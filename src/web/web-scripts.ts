@@ -52,6 +52,7 @@ const redoButton = document.getElementById("redo") as HTMLButtonElement;
 const fileButton = document.getElementById("file") as HTMLButtonElement;
 const logoutButton = document.getElementById("logout") as HTMLButtonElement;
 const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLButtonElement;
+const preferencesButton = document.getElementById("preferences") as HTMLButtonElement;
 
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
@@ -94,6 +95,8 @@ let lastEditorEvent: editorEvent | undefined;
 let errorDOMEvent: Event | undefined;
 let errorEditorEvent: editorEvent | undefined;
 let errorStack: string | undefined;
+
+let usingAp = false;
 
 autoSaveButton.hidden = !useChromeFileAPI();
 
@@ -264,7 +267,7 @@ expandCollapseButton?.addEventListener("click", async () => {
 });
 
 newButton?.addEventListener("click", async () => {
-  if (checkForUnsavedChanges()) {
+  if (checkForUnsavedChanges(cancelMsg)) {
     clearDisplays();
     clearUndoRedoAndAutoSave();
     file = new FileImpl(hash, profile, userName, transforms());
@@ -305,7 +308,7 @@ saveAsStandaloneButton.addEventListener("click", async () => {
 
 for (const elem of demoFiles) {
   elem.addEventListener("click", async () => {
-    if (checkForUnsavedChanges()) {
+    if (checkForUnsavedChanges(cancelMsg)) {
       const fileName = `${elem.id}`;
       const f = await fetch(fileName, { mode: "same-origin" });
       const rawCode = await f.text();
@@ -316,6 +319,42 @@ for (const elem of demoFiles) {
     }
   });
 }
+
+preferencesButton.addEventListener("click", () => {
+  const dialog = document.getElementById("preferences-dialog") as HTMLDialogElement;
+  const closeButton = dialog.querySelector("button");
+  const ap = document.getElementById("use-ap") as HTMLInputElement;
+  const cvd = document.getElementById("use-cvd") as HTMLInputElement;
+
+  closeButton?.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    if (ap.checked !== usingAp) {
+      if (checkForUnsavedChanges(profileMsg)) {
+        usingAp = ap.checked;
+        if (ap.checked) {
+          const p = await fetchProfile("advanced");
+          await setup(p);
+        } else {
+          const p = await fetchProfile("default");
+          await setup(p);
+        }
+      } else {
+        ap.checked = usingAp;
+      }
+    }
+
+    if (cvd.checked) {
+      changeCss("cvd-colourScheme");
+    } else {
+      changeCss("colourScheme");
+    }
+
+    dialog.close();
+  });
+
+  dialog.showModal();
+});
 
 function warningOrError(tgt: HTMLDivElement): [boolean, string] {
   if (tgt.classList.contains("warning")) {
@@ -358,6 +397,7 @@ async function handleStatusClick(event: Event, tag: string, useParent: boolean) 
 }
 
 function changeCss(stylesheet: string) {
+  console.log("css to: " + stylesheet);
   const links = document.getElementsByTagName("link");
   for (const link of links) {
     if (link.rel === "stylesheet" && link.href.includes("colourScheme")) {
@@ -440,6 +480,7 @@ if (okToContinue) {
       clearSystemInfoButton,
       clearGraphicsButton,
       saveAsStandaloneButton,
+      preferencesButton,
     ],
     msg,
   );
@@ -448,10 +489,11 @@ if (okToContinue) {
   }
 }
 
-function checkForUnsavedChanges(): boolean {
-  return hasUnsavedChanges()
-    ? confirm("You have unsaved changes - they will be lost unless you cancel")
-    : true;
+const cancelMsg = "You have unsaved changes - they will be lost unless you cancel";
+const profileMsg = "You have unsaved changes - they will be lost if you change your profile";
+
+function checkForUnsavedChanges(msg: string): boolean {
+  return hasUnsavedChanges() ? confirm(msg) : true;
 }
 
 async function setup(p: Profile) {
@@ -701,6 +743,7 @@ function updateDisplayValues() {
         fileButton,
         loadButton,
         saveAsStandaloneButton,
+        preferencesButton,
       ],
       msg,
     );
@@ -719,6 +762,7 @@ function updateDisplayValues() {
     enable(demosButton, "Load a demonstration program");
     enable(trimButton, "Remove all 'newCode' selectors that can be removed (shortcut: Alt-t)");
     enable(expandCollapseButton, "Expand / Collapse all code regions");
+    enable(preferencesButton, "Set preferences");
 
     enable(clearGraphicsButton, "Clear display");
     enable(clearSystemInfoButton, "Clear display");
@@ -1460,7 +1504,7 @@ async function handleRunWorkerError(data: WebWorkerStatusMessage) {
 
 function chooser(uploader: (event: Event) => void) {
   return () => {
-    if (checkForUnsavedChanges()) {
+    if (checkForUnsavedChanges(cancelMsg)) {
       const f = document.createElement("input");
       f.style.display = "none";
 
