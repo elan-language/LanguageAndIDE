@@ -45,7 +45,7 @@ export abstract class AbstractField implements Selectable, Field {
   private holder: Frame;
   private _optional: boolean = false;
   protected map: Map<string, Selectable>;
-  private _parseStatus: ParseStatus;
+  protected _parseStatus: ParseStatus;
   private _compileStatus: CompileStatus = CompileStatus.default;
   cursorPos: number = 0; //Relative to LH end of text
   selectionEnd: number = 0; //Relative to LH end of text
