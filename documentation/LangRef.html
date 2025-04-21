@@ -1001,6 +1001,28 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 
 <p>It is also possible explicitly to set a property or a named value to an empty instance of the appropriate Type.</p>
 
+<!-- #region Parse errors -->
+<h1 id="parse_error">Parse errors</h1>
+
+<p>A parse error occurs when the text entered into a field cannot be matched against any of the valid formats for contents of that fields.
+  The field will display in red (for the default colour scheme) with a message alongside it containing a link to 
+  one of the headings below. The <b>Parse</b> status in the status panel in the IDE will show as <b>Invalid</b>.
+</p>
+
+<h3 id="parse_arg_list" class="no-TOC">Parse error on an argument list</h3>
+<p>An argument list passed into a function or procedure call, must consist of one or more arguments separated by commas.
+  Each argument may in general be any of:</p>
+  <ul>
+    <li>A literal value</li>
+    <li>A named value</li>
+    <li>An expression</li>
+  </ul>
+  <p>(though in certain very specific contexts some options are disallowed by the compiler.)</p>
+
+
+<!-- #endregion -->
+
+
 <!-- #region Compile Errors and Warnings -->
 <h1 id="compile_error">Compile Errors and Warnings</h1>
 
