@@ -1,4 +1,4 @@
-# e6f5ba6dd9dd23647869fbf39828a952bf62f0a2c9e12b8ff1d9d7487463203d Elan 1.0.0-pre1 guest default_profile valid
+# 2082b82603ca57d297d70f5c07ce4b660e87b5b2ef72e16e700a14f6c22c868a Elan 1.0.0-pre2 guest default_profile valid
 
 function f() returns Int
   variable c set to 1160
