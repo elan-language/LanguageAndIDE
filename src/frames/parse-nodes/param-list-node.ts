@@ -3,9 +3,7 @@ import { ParamDefNode } from "./param-def-node";
 import { removeUnmatchedClosingBracket } from "./parse-node-helpers";
 
 export class ParamListNode extends CSV {
-  override nameForError(): string {
-    return `as a parameter definition list`;
-  }
+  override errorLink: string = "#parse_params";
 
   constructor() {
     super(() => new ParamDefNode(), 0);

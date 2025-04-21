@@ -7,9 +7,6 @@ import { Space } from "./parse-node-helpers";
 import { SpaceNode } from "./space-node";
 
 export class BracketedExpression extends AbstractSequence {
-  nameForError(): string {
-    return "as a bracketed expression";
-  }
   expr: ExprNode | undefined;
 
   constructor() {

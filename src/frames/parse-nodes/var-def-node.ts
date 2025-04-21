@@ -4,9 +4,7 @@ import { DeconstructedTuple } from "./deconstructed-tuple";
 import { IdentifierNode } from "./identifier-node";
 
 export class VarDefNode extends AbstractAlternatives {
-  override nameForError(): string {
-    return `as a name for a value`;
-  }
+  override errorLink: string = "#parse_var_or_let_def";
 
   constructor() {
     super();
