@@ -1,9 +1,7 @@
 import { IdentifierNode } from "./identifier-node";
 
 export class MethodNameNode extends IdentifierNode {
-  override nameForError(): string {
-    return "a valid method name";
-  }
+  override errorLink: string = "#parse_name";
 
   override renderAsHtml(): string {
     return this.renderAsSource();

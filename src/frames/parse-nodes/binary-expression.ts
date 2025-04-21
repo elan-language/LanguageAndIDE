@@ -6,9 +6,6 @@ import { allIdsAndMethods, allKeywordsThatCanStartAnExpression } from "./parse-n
 import { Term } from "./term";
 
 export class BinaryExpression extends AbstractSequence {
-  nameForError(): string {
-    return "";
-  }
   lhs: Term | undefined;
   op: BinaryOperation | undefined;
   rhs: ExprNode | undefined;

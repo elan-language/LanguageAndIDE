@@ -3,9 +3,6 @@ import { COMMA } from "../symbols";
 import { AbstractParseNode } from "./abstract-parse-node";
 
 export class CommaNode extends AbstractParseNode {
-  nameForError(): string {
-    return " - comma expected";
-  }
   parseText(text: string): void {
     const trim = text.trimStart();
     if (trim.length > 0) {
