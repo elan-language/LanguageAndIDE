@@ -1,8 +1,8 @@
 import { readFileSync, writeFileSync } from "node:fs";
+import { elanVersion } from "./environment";
 import { DefaultProfile } from "./frames/default-profile";
 import { FileImpl } from "./frames/file-impl";
 import { transforms } from "./frames/syntax-nodes/ast-helpers";
-import { elanVersion } from "./production";
 import { hash } from "./util";
 
 function updateVersion() {

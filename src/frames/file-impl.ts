@@ -1,6 +1,6 @@
 import { AssertOutcome } from "../assert-outcome";
 import { ElanFileError } from "../elan-file-error";
-import { elanVersion, isElanProduction } from "../production";
+import { elanVersion, isElanProduction } from "../environment";
 import { StdLib } from "../standard-library/std-lib";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AbstractSelector } from "./abstract-selector";
