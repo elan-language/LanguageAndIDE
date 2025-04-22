@@ -425,7 +425,3 @@ button.plain:disabled, menu-item.button.plain:disabled {
   background-color: var(--selection);
   width: 100%;
 }
-
-el-user, el-profile {
-  display:none;
-}

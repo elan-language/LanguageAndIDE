@@ -77,6 +77,10 @@ el-comment input {
     display: none;
 }
 
+el-header el-user, el-header el-profile {
+    display:none;
+}
+
 el-header, el-header * {
     color: var(--comment);
 }
