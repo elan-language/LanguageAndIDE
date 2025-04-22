@@ -82,3 +82,21 @@ test('debug program', async ({ page }) => {
   await expect(page.locator('#run-status')).toContainText('paused');
  
 });
+
+test('compile error', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('m'); // main
+  await page.keyboard.type('c'); // call
+  await page.keyboard.type('foo');
+  await page.keyboard.press('Tab');
+  
+  await expect(page.locator('#call5')).toContainText('\'foo\' is not defined. Click for more info.');
+  await expect(page.locator('#compile')).toContainText('unknown symbol');
+});
