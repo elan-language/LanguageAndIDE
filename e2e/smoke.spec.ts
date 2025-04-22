@@ -43,6 +43,21 @@ test('load and run demo', async ({ page }) => {
   await expect(page.locator('#printed-text')).toContainText("What type of fruit do you want ('x' to exit)? fig We can supply a fig What type of fruit do you want ('x' to exit)? ");
 });
 
+test('demo with tests', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await page.getByRole('button', { name: 'Demo' }).hover();
+  await page.getByText('Life').click();
+
+  await expect(page.locator('#parse')).toContainText('valid');
+  await expect(page.locator('#compile')).toContainText('ok');
+  await expect(page.locator('#test')).toContainText('pass');
+});
+
 test('debug program', async ({ page }) => {
   page.once('dialog', dialog => {
     //console.log(`Dialog message: ${dialog.message()}`);
@@ -100,6 +115,23 @@ test('compile error', async ({ page }) => {
   await expect(page.locator('#compile')).toContainText('unknown symbol');
 });
 
+test('parse error', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('m'); // main
+  await page.keyboard.type('c'); // call
+  await page.keyboard.type('4');
+  
+  await expect(page.locator('#call5')).toContainText('Invalid. Click for more info.');
+  await expect(page.locator('#parse')).toContainText('invalid');
+});
+
 test('load and run demo with graphics', async ({ page }) => {
   page.once('dialog', dialog => {
     //console.log(`Dialog message: ${dialog.message()}`);
@@ -128,4 +160,21 @@ test('symbol completion', async ({ page }) => {
   await page.keyboard.type('c');
 
   await expect(page.locator('#ident6')).toContainText('clearBlocksclearKeyBufferclearPrintedTextclearVectorGraphicsdisplayBlocksdisplayVectorGraphics');
+});
+
+test('undo redo', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#code-title')).toContainText('File: code.elan');
+  await page.getByText('main procedure function test').click();
+  await page.keyboard.type('m');
+  await expect(page.locator('#code-title')).toContainText('File: code.elan UNSAVED');
+  await page.getByRole('button', { name: 'Undo' }).click();
+  await expect(page.locator('el-help')).toContainText('main procedure function test constant enum #');
+  await page.getByRole('button', { name: 'Redo' }).click();
+  await expect(page.locator('el-top')).toContainText('main');
 });
