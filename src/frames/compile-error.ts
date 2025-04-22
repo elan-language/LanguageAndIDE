@@ -37,7 +37,7 @@ export class TypeCompileError extends CompileError {
       Severity.error,
       `Expression must be ${type}. Click for more info.`,
       location,
-      "LangRef.html#compile_error",
+      "LangRef.html#TypeCompileError",
     );
   }
 }
@@ -49,7 +49,7 @@ export class ThisCompileError extends CompileError {
       Severity.error,
       `Cannot use 'this' outside class context. Click for more info.`,
       location,
-      "LangRef.html#compile_error",
+      "LangRef.html#ThisCompileError",
     );
   }
 }
@@ -61,7 +61,7 @@ export class DeclaredAboveCompileError extends CompileError {
       Severity.error,
       `Abstract Class '${type}' must be declared before it is used. Click for more info.`,
       location,
-      "LangRef.html#compile_error",
+      "LangRef.html#DeclaredAboveCompileError",
     );
   }
 }
@@ -73,7 +73,7 @@ export class MemberTypeCompileError extends CompileError {
       Severity.error,
       `Member '${name}' must be of type ${type}. Click for more info.`,
       location,
-      "LangRef.html#compile_error",
+      "LangRef.html#MemberTypeCompileError",
     );
   }
 }
@@ -85,7 +85,7 @@ export class TypesCompileError extends CompileError {
       Severity.error,
       `Incompatible types. Expected: ${type2}${addInfo} Provided: ${type1}. Click for more info.`,
       location,
-      "LangRef.html#compile_error",
+      "LangRef.html#TypesCompileError",
     );
   }
 }
@@ -103,8 +103,9 @@ export class TernaryCompileError extends CompileError {
 }
 
 export class SyntaxCompileError extends CompileError {
-  constructor(message: string, location: string) {
-    super(DisplayPriority.second, Severity.error, message, location, "LangRef.html#compile_error");
+  constructor(message: string, location: string, link = "") {
+    const linkToUse = link === "" ? "LangRef.html#compile_error" : link;
+    super(DisplayPriority.second, Severity.error, message, location, linkToUse);
   }
 }
 

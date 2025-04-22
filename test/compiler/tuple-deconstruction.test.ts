@@ -763,7 +763,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Int Provided: tuple(Int, String). Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: String, Int Provided: tuple(Int, String). Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -785,7 +785,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Unknown Provided: tuple(Int, String). Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: String, Unknown Provided: tuple(Int, String). Click for more info.LangRef.html#TypesCompileError",
       "'y' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
@@ -829,7 +829,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, _ Provided: tuple(Int, String). Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: String, _ Provided: tuple(Int, String). Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -872,7 +872,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. Click for more info.LangRef.html#compile_error",
+      "Expression must be able to be deconstructed. Click for more info.LangRef.html#TypeCompileError",
     ]);
   });
 
@@ -891,7 +891,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. Click for more info.LangRef.html#compile_error",
+      "Expression must be able to be deconstructed. Click for more info.LangRef.html#TypeCompileError",
     ]);
   });
 

@@ -758,11 +758,15 @@ The variable holding the exception (by default named <el-code>e</el-code>, but t
 <!--   #region Named value-->
 <h2 id="named_value">Named value</h2>
 <p>A named value is a value that is associated with a name rather than being defined literally in code. There are various kinds of named value:</p>
-<p><a href="#Constant">Constant</a>, <span class="Hyperlink"><a href="#Let_statement_1">let</a></span> statement, <span class="Hyperlink"><a href="#Variables">variable</a></span> statement, <a href="#Parameter_passing_1">Parameter passing</a>, <span class="Hyperlink"><a href="#Enum_1">enum</a></span> statement</p>
+<p><a href="#Constant">Constant</a>, <span class="Hyperlink"><a href="#Let_statement_1">let</a></span> statement, <span class="Hyperlink"><a href="#Variables">variable</a></span> statement, <a href="#Parameter_passing_1">Parameter passing</a>, <span class="Hyperlink"><a href="#Enum_1">enum</a></span> statement.
+  Once a named value has been defined, it can be referred to by the name.</p>
 <!--   #endregion-->
 <!--   #region Identifier-->
 <h2 id="identifier">Identifier</h2>
-<p>For all kinds of named values, the name must follow the rules for an &lsquo;identifier&rsquo;. It must start with a lower case letter, followed by any combination of lower case and upper case letters, numeric digits, and the _ (underscore) symbol. It may not contain spaces or other symbols. Once a named value has been defined, it can be referred to by the name. </p>
+<p>For all kinds of named values, the name must follow the rules for an &lsquo;identifier&rsquo;. 
+  It must start with a lower case letter, followed by any combination of lower case and upper case letters,
+   numeric digits, and the _ (underscore) symbol. 
+   It may not contain spaces or other symbols.</p>
 
 <h2 id="scoping">Scoping and name qualification</h2>
 <p>With the exception of a <el-code>constant</el-code> (below), which is global in scope, named values are always &lsquo;local&rsquo;: their scope is confined to the method in which they are defined. </p>
@@ -1033,13 +1037,11 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 <p>An exception message must either be a literal string or a named value holding a string.</p>
 
 <h3 id="parse_expression" class="no-TOC">Invalid expression</h3>
-<p>The field you are entering must be a valid expression.</p>
+<p>The field you are entering must be a valid <a href="#Expression">expression</a>.</p>
 
 <h3 id="parse_name" class="no-TOC">Invalid name</h3>
 <p>The name defined for any variable, constant, let, parameter, function, procedure, or property 
-  must begin with a lower-case letter, optionally followed by letters or either case, numeric digits,
-  or underscore symbols. Nothing else.
-</p>
+  must follow the rules for an <a href="#identifier">identifier</a>.</p>
 
 <h3 id="parse_inheritance" class="no-TOC">Invalid inheritance clause</h3>
 <p>An inheritance clause, if used, must consist of the keyword <el-code><el-kw>inherits</el-kw></el-code>
@@ -1048,6 +1050,8 @@ followed by a space and then one or more Type names separated by commas.</p>
 <h3 id="parse_params" class="no-TOC">Invalid parameter list</h3>
 <p>Each parameter definition takes the form:</p>
 <el-code><el-id>name</el-id> <el-kw>as</el-kw> <el-type>Type</el-type></el-code>
+<p>The name must follow the rules for an <a href="#identifier">identifier</a>.</p>
+<p>The type must follow the rules for an <a href="#parse_type">type</a>.</p>
 <p>If more than one parameter is defined, the definitions must be separated by commas.</p>
 
 <h3 id="parse_proc_ref" class="no-TOC">Invalid reference to a procedure</h3>
@@ -1055,8 +1059,8 @@ followed by a space and then one or more Type names separated by commas.</p>
 <ul>
   <li><el-code><el-kw>call</el-kw> <el-method>procedureName</el-method>()</el-code></li>
   <li><el-code><el-kw>call</el-kw> <el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</el-code></li>
-  <li><el-code><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</el-code></li>
-  <li><el-code><el-kw>call</el-kw> <el-kw>library</el-kw>.<el-method>procedureMethodName</el-method>()</el-code></li>
+  <li><el-code><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>propertyName</el-id>.<el-method>procedureMethodName</el-method>()</el-code></li>
+  <li><el-code><el-kw>call</el-kw> <el-kw>library</el-kw>.<el-method>procedureName</el-method>()</el-code></li>
  </ul>
 
 <p>The last one is used only if there is a need to disambiguate between a library procedure and a user-defined (global)
@@ -1077,7 +1081,7 @@ followed by a space and then one or more Type names separated by commas.</p>
 <h3 id="parse_var_or_let_def" class="no-TOC">Invalid variable or let definition</h3>
 <p>The definition for a variable, or for a <el-code><el-kw>let</el-kw></el-code> statement is most commonly
 a simple <a href="#parse_name">name</a>. Less commonly, it may take the form of:
-a href="LibRef.html#Tuple">tuple deconstruction</a>, <a href="">list deconstruction</a>, or <a href="record_deconstruction">record deconstruction</a>.
+<a href="LibRef.html#Tuple">tuple deconstruction</a>, list deconstruction, or <a href="record_deconstruction">record deconstruction</a>.
 </p>
 
 <!-- #endregion -->
@@ -1247,17 +1251,39 @@ defines no parameters. If your intent was to define a <i>reference</i> to the fu
 </p>
 
   <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3> 
-<h3 id="FailCannotCompareProcFunc" class="no-TOC">Cannot do equality operations on Procedures or Functions.</h3> 
+  <p>An index into an array or list cannot have a negative value. If a negative is given in literal form e.g.
+    <el-code><el-id>a</el-id>[-<el-lit>3</el-lit>]</el-code> then this will generate a compile error.
+    If you use a named value for an index and it is negative, then this will cause a run-time error.</p>
+<h3 id="FailCannotCompareProcFunc" class="no-TOC">Cannot do equality operations on Procedures or Functions.</h3>
+
 <h3 id="mustBeImmutableType" class="no-TOC">Property ... is not of an immutable type.</h3>   
+<p>Properties on a <a href="#record">record</a> may only be of immutable types.</p>
+
 <h3 id="mustBeImmutableGenericType" class="no-TOC">... cannot be of mutable type ...</h3>  
+<p>Element type for a <a href="LibRef.html#ListImmutable">ListImmutable</a> must itself be an immutable type.
+Similarly, for an <a href="LibRef.html#DictionaryImmutable">DictionaryImmutable</a> the types for both the key and the value must be immutable types.</p>
+
 <h3 id="mustBeValidKeyType" class="no-TOC">... cannot have key of type ...</h3>
+<p>The type of the key for any dictionary <a href="LibRef.html#Dictionary">Dictionary</a> must be an immutable type, and not itself an indexable type.</p>
+
 <h3 id="invalidPropertyInRecordDeconstruction" class="no-TOC">No such property ... on record ...</h3>
+
+<p>The property name given in the record deconstruction does not match a property on the given type of record.</p>
+
 <h3 id="discardInRecordDeconstruction" class="no-TOC">Cannot discard in record deconstruction ...</h3>
 <h3 id="mustBeCompatibleDefinitionNode" class="no-TOC">Wrong number of deconstructed variables.</h3>  
 <h3 id="mustBePropertyPrefixedOnMember" class="no-TOC">referencing a property requires a prefix.</h3>
+
+<p>If you are referring to a property of a class <i>from code defined within the class</i> then the 
+property name must be preceded by <el-code><el-kw>property</el-kw>.</el-code></p>
 <h3 id="mustNotBeOutParameter" class="no-TOC">'out' parameters are only supported on procedures.</h3>
+<p>You cannot defined an <el-code><el-kw>out</el-kw></el-code> parameter in a function (because that would
+imply the possibility of creating a side-effect).</p>
 <h3 id="mustNotHaveDuplicateMain" class="no-TOC">There can only be one 'main' in a program.</h3>
 <h3 id="mustNotBeTwoUnaryExpressions" class="no-TOC">Unsupported operation.</h3>
+
+<p>You cannot chain two 'unary' operators (those that apply to a single value) - such as <el-code>-</el-code>
+or <el-code><el-kw>not</el-kw></el-code> successively within an expression.</p>
 
 <!-- #endregion-->
 <hr>

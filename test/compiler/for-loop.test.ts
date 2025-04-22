@@ -266,7 +266,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be Int. Click for more info.LangRef.html#compile_error",
+      "Expression must be Int. Click for more info.LangRef.html#TypeCompileError",
     ]);
   });
 
@@ -287,9 +287,9 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be Int. Click for more info.LangRef.html#compile_error",
-      "Expression must be Int. Click for more info.LangRef.html#compile_error",
-      "Expression must be Int. Click for more info.LangRef.html#compile_error",
+      "Expression must be Int. Click for more info.LangRef.html#TypeCompileError",
+      "Expression must be Int. Click for more info.LangRef.html#TypeCompileError",
+      "Expression must be Int. Click for more info.LangRef.html#TypeCompileError",
     ]);
   });
 
