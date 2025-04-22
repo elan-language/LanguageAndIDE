@@ -14,8 +14,7 @@ test('simple program', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await page.getByRole('button', { name: 'File' }).hover();
-
+  await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m');
   await page.keyboard.type('p');
