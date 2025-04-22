@@ -1,0 +1,27 @@
+import { test, expect } from '@playwright/test';
+
+test('has title', async ({ page }) => {
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  // Expect a title "to contain" a substring.
+  await expect(page).toHaveTitle(/Elan/);
+});
+
+test('simple program', async ({ page }) => {
+  page.once('dialog', dialog => {
+    console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await page.getByRole('button', { name: 'File' }).hover();
+
+
+  await page.keyboard.type('m');
+  await page.keyboard.type('p');
+  await page.keyboard.type('100');
+  await page.keyboard.press('Tab');
+
+  await page.getByRole('button', { name: 'Run the program' }).click();
+  await expect(page.locator('#printed-text')).toContainText('100');
+});

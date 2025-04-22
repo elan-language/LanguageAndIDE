@@ -23,3 +23,9 @@ web-editor/standalone.js
 src/environment.ts
 web-editor/*.css
 documentation/*.css
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
