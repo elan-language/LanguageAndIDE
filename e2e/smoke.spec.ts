@@ -71,6 +71,7 @@ test('debug program', async ({ page }) => {
   await page.keyboard.type('foo');
   await page.keyboard.press('Tab');
   await page.keyboard.type('100');
+  await page.keyboard.press('Tab');
 
   await page.getByText('print', { exact: true }).click({
     button: 'right'
