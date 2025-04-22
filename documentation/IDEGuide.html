@@ -39,8 +39,6 @@ It looks like this:</p>
 <!--   #region Demo -->
 <h2 id="Button_Demo">Demo</h2>
 
-<p><b>Note:</b> Depending upon how the installation of Elan that you are using, the <b>Demo</b> button might or might not be shown.</p>
-
 <p>If the <b>Demo</b> button is shown, clicking on it will show a list of available demo programs,
     which you may load just by selecting the program name. You can then run the program with the <a href="#Run_controls">Run button</a>.</p>
 
@@ -59,7 +57,9 @@ As with the main <b>Help</b> menu, the documentation will open in a separate bro
 <h3 class="no-TOC" id="New">New</h3>
 <p><b>New</b> will clear the current code &ndash; allowing you to start writing a new program. The code editor will then show this:</p>
 
-<el-header># Elan Beta 8</el-header>
+<div class="elan-code" data-code=""><el-header># <el-hash>c377a2f208351144cd5801840b7421b393b20140c4ff9ce06e81fde21150afad</el-hash> <el-version>Elan 1.0.0</el-version> <el-user class="hide">guest</el-user> <el-profile class="hide">Default_Profile</el-profile></el-header>
+ <el-global class="selected focused ok empty" id="select0" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> main procedure function test constant enum #</el-help></el-select></el-global>
+</div>
 
 The first line shows a standard Elan 'header' comment, which is required on every code file, and which you are not able to move, edit, or delete.
     The second line shows the <a href="#Global_selector">Global selector</a>.
@@ -98,7 +98,7 @@ Unlike <b>Auto Save</b> &ndash; <b>Manual Save</b> is a one-off event &ndash; yo
 As a reminder, if your existing code is not saved, you will see a confirmation dialog:</p>
 <img src="images/Unsaved_warning.png" style="width:30%;">
 <p>Note that for both <b>Auto Save</b> and <b>Manual Save</b>, code may be saved <i>only when its parse status is 'valid'</i>. However,
-    it <i>may</i> be saved even if it does not compile, or pass any tests.</p>
+    it <i>may</i> then be saved even if it does not compile, or pass any tests.</p>
 <!-- #endregion -->
 <!--     #region Save as Standalone -->
 <h3 class="no-TOC" id="Menu_Save_as_Standalone">Save as Standalone</h3>
