@@ -403,8 +403,8 @@ enum Fruit apple, orange, pear`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: String. Click for more info.LangRef.html#compile_error",
-      "Incompatible types. Expected: Float or Int Provided: Fruit. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: String. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int Provided: Fruit. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -465,7 +465,7 @@ enum Fruit apple, orange, pear`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Fruit. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Int Provided: Fruit. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 

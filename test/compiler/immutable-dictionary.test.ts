@@ -591,7 +591,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -609,7 +609,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: String Provided: Int. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 

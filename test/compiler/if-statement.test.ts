@@ -581,7 +581,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be Boolean. Click for more info.LangRef.html#compile_error",
+      "Expression must be Boolean. Click for more info.LangRef.html#TypeCompileError",
     ]);
   });
 
@@ -604,7 +604,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be Boolean. Click for more info.LangRef.html#compile_error",
+      "Expression must be Boolean. Click for more info.LangRef.html#TypeCompileError",
     ]);
   });
 

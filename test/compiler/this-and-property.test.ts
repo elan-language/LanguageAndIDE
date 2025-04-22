@@ -332,7 +332,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot use 'this' outside class context. Click for more info.LangRef.html#compile_error",
+      "Cannot use 'this' outside class context. Click for more info.LangRef.html#ThisCompileError",
     ]);
   });
 });

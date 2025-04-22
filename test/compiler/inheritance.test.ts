@@ -1643,9 +1643,9 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Member 'p1' must be of type Int. Click for more info.LangRef.html#compile_error",
-      "Member 'setP1' must be of type Procedure (Int). Click for more info.LangRef.html#compile_error",
-      "Member 'product' must be of type Func<of  => Int>. Click for more info.LangRef.html#compile_error",
+      "Member 'p1' must be of type Int. Click for more info.LangRef.html#MemberTypeCompileError",
+      "Member 'setP1' must be of type Procedure (Int). Click for more info.LangRef.html#MemberTypeCompileError",
+      "Member 'product' must be of type Func<of  => Int>. Click for more info.LangRef.html#MemberTypeCompileError",
     ]);
   });
 
@@ -1691,7 +1691,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Member 'product' must be of type Func<of  => Int>. Click for more info.LangRef.html#compile_error",
+      "Member 'product' must be of type Func<of  => Int>. Click for more info.LangRef.html#MemberTypeCompileError",
     ]);
   });
 
@@ -2923,7 +2923,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Abstract Class 'Bar' must be declared before it is used. Click for more info.LangRef.html#compile_error",
+      "Abstract Class 'Bar' must be declared before it is used. Click for more info.LangRef.html#DeclaredAboveCompileError",
     ]);
   });
 
@@ -2948,7 +2948,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Abstract Class 'Bar' must be declared before it is used. Click for more info.LangRef.html#compile_error",
+      "Abstract Class 'Bar' must be declared before it is used. Click for more info.LangRef.html#DeclaredAboveCompileError",
     ]);
   });
 });

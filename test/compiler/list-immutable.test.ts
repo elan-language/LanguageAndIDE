@@ -549,7 +549,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -579,7 +579,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -601,7 +601,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of Int>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -623,7 +623,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of String>. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: ListImmutable<of String>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -993,7 +993,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: String. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Int Provided: String. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -1010,7 +1010,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -1208,7 +1208,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: ListImmutable<of Int> try converting with '.asListImmutable()' Provided: List<of Int>. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: ListImmutable<of Int> try converting with '.asListImmutable()' Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 

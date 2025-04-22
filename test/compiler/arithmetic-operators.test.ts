@@ -350,15 +350,15 @@ end class
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "expr5", [
-      "Incompatible types. Expected: Float or Int Provided: Boolean. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: Boolean. Click for more info.LangRef.html#TypesCompileError",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "expr8", [
-      "Incompatible types. Expected: Float or Int Provided: Boolean. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: Boolean. Click for more info.LangRef.html#TypesCompileError",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "expr11", [
-      "Incompatible types. Expected: Float or Int Provided: Foo. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int Provided: Foo. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -375,7 +375,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -392,7 +392,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -409,7 +409,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -426,7 +426,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -514,7 +514,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -532,7 +532,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 });
