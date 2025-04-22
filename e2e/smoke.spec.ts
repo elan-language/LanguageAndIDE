@@ -99,3 +99,17 @@ test('compile error', async ({ page }) => {
   await expect(page.locator('#call5')).toContainText('\'foo\' is not defined. Click for more info.');
   await expect(page.locator('#compile')).toContainText('unknown symbol');
 });
+
+test('load and run demo with graphics', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await page.getByRole('button', { name: 'Demo' }).hover();
+  await page.getByText('Snake - procedural').click();
+
+  await page.getByRole('button', { name: 'Run the program' }).click();
+  await expect(page.locator('[style="background-color:#ff0000;"]')).toContainText("");
+});
