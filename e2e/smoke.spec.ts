@@ -113,3 +113,19 @@ test('load and run demo with graphics', async ({ page }) => {
   await page.getByRole('button', { name: 'Run the program' }).click();
   await expect(page.locator('[style="background-color:#ff0000;"]')).toContainText("");
 });
+
+test('symbol completion', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('m');
+  await page.keyboard.type('c');
+  await page.keyboard.type('c');
+
+  await expect(page.locator('#ident6')).toContainText('clearBlocksclearKeyBufferclearPrintedTextclearVectorGraphicsdisplayBlocksdisplayVectorGraphics');
+});
