@@ -21,3 +21,5 @@ web-editor/documentation/
 web-editor/demo/
 web-editor/standalone.js
 src/environment.ts
+web-editor/*.css
+documentation/*.css
