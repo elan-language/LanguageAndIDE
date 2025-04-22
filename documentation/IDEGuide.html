@@ -28,7 +28,7 @@ It looks like this:</p>
 
 <p>At the top left of the screen is the 'menu' of commands:</p>
 
-<img src="images/menu.png" style="width:30%;">
+<img src="images/menu.png" style="width 356; height 36">
 
 <p>Some of the options shown act like a button to  perform that command directly; others, when clicked will show a drop-down sub-menu
     of further commands. Individual commands may be greyed-out if unavailable. If you use the mouse to hover over any option
@@ -91,7 +91,6 @@ The first line shows a standard Elan 'header' comment, which is required on ever
 
 <p>Note that you may auto-save a <b>New</b> code file, even though you haven't added any instructions yet, because the file contains a valid header.</p>
 <!-- #endregion -->
-<!-- #endregion -->
 <!--     #region Manual Save -->
 <h3 class="no-TOC" id="Menu_Manual_Save">Manual Save</h3>
 <b>Manual Save</b> offers a file selection dialog to allow you to specify the name and location where your code will be saved.
@@ -104,25 +103,41 @@ As a reminder, if your existing code is not saved, you will see a confirmation d
 <!--     #region Save as Standalone -->
 <h3 class="no-TOC" id="Menu_Save_as_Standalone">Save as Standalone</h3>
 <p><b>Save as Standalone</b> permits a compiling program to be saved as a standalone Html file, which allows your application to be run without the Elan IDE.
-    This file can be opened from your desktop, emailed to others, or installed on a web-server. 
+    This file can be opened from your desktop, emailed to others, or installed on a web-server.
     When the file is opened in a browser:</p>
 <ul>
     <li>The page shows ust the <b>Display</b> pane from the IDE, magnified to the full visible browser height but preserving the 4:3 ratio needed in case the program uses Block Graphics.</li>
     <li>The Elan program is run as soon as the page is opened - or refreshed. It is up to the Elan programmer to provide options for exiting the program or running it again, if desired.</li>
 </ul>
 
-<p>The standalone web page includes the the program, compiled to JavaScript, and the .css for styling. 
+<p>The standalone web page includes the the program, compiled to JavaScript, and the .css for styling.
     The latter may be easily customised by editing the .html file directy - for example if you wish to:</p>
-
 <ul>
     <li>Alter the size of the Display area, and (if Block Graphics are not used) the aspect-ratio.</li>
     <li>Add any text around the Display area</li>
     <li>Edit the title attribute for the web page</li>
 </ul>
 <!-- #endregion -->
+<!--     #region Preferences -->
+<h3 class="no-TOC" id="Preferences">Preferences</h3>
+
+<p>Selecting <b>Preferences</b> brings up a dialog, currently showing two options:</p>
+<img src="images/preferences.png" style="width:230px; height:111px;">
+<ul>
+ <li><p><b>Advanced level coding</b> makes more options available in the selectors,
+        including the options for defining your own <a href="LangRef.html#class">classes</a>,
+        <a href="LangRef.html#interface">interfaces</a> and
+        <a href="LangRef.html#record">records</a>,
+        and for <a href="LangRef.html#throw">throwing</a> and <a href="LangRef.html#try">catching</a> exceptions.</p>
+    <p>Selecting or deselecting this option will clear the code pane.
+    You will be warned if your code is unsaved.</p>
+ </li>
+    <li><b>CVD colour scheme</b> changes the colour scheme to use colours and tones
+    likely to be more distinct to users with CVD.</li>
+</ul>
+<!-- #endregion -->
 <!--   #region Trim -->
 <h2 id="Button_Trim">Trim</h2>
-
 <p>The <b>Trim</b> command is used to neaten-up your code: it removes any 'new code' selectors from your code <i>that may be removed</i> which is typically most of them.
 <i>Where a 'new code' selector is not removed by <b>Trim</b> this indicates that code is still expected in that location.</i></p>
 
