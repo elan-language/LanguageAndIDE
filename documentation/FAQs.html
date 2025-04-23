@@ -12,6 +12,22 @@
 
 <img src="images/logo.png" style="width: 30%;">
 
+<h3>Is Elan a compiled language</h3>
+<p>Yes - Elan source is compiled to JavaScript and runs very fast. As with most modern languages
+    the compilation process is invisible to the user.</p>
+
+<h3>Can an Elan program be run without the Elan IDE</h3>
+
+<p>Yes.When you've written and tested your Elan program, you can simply use <b>File > Save as standalone</b>
+to save the program (compiled to JavaScript) within a standalone .html page. You can email this
+file to anyone else. They can open it in their browser and it runs automatically - all they see
+is a larger version of the <b>Display</b> pane. They don't need to know anything about Elan.</p>
+
+<h3>Can I install Elan on my school server?</h3>
+
+<p>Yes. If you go to <b>Help > Version history</b> you can download a .zip file for the current
+or previous releases of Elan. This can unzipped into any web-server for private access.</p>
+
 <h3>Why learn (or teach) a programming language that isn't used in industry?</h3>
 
 <p>Elan is designed specifically for teaching and learning programming, at high-school (KS3 - KS5) 
@@ -51,34 +67,6 @@
         by making it an integral feature of the language and very simple to use.
     </p>
 
-    <h3>Is Elan a compiled language</h3>
-    <p>Yes - Elan source is compiled to JavaScript and runs very fast. As with most modern languages
-        the compilation process is invisible to the user.</p>
-
-    <h3>Can an Elan program be run without the Elan IDE</h3>
-
-<p>Yes.When you've written and tested your Elan program, you can simply use <b>File > Save as standalone</b>
-    to save the program (compiled to JavaScript) within a standalone .html page. You can email this
-    file to anyone else. They can open it in their browser and it runs automatically - all they see
-    is a larger version of the <b>Display</b> pane. They don't need to know anything about Elan.</p>
-
-    <h3>Can I install Elan on my school server?</h3>
-
-    <p>Yes. If you go to <b>Help > Version history</b> you can download a .zip file for the current
-    or previous releases of Elan. This can unzipped into any web-server for private access.</p>
-
-    <h3>Can we trust that Elan will <i>remain</i> free to use?</h3>
-<p>Yes. We are committed to this on principle and we have a governance board to ensure that continues.
-    It is also worth pointing out that Elan is just 'single page app' - once you have accessed
-    the Elan IDE your code is edited, compiled, and run entirely within your browser, and Elan
-    files are saved locally. This means that we have no expensive server infrastructure to maintain,
-     or fund. Moreover, since Elan, its documentation, and associated teaching resources, are all open
-      source, there is nothing to stop you, or anyone else from serving up this same page and resources.
-      From your own server. We recommend that you use our version 
-      (at <a href="https://elan-lang.org">https://elan-lang.org</a>) if you can only because that 
-    way you will automatically be using the latest version.
-</p>
-
 <h3>Is Elan compatible with GCSE / A-level exams?</h3>
 
 <p>As it stands, Elan is fully compatible with OCR GCSE and A-level Computer Science, because
@@ -87,6 +75,33 @@
     the OCR 'pseudo code' specification - at least for all the coding constructs expected by OCR 
     - answers given in Elan will be easily comprehensible to <i>any</i> OCR examiner.</p>
 </p>
--->
+
+<h3>Can we trust that Elan will <i>remain</i> free to use?</h3>
+<p>Yes. We are committed to this on principle and we have a governance board to ensure that continues.
+    It is also worth pointing out that Elan is just 'single page app' - once you have accessed
+    the Elan IDE your code is edited, compiled, and run entirely within your browser, and Elan
+    files are saved locally. This means that we have no complex server infrastructure to maintain,
+     or fund. Moreover, since Elan, its documentation, and associated teaching resources, are all open
+      source, there is nothing to stop you, or anyone else from serving up this same page and resources.
+      From your own server. We recommend that you use our online version 
+      (at <a href="https://elan-lang.org">https://elan-lang.org</a>) if you can - only because that 
+    way you will automatically be using the latest version.
+</p>
+
+<h3>How stable is the Elan language?</h3>
+<p>We will continue to extend and improve Elan - with frequent new, but <i>non-breaking</i> releases.
+A non-breaking release means that any programs you have written previously will still load and run
+correctly. Elan is committed to <a href="https://semver.org/">semantic versioning</a>.'Third-level' releases
+(e.g. v1.0.X) are bug fixes, or changes to the IDE only - but with no change to the language or library.</p>
+
+<p>Second level releases (e.g. v1.X.0) will <i>extend</i> the language or library, and as such are always 'backwards-compatible'.
+    This means that you will be able to existing programs without modification. However, any <i>new</i> programs you write
+    in the new version, will not run on a on an older version of Elan that was <i>installed on a private server</i>.</p>
+
+<p>If, and only if, we were to see a <i>compelling</i> reason to make a small breaking change to any existing part
+    of the language grammar or the library - and this would always be publicly discussed in advance - then
+the change would be handled as a 'first-level' release (e.g. vX.0.0). Even then, the change would be managed in 
+such a way that a clear compile message would be shown alongside any obsolete instruction or library method used in your
+code - with a link to clear guidance on how to make your code compile and run again.</p>
 </body>
 </html>
