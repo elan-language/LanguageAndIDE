@@ -43,7 +43,7 @@ export function isClass(f?: ElanSymbol | Scope): f is Class {
   return !!f && "isClass" in f;
 }
 
-export function isGenericClass(f?: ElanSymbol | Scope): boolean {
+export function isGenericClass(f?: ElanSymbol | Scope): f is Class {
   return isClass(f) && f.ofTypes?.length > 0;
 }
 
