@@ -6,8 +6,8 @@ import { FileImpl } from "./frames/file-impl";
 import { transforms } from "./frames/syntax-nodes/ast-helpers";
 import { hash } from "./util";
 
-const demos = `${__dirname}/../../demo_programs/`;
-const snippets = `${__dirname}/../../documentation/CodeSnippets/`;
+const demos = `${__dirname}/../../src/demo_programs/`;
+const snippets = `${__dirname}/../../src/documentation/CodeSnippets/`;
 const tests = `${__dirname}/../../test/files/`;
 
 function loadFileAsSourceNew(sourceFile: string): string {

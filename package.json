@@ -16,8 +16,8 @@
   "scripts": {
     "update-build-script": "node ./out/src/update-build-files.js",
     "update-elan-files-script": "node ./out/src/update-elan-files.js",
-    "copy-web-files": "cpr ./web-content ./out/website -o && cpr ./styles ./out/website -o && cpr ./styles ./documentation -o ",
-    "copy-static-files": "npm run copy-web-files && npm run update-elan-files-script && cpr ./demo_programs ./out/website/demo -o && cpr ./documentation ./out/website/documentation -f .*\\.pptx  -o",
+    "copy-web-files": "cpr ./src/web-content ./out/website -o && cpr ./src/styles ./out/website -o && cpr ./src/styles ./src/documentation -o ",
+    "copy-static-files": "npm run copy-web-files && npm run update-elan-files-script && cpr ./src/demo_programs ./out/website/demo -o && cpr ./src/documentation ./out/website/documentation -f .*\\.pptx  -o",
     "build-website": "npm run copy-static-files && npm run compile-web",
     "compile-test-api": "esbuild ./src/standard-library/std-lib.ts --bundle --format=esm --outfile=out/test/elan-api.js",
     "compile-web": "esbuild ./out/src/web/web-scripts.js --bundle --outfile=out/website/web-scripts.js && esbuild ./src/standard-library/std-lib.ts --bundle --format=esm --outfile=out/website/elan-api.js && esbuild ./src/web/standalone.ts --bundle --outfile=out/website/standalone.js",

@@ -21,7 +21,7 @@ function updateVersion() {
 
   const tableEntry = `<tr><td>v${semver}</td><td>${date}</td><td><a href="/versions/${zipFileName}">Download zip</a></td></tr>`;
 
-  const versionFilePath = `${__dirname}/../../html/version-history.html`;
+  const versionFilePath = `${__dirname}/../../src/web-content/version-history.html`;
 
   const versionFileContent = readFileSync(versionFilePath, "utf-8");
 
