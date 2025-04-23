@@ -16,7 +16,7 @@
   "scripts": {
     "update-build-script": "node ./out/src/update-build-files.js",
     "update-elan-files-script": "node ./out/src/update-elan-files.js",
-    "copy-web-files": "cpr ./html ./out/website -o && cpr ./styles ./out/website -o && cpr ./styles ./documentation -o ",
+    "copy-web-files": "cpr ./web-content ./out/website -o && cpr ./styles ./out/website -o && cpr ./styles ./documentation -o ",
     "copy-static-files": "npm run copy-web-files && npm run update-elan-files-script && cpr ./demo_programs ./out/website/demo -o && cpr ./documentation ./out/website/documentation -f .*\\.pptx  -o",
     "build-website": "npm run copy-static-files && npm run compile-web",
     "compile-test-api": "esbuild ./src/standard-library/std-lib.ts --bundle --format=esm --outfile=out/test/elan-api.js",
