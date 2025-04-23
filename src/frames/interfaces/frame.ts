@@ -44,7 +44,6 @@ export interface Frame extends Selectable, Scope, ElanSymbol {
   expandCollapseAll(): void;
 
   compileErrors: CompileError[];
-  aggregateCompileErrors(): CompileError[];
   readCompileStatus(): CompileStatus;
   updateCompileStatus(): void;
   resetCompileStatusAndErrors(): void;
