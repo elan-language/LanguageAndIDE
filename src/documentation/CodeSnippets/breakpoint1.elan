@@ -1,0 +1,21 @@
+# 37c8f7bbabeed0970f0f59bf59cfa621bb3e995b44478b638a828c61a4f2a207 Elan 1.0.0-pre2 guest default_profile valid
+
+main
+  variable len set to 0
+  variable li set to [0]
+  variable result set to [0]
+  if len > 1 then
+    let mid be (len/2).floor()
+    let frontHalf be mergeSort(li[..mid])
+    let backHalf be mergeSort(li[mid..])
+    set result to merge(frontHalf, backHalf)
+  end if
+end main
+
+function mergeSort(l as List<of Int>) returns List<of Int>
+  return [0]
+end function
+
+function merge(l1 as List<of Int>, l2 as List<of Int>) returns List<of Int>
+  return [0]
+end function

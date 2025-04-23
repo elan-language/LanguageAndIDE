@@ -1,11 +1,13 @@
 import { readFileSync, writeFileSync } from "node:fs";
-import { elanVersion } from "./environment";
-import { DefaultProfile } from "./frames/default-profile";
-import { FileImpl } from "./frames/file-impl";
-import { transforms } from "./frames/syntax-nodes/ast-helpers";
-import { hash } from "./util";
+import { elanVersion } from "../environment";
+import { DefaultProfile } from "../frames/default-profile";
+import { FileImpl } from "../frames/file-impl";
+import { transforms } from "../frames/syntax-nodes/ast-helpers";
+import { hash } from "../util";
 
 function updateVersion() {
+  const rootdir = `${__dirname}/../../..`;
+
   const file = new FileImpl(hash, new DefaultProfile(), "guest", transforms(), true);
   file.setVersion(elanVersion.major, elanVersion.minor, elanVersion.patch, elanVersion.preRelease);
 
@@ -21,7 +23,7 @@ function updateVersion() {
 
   const tableEntry = `<tr><td>v${semver}</td><td>${date}</td><td><a href="/versions/${zipFileName}">Download zip</a></td></tr>`;
 
-  const versionFilePath = `${__dirname}/../../src/web-content/version-history.html`;
+  const versionFilePath = `${rootdir}/src/web-content/version-history.html`;
 
   const versionFileContent = readFileSync(versionFilePath, "utf-8");
 
@@ -34,7 +36,7 @@ function updateVersion() {
     writeFileSync(versionFilePath, newContent);
   }
 
-  const buildFilePath = `${__dirname}/../../src/build-version.txt`;
+  const buildFilePath = `${rootdir}/src/build-version.txt`;
   writeFileSync(buildFilePath, semver);
 }
 
