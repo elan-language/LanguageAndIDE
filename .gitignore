@@ -16,13 +16,8 @@ node_modules
 .elanLanguageServer/
 coverage
 .nyc_output
-web-editor/elan-api.js
-web-editor/documentation/
-web-editor/demo/
-web-editor/standalone.js
 src/environment.ts
-web-editor/*.css
-documentation/*.css
+src/documentation/*.css
 
 # Playwright
 /test-results/

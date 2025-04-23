@@ -33,7 +33,7 @@ jobs:
       id: deployment
       uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
       with:
-        path: out/web-editor/
+        path: out/website/
 
   deploy:
     # Add a dependency to the build job
