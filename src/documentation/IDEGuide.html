@@ -12,6 +12,10 @@
 </head>
 <body>
 <div class="docTitle">Elan IDE Guide</div>
+<div>Links to documents:
+      <a href="ElanIndex.html#top">Elan Index and Symbols</a>,
+      <a href="LangRef.html#top">Elan Language Reference</a>
+ and  <a href="LibRef.html#top">Elan Library Reference</a></div>
 <div class="docTOC">
   <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
@@ -21,18 +25,18 @@
 and in which text and graphic outputs are displayed.
 It looks like this:</p>
 
-<img src="images/IDE-overview.png" style="width:80%;height:auto;">
+<img src="images/IDE-overview.png" style="width:80%;">
 
 <!-- #region Menu -->
 <h1 id="Menu">1. Menu</h1>
 
 <p>At the top left of the screen is the 'menu' of commands:</p>
 
-<img src="images/menu.png" style="width 356; height 36">
+<img src="images/menu.png" style="width:30%;">
 
 <p>Some of the options shown act like a button to  perform that command directly; others, when clicked will show a drop-down sub-menu
     of further commands. Individual commands may be greyed-out if unavailable. If you use the mouse to hover over any option
-    you will usually be shown a 'toolip' that provides a description and/or information about why the option is currently
+    you will usually be shown a 'tooltip' that provides a description and/or information about why the option is currently
     unavailable.
 </p>
 
@@ -106,12 +110,12 @@ As a reminder, if your existing code is not saved, you will see a confirmation d
     This file can be opened from your desktop, emailed to others, or installed on a web-server.
     When the file is opened in a browser:</p>
 <ul>
-    <li>The page shows ust the <b>Display</b> pane from the IDE, magnified to the full visible browser height but preserving the 4:3 ratio needed in case the program uses Block Graphics.</li>
+    <li>The page shows just the <b>Display</b> pane from the IDE, magnified to the full visible browser height but preserving the 4:3 ratio needed in case the program uses Block Graphics.</li>
     <li>The Elan program is run as soon as the page is opened - or refreshed. It is up to the Elan programmer to provide options for exiting the program or running it again, if desired.</li>
 </ul>
 
 <p>The standalone web page includes the the program, compiled to JavaScript, and the .css for styling.
-    The latter may be easily customised by editing the .html file directy - for example if you wish to:</p>
+    The latter may be easily customised by editing the .html file directory - for example if you wish to:</p>
 <ul>
     <li>Alter the size of the Display area, and (if Block Graphics are not used) the aspect-ratio.</li>
     <li>Add any text around the Display area</li>
@@ -122,7 +126,7 @@ As a reminder, if your existing code is not saved, you will see a confirmation d
 <h3 class="no-TOC" id="Preferences">Preferences</h3>
 
 <p>Selecting <b>Preferences</b> brings up a dialog, currently showing two options:</p>
-<img src="images/preferences.png" style="width:230px; height:111px;">
+<img src="images/preferences.png" style="width:20%;">
 <ul>
  <li><p><b>Advanced level coding</b> makes more options available in the selectors,
         including the options for defining your own <a href="LangRef.html#class">classes</a>,
@@ -141,7 +145,7 @@ As a reminder, if your existing code is not saved, you will see a confirmation d
 <p>The <b>Trim</b> command is used to neaten-up your code: it removes any 'new code' selectors from your code <i>that may be removed</i> which is typically most of them.
 <i>Where a 'new code' selector is not removed by <b>Trim</b> this indicates that code is still expected in that location.</i></p>
 
-<p>The keyboard shortcut for <b>Trim</b> is <b>Alt-t</b>. (This is because <b>Ctrl-b</b> is a key sequence used for standard browser functionality).</p>
+<p>The keyboard shortcut for <b>Trim</b> is <b>Alt-t</b>. (This is because <b>Ctrl-t</b> is a key sequence used for standard browser functionality).</p>
 <!-- #endregion -->
  <!--   #region Outlining -->
 <h2 id="Button_Outlining">Outlining</h2>
@@ -172,7 +176,6 @@ format, and an outline format, where instructions are collapsed to a single line
 The background colour for the <b>+</b> shows the status of the code that is currently hidden so that you
 may easily find the parts of code that contain issues.</p>
 
-<p>The keyboard shortcut for <b>Trim</b> is <b>Alt-t</b>. (This is because <b>Ctrl-b</b> is a key sequence used for standard browser functionality).</p>
 <!-- #endregion -->
  <!--   #region Undo & Redo -->
 <div id="Button_Undo"></div>
@@ -376,7 +379,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
  <tr><td>&darr;</td> <td>Select next frame<br> (within peer-level only). </td> <td>Select next frame<br> &nbsp;(in tab order). </td> </tr>
  <tr><td>&larr;</td> <td>Select parent frame (if any).</td> <td>Move text cursor left within field.</td> </tr>
  <tr><td>&rarr;</td> <td>Select first child frame (if any).</td> <td>Move text cursor right within field.</td> </tr>
- <tr><td>Shift- &uarr;</td> <td>Add prev. frame (peer-level) to current selection.</td> <td>If auto-complete options are offered (drop-down list), move the selection down one in the list. (See also Enter)</td> </tr>
+ <tr><td>Shift- &uarr;</td> <td>Add previous frame (peer-level) to current selection.</td> <td>If auto-complete options are offered (drop-down list), move the selection down one in the list. (See also Enter)</td> </tr>
  <tr><td>Shift- &darr;</td> <td>Add next frame (peer-level) to current selection.</td> <td>If auto-complete options are offered (drop-down list), move the selection up one in the list. (See also Enter)</td> </tr>
  <tr><td>Esc</td> <td>Escape from the code editor, and put focus on the first Button in the IDE</td> <td> </td> </tr>
  <tr><td>Ctrl-o</td> <td>Toggle (expand/collapse) outlining on selected frame.</td> <td>Toggle (expand/collapse) outlining on the frame enclosing this field.</td> </tr>
@@ -401,6 +404,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
  <tr><td>Ctrl- &rarr;</td> <td></td> <td>Move the cursor to the end of the next &#8216;word&#8217; or other transition</td> </tr>
  <tr><td>Ctrl-x</td> <td>Cut selected frame(s) into the scratchpad</td> <td>Cut any selected text from the field</td> </tr>
  <tr><td>Ctrl-v</td> <td>Paste text from the clipboard into the field, at the cursor.</td> <td>On a selected &#8216;new code&#8217; field: Paste the frame(s) added to the scratchpad in place of the &#8216;new code&#8217; field. If any of the frames to be added is not compatible with the content of the &#8216;new code&#8217; field then no action will take place. </td></tr>
+ <tr><td>Ctrl-b</td> <td>Insert or remove a breakpoint on the frame</td> <td></td> </tr>
  <tr><td>Ctrl-i</td> <td>Toggle the <el-code>ignore</el-code> setting of a <el-code>test</el-code></td> <td></td> </tr>
  <tr><td>Ctrl-m</td> <td>Open menu of help options</td> <td></td> </tr>
  <tr><td>Ctrl-p</td> <td>Toggle the <el-code>private</el-code> status of members <el-code>property</el-code>, <el-code>function</el-code> or <el-code>procedure</el-code> of a <el-code>class</el-code></td> <td></td> </tr>
@@ -424,7 +428,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 
 <p>When an instruction is highlighted, you may right-mouse-click on it, or type <b>Ctrl-m</b> to bring up the context menu, for example:</p>
 
-<img src="Images/Context_menu.png" style="width:30%;">
+<img src="Images/Context_menu.png" style="width:40%;">
 <p>Note that several of the options show a keyboard short-cut &ndash; which you may use just by selecting the instruction and pressing
     the specified keys <i>without having to bring up the context menu.</i></p>
 <!-- #endregion -->
@@ -433,7 +437,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 <!-- #region The run controls-->
 <h1 id="Run_controls">3. Run controls</h1>
 <p>The set of 5 buttons shown below constitute the 'run controls':</p>
-<img src="Images/Run_controls.png" style="width:30%;">
+<img src="Images/Run_controls.png" style="width:20%;">
 <p>Reading left-to-right the five controls are:</p>
 <ul>
 <li><b>Run</b> This is the normal way to run the program. It will run at full speed, ignoring any breakpoints, and is the most efficient in terms of memory usage.</li>
@@ -448,7 +452,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 <!-- #region Status panel-->
 <h1 id="Status_panel">4. Status panel</h1>
 <p>The status panel is shown below:</p>
-<img src="Images/Status_panel.png" style="width:30%;">
+<img src="Images/Status_panel.png" style="width:20%;">
 <p>The panel shows four status bars:</p>
 <ul>
     <li><b>Parse status</b> aggregates the parse status of each <a href="#field">field</a> and shows the <i>worst</i> status of any field.
@@ -467,7 +471,7 @@ If the Parse, Compile, or Test status shows amber, or red, you may click on that
 
 <!-- #region Display-->
 <h1 id="Display">5. Display</h1>
-<img src="images/display.png" style="width:30%;">
+<img src="images/display.png" style="width:20%;">
 <p>The Display pane is always rendered with an aspect ratio of 4:3 &ndash; so if the size of the browser window is changed, the Display will change its dimensions also.</p>
 <p>The pane is used for the following purposes, on their own or in combination:</p>
 
@@ -529,7 +533,16 @@ If the Parse, Compile, or Test status shows amber, or red, you may click on that
     or by bringing up the <a href="#Context_menu">Context menu</a> and selecting <b>set breakpoint</b>.
     The breakpoint will be shown as a (red' flash adjacent to the instruction:</p>
 
-<img src="images/Breakpoint_set.png">
+<el-code-block source="breakpoint1.elan">
+<el-statement class="ok multiline" id="if5" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-id>len</el-id> &gt; <el-lit>1</el-lit></el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top>
+<el-statement class="ok" id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>mid</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>(<el-id>len</el-id>/<el-lit>2</el-lit>).<el-method>floor</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="selected focused breakpoint ok" id="let14" tabindex="0"><el-bp>&#x1f5f2;</el-bp><el-kw>let </el-kw><el-field id="var15" class="ok" tabindex="0"><el-txt><el-id>frontHalf</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr16" class="ok" tabindex="0"><el-txt><el-method>mergeSort</el-method>(<el-id>li</el-id>[..<el-id>mid</el-id>])</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="let17" tabindex="0"><el-kw>let </el-kw><el-field id="var18" class="ok" tabindex="0"><el-txt><el-id>backHalf</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr19" class="ok" tabindex="0"><el-txt><el-method>mergeSort</el-method>(<el-id>li</el-id>[<el-id>mid</el-id>..])</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="set20" tabindex="0"><el-kw>set </el-kw><el-field id="ident21" class="ok" tabindex="0"><el-txt><el-id>result</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr22" class="ok" tabindex="0"><el-txt><el-method>merge</el-method>(<el-id>frontHalf</el-id>, <el-id>backHalf</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-kw>end if</el-kw>
+</el-statement>
+</el-code-block>
 
     <p>Pressing <b>Ctrl-b</b> on a selected instruction that already has a breakpoint will clear that breakpoint.
     The context menu also offers options to clear a breakpoint that has been set, or to clear <i>all</i> breakpoints from the program in one go.</p>
@@ -538,7 +551,17 @@ If the Parse, Compile, or Test status shows amber, or red, you may click on that
         Then,whenever a breakpoint is reached, execution will be paused, and the instruction containing the breakpoint will be
         highlighted with an amber background:</p>
 
-<img src="images/Breakpoint_reached.png">
+<el-code-block source="Breakpoint2.elan">
+<el-statement class="ok multiline" id="if5" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-id>len</el-id> &gt; <el-lit>1</el-lit></el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top>
+<el-statement class="ok" id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>mid</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>(<el-id>len</el-id>/<el-lit>2</el-lit>).<el-method>floor</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="selected focused breakpoint paused-at" id="let14" tabindex="0"><el-bp>&#x1f5f2;</el-bp><el-kw>let </el-kw><el-field id="var15" class="ok" tabindex="0"><el-txt><el-id>frontHalf</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr16" class="ok" tabindex="0"><el-txt><el-method>mergeSort</el-method>(<el-id>li</el-id>[..<el-id>mid</el-id>])</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="let17" tabindex="0"><el-kw>let </el-kw><el-field id="var18" class="ok" tabindex="0"><el-txt><el-id>backHalf</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr19" class="ok" tabindex="0"><el-txt><el-method>mergeSort</el-method>(<el-id>li</el-id>[<el-id>mid</el-id>..])</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="set20" tabindex="0"><el-kw>set </el-kw><el-field id="ident21" class="ok" tabindex="0"><el-txt><el-id>result</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr22" class="ok" tabindex="0"><el-txt><el-method>merge</el-method>(<el-id>frontHalf</el-id>, <el-id>backHalf</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-kw>end if</el-kw>
+</el-statement>
+</el-code-block>
+
         <p>and the <a href="#System_info">System info</a> will display the current value of each named value that is defined in the current scope.</p>
 <!-- #endregion -->
 <!-- #endregion -->
@@ -551,6 +574,7 @@ If the Parse, Compile, or Test status shows amber, or red, you may click on that
     Profiles are created and managed by a teacher.
 </p>
 <!-- #endregion -->
+<hr>
 <b>Elan IDE Guide</b> go to the <a href="#top">top</a></h4>
  </body>
  </html>
