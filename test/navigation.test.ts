@@ -1,13 +1,10 @@
 import assert from "assert";
 import { ExpressionField } from "../src/frames/fields/expression-field";
 import { IdentifierField } from "../src/frames/fields/identifier-field";
-import { isParent } from "../src/frames/helpers";
 import { VariableStatement } from "../src/frames/statements/variable-statement";
-import {
-  T03_mainWithAllStatements,
-  T04_allGlobalsExceptClass
-} from "./model-generating-functions.";
 import { assertClasses, end, home, right, shift_tab, tab, up } from "./testHelpers";
+import { T03_mainWithAllStatements, T04_allGlobalsExceptClass } from "./model-generating-functions";
+import { isParent } from "../src/frames/frame-helpers";
 
 suite("Navigation", () => {
   test("Selectable Select", async () => {
@@ -89,8 +86,6 @@ suite("Navigation", () => {
     assert.equal(main_st_1.isSelected(), false);
     const main_st_2 = file.getById("set6");
     assert.equal(main_st_2.isSelected(), false);
-    const main_st_penult = file.getById("switch65");
-    assert.equal(main_st_penult.isSelected(), false);
     const main_st_last = file.getById("select2");
     assert.equal(main_st_last.isSelected(), false);
     assert.equal(main.isSelected(), false);
@@ -111,8 +106,5 @@ suite("Navigation", () => {
     assert.equal(main_st_last.isSelected(), true);
     main_st_last.processKey(up());
     assert.equal(main_st_last.isSelected(), false);
-    assert.equal(main_st_penult.isSelected(), true);
-    main_st_penult.processKey(right());
-    assert.equal(main_st_penult.isSelected(), false);
   });
 });

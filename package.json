@@ -14,8 +14,8 @@
     "Education"
   ],
   "scripts": {
-    "update-build-script": "node ./out/src/update-build-files.js",
-    "update-elan-files-script": "node ./out/src/update-elan-files.js",
+    "update-build-script": "node ./out/src/build-scripts/update-build-files.js",
+    "update-elan-files-script": "node ./out/src/build-scripts/update-elan-files.js",
     "copy-web-files": "cpr ./src/web-content ./out/website -o && cpr ./src/styles ./out/website/styles -o",
     "copy-static-files": "npm run copy-web-files && npm run update-elan-files-script && cpr ./src/demo_programs ./out/website/demo -o && cpr ./src/documentation ./out/website/documentation -f .*\\.pptx  -o",
     "build-website": "npm run copy-static-files && npm run compile-web",

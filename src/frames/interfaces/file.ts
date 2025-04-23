@@ -1,6 +1,5 @@
 import { AssertOutcome } from "../../assert-outcome";
 import { CodeSource } from "../code-source";
-import { CompileError } from "../compile-error";
 import { editorEvent } from "../interfaces/editor-event";
 import { ScratchPad } from "../scratch-pad";
 import {
@@ -86,8 +85,6 @@ export interface File extends Parent {
 
   deselectAll(): void;
   processKey(e: editorEvent): boolean;
-
-  aggregateCompileErrors(): CompileError[];
 
   setRunStatus(s: RunStatus): void;
 

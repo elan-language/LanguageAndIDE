@@ -1,14 +1,16 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { elanVersion } from "./environment";
-import { CodeSourceFromString } from "./frames/code-source";
-import { DefaultProfile } from "./frames/default-profile";
-import { FileImpl } from "./frames/file-impl";
-import { transforms } from "./frames/syntax-nodes/ast-helpers";
-import { hash } from "./util";
+import { elanVersion } from "../environment";
+import { CodeSourceFromString } from "../frames/code-source";
+import { DefaultProfile } from "../frames/default-profile";
+import { FileImpl } from "../frames/file-impl";
+import { transforms } from "../frames/syntax-nodes/ast-helpers";
+import { hash } from "../util";
 
-const demos = `${__dirname}/../../src/demo_programs/`;
-const snippets = `${__dirname}/../../src/documentation/CodeSnippets/`;
-const tests = `${__dirname}/../../test/files/`;
+const rootdir = `${__dirname}/../../..`;
+
+const demos = `${rootdir}/src/demo_programs/`;
+const snippets = `${rootdir}/src/documentation/CodeSnippets/`;
+const tests = `${rootdir}/test/files/`;
 
 function loadFileAsSourceNew(sourceFile: string): string {
   return readFileSync(sourceFile, "utf-8");

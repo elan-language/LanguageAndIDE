@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { handleClick, handleDblClick, handleKey } from "../editorHandlers";
 import { ElanCutCopyPasteError } from "../elan-cut-copy-paste-error";
 import { ElanRuntimeError } from "../elan-runtime-error";
 import { isElanProduction } from "../environment";
@@ -10,6 +9,7 @@ import { Profile } from "../frames/interfaces/profile";
 import { Group, Individual } from "../frames/interfaces/user-config";
 import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../frames/status-enums";
 import { StdLib } from "../standard-library/std-lib";
+import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
 import { checkIsChrome, confirmContinueOnNonChromeBrowser } from "./ui-helpers";
 import {
   fetchDefaultProfile,

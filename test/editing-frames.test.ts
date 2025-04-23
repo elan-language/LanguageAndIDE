@@ -5,6 +5,8 @@ import { MemberSelector } from "../src/frames/class-members/member-selector";
 import { CommentField } from "../src/frames/fields/comment-field";
 import { ConstantValueField } from "../src/frames/fields/constant-value-field";
 import { IdentifierField } from "../src/frames/fields/identifier-field";
+import { InheritsFrom } from "../src/frames/fields/inheritsFrom";
+import { TypeNameField } from "../src/frames/fields/type-name-field";
 import { FileImpl } from "../src/frames/file-impl";
 import { ConcreteClass } from "../src/frames/globals/concrete-class";
 import { Constant } from "../src/frames/globals/constant";
@@ -15,7 +17,6 @@ import { TestFrame } from "../src/frames/globals/test-frame";
 import { ReturnStatement } from "../src/frames/statements/return-statement";
 import { StatementSelector } from "../src/frames/statements/statement-selector";
 import { ParseStatus } from "../src/frames/status-enums";
-import { ignore_test } from "./compiler/compiler-test-helpers";
 import {
   classWithConstructor,
   emptyFunctionOnly,
@@ -23,11 +24,9 @@ import {
   oneConstant,
   T00_emptyFile,
   T03_mainWithAllStatements,
-  T05_classes,
   twoConstants,
 } from "./model-generating-functions";
 import {
-  back,
   createTestRunner,
   ctrl_d,
   ctrl_del,
@@ -46,8 +45,6 @@ import {
   tab,
   up,
 } from "./testHelpers";
-import { TypeNameField } from "../src/frames/fields/type-name-field";
-import { InheritsFrom } from "../src/frames/fields/inheritsFrom";
 
 suite("Editing Frames", () => {
   test("Enter on a frame to Insert new code - creating a selector", () => {
@@ -345,29 +342,6 @@ suite("Editing Frames", () => {
     assert.equal(third.getHtmlId(), "set6");
     const fourth = main.getChildren()[3];
     assert.equal(fourth.getHtmlId(), "call11");
-  });
-
-  ignore_test("#364 ParseError within in class member not showing up at class level", () => {
-    const file = T05_classes();
-    const player = file.getById("class1");
-    assert.equal(player.readParseStatus(), ParseStatus.valid);
-    const field = file.getById("ident12");
-    assert.equal(field.readParseStatus(), ParseStatus.valid);
-    field.processKey(key("%"));
-    assert.equal(field.readParseStatus(), ParseStatus.invalid);
-    assert.equal(player.readParseStatus(), ParseStatus.invalid);
-    field.processKey(back());
-    assert.equal(field.readParseStatus(), ParseStatus.valid);
-    assert.equal(player.readParseStatus(), ParseStatus.valid);
-    const card = file.getById("class14");
-    const reset = file.getById("func27");
-    const ret = file.getById("return32");
-    const expr = file.getById("expr33");
-    expr.processKey(key("£"));
-    assert.equal(expr.readParseStatus(), ParseStatus.invalid);
-    assert.equal(ret.readParseStatus(), ParseStatus.invalid);
-    assert.equal(reset.readParseStatus(), ParseStatus.invalid);
-    assert.equal(card.readParseStatus(), ParseStatus.invalid);
   });
 
   test("Paste at wrong level has no effect", async () => {

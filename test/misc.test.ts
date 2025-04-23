@@ -3,44 +3,9 @@ import { CodeSourceFromString } from "../src/frames/code-source";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { Regexes } from "../src/frames/fields/regexes";
 import { FileImpl } from "../src/frames/file-impl";
-import { hash } from "../src/util";
-import {
-  ignore_test,
-  testHeader,
-  testHeaderVersion,
-  transforms,
-} from "./compiler/compiler-test-helpers";
-import { T03_mainWithAllStatements } from "./model-generating-functions";
-import { assertElementHasClasses, key } from "./testHelpers";
+import { testHeader, transforms } from "./compiler/compiler-test-helpers";
 
 suite("Misc Tests", () => {
-  ignore_test("Invalid identifier", async () => {
-    const file = T03_mainWithAllStatements();
-    await assertElementHasClasses(file, "fileStatus", "incomplete");
-    await assertElementHasClasses(file, "var3", "incomplete");
-    file.getById("var4").processKey(key("X"));
-    await assertElementHasClasses(file, "var3", "invalid");
-    await assertElementHasClasses(file, "fileStatus", "invalid");
-  });
-
-  ignore_test("Valid identifier", async () => {
-    const file = T03_mainWithAllStatements();
-    await assertElementHasClasses(file, "fileStatus", "incomplete");
-    await assertElementHasClasses(file, "var3", "incomplete");
-    file.getById("var4").processKey(key("q"));
-    await assertElementHasClasses(file, "var4", "valid");
-    await assertElementHasClasses(file, "fileStatus", "incomplete"); //Because there are other incomplete fields
-  });
-
-  ignore_test("Valid variable statement", async () => {
-    const file = T03_mainWithAllStatements();
-    await assertElementHasClasses(file, "fileStatus", "incomplete");
-    await assertElementHasClasses(file, "var3", "incomplete");
-    file.getById("var4").processKey(key("q"));
-    file.getById("expr5").processKey(key("5"));
-    await assertElementHasClasses(file, "var3", "valid");
-  });
-
   //RegExp
   test("Test Regexes", () => {
     assert.equal(Regexes.newLine.test(""), false);
@@ -69,7 +34,7 @@ suite("Misc Tests", () => {
     assert.equal(source.getRemainingCode(), ") ");
   });
 
-  ignore_test("parse Frames - empty file", async () => {
+  test("parse Frames - empty file", async () => {
     const source = new CodeSourceFromString("");
     const fl = new FileImpl(
       () => Promise.resolve("FFFF"),

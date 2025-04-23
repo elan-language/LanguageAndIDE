@@ -1,17 +1,18 @@
 import assert from "assert";
 import { Done } from "mocha";
 import { AssertOutcome } from "../../src/assert-outcome";
+import { elanVersion } from "../../src/environment";
 import { FileImpl } from "../../src/frames/file-impl";
 import { Field } from "../../src/frames/interfaces/field";
 import { Frame } from "../../src/frames/interfaces/frame";
 import { Transforms } from "../../src/frames/interfaces/transforms";
 import { ParseStatus } from "../../src/frames/status-enums";
 import { transform, transformMany } from "../../src/frames/syntax-nodes/ast-visitor";
-import { runTests } from "../../src/runner";
 import { StdLib } from "../../src/standard-library/std-lib";
+import { runTests } from "../runner";
 import { TestInputOutput } from "./test-input-output";
 import { getTestSystem } from "./test-system";
-import { elanVersion } from "../../src/environment";
+import { aggregateCompileErrors } from "../testHelpers";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);
@@ -40,21 +41,21 @@ export function assertStatusIsInvalid(file: FileImpl) {
 export function assertObjectCodeIs(file: FileImpl, objectCode: string) {
   const actual = file.compile().replaceAll("\r", "");
   const expected = objectCode.replaceAll("\r", "");
-  const errors = file.aggregateCompileErrors();
+  const errors = aggregateCompileErrors(file);
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
   assert.strictEqual(actual, expected);
 }
 
 export function assertCompiles(file: FileImpl) {
   file.compile();
-  const errors = file.aggregateCompileErrors();
+  const errors = aggregateCompileErrors(file);
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
 }
 
 export function assertDoesNotCompile(file: FileImpl, msgs: string[]) {
   file.compile();
 
-  const errors = file.aggregateCompileErrors();
+  const errors = aggregateCompileErrors(file);
 
   for (let i = 0; i < msgs.length; i++) {
     const m = msgs[i];
@@ -69,7 +70,7 @@ export function assertDoesNotCompileWithId(file: FileImpl, id: string, msgs: str
   file.compile();
 
   const hasErrors = file.getById(id) as Frame | Field;
-  const errors = hasErrors.aggregateCompileErrors();
+  const errors = aggregateCompileErrors(hasErrors);
 
   for (let i = 0; i < msgs.length; i++) {
     const m = msgs[i];
@@ -86,7 +87,7 @@ function doImport(str: string) {
 
 function executeCode(file: FileImpl, input?: string) {
   const jsCode = file.compile();
-  const errors = file.aggregateCompileErrors();
+  const errors = aggregateCompileErrors(file);
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
 
   const system = getTestSystem(input ?? "");
@@ -107,7 +108,7 @@ function executeCode(file: FileImpl, input?: string) {
 
 export async function executeTestCode(file: FileImpl, input?: string) {
   const jsCode = file.compile();
-  const errors = file.aggregateCompileErrors();
+  const errors = aggregateCompileErrors(file);
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
 
   const system = getTestSystem(input ?? "");

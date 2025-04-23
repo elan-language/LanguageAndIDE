@@ -20,12 +20,17 @@ import { FloatType } from "../src/frames/symbols/float-type";
 import { IntType } from "../src/frames/symbols/int-type";
 import { StringType } from "../src/frames/symbols/string-type";
 import { UnknownType } from "../src/frames/symbols/unknown-type";
-import { getTestRunner } from "../src/runner";
 import { StdLib } from "../src/standard-library/std-lib";
 import { hash } from "../src/util";
 import { WebWorkerMessage } from "../src/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
+import { getTestRunner } from "./runner";
+import { Frame } from "../src/frames/interfaces/frame";
+import { CompileError } from "../src/frames/compile-error";
+import { FrameWithStatements } from "../src/frames/frame-with-statements";
+import { ClassFrame } from "../src/frames/globals/class-frame";
+import { Field } from "../src/frames/interfaces/field";
 
 
 // flag to update test file
@@ -121,7 +126,7 @@ export function loadFileAsSourceNew(sourceFile: string): string {
 }
 
 export function getElanFiles(sourceDir: string): string[] {
-  return readdirSync(sourceDir).filter(s =>  s.endsWith(".elan") );
+  return readdirSync(sourceDir).filter(s => s.endsWith(".elan"));
 }
 
 export async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
@@ -523,4 +528,41 @@ export async function testDemoProgram(program: string) {
   if (ts !== TestStatus.default) {
     assert.equal(ts, TestStatus.pass);
   }
+}
+
+export function aggregateCompileErrors(parent: FileImpl | Frame | Field): CompileError[] {
+
+  if (parent instanceof FileImpl) {
+    return parent
+      .getChildren()
+      .map((s) => aggregateCompileErrors(s))
+      .reduce((prev, cur) => prev.concat(cur), []);
+  }
+
+  if (parent instanceof FrameWithStatements || parent instanceof ClassFrame) {
+    const cc1 = parent
+      .getChildren()
+      .map((s) => aggregateCompileErrors(s))
+      .reduce((prev, cur) => prev.concat(cur), []);
+
+
+    const cc2 = parent.getFields()
+      .map((s) => aggregateCompileErrors(s))
+      .reduce((prev, cur) => prev.concat(cur), []);
+
+    return parent.compileErrors.concat(cc2).concat(cc1);
+  }
+
+  if (parent instanceof AbstractFrame) {
+    const cc = parent.getFields()
+      .map((s) => aggregateCompileErrors(s))
+      .reduce((prev, cur) => prev.concat(cur), []);
+    return parent.compileErrors.concat(cc);
+  }
+
+  if (parent instanceof AbstractField) {
+    return parent.aggregateCompileErrors();
+  }
+
+  return [];
 }

@@ -638,12 +638,6 @@ export abstract class AbstractFrame implements Frame {
 
   compileErrors: CompileError[] = [];
 
-  aggregateCompileErrors(): CompileError[] {
-    const cc = this.getFields()
-      .map((s) => s.aggregateCompileErrors())
-      .reduce((prev, cur) => prev.concat(cur), []);
-    return this.compileErrors.concat(cc);
-  }
   compileMsgAsHtml() {
     return helper_compileMsgAsHtml(this);
   }

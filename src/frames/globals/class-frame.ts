@@ -10,7 +10,6 @@ import { MemberSelector } from "../class-members/member-selector";
 import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
 import { CodeSource } from "../code-source";
-import { CompileError } from "../compile-error";
 import {
   mustBeInheritableClassOrInterface,
   mustBeKnownSymbolType,
@@ -38,7 +37,6 @@ import { classKeyword, thisKeyword } from "../keywords";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
-  parentHelper_aggregateCompileErrorsOfChildren,
   parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
@@ -402,11 +400,6 @@ export abstract class ClassFrame
 
   newChildSelector(): AbstractSelector {
     return new MemberSelector(this);
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    const cc = parentHelper_aggregateCompileErrorsOfChildren(this);
-    return cc.concat(super.aggregateCompileErrors());
   }
 
   resetCompileStatusAndErrors(): void {

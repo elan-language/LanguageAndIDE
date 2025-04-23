@@ -53,7 +53,6 @@ import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-ge
 import { UnaryExpression } from "../src/frames/parse-nodes/unary-expression";
 import { ParseStatus } from "../src/frames/status-enums";
 import { DOT } from "../src/frames/symbols";
-import { ignore_test } from "./compiler/compiler-test-helpers";
 import { testActiveNodeAndDone, testNodeParse } from "./testHelpers";
 
 suite("Parsing Nodes", () => {
@@ -1674,7 +1673,7 @@ suite("Parsing Nodes", () => {
       "11 div 3",
     );
   });
-  ignore_test("RevisedParseMethodForAbstractSequence#857", () => {
+  test("RevisedParseMethodForAbstractSequence#857", () => {
     testActiveNodeAndDone(new test_seq1(), `foo 45`, ParseStatus.valid, LitInt.name, false);
     testActiveNodeAndDone(new test_seq1(), `foo `, ParseStatus.incomplete, LitInt.name, false);
     testActiveNodeAndDone(new test_seq1(), `foo`, ParseStatus.incomplete, SpaceNode.name, false);
@@ -1687,12 +1686,12 @@ suite("Parsing Nodes", () => {
       false,
     );
     testActiveNodeAndDone(new LitFloat(), `3.`, ParseStatus.incomplete, RegExMatchNode.name, false);
-    testActiveNodeAndDone(new LitFloat(), `3.1`, ParseStatus.valid, OptionalNode.name, false);
+    testActiveNodeAndDone(new LitFloat(), `3.1`, ParseStatus.valid, RegExMatchNode.name, false);
     testActiveNodeAndDone(
       new test_seq2(),
       `3.1`,
       ParseStatus.incomplete,
-      OptionalNode.name, //for exponent. Should technically still be the RegexMatchNode for fractional part
+      RegExMatchNode.name, //for exponent. Should technically still be the RegexMatchNode for fractional part
       // since it could be extended. But unimportand as there is no symbol completion for any literal
       false,
     );
@@ -1707,14 +1706,14 @@ suite("Parsing Nodes", () => {
       new CSV(() => new LitInt(), 1),
       `12`,
       ParseStatus.valid,
-      Multiple.name,
+      LitInt.name,
       false,
     );
     testActiveNodeAndDone(
       new CSV(() => new LitInt(), 1),
       `12,`,
       ParseStatus.incomplete,
-      SpaceNode.name,
+      LitInt.name,
       false,
     );
   });
@@ -1774,7 +1773,7 @@ suite("Parsing Nodes", () => {
   test("Parse list of floats 2", () => {
     testNodeParse(new ExprNode(), `{0.0}`, ParseStatus.valid, `{0.0}`, "");
   });
-  ignore_test("Six open brackets", () => {
+  test("Six open brackets", () => {
     testNodeParse(new ExprNode(), `((((((3))))))`, ParseStatus.valid, `((((((3))))))`, "");
   });
   test("Image", () => {
