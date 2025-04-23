@@ -27,13 +27,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run compile --if-present
+    - run: npm run dev-compile --if-present
     - run: npm run test
     - name: Upload static files as artifact
       id: deployment
       uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
       with:
-        path: web-editor/
+        path: out/web-editor/
 
   deploy:
     # Add a dependency to the build job
