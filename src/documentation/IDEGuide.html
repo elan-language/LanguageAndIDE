@@ -287,14 +287,14 @@ The following example shows a <i>single instruction</i> that has been formatted 
  <p>which indicates that new instruction(s) may be created there. When the line containing 'new code' is given focus it
     changes form to show the list of instructions that you may insert, for example, within <el-code>main</el-code>:</p>
 
-<el-code-block>
-<el-statement class="selected focused ok empty" id="select4" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set variable while #</el-help></el-select></el-statement>
+<el-code-block source="selectors.elan">
+<el-statement class="selected focused ok empty" id="select4" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set variable while #</el-help></el-select></el-statement>
 </el-code-block>
 
 or, outside <el-code>main</el-code>:
 
-<el-code-block source="selector.elan">
-<el-statement class="selected focused ok empty" id="select4" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> procedure function test constant enum #</el-help></el-select></el-statement>
+<el-code-block source="selectors.elan">
+<el-statement class="selected focused ok empty" id="select4" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> procedure function test constant enum #</el-help></el-select></el-statement>
 </el-code-block>
 
 <h3 class="no-TOC">Using a selector to insert a new instruction</h3>
@@ -321,21 +321,16 @@ or, outside <el-code>main</el-code>:
 <p>Where two or more instruction start with the same letter(s) typing the initial letter will filter the options.
         For example, if the initial list were:</p>
 
-<el-code-block>
-<el-statement class="selected focused ok empty" id="select4" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set variable while #</el-help></el-select></el-statement>
+<el-code-block source="selectors.elan">
+<el-statement class="selected focused ok empty" id="select4" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set throw try while variable  #</el-help></el-select></el-statement>
 </el-code-block>
-
-
-<el-code><el-statement class="selected focused ok empty" id="select4" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-statement></el-code>
-
 <p>then after typing <el-code>t</el-code> you will see:</p>
 
 <el-code><el-statement class="selected focused ok" id="select4" tabindex="0"><el-select><el-txt>t</el-txt><el-place>new code</el-place></el-select></el-statement></el-code>
 
 <p>and the desired instruction can be selected by then typing the second character (<el-code>h</el-code> or <el-code>r</el-code>).
 In the following example, starting from this <a href="#Member_selector">member selector</a>:</p>
-
-<!--TODO-->
+<p>Note that some of the keywords in this particular selector are presented only when the Advanced level coding option has been selected from menu File &rarr; Preferences.</p>
 
 <h3 class="no-TOC">Why do the options I can see differ from those shown here?</h3>
 
