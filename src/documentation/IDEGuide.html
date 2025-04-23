@@ -84,7 +84,7 @@ The first line shows a standard Elan 'header' comment, which is required on ever
 
 <p><b>Append</b>, like <b>Load</b> offers a file selection dialog. If you select a valid <el-code>.elan</el-code> file
      it will be <i>appended</i> onto the end of your current code. From there the appended code may be moved within
-    the existing code (see <a href="#Editor">The Code Editor</a>).</p>
+    the existing code See <a href="#Editing_code">Editing code</a>.</p>
 <!-- #endregion -->
 <!--     #region Auto Save -->
 <h3 class="no-TOC" id="Menu_Auto_Save">Auto Save</h3>
@@ -111,7 +111,7 @@ As a reminder, if your existing code is not saved, you will see a confirmation d
     When the file is opened in a browser:</p>
 <ul>
     <li>The page shows just the <b>Display</b> pane from the IDE, magnified to the full visible browser height but preserving the 4:3 ratio needed in case the program uses Block Graphics.</li>
-    <li>The Elan program is run as soon as the page is opened - or refreshed. It is up to the Elan programmer to provide options for exiting the program or running it again, if desired.</li>
+    <li>The Elan program is run as soon as the page is opened - or refreshed. It is up to the the programmer to provide options for exiting the program or running it again, if desired.</li>
 </ul>
 
 <p>The standalone web page includes the the program, compiled to JavaScript, and the .css for styling.
@@ -142,8 +142,8 @@ As a reminder, if your existing code is not saved, you will see a confirmation d
 <!-- #endregion -->
 <!--   #region Trim -->
 <h2 id="Button_Trim">Trim</h2>
-<p>The <b>Trim</b> command is used to neaten-up your code: it removes any 'new code' selectors from your code <i>that may be removed</i> which is typically most of them.
-<i>Where a 'new code' selector is not removed by <b>Trim</b> this indicates that code is still expected in that location.</i></p>
+<p>The <b>Trim</b> command is used to neaten up your code: it removes any 'new code' selectors from your code <i>that can be removed</i> which is typically most of them.
+Where a 'new code' selector is not removed by <b>Trim</b> this indicates that code is still expected in that location.</p>
 
 <p>The keyboard shortcut for <b>Trim</b> is <b>Alt-t</b>. (This is because <b>Ctrl-t</b> is a key sequence used for standard browser functionality).</p>
 <!-- #endregion -->
@@ -182,17 +182,17 @@ may easily find the parts of code that contain issues.</p>
 <h2 id="Button_Redo">Undo & Redo</h2>
  <p>The <b>Undo</b> command allows you to undo recent change(s) and go back to the <i>last point at which the code parsed as 'valid'</i> &ndash; you cannot go back to any state when the code was still parsing as 'incomplete' or 'invalid'.
     You may apply <b>Undo</b> repeatedly, to go back through all parse-valid states of the code since you loaded the code, or started from <b>New</b>.
-    The <b>Redo</b> command to revert the last <b>Undo</b> if you went back too far.</p>
+    Use the <b>Redo</b> command to revert the last <b>Undo</b> if you went back too far.</p>
 
-    <p>The keyboard short-cut for <b>Undo</b> is <b>Ctrl-z</b>, and for <b>Undo</b> is <b>Ctrl-y</b>.</p>
+    <p>The keyboard shortcut for <b>Undo</b> is <b>Ctrl-z</b>, and for <b>Redo</b> is <b>Ctrl-y</b>.</p>
 <!-- #endregion -->
 <!-- #endregion -->
 
-<!-- #region Code Editor-->
+<!-- #region Code editor-->
  <!-- #region Heading & Intro-->
-<h1 id="Editor">2. The code editor</h1>
+<h1 id="Editor">2. Code editor</h1>
 
-<p>The main pane within the IDE is the 'code editor`.</p>
+<p>The main pane within the IDE is the 'code editor'.</p>
 
 <p>When entering, editing, or just navigating (browsing) through, different sections of code will be highlighted at two different levels:
     whole instruction(s) or an individual field within an instruction.</p>
@@ -212,7 +212,7 @@ Here a single instruction is highlighted:
 <el-kw>end while</el-kw>
 </el-statement>
 </el-code-block>
-<p id="Container_instruction">Here a <i>container</i>-instruction is highlighted. The highlight shows the full extent of the instruction, indicating the sequence of other instructions that it contains, which are all indented by two spaces:</p>
+<p id="Container_instruction">Here a <i>container</i> instruction is highlighted. The highlight shows the full extent of the instruction, indicating the sequence of other instructions that it contains, which are all indented by two spaces:</p>
 <el-code-block source="life.elan">
 <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Array2D</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;(<el-lit>40</el-lit>, <el-lit>30</el-lit>, <el-id>white</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-method>fillRandom</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt><el-id>grid</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
@@ -239,15 +239,15 @@ It is also possible to select multiple instructions (to move, or delete them, to
     </el-statement>
 </el-code-block>
 
-The following example shows a <i>single instruction</i> that has been formatted over multiple lines &ndash; either because it is too long to fit on one line, or because the editor formats that instruction over multiple lines for readability. Note that the second and subsequent lines are indented by just <i>one</i> character:
+The following example shows a <i>single instruction</i> that has been formatted over multiple lines &ndash; either because it is too long to fit on one line, or because the editor formats that instruction over multiple lines for readability. Note that the second and subsequent lines are indented by just <i>one</i> space:
 <el-code-block>
     <el-statement class="selected focused ok" id="let15" tabindex="0"><el-kw>let </el-kw><el-field id="var16" class="ok" tabindex="0"><el-txt><el-id>b</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>cx</el-id><el-kw> set to </el-kw><el-id>i</el-id>*<el-lit>5</el-lit> + <el-lit>2</el-lit>, <br><el-id>cy</el-id><el-kw> set to </el-kw><el-lit>75</el-lit>, <br><el-id>r</el-id><el-kw> set to </el-kw><el-lit>1</el-lit>, <br><el-id>fill</el-id><el-kw> set to </el-kw>-<el-lit>1</el-lit>, <br><el-id>stroke</el-id><el-kw> set to </el-kw><el-id>white</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 
 <h3 class="no-TOC" id="Field">Fields</h3>
 
-<p>Instructions consist of fixed (or 'templated') code &ndash; keywords and sometimes symbols &ndash; plus a number of 'fields' which is where the user enters code that define specific details for that instruction.
-    When the field is highlighted it will be highlighted with a background colour and a thin black border. This indicates that the user may now enter or edit code in that field, for example:</p>
+<p>Instructions consist of fixed (or 'templated') code &ndash; keywords and sometimes symbols &ndash; plus a number of 'fields' which is where you enter code that define specific details for that instruction.
+    When the field is highlighted it will be highlighted with a background colour and a thin black border. This indicates that you may now enter or edit code in that field, for example:</p>
 <el-code-block>
     <el-statement class="ok" id="var40" tabindex="0"><el-kw>variable </el-kw><el-field id="var41" class="selected focused ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="4" data-cursorend="4" size="3" style="width: 4ch" value="newX"></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr42" class="ok" tabindex="0"><el-txt><el-id>x</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
@@ -273,7 +273,7 @@ The following example shows a <i>single instruction</i> that has been formatted 
  <!-- #region Adding Instructions-->
 <h2 id="Selector">Adding Instructions into a program</h2>
 
- <p>At various places in the code you may see a 'new code selector', for example:</p>
+ <p>At various places in the code you may see a 'new code' selector, for example:</p>
 
  <el-code-block>
     <main class="ok multiline" id="main14" tabindex="0">
@@ -281,15 +281,21 @@ The following example shows a <i>single instruction</i> that has been formatted 
         <el-statement class="ok empty" id="select15" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-statement>
         <el-kw>end main</el-kw>
         </main>
+        <el-statement class="ok empty" id="select15" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-statement>
  </el-code-block>
 
  <p>which indicates that new instruction(s) may be created there. When the line containing 'new code' is given focus it
-    changes form to show the list of instructions that you may insert, for example: </p>
+    changes form to show the list of instructions that you may insert, for example, within <el-code>main</el-code>:</p>
 
-    <el-code>
-        <el-global class="selected focused ok empty" id="select0" tabindex="0">
-            <el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-global>
-    </el-code>
+<el-code-block>
+<el-statement class="selected focused ok empty" id="select4" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set variable while #</el-help></el-select></el-statement>
+</el-code-block>
+
+or, outside <el-code>main</el-code>:
+
+<el-code-block source="selector.elan">
+<el-statement class="selected focused ok empty" id="select4" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> procedure function test constant enum #</el-help></el-select></el-statement>
+</el-code-block>
 
 <h3 class="no-TOC">Using a selector to insert a new instruction</h3>
 
@@ -314,6 +320,11 @@ The following example shows a <i>single instruction</i> that has been formatted 
 
 <p>Where two or more instruction start with the same letter(s) typing the initial letter will filter the options.
         For example, if the initial list were:</p>
+
+<el-code-block>
+<el-statement class="selected focused ok empty" id="select4" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set variable while #</el-help></el-select></el-statement>
+</el-code-block>
+
 
 <el-code><el-statement class="selected focused ok empty" id="select4" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-statement></el-code>
 
@@ -388,8 +399,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
  </p>
 <!-- endregion -->
 <!-- #region Keyboard Editing-->
-<h2 id="Keyboard">Editing code</h2>
- <p>
+<h2 id="Editing_code">Editing code</h2>
  <table>
  <tr><th>Keystroke</th> <th>On a selected Frame</th> <th>On a selected Field</th> </tr>
  <tr><td>Alt-t</td> <td align="center" colspan="2">Remove all &#8216;new code&#8217; selections that can be removed.<br> This is equivalent to clicking on the Trim button. <br> (This cannot be Ctrl-t as that is defined and executed by the browser). </td> </tr>
@@ -411,7 +421,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
  <tr><td>Ctrl-y</td> <td>Redo last undo<br> provided that the code you undid from was parsing successfully </td> <td></td> </tr>
  <tr><td>Ctrl-z</td> <td>Undo last edit<br> Takes you back to the next most recent version <span>that parsed successfully.<br> </span>Any changes made that did not result in a successful parse will be lost. </td> <td></td> </tr>
 </table>
- </p>
+
 <!-- #endregion -->
 <!-- #region Mouse operations-->
 <h2 id="Mouse">Mouse operation &#8211; quick reference</h2>
@@ -429,7 +439,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 <p>When an instruction is highlighted, you may right-mouse-click on it, or type <b>Ctrl-m</b> to bring up the context menu, for example:</p>
 
 <img src="Images/Context_menu.png" style="width:40%;">
-<p>Note that several of the options show a keyboard short-cut &ndash; which you may use just by selecting the instruction and pressing
+<p>Note that several of the options show a keyboard shortcut &ndash; which you may use just by selecting the instruction and pressing
     the specified keys <i>without having to bring up the context menu.</i></p>
 <!-- #endregion -->
 <!-- #endregion -->
