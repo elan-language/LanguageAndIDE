@@ -2,11 +2,10 @@ import assert from "assert";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../src/frames/file-impl";
 import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../src/frames/status-enums";
-import { ignore_test, testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
-import { createTestRunner, key, loadFileAsModelNew } from "./testHelpers";
+import { testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
 
 suite("Overall Status Tests", () => {
-  ignore_test("Pattern for starting from literal program", async () => {
+  test("Pattern for starting from literal program", async () => {
     const code = `${testHeader}
   
       constant a set to 3
@@ -26,70 +25,5 @@ suite("Overall Status Tests", () => {
     assert.equal(f.readCompileStatus(), CompileStatus.default);
     assert.equal(f.readTestStatus(), TestStatus.default);
     assert.equal(f.readRunStatus(), RunStatus.default);
-  });
-
-  ignore_test("test top-level Parse, Compile, Test Status changes", async () => {
-    const f = await loadFileAsModelNew(`${__dirname}\\files\\programs/merge-sort.elan`);
-    const runner = await createTestRunner();
-    f.refreshParseAndCompileStatuses(false);
-    assert.equal(f.readParseStatus(), ParseStatus.valid);
-    assert.equal(f.readCompileStatus(), CompileStatus.ok);
-    assert.equal(f.readTestStatus(), TestStatus.pass);
-    //1. Make a test fail
-    const test64 = f.getById("test64");
-    assert.equal(test64.renderAsHtml().startsWith(`<el-test class="ok`), true);
-    const exp20 = f.getById("expr20");
-    exp20.select();
-    exp20.processKey(key("Backspace"));
-    exp20.processKey(key("2"));
-    await f.refreshParseAndCompileStatuses(false);
-    assert.equal(f.readParseStatus(), ParseStatus.valid);
-    assert.equal(f.readCompileStatus(), CompileStatus.ok);
-    assert.equal(f.readTestStatus(), TestStatus.fail);
-    assert.equal(test64.renderAsHtml().startsWith(`<el-test class="error`), true);
-    exp20.processKey(key("Backspace"));
-    exp20.processKey(key("1"));
-    f.refreshParseAndCompileStatuses(false);
-    assert.equal(f.readParseStatus(), ParseStatus.valid);
-    assert.equal(f.readCompileStatus(), CompileStatus.ok);
-    assert.equal(f.readTestStatus(), TestStatus.pass);
-    assert.equal(test64.renderAsHtml().startsWith(`<el-test class="ok`), true);
-    //2. Make a parse fail
-    let v4 = f.getById("var4");
-    v4.select();
-    v4.processKey(key("Backspace"));
-    v4.processKey(key("Backspace"));
-    const m1 = f.getById("main1");
-    v4 = f.getById("var4");
-    assert.equal(v4.renderAsSource(), "");
-    assert.equal(
-      v4.renderAsHtml().startsWith(`<el-field id="var4" class="selected focused empty warning"`),
-      true,
-    );
-    f.refreshParseAndCompileStatuses(false);
-    assert.equal(f.readParseStatus(), ParseStatus.incomplete);
-    assert.equal(f.readCompileStatus(), CompileStatus.default);
-    assert.equal(m1.renderAsHtml().startsWith(`<main class="warning`), true);
-    v4.processKey(key("L"));
-    assert.equal(
-      v4.renderAsHtml().startsWith(`<el-field id="var4" class="selected focused error"`),
-      true,
-    );
-    f.refreshParseAndCompileStatuses(false);
-    assert.equal(f.readParseStatus(), ParseStatus.invalid);
-    assert.equal(f.readCompileStatus(), CompileStatus.default);
-    // Make parse valid but with a compile warning
-    v4.processKey(key("Backspace"));
-    v4.processKey(key("l"));
-    f.refreshParseAndCompileStatuses(false);
-    assert.equal(f.readParseStatus(), ParseStatus.valid);
-    assert.equal(f.readCompileStatus(), CompileStatus.unknown_symbol);
-    assert.equal(m1.renderAsHtml().startsWith(`<main class="warning`), true);
-    // Make good again
-    v4.processKey(key("i"));
-    f.refreshParseAndCompileStatuses(false);
-    assert.equal(f.readParseStatus(), ParseStatus.valid);
-    assert.equal(f.readCompileStatus(), CompileStatus.ok);
-    assert.equal(m1.renderAsHtml().startsWith(`<main class="ok`), true);
   });
 });
