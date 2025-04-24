@@ -1,5 +1,4 @@
 import { AbstractSelector } from "./abstract-selector";
-import { CompileError } from "./compile-error";
 import { isSelector } from "./frame-helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
@@ -22,13 +21,6 @@ export function parentHelper_readWorstCompileStatusOfChildren(parent: Parent): C
     .getChildren()
     .map((s) => s.readCompileStatus())
     .reduce((prev, cur) => (cur < prev ? cur : prev), CompileStatus.default);
-}
-
-export function parentHelper_aggregateCompileErrorsOfChildren(parent: Parent): CompileError[] {
-  return parent
-    .getChildren()
-    .map((s) => s.aggregateCompileErrors())
-    .reduce((prev, cur) => prev.concat(cur), []);
 }
 
 export function parentHelper_removeChild(parent: Parent, child: Frame): void {

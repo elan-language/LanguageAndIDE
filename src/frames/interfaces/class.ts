@@ -12,4 +12,5 @@ export interface Class extends Scope, ClassSymbol {
   getDirectSuperClassesTypeAndName(transforms: Transforms): [SymbolType, string][];
   updateOfTypes(ofTypes: SymbolType[]): Class;
   deprecated: Deprecated | undefined;
+  isClass: boolean;
 }

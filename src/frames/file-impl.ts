@@ -5,7 +5,6 @@ import { StdLib } from "../standard-library/std-lib";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSource, CodeSourceFromString } from "./code-source";
-import { CompileError } from "./compile-error";
 import { Regexes } from "./fields/regexes";
 import {
   expandCollapseAll,
@@ -42,7 +41,6 @@ import { Transforms } from "./interfaces/transforms";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
-  parentHelper_aggregateCompileErrorsOfChildren,
   parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
@@ -604,9 +602,6 @@ export class FileImpl implements File, Scope {
       .map((c) => c as TestFrame);
   }
 
-  aggregateCompileErrors(): CompileError[] {
-    return parentHelper_aggregateCompileErrorsOfChildren(this);
-  }
   getAllSelected(): Selectable[] {
     const v = this.getMap().values()!;
     return [...v].filter((s) => s.isSelected());

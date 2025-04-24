@@ -1,7 +1,6 @@
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSource } from "./code-source";
-import { CompileError } from "./compile-error";
 import { Regexes } from "./fields/regexes";
 import { isSelector } from "./frame-helpers";
 import { Collapsible } from "./interfaces/collapsible";
@@ -16,7 +15,6 @@ import {
   compileStatements,
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
-  parentHelper_aggregateCompileErrorsOfChildren,
   parentHelper_compileChildren,
   parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
@@ -262,11 +260,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
 
     return localMatches.concat(matches);
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    const cc = parentHelper_aggregateCompileErrorsOfChildren(this);
-    return cc.concat(super.aggregateCompileErrors());
   }
 
   getAsserts() {

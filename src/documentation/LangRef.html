@@ -612,7 +612,7 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
 <h2 id="assert">Assert statement</h2>
 <!--     #endregion-->
 <!--     #region Procedure Call-->
-<h2 id="call">Procedure Call</h2>
+<h2 id="call">Procedure call</h2>
 <!--     #endregion-->
 <!--     #region Each loop-->
 <h2 id="each">Each loop</h2>
@@ -694,13 +694,13 @@ Note:
 <!--     #endregion-->
 <!--     #region Throw statement-->
 <h2 id="throw">Throw statement</h2>
-<p>You can deliberately generate, or &lsquo;throw&rsquo;, an exception when a specific circumstance is identified with a <el-code>throw</el-code> statement, for example:</p>
+<p>If you are in mode <i>Advanced level coding</i> (see <a href="IDEguide.html#preferences">Preferences</a>), you can deliberately generate, or &lsquo;throw&rsquo;, an exception when a specific circumstance is identified, using a <el-code>throw</el-code> statement, for example:</p>
 <el-code>throw exception "something has happened"</el-code><br>
 <!--     #endregion-->
 <!--     #region Try statement-->
 <h2 id="try">Try statement</h2>
+<p>If you are in mode <i>Advanced level coding</i> (see <a href="IDEguide.html#preferences">Preferences</a>), you can test whether another piece of code might throw an exception by wrapping it in a <el-code>try</el-code> statement. This might arise when calling a <a href="#System_methods">System method</a> that is dependent upon external conditions, for example:
 
-Where another piece of code might throw an exception, for example when calling a <a href="#System_methods">System method</a> that is dependent upon external conditions, it may be executed within a <el-code>try</el-code> statement, for example:
 <el-code-block source="tryCatch.elan">
 <el-statement class="ok multiline" id="try18" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>try </el-kw></el-top>
@@ -712,7 +712,7 @@ Where another piece of code might throw an exception, for example when calling a
 <el-kw>end try</el-kw>
 </el-statement>
 </el-code-block>
-The variable holding the exception (by default named <el-code>e</el-code>, but this may be changed by you) is of Type <el-code>String</el-code>. You may compare the exception message to one or more expected messages and, if the message does not match an expected exception, you may choose to throw the exception &lsquo;up&rsquo;, as in this example:
+The variable holding the exception (by default named <el-code>e</el-code>, but this may be changed by you) is of Type <el-code><el-type>String</el-type></el-code>. You can compare the exception message to one or more expected messages and, if the message does not match an expected exception, you may choose to throw the exception 'up', as in this example:
 <el-code-block source="tryCatch.elan">
 <el-statement class="ok multiline" id="try141" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>try </el-kw></el-top>
@@ -763,9 +763,9 @@ The variable holding the exception (by default named <el-code>e</el-code>, but t
 <!--   #endregion-->
 <!--   #region Identifier-->
 <h2 id="identifier">Identifier</h2>
-<p>For all kinds of named values, the name must follow the rules for an &lsquo;identifier&rsquo;. 
+<p>For all kinds of named values, the name must follow the rules for an &lsquo;identifier&rsquo;.
   It must start with a lower case letter, followed by any combination of lower case and upper case letters,
-   numeric digits, and the _ (underscore) symbol. 
+   numeric digits, and the _ (underscore) symbol.
    It may not contain spaces or other symbols.</p>
 
 <h2 id="scoping">Scoping and name qualification</h2>
@@ -1009,7 +1009,7 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 <h1 id="parse_error">Parse errors</h1>
 
 <p>A parse error occurs when the text entered into a field cannot be matched against any of the valid formats for contents of that fields.
-  The field will display in red (for the default colour scheme) with a message alongside it containing a link to 
+  The field will display in red (for the default colour scheme) with a message alongside it containing a link to
   one of the headings below. The <b>Parse</b> status in the status panel in the IDE will show as <b>Invalid</b>.
 </p>
 
@@ -1027,7 +1027,7 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 <p>The 'actual' field in an assert statement must be a named value or a function evaluation.</p>
 
 <h3 id="parse_constant_literal" class="no-TOC">Invalid constant value</h3>
-<p>The value of a constant must be a literal value of a type that is not mutable. 
+<p>The value of a constant must be a literal value of a type that is not mutable.
   This can be a simple value (e.g. a number or string), or an <i>immutable</i> List or Dictionary.</p>
 
 <h3 id="parse_enum_values" class="no-TOC">Invalid enum value(s)</h3>
@@ -1040,7 +1040,7 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 <p>The field you are entering must be a valid <a href="#Expression">expression</a>.</p>
 
 <h3 id="parse_name" class="no-TOC">Invalid name</h3>
-<p>The name defined for any variable, constant, let, parameter, function, procedure, or property 
+<p>The name defined for any variable, constant, let, parameter, function, procedure, or property
   must follow the rules for an <a href="#identifier">identifier</a>.</p>
 
 <h3 id="parse_inheritance" class="no-TOC">Invalid inheritance clause</h3>
@@ -1235,9 +1235,9 @@ defines no parameters. If your intent was to define a <i>reference</i> to the fu
   To avoid the possibility of ambiguity, you may not start your own comments with an open square bracket.
 </p>
 
-<h3 id="mustBeBooleanCondition" class="no-TOC">Condition of 'if' expression does not evaluate to a Boolean. 
+<h3 id="mustBeBooleanCondition" class="no-TOC">Condition of 'if' expression does not evaluate to a Boolean.
   <h3 id="mustNotHaveConditionalAfterUnconditionalElse" class="no-TOC">Cannot have any clause after unconditional 'else'.
-  
+
 <h3 id="mustNotBeKeyword" class="no-TOC">... is a keyword, and may not be used as an identifier.</h3>
 <p>An Elan keyword cannot be used to as the name for a value, property, or method. Try shortening the name, lengthening it, or using a different name</p>
 
@@ -1250,16 +1250,16 @@ defines no parameters. If your intent was to define a <i>reference</i> to the fu
    what it does (for a method), or represents (for a named value).
 </p>
 
-  <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3> 
+  <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
   <p>An index into an array or list cannot have a negative value. If a negative is given in literal form e.g.
     <el-code><el-id>a</el-id>[-<el-lit>3</el-lit>]</el-code> then this will generate a compile error.
     If you use a named value for an index and it is negative, then this will cause a run-time error.</p>
 <h3 id="FailCannotCompareProcFunc" class="no-TOC">Cannot do equality operations on Procedures or Functions.</h3>
 
-<h3 id="mustBeImmutableType" class="no-TOC">Property ... is not of an immutable type.</h3>   
+<h3 id="mustBeImmutableType" class="no-TOC">Property ... is not of an immutable type.</h3>
 <p>Properties on a <a href="#record">record</a> may only be of immutable types.</p>
 
-<h3 id="mustBeImmutableGenericType" class="no-TOC">... cannot be of mutable type ...</h3>  
+<h3 id="mustBeImmutableGenericType" class="no-TOC">... cannot be of mutable type ...</h3>
 <p>Element type for a <a href="LibRef.html#ListImmutable">ListImmutable</a> must itself be an immutable type.
 Similarly, for an <a href="LibRef.html#DictionaryImmutable">DictionaryImmutable</a> the types for both the key and the value must be immutable types.</p>
 
@@ -1271,10 +1271,10 @@ Similarly, for an <a href="LibRef.html#DictionaryImmutable">DictionaryImmutable<
 <p>The property name given in the record deconstruction does not match a property on the given type of record.</p>
 
 <h3 id="discardInRecordDeconstruction" class="no-TOC">Cannot discard in record deconstruction ...</h3>
-<h3 id="mustBeCompatibleDefinitionNode" class="no-TOC">Wrong number of deconstructed variables.</h3>  
+<h3 id="mustBeCompatibleDefinitionNode" class="no-TOC">Wrong number of deconstructed variables.</h3>
 <h3 id="mustBePropertyPrefixedOnMember" class="no-TOC">referencing a property requires a prefix.</h3>
 
-<p>If you are referring to a property of a class <i>from code defined within the class</i> then the 
+<p>If you are referring to a property of a class <i>from code defined within the class</i> then the
 property name must be preceded by <el-code><el-kw>property</el-kw>.</el-code></p>
 <h3 id="mustNotBeOutParameter" class="no-TOC">'out' parameters are only supported on procedures.</h3>
 <p>You cannot defined an <el-code><el-kw>out</el-kw></el-code> parameter in a function (because that would

@@ -2394,6 +2394,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "Member 'p1' must be of type String. Click for more info.LangRef.html#MemberTypeCompileError",
       "Name 'p1' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });
