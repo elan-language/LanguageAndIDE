@@ -1,0 +1,15 @@
+# 7a07e8cf473e09bc622090969f4ec5a8ee3071e9e278d24ff62a4221fd171fa9 Elan 1.0.0-pre2 guest Default_Profile valid
+
+main
+  variable rnd set to new Random()
+  call rnd.initialiseFromClock()
+  variable dice set to 0
+  for i from 1 to 10 step 1
+    set dice, rnd to rollDice(rnd)
+    print dice
+  end for
+end main
+
+function rollDice(rnd as Random) returns (Int, Random)
+  return rnd.nextInt(1, 6)
+end function

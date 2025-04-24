@@ -75,9 +75,11 @@
 
 <h3 id="Passing_a_function">Passing a function as a reference</h3>
 <p>On most occasions when you write the name of an existing function elsewhere in code your intent is to evaluate the function and, to do so, you write the name of the function followed by brackets containing such arguments as are required by the function. For this reason if you forget to add the brackets, you will get an error, for example:</p>
-<el-code-block source="error_brackets.elan"
-<el-statement class="error" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused error" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="20" data-cursorend="20" size="19" style="width: 20ch" value="createFileForWriting"></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl> <el-msg class="error">To evaluate function 'createFileForWriting' add brackets.</el-msg></el-field> <el-msg class="error"></el-msg></el-statement>
+
+<el-code-block source="error_addBrackets.elan">
+<el-statement class="error" id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr10" class="selected focused error" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="20" data-cursorend="20" size="19" style="width: 20ch" value="createFileForWriting"></el-txt><el-place><i>expression</i></el-place> <el-msg class="error error-link" data-href="LangRef.html#compile_error">To evaluate function 'createFileForWriting' add brackets. Click for more info.</el-msg></el-field> <el-msg class="error"></el-msg></el-statement>
 </el-code-block>
+
 <p>Unlike in procedural programming, it is valid in functional programming to create a reference to the function, rather than to evaluate it.
 In that case you precede the name of the function by <el-code>ref</el-code> without any function brackets or arguments.  For example:</p>
 
@@ -89,27 +91,32 @@ In that case you precede the name of the function by <el-code>ref</el-code> with
 <h3>Defining your own HoFs</h3>
 <p>The <el-code>Func</el-code> Type</p>
 
-
 <h2 id="Generating_random_numbers">Generating random numbers within a function</h2>
 <p>
 It is not possible to use the system methods <el-code>random()</el-code> or <el-code>randomInt()</el-code> within a function because they create unseen side-effects. You may use those system methods outside the function and pass the resulting random number (as an <el-code>Int</el-code> or a <el-code>Float</el-code>) as an argument into a function.<br>
 <br>
 It is possible to create and use random numbers within a function, but it requires a different approach and is a little more complex, using a special Type named <el-code>Random</el-code> (note that the <el-code>R</el-code> is in upper-case), as in this example:</p>
-<el-code>main</el-code><br>
-<el-code><br>
-&nbsp;&nbsp;variable rnd set to new Random()<br>
-&nbsp;&nbsp;call rnd.initialiseFromClock()<br>
-&nbsp;&nbsp;variable dice set to 0<br>
-&nbsp;&nbsp;for i from 1 to 10 step 1<br>
-&nbsp;&nbsp;&nbsp; set dice, rnd to rollDice(rnd)<br>
-&nbsp;&nbsp;&nbsp; print dice<br>
-&nbsp;&nbsp;end for<br>
-end main<br>
-</el-code><br>
 
-<el-code>function rollDice(rnd as Random) returns (Int, Random)</el-code><br>
-<el-code>&nbsp; return rnd.nextInt(1, 6)</el-code><br>
-<el-code>end function</el-code><br>
+<el-code-block source="func_random.elan">
+<main class="ok multiline" id="main47" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+<el-statement class="ok" id="var49" tabindex="0"><el-kw>variable </el-kw><el-field id="var50" class="ok" tabindex="0"><el-txt><el-id>rnd</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr51" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Random</el-type>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="call55" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident56" class="ok" tabindex="0"><el-txt><el-id>rnd</el-id>.<el-method>initialiseFromClock</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args57" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="var61" tabindex="0"><el-kw>variable </el-kw><el-field id="var62" class="ok" tabindex="0"><el-txt><el-id>dice</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr63" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok multiline" id="for65" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident67" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr68" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr69" class="ok" tabindex="0"><el-txt><el-lit>10</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr70" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
+<el-statement class="ok" id="set72" tabindex="0"><el-kw>set </el-kw><el-field id="ident73" class="ok" tabindex="0"><el-txt><el-id>dice</el-id>, <el-id>rnd</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr74" class="ok" tabindex="0"><el-txt><el-method>rollDice</el-method>(<el-id>rnd</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print76" tabindex="0"><el-kw>print </el-kw><el-field id="expr77" class="optional ok" tabindex="0"><el-txt><el-id>dice</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-kw>end for</el-kw>
+</el-statement>
+<el-kw>end main</el-kw>
+</main>
+<el-func class="ok multiline" id="func86" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident88" class="ok" tabindex="0"><el-txt>rollDice</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params89" class="optional ok" tabindex="0"><el-txt><el-id>rnd</el-id> <el-kw>as</el-kw> <el-type>Random</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type90" class="ok" tabindex="0"><el-txt>(<el-type>Int</el-type>, <el-type>Random</el-type>)</el-txt><el-place><i>Type</i></el-place></el-field></el-top>
+<el-statement class="ok" id="return91" tabindex="0"><el-kw>return </el-kw><el-field id="expr92" class="ok" tabindex="0"><el-txt><el-id>rnd</el-id>.<el-method>nextInt</el-method>(<el-lit>1</el-lit>, <el-lit>6</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
+</el-code-block>
 
 <p>The <el-code>Random</el-code> Type defined two &#8216;function methods&#8217;: <el-code>next</el-code> and <el-code>nextInt</el-code>.</p>
 <p>Both of them return a 2-<span class="Link">Tuple</span> consisting of the random value (as either a <el-code>Float</el-code> or an <el-code>Int</el-code> respectively) plus a new <el-code>Random</el-code>. The new (returned) <el-code>Random</el-code> must be used for generating the subsequent random number (if more are required). If you call <el-code>next</el-code> repeatedly on the same instance of Random, you will always get the same value. </p>

@@ -1,0 +1,14 @@
+# 92e45c892b0f1b76a6464f30fabbd013a4088e07b28bfeea24384262159404c4 Elan 1.0.0-pre2 guest Default_Profile valid
+
+main
+  let allPupils be new List<of String>()
+  variable passes set to allPupils.filter(ref passedMathsTest)
+end main
+
+function passedMathsTest(p as Pupil) returns Boolean
+  return p.mathsPercent > 35
+end function
+
+function mathsPercent() returns Int
+  return 0
+end function

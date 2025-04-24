@@ -1,0 +1,5 @@
+# 98889249dd2e064cac900054fd1eeeadace0af8d0aaa3faa6827b0e78a4272c3 Elan 1.0.0-pre2 guest Default_Profile valid
+
+main
+  let a be createFileForWriting
+end main
