@@ -38,12 +38,46 @@ table
 .docTitle { color:rgb(15,71,97); font-size:28pt; font-weight:bold;  text-indent:0pt; margin-top:24pt; margin-bottom:4pt; }
 
 /* document table of contents */
-.docTOC ul {
-  padding-inline-start: 10px;
+#generated-toc {
+ display: table;
 }
-.docTOC ul, .docTOC li { font-size:10pt; font-style:bold; margin-top:-2pt; margin-bottom:-2pt; }
-.docTOC div { column-count:5; column-gap:0px; }
-.docTOC #generated-toc #toggle-container { column-span: all }
+
+#generated-toc > ul {
+  > li:nth-child(even) { background-color: rgb(226, 226, 226); }
+  > li:nth-child(odd)  { background-color: rgb(196, 196, 196); }
+}
+#generated-toc > ul {
+  padding-left: 0px;
+
+}
+#generated-toc > ul > li{
+  display: table-row;
+  border: 2px;
+
+}
+#generated-toc > ul > li > a, #generated-toc > ul > li > ul {
+  display: table-cell;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 10px;
+  border-color: white;
+  border-style:solid;
+  vertical-align: top;
+}
+#generated-toc > ul > li > a {
+  white-space: nowrap;
+  overflow: hidden;
+  font-weight: bold;
+  padding-top: 5px;
+}
+
+#generated-toc > ul > li > ul > li {
+  display: block;
+  float: left;
+  padding-right: 20px;
+}
+
+
 
 /* to hide 'Skip table of contents' */
 .hidden { visibility: hidden; }

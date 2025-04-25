@@ -12,14 +12,14 @@
 <body>
 <div class="docTitle">Elan Language Reference</div>
 Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and  <a href="LibRef.html#top">Elan Library Reference</a>
-<div class="docTOC">
+<div id="docTOC">
 <div id="generated-toc" class="generate_from_h1 generate_for_page"></div></div>
 
 <!-- TODO: suggestion -->
 <!-- for temporary note of where change is needed -->
 
 <!-- #region Comments-->
-<h1 id="Comment">Comments</h1>
+<h3 id="Comment" class="no-TOC">Comments</h3>
 A comment is not an instruction: it is ignored by the compiler and does not change how the program works.
 Rather, a comment contains information <em>about</em> the program, intended to be read by a person seeking to understand or modify the code.</p>
 Every comment starts with the symbol <el-code>#</el-code> (known as &lsquo;hash&rsquo;) followed by some text or a blank line.
@@ -464,6 +464,11 @@ If you wish to have several subclasses of an <el-code>abstract class</el-code> t
 <p>An <el-code>interface</el-code> may inherit only from other <el-code>interface</el-code>s.</p>
 <p>Important: An <el-code>interface</el-code> must not re-declare abstract interfaces that are defined in any <el-code>interface</el-code> it inherits from, directly or indirectly.</p>
 <!--     #endregion-->
+<!--     #region # (comment)-->
+<h2 id="global_comment"># (comment)</h2>
+<p>See <a href="#Comment">Comments</a>.</p>
+<!--     #endregion-->
+
 <!--   #endregion-->
 
 <!--   #region Member Instructions-->
@@ -578,6 +583,10 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
 <p>An abstract function method may be defined only on an <a href="#Abstract_class"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
 
 <!-- #endregion-->
+<!--     #region # (comment)-->
+<h2 id="member_comment"># (comment)</h2>
+<p>See <a href="#Comment">Comments</a>.</p>
+<!--     #endregion-->
 <!--     #endregion -->
 <!--   #region Statement Instructions-->
 <!--     #region Heading & Intro-->
@@ -735,6 +744,10 @@ The variable holding the exception (by default named <el-code>e</el-code>, but t
 <!--     #region While loop-->
 <h2 id="while">While loop</h2>
 <!-- #endregion -->
+<!--     #region # (comment)-->
+<h2 id="statement_comment"># (comment)</h2>
+<p>See <a href="#Comment">Comments</a>.</p>
+<!--     #endregion-->
 <!--   #endregion -->
 <!-- #endregion -->
 <!-- #region Expressions-->
@@ -1004,9 +1017,11 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 </el-code-block>
 
 <p>It is also possible explicitly to set a property or a named value to an empty instance of the appropriate Type.</p>
+<!-- #region Errors and warnings -->
+<h1 id="errors_and_warnings">Errors and warnings</h1>
 
 <!-- #region Parse errors -->
-<h1 id="parse_error">Parse errors</h1>
+<h2 id="parse_error">Parse errors</h2>
 
 <p>A parse error occurs when the text entered into a field cannot be matched against any of the valid formats for contents of that fields.
   The field will display in red (for the default colour scheme) with a message alongside it containing a link to
@@ -1086,9 +1101,8 @@ a simple <a href="#parse_name">name</a>. Less commonly, it may take the form of:
 
 <!-- #endregion -->
 
-
 <!-- #region Compile Errors and Warnings -->
-<h1 id="compile_error">Compile Errors and Warnings</h1>
+<h2 id="compile_error">Compile Errors and Warnings</h2>
 
 <p>Q: What is the difference between a compile <i>error</i> and a <i>warning</i>.
 A: A warning usually indicates that the fix may involved <i>adding</i> some more code,
@@ -1286,6 +1300,7 @@ imply the possibility of creating a side-effect).</p>
 or <el-code><el-kw>not</el-kw></el-code> successively within an expression.</p>
 
 <!-- #endregion-->
+<!-- #endregion -->
 <hr>
 <b>Elan Language Reference</b> go to the <a href="#top">top</a></h4>
 </body>
