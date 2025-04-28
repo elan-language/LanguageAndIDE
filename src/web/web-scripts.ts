@@ -12,6 +12,7 @@ import { StdLib } from "../standard-library/std-lib";
 import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
 import { checkIsChrome, confirmContinueOnNonChromeBrowser } from "./ui-helpers";
 import {
+  encodeCode,
   fetchDefaultProfile,
   fetchProfile,
   fetchUserConfig,
@@ -153,7 +154,7 @@ function runProgram() {
       "",
     );
     const jsCode = file.compileAsWorker(path, debugMode, false);
-    const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+    const asUrl = encodeCode(jsCode);
 
     runWorker = new Worker(asUrl, { type: "module" });
 
@@ -295,7 +296,7 @@ saveAsStandaloneButton.addEventListener("click", async () => {
 
   jsCode = api + jsCode;
 
-  const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+  const asUrl = encodeCode(jsCode);
 
   script = script.replace("injected_code", asUrl);
   html = html.replace("injected_code", script);
@@ -1806,7 +1807,7 @@ function runTestsInner() {
       "",
     );
     const jsCode = file.compileAsTestWorker(path);
-    const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+    const asUrl = encodeCode(jsCode);
 
     testWorker = new Worker(asUrl, { type: "module" });
 

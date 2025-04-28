@@ -81,7 +81,7 @@ export function assertDoesNotCompileWithId(file: FileImpl, id: string, msgs: str
 }
 
 function doImport(str: string) {
-  const url = "data:text/javascript;base64," + btoa(str);
+  const url = encodeCode(str);
   return import(url);
 }
 
@@ -221,3 +221,9 @@ export function transforms() {
 export const testHeaderVersion = `Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}-${elanVersion.preRelease}`;
 
 export const testHeader = `# FFFF ${testHeaderVersion} guest default_profile valid`;
+
+export function encodeCode(code: string) {
+  const bytes = new TextEncoder().encode(code);
+  const binCode = Array.from(bytes, (byte) => String.fromCodePoint(byte)).join("");
+  return "data:text/javascript;base64," + btoa(binCode);
+}

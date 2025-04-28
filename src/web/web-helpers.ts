@@ -69,3 +69,9 @@ export function checkForUnclosedHtmlTag(text: string) {
     );
   }
 }
+
+export function encodeCode(code: string) {
+  const bytes = new TextEncoder().encode(code);
+  const binCode = Array.from(bytes, (byte) => String.fromCodePoint(byte)).join("");
+  return "data:text/javascript;base64," + btoa(binCode);
+}

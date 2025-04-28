@@ -54,7 +54,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "�!�$%^&*()@~#|<>'");
+    await assertObjectCodeExecutes(fileImpl, "¬!£$%^&*()@~#|<>'");
   });
   test("Pass_CallPrintTab", async () => {
     const code = `${testHeader}
