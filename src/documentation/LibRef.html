@@ -22,7 +22,7 @@ Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and 
 <!-- #endregion-->
 
 <!-- #region Value Types, with their methods-->
-<h1 id="Value_Types">Value Types, with their methods</h1>
+<h1 id="ValueTypes">Value Types, with their methods</h1>
 <!--   #region Int-->
 <h2 id="Int">Integer</h2>
 <p>An integer or whole number, i.e. one that has no fractional component.</p>
@@ -80,25 +80,25 @@ Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and 
 <h3 class="no-TOC">Dot methods</h3>
 <table>
  <tr><th>function<br>dot method</th><th>on<br>Type</th><th>argument<br>Types</th><th>return<br>Type</th><th>description</th></tr>
- <tr>
+ <tr id="asString">
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>Float</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>returns a string representing the floating point value </td>
- </tr><tr>
+ </tr><tr id="ceiling">
   <td><el-code><el-method>ceiling</el-method></el-code></td>
   <td><el-code><el-type>Float</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>returns the first integer larger than or equal to the floating point value</td>
- </tr><tr>
+ </tr><tr id="floor">
   <td><el-code><el-method>floor</el-method></el-code></td>
   <td><el-code><el-type>Float</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>returns the first integer smaller than or equal to the floating point value</td>
- </tr><tr>
+ </tr><tr id="round">
   <td><el-code><el-method>round</el-method></el-code></td>
   <td><el-code><el-type>Float</el-type></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
@@ -154,7 +154,7 @@ For greater detail, refer to the official JavaScript documentation.
 <!--   #endregion-->
 <!--   #region String-->
 <h2 id="String">String</h2>
-<p>A <el-code>String</el-code> represents &lsquo;text&rsquo;  i.e. a sequence of zero or more characters (see <a href="#charSets">Character sets)</a>.</p>
+<p>A <el-code>String</el-code> represents &lsquo;text&rsquo;  i.e. a sequence of zero or more characters (see <a href="#CharacterSets">Character sets)</a>.</p>
 
 <h3 class="no-TOC">Type name</h3>
 <el-code><el-type>String</el-type></el-code><br>
@@ -288,7 +288,7 @@ String dot methods are functions which are applied to a variable of Type <el-cod
   <td>returns a new string with the original rendered in upper case</td>
  </tr>
  </table>
-<h3 class="no-TOC" id="Interpolated_string">Interpolated string</h3>
+<h3 class="no-TOC" id="InterpolatedString">Interpolated string</h3>
 <p>
 Elan strings are automatically interpolated. This means that you may insert the values of variables or simple expressions within a string by enclosing them in curly braces. For example (assuming that the variables <el-code>a</el-code> and <el-code>b</el-code> are already defined as integers):<br>
 <el-code>print "{a} times {b} equals {a*b}"</el-code></p>
@@ -300,7 +300,7 @@ Alternatively, you can insert their Unicode codepoints by means of the <el-code>
 or<br>
 <el-code>print"Here are the curly braces: {unicode(123)} and {unicode(125)}"</el-code><br>
 
-<h3 class="no-TOC" id="String_method">Dot methods on a String</h3>
+<h3 class="no-TOC" id="StringMethod">Dot methods on a String</h3>
 <p>There are no &lsquo;substring&rsquo; methods in Elan because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code>  gives a <el-code>string</el-code> containing the fourth character to the seventh character inclusive of <el-code>string s</el-code>. Note that the upper bound of the range is <em>exclusive</em>. See<span class="Link"> Indexed Value</span>.</p>
 <p><el-code>upperCase</el-code> returns a new string based on the input with all alphabetic characters in upper case.</p>
 <p><el-code>lowerCase</el-code> returns a new string based on the input with all alphabetic characters in lower case.</p>
@@ -325,7 +325,7 @@ prints 'true'.
 <el-code>asUnicode returns Int</el-code><br>
 <p>returns the Unicode (integer) value for a character. If the string is more than one character long, the Unicode value returned is that for the first character in the string only. Note that the opposite method to create a single-character string from its numeric Unicode value is e.g. <el-code>unicode(123)</el-code> which returns <el-code>"{"</el-code>.</p>
 
-<h3 class="no-TOC" id="charSets">Character sets</h3>
+<h3 class="no-TOC" id="CharacterSets">Character sets</h3>
 
 <table>
 <tr><th></th></tr>
@@ -547,7 +547,7 @@ differences. Immutable data structures are intended specifically to facilitate t
   <td>function methods<br>that return<br>new structure<br>of same Type</td>
   <td><el-code>withAppend("x")</el-code><br><el-code>withAppendList(li2)</el-code> (immutable)<br><el-code>withInsert(2, "x")</el-code><br><el-code>withPut(2, "x")</el-code><br><el-code>withRemoveAt(2)</el-code><br><el-code>withRemoveValue("x")</el-code></td>
   <td><el-code>withPut("c",4)</el-code><br><el-code>withRemoveAt("c")</el-code></td>
-  <td><el-code>add</el-code><br><el-code>difference</el-code><br><el-code>intersection</el-code><br><el-code>remove</el-code><br><el-code>union</el-code></td>
+  <td><el-code>add</el-code><br><el-code id="difference">difference</el-code><br><el-code>intersection</el-code><br><el-code>remove</el-code><br><el-code>union</el-code></td>
   <td><el-code>push</el-code><br><el-code>pop</el-code> returns a tuple<br>comprising the popped Value<br>and the updated stack</td>
   <td><el-code>enqueue</el-code><br><el-code>dequeue</el-code> returns a tuple<br>comprising the popped<br>Value and the updated queue</td>
  </tr><tr>
@@ -992,7 +992,7 @@ end function
 </el-code>
 
 <p>The <el-code><el-kw>with</el-kw></el-code> clause also permits you to specify a title for the image, which shows up as a tooltip on the image. It is good practice to do this for meeting accessibility guidelines.The <el-code><el-kw>with</el-kw></el-code> clause
-also offers position properties <el-code><el-id>x</el-id></el-code> and <el-code><el-id>y</el-id></el-code>. These are ignored when <i>printing</i> an image, but are useful in the context of drawing vector graphics (see below).</p>
+also offers position properties <el-code><el-id>x</el-id></el-code> and <el-code><el-id>y</el-id></el-code>. These are ignored when <i>printing</i> an image, but are useful in the context of drawing <a href="VectorGraphics">Vector Graphics</a>.</p>
 
 <p>An image specified in this way may also be assigned to a named value, or defined inline as an argument to a method, for example:</p>
 
@@ -1048,7 +1048,7 @@ just by passing the required one as the argument to the <el-code><el-method>disp
 </ul>
 <!-- #endregion-->
 <!--   #region Turtle Graphics-->
-<h2 id="Turtle_graphics">Turtle graphics</h2>
+<h2 id="TurtleGraphics">Turtle graphics</h2>
 Turtle graphics are implemented in Elan with output to the Display pane on the screen (i.e. the &#8216;paper&#8217; on which the Turtle draws). The area is 100 turtle units wide by 75 turtle units high.
 <p>Example:</p>
 <el-code-block source="turtle_graphics.elan">
@@ -1120,7 +1120,14 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 <!-- #endregion-->
 <!--   #region Vector Graphics-->
 <h2 id="VectorGraphics">Vector graphics</h2>
-<p>Vector graphics are displayed using SVG (Scalable Vector Graphics) that are a part of the Html specification. The names of the shapes broadly correspond to the names of SVG tags: <el-code>CircleVG</el-code> for &lt;<el-code>circle../&gt;</el-code>, <el-code>LineVG</el-code> for <el-code>&lt;line../&gt;</el-code>, and <el-code>RectangleVG</el-code> for <el-code>&lt;rect../&gt;</el-code>.</p>
+<p>Vector graphics are displayed using SVG (Scalable Vector Graphics) that are a part of the Html specification. The names of the shapes broadly correspond to the names of SVG tags:</p>
+<ul>
+ <li id="CircleVG"> <el-code>CircleVG</el-code> for &lt;<el-code>circle../&gt;</el-code></li>
+ <li id="LineVG"><el-code>LineVG</el-code> for <el-code>&lt;line../&gt;</el-code></li>
+ <li id="RectanleVG"><el-code>RectangleVG</el-code> for <el-code>&lt;rect../&gt;</el-code></li>
+ <li id="ImageVG"><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
+ <li id="TextVG"><el-code>TextVG</el-code> for <el-code>&lt;text../&gt;</el-code></li>
+</ul>
 <p>The properties of the Elan VG shapes match the names of the attributes used in the SVG tags, except that the <el-code>stroke-width</el-code> attribute is changed to <el-code>strokeWidth</el-code> to make it a valid <a href="#Identifier">Identifier</a>.</p>
 <p>The &#8216;canvas&#8217; on which vector graphics are drawn (the Display pane in the user interface) is 100 units wide, by 75 units high. All numeric values specified for attributes of vector graphic shapes may be integer or floating point.</p>
 <p>Example:</p>
@@ -1206,7 +1213,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
     <tr><td><el-code><el-id>quotes</el-id></el-code></td><td><el-code><el-type>String</el-type></el-code></td><td><el-code>&nbsp;"</el-code></td>
 </table>
 
-<h2 id="Colour">Colours</h2>
+<h2 id="Colours">Colours</h2>
 <table class="tableColours">
 <tr><th>colour</th><th></th><th>decimal</th><th>decimal<br></th><th>hexadecimal</th></tr>
 <tr><th>name</th><th></th><th>integer</th><th style="font-family:monospace;">&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;&nbsp;G&nbsp;&nbsp;&nbsp;&nbsp;B</th><th style="font-family:monospace;">&nbsp;0xrrggbb</th></tr>
@@ -1273,7 +1280,6 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
     <li>One use of these parsing methods is for validating user input, but note that an easier way to do this is to use the various <a href="#input_methods">input methods</a>.</li>
 </ul>
 <div id="floor"></div>
-<div id="ceiling"></div>
 <div id="isNaN"></div>
 <div id="isInfinite"></div>
 <h2>floor, ceiling, round, isNaN, and IsInfinite</h3>
@@ -1293,7 +1299,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
             </el-test>
     </el-code-block>
 
-<h2 class="no-TOC" id="Maths_functions">Maths functions and constants</h3>
+<h2 class="no-TOC" id="MathsFunctions">Maths functions and constants</h3>
 <table>
 <tr><th>function</th><th>argument<br>Type</th><th>input<br>unit</th><th>returns</th><th>output<br>unit</th></tr>
 <tr id="pi"><td><el-code>pi</el-code></td><td>(none)</td><td></td><td>&#x1d70b = 3.141592653589793..</td><td></td></tr>
@@ -1369,7 +1375,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 </el-code-block>
     <p>Although it is recommended that literal regular expressions are written with the <el-code>/../</el-code> delimiters, the ability to convert a <el-code>string</el-code> allows you to input a regular expression into a running program.</p>
 
-<h2 class="no-TOC" id="Bitwise_function">Bitwise functions</h3>
+<h2 class="no-TOC" id="BitwiseFunction">Bitwise functions</h3>
     <p>These functions take in an integer value, and manipulate the bit representation of that value.</p>
     <ul>
         <li><el-code><el-method>bitAnd</el-method></el-code></li>
@@ -1571,7 +1577,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 
 <!-- #endregion-->
 <!-- #region Higher order functions (HoFs)-->
-<h1>Library functions that process Lists</h1>
+<h1 id="HoFs">Library functions that process Lists</h1>
 
 <h2 id="max">max and min</h2><span id="min"></span>
 <p>Both these functions may be applied to an <el-code>ListImmutable&lt;of Float&gt;</el-code> and return the maximum or minimum value found therein.</p>
