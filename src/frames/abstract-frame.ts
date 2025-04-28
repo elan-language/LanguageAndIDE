@@ -68,7 +68,7 @@ export abstract class AbstractFrame implements Frame {
 
   compileScope: Scope | undefined;
 
-  setCompileScope(s: Scope): void {
+  setCompileScope(s: Scope | undefined): void {
     this.compileScope = s;
   }
 

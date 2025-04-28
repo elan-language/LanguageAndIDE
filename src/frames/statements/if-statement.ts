@@ -60,6 +60,7 @@ ${this.indent()}${endKeyword} ${ifKeyword}`;
         c.setCompileScope(currentElse);
         currentElse.addChild(c);
       } else {
+        c.setCompileScope(undefined); // in case children have been cut and pasted between if/else
         ifChildren.push(c);
       }
     }
