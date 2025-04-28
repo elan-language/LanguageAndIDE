@@ -15,12 +15,13 @@ import { ChainedAsn } from "../interfaces/chained-asn";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { AbstractDefinitionStatement } from "../statements/abstract-definition.statement";
-import { Each } from "../statements/each";
-import { For } from "../statements/for";
 import { FunctionType } from "../symbols/function-type";
 import { NullScope } from "../symbols/null-scope";
-import { isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
+import {
+  isDefinitionStatement,
+  isMemberOnFieldsClass,
+  scopePrefix,
+} from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import {
   containsGenericType,
@@ -69,14 +70,10 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     return cc.concat(this.compileErrors).concat(pc);
   }
 
-  isDefinitionStatement(s: Scope): boolean {
-    return s instanceof AbstractDefinitionStatement || s instanceof Each || s instanceof For;
-  }
-
   getSymbolAndType(): [ElanSymbol, SymbolType] {
     let currentScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
 
-    if (this.isDefinitionStatement(currentScope)) {
+    if (isDefinitionStatement(currentScope)) {
       currentScope = currentScope.getParentScope();
     }
 

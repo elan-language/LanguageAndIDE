@@ -18,7 +18,10 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { globalKeyword, libraryKeyword } from "../keywords";
+import { AbstractDefinitionStatement } from "../statements/abstract-definition.statement";
 import { DefinitionAdapter } from "../statements/definition-adapter";
+import { Each } from "../statements/each";
+import { For } from "../statements/for";
 import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import {
   isAstIdNode,
@@ -687,4 +690,8 @@ export function isNumber(st: SymbolType) {
 
 export function knownType(symbolType: SymbolType) {
   return !(symbolType instanceof UnknownType);
+}
+
+export function isDefinitionStatement(s: Scope): boolean {
+  return s instanceof AbstractDefinitionStatement || s instanceof Each || s instanceof For;
 }

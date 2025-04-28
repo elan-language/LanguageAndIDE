@@ -5,9 +5,7 @@ import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
-import { AbstractDefinitionStatement } from "../statements/abstract-definition.statement";
-import { Each } from "../statements/each";
-import { For } from "../statements/for";
+import { isDefinitionStatement } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -53,10 +51,6 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
     return this.parameters.map((p) => p.compile()).join(", ");
   }
 
-  isDefinitionStatement(s: Scope): boolean {
-    return s instanceof AbstractDefinitionStatement || s instanceof Each || s instanceof For;
-  }
-
   resolveSymbol(id: string, transforms: Transforms, _scope: Scope): ElanSymbol {
     for (const p of this.parameters) {
       if (p.id.trim() === id) {
@@ -68,7 +62,7 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
       }
     }
 
-    const searchScope = this.isDefinitionStatement(this.scope)
+    const searchScope = isDefinitionStatement(this.scope)
       ? (this.scope as Frame).getParent()
       : this.scope;
 
