@@ -323,6 +323,31 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[25]");
   });
 
+  test("Pass_Lambda WithLambdaParam", async () => {
+    const code = `${testHeader}
+
+main
+  let l be lambda x as Func<of Int => Int> => x(2)
+  print l(lambda x as Int => 2 * x)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const l = async (x) => (await x(2));
+  await system.printLine((await l(async (x) => 2 * x)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "4");
+  });
+
   test("Fail_ImmediateInvoke", async () => {
     const code = `${testHeader}
 

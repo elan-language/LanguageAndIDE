@@ -15,6 +15,9 @@ import { ChainedAsn } from "../interfaces/chained-asn";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
+import { AbstractDefinitionStatement } from "../statements/abstract-definition.statement";
+import { Each } from "../statements/each";
+import { For } from "../statements/for";
 import { FunctionType } from "../symbols/function-type";
 import { NullScope } from "../symbols/null-scope";
 import { isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
@@ -66,9 +69,17 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     return cc.concat(this.compileErrors).concat(pc);
   }
 
+  isDefinitionStatement(s: Scope): boolean {
+    return s instanceof AbstractDefinitionStatement || s instanceof Each || s instanceof For;
+  }
+
   getSymbolAndType(): [ElanSymbol, SymbolType] {
-    const currentScope =
-      this.updatedScope === NullScope.Instance ? this.scope.getParentScope() : this.updatedScope;
+    let currentScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
+
+    if (this.isDefinitionStatement(currentScope)) {
+      currentScope = currentScope.getParentScope();
+    }
+
     const funcSymbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
     const funcSymbolType = funcSymbol.symbolType(transforms());
     return [funcSymbol, funcSymbolType];
