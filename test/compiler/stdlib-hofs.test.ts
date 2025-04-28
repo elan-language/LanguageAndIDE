@@ -725,7 +725,7 @@ return [main, _tests];}`;
   test("Pass_sortByImmutableList", async () => {
     const code = `${testHeader}
 
-constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
+constant source set to {27, 2, 3, 5, 7, 31, 37, 11, 13, 17, 19, 23}
 main
   print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1)
   print source
@@ -733,7 +733,7 @@ end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {
-  source = system.listImmutable([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  source = system.listImmutable([27, 2, 3, 5, 7, 31, 37, 11, 13, 17, 19, 23]);
 
 };
 async function main() {
@@ -750,7 +750,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "{37, 31, 27, 23, 19, 17, 13, 11, 7, 5, 3, 2}{2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}",
+      "{37, 31, 27, 23, 19, 17, 13, 11, 7, 5, 3, 2}{27, 2, 3, 5, 7, 31, 37, 11, 13, 17, 19, 23}",
     );
   });
 
@@ -758,7 +758,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  variable source set to [27, 2, 3, 5, 7, 31, 37, 11, 13, 17, 19, 23]
   print source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1)
   print source
 end main`;
@@ -766,7 +766,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  let source = system.list([27, 2, 3, 5, 7, 31, 37, 11, 13, 17, 19, 23]);
   await system.printLine((await source.sortBy(async (x, y) => x === y ? 0 : x < y ? 1 : (-1))));
   await system.printLine(source);
 }
@@ -780,7 +780,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      "[37, 31, 27, 23, 19, 17, 13, 11, 7, 5, 3, 2][2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]",
+      "[37, 31, 27, 23, 19, 17, 13, 11, 7, 5, 3, 2][27, 2, 3, 5, 7, 31, 37, 11, 13, 17, 19, 23]",
     );
   });
 
