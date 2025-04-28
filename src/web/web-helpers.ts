@@ -57,9 +57,15 @@ export async function fetchProfile(name: string) {
 }
 
 export function checkForUnclosedHtmlTag(text: string) {
-  if (/<[A-Za-z!\/?][^>]*$/.test(text)) {
+  // Detect any "<" not followed eventually by a ">"
+  // which makes all subsequent output not visible.
+  // The regexp picks out some surrounding text without newlines.
+  // The error message must not contain newlines
+  // because the second and subsequent lines of the error message are taken as stack trace.
+  const matches = text.match(/(.{0,20}<[A-Za-z!\/?][^>\n]{0,20})[^>]*$/);
+  if (matches) {
     throw new ElanRuntimeError(
-      "Unclosed HTML tag in printed text '" + text.replace(/</g, "&lt;") + "'",
+      "Unclosed HTML tag in printed text '" + matches[1].replace(/</g, "&lt;") + "'",
     );
   }
 }
