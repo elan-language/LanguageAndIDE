@@ -1,0 +1,5 @@
+# a7e2fdcf1c199474ee242fa0607e2887b46d9299d45ed369793e794a0fa17c25 Elan 1.0.0-pre2 guest Default_Profile valid
+
+function removeNonASCII(inp as String) returns String
+  return inp.split("").filter(lambda c as String => c.asUnicode() < 128).join("")
+end function
