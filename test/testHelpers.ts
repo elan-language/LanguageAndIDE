@@ -21,9 +21,8 @@ import { IntType } from "../src/frames/symbols/int-type";
 import { StringType } from "../src/frames/symbols/string-type";
 import { UnknownType } from "../src/frames/symbols/unknown-type";
 import { StdLib } from "../src/standard-library/std-lib";
-import { hash } from "../src/util";
 import { WebWorkerMessage } from "../src/web/web-worker-messages";
-import { assertParses, transforms } from "./compiler/compiler-test-helpers";
+import { assertParses, encodeCode, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
 import { Frame } from "../src/frames/interfaces/frame";
@@ -31,6 +30,7 @@ import { CompileError } from "../src/frames/compile-error";
 import { FrameWithStatements } from "../src/frames/frame-with-statements";
 import { ClassFrame } from "../src/frames/globals/class-frame";
 import { Field } from "../src/frames/interfaces/field";
+import { hash } from "../src/util";
 
 
 // flag to update test file
@@ -286,7 +286,7 @@ export async function assertDebugBreakPoint(
 
   const dir = __dirname.replaceAll("\\", "/");
   const jsCode = f.compileAsWorker(`file:///${dir}`, true, false);
-  const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+  const asUrl = encodeCode(jsCode);
 
   const runWorker = new Worker(asUrl, { type: "module" });
 

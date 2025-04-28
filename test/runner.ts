@@ -2,6 +2,7 @@ import { AssertOutcome } from "../src/assert-outcome";
 import { TestStatus } from "../src/frames/status-enums";
 import { StdLib } from "../src/standard-library/std-lib";
 import { System } from "../src/system";
+import { encodeCode } from "./compiler/compiler-test-helpers";
 
 export async function runTests(tests: [string, (_outcomes: AssertOutcome[]) => Promise<void>][]) {
   const allOutcomes: [string, AssertOutcome[]][] = [];
@@ -25,7 +26,7 @@ export async function runTests(tests: [string, (_outcomes: AssertOutcome[]) => P
 }
 
 export function doImport(str: string) {
-  const url = "data:text/javascript;base64," + btoa(str);
+  const url = encodeCode(str);
   return import(url);
 }
 
