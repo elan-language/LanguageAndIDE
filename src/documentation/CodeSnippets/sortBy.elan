@@ -1,6 +1,7 @@
-# aea0d277f5337ccd68f880957d75244e19b4772bfc78eb17ec90a5670c492184 Elan 1.0.0-pre2 guest Default_Profile valid
+# 53ec2d4e7e7a43f0f4602a87208b158d5fc35128d09e90744c309044f4d4f4f6 Elan 1.0.0-pre2 guest Default_Profile valid
 
 main
-  variable source set to {11, 3, 7, 37, 17, 2, 19, 5, 23, 27, 31, 13}
-  print source.sortBy(lambda x as Int, y as Int => if x > y then 1 else -1).asList()
+  let numbers be [27, 2, 3, 5, 7, 31, 37, 11, 13, 17, 19, 23]
+  let sorted be numbers.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1)
+  print sorted
 end main
