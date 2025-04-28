@@ -1,0 +1,8 @@
+# 36b61fd49b0e5a61b25d6cfc98a7ae3ce089b0c7940e20415fb65982c0cb3d85 Elan 1.0.0-pre2 guest Default_Profile valid
+
+main
+  let a be [3, 7, 5, 2, 4]
+  let head, tail be a
+  print head
+  print tail
+end main
