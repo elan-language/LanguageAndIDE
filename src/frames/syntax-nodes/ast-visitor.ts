@@ -65,7 +65,7 @@ import { WithClause } from "../parse-nodes/with-clause";
 import { SetStatement } from "../statements/set-statement";
 import { FuncName, ImageName, TupleName } from "../symbols/elan-type-names";
 import { EnumType } from "../symbols/enum-type";
-import { wrapScopeInScope } from "../symbols/symbol-helpers";
+//import { wrapScopeInScope } from "../symbols/symbol-helpers";
 import { isAstIdNode, mapOperation } from "./ast-helpers";
 import { BinaryExprAsn } from "./binary-expr-asn";
 import { BracketedAsn } from "./bracketed-asn";
@@ -219,8 +219,7 @@ export function transform(
     }
 
     const sig = new LambdaSigAsn(parameters, fieldId, scope);
-    // wrap sig scope in another scope to prevent looking up a symbol in current scope.
-    const body = transform(node.expr, fieldId, wrapScopeInScope(sig)) as AstNode;
+    const body = transform(node.expr, fieldId, sig) as AstNode;
 
     return new LambdaAsn(sig, body, fieldId);
   }

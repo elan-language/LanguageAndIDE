@@ -374,10 +374,10 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
  <!-- #endregion -->
 <!-- #region Keyboard navigation-->
 <h2 id="Keyboard">Navigation &#8211; using the keyboard</h2>
-<p>Note: For Apple Mac users: commands use of the Ctrl key in this reference, should be replaced by the macOS Cmd key.</p>
+<p>Note for Apple Mac users: commands that use the Ctrl key in this reference should use the  macOS &#x2318; Command key instead.</p>
 <p>
  <table>
- <tr><th>Keystroke</th>  <th>On a selected Frame</th> <th>On a selected Field</th> </tr>
+ <tr><th style="width:8%">Keystroke</th><th style="width:46%">On a selected Frame</th> <th style="width:46%">On a selected Field</th> </tr>
  <tr><td>Home</td> <td>First peer-level frame.</td> <td>Move text cursor to start of field.</td> </tr>
  <tr><td>End</td> <td>Last peer-level frame.</td> <td>Move text cursor to end of field.</td> </tr>
  <tr><td>Tab</td> <td>First field in frame.</td> <td>Select next field within frame or, if from last field in a frame, select the frame itself.<br> (If the field has a selected option in the auto-complete popup list then Tab will use that option &#8211; the same as Enter) </td> </tr>
@@ -389,14 +389,14 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
  <tr><td>Shift- &darr;</td> <td>Add next frame (peer-level) to current selection.</td> <td>If auto-complete options are offered (drop-down list), move the selection up one in the list. (See also Enter)</td> </tr>
  <tr><td>Esc</td> <td>Escape from the code editor, and put focus on the first Button in the IDE</td> <td> </td> </tr>
  <tr><td>Ctrl-o</td> <td>Toggle (expand/collapse) outlining on selected frame.</td> <td>Toggle (expand/collapse) outlining on the frame enclosing this field.</td> </tr>
- <tr><td align="center">Ctrl-O <br> (Ctrl-Shift-o) </td> <td>Toggle (expand/collapse) outlining on all frames.</td> <td>Toggle (expand/collapse) outlining on all frames.</td> </tr>
+ <tr><td>Ctrl-O <br>Ctrl-Shift-o</td> <td>Toggle (expand/collapse) outlining on all frames.</td> <td>Toggle (expand/collapse) outlining on all frames.</td> </tr>
  </table>
  </p>
 <!-- endregion -->
 <!-- #region Keyboard Editing-->
 <h2 id="Editing_code">Editing code</h2>
  <table>
- <tr><th>Keystroke</th> <th>On a selected Frame</th> <th>On a selected Field</th> </tr>
+ <tr><th style="width:8%">Keystroke</th><th style="width:46%">On a selected Frame</th> <th style="width:46%">On a selected Field</th> </tr>
  <tr><td>Alt-t</td> <td align="center" colspan="2">Remove all &#8216;new code&#8217; selections that can be removed.<br> This is equivalent to clicking on the Trim button. <br> (This cannot be Ctrl-t as that is defined and executed by the browser). </td> </tr>
  <tr><td>Backspace</td> <td>On any &#8216;new code&#8217; selector: delete the selector. (Note that all &#8216;new code&#8217; selectors can be removed with the +/- button above the code pane).<br> <br> On a new, unmodified, frame, or from any unedited field within that new frame: delete the whole frame and go back to the selector. This capability is to facilitate deleting a frame created unintentionally. As soon as any field has been edited, or any child frame added &#8211; the frame can only be deleted using Ctrl-Delete (see below). </td> <td>Delete character to the left of the cursor.</td> </tr>
  <tr><td>Delete</td> <td></td> <td>Delete the character to the right of the cursor.</td> </tr>

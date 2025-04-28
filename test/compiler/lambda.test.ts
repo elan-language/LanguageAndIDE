@@ -472,4 +472,20 @@ end procedure`;
       "ListImmutable cannot be of mutable type 'List<of Int>'. Click for more info.LangRef.html#compile_error",
     ]);
   });
+
+  test("Fail_ReturnSameNameAsVariable", async () => {
+    const code = `${testHeader}
+
+main
+  let aa be lambda x as Int => aa
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'aa' is not defined. Click for more info.LangRef.html#compile_error",
+    ]);
+  });
 });
