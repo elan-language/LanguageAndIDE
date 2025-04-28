@@ -260,18 +260,6 @@ export function getClassScope(start: Scope): Class | NullScope {
   return getClassScope(start.getParentScope());
 }
 
-export function wrapScopeInScope(wrapped: Scope): Scope {
-  return {
-    resolveSymbol: (id: string, transforms: Transforms, scope: Scope) =>
-      wrapped.resolveSymbol(id, transforms, scope),
-
-    getParentScope: () => wrapped,
-
-    symbolMatches: (id: string, all: boolean, initialScope: Scope) =>
-      wrapped.symbolMatches(id, all, initialScope),
-  };
-}
-
 export function isValueType(type: SymbolType) {
   return (
     type instanceof IntType ||
