@@ -1,4 +1,4 @@
-# 306565120669f2247da990d16e0b2b91bf3a2d3b704e706bc24b21e528ae5299 Elan 1.0.0-pre3 guest default_profile valid
+# ead5b47eff01e6c733614556bc0b004e1b52d00e7ed553fa0a3e5c122319cccd Elan 1.0.0-pre3 guest default_profile valid
 
 # Program to extract the parameters for the Barnsley Fern from the Wikipedia page
 # https://en.wikipedia.org/wiki/Barnsley_fern
@@ -82,7 +82,7 @@ end function
 
 # return the last element in a list of Int
 # a separate function so it can be applied to a complicated argument
-function last(l as ListImmutable<of Int>) returns Int
+function last(l as List<of Int>) returns Int
   return l[l.length() - 1]
 end function
 
@@ -95,7 +95,7 @@ test strings
 end test
 
 test last
-  assert last({5, 6, 7}) is 7
+  assert last([5, 6, 7]) is 7
 end test
 
 constant numberChars set to "-.0123456789"

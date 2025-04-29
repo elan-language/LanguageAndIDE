@@ -1409,6 +1409,13 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 </el-test>
 </el-code-block>
 <p>The result of <el-code><el-method>bitNot</el-method>(<el-id>a</el-id>)</el-code> being <el-code>-14</el-code> , when <el-code><el-id>a</el-id></el-code> is <el-code>13</el-code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as <el-code>00000000000000000000000000001101</el-code>, and applying <el-code><el-method>bitAnd</el-method></el-code> gives <el-code>11111111111111111111111111110010 </el-code>which is the value <el-code>-14 </el-code>in signed two&#8217;s complement format, the left-most bit being the sign (<el-code>0</el-code> positive, <el-code>1</el-code> negative).</p>
+
+<h2 class="no-TOC" id="sequence">Sequence</h3>
+
+<p>The <el-code><el-method>sequence</el-method></el-code> is used to create a <el-code><el-type>List</el-type></el-code> containing a sequence
+of integer values as defined by the two (integer) parameters: <el-code><el-id>start</el-id></el-code> and <el-code><el-id>end</el-id></el-code> 
+(both being <i>inclusive</i> values), for example:</p>
+
 <!-- #endregion-->
 <!-- #region Standalone procedures-->
 <h1 id="Standalone_procedures">Standalone procedures</h1>

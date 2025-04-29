@@ -829,7 +829,7 @@ function isnumberchar(s as String) returns Boolean
   return numberChars.contains(s)
 end function
 
-function last(l as ListImmutable<of Int>) returns Int
+function last(l as List<of Int>) returns Int
   return l[l.length() - 1]
 end function`;
 
