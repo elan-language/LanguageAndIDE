@@ -1338,6 +1338,11 @@ async function inactivityRefresh() {
   inactivityTimer = setTimeout(inactivityRefresh, inactivityTimeout);
 }
 
+const delayMessage =
+  "The addition to the current selected field added parsing complexity that resulted in a slow system response. It is strongly recommended that you delete the last character added, and simplify the contents of this field, for example by breaking out parts of it into separate 'let' statements.";
+
+let purgingKeys = false;
+
 async function handleKeyAndRender(e: editorEvent) {
   if (file.readRunStatus() === RunStatus.running) {
     // no change while running
@@ -1369,8 +1374,22 @@ async function handleKeyAndRender(e: editorEvent) {
         return;
       case "paste":
       case "key":
+        if (purgingKeys) {
+          return;
+        }
+        const now = Date.now();
         const codeChanged = handleKey(e, file);
+        const then = Date.now();
+        const ms = then - now;
+        console.info(`key tool ${ms}ms`);
         if (codeChanged === true) {
+          if (ms >= 1000) {
+            alert(delayMessage);
+            e.key = "Backspace";
+            handleKey(e, file);
+            setTimeout(() => (purgingKeys = false), 500);
+            purgingKeys = true;
+          }
           const singleKeyEdit = !(e.modKey.control || e.modKey.shift || e.modKey.alt);
           await refreshAndDisplay(false, singleKeyEdit);
         } else if (codeChanged === false) {
