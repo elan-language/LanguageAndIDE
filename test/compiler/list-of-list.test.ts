@@ -12,7 +12,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("List-of-List", () => {
+suite("List of List", () => {
   test("Pass_literalListOfList", async () => {
     const code = `${testHeader}
 

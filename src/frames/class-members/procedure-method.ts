@@ -1,4 +1,3 @@
-import { CodeSource } from "../code-source";
 import { mustBeUniqueNameInScope } from "../compile-rules";
 import {
   addPrivateToggleToContextMenu,
@@ -7,6 +6,7 @@ import {
 } from "../frame-helpers";
 import { ConcreteClass } from "../globals/concrete-class";
 import { ProcedureFrame } from "../globals/procedure-frame";
+import { CodeSource } from "../interfaces/code-source";
 import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Parent } from "../interfaces/parent";

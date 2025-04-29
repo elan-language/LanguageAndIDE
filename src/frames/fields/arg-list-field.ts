@@ -1,10 +1,10 @@
-import { CodeSource } from "../code-source";
 import { currentParameterIndex } from "../frame-helpers";
+import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
+import { ParseNode } from "../interfaces/parse-node";
 import { Scope } from "../interfaces/scope";
 import { Transforms } from "../interfaces/transforms";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
-import { ParseNode } from "../parse-nodes/parse-node";
 import { CallStatement } from "../statements/call-statement";
 import { ParseStatus } from "../status-enums";
 import { parameterNames } from "../symbols/symbol-helpers";

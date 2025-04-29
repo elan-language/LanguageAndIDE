@@ -1,5 +1,4 @@
 import { ElanCutCopyPasteError } from "../elan-cut-copy-paste-error";
-import { CodeSource } from "./code-source";
 import { CompileError } from "./compile-error";
 import {
   expandCollapseAll,
@@ -12,6 +11,7 @@ import {
   isSelector,
   singleIndent,
 } from "./frame-helpers";
+import { CodeSource } from "./interfaces/code-source";
 import { editorEvent } from "./interfaces/editor-event";
 import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Field } from "./interfaces/field";

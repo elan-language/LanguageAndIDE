@@ -1,6 +1,6 @@
+import { ParseNode } from "../interfaces/parse-node";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { ParseNode } from "./parse-node";
 
 export class Alternatives extends AbstractAlternatives {
   elementConstructors: (() => ParseNode)[];

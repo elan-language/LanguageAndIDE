@@ -1,7 +1,7 @@
+import { ParseNode } from "../interfaces/parse-node";
 import { AbstractSequence } from "./abstract-sequence";
 import { CommaNode } from "./comma-node";
 import { OptionalNode } from "./optional-node";
-import { ParseNode } from "./parse-node";
 
 export class CSVelement extends AbstractSequence {
   node: ParseNode;

@@ -1,7 +1,7 @@
-import { CodeSource } from "../code-source";
 import { mustBeOfType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
+import { CodeSource } from "../interfaces/code-source";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Transforms } from "../interfaces/transforms";

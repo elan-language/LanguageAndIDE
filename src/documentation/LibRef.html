@@ -451,6 +451,21 @@ further items to an array, although it is possible to convert an array to a list
     <el-code><el-kw>call</el-kw></el-code> the <el-code><el-method>put</el-method></el-code> procedure-method, or use <thead></thead>
     either <el-code><el-method>withPut</el-method></el-code> function-method.
 </p>
+<h3 class="no-TOC">Dot methods on an Array</h2>
+
+    <table>
+        <tr><th>Method</th><th>Parameters</th><th>Returns</th><th>Notes</th></tr>
+        <tr><td colspan="4"><b>Procedures</b></td></tr>
+        <tr><td><el-code><el-method></el-method></el-code></td>
+            <td></td>
+            <td></td>
+            <td></td></tr>
+        <tr><td colspan="4"><b>Functions</b></td></tr>
+        <tr><td><el-code><el-method></el-method></el-code></td>
+            <td></td>
+            <td></td>
+            <td></td></tr>
+    </table>
 <!--   #endregion-->
 <!--   #region Array2D-->
 <h2 id="Array2D">Array2D</h2>
@@ -462,7 +477,21 @@ further items to an array, although it is possible to convert an array to a list
      one of: <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>,
      <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code>.
      </p>
+     <h3 class="no-TOC">Dot methods on an Array2D</h2>
 
+        <table>
+            <tr><th>Method</th><th>Parameters</th><th>Returns</th><th>Notes</th></tr>
+            <tr><td colspan="4"><b>Procedures</b></td></tr>
+            <tr><td><el-code><el-method></el-method></el-code></td>
+                <td></td>
+                <td></td>
+                <td></td></tr>
+            <tr><td colspan="4"><b>Functions</b></td></tr>
+            <tr><td><el-code><el-method></el-method></el-code></td>
+                <td></td>
+                <td></td>
+                <td></td></tr>
+        </table>
 
 <p>You can read individual elements with a double index, for example:</p>
 <el-code>for col from 0 to 7 step 1</el-code><br>
@@ -485,6 +514,147 @@ further items to an array, although it is possible to convert an array to a list
         </li>
     </ul>
 </p>
+
+<h3 class="no-TOC">Dot methods on a list</h2>
+
+<table>
+    <tr><th>Method</th><th>Parameters</th><th>Returns</th><th>Notes</th></tr>
+    <tr><td colspan="4"><b>Procedures</b></td></tr>
+    <tr><td><el-code><el-method>append</el-method></el-code></td>
+        <td></td>
+        <td>N/A</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>appendList</el-method></el-code></td>
+        <td></td>
+        <td>N/A</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>insert</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>prepend</el-method></el-code></td>
+        <td></td>
+        <td>N/A</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>prependList</el-method></el-code></td>
+        <td></td>
+        <td>N/A</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>put</el-method></el-code></td>
+        <td></td>
+        <td>N/A</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>removeAll</el-method></el-code></td>
+        <td></td>
+        <td>N/A</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>removeAt</el-method></el-code></td>
+        <td></td>
+        <td>N/A</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>removeFirst</el-method></el-code></td>
+        <td></td>
+        <td>N/A</td>
+        <td></td></tr>
+    <tr><td colspan="4"><b>Functions</b></td></tr>
+    <tr><td><el-code><el-method>asArray</el-method></el-code></td>
+        <td>None</td>
+        <td>A new Array containing references to the same elements</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>asListImmutable</el-method></el-code></td>
+        <td>None</td>
+        <td>A new ListImmutable containing references to the same elements</em></td>
+        <td>Works only if the original list contains elements of an immutable type</td></tr>
+    <tr><td><el-code><el-method>asSet</el-method></el-code></td>
+        <td>None</td>
+        <td>A new Set containing all the <i>unique</i> elements in the list</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>asString</el-method></el-code></td>
+        <td>None</td>
+        <td>A string representation of the list (e.g. for printing)</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>contains</el-method></el-code></td>
+        <td></td>
+        <td>A Boolean indicating whether or not the list contains the specified element</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>filter</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>head</el-method></el-code></td>
+        <td></td>
+        <td>The first element only from the list</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>indexOf</el-method></el-code></td>
+        <td></td>
+        <td>The integer index of the first occurrence of the specified element</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>join</el-method></el-code></td>
+        <td>A String separator, which may be an empty String, to be inserted between elements</td>
+        <td>A single string that joins all the elements in the list, with the specified separator between each</td>
+        <td>Applies only to a list of type String</td></tr>
+    <tr><td><el-code><el-method>length</el-method></el-code></td>
+        <td>none</td>
+        <td>An integer representing the number of elements in the list</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>map</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>maxBy</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>maxBy</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>reduce</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>sortBy</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>withAppend</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>    
+    <tr><td><el-code><el-method>withAppendList</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>  
+    <tr><td><el-code><el-method>withInsert</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>    
+    <tr><td><el-code><el-method>withPrepend</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr> 
+    <tr><td><el-code><el-method>withPrependList</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr> 
+    <tr><td><el-code><el-method>withPut</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr> 
+    <tr><td><el-code><el-method>withRemoveAll</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>withRemoveAt</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>  
+    <tr><td><el-code><el-method>withRemoveFirst</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+</table>
+
 <!--   #endregion-->
 <!--   #region Dictionary-->
 <h2 id="Dictionary">Dictionary</h2>
@@ -494,6 +664,22 @@ further items to an array, although it is possible to convert an array to a list
     <i>or</i> a user-defined <i>record</i> Type &ndash; is specified when the dictionary is created along with the type
     for the values, which may be any Type.</p>
 </p>
+
+<h3 class="no-TOC">Dot methods on a Dictionary</h2>
+
+    <table>
+        <tr><th>Method</th><th>Parameters</th><th>Returns</th><th>Notes</th></tr>
+        <tr><td colspan="4"><b>Procedures</b></td></tr>
+        <tr><td><el-code><el-method></el-method></el-code></td>
+            <td></td>
+            <td></td>
+            <td></td></tr>
+        <tr><td colspan="4"><b>Functions</b></td></tr>
+        <tr><td><el-code><el-method></el-method></el-code></td>
+            <td></td>
+            <td></td>
+            <td></td></tr>
+    </table>
 <!-- #endregion-->
 <!-- #region Immutable data structures -->
 <h1>Immutable data structures</h1>

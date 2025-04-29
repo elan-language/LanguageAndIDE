@@ -1,9 +1,9 @@
-import { CodeSource } from "../code-source";
 import { MethodNameField } from "../fields/method-name-field";
 import { ParamList } from "../fields/param-list";
 import { TypeField } from "../fields/type-field";
 import { isReturnStatement } from "../frame-helpers";
 import { FrameWithStatements } from "../frame-with-statements";
+import { CodeSource } from "../interfaces/code-source";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";

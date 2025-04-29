@@ -1,6 +1,6 @@
+import { ParseNode } from "../interfaces/parse-node";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
-import { ParseNode } from "./parse-node";
 
 export class Multiple extends AbstractParseNode {
   elementConstructor: () => ParseNode;

@@ -1,6 +1,6 @@
-import { CodeSource } from "../code-source";
 import { mustNotHaveDuplicateMain } from "../compile-rules";
 import { FrameWithStatements } from "../frame-with-statements";
+import { CodeSource } from "../interfaces/code-source";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";

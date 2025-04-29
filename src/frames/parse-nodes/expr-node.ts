@@ -1,3 +1,4 @@
+import { ParseNode } from "../interfaces/parse-node";
 import {
   copyKeyword,
   emptyKeyword,
@@ -19,7 +20,6 @@ import { IfExpr } from "./if-expr";
 import { ImageNode } from "./image-node";
 import { Lambda } from "./lambda";
 import { NewInstance } from "./new-instance";
-import { ParseNode } from "./parse-node";
 import { Term } from "./term";
 import { TupleNode } from "./tuple-node";
 

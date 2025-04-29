@@ -21,16 +21,17 @@ export function transforms() {
   } as Transforms;
 }
 
-export async function fetchUserConfig() {
-  const jsonUserConfig = `userConfig.json`;
-  try {
-    const f = await fetch(jsonUserConfig, { mode: "same-origin" });
-    const j = await f.json();
-    return j as UserConfig;
-  } catch {
-    console.warn("user config not found");
-    return new DefaultUserConfig();
-  }
+export async function fetchUserConfig(): Promise<UserConfig> {
+  // for the moment no user config
+  // const jsonUserConfig = `userConfig.json`;
+  // try {
+  //   const f = await fetch(jsonUserConfig, { mode: "same-origin" });
+  //   const j = await f.json();
+  //   return j as UserConfig;
+  // } catch {
+  //   console.warn("user config not found");
+  return new DefaultUserConfig();
+  //}
 }
 
 export async function fetchDefaultProfile() {

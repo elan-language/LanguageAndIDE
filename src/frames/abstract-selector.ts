@@ -1,7 +1,7 @@
 import { ElanCutCopyPasteError } from "../elan-cut-copy-paste-error";
 import { AbstractFrame } from "./abstract-frame";
-import { CodeSource } from "./code-source";
 import { isFrameWithStatements } from "./frame-helpers";
+import { CodeSource } from "./interfaces/code-source";
 import { editorEvent } from "./interfaces/editor-event";
 import { Field } from "./interfaces/field";
 import { Frame } from "./interfaces/frame";

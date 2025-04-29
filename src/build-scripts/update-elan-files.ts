@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { elanVersion } from "../environment";
-import { CodeSourceFromString } from "../frames/code-source";
+import { CodeSourceFromString } from "../frames/code-source-from-string";
 import { DefaultProfile } from "../frames/default-profile";
 import { FileImpl } from "../frames/file-impl";
 import { transforms } from "../frames/syntax-nodes/ast-helpers";

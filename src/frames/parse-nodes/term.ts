@@ -1,7 +1,7 @@
+import { ParseNode } from "../interfaces/parse-node";
 import { refKeyword, thisKeyword } from "../keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { ParseNode } from "./parse-node";
 import { allIdsAndMethods } from "./parse-node-helpers";
 import { TermChained } from "./term-chained";
 import { TermSimpleWithOptIndex } from "./term-simple-with-opt-index";

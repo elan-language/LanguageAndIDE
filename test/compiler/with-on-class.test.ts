@@ -1,4 +1,4 @@
-import { CodeSourceFromString } from "../../src/frames/code-source";
+import { CodeSourceFromString } from "../../src/frames/code-source-from-string";
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { FileImpl } from "../../src/frames/file-impl";
 import {
@@ -12,7 +12,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("WithOnClass", () => {
+suite("With on Class", () => {
   test("Pass_SingleSetToVar", async () => {
     const code = `${testHeader}
 

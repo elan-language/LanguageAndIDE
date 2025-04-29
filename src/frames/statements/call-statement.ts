@@ -1,5 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
-import { CodeSource } from "../code-source";
+
 import {
   cannotPassAsOutParameter,
   checkForDeprecation,
@@ -13,6 +13,7 @@ import { ArgListField } from "../fields/arg-list-field";
 import { ProcRefField } from "../fields/proc-ref-field";
 import { ProcedureFrame } from "../globals/procedure-frame";
 import { AstNode } from "../interfaces/ast-node";
+import { CodeSource } from "../interfaces/code-source";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";

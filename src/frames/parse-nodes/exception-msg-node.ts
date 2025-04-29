@@ -1,7 +1,7 @@
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { IdentifierNode } from "./identifier-node";
-import { LitStringNonEmpty } from "./lit-string-non-empty";
+import { LitString } from "./lit-string";
 
 export class ExceptionMsgNode extends AbstractAlternatives {
   tokenTypes: Set<TokenType> = new Set<TokenType>([
@@ -11,7 +11,7 @@ export class ExceptionMsgNode extends AbstractAlternatives {
   ]);
   constructor() {
     super();
-    this.alternatives.push(new LitStringNonEmpty());
+    this.alternatives.push(new LitString());
     this.alternatives.push(new IdentifierNode(this.tokenTypes));
   }
   override errorLink: string = "#parse_exception_message";

@@ -1,6 +1,6 @@
+import { ParseNode } from "../interfaces/parse-node";
 import { CSV } from "./csv";
 import { ExprNode } from "./expr-node";
-import { ParseNode } from "./parse-node";
 
 export class ArgListNode extends CSV {
   errorLink: string = "#parse_arg_list";

@@ -1,7 +1,7 @@
-import { CodeSource } from "../code-source";
+import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
+import { ParseNode } from "../interfaces/parse-node";
 import { ConstantLiteralNode } from "../parse-nodes/constant-literal-node";
-import { ParseNode } from "../parse-nodes/parse-node";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 

@@ -11,7 +11,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("Printing", () => {
+suite("Printing Symbols", () => {
   test("Pass_PrintWithNoArgument", async () => {
     const code = `${testHeader}
 

@@ -1,9 +1,9 @@
-import { CodeSource } from "../code-source";
+import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
+import { ParseNode } from "../interfaces/parse-node";
 import { Alternatives } from "../parse-nodes/alternatives";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
-import { ParseNode } from "../parse-nodes/parse-node";
 import { ProcRefNode } from "../parse-nodes/proc-ref-node";
 import { ParseStatus } from "../status-enums";
 import { transforms } from "../syntax-nodes/ast-helpers";

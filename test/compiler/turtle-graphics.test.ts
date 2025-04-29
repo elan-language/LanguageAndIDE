@@ -10,7 +10,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("Turtle", () => {
+suite("Turtle Graphics", () => {
   test("Pass_MethodsUpdateTurtleState", async () => {
     const code = `${testHeader}
 
