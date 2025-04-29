@@ -1377,13 +1377,12 @@ async function handleKeyAndRender(e: editorEvent) {
         if (purgingKeys) {
           return;
         }
-        const now = Date.now();
+        const before = Date.now();
         const codeChanged = handleKey(e, file);
-        const then = Date.now();
-        const ms = then - now;
-        console.info(`key tool ${ms}ms`);
+        const after = Date.now();
+        const delay = after - before;
         if (codeChanged === true) {
-          if (ms >= 1000) {
+          if (delay >= 1000) {
             alert(delayMessage);
             e.key = "Backspace";
             handleKey(e, file);
