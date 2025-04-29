@@ -1,8 +1,8 @@
-import { CodeSource } from "../code-source";
 import { escapeHtmlInclSpaces } from "../frame-helpers";
+import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
+import { ParseNode } from "../interfaces/parse-node";
 import { CommentNode } from "../parse-nodes/comment-node";
-import { ParseNode } from "../parse-nodes/parse-node";
 import { ParseStatus } from "../status-enums";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";

@@ -1,7 +1,8 @@
 import { transforms } from "../../web/web-helpers";
 import { AbstractFrame } from "../abstract-frame";
-import { CodeSource } from "../code-source";
+
 import { CommentField } from "../fields/comment-field";
+import { CodeSource } from "../interfaces/code-source";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";

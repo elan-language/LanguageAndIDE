@@ -1,8 +1,8 @@
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
-import { CodeSource } from "./code-source";
 import { Regexes } from "./fields/regexes";
 import { isSelector } from "./frame-helpers";
+import { CodeSource } from "./interfaces/code-source";
 import { Collapsible } from "./interfaces/collapsible";
 import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Frame } from "./interfaces/frame";

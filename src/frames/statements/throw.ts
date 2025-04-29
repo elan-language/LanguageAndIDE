@@ -1,6 +1,6 @@
 import { AbstractFrame } from "../abstract-frame";
-import { CodeSource } from "../code-source";
 import { ExceptionMessage } from "../fields/exception-message";
+import { CodeSource } from "../interfaces/code-source";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";

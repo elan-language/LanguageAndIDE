@@ -12,7 +12,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("VectorGraphics", () => {
+suite("Vector Graphics", () => {
   test("Fail_CannotCreateAbstractClass", async () => {
     const code = `${testHeader}
 

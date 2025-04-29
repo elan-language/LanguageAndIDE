@@ -1,9 +1,9 @@
-import { CodeSource } from "../code-source";
+import { CodeSource } from "../interfaces/code-source";
 import { editorEvent } from "../interfaces/editor-event";
 import { Frame } from "../interfaces/frame";
+import { ParseNode } from "../interfaces/parse-node";
 import { KeywordNode } from "../parse-nodes/keyword-node";
 import { OptionalNode } from "../parse-nodes/optional-node";
-import { ParseNode } from "../parse-nodes/parse-node";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 

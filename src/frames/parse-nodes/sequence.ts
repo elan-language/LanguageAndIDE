@@ -1,5 +1,5 @@
+import { ParseNode } from "../interfaces/parse-node";
 import { AbstractSequence } from "./abstract-sequence";
-import { ParseNode } from "./parse-node";
 
 export class Sequence extends AbstractSequence {
   elementConstructors: (() => ParseNode)[];

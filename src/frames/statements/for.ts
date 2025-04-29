@@ -1,8 +1,8 @@
-import { CodeSource } from "../code-source";
 import { mustBeOfSymbolType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
+import { CodeSource } from "../interfaces/code-source";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";

@@ -1,8 +1,8 @@
-import { CodeSource } from "../code-source";
 import { isAstType } from "../frame-helpers";
+import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
+import { ParseNode } from "../interfaces/parse-node";
 import { Transforms } from "../interfaces/transforms";
-import { ParseNode } from "../parse-nodes/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";
 import { TokenType } from "../symbol-completion-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";

@@ -1,7 +1,7 @@
+import { ParseNode } from "../interfaces/parse-node";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
-import { ParseNode } from "./parse-node";
 
 export class OptionalNode extends AbstractParseNode {
   option: ParseNode;

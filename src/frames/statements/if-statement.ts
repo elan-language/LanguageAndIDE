@@ -1,7 +1,8 @@
-import { CodeSource, CodeSourceFromString } from "../code-source";
+import { CodeSourceFromString } from "../code-source-from-string";
 import { mustBeOfType, mustNotHaveConditionalAfterUnconditionalElse } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
+import { CodeSource } from "../interfaces/code-source";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";

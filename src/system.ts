@@ -6,9 +6,9 @@ import { TestStatus } from "./frames/status-enums";
 import { Dictionary } from "./standard-library/dictionary";
 import { DictionaryImmutable } from "./standard-library/dictionary-immutable";
 import { ElanArray } from "./standard-library/elan-array";
+import { ElanSet } from "./standard-library/elan-set";
 import { List } from "./standard-library/list";
 import { ListImmutable } from "./standard-library/list-immutable";
-import { ElanSet } from "./standard-library/set";
 import { WebWorkerBreakpointMessage } from "./web/web-worker-messages";
 
 export class System {

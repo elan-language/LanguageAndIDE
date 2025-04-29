@@ -1,11 +1,11 @@
 import { AbstractFrame } from "../abstract-frame";
-import { CodeSource } from "../code-source";
 import { mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamList } from "../fields/param-list";
 import { TypeField } from "../fields/type-field";
 import { singleIndent } from "../frame-helpers";
 import { ConcreteClass } from "../globals/concrete-class";
+import { CodeSource } from "../interfaces/code-source";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";

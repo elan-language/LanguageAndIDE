@@ -1,5 +1,5 @@
 import { AssertOutcome } from "../../assert-outcome";
-import { CodeSource } from "../code-source";
+
 import { editorEvent } from "../interfaces/editor-event";
 import { ScratchPad } from "../scratch-pad";
 import {
@@ -9,6 +9,7 @@ import {
   RunStatus,
   TestStatus,
 } from "../status-enums";
+import { CodeSource } from "./code-source";
 import { Frame } from "./frame";
 import { Parent } from "./parent";
 import { Profile } from "./profile";

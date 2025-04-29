@@ -1,8 +1,8 @@
+import { ParseNode } from "../interfaces/parse-node";
 import { AbstractSequence } from "./abstract-sequence";
 import { CommaNode } from "./comma-node";
 import { Multiple } from "./multiple";
 import { OptionalNode } from "./optional-node";
-import { ParseNode } from "./parse-node";
 import { Sequence } from "./sequence";
 
 //A list of comma-separated values of a specified type, but with no list delimiters

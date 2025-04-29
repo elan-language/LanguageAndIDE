@@ -1,10 +1,11 @@
 import { AbstractFrame } from "../abstract-frame";
-import { CodeSource } from "../code-source";
+
 import { mustBeKnownSymbolType, mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
 import { addPrivateToggleToContextMenu, processTogglePrivate } from "../frame-helpers";
 import { ConcreteClass } from "../globals/concrete-class";
+import { CodeSource } from "../interfaces/code-source";
 import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";

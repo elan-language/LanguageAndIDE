@@ -4,7 +4,7 @@ import { elanVersion, isElanProduction } from "../environment";
 import { StdLib } from "../standard-library/std-lib";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AbstractSelector } from "./abstract-selector";
-import { CodeSource, CodeSourceFromString } from "./code-source";
+import { CodeSourceFromString } from "./code-source-from-string";
 import { Regexes } from "./fields/regexes";
 import {
   expandCollapseAll,
@@ -26,6 +26,7 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
+import { CodeSource } from "./interfaces/code-source";
 import { editorEvent } from "./interfaces/editor-event";
 import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Field } from "./interfaces/field";

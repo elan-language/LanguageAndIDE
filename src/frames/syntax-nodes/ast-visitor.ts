@@ -3,6 +3,7 @@ import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
+import { ParseNode } from "../interfaces/parse-node";
 import { Scope } from "../interfaces/scope";
 import { globalKeyword, libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
 import { Index } from "../parse-nodes";
@@ -21,6 +22,7 @@ import { DotAfter } from "../parse-nodes/dot-after";
 import { DottedTerm } from "../parse-nodes/dotted-term";
 import { EmptyOfTypeNode } from "../parse-nodes/empty-of-type-node";
 import { EnumVal } from "../parse-nodes/enum-val";
+import { ExceptionMsgNode } from "../parse-nodes/exception-msg-node";
 import { FunctionRefNode } from "../parse-nodes/function-ref-node";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
@@ -45,7 +47,6 @@ import { Multiple } from "../parse-nodes/multiple";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { OptionalNode } from "../parse-nodes/optional-node";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
-import { ParseNode } from "../parse-nodes/parse-node";
 import { PropertyRef } from "../parse-nodes/property-ref";
 import { PunctuationNode } from "../parse-nodes/punctuation-node";
 import { RangeNode } from "../parse-nodes/range-node";
@@ -323,6 +324,14 @@ export function transform(
     return undefined;
   }
 
+  if (node instanceof ExceptionMsgNode) {
+    if (node.bestMatch) {
+      return checkMsg(transform(node.bestMatch, fieldId, scope));
+    }
+
+    return EmptyAsn.Instance;
+  }
+
   if (node instanceof AbstractAlternatives) {
     if (node.bestMatch) {
       return transform(node.bestMatch, fieldId, scope);
@@ -502,4 +511,11 @@ export function transform(
   }
 
   throw new ElanCompilerError("Unsupported node " + (node ? node.constructor.name : "undefined"));
+}
+
+function checkMsg(msg: AstNode | undefined) {
+  if (msg instanceof LiteralStringAsn) {
+    msg.ensureNotEmpty();
+  }
+  return msg;
 }

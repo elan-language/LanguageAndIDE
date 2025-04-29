@@ -1,10 +1,10 @@
+import { ParseNode } from "../interfaces/parse-node";
 import { TokenType } from "../symbol-completion-helpers";
 import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { IdentifierNode } from "./identifier-node";
 import { MethodCallNode } from "./method-call-node";
-import { ParseNode } from "./parse-node";
 import { PunctuationNode } from "./punctuation-node";
 
 export class DottedTerm extends AbstractSequence {

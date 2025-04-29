@@ -1,9 +1,9 @@
-import { CodeSource } from "../code-source";
+import { CodeSource } from "../interfaces/code-source";
 import { editorEvent } from "../interfaces/editor-event";
+import { ParseNode } from "../interfaces/parse-node";
 import { ifKeyword } from "../keywords";
 import { KeywordNode } from "../parse-nodes/keyword-node";
 import { OptionalNode } from "../parse-nodes/optional-node";
-import { ParseNode } from "../parse-nodes/parse-node";
 import { Else } from "../statements/else";
 import { ParseStatus } from "../status-enums";
 import { AbstractField } from "./abstract-field";

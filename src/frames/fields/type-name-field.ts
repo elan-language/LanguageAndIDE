@@ -1,7 +1,7 @@
-import { CodeSource } from "../code-source";
+import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
 
-import { ParseNode } from "../parse-nodes/parse-node";
+import { ParseNode } from "../interfaces/parse-node";
 import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
 import { TokenType } from "../symbol-completion-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";

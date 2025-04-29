@@ -1,8 +1,9 @@
 import { AbstractFrame } from "../abstract-frame";
-import { CodeSource } from "../code-source";
+
 import { mustBeUniqueNameInScope } from "../compile-rules";
 import { ConstantValueField } from "../fields/constant-value-field";
 import { IdentifierField } from "../fields/identifier-field";
+import { CodeSource } from "../interfaces/code-source";
 import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";

@@ -1,9 +1,9 @@
-import { CodeSource } from "../code-source";
+import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
+import { ParseNode } from "../interfaces/parse-node";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { InheritanceNode } from "../parse-nodes/inheritanceNode";
-import { ParseNode } from "../parse-nodes/parse-node";
 import { isAstCollectionNode, transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 

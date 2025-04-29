@@ -1,6 +1,6 @@
+import { ParseNode } from "../interfaces/parse-node";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
-import { ParseNode } from "./parse-node";
 
 export abstract class AbstractParseNode implements ParseNode {
   status: ParseStatus = ParseStatus.empty;

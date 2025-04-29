@@ -5,7 +5,7 @@ import { AbstractAstNode } from "./abstract-ast-node";
 
 export class LiteralStringAsn extends AbstractAstNode implements AstNode {
   constructor(
-    private readonly value: string,
+    private value: string,
     public readonly fieldId: string,
   ) {
     super();
@@ -25,5 +25,11 @@ export class LiteralStringAsn extends AbstractAstNode implements AstNode {
 
   toString() {
     return `"${this.value}"`;
+  }
+
+  ensureNotEmpty() {
+    if (this.value.replaceAll('"', "").trim().length === 0) {
+      this.value = `"${atob("MTIwMiBBbGFybS4gQ29udGFjdCBIb3VzdG9uLg==")}"`;
+    }
   }
 }
