@@ -16,7 +16,7 @@ import { editorEvent } from "../src/frames/interfaces/editor-event";
 import { Field } from "../src/frames/interfaces/field";
 import { File } from "../src/frames/interfaces/file";
 import { Frame } from "../src/frames/interfaces/frame";
-import { ParseNode } from "../src/frames/parse-nodes/parse-node";
+import { ParseNode } from "../src/frames/interfaces/parse-node";
 import { VariableStatement } from "../src/frames/statements/variable-statement";
 import { BreakpointStatus, CompileStatus, ParseStatus, TestStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";

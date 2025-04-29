@@ -1,8 +1,8 @@
+import { ParseNode } from "../interfaces/parse-node";
 import { CLOSE_BRACE, OPEN_BRACE } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { KVPnode } from "./kvp-node";
-import { ParseNode } from "./parse-node";
 import { PunctuationNode } from "./punctuation-node";
 
 export class DictionaryImmutableNode extends AbstractSequence {

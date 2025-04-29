@@ -1,9 +1,9 @@
 import { mustBeUniqueValueInScope, mustNotBeKeyword } from "../compile-rules";
 import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
+import { ParseNode } from "../interfaces/parse-node";
 import { Transforms } from "../interfaces/transforms";
 import { EnumValuesNode } from "../parse-nodes/enum-values-node";
-import { ParseNode } from "../parse-nodes/parse-node";
 import { isAstCollectionNode, transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 

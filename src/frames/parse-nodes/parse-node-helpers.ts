@@ -1,8 +1,8 @@
+import { ParseNode } from "../interfaces/parse-node";
 import { copyKeyword, emptyKeyword, ifKeyword, lambdaKeyword, newKeyword } from "../keywords";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { FixedTextNode } from "./fixed-text-node";
-import { ParseNode } from "./parse-node";
 import { SpaceNode } from "./space-node";
 
 export function matchRegEx(text: string, regx: RegExp): [ParseStatus, string, string] {

@@ -13,12 +13,12 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
+import { ParseNode } from "../interfaces/parse-node";
 import { Selectable } from "../interfaces/selectable";
 import { Transforms } from "../interfaces/transforms";
 import { propertyKeyword } from "../keywords";
 import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
-import { ParseNode } from "../parse-nodes/parse-node";
 import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
 import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import {

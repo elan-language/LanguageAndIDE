@@ -1,6 +1,6 @@
+import { ParseNode } from "../interfaces/parse-node";
 import { COLON } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
-import { ParseNode } from "./parse-node";
 import { PunctuationNode } from "./punctuation-node";
 
 export class KVPnode extends AbstractSequence {

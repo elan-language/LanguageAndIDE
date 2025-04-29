@@ -1,6 +1,6 @@
+import { ParseNode } from "../interfaces/parse-node";
 import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
-import { ParseNode } from "./parse-node";
 import { PunctuationNode } from "./punctuation-node";
 
 export class DotAfter extends AbstractSequence {
