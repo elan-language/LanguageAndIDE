@@ -1,9 +1,9 @@
 {
-"name": "Default Profile",
+"name": "default_profile",
 
-"globals":["main", "procedure", "function",  "constant", "test", "enum", "#"],
-"statements":["assert", "call", "each", "else", "for", "if", "let", "print",
-               "repeat", "set", "variable", "while", "#"],
+"globals":["main", "procedure", "function",  "constant", "test", "enum", "class", "abstract", "interface", "record","#"],
+"statements":["assert", "call", "each", "else", "for", "if", "let", "match", "otherwise", "print",
+               "repeat", "set", "switch", "throw", "try", "variable", "while", "#"],
 "class_members": ["constructor", "function", "procedure", "property",
                   "abstract function", "abstract procedure", "abstract property",
                   "private function", "private procedure", "private property","#"],

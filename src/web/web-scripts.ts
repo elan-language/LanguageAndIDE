@@ -96,8 +96,6 @@ let errorDOMEvent: Event | undefined;
 let errorEditorEvent: editorEvent | undefined;
 let errorStack: string | undefined;
 
-let usingAp = false;
-
 autoSaveButton.hidden = !useChromeFileAPI();
 
 // add all the listeners
@@ -323,27 +321,11 @@ for (const elem of demoFiles) {
 preferencesButton.addEventListener("click", () => {
   const dialog = document.getElementById("preferences-dialog") as HTMLDialogElement;
   const closeButton = dialog.querySelector("button");
-  const ap = document.getElementById("use-ap") as HTMLInputElement;
+
   const cvd = document.getElementById("use-cvd") as HTMLInputElement;
 
   closeButton?.addEventListener("click", async (e) => {
     e.preventDefault();
-
-    if (ap.checked !== usingAp) {
-      if (checkForUnsavedChanges(profileMsg)) {
-        usingAp = ap.checked;
-        if (ap.checked) {
-          const p = await fetchProfile("advanced");
-          await setup(p);
-        } else {
-          const p = await fetchProfile("default");
-          await setup(p);
-        }
-      } else {
-        ap.checked = usingAp;
-      }
-    }
-
     if (cvd.checked) {
       changeCss("cvd-colourScheme");
     } else {
@@ -490,7 +472,6 @@ if (okToContinue) {
 }
 
 const cancelMsg = "You have unsaved changes - they will be lost unless you cancel";
-const profileMsg = "You have unsaved changes - they will be lost if you change your profile";
 
 function checkForUnsavedChanges(msg: string): boolean {
   return hasUnsavedChanges() ? confirm(msg) : true;

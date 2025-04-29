@@ -1,4 +1,4 @@
-# e41a90b146bdea50e84aa79e711bca1761c78770f13ba700a93d0ef1e72eafcc Elan 1.0.0-pre2 guest default_profile valid
+# b10bfd81edd11063932f7ce76a7fa768957aff578e3d615385efb33ec82ac2b9 Elan 1.0.0-pre3 guest default_profile valid
 
 main
   let file be openFileForReading()
