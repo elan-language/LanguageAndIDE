@@ -13,7 +13,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("WithOnRecord", () => {
+suite("With on Record", () => {
   test("Pass_SingleSetToVar", async () => {
     const code = `${testHeader}
 

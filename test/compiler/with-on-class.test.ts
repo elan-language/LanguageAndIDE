@@ -12,7 +12,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("WithOnClass", () => {
+suite("With on Class", () => {
   test("Pass_SingleSetToVar", async () => {
     const code = `${testHeader}
 
