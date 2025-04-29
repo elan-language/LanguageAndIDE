@@ -1847,7 +1847,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to range(1,4)
+  variable a set to sequence(1,4)
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
@@ -1858,7 +1858,7 @@ end main`;
       ["maxBy", "maxBy", "maxBy("],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", "range(1,4).ma", expected);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "sequence(1,4).ma", expected);
   });
 
   // outstanding symbol completion bugs eg #1063
