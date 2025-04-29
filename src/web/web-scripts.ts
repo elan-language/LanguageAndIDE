@@ -1339,7 +1339,7 @@ async function inactivityRefresh() {
 }
 
 const delayMessage =
-  "The addition to the current selected field added parsing complexity that resulted in a slow system response. It is strongly recommended that you delete the last character added, and simplify the contents of this field, for example by breaking out parts of it into separate 'let' statements.";
+  "Overly complex expressions - for example involving a sequence of open brackets - can result in very slow parsing. We strongly recommended that you simplify the contents of this field, for example by breaking out parts of it into separate 'let' statements. Otherwise it might become impossible to add more text.";
 
 let purgingKeys = false;
 
