@@ -21,7 +21,7 @@ suite("Overall Status Tests", () => {
   test("new file created with all statuses at default", async () => {
     const prof = new DefaultProfile();
     const f = new FileImpl(testHash, prof, "", transforms(), true);
-    assert.equal(f.readParseStatus(), ParseStatus.default);
+    assert.equal(f.readParseStatus(), ParseStatus.valid);
     assert.equal(f.readCompileStatus(), CompileStatus.default);
     assert.equal(f.readTestStatus(), TestStatus.default);
     assert.equal(f.readRunStatus(), RunStatus.default);

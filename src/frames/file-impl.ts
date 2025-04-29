@@ -477,12 +477,16 @@ export class FileImpl implements File, Scope {
   }
 
   readParseStatus(): ParseStatus {
+    this._parseStatus = ParseStatus.default as ParseStatus;
+    this.updateAllParseStatus();
     return this._parseStatus;
   }
+
   getParseStatusLabel(): string {
     const status = this.readParseStatus();
     return status === ParseStatus.default ? "" : ParseStatus[status];
   }
+
   getParseStatusColour(): string {
     return DisplayColour[helper_parseStatusAsDisplayStatus(this._parseStatus)];
   }

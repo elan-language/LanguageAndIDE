@@ -251,4 +251,8 @@ export abstract class AbstractSelector extends AbstractFrame {
     this.select(true, false);
     return true;
   }
+
+  worstParseStatusOfFields(): ParseStatus {
+    return this.text ? ParseStatus.incomplete : ParseStatus.valid;
+  }
 }
