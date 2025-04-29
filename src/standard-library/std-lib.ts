@@ -207,7 +207,7 @@ export class StdLib {
   }
 
   @elanFunction(["start", "end"], FunctionOptions.pure, ElanClass(ListImmutable, [ElanInt]))
-  range(@elanIntType() start: number, @elanIntType() end: number): ListImmutable<number> {
+  sequence(@elanIntType() start: number, @elanIntType() end: number): ListImmutable<number> {
     const seq = [];
     for (let i = start; i <= end; i++) {
       seq.push(i);

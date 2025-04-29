@@ -1,6 +1,6 @@
-# d78cedf7f1b7059bc684dd6b4c3f4e31fca79b4cb56a1cb095e36e3024607444 Elan 1.0.0-pre3 guest default_profile valid
+# 306565120669f2247da990d16e0b2b91bf3a2d3b704e706bc24b21e528ae5299 Elan 1.0.0-pre3 guest default_profile valid
 
-# Program to sxtract the parameters for the Barnsley Fern from the Wikipedia page
+# Program to extract the parameters for the Barnsley Fern from the Wikipedia page
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Prints a string suitable for pasting into the main program
 # for generating the Barnsley Fern.
@@ -73,7 +73,7 @@ end procedure
 # only works if the string contains at least one non-number character
 # written in a functional style, see if you can work out how it works
 function gettrailingnumber(s as String) returns String
-  return if s is "" then "" else s[last(range(0, s.length() - 1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
+  return if s is "" then "" else s[last(sequence(0, s.length() - 1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
 end function
 
 function isnumberchar(s as String) returns Boolean
