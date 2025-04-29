@@ -822,14 +822,14 @@ main
 end main
 
 function getTrailingNumber(s as String) returns String
-  return if s is "" then "" else s[last(range(0, s.length() -1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
+  return if s is "" then "" else s[last(sequence(0, s.length() -1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
 end function
 
 function isnumberchar(s as String) returns Boolean
   return numberChars.contains(s)
 end function
 
-function last(l as ListImmutable<of Int>) returns Int
+function last(l as List<of Int>) returns Int
   return l[l.length() - 1]
 end function`;
 
@@ -843,7 +843,7 @@ async function main() {
 }
 
 async function getTrailingNumber(s) {
-  return s === "" ? "" : system.safeSlice(s, (await global.last((await _stdlib.range(0, _stdlib.length(s) - 1).filter(async (n) => !(await global.isnumberchar(system.safeIndex(s, n))))))) + 1, _stdlib.length(s));
+  return s === "" ? "" : system.safeSlice(s, (await global.last((await _stdlib.sequence(0, _stdlib.length(s) - 1).filter(async (n) => !(await global.isnumberchar(system.safeIndex(s, n))))))) + 1, _stdlib.length(s));
 }
 global["getTrailingNumber"] = getTrailingNumber;
 

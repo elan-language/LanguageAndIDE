@@ -1,6 +1,6 @@
-# 88d8c007d969219852c790b6404390dee2beafd6d0f59813494dcc891bed54e5 Elan 1.0.0-pre2 guest default_profile valid
+# ead5b47eff01e6c733614556bc0b004e1b52d00e7ed553fa0a3e5c122319cccd Elan 1.0.0-pre3 guest default_profile valid
 
-# Program to sxtract the parameters for the Barnsley Fern from the Wikipedia page
+# Program to extract the parameters for the Barnsley Fern from the Wikipedia page
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Prints a string suitable for pasting into the main program
 # for generating the Barnsley Fern.
@@ -73,7 +73,7 @@ end procedure
 # only works if the string contains at least one non-number character
 # written in a functional style, see if you can work out how it works
 function gettrailingnumber(s as String) returns String
-  return if s is "" then "" else s[last(range(0, s.length() - 1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
+  return if s is "" then "" else s[last(sequence(0, s.length() - 1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
 end function
 
 function isnumberchar(s as String) returns Boolean
@@ -82,7 +82,7 @@ end function
 
 # return the last element in a list of Int
 # a separate function so it can be applied to a complicated argument
-function last(l as ListImmutable<of Int>) returns Int
+function last(l as List<of Int>) returns Int
   return l[l.length() - 1]
 end function
 
@@ -95,7 +95,7 @@ test strings
 end test
 
 test last
-  assert last({5, 6, 7}) is 7
+  assert last([5, 6, 7]) is 7
 end test
 
 constant numberChars set to "-.0123456789"

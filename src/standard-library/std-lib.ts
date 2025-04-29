@@ -206,13 +206,13 @@ export class StdLib {
     return ss.indexOf(item);
   }
 
-  @elanFunction(["start", "end"], FunctionOptions.pure, ElanClass(ListImmutable, [ElanInt]))
-  range(@elanIntType() start: number, @elanIntType() end: number): ListImmutable<number> {
+  @elanFunction(["start", "end"], FunctionOptions.pure, ElanClass(List, [ElanInt]))
+  sequence(@elanIntType() start: number, @elanIntType() end: number): List<number> {
     const seq = [];
     for (let i = start; i <= end; i++) {
       seq.push(i);
     }
-    return this.system.initialise(new ListImmutable(seq));
+    return this.system.initialise(new List(seq));
   }
 
   @elanFunction(["match", "replacement"], FunctionOptions.pureExtension)

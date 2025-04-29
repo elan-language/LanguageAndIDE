@@ -322,6 +322,10 @@ el-field.selected el-msg, el-field.selected el-msg * {
     color: var(--defaultText);
   }
 
+  .warning > el-select > el-txt {
+    color: var(--warning);
+  }
+
   /* el-select el-place */
 el-select el-place  {
     display: none;

@@ -1,4 +1,4 @@
-# 55675539220b369896a449e8f5a31c245ce362c21b1df8c2f1f8f413e069b3af Elan 1.0.0-pre2 guest default_profile valid
+# e01fdb2cadfb78495635fd7c46afae60218ecb79b152f1ca55f7062d20a91f2f Elan 1.0.0-pre3 guest default_profile valid
 
 main
   variable grid set to new Array2D<of Int>(40, 30, white)

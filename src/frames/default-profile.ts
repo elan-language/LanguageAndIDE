@@ -37,7 +37,7 @@ import {
 } from "./keywords";
 
 export class DefaultProfile implements Profile {
-  name: string = "default profile";
+  name: string = "default_profile";
   globals: string[] = [
     mainKeyword,
     procedureKeyword,
