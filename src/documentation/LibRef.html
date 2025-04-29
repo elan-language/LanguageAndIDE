@@ -38,8 +38,13 @@ Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and 
 
 <h3 class="no-TOC">Dot methods</h3>
 <table>
- <tr><th>function<br>dot method</th><th>on<br>Type</th><th>argument<br>Types</th><th>return<br>Type</th><th>description</th></tr>
  <tr>
+  <th style="width:10%">function<br>dot method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:5%">return<br>Type</th>
+  <th style="width:50%">description</th>
+ </tr><tr>
   <td><el-code><el-method>asBinary</el-method></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>(none)</td>
@@ -79,8 +84,13 @@ Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and 
 
 <h3 class="no-TOC">Dot methods</h3>
 <table>
- <tr><th>function<br>dot method</th><th>on<br>Type</th><th>argument<br>Types</th><th>return<br>Type</th><th>description</th></tr>
- <tr id="asString">
+ <tr>
+  <th style="width:10%">function<br>dot method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:5%">return<br>Type</th>
+  <th style="width:50%">description</th>
+ </tr><tr id="asString">
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>Float</el-type></el-code></td>
   <td>(none)</td>
@@ -139,10 +149,15 @@ For greater detail, refer to the official JavaScript documentation.
 <h3 class="no-TOC">Default value</h3>
 <el-code>false</el-code><br>
 
-<h3 class="no-TOC">Dot methods</h3>
+<h3 class="no-TOC">Dot method</h3>
 <table>
- <tr><th>function<br>dot method</th><th>on<br>Type</th><th>argument<br>Types</th><th>return<br>Type</th><th>description</th></tr>
  <tr>
+  <th style="width:10%">function<br>dot method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:5%">return<br>Type</th>
+  <th style="width:50%">description</th>
+ </tr><tr>
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
   <td>(none)</td>
@@ -177,8 +192,13 @@ For greater detail, refer to the official JavaScript documentation.
 <h3 class="no-TOC">Dot methods</h3>
 String dot methods are functions which are applied to a variable of Type <el-code><el-type>String</el-type></el-code>. Some take arguments as shown in the table.
 <table>
- <tr><th>function<br>dot method</th><th>on<br>Type</th><th>argument<br>Types</th><th>return<br>Type</th><th>description</th></tr>
  <tr>
+  <th style="width:10%">function<br>dot method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:5%">return<br>Type</th>
+  <th style="width:50%">description</th>
+ </tr><tr>
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
@@ -374,8 +394,13 @@ or into existing variables of the correct Type:</p>
 <h1 id="standard_data_structures">Standard data structures</h1>
 <p>The four 'standard' data structures defined in the Elan library are summarised in this table:</p>
 <table>
- <tr><th><br></th><th>Array</th><th> Array2D</th><th>List</th><th>Dictionary</th></tr>
  <tr>
+  <th style="width:10%"></th>
+  <th style="width:20%">Array</th>
+  <th style="width:20%">Array2D</th>
+  <th style="width:20%">List</th>
+  <th style="width:20%">Dictionary</th>
+ </tr><tr>
   <td>Size</td><td>Static</td><td>Static</td><td>Dynamic</td><td>Dynamic</td></tr>
   <tr><td>Type form<br>(example)</td>
   <td><el-code>Array&lt;of String&gt;</el-code><br>of Type <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code>, or <el-code>Boolean</el-code></td>
@@ -453,19 +478,55 @@ further items to an array, although it is possible to convert an array to a list
 </p>
 <h3 class="no-TOC">Dot methods on an Array</h2>
 
-    <table>
-        <tr><th>Method</th><th>Parameters</th><th>Returns</th><th>Notes</th></tr>
-        <tr><td colspan="4"><b>Procedures</b></td></tr>
-        <tr><td><el-code><el-method></el-method></el-code></td>
-            <td></td>
-            <td></td>
-            <td></td></tr>
-        <tr><td colspan="4"><b>Functions</b></td></tr>
-        <tr><td><el-code><el-method></el-method></el-code></td>
-            <td></td>
-            <td></td>
-            <td></td></tr>
-    </table>
+<table>
+ <tr>
+  <th style="width:10%">procedure<br>method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:5%"></th>
+  <th style="width:50%">description</th>
+ </tr><tr>
+  <td><el-code><el-method>put</el-method></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td><el-code><el-type>Int, Array's Type</el-type></el-code></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td>puts the value (of Array's Type) at the (integer) index position in the Array</td>
+ </tr>
+</table> <p>&nbsp;</p>
+<table>
+ <tr>
+  <th style="width:10%">function<br>method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:5%">return<br>Type</th>
+  <th style="width:50%">description</th>
+ <tr>
+  <td><el-code><el-method>withPut</el-method></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td><el-code><el-type>Int,<br> Array's Type</el-type></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td>returns a new Array with the value (of Array's Type) at the (integer) index position</td>
+ </tr><tr>
+  <td><el-code><el-method>asList</el-method></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td><el-code><el-type>(none)</el-type></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>returns the contents of the Array as a List</td>
+ </tr><tr>
+  <td><el-code><el-method>asString</el-method></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td><el-code><el-type>(none)</el-type></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>returns the contents of the Array as a String</td>
+ </tr><tr>
+  <td><el-code><el-method>contains</el-method></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td><el-code><el-type>Array's Type</el-type></el-code></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td>
+  <td>returns <el-code><el-id>true</el-id></el-code> if the Array contains the value, <el-code><el-id>false</el-id></el-code> otherwise</td>
+ </tr>
+</table>
+
 <!--   #endregion-->
 <!--   #region Array2D-->
 <h2 id="Array2D">Array2D</h2>
@@ -477,7 +538,38 @@ further items to an array, although it is possible to convert an array to a list
      one of: <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>,
      <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code>.
      </p>
-     <h3 class="no-TOC">Dot methods on an Array2D</h2>
+<h3 class="no-TOC">Dot methods on an Array2D</h2>
+
+<table>
+ <tr>
+  <th style="width:10%">procedure<br>method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:5%">argument<br>Types</th>
+  <th style="width:5%"></th>
+  <th style="width:50%">description</th>
+ </tr><tr>
+  <td><el-code><el-method>put</el-method></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td><el-code><el-type>Int, Int, Array's Type</el-type></el-code></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td>puts the value (of Array's Type) at the (integer) index positions in the Array </td>
+ </tr>
+</table> <p>&nbsp;</p>
+<table>
+ <tr>
+  <th style="width:10%">function<br>dot method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:5%">argument<br>Types</th>
+  <th style="width:5%">return<br>Type</th>
+  <th style="width:50%">description</th>
+ <tr>
+  <td><el-code><el-method>asList</el-method></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td><el-code><el-type>(none)</el-type></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>returns the contents of the Array as a List</td>
+ </tr>
+</table>
 
         <table>
             <tr><th>Method</th><th>Parameters</th><th>Returns</th><th>Notes</th></tr>
@@ -620,27 +712,27 @@ further items to an array, although it is possible to convert an array to a list
     <tr><td><el-code><el-method>withAppend</el-method></el-code></td>
         <td></td>
         <td></td>
-        <td></td></tr>    
+        <td></td></tr>
     <tr><td><el-code><el-method>withAppendList</el-method></el-code></td>
         <td></td>
         <td></td>
-        <td></td></tr>  
+        <td></td></tr>
     <tr><td><el-code><el-method>withInsert</el-method></el-code></td>
         <td></td>
         <td></td>
-        <td></td></tr>    
+        <td></td></tr>
     <tr><td><el-code><el-method>withPrepend</el-method></el-code></td>
         <td></td>
         <td></td>
-        <td></td></tr> 
+        <td></td></tr>
     <tr><td><el-code><el-method>withPrependList</el-method></el-code></td>
         <td></td>
         <td></td>
-        <td></td></tr> 
+        <td></td></tr>
     <tr><td><el-code><el-method>withPut</el-method></el-code></td>
         <td></td>
         <td></td>
-        <td></td></tr> 
+        <td></td></tr>
     <tr><td><el-code><el-method>withRemoveAll</el-method></el-code></td>
         <td></td>
         <td></td>
@@ -648,7 +740,7 @@ further items to an array, although it is possible to convert an array to a list
     <tr><td><el-code><el-method>withRemoveAt</el-method></el-code></td>
         <td></td>
         <td></td>
-        <td></td></tr>  
+        <td></td></tr>
     <tr><td><el-code><el-method>withRemoveFirst</el-method></el-code></td>
         <td></td>
         <td></td>
@@ -693,7 +785,12 @@ differences. Immutable data structures are intended specifically to facilitate t
 <p>The five immutable data structures defined in the Elan library are summarised in this table. More details on each Type are given below the table.</p>
 <table>
  <tr>
-  <th></th><th>ListImmutable</th><th>DictionaryImmutable</th><th>Set</th><th>Stack</th><th>Queue</th>
+  <th style="width:10%"></th>
+  <th style="width:20%">ListImmutable</th>
+  <th style="width:20%">DictionaryImmutable</th>
+  <th style="width:20%">Set</th>
+  <th style="width:20%">Stack</th>
+  <th style="width:20%">Queue</th>
  </tr><tr>
   <td>Type</td>
   <td><el-code>ListImmutable&lt;of String&gt;</el-code><br>Item Type must be immutable</td>
