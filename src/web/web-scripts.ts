@@ -679,6 +679,10 @@ function isRunningState() {
   return file.readRunStatus() === RunStatus.running || file.readRunStatus() === RunStatus.paused;
 }
 
+function isTestRunningState() {
+  return file.readTestStatus() === TestStatus.running;
+}
+
 function isPausedState() {
   return file.readRunStatus() === RunStatus.paused;
 }
@@ -693,19 +697,28 @@ function setPauseButtonState(waitingForUserInput?: boolean) {
 
 function updateDisplayValues() {
   updateNameAndSavedStatus();
-  setStatus(parseStatus, file.getParseStatusColour(), file.getParseStatusLabel());
-  setStatus(compileStatus, file.getCompileStatusColour(), file.getCompileStatusLabel());
-  setStatus(testStatus, file.getTestStatusColour(), file.getTestStatusLabel());
-  setStatus(runStatus, file.getRunStatusColour(), file.getRunStatusLabel(), false);
+
   // Button control
   const isEmpty = file.readParseStatus() === ParseStatus.default;
   const isParsing = file.readParseStatus() === ParseStatus.valid;
   const isCompiling = file.readCompileStatus() === CompileStatus.ok;
   const isRunning = isRunningState();
   const isPaused = isPausedState();
-  const isTestRunning = file.readTestStatus() === TestStatus.running;
+  let isTestRunning = isTestRunningState();
 
   saveButton.hidden = !!autoSaveFileHandle;
+
+  if (isTestRunning && !(isParsing || isCompiling)) {
+    endTests();
+    file.setTestStatus(TestStatus.default);
+    isTestRunning = false;
+    console.info("tests cancelled in updateDisplayValues");
+  }
+
+  setStatus(parseStatus, file.getParseStatusColour(), file.getParseStatusLabel());
+  setStatus(compileStatus, file.getCompileStatusColour(), file.getCompileStatusLabel());
+  setStatus(testStatus, file.getTestStatusColour(), file.getTestStatusLabel());
+  setStatus(runStatus, file.getRunStatusColour(), file.getRunStatusLabel(), false);
 
   if (isRunning || isTestRunning) {
     codeContainer?.classList.add("running");
@@ -1010,6 +1023,12 @@ async function handleEditorEvent(
   if (!isSupportedKey(msg)) {
     // discard
     return;
+  }
+
+  if (isTestRunningState()) {
+    endTests();
+    file.setTestStatus(TestStatus.default);
+    console.info("tests cancelled in handleEditorEvent");
   }
 
   if (handleEscape(msg)) {
