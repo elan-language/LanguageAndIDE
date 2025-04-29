@@ -1,4 +1,3 @@
-import { CodeSource } from "../code-source";
 import { CompileError } from "../compile-error";
 import {
   escapeHtmlChars,
@@ -8,6 +7,7 @@ import {
   isCollapsible,
 } from "../frame-helpers";
 import { AstNode } from "../interfaces/ast-node";
+import { CodeSource } from "../interfaces/code-source";
 import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";

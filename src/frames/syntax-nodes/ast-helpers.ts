@@ -16,9 +16,7 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { noTypeOptions } from "../interfaces/type-options";
-
 import { ClassType } from "../symbols/class-type";
-
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
 import { IntType } from "../symbols/int-type";

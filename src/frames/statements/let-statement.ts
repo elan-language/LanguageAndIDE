@@ -1,4 +1,4 @@
-import { CodeSource } from "../code-source";
+import { CodeSource } from "../interfaces/code-source";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";

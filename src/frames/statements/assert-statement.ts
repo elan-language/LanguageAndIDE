@@ -1,10 +1,11 @@
 import { AssertOutcome } from "../../assert-outcome";
 import { AbstractFrame } from "../abstract-frame";
-import { CodeSource } from "../code-source";
+
 import { AssertActualField } from "../fields/assert-actual-field";
 import { ExpressionField } from "../fields/expression-field";
 import { helper_compileMsgAsHtml } from "../frame-helpers";
 import { TestFrame } from "../globals/test-frame";
+import { CodeSource } from "../interfaces/code-source";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";

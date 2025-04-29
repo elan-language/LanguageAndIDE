@@ -1,5 +1,5 @@
-import { CodeSource } from "../code-source";
 import { escapeHtmlInclSpaces } from "../frame-helpers";
+import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
 import { CommentNode } from "../parse-nodes/comment-node";
 import { ParseNode } from "../parse-nodes/parse-node";

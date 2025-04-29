@@ -1,7 +1,8 @@
 import { AbstractFrame } from "../abstract-frame";
-import { CodeSource } from "../code-source";
+
 import { CommentField } from "../fields/comment-field";
 import { ConcreteClass } from "../globals/concrete-class";
+import { CodeSource } from "../interfaces/code-source";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";

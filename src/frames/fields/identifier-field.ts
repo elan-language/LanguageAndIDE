@@ -1,6 +1,5 @@
-import { CodeSource } from "../code-source";
+import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
-
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { ParseNode } from "../parse-nodes/parse-node";
 import { transforms } from "../syntax-nodes/ast-helpers";

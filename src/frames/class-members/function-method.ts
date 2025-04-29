@@ -1,4 +1,3 @@
-import { CodeSource } from "../code-source";
 import {
   mustBeAssignableType,
   mustBeKnownSymbolType,
@@ -11,6 +10,7 @@ import {
 } from "../frame-helpers";
 import { ConcreteClass } from "../globals/concrete-class";
 import { FunctionFrame } from "../globals/function-frame";
+import { CodeSource } from "../interfaces/code-source";
 import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Parent } from "../interfaces/parent";

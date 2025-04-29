@@ -9,7 +9,6 @@ import { FunctionMethod } from "../class-members/function-method";
 import { MemberSelector } from "../class-members/member-selector";
 import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
-import { CodeSource } from "../code-source";
 import {
   mustBeInheritableClassOrInterface,
   mustBeKnownSymbolType,
@@ -22,6 +21,7 @@ import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
 import { isConstructor, isMember } from "../frame-helpers";
 import { Class } from "../interfaces/class";
+import { CodeSource } from "../interfaces/code-source";
 import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";

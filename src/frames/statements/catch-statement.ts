@@ -1,7 +1,7 @@
-import { CodeSource } from "../code-source";
 import { IdentifierField } from "../fields/identifier-field";
 import { singleIndent } from "../frame-helpers";
 import { FrameWithStatements } from "../frame-with-statements";
+import { CodeSource } from "../interfaces/code-source";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";

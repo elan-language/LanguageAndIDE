@@ -1,4 +1,4 @@
-import { CodeSource } from "../code-source";
+import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
 import { AssignableNode } from "../parse-nodes/assignable-node";
 import { ParseNode } from "../parse-nodes/parse-node";

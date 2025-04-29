@@ -1,4 +1,4 @@
-import { CodeSource } from "../code-source";
+import { CodeSource } from "../interfaces/code-source";
 import { editorEvent } from "../interfaces/editor-event";
 import { Frame } from "../interfaces/frame";
 import { KeywordNode } from "../parse-nodes/keyword-node";

@@ -1,4 +1,4 @@
-import { CodeSourceFromString } from "../../src/frames/code-source";
+import { CodeSourceFromString } from "../../src/frames/code-source-from-string";
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { FileImpl } from "../../src/frames/file-impl";
 import {

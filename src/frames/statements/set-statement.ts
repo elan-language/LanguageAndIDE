@@ -1,5 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
-import { CodeSource } from "../code-source";
+
 import {
   mustBeCompatibleNode,
   mustBeDeconstructableType,
@@ -12,6 +12,7 @@ import {
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";
 import { mapSymbolType } from "../frame-helpers";
+import { CodeSource } from "../interfaces/code-source";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";

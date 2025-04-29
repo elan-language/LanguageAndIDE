@@ -1,5 +1,5 @@
-import { CodeSource } from "../code-source";
 import { currentParameterIndex } from "../frame-helpers";
+import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { Transforms } from "../interfaces/transforms";

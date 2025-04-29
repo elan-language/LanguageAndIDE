@@ -1,5 +1,5 @@
 import { AssertOutcome } from "../../assert-outcome";
-import { CodeSource } from "../code-source";
+
 import { CompileError } from "../compile-error";
 import { CommentField } from "../fields/comment-field";
 import {
@@ -7,6 +7,7 @@ import {
   helper_testStatusAsDisplayStatus,
 } from "../frame-helpers";
 import { FrameWithStatements } from "../frame-with-statements";
+import { CodeSource } from "../interfaces/code-source";
 import { editorEvent } from "../interfaces/editor-event";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";

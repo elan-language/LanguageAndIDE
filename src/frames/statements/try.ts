@@ -1,5 +1,5 @@
-import { CodeSource } from "../code-source";
 import { FrameWithStatements } from "../frame-with-statements";
+import { CodeSource } from "../interfaces/code-source";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Transforms } from "../interfaces/transforms";

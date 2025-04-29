@@ -1,8 +1,9 @@
 import { AbstractFrame } from "../abstract-frame";
-import { CodeSource, CodeSourceFromString } from "../code-source";
+import { CodeSourceFromString } from "../code-source-from-string";
 import { mustBeOfType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { IfSelector } from "../fields/if-selector";
+import { CodeSource } from "../interfaces/code-source";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";

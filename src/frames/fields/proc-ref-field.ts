@@ -1,4 +1,4 @@
-import { CodeSource } from "../code-source";
+import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
 import { Alternatives } from "../parse-nodes/alternatives";
 import { IdentifierNode } from "../parse-nodes/identifier-node";

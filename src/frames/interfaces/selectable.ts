@@ -1,5 +1,5 @@
-import { CodeSource } from "../code-source";
 import { ParseStatus } from "../status-enums";
+import { CodeSource } from "./code-source";
 import { editorEvent } from "./editor-event";
 
 export interface Selectable {

@@ -1,4 +1,3 @@
-import { CodeSource } from "../code-source";
 import {
   mustBeUniqueNameInScope,
   mustNotBeOutParameter,
@@ -7,6 +6,7 @@ import {
 import { isConstructor, isFunction } from "../frame-helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
+import { CodeSource } from "../interfaces/code-source";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";

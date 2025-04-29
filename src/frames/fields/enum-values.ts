@@ -1,5 +1,5 @@
-import { CodeSource } from "../code-source";
 import { mustBeUniqueValueInScope, mustNotBeKeyword } from "../compile-rules";
+import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
 import { Transforms } from "../interfaces/transforms";
 import { EnumValuesNode } from "../parse-nodes/enum-values-node";

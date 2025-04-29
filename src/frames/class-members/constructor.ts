@@ -1,7 +1,7 @@
-import { CodeSource } from "../code-source";
 import { ParamList } from "../fields/param-list";
 import { FrameWithStatements } from "../frame-with-statements";
 import { ConcreteClass } from "../globals/concrete-class";
+import { CodeSource } from "../interfaces/code-source";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
