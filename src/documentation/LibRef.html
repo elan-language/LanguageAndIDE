@@ -67,7 +67,7 @@ Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and 
 <h4 class="no-TOC">Notes</h4>
 <ul>
 <li>If either limit is exceeded the number will automatically be represented as a <el-code>Float</el-code>, with possible loss of precision.</li>
-<li>A value assigned to an <el-code>Int</el-code> may be expressed in decimal or, if preceded by <el-code>0x</el-code>, in hexadecimal. Hexadecimal is useful for defining <a href="#Colour">colours</a> and Unicode codepoint values.</li>
+<li>A value assigned to an <el-code>Int</el-code> may be expressed in decimal or, if preceded by <el-code>0x</el-code>, in hexadecimal. Hexadecimal is useful for defining <a href="#Colours">colours</a> and Unicode codepoint values.</li>
 <li>An <el-code>Int</el-code> may always be passed as an argument into a method that specifies a <el-code>Float</el-code>.</li>
 </ul>
 <!--   #endregion-->
@@ -239,7 +239,7 @@ String dot methods are functions which are applied to a variable of Type <el-cod
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td>the offset (from 0) of the single character argument  within the string: if the character is not present or if  the argument string is other than a single character, the method returns -1</td>
+  <td>the offset (from 0) of the first single character argument within the string: if the character is not present or if  the argument string is other than a single character, the method returns -1</td>
  </tr><tr>
   <td><el-code><el-method>isAfter</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
@@ -446,7 +446,7 @@ or into existing variables of the correct Type:</p>
  </tr><tr>
   <td>Other function methods</td>
   <td><el-code>asList</el-code><br><el-code>sString</el-code><br><el-code>contains</el-code><br><el-code>indexOf</el-code><br><el-code>length</el-code></td>
-  <td><el-code>asString</el-code><br><el-code>contains</el-code><br><el-code>indexOf</el-code><br><el-code>length</el-code></td>
+  <td><el-code>asString</el-code><br><el-code>columns</el-code><br><el-code>contains</el-code><br><el-code>indexOf</el-code><br><el-code>rows</el-code></td>
   <td><el-code>asArray asSet asString</el-code><br><el-code>contains</el-code><br> <el-code>indexOf</el-code><br><el-code>join</el-code><br><el-code>length</el-code><br><el-code>map filter reduce</el-code><br><el-code>maxBy minBy sortBy</el-code></td>
   <td><el-code>asString</el-code><br><el-code>keys</el-code> returns a List<br><el-code>values</el-code> returns a List</td>
  </tr>
@@ -521,17 +521,17 @@ further items to an array, although it is possible to convert an array to a list
   <td><el-code><el-type>Array</el-type></el-code></td>
   <td><el-code><el-type>Array member's Type</el-type></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td><el-code><el-id>true</el-id></el-code> if the Array contains the value &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+  <td><el-code><el-id>true</el-id></el-code> if the Array contains the value &ndash; otherwise <el-code><el-id>false</el-id></el-code></td>
  </tr><tr>
   <td><el-code><el-method>indexOf</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
   <td><el-code><el-type>Array member's Type</el-type></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td>the index position of the argument's value in the array</td>
+  <td>the index position of the first occurrence of the argument value in the array, <br>or -1 if no match is found</td>
  </tr><tr>
   <td><el-code><el-method>length</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td>(none)</td>
+  <td>(none</td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>the number of items in the array</td>
  </tr>
@@ -543,8 +543,8 @@ further items to an array, although it is possible to convert an array to a list
 <p>The <el-code><el-type>Array2D</el-type></el-code> Type defines a 2-dimensional array of fixed size. The two
  dimensions, which are specified when the array is created, may be of the same size (a 'square' array)
  or different (a 'rectangular' array). If you want to create a 'jagged' array, you should use a <el-code><el-type>List</el-type></el-code> of Lists.</p>
-<p>The convention is to refer to the position of an item in such an array
- as <i>(x,y)</i> where <i>x</i> is the column number and <i>y</i> is the row number of a rectangular grid.</p>
+<p>The convention is to refer to the position of an item in such an array by two index values
+<i>(x,y)</i>, where <i>x</i> is the column number and <i>y</i> is the row number of a rectangular grid.</p>
 <p>The Type for the members is also specified when the Array is defined and must be
  one of: <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>,
  <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code>.</p>
@@ -582,25 +582,32 @@ further items to an array, although it is possible to convert an array to a list
   <td><el-code><el-type>Array2D</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>the contents of the Array2D as a string</td>
+  <td>the contents of the array as a string</td>
+ </tr><tr>
+  <td><el-code><el-method>columns</el-method></el-code></td>
+  <td><el-code><el-type>Array2D</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>the number of columns in the array (the maximum <i>x</i> value)</td>
  </tr><tr>
   <td><el-code><el-method>contains</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
   <td><el-code><el-type>Array2D member's Type</el-type></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td><el-code><el-id>true</el-id></el-code> if the Array2D contains the value &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+  <td><el-code><el-id>true</el-id></el-code> if the Array2D contains the value &ndash; otherwise <el-code><el-id>false</el-id></el-code></td>
  </tr><tr>
   <td><el-code><el-method>indexOf</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
   <td><el-code><el-type>Array2D member's Type</el-type></el-code></td>
   <td><el-code><el-type>Int, Int</el-type></el-code></td>
-  <td>a Tuple containing the index pair of the position of the argument's value in the array</td>
+  <td>a Tuple containing the index pair of the first occurrence of the argument's value in the array
+      by searching the colums, or (-1,-1) if no match is found</td>
  </tr><tr>
-  <td><el-code><el-method>length</el-method></el-code></td>
+  <td><el-code><el-method>rows</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td>the number of items in the array</td>
+  <td>the number of rows in the array (the maximum <i>y</i> value)</td>
  </tr>
 </table>
 
@@ -1345,7 +1352,7 @@ the URL as a <el-code><el-type>String</el-type></el-code>, either as a literal (
 <li>The <el-code><el-type>Array2D</el-type></el-code> must be of type <el-code><el-type>Int</el-type></el-code> and of size 40 x 30.</li>
 <li>You may create multiple <el-code><el-type>Array2Ds</el-type></el-code> holding different patterns of blocks, and switch between them
 just by passing the required one as the argument to the <el-code><el-method>displayBlocks</el-method></el-code> method.</li>
-<li>A colour is specified as an <el-code>Int</el-code>, as described under <a href="#Colour">Colours</a>.</li>
+<li>A colour is specified as an <el-code>Int</el-code>, as described under <a href="#Colours">Colours</a>.</li>
 </ul>
 <!-- #endregion-->
 <!--   #region Turtle Graphics-->
@@ -1373,7 +1380,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 <li><el-code>show</el-code> causes the turtle to be displayed (the small green circle with a black radius showing the direction it is pointing); <el-code>hide</el-code> does the opposite.</li>
 <li>You can move and turn the turtle, causing lines to be drawn, whether or not the turtle is shown. </li>
 <li>To move the turtle without drawing a line call <el-code>penUp</el-code>, then <el-code>penDown</el-code> when you are ready to draw lines again.</li>
-<li><el-code>penColour</el-code> takes an integer argument specifying the colour. For specifying colours, see <a href="#Colour">Colours</a>.</li>
+<li><el-code>penColour</el-code> takes an integer argument specifying the colour. For specifying colours, see <a href="#Colours">Colours</a>.</li>
 <li><el-code>penWidth</el-code> takes an integer argument specifying the width of the line drawn by the turtle. The minimum value is 1, which is also the default.</li>
 <li>You can specify the start position of the turtle in <el-code>x,y</el-code> coordinates (<el-code>0,0</el-code> being the top-left of the Display pane) with <el-code>placeAt</el-code>, which may also be used to reposition the turtle (without drawing a connecting line). You may specify the turtle&#8217;s absolute heading with <el-code>turnTo</el-code>, where 0 would cause the turtle to face up the screen.</li>
 <li>The current location and heading of the turtle may be read using the <el-code>x</el-code>, <el-code>y</el-code>, and <el-code>heading</el-code> properties.</li>
@@ -1465,7 +1472,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
  <li>As with <span class="Link">Block</span> graphics the screen is not updated until the <el-code><el-method>displayVectorGraphics</el-method></el-code> method is called,
    allowing you to make multiple changes before updating the screen. Similarly, the method to add a shape returns a new instance of the <el-code>VectorGraphics</el-code> which must be assigned either to an existing variable, or to a new <el-code>let</el-code>.</li>
  <li>As with the way that SVG works within Html, the shapes are drawn in the order in which they are added into the list of <el-code><el-type>VectorGraphic</el-type></el-code> instances, with later shapes positioned over earlier shapes.</li>
- <li>The <el-code><el-id>fillColour</el-id></el-code> and <el-code><el-id>strokeColour</el-id></el-code> properties may be specified as described under <a href="#Colour">Colours</a>.
+ <li>The <el-code><el-id>fillColour</el-id></el-code> and <el-code><el-id>strokeColour</el-id></el-code> properties may be specified as described under <a href="#Colours">Colours</a>.
   The <el-code><el-id>fillColour</el-id></el-code> only may also be specified as <el-code><el-id>transparent</el-id></el-method> (which has the value <el-code>-1</el-code>).
  <li><el-code><el-type>VectorGraphic</el-type></el-code> is the abstract superclass of all <el-code>...VG</el-code> shapes. You would only use it if you wanted to define a method that could work on any shape (using common members defined on <el-code>VectorGraphic</el-code>) or that could work with a <el-code>List</el-code> holding different types of shape.</li>
  <li>The constructor parameters for <el-code><el-type>CircleVG</el-type></el-code> are: <el-code>centreX, centreY, radius, fillColour, strokeColour, strokeWidth</el-code>.</li>
