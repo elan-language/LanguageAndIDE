@@ -43,19 +43,19 @@ Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and 
   <th style="width:5%">on<br>Type</th>
   <th style="width:10%">argument<br>Types</th>
   <th style="width:5%">return<br>Type</th>
-  <th style="width:50%">description</th>
+  <th style="width:50%">returns</th>
  </tr><tr>
   <td><el-code><el-method>asBinary</el-method></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>returns a string of binary digits equal in value to integer</td>
+  <td>string of binary digits equal in value to integer</td>
  </tr><tr>
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>returns a string of decimal digits equal in value to integer</td>
+  <td>string of decimal digits equal in value to integer</td>
  </tr>
 </table>
 
@@ -89,31 +89,31 @@ Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and 
   <th style="width:5%">on<br>Type</th>
   <th style="width:10%">argument<br>Types</th>
   <th style="width:5%">return<br>Type</th>
-  <th style="width:50%">description</th>
+  <th style="width:50%">returns</th>
  </tr><tr id="asString">
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>Float</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>returns a string representing the floating point value </td>
+  <td>string representing the argument's floating point value</td>
  </tr><tr id="ceiling">
   <td><el-code><el-method>ceiling</el-method></el-code></td>
   <td><el-code><el-type>Float</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td>returns the first integer larger than or equal to the floating point value</td>
+  <td>the first integer larger than or equal to the argument's floating point value</td>
  </tr><tr id="floor">
   <td><el-code><el-method>floor</el-method></el-code></td>
   <td><el-code><el-type>Float</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td>returns the first integer smaller than or equal to the floating point value</td>
+  <td>the first integer smaller than or equal to the argument's floating point value</td>
  </tr><tr id="round">
   <td><el-code><el-method>round</el-method></el-code></td>
   <td><el-code><el-type>Float</el-type></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td><el-code><el-type>Float</el-type></el-code></td>
-  <td>returns the value rounded to the number of decimal places specified in the argument</td>
+  <td>the value rounded to the number of decimal places specified in the argument</td>
  </tr>
 </table>
 
@@ -156,13 +156,13 @@ For greater detail, refer to the official JavaScript documentation.
   <th style="width:5%">on<br>Type</th>
   <th style="width:10%">argument<br>Types</th>
   <th style="width:5%">return<br>Type</th>
-  <th style="width:50%">description</th>
+  <th style="width:50%">returns</th>
  </tr><tr>
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>returns "true" if <el-code>true</el-code>, "false" if <el-code>false</el-code></td>
+  <td>string "true" if <el-code>true</el-code>, "false" if <el-code>false</el-code></td>
  </tr>
  </table>
 
@@ -196,116 +196,116 @@ String dot methods are functions which are applied to a variable of Type <el-cod
   <th style="width:10%">function<br>dot method</th>
   <th style="width:5%">on<br>Type</th>
   <th style="width:10%">argument<br>Types</th>
-  <th style="width:5%">return<br>Type</th>
-  <th style="width:50%">description</th>
+  <th style="width:10%">return<br>Type</th>
+  <th style="width:50%">returns</th>
  </tr><tr>
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td> returns the string itself &ndash; all Types have this method in order to be printable</td>
+  <td> the string itself &ndash; all Types have this method in order to be printable</td>
  </tr><tr>
   <td><el-code><el-method>asList</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code> <el-type>List&lt;of String&gt;</el-type></el-code></td>
-  <td>returns a list of the individual characters</td>
+  <td>a List of the individual characters</td>
  </tr><tr id="asUnicode">
   <td><el-code><el-method>asUnicode</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td>returns the Unicode value of the <i>first character of the string</i></td>
+  <td>the Unicode value of the <i>first character of the string</i></td>
  </td><tr>
   <td><el-code><el-method>asRegExp</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>RegExp</el-type></el-code></td>
-  <td>returns a new string that is a which is converted to a regular expression:<br>no check is made of whether the result is a valid regular expression</td>
+  <td>a new string that is a a converted to a regular expression:<br>no check is made of whether the result is a valid regular expression</td>
  </tr><tr>
   <td><el-code><el-method>asSet</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>Set</el-type></el-code></td>
-  <td> returns a <el-code><el-type>Set</el-type></el-code>of the <i>unique</i> characters in the string</td>
+  <td> a <el-code><el-type>Set</el-type></el-code>of the <i>unique</i> characters in the string</td>
  </tr><tr>
   <td><el-code><el-method>contains</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td>returns <el-code><el-id>true</el-id></el-code> if the string contains the substring specified as the argument<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+  <td><el-code><el-id>true</el-id></el-code> if the string contains the substring specified as the argument &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>indexOf</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td>returns the offset (from 0) of a single character argument  within the string: if the character is not present or if  the argument string is other than a single character, it returns -1</td>
+  <td>the offset (from 0) of the single character argument  within the string: if the character is not present or if  the argument string is other than a single character, the method returns -1</td>
  </tr><tr>
   <td><el-code><el-method>isAfter</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td>returns <el-code><el-id>true</el-id></el-code> if an alphabetic comparison finds the string comes strictly 'after' the argument string<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+  <td><el-code><el-id>true</el-id></el-code> if alphabetic comparison finds the string comes strictly 'after' the argument string &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>isAfterOrSameAs</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td>returns <el-code><el-id>true</el-id></el-code> if an alphabetic comparison finds the string comes 'after' or equals the argument string<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+  <td><el-code><el-id>true</el-id></el-code> if alphabetic comparison finds the string comes 'after' or equals the argument string &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>isBefore</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td>returns <el-code><el-id>true</el-id></el-code> if an alphabetic comparison finds the string comes strictly 'before' the argument string<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+  <td><el-code><el-id>true</el-id></el-code> if alphabetic comparison finds the string comes strictly 'before' the argument string &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>isBeforeOrSameAs</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td>returns <el-code><el-id>true</el-id></el-code> if an alphabetic comparison finds the string comes 'before' or equals the argument string<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+  <td><el-code><el-id>true</el-id></el-code> if alphabetic comparison finds the string comes 'before' or equals the argument string &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>length</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td>returns the number of characters in the string</td>
+  <td>the number of characters in the string</td>
  </tr><tr>
   <td><el-code><el-method>lowerCase</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>returns a new string with the original rendered in lower case</td>
+  <td>a new string with the original rendered in lower case</td>
  </tr><tr>
   <td><el-code><el-method>matchesRegExp</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>RegExp</el-type></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td>returns <el-code><el-id>true</el-id></el-code> if the string matches the regular expression<br> &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+  <td><el-code><el-id>true</el-id></el-code> if the string matches the regular expression &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>replace</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code>, <el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>returns a new string with <i>all</i> occurrences of the first argument string replaced<br>by the second argument string </td>
+  <td>a new string with <i>all</i> occurrences of the first argument string replaced<br>by the second argument string </td>
  </tr><tr>
   <td><el-code><el-method>split</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>List&lt;of String&gt;</of></el-type></el-code></td>
-  <td>returns a <el-code><el-type>List</el-type></el-code> of the substrings found between occurrences of the argument string</td>
+  <td>a <el-code><el-type>List</el-type></el-code> of the substrings found between occurrences of the argument string</td>
  </tr><tr>
   <td><el-code><el-method>trim</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>returns a new string with leading and trailing spaces removed</td>
+  <td>a new string with leading and trailing spaces removed</td>
  </tr><tr>
   <td><el-code><el-method>upperCase</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>returns a new string with the original rendered in upper case</td>
+  <td>a new string with the original rendered in upper case</td>
  </tr>
  </table>
 <h3 class="no-TOC" id="InterpolatedString">Interpolated string</h3>
@@ -446,7 +446,7 @@ or into existing variables of the correct Type:</p>
  </tr><tr>
   <td>Other function methods</td>
   <td><el-code>asList</el-code><br><el-code>sString</el-code><br><el-code>contains</el-code><br><el-code>indexOf</el-code><br><el-code>length</el-code></td>
-  <td><el-code>asString</el-code><br><el-code>contains</el-code><br><el-code>indexOf</el-code> returns Tuple with row & column index values<br><el-code>length</el-code></td>
+  <td><el-code>asString</el-code><br><el-code>contains</el-code><br><el-code>indexOf</el-code><br><el-code>length</el-code></td>
   <td><el-code>asArray asSet asString</el-code><br><el-code>contains</el-code><br> <el-code>indexOf</el-code><br><el-code>join</el-code><br><el-code>length</el-code><br><el-code>map filter reduce</el-code><br><el-code>maxBy minBy sortBy</el-code></td>
   <td><el-code>asString</el-code><br><el-code>keys</el-code> returns a List<br><el-code>values</el-code> returns a List</td>
  </tr>
@@ -476,114 +476,133 @@ further items to an array, although it is possible to convert an array to a list
     <el-code><el-kw>call</el-kw></el-code> the <el-code><el-method>put</el-method></el-code> procedure-method, or use <thead></thead>
     either <el-code><el-method>withPut</el-method></el-code> function-method.
 </p>
-<h3 class="no-TOC">Dot methods on an Array</h2>
-
+<h3 class="no-TOC">Procedure method on an Array</h2>
 <table>
  <tr>
   <th style="width:10%">procedure<br>method</th>
-  <th style="width:5%">on<br>Type</th>
+  <th style="width:10%">on<br>Type</th>
   <th style="width:10%">argument<br>Types</th>
-  <th style="width:5%"></th>
-  <th style="width:50%">description</th>
+  <th style="width:50%">action</th>
  </tr><tr>
   <td><el-code><el-method>put</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>Int, Array's Type</el-type></el-code></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td>puts the value (of Array's Type) at the (integer) index position in the Array</td>
+  <td><el-code><el-type>Int, Array member's Type</el-type></el-code></td>
+  <td>puts the value (of Array member's Type) at the (integer) index position in the array</td>
  </tr>
-</table> <p>&nbsp;</p>
+</table>
+<h3 class="no-TOC">Function and dot methods on an Array</h2>
 <table>
  <tr>
   <th style="width:10%">function<br>method</th>
   <th style="width:5%">on<br>Type</th>
   <th style="width:10%">argument<br>Types</th>
   <th style="width:5%">return<br>Type</th>
-  <th style="width:50%">description</th>
+  <th style="width:50%">returns</th>
  <tr>
   <td><el-code><el-method>withPut</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>Int,<br> Array's Type</el-type></el-code></td>
+  <td><el-code><el-type>Int, Array member's Type</el-type></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td>returns a new Array with the value (of Array's Type) at the (integer) index position</td>
+  <td>a new Array with the value (of Array member's Type) at the (integer) index position</td>
  </tr><tr>
   <td><el-code><el-method>asList</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>(none)</el-type></el-code></td>
+  <td>(none)</td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td>returns the contents of the Array as a List</td>
+  <td>the contents of the Array as a List</td>
  </tr><tr>
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>(none)</el-type></el-code></td>
+  <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>returns the contents of the Array as a String</td>
+  <td>the contents of the Array as a string</td>
  </tr><tr>
   <td><el-code><el-method>contains</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>Array's Type</el-type></el-code></td>
+  <td><el-code><el-type>Array member's Type</el-type></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td>returns <el-code><el-id>true</el-id></el-code> if the Array contains the value, <el-code><el-id>false</el-id></el-code> otherwise</td>
+  <td><el-code><el-id>true</el-id></el-code> if the Array contains the value &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+ </tr><tr>
+  <td><el-code><el-method>indexOf</el-method></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td><el-code><el-type>Array member's Type</el-type></el-code></td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>the index position of the argument's value in the array</td>
+ </tr><tr>
+  <td><el-code><el-method>length</el-method></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>the number of items in the array</td>
  </tr>
 </table>
 
 <!--   #endregion-->
 <!--   #region Array2D-->
 <h2 id="Array2D">Array2D</h2>
-<p>The <el-code><el-type>Array2D</el-type></el-code> Type defines a 2-dimensional arrays of a fixed size. The two
-    dimensions, which are specified when the array is created, may be of the same size (known as a 'square' array)
-     or different ('rectangular'). If you want to create a 'jagged' array, you should use a <el-code><el-type>List</el-type></el-code> of lists.</p>
+<p>The <el-code><el-type>Array2D</el-type></el-code> Type defines a 2-dimensional array of fixed size. The two
+ dimensions, which are specified when the array is created, may be of the same size (a 'square' array)
+ or different (a 'rectangular' array). If you want to create a 'jagged' array, you should use a <el-code><el-type>List</el-type></el-code> of Lists.</p>
+<p>The convention is to refer to the position of an item in such an array
+ as <i>(x,y)</i> where <i>x</i> is the column number and <i>y</i> is the row number of a rectangular grid.</p>
+<p>The Type for the members is also specified when the Array is defined and must be
+ one of: <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>,
+ <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code>.</p>
 
-    <p>The Type for the members is also specified when the array is defined and must be
-     one of: <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>,
-     <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code>.
-     </p>
-<h3 class="no-TOC">Dot methods on an Array2D</h2>
-
+<h3 class="no-TOC">Procedure method on an Array2D</h2>
 <table>
  <tr>
   <th style="width:10%">procedure<br>method</th>
-  <th style="width:5%">on<br>Type</th>
-  <th style="width:5%">argument<br>Types</th>
-  <th style="width:5%"></th>
-  <th style="width:50%">description</th>
+  <th style="width:10%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:50%">action</th>
  </tr><tr>
   <td><el-code><el-method>put</el-method></el-code></td>
-  <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>Int, Int, Array's Type</el-type></el-code></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td>puts the value (of Array's Type) at the (integer) index positions in the Array </td>
+  <td><el-code><el-type>Array2D</el-type></el-code></td>
+  <td><el-code><el-type>Int, Int, Array2D member's Type</el-type></el-code></td>
+  <td>puts the value (of Array2D member's Type) at the (two integers) index position in the array</td>
  </tr>
-</table> <p>&nbsp;</p>
+</table>
+<h3 class="no-TOC">Function and dot methods on an Array2D</h2>
 <table>
  <tr>
   <th style="width:10%">function<br>dot method</th>
   <th style="width:5%">on<br>Type</th>
-  <th style="width:5%">argument<br>Types</th>
+  <th style="width:10%">argument<br>Types</th>
   <th style="width:5%">return<br>Type</th>
-  <th style="width:50%">description</th>
- <tr>
-  <td><el-code><el-method>asList</el-method></el-code></td>
-  <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>(none)</el-type></el-code></td>
-  <td><el-code><el-type>List</el-type></el-code></td>
-  <td>returns the contents of the Array as a List</td>
+  <th style="width:50%">returns</th>
+ </tr><tr>
+  <td><el-code><el-method>withPut</el-method></el-code></td>
+  <td><el-code><el-type>Array2D</el-type></el-code></td>
+  <td><el-code><el-type>Int, Int, Array2D member's Type</el-type></el-code></td>
+  <td><el-code><el-type>Array2D</el-type></el-code></td>
+  <td>a new Array2D with the value (of Array2D member's Type) at the (two integers) index position in the array</td>
+ </tr><tr>
+  <td><el-code><el-method>asString</el-method></el-code></td>
+  <td><el-code><el-type>Array2D</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>the contents of the Array2D as a string</td>
+ </tr><tr>
+  <td><el-code><el-method>contains</el-method></el-code></td>
+  <td><el-code><el-type>Array2D</el-type></el-code></td>
+  <td><el-code><el-type>Array2D member's Type</el-type></el-code></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td>
+  <td><el-code><el-id>true</el-id></el-code> if the Array2D contains the value &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+ </tr><tr>
+  <td><el-code><el-method>indexOf</el-method></el-code></td>
+  <td><el-code><el-type>Array2D</el-type></el-code></td>
+  <td><el-code><el-type>Array2D member's Type</el-type></el-code></td>
+  <td><el-code><el-type>Int, Int</el-type></el-code></td>
+  <td>a Tuple containing the index pair of the position of the argument's value in the array</td>
+ </tr><tr>
+  <td><el-code><el-method>length</el-method></el-code></td>
+  <td><el-code><el-type>Array2D</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>the number of items in the array</td>
  </tr>
 </table>
-
-        <table>
-            <tr><th>Method</th><th>Parameters</th><th>Returns</th><th>Notes</th></tr>
-            <tr><td colspan="4"><b>Procedures</b></td></tr>
-            <tr><td><el-code><el-method></el-method></el-code></td>
-                <td></td>
-                <td></td>
-                <td></td></tr>
-            <tr><td colspan="4"><b>Functions</b></td></tr>
-            <tr><td><el-code><el-method></el-method></el-code></td>
-                <td></td>
-                <td></td>
-                <td></td></tr>
-        </table>
 
 <p>You can read individual elements with a double index, for example:</p>
 <el-code>for col from 0 to 7 step 1</el-code><br>
@@ -596,7 +615,6 @@ further items to an array, although it is possible to convert an array to a list
 <!--   #region List-->
 <h2 id="List">List</h2>
 <p>A <el-code><el-type>List</el-type></el-code> is similar to an array but more flexible because:
-
     <ul>
         <li>While the members must all be of one Type, that type is not limited to the simple value types:
             the member Type may also be a user-defined type such as a class or record, or another list, or even an array.
@@ -663,7 +681,7 @@ further items to an array, although it is possible to convert an array to a list
         <td></td></tr>
     <tr><td><el-code><el-method>asString</el-method></el-code></td>
         <td>None</td>
-        <td>A string representation of the list (e.g. for printing)</td>
+        <td>string representation of the list (e.g. for printing)</td>
         <td></td></tr>
     <tr><td><el-code><el-method>contains</el-method></el-code></td>
         <td></td>
@@ -1705,7 +1723,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <h2>Table of standalone procedures</h2>
 <p>All <el-code>procedure</el-code>s are accessed via a <el-code><a href="LangRef.html#Call">call</el-code></a> statement.</p>
 <table>
- <tr><th>procedure</th><th>input<br>argument<br>Types</th><th>output<br>argument<br>Types</th><th>description</th></tr>
+ <tr><th>procedure</th><th>input<br>argument<br>Types</th><th>output<br>argument<br>Types</th><th>action</th></tr>
  <tr id="pause">
   <td><el-code><el-method>pause</el-method></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
@@ -1788,7 +1806,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 </ul>
 <h2>Table of system methods</h2>
 <table
- <tr><th>function<br>method</th><th>argument<br>Types</th><th>return<br>Types</th><th>description</th></tr>
+ <tr><th>function<br>method</th><th>argument<br>Types</th><th>return<br>Types</th><th>action</th></tr>
  <tr id="clock">
   <td><el-code><el-method>clock</el-method></el-code></td>
   <td>(none)</td>
@@ -1921,7 +1939,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 
 <p>Empty method table template</p>
 <table>
-    <tr><th>Method</th><th>Returns</th><th>Parameters</th><th>Description</th></tr>
+    <tr><th>Method</th><th>Returns</th><th>Parameters</th><th>action</th></tr>
     <tr><th colspan="4">Functions</th></tr>
     <tr><td><el-code><el-method>asString</el-method></el-code></td>
         <td><el-code><el-type>String</el-type></el-code></td>
