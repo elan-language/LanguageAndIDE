@@ -1,4 +1,4 @@
-# 552c7c1bd215a091538de9e51da8ec248b340689e5f4dae8d2839bd5d6e6cbbd Elan 1.0.0 guest default_profile valid
+# 4fcc6f05a05fd9f1eae751064f98f002a6e1e66801e5872f3c21c9d83cda3448 Elan 1.0.1 guest default_profile valid
 
 main
   print "<h1 style='color: blue;'>A heading</h1>"
