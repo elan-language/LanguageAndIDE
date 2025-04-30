@@ -259,4 +259,4 @@ test newGame
   assert game.isOn is true
 end test
 
-# Test coverage: 82% (54/66 instructions)
+# Test coverage: 82% (53/65 instructions)
