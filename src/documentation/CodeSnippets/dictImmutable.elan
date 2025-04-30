@@ -1,4 +1,4 @@
-# 4f36ed7799f2b5f9456c0b0422eb80cce8cd1e9e6430989807dbb4f94fbfc2db Elan 1.0.0-pre3 guest default_profile valid
+# 902effd2a7fb3219138b1b9866d163a31d0b81a95490863be160ca275be9aa2c Elan 1.0.0 guest default_profile valid
 
 main
   variable immD set to new DictionaryImmutable<of String, Int>()

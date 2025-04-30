@@ -12,21 +12,23 @@
 
 <img src="images/logo.png" style="width: 30%;">
 
-<h3>Is Elan a compiled language</h3>
-<p>Yes - Elan source is compiled to JavaScript and runs very fast. As with most modern languages
+<h3>Is Elan a compiled language?</h3>
+<p>Yes. Elan source is compiled to JavaScript and runs very fast. As with most modern languages
     the compilation process is invisible to the user.</p>
 
-<h3>Can an Elan program be run without the Elan IDE</h3>
+<h3>Can an Elan program be run without the Elan IDE?</h3>
 
-<p>Yes.When you've written and tested your Elan program, you can simply use <b>File > Save as standalone</b>
-to save the program (compiled to JavaScript) within a standalone .html page. You can email this
-file to anyone else. They can open it in their browser and it runs automatically - all they see
-is a larger version of the <b>Display</b> pane. They don't need to know anything about Elan.</p>
+<p>Yes. When you've written and tested your Elan program, you can simply use <b>File > Save as standalone</b>
+to save the program (compiled to JavaScript) embedded within a standalone .html page. You can email this .html
+file to anyone else. They can open it in their browser and the program will run automatically. All they see
+is a larger version of the <b>Display</b> pane. They don't need to know anything about Elan to use the program.</p>
 
 <h3>Can I install Elan on my school server?</h3>
 
 <p>Yes. If you go to <b>Help > Version history</b> you can download a .zip file for the current
-or previous releases of Elan. This can unzipped into any web-server for private access.</p>
+or previous releases of Elan. These can unzipped into any web-server for private access.
+However, unless you have a reason to do this we recommend that you use the online version,
+as this will ensure that you are always using the latest release.</p>
 
 <h3>Why learn (or teach) a programming language that isn't used in industry?</h3>
 
@@ -41,27 +43,26 @@ or previous releases of Elan. This can unzipped into any web-server for private 
     <a href="https://infedu.vu.lt/journal/INFEDU/article/797/info">Principles of Educational Programming Language Design</a> by Michael Kölling, 
     Informatics in Education Volume 23, Issue 4 (2024).</p>
 
-    <p>Learning to program in a language used in industry isn't as useful as many people imagine:
-        because there are <i>many</i> languages used in industry: so what are the chances that
+    <p>Learning to program in a language used in industry isn't as useful as many people imagine.
+        There are <i>many</i> languages used in industry: so what are the chances that
         the one you have learned happens to be the one used in the organisation you want to join?</p>
 
     <p>More important than 'Is [the language I am going to learn] used in industry?' is
-        the question, 'Will this language make it easier, for me to switch to another language in future?'
+        the question, 'Will this language make it easy for me to switch to another language in future?'
         and, even more important, 'Will this language help me to learn to program <i>well</i>?'.</p>
 
-
     <p>Elan is designed to lay a far better foundation than you are going to get from learning
-        Python, VB, C#, Java, or any other language widely used in education today. It directly
+        Python, VB, C#, Java, or any other language widely used in education today. Elan directly
         <i>prevents</i> you from learning bad habits that those languages can encourage. 
         To pick just one of many examples: why start off writing 'global' variables only to have to learn, later on, not to
-                use them at all? Elan doesn't allow you to define any global variables.</p>
+                use them at all? Elan doesn't allow you to define any global variables in the first place.</p>
 
-    <p>If you pursue programming beyond your current educational level, there's a high chance 
-        that you'll have to learn to do 'functional programming' in a language such as Haskell.
-        The hard part isn't learning the different syntax of Haskell; the hard part is learning how
-        to build systems from pure, side-effect free functions. But if you had learned Elan first,
+    <p>If you pursue programming beyond your current educational level, then you can expect
+        to learn 'functional programming' in a language such as Haskell.
+        The hard part isn't learning the different syntax of Haskell: the hard part is learning how
+        to build systems entirely from pure, side-effect free functions. But if you have learned Elan first,
         the transition is going to be much easier, because in Elan you could never have learned
-        to create side-effects or system dependencies in functions - because Elan prevents them.
+        to create side-effects or system dependencies in functions. Elan prevents them.
         And while, for most professional programmers, it takes years to get into the habit of writing
         unit tests for all your functions, Elan encourages that from the very beginning of programming
         by making it an integral feature of the language and very simple to use.
@@ -79,29 +80,33 @@ or previous releases of Elan. This can unzipped into any web-server for private 
 <h3>Can we trust that Elan will <i>remain</i> free to use?</h3>
 <p>Yes. We are committed to this on principle and we have a governance board to ensure that continues.
     It is also worth pointing out that Elan is just 'single page app' - once you have accessed
-    the Elan IDE your code is edited, compiled, and run entirely within your browser, and Elan
-    files are saved locally. This means that we have no complex server infrastructure to maintain,
+    the page, your code is edited, compiled, and run entirely within your browser, and Elan
+    files are saved locally. This means that we have no complex server infrastructure to host, maintain,
      or fund. Moreover, since Elan, its documentation, and associated teaching resources, are all open
-      source, there is nothing to stop you, or anyone else from serving up this same page and resources.
-      From your own server. We recommend that you use our online version 
+      source, there is nothing to stop you from serving up this same page and resources from your own server.
+       We recommend that you use our online version 
       (at <a href="https://elan-lang.org">https://elan-lang.org</a>) if you can - only because that 
     way you will automatically be using the latest version.
 </p>
 
 <h3>How stable is the Elan language?</h3>
-<p>We will continue to extend and improve Elan - with frequent new, but <i>non-breaking</i> releases.
+<p>We will continue to extend and improve Elan - with frequent new, <i>non-breaking</i> releases.
 A non-breaking release means that any programs you have written previously will still load and run
-correctly. Elan is committed to <a href="https://semver.org/">semantic versioning</a>.'Third-level' releases
-(e.g. v1.0.X) are bug fixes, or changes to the IDE only - but with no change to the language or library.</p>
+correctly. Elan is committed to <a href="https://semver.org/">semantic versioning</a>:
 
-<p>Second level releases (e.g. v1.X.0) will <i>extend</i> the language or library, and as such are always 'backwards-compatible'.
+<ul>
+<li>'Third-level' releases
+(e.g. v1.0.X) are bug fixes, or changes to the IDE only - but with no change to the language or library.</li>
+
+<li>Second level releases (e.g. v1.X.0) may <i>extend</i> the language or library, and as such are always 'backwards-compatible'.
     This means that you will be able to existing programs without modification. However, any <i>new</i> programs you write
-    in the new version, will not run on a on an older version of Elan that was <i>installed on a private server</i>.</p>
+    using the new version, will not necessarily run on a on an older version of Elan that was <i>installed on a private server</i>.</li>
 
 <p>If, and only if, we were to see a <i>compelling</i> reason to make a small breaking change to any existing part
     of the language grammar or the library - and this would always be publicly discussed in advance - then
 the change would be handled as a 'first-level' release (e.g. vX.0.0). Even then, the change would be managed in 
 such a way that a clear compile message would be shown alongside any obsolete instruction or library method used in your
-code - with a link to clear guidance on how to make your code compile and run again.</p>
+code - with a link to clear and simple guidance on how to make your code compile and run again.</p>
+</ul>
 </body>
 </html>

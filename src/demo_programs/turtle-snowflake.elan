@@ -1,4 +1,4 @@
-# c8dd6869c20707e0a13948c26abca04bb6575ba4388e17d40a755e53e9b58380 Elan 1.0.0-pre3 guest default_profile valid
+# 5b6ffeda6280040d6e27695e67194e24455cf51ba4a650de9932a74fecaa5b23 Elan 1.0.0 guest default_profile valid
 
 main
   let t be new Turtle()
