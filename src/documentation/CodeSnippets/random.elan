@@ -1,4 +1,4 @@
-# 19f04818a9beeeff766bd98c4eba74fdd27aae231fca80cc003d607ef79c081b Elan 1.0.0-pre3 guest default_profile valid
+# 662ec5867708751ab9c76529b3f2c73c97e336b581195e10f77f269e0f73a09c Elan 1.0.0 guest default_profile valid
 
 main
   let probability be random()

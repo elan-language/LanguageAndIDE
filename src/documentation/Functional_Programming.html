@@ -9,117 +9,47 @@
 <title>Elan Functional Programming</title>
 </head>
 <body>
-<h1>Functional programming</h1>
-<p>Elan is designed to support the &#8216;functional programming&#8217; paradigm.</p>
-<p>Unlike in most &#8216;mixed-paradigm&#8217; programming languages, all functions in Elan are &#8216;pure functions&#8217;. Elan does not permit any function to create &#8216;side-effects&#8217;, and enforces that the returned value is derived solely, and deterministically, from the values passed into the function&#8217;s parameters. This applies whether or not you are actively seeking to write code according to the functional programming approach.</p>
-<p>When writing code according to the functional programming paradigm the aims are:</p>
+<p>Elan is a 'multi-paradigm' programming language. It supports
 <ul>
-<li>to write as much as possible of the program&#8217;s logic and behaviour within pure functions</li>
-<li>to use the <a href="#Main_routine">Main routine</a> and <a href="#Function_and_procedures">Function and Procedure</a> calls solely for implementing input/output</li>
-<li>to keep both main and procedures &#8216;as thin&#8217; as possible.</li>
+    <li>Procedural programming</li>
+    <li>Object-oriented programming</li>
+    <li>Functional programming</li>
 </ul>
-<p>Elan&#8217;s built-in support for character-mapped <el-code>BlockGraphics</el-code> is a good example of this pattern: almost all the work can be done using the built-in functions, such as <el-code>withBlock</el-code>, which may be used within your own user-defined functions. Only the <el-code>draw</el-code> method (the only one that actually changes the display) is a <el-code>procedure</el-code>, and this must be called from within <el-code>main</el-code> or a <el-code>procedure</el-code>.</p>
-<p>Although it is not a requirement to do so, adopting the functional programming paradigm also means that, wherever possible, functions should avoid using the procedural code constructs  Sequence, Loop and Branch. Here are some examples of functions that don&#8217;t use any of those procedural code constructs:</p>
-<el-code-block source="function_w.elan">
-<el-func class="ok multiline" id="func3" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident5" class="ok" tabindex="0"><el-txt>w</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params6" class="optional ok" tabindex="0"><el-txt><el-id>c</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="0"><el-txt><el-type>Int</el-type></el-txt><el-place><i>Type</i></el-place></el-field><el-msg></el-msg></el-top>
-<el-statement class="ok" id="return8" tabindex="0"><el-kw>return </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-kw>if </el-kw>(<el-id>c</el-id><el-kw> mod </el-kw><el-lit>40</el-lit>) &gt; <el-lit>0</el-lit><el-kw> then </el-kw><el-id>c</el-id> - <el-lit>1</el-lit><el-kw><br>else </el-kw><el-id>c</el-id> + <el-lit>39</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
-<el-kw>end function</el-kw>
-</el-func>
-</el-code-block>
-<el-code-block source="possibleAnswers.elan">
-<el-func class="ok multiline" id="func316" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident318" class="ok" tabindex="0"><el-txt>possibleAnswersAfterAttempt</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params319" class="optional ok" tabindex="0"><el-txt><el-id>prior</el-id> <el-kw>as</el-kw> <el-type>ListImmutable</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;, <el-id>attempt</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>mark</el-id> <el-kw>as</el-kw> <el-type>String</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type320" class="ok" tabindex="0"><el-txt><el-type>ListImmutable</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt><el-place><i>Type</i></el-place></el-field><el-msg></el-msg></el-top>
-<el-statement class="ok" id="return321" tabindex="0"><el-kw>return </el-kw><el-field id="expr322" class="ok" tabindex="0"><el-txt><el-id>prior</el-id>.<el-method>filter</el-method>(<el-kw>lambda</el-kw> <el-id>w</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-method>markAttempt</el-method>(<el-id>attempt</el-id>, <el-id>w</el-id>)<el-kw> is </el-kw><el-id>mark</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
-<el-kw>end function</el-kw>
-</el-func>
-</el-code-block>
-<el-code-block source="nextGeneration.elan">
-<el-func class="ok multiline" id="func133" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident135" class="ok" tabindex="0"><el-txt>nextGeneration</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params136" class="optional ok" tabindex="0"><el-txt><el-id>cells</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Boolean</el-type>&gt;</el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type137" class="ok" tabindex="0"><el-txt><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Boolean</el-type>&gt;</el-txt><el-place><i>Type</i></el-place></el-field><el-msg></el-msg></el-top>
-<el-statement class="ok" id="let140" tabindex="0"><el-kw>let </el-kw><el-field id="var141" class="ok" tabindex="0"><el-txt><el-id>cellRange</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr142" class="ok" tabindex="0"><el-txt><el-method>range</el-method>(<el-lit>0</el-lit>, <el-id>cells</el-id>.<el-method>length</el-method>() - <el-lit>1</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
-<el-statement class="ok" id="let143" tabindex="0"><el-kw>let </el-kw><el-field id="var144" class="ok" tabindex="0"><el-txt><el-id>next</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr145" class="ok" tabindex="0"><el-txt><el-id>cellRange</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-method>nextCellValue</el-method>(<el-id>cells</el-id>, <el-id>n</el-id>))</el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
-<el-statement class="ok" id="return138" tabindex="0"><el-kw>return </el-kw><el-field id="expr139" class="ok" tabindex="0"><el-txt><el-id>next</el-id>.<el-method>asList</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>
-<el-kw>end function</el-kw>
-</el-func>
-</el-code-block>
-<p>In the examples above we can see several patterns or techniques that are widely used in functional programming in place of procedural code constructs:</p>
-<ul>
-<li>(Top example) Use of an <a href="#If_expression">If expression</a> instead of using an <a href="#If_expression">If statement</a>.</li>
-<li>(Middle example) Use of <a href="#HoFs">Higher order Functions (HoFs)</a> &#8211; in this case <el-code>filter</el-code> &#8211; together with <a href="#Reference">Passing a function as a reference</a>.</li>
-</ul>
-<p>If you are passing a reference to a free-standing function as an argument into a HoF (as distinct from defining a <el-code>lambda</el-code>) then you provide the name of that function, but precede it with the keyword <el-code>function</el-code>. For example:</p>
-<el-code>variable passes set to allPupils.filter(function passedMathsTest)</el-code><br>
+and it is a very good way to learn all three of them. Elan lays a very strong foundation
+that will make it easier for you to transition later on to more languages that are specialised
+towards one of the three programming languages such as Java, C#, or TypeScript for object-oriented programming; 
+or Haskell, OCaml, or F#, for functional programming. Other popular multi-paradigm languages such as Python, 
+VB, C#, and Java do not lay as good a foundation. 
 
-<el-code>function passedMathsTest(p as Pupil) as Boolean</el-code><br>
-<el-code>  return p.mathsPercent &gt; 35</el-code><br>
-<el-code>end function</el-code><br>
+<p>Functional programming means constructing programs from pure function. A pure function: 
 
-<p>Notes</p>
-<ul>
-<li>When passing in the reference function <el-code>passMathsTest</el-code>, the name is preceded by <el-code>function</el-code>, and no parameters (or brackets) are added to the name as they would have been if you were evaluating (calling) the function at that point.</li>
-<li><el-code>lambda</el-code>, instead of writing a loop.</li>
-<li>Use of a <el-code>let</el-code> statement (instead of a <el-code>variable</el-code> statement) to calculate intermediate values.</li>
-</ul>
-<p>These are explained below.</p>
-<ul>
-<li>When the <el-code>if</el-code> expression is being entered or edited, it is presented as a single editable line which may be scrolled horizontally. As soon as the entry/edit field is exited, the expression will be re-formatted as shown above, with each else clause starting on a new line, indented by one character. Note that each of the three examples above is still a single statement and not a sequence of statements.</li>
-<li>The <el-code>else</el-code> keyword may be followed by a further <el-code>if</el-code> expression, as in the second example above. It is possible to form a long &#8216;chain&#8217; of these <el-code>else if</el-code> clauses, in which case there is only ever one unconditional <el-code>else</el-code> clause at the very end.</li>
-<li>If you wish to have another <el-code>if</el-code> expression within the <el-code>then</el-code> clause then this &#8216;nested&#8217; <el-code>if</el-code> expression must be surrounded by brackets in order to avoid ambiguity. However, nesting <el-code>if</el-code> expressions in this way, rather than chaining <el-code>else if</el-code> statements (above), will make the <el-code>if</el-code> expressions hard to read and interpret.</li>
-</ul>
-<h2>Higher order functions (HoFs)</h2>
-<p>A &#8216;higher order function&#8217; is one that takes in a reference to another function as a parameter, or (less commonly) that returns a reference to another function as its result. </p>
+    <ul>
+        <li>returns a value that is derived solely and deterministically from the values passed to it as parameters</li>
+        <li>may call other pure functions but may not depend upon any information other than was passed to it as parameters</li>
+        <li>may not generate any 'side effects'. A side effect is anything information, or change to the state of the system,
+             that could be observed by code ouside the function <i>other than</i> the value returned by the function.</li>
+    </ul>
 
-<h3>Standard HoFs</h3>
-<p>The Elan standard library contains several HoFs that are widely recognised and used within functional programming. See <a href="#Higher_order_functions">Higher order functions (HoFs)</a><span class="Link">.</span></p>
+<p>The reason for these constraints is that pure functions can be combined to form a program where the results are entirely predictable
+    and guaranteed. This, surprisingly perhaps, is not the case with impure functions, because external dependencies
+and side-effects can result in unexpected interference between the combined functions. </p>
 
-<h3 id="Passing_a_function">Passing a function as a reference</h3>
-<p>On most occasions when you write the name of an existing function elsewhere in code your intent is to evaluate the function and, to do so, you write the name of the function followed by brackets containing such arguments as are required by the function. For this reason if you forget to add the brackets, you will get an error, for example:</p>
+<p>However, as Simon Peyton Jones, one of the leading exponents of functional programming and lead developer of Haskell has said,</p>
 
-<el-code-block source="error_addBrackets.elan">
-<el-statement class="error" id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr10" class="selected focused error" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="20" data-cursorend="20" size="19" style="width: 20ch" value="createFileForWriting"></el-txt><el-place><i>expression</i></el-place> <el-msg class="error error-link" data-href="LangRef.html#compile_error">To evaluate function 'createFileForWriting' add brackets. Click for more info.</el-msg></el-field> <el-msg class="error"></el-msg></el-statement>
-</el-code-block>
+<p><i>'The problem is that the whole point of systems is to produce side-effects'</i>, meaning that if a program doesn't <i>at minimum</i> produce
+any output - whether displayed on a screen, stored in a file, transmitted over a network, 
+or driving an actuator in a mechanical device A-level. Then it isn't doing anything useful!</p>
 
-<p>Unlike in procedural programming, it is valid in functional programming to create a reference to the function, rather than to evaluate it.
-In that case you precede the name of the function by <el-code>ref</el-code> without any function brackets or arguments.  For example:</p>
+<p>Pure functional programming languages such as Haskell enforce that <i>all</i> functions are pure - even functions that are responsible
+for input/output which sounds like a contradiction. But the way that that conundrum is resolved is one of the reasons why learning
+to write whole applications in a pure functional language is difficult.</p>
 
-<el-code>variable passes set to allPupils.filter(ref passedMathsTest)</el-code><br>
-<el-code>function passedMathsTest(p as Pupil) as Boolean</el-code><br>
-<el-code>  return p.mathsPercent &gt; 35</el-code><br>
-<el-code>end function</el-code><br>
+<p>If you want to learn functional programming in a multi-paradigm language such as Python, VB, or C#, say, then you have
+    to split your program into the pure parts that cover the core data transformations, and the 'impure' parts that handle.
+    The problem with that approach, is that those languages cannot enforce that separation, and it is all to easy to 
+    find side-effects and dependencies creeping into your supposedly-pure core functionality.</p>
 
-<h3>Defining your own HoFs</h3>
-<p>The <el-code>Func</el-code> Type</p>
+<p>Elan is almost unique amongst</p>
 
-<h2 id="Generating_random_numbers">Generating random numbers within a function</h2>
-<p>
-It is not possible to use the system methods <el-code>random()</el-code> or <el-code>randomInt()</el-code> within a function because they create unseen side-effects. You may use those system methods outside the function and pass the resulting random number (as an <el-code>Int</el-code> or a <el-code>Float</el-code>) as an argument into a function.<br>
-<br>
-It is possible to create and use random numbers within a function, but it requires a different approach and is a little more complex, using a special Type named <el-code>Random</el-code> (note that the <el-code>R</el-code> is in upper-case), as in this example:</p>
-
-<el-code-block source="func_random.elan">
-<main class="ok multiline" id="main47" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
-<el-statement class="ok" id="var49" tabindex="0"><el-kw>variable </el-kw><el-field id="var50" class="ok" tabindex="0"><el-txt><el-id>rnd</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr51" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Random</el-type>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="call55" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident56" class="ok" tabindex="0"><el-txt><el-id>rnd</el-id>.<el-method>initialiseFromClock</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args57" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-<el-statement class="ok" id="var61" tabindex="0"><el-kw>variable </el-kw><el-field id="var62" class="ok" tabindex="0"><el-txt><el-id>dice</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr63" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok multiline" id="for65" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident67" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr68" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr69" class="ok" tabindex="0"><el-txt><el-lit>10</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr70" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
-<el-statement class="ok" id="set72" tabindex="0"><el-kw>set </el-kw><el-field id="ident73" class="ok" tabindex="0"><el-txt><el-id>dice</el-id>, <el-id>rnd</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr74" class="ok" tabindex="0"><el-txt><el-method>rollDice</el-method>(<el-id>rnd</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print76" tabindex="0"><el-kw>print </el-kw><el-field id="expr77" class="optional ok" tabindex="0"><el-txt><el-id>dice</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-kw>end for</el-kw>
-</el-statement>
-<el-kw>end main</el-kw>
-</main>
-<el-func class="ok multiline" id="func86" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident88" class="ok" tabindex="0"><el-txt>rollDice</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params89" class="optional ok" tabindex="0"><el-txt><el-id>rnd</el-id> <el-kw>as</el-kw> <el-type>Random</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type90" class="ok" tabindex="0"><el-txt>(<el-type>Int</el-type>, <el-type>Random</el-type>)</el-txt><el-place><i>Type</i></el-place></el-field></el-top>
-<el-statement class="ok" id="return91" tabindex="0"><el-kw>return </el-kw><el-field id="expr92" class="ok" tabindex="0"><el-txt><el-id>rnd</el-id>.<el-method>nextInt</el-method>(<el-lit>1</el-lit>, <el-lit>6</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-kw>end function</el-kw>
-</el-func>
-</el-code-block>
-
-<p>The <el-code>Random</el-code> Type defined two &#8216;function methods&#8217;: <el-code>next</el-code> and <el-code>nextInt</el-code>.</p>
-<p>Both of them return a 2-<span class="Link">Tuple</span> consisting of the random value (as either a <el-code>Float</el-code> or an <el-code>Int</el-code> respectively) plus a new <el-code>Random</el-code>. The new (returned) <el-code>Random</el-code> must be used for generating the subsequent random number (if more are required). If you call <el-code>next</el-code> repeatedly on the same instance of Random, you will always get the same value. </p>
-<p>As shown in the example, when first created you should call <el-code>initialiseWithClock()</el-code> on it. If you remove that call statement from the code above, the program will still generate a sequence of randomised values, but the sequence will be exactly the same each time you run the program. Initialising from the clock ensures that you get a different sequence each run. Using Random without so initialising, however, can be extremely useful for testing purposes since the results are repeatable.</p>
 </body>
 </html>

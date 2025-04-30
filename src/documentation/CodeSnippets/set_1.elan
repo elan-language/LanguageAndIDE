@@ -1,4 +1,4 @@
-# 88a8514561c2c793c65802d72daf8121bee8c43e3a002a75e97e1ebe5b593a47 Elan 1.0.0-pre3 guest default_profile valid
+# 629d4f39e6643aae78c53fd3720d897ebdb953cd6f055c5cbabfa8129d437b39 Elan 1.0.0 guest default_profile valid
 
 main
   variable st set to "new Set<of Int()"

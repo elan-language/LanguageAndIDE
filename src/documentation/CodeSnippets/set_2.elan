@@ -1,4 +1,4 @@
-# 6163f507bfd4cb8785a3a2e4b625f349601ecb1d9e0770600b5cfe52a33ab152 Elan 1.0.0-pre3 guest default_profile valid
+# 6e4c3fc7d17f42a274621675c64f58fce42c28db15bfad91356c1dc187d4130a Elan 1.0.0 guest default_profile valid
 
 main
   print s.length()

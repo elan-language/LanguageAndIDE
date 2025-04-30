@@ -1,4 +1,4 @@
-# 35932b899b562f218274a3ab056f36ae5f867c918cc08f993d5c238d6bf81c66 Elan 1.0.0-pre3 guest default_profile valid
+# efb9e5f69638e20f29fde1d4c87404a059457078d6e6c8b3bf6cfe4683ee9d36 Elan 1.0.0 guest default_profile valid
 
 class Foo
   constructor()

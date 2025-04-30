@@ -1,4 +1,4 @@
-# 701c3e86eacf9d64326a1b1168a904374ade524f65afad66433418e2eef3cfdf Elan 1.0.0-pre3 guest default_profile valid
+# 64f809c9f90bc321b71b277c976b072c25e41cf9a612485cb51e64f0d3542ec9 Elan 1.0.0 guest default_profile valid
 
 main
   let numbers be [27, 2, 3, 5, 7, 31, 37, 11, 13, 17, 19, 23]

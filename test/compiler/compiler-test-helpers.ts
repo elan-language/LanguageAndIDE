@@ -218,6 +218,8 @@ export function transforms() {
   } as Transforms;
 }
 
-export const testHeaderVersion = `Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}-${elanVersion.preRelease}`;
+const pre = elanVersion.preRelease === "" ? "" : `-${elanVersion.preRelease}`;
+
+export const testHeaderVersion = `Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
 
 export const testHeader = `# FFFF ${testHeaderVersion} guest default_profile valid`;
