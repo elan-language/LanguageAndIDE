@@ -1373,4 +1373,31 @@ end class`;
       "Argument types. Expected: listOfVGs (List<of VectorGraphic>) Provided: List<of Foo>. Click for more info.LangRef.html#compile_error",
     ]);
   });
+
+  test("Pass_split", async () => {
+    const code = `${testHeader}
+
+main
+  print parseAsInt("12 34 56".split(" ")[1])
+  print "z" + "a b c".split(" ")[1]
+  print "a b c".split(" ")[1] + "z"
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.printLine(_stdlib.parseAsInt(system.safeIndex(_stdlib.split("12 34 56", " "), 1)));
+  await system.printLine("z" + system.safeIndex(_stdlib.split("a b c", " "), 1));
+  await system.printLine(system.safeIndex(_stdlib.split("a b c", " "), 1) + "z");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "tuple(true, 34)zbbz");
+  });
 });

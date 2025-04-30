@@ -260,7 +260,7 @@ export class StdLib {
     return s.trim();
   }
 
-  @elanFunction(["", "separator"], FunctionOptions.pureExtension, ElanClass(List))
+  @elanFunction(["", "separator"], FunctionOptions.pureExtension, ElanClass(List, [ElanString]))
   split(s: string, separator: string): List<string> {
     return this.system.initialise(new List(s.split(separator)));
   }
