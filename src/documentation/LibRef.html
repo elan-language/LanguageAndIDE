@@ -38,8 +38,13 @@ Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and 
 
 <h3 class="no-TOC">Dot methods</h3>
 <table>
- <tr><th>function<br>dot method</th><th>on<br>Type</th><th>argument<br>Types</th><th>return<br>Type</th><th>description</th></tr>
  <tr>
+  <th style="width:10%">function<br>dot method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:5%">return<br>Type</th>
+  <th style="width:50%">description</th>
+ </tr><tr>
   <td><el-code><el-method>asBinary</el-method></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>(none)</td>
@@ -79,8 +84,13 @@ Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and 
 
 <h3 class="no-TOC">Dot methods</h3>
 <table>
- <tr><th>function<br>dot method</th><th>on<br>Type</th><th>argument<br>Types</th><th>return<br>Type</th><th>description</th></tr>
- <tr id="asString">
+ <tr>
+  <th style="width:10%">function<br>dot method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:5%">return<br>Type</th>
+  <th style="width:50%">description</th>
+ </tr><tr id="asString">
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>Float</el-type></el-code></td>
   <td>(none)</td>
@@ -139,10 +149,15 @@ For greater detail, refer to the official JavaScript documentation.
 <h3 class="no-TOC">Default value</h3>
 <el-code>false</el-code><br>
 
-<h3 class="no-TOC">Dot methods</h3>
+<h3 class="no-TOC">Dot method</h3>
 <table>
- <tr><th>function<br>dot method</th><th>on<br>Type</th><th>argument<br>Types</th><th>return<br>Type</th><th>description</th></tr>
  <tr>
+  <th style="width:10%">function<br>dot method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:5%">return<br>Type</th>
+  <th style="width:50%">description</th>
+ </tr><tr>
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
   <td>(none)</td>
@@ -177,8 +192,13 @@ For greater detail, refer to the official JavaScript documentation.
 <h3 class="no-TOC">Dot methods</h3>
 String dot methods are functions which are applied to a variable of Type <el-code><el-type>String</el-type></el-code>. Some take arguments as shown in the table.
 <table>
- <tr><th>function<br>dot method</th><th>on<br>Type</th><th>argument<br>Types</th><th>return<br>Type</th><th>description</th></tr>
  <tr>
+  <th style="width:10%">function<br>dot method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:5%">return<br>Type</th>
+  <th style="width:50%">description</th>
+ </tr><tr>
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
@@ -374,8 +394,13 @@ or into existing variables of the correct Type:</p>
 <h1 id="standard_data_structures">Standard data structures</h1>
 <p>The four 'standard' data structures defined in the Elan library are summarised in this table:</p>
 <table>
- <tr><th><br></th><th>Array</th><th> Array2D</th><th>List</th><th>Dictionary</th></tr>
  <tr>
+  <th style="width:10%"></th>
+  <th style="width:20%">Array</th>
+  <th style="width:20%">Array2D</th>
+  <th style="width:20%">List</th>
+  <th style="width:20%">Dictionary</th>
+ </tr><tr>
   <td>Size</td><td>Static</td><td>Static</td><td>Dynamic</td><td>Dynamic</td></tr>
   <tr><td>Type form<br>(example)</td>
   <td><el-code>Array&lt;of String&gt;</el-code><br>of Type <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code>, or <el-code>Boolean</el-code></td>
@@ -451,6 +476,57 @@ further items to an array, although it is possible to convert an array to a list
     <el-code><el-kw>call</el-kw></el-code> the <el-code><el-method>put</el-method></el-code> procedure-method, or use <thead></thead>
     either <el-code><el-method>withPut</el-method></el-code> function-method.
 </p>
+<h3 class="no-TOC">Dot methods on an Array</h2>
+
+<table>
+ <tr>
+  <th style="width:10%">procedure<br>method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:5%"></th>
+  <th style="width:50%">description</th>
+ </tr><tr>
+  <td><el-code><el-method>put</el-method></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td><el-code><el-type>Int, Array's Type</el-type></el-code></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td>puts the value (of Array's Type) at the (integer) index position in the Array</td>
+ </tr>
+</table> <p>&nbsp;</p>
+<table>
+ <tr>
+  <th style="width:10%">function<br>method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:5%">return<br>Type</th>
+  <th style="width:50%">description</th>
+ <tr>
+  <td><el-code><el-method>withPut</el-method></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td><el-code><el-type>Int,<br> Array's Type</el-type></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td>returns a new Array with the value (of Array's Type) at the (integer) index position</td>
+ </tr><tr>
+  <td><el-code><el-method>asList</el-method></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td><el-code><el-type>(none)</el-type></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>returns the contents of the Array as a List</td>
+ </tr><tr>
+  <td><el-code><el-method>asString</el-method></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td><el-code><el-type>(none)</el-type></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>returns the contents of the Array as a String</td>
+ </tr><tr>
+  <td><el-code><el-method>contains</el-method></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td><el-code><el-type>Array's Type</el-type></el-code></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td>
+  <td>returns <el-code><el-id>true</el-id></el-code> if the Array contains the value, <el-code><el-id>false</el-id></el-code> otherwise</td>
+ </tr>
+</table>
+
 <!--   #endregion-->
 <!--   #region Array2D-->
 <h2 id="Array2D">Array2D</h2>
@@ -462,7 +538,52 @@ further items to an array, although it is possible to convert an array to a list
      one of: <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>,
      <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code>.
      </p>
+<h3 class="no-TOC">Dot methods on an Array2D</h2>
 
+<table>
+ <tr>
+  <th style="width:10%">procedure<br>method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:5%">argument<br>Types</th>
+  <th style="width:5%"></th>
+  <th style="width:50%">description</th>
+ </tr><tr>
+  <td><el-code><el-method>put</el-method></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td><el-code><el-type>Int, Int, Array's Type</el-type></el-code></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td>puts the value (of Array's Type) at the (integer) index positions in the Array </td>
+ </tr>
+</table> <p>&nbsp;</p>
+<table>
+ <tr>
+  <th style="width:10%">function<br>dot method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:5%">argument<br>Types</th>
+  <th style="width:5%">return<br>Type</th>
+  <th style="width:50%">description</th>
+ <tr>
+  <td><el-code><el-method>asList</el-method></el-code></td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td><el-code><el-type>(none)</el-type></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>returns the contents of the Array as a List</td>
+ </tr>
+</table>
+
+        <table>
+            <tr><th>Method</th><th>Parameters</th><th>Returns</th><th>Notes</th></tr>
+            <tr><td colspan="4"><b>Procedures</b></td></tr>
+            <tr><td><el-code><el-method></el-method></el-code></td>
+                <td></td>
+                <td></td>
+                <td></td></tr>
+            <tr><td colspan="4"><b>Functions</b></td></tr>
+            <tr><td><el-code><el-method></el-method></el-code></td>
+                <td></td>
+                <td></td>
+                <td></td></tr>
+        </table>
 
 <p>You can read individual elements with a double index, for example:</p>
 <el-code>for col from 0 to 7 step 1</el-code><br>
@@ -485,6 +606,147 @@ further items to an array, although it is possible to convert an array to a list
         </li>
     </ul>
 </p>
+
+<h3 class="no-TOC">Dot methods on a list</h2>
+
+<table>
+    <tr><th>Method</th><th>Parameters</th><th>Returns</th><th>Notes</th></tr>
+    <tr><td colspan="4"><b>Procedures</b></td></tr>
+    <tr><td><el-code><el-method>append</el-method></el-code></td>
+        <td></td>
+        <td>N/A</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>appendList</el-method></el-code></td>
+        <td></td>
+        <td>N/A</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>insert</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>prepend</el-method></el-code></td>
+        <td></td>
+        <td>N/A</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>prependList</el-method></el-code></td>
+        <td></td>
+        <td>N/A</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>put</el-method></el-code></td>
+        <td></td>
+        <td>N/A</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>removeAll</el-method></el-code></td>
+        <td></td>
+        <td>N/A</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>removeAt</el-method></el-code></td>
+        <td></td>
+        <td>N/A</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>removeFirst</el-method></el-code></td>
+        <td></td>
+        <td>N/A</td>
+        <td></td></tr>
+    <tr><td colspan="4"><b>Functions</b></td></tr>
+    <tr><td><el-code><el-method>asArray</el-method></el-code></td>
+        <td>None</td>
+        <td>A new Array containing references to the same elements</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>asListImmutable</el-method></el-code></td>
+        <td>None</td>
+        <td>A new ListImmutable containing references to the same elements</em></td>
+        <td>Works only if the original list contains elements of an immutable type</td></tr>
+    <tr><td><el-code><el-method>asSet</el-method></el-code></td>
+        <td>None</td>
+        <td>A new Set containing all the <i>unique</i> elements in the list</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>asString</el-method></el-code></td>
+        <td>None</td>
+        <td>A string representation of the list (e.g. for printing)</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>contains</el-method></el-code></td>
+        <td></td>
+        <td>A Boolean indicating whether or not the list contains the specified element</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>filter</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>head</el-method></el-code></td>
+        <td></td>
+        <td>The first element only from the list</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>indexOf</el-method></el-code></td>
+        <td></td>
+        <td>The integer index of the first occurrence of the specified element</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>join</el-method></el-code></td>
+        <td>A String separator, which may be an empty String, to be inserted between elements</td>
+        <td>A single string that joins all the elements in the list, with the specified separator between each</td>
+        <td>Applies only to a list of type String</td></tr>
+    <tr><td><el-code><el-method>length</el-method></el-code></td>
+        <td>none</td>
+        <td>An integer representing the number of elements in the list</td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>map</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>maxBy</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>maxBy</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>reduce</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>sortBy</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>withAppend</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>withAppendList</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>withInsert</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>withPrepend</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>withPrependList</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>withPut</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>withRemoveAll</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>withRemoveAt</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+    <tr><td><el-code><el-method>withRemoveFirst</el-method></el-code></td>
+        <td></td>
+        <td></td>
+        <td></td></tr>
+</table>
+
 <!--   #endregion-->
 <!--   #region Dictionary-->
 <h2 id="Dictionary">Dictionary</h2>
@@ -494,6 +756,22 @@ further items to an array, although it is possible to convert an array to a list
     <i>or</i> a user-defined <i>record</i> Type &ndash; is specified when the dictionary is created along with the type
     for the values, which may be any Type.</p>
 </p>
+
+<h3 class="no-TOC">Dot methods on a Dictionary</h2>
+
+    <table>
+        <tr><th>Method</th><th>Parameters</th><th>Returns</th><th>Notes</th></tr>
+        <tr><td colspan="4"><b>Procedures</b></td></tr>
+        <tr><td><el-code><el-method></el-method></el-code></td>
+            <td></td>
+            <td></td>
+            <td></td></tr>
+        <tr><td colspan="4"><b>Functions</b></td></tr>
+        <tr><td><el-code><el-method></el-method></el-code></td>
+            <td></td>
+            <td></td>
+            <td></td></tr>
+    </table>
 <!-- #endregion-->
 <!-- #region Immutable data structures -->
 <h1>Immutable data structures</h1>
@@ -507,7 +785,12 @@ differences. Immutable data structures are intended specifically to facilitate t
 <p>The five immutable data structures defined in the Elan library are summarised in this table. More details on each Type are given below the table.</p>
 <table>
  <tr>
-  <th></th><th>ListImmutable</th><th>DictionaryImmutable</th><th>Set</th><th>Stack</th><th>Queue</th>
+  <th style="width:10%"></th>
+  <th style="width:20%">ListImmutable</th>
+  <th style="width:20%">DictionaryImmutable</th>
+  <th style="width:20%">Set</th>
+  <th style="width:20%">Stack</th>
+  <th style="width:20%">Queue</th>
  </tr><tr>
   <td>Type</td>
   <td><el-code>ListImmutable&lt;of String&gt;</el-code><br>Item Type must be immutable</td>
@@ -531,7 +814,7 @@ differences. Immutable data structures are intended specifically to facilitate t
   <td><el-code>new Queue&lt;of String&gt;()</el-code></td>
  </tr><tr>
   <td>read by Key</td>
-  <td><el-code>lim[2</el-code></td>
+  <td><el-code>lim[2]</el-code></td>
   <td><el-code>di["b"]</el-code></td>
   <td>N/A</td>
   <td>N/A</td>
@@ -1413,7 +1696,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 <h2 class="no-TOC" id="sequence">Sequence</h3>
 
 <p>The <el-code><el-method>sequence</el-method></el-code> is used to create a <el-code><el-type>List</el-type></el-code> containing a sequence
-of integer values as defined by the two (integer) parameters: <el-code><el-id>start</el-id></el-code> and <el-code><el-id>end</el-id></el-code> 
+of integer values as defined by the two (integer) parameters: <el-code><el-id>start</el-id></el-code> and <el-code><el-id>end</el-id></el-code>
 (both being <i>inclusive</i> values), for example:</p>
 
 <!-- #endregion-->
@@ -1623,13 +1906,9 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <h3 class="no-TOC" id="sortBy">sortBy</h3>
     <p><el-code>sortBy</el-code> takes a <el-code>lambda</el-code> that takes two arguments (of the same Type as that of the <el-code>ListImmutable</el-code> being sorted) and compares them, returning an integer with one of the values -1, 0, or +1, to indicate whether the first argument should be placed respectively before, adjacent to or after the second argument in the sorted result, where &#8216;adjacent to&#8217; means it does not matter whether before or after):</p>
     <el-code-block source="sortBy.elan">
-        <main class="ok multiline" id="main1" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
-            <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg><el-fr>1</el-fr></el-top>
-            <el-statement class="ok" id="let3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>source</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>[<el-lit>27</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>31</el-lit>, <el-lit>37</el-lit>, <el-lit>11</el-lit>, <el-lit>13</el-lit>, <el-lit>17</el-lit>, <el-lit>19</el-lit>, <el-lit>23</el-lit>]</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
-            <el-statement class="ok" id="let6" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>source</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id><el-kw> is </el-kw><el-id>y</el-id><el-kw> then </el-kw><el-lit>0</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id> &lt; <el-id>y</el-id><el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw>-<el-lit>1</el-lit>)</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>3</el-fr></el-statement>
-            <el-statement class="ok" id="print9" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>4</el-fr></el-statement>
-            <el-kw>end main</el-kw>
-        </main>
+           <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>source</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>[<el-lit>27</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>31</el-lit>, <el-lit>37</el-lit>, <el-lit>11</el-lit>, <el-lit>13</el-lit>, <el-lit>17</el-lit>, <el-lit>19</el-lit>, <el-lit>23</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>source</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id><el-kw> is </el-kw><el-id>y</el-id><el-kw> then </el-kw><el-lit>0</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id> &lt; <el-id>y</el-id><el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw>-<el-lit>1</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
     </el-code-block>
 <!-- #endregion-->
 
