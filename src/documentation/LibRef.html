@@ -233,37 +233,37 @@ String dot methods are functions which are applied to a variable of Type <el-cod
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td><el-code><el-id>true</el-id></el-code> if the string contains the substring specified as the argument &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+  <td><el-code><el-id>true</el-id></el-code> if the string contains the substring specified as the argument<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise
  </tr><tr>
   <td><el-code><el-method>indexOf</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td>the offset (from 0) of the first single character argument within the string: if the character is not present or if  the argument string is other than a single character, the method returns -1</td>
+  <td>index of the first single character argument within the string: if the character is not present or if  the argument string is other than a single character, the method returns -1</td>
  </tr><tr>
   <td><el-code><el-method>isAfter</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td><el-code><el-id>true</el-id></el-code> if alphabetic comparison finds the string comes strictly 'after' the argument string &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+  <td><el-code><el-id>true</el-id></el-code> if alphabetic comparison finds the string comes strictly 'after' the argument string<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>isAfterOrSameAs</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td><el-code><el-id>true</el-id></el-code> if alphabetic comparison finds the string comes 'after' or equals the argument string &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+  <td><el-code><el-id>true</el-id></el-code> if alphabetic comparison finds the string comes 'after' or equals the argument string<br> &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>isBefore</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td><el-code><el-id>true</el-id></el-code> if alphabetic comparison finds the string comes strictly 'before' the argument string &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+  <td><el-code><el-id>true</el-id></el-code> if alphabetic comparison finds the string comes strictly 'before' the argument string<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>isBeforeOrSameAs</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td><el-code><el-id>true</el-id></el-code> if alphabetic comparison finds the string comes 'before' or equals the argument string &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+  <td><el-code><el-id>true</el-id></el-code> if alphabetic comparison finds the string comes 'before' or equals the argument string<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>length</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
@@ -281,7 +281,7 @@ String dot methods are functions which are applied to a variable of Type <el-cod
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>RegExp</el-type></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td><el-code><el-id>true</el-id></el-code> if the string matches the regular expression &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+  <td><el-code><el-id>true</el-id></el-code> if the string matches the regular expression<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>replace</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
@@ -466,10 +466,10 @@ with the specified changes &ndash; which is why all such methods have names star
 <!--   #region Array-->
 <h2 id="Array">Array</h2>
 
-<p>An array is a simple data structure. The Type for the members of the array must be one of:
+<p>An array is a simple data structure. The Type for the elements of the array must be one of:
     <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code>.
 The size must also be specified when it is
-created, along with the value (of the specific member Type) to which each member is initialised. It is not possible to append
+created, along with the value (of the specific element Type) to which each element is initialised. It is not possible to append
 further items to an array, although it is possible to convert an array to a list using <el-code>.<el-method>asList</el-method></el-code> and then to extend or reduce that list.</p>
 
 <p>As in most languages, individual elements may be read 'by index'. However, to modify an element you must either
@@ -486,8 +486,8 @@ further items to an array, although it is possible to convert an array to a list
  </tr><tr>
   <td><el-code><el-method>put</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>Int, Array member's Type</el-type></el-code></td>
-  <td>puts the value (of Array member's Type) at the (integer) index position in the array</td>
+  <td><el-code><el-type>Int, Array element's Type</el-type></el-code></td>
+  <td>puts the value (of Array element's Type) at the (integer) index position in the array</td>
  </tr>
 </table>
 <h3 class="no-TOC">Function and dot methods on an Array</h2>
@@ -501,9 +501,9 @@ further items to an array, although it is possible to convert an array to a list
  <tr>
   <td><el-code><el-method>withPut</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>Int, Array member's Type</el-type></el-code></td>
+  <td><el-code><el-type>Int, Array element's Type</el-type></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td>a new Array with the value (of Array member's Type) at the (integer) index position</td>
+  <td>a new Array with the value (of Array element's Type) at the (integer) index position</td>
  </tr><tr>
   <td><el-code><el-method>asList</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
@@ -519,13 +519,13 @@ further items to an array, although it is possible to convert an array to a list
  </tr><tr>
   <td><el-code><el-method>contains</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>Array member's Type</el-type></el-code></td>
+  <td><el-code><el-type>Array element's Type</el-type></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td><el-code><el-id>true</el-id></el-code> if the Array contains the value &ndash; otherwise <el-code><el-id>false</el-id></el-code></td>
+  <td><el-code><el-id>true</el-id></el-code> if the Array contains the value<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>indexOf</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>Array member's Type</el-type></el-code></td>
+  <td><el-code><el-type>Array element's Type</el-type></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>the index position of the first occurrence of the argument value in the array, <br>or -1 if no match is found</td>
  </tr><tr>
@@ -545,7 +545,7 @@ further items to an array, although it is possible to convert an array to a list
  or different (a 'rectangular' array). If you want to create a 'jagged' array, you should use a <el-code><el-type>List</el-type></el-code> of Lists.</p>
 <p>The convention is to refer to the position of an item in such an array by two index values
 <i>(x,y)</i>, where <i>x</i> is the column number and <i>y</i> is the row number of a rectangular grid.</p>
-<p>The Type for the members is also specified when the Array is defined and must be
+<p>The Type for the elements is also specified when the Array is defined and must be
  one of: <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>,
  <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code>.</p>
 
@@ -559,8 +559,8 @@ further items to an array, although it is possible to convert an array to a list
  </tr><tr>
   <td><el-code><el-method>put</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
-  <td><el-code><el-type>Int, Int, Array2D member's Type</el-type></el-code></td>
-  <td>puts the value (of Array2D member's Type) at the (two integers) index position in the array</td>
+  <td><el-code><el-type>Int, Int, Array2D element's Type</el-type></el-code></td>
+  <td>puts the value (of Array2D element's Type) at the (two integers) index position in the array</td>
  </tr>
 </table>
 <h3 class="no-TOC">Function and dot methods on an Array2D</h2>
@@ -574,9 +574,9 @@ further items to an array, although it is possible to convert an array to a list
  </tr><tr>
   <td><el-code><el-method>withPut</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
-  <td><el-code><el-type>Int, Int, Array2D member's Type</el-type></el-code></td>
+  <td><el-code><el-type>Int, Int, Array2D element's Type</el-type></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
-  <td>a new Array2D with the value (of Array2D member's Type) at the (two integers) index position in the array</td>
+  <td>a new Array2D with the value (of Array2D element's Type) at the (two integers) index position in the array</td>
  </tr><tr>
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
@@ -592,13 +592,13 @@ further items to an array, although it is possible to convert an array to a list
  </tr><tr>
   <td><el-code><el-method>contains</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
-  <td><el-code><el-type>Array2D member's Type</el-type></el-code></td>
+  <td><el-code><el-type>Array2D element's Type</el-type></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td><el-code><el-id>true</el-id></el-code> if the Array2D contains the value &ndash; otherwise <el-code><el-id>false</el-id></el-code></td>
+  <td><el-code><el-id>true</el-id></el-code> if the Array2D contains the value<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>indexOf</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
-  <td><el-code><el-type>Array2D member's Type</el-type></el-code></td>
+  <td><el-code><el-type>Array2D element's Type</el-type></el-code></td>
   <td><el-code><el-type>Int, Int</el-type></el-code></td>
   <td>a Tuple containing the index pair of the first occurrence of the argument's value in the array
       by searching the colums, or (-1,-1) if no match is found</td>
@@ -623,8 +623,8 @@ further items to an array, although it is possible to convert an array to a list
 <h2 id="List">List</h2>
 <p>A <el-code><el-type>List</el-type></el-code> is similar to an array but more flexible because:
     <ul>
-        <li>While the members must all be of one Type, that type is not limited to the simple value types:
-            the member Type may also be a user-defined type such as a class or record, or another list, or even an array.
+        <li>While the elements must all be of one Type, that type is not limited to the simple value types:
+            the element Type may also be a user-defined type such as a class or record, or another list, or even an array.
         </li>
         <li>The size may be dynamically extended. Indeed a list is either created empty to begin with, or
             initialised from a literal definition.
@@ -632,144 +632,214 @@ further items to an array, although it is possible to convert an array to a list
     </ul>
 </p>
 
-<h3 class="no-TOC">Dot methods on a list</h2>
-
+<h3 class="no-TOC">Procedure methods on a List</h2>
 <table>
-    <tr><th>Method</th><th>Parameters</th><th>Returns</th><th>Notes</th></tr>
-    <tr><td colspan="4"><b>Procedures</b></td></tr>
-    <tr><td><el-code><el-method>append</el-method></el-code></td>
-        <td></td>
-        <td>N/A</td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>appendList</el-method></el-code></td>
-        <td></td>
-        <td>N/A</td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>insert</el-method></el-code></td>
-        <td></td>
-        <td></td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>prepend</el-method></el-code></td>
-        <td></td>
-        <td>N/A</td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>prependList</el-method></el-code></td>
-        <td></td>
-        <td>N/A</td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>put</el-method></el-code></td>
-        <td></td>
-        <td>N/A</td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>removeAll</el-method></el-code></td>
-        <td></td>
-        <td>N/A</td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>removeAt</el-method></el-code></td>
-        <td></td>
-        <td>N/A</td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>removeFirst</el-method></el-code></td>
-        <td></td>
-        <td>N/A</td>
-        <td></td></tr>
-    <tr><td colspan="4"><b>Functions</b></td></tr>
-    <tr><td><el-code><el-method>asArray</el-method></el-code></td>
-        <td>None</td>
-        <td>A new Array containing references to the same elements</td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>asListImmutable</el-method></el-code></td>
-        <td>None</td>
-        <td>A new ListImmutable containing references to the same elements</em></td>
-        <td>Works only if the original list contains elements of an immutable type</td></tr>
-    <tr><td><el-code><el-method>asSet</el-method></el-code></td>
-        <td>None</td>
-        <td>A new Set containing all the <i>unique</i> elements in the list</td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>asString</el-method></el-code></td>
-        <td>None</td>
-        <td>string representation of the list (e.g. for printing)</td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>contains</el-method></el-code></td>
-        <td></td>
-        <td>A Boolean indicating whether or not the list contains the specified element</td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>filter</el-method></el-code></td>
-        <td></td>
-        <td></td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>head</el-method></el-code></td>
-        <td></td>
-        <td>The first element only from the list</td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>indexOf</el-method></el-code></td>
-        <td></td>
-        <td>The integer index of the first occurrence of the specified element</td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>join</el-method></el-code></td>
-        <td>A String separator, which may be an empty String, to be inserted between elements</td>
-        <td>A single string that joins all the elements in the list, with the specified separator between each</td>
-        <td>Applies only to a list of type String</td></tr>
-    <tr><td><el-code><el-method>length</el-method></el-code></td>
-        <td>none</td>
-        <td>An integer representing the number of elements in the list</td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>map</el-method></el-code></td>
-        <td></td>
-        <td></td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>maxBy</el-method></el-code></td>
-        <td></td>
-        <td></td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>maxBy</el-method></el-code></td>
-        <td></td>
-        <td></td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>reduce</el-method></el-code></td>
-        <td></td>
-        <td></td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>sortBy</el-method></el-code></td>
-        <td></td>
-        <td></td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>withAppend</el-method></el-code></td>
-        <td></td>
-        <td></td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>withAppendList</el-method></el-code></td>
-        <td></td>
-        <td></td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>withInsert</el-method></el-code></td>
-        <td></td>
-        <td></td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>withPrepend</el-method></el-code></td>
-        <td></td>
-        <td></td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>withPrependList</el-method></el-code></td>
-        <td></td>
-        <td></td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>withPut</el-method></el-code></td>
-        <td></td>
-        <td></td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>withRemoveAll</el-method></el-code></td>
-        <td></td>
-        <td></td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>withRemoveAt</el-method></el-code></td>
-        <td></td>
-        <td></td>
-        <td></td></tr>
-    <tr><td><el-code><el-method>withRemoveFirst</el-method></el-code></td>
-        <td></td>
-        <td></td>
-        <td></td></tr>
+ <tr>
+  <th style="width:10%">procedure<br>method</th>
+  <th style="width:10%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:50%">action</th>
+ </tr><tr>
+  <td><el-code><el-method>append</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>(none)</td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>appendList</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>(none)</td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>insert</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>(none)</td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>prepend</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>(none)</td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>prependList</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>(none)</td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>put</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>(none)</td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>removeAll</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>(none)</td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>removeAt</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>(none)</td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>RemoveFirst</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>(none)</td>
+  <td></td>
+ </tr>
+</table>
+<h3 class="no-TOC">Function and dot methods on a List</h2>
+<table>
+ <tr>
+  <th style="width:10%">function<br>dot method</th>
+  <th style="width:10%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:5%">return<br>Type</th>
+  <th style="width:50%">returns</th>
+ </tr><tr>
+  <td><el-code><el-method>asArray</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Array</el-type></el-code></td>
+  <td>a new Array containing references to the same elements</td>
+ </tr><tr>
+  <td><el-code><el-method>asListImmutable</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>ListImmutable</el-type></el-code></td>
+  <td>a new ListImmutable containing references to the same elements:<br>
+  requires original List to contain elements of an immutable Type </td>
+ </tr><tr>
+  <td><el-code><el-method>asSet</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td>a new Set containing all the <i>unique</i> elements in the list</td>
+ </tr><tr>
+  <td><el-code><el-method>asString</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>a string representation of the list (e.g. for printing)</td>
+ </tr><tr>
+  <td><el-code><el-method>contains</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td><el-code><el-type>List element's Type</el-type></el-code></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td>
+  <td><el-code><el-id>true</el-id></el-code> if the List  contains the specified element<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise
+ </tr><tr>
+  <td><el-code><el-method>filter</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>head</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code>List element's Type<el-type></el-type></el-code></td>
+  <td>the first element of the List</td>
+ </tr><tr>
+  <td><el-code><el-method>indexOf</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td><el-code><el-type>List element's Type</el-type></el-code></td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>index position of the first occurrence of the argument value in the List,<br>or -1 if no match is found</td>
+ </tr><tr>
+  <td><el-code><el-method>join</el-method></el-code></td>
+  <td><el-code><el-type>List member Type String</el-type></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>a single string that joins all the elements in the list,<br>with the specified string (which can be empty) inserted between the elements </td>
+ </tr><tr>
+  <td><el-code><el-method>length</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>the number of elements in the List</td>
+ </tr><tr>
+  <td><el-code><el-method>map</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>maxBy</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>minBy</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>reduce</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>sortBy</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>withAppend</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>withAppendList</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>withInsert</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>withPrepend</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>withPrependList</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>withPut</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>withRemoveAll</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>withRemoveAt</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>withRemoveFirst</el-method></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr>
 </table>
 
 <!--   #endregion-->
@@ -1294,7 +1364,7 @@ end function
 
 <p>Acknowledgement: The idea of displaying an image value as a thumbnail within the code was inspired by
     a similar feature in the language <a href="https://strype.org">Strype</a>. We are
-grateful to Prof. Michael Kölling and the team at King's College, London responsible for Strype, 
+grateful to Prof. Michael Kölling and the team at King's College, London responsible for Strype,
 who showed us this feature in confidence before its release, but nonetheless generously allowed us to mimic it in Elan.</p>
 
 <p>When the code is run the image will be printed on the <b>Display</b>, but still thumbnail sized.
@@ -1479,7 +1549,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
  <li>As with the way that SVG works within Html, the shapes are drawn in the order in which they are added into the list of <el-code><el-type>VectorGraphic</el-type></el-code> instances, with later shapes positioned over earlier shapes.</li>
  <li>The <el-code><el-id>fillColour</el-id></el-code> and <el-code><el-id>strokeColour</el-id></el-code> properties may be specified as described under <a href="#Colours">Colours</a>.
   The <el-code><el-id>fillColour</el-id></el-code> only may also be specified as <el-code><el-id>transparent</el-id></el-method> (which has the value <el-code>-1</el-code>).
- <li><el-code><el-type>VectorGraphic</el-type></el-code> is the abstract superclass of all <el-code>...VG</el-code> shapes. You would only use it if you wanted to define a method that could work on any shape (using common members defined on <el-code>VectorGraphic</el-code>) or that could work with a <el-code>List</el-code> holding different types of shape.</li>
+ <li><el-code><el-type>VectorGraphic</el-type></el-code> is the abstract superclass of all <el-code>...VG</el-code> shapes. You would only use it if you wanted to define a method that could work on any shape (using common elements defined on <el-code>VectorGraphic</el-code>) or that could work with a <el-code>List</el-code> holding different types of shape.</li>
  <li>The constructor parameters for <el-code><el-type>CircleVG</el-type></el-code> are: <el-code>centreX, centreY, radius, fillColour, strokeColour, strokeWidth</el-code>.</li>
  <li>The constructor parameters for <el-code><el-type>LineVG</el-type></el-code> are: <el-code>x1, y1, x2, y2, strokeColour, strokeWidth</el-code>, all of Type <el-code><el-type>Int</el-type></el-code>.</li>
  <li>The constructor parameters for <el-code><el-type>LineVG</el-type></el-code> are: <el-code>x, y, width, height, fillColour, strokeColour, strokeWidth</el-code>.</li>
