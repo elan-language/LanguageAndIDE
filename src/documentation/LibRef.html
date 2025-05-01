@@ -490,7 +490,7 @@ further items to an array, although it is possible to convert an array to a list
   <td>puts the value (of Array element's Type) at the (integer) index position in the array</td>
  </tr>
 </table>
-<h3 class="no-TOC">Function and dot methods on an Array</h2>
+<h3 class="no-TOC">Dot methods on an Array</h2>
 <table>
  <tr>
   <th style="width:10%">function<br>method</th>
@@ -563,7 +563,7 @@ further items to an array, although it is possible to convert an array to a list
   <td>puts the value (of Array2D element's Type) at the (two integers) index position in the array</td>
  </tr>
 </table>
-<h3 class="no-TOC">Function and dot methods on an Array2D</h2>
+<h3 class="no-TOC">Dot methods on an Array2D</h2>
 <table>
  <tr>
   <th style="width:10%">function<br>dot method</th>
@@ -686,7 +686,7 @@ further items to an array, although it is possible to convert an array to a list
   <td></td>
  </tr>
 </table>
-<h3 class="no-TOC">Function and dot methods on a List</h2>
+<h3 class="no-TOC">Dot methods on a List</h2>
 <table>
  <tr>
   <th style="width:10%">function<br>dot method</th>
@@ -745,7 +745,7 @@ further items to an array, although it is possible to convert an array to a list
   <td>index position of the first occurrence of the argument value in the List,<br>or -1 if no match is found</td>
  </tr><tr>
   <td><el-code><el-method>join</el-method></el-code></td>
-  <td><el-code><el-type>List member Type String</el-type></el-code></td>
+  <td><el-code><el-type>List&lt;of String&gt;<br></el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>a single string that joins all the elements in the list,<br>with the specified string (which can be empty) inserted between the elements </td>
@@ -852,21 +852,37 @@ further items to an array, although it is possible to convert an array to a list
     for the values, which may be any Type.</p>
 </p>
 
+<h3 class="no-TOC">Procedure methods on a Dictionary</h2>
+<table>
+ <tr>
+  <th style="width:10%">procedure<br>method</th>
+  <th style="width:10%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:50%">action</th>
+ </tr><tr>
+  <td><el-code><el-method></el-method></el-code></td>
+  <td><el-code><el-type>Dictionary</el-type></el-code></td>
+  <td></td>
+  <td></td>
+ </tr>
+ </table>
 <h3 class="no-TOC">Dot methods on a Dictionary</h2>
+<table>
+ <tr>
+  <th style="width:10%">function<br>dot method</th>
+  <th style="width:10%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:5%">return<br>Type</th>
+  <th style="width:50%">returns</th>
+ </tr><tr>
+  <td><el-code><el-method></el-method></el-code></td>
+  <td><el-code><el-type>Dictionary</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td</td>
+ </tr>
+ </table>
 
-    <table>
-        <tr><th>Method</th><th>Parameters</th><th>Returns</th><th>Notes</th></tr>
-        <tr><td colspan="4"><b>Procedures</b></td></tr>
-        <tr><td><el-code><el-method></el-method></el-code></td>
-            <td></td>
-            <td></td>
-            <td></td></tr>
-        <tr><td colspan="4"><b>Functions</b></td></tr>
-        <tr><td><el-code><el-method></el-method></el-code></td>
-            <td></td>
-            <td></td>
-            <td></td></tr>
-    </table>
 <!-- #endregion-->
 <!-- #region Immutable data structures -->
 <h1>Immutable data structures</h1>
@@ -937,104 +953,6 @@ differences. Immutable data structures are intended specifically to facilitate t
   <td><el-code>peek</el-code><br><el-code>length</el-code></td>
  </tr>
 </table>
-
-<!--   #region Set-->
-<h2 id="Set_data">Set</h2>
-    <p>A <el-code>Set</el-code> is a standard data structure that works somewhat like a <el-code>ListImmutable</el-code> with the important difference that in a <el-code>Set</el-code> a given element may appear only once. If an item being added to a <el-code>Set</el-code> is identical to an existing item in the <el-code>Set</el-code> then the <el-code>Set</el-code> remains the same length as before. </p>
-    <p>This enables a <el-code>Set</el-code> to work like a mathematical set so that it is possible to perform standard set operations such as <el-code>union</el-code> or <el-code>intersection</el-code>. For the same reason, a Set is an immutable data structure: there are no methods modify the set on which they are called, but several of them (including <el-code>add</el-code>, <el-code>remove</el-code>) return a new <el-code>Set</el-code> that is based on the original <el-code>Set</el-code> or <el-code>Set</el-code>s, with specified differences. </p>
-    <p>Example of use:</p>
-<el-code-block source="set_1.elan">
-        <main class="ok multiline" id="main1" tabindex="0">
-            <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
-            <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Set</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="set6" tabindex="0"><el-kw>set </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>addFromList</el-method>({<el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>})</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="set11" tabindex="0"><el-kw>set </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>add</el-method>(<el-lit>7</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="print14" tabindex="0"><el-kw>print </el-kw><el-field id="expr15" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="set16" tabindex="0"><el-kw>set </el-kw><el-field id="ident17" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr18" class="ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>remove</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="print19" tabindex="0"><el-kw>print </el-kw><el-field id="expr20" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="set21" tabindex="0"><el-kw>set </el-kw><el-field id="ident22" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr23" class="ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>remove</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="print24" tabindex="0"><el-kw>print </el-kw><el-field id="expr25" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="print26" tabindex="0"><el-kw>print </el-kw><el-field id="expr27" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-kw>end main</el-kw>
-        </main>
-    </el-code-block>
-<h4 class="no-TOC">Notes</h4>
-<ul>
-    <li> When creating a <el-code>Set</el-code>, the Type of the elements must be specified in the form
-    <el-code>Set&lt;of String&gt;</el-code>. This applies both when creating a new, empty set and when defining the Type of a parameter to be a <el-code>Set</el-code>.</li>
-    <li>You can add elements: individually with <el-code>add</el-code>, or multiple elements with <el-code>addFromList</el-code> and <el-code>addFromList</el-code>.</li>
-    <li>You can create a new <el-code>Se</el-code>t from an existing <el-code>List</el-code> or <el-code>ListImmutable</el-code> by calling <el-code>asSet</el-code> on it.</li>
-</ul>
-    <p>Available dot methods on a <el-code>Set</el-code>:</p>
-<el-code-block source="set_2.elan">
-        <el-statement class="ok" id="print18" tabindex="0"><el-kw>print </el-kw><el-field id="expr19" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="print20" tabindex="0"><el-kw>print </el-kw><el-field id="expr21" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>contains</el-method>(<el-id>item</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="print22" tabindex="0"><el-kw>print </el-kw><el-field id="expr23" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>add</el-method>(<el-id>item</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="print24" tabindex="0"><el-kw>print </el-kw><el-field id="expr25" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>addFromList</el-method>(<el-id>list</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="print26" tabindex="0"><el-kw>print </el-kw><el-field id="expr27" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>addFromList</el-method>(<el-id>array</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="print28" tabindex="0"><el-kw>print </el-kw><el-field id="expr29" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>remove</el-method>(<el-id>item</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="print30" tabindex="0"><el-kw>print </el-kw><el-field id="expr31" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>union</el-method>(<el-id>anotherSet</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="print32" tabindex="0"><el-kw>print </el-kw><el-field id="expr33" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>difference</el-method>(<el-id>anotherSet</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="print34" tabindex="0"><el-kw>print </el-kw><el-field id="expr35" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>intersection</el-method>(<el-id>anotherSet</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="print36" tabindex="0"><el-kw>print </el-kw><el-field id="expr37" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>isDisjointFrom</el-method>(<el-id>anotherSet</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="print38" tabindex="0"><el-kw>print </el-kw><el-field id="expr39" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>isSubsetOf</el-method>(<el-id>anotherSet</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="print40" tabindex="0"><el-kw>print </el-kw><el-field id="expr41" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>isSupersetOf</el-method>(<el-id>anotherSet</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="print42" tabindex="0"><el-kw>print </el-kw><el-field id="expr43" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>asList</el-method>(<el-id>anotherSet</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="print44" tabindex="0"><el-kw>print </el-kw><el-field id="expr45" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>asImmutableList</el-method>(<el-id>anotherSet</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="print46" tabindex="0"><el-kw>print </el-kw><el-field id="expr47" class="optional ok" tabindex="0"><el-txt><el-id>s</el-id>.<el-method>asString</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code-block>
-<!--   #endregion-->
-<!--   #region Stack and queue-->
-<p id="Queue"></p>
-<h2 id="Stack">Stack and queue</h2>
-<ul>
-    <li><el-code>Stack</el-code> and <el-code>Queue</el-code> are similar data structures except that <el-code>Stack</el-code> is &#8216;LIFO&#8217; (last in, first out), while <el-code>Queue</el-code> is FIFO (first in, first out). The names of the methods for adding/removing are different, but there are also common methods, summarised here.</li>
-    <li>Both a <el-code>Stack</el-code> and a <el-code>Queue</el-code> are defined with the Type of the items that they can contain, similarly to how <el-code>List</el-code> and <el-code>ListImmutable</el-code> have a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <el-code>Stack&lt;of String&gt;, Queue&lt;of Int&gt;, Stack&lt;of (Float, Float)&gt;, Queue&lt;of Square&gt;</el-code>.</li>
-    <li>Both <el-code>Stack </el-code>and<el-code> Queue</el-code> are dynamically extensible, like <el-code>List</el-code> and <el-code>ListImmutable</el-code>. There is no need (or means to) specify a size limit as they will continue to expand until, eventually, the computer&#8217;s memory limit is reached.</li>
-    <li>This same syntax is used to specify the Type if you want to pass a <el-code>Stack</el-code> into a function, or specify it as the <el-code>return</el-code> Type.</li>
-    <li><el-code>Stack</el-code> and <el-code>Queue</el-code> have some methods in common: <el-code>length</el-code>, and <el-code>peek</el-code> which allows you to read the next item that would be removed, without actually removing it.</li>
-    <li>The names of the methods for adding or removing an item are different for <el-code>Stack</el-code>k and <el-code>Queue</el-code>, as summarised in this table:</li>
-</ul>
-<p>
-<table>
-<tr><th></th><th>Stack</th><th>Queue</th></tr>
-<tr><td>Create a new instance</td><td><el-code>let s be new Stack&lt;of Int&gt;()</el-code></td><td><el-code>let q be new Queue&lt;of Int&gt;()</el-code></td></tr>
-<tr><td>Add an item (must be of correct Type)</td><td><el-code>call s.push(item)</el-code></td><td><el-code>call q.enqueue(item)</el-code></td></tr>
-<tr><td>Remove the next item</td><td><el-code>variable item set to s.pop()</el-code></td><td><el-code>variable item set to q.dequeue()</el-code></td></tr>
-<tr><td>View the next item to be removed<br>without removing it</td><td><el-code>variable item set to s.peek()</el-code></td><td><el-code>variable item set to q.peek()</el-code></td></tr>
-<tr><td>Read the current length</td><td><el-code>s.length()</el-code></td><td><el-code>q.length()</el-code></td></tr>
-</table>
-    </p>
-    <p>Example use of a <el-code>Stack</el-code>:</p>
-<el-code-block source="stack.elan">
-            <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>sk</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Stack</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="print6" tabindex="0"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="0"><el-txt><el-id>sk</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="call8" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident9" class="ok" tabindex="0"><el-txt><el-id>sk</el-id>.<el-method>push</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args10" class="optional ok" tabindex="0"><el-txt>"<el-lit>apple</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-            <el-statement class="ok" id="call11" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-id>sk</el-id>.<el-method>push</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args13" class="optional ok" tabindex="0"><el-txt>"<el-lit>pear</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-            <el-statement class="ok" id="print14" tabindex="0"><el-kw>print </el-kw><el-field id="expr15" class="optional ok" tabindex="0"><el-txt><el-id>sk</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="print16" tabindex="0"><el-kw>print </el-kw><el-field id="expr17" class="optional ok" tabindex="0"><el-txt><el-id>sk</el-id>.<el-method>peek</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="var18" tabindex="0"><el-kw>variable </el-kw><el-field id="var19" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr20" class="ok" tabindex="0"><el-txt><el-id>sk</el-id>.<el-method>pop</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="print21" tabindex="0"><el-kw>print </el-kw><el-field id="expr22" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="set23" tabindex="0"><el-kw>set </el-kw><el-field id="ident24" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr25" class="ok" tabindex="0"><el-txt><el-id>sk</el-id>.<el-method>pop</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="print26" tabindex="0"><el-kw>print </el-kw><el-field id="expr27" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="print28" tabindex="0"><el-kw>print </el-kw><el-field id="expr29" class="optional ok" tabindex="0"><el-txt><el-id>sk</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code-block>
-    <p>Example use of a <el-code>Queue</el-code>:</p>
-<el-code-block source="queue.elan">
-            <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>qu</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Queue</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="print6" tabindex="0"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="call8" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident9" class="ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>enqueue</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args10" class="optional ok" tabindex="0"><el-txt>"<el-lit>apple</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-            <el-statement class="ok" id="call11" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>enqueue</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args13" class="optional ok" tabindex="0"><el-txt>"<el-lit>pear</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-            <el-statement class="ok" id="print14" tabindex="0"><el-kw>print </el-kw><el-field id="expr15" class="optional ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="print16" tabindex="0"><el-kw>print </el-kw><el-field id="expr17" class="optional ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>peek</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="var18" tabindex="0"><el-kw>variable </el-kw><el-field id="var19" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr20" class="ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>dequeue</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="print21" tabindex="0"><el-kw>print </el-kw><el-field id="expr22" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="set23" tabindex="0"><el-kw>set </el-kw><el-field id="ident24" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr25" class="ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>dequeue</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="print26" tabindex="0"><el-kw>print </el-kw><el-field id="expr27" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="print28" tabindex="0"><el-kw>print </el-kw><el-field id="expr29" class="optional ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    </el-code-block>
-<!-- #endregion-->
 <!--   #region ListImmutable -->
 <h2 id="ListImmutable">ListImmutable</h2>
 <p>A <el-code>ListImmutable</el-code> is like a <el-code>List</el-code> but is <i>immutable</i> (like a <el-code>String</el-code>)
@@ -1127,15 +1045,220 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 <el-code>print immD["a"]</el-code><br>
 <el-code>set immD to immD.withRemoveAtKey("a")</el-code><br>
 <el-code>print immD</el-code><br>
-<el-code></el-code><br>
+<el-code></el-code>
 
-<h3 class="no-TOC">Dot methods on an Immutable Dictionary</h3>
-<p>See also <span class="Link">Quick reference</span>.</p>
-<el-code>hasKey</el-code><br>
-<el-code>withPutKey</el-code><br>
-<el-code>withRemoveAtKey</el-code><br>
-<el-code></el-code><br>
+<h3 class="no-TOC">Dot methods on a DictionaryImmutable</h2>
+<table>
+ <tr>
+  <th style="width:10%">function<br>dot method</th>
+  <th style="width:10%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:10%">return<br>Type</th>
+  <th style="width:50%">returns</th>
+ </tr><tr>
+  <td><el-code><el-method>hasKey</el-method></el-code></td>
+  <td><el-code><el-type>DictionaryImmutable</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>withPutKey</el-method></el-code></td>
+  <td><el-code><el-type>DictionaryImmutable</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>withRemoveAtKey</el-method></el-code></td>
+  <td><el-code><el-type>DictionaryImmutable</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr>
+ </table>
+
 <!--#endregion-->
+
+<!--   #region Set-->
+<h2 id="Set_data">Set</h2>
+    <p>A <el-code>Set</el-code> is a standard data structure that works somewhat like a <el-code>ListImmutable</el-code> with the important difference that in a <el-code>Set</el-code> a given element may appear only once. If an item being added to a <el-code>Set</el-code> is identical to an existing item in the <el-code>Set</el-code> then the <el-code>Set</el-code> remains the same length as before. </p>
+    <p>This enables a <el-code>Set</el-code> to work like a mathematical set so that it is possible to perform standard set operations such as <el-code>union</el-code> or <el-code>intersection</el-code>. For the same reason, a Set is an immutable data structure: there are no methods modify the set on which they are called, but several of them (including <el-code>add</el-code>, <el-code>remove</el-code>) return a new <el-code>Set</el-code> that is based on the original <el-code>Set</el-code> or <el-code>Set</el-code>s, with specified differences. </p>
+    <p>Example of use:</p>
+<el-code-block source="set_1.elan">
+        <main class="ok multiline" id="main1" tabindex="0">
+            <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+            <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Set</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="set6" tabindex="0"><el-kw>set </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>addFromList</el-method>({<el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>})</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="set11" tabindex="0"><el-kw>set </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>add</el-method>(<el-lit>7</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="print14" tabindex="0"><el-kw>print </el-kw><el-field id="expr15" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="set16" tabindex="0"><el-kw>set </el-kw><el-field id="ident17" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr18" class="ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>remove</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="print19" tabindex="0"><el-kw>print </el-kw><el-field id="expr20" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="set21" tabindex="0"><el-kw>set </el-kw><el-field id="ident22" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr23" class="ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>remove</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="print24" tabindex="0"><el-kw>print </el-kw><el-field id="expr25" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="print26" tabindex="0"><el-kw>print </el-kw><el-field id="expr27" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-kw>end main</el-kw>
+        </main>
+    </el-code-block>
+<h4 class="no-TOC">Notes</h4>
+<ul>
+    <li> When creating a <el-code>Set</el-code>, the Type of the elements must be specified in the form
+    <el-code>Set&lt;of String&gt;</el-code>. This applies both when creating a new, empty set and when defining the Type of a parameter to be a <el-code>Set</el-code>.</li>
+    <li>You can add elements: individually with <el-code>add</el-code>, or multiple elements with <el-code>addFromList</el-code> and <el-code>addFromList</el-code>.</li>
+    <li>You can create a new <el-code>Se</el-code>t from an existing <el-code>List</el-code> or <el-code>ListImmutable</el-code> by calling <el-code>asSet</el-code> on it.</li>
+</ul>
+
+<h3 class="no-TOC">Dot methods on a Set</h2>
+<table>
+ <tr>
+  <th style="width:10%">function<br>dot method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:10%">return<br>Type</th>
+  <th style="width:50%">returns</th>
+ </tr><tr>
+  <td><el-code><el-method>add</el-method></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>addFromArray</el-method></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>addFromList</el-method></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>asList</el-method></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>asListImmutable</el-method></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>asString</el-method></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>contains</el-method></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>difference</el-method></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>intersection</el-method></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>isDisjointFrom</el-method></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>isSubsetOf</el-method></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>isSupersetOf</el-method></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>length</el-method></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>remove</el-method></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>union</el-method></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td></td>
+  <td><el-code><el-type></el-type></el-code></td>
+  <td></td>
+ </tr>
+ </table>
+
+<!--   #endregion-->
+<!--   #region Stack and queue-->
+<p id="Queue"></p>
+<h2 id="Stack">Stack and queue</h2>
+<ul>
+    <li><el-code>Stack</el-code> and <el-code>Queue</el-code> are similar data structures except that <el-code>Stack</el-code> is &#8216;LIFO&#8217; (last in, first out), while <el-code>Queue</el-code> is FIFO (first in, first out). The names of the methods for adding/removing are different, but there are also common methods, summarised here.</li>
+    <li>Both a <el-code>Stack</el-code> and a <el-code>Queue</el-code> are defined with the Type of the items that they can contain, similarly to how <el-code>List</el-code> and <el-code>ListImmutable</el-code> have a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <el-code>Stack&lt;of String&gt;, Queue&lt;of Int&gt;, Stack&lt;of (Float, Float)&gt;, Queue&lt;of Square&gt;</el-code>.</li>
+    <li>Both <el-code>Stack </el-code>and<el-code> Queue</el-code> are dynamically extensible, like <el-code>List</el-code> and <el-code>ListImmutable</el-code>. There is no need (or means to) specify a size limit as they will continue to expand until, eventually, the computer&#8217;s memory limit is reached.</li>
+    <li>This same syntax is used to specify the Type if you want to pass a <el-code>Stack</el-code> into a function, or specify it as the <el-code>return</el-code> Type.</li>
+    <li><el-code>Stack</el-code> and <el-code>Queue</el-code> have some methods in common: <el-code>length</el-code>, and <el-code>peek</el-code> which allows you to read the next item that would be removed, without actually removing it.</li>
+    <li>The names of the methods for adding or removing an item are different for <el-code>Stack</el-code>k and <el-code>Queue</el-code>, as summarised in this table:</li>
+</ul>
+<p>
+<table>
+<tr><th></th><th>Stack</th><th>Queue</th></tr>
+<tr><td>Create a new instance</td><td><el-code>let s be new Stack&lt;of Int&gt;()</el-code></td><td><el-code>let q be new Queue&lt;of Int&gt;()</el-code></td></tr>
+<tr><td>Add an item (must be of correct Type)</td><td><el-code>call s.push(item)</el-code></td><td><el-code>call q.enqueue(item)</el-code></td></tr>
+<tr><td>Remove the next item</td><td><el-code>variable item set to s.pop()</el-code></td><td><el-code>variable item set to q.dequeue()</el-code></td></tr>
+<tr><td>View the next item to be removed<br>without removing it</td><td><el-code>variable item set to s.peek()</el-code></td><td><el-code>variable item set to q.peek()</el-code></td></tr>
+<tr><td>Read the current length</td><td><el-code>s.length()</el-code></td><td><el-code>q.length()</el-code></td></tr>
+</table>
+    </p>
+    <p>Example use of a <el-code>Stack</el-code>:</p>
+<el-code-block source="stack.elan">
+            <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>sk</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Stack</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="print6" tabindex="0"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="0"><el-txt><el-id>sk</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="call8" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident9" class="ok" tabindex="0"><el-txt><el-id>sk</el-id>.<el-method>push</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args10" class="optional ok" tabindex="0"><el-txt>"<el-lit>apple</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+            <el-statement class="ok" id="call11" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-id>sk</el-id>.<el-method>push</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args13" class="optional ok" tabindex="0"><el-txt>"<el-lit>pear</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+            <el-statement class="ok" id="print14" tabindex="0"><el-kw>print </el-kw><el-field id="expr15" class="optional ok" tabindex="0"><el-txt><el-id>sk</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="print16" tabindex="0"><el-kw>print </el-kw><el-field id="expr17" class="optional ok" tabindex="0"><el-txt><el-id>sk</el-id>.<el-method>peek</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="var18" tabindex="0"><el-kw>variable </el-kw><el-field id="var19" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr20" class="ok" tabindex="0"><el-txt><el-id>sk</el-id>.<el-method>pop</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="print21" tabindex="0"><el-kw>print </el-kw><el-field id="expr22" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="set23" tabindex="0"><el-kw>set </el-kw><el-field id="ident24" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr25" class="ok" tabindex="0"><el-txt><el-id>sk</el-id>.<el-method>pop</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="print26" tabindex="0"><el-kw>print </el-kw><el-field id="expr27" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="print28" tabindex="0"><el-kw>print </el-kw><el-field id="expr29" class="optional ok" tabindex="0"><el-txt><el-id>sk</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-code-block>
+    <p>Example use of a <el-code>Queue</el-code>:</p>
+<el-code-block source="queue.elan">
+            <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>qu</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Queue</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="print6" tabindex="0"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="call8" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident9" class="ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>enqueue</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args10" class="optional ok" tabindex="0"><el-txt>"<el-lit>apple</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+            <el-statement class="ok" id="call11" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>enqueue</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args13" class="optional ok" tabindex="0"><el-txt>"<el-lit>pear</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+            <el-statement class="ok" id="print14" tabindex="0"><el-kw>print </el-kw><el-field id="expr15" class="optional ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="print16" tabindex="0"><el-kw>print </el-kw><el-field id="expr17" class="optional ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>peek</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="var18" tabindex="0"><el-kw>variable </el-kw><el-field id="var19" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr20" class="ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>dequeue</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="print21" tabindex="0"><el-kw>print </el-kw><el-field id="expr22" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="set23" tabindex="0"><el-kw>set </el-kw><el-field id="ident24" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr25" class="ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>dequeue</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="print26" tabindex="0"><el-kw>print </el-kw><el-field id="expr27" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="print28" tabindex="0"><el-kw>print </el-kw><el-field id="expr29" class="optional ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+    </el-code-block>
+<!-- #endregion-->
 <!--#endregion-->
 <!-- #region Input/output -->
 <h1>Input/output</h1>
