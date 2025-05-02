@@ -1,0 +1,14 @@
+# 696ef6682fd8f2923763256019a32f8ac0c819dcbeca9726dc0cbac4e6c17d56 Elan 1.0.1 guest default_profile valid
+
+main
+  variable qu set to new Queue<of String>()
+  print qu.length()
+  set qu to qu.enqueue("apple")
+  set qu to qu.enqueue("pear")
+  print qu.length()
+  print qu.peek()
+  variable t set to qu.dequeue()
+  print t
+  print qu
+  print qu.length()
+end main
