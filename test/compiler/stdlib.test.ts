@@ -1216,6 +1216,7 @@ main
   print b.indexOf(7)
   print c.indexOf("o")
   print c.indexOf("ll")
+  print c.indexOf("x")
   variable i set to 1
   set i to a.indexOf(9)
 end main`;
@@ -1232,6 +1233,7 @@ async function main() {
   await system.printLine(b.indexOf(7));
   await system.printLine(_stdlib.indexOf(c, "o"));
   await system.printLine(_stdlib.indexOf(c, "ll"));
+  await system.printLine(_stdlib.indexOf(c, "x"));
   let i = 1;
   i = a.indexOf(9);
 }
@@ -1243,7 +1245,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "420-142");
+    await assertObjectCodeExecutes(fileImpl, "420-142-1");
   });
   test("Pass_asUnicodeReturnsInt#1061", async () => {
     const code = `${testHeader}
