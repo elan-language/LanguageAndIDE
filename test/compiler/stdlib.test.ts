@@ -1243,7 +1243,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "420-14-1");
+    await assertObjectCodeExecutes(fileImpl, "420-142");
   });
   test("Pass_asUnicodeReturnsInt#1061", async () => {
     const code = `${testHeader}

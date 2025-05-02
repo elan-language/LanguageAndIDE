@@ -202,8 +202,7 @@ export class StdLib {
     @elanStringType()
     item: string,
   ): number {
-    const ss = s.split("");
-    return ss.indexOf(item);
+    return s.indexOf(item);
   }
 
   @elanFunction(["start", "end"], FunctionOptions.pure, ElanClass(List, [ElanInt]))
