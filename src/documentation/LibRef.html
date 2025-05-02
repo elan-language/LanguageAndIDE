@@ -1121,12 +1121,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
   <td></td>
   <td><el-code><el-type></el-type></el-code></td>
   <td></td>
- </tr><tr>
-  <td><el-code><el-method>addFromArray</el-method></el-code></td>
-  <td><el-code><el-type>Set</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+ </tr></td>
  </tr><tr>
   <td><el-code><el-method>addFromList</el-method></el-code></td>
   <td><el-code><el-type>Set</el-type></el-code></td>
@@ -1135,12 +1130,6 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
   <td></td>
  </tr><tr>
   <td><el-code><el-method>asList</el-method></el-code></td>
-  <td><el-code><el-type>Set</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
- </tr><tr>
-  <td><el-code><el-method>asListImmutable</el-method></el-code></td>
   <td><el-code><el-type>Set</el-type></el-code></td>
   <td></td>
   <td><el-code><el-type></el-type></el-code></td>
@@ -1228,6 +1217,61 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 <tr><td>Remove the next item</td><td><el-code>variable item set to s.pop()</el-code></td><td><el-code>variable item set to q.dequeue()</el-code></td></tr>
 <tr><td>View the next item to be removed<br>without removing it</td><td><el-code>variable item set to s.peek()</el-code></td><td><el-code>variable item set to q.peek()</el-code></td></tr>
 <tr><td>Read the current length</td><td><el-code>s.length()</el-code></td><td><el-code>q.length()</el-code></td></tr>
+</table>
+
+<h3 class="no-TOC">Procedure methods on a Stack or a Queue</h2>
+<table>
+ <tr>
+  <th style="width:10%">procedure<br>method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:15%">argument<br>Types</th>
+  <th style="width:50%">action</th>
+ </tr><tr>
+  <td><el-code><el-method>push</el-method></el-code></td>
+  <td><el-code><el-type>Stack</el-type></el-code></td>
+  <td><el-code><el-type>Stack element Type</el-type></el-code></td>
+  <td>adds the element to the top of the Stack</td>
+ </tr>adds the element to the top of the Stack<tr>
+  <td><el-code><el-method>enqueue</el-method></el-code></td>
+  <td><el-code><el-type>Queue</el-type></el-code></td>
+  <td><el-code><el-type>Queue element Type</el-type></el-code></td>
+  <td>adds the element to the end of the Queue</td>
+ </tr>
+</table>
+
+<h3 class="no-TOC">Dot methods on a Stack and or a Queue</h2>
+<table>
+ <tr>
+  <th style="width:10%">function<br>dot method</th>
+  <th style="width:5%">on<br>Type</th>
+  <th style="width:5%">argument<br>Types</th>
+  <th style="width:15%">return<br>Types</th>
+  <th style="width:50%">returns</th>
+ </tr><tr>
+  <td><el-code><el-method>pop</el-method></el-code></td>
+  <td><el-code><el-type>Stack</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Stack,<br> Stack element Type</el-type></el-code></td>
+  <td>the topmost element of the Stack, and the Stack with the element removed</td>
+ </tr><tr>
+  <td><el-code><el-method>peek</el-method></el-code></td>
+  <td><el-code><el-type>Stack</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Stack element Type</el-type></el-code></td>
+  <td>the topmost element of the Stack (without altering the Stack)</td>
+ </tr><tr>
+  <td><el-code><el-method>dequeue</el-method></el-code></td>
+  <td><el-code><el-type>Queue</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Queue,<br> Queue element type</el-type></el-code></td>
+  <td>the next element of the Queue, and the Queue  with the element removed</td>
+ </tr><tr>
+  <td><el-code><el-method>peek</el-method></el-code></td>
+  <td><el-code><el-type>Queue</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Queue element type</el-type></el-code></td>
+  <td>the next element of the Queue (without altering the Queue)</td>
+ </tr>
 </table>
     </p>
     <p>Example use of a <el-code>Stack</el-code>:</p>
