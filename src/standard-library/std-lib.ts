@@ -427,14 +427,15 @@ export class StdLib {
   @elanFunction(["prompt", "options"], FunctionOptions.impureAsync, ElanString)
   async inputStringFromOptions(
     prompt: string,
-    @elanClassType(List) options: List<string>,
+    @elanClassType(List, [ElanString]) options: List<string>,
   ): Promise<string> {
     const s = await this.inputString(prompt);
 
     if (options.contains(s)) {
       return s;
     }
-    await this.prompt(`response must be one of ${options}`);
+    const valid = await options.asString();
+    await this.prompt(`response must be one of ${valid}`);
     return await this.inputStringFromOptions(prompt, options);
   }
 
