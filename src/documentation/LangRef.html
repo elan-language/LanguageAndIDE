@@ -897,14 +897,16 @@ See <span class="Link">Dot methods on a String</span>.</li>
 <!--   #endregion-->
 <!--   #region Lambda-->
 <h2 id="lambda">Lambda</h2>
-<p>A lambda is lightweight means to define a function &lsquo;in line&rsquo;. You typically define a <el-code>lambda</el-code>:</p>
+<p>A lambda is a lightweight means to define a function &lsquo;in line&rsquo;. You typically define a <el-code>lambda</el-code>:</p>
 <ul>
-<li>If the functionality it defines is needed in only one location; typically for a particular call to a HoF.</li>
+<li>If the functionality it defines is needed in only one location: typically for a particular call to a HoF.</li>
 <li>If you need to capture a local variable in the implementation. This is called &lsquo;closing around a variable&rsquo;.</li>
+</ul>
 <p>The syntax for a <el-code>lambda</el-code> is as follows:</p>
+<ul>
 <li>Start with the keyword <el-code>lambda</el-code>.</li>
-<li>Parameter definitions, comma-separated, follow the same form as parameter definitions in a function or procedure, but with out surrounding brackets.</li>
-<li>The<el-code> =&gt;</el-code> symbol, which is usually articulated as &lsquo;returns&rsquo;,  &lsquo;yields&rsquo; or even &lsquo;fat arrow&rsquo;.</li>
+<li>Parameter definitions, comma-separated, follow the same form as parameter definitions in a function or procedure, but without surrounding brackets.</li>
+<li>The <el-code>=&gt;</el-code> symbol, which is usually articulated as &lsquo;returns&rsquo;,  &lsquo;yields&rsquo; or even &lsquo;fat arrow&rsquo;.</li>
 <li>An expression that makes use of the parameters, and may also make use of other variables that are in scope. </li>
 </ul>
 Example:
@@ -919,7 +921,7 @@ Example:
 Notes:
 <ul>
 <li>Although a lambda is commonly defined &lsquo;inline&rsquo; (as shown above) it is possible to assign a lambda to a variable and hence to re-use it within the scope of that variable.</li>
-<li>Ana although a lambda will usually define at least one parameter, it is possible to define a lambda with no parameter &ndash; just returning an expression &ndash; in which case it acts just like a locally defined variable, but with the advantage (useful in rare circumstances) that the expression is evaluated &lsquo;lazily&rsquo; i.e. only when the lambda is used.</li>
+<li>Although a lambda will usually define at least one parameter, it is possible to define a lambda with no parameter &ndash; just returning an expression &ndash; in which case it acts just like a locally defined variable, but with the advantage (useful in rare circumstances) that the expression is evaluated &lsquo;lazily&rsquo;, i.e. only when the lambda is used.</li>
 </ul>
 <p>The following example uses both these techniques within a function:</p>
 <el-code-block source="safeSquareRoot.elan<el-func class="ok multiline" id="func1" tabindex="0">
