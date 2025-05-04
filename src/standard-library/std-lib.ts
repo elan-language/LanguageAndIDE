@@ -574,6 +574,7 @@ export class StdLib {
 
   @elanFunction(["radians"])
   sin(x: number): number {
+    throw new Error("foo");
     return Math.sin(x);
   }
   // Returns the sine of the input.
