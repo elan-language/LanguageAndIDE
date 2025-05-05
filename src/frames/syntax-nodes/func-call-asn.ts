@@ -17,7 +17,11 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { FunctionType } from "../symbols/function-type";
 import { NullScope } from "../symbols/null-scope";
-import { isMemberOnFieldsClass, scopePrefix } from "../symbols/symbol-helpers";
+import {
+  isDefinitionStatement,
+  isMemberOnFieldsClass,
+  scopePrefix,
+} from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import {
   containsGenericType,
@@ -67,8 +71,11 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
   }
 
   getSymbolAndType(): [ElanSymbol, SymbolType] {
-    const currentScope =
-      this.updatedScope === NullScope.Instance ? this.scope.getParentScope() : this.updatedScope;
+    let currentScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
+
+    if (isDefinitionStatement(currentScope)) {
+      currentScope = currentScope.getParentScope();
+    }
     const funcSymbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
     const funcSymbolType = funcSymbol.symbolType(transforms());
     return [funcSymbol, funcSymbolType];

@@ -323,6 +323,31 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[25]");
   });
 
+  test("Pass_Lambda WithLambdaParam", async () => {
+    const code = `${testHeader}
+
+main
+  let l be lambda x as Func<of Int => Int> => x(2)
+  print l(lambda x as Int => 2 * x)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const l = async (x) => (await x(2));
+  await system.printLine((await l(async (x) => 2 * x)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "4");
+  });
+
   test("Fail_ImmediateInvoke", async () => {
     const code = `${testHeader}
 
@@ -470,6 +495,38 @@ end procedure`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "ListImmutable cannot be of mutable type 'List<of Int>'. Click for more info.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_ReturnSameNameAsVariable", async () => {
+    const code = `${testHeader}
+
+main
+  let aa be lambda x as Int => aa
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'aa' is not defined. Click for more info.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_ReturnSameNameAsVariable1", async () => {
+    const code = `${testHeader}
+
+main
+  let l be lambda x as Int => if x is 1 then x else l(x-1)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'l' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

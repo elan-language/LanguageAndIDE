@@ -1,9 +1,11 @@
 import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
+import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
+import { isDefinitionStatement } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -59,7 +61,11 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
         };
       }
     }
-    return this.scope.resolveSymbol(id, transforms, this);
+    const searchScope = isDefinitionStatement(this.scope)
+      ? (this.scope as Frame).getParent()
+      : this.scope;
+
+    return searchScope.resolveSymbol(id, transforms, this.scope);
   }
 
   toString() {
