@@ -19,9 +19,22 @@ export class SegmentedStringAsn extends AbstractAstNode implements AstNode {
     return this.compileErrors.concat(cc);
   }
 
+  sanitise(s: string) {
+    const backticks = s.split("").filter((c) => c === "`").length;
+
+    if (backticks !== 2) {
+      const trimmed = s.slice(1, -1).replaceAll("`", "\\`");
+      return `\`${trimmed}\``;
+    }
+
+    return s;
+  }
+
   compile(): string {
     this.compileErrors = [];
-    return `\`${this.segments.map((s) => s.compile()).join("")}\``;
+    const s = `\`${this.segments.map((s) => s.compile()).join("")}\``;
+
+    return this.sanitise(s);
   }
 
   symbolType() {
