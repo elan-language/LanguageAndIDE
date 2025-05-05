@@ -213,16 +213,31 @@ export class WebInputOutput implements ElanInputOutput {
 
   stopReading(): Promise<void> {
     clearInterval(this.currentInterval);
-    const inputOffset = this.printedText.indexOf("<input");
-    this.printedText = `${this.printedText.slice(0, inputOffset)}`;
     this.display.focus();
     return Promise.resolve();
   }
 
   readLine() {
-    this.printedText = `${this.printedText}<input id = "inp" type="text" autofocus tabindex="2"></input>`;
     this.renderPrintedText();
-    const inp = document.getElementById("inp") as HTMLInputElement;
+
+    const div = document.getElementById("printed-text")!;
+    const inp = document.createElement("input");
+    inp.id = "inp";
+    inp.type = "text";
+    inp.autofocus = true;
+    inp.tabIndex = 2;
+
+    const spacers = this.printedText.split("").filter((c) => c === "\n").length;
+
+    for (let i = 0; i < spacers; i++) {
+      const spacer = document.createElement("div");
+      spacer.className = "spacer";
+      spacer.textContent = " ";
+      div.appendChild(spacer);
+    }
+
+    div.appendChild(inp);
+
     inp.focus();
 
     return new Promise<string>((rs) => {
@@ -234,7 +249,9 @@ export class WebInputOutput implements ElanInputOutput {
         if (entered) {
           rs(inp.value);
           this.stopReading();
-          this.printLine(inp.value.replace(/</g, "&lt;"));
+          const v = inp.value.replace(/</g, "&lt;");
+          div.removeChild(inp);
+          this.printLine(v);
         }
       }, 250);
     });
@@ -283,7 +300,7 @@ export class WebInputOutput implements ElanInputOutput {
   renderPrintedText(): Promise<void> {
     checkForUnclosedHtmlTag(this.printedText);
     const div = document.getElementById("printed-text")!;
-    div.innerHTML = this.printedText;
+    div.innerHTML = `<iframe sandbox seamless srcdoc="<head><link href='styles/ide.css' rel='stylesheet'/></head><body><div id='printed-text'>${this.printedText}</div></body>"</iframe>`;
     this.display.focus();
     return Promise.resolve();
   }
