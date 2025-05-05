@@ -210,14 +210,7 @@ suite("Symbol Completion Spec", () => {
       ParseStatus.incomplete,
       MethodNameNode.name,
       "",
-      [
-        TokenType.id_let,
-        TokenType.id_parameter_out,
-        TokenType.id_parameter_regular,
-        TokenType.id_property,
-        TokenType.id_variable,
-        TokenType.method_procedure,
-      ],
+      [TokenType.method_procedure],
       [],
       "foo",
     );
@@ -263,14 +256,7 @@ suite("Symbol Completion Spec", () => {
       ParseStatus.valid,
       MethodNameNode.name,
       "wi",
-      [
-        TokenType.id_let,
-        TokenType.id_parameter_out,
-        TokenType.id_parameter_regular,
-        TokenType.id_property,
-        TokenType.id_variable,
-        TokenType.method_procedure,
-      ],
+      [TokenType.method_procedure],
       [],
       "foo",
     );

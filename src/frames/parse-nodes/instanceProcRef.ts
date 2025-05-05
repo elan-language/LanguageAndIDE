@@ -29,7 +29,10 @@ export class InstanceProcRef extends AbstractSequence {
       const instanceDot = () => new DotAfter(instance);
       const propertyRef = () => new DotAfter(new PropertyRef());
       this.prefix = new OptionalNode(new Alternatives([propertyRef, qualifierDot, instanceDot]));
-      this.procName = new MethodNameNode(this.tokenTypes, () => instance.matchedText);
+      this.procName = new MethodNameNode(
+        new Set([TokenType.method_procedure]),
+        () => instance.matchedText,
+      );
       this.addElement(this.prefix);
       this.addElement(this.procName!);
       super.parseText(text);

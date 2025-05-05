@@ -406,7 +406,6 @@ end main`;
       ["pproc3", "*", "*"],
       ["proc1", "*", "*"],
       ["proc2", "*", "*"],
-      ["prop1", "*", "*"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident36", ".", 3, expected);
@@ -2183,7 +2182,6 @@ end main`;
 
     const expected = [
       ["clearAndReset", "*", "*"],
-      ["heading", "*", "*"],
       ["hide", "*", "*"],
       ["move", "*", "*"],
       ["moveTo", "*", "*"],
@@ -2195,8 +2193,6 @@ end main`;
       ["show", "*", "*"],
       ["turn", "*", "*"],
       ["turnToHeading", "*", "*"],
-      ["x", "*", "*"],
-      ["y", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "ident7", "t.", expected);
