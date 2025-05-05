@@ -425,7 +425,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
   background-color: var(--selection);
   width: 100%;
 }
-/* 
+
 iframe {
   border-image: none;
   border-color: initial;
@@ -438,7 +438,7 @@ iframe {
   position: absolute;
   top: 0;
   left: 0;
-} */
+} 
 
 div.spacer{
   width: 100%;
