@@ -22,7 +22,7 @@ test('simple program', async ({ page }) => {
   await page.keyboard.press('Tab');
 
   await page.getByRole('button', { name: 'Run the program' }).click();
-  await expect(page.frameLocator('iframe').locator('#printed-text')).toContainText('100');
+  await expect(page.locator('#printed-text')).toContainText('100');
 });
 
 test('load and run demo', async ({ page }) => {
@@ -36,11 +36,11 @@ test('load and run demo', async ({ page }) => {
   await page.getByText('Binary Search').click();
 
   await page.getByRole('button', { name: 'Run the program' }).click();
-  await expect(page.frameLocator('iframe').locator('#printed-text')).toContainText("What type of fruit do you want ('x' to exit)? ");
+  await expect(page.locator('#printed-text')).toContainText("What type of fruit do you want ('x' to exit)? ");
 
   await page.locator('#inp').fill('fig');
   await page.locator('#inp').press('Enter');
-  await expect(page.frameLocator('iframe').locator('#printed-text')).toContainText("What type of fruit do you want ('x' to exit)? fig We can supply a fig What type of fruit do you want ('x' to exit)? ");
+  await expect(page.locator('#printed-text')).toContainText("What type of fruit do you want ('x' to exit)? fig We can supply a fig What type of fruit do you want ('x' to exit)? ");
 });
 
 test('demo with tests', async ({ page }) => {
