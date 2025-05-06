@@ -1,0 +1,54 @@
+# 91660a3084487ed89a997dd5238988ff59624de0f635391f1f691956621844b1 Elan 1.0.3 guest default_profile valid
+
+# Exercise: learn how to use simple Block Graphics, writing a program called 'burrow'
+# 1. Create a main routine and within that add a 'let' statement defining a value named
+#    'blocks' as a new Array2D of type Int, and with arguments 40, 30 (corresponding to
+#    the width and height of the Display in blocks) and 'white' as the initial value for
+#    each block
+# 2. Define two variables 'x' and 'y' with initial values of 20 and 15 respectively,
+#    being the coordinates of the centre of the display
+# 3. Call the '.put' procedure-method on 'blocks' passing in arguments x, y, and 'red'
+# 4. Call the procedure displayBlocks, passing in 'blocks' as the argument
+# Run the program to check that this displays a red block in the centre of the Display
+# 5. After the other instructions in main, add an infinite loop ('while true')
+# 6. Select the first of the existing call instructions, then Shift-↓ to also select
+#    the second one, cut them (Ctrl-x) then select the 'new code' within the while loop
+#    and paste them there with Ctrl-v.
+# 7. After the displayBlocks call, add another call to 'blocks.put' to change the block
+#    at x, y to black
+# 8. Add a new 'let' define 'direction' as being a randomInt in the ranege 0 to 3
+# 9. Add an 'if' statement that tests if the direction is zero and if so increments 
+#    the value of x by 1 using a 'set` instruction.
+# 10.Within the if statement add three 'else if' clauses such that all four of the
+#    possible values for direction are covered, and between them either increment or
+#    decrement x or y by one. It doesn't matter which variant
+#    goes in which clause as long as all four possible changes are handled.
+# Run the program to see the red animal burrowing at random, but note that the program will
+# stop when it reaches an edge with an error. Note carefully the error (shown in System info)
+# and make sure you understand why this error has occcured.
+# 11.Ensure the animal does not go over the edge of the screen by modifying each of the four
+#    set instructions, using the functions minInt & maxInt to keep the values within bounds,
+#    remembering that both the array indexes start from 0. Since minInt & maxInt expect a
+#    list of integers as the only argument, you can just render a pair of values as a literal
+#    list e.g. minInt([x_1,39])
+# Run the program and check that the animal stays within the bounds of the Display.
+main
+  let blocks be new Array2D<of Int>(40, 30, white)
+  variable x set to 20
+  variable y set to 15
+  while true
+    call blocks.put(x, y, red)
+    call displayBlocks(blocks)
+    call blocks.put(x, y, black)
+    let direction be randomInt(0, 3)
+    if direction is 0 then
+      set x to x + 1
+    else if direction is 1 then
+      set x to x - 1
+    else if direction is 2 then
+      set y to y + 1
+    else if direction is 3 then
+      set y to y - 1
+    end if
+  end while
+end main
