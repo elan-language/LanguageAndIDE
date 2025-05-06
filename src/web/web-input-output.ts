@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ElanInputOutput } from "../elan-input-output";
-import { checkForUnclosedHtmlTag } from "./web-helpers";
+import { checkForUnclosedHtmlTag, mayBeHtml } from "./web-helpers";
 
 export class WebInputOutput implements ElanInputOutput {
   keyBuffer: KeyboardEvent[] = [];
@@ -219,6 +219,7 @@ export class WebInputOutput implements ElanInputOutput {
 
   async readLine() {
     await this.renderPrintedText();
+    const useSpacers = mayBeHtml(this.printedText);
 
     const div = document.getElementById("printed-text")!;
     const inp = document.createElement("input");
@@ -226,16 +227,18 @@ export class WebInputOutput implements ElanInputOutput {
     inp.type = "text";
     inp.autofocus = true;
     inp.tabIndex = 2;
-
-    const numSpacers = this.printedText.split("").filter((c) => c === "\n").length;
     const spacers: HTMLDivElement[] = [];
 
-    for (let i = 0; i < numSpacers; i++) {
-      const spacer = document.createElement("div");
-      spacer.className = "spacer";
-      spacer.textContent = " ";
-      div.appendChild(spacer);
-      spacers.push(spacer);
+    if (useSpacers) {
+      const numSpacers = this.printedText.split("").filter((c) => c === "\n").length;
+
+      for (let i = 0; i < numSpacers; i++) {
+        const spacer = document.createElement("div");
+        spacer.className = "spacer";
+        spacer.textContent = " ";
+        div.appendChild(spacer);
+        spacers.push(spacer);
+      }
     }
 
     div.appendChild(inp);
@@ -312,7 +315,17 @@ export class WebInputOutput implements ElanInputOutput {
     return `<iframe id="printed-text-sandbox" sandbox seamless srcdoc="${this.wrapTextInSrcdoc(s)}"</iframe>`;
   }
 
-  renderPrintedText(): Promise<void> {
+  async renderPrintedText(): Promise<void> {
+    if (mayBeHtml(this.printedText)) {
+      return await this.renderPrintedHtml();
+    }
+
+    const div = document.getElementById("printed-text")!;
+    div.innerHTML = this.printedText;
+    return Promise.resolve();
+  }
+
+  renderPrintedHtml(): Promise<void> {
     checkForUnclosedHtmlTag(this.printedText);
     const div = document.getElementById("printed-text")!;
 

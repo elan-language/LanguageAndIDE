@@ -64,3 +64,7 @@ export function checkForUnclosedHtmlTag(text: string) {
     );
   }
 }
+
+export function mayBeHtml(text: string) {
+  return /<.*>/.test(text);
+}
