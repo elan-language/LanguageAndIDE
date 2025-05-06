@@ -581,6 +581,9 @@ async function showError(err: Error, fileName: string, reset: boolean) {
 }
 
 function systemInfoPrintLine(text: string, scroll = true) {
+  // sanitise the text
+  text = text.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+
   systemInfoDiv.innerHTML = systemInfoDiv.innerHTML + text + "\n";
   if (scroll) {
     systemInfoDiv.scrollTop = systemInfoDiv.scrollHeight;
