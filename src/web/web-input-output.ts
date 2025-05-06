@@ -179,7 +179,7 @@ export class WebInputOutput implements ElanInputOutput {
 
   async clearAllGraphics(): Promise<void> {
     this.clearKeyBuffer();
-    this.clearPrintedText();
+    await this.clearPrintedText();
     await this.clearBlockGraphics();
     return this.clearVectorGraphics();
   }
@@ -187,27 +187,27 @@ export class WebInputOutput implements ElanInputOutput {
   printedText: string = "";
   currentInterval?: any;
 
-  printLine(text: string): Promise<void> {
-    this.print(`${text}\n`);
+  async printLine(text: string): Promise<void> {
+    await this.print(`${text}\n`);
     const element = document.getElementById("printed-text")!;
     element.scrollTop = element.scrollHeight;
     return Promise.resolve();
   }
 
-  print(text: string): Promise<void> {
+  async print(text: string): Promise<void> {
     this.printedText = `${this.printedText}${text}`;
-    this.renderPrintedText();
+    await this.renderPrintedText();
     return Promise.resolve();
   }
 
-  printTab(position: number, text: string): Promise<void> {
+  async printTab(position: number, text: string): Promise<void> {
     const lastNl = this.printedText.lastIndexOf("\n");
     const spaces =
       "                                                                                ";
     const charsSinceNl = this.printedText.length - lastNl;
     const tab = spaces.substring(0, position - charsSinceNl + 1);
     this.printedText = `${this.printedText}${tab}${text}`;
-    this.renderPrintedText();
+    await this.renderPrintedText();
     return Promise.resolve();
   }
 
@@ -217,8 +217,8 @@ export class WebInputOutput implements ElanInputOutput {
     return Promise.resolve();
   }
 
-  readLine() {
-    this.renderPrintedText();
+  async readLine() {
+    await this.renderPrintedText();
 
     const div = document.getElementById("printed-text")!;
     const inp = document.createElement("input");
@@ -227,13 +227,15 @@ export class WebInputOutput implements ElanInputOutput {
     inp.autofocus = true;
     inp.tabIndex = 2;
 
-    const spacers = this.printedText.split("").filter((c) => c === "\n").length;
+    const numSpacers = this.printedText.split("").filter((c) => c === "\n").length;
+    const spacers: HTMLDivElement[] = [];
 
-    for (let i = 0; i < spacers; i++) {
+    for (let i = 0; i < numSpacers; i++) {
       const spacer = document.createElement("div");
       spacer.className = "spacer";
       spacer.textContent = " ";
       div.appendChild(spacer);
+      spacers.push(spacer);
     }
 
     div.appendChild(inp);
@@ -245,13 +247,18 @@ export class WebInputOutput implements ElanInputOutput {
       inp.addEventListener("keydown", (k: KeyboardEvent) => {
         entered = k.key === "Enter";
       });
-      this.currentInterval = setInterval(() => {
+      this.currentInterval = setInterval(async () => {
         if (entered) {
           rs(inp.value);
           this.stopReading();
           const v = inp.value.replace(/</g, "&lt;");
+
+          for (const sp of spacers) {
+            div.removeChild(sp);
+          }
+
           div.removeChild(inp);
-          this.printLine(v);
+          await this.printLine(v);
         }
       }, 250);
     });
@@ -297,17 +304,32 @@ export class WebInputOutput implements ElanInputOutput {
     return Promise.resolve();
   }
 
+  wrapTextInSrcdoc(s: string) {
+    return `<head><link href='styles/ide.css' rel='stylesheet'/></head><body><div id='printed-text'>${s}</div></body>`;
+  }
+
+  wrapTextInIframe(s: string) {
+    return `<iframe id="printed-text-sandbox" sandbox seamless srcdoc="${this.wrapTextInSrcdoc(s)}"</iframe>`;
+  }
+
   renderPrintedText(): Promise<void> {
     checkForUnclosedHtmlTag(this.printedText);
     const div = document.getElementById("printed-text")!;
-    div.innerHTML = `<iframe sandbox seamless srcdoc="<head><link href='styles/ide.css' rel='stylesheet'/></head><body><div id='printed-text'>${this.printedText}</div></body>"</iframe>`;
-    this.display.focus();
+
+    const iframe = document.getElementById("printed-text-sandbox") as HTMLIFrameElement | undefined;
+
+    if (!iframe) {
+      div.innerHTML = this.wrapTextInIframe(this.printedText);
+    } else {
+      iframe.srcdoc = this.wrapTextInSrcdoc(this.printedText);
+    }
+
     return Promise.resolve();
   }
 
-  clearPrintedText(): Promise<void> {
+  async clearPrintedText(): Promise<void> {
     this.printedText = "";
-    this.renderPrintedText();
+    await this.renderPrintedText();
     return Promise.resolve();
   }
 }
