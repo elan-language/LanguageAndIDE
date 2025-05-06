@@ -324,7 +324,7 @@ export class WebInputOutput implements ElanInputOutput {
       iframe.srcdoc = this.wrapTextInSrcdoc(this.printedText);
     }
 
-    return Promise.resolve();
+    return new Promise((rs) => setTimeout(() => rs(), 50));
   }
 
   async clearPrintedText(): Promise<void> {
