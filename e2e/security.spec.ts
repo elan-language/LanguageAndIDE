@@ -1,5 +1,25 @@
 import { test, expect } from '@playwright/test';
 
+// main
+//   print "<img src='images/Debug.png' onclick=console.warn('explot') />"
+// end main
+// main
+//   print "<iframe src=javascript:console.warn('exploit') ></iframe>"
+// end main
+// main
+//   variable a set to "a"
+//   variable b set to "{a}` + eval('console.warn(`exploit`)') + `"
+// end main
+// main
+//   variable a set to "a"
+//   variable b set to "{a}` + console.warn(`exploit`) + `"
+// end main
+// main
+//   throw exception "<iframe src=javascript:console.log('Youvebeenhacked!') ></iframe>"
+// end main
+
+
+
 test('img click xss', async ({ page }) => {
   page.once('dialog', dialog => {
     //console.log(`Dialog message: ${dialog.message()}`);
@@ -111,4 +131,31 @@ test('iframe xss', async ({ page }) => {
     await page.keyboard.press('Enter');
   
     await page.getByRole('button', { name: 'Run the program' }).click();
+  });
+
+  test('system error xss', async ({ page }) => {
+    page.once('dialog', dialog => {
+      //console.log(`Dialog message: ${dialog.message()}`);
+      dialog.accept().catch(() => {});
+    });
+  
+    page.on('console', async msg => {
+      if (msg.type() === 'error') {
+        expect(msg.text()).not.toContain("exploit");
+      }
+    });
+  
+    await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+   
+    await page.getByText('main procedure function test').click();
+  
+    await page.keyboard.type('m');
+    
+    await page.keyboard.type('th');
+
+    await page.keyboard.type(`"<iframe src=javascript:console.warn('exploit') ></iframe>"`);
+    await page.keyboard.press('Enter');
+  
+    await page.getByRole('button', { name: 'Run the program' }).click();
+    await expect(page.locator('#system-info')).toContainText("<iframe src=javascript:console.warn('exploit') ></iframe>");
   });
