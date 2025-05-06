@@ -1,4 +1,4 @@
-# fd46961dfb2914ab3071dba4f6de5af54e914dc722b7bf12080bfff23b24fb1b Elan 1.0.3 guest default_profile valid
+# 74909778e8192a25dc75d4826e75ab1745b425908834b88734f86d84f5ab660c Elan 1.0.3 guest default_profile valid
 
 # Demo shows one way to implement a mergeSort function - using recursion
 # Since merge sort is always an 'out of place' sort, we have chosen to use immutable lists
@@ -36,20 +36,21 @@ function merge(a as List<of String>, b as List<of String>) returns List<of Strin
 end function
 
 test merge
-  assert merge(new List<of String>(), new List<of String>()) is new List<of String>()
+  let emptyList be empty List<of String>
+  assert merge(emptyList, emptyList) is emptyList
   assert merge(["orange"], ["melon"]) is ["melon", "orange"]
   let l1 be ["apple", "lime", "pear"]
   let l2 be ["apricot", "lemon", "plum"]
   assert merge(l1, l2) is ["apple", "apricot", "lemon", "lime", "pear", "plum"]
   assert merge(l2, l1) is ["apple", "apricot", "lemon", "lime", "pear", "plum"]
-  assert merge(l1, new List<of String>()) is l1
-  assert merge(new List<of String>(), l2) is l2
+  assert merge(l1, emptyList) is l1
+  assert merge(emptyList, l2) is l2
   assert merge(l1, l1) is ["apple", "apple", "lime", "lime", "pear", "pear"]
 end test
 
 test sort
-  let li1 be empty List<of String>
-  assert sort(li1) is li1
+  let emptyList be empty List<of String>
+  assert sort(emptyList) is emptyList
   let li2 be ["plum"]
   assert sort(li2) is li2
   let li3 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
