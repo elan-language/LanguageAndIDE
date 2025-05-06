@@ -1,0 +1,60 @@
+# e019afdd7386da4ebddfddf0eb2c8ef1a5852e15e35556b583e498be2114b711 Elan 1.0.3 guest default_profile valid
+
+# Exercise: implement a function to search for an item in a sorted list, 
+# using the 'binary search' algorithm
+# The code below defines the signature for the 'binarySearch' function,
+# with just enough code to compile, but it fails multiple tests.
+# Your task is to implement binarySearch sufficient to get all the tests passing.
+# You can then run the main program, which applies the function.
+# 
+# Hints:
+# - Use a recursive implementation, but as with any recursive function think first
+#   about the 'termination' condition
+# - Find the mid-point of ths list using integer division ('div')
+# - To compare strings alphabetically use the .isBefore or .isAfter dot-methods 
+# - To extract the lists before and after the mid-point use the range indexes:
+#    'li[..mid]' and 'li[mid+1..]'
+# - You can implement the whole algorithm just by adding a new 'if' statement between the
+#   first and last lines, containing 'else if/else' clauses as needed. Each clause should
+#   set the result.
+# - Use 'let' statements to calculate any sub-expression that will be used more than once
+#   in your logic and/or to improve readability.
+function binarySearch(li as List<of String>, item as String) returns Boolean
+  variable result set to false
+  return result
+end function
+
+main
+  let fruit be ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
+  variable exit set to false
+  repeat
+    let wanted be inputString("What type of fruit do you want ('x' to exit)? ")
+    if wanted isnt "x" then
+      let result be binarySearch(fruit, wanted)
+      if result then
+        print "We can supply a {wanted}"
+      else
+        print "Sorry, we cannot supply a {wanted}"
+      end if
+    else
+      set exit to true
+    end if
+  end repeat when exit
+end main
+
+test 
+  let li1 be ["lemon", "lime", "orange"]
+  assert binarySearch(li1, "lemon") is true
+  assert binarySearch(li1, "lime") is true
+  assert binarySearch(li1, "orange") is true
+  assert binarySearch(li1, "pear") is false
+  let li2 be ["lemon", "orange"]
+  assert binarySearch(li2, "lemon") is true
+  assert binarySearch(li2, "orange") is true
+  assert binarySearch(li2, "pear") is false
+  let li3 be ["lemon"]
+  assert binarySearch(li3, "lemon") is true
+  assert binarySearch(li3, "lime") is false
+  let li4 be empty List<of String>
+  assert binarySearch(li4, "pear") is false
+end test
