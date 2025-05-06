@@ -1,0 +1,58 @@
+# 2c487b819ebf6f65276f0a7c07700b343dfdc6139568a0669881d8a61180a649 Elan 1.0.3 guest default_profile valid
+
+# Exercise: use VectorGraphics to create an attractive simple animation
+# 1. Create a 'main' and within it add a 'let' statement to define a new List<of CircleVG>
+#    named 'bubbles'
+# 2. Add a 'for' loop that defines an index 'i' counting from 1 to 20, which will be used
+#    to create 20 small bubbles spread across the bottom of the display
+# 3. Within the loop create a new CircleVG named 'c' using a 'let' statement,
+#    adding a 'with' clause that sets these initial values for c: 
+#    centreX set to i*5 + 2, centreY set to 75, radius set to 1, 
+#    fillColour set to transparent, strokeColour set to randomInt(black, white)
+#    Note that randomInt(0, white) creates a random number somewhere within the
+#    full 24-bit colour space from black (0x000000) to white (0xFFFFFF)
+# 4. After creating 'c', still within the loop, append 'c' to the 'bubbles' list by
+#    calling the 'append' dot-method on bubbles.
+# 5. After the end of the loop, call the displayVectorGraphics procedure, passing in 'bubbles'.
+# Run the program to check that it creates the static bubbles, half-visible, at the bottom
+# Now write code to move the bubbles upwards, expanding them as they grow:
+# 6. At the bottom of main, create an infinite loop ('while true')
+# 7. Within the while loop, use an 'each statement to iterate over each 'b' in bubbles
+# 8. Within the each loop, call 'set...' methods on b to reduce its existing value for centreY by 1
+#    and to increase its existing radius by 0.2. You will need reference the properties e.g.
+#    b.centreY to do this
+# 9. Select the existing call to displayVectorGraphics, then using cut and paste (Ctrl-x, Ctrl-v) 
+#    move it inside the while loop, placed after the 'end each'
+# 10.To slow down the animation slightly, after that display... instuction call 'pause' 
+#    with a value of 50 (milliseconds).
+# Run the program to check that the bubbles now all rise slowly, expanding as they rise, until
+# they disappear off the top of the screen. You will need to press the Stop button to resume coding.
+# 11.Within the each loop add an 'if' statement, with the condition random() < 0.05 - which should
+#    be true approximately once every twenty times it is called
+# 12.Add a plain 'else' clause into the 'if' statement
+# 13.Using cut-and-paste, reposition the two existing call statements that move and 
+#    grow a bubble, into this new else clause 
+# 14.As the 'then' clause simulate the bubble bursting by setting its radius to 1, and 
+#    setting its Y position back to 75 (the bottom of the display) - ready to grow again
+# Run the program to check that bubbles burst (disappear) randomly and new ones appear continually
+# at the bottom
+main
+  let bubbles be new List<of CircleVG>()
+  for i from 1 to 20 step 1
+    let c be new CircleVG() with centreX set to i*5 + 2, centreY set to 75, radius set to 1, fillColour set to transparent, strokeColour set to randomInt(black, white)
+    call bubbles.append(c)
+  end for
+  while true
+    each b in bubbles
+      if random() < 0.05 then
+        call b.setRadius(0)
+        call b.setCentreY(75)
+      else
+        call b.setCentreY(b.centreY - 1)
+        call b.setRadius(b.radius + 0.2)
+      end if
+    end each
+    call displayVectorGraphics(bubbles)
+    call pause(50)
+  end while
+end main
