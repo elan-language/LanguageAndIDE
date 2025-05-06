@@ -136,14 +136,14 @@ function resumeProgram() {
   updateDisplayValues();
 }
 
-function runProgram() {
+async function runProgram() {
   try {
     if (file.readRunStatus() === RunStatus.paused && runWorker && debugMode) {
       resumeProgram();
       return;
     }
 
-    clearDisplays();
+    await clearDisplays();
     file.setRunStatus(RunStatus.running);
     updateDisplayValues();
     const path = `${document.location.origin}${document.location.pathname}`.replace(
@@ -206,15 +206,15 @@ function runProgram() {
   }
 }
 
-runButton?.addEventListener("click", () => {
+runButton?.addEventListener("click", async () => {
   debugMode = singleStepping = processingSingleStep = false;
-  runProgram();
+  await runProgram();
 });
 
-runDebugButton?.addEventListener("click", () => {
+runDebugButton?.addEventListener("click", async () => {
   debugMode = true;
   singleStepping = processingSingleStep = false;
-  runProgram();
+  await runProgram();
 });
 
 stepButton?.addEventListener("click", async () => {
@@ -255,8 +255,8 @@ clearSystemInfoButton?.addEventListener("click", () => {
   systemInfoDiv.innerHTML = "";
 });
 
-clearGraphicsButton?.addEventListener("click", () => {
-  elanInputOutput.clearAllGraphics();
+clearGraphicsButton?.addEventListener("click", async () => {
+  await elanInputOutput.clearAllGraphics();
 });
 
 expandCollapseButton?.addEventListener("click", async () => {
@@ -266,7 +266,7 @@ expandCollapseButton?.addEventListener("click", async () => {
 
 newButton?.addEventListener("click", async () => {
   if (checkForUnsavedChanges(cancelMsg)) {
-    clearDisplays();
+    await clearDisplays();
     clearUndoRedoAndAutoSave();
     file = new FileImpl(hash, profile, userName, transforms());
     await initialDisplay(false);
@@ -494,9 +494,9 @@ async function renderAsHtml(editingField: boolean) {
   }
 }
 
-function clearDisplays() {
+async function clearDisplays() {
   systemInfoDiv.innerHTML = "";
-  elanInputOutput.clearAllGraphics();
+  await elanInputOutput.clearAllGraphics();
 }
 
 function clearUndoRedoAndAutoSave() {
@@ -552,7 +552,7 @@ async function showError(err: Error, fileName: string, reset: boolean) {
   errorDOMEvent = lastDOMEvent;
   errorEditorEvent = lastEditorEvent;
 
-  clearDisplays();
+  await clearDisplays();
   if (reset) {
     await resetFile();
   }
@@ -592,7 +592,7 @@ async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean
   try {
     file.refreshParseAndCompileStatuses(compileIfParsed);
     if (file.readCompileStatus() === CompileStatus.ok && file.hasTests) {
-      runTests();
+      await runTests();
     }
     await renderAsHtml(editingField);
   } catch (e) {
@@ -601,7 +601,7 @@ async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean
 }
 
 async function initialDisplay(reset: boolean) {
-  clearDisplays();
+  await clearDisplays();
 
   const ps = file.readParseStatus();
   if (ps === ParseStatus.valid || ps === ParseStatus.default) {
@@ -1610,13 +1610,13 @@ function cursorDefault() {
   document.body.style.cursor = "default";
 }
 
-function handleUploadOrAppend(event: Event, upload: boolean) {
+async function handleUploadOrAppend(event: Event, upload: boolean) {
   const elanFile = (event.target as any).files?.[0] as any;
 
   if (elanFile) {
     const fileName = upload ? elanFile.name : file.fileName;
     cursorWait();
-    clearDisplays();
+    await clearDisplays();
     const reader = new FileReader();
     reader.addEventListener("load", async (event: any) => {
       const rawCode = event.target.result;
@@ -1632,12 +1632,12 @@ function handleUploadOrAppend(event: Event, upload: boolean) {
   event.preventDefault();
 }
 
-function handleUpload(event: Event) {
-  handleUploadOrAppend(event, true);
+async function handleUpload(event: Event) {
+  await handleUploadOrAppend(event, true);
 }
 
-function handleAppend(event: Event) {
-  handleUploadOrAppend(event, false);
+async function handleAppend(event: Event) {
+  await handleUploadOrAppend(event, false);
 }
 
 function updateFileName() {
@@ -1792,10 +1792,10 @@ function cancelTestTimeout() {
   testTimer = undefined;
 }
 
-function runTests() {
+async function runTests() {
   // if already running cancel and restart
   endTests();
-  runTestsInner();
+  await runTestsInner();
 
   let timeoutCount = 0;
   const testTimeout = 2; // seconds
@@ -1814,9 +1814,9 @@ function runTests() {
   }, 1000);
 }
 
-function runTestsInner() {
+async function runTestsInner() {
   try {
-    clearDisplays();
+    await clearDisplays();
     file.setTestStatus(TestStatus.running);
 
     updateDisplayValues();
