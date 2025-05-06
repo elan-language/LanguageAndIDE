@@ -921,15 +921,7 @@ Example:
 Notes:
 <ul>
 <li>Although a lambda is commonly defined &lsquo;inline&rsquo; (as shown above) it is possible to assign a lambda to a variable and hence to re-use it within the scope of that variable.</li>
-<li>Although a lambda will usually define at least one parameter, it is possible to define a lambda with no parameter &ndash; just returning an expression &ndash; in which case it acts just like a locally defined variable, but with the advantage (useful in rare circumstances) that the expression is evaluated &lsquo;lazily&rsquo;, i.e. only when the lambda is used.</li>
 </ul>
-<p>The following example uses both these techniques within a function:</p>
-<el-code-block source="safeSquareRoot.elan<el-func class="ok multiline" id="func1" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident3" class="ok" tabindex="0"><el-txt>safeSquareRoot</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params4" class="optional ok" tabindex="0"><el-txt><el-id>x</el-id> <el-kw>as</el-kw> <el-type>Float</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type5" class="ok" tabindex="0"><el-txt><el-type>Float</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
-<el-statement class="ok" id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>root</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt><el-kw>lambda</el-kw> =&gt; <el-method>sqrt</el-method>(<el-id>x</el-id>)</el-txt><el-place><i>expression</i></el-place><el-compl><i>name</i> as <i>Type</i>, ...</el-compl></el-field></el-statement>
-<el-statement class="ok" id="return6" tabindex="0"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-kw>if </el-kw><el-id>x</el-id> &lt; <el-lit>0</el-lit><el-kw> then </el-kw><el-lit>0</el-lit><el-kw><br>else </el-kw><el-method>root</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-kw>end function</el-kw></el-func>
-</el-code-block>
 <!--   #endregion-->
 <!--   #region If expression-->
 <h2 id="if_expression">If expression</h2>
