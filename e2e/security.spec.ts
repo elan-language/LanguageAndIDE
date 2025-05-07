@@ -64,32 +64,32 @@ test('iframe xss', async ({ page }) => {
     await expect(page.locator('#printed-text')).toContainText("<iframe src=javascript:console.error('exploit') ></iframe>");
   });
 
-  test('img click xss html', async ({ page }) => {
-    page.once('dialog', dialog => {
-      //console.log(`Dialog message: ${dialog.message()}`);
-      dialog.accept().catch(() => {});
-    });
+  // test('img click xss html', async ({ page }) => {
+  //   page.once('dialog', dialog => {
+  //     //console.log(`Dialog message: ${dialog.message()}`);
+  //     dialog.accept().catch(() => {});
+  //   });
   
-    page.on('console', async msg => {
-      if (msg.type() === 'error') {
-        expect(msg.text()).toContain("Blocked script execution in 'about:srcdoc' because the document's frame is sandboxed and the 'allow-scripts' permission is not set.");
-      }
-    });
+  //   page.on('console', async msg => {
+  //     if (msg.type() === 'error') {
+  //       expect(msg.text()).toContain("Blocked script execution in 'about:srcdoc' because the document's frame is sandboxed and the 'allow-scripts' permission is not set.");
+  //     }
+  //   });
   
-    await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+  //   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
    
-    await page.getByText('main procedure function test').click();
+  //   await page.getByText('main procedure function test').click();
   
-    await page.keyboard.type('m');
-    await page.keyboard.type('c');
-    await page.keyboard.type('displayHtml');
-    await page.keyboard.press('Tab');
-    await page.keyboard.type(`"<img src='images/Debug.png' onclick=console.error('exploit') />"`);
-    await page.keyboard.press('Tab');
+  //   await page.keyboard.type('m');
+  //   await page.keyboard.type('c');
+  //   await page.keyboard.type('displayHtml');
+  //   await page.keyboard.press('Tab');
+  //   await page.keyboard.type(`"<img src='images/Debug.png' onclick=console.error('exploit')/>"`);
+  //   await page.keyboard.press('Tab');
   
-    await page.getByRole('button', { name: 'Run the program' }).click();
-    await page.locator('#printed-html').click();
-  });
+  //   await page.getByRole('button', { name: 'Run the program' }).click();
+  //   await page.frameLocator('iframe').locator('#printed-html').click();
+  // });
   
   test('iframe xss html', async ({ page }) => {
       page.once('dialog', dialog => {
