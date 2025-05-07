@@ -19,6 +19,7 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { globalKeyword, libraryKeyword } from "../keywords";
 import { AbstractDefinitionStatement } from "../statements/abstract-definition.statement";
+import { CallStatement } from "../statements/call-statement";
 import { DefinitionAdapter } from "../statements/definition-adapter";
 import { Each } from "../statements/each";
 import { For } from "../statements/for";
@@ -98,7 +99,7 @@ export function isLetStatement(s?: ElanSymbol): boolean {
   return !!s && "isLet" in s;
 }
 
-export function isCallStatement(s?: ElanSymbol | Scope): boolean {
+export function isCallStatement(s?: ElanSymbol | Scope): s is CallStatement {
   return !!s && "isCall" in s;
 }
 

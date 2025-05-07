@@ -2236,4 +2236,20 @@ end main`;
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "new List<of V", expected);
   });
+
+  test("Pass_args", async () => {
+    const code = `${testHeader}
+
+main
+  let aaa be 10
+  call pause(aaa)
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["aaa", "aaa", "aaa"]] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "args8", "aa", expected);
+  });
 });

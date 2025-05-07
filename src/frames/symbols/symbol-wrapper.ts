@@ -107,7 +107,7 @@ export class SymbolWrapper {
       return `${propertyKeyword}.${symbol.symbolId}`;
     }
 
-    if (isCallStatement(this.scope)) {
+    if (isCallStatement(this.scope) && this.scope.args.cursorPos === 0) {
       return `${this.name}.`;
     }
 
