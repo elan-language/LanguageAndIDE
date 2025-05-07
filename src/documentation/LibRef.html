@@ -1393,33 +1393,34 @@ which the dot methods the following methods may be invoked:</p>
 <p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
 <!-- #endregion-->
 <!-- #region Display Html-->
+<div id="displayHtml"></div>
 <h2 id="Html">Display Html</h2>
 <p>If you attempt to embed Html in a string and then attempt to print it, you will see the string displayed literally - the Html tags
-    will not be recognised - this is for security reasons. However, it <i>is</i> possible to display formatted Html on the <b>Display.</b> 
+    will not be recognised - this is for security reasons. However, it <i>is</i> possible to display formatted Html on the <b>Display.</b>
     The following code:</p>
 
 <el-code-block source="Html_1.elan">
-    <el-statement class="ok" id="call5" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-method>displayHtml</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="The name of the procedure to be called (starting lower-case). Alternatively, a 'dotted-call':  the name of a variable or property, followed by a ''' and the name of the procedure method to call on that 'instance'.">?</el-help></el-field>(<el-field id="args7" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;h1 style='color: blue;'&gt;A heading&lt;/h1&gt;&lt;p&gt;some text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>html</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.">?</el-help></el-field>)<el-msg></el-msg><el-fr>2</el-fr></el-top></el-statement>
+    <el-statement class="ok" id="call5" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-method>displayHtml</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args7" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;h1 style='color: blue;'&gt;A heading&lt;/h1&gt;&lt;p&gt;some text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>html</i></el-place></el-field>)</el-top></el-statement>
 </el-code-block>
 
 <p>will produce:</p>
 <img src="images/Html_1.png" width="206" height="211">
 
-<p>This Html forms another 'layer' of the Display. Any plain text that you print 
+<p>This Html forms another 'layer' of the Display. Any plain text that you print
     (using <el-code><el-kw>print</el-kw></el-code> or any of the <el-code><el-method>print...</el-method></el-code> procedures)
     will be overlaid on top of this.</p>
 
 <p>You can programmatically clear just the Html display using the procedure <el-code><el-method>clearDisplay</el-method></el-code>.</p>
 
-<p>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above. 
-    Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string. 
+<p>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above.
+    Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string.
     Alternatively, you could use the constant <el-code>quotes</el-code> within braces as an interolated field.</li>
 
 <h3 class="no-TOC">Using an embedded stylesheet</h3>
 <p>You can also specify a <el-code>style</el-code> tag at the start of your Html string, to apply to the whole Html being displayed:</p>
 <el-code-block source="Html_2.elan">
-    <el-statement class="ok" id="let3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>style</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>"<el-lit>&lt;style&gt; h1 </el-lit>{<el-id>openBrace</el-id>}<el-lit> color: DarkRed; font-size: 24pt; </el-lit>{<el-id>closeBrace</el-id>}<el-lit> p </el-lit>{<el-id>openBrace</el-id>}<el-lit> font-family: Serif;</el-lit>{<el-id>closeBrace</el-id>}<el-lit> &lt;/style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
-    <el-statement class="ok" id="call6" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-method>displayHtml</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="The name of the procedure to be called (starting lower-case). Alternatively, a 'dotted-call':  the name of a variable or property, followed by a ''' and the name of the procedure method to call on that 'instance'.">?</el-help></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt>"<el-lit></el-lit>{<el-id>style</el-id>}<el-lit>&lt;h1&gt;New heading&lt;/h1&gt;&lt;p&gt;some new text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.">?</el-help></el-field>)<el-msg></el-msg><el-fr>3</el-fr></el-top></el-statement>
+    <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>style</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>"<el-lit>&lt;style&gt; h1 </el-lit>{<el-id>openBrace</el-id>}<el-lit> color: DarkRed; font-size: 24pt; </el-lit>{<el-id>closeBrace</el-id>}<el-lit> p </el-lit>{<el-id>openBrace</el-id>}<el-lit> font-family: Serif;</el-lit>{<el-id>closeBrace</el-id>}<el-lit> &lt;/style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+    <el-statement class="ok" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-method>displayHtml</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt>"<el-lit></el-lit>{<el-id>style</el-id>}<el-lit>&lt;h1&gt;New heading&lt;/h1&gt;&lt;p&gt;some new text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
 </el-code-block>
 
 <p>producing this result:</p>
