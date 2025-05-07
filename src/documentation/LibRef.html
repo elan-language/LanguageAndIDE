@@ -1392,125 +1392,38 @@ which the dot methods the following methods may be invoked:</p>
 </el-code-block>
 <p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
 <!-- #endregion-->
-<h2 id="Html">Printing Html to the Display</h2>
-<p>As well as plain text, it is also possible to print Html to the Display, which will be correctly formatted. For example:</p>
+<!-- #region Display Html-->
+<h2 id="Html">Display Html</h2>
+<p>If you attempt to embed Html in a string and then attempt to print it, you will see the string displayed literally - the Html tags
+    will not be recognised - this is for security reasons. However, it <i>is</i> possible to display formatted Html on the <b>Display.</b> 
+    The following code:</p>
 
 <el-code-block source="Html_1.elan">
-<el-statement class="ok" id="print5" tabindex="0"><el-kw>print </el-kw><el-field id="expr6" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;h1 style='color: blue;'&gt;A heading&lt;/h1&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print7" tabindex="0"><el-kw>print </el-kw><el-field id="expr8" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;p&gt;some text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+    <el-statement class="ok" id="call5" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-method>displayHtml</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="The name of the procedure to be called (starting lower-case). Alternatively, a 'dotted-call':  the name of a variable or property, followed by a ''' and the name of the procedure method to call on that 'instance'.">?</el-help></el-field>(<el-field id="args7" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;h1 style='color: blue;'&gt;A heading&lt;/h1&gt;&lt;p&gt;some text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>html</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.">?</el-help></el-field>)<el-msg></el-msg><el-fr>2</el-fr></el-top></el-statement>
 </el-code-block>
 
 <p>will produce:</p>
 <img src="images/Html_1.png" width="206" height="211">
-<h4 class="no-TOC">Notes</h4>
-<ul>
-<li>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above. Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string. Alternatively, you could replace each ' by the interpolated constant <el-code>quotes</el-code>.</li>
-<li>It is not necessary to put individual lines of Html into separate <el-code>print</el-code> statements &ndash; you can print a string of any length &ndash; but putting tags into separate <el-code>print</el-code> statements can improve the readability of your code.</li>
-</ul>
+
+<p>This Html forms another 'layer' of the Display. Any plain text that you print 
+    (using <el-code><el-kw>print</el-kw></el-code> or any of the <el-code><el-method>print...</el-method></el-code> procedures)
+    will be overlaid on top of this.</p>
+
+<p>You can programmatically clear just the Html display using the procedure <el-code><el-method>clearDisplay</el-method></el-code>.</p>
+
+<p>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above. 
+    Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string. 
+    Alternatively, you could use the constant <el-code>quotes</el-code> within braces as an interolated field.</li>
+
 <h3 class="no-TOC">Using an embedded stylesheet</h3>
-<p>If you want styles to be applied to multiple tags you can embed a stylesheet. For example, the following stylesheet will set the font for all text, and some further details for all &lt;h1&gt; headings:</p>
+<p>You can also specify a <el-code>style</el-code> tag at the start of your Html string, to apply to the whole Html being displayed:</p>
 <el-code-block source="Html_2.elan">
-     <el-statement class="ok" id="print16" tabindex="0"><el-kw>print </el-kw><el-field id="expr17" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print18" tabindex="0"><el-kw>print </el-kw><el-field id="expr19" class="optional ok" tabindex="0"><el-txt>"<el-lit>h1 openBrace</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print20" tabindex="0"><el-kw>print </el-kw><el-field id="expr21" class="optional ok" tabindex="0"><el-txt>"<el-lit>color: DarkRed;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print22" tabindex="0"><el-kw>print </el-kw><el-field id="expr23" class="optional ok" tabindex="0"><el-txt>"<el-lit>font-size: 24pt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print24" tabindex="0"><el-kw>print </el-kw><el-field id="expr25" class="optional ok" tabindex="0"><el-txt><el-id>closeBrace</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print26" tabindex="0"><el-kw>print </el-kw><el-field id="expr27" class="optional ok" tabindex="0"><el-txt>"<el-lit>p openBrace</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print28" tabindex="0"><el-kw>print </el-kw><el-field id="expr29" class="optional ok" tabindex="0"><el-txt>"<el-lit>font-family: Serif;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print30" tabindex="0"><el-kw>print </el-kw><el-field id="expr31" class="optional ok" tabindex="0"><el-txt><el-id>closeBrace</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print32" tabindex="0"><el-kw>print </el-kw><el-field id="expr33" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;/style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print34" tabindex="0"><el-kw>print </el-kw><el-field id="expr35" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;h1&gt;New heading&lt;/h1&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print36" tabindex="0"><el-kw>print </el-kw><el-field id="expr37" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;p&gt;some new text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+    <el-statement class="ok" id="let3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>style</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>"<el-lit>&lt;style&gt; h1 </el-lit>{<el-id>openBrace</el-id>}<el-lit> color: DarkRed; font-size: 24pt; </el-lit>{<el-id>closeBrace</el-id>}<el-lit> p </el-lit>{<el-id>openBrace</el-id>}<el-lit> font-family: Serif;</el-lit>{<el-id>closeBrace</el-id>}<el-lit> &lt;/style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
+    <el-statement class="ok" id="call6" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-method>displayHtml</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="The name of the procedure to be called (starting lower-case). Alternatively, a 'dotted-call':  the name of a variable or property, followed by a ''' and the name of the procedure method to call on that 'instance'.">?</el-help></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt>"<el-lit></el-lit>{<el-id>style</el-id>}<el-lit>&lt;h1&gt;New heading&lt;/h1&gt;&lt;p&gt;some new text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.">?</el-help></el-field>)<el-msg></el-msg><el-fr>3</el-fr></el-top></el-statement>
 </el-code-block>
 
+<p>producing this result:</p>
 <img src="images/Html_2.png" width="277" height="219">
-
-<p>This may be safely coalesced into a single line with  <el-code>print</el-code> statements and spaces removed:</p>
-<el-code-block source="Html_2.elan">
-     <el-statement class="ok" id="print41" tabindex="0"><el-kw>print </el-kw><el-field id="expr42" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;style&gt;h1</el-lit>" + <el-id>openBrace</el-id> + "<el-lit>color:DarkRed;font-size:24pt;</el-lit>" + <el-id>closeBrace</el-id> + "<el-lit>p</el-lit>" + <el-id>openBrace</el-id> + "<el-lit>font-family:Serif;</el-lit>" + <el-id>closeBrace</el-id> + "<el-lit>&lt;/style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code-block>
-<p>This demonstrates how to include a stylesheet's necessary curly braces { } since, within a literal string, Elan would interpret these as defining an 'interpolation' clause (see <a href="Interpolated string">Interpolated string</a>). This is solved by using the interpolated constants <el-code>openBrace</el-code> and <el-code>closeBrace</el-code> instead of { and }:</p>
-<el-code-block source="">
-</el-code-block>
-<!--
-main
-  let stylesheet be "<style>h1{openBrace}color:blue;font-size:24pt;{closeBrace}p{openBrace}font-family:Helvetica;{closeBrace}</style>"
-  print stylesheet
-  print "<h1>A heading</h1>"
-  print "<p>plain text</p>"
-end main
--->
-</p>Here is the result:</p>
-
-<p>An alternative would be to use, say,  [ and ] in the original Html stylesheet instead of { and }, and have a function replace the square brackets with curly braces (defined by their Unicode codepoint values) before use, and get the same result:</p>
-
-<!--
-main
-  let stylesheet be "<style> h1[color:blue;font-size:24pt;],p[font-family:Helvetica;] h1</style>"
-  print replaceBrackets(stylesheet)
-  print "<h1>A heading</h1>"
-  print "<p>plain text</p>"
-end main
-
-function replaceBrackets(original as String) returns String
-  return original.replace("[", unicode(123)).replace("]", unicode(125))
-end function
--->
-
-<h4 class="no-TOC">Notes</h4>
-<ul>
-<li>If you define an embedded stylesheet in the manner described above, then this should be printed first, and will then be applied to any subsequent printing of Html within the program. However if the Display is cleared, either by the Clear button in the IDE, or programmatically by calling <el-code>clearPrintedText</el-code>, then the stylesheet will be removed also.</li>
-<li> You can, though, print the stylesheet again before printing further content. In this case it can be a good idea to define the stylesheet as a (global) constant.</li>
-<li>In general you should avoid using * to define the applicability of a style, since this could mess up the styling of the Elan IDE, and even render it unusable. (Should this happen, refresh the browser and correct the stylesheet definition). If you want a style to apply to all elements that you are printing you may specify <el-code>#display *</el-code>, which means 'all elements within the element with <el-code>id = 'display</el-code>'.</li>
-<li>Beware printing strings with < and > in them in case they enclose non-blank characters, since Elan will try and interpret the enclosed characters as an Html tag.</li>
-</ul>
-<!-- #endregion-->
-<!--   #region Print Html-->
-<h2 id="Html">Printing Html to the Display</h2>
-<p>As well as plain text, it is also possible to print Html to the Display, which will be correctly formatted. For example:</p>
-
-<el-code-block source="Html_1.elan">
-<el-statement class="ok" id="print5" tabindex="0"><el-kw>print </el-kw><el-field id="expr6" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;h1 style='color: blue;'&gt;A heading&lt;/h1&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print7" tabindex="0"><el-kw>print </el-kw><el-field id="expr8" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;p&gt;some text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code-block>
-
-<p>will produce:</p>
-<img src="images/Html_1.png" width="206" height="211">
-<h4 class="no-TOC">Notes</h4>
-<ul>
-<li>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above. Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string. Alternatively, you could replace each ' by the interpolated constant <el-code>quotes</el-code>.</li>
-<li>It is not necessary to put individual lines of Html into separate <el-code>print</el-code> statements &ndash; you can print a string of any length &ndash; but putting tags into separate <el-code>print</el-code> statements can improve the readability of your code.</li>
-</ul>
-<h3 class="no-TOC">Using an embedded stylesheet</h3>
-<p>If you want styles to be applied to multiple tags you can embed a stylesheet. For example, the following stylesheet will set the font for all text, and some further details for all &lt;h1&gt; headings:</p>
-<el-code-block source="Html_2.elan">
-     <el-statement class="ok" id="print16" tabindex="0"><el-kw>print </el-kw><el-field id="expr17" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print18" tabindex="0"><el-kw>print </el-kw><el-field id="expr19" class="optional ok" tabindex="0"><el-txt>"<el-lit>h1 openBrace</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print20" tabindex="0"><el-kw>print </el-kw><el-field id="expr21" class="optional ok" tabindex="0"><el-txt>"<el-lit>color: DarkRed;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print22" tabindex="0"><el-kw>print </el-kw><el-field id="expr23" class="optional ok" tabindex="0"><el-txt>"<el-lit>font-size: 24pt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print24" tabindex="0"><el-kw>print </el-kw><el-field id="expr25" class="optional ok" tabindex="0"><el-txt><el-id>closeBrace</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print26" tabindex="0"><el-kw>print </el-kw><el-field id="expr27" class="optional ok" tabindex="0"><el-txt>"<el-lit>p openBrace</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print28" tabindex="0"><el-kw>print </el-kw><el-field id="expr29" class="optional ok" tabindex="0"><el-txt>"<el-lit>font-family: Serif;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print30" tabindex="0"><el-kw>print </el-kw><el-field id="expr31" class="optional ok" tabindex="0"><el-txt><el-id>closeBrace</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print32" tabindex="0"><el-kw>print </el-kw><el-field id="expr33" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;/style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print34" tabindex="0"><el-kw>print </el-kw><el-field id="expr35" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;h1&gt;New heading&lt;/h1&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print36" tabindex="0"><el-kw>print </el-kw><el-field id="expr37" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;p&gt;some new text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code-block>
-
-<img src="images/Html_2.png" width="277" height="219">
-
-<p>This may be safely coalesced into a single line with  <el-code>print</el-code> statements and spaces removed:</p>
-<el-code-block source="Html_2.elan">
-     <el-statement class="ok" id="print41" tabindex="0"><el-kw>print </el-kw><el-field id="expr42" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;style&gt;h1</el-lit>" + <el-id>openBrace</el-id> + "<el-lit>color:DarkRed;font-size:24pt;</el-lit>" + <el-id>closeBrace</el-id> + "<el-lit>p</el-lit>" + <el-id>openBrace</el-id> + "<el-lit>font-family:Serif;</el-lit>" + <el-id>closeBrace</el-id> + "<el-lit>&lt;/style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code-block>
-<p>This demonstrates how to include a stylesheet's necessary curly braces { } since, within a literal string, Elan would interpret these as defining an 'interpolation' clause (see <a href="Interpolated string">Interpolated string</a>). This is solved by using the interpolated constants <el-code>openBrace</el-code> and <el-code>closeBrace</el-code> instead of { and }.</p>
-
-<h4 class="no-TOC">Notes</h4>
-<ul>
-<li>If you define an embedded stylesheet in the manner described above, then this should be printed first, and will then be applied to any subsequent printing of Html within the program. However if the Display is cleared, either by the Clear button in the IDE, or programmatically by calling <el-code>clearPrintedText</el-code>, then the stylesheet will be removed also.</li>
-<li> You can, though, print the stylesheet again before printing further content. In this case it can be a good idea to define the stylesheet as a (global) constant.</li>
-<li>In general you should avoid using * to define the applicability of a style, since this could mess up the styling of the Elan IDE, and even render it unusable. (Should this happen, refresh the browser and correct the stylesheet definition). If you want a style to apply to all elements that you are printing you may specify <el-code>#display *</el-code>, which means 'all elements within the element with <el-code>id = 'display</el-code>'.</li>
-</ul>
 <!-- #endregion-->
 <!--   #region Images-->
 <h2 id="image">Handling images</h2>

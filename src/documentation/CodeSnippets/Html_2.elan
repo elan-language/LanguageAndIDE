@@ -1,21 +1,6 @@
-# 13b0b7ccda5999c4e211685cf50239ce6c28e49f9fd628af048bc4728bf8449d Elan 1.1.0 guest default_profile valid
+# b738047c0458129551eca2745cea0338a4181188d5dcaa657fbb240a6e0bf6b9 Elan 1.1.0 guest default_profile valid
 
 main
-  print "<style>"
-  print "h1 openBrace"
-  print "color: DarkRed;"
-  print "font-size: 24pt;"
-  print closeBrace
-  print "p openBrace"
-  print "font-family: Serif;"
-  print closeBrace
-  print "</style>"
-  print "<h1>New heading</h1>"
-  print "<p>some new text</p>"
-  # 
-  print "<style>h1" + openBrace + "color:DarkRed;font-size:24pt;" + closeBrace + "p" + openBrace + "font-family:Serif;" + closeBrace + "</style>"
+  let style be "<style> h1 {openBrace} color: DarkRed; font-size: 24pt; {closeBrace} p {openBrace} font-family: Serif;{closeBrace} </style>"
+  call displayHtml("{style}<h1>New heading</h1><p>some new text</p>")
 end main
-
-test 
-
-end test

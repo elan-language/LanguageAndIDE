@@ -1,10 +1,5 @@
-# c43a848d67dd42fba384c8dcc51d7a339c04e437ce8a1356d87c4058b5dc4108 Elan 1.1.0 guest default_profile valid
+# 02116b213a7b3dea4840cd54b1783ce84625a3ab29b7e2bc007acd69a6677422 Elan 1.1.0 guest default_profile valid
 
 main
-  print "<h1 style='color: blue;'>A heading</h1>"
-  print "<p>some text</p>"
+  call displayHtml("<h1 style='color: blue;'>A heading</h1><p>some text</p>")
 end main
-
-test 
-
-end test
