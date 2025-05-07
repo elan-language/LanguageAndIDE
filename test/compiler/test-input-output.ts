@@ -53,7 +53,7 @@ export class TestInputOutput implements ElanInputOutput {
     this.drawn = "";
     return Promise.resolve();
   }
-  clearAllGraphics(): Promise<void> {
+  clearDisplay(): Promise<void> {
     this.drawn = "";
     return Promise.resolve();
   }
@@ -83,6 +83,10 @@ export class TestInputOutput implements ElanInputOutput {
   }
   clearSystemInfo(): Promise<void> {
     this.printed = "";
+    return Promise.resolve();
+  }
+  clearHtml(): Promise<void> {
+    this.drawn = "";
     return Promise.resolve();
   }
 }
