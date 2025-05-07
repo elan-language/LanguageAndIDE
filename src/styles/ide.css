@@ -3,6 +3,7 @@
   --ideTitleSize: 12pt;
 }
 
+#printed-html,
 #system-info,
 #printed-text,
 #printed-text input {
@@ -195,7 +196,8 @@ body {
 
 #block-graphics,
 #vector-graphics,
-#print {
+#print,
+#printed-html {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -425,6 +427,11 @@ button.plain:disabled, menu-item.button.plain:disabled {
 #printed-text input:focus {
   background-color: var(--selection);
   width: 100%;
+}
+
+#printed-html {
+  padding: 2px;
+  overflow-y: auto;
 }
 
 iframe {
