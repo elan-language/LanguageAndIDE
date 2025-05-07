@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 test('has title', async ({ page }) => {
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
@@ -159,7 +159,7 @@ test('symbol completion', async ({ page }) => {
   await page.keyboard.type('c');
   await page.keyboard.type('c');
 
-  await expect(page.locator('#ident6')).toContainText('clearBlocksclearKeyBufferclearPrintedTextclearVectorGraphicsdisplayBlocksdisplayVectorGraphics');
+  await expect(page.locator('#ident6')).toContainText('clearBlocksclearHtmlclearKeyBufferclearPrintedTextclearVectorGraphicsdisplayBlocksdisplayVectorGraphics');
 });
 
 test('undo redo', async ({ page }) => {
