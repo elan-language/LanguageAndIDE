@@ -97,8 +97,6 @@ let errorDOMEvent: Event | undefined;
 let errorEditorEvent: editorEvent | undefined;
 let errorStack: string | undefined;
 
-autoSaveButton.hidden = !useChromeFileAPI();
-
 // add all the listeners
 
 undoButton.addEventListener("click", undo);
@@ -700,8 +698,6 @@ function updateDisplayValues() {
   const isPaused = isPausedState();
   let isTestRunning = isTestRunningState();
 
-  saveButton.hidden = !!autoSaveFileHandle;
-
   if (isTestRunning && !(isParsing || isCompiling)) {
     endTests();
     file.setTestStatus(TestStatus.default);
@@ -782,6 +778,8 @@ function updateDisplayValues() {
       disable([saveButton], "Some code must be added in order to save");
     } else if (!isParsing) {
       disable([saveButton], "Code must be parsing in order to save");
+    } else if (autoSaveFileHandle) {
+      disable([saveButton], "Autosave is enabled- cancel to manual save");
     } else {
       enable(saveButton, "Save the code into a file");
     }
@@ -828,6 +826,8 @@ function updateDisplayValues() {
         } else {
           disable([autoSaveButton], "Code must be parsing in order to save");
         }
+      } else {
+        disable([autoSaveButton], "Only available on Chrome");
       }
     }
 
