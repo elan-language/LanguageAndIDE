@@ -303,18 +303,18 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   wrapHtmlInSrcdoc(s: string) {
-    return `<head><link href='styles/ide.css' rel='stylesheet'/></head><body><div id='printed-html'>${s}</div></body>`;
+    return `<head><link href='styles/ide.css' rel='stylesheet'/></head><body><div id='display-html'>${s}</div></body>`;
   }
 
   wrapHtmlInIframe(s: string) {
-    return `<iframe id="printed-html-sandbox" sandbox seamless srcdoc="${this.wrapHtmlInSrcdoc(s)}"</iframe>`;
+    return `<iframe id="display-html-sandbox" sandbox seamless srcdoc="${this.wrapHtmlInSrcdoc(s)}"</iframe>`;
   }
 
   drawHtml(html: string): Promise<void> {
     checkForUnclosedHtmlTag(html);
-    const div = document.getElementById("printed-html")!;
+    const div = document.getElementById("display-html")!;
 
-    const iframe = document.getElementById("printed-html-sandbox") as HTMLIFrameElement | undefined;
+    const iframe = document.getElementById("display-html-sandbox") as HTMLIFrameElement | undefined;
 
     if (!iframe) {
       div.innerHTML = this.wrapHtmlInIframe(html);
@@ -326,7 +326,7 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   clearHtml(): Promise<void> {
-    document.getElementById("printed-html")!.innerHTML = "";
+    document.getElementById("display-html")!.innerHTML = "";
     return Promise.resolve();
   }
 }

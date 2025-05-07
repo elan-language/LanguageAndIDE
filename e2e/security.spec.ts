@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 // main
 //   print "<img src='images/Debug.png' onclick=console.warn('explot') />"
@@ -88,7 +88,7 @@ test('iframe xss', async ({ page }) => {
   //   await page.keyboard.press('Tab');
   
   //   await page.getByRole('button', { name: 'Run the program' }).click();
-  //   await page.frameLocator('iframe').locator('#printed-html').click();
+  //   await page.frameLocator('iframe').locator('#display-html').click();
   // });
   
   test('iframe xss html', async ({ page }) => {
