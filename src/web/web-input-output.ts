@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ElanInputOutput } from "../elan-input-output";
-import { checkForUnclosedHtmlTag } from "./web-helpers";
+import { checkForUnclosedHtmlTag, sanitiseHtml } from "./web-helpers";
 
 export class WebInputOutput implements ElanInputOutput {
   keyBuffer: KeyboardEvent[] = [];
@@ -195,7 +195,7 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   async print(text: string): Promise<void> {
-    this.printedText = `${this.printedText}${text}`;
+    this.printedText = `${this.printedText}${sanitiseHtml(text)}`;
     await this.renderPrintedText();
     return Promise.resolve();
   }
@@ -206,7 +206,7 @@ export class WebInputOutput implements ElanInputOutput {
       "                                                                                ";
     const charsSinceNl = this.printedText.length - lastNl;
     const tab = spaces.substring(0, position - charsSinceNl + 1);
-    this.printedText = `${this.printedText}${tab}${text}`;
+    this.printedText = `${this.printedText}${tab}${sanitiseHtml(text)}`;
     await this.renderPrintedText();
     return Promise.resolve();
   }
@@ -290,8 +290,6 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   async renderPrintedText(): Promise<void> {
-    this.printedText = this.printedText.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-
     const div = document.getElementById("printed-text")!;
     div.innerHTML = this.printedText;
     return Promise.resolve();

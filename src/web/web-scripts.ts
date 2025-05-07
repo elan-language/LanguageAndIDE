@@ -16,6 +16,7 @@ import {
   fetchProfile,
   fetchUserConfig,
   hash,
+  sanitiseHtml,
   transforms,
 } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
@@ -586,7 +587,7 @@ async function showError(err: Error, fileName: string, reset: boolean) {
 
 function systemInfoPrintLine(text: string, scroll = true) {
   // sanitise the text
-  text = text.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+  text = sanitiseHtml(text);
 
   systemInfoDiv.innerHTML = systemInfoDiv.innerHTML + text + "\n";
   if (scroll) {
