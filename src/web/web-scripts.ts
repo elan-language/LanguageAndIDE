@@ -37,7 +37,7 @@ const stopButton = document.getElementById("stop") as HTMLButtonElement;
 const pauseButton = document.getElementById("pause") as HTMLButtonElement;
 const stepButton = document.getElementById("step") as HTMLButtonElement;
 const clearSystemInfoButton = document.getElementById("clear-system-info") as HTMLButtonElement;
-const clearGraphicsButton = document.getElementById("clear-display") as HTMLButtonElement;
+const clearDisplayButton = document.getElementById("clear-display") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
 const newButton = document.getElementById("new") as HTMLButtonElement;
 const demosButton = document.getElementById("demos") as HTMLButtonElement;
@@ -256,8 +256,8 @@ clearSystemInfoButton?.addEventListener("click", () => {
   systemInfoDiv.innerHTML = "";
 });
 
-clearGraphicsButton?.addEventListener("click", async () => {
-  await elanInputOutput.clearAllGraphics();
+clearDisplayButton?.addEventListener("click", async () => {
+  await elanInputOutput.clearDisplay();
 });
 
 expandCollapseButton?.addEventListener("click", async () => {
@@ -461,7 +461,7 @@ if (okToContinue) {
       undoButton,
       redoButton,
       clearSystemInfoButton,
-      clearGraphicsButton,
+      clearDisplayButton,
       saveAsStandaloneButton,
       preferencesButton,
     ],
@@ -501,7 +501,7 @@ function clearSystemDisplay() {
 
 async function clearDisplays() {
   clearSystemDisplay();
-  await elanInputOutput.clearAllGraphics();
+  await elanInputOutput.clearDisplay();
 }
 
 function clearUndoRedoAndAutoSave() {
@@ -741,7 +741,7 @@ function updateDisplayValues() {
         expandCollapseButton,
         undoButton,
         redoButton,
-        clearGraphicsButton,
+        clearDisplayButton,
         clearSystemInfoButton,
         fileButton,
         loadButton,
@@ -767,7 +767,7 @@ function updateDisplayValues() {
     enable(expandCollapseButton, "Expand / Collapse all code regions");
     enable(preferencesButton, "Set preferences");
 
-    enable(clearGraphicsButton, "Clear display");
+    enable(clearDisplayButton, "Clear display");
     enable(clearSystemInfoButton, "Clear display");
 
     for (const elem of demoFiles) {

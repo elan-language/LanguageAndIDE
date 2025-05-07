@@ -105,7 +105,7 @@ export class StubInputOutput implements ElanInputOutput {
     });
   }
 
-  clearAllGraphics() {
+  clearDisplay() {
     return new Promise<void>((rs, rj) => {
       onmessage = (e) => {
         const data = e.data as WebWorkerMessage;
@@ -298,6 +298,22 @@ export class StubInputOutput implements ElanInputOutput {
         }
       };
       postMessage(this.writeMsg("drawHtml", [html]));
+    });
+  }
+
+  clearHtml() {
+    return new Promise<void>((rs, rj) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs();
+        }
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
+      };
+      postMessage(this.writeMsg("clearHtml"));
     });
   }
 }

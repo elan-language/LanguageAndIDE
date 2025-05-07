@@ -16,7 +16,7 @@ export interface ElanInputOutput {
   drawVectorGraphics(html: string): Promise<void>;
   clearVectorGraphics(): Promise<void>;
 
-  clearAllGraphics(): Promise<void>;
+  clearDisplay(): Promise<void>;
 
   waitForAnyKey(): Promise<void>;
 
@@ -31,4 +31,6 @@ export interface ElanInputOutput {
   writeFile(fileName: string, data: string): Promise<void>;
 
   drawHtml(html: string): Promise<void>;
+
+  clearHtml(): Promise<void>;
 }

@@ -177,9 +177,10 @@ export class WebInputOutput implements ElanInputOutput {
     return this.drawVectorGraphics("");
   }
 
-  async clearAllGraphics(): Promise<void> {
+  async clearDisplay(): Promise<void> {
     this.clearKeyBuffer();
     await this.clearPrintedText();
+    await this.clearHtml();
     await this.clearBlockGraphics();
     return this.clearVectorGraphics();
   }
@@ -322,5 +323,10 @@ export class WebInputOutput implements ElanInputOutput {
     }
 
     return new Promise((rs) => setTimeout(() => rs(), 50));
+  }
+
+  clearHtml(): Promise<void> {
+    document.getElementById("printed-html")!.innerHTML = "";
+    return Promise.resolve();
   }
 }

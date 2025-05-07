@@ -770,4 +770,9 @@ export class StdLib {
   async displayHtml(html: string): Promise<void> {
     return await this.system!.elanInputOutput.drawHtml(html);
   }
+
+  @elanProcedure([], ProcedureOptions.async)
+  async clearHtml(): Promise<void> {
+    return await this.system!.elanInputOutput.clearHtml();
+  }
 }
