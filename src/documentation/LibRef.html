@@ -347,14 +347,6 @@ prints 'true'.
 
 <h3 class="no-TOC" id="CharacterSets">Character sets</h3>
 
-<table>
-<tr><th></th></tr>
-<tr>
- <td></td>
-
-</table>
-
-Program code
 
 <!--   #endregion-->
 <!-- #endregion-->
@@ -362,8 +354,9 @@ Program code
 <h1 id="Tuple">Tuples</h1>
 A <el-code>tuple</el-code> is a way of holding a small number of values of different Types together as a single reference. It may be considered a &lsquo;lightweight&rsquo; alternative to defining a specific class for some purposes. Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold. Common uses include:
 <ul>
-<li>Holding a pair of x and y coordinates (each of Type <el-code>Float</el-code>) as a single unit.</li>
-<li>Allowing a function to pass back a result comprised of both a message in a <el-code>String</el-code> and a <el-code>Boolean</el-code> indicating whether the operation was successful.</li>
+ <li>Holding a pair of x and y coordinates (each of Type <el-code>Float</el-code>) as a single unit.</li>
+ <li>Allowing a function to pass back a result comprised of both a message in a <el-code>String</el-code> and a <el-code>Boolean</el-code> indicating whether the operation was successful.</li>
+ <li>Returning both an updated copy of an immutable data structure and the value of an element from it, e.g. from method <el-code><el-method>pop</el-method></el-code> on a Stack.</li>
 </ul>
 
 <h2>Using a tuple</h2>
@@ -903,6 +896,8 @@ differences. Immutable data structures are intended specifically to facilitate t
   <th style="width:20%">Stack</th>
   <th style="width:20%">Queue</th>
  </tr><tr>
+  <td>Size</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td>
+ </tr><tr>
   <td>Type</td>
   <td><el-code>ListImmutable&lt;of String&gt;</el-code><br>Item Type must be immutable</td>
   <td><el-code>DictionaryImmutable&lt;of String, Int&gt;</el-code><br>Key Type must be <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code>, <el-code>Boolean</el-code> or any <el-code>record</el-code><br>Value Type may be any immutable Type</td>
@@ -971,8 +966,12 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 
 <h3 class="no-TOC">Dot methods on a ListImmutable</h3>
 <table
- <tr><th>function<br>method</th><th>argument<br>Types</th><th>return<br>Types</th><th>returns</th></tr>
  <tr>
+  <th style="width:10%">function<br>dot method</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:10%">return<br>Type</th>
+  <th style="width:50%">returns</th>
+ </tr><tr>
   <td><el-code><el-method>contains</el-method></el-code></td>
   <td>(single item of the List's Type)</td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
@@ -1207,18 +1206,8 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
     <li>Both <el-code>Stack </el-code>and<el-code> Queue</el-code> are dynamically extensible, like <el-code>List</el-code> and <el-code>ListImmutable</el-code>. There is no need (or means to) specify a size limit as they will continue to expand until, eventually, the computer&#8217;s memory limit is reached.</li>
     <li>This same syntax is used to specify the Type if you want to pass a <el-code>Stack</el-code> into a function, or specify it as the <el-code>return</el-code> Type.</li>
     <li><el-code>Stack</el-code> and <el-code>Queue</el-code> have some methods in common: <el-code>length</el-code>, and <el-code>peek</el-code> which allows you to read the next item that would be removed, without actually removing it.</li>
-    <li>The names of the methods for adding or removing an item are different for <el-code>Stack</el-code>k and <el-code>Queue</el-code>, as summarised in this table:</li>
+    <li>The names of the methods for adding or removing an item are different for <el-code>Stack</el-code> and <el-code>Queue</el-code>, as summarised in these tables:</li>
 </ul>
-<p>
-<table>
-<tr><th></th><th>Stack</th><th>Queue</th></tr>
-<tr><td>Create a new instance</td><td><el-code>let s be new Stack&lt;of Int&gt;()</el-code></td><td><el-code>let q be new Queue&lt;of Int&gt;()</el-code></td></tr>
-<tr><td>Add an item (must be of correct Type)</td><td><el-code>call s.push(item)</el-code></td><td><el-code>call q.enqueue(item)</el-code></td></tr>
-<tr><td>Remove the next item</td><td><el-code>variable item set to s.pop()</el-code></td><td><el-code>variable item set to q.dequeue()</el-code></td></tr>
-<tr><td>View the next item to be removed<br>without removing it</td><td><el-code>variable item set to s.peek()</el-code></td><td><el-code>variable item set to q.peek()</el-code></td></tr>
-<tr><td>Read the current length</td><td><el-code>s.length()</el-code></td><td><el-code>q.length()</el-code></td></tr>
-</table>
-
 <h3 class="no-TOC">Procedure methods on a Stack or a Queue</h2>
 <table>
  <tr>
@@ -1231,7 +1220,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
   <td><el-code><el-type>Stack</el-type></el-code></td>
   <td><el-code><el-type>Stack element Type</el-type></el-code></td>
   <td>adds the element to the top of the Stack</td>
- </tr>adds the element to the top of the Stack<tr>
+ </tr><tr>
   <td><el-code><el-method>enqueue</el-method></el-code></td>
   <td><el-code><el-type>Queue</el-type></el-code></td>
   <td><el-code><el-type>Queue element Type</el-type></el-code></td>
@@ -1251,7 +1240,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
   <td><el-code><el-method>pop</el-method></el-code></td>
   <td><el-code><el-type>Stack</el-type></el-code></td>
   <td>(none)</td>
-  <td><el-code><el-type>Stack,<br> Stack element Type</el-type></el-code></td>
+  <td><el-code><el-type>Tuple(Stack element Type,<br>Stack</el-type>)</el-code></td>
   <td>the topmost element of the Stack, and the Stack with the element removed</td>
  </tr><tr>
   <td><el-code><el-method>peek</el-method></el-code></td>
@@ -1263,7 +1252,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
   <td><el-code><el-method>dequeue</el-method></el-code></td>
   <td><el-code><el-type>Queue</el-type></el-code></td>
   <td>(none)</td>
-  <td><el-code><el-type>Queue,<br> Queue element type</el-type></el-code></td>
+  <td><el-code><el-type>Tuple(Queue element Type,<br>Queue</el-type>)</td>
   <td>the next element of the Queue, and the Queue  with the element removed</td>
  </tr><tr>
   <td><el-code><el-method>peek</el-method></el-code></td>
@@ -1271,6 +1260,12 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
   <td>(none)</td>
   <td><el-code><el-type>Queue element type</el-type></el-code></td>
   <td>the next element of the Queue (without altering the Queue)</td>
+ </tr><tr>
+  <td><el-code><el-method>length</el-method></el-code></td>
+  <td><el-code><el-type>Stack <i>or</i> Queue</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>the number of elements in the the Stack or the Queue</td>
  </tr>
 </table>
     </p>
