@@ -8,10 +8,10 @@
 #printed-text,
 #printed-text input {
   color: var(--defaultText);
-  border-color: var(--panelBackground);
   font-style: normal;
   font-family: consolas, monospace;
   font-size: 11pt;
+  background-color: white;
 }
 #code-title,
 #system-info-title,
@@ -196,7 +196,7 @@ body {
 
 #block-graphics,
 #vector-graphics,
-#printed-text,
+#print,
 #printed-html {
   width: 100%;
   height: 100%;
@@ -209,7 +209,8 @@ body {
   z-index: 10;
 }
 
-#printed-text {
+#print, #printed-text {
+  border-color: var(--panelBackground);
   z-index: 20;
 }
 
@@ -418,7 +419,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
   opacity: 0.75;
 }
 
-#printed-text {
+#print {
   padding: 2px;
   overflow-y: auto;
 }
