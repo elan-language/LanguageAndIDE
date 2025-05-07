@@ -814,7 +814,7 @@ function updateDisplayValues() {
 
     if (autoSaveFileHandle) {
       autoSaveButton.innerText = "Cancel Auto Save";
-      autoSaveButton.setAttribute("title", "Click to turn auto-save off and resume manual saving.");
+      enable(autoSaveButton, "Click to turn auto-save off and resume manual saving.");
     } else {
       if (useChromeFileAPI()) {
         autoSaveButton.innerText = "Auto Save";
