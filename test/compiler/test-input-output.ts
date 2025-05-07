@@ -2,6 +2,12 @@ import { ElanInputOutput } from "../../src/elan-input-output";
 import { checkForUnclosedHtmlTag } from "../../src/web/web-helpers";
 
 export class TestInputOutput implements ElanInputOutput {
+
+  drawHtml(html: string): Promise<void> {
+    this.drawn = html;
+    return Promise.resolve();
+  }
+  
   waitForAnyKey(): Promise<void> {
     throw new Error("Method not implemented.");
   }

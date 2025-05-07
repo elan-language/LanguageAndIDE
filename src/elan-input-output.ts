@@ -29,4 +29,6 @@ export interface ElanInputOutput {
   readFile(): Promise<string>;
 
   writeFile(fileName: string, data: string): Promise<void>;
+
+  drawHtml(html: string): Promise<void>;
 }

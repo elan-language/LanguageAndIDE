@@ -765,4 +765,9 @@ export class StdLib {
   async clearVectorGraphics() {
     await this.system!.elanInputOutput.clearVectorGraphics();
   }
+
+  @elanProcedure(["html"], ProcedureOptions.async)
+  async displayHtml(html: string): Promise<void> {
+    return await this.system!.elanInputOutput.drawHtml(html);
+  }
 }

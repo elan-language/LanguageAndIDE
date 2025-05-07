@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ElanInputOutput } from "../elan-input-output";
-import { checkForUnclosedHtmlTag, mayBeHtml } from "./web-helpers";
+import { checkForUnclosedHtmlTag } from "./web-helpers";
 
 export class WebInputOutput implements ElanInputOutput {
   keyBuffer: KeyboardEvent[] = [];
@@ -219,7 +219,6 @@ export class WebInputOutput implements ElanInputOutput {
 
   async readLine() {
     await this.renderPrintedText();
-    const useSpacers = mayBeHtml(this.printedText);
 
     const div = document.getElementById("printed-text")!;
     const inp = document.createElement("input");
@@ -227,19 +226,6 @@ export class WebInputOutput implements ElanInputOutput {
     inp.type = "text";
     inp.autofocus = true;
     inp.tabIndex = 2;
-    const spacers: HTMLDivElement[] = [];
-
-    if (useSpacers) {
-      const numSpacers = this.printedText.split("").filter((c) => c === "\n").length;
-
-      for (let i = 0; i < numSpacers; i++) {
-        const spacer = document.createElement("div");
-        spacer.className = "spacer";
-        spacer.textContent = " ";
-        div.appendChild(spacer);
-        spacers.push(spacer);
-      }
-    }
 
     div.appendChild(inp);
 
@@ -255,10 +241,6 @@ export class WebInputOutput implements ElanInputOutput {
           rs(inp.value);
           this.stopReading();
           const v = inp.value.replace(/</g, "&lt;");
-
-          for (const sp of spacers) {
-            div.removeChild(sp);
-          }
 
           div.removeChild(inp);
           await this.printLine(v);
@@ -307,42 +289,40 @@ export class WebInputOutput implements ElanInputOutput {
     return Promise.resolve();
   }
 
-  wrapTextInSrcdoc(s: string) {
-    return `<head><link href='styles/ide.css' rel='stylesheet'/></head><body><div id='printed-text'>${s}</div></body>`;
-  }
-
-  wrapTextInIframe(s: string) {
-    return `<iframe id="printed-text-sandbox" sandbox seamless srcdoc="${this.wrapTextInSrcdoc(s)}"</iframe>`;
-  }
-
   async renderPrintedText(): Promise<void> {
-    if (mayBeHtml(this.printedText)) {
-      return await this.renderPrintedHtml();
-    }
+    this.printedText = this.printedText.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 
     const div = document.getElementById("printed-text")!;
     div.innerHTML = this.printedText;
     return Promise.resolve();
   }
 
-  renderPrintedHtml(): Promise<void> {
-    checkForUnclosedHtmlTag(this.printedText);
-    const div = document.getElementById("printed-text")!;
-
-    const iframe = document.getElementById("printed-text-sandbox") as HTMLIFrameElement | undefined;
-
-    if (!iframe) {
-      div.innerHTML = this.wrapTextInIframe(this.printedText);
-    } else {
-      iframe.srcdoc = this.wrapTextInSrcdoc(this.printedText);
-    }
-
-    return new Promise((rs) => setTimeout(() => rs(), 50));
-  }
-
   async clearPrintedText(): Promise<void> {
     this.printedText = "";
     await this.renderPrintedText();
     return Promise.resolve();
+  }
+
+  wrapHtmlInSrcdoc(s: string) {
+    return `<head><link href='styles/ide.css' rel='stylesheet'/></head><body><div id='printed-text'>${s}</div></body>`;
+  }
+
+  wrapHtmlInIframe(s: string) {
+    return `<iframe id="printed-html-sandbox" sandbox seamless srcdoc="${this.wrapHtmlInSrcdoc(s)}"</iframe>`;
+  }
+
+  drawHtml(html: string): Promise<void> {
+    checkForUnclosedHtmlTag(html);
+    const div = document.getElementById("printed-html")!;
+
+    const iframe = document.getElementById("printed-html-sandbox") as HTMLIFrameElement | undefined;
+
+    if (!iframe) {
+      div.innerHTML = this.wrapHtmlInIframe(html);
+    } else {
+      iframe.srcdoc = this.wrapHtmlInSrcdoc(html);
+    }
+
+    return new Promise((rs) => setTimeout(() => rs(), 50));
   }
 }
