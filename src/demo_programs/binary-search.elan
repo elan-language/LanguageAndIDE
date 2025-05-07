@@ -1,4 +1,4 @@
-# d14b4db44d81488e95756d250fb665e7417c78c0e011fd10813710fd85567312 Elan 1.0.3 guest default_profile valid
+# bcdb8a943744335b2c4d2874733a4b1b1fab591fc976b9ac01316d1c9c83a85d Elan 1.1.0 guest default_profile valid
 
 main
   let fruit be ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]

@@ -1,4 +1,4 @@
-# 0433889609c80c6665fe354b5941251588780e59abb3146ab63569f665a84d2d Elan 1.0.3 guest default_profile valid
+# fed4e0ffabb39dc62cfe4cc16568bc1bba32fa9bc7760d8bc8537e035186b00d Elan 1.1.0 guest default_profile valid
 
 main
   let qu be "new Queue<of String()"
