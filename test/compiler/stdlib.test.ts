@@ -4,6 +4,7 @@ import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import { TestStatus } from "../../src/frames/status-enums";
 import {
   assertDoesNotCompile,
+  assertGraphicsContains,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -1426,5 +1427,53 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "tuple(true, 34)zbbz");
+  });
+
+  test("Pass_drawHtml", async () => {
+    const code = `${testHeader}
+
+main
+  call displayHtml("<p>fred</p>")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.displayHtml("<p>fred</p>");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertGraphicsContains(fileImpl, 0, "<p>fred</p>");
+  });
+
+  test("Pass_clearHtml", async () => {
+    const code = `${testHeader}
+
+main
+  call displayHtml("<p>fred</p>")
+  call clearHtml()
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.displayHtml("<p>fred</p>");
+  await _stdlib.clearHtml();
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertGraphicsContains(fileImpl, 0, "");
   });
 });
