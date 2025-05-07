@@ -494,8 +494,12 @@ async function renderAsHtml(editingField: boolean) {
   }
 }
 
-async function clearDisplays() {
+function clearSystemDisplay() {
   systemInfoDiv.innerHTML = "";
+}
+
+async function clearDisplays() {
+  clearSystemDisplay();
   await elanInputOutput.clearAllGraphics();
 }
 
@@ -552,7 +556,7 @@ async function showError(err: Error, fileName: string, reset: boolean) {
   errorDOMEvent = lastDOMEvent;
   errorEditorEvent = lastEditorEvent;
 
-  await clearDisplays();
+  clearSystemDisplay();
   if (reset) {
     await resetFile();
   }
