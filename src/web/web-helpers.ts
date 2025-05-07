@@ -68,3 +68,7 @@ export function checkForUnclosedHtmlTag(text: string) {
 export function mayBeHtml(text: string) {
   return /<.*>/.test(text);
 }
+
+export function sanitiseHtml(text: string) {
+  return text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+}
