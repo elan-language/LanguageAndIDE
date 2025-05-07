@@ -565,30 +565,34 @@ async function showError(err: Error, fileName: string, reset: boolean) {
   file.fileName = fileName;
 
   if (err.message?.startsWith(fileErrorPrefix)) {
-    systemInfoPrintLine(err.message);
+    systemInfoPrintSafe(err.message);
   } else if (err.stack) {
     let msg = "";
     let stack = "";
     if (err instanceof ElanRuntimeError) {
       msg = "A Runtime error occurred in the Elan code";
       stack = err.elanStack;
-      systemInfoPrintLine(msg);
-      systemInfoPrintLine(stack);
+      systemInfoPrintSafe(msg);
+      systemInfoPrintSafe(stack);
     } else {
-      systemInfoPrintLine(internalErrorMsg, false);
+      // our message
+      systemInfoPrintUnsafe(internalErrorMsg, false);
       errorStack = err.stack;
       document.getElementById("bug-report")?.addEventListener("click", gatherDebugInfo);
     }
   } else {
-    systemInfoPrintLine(err.message ?? "Unknown error parsing file");
+    systemInfoPrintSafe(err.message ?? "Unknown error parsing file");
   }
   updateDisplayValues();
 }
 
-function systemInfoPrintLine(text: string, scroll = true) {
+function systemInfoPrintSafe(text: string, scroll = true) {
   // sanitise the text
   text = sanitiseHtml(text);
+  systemInfoPrintUnsafe(text, scroll);
+}
 
+function systemInfoPrintUnsafe(text: string, scroll = true) {
   systemInfoDiv.innerHTML = systemInfoDiv.innerHTML + text + "\n";
   if (scroll) {
     systemInfoDiv.scrollTop = systemInfoDiv.scrollHeight;
@@ -1412,7 +1416,7 @@ async function handleKeyAndRender(e: editorEvent) {
     }
   } catch (e) {
     if (e instanceof ElanCutCopyPasteError) {
-      systemInfoPrintLine(e.message);
+      systemInfoPrintSafe(e.message);
       await renderAsHtml(false);
       return;
     }
@@ -1502,7 +1506,7 @@ async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<
   systemInfoDiv.innerHTML = "";
 
   for (const v of variables) {
-    systemInfoPrintLine(`${v[0]} : ${v[1]}`);
+    systemInfoPrintSafe(`${v[0]} : ${v[1]}`);
   }
 
   const pausedAt = document.getElementById(data.pausedAt);
@@ -1789,7 +1793,7 @@ async function handleTestWorkerError(data: WebWorkerStatusMessage) {
 function handleTestAbort() {
   endTests();
   file.setTestStatus(TestStatus.error);
-  systemInfoPrintLine("Tests timed out and were aborted");
+  systemInfoPrintSafe("Tests timed out and were aborted");
   updateDisplayValues();
 }
 
