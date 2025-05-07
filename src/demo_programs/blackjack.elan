@@ -1,4 +1,4 @@
-# bca229fc52d43e69cd8b1b6152abdedb8295a680037ce81c8cf07a73cb026da1 Elan 1.1.0 guest default_profile valid
+# 52fa1dd351c01154ea384d1517a54162fb9339ea2465437a2bff49f058d4c8fb Elan 1.1.0 guest default_profile valid
 
 main
   call playGame()
@@ -104,8 +104,8 @@ end procedure
 
 procedure displayHands(dealer as Dealer, player as HumanPlayer)
   call clearPrintedText()
-  print dealer
-  print player
+  let blankLines be "<br><br><br><br><br>"
+  call displayHtml("<br><br><br><br><br>{dealer.asHtml()}<br>{player.asHtml()}")
 end procedure
 
 procedure updateScores(dealer as Dealer, player as Player, outcome as Outcome)
@@ -202,8 +202,8 @@ class Dealer inherits Automated
     return if property.hand.total < 17 then Action.draw else Action.stand
   end function
 
-  function asString() returns String
-    return if property.active then "Dealer: {property.hand}" else "Dealer: {property.dealerFaceCard} {unicode(9633)}"
+  function asHtml() returns String
+    return if property.active then "Dealer: {property.hand.asHtml()}" else "Dealer: {property.dealerFaceCard.asHtml()} {unicode(9633)}"
   end function
 
 end class
@@ -241,8 +241,8 @@ class HumanPlayer inherits Player
     set property.score to property.score + amount
   end procedure
 
-  function asString() returns String
-    return "You: {property.hand}"
+  function asHtml() returns String
+    return "You: {property.hand.asHtml()}"
   end function
 
 end class
@@ -270,8 +270,8 @@ class AutomatedPlayer inherits Automated
     return decisionFunc(property.hand, property.dealerFaceCard)
   end function
 
-  function asString() returns String
-    return "{property.name}: {property.hand}"
+  function asHtml() returns String
+    return "{property.name}: {property.hand.asHtml()}"
   end function
 
 end class
@@ -345,10 +345,10 @@ class Hand
     end if
   end procedure
 
-  function asString() returns String
+  function asHtml() returns String
     variable str set to ""
     each card in property.cards
-      set str to str + card.asString() + " "
+      set str to str + card.asHtml() + " "
     end each
     set str to "{str}({property.total}) {property.status}"
     return str
@@ -369,7 +369,7 @@ record Card
     return property.rank is "A"
   end function
 
-  function asString() returns String
+  function asHtml() returns String
     let blackSuit be (property.suit is 0) or (property.suit is 3)
     let colour be if blackSuit then "black" else "red"
     let tag be htmlEscChars[property.suit]
