@@ -43,6 +43,33 @@ test('load and run demo', async ({ page }) => {
   await expect(page.locator('#printed-text')).toContainText("What type of fruit do you want ('x' to exit)? fig We can supply a fig What type of fruit do you want ('x' to exit)? ");
 });
 
+test('input validation', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await page.getByRole('button', { name: 'Demo' }).hover();
+  await page.getByText('Pathfinder').click();
+
+  await page.getByRole('button', { name: 'Run the program' }).click();
+  await expect(page.locator('#printed-text')).toContainText("Enter % rocks (0-100):");
+
+  await page.locator('#inp').fill('101');
+  await page.locator('#inp').press('Enter');
+  await expect(page.locator('#printed-text')).toContainText("must be an integer between 0 and 100 inclusive");
+  await page.locator('#inp').fill('35');
+  await page.locator('#inp').press('Enter');
+  await expect(page.locator('#printed-text')).toContainText("Enter 'a' for A-star, 'd' for Dijkstra, 'h' for Heuristic");
+  await page.locator('#inp').fill('b');
+  await page.locator('#inp').press('Enter');
+  await expect(page.locator('#printed-text')).toContainText("response must be one of [a, d, h]");
+  await page.locator('#inp').fill('h');
+  await page.locator('#inp').press('Enter');
+  await expect(page.locator('#printed-text')).toContainText("Enter 'a' for A-star, 'd' for Dijkstra, 'h' for Heuristic");
+});
+
 test('demo with tests', async ({ page }) => {
   page.once('dialog', dialog => {
     //console.log(`Dialog message: ${dialog.message()}`);
