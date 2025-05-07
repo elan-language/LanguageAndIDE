@@ -1,4 +1,4 @@
-# 1ab8634cb38a3889e297a71fea19cf76a3ff4eab9c02dd19f9e182e57accbf53 Elan 1.1.0 guest default_profile valid
+# c85ccaf11dee021642c78d8cbe31d114df5157856e559d6a90e4d26fdc3bc32d Elan 1.1.0 guest default_profile valid
 
 main
   let start be newPoint(5, 5)
@@ -12,12 +12,7 @@ main
   call displayBlocks(gr)
   variable solver set to new Solver(nodes, start, destination)
   while true
-    print algPrompt
-    call clearKeyBuffer()
-    variable option set to ""
-    while (option isnt "a") and (option isnt "d") and (option isnt "h")
-      set option to getKey()
-    end while
+    let option be inputStringFromOptions(algPrompt, ["a", "d", "h"])
     call clearPrintedText()
     let alg be algFromLetter[option]
     call runSolver(gr, start, destination, rocks, solver, alg)
@@ -278,7 +273,7 @@ constant infinity set to 2000.0
 
 constant algFromLetter set to {"a":Algorithm.aStar, "d":Algorithm.dijkstra, "h":Algorithm.heuristic}
 
-constant algPrompt set to "Press 'a' for A-star, 'd' for Dijkstra, 'h' for Heuristic"
+constant algPrompt set to "Enter 'a' for A-star, 'd' for Dijkstra, 'h' for Heuristic"
 
 constant lightBlue set to 0x80abff
 
