@@ -304,7 +304,7 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   wrapHtmlInSrcdoc(s: string) {
-    return `<head><link href='styles/ide.css' rel='stylesheet'/></head><body><div id='printed-text'>${s}</div></body>`;
+    return `<head><link href='styles/ide.css' rel='stylesheet'/></head><body><div id='printed-html'>${s}</div></body>`;
   }
 
   wrapHtmlInIframe(s: string) {
