@@ -506,7 +506,7 @@ If you wish to have several subclasses of an <el-code>abstract class</el-code> t
 <li>define one or more parameters, which are then used to initialise properties</li>
 </ul>
 <p>If a class does define a constructor, and the constructor defines any parameters, then when the class is instantiated (using <el-code>new</el-code>) then values of
-the correct types must be provided, for example, if the class <el-code><el-type>Snake</el-type></el-code> defines this constructor:</thead></p>
+the correct types must be provided, for example, if the class <el-code><el-type>Square</el-type></el-code> defines this constructor:</thead></p>
 
 <el-code-block>
   <el-constructor class="ok multiline" id="constructor211" tabindex="0">
@@ -531,7 +531,7 @@ the correct types must be provided, for example, if the class <el-code><el-type>
 <el-code>property head as Square</el-code><br>
 <el-code>property body as [Square]</el-code><br>
 <ul>
-<li>A <el-code><el-kw>property</el-kw></el-code> is defined on a <span class="Link">Class</span> and must <el-code>specify</el-code> a name (conforming to the rules for an <a href="#Identifier">Identifier</a> and a Type.</li>
+<li>A <el-code><el-kw>property</el-kw></el-code> is defined on a <span class="Link">Class</span> and must <el-code>specify</el-code> a name (conforming to the rules for an <a href="#identifier">Identifier</a>) and a Type.</li>
 <li>A <el-code><el-kw>property</el-kw></el-code> may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and pressing Ctrl-p. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 <li>If not marked <el-code>private</el-code>, a property may be read but not be written to. Properties may only be modified from outside the class by means of a <span class="Link">Procedure method</span>.</li>
 <li>A property may be given an initial value in the <el-code>constructor</el-code>.</li>
@@ -698,7 +698,7 @@ The simplest way to print is with the <el-code>print</el-code> statement. For ex
 
 Note:
 <ul>
-<li>The last line in the example above uses an <a href="#Interpolated_string">interpolated string</a>. Arguments placed within curly braces are evaluated before printing, and these may be separated by literal text and punctuation as needed. This is one recommended way to print more than one value on a line. The other way is to use print procedures.</li>
+<li>The last line in the example above uses an <a href="LibRef.html#Interpolated_String">interpolated string</a>. Arguments placed within curly braces are evaluated before printing, and these may be separated by literal text and punctuation as needed. This is one recommended way to print more than one value on a line. The other way is to use print procedures.</li>
 </ul>
 <!--     #endregion-->
 <!--     #region Repeat loop-->
