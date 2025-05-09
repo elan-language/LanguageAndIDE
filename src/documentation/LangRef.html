@@ -240,7 +240,7 @@ Procedures and functions may be called or referenced recursively. For example, a
 <h2 id="constant">Constant</h2>
 <p>A <el-code>constant</el-code> defines a named value that cannot change and is always defined at global level (directly within a file) and is global in scope.</p>
 <ul>
-<li>A <el-code>constant</el-code> may not be defined within any method. (However, see<a href=""</a>)<!-- TODO missing link -->.</li>
+<li>A <el-code>constant</el-code> may not be defined within any method. (However, see <a href="#let">let statement</a>).</li>
 <li>The name of a <el-code>constant</el-code> follows the rules for an <a href="#Identifier">Identifier</a>.</li>
 <li>The value to which a constant is set must be a <span class="Link">Literal value</span> of one of the following Types: <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>Boolean</el-code>, <el-code>String</el-code>, <el-code>Dictionary</el-code> or <el-code>DictionaryImmutable</el-code>.</li>
 </ul>
@@ -820,7 +820,10 @@ Writing a value to a specific index location is done through a method such as in
 <h2 id="operator">Operators</h2>
 
 <h4 class="no-TOC" id="Arithmetic_operator">Arithmetic operators</h4>
-<p>Arithmetic operators can be applied to <el-code>Float</el-code> or <el-code>Int</el-code> arguments, but the result is always a <el-code>Float</el-code>:</p>
+<p>Arithmetic operators can be applied to <el-code>Float</el-code> or <el-code>Int</el-code> arguments. The result may be a <el-code>Float</el-code> or an <el-code>Int</el-code> depending on the arguments.</p>
+<p>For <el-code>^ + - *</el-code>, the result is a <el-code>Float</el-code> if either of the arguments is a <el-code>Float</el-code>, and an <el-code>Int</el-code> if both arguments are <el-code>Int</el-code>.</p>
+<p>For <el-code>/</el-code>, the result is always a <el-code>Float</el-code>.  It can be converted to an <el-code>Int</el-code> using the <a href="LibRef.html#floor">floor()</a> function.</p>
+<p><el-code>mod</el-code> and <el-code>div</el-code> only operate on <el-code>Int</el-code> arguments, and the result is <el-code>Int</el-code>.
 <pre>
     <el-code>2^3</el-code>             &rarr;  <el-code>8</el-code>
     <el-code>2/3</el-code>             &rarr;  <el-code>0.666...</el-code>
@@ -835,6 +838,7 @@ When combining <el-code>div</el-code> or <el-code>mod</el-code> with any other o
 <pre>
     <el-code>(5 + 6) mod 3</el-code>
 </pre>
+<p>Note that <el-code>mod</el-code> is more of a remainder operator than a modulus operator -- the result takes the sign of the first argument.  If both arguments are positive, there is no difference.</p>
 The minus sign may also be used as a unary operator, and this takes precedence over binary operators so:
 <pre>
     <el-code>2*-3</el-code>           &rarr;  <el-code>-6</el-code>
@@ -855,7 +859,7 @@ example, which implements an &lsquo;exclusive or&rsquo;, need not use brackets a
 <el-kw>end function</el-kw></el-func>
 </el-code-block>
 
-<h4 class="no-TOC">Equality testing</h4>
+<h4 class="no-TOC" id="Equality_test">Equality testing</h4>
 <p>Equality testing uses the <el-code>is</el-code> and <el-code>isnt</el-code> keywords with two arguments. The arguments may be of any Type.</p>
 <ul>
 <li><el-code>a is b</el-code> returns <el-code>true</el-code>, if <el-code>a</el-code> and <el-code>b</el-code> are both of the same Type and their values are equal. The only exception is that if one argument is of Type <el-code>Float</el-code> and the other is of Type <el-code>Int</el-code>, then <el-code>is</el-code> will return <el-code>true</el-code> if their values are the same, i.e. are the same whole number.</li>

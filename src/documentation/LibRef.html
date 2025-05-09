@@ -128,7 +128,7 @@ For greater detail, refer to the official JavaScript documentation.
  <li>A variable that has been defined as being of Type <el-code>Float</el-code> may not be passed as an argument into a method that requires an <el-code>Int</el-code>, nor as an index into a <el-code>List</el-code>, even if the variable contains no fractional part. It may, however, be converted into an <el-code>Int</el-code> before passing, using the functions <el-code>floor</el-code> or <el-code>ceiling</el-code>:
    <ul>
 <li><el-code>floor</el-code> returns the integer value left by removing any fractional part, and</li>
-<li><el-code>ceiling</el-code> returns the lowest integer greater than the <el-code>Float</el-code> value if does have a fractional part.</li>
+<li><el-code>ceiling</el-code> returns the lowest integer greater than the <el-code>Float</el-code> value if it does have a fractional part.</li>
   </ul>
  <li>If you wish to define a variable to be of Type <el-code>Float</el-code> but initialise it with an integer value then add <el-code>.0</el-code> on the end of the whole number, for example:<br>
 <el-code>variable a set to 3.0</el-code></li>
@@ -346,8 +346,8 @@ prints 'true'.
 <el-code>isBeforeOrSameAs(otherString as String) returns Boolean</el-code><br>
 <el-code>isAfterOrSameAs(otherString as String) returns Boolean</el-code><br>
 
-<el-code>asUnicode returns Int</el-code><br>
-<p>returns the Unicode (integer) value for a character. If the string is more than one character long, the Unicode value returned is that for the first character in the string only. Note that the opposite method to create a single-character string from its numeric Unicode value is e.g. <el-code>unicode(123)</el-code> which returns <el-code>"{"</el-code>.</p>
+<p><el-code>asUnicode returns Int</el-code>
+returns the Unicode (integer) value for a character. If the string is more than one character long, the Unicode value returned is that for the first character in the string only. Note that the opposite method to create a single-character string from its numeric Unicode value is e.g. <el-code>unicode(123)</el-code> which returns <el-code>"{"</el-code>.</p>
 
 <h3 class="no-TOC" id="CharacterSets">Character sets</h3>
 
@@ -1034,7 +1034,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 
 <h3 class="no-TOC">Type name</h3>
 <p>In the following example, the keys are of Type <el-code>String</el-code>, and the values associated with the keys are of Type <el-code>Int</el-code>:</p>
-<el-code>DictionaryImmutable&lt;of String, Iny&gt;</el-code><br>
+<el-code>DictionaryImmutable&lt;of String, Int&gt;</el-code><br>
 
 <h3 class="no-TOC">Defining a literal DictionaryImmutable</h3>
 <p>A literal<el-code> DictionaryImmutable</el-code> is defined as a comma-separated list of &lsquo;key:value pairs&rsquo; (key,colon.value) surrounded by curly braces:</p>
