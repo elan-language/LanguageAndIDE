@@ -1,0 +1,14 @@
+# 6a665438c8b949c07bf9641c75da17ba318676fd8c7c58d07947cacfdb908d44 Elan 1.1.1 guest default_profile valid
+
+main
+  variable st set to new Set<of Int>()
+  set st to st.addFromList([3, 5, 7])
+  print st.length()
+  set st to st.add(7)
+  print st.length()
+  set st to st.remove(3)
+  print st.length()
+  set st to st.remove(3)
+  print st.length()
+  print st
+end main
