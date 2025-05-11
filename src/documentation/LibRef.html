@@ -36,7 +36,7 @@ Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and 
 <h3 class="no-TOC">Default value</h3>
 <p>0</p>
 
-<h3 class="no-TOC">Dot methods</h3>
+<h3 class="no-TOC">Dot methods on an <el-code><el-type>Int</el-type></el-code></h3>
 <table>
  <tr>
   <th style="width:10%">function<br>dot method</th>
@@ -82,7 +82,7 @@ Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and 
 <el-code>variable a set to 1.618</el-code><br>
 <el-code>variable b set to 1.1e-10</el-code><br>
 
-<h3 class="no-TOC">Dot methods</h3>
+<h3 class="no-TOC">Dot methods on a <el-code><el-type>Float</el-type></el-code></h3>
 <table>
  <tr>
   <th style="width:10%">function<br>dot method</th>
@@ -149,7 +149,7 @@ For greater detail, refer to the official JavaScript documentation.
 <h3 class="no-TOC">Default value</h3>
 <el-code>false</el-code><br>
 
-<h3 class="no-TOC">Dot method</h3>
+<h3 class="no-TOC">Dot method on a <el-code><el-type>Boolean</el-type></el-code></h3>
 <table>
  <tr>
   <th style="width:10%">function<br>dot method</th>
@@ -189,8 +189,10 @@ For greater detail, refer to the official JavaScript documentation.
  <ul><li><el-code>print "Hello\nWorld"</el-code></li></ul>
  <li>You may insert single quotation marks  <el-code>'</el-code>within a string. </li>
 </ul>
-<h3 class="no-TOC">Dot methods</h3>
-String dot methods are functions which are applied to a variable of Type <el-code><el-type>String</el-type></el-code>. Some take arguments as shown in the table.
+<p>There are no 'substring' methods in Elan because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth character to the seventh character inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <em>exclusive</em>. See <a href="LangRef.html#indexed_value">Indexed Value</a>.</p>
+<p>There are, however, many dot methods that can be applied to strings, listed in the table below.</p>
+
+<h3 class="no-TOC">Dot methods on a <el-code><el-type>String</el-type></el-code></h3>
 <table>
  <tr>
   <th style="width:10%">function<br>dot method</th>
@@ -203,7 +205,7 @@ String dot methods are functions which are applied to a variable of Type <el-cod
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td> the string itself &ndash; all Types have this method in order to be printable</td>
+  <td> the string itself</td>
  </tr><tr>
   <td><el-code><el-method>asList</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
@@ -215,7 +217,8 @@ String dot methods are functions which are applied to a variable of Type <el-cod
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td>the Unicode value of the <i>first character of the string</i></td>
+  <td>the Unicode value of the <i>first</i> character of the string<br>
+   (To convert a Unicode value into a string, use function <a href="#unicode"><el-code><el-method>unicode</el-method></el-code></a>)</td>
  </td><tr id="asRegExp">
   <td><el-code><el-method>asRegExp</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
@@ -239,7 +242,7 @@ String dot methods are functions which are applied to a variable of Type <el-cod
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td>index of the first instance of the argument within the string: if the sub-string is not present the method returns -1</td>
+  <td>index of the first instance of the argument (substring) within the string<br>If it is not present, -1 is returned</td>
  </tr><tr>
   <td><el-code><el-method>isAfter</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
@@ -287,7 +290,7 @@ String dot methods are functions which are applied to a variable of Type <el-cod
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code>, <el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>a new string with <i>all</i> occurrences of the first argument string replaced<br>by the second argument string </td>
+  <td>a new string with <i>all</i> occurrences of the first argument string replaced by the second argument string </td>
  </tr><tr>
   <td><el-code><el-method>split</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
@@ -308,49 +311,27 @@ String dot methods are functions which are applied to a variable of Type <el-cod
   <td>a new string with the original rendered in upper case</td>
  </tr>
  </table>
-<h3 class="no-TOC" id="Interpolated_String">Interpolated string</h3>
+<h3 class="no-TOC" id="Interpolated_string">Interpolated strings</h3>
 <p>
-Elan strings are automatically interpolated. This means that you may insert the values of variables or simple expressions within a string by enclosing them in curly braces. For example (assuming that the variables <el-code>a</el-code> and <el-code>b</el-code> are already defined as integers):<br>
-<el-code>print "{a} times {b} equals {a*b}"</el-code><br>
-and, if <el-code>velocity</el-code> and <el-code>fuel</el-code> are already defined as Floats:<br>
-<el-code>set message to "LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}"</el-code></p>
-<p>
-You cannot include the characters <el-code>"</el-code>, <el-code>{</el-code>, or <el-code>}</el-code> directly within a literal string because of their special meanings. Instead, you use the constants <el-id>quotes</el-id>, <el-id>openBrace</el-id> and <el-id>closeBrace</el-id> respectively:<br>
-<el-code>print "This is a double quotation mark: " + quotes</el-code><br>
-or<br>
-<el-code>print "Here are the curly braces: {openBrace} and {closeBrace}"</el-code></p>
-<p>Alternatively, you can insert their Unicode codepoints by means of the <el-code>unicode</el-code> standalone function:<br>
-<el-code>print "This is a double quotation mark: " + unicode(34)</el-code><br>
-or<br>
-<el-code>print "Here are the curly braces: {unicode(123)} and {unicode(125)}"</el-code></p>
+Strings are automatically interpolated, that is you can insert the values of variables or simple expressions within a string by enclosing them in braces.
+For example (assuming that the variables <el-code>a</el-code> and <el-code>b</el-code> are already defined as integers):</p>
+<p><el-code>print "{a} times {b} equals {a*b}"</el-code</p>
+<p>prints the sentence with the values and calculated expression inserted.</p>
+<p>If <el-code>velocity</el-code> and <el-code>fuel</el-code> are already defined as <el-code><el-type>Float</el-type></el-code> then:</p>
+<p><el-code>set message to "LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}"</el-code></p>
+<p>updates variable <el-code>message</el-code> with calculated (and printable) integer values.</p>
 
-<h3 class="no-TOC" id="StringMethod">Dot methods on a String</h3>
-<p>There are no &lsquo;substring&rsquo; methods in Elan because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code>  gives a <el-code>string</el-code> containing the fourth character to the seventh character inclusive of <el-code>string s</el-code>. Note that the upper bound of the range is <em>exclusive</em>. See <a href="LangRef.html#indexed_value">Indexed Value</a>.</p>
-<p><el-code>upperCase</el-code> returns a new string based on the input with all alphabetic characters in upper case.</p>
-<p><el-code>lowerCase</el-code> returns a new string based on the input with all alphabetic characters in lower case.</p>
-<p><el-code>contains(partString as String)</el-code> takes a single parameter of Type <el-code>String</el-code> and returns a Boolean value indicating whether or not the string argument is contained within the <el-code>string</el-code> on which <el-code>contains</el-code> was called. For example:</p>
-<ul>
-<el-code>
-variable a set to "Hello World!"<br>
-print a.contains("ello")<br>
-</el-code>
-prints 'true'.
-</ul>
-<p><el-code>replace(match as String, replacement as String)</el-code> returns a new string in which all occurrences of the <el-code>match</el-code> string are replaced with the <el-code>replacement</el-code> string. </p>
-<p><el-code>trim returns String</el-code> returns a new string based on the referenced string with all leading and trailing spaces removed.</p>
-<p id="indexOf"><el-code>indexOf(partString as String) returns Int</el-code>
+<h3 class="no-TOC">Special characters</h3>
+<p>You cannot include the characters <el-code>"</el-code>, <el-code>{</el-code>, or <el-code>}</el-code> directly within a literal string
+ because of their special meanings. Instead, you use the constants <el-id>quotes</el-id>, <el-id>openBrace</el-id> and <el-id>closeBrace</el-id> respectively, e.g.:
+<p><el-code>print "This is a double quotation mark: " + quotes</el-code></p>
+<p><el-code>print "Here are the curly braces: {openBrace} and {closeBrace}"</el-code></p>
 
-<p>The following methods are used for comparing strings alphabetically,  for example in a sort routine:</p>
-<el-code>isBefore(otherString as String) returns Boolean</el-code><br>
-<el-code>isAfter(otherString as String) returns Boolean</el-code><br>
-<el-code>isBeforeOrSameAs(otherString as String) returns Boolean</el-code><br>
-<el-code>isAfterOrSameAs(otherString as String) returns Boolean</el-code><br>
-
-<p><el-code>asUnicode returns Int</el-code>
-returns the Unicode (integer) value for a character. If the string is more than one character long, the Unicode value returned is that for the first character in the string only. Note that the opposite method to create a single-character string from its numeric Unicode value is e.g. <el-code>unicode(123)</el-code> which returns <el-code>"{"</el-code>.</p>
+<p>Alternatively, you can insert their Unicode codepoint values (in decimal or hexadecimal) by means of function <a href="#unicode"><el-code><el-method>unicode</el-method></el-code></a>:</p>
+<p><el-code>print "Here are the curly braces: {unicode(123)} and {unicode(125)}"</el-code></p>
+<p><el-code>print "This is an ASCII double quotation mark: " + unicode(0x22)</el-code></p>
 
 <h3 class="no-TOC" id="CharacterSets">Character sets</h3>
-
 
 <!--   #endregion-->
 <!-- #endregion-->
@@ -413,7 +394,7 @@ or into existing variables of the correct Type:</p>
  </tr><tr>
   <td>create</td>
   <td><el-code>new Array&lt;of String&gt;(10, "")</el-code><br>any initial value of correct Type</td>
-  <td><el-code>new Array2D&lt;of String&gt;(8,8, "")</el-code><br>dimensions may differ ('rectangular')<br>any initial value of correct Type</td>
+  <td><el-code>new Array2D&lt;of String&gt;(5,8, "")</el-code><br>defines 5 arrays each of 8 elements<br>any initial value of correct Type</td>
   <td><el-code>new List&lt;of Int&gt;()</el-code><br>created empty<br>can be 'of' any Type</td>
   <td><el-code>new Dictionary&lt;of String, Int&gt;()</el-code><br>Key Type must be simple value or a <el-code>record</el-code><br>Value Type can be any</td>
  </tr><tr>
@@ -512,7 +493,7 @@ further elements to an array, although it is possible to convert an array to a l
   <td><el-code><el-type>Array</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>the contents of the Array as a string</td>
+  <td>a String that is a comma+space-separated list of the Array'elements enclosed in square brackets</td>
  </tr><tr>
   <td><el-code><el-method>contains</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
@@ -579,7 +560,7 @@ further elements to an array, although it is possible to convert an array to a l
   <td><el-code><el-type>Array2D</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>the contents of the array as a string</td>
+  <td>a String that is a comma+space-separated list of the  Array2D's columns each of which contains a comma+space-separated list of row values enclosed in square brackets, the whole enclosed in square brackets</td>
  </tr><tr>
   <td><el-code><el-method>columns</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
@@ -618,15 +599,12 @@ further elements to an array, although it is possible to convert an array to a l
 <!--   #endregion-->
 <!--   #region List-->
 <h2 id="List">List</h2>
-<p>A <el-code><el-type>List</el-type></el-code> is similar to an array but more flexible because:
-    <ul>
-        <li>While the elements must all be of one Type, that type is not limited to the simple value types:
-            the element Type may also be a user-defined type such as a class or record, or another list, or even an array.
-        </li>
-        <li>The size may be dynamically extended. Indeed a list is either created empty to begin with, or
-            initialised from a literal definition.
-        </li>
-    </ul>
+<p>A <el-code><el-type>List</el-type></el-code> is similar to an Array but more flexible because:
+<ul>
+ <li>While the elements must all be of one Type, that Type is not limited to the simple value Types:
+  the element Type may also be a user-defined type such as a <i>Class</i> or <i>Record</i>, or another <i>Lis</i>t, or even an <i>Array</i>.</li>
+ <li>A List's size may be dynamically extended. it is created either empty or initialised from a literal definition.</li>
+</ul>
 </p>
 
 <h3 class="no-TOC">Procedure methods on a List</h2>
@@ -843,11 +821,10 @@ further elements to an array, although it is possible to convert an array to a l
 <!--   #region Dictionary-->
 <h2 id="Dictionary">Dictionary</h2>
 
-<p>A dictionary works like an array, but instead of requiring a numeric (integer) index, each entry has a 'key'. The Type of
-    the key &ndash; which must be one of <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code>, <el-code>Boolean</el-code>
-    <i>or</i> a user-defined <i>record</i> Type &ndash; is specified when the dictionary is created along with the type
-    for the values, which may be any Type.</p>
-</p>
+<p>A Aictionary works like an Array, but instead of requiring a numeric (integer) index, each entry has a 'key'. Each key is associated with a value,
+so the Dictionary is a set of <i>key:value</i> pairs
+The key's Type must be one of <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code> or <el-code>Boolean</el-code>,
+<i>or</i> it may be a user-defined <i>record</i>. The values may be of any Type, and the Types of both key and value are fixed when the Dictionary is created.</p>
 
 <h3 class="no-TOC">Procedure methods on a Dictionary</h2>
 <table>
@@ -1138,7 +1115,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
   <td><el-code><el-type>Set</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>a String with the Set's elements separated by commas and enclosed in braces</td>
+  <td>a String that is a comma+space-separated list of the Set's elements enclosed in braces</td>
  </tr><tr>
   <td><el-code><el-method>contains</el-method></el-code></td>
   <td><el-code><el-type>Set</el-type></el-code></td>
@@ -2091,12 +2068,21 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
     <el-code>print a.maxBy(lambda x as Int =&gt; x mod 10)</el-code><br>
 
 <h3 class="no-TOC" id="sortBy">sortBy</h3>
-    <p><el-code>sortBy</el-code> takes a <el-code>lambda</el-code> that takes two arguments (of the same Type as that of the <el-code>ListImmutable</el-code> being sorted) and compares them, returning an integer with one of the values -1, 0, or +1, to indicate whether the first argument should be placed respectively before, adjacent to or after the second argument in the sorted result, where &#8216;adjacent to&#8217; means it does not matter whether before or after):</p>
-    <el-code-block source="sortBy.elan">
-           <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>source</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>[<el-lit>27</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>31</el-lit>, <el-lit>37</el-lit>, <el-lit>11</el-lit>, <el-lit>13</el-lit>, <el-lit>17</el-lit>, <el-lit>19</el-lit>, <el-lit>23</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>source</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id><el-kw> is </el-kw><el-id>y</el-id><el-kw> then </el-kw><el-lit>0</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id> &lt; <el-id>y</el-id><el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw>-<el-lit>1</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    </el-code-block>
+<p><el-code>sortBy</el-code> takes a <el-code>lambda</el-code> that takes two arguments (of the same Type as that of the <el-code>ListImmutable</el-code> being sorted) and compares them, returning an integer with one of the values -1, 0, or +1, to indicate whether the first argument should be placed respectively before, adjacent to or after the second argument in the sorted result, where &#8216;adjacent to&#8217; means it does not matter whether before or after):</p>
+
+<el-code-block source="sortBy_Int.elan">
+<el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>numbers</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>[<el-lit>27</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>31</el-lit>, <el-lit>37</el-lit>, <el-lit>11</el-lit>, <el-lit>13</el-lit>, <el-lit>17</el-lit>, <el-lit>19</el-lit>, <el-lit>23</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>numbers</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id> &gt; <el-id>y</el-id><el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id> &lt; <el-id>y</el-id><el-kw> then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-code-block>
+
+<p>And similarly for string comparisons using methods <el-code><el-method>isBefore</el-method></el-code> and <el-code><el-method>isAfter</el-method></el-code>:
+<el-code-block source="sortBy_String.elan">
+<el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>["<el-lit>Simon</el-lit>", "<el-lit>Pauline</el-lit>", "<el-lit>Jason</el-lit>", "<el-lit>Zelda</el-lit>", "<el-lit>Edith</el-lit>", "<el-lit>Lance</el-lit>", "<el-lit>Alice</el-lit>", "<el-lit>Paul</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>names</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id>.<el-method>isAfter</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id>.<el-method>isBefore</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-code-block>
+
 <!-- #endregion-->
 
 <!-- #region Leftover-->
