@@ -560,7 +560,7 @@ further elements to an array, although it is possible to convert an array to a l
   <td><el-code><el-type>Array2D</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>a String that is a comma+space-separated list of the  Array2D's columns each of which contains a comma+space-separated list of row values enclosed in square brackets, the whole enclosed in square brackets</td>
+  <td>a String that is a comma+space-separated list of the Array2D's columns each of which contains a comma+space-separated list of row values enclosed in square brackets, the whole enclosed in square brackets</td>
  </tr><tr>
   <td><el-code><el-method>columns</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
@@ -958,10 +958,20 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
   <td><el-code><el-type>Boolean</el-type></el-code></td>
   <td><el-code><el-id>true</el-id></el-code> if the List contains the item<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
+  <td><el-code><el-method>head</el-method></el-code></td>
+  <td>(none)</td>
+  <td>item of List element's Type</td>
+  <td>the first item in the List</td>
+ </tr><tr>
   <td><el-code><el-method>asList</el-method></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>ListImmutable</el-type></el-code></td>
   <td>copy of the List</td>
+ </tr><tr>
+  <td><el-code><el-method>asString</el-method></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>a String that is a comma+space-separated list of the List's elements enclosed in braces</td>
  </tr><tr>
   <td><el-code><el-method>withInsert</el-method></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code>, item of List element's Type</td>
@@ -1088,8 +1098,8 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
  <tr>
   <th style="width:10%">function<br>dot method</th>
   <th style="width:5%">on<br>Type</th>
-  <th style="width:15%">argument<br>Types</th>
-  <th style="width:10%">return<br>Type</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:5%">return<br>Type</th>
   <th style="width:50%">returns</th>
  </tr><tr>
   <td><el-code><el-method>add</el-method></el-code></td>
@@ -1119,57 +1129,57 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
  </tr><tr>
   <td><el-code><el-method>contains</el-method></el-code></td>
   <td><el-code><el-type>Set</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td>item of Set element's Type</td>
+  <td><el-code>Boolean<el-type></el-type></el-code></td>
+  <td><el-code><el-id>true</el-id></el-code> if the Set contains the item<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>difference</el-method></el-code></td>
   <td><el-code><el-type>Set</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td>a Set containing those elements of the Set that do not occur in the argument Set</td>
  </tr><tr>
   <td><el-code><el-method>intersection</el-method></el-code></td>
   <td><el-code><el-type>Set</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td>a Set containing those elements common to both the Set and the argument Set</td>
  </tr><tr>
   <td><el-code><el-method>isDisjointFrom</el-method></el-code></td>
   <td><el-code><el-type>Set</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td>
+  <td><el-code><el-id>true</el-id></el-code> if the Set has no items in common with the argument Set<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>isSubsetOf</el-method></el-code></td>
   <td><el-code><el-type>Set</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td>
+  <td><el-code><el-id>true</el-id></el-code> if all the Set's items are also in the argument Set<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>isSupersetOf</el-method></el-code></td>
   <td><el-code><el-type>Set</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td>
+  <td><el-code><el-id>true</el-id></el-code> if the Set contains all the  items that are in the argument Set<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>length</el-method></el-code></td>
   <td><el-code><el-type>Set</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>the number of elements in the Set</td>
  </tr><tr>
   <td><el-code><el-method>remove</el-method></el-code></td>
   <td><el-code><el-type>Set</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td>item of Set element's Type</td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td>copy of the Set with the argument item removed (if present)</td>
  </tr><tr>
   <td><el-code><el-method>union</el-method></el-code></td>
   <td><el-code><el-type>Set</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td><el-code><el-type>Set</el-type></el-code></td>
+  <td>a Set containing all the unique elements of the Set and the argument Set (i.e. no duplicates)</td>
  </tr>
  </table>
 
