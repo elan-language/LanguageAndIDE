@@ -1301,43 +1301,45 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 <el-statement class="ok" id="print31" tabindex="0"><el-kw>print </el-kw><el-field id="expr32" class="optional ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 <!-- #endregion-->
-<!-- #region Dot methods for fundamental Types-->
+<!-- #region Common dot methods-->
 <h1 id="Dot_methods">Common dot methods</h1>
 <h2>Dot methods that work on more than one fundamental Type</h2>
 <p>Although all applicable methods are described under each Type, this table lists those which are applicable to several Types.
 <table >
- <tr><th>Type</th><th colspan="4">method</th></tr>
+ <tr><th>Type</th><th colspan="6">method</th></tr>
  <tr><td></td>
+  <td style="width:60px"><el-code><el-method>asList</el-method></el-code></td>
   <td style="width:60px"><el-code><el-method>asString</el-method></el-code></td>
   <td style="width:60px"><el-code><el-method>contains</el-method></el-code></td>
   <td style="width:60px"><el-code><el-method>head</el-method></el-code></td>
-  <td style="width:60px"><el-code><el-method>length</el-method></el-code></td></tr>
+  <td style="width:60px"><el-code><el-method>length</el-method></el-code></td>
+  <td style="width:60px"><el-code><el-method>peek</el-method></el-code></td>
  </tr><tr>
-  <td><el-code><el-type>Int</el-type></el-code></td><td>&#x2714;</td><td></td><td></td><td></td>
+  <td><el-code><el-type>Int</el-type></el-code></td><td></td><td>&#x2714;</td><td></td><td></td><td></td><td></td>
  </tr><tr>
-  <td><el-code><el-type>Float</el-type></el-code></td><td>&#x2714;</td><td></td><td></td><td></td>
+  <td><el-code><el-type>Float</el-type></el-code></td><td></td><td>&#x2714;</td><td></td><td></td><td></td><td></td>
  </tr><tr>
-  <td><el-code><el-type>Boolean</el-type></el-code></td><td>&#x2714;</td><td></td><td></td><td></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td><td></td><td>&#x2714;</td><td></td><td></td><td></td><td></td>
  </tr><tr>
-  <td><el-code><el-type>String</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td></td><td>&#x2714;</td>
+  <td><el-code><el-type>String</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td><td>&#x2714;</td><td></td>
  </tr><tr>
-  <td><el-code><el-type>Array</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td></td><td>&#x2714;</td>
+  <td><el-code><el-type>Array</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td><td>&#x2714;</td><td></td>
  </tr><tr>
-  <td><el-code><el-type>Array2D</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td></td><td></td>
+  <td><el-code><el-type>Array2D</el-type></el-code></td><td></td><td>&#x2714;</td><td>&#x2714;</td><td></td><td></td><td></td>
  </tr><tr>
-  <td><el-code><el-type>List</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td>
+  <td><el-code><el-type>List</el-type></el-code></td><td></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td>
  </tr><tr>
-  <td><el-code><el-type>Dictionary</el-type></el-code></td><td></td><td></td><td></td><td></td>
+  <td><el-code><el-type>Dictionary</el-type></el-code></td><td></td><td></td><td></td><td></td><td></td><td></td>
  </tr><tr>
-  <td><el-code><el-type>ListImmutable</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td>
+  <td><el-code><el-type>ListImmutable</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td>
  </tr><tr>
-  <td><el-code><el-type>DictionaryImmutable</el-type></el-code></td><td></td><td></td><td></td><td></td>
+  <td><el-code><el-type>DictionaryImmutable</el-type></el-code></td><td></td><td></td><td></td><td></td><td></td><td></td>
  </tr><tr>
-  <td><el-code><el-type>Set</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td></td><td>&#x2714;</td>
+  <td><el-code><el-type>Set</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td><td>&#x2714;</td><td></td>
  </tr><tr>
-  <td><el-code><el-type>Stack</el-type></el-code></td><td></td><td></td><td></td><td>&#x2714;</td>
+  <td><el-code><el-type>Stack</el-type></el-code></td><td></td><td></td><td></td><td></td><td>&#x2714;</td><td>&#x2714;</td>
  </tr><tr>
-  <td><el-code><el-type>Queue</el-type></el-code></td><td></td><td></td><td></td><td>&#x2714;</td>
+  <td><el-code><el-type>Queue</el-type></el-code></td><td></td><td></td><td></td><td></td><td>&#x2714;</td><td>&#x2714;</td>
  </tr>
 </table>
 <!-- #endregion-->
