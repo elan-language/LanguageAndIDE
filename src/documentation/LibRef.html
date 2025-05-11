@@ -464,8 +464,8 @@ further elements to an array, although it is possible to convert an array to a l
  </tr><tr>
   <td><el-code><el-method>put</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>Int, Array element's Type</el-type></el-code></td>
-  <td>puts the value (of Array element's Type) at the (integer) index position in the array</td>
+  <td><el-code><el-type>Int,</el-type></el-code> item of Array element's Type</td>
+  <td>puts the item at the (integer) index position in the array</td>
  </tr>
 </table>
 <h3 class="no-TOC">Dot methods on an Array</h2>
@@ -479,9 +479,9 @@ further elements to an array, although it is possible to convert an array to a l
  <tr>
   <td><el-code><el-method>withPut</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>Int, Array element's Type</el-type></el-code></td>
+  <td><el-code><el-type>Int,</el-type></el-code> item of Array element's Type</td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td>a new Array with the value (of Array element's Type) at the (integer) index position</td>
+  <td>a new Array with the item at the (integer) index position</td>
  </tr><tr>
   <td><el-code><el-method>asList</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
@@ -497,19 +497,19 @@ further elements to an array, although it is possible to convert an array to a l
  </tr><tr>
   <td><el-code><el-method>contains</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>Array element's Type</el-type></el-code></td>
+  <td>item of Array element's Type</td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
   <td><el-code><el-id>true</el-id></el-code> if the Array contains the value<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>indexOf</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>Array element's Type</el-type></el-code></td>
+  <td>item of Array element's Type</td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>the index position of the first occurrence of the argument value in the array, <br>or -1 if no match is found</td>
  </tr><tr>
   <td><el-code><el-method>length</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td>(none</td>
+  <td>(none)</td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>the number of elements in the array</td>
  </tr>
@@ -537,8 +537,8 @@ further elements to an array, although it is possible to convert an array to a l
  </tr><tr>
   <td><el-code><el-method>put</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
-  <td><el-code><el-type>Int, Int, Array2D element's Type</el-type></el-code></td>
-  <td>puts the value (of Array2D element's Type) at the (two integers) index position in the array</td>
+  <td><el-code><el-type>Int, Int,</el-type></el-code> item of Array2D element's Type</td>
+  <td>puts the item at the (two integers) index position in the array</td>
  </tr>
 </table>
 <h3 class="no-TOC">Dot methods on an Array2D</h2>
@@ -552,9 +552,9 @@ further elements to an array, although it is possible to convert an array to a l
  </tr><tr>
   <td><el-code><el-method>withPut</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
-  <td><el-code><el-type>Int, Int, Array2D element's Type</el-type></el-code></td>
+  <td><el-code><el-type>Int, Int,</el-type></el-code> item of Array2D element's Type</td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
-  <td>a new Array2D with the value (of Array2D element's Type) at the (two integers) index position in the array</td>
+  <td>a new Array2D with the item at the (two integers) index position in the array</td>
  </tr><tr>
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
@@ -570,13 +570,13 @@ further elements to an array, although it is possible to convert an array to a l
  </tr><tr>
   <td><el-code><el-method>contains</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
-  <td><el-code><el-type>Array2D element's Type</el-type></el-code></td>
+  <td>item of Array2D element's Type</td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td><el-code><el-id>true</el-id></el-code> if the Array2D contains the value<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+  <td><el-code><el-id>true</el-id></el-code> if the Array2D contains the item<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr>
   <td><el-code><el-method>indexOf</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
-  <td><el-code><el-type>Array2D element's Type</el-type></el-code></td>
+  <td>item of Array2D element's Type</td>
   <td><el-code><el-type>Int, Int</el-type></el-code></td>
   <td>a Tuple containing the index pair of the first occurrence of the argument's value in the array
       by searching the colums, or (-1,-1) if no match is found</td>
@@ -1306,40 +1306,41 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 <h2>Dot methods that work on more than one fundamental Type</h2>
 <p>Although all applicable methods are described under each Type, this table lists those which are applicable to several Types.
 <table >
- <tr><th>Type</th><th colspan="6">method</th></tr>
+ <tr><th>Type</th><th colspan="7">method</th></tr>
  <tr><td></td>
   <td style="width:60px"><el-code><el-method>asList</el-method></el-code></td>
   <td style="width:60px"><el-code><el-method>asString</el-method></el-code></td>
   <td style="width:60px"><el-code><el-method>contains</el-method></el-code></td>
   <td style="width:60px"><el-code><el-method>head</el-method></el-code></td>
+  <td style="width:60px"><el-code><el-method>indexOf</el-method></el-code></td>
   <td style="width:60px"><el-code><el-method>length</el-method></el-code></td>
   <td style="width:60px"><el-code><el-method>peek</el-method></el-code></td>
  </tr><tr>
-  <td><el-code><el-type>Int</el-type></el-code></td><td></td><td>&#x2714;</td><td></td><td></td><td></td><td></td>
+  <td><el-code><el-type>Int</el-type></el-code></td><td></td><td>&#x2714;</td><td></td><td></td><td></td><td></td><td></td>
  </tr><tr>
-  <td><el-code><el-type>Float</el-type></el-code></td><td></td><td>&#x2714;</td><td></td><td></td><td></td><td></td>
+  <td><el-code><el-type>Float</el-type></el-code></td><td></td><td>&#x2714;</td><td></td><td></td><td></td><td></td><td></td>
  </tr><tr>
-  <td><el-code><el-type>Boolean</el-type></el-code></td><td></td><td>&#x2714;</td><td></td><td></td><td></td><td></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td><td></td><td>&#x2714;</td><td></td><td></td><td></td><td></td><td></td>
  </tr><tr>
-  <td><el-code><el-type>String</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td><td>&#x2714;</td><td></td>
+  <td><el-code><el-type>String</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td><td>&#x2714;</td><td>&#x2714;</td><td></td>
  </tr><tr>
-  <td><el-code><el-type>Array</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td><td>&#x2714;</td><td></td>
+  <td><el-code><el-type>Array</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td><td>&#x2714;</td><td>&#x2714;</td><td></td>
  </tr><tr>
-  <td><el-code><el-type>Array2D</el-type></el-code></td><td></td><td>&#x2714;</td><td>&#x2714;</td><td></td><td></td><td></td>
+  <td><el-code><el-type>Array2D</el-type></el-code></td><td></td><td>&#x2714;</td><td>&#x2714;</td><td></td><td>&#x2714;</td><td></td><td></td>
  </tr><tr>
-  <td><el-code><el-type>List</el-type></el-code></td><td></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td>
+  <td><el-code><el-type>List</el-type></el-code></td><td></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td>
  </tr><tr>
-  <td><el-code><el-type>Dictionary</el-type></el-code></td><td></td><td></td><td></td><td></td><td></td><td></td>
+  <td><el-code><el-type>Dictionary</el-type></el-code></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
  </tr><tr>
-  <td><el-code><el-type>ListImmutable</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td>
+  <td><el-code><el-type>ListImmutable</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td>
  </tr><tr>
-  <td><el-code><el-type>DictionaryImmutable</el-type></el-code></td><td></td><td></td><td></td><td></td><td></td><td></td>
+  <td><el-code><el-type>DictionaryImmutable</el-type></el-code></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
  </tr><tr>
-  <td><el-code><el-type>Set</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td><td>&#x2714;</td><td></td>
+  <td><el-code><el-type>Set</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td><td></td><td>&#x2714;</td><td></td>
  </tr><tr>
-  <td><el-code><el-type>Stack</el-type></el-code></td><td></td><td></td><td></td><td></td><td>&#x2714;</td><td>&#x2714;</td>
+  <td><el-code><el-type>Stack</el-type></el-code></td><td></td><td></td><td></td><td></td><td></td><td>&#x2714;</td><td>&#x2714;</td>
  </tr><tr>
-  <td><el-code><el-type>Queue</el-type></el-code></td><td></td><td></td><td></td><td></td><td>&#x2714;</td><td>&#x2714;</td>
+  <td><el-code><el-type>Queue</el-type></el-code></td><td></td><td></td><td></td><td></td><td></td><td>&#x2714;</td><td>&#x2714;</td>
  </tr>
 </table>
 <!-- #endregion-->
