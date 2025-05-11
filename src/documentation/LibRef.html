@@ -973,6 +973,11 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>a String that is a comma+space-separated list of the List's elements enclosed in braces</td>
  </tr><tr>
+  <td><el-code><el-method>length</el-method></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>the number of elements in the List</td>
+ </tr><tr>
   <td><el-code><el-method>withInsert</el-method></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code>, item of List element's Type</td>
   <td><el-code><el-type>ListImmutable</el-type></el-code></td>
@@ -1296,7 +1301,46 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 <el-statement class="ok" id="print31" tabindex="0"><el-kw>print </el-kw><el-field id="expr32" class="optional ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 <!-- #endregion-->
-<!--#endregion-->
+<!-- #region Dot methods for fundamental Types-->
+<h1 id="Dot_methods">Common dot methods</h1>
+<h2>Dot methods that work on more than one fundamental Type</h2>
+<p>Although all applicable methods are described under each Type, this table lists those which are applicable to several Types.
+<table >
+ <tr><th>Type</th><th colspan="4">method</th></tr>
+ <tr><td></td>
+  <td style="width:60px"><el-code><el-method>asString</el-method></el-code></td>
+  <td style="width:60px"><el-code><el-method>contains</el-method></el-code></td>
+  <td style="width:60px"><el-code><el-method>head</el-method></el-code></td>
+  <td style="width:60px"><el-code><el-method>length</el-method></el-code></td></tr>
+ </tr><tr>
+  <td><el-code><el-type>Int</el-type></el-code></td><td>&#x2714;</td><td></td><td></td><td></td>
+ </tr><tr>
+  <td><el-code><el-type>Float</el-type></el-code></td><td>&#x2714;</td><td></td><td></td><td></td>
+ </tr><tr>
+  <td><el-code><el-type>Boolean</el-type></el-code></td><td>&#x2714;</td><td></td><td></td><td></td>
+ </tr><tr>
+  <td><el-code><el-type>String</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td></td><td>&#x2714;</td>
+ </tr><tr>
+  <td><el-code><el-type>Array</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td></td><td>&#x2714;</td>
+ </tr><tr>
+  <td><el-code><el-type>Array2D</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td></td><td></td>
+ </tr><tr>
+  <td><el-code><el-type>List</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td>
+ </tr><tr>
+  <td><el-code><el-type>Dictionary</el-type></el-code></td><td></td><td></td><td></td><td></td>
+ </tr><tr>
+  <td><el-code><el-type>ListImmutable</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td>
+ </tr><tr>
+  <td><el-code><el-type>DictionaryImmutable</el-type></el-code></td><td></td><td></td><td></td><td></td>
+ </tr><tr>
+  <td><el-code><el-type>Set</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td></td><td>&#x2714;</td>
+ </tr><tr>
+  <td><el-code><el-type>Stack</el-type></el-code></td><td></td><td></td><td></td><td>&#x2714;</td>
+ </tr><tr>
+  <td><el-code><el-type>Queue</el-type></el-code></td><td></td><td></td><td></td><td>&#x2714;</td>
+ </tr>
+</table>
+<!-- #endregion-->
 <!-- #region Input/output -->
 <h1>Input/output</h1>
 <!--   #region Reading and writing Text files-->
@@ -2092,34 +2136,6 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>names</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id>.<el-method>isAfter</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id>.<el-method>isBefore</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
-
-<!-- #endregion-->
-
-<!-- #region Leftover-->
-<h2 id="Dot_methods">Dot methods that work on many different Types</h2>
-    <!-- TODO These should each be added to the Types they apply to-->
-    <el-code>.asString()</el-code><br>
-    <el-code>.length()</el-code><br>
-    <el-code>.head()</el-code> returns the first item in a <el-code>List</el-code> or a <el-code>ListImmutable</el-code></p>
-
-<p>Empty method table template</p>
-<table>
-    <tr><th>Method</th><th>Returns</th><th>Parameters</th><th>action</th></tr>
-    <tr><th colspan="4">Functions</th></tr>
-    <tr><td><el-code><el-method>asString</el-method></el-code></td>
-        <td><el-code><el-type>String</el-type></el-code></td>
-        <td><el-code> <el-kw>as</el-kw> </el-code></td>
-        <td></td>
-    </tr>
-    <tr><th colspan="4">Procedures</th></tr>
-    <tr><td><el-code><el-method></el-method></el-code></td>
-        <td><el-code></el-code></td>
-        <td><el-code> <el-kw>as</el-kw> </el-code></td>
-        <td></td>
-    </tr>
-</table>
-<!-- #region Dot methods for fundamental Types-->
-<!-- #endregion-->
 <!-- #endregion-->
 <hr>
 <b>Elan Library Reference</b> go to the <a href="#top">top</a></h4>
