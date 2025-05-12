@@ -353,7 +353,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot iterate Int. Click for more info.LangRef.html#compile_error",
+      "Source for 'each' must be an Array, List, or String.LangRef.html#compile_error",
     ]);
   });
 

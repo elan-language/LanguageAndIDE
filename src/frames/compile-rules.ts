@@ -13,6 +13,7 @@ import {
   ExtraParameterCompileError,
   FunctionRefCompileError,
   GenericParametersCompileError,
+  InvalidSourceForEachCompileError,
   IsDeprecated,
   MemberTypeCompileError,
   MissingParameterCompileError,
@@ -25,7 +26,6 @@ import {
   MutateCompileError,
   NotGlobalFunctionRefCompileError,
   NotIndexableCompileError,
-  NotIterableCompileError,
   NotNewableCompileError,
   NotRangeableCompileError,
   NotUniqueNameCompileError,
@@ -1072,7 +1072,7 @@ export function mustBeIterable(
   location: string,
 ) {
   if (knownType(symbolType) && !isIterableType(symbolType)) {
-    compileErrors.push(new NotIterableCompileError(symbolType.name, location));
+    compileErrors.push(new InvalidSourceForEachCompileError(location));
   }
 }
 

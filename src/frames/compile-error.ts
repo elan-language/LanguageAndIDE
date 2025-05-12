@@ -242,12 +242,12 @@ export class NotNewableCompileError extends CompileError {
   }
 }
 
-export class NotIterableCompileError extends CompileError {
-  constructor(type: string, location: string) {
+export class InvalidSourceForEachCompileError extends CompileError {
+  constructor(location: string) {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Cannot iterate ${type}. Click for more info.`,
+      `Source for 'each' must be an Array, List, or String.`,
       location,
       "LangRef.html#compile_error",
     );

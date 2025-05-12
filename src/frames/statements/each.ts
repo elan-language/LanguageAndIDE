@@ -27,7 +27,7 @@ export class Each extends FrameWithStatements implements Statement {
     this.variable = new IdentifierField(this);
     this.variable.setPlaceholder("<i>variableName</i>");
     this.iter = new ExpressionField(this);
-    this.iter.setPlaceholder("<i>iterable value or expression</i>");
+    this.iter.setPlaceholder("<i>source</i>");
   }
   initialKeywords(): string {
     return eachKeyword;
