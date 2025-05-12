@@ -1,3 +1,4 @@
+import { ElanCompilerError } from "../../elan-compiler-error";
 import { CompileError } from "../compile-error";
 import {
   mustBeBooleanTypes,
@@ -115,6 +116,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       case OperationSymbol.Pow:
         return "**";
     }
+    throw new ElanCompilerError(`No mapping for op: ${this.op}`);
   }
 
   isString(st: SymbolType) {
