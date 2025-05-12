@@ -21,6 +21,7 @@ main
   print q.length()
   set q to q.enqueue("apple")
   set q to q.enqueue("pear")
+  print q
   print q.length()
   print q.peek()
   variable fruit set to ""
@@ -29,6 +30,7 @@ main
   set fruit, q to q.dequeue()
   print fruit
   print q.length()
+  print q
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -38,6 +40,7 @@ async function main() {
   await system.printLine(q.length());
   q = q.enqueue("apple");
   q = q.enqueue("pear");
+  await system.printLine(q);
   await system.printLine(q.length());
   await system.printLine(q.peek());
   let fruit = "";
@@ -46,6 +49,7 @@ async function main() {
   [fruit, q] = q.dequeue();
   await system.printLine(fruit);
   await system.printLine(q.length());
+  await system.printLine(q);
 }
 return [main, _tests];}`;
 
@@ -55,7 +59,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "02appleapplepear0");
+    await assertObjectCodeExecutes(fileImpl, "0[apple, pear]2appleapplepear0[]");
   });
 
   test("Fail_Queue_adding_incompatible_type1", async () => {
