@@ -155,10 +155,12 @@ in the range:</li>
    <li>Maximum value: just over 1 &times; 10<sup>308</sup></li>
    <li>Minimum value: approximately 5 &times; 10<sup>-324</sup></li>
   </ul>
- <li>A variable that has been defined as being of Type <el-code>Float</el-code> may not be passed as an argument into a method that requires an <el-code>Int</el-code>, nor as an index into a <el-code>List</el-code>, even if the variable contains no fractional part. It may, however, be converted into an <el-code>Int</el-code> before passing, using the functions <el-code>floor</el-code> or <el-code>ceiling</el-code>:
+ <li>A variable that has been defined as being of Type <el-code><el-type>Float</el-type></el-code> may not be passed as an argument into a method that requires an <el-code><el-type>Int</el-type></el-code>, 
+    nor as an index into a <el-code><el-type>List</el-type></el-code>, even if the variable contains no fractional part. 
+    It may, however, be converted into an <el-code><el-type>Int</el-type></el-code> before passing, using the functions <el-code>floor</el-code> or <el-code>ceiling</el-code>:
    <ul>
 <li><el-code><el-method>floor</el-method></el-code> returns the integer value left by removing any fractional part, and</li>
-<li><el-code><el-method></el-method>ceiling</el-method></el-code> returns the lowest integer greater than the <el-code>Float</el-code> value if it does have a fractional part.</li>
+<li><el-code><el-method></el-method>ceiling</el-method></el-code> returns the lowest integer greater than the <el-code><el-type>Float</el-type></el-code> value if it does have a fractional part.</li>
   </ul>
  <li>If you wish to define a variable to be of Type <el-code><el-type>Float</el-type></el-code> but initialise it with an integer value then add <el-code>.0</el-code> on the end of the whole number, for example:<br>
 <el-code>variable a set to 3.0</el-code></li>
@@ -167,7 +169,7 @@ in the range:</li>
 <!--   #endregion-->
 <!--   #region Boolean-->
 <h2 id="Boolean">Boolean</h2>
-<p>A <el-code>Boolean</el-code> value is either <el-code>true</el-code> or <el-code>false</el-code>.</p>
+<p>A <el-code><el-type>Boolean</el-type></el-code> value is either <el-code>true</el-code> or <el-code>false</el-code>.</p>
 
 <h3 class="no-TOC">Type name</h3>
 <el-code><el-type>Boolean</el-type></el-code><br>
@@ -199,21 +201,21 @@ in the range:</li>
 <!--   #endregion-->
 <!--   #region String-->
 <h2 id="String">String</h2>
-<p>A <el-code>String</el-code> represents &lsquo;text&rsquo;  i.e. a sequence of zero or more characters (see <a href="#CharacterSets">Character sets)</a>.</p>
+<p>A <el-code><el-type>String</el-type></el-code> represents &lsquo;text&rsquo;  i.e. a sequence of zero or more characters (see <a href="#CharacterSets">Character sets)</a>.</p>
 
 <h3 class="no-TOC">Type name</h3>
 <el-code><el-type>String</el-type></el-code><br>
 
 <h3 class="no-TOC">Defining a literal string value</h3>
 <p><el-code>variable a set to "Hello"</el-code></p>
-<p><el-code>String</el-code>s are always delineated by double quotation marks.</p>
+<p><el-code><el-type>String</el-type></el-code>s are always delineated by double quotation marks.</p>
 
 <h3 class="no-TOC">Default value</h3>
 <p><el-code>""</el-code>, known as &lsquo;the empty string&rsquo;.</p>
 <h4 class="no-TOC">Notes</h4>
 <ul>
  <li>As in most programming languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never modified. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</li>
- <li><el-code>String</el-code>s may be appended to using the plus operator, for example</li>
+ <li><el-code><el-type>String</el-type></el-code>s may be appended to using the plus operator, for example</li>
  <ul><li><el-code>print</el-code> <el-code>"Hello" + " " + "World"</el-code></li></ul>
  <li>A newline may be inserted within a string as <el-code>\n</el-code>, for example:</li>
  <ul><li><el-code>print "Hello\nWorld"</el-code></li></ul>
@@ -369,8 +371,8 @@ For example (assuming that the variables <el-code>a</el-code> and <el-code>b</el
 <h1 id="Tuple">Tuples</h1>
 A <el-code>tuple</el-code> is a way of holding a small number of values of different Types together as a single reference. It may be considered a &lsquo;lightweight&rsquo; alternative to defining a specific class for some purposes. Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold. Common uses include:
 <ul>
- <li>Holding a pair of x and y coordinates (each of Type <el-code>Float</el-code>) as a single unit.</li>
- <li>Allowing a function to pass back a result comprised of both a message in a <el-code>String</el-code> and a <el-code>Boolean</el-code> indicating whether the operation was successful.</li>
+ <li>Holding a pair of x and y coordinates (each of Type <el-code><el-type>Float</el-type></el-code>) as a single unit.</li>
+ <li>Allowing a function to pass back a result comprised of both a message in a <el-code><el-type>String</el-type></el-code> and a <el-code><el-type>Boolean</el-type></el-code> indicating whether the operation was successful.</li>
  <li>Returning both an updated copy of an immutable data structure and the value of an element from it, e.g. from method <el-code><el-method>pop</el-method></el-code> on a Stack.</li>
 </ul>
 
@@ -393,7 +395,7 @@ or into existing variables of the correct Type:</p>
 <br>
 <h4 class="no-TOC">Notes</h4>
 <ul>
-<li>As in most languages, Elan <el-code>tuple</el-code>s are immutable. Once defined they are effectively &lsquo;read only&rsquo;. You cannot alter any of the elements in a <el-code>tuple</el-code> nor (unlike a <el-code>List</el-code> for example) can you create a new <el-code>tuple</el-code> from an existing one with specified differences.</li>
+<li>As in most languages, Elan <el-code>tuple</el-code>s are immutable. Once defined they are effectively &lsquo;read only&rsquo;. You cannot alter any of the elements in a <el-code>tuple</el-code> nor (unlike a <el-code><el-type>List</el-type></el-code> for example) can you create a new <el-code>tuple</el-code> from an existing one with specified differences.</li>
 <li>You cannot deconstruct a <el-code>tuple</el-code> into a mixture of new and existing variables.</li>
 <li><el-code>tuple</el-code>s may be nested: you can define a <el-code>tuple</el-code> within a <el-code>tuple</el-code>.</li>
 </ul>
@@ -411,10 +413,10 @@ or into existing variables of the correct Type:</p>
  </tr><tr>
   <td>Size</td><td>Static</td><td>Static</td><td>Dynamic</td><td>Dynamic</td></tr>
   <tr><td>Type form<br>(example)</td>
-  <td><el-code>Array&lt;of String&gt;</el-code><br>of Type <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code>, or <el-code>Boolean</el-code></td>
-  <td><el-code>Array2D&lt;of String&gt;</el-code><br>of Type <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code></el-code>, or <el-code>Boolean</el-code></td>
-  <td><el-code>List&lt;of String&gt;</el-code><br>of any Type including <el-code>Array</el-code><br> &ndash; or <el-code>List</el-code> for 'jagged' data</td>
-  <td><el-code>Dictionary&lt;of String, Int&gt;</el-code><br>key must be <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code>, <el-code>Boolean</el-code>, or any<el-code>record</el-code>. Value Type may be anything</td>
+  <td><el-code>Array&lt;of String&gt;</el-code><br>of Type <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code></td>
+  <td><el-code>Array2D&lt;of String&gt;</el-code><br>of Type <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code></el-code>, or <el-code><el-type>Boolean</el-type></el-code></td>
+  <td><el-code>List&lt;of String&gt;</el-code><br>of any Type including <el-code><el-type>Array</el-type></el-code><br> &ndash; or <el-code><el-type>List</el-type></el-code> for 'jagged' data</td>
+  <td><el-code>Dictionary&lt;of String, Int&gt;</el-code><br>key must be <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code>, <el-code><el-type>Boolean</el-type></el-code>, or any<el-code>record</el-code>. Value Type may be anything</td>
  </tr><tr>
   <td>literal</td>
   <td>N/A, but can convert literal list:<br><el-code>["a","b","c"].asArray()</el-code></td>
@@ -853,7 +855,7 @@ further elements to an array, although it is possible to convert an array to a l
 
 <p>A Aictionary works like an Array, but instead of requiring a numeric (integer) index, each entry has a 'key'. Each key is associated with a value,
 so the Dictionary is a set of <i>key:value</i> pairs
-The key's Type must be one of <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code> or <el-code>Boolean</el-code>,
+The key's Type must be one of <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code> or <el-code><el-type>Boolean</el-type></el-code>,
 <i>or</i> it may be a user-defined <i>record</i>. The values may be of any Type, and the Types of both key and value are fixed when the Dictionary is created.</p>
 
 <h3 class="no-TOC">Procedure methods on a Dictionary</h2>
@@ -917,7 +919,7 @@ differences. Immutable data structures are intended specifically to facilitate t
  </tr><tr>
   <td>Type</td>
   <td><el-code>ListImmutable&lt;of String&gt;</el-code><br>element Type must be immutable</td>
-  <td><el-code>DictionaryImmutable&lt;of String, Int&gt;</el-code><br>Key Type must be <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>String</el-code>, <el-code>Boolean</el-code> or any <el-code>record</el-code><br>Value Type may be any immutable Type</td>
+  <td><el-code>DictionaryImmutable&lt;of String, Int&gt;</el-code><br>Key Type must be <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code>, <el-code><el-type>Boolean</el-type></el-code> or any <el-code>record</el-code><br>Value Type may be any immutable Type</td>
   <td><el-code>Set&lt;of String&gt;</el-code><br>element Type must be immutable</td>
   <td><el-code>Stack&lt;of String&gt;</el-code><br>element Type must be immutable</td>
   <td><el-code>Queue&lt;of String&gt;</el-code><br>element Type must be immutable</td>
@@ -967,7 +969,7 @@ differences. Immutable data structures are intended specifically to facilitate t
 </table>
 <!--   #region ListImmutable -->
 <h2 id="ListImmutable">ListImmutable</h2>
-<p>A <el-code>ListImmutable</el-code> is like a <el-code>List</el-code> but is <i>immutable</i> (like a <el-code>String</el-code>)
+<p>A <el-code>ListImmutable</el-code> is like a <el-code><el-type>List</el-type></el-code> but is <i>immutable</i> (like a <el-code><el-type>String</el-type></el-code>)
 You can still insert, delete, or change elements in a <el-code>ListImmutable</el-code>, but the methods for these operations do not modify the input <el-code>ListImmutable</el-code>: they return a new <el-code>ListImmutable</el-code> based on the input <el-code>ListImmutable</el-code> but with the specified differences. </p>
 
 <h3 class="no-TOC">Type name</h3>
@@ -1061,7 +1063,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 <p>An immutable dictionary may be defined in a <el-code>constant</el-code>.</p>
 
 <h3 class="no-TOC">Type name</h3>
-<p>In the following example, the keys are of Type <el-code>String</el-code>, and the values associated with the keys are of Type <el-code>Int</el-code>:</p>
+<p>In the following example, the keys are of Type <el-code><el-type>String</el-type></el-code>, and the values associated with the keys are of Type <el-code><el-type>Int</el-type></el-code>:</p>
 <el-code>DictionaryImmutable&lt;of String, Int&gt;</el-code><br>
 
 <h3 class="no-TOC">Defining a literal DictionaryImmutable</h3>
@@ -1117,8 +1119,8 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 
 <!--   #region Set-->
 <h2 id="Set_data">Set</h2>
-    <p>A <el-code>Set</el-code> is a standard data structure that works somewhat like a <el-code>ListImmutable</el-code> with the important difference that in a <el-code>Set</el-code> a given element may appear only once. If an item being added to a <el-code>Set</el-code> is identical to an existing item in the <el-code>Set</el-code> then the <el-code>Set</el-code> remains the same length as before. </p>
-    <p>This enables a <el-code>Set</el-code> to work like a mathematical set so that it is possible to perform standard set operations such as <el-code>union</el-code> or <el-code>intersection</el-code>. For the same reason, a Set is an immutable data structure: there are no methods modify the set on which they are called, but several of them (including <el-code>add</el-code>, <el-code>remove</el-code>) return a new <el-code>Set</el-code> that is based on the original <el-code>Set</el-code> or <el-code>Set</el-code>s, with specified differences. </p>
+    <p>A set is a standard data structure that works somewhat like a <el-code>ListImmutable</el-code> with the important difference that in a set a given element may appear only once. If an item being added to a <el-code>Set</el-code> is identical to an existing item in the <el-code>Set</el-code> then the <el-code>Set</el-code> remains the same length as before. </p>
+    <p>This enables a set to work like a mathematical set so that it is possible to perform standard set operations such as <el-code>union</el-code> or <el-code>intersection</el-code>. For the same reason, a Set is an immutable data structure: there are no methods modify the set on which they are called, but several of them (including <el-code>add</el-code>, <el-code>remove</el-code>) return a new set that is based on the original set or sets, with specified differences. </p>
     <p>Example of use:</p>
 <el-code-block source="set.elan">
 <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Set</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1134,10 +1136,10 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
  </el-code-block>
 <h4 class="no-TOC">Notes</h4>
 <ul>
-    <li> When creating a <el-code>Set</el-code>, the Type of the elements must be specified in the form
+    <li> When creating a set, the Type of the elements must be specified in the form
     <el-code>Set&lt;of String&gt;</el-code>. This applies both when creating a new, empty set and when defining the Type of a parameter to be a <el-code>Set</el-code>.</li>
     <li>You can add elements: individually with <el-code>add</el-code>, or multiple elements with <el-code>addFromList</el-code> and <el-code>addFromList</el-code>.</li>
-    <li>You can create a new <el-code>Se</el-code>t from an existing <el-code>List</el-code> or <el-code>ListImmutable</el-code> by calling <el-code>asSet</el-code> on it.</li>
+    <li>You can create a new set from an existing list or <el-code>ListImmutable</el-code> by calling <el-code>asSet</el-code> on it.</li>
 </ul>
 
 <h3 class="no-TOC">Dot methods on a Set</h2>
@@ -1235,11 +1237,11 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 <p id="Queue"></p>
 <h2 id="Stack">Stack and Queue</h2>
 <ul>
-    <li><el-code>Stack</el-code> and <el-code>Queue</el-code> are similar data structures except that <el-code>Stack</el-code> is &#8216;LIFO&#8217; (last in, first out), while <el-code>Queue</el-code> is FIFO (first in, first out). The names of the methods for adding/removing are different, but there are also common methods.</li>
-    <li>Both a <el-code>Stack</el-code> and a <el-code>Queue</el-code> are defined with the Type of the items that they can contain, similarly to how <el-code>List</el-code> and <el-code>ListImmutable</el-code> have a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <el-code>Stack&lt;of String&gt;, Queue&lt;of Int&gt;, Stack&lt;of (Float, Float)&gt;, Queue&lt;of Square&gt;</el-code>.</li>
-    <li>Both <el-code>Stack </el-code>and<el-code> Queue</el-code> are dynamically extensible, like <el-code>List</el-code> and <el-code>ListImmutable</el-code>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer&#8217;s memory limit is reached.</li>
-    <li>This same syntax is used to specify the Type if you want to pass a <el-code>Stack</el-code> into a function, or specify it as the <el-code>return</el-code> Type.</li>
-    <li><el-code>Stack</el-code> and <el-code>Queue</el-code> have two methods in common: <el-code><el-method>length</el-method></el-code> and <el-code><el-method>peek</el-method></el-code>.
+    <li><el-code><el-type>Stack</el-type></el-code> and <el-code><el-type>Queue</el-type></el-code> are similar data structures except that <el-code><el-type>Stack</el-type></el-code> is &#8216;LIFO&#8217; (last in, first out), while <el-code><el-type>Queue</el-type></el-code> is FIFO (first in, first out). The names of the methods for adding/removing are different, but there are also common methods.</li>
+    <li>Both a <el-code><el-type>Stack</el-type></el-code> and a <el-code><el-type>Queue</el-type></el-code> are defined with the Type of the items that they can contain, similarly to how <el-code><el-type>List</el-type></el-code> and <el-code>ListImmutable</el-code> have a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <el-code>Stack&lt;of String&gt;, Queue&lt;of Int&gt;, Stack&lt;of (Float, Float)&gt;, Queue&lt;of Square&gt;</el-code>.</li>
+    <li>Both <el-code>Stack </el-code>and<el-code> Queue</el-code> are dynamically extensible, like <el-code><el-type>List</el-type></el-code> and <el-code>ListImmutable</el-code>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer&#8217;s memory limit is reached.</li>
+    <li>This same syntax is used to specify the Type if you want to pass a <el-code><el-type>Stack</el-type></el-code> into a function, or specify it as the <el-code>return</el-code> Type.</li>
+    <li><el-code><el-type>Stack</el-type></el-code> and <el-code><el-type>Queue</el-type></el-code> have two methods in common: <el-code><el-method>length</el-method></el-code> and <el-code><el-method>peek</el-method></el-code>.
     <el-code><el-method>peek</el-method></el-code> returns the next item to be removed, without actually removing it.
     <li>The methods for adding and removing an item are different for <el-code><el-type>Stack</el-type></el-code> and <el-code><el-type>Queue</el-type></el-code>, as shown here:</li>
 </ul>
@@ -1326,7 +1328,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 </tr>
 </table>
     </p>
-    <p>Example use of a <el-code>Stack</el-code>:</p>
+    <p>Example use of a <el-code><el-type>Stack</el-type></el-code>:</p>
 <el-code-block source="stack.elan">
 <el-statement class="ok" id="var35" tabindex="0"><el-kw>variable </el-kw><el-field id="var36" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr37" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Stack</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print6" tabindex="0"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1341,7 +1343,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 <el-statement class="ok" id="print26" tabindex="0"><el-kw>print </el-kw><el-field id="expr27" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print28" tabindex="0"><el-kw>print </el-kw><el-field id="expr29" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
-    <p>Example use of a <el-code>Queue</el-code>:</p>
+    <p>Example use of a <el-code><el-type>Queue</el-type></el-code>:</p>
 <el-code-block source="queue.elan">
 <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>qu</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Queue</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print6" tabindex="0"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1445,8 +1447,8 @@ which the dot methods the following methods may be invoked:</p>
 <h4 class="no-TOC">Notes</h4>
 <ul>
 <li><el-code>openFileForReading</el-code> will present the user with a dialog to select the file.</li>
-<li><el-code>readWholeFile</el-code> returns a <el-code>String</el-code> containing every character in the file, without any trimming. It automatically closes the file after the read.</li>
-<li><el-code>readLine</el-code> reads as far as the next newline character (<el-code>\n</el-code>) and then automatically trims the line to remove any spaces and/or carriage-returns (which some file systems insert after the newline automatically) from the resulting line returned as a <el-code>String</el-code>. If this behaviour is not desired, you can use <el-code>readWholeFile</el-code>, which does no trimming, and then parse the resulting <el-code>String</el-code> into separate lines.</li>
+<li><el-code>readWholeFile</el-code> returns a <el-code><el-type>String</el-type></el-code> containing every character in the file, without any trimming. It automatically closes the file after the read.</li>
+<li><el-code>readLine</el-code> reads as far as the next newline character (<el-code>\n</el-code>) and then automatically trims the line to remove any spaces and/or carriage-returns (which some file systems insert after the newline automatically) from the resulting line returned as a <el-code><el-type>String</el-type></el-code>. If this behaviour is not desired, you can use <el-code>readWholeFile</el-code>, which does no trimming, and then parse the resulting <el-code><el-type>String</el-type></el-code> into separate lines.</li>
 <li>Calling <el-code>file.close</el-code> after reading line by line is strongly recommended to avoid any risk of leaving the file locked. It is not necessary to call it after using <el-code>readWholeFile</el-code> because that method automatically closes the file.</li>
 <li>Calling any method on a file that is already closed will result in a runtime error.</li>
 </ul>
@@ -1613,7 +1615,7 @@ the URL as a <el-code><el-type>String</el-type></el-code>, either as a literal (
 <li>The <el-code><el-type>Array2D</el-type></el-code> must be of type <el-code><el-type>Int</el-type></el-code> and of size 40 x 30.</li>
 <li>You may create multiple <el-code><el-type>Array2Ds</el-type></el-code> holding different patterns of blocks, and switch between them
 just by passing the required one as the argument to the <el-code><el-method>displayBlocks</el-method></el-code> method.</li>
-<li>A colour is specified as an <el-code>Int</el-code>, as described under <a href="#Colours">Colours</a>.</li>
+<li>A colour is specified as an <el-code><el-type>Int</el-type></el-code>, as described under <a href="#Colours">Colours</a>.</li>
 </ul>
 <!-- #endregion-->
 <!--   #region Turtle Graphics-->
@@ -1636,7 +1638,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 <img src="images/Pic30.png"  align="MIDDLE" width="277" height="280" >
 <h4 class="no-TOC">Notes</h4>
 <ul>
-<li><el-code>move</el-code> and <el-code>turn</el-code> are the two most commonly-used methods. To <el-code>move</el-code> backwards, specify a negative value. The value passed into <el-code>turn</el-code> is interpreted as degrees: a positive value turns clockwise; a negative value anti-clockwise. Both methods take a numeric value, which may be an <el-code>Int</el-code> or a <el-code>Float</el-code>.</li>
+<li><el-code>move</el-code> and <el-code>turn</el-code> are the two most commonly-used methods. To <el-code>move</el-code> backwards, specify a negative value. The value passed into <el-code>turn</el-code> is interpreted as degrees: a positive value turns clockwise; a negative value anti-clockwise. Both methods take a numeric value, which may be an <el-code><el-type>Int</el-type></el-code> or a <el-code><el-type>Float</el-type></el-code>.</li>
 <li><el-code>move</el-code> takes an argument that is a distance in turtle units. If the turtle is moved outside the 100 &times; 75 area boundary, it will not cause an error, but the location of the turtle and any lines outside the boundary will not be visible.</li>
 <li><el-code>show</el-code> causes the turtle to be displayed (the small green circle with a black radius showing the direction it is pointing); <el-code>hide</el-code> does the opposite.</li>
 <li>You can move and turn the turtle, causing lines to be drawn, whether or not the turtle is shown. </li>
@@ -1645,8 +1647,8 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 <li><el-code>penWidth</el-code> takes an integer argument specifying the width of the line drawn by the turtle. The minimum value is 1, which is also the default.</li>
 <li>You can specify the start position of the turtle in <el-code>x,y</el-code> coordinates (<el-code>0,0</el-code> being the top-left of the Display pane) with <el-code>placeAt</el-code>, which may also be used to reposition the turtle (without drawing a connecting line). You may specify the turtle&#8217;s absolute heading with <el-code>turnTo</el-code>, where 0 would cause the turtle to face up the screen.</li>
 <li>The current location and heading of the turtle may be read using the <el-code>x</el-code>, <el-code>y</el-code>, and <el-code>heading</el-code> properties.</li>
-<li>There is no difference in effect between <el-code>call t.pause(500)</el-code> and the standalone <el-code>call pause(500)</el-code>: the former option is provided as a convenience, because most instructions in a <el-code>Turtle</el-code> program take the form <el-code>call t.something</el-code>. Both versions take an integer argument, being the length of the pause in milliseconds.</li>
-<li>Apart from the <el-code>penColour</el-code> and <el-code>pause</el-code> methods, both of which require an integer value, all other procedure methods on the <el-code>Turtle</el-code> can take integer or floating point values.</li>
+<li>There is no difference in effect between <el-code>call t.pause(500)</el-code> and the standalone <el-code>call pause(500)</el-code>: the former option is provided as a convenience, because most instructions in a <el-code><el-type>Turtle</el-type></el-code> program take the form <el-code>call t.something</el-code>. Both versions take an integer argument, being the length of the pause in milliseconds.</li>
+<li>Apart from the <el-code>penColour</el-code> and <el-code>pause</el-code> methods, both of which require an integer value, all other procedure methods on the <el-code><el-type>Turtle</el-type></el-code> can take integer or floating point values.</li>
 </ul>
 <p>Here is a more sophisticated example, using a procedure and recursion, that produces a fractal snowflake:</p>
 <el-code-block source="turtle_snowflake.elan">
@@ -1735,7 +1737,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
  <li>As with the way that SVG works within Html, the shapes are drawn in the order in which they are added into the list of <el-code><el-type>VectorGraphic</el-type></el-code> instances, with later shapes positioned over earlier shapes.</li>
  <li>The <el-code><el-id>fillColour</el-id></el-code> and <el-code><el-id>strokeColour</el-id></el-code> properties may be specified as described under <a href="#Colours">Colours</a>.
   The <el-code><el-id>fillColour</el-id></el-code> only may also be specified as <el-code><el-id>transparent</el-id></el-method> (which has the value <el-code>-1</el-code>).
- <li><el-code><el-type>VectorGraphic</el-type></el-code> is the abstract superclass of all <el-code>...VG</el-code> shapes. You would only use it if you wanted to define a method that could work on any shape (using common elements defined on <el-code>VectorGraphic</el-code>) or that could work with a <el-code>List</el-code> holding different types of shape.</li>
+ <li><el-code><el-type>VectorGraphic</el-type></el-code> is the abstract superclass of all <el-code>...VG</el-code> shapes. You would only use it if you wanted to define a method that could work on any shape (using common elements defined on <el-code>VectorGraphic</el-code>) or that could work with a <el-code><el-type>List</el-type></el-code> holding different types of shape.</li>
  <li>The constructor parameters for <el-code><el-type>CircleVG</el-type></el-code> are: <el-code>centreX, centreY, radius, fillColour, strokeColour, strokeWidth</el-code>.</li>
  <li>The constructor parameters for <el-code><el-type>LineVG</el-type></el-code> are: <el-code>x1, y1, x2, y2, strokeColour, strokeWidth</el-code>, all of Type <el-code><el-type>Int</el-type></el-code>.</li>
  <li>The constructor parameters for <el-code><el-type>LineVG</el-type></el-code> are: <el-code>x, y, width, height, fillColour, strokeColour, strokeWidth</el-code>.</li>
@@ -1765,9 +1767,9 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 <p>A <el-code>function</el-code> may be passed as an argument into another <el-code>function</el-code> (or a <el-code>procedure</el-code>), or returned as the result of calling another <el-code>function</el-code>. This pattern is known as &lsquo;Higher order Function&rsquo; (HoF), and is a key idea in the functional programming paradigm. To define a <el-code>function</el-code> that takes in another <el-code>function</el-code> as a parameter, or returns a <el-code>function</el-code>, you need to specify the Type of the <el-code>function</el-code>, just as you would specify the Type of every parameter and the return Type for the <el-code>function</el-code>. </p>
 
 <h3 class="no-TOC">Type name</h3>
-<p>The Type of any <el-code>function</el-code> starts with the word <el-code>Func</el-code> followed by angle brackets defining the Type of each parameter, and the return Type for that function, following this syntax:</p>
+<p>The Type of any <el-code>function</el-code> starts with the word <el-code><el-type>Func</el-type></el-code> followed by angle brackets defining the Type of each parameter, and the return Type for that function, following this syntax:</p>
 <el-code>Func&lt;of String, String, Int =&gt; Boolean&gt;</el-code><!-- TODO correct the syntax -->
-<p>This example defines the Type for a function that defines three parameters of Type <el-code>String</el-code>, <el-code>String</el-code>, and <el-code>Int</el-code> respectively, and returns a <el-code>Boolean</el-code> value. This Type would match that of a function definition that started:</p>
+<p>This example defines the Type for a function that defines three parameters of Type <el-code><el-type>String</el-type></el-code>, <el-code><el-type>String</el-type></el-code>, and <el-code><el-type>Int</el-type></el-code> respectively, and returns a <el-code><el-type>Boolean</el-type></el-code> value. This Type would match that of a function definition that started:</p>
 <el-code-block source="functionChars.elan">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident5" class="ok" tabindex="0"><el-txt>charactersMatchAt</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params6" class="optional ok" tabindex="0"><el-txt><el-id>a</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>b</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>position</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="0"><el-txt><el-type>Boolean</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
 </el-code-block>
@@ -1797,7 +1799,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
     <tr><td><el-code><el-id>transparent</el-id></el-code></td><td style="color:#000000">&#x25fb;</td><td>-1</td><td>N/A</td><td>N/A</td></tr>
 </table>
 <br>
-<p>A colour is specified as an <el-code>Int</el-code> value using one of these methods:</p>
+<p>A colour is specified as an <el-code><el-type>Int</el-type></el-code> value using one of these methods:</p>
 <ul>
  <li>the limited colours defined as library constants as in the above table.</li>
  <li>an integer in the decimal range 0 (black) to 2<sup>24-1</sup> (white).</li>
@@ -1918,7 +1920,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 <h2 id="RegExp">Regular expressions</h3>
     <p>Elan's regular expressions are modelled on those of JavaScript, including the syntax for literal regular expressions. See, for example this <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions">Guide to Regular Expressions</a>.</p>
     <p>More functions for using regular expressions will be added in a future release of Elan. For now&#8230;</p>
-    <p>The method <el-code>matchesRegExp</el-code> is applied to a <el-code>String</el-code> using dot syntax and requires a <el-code>RegExp</el-code> parameter specified as a literal or as variable. It returns a Boolean. For example:</p>
+    <p>The method <el-code>matchesRegExp</el-code> is applied to a <el-code><el-type>String</el-type></el-code> using dot syntax and requires a <el-code>RegExp</el-code> parameter specified as a literal or as variable. It returns a Boolean. For example:</p>
 <el-code-block source="test_regexp_1.elan">
 <el-test class="ok multiline" id="test1" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
@@ -2171,7 +2173,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <el-code>print "Max: {a.max()} Min: {a.min()}"</el-code><br>
 
 <h2 id="HoF">Higher order functions (HoFs)</h2>
-    <p>These dot methods are called on any <el-code>List,</el-code> <el-code>ListImmutable</el-code> or <el-code>String</el-code>. As &#8216;higher order functions&#8217; they take either a <el-code>lambda</el-code> or a function reference as one of their arguments: see <span class="Link">Passing a function as a reference</span>.</p>
+    <p>These dot methods are called on any <el-code>List,</el-code> <el-code>ListImmutable</el-code> or <el-code><el-type>String</el-type></el-code>. As &#8216;higher order functions&#8217; they take either a <el-code>lambda</el-code> or a function reference as one of their arguments: see <span class="Link">Passing a function as a reference</span>.</p>
     <p>Important: Several of these methods return a <el-code><el-type>ListImmutable</el-type></el-code> but this may be converted to an array using <el-code>.<el-method>asList()</el-method></el-code> at the end of the expression.</p>
     <p>These are not yet fully documented but, for readers familiar with HoFs from another programming language, some examples are shown below.</p>
 
