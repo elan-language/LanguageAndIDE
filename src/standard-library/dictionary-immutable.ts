@@ -59,13 +59,13 @@ export class DictionaryImmutable<T1, T2> {
     return this.system!.initialise(new DictionaryImmutable<T1, T2>([...newDict.entries()]));
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClass(ListImmutable))
+  @elanFunction([], FunctionOptions.pure, ElanClass(ListImmutable, [ElanT1]))
   keys(): ListImmutable<T1> {
     const lst = [...this.contents.keys()];
     return this.system!.initialise(new ListImmutable<T1>(lst));
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClass(ListImmutable))
+  @elanFunction([], FunctionOptions.pure, ElanClass(ListImmutable, [ElanT2]))
   values(): ListImmutable<T2> {
     const lst = [...this.contents.values()];
     return this.system!.initialise(new ListImmutable<T2>(lst));
