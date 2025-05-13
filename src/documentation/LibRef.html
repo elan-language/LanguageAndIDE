@@ -60,18 +60,48 @@ Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and 
  </tr>
 </table>
 
-<h4 class="no-TOC">Constraints</h4>
-<ul>
-<li>Maximum value: 2<sup>53</sup> &ndash; 1 which is just over 9 &times; 10<sup>15</sup></li>
-<li>Minimum value: &ndash; (2<sup>53</sup> &ndash; 1)</li>
-</ul>
 <h4 class="no-TOC">Notes</h4>
+
 <ul>
-<li>If either limit is exceeded the number will automatically be represented as a <el-code>Float</el-code>, with possible loss of precision.</li>
-<li>A value assigned to an <el-code>Int</el-code> may be expressed in decimal or, if preceded by <el-code>0x</el-code>, in hexadecimal. Hexadecimal is useful for defining <a href="#Colours">colours</a> and Unicode codepoint values.</li>
-<li>An <el-code>Int</el-code> may always be passed as an argument into a method that specifies a <el-code>Float</el-code>.</li>
+<li>A literal integer or a named value of type <el-code><el-type>Int</el-type></el-code> may
+always be passed into a function or procedure that is expecting a <el-code><el-type>Float</el-type></el-code> .</li>
+<li>The <el-code><el-type>Int</el-type></el-code> type is <i>intended</i> to represent whole numbers
+in the range:</li>
+    <ul>
+    <li>Maximum: 2<sup>53</sup> &ndash; 1 (which is 9007199254740991)</li>
+    <li>Minimum value: &ndash; (2<sup>53</sup> &ndash; 1)</li>
+    </ul>
+
+<li>If you go outside the limits give above, the number will be represented with the same precision as if
+    it were being held in a <el-code><el-type>Int</el-type></el-code> type: accurate to approximately 15 decimal digits.
+    Larger numbers will be padded with zeros at the end, until they to the point where they will automatically be shown
+    in exponential ('scientific') format, as illustrated by the following code:
+
+
+<el-code-block>
+    <main class="ok multiline" id="main3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+        <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg><el-fr>1</el-fr></el-top>
+        <el-statement class="ok multiline" id="for5" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+        <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else.">?</el-help></el-field><el-kw> from </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-lit>50</el-lit></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-kw> to </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-kw> step </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-top>
+        <el-statement class="ok" id="call14" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident15" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="The name of the procedure to be called (starting lower-case). Alternatively, a 'dotted-call':  the name of a variable or property, followed by a ''' and the name of the procedure method to call on that 'instance'.">?</el-help></el-field>(<el-field id="args16" class="optional ok" tabindex="0"><el-txt><el-lit>0</el-lit>, <el-id>i</el-id>.<el-method>asString</el-method>()</el-txt><el-place><i>position, text</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.">?</el-help></el-field>)<el-msg></el-msg><el-fr>3</el-fr></el-top></el-statement>
+        <el-statement class="ok" id="call23" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident24" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="The name of the procedure to be called (starting lower-case). Alternatively, a 'dotted-call':  the name of a variable or property, followed by a ''' and the name of the procedure method to call on that 'instance'.">?</el-help></el-field>(<el-field id="args25" class="optional ok" tabindex="0"><el-txt><el-lit>10</el-lit>, (<el-lit>2</el-lit>^<el-id>i</el-id>).<el-method>asString</el-method>()</el-txt><el-place><i>position, text</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.">?</el-help></el-field>)<el-msg></el-msg><el-fr>4</el-fr></el-top></el-statement>
+        <el-statement class="ok" id="print70" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>print </el-kw><el-field id="expr71" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>expression</i></el-place><el-compl><i>expression</i></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>5</el-fr></el-statement>
+        <el-kw>end for</el-kw>
+        </el-statement>
+        <el-kw>end main</el-kw>
+    </main>
+</el-code-block>
+
+<p></p>which produces:</p>
+
+<img src="images/Pic88.png">
+
+</li>
+
+
 </ul>
-<!--   #endregion-->
+    <!--   #endregion-->
+
 <!--   #region Float-->
 <h2 id="Float">Float</h2>
 <p>A &lsquo;floating point number&rsquo;, i.e. a number that may have both integer and fractional parts.</p>
@@ -118,20 +148,19 @@ Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and 
  </tr>
 </table>
 
-<h4 class="no-TOC">Constraints</h4>
+<h4 class="no-TOC">Notes</h4>
 <ul>
- <li>Since Elan compiles to JavaScript, the constraints on floating point numbers are those of JavaScript:
+ <li>The limits on floating point numbers are:
   <ul>
    <li>Maximum value: just over 1 &times; 10<sup>308</sup></li>
    <li>Minimum value: approximately 5 &times; 10<sup>-324</sup></li>
   </ul>
-For greater detail, refer to the official JavaScript documentation.
  <li>A variable that has been defined as being of Type <el-code>Float</el-code> may not be passed as an argument into a method that requires an <el-code>Int</el-code>, nor as an index into a <el-code>List</el-code>, even if the variable contains no fractional part. It may, however, be converted into an <el-code>Int</el-code> before passing, using the functions <el-code>floor</el-code> or <el-code>ceiling</el-code>:
    <ul>
-<li><el-code>floor</el-code> returns the integer value left by removing any fractional part, and</li>
-<li><el-code>ceiling</el-code> returns the lowest integer greater than the <el-code>Float</el-code> value if it does have a fractional part.</li>
+<li><el-code><el-method>floor</el-method></el-code> returns the integer value left by removing any fractional part, and</li>
+<li><el-code><el-method></el-method>ceiling</el-method></el-code> returns the lowest integer greater than the <el-code>Float</el-code> value if it does have a fractional part.</li>
   </ul>
- <li>If you wish to define a variable to be of Type <el-code>Float</el-code> but initialise it with an integer value then add <el-code>.0</el-code> on the end of the whole number, for example:<br>
+ <li>If you wish to define a variable to be of Type <el-code><el-type>Float</el-type></el-code> but initialise it with an integer value then add <el-code>.0</el-code> on the end of the whole number, for example:<br>
 <el-code>variable a set to 3.0</el-code></li>
 </ul>
 
