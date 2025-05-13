@@ -149,7 +149,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ["a":1, "b":3, "z":10]
-  variable b set to empty ListImmutable<of String>
+  variable b set to empty List<of String>
   set b to a.keys()
   print b
 end main`;
@@ -158,7 +158,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  let b = system.initialise(_stdlib.ListImmutable.emptyInstance());
+  let b = system.initialise(_stdlib.List.emptyInstance());
   b = a.keys();
   await system.printLine(b);
 }
@@ -170,7 +170,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{a, b, z}");
+    await assertObjectCodeExecutes(fileImpl, "[a, b, z]");
   });
 
   test("Pass_hasKey", async () => {
@@ -222,7 +222,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "{1, 3, 10}");
+    await assertObjectCodeExecutes(fileImpl, "[1, 3, 10]");
   });
 
   test("Pass_set", async () => {
@@ -865,7 +865,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "true 99 true 98[42:99] [42:98]{42} true");
+    await assertObjectCodeExecutes(fileImpl, "true 99 true 98[42:99] [42:98][42] true");
   });
 
   test("Pass_asDictionaryImmutable", async () => {
