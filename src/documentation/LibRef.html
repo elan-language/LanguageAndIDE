@@ -323,7 +323,7 @@ For example (assuming that the variables <el-code>a</el-code> and <el-code>b</el
 
 <h3 class="no-TOC">Special characters</h3>
 <p>You cannot include the characters <el-code>"</el-code>, <el-code>{</el-code>, or <el-code>}</el-code> directly within a literal string
- because of their special meanings. Instead, you use the constants <el-id>quotes</el-id>, <el-id>openBrace</el-id> and <el-id>closeBrace</el-id> respectively, e.g.:
+ because of their special meanings. Instead, you use the constants <el-id>quotes</el-id>, <el-id>openBrace</el-id> and <el-id>closeBrace</el-id> respectively, e.g.
 <p><el-code>print "This is a double quotation mark: " + quotes</el-code></p>
 <p><el-code>print "Here are the curly braces: {openBrace} and {closeBrace}"</el-code></p>
 
@@ -1205,12 +1205,13 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 <p id="Queue"></p>
 <h2 id="Stack">Stack and Queue</h2>
 <ul>
-    <li><el-code>Stack</el-code> and <el-code>Queue</el-code> are similar data structures except that <el-code>Stack</el-code> is &#8216;LIFO&#8217; (last in, first out), while <el-code>Queue</el-code> is FIFO (first in, first out). The names of the methods for adding/removing are different, but there are also common methods, summarised here.</li>
+    <li><el-code>Stack</el-code> and <el-code>Queue</el-code> are similar data structures except that <el-code>Stack</el-code> is &#8216;LIFO&#8217; (last in, first out), while <el-code>Queue</el-code> is FIFO (first in, first out). The names of the methods for adding/removing are different, but there are also common methods.</li>
     <li>Both a <el-code>Stack</el-code> and a <el-code>Queue</el-code> are defined with the Type of the items that they can contain, similarly to how <el-code>List</el-code> and <el-code>ListImmutable</el-code> have a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <el-code>Stack&lt;of String&gt;, Queue&lt;of Int&gt;, Stack&lt;of (Float, Float)&gt;, Queue&lt;of Square&gt;</el-code>.</li>
-    <li>Both <el-code>Stack </el-code>and<el-code> Queue</el-code> are dynamically extensible, like <el-code>List</el-code> and <el-code>ListImmutable</el-code>. There is no need (or means to) specify a size limit as they will continue to expand until, eventually, the computer&#8217;s memory limit is reached.</li>
+    <li>Both <el-code>Stack </el-code>and<el-code> Queue</el-code> are dynamically extensible, like <el-code>List</el-code> and <el-code>ListImmutable</el-code>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer&#8217;s memory limit is reached.</li>
     <li>This same syntax is used to specify the Type if you want to pass a <el-code>Stack</el-code> into a function, or specify it as the <el-code>return</el-code> Type.</li>
-    <li><el-code>Stack</el-code> and <el-code>Queue</el-code> have some methods in common: <el-code>length</el-code>, and <el-code>peek</el-code> which allows you to read the next item that would be removed, without actually removing it.</li>
-    <li>The names of the methods for adding or removing an item are different for <el-code>Stack</el-code> and <el-code>Queue</el-code>, as summarised in these tables:</li>
+    <li><el-code>Stack</el-code> and <el-code>Queue</el-code> have two methods in common: <el-code><el-method>length</el-method></el-code> and <el-code><el-method>peek</el-method></el-code>.
+    <el-code><el-method>peek</el-method></el-code> returns the next item to be removed, without actually removing it.
+    <li>The methods for adding and removing an item are different for <el-code><el-type>Stack</el-type></el-code> and <el-code><el-type>Queue</el-type></el-code>, as shown here:</li>
 </ul>
 
 <h3 class="no-TOC">Dot methods on a Stack</h3>
@@ -1355,11 +1356,11 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
  </tr><tr>
   <td><el-code><el-type>List</el-type></el-code></td><td></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td>
  </tr><tr>
-  <td><el-code><el-type>Dictionary</el-type></el-code></td><td></td><td>&#x2714;</td><td></td><td></td><td></td><td></td><td></td>
+  <td><a href="#Dictionary"><el-code><el-type>Dictionary</el-type></el-code></a></td><td>&#x2714;</td><td>&#x2714;</td><td>see notes</td><td></td><td></td><td>see notes</td><td></td>
  </tr><tr>
   <td><el-code><el-type>ListImmutable</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td>
  </tr><tr>
-  <td><el-code><el-type>DictionaryImmutable</el-type></el-code></td><td></td><td>&#x2714;</td><td></td><td></td><td></td><td></td><td></td>
+  <td><a href="#DictionaryImmutable"><el-code><el-type>DictionaryImmutable</el-type></el-code></a></td><td></td><td>&#x2714;</td><td>see notes</td><td></td><td></td><td>see notes</td><td></td
  </tr><tr>
   <td><el-code><el-type>Set</el-type></el-code></td><td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td></td><td></td><td>&#x2714;</td><td></td>
  </tr><tr>
@@ -1368,9 +1369,18 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
   <td><el-code><el-type>Queue</el-type></el-code></td><td></td><td>&#x2714;</td><td></td><td></td><td></td><td>&#x2714;</td><td>&#x2714;</td>
  </tr>
 </table>
+<h4 class="no-TOC">Notes</h4>
+<ul>
+ <li>The length of a <el-code><el-type>Dictionary</el-type></el-code> or <el-code><el-type>DictionaryImmutable</el-type></el-code> can be found by applying method <el-code><el-method>length</el-method></el-code> to the list returned by method <el-code><el-method>keys</el-method></el-code> on the dictionary:</li>
+  <p><el-code>print dict.keys().length()</el-code> &rarr; 15</p>
+ <li>Checking whether an item is contained in a <el-code><el-type>Dictionary</el-type></el-code> or <el-code><el-type>DictionaryImmutable</el-type></el-code> can be
+  done by applying method <el-code><el-method>contains</el-method></el-code> to the list returned by methods <el-code><el-method>keys</el-method></el-code> and <el-code><el-method>values</el-method></el-code> on the dictionary:</li>
+  <p><el-code>print dict.keys().contains(42)</el-code> &rarr; <el-id>true</el-id> or <el-id>false</el-id></p>
+  <p><el-code>print dict.values().contains("widget")</el-code> &rarr; <el-id>true</el-id> or <el-id>false</el-id></p>
+</ul>
 <!-- #endregion-->
 <!-- #region Input/output -->
-<h1>Input/output</h1>
+<h1 id="Input/output">Input/output</h1>
 <!--   #region Reading and writing Text files-->
 <h2 id="TextFileReader">Reading Text Files</h2>
 <p>The <el-code><el-type>TextFileReader</el-type></el-code> class is used to read textual data from a file.
@@ -1948,7 +1958,6 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <!-- #endregion-->
 <!-- #region Standalone procedures-->
 <h1 id="Standalone_procedures">Standalone procedures</h1>
-<h2>Table of standalone procedures</h2>
 <p>All <el-code>procedure</el-code>s are accessed via a <el-code><a href="LangRef.html#call">call</el-code></a> statement.</p>
 <table>
  <tr><th>procedure</th><th>input<br>argument<br>Types</th><th>output<br>argument<br>Types</th><th>action</th></tr>
@@ -2019,88 +2028,99 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <h1 id="System_methods">System methods</h1>
     <p>System methods appear to work like <el-code>functions</el-code>, because:</p>
 <ul>
-    <li>they may require one or more arguments to be provided</li>
-    <li>they always return a value</li>
-    <li>they are used in expressions</li>
-    <p>However, system methods are not pure functions because:</p>
-    <li>They may have a dependency on data that is not provided as an argument</li>
-    <li>They may generate side-effects, such as changing the screen display, or writing to a file</li>
-    <p>Because of these properties, system methods may be used only within the <el-code>main</el-code> routine or within a <el-code>procedure</el-code>. System methods may not be used inside a <el-code>function</el-code> that you have defined, because to do so would mean that your <el-code>function</el-code> would not be pure. </p>
-    <p>System methods are all defined within the Elan standard library. You cannot write a system method yourself.</p>
-    <p>System methods are commonly associated with <a href="#Input/Output">Input/Output</a>, but note that:</p>
-    <li>Input/output may also be performed via procedures</li>
-    <li>Some system methods do not appear to be concerned with input/output: see the list below</li>
-    <li>The reason those are system methods is that they have a dependency on variable data that is not passed into them as arguments</li>
+ <li>they may require one or more arguments to be provided</li>
+ <li>they always return a value</li>
+ <li>they are used in expressions</li>
 </ul>
-<h2>Table of system methods</h2>
+<p>They are not, however,pure functions because:</p>
+<ul>
+ <li>They may have a dependency on data that is not provided as an argument</li>
+ <li>They may generate side effects, such as changing the screen display, or writing to a file</li>
+</ul>
+<p>Because of these properties, system methods may be used only within the <el-code>main</el-code> routine or within a <el-code>procedure</el-code>.
+ They may not be used inside a <el-code>function</el-code> that you have defined, because to do so would mean that your <el-code>function</el-code> would not be pure.</p>
+<p>System methods are all defined within the Elan standard library: you cannot write a system method yourself.</p>
+<p>System methods are commonly associated with <a href="#Input/output">Input/output</a>, but note that:</p>
+<ul>
+ <li>Input/output may also be performed in your procedures.</li>
+ <li>Some system methods are not concerned with input/output, e.g. generating random numbers.</li>
+</ul>
+<p>The reason those are system methods is that they have a dependency on variable data that is not passed into them as arguments.</p>
 <table
- <tr><th>function<br>method</th><th>argument<br>Types</th><th>return<br>Types</th><th>action</th></tr>
+ <tr><th>system<br>method</th><th>argument<br>Types</th><th>return<br>Types</th><th>action</th></tr>
  <tr id="clock">
   <td><el-code><el-method>clock</el-method></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td>returns an integer that increments every millisecond<br>useful for measuring elapsed time by comparing the values returned by two calls</td>
+  <td>returns the current value (in  milliseconds) of a system clock.<br>Useful for measuring elapsed time by comparing the values returned by two calls.</td>
  </tr><tr id="getKey">
   <td><el-code><el-method>getKey</el-method></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>returns the keyboard key character pressed (see below)</td>
+  <td>returns the character of the keyboard key pressed.</td>
  </tr><tr id="getKeyWithModifier">
   <td><el-code><el-method>getKeyWithModifier</el-method></el-code></td>
   <td>(none)</td>
   <td>2-tuple:<br><el-code><el-type>String</el-type></el-code>, <el-code><el-type>String</el-type></el-code></td>
-  <td>returns both the keyboard key character pressed<br>and the modifier key's name if pressed also (see below)</td>
+  <td>returns both the character of the keyboard key pressed<br>and the modifier key's name if also pressed.</td>
  </tr><tr id="inputString">
   <td><el-code><el-method>inputString</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>prints the argument string as a prompt<br>and returns the string typed when Enter is pressed</td>
+  <td>prints the string as a prompt, and returns the typed input when Enter is pressed.</td>
  </tr><tr id="inputStringWithLimits">
   <td><el-code><el-method>inputStringWithLimits</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code>, <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Int</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>prints the argument string as a prompt together with minimum and maximum lengths of response<br>
-      and returns the string typed when Enter is pressed (see below)</td>
+  <td>prints the string as a prompt and returns the typed input when Enter is pressed<br>
+  provided the length of the response is within the minimum and maximum limits specified.<br>
+  If it is not, the prompt is repeated with the relevant limit is displayed.</td>
  </tr><tr id="inputStringFromOptions">
   <td><el-code><el-method>inputStringFromOptions</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code>, <el-code><el-type>List&lt;of String&gt;</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td></td>
+  <td>prints the string as a prompt and returns the typed input when Enter is pressed<br>
+  provided it is one of the options in the list.<br>
+  If it is not, the prompt is repeated with the options are displayed.</td>
  </tr><tr id="inputInt">
   <td><el-code><el-method>inputInt</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td></td>
+  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
+  provided that it is an integer. If it is not, the prompt is repeated with an error message.</td>
  </tr><tr id="inputIntBetween">
   <td><el-code><el-method>inputIntBetween</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code>, <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Int</el-type></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td></td>
+  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
+  provided that it is an integer with a value in the (inclusive) range. The first range value must be less than or equal to the second.</td>
  </tr><tr id="inputFloat">
   <td><el-code><el-method>inputFloat</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Float</el-type></el-code></td>
-  <td></td>
+  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
+  provided that it is a number. If it is not, the prompt is repeated with an error message.</td>
  </tr><tr id="inputFloatBetween">
   <td><el-code><el-method>inputFloatBetween</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code>, <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Int</el-type></el-code></td>
   <td><el-code><el-type>Float</el-type></el-code></td>
-  <td></td>
+  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
+  provided that it is a number with a value in the (inclusive) range. The first range value must be less than or equal to the second.</td>
  </tr><tr id="openFileForReading">
   <td><el-code><el-method>openFileForReading</el-method></el-code></td>
-  <td></td>
-  <td></td>
-  <td>see Reading textual data from a file</td>
+  <td>(none)</td>
+  <td><el-class>TextFileReader</el-class></td>
+  <td>see <a href="#Input/output">Input/output</a></td>
  </tr><tr id="random">
   <td><el-code><el-method>random</el-method></el-code></td>
-  <td></td>
-  <td></td>
-  <td>see Generating random numbers</td>
+  <td>(none)</td>
+  <td><el-code><el-type>Float</el-type></el-code></td>
+  <td>returns a random number in the range [0..1]</td>
  </tr><tr id="randomInt">
   <td><el-code><el-method>randomInt</el-method></el-code></td>
-  <td></td>
-  <td></td>
-  <td>see Generating random numbers</td>
+  <td><el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Int</el-type></el-code></td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>returns a random number in the (inclusive) range between the two arguments.</td>
  </tr><tr id="waitForAnyKey">
   <td><el-code><el-method>waitForAnyKey</el-method></el-code></td>
   <td></td>
