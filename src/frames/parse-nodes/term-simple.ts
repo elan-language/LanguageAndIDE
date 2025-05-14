@@ -6,7 +6,7 @@ import { ExprNode } from "./expr-node";
 import { DictionaryImmutableNode } from "./immutable-dictionary-node";
 import { ListImmutableNode } from "./list-immutable-node";
 import { ListNode } from "./list-node";
-import { LitValueNode } from "./lit-value";
+import { LitValueNode } from "./lit-value-node";
 import { ReferenceNode } from "./reference-node";
 import { UnaryExpression } from "./unary-expression";
 

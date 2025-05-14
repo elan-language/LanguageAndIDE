@@ -2,7 +2,7 @@ import { AbstractAlternatives } from "./abstract-alternatives";
 import { IdentifierNode } from "./identifier-node";
 import { DictionaryImmutableNode } from "./immutable-dictionary-node";
 import { ListImmutableNode } from "./list-immutable-node";
-import { LitValueNode } from "./lit-value";
+import { LitValueNode } from "./lit-value-node";
 import { TupleNode } from "./tuple-node";
 
 export class ConstantLiteralNode extends AbstractAlternatives {
