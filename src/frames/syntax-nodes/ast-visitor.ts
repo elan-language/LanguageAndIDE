@@ -28,6 +28,7 @@ import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
 import { ImageNode } from "../parse-nodes/image-node";
 import { DictionaryImmutableNode } from "../parse-nodes/immutable-dictionary-node";
+import { IndexDouble } from "../parse-nodes/index-double";
 import { IndexRange } from "../parse-nodes/index-range";
 import { InheritanceNode } from "../parse-nodes/inheritanceNode";
 import { InstanceNode } from "../parse-nodes/instanceNode";
@@ -438,14 +439,15 @@ export function transform(
     return new RangeAsn(from, to, fieldId);
   }
 
+  if (node instanceof IndexDouble) {
+    const index1 = transform(node.index1, fieldId, scope) as AstCollectionNode;
+    const index2 = transform(node.index2, fieldId, scope) as AstCollectionNode;
+    return new IndexDoubleAsn(index1, index2, fieldId);
+  }
+
   if (node instanceof Index) {
-    const indexes = transformMany(node.contents as CSV, fieldId, scope) as AstCollectionNode;
-    const singleIndex = indexes.items[0];
-    const secondIndex = indexes.items.length > 1 ? indexes.items[1] : undefined;
-
-    const asn = secondIndex ? new IndexDoubleAsn(singleIndex, secondIndex, fieldId) : singleIndex;
-
-    return new IndexAsn(asn, fieldId);
+    const index = transform(node.contents, fieldId, scope) as AstCollectionNode;
+    return new IndexAsn(index, fieldId);
   }
 
   if (node instanceof DotAfter) {
