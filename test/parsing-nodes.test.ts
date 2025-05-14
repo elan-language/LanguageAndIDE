@@ -6,6 +6,7 @@ import { BinaryExpression } from "../src/frames/parse-nodes/binary-expression";
 import { BinaryOperation } from "../src/frames/parse-nodes/binary-operation";
 import { BracketedExpression } from "../src/frames/parse-nodes/bracketed-expression";
 import { CommaNode } from "../src/frames/parse-nodes/comma-node";
+import { ConstantValueNode } from "../src/frames/parse-nodes/constant-value-node";
 import { CSV } from "../src/frames/parse-nodes/csv";
 import { DeconstructedList } from "../src/frames/parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../src/frames/parse-nodes/deconstructed-tuple";
@@ -28,8 +29,7 @@ import { LitRegExp } from "../src/frames/parse-nodes/lit-regExp";
 import { LitString } from "../src/frames/parse-nodes/lit-string";
 import { LitStringInterpolation } from "../src/frames/parse-nodes/lit-string-interpolation";
 import { LitStringNonEmpty } from "../src/frames/parse-nodes/lit-string-non-empty";
-import { LitValueNode } from "../src/frames/parse-nodes/lit-value";
-import { LiteralNode } from "../src/frames/parse-nodes/literal-node";
+import { LitValueNode } from "../src/frames/parse-nodes/lit-value-node";
 import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
 import { Multiple } from "../src/frames/parse-nodes/multiple";
 import { NewInstance } from "../src/frames/parse-nodes/new-instance";
@@ -40,12 +40,12 @@ import { PunctuationNode } from "../src/frames/parse-nodes/punctuation-node";
 import { Qualifier } from "../src/frames/parse-nodes/qualifier";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { RegExMatchNode } from "../src/frames/parse-nodes/regex-match-node";
+import { SetToClause } from "../src/frames/parse-nodes/set-to-clause";
 import { SpaceNode } from "../src/frames/parse-nodes/space-node";
 import { Term } from "../src/frames/parse-nodes/term";
 import { TermChained } from "../src/frames/parse-nodes/term-chained";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
 import { TermSimpleWithOptIndex } from "../src/frames/parse-nodes/term-simple-with-opt-index";
-import { ToClause } from "../src/frames/parse-nodes/to-clause";
 import { TupleNode } from "../src/frames/parse-nodes/tuple-node";
 import { TypeNode } from "../src/frames/parse-nodes/type-node";
 import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
@@ -173,12 +173,12 @@ suite("Parsing Nodes", () => {
       "",
     );
   });
-  test("Set Clause", () => {
-    testNodeParse(new ToClause(() => ""), "x set to p.x + 3", ParseStatus.valid, "", "", "", "");
+  test("Set To Clause", () => {
+    testNodeParse(new SetToClause(() => ""), "x set to p.x + 3", ParseStatus.valid, "", "", "", "");
   });
   test("CSV of set clauses", () => {
     testNodeParse(
-      new CSV(() => new ToClause(() => ""), 1),
+      new CSV(() => new SetToClause(() => ""), 1),
       "x set to p.x + 3, y set to p.y - 1",
       ParseStatus.valid,
       "",
@@ -759,15 +759,6 @@ suite("Parsing Nodes", () => {
       "",
       `{"<el-lit>apple</el-lit>", "<el-lit>pear</el-lit>"}`,
     );
-    testNodeParse(
-      new ListImmutableNode(() => new LiteralNode()),
-      `{"apple", "pear"}`,
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-      `{"<el-lit>apple</el-lit>", "<el-lit>pear</el-lit>"}`,
-    );
   });
   test("List of expressions", () => {
     testNodeParse(
@@ -1298,11 +1289,10 @@ suite("Parsing Nodes", () => {
     );
   });
   test("Literal", () => {
-    testNodeParse(new LiteralNode(), `"hello"`, ParseStatus.valid, "", "", "");
-    testNodeParse(new LiteralNode(), `123`, ParseStatus.valid, "", "", "");
-    testNodeParse(new LiteralNode(), `{"a":37, 42:"b"}`, ParseStatus.valid, "", "", "");
+    testNodeParse(new LitValueNode(), `"hello"`, ParseStatus.valid, "", "", "");
+    testNodeParse(new LitValueNode(), `123`, ParseStatus.valid, "", "", "");
     testNodeParse(
-      new LiteralNode(),
+      new ListImmutableNode(() => new ConstantValueNode()),
       `{"apple", "pear"}`,
       ParseStatus.valid,
       "",
@@ -1311,7 +1301,7 @@ suite("Parsing Nodes", () => {
       `{"<el-lit>apple</el-lit>", "<el-lit>pear</el-lit>"}`,
     );
     testNodeParse(
-      new LiteralNode(),
+      new ListImmutableNode(() => new ConstantValueNode()),
       `{4, 5, 2, 3}`,
       ParseStatus.valid,
       "",

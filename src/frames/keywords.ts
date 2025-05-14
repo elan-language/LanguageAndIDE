@@ -23,7 +23,6 @@ export const globalKeyword = "global";
 export const ifKeyword = "if";
 export const ignoreKeyword = "ignore";
 export const imageKeyword = "image";
-export const importKeyword = "import";
 export const inKeyword = "in";
 export const inheritsKeyword = "inherits";
 export const interfaceKeyword = "interface";
@@ -100,9 +99,9 @@ export const allKeywords = [
   imageKeyword,
   inKeyword,
   inheritsKeyword,
+  interfaceKeyword,
   isKeyword,
   isntKeyword,
-  interfaceKeyword,
   lambdaKeyword,
   letKeyword,
   libraryKeyword,
