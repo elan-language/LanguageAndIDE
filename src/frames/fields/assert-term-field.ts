@@ -1,11 +1,11 @@
 import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../interfaces/parse-node";
-import { AssertActualNode } from "../parse-nodes/assert-actual-node";
+import { AssertTermNode } from "../parse-nodes/assert-term-node";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
-export class AssertActualField extends AbstractField {
+export class AssertTermField extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("<i>computed value</i>");
@@ -13,7 +13,7 @@ export class AssertActualField extends AbstractField {
 
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new AssertActualNode();
+    this.rootNode = new AssertTermNode();
     return this.rootNode;
   }
 
