@@ -4,7 +4,7 @@ import { ExprNode } from "./expr-node";
 import { OptionalNode } from "./optional-node";
 import { PunctuationNode } from "./punctuation-node";
 
-export class RangeNode extends AbstractSequence {
+export class IndexRange extends AbstractSequence {
   fromIndex: OptionalNode | undefined;
   toIndex: OptionalNode | undefined;
 
