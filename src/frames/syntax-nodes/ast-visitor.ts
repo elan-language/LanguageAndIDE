@@ -28,6 +28,7 @@ import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { IfExpr } from "../parse-nodes/if-expr";
 import { ImageNode } from "../parse-nodes/image-node";
 import { DictionaryImmutableNode } from "../parse-nodes/immutable-dictionary-node";
+import { IndexRange } from "../parse-nodes/index-range";
 import { InheritanceNode } from "../parse-nodes/inheritanceNode";
 import { InstanceNode } from "../parse-nodes/instanceNode";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
@@ -49,7 +50,6 @@ import { OptionalNode } from "../parse-nodes/optional-node";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
 import { PropertyRef } from "../parse-nodes/property-ref";
 import { PunctuationNode } from "../parse-nodes/punctuation-node";
-import { RangeNode } from "../parse-nodes/range-node";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
 import { Sequence } from "../parse-nodes/sequence";
 import { SpaceNode } from "../parse-nodes/space-node";
@@ -430,7 +430,7 @@ export function transform(
     return new TypeAsn(TupleName, gp, fieldId, scope);
   }
 
-  if (node instanceof RangeNode) {
+  if (node instanceof IndexRange) {
     const fromNode = node.fromIndex?.matchedNode;
     const from = fromNode ? (transform(fromNode, fieldId, scope) as AstNode) : EmptyAsn.Instance;
     const toNode = node.toIndex?.matchedNode;
