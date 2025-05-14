@@ -7,7 +7,7 @@ import {
   mustNotBeRedefined,
 } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
-import { VarDefField } from "../fields/var-def-field";
+import { ValueDefField } from "../fields/value-def-field";
 import { mapSymbolType } from "../frame-helpers";
 import { CodeSource } from "../interfaces/code-source";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -26,12 +26,12 @@ export abstract class AbstractDefinitionStatement
   implements Statement, ElanSymbol
 {
   isStatement = true;
-  name: VarDefField;
+  name: ValueDefField;
   expr: ExpressionField;
 
   constructor(parent: Parent) {
     super(parent);
-    this.name = new VarDefField(this);
+    this.name = new ValueDefField(this);
     this.expr = new ExpressionField(this);
   }
   abstract initialKeywords(): string;
