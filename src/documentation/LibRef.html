@@ -14,7 +14,6 @@
 Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and  <a href="LangRef.html#top">Elan Language Reference</a>
 <div class="docTOC">
 <div id="generated-toc" class="generate_from_h1 generate_for_page"></div></div>
-<!-- small change -->
 
 <!-- TODO: suggestion -->
 <!-- for temporary note of where change is needed -->
@@ -402,10 +401,10 @@ or into existing variables of the correct Type:</p>
 <!-- #endregion-->
 <!-- #region Standard data structures-->
 <h1 id="standard_data_structures">Standard data structures</h1>
-<p>The four 'standard' data structures defined in the Elan library are summarised in this table:</p>
 <table>
+ <tr><th></th><th colspan="4">Standard data structures</th></tr>
  <tr>
-  <th style="width:10%"></th>
+  <th style="width:20%"></th>
   <th style="width:20%">Array</th>
   <th style="width:20%">Array2D</th>
   <th style="width:20%">List</th>
@@ -442,26 +441,19 @@ or into existing variables of the correct Type:</p>
   <td><el-code>li[2..5]</el-code><br>lower bound is <em>inclusive</em><br>upper bound is <em>exclusive</em></td>
   <td> N/A</td>
  </tr><tr>
-  <td>procedure methods<br>to mutate contents</td>
-  <td><el-code>put(2, "x")</el-code></td>
-  <td><el-code>put(3, 5, "x")</el-code></td>
-  <td><el-code><el-code>append("x")</el-code></el-code><br><el-code>appendList(li2)</el-code><br><el-code>insert(2,"x")</el-code><br><el-code>put(2, "x")</el-code><br><el-code>removeAt(2)</el-code><br><el-code>removeValue("x")</el-code></td>
-  <td><el-code>put("c", 4)<br><el-code>removeAt("c")</el-code></el-code></td>
+  <td>procedure methods to mutate contents</td>
+  <td>see <a href="#Array_procedures">Procedure methods on an Array</a></td>
+  <td>see <a href="#Array2D_procedures">Procedure methods on an Array2D</a></td>
+  <td>see <a href="#List_procedures">Procedure methods on a List</a></td>
+  <td>see <a href="#Dictionary_procedures">Procedure methods on a Dictionary</a></td>
  </tr><tr>
-  <td>function methods<br>to make changes<br>by returning new<br>structure</td>
-  <td><el-code>withPut(2, "x")</el-code></td>
-  <td><el-code> withPut(3, 5, "x")</el-code></td>
-  <td><el-code>withAppend("x")</el-code><br><el-code>withAppendList(li2)</el-code><br><el-code>withInsert(2, "x")</el-code><br><el-code>withPut(2,"x")</el-code><br><el-code>withRemoveAt(2)</el-code><br><el-code>withRemoveValue("x")</el-code></td>
-  <td><el-code>withPut("c",4)</el-code><br><el-code>withRemoveAt("c")</el-code></td>
- </tr><tr>
-  <td>Other function methods</td>
-  <td><el-code>asList</el-code><br><el-code>asString</el-code><br><el-code>contains</el-code><br><el-code>indexOf</el-code><br><el-code>length</el-code></td>
-  <td><el-code>asString</el-code><br><el-code>columns</el-code><br><el-code>contains</el-code><br><el-code>indexOf</el-code><br><el-code>rows</el-code></td>
-  <td><el-code>asArray asSet asString</el-code><br><el-code>contains</el-code><br> <el-code>indexOf</el-code><br><el-code>join</el-code><br><el-code>length</el-code><br><el-code>map filter reduce</el-code><br><el-code>maxBy minBy sortBy</el-code></td>
-  <td><el-code>asString</el-code><br><el-code>keys</el-code> returns a List<br><el-code>values</el-code> returns a List</td>
+  <td>function methods</td>
+  <td>see <a href="#Array_functions">Function methods on an Array</a></td>
+  <td>see <a href="#Array2D_functions">Function methods on an Array2D</a></td>
+  <td>see <a href="#List_functions">Function methods on a List</a></td>
+  <td>see <a href="#Dictionary_functions">Function methods on a Dictionary</a></td>
  </tr>
 </table>
-<br>
 <p>All four are 'mutable' &ndash; meaning that their contents may be changed directly by calling the various <i>procedure</i> dot methods that each
 Type defines.
 However, since procedure methods may be called only from within the <el-code><el-kw>main</el-kw></el-code> routine,
@@ -476,42 +468,41 @@ with the specified changes &ndash; which is why all such methods have names star
 <!--   #region Array-->
 <h2 id="Array">Array</h2>
 
-<p>An array is a simple data structure. The Type for the elements of the array must be one of:
-    <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code>.
-The size must also be specified when it is
-created, along with the value (of the specific element Type) to which each element is initialised. It is not possible to append
-further elements to an array, although it is possible to convert an array to a list using <el-code>.<el-method>asList</el-method></el-code> and then to extend or reduce that list.</p>
+<p>An array is a simple data structure containing <i>n</i> elements of a single Type, indexed from <i>0</i> to <i>n-1</i>.</p>
+<p>The array elements' Type must be one of <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code>.</p>
+<p>As in most languages, individual elements may be read by their index.</p>
+<p>To modify an element you may either
+<el-code><el-kw>call</el-kw></el-code> the <el-code><el-method>put</el-method></el-code> procedure method, or use
+<el-code><el-method>withPut</el-method></el-code> function method.</p>
+<p>Its size is specified when it is created, along with the single value to which each element is initialised.</p>
+<p>It is not possible to append further elements to an array, but you can convert an array to a list using method <el-code><el-method>asList</el-method></el-code> and then extend or reduce the list.</p>
 
-<p>As in most languages, individual elements may be read 'by index'. However, to modify an element you must either
-    <el-code><el-kw>call</el-kw></el-code> the <el-code><el-method>put</el-method></el-code> procedure-method, or use <thead></thead>
-    either <el-code><el-method>withPut</el-method></el-code> function-method.
-</p>
-<h3 class="no-TOC">Procedure method on an Array</h2>
+<h3 class="no-TOC" id="Array_procedures">Procedure methods on an Array</h3>
 <table>
  <tr>
   <th style="width:10%">procedure<br>method</th>
   <th style="width:10%">on<br>Type</th>
-  <th style="width:10%">argument<br>Types</th>
-  <th style="width:50%">action</th>
+  <th style="width:20%">argument<br>Types</th>
+  <th style="width:40%">action</th>
  </tr><tr>
   <td><el-code><el-method>put</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>Int,</el-type></el-code> item of Array element's Type</td>
+  <td><el-code><el-type>Int</el-type></el-code>, <br>item of Array element's Type</td>
   <td>puts the item at the (integer) index position in the array</td>
  </tr>
 </table>
-<h3 class="no-TOC">Dot methods on an Array</h2>
+<h3 class="no-TOC" id="Array_functions">Function methods on an Array</h3>
 <table>
  <tr>
   <th style="width:10%">function<br>method</th>
-  <th style="width:5%">on<br>Type</th>
-  <th style="width:10%">argument<br>Types</th>
-  <th style="width:5%">return<br>Type</th>
+  <th style="width:10%">on<br>Type</th>
+  <th style="width:20%">argument<br>Types</th>
+  <th style="width:10%">return<br>Type</th>
   <th style="width:50%">returns</th>
  <tr>
   <td><el-code><el-method>withPut</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><el-code><el-type>Int,</el-type></el-code> item of Array element's Type</td>
+  <td><el-code><el-type>Int</el-type></el-code>,<br>item of Array element's Type</td>
   <td><el-code><el-type>Array</el-type></el-code></td>
   <td>a new Array with the item at the (integer) index position</td>
  </tr><tr>
@@ -559,13 +550,13 @@ further elements to an array, although it is possible to convert an array to a l
  one of: <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>,
  <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code>.</p>
 
-<h3 class="no-TOC">Procedure method on an Array2D</h2>
+<h3 class="no-TOC" id="Array2D_procedures">Procedure methods on an Array2D</h3>
 <table>
  <tr>
   <th style="width:10%">procedure<br>method</th>
   <th style="width:10%">on<br>Type</th>
-  <th style="width:10%">argument<br>Types</th>
-  <th style="width:50%">action</th>
+  <th style="width:20%">argument<br>Types</th>
+  <th style="width:40%">action</th>
  </tr><tr>
   <td><el-code><el-method>put</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
@@ -573,18 +564,18 @@ further elements to an array, although it is possible to convert an array to a l
   <td>puts the item at the (two integers) index position in the array</td>
  </tr>
 </table>
-<h3 class="no-TOC">Dot methods on an Array2D</h2>
+<h3 class="no-TOC" id="Array2D_functions">Function methods on an Array2D</h3>
 <table>
  <tr>
   <th style="width:10%">function<br>dot method</th>
-  <th style="width:5%">on<br>Type</th>
-  <th style="width:10%">argument<br>Types</th>
-  <th style="width:5%">return<br>Type</th>
+  <th style="width:10%">on<br>Type</th>
+  <th style="width:20%">argument<br>Types</th>
+  <th style="width:10%">return<br>Type</th>
   <th style="width:50%">returns</th>
  </tr><tr>
   <td><el-code><el-method>withPut</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
-  <td><el-code><el-type>Int, Int,</el-type></el-code> item of Array2D element's Type</td>
+  <td><el-code><el-type>Int, Int</el-type></el-code>,<br>item of Array2D element's Type</td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
   <td>a new Array2D with the item at the (two integers) index position in the array</td>
  </tr><tr>
@@ -631,107 +622,108 @@ further elements to an array, although it is possible to convert an array to a l
 <!--   #endregion-->
 <!--   #region List-->
 <h2 id="List">List</h2>
-<p>A <el-code><el-type>List</el-type></el-code> is similar to an Array but more flexible because:
+<p>A List is similar to an Array in that its <i>n</i> elements are all of one Type
+ and are indexed from <i>0</i> to <i>n-1</i>, but is more flexible because:</p>
 <ul>
  <li>While the elements must all be of one Type, that Type is not limited to the simple value Types:
-  the element Type may also be a user-defined type such as a <i>Class</i> or <i>Record</i>, or another <i>Lis</i>t, or even an <i>Array</i>.</li>
+  the element Type may also be a user-defined Type such as a <i>Class</i>, <i>Record</i>, another <i>Lis</i>t, or even an <i>Array</i>.</li>
  <li>A List's size may be dynamically extended. it is created either empty or initialised from a literal definition.</li>
 </ul>
-</p>
-
-<h3 class="no-TOC">Procedure methods on a List</h2>
+<h3 class="no-TOC" id="List_procedures">Procedure methods on a List</h3>
 <table>
  <tr>
   <th style="width:10%">procedure<br>method</th>
   <th style="width:10%">on<br>Type</th>
-  <th style="width:10%">argument<br>Types</th>
-  <th style="width:50%">action</th>
+  <th style="width:20%">argument<br>Types</th>
+  <th style="width:40%">action</th>
  </tr><tr>
   <td><el-code><el-method>append</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td>(none)</td>
-  <td></td>
+  <td>item of List element's Type</td>
+  <td>the item is added to the end of the List.</td>
  </tr><tr>
   <td><el-code><el-method>appendList</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td>(none)</td>
-  <td></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>the argument List is added to the end of the List.</td>
  </tr><tr>
   <td><el-code><el-method>insert</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td>(none)</td>
-  <td></td>
+  <td><el-code><el-type>Int</el-type></el-code>,<br> item of List element's Type</td>
+  <td>the item is inserted at the index given.<br>
+  If the index is negative it is counted from the end.<br>
+  If the index is greater than the list's length, the item is inserted at the end..</td>
  </tr><tr>
   <td><el-code><el-method>prepend</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td>(none)</td>
-  <td></td>
+  <td>item of List element's Type</td>
+  <td>the item is is added to the start of the List.</td>
  </tr><tr>
   <td><el-code><el-method>prependList</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td>(none)</td>
-  <td></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>the argument List is added to the start of the List.</td>
  </tr><tr>
   <td><el-code><el-method>put</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td>(none)</td>
-  <td></td>
+  <td><el-code><el-type>Int</el-type></el-code>,<br> item of List element's Type</td>
+  <td>replace the item at the given index with the argument item.</td>
  </tr><tr>
   <td><el-code><el-method>removeAll</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td>(none)</td>
+  <td></td>
   <td></td>
  </tr><tr>
   <td><el-code><el-method>removeAt</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td>(none)</td>
-  <td></td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>delete the item at the argument index.</td>
  </tr><tr>
-  <td><el-code><el-method>RemoveFirst</el-method></el-code></td>
+  <td><el-code><el-method>removeFirst</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td>(none)</td>
+  <td></td>
   <td></td>
  </tr>
 </table>
-<h3 class="no-TOC">Dot methods on a List</h2>
+<h3 class="no-TOC" id="List_functions">Function methods on a List</h3>
 <table>
  <tr>
   <th style="width:10%">function<br>dot method</th>
   <th style="width:10%">on<br>Type</th>
-  <th style="width:10%">argument<br>Types</th>
-  <th style="width:5%">return<br>Type</th>
+  <th style="width:20%">argument<br>Types</th>
+  <th style="width:10%">return<br>Type</th>
   <th style="width:50%">returns</th>
  </tr><tr>
   <td><el-code><el-method>asArray</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td>a new Array containing references to the same elements</td>
+  <td>a new Array containing the same elements.</td>
  </tr><tr>
   <td><el-code><el-method>asListImmutable</el-method></el-code></td>
-  <td><el-code><el-type>List</el-type></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code> whose elements are of an immutable Type</td>
   <td>(none)</td>
   <td><el-code><el-type>ListImmutable</el-type></el-code></td>
-  <td>a new ListImmutable containing references to the same elements:<br>
-  requires original List to contain elements of an immutable Type </td>
+  <td>a new ListImmutable containingthe same elements.</td>
  </tr><tr>
   <td><el-code><el-method>asSet</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>Set</el-type></el-code></td>
-  <td>a new Set containing all the <i>unique</i> elements in the list</td>
+  <td>a new Set containing all the <i>unique</i> elements in the List.</td>
  </tr><tr>
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>a string representation of the list (e.g. for printing)</td>
+  <td>a string representation of the List.</td>
  </tr><tr>
   <td><el-code><el-method>contains</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td><el-code><el-type>List element's Type</el-type></el-code></td>
+  <td>List element's Type</td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td><el-code><el-id>true</el-id></el-code> if the List  contains the specified element<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise
+  <td><el-code><el-id>true</el-id></el-code> if the List  contains the specified element<br>
+  &ndash; <el-code><el-id>false</el-id></el-code> otherwise.</td>
  </tr><tr>
   <td><el-code><el-method>filter</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
@@ -742,20 +734,20 @@ further elements to an array, although it is possible to convert an array to a l
   <td><el-code><el-method>head</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
   <td>(none)</td>
-  <td><el-code>List element's Type<el-type></el-type></el-code></td>
-  <td>the first element of the List</td>
+  <td>List element's Type</td>
+  <td>the first element of the List.</td>
  </tr><tr>
   <td><el-code><el-method>indexOf</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td><el-code><el-type>List element's Type</el-type></el-code></td>
+  <td>List element's Type</td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td>index position of the first occurrence of the argument value in the List,<br>or -1 if no match is found</td>
+  <td>index of the first occurrence of the argument value in the List,<br>or -1 if no match is found.</td>
  </tr><tr>
   <td><el-code><el-method>join</el-method></el-code></td>
   <td><el-code><el-type>List&lt;of String&gt;<br></el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>a single string that joins all the elements in the list,<br>with the specified string (which can be empty) inserted between the elements </td>
+  <td>a single String that joins all the elements in the list,<br>with the specified String (which can be empty) inserted between the elements.</td>
  </tr><tr>
   <td><el-code><el-method>length</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
@@ -858,40 +850,51 @@ so the Dictionary is a set of <i>key:value</i> pairs
 The key's Type must be one of <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code> or <el-code><el-type>Boolean</el-type></el-code>,
 <i>or</i> it may be a user-defined <i>record</i>. The values may be of any Type, and the Types of both key and value are fixed when the Dictionary is created.</p>
 
-<h3 class="no-TOC">Procedure methods on a Dictionary</h2>
+<h3 class="no-TOC" id="Dictionary_procedures">Procedure methods on a Dictionary</h3>
 <table>
  <tr>
   <th style="width:10%">procedure<br>method</th>
   <th style="width:10%">on<br>Type</th>
-  <th style="width:10%">argument<br>Types</th>
-  <th style="width:50%">action</th>
+  <th style="width:20%">argument<br>Types</th>
+  <th style="width:40%">action</th>
  </tr><tr>
-  <td><el-code><el-method></el-method></el-code></td>
+  <td><el-code><el-method>put</el-method></el-code></td>
+  <td><el-code><el-type>Dictionary</el-type></el-code></td>
+  <td></td>
+  <td></td>
+ </tr><tr>
+  <td><el-code><el-method>removeAt</el-method></el-code></td>
   <td><el-code><el-type>Dictionary</el-type></el-code></td>
   <td></td>
   <td></td>
  </tr>
  </table>
-<h3 class="no-TOC">Dot methods on a Dictionary</h2>
+<h3 class="no-TOC" id="Dictionary_functions">Function methods on a Dictionary</h3>
 <table>
  <tr>
   <th style="width:10%">function<br>dot method</th>
   <th style="width:10%">on<br>Type</th>
-  <th style="width:10%">argument<br>Types</th>
-  <th style="width:5%">return<br>Type</th>
+  <th style="width:20%">argument<br>Types</th>
+  <th style="width:10%">return<br>Type</th>
   <th style="width:50%">returns</th>
- </tr><tr>
-  <td><el-code><el-method></el-method></el-code></td>
-  <td><el-code><el-type>Dictionary</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td</td>
  </tr><tr>
     <td><el-code><el-method>asString</el-method></el-code></td>
     <td><el-code><el-type>Dictionary</el-type></el-code></td>
     <td>(none)</td>
     <td><el-code><el-type>String</el-type></el-code></td>
     <td>a string representation of the dictionary (automatically called when printing)</td>
+</tr><tr>
+    <td><el-code><el-method>keys</el-method></el-code></td>
+    <td><el-code><el-type>Dictionary</el-type></el-code></td>
+    <td>(none)</td>
+    <td></td>
+    <td></td>
+</tr><tr>
+    <td><el-code><el-method>values</el-method></el-code></td>
+    <td><el-code><el-type>Dictionary</el-type></el-code></td>
+    <td>(none)</td>
+    <td></td>
+    <td></td>
 </tr>
  </table>
 
@@ -907,13 +910,14 @@ differences. Immutable data structures are intended specifically to facilitate t
 
 <p>The five immutable data structures defined in the Elan library are summarised in this table. More details on each Type are given below the table.</p>
 <table>
+ <tr><th></th><th colspan="5">Immutable data structures</th></tr>
  <tr>
   <th style="width:10%"></th>
-  <th style="width:20%">ListImmutable</th>
-  <th style="width:20%">DictionaryImmutable</th>
-  <th style="width:20%">Set</th>
-  <th style="width:20%">Stack</th>
-  <th style="width:20%">Queue</th>
+  <th style="width:10%">ListImmutable</th>
+  <th style="width:10%">DictionaryImmutable</th>
+  <th style="width:10%">Set</th>
+  <th style="width:10%">Stack</th>
+  <th style="width:10%">Queue</th>
  </tr><tr>
   <td>Size</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td>
  </tr><tr>
@@ -951,20 +955,12 @@ differences. Immutable data structures are intended specifically to facilitate t
   <td>N/A</td>
   <td>N/A</td>
   <td>N/A</td>
- </tr><tr>
-  <td>function methods<br>that return<br>new structure<br>of same Type</td>
-  <td><el-code>withAppend("x")</el-code><br><el-code>withAppendList(li2)</el-code> (immutable)<br><el-code>withInsert(2, "x")</el-code><br><el-code>withPut(2, "x")</el-code><br><el-code>withRemoveAt(2)</el-code><br><el-code>withRemoveValue("x")</el-code></td>
-  <td><el-code>withPut("c",4)</el-code><br><el-code>withRemoveAt("c")</el-code></td>
-  <td><el-code><el-method>add</el-method></el-code><br><el-code id="difference">difference</el-code><br><el-code><el-method>intersection</el-method></el-code><br><el-code><el-method>remove</el-method></el-code><br><el-code><el-method>union</el-method></el-code></td>
-  <td><el-code><el-method>push</el-method></el-code><br><el-code><el-method>pop</el-method></el-code> returns a tuple<br>comprising the popped Value<br>and the updated stack</td>
-  <td><el-code><el-method>enqueue</el-method></el-code><br><el-code><el-method>dequeue</el-method></el-code> returns a tuple<br>comprising the popped<br>Value and the updated queue</td>
- </tr><tr>
-  <td>Other function methods</td>
-  <td><el-code>asString</el-code><br><el-code><el-method>contains</el-method></el-code><br><el-code><el-method>filter</el-method></el-code><br><el-code>indexOf</el-code><br><el-code><el-method>join</el-method></el-code><br><el-code><el-method>length</el-method></el-code><br><el-code><el-method>map</el-method></el-code><br><el-code>maxBy</el-code><br><el-code>minBy</el-code><br><el-code><el-method>reduce</el-method></el-code><br><el-code>sortBy</el-code></td>
-  <td><el-code>asDictionary</el-code><br><el-code>Keys</el-code> as <el-code>ListImmutable</el-code><br><el-code>Values</el-code> as <el-code>ListImmutable</el-code></td>
-  <td><el-code><el-code>asList</el-code></el-code><br><el-code>asString</el-code><br><el-code><el-method>contains</el-method></el-code><br><el-code>isDisjointFrom</el-code><br><el-code>isSubsetOf</el-code><br><el-code>isSupersetOf</el-code><br><el-code><el-method>length</el-method></el-code></td>
-  <td><el-code><el-method>peek</el-method></el-code><br><el-code><el-method>length</el-method></el-code></td>
-  <td><el-code><el-method>peek</el-method></el-code><br><el-code><el-method>length</el-method></el-code></td>
+  <td>function methods</td>
+  <td>see <a href="#ListImmutable_functions">Function methods on a ListImmutable</a></td>
+  <td>see <a href="#DictionaryImmutable_functions">Function methods on a DictionaryImmutable</a></td>
+  <td>see <a href="#Set_functions">Function methods on a Set</a></td>
+  <td>see <a href="#Stack_functions">Function methods on a Stack</a></td>
+  <td>see <a href="#Queue_functions">Function methods on a Queue</a></td>
  </tr>
 </table>
 <!--   #region ListImmutable -->
@@ -983,7 +979,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 <p>A <el-code>ListImmutable</el-code> may be defined in &lsquo;literal&rsquo; form, delimited by curly braces, and with all the required elements separated by commas. The elements may be literal values but must all be of the same Type, for example:</p>
 <el-code>variable fruit set to {"apple", "orange", "pear"} </el-code>
 
-<h3 class="no-TOC">Dot methods on a ListImmutable</h3>
+<h3 class="no-TOC" id="ListImmutable_functions">Function methods on a ListImmutable</h3>
 <table
  <tr>
   <th style="width:10%">function<br>dot method</th>
@@ -1079,7 +1075,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 <el-code>set immD to immD.withRemoveAtKey("a")</el-code><br>
 <el-code>print immD</el-code><br>
 
-<h3 class="no-TOC">Dot methods on a DictionaryImmutable</h2>
+<h3 class="no-TOC" id="DictionaryImmutable_functions">Function methods on a DictionaryImmutable</h3>
 <table>
  <tr>
   <th style="width:10%">function<br>dot method</th>
@@ -1141,7 +1137,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
     <li>You can create a new set from an existing list or <el-code>ListImmutable</el-code> by calling <el-code>asSet</el-code> on it.</li>
 </ul>
 
-<h3 class="no-TOC">Dot methods on a Set</h2>
+<h3 class="no-TOC" id="Set_functions">Function methods on a Set</h3>
 <table>
  <tr>
   <th style="width:10%">function<br>dot method</th>
@@ -1245,7 +1241,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
     <li>The methods for adding and removing an item are different for <el-code><el-type>Stack</el-type></el-code> and <el-code><el-type>Queue</el-type></el-code>, as shown here:</li>
 </ul>
 
-<h3 class="no-TOC">Dot methods on a Stack</h3>
+<h3 class="no-TOC" id="Stack_functions">Function methods on a Stack</h3>
 <table>
  <tr>
   <th style="width:10%">function<br>dot method</th>
@@ -1286,7 +1282,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 </tr>
 
 </table>
-<h3 class="no-TOC">Dot methods on a Queue</h3>
+<h3 class="no-TOC" id="Queue_functions">Function methods on a Queue</h3>
 <table>
  <tr>
   <th style="width:10%">function<br>dot method</th>
@@ -1873,7 +1869,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
             </el-test>
     </el-code-block>
 
-<h2 class="no-TOC" id="MathsFunctions">Maths functions and constants</h3>
+<h2 class="no-TOC" id="MathsFunctions">Maths functions and constants</h2>
 <table>
 <tr><th>function</th><th>argument<br>Type</th><th>input<br>unit</th><th>returns</th><th>output<br>unit</th></tr>
 <tr id="pi"><td><el-code>pi</el-code></td><td>(none)</td><td></td><td>&#x1d70b = 3.141592653589793..</td><td></td></tr>
@@ -1920,7 +1916,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 </el-test>
 </el-code-block>
 
-<h2 id="RegExp">Regular expressions</h3>
+<h2 id="RegExp">Regular expressions</h2>
     <p>Elan's regular expressions are modelled on those of JavaScript, including the syntax for literal regular expressions. See, for example this <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions">Guide to Regular Expressions</a>.</p>
     <p>More functions for using regular expressions will be added in a future release of Elan. For now&#8230;</p>
     <p>The method <el-code>matchesRegExp</el-code> is applied to a <el-code><el-type>String</el-type></el-code> using dot syntax and requires a <el-code>RegExp</el-code> parameter specified as a literal or as variable. It returns a Boolean. For example:</p>
@@ -1949,7 +1945,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 </el-code-block>
     <p>Although it is recommended that literal regular expressions are written with the <el-code>/../</el-code> delimiters, the ability to convert a <el-code>string</el-code> allows you to input a regular expression into a running program.</p>
 
-<h2 class="no-TOC" id="BitwiseFunctions">Bitwise functions</h3>
+<h2 class="no-TOC" id="BitwiseFunctions">Bitwise functions</h2>
     <p>These functions take in an integer value, and manipulate the bit representation of that value.</p>
     <ul>
         <li><el-code><el-method>bitAnd</el-method></el-code></li>
@@ -1984,7 +1980,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 </el-code-block>
 <p>The result of <el-code><el-method>bitNot</el-method>(<el-id>a</el-id>)</el-code> being <el-code>-14</el-code> , when <el-code><el-id>a</el-id></el-code> is <el-code>13</el-code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as <el-code>00000000000000000000000000001101</el-code>, and applying <el-code><el-method>bitAnd</el-method></el-code> gives <el-code>11111111111111111111111111110010 </el-code>which is the value <el-code>-14 </el-code>in signed two&#8217;s complement format, the left-most bit being the sign (<el-code>0</el-code> positive, <el-code>1</el-code> negative).</p>
 
-<h2 class="no-TOC" id="sequence">Sequence</h3>
+<h2 class="no-TOC" id="sequence">Sequence</h2>
 
 <p>The <el-code><el-method>sequence</el-method></el-code> is used to create a <el-code><el-type>List</el-type></el-code> containing a sequence
 of integer values as defined by the two (integer) parameters: <el-code><el-id>start</el-id></el-code> and <el-code><el-id>end</el-id></el-code>
@@ -2000,39 +1996,39 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td><el-code><el-method>pause</el-method></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>(none)</td>
-  <td>pauses the execution of a program for the given number of milliseconds, e.g. for a game<br><el-code>pause(100)</el-code> delays execution for one tenth of a second </td>
+  <td>pauses the execution of a program for the given number of milliseconds,<br> e.g. for a game <el-code>pause(100)</el-code> delays execution for one tenth of a second.</td>
  </tr><tr id="clearPrintedText">
   <td><el-code><el-method>clearPrintedText</el-method></el-code></td>
   <td>(none)</td>
   <td>(none)</td>
-  <td>clears the IDE's Display panel</td>
+  <td>clears the IDE's Display panel.</td>
  </tr><tr id="clearKeyBuffer">
   <td><el-code><el-method>clearKeyBuffer</el-method></el-code></td>
   <td>(none)</td>
   <td>(none)</td>
-  <td>clears the IDE's keyboard input</td>
+  <td>clears the IDE's keyboard input.</td>
  </tr><tr id="printLine">
   <td><el-code><el-method>printLine</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
-  <td>prints the string to the Display followed by a newline<br>
-  this method offers the means to do all printing via methods<br>
-  rather than coding a mixture of <el-code>call</el-code>s and <el-code>print</el-code> statements</td>
+  <td>prints the string to the Display followed by a newline.<br>
+  This method offers the means to do all printing via methods<br>
+  rather than coding a mixture of <el-code>call</el-code> and <el-code>print</el-code> statements.</td>
  </tr><tr id="printNoLine">
   <td><el-code><el-method>printNoLine</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
-  <td>prints the string to the Display without appending a newline<br>
-  a following call will output on the same line<br>
-  you can put your own "\n" newlines in the argument string</td>
+  <td>prints the string to the Display without appending a newline so<br>
+  a following call will output on the same line.<br>
+  You can put your own "\n" newlines in the argument string.</td>
  </tr><tr id="printTab">
   <td><el-code><el-method>printTab</el-method></el-code></td>
   <td><el-code><el-type>Int, String</el-type></el-code></td>
   <td>(none)</td>
-  <td>prints the string to the Display starting at the tab position given (from 0)</td>
+  <td>prints the string to the Display starting at the tab position given (from 0).</td>
  </tr>
 </table>
-<p>Method <el-code><el-method>printTab(</el-method></el-code> helps in the layout of information printed to the Display, in particular, when printing columns of data.
+<p>Method <el-code><el-method>printTab</el-method></el-code> helps in the layout of information printed to the Display, in particular, when printing columns of data.
  For example:</p>
 <el-code-block source="printTab.elan">
 <el-statement class="ok" id="call5" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args7" class="optional ok" tabindex="0"><el-txt><el-lit>0</el-lit>, "<el-lit>Number</el-lit>"</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
@@ -2061,29 +2057,34 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <!-- #endregion-->
 <!-- #region System methods-->
 <h1 id="System_methods">System methods</h1>
-    <p>System methods appear to work like <el-code>functions</el-code>, because:</p>
+<p>System methods appear to work like <el-code>functions</el-code>, because:</p>
 <ul>
- <li>they may require one or more arguments to be provided</li>
- <li>they always return a value</li>
- <li>they are used in expressions</li>
+ <li>they may require one or more arguments to be provided.</li>
+ <li>they always return a value.</li>
+ <li>they are used in expressions.</li>
 </ul>
-<p>They are not, however,pure functions because:</p>
+<p>They are not, however, pure functions because:</p>
 <ul>
- <li>They may have a dependency on data that is not provided as an argument</li>
- <li>They may generate side effects, such as changing the screen display, or writing to a file</li>
+ <li>They may have a dependency on data that is not provided as an argument.</li>
+ <li>They may generate side effects, such as changing the screen display or writing to a file.</li>
 </ul>
 <p>Because of these properties, system methods may be used only within the <el-code>main</el-code> routine or within a <el-code>procedure</el-code>.
  They may not be used inside a <el-code>function</el-code> that you have defined, because to do so would mean that your <el-code>function</el-code> would not be pure.</p>
 <p>System methods are all defined within the Elan standard library: you cannot write a system method yourself.</p>
 <p>System methods are commonly associated with <a href="#Input/output">Input/output</a>, but note that:</p>
 <ul>
- <li>Input/output may also be performed in your procedures.</li>
- <li>Some system methods are not concerned with input/output, e.g. generating random numbers.</li>
+ <li>Input/output may be performed in  procedures as well as in <el-code>main</el-code>.</li>
+ <li>Some system methods are not concerned with input/output, e.g. some generate random numbers.</li>
 </ul>
 <p>The reason those are system methods is that they have a dependency on variable data that is not passed into them as arguments.</p>
+<br>
 <table
- <tr><th>system<br>method</th><th>argument<br>Types</th><th>return<br>Types</th><th>action</th></tr>
- <tr id="clock">
+ <tr>
+  <th style="width:10%">system<br>method</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:15%">return<br>Types</th>
+  <th style="width:60%">action</th>
+ </tr><tr id="clock">
   <td><el-code><el-method>clock</el-method></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>Int</el-type></el-code></td>
@@ -2096,7 +2097,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
  </tr><tr id="getKeyWithModifier">
   <td><el-code><el-method>getKeyWithModifier</el-method></el-code></td>
   <td>(none)</td>
-  <td>2-tuple:<br><el-code><el-type>String</el-type></el-code>, <el-code><el-type>String</el-type></el-code></td>
+  <td>2-tuple:<br>(<el-code><el-type>String</el-type></el-code>, <el-code><el-type>String</el-type></el-code>)</td>
   <td>returns both the character of the keyboard key pressed<br>and the modifier key's name if also pressed.</td>
  </tr><tr id="inputString">
   <td><el-code><el-method>inputString</el-method></el-code></td>
@@ -2109,38 +2110,38 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>prints the string as a prompt and returns the typed input when Enter is pressed<br>
   provided the length of the response is within the minimum and maximum limits specified.<br>
-  If it is not, the prompt is repeated with the relevant limit is displayed.</td>
+  If it is not, the prompt is repeated with the relevant limit displayed.</td>
  </tr><tr id="inputStringFromOptions">
   <td><el-code><el-method>inputStringFromOptions</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code>, <el-code><el-type>List&lt;of String&gt;</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>prints the string as a prompt and returns the typed input when Enter is pressed<br>
   provided it is one of the options in the list.<br>
-  If it is not, the prompt is repeated with the options are displayed.</td>
+  If it is not, the prompt is repeated with the options displayed.</td>
  </tr><tr id="inputInt">
   <td><el-code><el-method>inputInt</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
-  provided that it is an integer. If it is not, the prompt is repeated with an error message.</td>
+  provided that it is an integer.<br> If it is not, the prompt is repeated with an error message.</td>
  </tr><tr id="inputIntBetween">
   <td><el-code><el-method>inputIntBetween</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code>, <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Int</el-type></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
-  provided that it is an integer with a value in the (inclusive) range. The first range value must be less than or equal to the second.</td>
+  provided that it is an integer with a value in the (inclusive) range.<br> The first range value must be less than or equal to the second.</td>
  </tr><tr id="inputFloat">
   <td><el-code><el-method>inputFloat</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>Float</el-type></el-code></td>
   <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
-  provided that it is a number. If it is not, the prompt is repeated with an error message.</td>
+  provided that it is a number.<br> If it is not, the prompt is repeated with an error message.</td>
  </tr><tr id="inputFloatBetween">
   <td><el-code><el-method>inputFloatBetween</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code>, <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Int</el-type></el-code></td>
   <td><el-code><el-type>Float</el-type></el-code></td>
   <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
-  provided that it is a number with a value in the (inclusive) range. The first range value must be less than or equal to the second.</td>
+  provided that it is a number with a value in the (inclusive) range.<br> The first range value must be less than or equal to the second.</td>
  </tr><tr id="openFileForReading">
   <td><el-code><el-method>openFileForReading</el-method></el-code></td>
   <td>(none)</td>
