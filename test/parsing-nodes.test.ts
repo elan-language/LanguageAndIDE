@@ -6,7 +6,7 @@ import { BinaryExpression } from "../src/frames/parse-nodes/binary-expression";
 import { BinaryOperation } from "../src/frames/parse-nodes/binary-operation";
 import { BracketedExpression } from "../src/frames/parse-nodes/bracketed-expression";
 import { CommaNode } from "../src/frames/parse-nodes/comma-node";
-import { ConstantLiteralNode } from "../src/frames/parse-nodes/constant-literal-node";
+import { ConstantValueNode } from "../src/frames/parse-nodes/constant-value-node";
 import { CSV } from "../src/frames/parse-nodes/csv";
 import { DeconstructedList } from "../src/frames/parse-nodes/deconstructed-list";
 import { DeconstructedTuple } from "../src/frames/parse-nodes/deconstructed-tuple";
@@ -17,7 +17,6 @@ import { ExprNode } from "../src/frames/parse-nodes/expr-node";
 import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
 import { IfExpr } from "../src/frames/parse-nodes/if-expr";
 import { ImageNode } from "../src/frames/parse-nodes/image-node";
-import { DictionaryImmutableNode } from "../src/frames/parse-nodes/immutable-dictionary-node";
 import { InstanceNode } from "../src/frames/parse-nodes/instanceNode";
 import { InstanceProcRef } from "../src/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../src/frames/parse-nodes/keyword-node";
@@ -1293,7 +1292,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitValueNode(), `"hello"`, ParseStatus.valid, "", "", "");
     testNodeParse(new LitValueNode(), `123`, ParseStatus.valid, "", "", "");
     testNodeParse(
-      new ListImmutableNode(() => new ConstantLiteralNode()),
+      new ListImmutableNode(() => new ConstantValueNode()),
       `{"apple", "pear"}`,
       ParseStatus.valid,
       "",
@@ -1302,7 +1301,7 @@ suite("Parsing Nodes", () => {
       `{"<el-lit>apple</el-lit>", "<el-lit>pear</el-lit>"}`,
     );
     testNodeParse(
-      new ListImmutableNode(() => new ConstantLiteralNode()),
+      new ListImmutableNode(() => new ConstantValueNode()),
       `{4, 5, 2, 3}`,
       ParseStatus.valid,
       "",
