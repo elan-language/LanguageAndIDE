@@ -52,10 +52,10 @@ import { PunctuationNode } from "../parse-nodes/punctuation-node";
 import { RangeNode } from "../parse-nodes/range-node";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
 import { Sequence } from "../parse-nodes/sequence";
+import { SetToClause } from "../parse-nodes/set-to-clause";
 import { SpaceNode } from "../parse-nodes/space-node";
 import { TermChained } from "../parse-nodes/term-chained";
 import { TermSimpleWithOptIndex } from "../parse-nodes/term-simple-with-opt-index";
-import { ToClause } from "../parse-nodes/to-clause";
 import { TupleNode } from "../parse-nodes/tuple-node";
 import { TypeFuncNode } from "../parse-nodes/type-func-node";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
@@ -285,7 +285,7 @@ export function transform(
     return transformMany(node as CSV, fieldId, scope);
   }
 
-  if (node instanceof ToClause) {
+  if (node instanceof SetToClause) {
     const id = node.property!.matchedText;
     const to = transform(node.expr, fieldId, scope) as AstNode;
 

@@ -40,12 +40,12 @@ import { PunctuationNode } from "../src/frames/parse-nodes/punctuation-node";
 import { Qualifier } from "../src/frames/parse-nodes/qualifier";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { RegExMatchNode } from "../src/frames/parse-nodes/regex-match-node";
+import { SetToClause } from "../src/frames/parse-nodes/set-to-clause";
 import { SpaceNode } from "../src/frames/parse-nodes/space-node";
 import { Term } from "../src/frames/parse-nodes/term";
 import { TermChained } from "../src/frames/parse-nodes/term-chained";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
 import { TermSimpleWithOptIndex } from "../src/frames/parse-nodes/term-simple-with-opt-index";
-import { ToClause } from "../src/frames/parse-nodes/to-clause";
 import { TupleNode } from "../src/frames/parse-nodes/tuple-node";
 import { TypeNode } from "../src/frames/parse-nodes/type-node";
 import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
@@ -173,12 +173,12 @@ suite("Parsing Nodes", () => {
       "",
     );
   });
-  test("Set Clause", () => {
-    testNodeParse(new ToClause(() => ""), "x set to p.x + 3", ParseStatus.valid, "", "", "", "");
+  test("Set To Clause", () => {
+    testNodeParse(new SetToClause(() => ""), "x set to p.x + 3", ParseStatus.valid, "", "", "", "");
   });
   test("CSV of set clauses", () => {
     testNodeParse(
-      new CSV(() => new ToClause(() => ""), 1),
+      new CSV(() => new SetToClause(() => ""), 1),
       "x set to p.x + 3, y set to p.y - 1",
       ParseStatus.valid,
       "",

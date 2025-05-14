@@ -7,7 +7,7 @@ import { KeywordNode } from "./keyword-node";
 import { Space } from "./parse-node-helpers";
 import { SpaceNode } from "./space-node";
 
-export class ToClause extends AbstractSequence {
+export class SetToClause extends AbstractSequence {
   property: IdentifierNode | undefined;
   expr: ExprNode | undefined;
   private context: () => string;
