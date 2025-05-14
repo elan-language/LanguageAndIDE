@@ -25,17 +25,25 @@ Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and 
 <h1 id="ValueTypes">Value Types, with their methods</h1>
 <!--   #region Int-->
 <h2 id="Int">Integer</h2>
-<p>An integer or whole number, i.e. one that has no fractional component.</p>
-
-<h3 class="no-TOC">Type name</h3>
-<p><el-code><el-type>Int</el-type></el-code></p>
-
-<h3 class="no-TOC">Defining a literal integer</h3>
-<p><el-code>variable maxNumberOfAttempts set to 3</el-code></p>
-
-<h3 class="no-TOC">Default value</h3>
-<p>0</p>
-
+<p>An integer is a whole number, i.e. one that has no fractional part. It may be represented in decimal, hexadecimal or binary:</p>
+<p><el-code>100</el-code> (decimal), <el-code>0x64</el-code> (hexadecimal) and <el-code>0b1100100</el-code> all have the same value.</p>
+<br>
+<table>
+ <tr>
+  <th style="width:10%">name of Type</th>
+  <th style="width:25%">examples of defining a literal value</th>
+  <th style="width:10%">default value</th>
+</tr><tr>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td><el-code>variable maxNumber set to 10</el-code></td>
+  <td>0</td>
+</tr><tr>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td><el-code>variable flags set to 0b1100100</el-code></td>
+  <td>0</td>
+</tr>
+</table>
+<br>
 <h3 class="no-TOC">Dot methods on an <el-code><el-type>Int</el-type></el-code></h3>
 <table>
  <tr>
@@ -62,8 +70,8 @@ Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and 
 <h4 class="no-TOC">Notes</h4>
 
 <ul>
-<li>A literal integer or a named value of type <el-code><el-type>Int</el-type></el-code> may
-always be passed into a function or procedure that is expecting a <el-code><el-type>Float</el-type></el-code> .</li>
+<li>A literal integer or a named value of Type <el-code><el-type>Int</el-type></el-code> may
+always be passed into a function or procedure that is expecting a <el-code><el-type>Float</el-type></el-code>.</li>
 <li>The <el-code><el-type>Int</el-type></el-code> type is <i>intended</i> to represent whole numbers
 in the range:</li>
     <ul>
@@ -71,24 +79,23 @@ in the range:</li>
     <li>Minimum value: &ndash; (2<sup>53</sup> &ndash; 1)</li>
     </ul>
 
-<li>If you go outside the limits give above, the number will be represented with the same precision as if
-    it were being held in a <el-code><el-type>Int</el-type></el-code> type: accurate to approximately 15 decimal digits.
-    Larger numbers will be padded with zeros at the end, until they to the point where they will automatically be shown
+<li>If you go outside the limits given above, the number will be represented with the same precision as if
+    it were being held in an <el-code><el-type>Int</el-type></el-code>, accurate to approximately 15 decimal digits.
+    Larger numbers will be padded with zeros at the end, until they get to the point where they will automatically be shown
     in exponential ('scientific') format, as illustrated by the following code:
 
-
-<el-code-block>
-    <main class="ok multiline" id="main3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
-        <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg><el-fr>1</el-fr></el-top>
-        <el-statement class="ok multiline" id="for5" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
-        <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else.">?</el-help></el-field><el-kw> from </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-lit>50</el-lit></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-kw> to </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-kw> step </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-top>
-        <el-statement class="ok" id="call14" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident15" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="The name of the procedure to be called (starting lower-case). Alternatively, a 'dotted-call':  the name of a variable or property, followed by a ''' and the name of the procedure method to call on that 'instance'.">?</el-help></el-field>(<el-field id="args16" class="optional ok" tabindex="0"><el-txt><el-lit>0</el-lit>, <el-id>i</el-id>.<el-method>asString</el-method>()</el-txt><el-place><i>position, text</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.">?</el-help></el-field>)<el-msg></el-msg><el-fr>3</el-fr></el-top></el-statement>
-        <el-statement class="ok" id="call23" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident24" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="The name of the procedure to be called (starting lower-case). Alternatively, a 'dotted-call':  the name of a variable or property, followed by a ''' and the name of the procedure method to call on that 'instance'.">?</el-help></el-field>(<el-field id="args25" class="optional ok" tabindex="0"><el-txt><el-lit>10</el-lit>, (<el-lit>2</el-lit>^<el-id>i</el-id>).<el-method>asString</el-method>()</el-txt><el-place><i>position, text</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.">?</el-help></el-field>)<el-msg></el-msg><el-fr>4</el-fr></el-top></el-statement>
-        <el-statement class="ok" id="print70" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>print </el-kw><el-field id="expr71" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>expression</i></el-place><el-compl><i>expression</i></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>5</el-fr></el-statement>
+<el-code-block source=".elan">
+<main class="ok multiline" id="main3" tabindex="0">
+        <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+        <el-statement class="ok multiline" id="for5" tabindex="0">
+        <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-lit>50</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
+        <el-statement class="ok" id="call14" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident15" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args16" class="optional ok" tabindex="0"><el-txt><el-lit>0</el-lit>, <el-id>i</el-id>.<el-method>asString</el-method>()</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
+        <el-statement class="ok" id="call23" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident24" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args25" class="optional ok" tabindex="0"><el-txt><el-lit>10</el-lit>, (<el-lit>2</el-lit>^<el-id>i</el-id>).<el-method>asString</el-method>()</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
+        <el-statement class="ok" id="print70" tabindex="0"><el-kw>print </el-kw><el-field id="expr71" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>expression</i></el-place><el-compl><i>expression</i></el-compl></el-field></el-statement>
         <el-kw>end for</el-kw>
         </el-statement>
         <el-kw>end main</el-kw>
-    </main>
+</main>
 </el-code-block>
 
 <p></p>which produces:</p>
@@ -102,16 +109,25 @@ in the range:</li>
     <!--   #endregion-->
 
 <!--   #region Float-->
-<h2 id="Float">Float</h2>
-<p>A &lsquo;floating point number&rsquo;, i.e. a number that may have both integer and fractional parts.</p>
-
-<h3 class="no-TOC">Type name</h3>
-<el-code><el-type>Float</el-type></el-code><br>
-
-<h3 class="no-TOC">Defining literal floating point value</h3>
-<el-code>variable a set to 1.618</el-code><br>
-<el-code>variable b set to 1.1e-10</el-code><br>
-
+<h2 id="Float">Floating point</h2>
+<p>A floating point number is a number that may have both integer and fractional parts.</p>
+<br>
+<table>
+ <tr>
+  <th style="width:10%">name of Type</th>
+  <th style="width:25%">examples of defining literal values</th>
+  <th style="width:10%">default value</th>
+</tr><tr>
+  <td><el-code><el-type>Float</el-type></el-code></td>
+  <td><el-code>variable phi set to 1.618</el-code></td>
+  <td>0.0</td>
+</tr><tr>
+  <td><el-code><el-type>Float</el-type></el-code></td>
+  <td><el-code>variable reading set to 1.1e-10</el-code></td>
+  <td>0.0</td>
+</tr>
+</table>
+<br>
 <h3 class="no-TOC">Dot methods on a <el-code><el-type>Float</el-type></el-code></h3>
 <table>
  <tr>
@@ -151,18 +167,18 @@ in the range:</li>
 <ul>
  <li>The limits on floating point numbers are:
   <ul>
-   <li>Maximum value: just over 1 &times; 10<sup>308</sup></li>
-   <li>Minimum value: approximately 5 &times; 10<sup>-324</sup></li>
+   <li>Maximum value: just over 1.0 &times; 10<sup>308</sup></li>
+   <li>Minimum value: approximately 5.0 &times; 10<sup>-324</sup></li>
   </ul>
- <li>A variable that has been defined as being of Type <el-code><el-type>Float</el-type></el-code> may not be passed as an argument into a method that requires an <el-code><el-type>Int</el-type></el-code>, 
-    nor as an index into a <el-code><el-type>List</el-type></el-code>, even if the variable contains no fractional part. 
-    It may, however, be converted into an <el-code><el-type>Int</el-type></el-code> before passing, using the functions <el-code>floor</el-code> or <el-code>ceiling</el-code>:
+ <li>A variable that has been defined as being of Type <el-code><el-type>Float</el-type></el-code> may not be passed as an argument into a method that requires an <el-code><el-type>Int</el-type></el-code>,
+    nor as an index into a <el-code><el-type>List</el-type></el-code> or , <el-code><el-type>Array</el-type></el-code> even if the variable contains no fractional part.
+    It may, however, be converted into an <el-code><el-type>Int</el-type></el-code> before passing, using the function <el-code>floor</el-code> or <el-code>ceiling</el-code>:
    <ul>
 <li><el-code><el-method>floor</el-method></el-code> returns the integer value left by removing any fractional part, and</li>
 <li><el-code><el-method></el-method>ceiling</el-method></el-code> returns the lowest integer greater than the <el-code><el-type>Float</el-type></el-code> value if it does have a fractional part.</li>
   </ul>
- <li>If you wish to define a variable to be of Type <el-code><el-type>Float</el-type></el-code> but initialise it with an integer value then add <el-code>.0</el-code> on the end of the whole number, for example:<br>
-<el-code>variable a set to 3.0</el-code></li>
+ <li>If you wish to define a variable to be of Type <el-code><el-type>Float</el-type></el-code> but initialise it with an integer value, then add <el-code>.0</el-code> on the end of the whole number, as in:<br>
+<el-code>variable hour set to 3.0</el-code></li>
 </ul>
 
 <!--   #endregion-->
@@ -170,15 +186,19 @@ in the range:</li>
 <h2 id="Boolean">Boolean</h2>
 <p>A <el-code><el-type>Boolean</el-type></el-code> value is either <el-code>true</el-code> or <el-code>false</el-code>.</p>
 
-<h3 class="no-TOC">Type name</h3>
-<el-code><el-type>Boolean</el-type></el-code><br>
-
-<h3 class="no-TOC">Defining a literal Boolean</h3>
-<p><el-code>variable a set to true</el-code> </p>
-<p><el-code>true</el-code> and <el-code>false</el-code> must be written in lower case</p>
-
-<h3 class="no-TOC">Default value</h3>
-<el-code>false</el-code><br>
+<table>
+ <tr>
+  <th style="width:10%">name of Type</th>
+  <th style="width:25%">example of defining a literal value</th>
+  <th style="width:10%">default value</th>
+</tr><tr>
+  <td><el-code><el-type>Boolean</el-type></el-code></td>
+  <td><el-code>variable fact set to true</el-code></td>
+  <td><el-code>false</el-code></td>
+</tr>
+</table>
+<br>
+<p>The keywords <el-code>true</el-code> and <el-code>false</el-code> must be written in lower case.</p>
 
 <h3 class="no-TOC">Dot method on a <el-code><el-type>Boolean</el-type></el-code></h3>
 <table>
@@ -200,29 +220,30 @@ in the range:</li>
 <!--   #endregion-->
 <!--   #region String-->
 <h2 id="String">String</h2>
-<p>A <el-code><el-type>String</el-type></el-code> represents &lsquo;text&rsquo;  i.e. a sequence of zero or more characters (see <a href="#CharacterSets">Character sets)</a>.</p>
+<p>A <el-code><el-type>String</el-type></el-code> represents text,  i.e. a sequence of zero or more characters (see <a href="#CharacterSets">Character sets)</a>.</p>
 
-<h3 class="no-TOC">Type name</h3>
-<el-code><el-type>String</el-type></el-code><br>
-
-<h3 class="no-TOC">Defining a literal string value</h3>
-<p><el-code>variable a set to "Hello"</el-code></p>
-<p><el-code><el-type>String</el-type></el-code>s are always delineated by double quotation marks.</p>
-
-<h3 class="no-TOC">Default value</h3>
-<p><el-code>""</el-code>, known as &lsquo;the empty string&rsquo;.</p>
+<table>
+ <tr>
+  <th style="width:10%">name of Type</th>
+  <th style="width:25%">example of defining a literal value</th>
+  <th style="width:20%">default value</th>
+</tr><tr>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td><el-code>variable greeting set to "hello"</el-code></td>
+  <td><el-code>"", i.e. the empty string</el-code></td>
+</tr>
+</table>
 <h4 class="no-TOC">Notes</h4>
 <ul>
+ <li>A <el-code><el-type>String</el-type></el-code> is always delineated by double quotation marks.</li>
  <li>As in most programming languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never modified. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</li>
- <li><el-code><el-type>String</el-type></el-code>s may be appended to using the plus operator, for example</li>
+ <li>Strings may be built from other strings by concatenation using the plus operator, for example</li>
  <ul><li><el-code>print</el-code> <el-code>"Hello" + " " + "World"</el-code></li></ul>
- <li>A newline may be inserted within a string as <el-code>\n</el-code>, for example:</li>
+ <li>A newline may be inserted within a string with <el-code>\n</el-code>, for example:</li>
  <ul><li><el-code>print "Hello\nWorld"</el-code></li></ul>
- <li>You may insert single quotation marks  <el-code>'</el-code>within a string. </li>
+<li>There are no 'substring' methods in Elan because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth character to the seventh character inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <em>exclusive</em>. See <a href="LangRef.html#indexed_value">Indexed Value</a>.</li>
+<li>There are, however, many dot methods that can be applied to strings:</li>
 </ul>
-<p>There are no 'substring' methods in Elan because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth character to the seventh character inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <em>exclusive</em>. See <a href="LangRef.html#indexed_value">Indexed Value</a>.</p>
-<p>There are, however, many dot methods that can be applied to strings, listed in the table below.</p>
-
 <h3 class="no-TOC">Dot methods on a <el-code><el-type>String</el-type></el-code></h3>
 <table>
  <tr>
@@ -345,7 +366,7 @@ in the range:</li>
 <h3 class="no-TOC" id="Interpolated_string">Interpolated strings</h3>
 <p>
 Strings are automatically interpolated, that is you can insert the values of variables or simple expressions within a string by enclosing them in braces.
-For example (assuming that the variables <el-code>a</el-code> and <el-code>b</el-code> are already defined as integers):</p>
+For example, assuming that the variables <el-code>a</el-code> and <el-code>b</el-code> are already defined as integers:</p>
 <p><el-code>print "{a} times {b} equals {a*b}"</el-code</p>
 <p>prints the sentence with the values and calculated expression inserted.</p>
 <p>If <el-code>velocity</el-code> and <el-code>fuel</el-code> are already defined as <el-code><el-type>Float</el-type></el-code> then:</p>
@@ -353,11 +374,11 @@ For example (assuming that the variables <el-code>a</el-code> and <el-code>b</el
 <p>updates variable <el-code>message</el-code> with calculated (and printable) integer values.</p>
 
 <h3 class="no-TOC">Special characters</h3>
-<p>You cannot include the characters <el-code>"</el-code>, <el-code>{</el-code>, or <el-code>}</el-code> directly within a literal string
- because of their special meanings. Instead, you use the constants <el-id>quotes</el-id>, <el-id>openBrace</el-id> and <el-id>closeBrace</el-id> respectively, e.g.
+<p>You may insert single quotation marks <el-code>'</el-code>within a string, but not double quotation marks <el-code>"</el-code>. Nor can you include
+the braces <el-code>{</el-code> or <el-code>}</el-code> within a literal string because of their special meanings.
+Instead, you use the constants <el-code><el-id>quotes</el-id></el-code>, <el-code><el-id>openBrace</el-id></el-code> and <el-code><el-id>closeBrace</el-id></el-code> respectively, e.g.
 <p><el-code>print "This is a double quotation mark: " + quotes</el-code></p>
 <p><el-code>print "Here are the curly braces: {openBrace} and {closeBrace}"</el-code></p>
-
 <p>Alternatively, you can insert their Unicode codepoint values (in decimal or hexadecimal) by means of function <a href="#unicode"><el-code><el-method>unicode</el-method></el-code></a>:</p>
 <p><el-code>print "Here are the curly braces: {unicode(123)} and {unicode(125)}"</el-code></p>
 <p><el-code>print "This is an ASCII double quotation mark: " + unicode(0x22)</el-code></p>
@@ -367,7 +388,7 @@ For example (assuming that the variables <el-code>a</el-code> and <el-code>b</el
 <!--   #endregion-->
 <!-- #endregion-->
 <!-- #region Tuples-->
-<h1 id="Tuple">Tuples</h1>
+<h2 id="Tuple">Tuple</h2>
 A <el-code>tuple</el-code> is a way of holding a small number of values of different Types together as a single reference. It may be considered a &lsquo;lightweight&rsquo; alternative to defining a specific class for some purposes. Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold. Common uses include:
 <ul>
  <li>Holding a pair of x and y coordinates (each of Type <el-code><el-type>Float</el-type></el-code>) as a single unit.</li>
@@ -375,7 +396,7 @@ A <el-code>tuple</el-code> is a way of holding a small number of values of diffe
  <li>Returning both an updated copy of an immutable data structure and the value of an element from it, e.g. from method <el-code><el-method>pop</el-method></el-code> on a Stack.</li>
 </ul>
 
-<h2>Using a tuple</h2>
+<h3 class="no-TOC">Using a tuple</h3>
 <p>You may pass a tuple into a function, or return one from a function, for example:</p>
 <el-code>variable d set to distanceBetween(point1, tuple(12.34, 20.0))</el-code><br>
 <br>
@@ -418,8 +439,8 @@ or into existing variables of the correct Type:</p>
   <td><el-code>Dictionary&lt;of String, Int&gt;</el-code><br>key must be <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code>, <el-code><el-type>Boolean</el-type></el-code>, or any<el-code>record</el-code>. Value Type may be anything</td>
  </tr><tr>
   <td>literal</td>
-  <td>N/A, but can convert literal list:<br><el-code>["a","b","c"].asArray()</el-code></td>
-  <td>N/A</td>
+  <td>n/a, but can convert literal list:<br><el-code>["a","b","c"].asArray()</el-code></td>
+  <td>n/a</td>
   <td><el-code>["a","b","c"]</el-code></td>
   <td><el-code>["a":3, "b":5]</el-code></td>
  </tr><tr>
@@ -437,9 +458,9 @@ or into existing variables of the correct Type:</p>
  </tr><tr>
   <td>read range</td>
   <td><el-code>a[2..5]</el-code><br>lower bound is <em>inclusive</em><br>upper bound is <em>exclusive</em></td>
-  <td>N/A</td>
+  <td>n/a</td>
   <td><el-code>li[2..5]</el-code><br>lower bound is <em>inclusive</em><br>upper bound is <em>exclusive</em></td>
-  <td> N/A</td>
+  <td> n/a</td>
  </tr><tr>
   <td>procedure methods to mutate contents</td>
   <td>see <a href="#Array_procedures">Procedure methods on an Array</a></td>
@@ -945,16 +966,17 @@ differences. Immutable data structures are intended specifically to facilitate t
   <td>read by Key</td>
   <td><el-code>lim[2]</el-code></td>
   <td><el-code>di["b"]</el-code></td>
-  <td>N/A</td>
-  <td>N/A</td>
-  <td>N/A</td>
+  <td>n/a</td>
+  <td>n/a</td>
+  <td>n/a</td>
  </tr><tr>
   <td>read range</td>
   <td><el-code>lim[2..5]</el-code><br>upper bound <em>exclusive</em></td>
-  <td>N/A</td>
-  <td>N/A</td>
-  <td>N/A</td>
-  <td>N/A</td>
+  <td>n/a</td>
+  <td>n/a</td>
+  <td>n/a</td>
+  <td>n/a</td>
+ </tr><tr>
   <td>function methods</td>
   <td>see <a href="#ListImmutable_functions">Function methods on a ListImmutable</a></td>
   <td>see <a href="#DictionaryImmutable_functions">Function methods on a DictionaryImmutable</a></td>
@@ -1494,9 +1516,9 @@ which the dot methods the following methods may be invoked:</p>
 </el-code-block>
 <p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
 <!-- #endregion-->
-<!-- #region Display Html-->
+<!-- #region Displaying Html-->
 <div id="displayHtml"></div>
-<h2 id="Html">Display Html</h2>
+<h2 id="Html">Displaying Html</h2>
 <p>If you attempt to embed Html in a string and then attempt to print it, you will see the string displayed literally - the Html tags
     will not be recognised - this is for security reasons. However, it <i>is</i> possible to display formatted Html on the <b>Display.</b>
     The following code:</p>
@@ -1528,8 +1550,8 @@ which the dot methods the following methods may be invoked:</p>
 <p>producing this result:</p>
 <img src="images/Html_2.png" width="277" height="219">
 <!-- #endregion-->
-<!--   #region Images-->
-<h2 id="image">Handling images</h2>
+<!--   #region Displaying images-->
+<h2 id="image">Displaying images</h2>
 
 <h3 class="no-TOC">Printing an image on the Display</h3>
 
@@ -1584,7 +1606,9 @@ the URL as a <el-code><el-type>String</el-type></el-code>, either as a literal (
 <el-statement class="ok" id="let7" tabindex="0"><el-kw>let </el-kw><el-field id="var8" class="ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>(<el-id>url</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print10" tabindex="0"><el-kw>print </el-kw><el-field id="expr11" class="optional ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
-
+<!-- #endregion-->
+<!--   #region Graphics-->
+<h1>Graphics</h1>
 <!-- #endregion-->
 <!--   #region Block Graphics-->
 <h2 id="BlockGraphics">Block graphics</h2>
@@ -1759,13 +1783,13 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 <h1 id="Func">Other Types</h1>
 <!--   #region Func-->
 <h2 id="Func">Func</h2>
-<p>A function may be passed as an argument into another function (or a procedure), or returned as the result of calling another function<. 
-    This pattern is known as &lsquo;Higher order Function&rsquo; (HoF), and is a key idea in the functional programming paradigm. 
-    To define a function> that takes in another function as a parameter, or returns a function, you need to specify the Type of the function, 
+<p>A function may be passed as an argument into another function (or a procedure), or returned as the result of calling another function<.
+    This pattern is known as &lsquo;Higher order Function&rsquo; (HoF), and is a key idea in the functional programming paradigm.
+    To define a function> that takes in another function as a parameter, or returns a function, you need to specify the Type of the function,
     just as you would specify the Type of every parameter and the return Type for the function. </p>
 
 <h3 class="no-TOC">Type name</h3>
-<p>The Type of any function< starts with the word <el-code><el-type>Func</el-type></el-code> followed by angle brackets defining the Type of each parameter, 
+<p>The Type of any function< starts with the word <el-code><el-type>Func</el-type></el-code> followed by angle brackets defining the Type of each parameter,
     and the return Type for that function, following this syntax:</p>
 <el-code>Func&lt;of String, String, Int =&gt; Boolean&gt;</el-code><!-- TODO correct the syntax -->
 <p>This example defines the Type for a function that defines three parameters of Type <el-code><el-type>String</el-type></el-code>, <el-code><el-type>String</el-type></el-code>, and <el-code><el-type>Int</el-type></el-code> respectively, and returns a <el-code><el-type>Boolean</el-type></el-code> value. This Type would match that of a function definition that started:</p>
@@ -1776,14 +1800,21 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 <!-- #endregion-->
 <!-- #region constants-->
 <h1 id="Constants">Constants</h1>
+<h2 >String constants</h2>
 <table>
-    <tr><th>name</th><th>Type</th><th>value</th></tr>
-    <tr><td><el-code><el-id>openBrace</el-id></el-code></td><td><el-code><el-type>String</el-type></el-code></td><td><el-code>&nbsp;{</el-code></td>
-    <tr><td><el-code><el-id>closeBrace</el-id></el-code></td><td><el-code><el-type>String</el-type></el-code></td><td><el-code>&nbsp;}</el-code></td>
-    <tr><td><el-code><el-id>quotes</el-id></el-code></td><td><el-code><el-type>String</el-type></el-code></td><td><el-code>&nbsp;"</el-code></td>
+    <tr><th width="5%">name</th><th width="5%">Type</th><th width="5%">value</th></tr>
+    <tr><td><el-code><el-id>openBrace</el-id></el-code></td><td><el-code><el-type>String</el-type></el-code></td><td><el-code>&nbsp; { </el-code></td>
+    <tr><td><el-code><el-id>closeBrace</el-id></el-code></td><td><el-code><el-type>String</el-type></el-code></td><td><el-code>&nbsp; } </el-code></td>
+    <tr><td><el-code><el-id>quotes</el-id></el-code></td><td><el-code><el-type>String</el-type></el-code></td><td><el-code>&nbsp; " </el-code></td>
+</table>
+<h2 >Maths constants</h2>
+<table>
+    <tr><th width="5%">name</th><th width="5%">Type</th><th width="40%">value</th></tr>
+    <tr><td id="exp"><el-code><el-id>exp</el-id></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>&#x1d452<sup>&#x1d465</sup> where &#x1d465 is the argument and<br>&#x1d452 is Euler's number 2.718281828459045..<br>the base of natural logarithms</td>
+    <tr id="pi"><td><el-code><el-id>pi</el-id></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>&#x1d70b = 3.141592653589793..</td>
 </table>
 
-<h2 id="Colours">Colours</h2>
+<h2 id="Colours">Colour constants</h2>
 <table class="tableColours">
 <tr><th>colour</th><th></th><th>decimal</th><th>decimal<br></th><th>hexadecimal</th></tr>
 <tr><th>name</th><th></th><th>integer</th><th style="font-family:monospace;">&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;&nbsp;G&nbsp;&nbsp;&nbsp;&nbsp;B</th><th style="font-family:monospace;">&nbsp;0xrrggbb</th></tr>
@@ -1795,7 +1826,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
     <tr><td><el-code><el-id>yellow</el-id></el-code></td><td style="color:#ffff00">&#x25fc;</td><td>16776960</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0xffff00</el-code></td></tr>
     <tr><td><el-code><el-id>brown</el-id></el-code></td><td style="color:#a52a2a">&#x25fc;</td><td>10824234</td><td>&nbsp;165&nbsp;&nbsp;&nbsp;42&nbsp;&nbsp;&nbsp;42</td><td><el-code>0xa52a2a</el-code></td></tr>
     <tr><td><el-code><el-id>grey</el-id></el-code></td><td style="color:#808080">&#x25fc;</td><td>8421504</td><td>&nbsp;128&nbsp;&nbsp;128&nbsp;&nbsp;128</td><td><el-code>0x808080</el-code></td></tr>
-    <tr><td><el-code><el-id>transparent</el-id></el-code></td><td style="color:#000000">&#x25fb;</td><td>-1</td><td>N/A</td><td>N/A</td></tr>
+    <tr><td><el-code><el-id>transparent</el-id></el-code></td><td style="color:#000000">&#x25fb;</td><td>-1</td><td>n/a</td><td>n/a</td></tr>
 </table>
 <br>
 <p>A colour is specified as an <el-code><el-type>Int</el-type></el-code> value using one of these methods:</p>
@@ -1869,10 +1900,9 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
             </el-test>
     </el-code-block>
 
-<h2 class="no-TOC" id="MathsFunctions">Maths functions and constants</h2>
+<h2 class="no-TOC" id="MathsFunctions">Maths functions</h2>
 <table>
 <tr><th>function</th><th>argument<br>Type</th><th>input<br>unit</th><th>returns</th><th>output<br>unit</th></tr>
-<tr id="pi"><td><el-code>pi</el-code></td><td>(none)</td><td></td><td>&#x1d70b = 3.141592653589793..</td><td></td></tr>
 <tr id="abs"><td><el-code><el-method>abs</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>absolute value of the input</td><td></td></tr>
 <tr id="acos"><td><el-code><el-method>acos</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>arccosine of the input</td><td>radians</td></tr>
 <tr id="asin"><td><el-code><el-method>asin</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>arcsine of the input</td><td>radians</td></tr>
@@ -1882,7 +1912,6 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 <tr id="atanDeg"><td><el-code><el-method>atanDeg</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>arctangent of the input</td><td>degrees</td></tr>
 <tr id="cos"><td><el-code><el-method>cos</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>radians</td><td>cosine of the input</td><td></td></tr>
 <tr id="cosDeg"><td><el-code><el-method>cosDeg</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>degrees</td><td>cosine of the input</td><td></td></tr>
-<tr id="exp"><td><el-code><el-method>exp</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>&#x1d452<sup>&#x1d465</sup> where &#x1d465 is the argument and<br>&#x1d452 is Euler's number 2.718281828459045..<br>the base of natural logarithms</td><td></td></tr>
 <tr id="logE"><td><el-code><el-method>logE</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>natural logarithm of the input</td><td></td></tr>
 <tr id="log10"><td><el-code><el-method>log10</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>base-10 logarithm of the input</td><td></td></tr>
 <tr id="log2"><td><el-code><el-method>log2</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>base-2 logarithm of the input</td><td></td></tr>
@@ -1894,7 +1923,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 <tr id="degToRad"><td><el-code><el-method>degToRad</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>degrees</td><td>converts input from degrees to radians</td><td>radians</td></tr>
 <tr id="radToDeg"><td><el-code><el-method>radToDeg</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>radians</td><td>converts input from radians to degrees</td><td>degrees</td></tr></table>
 <br>
-<p>Examples of some maths functions being tested:</p>
+<p>Examples of some maths functions and constants being tested:</p>
 <el-code-block source="test_maths.elan">
 <el-test class="ok multiline" id="test1" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
@@ -1943,19 +1972,50 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
-    <p>Although it is recommended that literal regular expressions are written with the <el-code>/../</el-code> delimiters, the ability to convert a <el-code>string</el-code> allows you to input a regular expression into a running program.</p>
+    <p>Although it is recommended that literal regular expressions are written with <el-code>/../</el-code> delimiters, the ability to convert a <el-code>string</el-code> allows you to input a regular expression into a running program.</p>
 
-<h2 class="no-TOC" id="BitwiseFunctions">Bitwise functions</h2>
+<h2 id="BitwiseFunctions">Bitwise functions</h2>
     <p>These functions take in an integer value, and manipulate the bit representation of that value.</p>
-    <ul>
-        <li><el-code><el-method>bitAnd</el-method></el-code></li>
-        <li><el-code><el-method>bitOr</el-method></el-code></li>
-        <li><el-code><el-method>bitNot</el-method></el-code></li>
-        <li><el-code><el-method>bitXor</el-method></el-code>Performs an <i>exclusive</i> OR operation on the bit</li>
-        <li><el-code><el-method>bitShiftL</el-method></el-code> &ndash; the second argument specifies how many bits to shift-left by</li>
-        <li><el-code><el-method>bitShiftR</el-method></el-code> &ndash; the second argument specifies how many bits to shift-right by</li>
-    </ul>
-    <p>Examples of the bitwise functions being tested:</p>
+
+<table>
+ <tr>
+  <th style="width:10%">function</th>
+  <th style="width:10%">argument<br>Types</th>
+  <th style="width:5%">return<br>Type</th>
+  <th style="width:50%">returns</th>
+ </tr><tr id="asBinary">
+  <td><el-code><el-method>bitAnd</el-method></el-code></td>
+  <td><el-code><el-type>Int, Int</el-type></el-code></td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>integer whose binary representation is the bitwise AND of the inputs</td>
+ </tr><tr>
+  <td><el-code><el-method>bitOr</el-method></el-code></td>
+  <td><el-code><el-type>Int, Int</el-type></el-code></td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>integer whose binary representation is the bitwise OR of the inputs</td>
+ </tr><tr>
+  <td><el-code><el-method>bitNot</el-method></el-code></td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>integer whose binary representation is the bitwise complement of the input</td>
+ </tr><tr>
+  <td><el-code><el-method>bitXor</el-method></el-code></td>
+  <td><el-code><el-type>Int, Int</el-type></el-code></td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>integer whose binary representation is the bitwise XOR of the input</td>
+ </tr><tr>
+  <td><el-code><el-method>bitShiftL</el-method></el-code></td>
+  <td><el-code><el-type>Int, Int</el-type></el-code></td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>integer bit shifted to the left by the value of the second argument,<br>i.e. multiplied by 2 to the power of the second argument</td>
+ </tr><tr>
+  <td><el-code><el-method>bitShiftR</el-method></el-code></td>
+  <td><el-code><el-type>Int, Int</el-type></el-code></td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>integer bit shifted to the right by the value of the second argument,<br>i.e.  divided by 2 to the power of the second argument</td>
+ </tr>
+</table>
+<p>Examples of the bitwise functions being tested:</p>
 <el-code-block source="test_bitwise.elan">
 <el-test class="ok multiline" id="test3" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment5" class="optional ok" tabindex="0"><el-txt>bitwise</el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
@@ -1980,7 +2040,7 @@ Turtle graphics are implemented in Elan with output to the Display pane on the s
 </el-code-block>
 <p>The result of <el-code><el-method>bitNot</el-method>(<el-id>a</el-id>)</el-code> being <el-code>-14</el-code> , when <el-code><el-id>a</el-id></el-code> is <el-code>13</el-code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as <el-code>00000000000000000000000000001101</el-code>, and applying <el-code><el-method>bitAnd</el-method></el-code> gives <el-code>11111111111111111111111111110010 </el-code>which is the value <el-code>-14 </el-code>in signed two&#8217;s complement format, the left-most bit being the sign (<el-code>0</el-code> positive, <el-code>1</el-code> negative).</p>
 
-<h2 class="no-TOC" id="sequence">Sequence</h2>
+<h2 id="sequence">Sequence</h2>
 
 <p>The <el-code><el-method>sequence</el-method></el-code> is used to create a <el-code><el-type>List</el-type></el-code> containing a sequence
 of integer values as defined by the two (integer) parameters: <el-code><el-id>start</el-id></el-code> and <el-code><el-id>end</el-id></el-code>
@@ -1989,6 +2049,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <!-- #endregion-->
 <!-- #region Standalone procedures-->
 <h1 id="Standalone_procedures">Standalone procedures</h1>
+<h2 >Standalone procedures</h2>
 <p>All <el-code>procedure</el-code>s are accessed via a <el-code><a href="LangRef.html#call">call</el-code></a> statement.</p>
 <table>
  <tr><th>procedure</th><th>input<br>argument<br>Types</th><th>output<br>argument<br>Types</th><th>action</th></tr>
@@ -2057,6 +2118,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <!-- #endregion-->
 <!-- #region System methods-->
 <h1 id="System_methods">System methods</h1>
+<h2>System methods</h2>
 <p>System methods appear to work like <el-code>functions</el-code>, because:</p>
 <ul>
  <li>they may require one or more arguments to be provided.</li>
