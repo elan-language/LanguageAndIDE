@@ -407,7 +407,7 @@ export function compileSimpleSubscript(
     mustBeIndexableType(id, rootType, true, compileErrors, fieldId);
   }
   const [indexType] = getIndexAndOfType(rootType);
-  mustBeAssignableType(indexType, index.subscript1.symbolType(), compileErrors, fieldId);
+  mustBeAssignableType(indexType, index.index.symbolType(), compileErrors, fieldId);
 
   return wrapSimpleSubscript(`${prefix}${code}, ${postfix}`);
 }
