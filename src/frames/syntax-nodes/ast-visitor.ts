@@ -84,6 +84,7 @@ import { IdAsn } from "./id-asn";
 import { IdDefAsn } from "./id-def-asn";
 import { IfExprAsn } from "./if-expr-asn";
 import { IndexAsn } from "./index-asn";
+import { IndexDoubleAsn } from "./index-double-asn";
 import { InterpolatedAsn } from "./interpolated-asn";
 import { KvpAsn } from "./kvp-asn";
 import { LambdaAsn } from "./lambda-asn";
@@ -441,7 +442,10 @@ export function transform(
     const indexes = transformMany(node.contents as CSV, fieldId, scope) as AstCollectionNode;
     const singleIndex = indexes.items[0];
     const secondIndex = indexes.items.length > 1 ? indexes.items[1] : undefined;
-    return new IndexAsn(singleIndex, secondIndex, fieldId);
+
+    const asn = secondIndex ? new IndexDoubleAsn(singleIndex, secondIndex, fieldId) : singleIndex;
+
+    return new IndexAsn(asn, fieldId);
   }
 
   if (node instanceof DotAfter) {
