@@ -22,6 +22,11 @@ p,img,pre,blockquote,address,td,th,li,ul
 /* show sort direction icons in the sortable column headings */
 table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {content: " \25B4\25BE"}
 
+.tableColours td { font-family:monospace; text-align:right; }
+.tableType th, td { padding-left:5px; padding-right:5px; }
+.tableMethod th, td { padding-left:5px; padding-right:5px;  }
+.tableStructure th, td { padding-left:5px; padding-right:5px;  }
+
 table
  th, th * {color: white; background-color: rgb(15,71,97)}
  th { text-align:center; margin-top:4pt; margin-bottom:4pt }
@@ -29,31 +34,28 @@ table
  tr:nth-child(even) td { background-color: rgb(226, 226, 226); }
  tr:nth-child(odd)  td { background-color: rgb(196, 196, 196); }
  td {padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ /* tr.x temporary class for ElanIndex during development */
  tr.x td:nth-child(3) * { color: red; }
+ /* tr.subhead for ElanIndex head letters
  tr.subhead td, tr.subhead td * { background-color: rgb(15,71,97); color: white; font-weight: bold; }
-
-.tableColours td { font-family:monospace; text-align:right; }
 
 /* document title */
 .docTitle { color:rgb(15,71,97); font-size:28pt; font-weight:bold;  text-indent:0pt; margin-top:24pt; margin-bottom:4pt; }
 
-/* document table of contents */
+/* document table of contents : display as table of h1 and h2*/
 #generated-toc {
  display: table;
 }
-
 #generated-toc > ul {
   > li:nth-child(even) { background-color: rgb(226, 226, 226); }
   > li:nth-child(odd)  { background-color: rgb(196, 196, 196); }
 }
 #generated-toc > ul {
   padding-left: 0px;
-
 }
-#generated-toc > ul > li{
+#generated-toc > ul > li {
   display: table-row;
   border: 2px;
-
 }
 #generated-toc > ul > li > a, #generated-toc > ul > li > ul {
   display: table-cell;
@@ -70,16 +72,12 @@ table
   font-weight: bold;
   padding-top: 5px;
 }
-
 #generated-toc > ul > li > ul > li {
   display: block;
   float: left;
   padding-right: 20px;
 }
-
-
-
-/* to hide 'Skip table of contents' */
+/* to hide button 'Skip table of contents' */
 .hidden { visibility: hidden; }
 
 /* Paragraph style  'ListImmutable Paragraph 2'  What was this for? Currently commented out */
