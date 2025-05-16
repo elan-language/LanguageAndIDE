@@ -483,7 +483,7 @@ or from within another <el-code><el-kw>procedure</el-kw></el-code>, it is also p
 with the specified changes &ndash; which is why all such methods have names starting <el-code>with...</el-code>.</p>
 
 <p>All four data structures contain values of a single Type &ndash; that Type either being specified explicitly as in
-    <el-code>of &lt;<el-kw>procedure</el-kw>&gt; <el-type>Int</el-type></el-code> &ndash; or implictly if the structure
+    <el-code>of &lt;<el-kw>procedure</el-kw>&gt; <el-type>Int</el-type></el-code> &ndash; or implicitly if the structure
     is created from its literal definition form. (<el-type>Dictionary</el-type> is defined by two types: one for the 'keys' and one for the 'values').</p>
 </p>
 <!--   #region Array-->
@@ -537,7 +537,7 @@ with the specified changes &ndash; which is why all such methods have names star
   <td><el-code><el-type>Array</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td>a String that is a comma+space-separated list of the Array'elements enclosed in square brackets</td>
+  <td>a String that is a comma+space-separated list of the Array's elements enclosed in square brackets</td>
  </tr><tr>
   <td><el-code><el-method>contains</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
@@ -623,7 +623,7 @@ with the specified changes &ndash; which is why all such methods have names star
   <td>item of Array2D element's Type</td>
   <td><el-code><el-type>Int, Int</el-type></el-code></td>
   <td>a Tuple containing the index pair of the first occurrence of the argument's value in the array
-      by searching the colums, or (-1,-1) if no match is found</td>
+      by searching the columns, or (-1,-1) if no match is found</td>
  </tr><tr>
   <td><el-code><el-method>rows</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
@@ -725,7 +725,7 @@ with the specified changes &ndash; which is why all such methods have names star
   <td><el-code><el-type>List</el-type></el-code> whose elements are<br> of an immutable Type</td>
   <td>(none)</td>
   <td><el-code><el-type>ListImmutable</el-type></el-code></td>
-  <td>a new ListImmutable containingthe same elements.</td>
+  <td>a new ListImmutable containing the same elements.</td>
  </tr><tr>
   <td><el-code><el-method>asSet</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
@@ -866,7 +866,7 @@ with the specified changes &ndash; which is why all such methods have names star
 <!--   #region Dictionary-->
 <h2 id="Dictionary">Dictionary</h2>
 
-<p>A Aictionary works like an Array, but instead of requiring a numeric (integer) index, each entry has a 'key'. Each key is associated with a value,
+<p>A Dictionary works like an Array, but instead of requiring a numeric (integer) index, each entry has a 'key'. Each key is associated with a value,
 so the Dictionary is a set of <i>key:value</i> pairs
 The key's Type must be one of <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code> or <el-code><el-type>Boolean</el-type></el-code>,
 <i>or</i> it may be a user-defined <i>record</i>. The values may be of any Type, and the Types of both key and value are fixed when the Dictionary is created.</p>
@@ -923,7 +923,7 @@ The key's Type must be one of <el-code><el-type>Int</el-type></el-code>, <el-cod
 <!-- #region Immutable data structures -->
 <h1>Immutable data structures</h1>
 
-<p>In constrast to the <a href="#standard_data_structures">standard data structures</a>, <i>immutable</i>
+<p>In contrast to the <a href="#standard_data_structures">standard data structures</a>, <i>immutable</i>
 data structures cannot be modified directly &ndash; and hence define no <i>procedure</i> dot methods. Instead,
 changes are made by using <i>function</i> dot methods that copy the existing data structure, but with specified
 differences. Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
@@ -1538,7 +1538,7 @@ which the dot methods the following methods may be invoked:</p>
 
 <p>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above.
     Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string.
-    Alternatively, you could use the constant <el-code><el-id>quotes</el-id></el-code> within braces as an interolated field.</li>
+    Alternatively, you could use the constant <el-code><el-id>quotes</el-id></el-code> within braces as an interpolated field.</li>
 
 <h3 class="no-TOC">Using an embedded stylesheet</h3>
 <p>You can also specify a <el-code><el-method>style</el-method></el-code> tag at the start of your Html string, to apply to the whole Html being displayed:</p>
@@ -1569,7 +1569,7 @@ which the dot methods the following methods may be invoked:</p>
 
 <p>Acknowledgement: The idea of displaying an image value as a thumbnail within the code was inspired by
     a similar feature in the language <a href="https://strype.org">Strype</a>. We are
-grateful to Prof. Michael Kölling and the team at King's College, London responsible for Strype,
+grateful to Prof. Michael K&ouml;lling and the team at King's College, London responsible for Strype,
 who showed us this feature in confidence before its release, but nonetheless generously allowed us to mimic it in Elan.</p>
 
 <p>When the code is run the image will be printed on the <b>Display</b>, but still thumbnail sized.
@@ -1818,7 +1818,7 @@ just by passing the required one as the argument to the <el-code><el-method>disp
  <li>All parameters for the three constructors above are of type <el-code><el-type>Int</el-type></el-code>.</li>
  <li>Individual properties of any of the VG types may be modified by calling the corresponding <el-code><el-method>set...</el-method></el-code> procedure method
   or, if working within a function, by using the corresponding <el-code><el-method>with...</el-method></el-code> function method.</li>
- <li><el-code><el-method>displayVectorGraphics</el-method></el-code> takes as an argyment either a <el-code><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;()</el-code>
+ <li><el-code><el-method>displayVectorGraphics</el-method></el-code> takes as an argument either a <el-code><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;()</el-code>
   or a <el-code><el-type>List</el-type></el-code> of any specific type of <el-code><el-type>VectorGraphic</el-type></el-code> such as <el-code><el-type>CircleVG</el-type></el-code>.</li>
 </ul>
 <!-- #endregion-->
@@ -1826,7 +1826,7 @@ just by passing the required one as the argument to the <el-code><el-method>disp
 <p>Program outputs, whether text or graphical, can be combined in the Display. In particular, Block graphics and text or Html printing can share the Display
  along with <em>either</em> Vector graphics <em>or</em> Turtle graphics (but not both).</p>
 <p>If you want to share the Display in this way, remember that both text and Html print outputs appear sequentially down the Display (which can be scrolled), whereas the graphic outputs are positioned in the Display using their own absolute coordinate systems.</p>
-<p>The order in which the outputs are displayed (and therefore overwite) is:</p>
+<p>The order in which the outputs are displayed (and therefore overwrite) is:</p>
 <ol>
  <li>Block graphics</li>
  <li>Vector <em>or</em> Turtle graphics</li>
