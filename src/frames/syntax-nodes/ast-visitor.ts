@@ -60,7 +60,7 @@ import { TermSimpleWithOptIndex } from "../parse-nodes/term-simple-with-opt-inde
 import { TupleNode } from "../parse-nodes/tuple-node";
 import { TypeFuncNode } from "../parse-nodes/type-func-node";
 import { TypeGenericNode } from "../parse-nodes/type-generic-node";
-import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
+import { TypeNameNode } from "../parse-nodes/type-name-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
 import { WithClause } from "../parse-nodes/with-clause";
@@ -256,7 +256,7 @@ export function transform(
     return new TypeAsn(FuncName, inp.concat(oup), fieldId, scope);
   }
 
-  if (node instanceof TypeSimpleNode) {
+  if (node instanceof TypeNameNode) {
     const type = node.matchedText;
 
     return new TypeAsn(type, [], fieldId, scope);

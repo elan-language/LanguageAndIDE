@@ -3,7 +3,7 @@ import { OPEN_BRACKET } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { TypeFuncNode } from "./type-func-node";
 import { TypeGenericNode } from "./type-generic-node";
-import { TypeSimpleNode } from "./type-simple-node";
+import { TypeNameNode } from "./type-name-node";
 import { TypeTupleNode } from "./type-tuple-node";
 
 export class TypeNode extends AbstractAlternatives {
@@ -25,7 +25,7 @@ export class TypeNode extends AbstractAlternatives {
       } else if (text.trimStart().startsWith(OPEN_BRACKET)) {
         this.alternatives.push(new TypeTupleNode());
       } else {
-        this.alternatives.push(new TypeSimpleNode(this.tokenTypes));
+        this.alternatives.push(new TypeNameNode(this.tokenTypes));
         this.alternatives.push(new TypeGenericNode(this.tokenTypes));
       }
       super.parseText(text.trimStart());
