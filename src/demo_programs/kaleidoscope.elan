@@ -1,4 +1,4 @@
-# 9a8292997c22fb9dd400f52f19684f07676152757d7512ad172e8db616891a37 Elan 1.1.1 guest default_profile valid
+# 9ea6bca09573282fdc0a06b5b9a66a6018b8d55186f021448bd0d36c99ae0c99 Elan 1.1.2 guest default_profile valid
 
 main
   variable blocks set to new Array2D<of Int>(40, 30, white)

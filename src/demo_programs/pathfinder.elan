@@ -1,4 +1,4 @@
-# 00e6044cb21bf61202f9ff2f263bcc86deffc3f1c5facbb5daabf619927b3ca6 Elan 1.1.1 guest default_profile valid
+# ef1e570cd03ecac6561cd51c81e8cde877f64049ab760f5bb21b47d29c323313 Elan 1.1.2 guest default_profile valid
 
 main
   let start be newPoint(5, 5)

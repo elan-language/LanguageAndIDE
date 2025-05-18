@@ -1,4 +1,4 @@
-# e94aea45dd028120e1ed0f6dec75b81d1d3a84b7c091131306aaf82b84bf96ef Elan 1.1.1 guest default_profile valid
+# 3b22ada65a1bec053a8308cb5fa32388f36072e5e99662874eef371c71a72b73 Elan 1.1.2 guest default_profile valid
 
 main
   variable x set to Status.pending
