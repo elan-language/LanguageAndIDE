@@ -626,55 +626,72 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
 <!--     #endregion-->
 <!--     #region Each loop-->
 <h2 id="each">Each loop</h2>
+<p>The <el-code>each..in..</el-code> construct specifies looping sequentially over the elements in a <el-code><el-type>List</el-type></el-code> or  an <el-code><el-type>Array</el-type></el-code>, or over the characters in a <el-code><el-type>String</el-type></el-code>.</p>
+<p>The <el-code>each..</el-code> loop counter variable (which counts from 0) is of Type <el-code><el-type>Int</el-type></el-code> and does not have to have been defined in a <el-code>variable</el-code> statement.</p>
+<p>Example:</p>
+<el-code-block source="each.elan">
+<el-statement class="ok" id="var16" tabindex="0"><el-kw>variable </el-kw><el-field id="var17" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr18" class="ok" tabindex="0"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print30" tabindex="0"><el-kw>print </el-kw><el-field id="expr31" class="optional ok" tabindex="0"><el-txt><el-id>names</el-id>[<el-lit>0</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok multiline" id="each19" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident21" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> in </el-kw><el-field id="expr22" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt><el-place><i>source</i></el-place></el-field></el-top>
+<el-statement class="ok" id="print23" tabindex="0"><el-kw>print </el-kw><el-field id="expr24" class="optional ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-kw>end each</el-kw>
+</el-statement>
+</el-code-block>
 
-<!--     #endregion-->
-<!--     #region Else clause-->
-<h2 id="else">Else clause</h2>
 <!--     #endregion-->
 <!--     #region For loop-->
 <h2 id="for">For loop</h2>
-<p>The loop counter variable does not have to have been defined in a <el-code>variable</el-code> statement.</p>
-<p>The three defining values (<el-code>from</el-code>, <el-code>to</el-code>, and <el-code>step</el-code>) must all be integer, positive or negative.</p>
-<p>They may be defined by literal integers, variables of Type <el-code>Int</el-code>, or expressions that evaluate to an integer. </p>
-<p>However, if you require a negative step then the literal value, variable, or expression must start with a negative sign as this is needed at compile time to determine the nature of the exit condition. So if you have a variable <el-code>s</el-code> that holds a negative value to be used as the step, then you will need to write something like the following:</p>
-<el-code-block>
-variable s set to -3<br>
-for i from 100 to 0 step -(-s)<br>
-&nbsp;&nbsp;..<br>
-end for
+<p>The <el-code>for..from..to..step..</el-code> construct specifies looping through a sequence of integer values with a given increment.</p>
+<p>The <el-code>for..</el-code> loop counter variable (which counts from 0) is of Type <el-code><el-type>Int</el-type></el-code> and does not have to have been defined in a <el-code>variable</el-code> statement.
+<p>The three defining values, <el-code>from</el-code>, <el-code>to</el-code>, and <el-code>step</el-code>, must all be of Type <el-code><el-type>Int</el-type></el-code>, positive or negative.
+and may be defined by literals, variables  or expressions that evaluate to integers.</p>
+<p>Note that, if you require a negative step value, then the literal, variable, or expression must start with a negative sign.
+This is needed at compile time to determine the nature of the exit condition.
+So if you have a variable <el-code>s</el-code> that holds a negative value to be used to step in reverse order, then you would write:</p>
+<el-code-block source="forStepNeg.elan">
+<el-statement class="ok" id="var16" tabindex="0"><el-kw>variable </el-kw><el-field id="var17" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr18" class="ok" tabindex="0"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="var40" tabindex="0"><el-kw>variable </el-kw><el-field id="var41" class="ok" tabindex="0"><el-txt><el-id>s</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr42" class="ok" tabindex="0"><el-txt>-<el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok multiline" id="for34" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident36" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr37" class="ok" tabindex="0"><el-txt><el-lit>2</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr38" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr39" class="ok" tabindex="0"><el-txt>-(-<el-id>s</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-top>
+<el-statement class="ok" id="print43" tabindex="0"><el-kw>print </el-kw><el-field id="expr44" class="optional ok" tabindex="0"><el-txt><el-id>names</el-id>[<el-id>n</el-id>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-kw>end for</el-kw>
+</el-statement>
 </el-code-block>
 <!--     #endregion-->
 <!--     #region If statement-->
 <h2 id="if_statement">If statement</h2>
 <p>See also <a href="if_expression">if expression</a></p>
+<p>The <el-code>if..then..else..</el-code> and <el-code>if..then..else..else if..</el-code> constucts specify which of several code sequences is to be executed next.</p>
+<p>The <el-code>else</el-code> clause is optional.</p>
+<p>You can add as many <el-code>else if</el-code> clauses as you wish, but only one unconditional <el-code>else</el-code> (which, if present, must be the last clause).</p>
 
 Example 1:
-<el-code-block
-  <el-statement class="multiline" id="if3" tabindex="0">
-    <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr5" class="" tabindex="0"><el-txt><el-id>head</el-id><el-kw> is </el-kw><el-id>apple</el-id></el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top> <el-msg class=""></el-msg>
-    <el-statement class=""" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-method>setAppleToRandomPosition</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args8" class="optional " tabindex="0"><el-txt><el-id>apple</el-id>, <el-id>body</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>) <el-msg class="">'setAppleToRandomPosition' is not defined</el-msg></el-top></el-statement>
-    <el-statement class="ok outdent" id="else9" tabindex="0"><el-top>
-<el-kw>else </el-kw><el-field id="elif11" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>if</i></el-place></el-field></el-top></el-statement>
-    <el-statement class="" id="call12" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident13" class="" tabindex="0"><el-txt><el-id>body</el-id>.<el-method>removeAt</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args14" class="optional ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>arguments</i></el-place></el-field>) <el-msg class=""></el-msg></el-top></el-statement>
-    <el-kw>end if</el-kw>
-    </el-statement>
+<el-code-block source="if_else">
+<el-statement class="ok multiline" id="if71" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr73" class="ok" tabindex="0"><el-txt><el-id>head</el-id><el-kw> is </el-kw><el-id>apple</el-id></el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top>
+<el-statement class="ok" id="call80" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident81" class="ok" tabindex="0"><el-txt><el-method>setAppleToRandomPosition</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args82" class="optional ok" tabindex="0"><el-txt><el-id>apple</el-id>, <el-id>body</el-id></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok outdent" id="else83" tabindex="0"><el-top>
+<el-kw>else </el-kw><el-field id="elif85" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>if</i></el-place></el-field></el-top></el-statement>
+<el-statement class="ok" id="call86" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident87" class="ok" tabindex="0"><el-txt><el-id>body</el-id>.<el-method>removeAt</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args88" class="optional ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
+<el-kw>end if</el-kw>
+</el-statement>
 </el-code-block>
 
 Example 2:
-<el-code><br>
-if item is value then<br>
-&nbsp;&nbsp;set result to true<br>
-else if item.isBefore(value) then<br>
-&nbsp;&nbsp;set result to binarySearch(list[..mid], item)<br>
-else<br>
-&nbsp;&nbsp;set result to binarySearch(list[mid + 1..], item)<br>
-end if
-</el-code>
-Notes:
-<ul>
-<li>The <el-code>else</el-code> clause is optional</li>
-<li>You can add as many <el-code>else if</el-code> clauses as you wish, but only one unconditional <el-code>else</el-code> (which, if present, must be the last clause).</li>
-</ul>
+<el-code-block source="if_else">
+<el-statement class="ok multiline" id="if135" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr137" class="ok" tabindex="0"><el-txt><el-id>item</el-id><el-kw> is </el-kw><el-id>value</el-id></el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top>
+<el-statement class="ok" id="set157" tabindex="0"><el-kw>set </el-kw><el-field id="ident158" class="ok" tabindex="0"><el-txt><el-id>result</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr159" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok outdent" id="else174" tabindex="0"><el-top>
+<el-kw>else </el-kw><el-kw>if </el-kw><el-field id="expr175" class="ok" tabindex="0"><el-txt><el-id>item</el-id>.<el-method>isBefore</el-method>(<el-id>value</el-id>)</el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top></el-statement>
+<el-statement class="ok" id="set195" tabindex="0"><el-kw>set </el-kw><el-field id="ident196" class="ok" tabindex="0"><el-txt><el-id>result</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr197" class="ok" tabindex="0"><el-txt><el-method>binarySearch</el-method>(<el-id>lst</el-id>[..<el-id>mid</el-id>], <el-id>item</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok outdent" id="else198" tabindex="0"><el-top>
+    <el-kw>else </el-kw><el-field id="elif200" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>if</i></el-place></el-field></el-top></el-statement>
+<el-statement class="ok" id="set201" tabindex="0"><el-kw>set </el-kw><el-field id="ident202" class="ok" tabindex="0"><el-txt><el-id>result</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr203" class="ok" tabindex="0"><el-txt><el-method>binarySearch</el-method>(<el-id>lst</el-id>[<el-id>mid</el-id> + <el-lit>1</el-lit>..], <el-id>item</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-kw>end if</el-kw>
+</el-statement>
+</el-code-block>
 <!--     #endregion-->
 <!--     #region Let statement-->
 <h2 id="let">Let statement</h2>
@@ -704,6 +721,8 @@ Note:
 <!--     #endregion-->
 <!--     #region Repeat loop-->
 <h2 id="repeat">Repeat loop</h2>
+
+
 <!--     #endregion-->
 <!--     #region Set statement-->
 <h2 id="set">Set statement</h2>

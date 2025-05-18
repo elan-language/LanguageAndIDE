@@ -778,9 +778,9 @@ with the specified changes &ndash; which is why all such methods have names star
  </tr><tr>
   <td><el-code><el-method>map</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td></td>
+  <td>lambda or </td>
   <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td>HoF: apply </td>
  </tr><tr>
   <td><el-code><el-method>maxBy</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
@@ -1838,10 +1838,10 @@ just by passing the required one as the argument to the <el-code><el-method>disp
 <h1 id="Func">Other Types</h1>
 <!--   #region Func-->
 <h2 id="Func">Func</h2>
-<p>A function may be passed as an argument into another function (or a procedure), or returned as the result of calling another function<.
-    This pattern is known as &lsquo;Higher order Function&rsquo; (HoF), and is a key idea in the functional programming paradigm.
-    To define a function> that takes in another function as a parameter, or returns a function, you need to specify the Type of the function,
-    just as you would specify the Type of every parameter and the return Type for the function. </p>
+<p>A function may be passed as an argument into another function (or a procedure), or returned as the result of calling another function.
+This pattern is known as <b>Higher order Function (HoF)</b>, and is a key idea in the Functional Programming.</p>
+<p>To define a function that takes in another function as a parameter, or returns a function, you need to specify the Type of the function,
+just as you would specify the Type of every parameter and the return Type for the function. </p>
 
 <h3 class="no-TOC">Type name</h3>
 <p>The Type of any function< starts with the word <el-code><el-type>Func</el-type></el-code> followed by angle brackets defining the Type of each parameter,
@@ -1873,7 +1873,23 @@ just by passing the required one as the argument to the <el-code><el-method>disp
   <td><el-code>&nbsp; &quot; </el-code></td>
  </tr>
 </table>
-<h2 >Maths constant</h2>
+
+<h2 id="BooleanConstants">Boolean constants</h2>
+<table class="tableType">
+ <tr>
+  <th>name</th><th>Type</th><th >value</th>
+ </tr><tr>
+  <td><el-code><el-id>true</el-id></el-code></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td>
+  <td><a href="#Boolean"><el-code><el-kw>true</el-kw></el-code></a></td>
+ </tr><tr>
+  <td><el-code><el-id>false</el-id></el-code></td>
+  <td><el-code><el-type>Boolean</el-type></el-code></td>
+  <td><a href="#Boolean"><el-code><el-kw>false</el-kw></el-code></a></td>
+ </tr>
+</table>
+
+<h2 id="MathsConstant">Maths constant</h2>
 <table class="tableType">
  <tr><th>name</th><th>Type</th><th>value</th></tr>
 <tr id="pi">
@@ -1883,7 +1899,7 @@ just by passing the required one as the argument to the <el-code><el-method>disp
  </tr>
 </table>
 
-<h2 id="Colours">Colour constants</h2>
+<h2 id="Colours">Colours</h2>
 <table class="tableColours">
 <tr><th>colour</th><th></th><th>decimal</th><th>decimal<br></th><th>hexadecimal</th></tr>
 <tr><th>name</th><th></th><th>integer</th><th style="font-family:monospace;">&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;&nbsp;G&nbsp;&nbsp;&nbsp;&nbsp;B</th><th style="font-family:monospace;">&nbsp;0xrrggbb</th></tr>
