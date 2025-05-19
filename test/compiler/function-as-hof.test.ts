@@ -341,7 +341,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int, Int => Int>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>), Provided: Int, Func<of Int, Int => Int>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -365,7 +365,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int => String>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>), Provided: Int, Func<of Int => String>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 

@@ -1921,7 +1921,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: bar (Bar) Provided: Foo. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: bar (Bar), Provided: Foo. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1955,7 +1955,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: l (List<of Foo>) Provided: List<of Bar>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: l (List<of Foo>), Provided: List<of Bar>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1989,7 +1989,7 @@ end procedure
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: l (List<of Foo>) Provided: List<of Bar>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: l (List<of Foo>), Provided: List<of Bar>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -2022,7 +2022,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: l (Dictionary<of String, Foo>) Provided: Dictionary<of String, Bar>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: l (Dictionary<of String, Foo>), Provided: Dictionary<of String, Bar>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 

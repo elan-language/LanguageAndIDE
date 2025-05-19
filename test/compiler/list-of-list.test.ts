@@ -609,7 +609,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (List<of String>) Provided: Int, String. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: index (Int), value (List<of String>), Provided: Int, String. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -645,7 +645,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (List<of String>) Provided: Int, Boolean. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: index (Int), value (List<of String>), Provided: Int, Boolean. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -663,7 +663,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: value (List<of String>) Provided: String. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: value (List<of String>), Provided: String. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -699,7 +699,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (Int) Provided: String, Int. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: index (Int), value (Int), Provided: String, Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

@@ -643,7 +643,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String) Provided: Int. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: key (String), Provided: Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -661,7 +661,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int) Provided: Int, Int. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: key (String), value (Int), Provided: Int, Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -679,7 +679,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int) Provided: String, Float. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: key (String), value (Int), Provided: String, Float. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -765,7 +765,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 2 Provided: 0. Click for more info.LangRef.html#compile_error",
+      "<of Type(s)> Expected: 2, Provided: 0. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1115,7 +1115,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 2 Provided: 0. Click for more info.LangRef.html#compile_error",
+      "<of Type(s)> Expected: 2, Provided: 0. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });

@@ -385,8 +385,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: p (Int) Provided: Boolean. Click for more info.LangRef.html#compile_error",
-      "Argument types. Expected: p (Int) Provided: Float. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: p (Int), Provided: Boolean. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: p (Int), Provided: Float. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -727,7 +727,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: a (Int), b (Int) Provided: Int, String. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: a (Int), b (Int), Provided: Int, String. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -979,7 +979,7 @@ end function`;
       "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>. Click for more info.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>. Click for more info.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>. Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Func<of  => Int> Provided: Func<of Int => Float>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Func<of  => Int>, Provided: Func<of Int => Float>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 

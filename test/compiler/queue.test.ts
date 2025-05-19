@@ -77,7 +77,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: parameter0 (String) Provided: Int. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: parameter0 (String), Provided: Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -95,7 +95,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: parameter0 (String) Provided: Int. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: parameter0 (String), Provided: Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -168,7 +168,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 1 Provided: 0. Click for more info.LangRef.html#compile_error",
+      "<of Type(s)> Expected: 1, Provided: 0. Click for more info.LangRef.html#compile_error",
     ]);
   });
 

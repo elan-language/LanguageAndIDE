@@ -89,7 +89,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: arr (List<of Int>) Provided: Array<of Int>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: arr (List<of Int>), Provided: Array<of Int>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -588,7 +588,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (String) Provided: Int, Boolean. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: index (Int), value (String), Provided: Int, Boolean. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -605,8 +605,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: size (Int), initialValue (Generic Parameter T1) Provided: Int, String. Click for more info.LangRef.html#compile_error",
-      "<of Type(s)> Expected: 1 Provided: 0. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: size (Int), initialValue (Generic Parameter T1), Provided: Int, String. Click for more info.LangRef.html#compile_error",
+      "<of Type(s)> Expected: 1, Provided: 0. Click for more info.LangRef.html#compile_error",
     ]);
   });
 

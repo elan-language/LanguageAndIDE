@@ -460,11 +460,11 @@ end main`;
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set15", [
-      "Incompatible types. Expected: ListImmutable<of Float> try converting with '.asListImmutable()' Provided: List<of String>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: ListImmutable<of Float> try converting with '.asListImmutable()', Provided: List<of String>. Click for more info.LangRef.html#TypesCompileError",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set18", [
-      "Incompatible types. Expected: Dictionary<of String, Float> Provided: ListImmutable<of Float>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Dictionary<of String, Float>, Provided: ListImmutable<of Float>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 

@@ -1190,7 +1190,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 1 Provided: 0. Click for more info.LangRef.html#compile_error",
+      "<of Type(s)> Expected: 1, Provided: 0. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1208,7 +1208,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: ListImmutable<of Int> try converting with '.asListImmutable()' Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: ListImmutable<of Int> try converting with '.asListImmutable()', Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -1436,7 +1436,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 1 Provided: 0. Click for more info.LangRef.html#compile_error",
+      "<of Type(s)> Expected: 1, Provided: 0. Click for more info.LangRef.html#compile_error",
     ]);
   });
 });
