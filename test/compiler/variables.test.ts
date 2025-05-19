@@ -456,7 +456,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set12", [
-      "Incompatible types. Expected: List<of String> Provided: ListImmutable<of Float>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of String>, Provided: ListImmutable<of Float>. Click for more info.LangRef.html#TypesCompileError",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set15", [

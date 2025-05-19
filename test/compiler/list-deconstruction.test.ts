@@ -544,7 +544,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of String> Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of String>, Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -565,7 +565,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of String> Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of String>, Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -607,7 +607,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of Int> Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of Int>, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -628,7 +628,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: ListImmutable<of Int> Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: ListImmutable<of Int>, Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -648,7 +648,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: ListImmutable<of String> or List<of String> Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: ListImmutable<of String> or List<of String>, Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -668,7 +668,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of String> Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of String>, Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
