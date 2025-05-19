@@ -3,21 +3,19 @@ import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { Transforms } from "../interfaces/transforms";
 import { AbstractAstNode } from "./abstract-ast-node";
-
 import { singleIndent } from "../frame-helpers";
 import { BreakpointStatus } from "../status-enums";
-import { getIds, isSymbol, orderSymbol } from "../symbols/symbol-helpers";
+import { allScopedSymbols, orderSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { AssertFrameAsn } from "./assert-frame-asn";
-import { compileNodes } from "./ast-helpers";
+import { Transforms } from "../interfaces/transforms";
+import { Parent } from "../interfaces/parent";
+import { File } from "../interfaces/file";
 
-export class FrameAsn extends AbstractAstNode implements AstNode {
+export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
   constructor(
-    private children: AstNode[],
     public readonly fieldId: string,
-    private scope: Scope,
+    protected readonly scope: Scope,
   ) {
     super();
   }
@@ -35,14 +33,14 @@ export class FrameAsn extends AbstractAstNode implements AstNode {
     throw new Error("Method not implemented.");
   }
 
-  getFirstChild(): AstNode {
-    return this.children[0];
-  }
-
   compileScope: Scope | undefined;
 
   setCompileScope(s: Scope): void {
     this.compileScope = s;
+  }
+
+  getParent(): Parent {
+    return this.scope as unknown as Parent;
   }
 
   getParentScope(): Scope {
@@ -51,31 +49,6 @@ export class FrameAsn extends AbstractAstNode implements AstNode {
 
   getCurrentScope(): Scope {
     return this as unknown as Scope;
-  }
-
-  getChildRange(first: AstNode, last: AstNode): AstNode[] {
-    const fst = this.children.indexOf(first);
-    const lst = this.children.indexOf(last);
-    return fst < lst ? this.children.slice(fst, lst + 1) : this.children.slice(lst, fst + 1);
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, initialScope: AstNode): ElanSymbol {
-    const fst = this.getFirstChild();
-    let range = this.getChildRange(fst, initialScope);
-    if (range.length > 1) {
-      range = range.slice(0, range.length - 1);
-
-      for (const f of range) {
-        if (isSymbol(f) && id) {
-          const sids = getIds(f.symbolId);
-          if (sids.includes(id)) {
-            return f;
-          }
-        }
-      }
-    }
-
-    return this.getParentScope().resolveSymbol(id, transforms, this.getCurrentScope());
   }
 
   indent(): string {
@@ -94,10 +67,6 @@ export class FrameAsn extends AbstractAstNode implements AstNode {
 
   bpIndent() {
     return this.indent() === "" ? "  " : this.indent();
-  }
-
-  protected compileChildren(): string {
-    return compileNodes(this.children);
   }
 
   resolveVariables(scopedSymbols: () => ElanSymbol[]) {
@@ -156,14 +125,19 @@ export class FrameAsn extends AbstractAstNode implements AstNode {
     return "";
   }
 
-  getAsserts() {
-    const children = this.children;
-    let asserts = this.children.filter((c) => c instanceof AssertFrameAsn) as AssertFrameAsn[];
+  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
+    return this.getParentScope().resolveSymbol(id, transforms, this as unknown as Scope);
+  }
 
-    for (const f of children.filter((c) => c instanceof FrameAsn)) {
-      asserts = asserts.concat(f.getAsserts());
-    }
+  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
+    return this.getParentScope().symbolMatches(id, all, this as unknown as Scope);
+  }
 
-    return asserts;
+  debugSymbols() {
+    return () => allScopedSymbols(this.getParentScope(), this as unknown as Scope);
+  }
+
+  getFile(): File {
+    return (this.scope as unknown as Parent).getFile();
   }
 }

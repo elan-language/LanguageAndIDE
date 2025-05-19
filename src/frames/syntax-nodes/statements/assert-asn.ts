@@ -1,20 +1,20 @@
-import { CompileError } from "../compile-error";
-import { singleIndent } from "../frame-helpers";
-import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
-import { SymbolType } from "../interfaces/symbol-type";
-import { UnknownType } from "../symbols/unknown-type";
-import { AbstractAstNode } from "./abstract-ast-node";
-import { TestFrameAsn } from "./test-frame-asn";
+import { CompileError } from "../../compile-error";
+import { singleIndent } from "../../frame-helpers";
+import { AstNode } from "../../interfaces/ast-node";
+import { Scope } from "../../interfaces/scope";
+import { SymbolType } from "../../interfaces/symbol-type";
+import { UnknownType } from "../../symbols/unknown-type";
+import { FrameAsn } from "../frame-asn";
+import { TestFrameAsn } from "../globals/test-frame-asn";
 
-export class AssertFrameAsn extends AbstractAstNode implements AstNode {
+export class AssertAsn extends FrameAsn implements AstNode {
   constructor(
     private expected: AstNode,
     private actual: AstNode,
-    public readonly fieldId: string,
-    private scope: Scope,
+    fieldId: string,
+    scope: Scope,
   ) {
-    super();
+    super(fieldId, scope);
   }
 
   symbolType(): SymbolType {

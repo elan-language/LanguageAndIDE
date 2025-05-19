@@ -1,11 +1,11 @@
-import { CompileError } from "../compile-error";
-import { mustBeUniqueNameInScope } from "../compile-rules";
-import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
-import { SymbolType } from "../interfaces/symbol-type";
-import { getGlobalScope } from "../symbols/symbol-helpers";
-import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
+import { CompileError } from "../../compile-error";
+import { mustBeUniqueNameInScope } from "../../compile-rules";
+import { AstNode } from "../../interfaces/ast-node";
+import { Scope } from "../../interfaces/scope";
+import { SymbolType } from "../../interfaces/symbol-type";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
+import { AbstractAstNode } from "../abstract-ast-node";
+import { transforms } from "../ast-helpers";
 
 export class ConstantFrameAsn extends AbstractAstNode implements AstNode {
   constructor(

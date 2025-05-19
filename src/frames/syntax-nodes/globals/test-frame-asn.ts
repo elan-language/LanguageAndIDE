@@ -1,11 +1,11 @@
-import { CompileError } from "../compile-error";
-import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
-import { SymbolType } from "../interfaces/symbol-type";
-import { compileNodes } from "./ast-helpers";
-import { FrameAsn } from "./frame-asn";
+import { CompileError } from "../../compile-error";
+import { AstNode } from "../../interfaces/ast-node";
+import { Scope } from "../../interfaces/scope";
+import { SymbolType } from "../../interfaces/symbol-type";
+import { compileNodes } from "../ast-helpers";
+import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
-export class TestFrameAsn extends FrameAsn implements AstNode {
+export class TestFrameAsn extends FrameWithStatementsAsn implements AstNode {
   constructor(children: AstNode[], fieldId: string, scope: Scope) {
     super(children, fieldId, scope);
   }

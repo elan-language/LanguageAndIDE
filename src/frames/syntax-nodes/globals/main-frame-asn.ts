@@ -1,14 +1,14 @@
-import { CompileError } from "../compile-error";
-import { mustNotHaveDuplicateMain } from "../compile-rules";
-import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
-import { SymbolType } from "../interfaces/symbol-type";
-import { DuplicateSymbol } from "../symbols/duplicate-symbol";
-import { allScopedSymbols } from "../symbols/symbol-helpers";
-import { transforms } from "./ast-helpers";
-import { FrameAsn } from "./frame-asn";
+import { CompileError } from "../../compile-error";
+import { mustNotHaveDuplicateMain } from "../../compile-rules";
+import { AstNode } from "../../interfaces/ast-node";
+import { Scope } from "../../interfaces/scope";
+import { SymbolType } from "../../interfaces/symbol-type";
+import { DuplicateSymbol } from "../../symbols/duplicate-symbol";
+import { allScopedSymbols } from "../../symbols/symbol-helpers";
+import { transforms } from "../ast-helpers";
+import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
-export class MainFrameAsn extends FrameAsn implements AstNode {
+export class MainFrameAsn extends FrameWithStatementsAsn implements AstNode {
   constructor(
     children: AstNode[],
     public readonly fieldId: string,
