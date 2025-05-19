@@ -416,10 +416,12 @@ export class GenericParametersCompileError extends CompileError {
     const priority = actual < expected ? DisplayPriority.third : DisplayPriority.second;
     const severity = actual < expected ? Severity.warning : Severity.error;
     let msg = ``;
-    if (actual === 0 && expected === 1) {
-      msg =    `Expected: '<of Type>'.`;
-    } else if (actual < 2 && expected === 2)  {
-      msg =    `Expected: '<of Type, Type>'.`;
+    if (expected === 0 && actual > 0) {
+      msg = `<of Type> was not expected here.`;
+    } else if (expected === 1 && actual === 0) {
+      msg = `Expected: '<of Type>'.`;
+    } else if (expected === 2 && actual < 2) {
+      msg = `Expected: '<of Type, Type>'.`;
     } else {
       msg = `Number of Types specified in '<of ...>' is not correct. Expected: ${expected}, Provided: ${actual}.`;
     }
@@ -430,7 +432,7 @@ export class GenericParametersCompileError extends CompileError {
       location,
       "LangRef.html#compile_error",
     );
-    }
+  }
 }
 
 export class MutateCompileError extends CompileError {

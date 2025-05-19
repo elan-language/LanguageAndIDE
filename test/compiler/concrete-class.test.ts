@@ -1139,7 +1139,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 0, Provided: 1. Click for more info.LangRef.html#compile_error",
+      "<of Type> was not expected here. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1156,7 +1156,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 0, Provided: 1. Click for more info.LangRef.html#compile_error",
+      "<of Type> was not expected here. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
