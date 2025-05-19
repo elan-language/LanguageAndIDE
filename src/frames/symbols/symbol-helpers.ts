@@ -73,7 +73,7 @@ export function isIterableType(s?: SymbolType): boolean {
   return !!s?.typeOptions.isIterable;
 }
 
-export function isSymbol(s?: Parent | Frame | ElanSymbol): s is ElanSymbol {
+export function isSymbol(s?: Parent | Frame | ElanSymbol | AstNode): s is ElanSymbol {
   return !!s && "symbolId" in s && "symbolType" in s;
 }
 

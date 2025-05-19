@@ -411,3 +411,15 @@ export function compileSimpleSubscript(
 
   return wrapSimpleSubscript(`${prefix}${code}, ${postfix}`);
 }
+
+export function compileNodes(nodes: AstNode[]): string {
+  let result = "";
+  if (nodes.length > 0) {
+    const ss: Array<string> = [];
+    for (const node of nodes) {
+      ss.push(node.compile());
+    }
+    result = ss.join("\r\n");
+  }
+  return result;
+}
