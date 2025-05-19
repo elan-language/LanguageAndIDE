@@ -31,7 +31,7 @@ export class ImageVG extends VectorGraphic {
     this.width = copy ? copy.width : 13.2;
     this.height = copy ? copy.height : 13.2;
     this.url = copy ? copy.url : "";
-    this.alt = copy ? copy.alt: "";
+    this.alt = copy ? copy.alt : "";
   }
 
   @elanProperty()
@@ -65,7 +65,7 @@ export class ImageVG extends VectorGraphic {
   }
 
   @elanProperty()
-  alt: string; 
+  alt: string;
 
   @elanProcedure(["alt"])
   setAlt(alt: string) {
