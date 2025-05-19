@@ -737,7 +737,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: val (Int) Provided: Float. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: val (Int), Provided: Float. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -847,7 +847,7 @@ end procedure
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: bar (Bar) Provided: Foo. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: bar (Bar), Provided: Foo. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -882,7 +882,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: bar (Bar) Provided: Foo. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: bar (Bar), Provided: Foo. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1139,7 +1139,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 0 Provided: 1. Click for more info.LangRef.html#compile_error",
+      "<of Type> was not expected here. Click for more info.LangRef.html#GenericParametersCompileError",
     ]);
   });
 
@@ -1156,7 +1156,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 0 Provided: 1. Click for more info.LangRef.html#compile_error",
+      "<of Type> was not expected here. Click for more info.LangRef.html#GenericParametersCompileError",
     ]);
   });
 

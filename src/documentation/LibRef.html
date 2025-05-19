@@ -1606,6 +1606,29 @@ the URL as a <el-code><el-type>String</el-type></el-code>, either as a literal (
 <el-statement class="ok" id="let7" tabindex="0"><el-kw>let </el-kw><el-field id="var8" class="ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>(<el-id>url</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print10" tabindex="0"><el-kw>print </el-kw><el-field id="expr11" class="optional ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
+
+<p>Various properties can be set on an <el-code><el-type>ImageVG</el-type></el-code>  using a <el-code><el-kw>with</el-kw></el-code> clause, for example:</p>
+
+<el-code>
+    <main class="ok multiline" id="main3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+        <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg><el-fr>1</el-fr></el-top>
+        <el-statement class="ok" id="let8" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>url</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>"<el-lit>https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg</el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
+        <el-statement class="ok" id="let11" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>(<el-id>url</el-id>)<el-kw> with </el-kw><br><el-id>alt</el-id><el-kw> set to </el-kw>"<el-lit>shark</el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>3</el-fr></el-statement>
+        <el-kw>end main</el-kw>
+    </main>
+</el-code>
+
+<p>The properties are:</p>
+
+<table>
+    <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+    <tr><td><el-code><el-id>alt</el-id></el-code></td><td><el-code><el-type>String</el-type></el-code></td><td>Alternate textual description (for assessibility)</td></tr>
+    <tr><td><el-code><el-id>height</el-id></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>height to render the image</td></tr>
+    <tr><td><el-code><el-id>title</el-id></el-code></td><td><el-code><el-type>String</el-type></el-code></td><td>Textual title to be read by user</td></tr>
+    <tr><td><el-code><el-id>width</el-id></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>width to render the image</td></tr>
+    <tr><td><el-code><el-id>x</el-id></el-code></td><el-code><td><el-type>Float</el-type></el-code></td><td>Horizontal position within the pane</td></tr>
+    <tr><td><el-code><el-id>y</el-id></el-code></td><el-code><td><el-type>Float</el-type></el-code></td><td>Vertical position within the pane</td></tr>
+</table>
 <!-- #endregion-->
 <!--   #region Graphics-->
 <h1>Graphics</h1>

@@ -31,6 +31,7 @@ export class ImageVG extends VectorGraphic {
     this.width = copy ? copy.width : 13.2;
     this.height = copy ? copy.height : 13.2;
     this.url = copy ? copy.url : "";
+    this.alt = copy ? copy.alt : "";
   }
 
   @elanProperty()
@@ -60,6 +61,21 @@ export class ImageVG extends VectorGraphic {
   withY(y: number): ImageVG {
     const copy = this.system!.initialise(new ImageVG(this));
     copy.y = y;
+    return copy;
+  }
+
+  @elanProperty()
+  alt: string;
+
+  @elanProcedure(["alt"])
+  setAlt(alt: string) {
+    this.alt = alt;
+  }
+
+  @elanFunction(["alt"], FunctionOptions.pure, ElanClass(ImageVG))
+  withAlt(alt: string): ImageVG {
+    const copy = this.system!.initialise(new ImageVG(this));
+    copy.alt = alt;
     return copy;
   }
 
@@ -116,10 +132,10 @@ export class ImageVG extends VectorGraphic {
   }
 
   asSVG(): string {
-    return `<image x="${this.x}%" y="${this.y / 0.75}%" width="${this.width}" height="${this.height / 0.75}" href="${this.url}" title="${this.title}"/>`; //TODO style, size etc
+    return `<image x="${this.x}%" y="${this.y / 0.75}%" width="${this.width}" height="${this.height / 0.75}" href="${this.url}" title="${this.title}" alt="${this.alt}"/>`; //TODO style, size etc
   }
 
   async asString() {
-    return `<img src="${this.url}" width="${this.width}" height="${this.height}" title="${this.title}">`; //TODO style, size etc
+    return `<img src="${this.url}" width="${this.width}" height="${this.height}" title="${this.title}" alt="${this.alt}">`; //TODO style, size etc
   }
 }
