@@ -1244,8 +1244,12 @@ constant, a literal value, or a named value that is defined by a <el-code><el-kw
 <h3 id="ParameterTypesCompileError" class="no-TOC">Argument types ...</h3>
 <p>One or more arguments provided to the method are of the wrong type.</p>
 
-<h3 id="GenericParametersCompileError" class="no-TOC">&lt;of Type(s)&gt;</3>
-<p>The the number of types given in the <el-code><el-kw>of</el-kw></el-code> clause, does not match the number required for the specified outer type.</p>
+<h3 id="GenericParametersCompileError" class="no-TOC">...&lt;of Type&gt;...</h3>
+<p>Certain data structure types, including <el-code><el-type>Array</el-type></el-code>, <el-code><el-type>Array2D</el-type></el-code>,
+  <el-code><el-type>List</el-type></el-code> must specify the Type of their members, for example <el-code><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-code>. 
+  Failure to specify the 'of Type' on these types will give an error, as will specifying 'of Type' where it is <i>not</i> required.
+Dictionaries require Types to be specified for both the keys and the values, 
+for example: <el-code><el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Float</el-type>&gt;</el-code>.</p>
 
 <h3 id="MutateCompileError" class="no-TOC">May not re-assign the ...</h3>
 <p>Attempting to re-assign, or mutate, a named value that may not be re-assigned in the current context.</p>

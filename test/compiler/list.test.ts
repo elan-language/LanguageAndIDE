@@ -83,7 +83,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: other (List<of Int>) Provided: Int. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: other (List<of Int>), Provided: Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -746,7 +746,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (String) Provided: Int, Boolean. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: index (Int), value (String), Provided: Int, Boolean. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -785,7 +785,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: String. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: String. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -803,7 +803,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: value (String) Provided: Int. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: value (String), Provided: Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -836,7 +836,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (String) Provided: String, String. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: index (Int), value (String), Provided: String, String. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -853,7 +853,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: size (Int), initialValue (Int) Provided: Float, Int. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: size (Int), initialValue (Int), Provided: Float, Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1101,7 +1101,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: List<of String>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: List<of String>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -1120,7 +1120,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of String> Provided: String. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of String>, Provided: String. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -1409,7 +1409,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 1 Provided: 0. Click for more info.LangRef.html#compile_error",
+      "Expected: '<of Type>'. Click for more info.LangRef.html#GenericParametersCompileError",
     ]);
   });
 
@@ -1600,7 +1600,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type(s)> Expected: 1 Provided: 0. Click for more info.LangRef.html#compile_error",
+      "Expected: '<of Type>'. Click for more info.LangRef.html#GenericParametersCompileError",
     ]);
   });
 
@@ -1618,7 +1618,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: List<of tuple(Int, Int)>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: List<of tuple(Int, Int)>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -1636,7 +1636,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of tuple(Int, Int)> Provided: Procedure (List<of tuple(Int, Int)>). Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of tuple(Int, Int)>, Provided: Procedure (List<of tuple(Int, Int)>). Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 

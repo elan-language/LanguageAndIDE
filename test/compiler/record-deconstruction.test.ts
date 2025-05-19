@@ -757,8 +757,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int. Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Int Provided: String. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: String, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: String. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -784,7 +784,7 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: String, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
       "'b' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
@@ -812,7 +812,7 @@ end record`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "The identifier 'a' is already used for a variable and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
-      "Incompatible types. Expected: String Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: String, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
