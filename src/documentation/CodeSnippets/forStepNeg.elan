@@ -1,0 +1,9 @@
+# 736c7edc1e355e7cf1c6d965e881ef2ba3ec22e5cef9614f535060f866553223 Elan 1.1.2 guest default_profile valid
+
+main
+  variable names set to ["Tom", "Dick", "Harriet"]
+  variable s set to -1
+  for n from 2 to 0 step -(-s)
+    print names[n]
+  end for
+end main
