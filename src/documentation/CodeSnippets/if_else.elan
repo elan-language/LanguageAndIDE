@@ -1,0 +1,16 @@
+# 9442e7ee8050a0f2b96c88dda79a595020b26bab8d2f6fcd9489ef38cd75c08a Elan 1.1.2 guest default_profile valid
+
+main
+  variable head set to 0
+  variable apple set to 0
+  variable body set to new List<of Int>()
+  if head is apple then
+    call setAppleToRandomPosition(apple, body)
+  else
+    call body.removeAt(0)
+  end if
+end main
+
+procedure setAppleToRandomPosition(x as Int, y as List<of Int>)
+
+end procedure
