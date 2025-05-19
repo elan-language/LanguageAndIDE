@@ -313,7 +313,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -332,7 +332,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -357,7 +357,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Bar Provided: Foo. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Bar, Provided: Foo. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -411,7 +411,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Bar Provided: Foo. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Bar, Provided: Foo. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -440,7 +440,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Bar Provided: Foo. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Bar, Provided: Foo. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 });

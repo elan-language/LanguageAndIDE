@@ -406,7 +406,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Boolean. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Boolean. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -479,7 +479,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: String, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -535,7 +535,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Float. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 

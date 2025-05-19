@@ -523,7 +523,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: String, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -586,7 +586,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 

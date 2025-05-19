@@ -465,7 +465,7 @@ enum Fruit apple, orange, pear`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: Fruit. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Fruit. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 

@@ -219,14 +219,14 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -332,7 +332,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -351,7 +351,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean Provided: String. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: String. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 

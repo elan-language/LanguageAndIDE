@@ -674,7 +674,7 @@ end record`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
