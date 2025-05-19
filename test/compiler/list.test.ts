@@ -1409,7 +1409,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expected: '<of Type>'. Click for more info.LangRef.html#compile_error",
+      "Expected: '<of Type>'. Click for more info.LangRef.html#GenericParametersCompileError",
     ]);
   });
 
@@ -1600,7 +1600,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expected: '<of Type>'. Click for more info.LangRef.html#compile_error",
+      "Expected: '<of Type>'. Click for more info.LangRef.html#GenericParametersCompileError",
     ]);
   });
 

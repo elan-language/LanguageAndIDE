@@ -188,7 +188,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expected: '<of Type>'. Click for more info.LangRef.html#compile_error",
+      "Expected: '<of Type>'. Click for more info.LangRef.html#GenericParametersCompileError",
     ]);
   });
 

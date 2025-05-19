@@ -430,7 +430,7 @@ export class GenericParametersCompileError extends CompileError {
       severity,
       `${msg} Click for more info.`,
       location,
-      "LangRef.html#compile_error",
+      "LangRef.html#GenericParametersCompileError",
     );
   }
 }
