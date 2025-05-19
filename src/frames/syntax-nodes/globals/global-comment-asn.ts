@@ -2,12 +2,11 @@ import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
 import { FrameAsn } from "../frame-asn";
 
-export class ReturnAsn extends FrameAsn {
-  isStatement = true;
-  isReturnStatement = true;
+export class GlobalCommentAsn extends FrameAsn {
+  isGlobal = true;
 
   constructor(
-    public readonly expr: AstNode,
+    private readonly text: AstNode,
     fieldId: string,
     scope: Scope,
   ) {
@@ -16,6 +15,7 @@ export class ReturnAsn extends FrameAsn {
 
   compile(): string {
     this.compileErrors = [];
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}return ${this.expr.compile()};`;
+    this.text.compile();
+    return "";
   }
 }

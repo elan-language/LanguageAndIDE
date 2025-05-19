@@ -3,10 +3,10 @@ import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { EnumFrameAsn } from "./enum-frame-asn";
-import { ConstantFrameAsn } from "./globals/constant-frame-asn";
-import { MainFrameAsn } from "./globals/main-frame-asn";
-import { TestFrameAsn } from "./globals/test-frame-asn";
+import { ConstantFrameAsn } from "./globals/constant-asn";
+import { EnumFrameAsn } from "./globals/enum-asn";
+import { MainFrameAsn } from "./globals/main-asn";
+import { TestFrameAsn } from "./globals/test-asn";
 
 export class FileAsn extends AbstractAstNode implements AstNode {
   constructor(

@@ -5,7 +5,7 @@ import { Scope } from "../../interfaces/scope";
 import { SymbolType } from "../../interfaces/symbol-type";
 import { UnknownType } from "../../symbols/unknown-type";
 import { FrameAsn } from "../frame-asn";
-import { TestFrameAsn } from "../globals/test-frame-asn";
+import { TestFrameAsn } from "../globals/test-asn";
 
 export class AssertAsn extends FrameAsn implements AstNode {
   constructor(

@@ -4,17 +4,17 @@ import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
 import { SymbolType } from "../../interfaces/symbol-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
-import { AbstractAstNode } from "../abstract-ast-node";
 import { transforms } from "../ast-helpers";
+import { FrameAsn } from "../frame-asn";
 
-export class ConstantFrameAsn extends AbstractAstNode implements AstNode {
+export class ConstantFrameAsn extends FrameAsn implements AstNode {
   constructor(
     private name: AstNode,
     private value: AstNode,
-    public readonly fieldId: string,
-    private scope: Scope,
+    fieldId: string,
+    scope: Scope,
   ) {
-    super();
+    super(fieldId, scope);
   }
 
   symbolType(): SymbolType {

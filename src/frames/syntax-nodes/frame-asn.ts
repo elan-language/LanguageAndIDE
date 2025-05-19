@@ -5,7 +5,7 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { singleIndent } from "../frame-helpers";
-import { BreakpointStatus } from "../status-enums";
+import { BreakpointEvent, BreakpointStatus } from "../status-enums";
 import { allScopedSymbols, orderSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { Transforms } from "../interfaces/transforms";
@@ -139,5 +139,50 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
 
   getFile(): File {
     return (this.scope as unknown as Parent).getFile();
+  }
+
+  getNextState(currentState: BreakpointStatus, event: BreakpointEvent) {
+    switch (currentState) {
+      case BreakpointStatus.none:
+        switch (event) {
+          case BreakpointEvent.clear:
+            return BreakpointStatus.none;
+          case BreakpointEvent.activate:
+            return BreakpointStatus.singlestep;
+          case BreakpointEvent.disable:
+            return BreakpointStatus.none;
+        }
+      case BreakpointStatus.disabled:
+        switch (event) {
+          case BreakpointEvent.clear:
+            return BreakpointStatus.none;
+          case BreakpointEvent.activate:
+            return BreakpointStatus.active;
+          case BreakpointEvent.disable:
+            return BreakpointStatus.disabled;
+        }
+      case BreakpointStatus.active:
+        switch (event) {
+          case BreakpointEvent.clear:
+            return BreakpointStatus.none;
+          case BreakpointEvent.activate:
+            return BreakpointStatus.active;
+          case BreakpointEvent.disable:
+            return BreakpointStatus.disabled;
+        }
+      case BreakpointStatus.singlestep:
+        switch (event) {
+          case BreakpointEvent.clear:
+            return BreakpointStatus.none;
+          case BreakpointEvent.activate:
+            return BreakpointStatus.singlestep;
+          case BreakpointEvent.disable:
+            return BreakpointStatus.none;
+        }
+    }
+  }
+
+  updateBreakpoints(event: BreakpointEvent): void {
+    this.breakpointStatus = this.getNextState(this.breakpointStatus, event);
   }
 }
