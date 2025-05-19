@@ -33,3 +33,10 @@
 #    you can just render a pair of values as a literal list e.g. minInt([x_1,39])
 # 12.Slow down the simulation slightly by calling pause within the loop
 # Run the program and check that the animal stays within the bounds of the Display.
+#
+# OPTIONAL REFINEMENTS (if you finish early)
+# a. As well as moving orthogonally one square, make the random movement one of 8 options, which include the four diagonals.
+# b. Have two burrowing animals working at once, with different colours. (Should be easier than it sounds). 
+# c. Don't let the two animals ever overlap. If one is about to move onto the other's current location, cancel that move.
+# d. Each time around the loop paint a random square white to represent a part of the burrow collapsing. When the burrow is small, you'll hardly see anything, but as it gets larger it will start to collapse more.
+# e. Instead of moving at random, bias the movement such that it digs more aggressively. In other words, read the values of the four adjacent blocks and go to the first one it finds empty. If none are empty then move at random.
