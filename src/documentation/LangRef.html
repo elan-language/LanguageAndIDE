@@ -438,7 +438,7 @@ Notes:
 </ul>
 <!-- #endregion-->
 <!--     #region Abstract Class-->
-<h2 id="abstract_class">Abstract Class</h2>
+<h2 id="AbstractClass">Abstract class</h2>
 <p>See also: <a href="Inheritance">Inheritance</a></p>
 <p>An <el-code>abstract class</el-code> may not be instantiated (and hence may not define a constructor). It may define concrete members i.e.:</p>
 <ul>
@@ -571,7 +571,7 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
 </ul>
 <!-- #endregion-->
 <!--     #region Abstract Property-->
-<h2 id="abstract_property">Abstract Property</h2>
+<h2 id="AbstractProperty">Abstract Property</h2>
 <p>An abstract property may be defined only on an <a href="#Abstract_class"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
 <!-- #endregion-->
 <!--     #region Abstract Procedure Method-->
@@ -817,7 +817,7 @@ The variable holding the exception (by default named <el-code>e</el-code>, but t
 <p>Elan allows local named values to be defined with the same name as a constant, function, or procedure defined at global level or defined in the standard library. In such cases, when the name is used within the same method, then it will refer to the local definition. If you have done this, but then need to access the <el-code>constant</el-code>, <el-code>function</el-code>, or <el-code>procedure</el-code> with the same name, then you can simply prefix the use of the name with a &lsquo;qualifier&rsquo; of either <el-code>global.</el-code> or <el-code>library.</el-code> as appropriate.</p>
 <!--   #endregion-->
 <!--   #region Indexed Value-->
-<h2 id="indexed_value">Indexed Value</h2>
+<h2 id="IndexedValue">Indexed Value</h2>
 If a variable is of an indexable Type, then an index or index range may be applied to the variable within an expression. For example:
 <pre>
     <el-code>variable a set to "Hello World!"</el-code>
@@ -843,7 +843,7 @@ Writing a value to a specific index location is done through a method such as in
 <p>Arithmetic operators can be applied to <el-code>Float</el-code> or <el-code>Int</el-code> arguments. The result may be a <el-code>Float</el-code> or an <el-code>Int</el-code> depending on the arguments.</p>
 <p>For <el-code>^ + - *</el-code>, the result is a <el-code>Float</el-code> if either of the arguments is a <el-code>Float</el-code>, and an <el-code>Int</el-code> if both arguments are <el-code>Int</el-code>.</p>
 <p>For <el-code>/</el-code>, the result is always a <el-code>Float</el-code>.  It can be converted to an <el-code>Int</el-code> using the <a href="LibRef.html#floor">floor()</a> function.</p>
-<p><el-code>mod</el-code> and <el-code>div</el-code> only operate on <el-code>Int</el-code> arguments, and the result is <el-code>Int</el-code>.
+<p id="mod"><el-code>mod</el-code> and <el-code>div</el-code> only operate on <el-code>Int</el-code> arguments, and the result is <el-code>Int</el-code>.
 <pre>
     <el-code>2^3</el-code>             &rarr;  <el-code>8</el-code>
     <el-code>2/3</el-code>             &rarr;  <el-code>0.666...</el-code>
@@ -865,7 +865,7 @@ The minus sign may also be used as a unary operator, and this takes precedence o
 </pre>
 <p>Note that the Elan editor automatically puts spaces around the <el-code>+</el-code> and <el-code>&ndash;</el-code> binary operators, but not around <el-code>^</el-code>, <el-code>/</el-code> or <el-code>*</el-code>. This is just to visually reinforce the precedence.</p>
 
-<h4 class="no-TOC" id="Logical_operator">Logical operators</h4>
+<h4 class="no-TOC" id="LogicalOperator">Logical operators</h4>
 <p>Logical operators are applied to <el-code>Boolean</el-code> arguments and return a <el-code>Boolean</el-code> result.</p>
 <el-code>and</el-code> and <el-code>or</el-code> are binary operators<br>
 <el-code>not</el-code> is a unary operator. </p>
@@ -879,7 +879,7 @@ example, which implements an &lsquo;exclusive or&rsquo;, need not use brackets a
 <el-kw>end function</el-kw></el-func>
 </el-code-block>
 
-<h4 class="no-TOC" id="Equality_test">Equality testing</h4>
+<h4 class="no-TOC" id="EqualityTesting">Equality testing</h4>
 <p>Equality testing uses the <el-code>is</el-code> and <el-code>isnt</el-code> keywords with two arguments. The arguments may be of any Type.</p>
 <ul>
 <li><el-code>a is b</el-code> returns <el-code>true</el-code>, if <el-code>a</el-code> and <el-code>b</el-code> are both of the same Type and their values are equal. The only exception is that if one argument is of Type <el-code>Float</el-code> and the other is of Type <el-code>Int</el-code>, then <el-code>is</el-code> will return <el-code>true</el-code> if their values are the same, i.e. are the same whole number.</li>
@@ -900,7 +900,8 @@ example, which implements an &lsquo;exclusive or&rsquo;, need not use brackets a
 <p>Each is applied to two arguments of Type <el-code>Float</el-code>, but any variable or expression that evaluates to an <el-code>Int</el-code> may always be used where a <el-code>Float</el-code> is expected.</p>
 Notes:
 <ul>
-<li>These operators cannot be applied to strings. Use the dot methods <el-code>isBefore</el-code> and <el-code>isAfter</el-code> to compare strings alphabetically. See <a href="#Dot_methods_on">Dot methods on a String</a>.</li>
+<li>These operators cannot be applied to strings. Use the dot methods <el-code>isBefore</el-code> and <el-code>isAfter</el-code> to compare strings alphabetically.
+ See <a href="LibRef.html#CommonDotMethods">Common dot methods</a>.</li>
 <li>Where a binary operator is expected, as soon as you type <el-code>&lt; </el-code>or <el-code>&gt;</el-code> the editor will automatically insert a space after it. To enter <el-code>&lt;=</el-code> or <el-code>&gt;=</el-code> you need to delete the space (using the Backspace key) and then type <el-code>=</el-code>.</li>
 </ul>
 
