@@ -32,7 +32,7 @@ Comments may be inserted at the same level as a <a href="#Global">global</a>,
 
 <!--   #region Global Instructions-->
 <!--     #region Heading & Intro-->
-<h1 id="Global">Global Instructions</h1>
+<h1 id="GlobalInstructions">Global Instructions</h1>
 <p>Global instructions (also referred to simply as &lsquo;globals&rsquo;) are located <em>directly</em> within a code file.
   They are never indented from the left-hand edge, nor may they be located <em>within</em> other instructions.
   Three of the globals &ndash; <el-code>main</el-code>, <el-code>function</el-code>, and <el-code>procedure</el-code> &ndash; are described as &lsquo;methods&rsquo; and these are defined by one or more <a href="#statement">statements</a> within them.</em>
@@ -124,8 +124,9 @@ Unlike a function, a procedure does not return a value.
 <!-- #endregion-->
 <!--     #region Function-->
 <h2 id="function">Function</h2>
-<p>A <el-code>function</el-code> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in a statement or expression.
-Unlike a <a href="#procedure">procedure</a>, a function returns a value. Also unlike a procedure, a function can have no &lsquo;side effects&rsquo; and cannot depend on any <a href="#System_methods">System methods</a>.</p>
+<p>A <el-code>function</el-code> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in a statement or expression.</p>
+<p>Unlike a <a href="#procedure">procedure</a>, a function returns a value. Also unlike a procedure, a function can have no &lsquo;side effects&rsquo; and cannot depend on any <a href="#System_methods">System methods</a>.</p>
+<p>The <el-code><el-kw>return</el-kw></el-code> statement is followed by the value returned by the function.</p>
 Example of a function:</p>
 <el-code-block source="score.elan">
 <el-func class="ok multiline" id="func91" tabindex="0">
@@ -138,7 +139,7 @@ Example of a function:</p>
 <!-- #endregion-->
 <!--     #region Parameters-->
 <div id="as"></div>
-<h2 id="parameter">Parameters</h2>
+<h2 id="Parameters">Parameters</h2>
 Parameters for both <el-code>procedures</el-code> and <el-code>functions</el-code> are defined in exactly the same way: each parameter definition takes the form:
 <br>&nbsp;&nbsp;&lt;name&gt; <el-code>as</el-code> &lt;Type&gt;
 <br> for example:
@@ -369,8 +370,10 @@ Or even to the same name if that name is a variable:</p>
 When deconstructing, the names of the values must match the names of the <el-code>properties</el-code> of the <el-code><el-kw>record</el-kw></el-code>. However, the ordering of the names does not have to match the order in which the <el-code>properties</el-code> are defined in the <el-code><el-kw>record</el-kw></el-code>.
 <!-- #endregion-->
 <!--     #region Class-->
-<h2 id="class">Class</h2>
-
+<h2 id="Class">Class</h2>
+<!-- TODO Subclass and Superclass -->
+<div id="Subclass"></div>
+<div id="Superclass"></div>
 <p>See also: <a href="Inheritance">Inheritance</a></p>
 
 <p>A <el-code>class</el-code> is a user-defined Type offering far richer capability than an <el-code>enum</el-code>. </p>
@@ -474,7 +477,7 @@ If you wish to have several subclasses of an <el-code>abstract class</el-code> t
 
 <!--   #region Member Instructions-->
 <!--     #region Heading & Intro-->
-<h1 id="Member">Member Instructions</h1>
+<h1 id="MemberInstructions">Member Instructions</h1>
 <p>Member instructions (also referred to simply as &lsquo;members&rsquo;) are located directly within the a: <el-code>record</el-code>, <el-code>class</el-code>, <el-code>abstract class</el-code>, <el-code>interface</el-code>.
   All members, with the exception of <el-code>property</el-code>, define one or more <a href="#statement">statements</a> within them.</p>
 <p>When you navigate to a <el-code>new code</el-code> that is at <em>member</em> level
@@ -591,7 +594,7 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
 <!--     #endregion -->
 <!--   #region Statement Instructions-->
 <!--     #region Heading & Intro-->
-<h1 id="statement">Statement Instructions</h1>
+<h1 id="StatementInstructions">Statement Instructions</h1>
 <p>Statement instructions (also referred to simply as &lsquo;statements&rsquo;) are located within &lsquo;methods&rsquo;. Some of these statements may contain other statements.</p>
 <p>When you navigate to a <el-code>new code</el-code> that is at <em>statement</em> level
   (located within a <a href="#Global">global</a> or a <a href="#Member">member</a> instruction)
@@ -642,6 +645,7 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
 <!--     #endregion-->
 <!--     #region For loop-->
 <h2 id="for">For loop</h2>
+<div id="step"></div>
 <p>The <el-code>for..from..to..step..</el-code> construct specifies looping through a sequence of integer values with a given increment.</p>
 <p>The <el-code>for..</el-code> loop counter variable (which counts from 0) is of Type <el-code><el-type>Int</el-type></el-code> and does not have to have been defined in a <el-code>variable</el-code> statement.
 <p>The three defining values, <el-code>from</el-code>, <el-code>to</el-code>, and <el-code>step</el-code>, must all be of Type <el-code><el-type>Int</el-type></el-code>, positive or negative.
@@ -837,9 +841,9 @@ Writing a value to a specific index location is done through a method such as in
 </pre>
 <!--   #endregion-->
 <!--   #region Operator-->
-<h2 id="operator">Operators</h2>
+<h2 id="Operators">Operators</h2>
 
-<h4 class="no-TOC" id="Arithmetic_operator">Arithmetic operators</h4>
+<h4 class="no-TOC" id="ArithmeticOperators">Arithmetic operators</h4>
 <p>Arithmetic operators can be applied to <el-code>Float</el-code> or <el-code>Int</el-code> arguments. The result may be a <el-code>Float</el-code> or an <el-code>Int</el-code> depending on the arguments.</p>
 <p>For <el-code>^ + - *</el-code>, the result is a <el-code>Float</el-code> if either of the arguments is a <el-code>Float</el-code>, and an <el-code>Int</el-code> if both arguments are <el-code>Int</el-code>.</p>
 <p>For <el-code>/</el-code>, the result is always a <el-code>Float</el-code>.  It can be converted to an <el-code>Int</el-code> using the <a href="LibRef.html#floor">floor()</a> function.</p>
@@ -865,7 +869,11 @@ The minus sign may also be used as a unary operator, and this takes precedence o
 </pre>
 <p>Note that the Elan editor automatically puts spaces around the <el-code>+</el-code> and <el-code>&ndash;</el-code> binary operators, but not around <el-code>^</el-code>, <el-code>/</el-code> or <el-code>*</el-code>. This is just to visually reinforce the precedence.</p>
 
-<h4 class="no-TOC" id="LogicalOperator">Logical operators</h4>
+<h4 class="no-TOC" id="LogicalOperators">Logical operators</h4>
+<!-- TODO table of logical operators -->
+<div id="and"></div>
+<div id="not"></div>
+<div id="or"></div>
 <p>Logical operators are applied to <el-code>Boolean</el-code> arguments and return a <el-code>Boolean</el-code> result.</p>
 <el-code>and</el-code> and <el-code>or</el-code> are binary operators<br>
 <el-code>not</el-code> is a unary operator. </p>
