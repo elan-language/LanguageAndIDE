@@ -151,6 +151,7 @@ suite("Parsing - Completions", () => {
       ParseStatus.incomplete,
       "> <i>expression</i>",
     );
+    testCompletion(new Lambda(), "lambda => ", ParseStatus.incomplete, "<i>expression</i>");
   });
   test("#884", () => {
     testCompletion(
