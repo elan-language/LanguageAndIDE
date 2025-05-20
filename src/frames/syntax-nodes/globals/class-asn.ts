@@ -163,8 +163,8 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     return `[${ps}]`;
   }
 
-  private mapSymbol(c: ElanSymbol, transforms: Transforms): [SymbolType, string] {
-    return [c.symbolType(transforms), c.symbolId];
+  private mapSymbol(c: ElanSymbol): [SymbolType, string] {
+    return [c.symbolType(), c.symbolId];
   }
 
   public getDirectSuperClassesTypeAndName(transforms: Transforms) {
@@ -175,7 +175,7 @@ export abstract class ClassAsn extends FrameAsn implements Class {
         const nodes = superClasses.items.filter((i) => isAstIdNode(i));
         const typeAndName: [SymbolType, string][] = nodes
           .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
-          .map((c) => this.mapSymbol(c, transforms));
+          .map((c) => this.mapSymbol(c));
 
         return typeAndName;
       }

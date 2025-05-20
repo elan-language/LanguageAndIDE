@@ -15,11 +15,10 @@ export class EachAsn extends FrameWithStatementsAsn {
   constructor(
     private readonly variable: AstNode,
     private readonly iter: AstNode,
-    children: AstNode[],
     fieldId: string,
     scope: Scope,
   ) {
-    super(children, fieldId, scope);
+    super(fieldId, scope);
   }
 
   compile(): string {
@@ -58,7 +57,7 @@ ${this.indent()}}`;
       const symbol = super.resolveSymbol(id, transforms, this);
       return {
         symbolId: id,
-        symbolType: (t) => symbol.symbolType(t),
+        symbolType: () => symbol.symbolType(),
         symbolScope: SymbolScope.counter,
       };
     }

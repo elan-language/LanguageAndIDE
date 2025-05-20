@@ -67,9 +67,7 @@ import {
   RunStatus,
   TestStatus,
 } from "./status-enums";
-import { DuplicateSymbol } from "./symbols/duplicate-symbol";
-import { elanSymbols } from "./symbols/elan-symbols";
-import { isSymbol, symbolMatches } from "./symbols/symbol-helpers";
+//import { elanSymbols } from "./symbols/elan-symbols";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -132,13 +130,14 @@ export class FileImpl implements File, Scope {
   private version = elanVersion;
   private isProduction = isElanProduction;
 
-  symbolMatches(id: string, all: boolean): ElanSymbol[] {
-    const languageMatches = symbolMatches(id, all, elanSymbols);
-    const libMatches = this.libraryScope.symbolMatches(id, all);
-    const globalSymbols = this.getChildren().filter((c) => isSymbol(c)) as ElanSymbol[];
-    const matches = symbolMatches(id, all, globalSymbols);
+  symbolMatches(_id: string, _all: boolean): ElanSymbol[] {
+    //const languageMatches = symbolMatches(id, all, elanSymbols);
+    // const libMatches = this.libraryScope.symbolMatches(id, all);
+    // const globalSymbols = this.getChildren().filter((c) => isSymbol(c)) as ElanSymbol[];
+    // const matches = symbolMatches(id, all, globalSymbols);
 
-    return languageMatches.concat(matches).concat(libMatches);
+    // return languageMatches.concat(matches).concat(libMatches);
+    return [];
   }
 
   getFile(): File {
@@ -356,8 +355,12 @@ export class FileImpl implements File, Scope {
   }
 
   compile(): string {
-    const stdlib = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
-    return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}`;
+    const ast = this.transform.transform(this, "", undefined);
+
+    return ast?.compile() ?? "";
+
+    // const stdlib = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
+    // return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}`;
   }
 
   compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string {
@@ -858,17 +861,17 @@ export class FileImpl implements File, Scope {
 
   resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
     // unknown because of typescript quirk
-    const globalSymbols = (this.getChildren().filter((c) => isSymbol(c)) as ElanSymbol[]).concat(
-      elanSymbols,
-    );
-    const matches = globalSymbols.filter((s) => s.symbolId === id);
+    // const globalSymbols = (this.getChildren().filter((c) => isSymbol(c)) as ElanSymbol[]).concat(
+    //   elanSymbols,
+    // );
+    // const matches = globalSymbols.filter((s) => s.symbolId === id);
 
-    if (matches.length === 1) {
-      return matches[0];
-    }
-    if (matches.length > 1) {
-      return new DuplicateSymbol(matches);
-    }
+    // if (matches.length === 1) {
+    //   return matches[0];
+    // }
+    // if (matches.length > 1) {
+    //   return new DuplicateSymbol(matches);
+    // }
 
     return this.libraryScope.resolveSymbol(id, transforms, this);
   }

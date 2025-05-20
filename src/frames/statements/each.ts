@@ -100,7 +100,7 @@ ${this.indent()}}`;
       const symbol = super.resolveSymbol(id, transforms, this);
       return {
         symbolId: id,
-        symbolType: (t) => symbol.symbolType(t),
+        symbolType: () => symbol.symbolType(),
         symbolScope: SymbolScope.counter,
       };
     }

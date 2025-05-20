@@ -149,7 +149,7 @@ export class CallStatement extends AbstractFrame implements Statement {
     );
     mustBeProcedure(
       procSymbol.symbolId,
-      procSymbol.symbolType(transforms),
+      procSymbol.symbolType(),
       procSymbol.symbolScope,
       this.compileErrors,
       this.htmlId,
@@ -159,7 +159,7 @@ export class CallStatement extends AbstractFrame implements Statement {
       mustBePublicMember(procSymbol, this.compileErrors, this.htmlId);
     }
 
-    const procSymbolType = procSymbol.symbolType(transforms);
+    const procSymbolType = procSymbol.symbolType();
     const parameterList = this.args.getOrTransformAstNode(transforms);
 
     if (isAstCollectionNode(parameterList)) {

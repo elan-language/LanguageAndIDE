@@ -61,7 +61,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   commonCompile() {
     this.compileErrors = [];
-    const rootSt = this.rootSymbol().symbolType(transforms());
+    const rootSt = this.rootSymbol().symbolType();
 
     mustBeKnownSymbolType(rootSt, this.id, this.compileErrors, this.fieldId);
 
@@ -118,7 +118,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   symbolType() {
     const symbol = this.rootSymbol();
-    const st = symbol.symbolType(transforms());
+    const st = symbol.symbolType();
 
     if (isReifyableSymbolType(st)) {
       return st.reify(this.getGenericParameterSymbolTypes());

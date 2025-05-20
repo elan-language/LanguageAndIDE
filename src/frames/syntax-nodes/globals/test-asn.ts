@@ -6,8 +6,8 @@ import { compileNodes } from "../ast-helpers";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
 export class TestFrameAsn extends FrameWithStatementsAsn implements AstNode {
-  constructor(children: AstNode[], fieldId: string, scope: Scope) {
-    super(children, fieldId, scope);
+  constructor(fieldId: string, scope: Scope) {
+    super(fieldId, scope);
   }
   symbolType(): SymbolType {
     throw new Error("Method not implemented.");

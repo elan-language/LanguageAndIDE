@@ -14,11 +14,10 @@ export abstract class ProcedureAsn extends FrameWithStatementsAsn implements Ela
   constructor(
     protected readonly name: AstNode,
     protected readonly params: AstNode,
-    protected readonly children: AstNode[],
     fieldId: string,
     scope: Scope,
   ) {
-    super(children, fieldId, scope);
+    super(fieldId, scope);
   }
 
   isProcedure = true;

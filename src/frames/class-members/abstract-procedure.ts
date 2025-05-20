@@ -82,8 +82,8 @@ ${this.indent()}}\r
     return this.name.text;
   }
 
-  symbolType(transforms?: Transforms) {
-    const [pn, pt] = this.params.symbolNamesAndTypes(transforms);
+  symbolType() {
+    const [pn, pt] = this.params.symbolNamesAndTypes();
     return new ProcedureType(pn, pt, false, true);
   }
 

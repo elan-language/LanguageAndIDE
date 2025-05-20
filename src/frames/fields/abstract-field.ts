@@ -70,6 +70,10 @@ export abstract class AbstractField implements Selectable, Field {
     this._parseStatus = ParseStatus.incomplete; // (see setOptional)
   }
 
+  getRootNode(): ParseNode | undefined {
+    return this.rootNode;
+  }
+
   getFile(): File {
     return this.holder.getFile();
   }

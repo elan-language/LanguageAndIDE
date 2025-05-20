@@ -31,9 +31,7 @@ export class ThisAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    return this.scope
-      .resolveSymbol(thisKeyword, transforms(), this.scope)
-      ?.symbolType(transforms());
+    return this.scope.resolveSymbol(thisKeyword, transforms(), this.scope)?.symbolType();
   }
 
   toString() {

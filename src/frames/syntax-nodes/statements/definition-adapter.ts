@@ -1,10 +1,9 @@
 import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { SymbolType } from "../../interfaces/symbol-type";
-import { Transforms } from "../../interfaces/transforms";
 import {
   getDeconstructionIds,
-  isVariableStatement,
   isLetStatement,
+  isVariableStatement,
 } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 
@@ -29,8 +28,8 @@ export class DefinitionAdapter implements ElanSymbol {
   }
 
   symbolId: string;
-  symbolType(transforms?: Transforms): SymbolType {
-    return this.adapted.symbolType(transforms);
+  symbolType(): SymbolType {
+    return this.adapted.symbolType();
   }
   symbolScope: SymbolScope;
 }

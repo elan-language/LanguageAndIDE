@@ -106,7 +106,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   }
 
   symbolType() {
-    const st = this.getSymbol().symbolType(transforms());
+    const st = this.getSymbol().symbolType();
 
     if (isDeconstructedType(st)) {
       return st.symbolTypeFor(this.id);

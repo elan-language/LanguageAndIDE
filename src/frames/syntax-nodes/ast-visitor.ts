@@ -1,8 +1,15 @@
 import { ElanCompilerError } from "../../elan-compiler-error";
+import { StdLib } from "../../standard-library/std-lib";
+import { StdLibSymbols } from "../../standard-library/std-lib-symbols";
+import { AbstractField } from "../fields/abstract-field";
+import { FileImpl } from "../file-impl";
+import { MainFrame } from "../globals/main-frame";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
+import { Field } from "../interfaces/field";
+import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../interfaces/parse-node";
 import { Scope } from "../interfaces/scope";
 import { globalKeyword, libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
@@ -64,7 +71,9 @@ import { TypeNameNode } from "../parse-nodes/type-name-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
 import { WithClause } from "../parse-nodes/with-clause";
+import { Print } from "../statements/print";
 import { SetStatement } from "../statements/set-statement";
+import { VariableStatement } from "../statements/variable-statement";
 import { FuncName, ImageName, TupleName } from "../symbols/elan-type-names";
 import { EnumType } from "../symbols/enum-type";
 import { isAstIdNode, mapOperation } from "./ast-helpers";
@@ -79,8 +88,10 @@ import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { DiscardAsn } from "./discard-asn";
 import { EmptyAsn } from "./empty-asn";
 import { EmptyTypeAsn } from "./empty-type-asn";
+import { FileAsn } from "./file-asn";
 import { FixedIdAsn } from "./fixed-id-asn";
 import { FuncCallAsn } from "./func-call-asn";
+import { MainFrameAsn } from "./globals/main-asn";
 import { IdAsn } from "./id-asn";
 import { IdDefAsn } from "./id-def-asn";
 import { IfExprAsn } from "./if-expr-asn";
@@ -105,6 +116,8 @@ import { ParamDefAsn } from "./param-def-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
 import { SegmentedStringAsn } from "./segmented-string-asn";
+import { PrintAsn } from "./statements/print-asn";
+import { VariableAsn } from "./statements/variable-asn";
 import { ThisAsn } from "./this-asn";
 import { ToAsn } from "./to-asn";
 import { TypeAsn } from "./type-asn";
@@ -139,10 +152,50 @@ export function transformMany(
 }
 
 export function transform(
-  node: ParseNode | undefined,
+  node: ParseNode | FileImpl | Frame | Field | undefined,
   fieldId: string,
   scope: Scope,
 ): AstNode | undefined {
+  if (node instanceof FileImpl) {
+    // todo make stdlinsymbols an immutable singleton ?
+    const astRoot = new FileAsn(new StdLibSymbols(new StdLib()));
+
+    astRoot.children = node
+      .getChildren()
+      .map((f) => transform(f, "", astRoot as unknown as Scope)) as AstNode[];
+
+    return astRoot;
+  }
+
+  if (node instanceof MainFrame) {
+    const mainAsn = new MainFrameAsn(node.getHtmlId(), scope);
+
+    mainAsn.children = node
+      .getChildren()
+      .map((f) => transform(f, f.getHtmlId(), mainAsn)) as AstNode[];
+
+    return mainAsn;
+  }
+
+  if (node instanceof VariableStatement) {
+    const varAsn = new VariableAsn(node.getHtmlId(), scope);
+
+    varAsn.name = transform(node.name, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
+    varAsn.expr = transform(node.name, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
+
+    return varAsn;
+  }
+
+  if (node instanceof Print) {
+    const printAsn = new PrintAsn(node.getHtmlId(), scope);
+    printAsn.expr = transform(node.expr, node.getHtmlId(), printAsn) ?? EmptyAsn.Instance;
+    return printAsn;
+  }
+
+  if (node instanceof AbstractField) {
+    return transform(node.getRootNode(), node.getHtmlId(), scope);
+  }
+
   if (node instanceof BracketedExpression) {
     return new BracketedAsn(transform(node.expr, fieldId, scope)!, fieldId);
   }

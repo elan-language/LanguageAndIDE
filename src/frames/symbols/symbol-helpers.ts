@@ -163,7 +163,7 @@ export function scopePrefix(
     return `this.`;
   }
 
-  if (isFunction(symbol, transforms()) && symbol.symbolScope === SymbolScope.program) {
+  if (isFunction(symbol) && symbol.symbolScope === SymbolScope.program) {
     return "global.";
   }
 
@@ -300,24 +300,24 @@ export function isPossibleExtensionForType(actualType: SymbolType, procType: Pro
   return false;
 }
 
-export function isProcedure(s: ElanSymbol, transforms: Transforms) {
-  return s.symbolType(transforms) instanceof ProcedureType;
+export function isProcedure(s: ElanSymbol) {
+  return s.symbolType() instanceof ProcedureType;
 }
 
-export function isFunction(s: ElanSymbol, transforms: Transforms) {
-  return s.symbolType(transforms) instanceof FunctionType;
+export function isFunction(s: ElanSymbol) {
+  return s.symbolType() instanceof FunctionType;
 }
 
-export function isPureFunction(s: ElanSymbol, transforms: Transforms) {
-  if (isFunction(s, transforms)) {
+export function isPureFunction(s: ElanSymbol) {
+  if (isFunction(s)) {
     const ft = s.symbolType();
     return ft instanceof FunctionType && ft.isPure;
   }
   return false;
 }
 
-export function isSystemFunction(s: ElanSymbol, transforms: Transforms) {
-  if (isFunction(s, transforms)) {
+export function isSystemFunction(s: ElanSymbol) {
+  if (isFunction(s)) {
     const ft = s.symbolType();
     return ft instanceof FunctionType && !ft.isPure;
   }
@@ -370,7 +370,7 @@ function matchingSymbolsWithQualifier(
   }
 
   // class scope so all or matching symbols on class
-  let qualSt = qual.symbolType(transforms);
+  let qualSt = qual.symbolType();
 
   if (isFunctionType(qualSt)) {
     qualSt = qualSt.returnType;
@@ -399,7 +399,7 @@ function matchingSymbolsWithQualifier(
   const allExtensions = getGlobalScope(scope)
     .libraryScope.symbolMatches(propId, !propId, NullScope.Instance)
     .filter((s) => {
-      const st = s.symbolType(transforms);
+      const st = s.symbolType();
       return (
         (st instanceof ProcedureType || st instanceof FunctionType) &&
         st.isExtension &&
@@ -420,7 +420,7 @@ export function matchingSymbols(
   }
 
   const allNotExtensions = scope.symbolMatches(spec.toMatch, !spec.toMatch, scope).filter((s) => {
-    const st = s.symbolType(transforms);
+    const st = s.symbolType();
     let isCall = false;
     let isExtension = false;
 
@@ -467,7 +467,7 @@ export function filteredSymbols(
   scope: Scope,
 ): ElanSymbol[] {
   const matches = matchingSymbols(spec, transforms, scope);
-  const filters = filtersForTokenType(spec.tokenTypes, transforms);
+  const filters = filtersForTokenType(spec.tokenTypes);
   const filtered = ensureUnique(filterSymbols(matches, filters));
 
   const startsWith = filtered
@@ -555,17 +555,14 @@ export function isId(f: ElanSymbol): f is ElanSymbol {
   );
 }
 
-export function filterForTokenType(
-  tt: TokenType,
-  transforms: Transforms,
-): (s?: ElanSymbol) => boolean {
+export function filterForTokenType(tt: TokenType): (s?: ElanSymbol) => boolean {
   switch (tt) {
     case TokenType.method_function:
-      return (s?: ElanSymbol) => isPureFunction(s!, transforms);
+      return (s?: ElanSymbol) => isPureFunction(s!);
     case TokenType.method_procedure:
-      return (s?: ElanSymbol) => isProcedure(s!, transforms);
+      return (s?: ElanSymbol) => isProcedure(s!);
     case TokenType.method_system:
-      return (s?: ElanSymbol) => isSystemFunction(s!, transforms);
+      return (s?: ElanSymbol) => isSystemFunction(s!);
     case TokenType.type_concrete:
       return isConcreteTypeName;
     case TokenType.type_abstract:
@@ -591,14 +588,11 @@ export function filterForTokenType(
   }
 }
 
-export function filtersForTokenType(
-  tokenTypes: Set<TokenType>,
-  transforms: Transforms,
-): ((s?: ElanSymbol) => boolean)[] {
+export function filtersForTokenType(tokenTypes: Set<TokenType>): ((s?: ElanSymbol) => boolean)[] {
   const filters: ((s?: ElanSymbol) => boolean)[] = [];
 
   for (const f of tokenTypes) {
-    filters.push(filterForTokenType(f, transforms));
+    filters.push(filterForTokenType(f));
   }
 
   return filters;

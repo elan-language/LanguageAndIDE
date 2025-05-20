@@ -97,7 +97,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
   }
 
   rootSymbolType() {
-    return this.getSymbol().symbolType(transforms());
+    return this.getSymbol().symbolType();
   }
 
   symbolType() {

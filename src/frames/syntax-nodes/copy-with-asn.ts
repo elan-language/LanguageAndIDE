@@ -46,12 +46,7 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
 
           const pSymbol = classSymbol.resolveSymbol(propertyId, transforms(), this.scope);
           mustBePropertyAndPublic(pSymbol, this.compileErrors, this.fieldId);
-          mustBeAssignableType(
-            pSymbol.symbolType(transforms()),
-            type,
-            this.compileErrors,
-            this.fieldId,
-          );
+          mustBeAssignableType(pSymbol.symbolType(), type, this.compileErrors, this.fieldId);
 
           withClause.push(`${tempTo}.${ast.compile()}`);
         }

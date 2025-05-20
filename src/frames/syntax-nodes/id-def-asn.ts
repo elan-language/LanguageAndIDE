@@ -25,7 +25,7 @@ export class IdDefAsn extends AbstractAstNode implements AstIdNode {
   }
 
   symbolType() {
-    return this.scope.resolveSymbol(this.id, transforms(), this.scope).symbolType(transforms());
+    return this.scope.resolveSymbol(this.id, transforms(), this.scope).symbolType();
   }
 
   toString() {

@@ -62,7 +62,7 @@ export class SymbolWrapper {
       return " type";
     }
 
-    if (isFunction(symbol, this.transforms) || isProcedure(symbol, this.transforms)) {
+    if (isFunction(symbol) || isProcedure(symbol)) {
       return " method";
     }
 
@@ -91,11 +91,11 @@ export class SymbolWrapper {
       return `${this.name}<of `;
     }
 
-    if (isFunction(symbol, this.transforms)) {
+    if (isFunction(symbol)) {
       return `${this.name}(`;
     }
 
-    if (isProcedure(symbol, this.transforms)) {
+    if (isProcedure(symbol)) {
       return `${this.name}`;
     }
 

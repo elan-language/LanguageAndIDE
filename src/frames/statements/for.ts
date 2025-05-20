@@ -70,12 +70,7 @@ ${this.indent()}end for`;
     if (id instanceof UnknownSymbol) {
       declare = "let ";
     } else {
-      mustBeOfSymbolType(
-        id.symbolType(transforms),
-        IntType.Instance,
-        this.compileErrors,
-        this.htmlId,
-      );
+      mustBeOfSymbolType(id.symbolType(), IntType.Instance, this.compileErrors, this.htmlId);
     }
 
     mustBeOfSymbolType(

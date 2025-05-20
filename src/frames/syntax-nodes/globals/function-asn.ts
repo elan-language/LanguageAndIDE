@@ -17,11 +17,10 @@ export abstract class FunctionAsn extends FrameWithStatementsAsn implements Elan
     protected readonly name: AstNode,
     protected readonly params: AstNode,
     protected readonly returnType: AstNode,
-    protected readonly children: AstNode[],
     fieldId: string,
     scope: Scope,
   ) {
-    super(children, fieldId, scope);
+    super(fieldId, scope);
   }
   initialKeywords(): string {
     return functionKeyword;

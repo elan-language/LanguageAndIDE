@@ -11,11 +11,10 @@ export class RepeatAsn extends FrameWithStatementsAsn {
 
   constructor(
     private readonly condition: AstNode,
-    children: AstNode[],
     fieldId: string,
     scope: Scope,
   ) {
-    super(children, fieldId, scope);
+    super(fieldId, scope);
   }
 
   compile(): string {

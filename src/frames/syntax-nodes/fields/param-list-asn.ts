@@ -52,10 +52,10 @@ export class ParamList extends AbstractAstNode implements Scope {
     return symbolMatches(id, all, symbols);
   }
 
-  symbolNamesAndTypes(transforms?: Transforms): [string[], SymbolType[]] {
+  symbolNamesAndTypes(): [string[], SymbolType[]] {
     const symbols = this.getParamsAsSymbols();
     const names = symbols.map((s) => s.symbolId);
-    const types = symbols.map((s) => s.symbolType(transforms));
+    const types = symbols.map((s) => s.symbolType());
     return [names, types];
   }
 
@@ -84,10 +84,7 @@ export class ParamList extends AbstractAstNode implements Scope {
     // up two or we just get the parameter again
     const parentScope = this.getParentScope();
 
-    if (
-      isFunction(parentScope as unknown as ElanSymbol, transforms) ||
-      isConstructor(parentScope)
-    ) {
+    if (isFunction(parentScope as unknown as ElanSymbol) || isConstructor(parentScope)) {
       const symbol = parentScope.resolveSymbol(id, transforms, this);
       if (symbol.symbolScope === SymbolScope.outParameter) {
         mustNotBeOutParameter(this.compileErrors, this.fieldId);

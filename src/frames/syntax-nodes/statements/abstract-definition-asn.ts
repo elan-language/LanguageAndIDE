@@ -12,35 +12,21 @@ import { Transforms } from "../../interfaces/transforms";
 import { getDeconstructionIds, symbolMatches } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { getIds, transforms, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
+import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 import { DefinitionAdapter } from "./definition-adapter";
 
 export abstract class AbstractDefinitionAsn extends FrameAsn implements ElanSymbol {
   isStatement = true;
 
-  constructor(
-    private readonly name: AstNode,
-    private readonly expr: AstNode,
-    fieldId: string,
-    scope: Scope,
-  ) {
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
-  // abstract initialKeywords(): string;
 
-  // abstract parseFrom(source: CodeSource): void;
-
-  // abstract getIdPrefix(): string;
+  name: AstNode = EmptyAsn.Instance;
+  expr: AstNode = EmptyAsn.Instance;
 
   abstract getJsKeyword(): string;
-
-  // abstract renderAsHtml(): string;
-
-  // abstract renderAsSource(): string;
-
-  // getFields(): Field[] {
-  //   return [this.name, this.expr];
-  // }
 
   ids() {
     return getIds(this.name);

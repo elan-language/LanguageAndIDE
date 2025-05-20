@@ -10,11 +10,10 @@ export class GlobalProcedureAsn extends ProcedureAsn {
   constructor(
     protected readonly name: AstNode,
     protected readonly params: AstNode,
-    protected readonly children: AstNode[],
     fieldId: string,
     scope: Scope,
   ) {
-    super(name, params, children, fieldId, scope);
+    super(name, params, fieldId, scope);
   }
 
   indent(): string {

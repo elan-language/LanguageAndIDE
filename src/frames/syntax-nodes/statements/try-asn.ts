@@ -1,10 +1,9 @@
-import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
 export class TryAsn extends FrameWithStatementsAsn {
-  constructor(children: AstNode[], fieldId: string, scope: Scope) {
-    super(children, fieldId, scope);
+  constructor(fieldId: string, scope: Scope) {
+    super(fieldId, scope);
   }
 
   compile(): string {

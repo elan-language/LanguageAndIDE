@@ -54,7 +54,7 @@ export class ArgListField extends AbstractField {
     const ps = holder.resolveSymbol(proc, transforms, holder);
     let descriptions = ["<i>arguments</i>"];
     if (!(ps instanceof UnknownSymbol)) {
-      descriptions = parameterNames(ps.symbolType(transforms));
+      descriptions = parameterNames(ps.symbolType());
     }
     return descriptions;
   }

@@ -75,10 +75,10 @@ export class ParamList extends AbstractField implements Scope {
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToNonMatchingCloseBracket();
 
-  symbolNamesAndTypes(transforms?: Transforms): [string[], SymbolType[]] {
+  symbolNamesAndTypes(): [string[], SymbolType[]] {
     const symbols = this.getParamsAsSymbols();
     const names = symbols.map((s) => s.symbolId);
-    const types = symbols.map((s) => s.symbolType(transforms));
+    const types = symbols.map((s) => s.symbolType());
     return [names, types];
   }
 

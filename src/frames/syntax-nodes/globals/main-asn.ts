@@ -10,11 +10,10 @@ import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
 export class MainFrameAsn extends FrameWithStatementsAsn implements AstNode {
   constructor(
-    children: AstNode[],
     public readonly fieldId: string,
     scope: Scope,
   ) {
-    super(children, fieldId, scope);
+    super(fieldId, scope);
   }
 
   symbolType(): SymbolType {

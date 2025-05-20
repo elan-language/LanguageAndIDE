@@ -20,11 +20,10 @@ export class ConstructorAsn extends FrameWithStatementsAsn implements ElanSymbol
 
   constructor(
     protected readonly params: AstNode,
-    protected readonly children: AstNode[],
     fieldId: string,
     scope: Scope,
   ) {
-    super(children, fieldId, scope);
+    super(fieldId, scope);
   }
 
   getClass(): ConcreteClass {

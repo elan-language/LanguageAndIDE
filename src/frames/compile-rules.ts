@@ -457,8 +457,8 @@ export function mustImplementSuperClasses(
       } else {
         mustBeMemberOfSymbolType(
           superSymbol.symbolId,
-          subSymbol.symbolType(transforms),
-          superSymbol.symbolType(transforms),
+          subSymbol.symbolType(),
+          superSymbol.symbolType(),
           compileErrors,
           location,
         );

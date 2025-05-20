@@ -77,7 +77,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       currentScope = currentScope.getParentScope();
     }
     const funcSymbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
-    const funcSymbolType = funcSymbol.symbolType(transforms());
+    const funcSymbolType = funcSymbol.symbolType();
     return [funcSymbol, funcSymbolType];
   }
 

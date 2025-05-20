@@ -17,11 +17,10 @@ export class CatchAsn extends FrameWithStatementsAsn implements ElanSymbol {
 
   constructor(
     private readonly variable: AstNode,
-    children: AstNode[],
     fieldId: string,
     scope: Scope,
   ) {
-    super(children, fieldId, scope);
+    super(fieldId, scope);
   }
 
   get symbolId() {

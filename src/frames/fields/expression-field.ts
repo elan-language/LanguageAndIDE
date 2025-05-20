@@ -48,7 +48,7 @@ export class ExpressionField extends AbstractField {
       const ps = holder.resolveSymbol(context, transforms, holder);
       descriptions = "<i>arguments</i>";
       if (!(ps instanceof UnknownSymbol)) {
-        const names = parameterNames(ps.symbolType(transforms));
+        const names = parameterNames(ps.symbolType());
         descriptions = names.length > 0 ? names.join(", ") : "";
       }
     }

@@ -13,13 +13,11 @@ import { FrameAsn } from "./frame-asn";
 import { AssertAsn } from "./statements/assert-asn";
 
 export class FrameWithStatementsAsn extends FrameAsn implements AstNode {
-  constructor(
-    protected readonly children: AstNode[],
-    fieldId: string,
-    scope: Scope,
-  ) {
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
+  children: AstNode[] = [];
 
   breakpointStatus: BreakpointStatus = BreakpointStatus.none;
   protected paused = false;

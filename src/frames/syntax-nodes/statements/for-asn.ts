@@ -17,12 +17,10 @@ export class ForASn extends FrameWithStatementsAsn {
     private readonly from: AstNode,
     private readonly to: AstNode,
     private readonly step: AstNode,
-
-    children: AstNode[],
     fieldID: string,
     scope: Scope,
   ) {
-    super(children, fieldID, scope);
+    super(fieldID, scope);
   }
 
   compile(): string {
@@ -38,12 +36,7 @@ export class ForASn extends FrameWithStatementsAsn {
     if (id instanceof UnknownSymbol) {
       declare = "let ";
     } else {
-      mustBeOfSymbolType(
-        id.symbolType(transforms()),
-        IntType.Instance,
-        this.compileErrors,
-        this.fieldId,
-      );
+      mustBeOfSymbolType(id.symbolType(), IntType.Instance, this.compileErrors, this.fieldId);
     }
 
     mustBeOfSymbolType(this.from.symbolType(), IntType.Instance, this.compileErrors, this.fieldId);

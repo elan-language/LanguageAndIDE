@@ -25,11 +25,10 @@ export class FunctionMethodAsn extends FunctionAsn {
     protected readonly name: AstNode,
     protected readonly params: AstNode,
     protected readonly returnType: AstNode,
-    protected readonly children: AstNode[],
     fieldId: string,
     scope: Scope,
   ) {
-    super(name, params, returnType, children, fieldId, scope);
+    super(name, params, returnType, fieldId, scope);
   }
 
   getClass(): ConcreteClass {

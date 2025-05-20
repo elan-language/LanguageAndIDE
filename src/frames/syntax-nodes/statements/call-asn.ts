@@ -113,7 +113,7 @@ export class CallAsn extends FrameAsn {
     );
     mustBeProcedure(
       procSymbol.symbolId,
-      procSymbol.symbolType(transforms()),
+      procSymbol.symbolType(),
       procSymbol.symbolScope,
       this.compileErrors,
       this.fieldId,
@@ -123,7 +123,7 @@ export class CallAsn extends FrameAsn {
       mustBePublicMember(procSymbol, this.compileErrors, this.fieldId);
     }
 
-    const procSymbolType = procSymbol.symbolType(transforms());
+    const procSymbolType = procSymbol.symbolType();
     const parameterList = this.args;
 
     if (isAstCollectionNode(parameterList)) {

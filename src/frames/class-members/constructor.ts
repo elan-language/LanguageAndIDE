@@ -92,8 +92,8 @@ ${this.indent()}}\r
     return `__${constructorKeyword}`;
   }
 
-  symbolType(transforms?: Transforms) {
-    const [pn, pt] = this.params.symbolNamesAndTypes(transforms);
+  symbolType() {
+    const [pn, pt] = this.params.symbolNamesAndTypes();
     return new ProcedureType(pn, pt, false, false);
   }
 
