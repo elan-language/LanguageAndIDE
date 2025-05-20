@@ -1,4 +1,5 @@
 import {
+  getId,
   mustBeCompatibleDefinitionNode,
   mustBeDeconstructableType,
   mustNotBeKeyword,
@@ -59,7 +60,7 @@ export abstract class AbstractDefinitionAsn extends FrameAsn implements ElanSymb
   }
 
   get symbolId() {
-    return this.name.compile();
+    return getId(this.name);
   }
 
   symbolType() {

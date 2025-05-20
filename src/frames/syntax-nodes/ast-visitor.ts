@@ -181,7 +181,7 @@ export function transform(
     const varAsn = new VariableAsn(node.getHtmlId(), scope);
 
     varAsn.name = transform(node.name, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
-    varAsn.expr = transform(node.name, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
+    varAsn.expr = transform(node.expr, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
 
     return varAsn;
   }

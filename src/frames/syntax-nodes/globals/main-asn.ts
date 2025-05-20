@@ -34,9 +34,9 @@ export class MainFrameAsn extends FrameWithStatementsAsn implements AstNode {
     }
 
     return `async function main() {\r
-    ${this.breakPoint(this.debugSymbols())}${this.compileChildren()}\r
-    }\r
-    `;
+${this.breakPoint(this.debugSymbols())}${this.compileChildren()}\r
+}\r
+`;
   }
 
   aggregateCompileErrors(): CompileError[] {
