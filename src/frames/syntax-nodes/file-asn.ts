@@ -21,6 +21,22 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   constructor(private scope: Scope) {
     super();
   }
+  getAllCompileErrors(): CompileError[] {
+    let all: CompileError[] = [];
+
+    for (const e of this.compileErrorMap.values()) {
+      all = all.concat(e);
+    }
+
+    return all;
+  }
+
+  getCompileErrorsFor(fieldId: string): CompileError[] {
+    if (this.compileErrorMap.has(fieldId)) {
+      return this.compileErrorMap.get(fieldId)!;
+    }
+    return [];
+  }
 
   get libraryScope() {
     return this.scope;

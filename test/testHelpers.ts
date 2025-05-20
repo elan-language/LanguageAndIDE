@@ -530,39 +530,4 @@ export async function testDemoProgram(program: string) {
   }
 }
 
-export function aggregateCompileErrors(parent: FileImpl | Frame | Field): CompileError[] {
 
-  if (parent instanceof FileImpl) {
-    return parent
-      .getChildren()
-      .map((s) => aggregateCompileErrors(s))
-      .reduce((prev, cur) => prev.concat(cur), []);
-  }
-
-  if (parent instanceof FrameWithStatements || parent instanceof ClassFrame) {
-    const cc1 = parent
-      .getChildren()
-      .map((s) => aggregateCompileErrors(s))
-      .reduce((prev, cur) => prev.concat(cur), []);
-
-
-    const cc2 = parent.getFields()
-      .map((s) => aggregateCompileErrors(s))
-      .reduce((prev, cur) => prev.concat(cur), []);
-
-    return parent.compileErrors.concat(cc2).concat(cc1);
-  }
-
-  if (parent instanceof AbstractFrame) {
-    const cc = parent.getFields()
-      .map((s) => aggregateCompileErrors(s))
-      .reduce((prev, cur) => prev.concat(cur), []);
-    return parent.compileErrors.concat(cc);
-  }
-
-  if (parent instanceof AbstractField) {
-    return parent.compileErrors;
-  }
-
-  return [];
-}

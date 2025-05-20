@@ -26,7 +26,6 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
-import { AstNode } from "./interfaces/ast-node";
 import { CodeSource } from "./interfaces/code-source";
 import { editorEvent } from "./interfaces/editor-event";
 import { ElanSymbol } from "./interfaces/elan-symbol";
@@ -35,6 +34,7 @@ import { File } from "./interfaces/file";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { defaultUsername, Profile } from "./interfaces/profile";
+import { RootAstNode } from "./interfaces/root-ast-node";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { Semver } from "./interfaces/semver";
@@ -68,7 +68,6 @@ import {
   RunStatus,
   TestStatus,
 } from "./status-enums";
-//import { elanSymbols } from "./symbols/elan-symbols";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -103,7 +102,7 @@ export class FileImpl implements File, Scope {
   private _testError?: Error;
   private _frNo: number = 0;
   private _showFrameNos: boolean = true;
-  private ast: AstNode | undefined;
+  ast: RootAstNode | undefined;
 
   constructor(
     private readonly hash: (toHash: string) => Promise<string>,
@@ -357,7 +356,7 @@ export class FileImpl implements File, Scope {
   }
 
   compile(): string {
-    this.ast = this.transform.transform(this, "", undefined);
+    this.ast = this.transform.transform(this, "", undefined) as RootAstNode | undefined;
 
     return this.ast?.compile() ?? "";
 
