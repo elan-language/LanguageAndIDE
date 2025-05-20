@@ -6,7 +6,6 @@ import {
 } from "../../compile-rules";
 import { singleIndent } from "../../frame-helpers";
 import { ConcreteClass } from "../../globals/concrete-class";
-import { AstNode } from "../../interfaces/ast-node";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Scope } from "../../interfaces/scope";
 import { Transforms } from "../../interfaces/transforms";
@@ -21,14 +20,8 @@ export class FunctionMethodAsn extends FunctionAsn {
   isAbstract = false;
   hrefForFrameHelp: string = "LangRef.html#function_method";
 
-  constructor(
-    protected readonly name: AstNode,
-    protected readonly params: AstNode,
-    protected readonly returnType: AstNode,
-    fieldId: string,
-    scope: Scope,
-  ) {
-    super(name, params, returnType, fieldId, scope);
+  constructor(fieldId: string, scope: Scope) {
+    super(fieldId, scope);
   }
 
   getClass(): ConcreteClass {

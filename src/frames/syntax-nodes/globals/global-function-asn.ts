@@ -3,24 +3,16 @@ import {
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
 } from "../../compile-rules";
-import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { transforms } from "../ast-helpers";
 import { FunctionAsn } from "./function-asn";
 
-export class GlobalFunctionASn extends FunctionAsn {
+export class GlobalFunctionAsn extends FunctionAsn {
   isGlobal = true;
-  hrefForFrameHelp: string = "LangRef.html#function";
 
-  constructor(
-    protected readonly name: AstNode,
-    protected readonly params: AstNode,
-    protected readonly returnType: AstNode,
-    fieldId: string,
-    scope: Scope,
-  ) {
-    super(name, params, returnType, fieldId, scope);
+  constructor(fieldId: string, scope: Scope) {
+    super(fieldId, scope);
   }
 
   indent(): string {

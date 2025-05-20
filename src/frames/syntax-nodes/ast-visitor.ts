@@ -5,6 +5,7 @@ import { AbstractField } from "../fields/abstract-field";
 import { FileImpl } from "../file-impl";
 import { Constant } from "../globals/constant";
 import { Enum } from "../globals/enum";
+import { GlobalFunction } from "../globals/global-function";
 import { MainFrame } from "../globals/main-frame";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
@@ -59,6 +60,7 @@ import { Multiple } from "../parse-nodes/multiple";
 import { NewInstance } from "../parse-nodes/new-instance";
 import { OptionalNode } from "../parse-nodes/optional-node";
 import { ParamDefNode } from "../parse-nodes/param-def-node";
+import { ParamListNode } from "../parse-nodes/param-list-node";
 import { PropertyRef } from "../parse-nodes/property-ref";
 import { PunctuationNode } from "../parse-nodes/punctuation-node";
 import { RegExMatchNode } from "../parse-nodes/regex-match-node";
@@ -92,11 +94,13 @@ import { DiscardAsn } from "./discard-asn";
 import { EmptyAsn } from "./empty-asn";
 import { EmptyTypeAsn } from "./empty-type-asn";
 import { EnumValuesAsn } from "./fields/enum-values-asn";
+import { ParamListAsn } from "./fields/param-list-asn";
 import { FileAsn } from "./file-asn";
 import { FixedIdAsn } from "./fixed-id-asn";
 import { FuncCallAsn } from "./func-call-asn";
 import { ConstantAsn } from "./globals/constant-asn";
 import { EnumAsn } from "./globals/enum-asn";
+import { GlobalFunctionAsn } from "./globals/global-function-asn";
 import { MainAsn } from "./globals/main-asn";
 import { IdAsn } from "./id-asn";
 import { IdDefAsn } from "./id-def-asn";
@@ -226,6 +230,29 @@ export function transform(
     constantAsn.value = transform(node.value, node.getHtmlId(), constantAsn) ?? EmptyAsn.Instance;
 
     return constantAsn;
+  }
+
+  if (node instanceof ParamListNode) {
+    const paramsAsn = new ParamListAsn(fieldId, scope);
+
+    paramsAsn.parms = transformMany(node, fieldId, scope);
+
+    return paramsAsn;
+  }
+
+  if (node instanceof GlobalFunction) {
+    const functionAsn = new GlobalFunctionAsn(node.getHtmlId(), scope);
+
+    functionAsn.name = transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+    functionAsn.params = transform(node.params, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+    functionAsn.returnType =
+      transform(node.returnType, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+
+    functionAsn.children = node
+      .getChildren()
+      .map((f) => transform(f, f.getHtmlId(), functionAsn)) as AstNode[];
+
+    return functionAsn;
   }
 
   if (node instanceof Print) {

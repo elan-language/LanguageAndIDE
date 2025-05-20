@@ -7,21 +7,21 @@ import { functionKeyword } from "../../keywords";
 import { FunctionType } from "../../symbols/function-type";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
+import { EmptyAsn } from "../empty-asn";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 import { ReturnAsn } from "../statements/return-asn";
 
 export abstract class FunctionAsn extends FrameWithStatementsAsn implements ElanSymbol {
   isFunction = true;
 
-  constructor(
-    protected readonly name: AstNode,
-    protected readonly params: AstNode,
-    protected readonly returnType: AstNode,
-    fieldId: string,
-    scope: Scope,
-  ) {
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
+  name: AstNode = EmptyAsn.Instance;
+  params: AstNode = EmptyAsn.Instance;
+  returnType: AstNode = EmptyAsn.Instance;
+
   initialKeywords(): string {
     return functionKeyword;
   }

@@ -10,22 +10,26 @@ import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Scope } from "../../interfaces/scope";
 import { SymbolType } from "../../interfaces/symbol-type";
 import { Transforms } from "../../interfaces/transforms";
-
 import { DuplicateSymbol } from "../../symbols/duplicate-symbol";
 import { getGlobalScope, isFunction, symbolMatches } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { AbstractAstNode } from "../abstract-ast-node";
 import { isAstCollectionNode, isAstIdNode, transforms } from "../ast-helpers";
+import { EmptyAsn } from "../empty-asn";
 
-export class ParamList extends AbstractAstNode implements Scope {
+export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
   constructor(
-    private readonly parms: AstNode,
-    private readonly fieldId: string,
+    readonly fieldId: string,
     private readonly scope: Scope,
   ) {
     super();
   }
+  symbolType(): SymbolType {
+    throw new Error("Method not implemented.");
+  }
+
+  parms: AstNode = EmptyAsn.Instance;
 
   getParentScope(): Scope {
     return this.scope;

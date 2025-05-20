@@ -3,7 +3,7 @@ import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
 import { AbstractAstNode } from "../abstract-ast-node";
 
-export class TypeField extends AbstractAstNode {
+export class TypeAsn extends AbstractAstNode {
   isParseByNodes = true;
   constructor(
     private readonly type: AstNode,

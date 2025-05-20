@@ -3,7 +3,7 @@ import { SymbolType } from "../../interfaces/symbol-type";
 import { AbstractAstNode } from "../abstract-ast-node";
 import { isAstCollectionNode } from "../ast-helpers";
 
-export class InheritsFrom extends AbstractAstNode {
+export class InheritsFromAsn extends AbstractAstNode {
   isParseByNodes = true;
   constructor(private readonly inheritance: AstNode) {
     super();
