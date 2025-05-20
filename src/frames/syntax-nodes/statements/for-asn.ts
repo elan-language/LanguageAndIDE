@@ -4,6 +4,7 @@ import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Scope } from "../../interfaces/scope";
 import { Transforms } from "../../interfaces/transforms";
 import { IntType } from "../../symbols/int-type";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { transforms } from "../ast-helpers";
@@ -51,6 +52,8 @@ export class ForAsn extends FrameWithStatementsAsn {
       incDec = "-";
       s = s.slice(1);
     }
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `${this.indent()}${this.breakPoint(this.debugSymbols())}for (${declare}${v} = ${f}; ${v} ${compare} ${t}; ${v} = ${v} ${incDec} ${s}) {\r
 ${this.compileChildren()}\r

@@ -1,6 +1,5 @@
 import { AssertOutcome } from "../../assert-outcome";
 
-import { CompileError } from "../compile-error";
 import { CommentField } from "../fields/comment-field";
 import {
   helper_CompileOrParseAsDisplayStatus,
@@ -105,17 +104,10 @@ end test\r
     return this.parseStandardEnding(source, "end test");
   }
 
-  private aggregateCompileErrors(): CompileError[] {
-    const cc = this.getFields()
-      .map((s) => s.aggregateCompileErrors())
-      .reduce((prev, cur) => prev.concat(cur), []);
-    return this.compileErrors.concat(cc);
-  }
-
   private compileTestBody(transforms: Transforms) {
     const body = this.compileChildren(transforms);
 
-    if (!this.ignored || this.aggregateCompileErrors().length > 0) {
+    if (!this.ignored || this.compileErrors.length > 0) {
       return body;
     }
 

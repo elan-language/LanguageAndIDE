@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import { mustBeAssignableType, mustBeImmutableGenericType } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
@@ -19,14 +18,6 @@ export class LiteralListImmutableAsn extends AbstractAstNode implements AstColle
     super();
   }
 
-  aggregateCompileErrors(): CompileError[] {
-    let cc: CompileError[] = [];
-    for (const i of this.items) {
-      cc = cc.concat(i.aggregateCompileErrors());
-    }
-    return this.compileErrors.concat(cc);
-  }
-
   compile(): string {
     this.compileErrors = [];
     const ofType = this.items[0]?.symbolType();
@@ -38,6 +29,8 @@ export class LiteralListImmutableAsn extends AbstractAstNode implements AstColle
     mustBeImmutableGenericType(this.symbolType(), ofType, this.compileErrors, this.fieldId);
 
     const it = this.items.map((p) => p.compile()).join(", ");
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return `system.listImmutable([${it}])`;
   }
 

@@ -1,10 +1,10 @@
-import { CompileError } from "../compile-error";
 import { mustBeAssignableType, mustBeClass, mustBePropertyAndPublic } from "../compile-rules";
 import { isClass } from "../frame-helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { ClassType } from "../symbols/class-type";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
 import { ToAsn } from "./to-asn";
@@ -17,12 +17,6 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
     private readonly scope: Scope,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors
-      .concat(this.obj.aggregateCompileErrors())
-      .concat(this.withClause.aggregateCompileErrors());
   }
 
   compile(): string {
@@ -56,6 +50,8 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
     if (withClause.length > 0) {
       withClauseStr = ` ${withClause.join("; ")};`;
     }
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `await (async () => {const ${tempTo} = {...${from}}; Object.setPrototypeOf(${tempTo}, Object.getPrototypeOf(${from}));${withClauseStr} return ${tempTo};})()`;
   }

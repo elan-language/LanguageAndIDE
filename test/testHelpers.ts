@@ -561,7 +561,7 @@ export function aggregateCompileErrors(parent: FileImpl | Frame | Field): Compil
   }
 
   if (parent instanceof AbstractField) {
-    return parent.aggregateCompileErrors();
+    return parent.compileErrors;
   }
 
   return [];

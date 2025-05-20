@@ -1,16 +1,15 @@
-import { CompileError } from "../compile-error";
+import { singleIndent } from "../frame-helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
+import { File } from "../interfaces/file";
+import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
-import { AbstractAstNode } from "./abstract-ast-node";
-import { singleIndent } from "../frame-helpers";
+import { Transforms } from "../interfaces/transforms";
 import { BreakpointEvent, BreakpointStatus } from "../status-enums";
 import { allScopedSymbols, orderSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { Transforms } from "../interfaces/transforms";
-import { Parent } from "../interfaces/parent";
-import { File } from "../interfaces/file";
+import { AbstractAstNode } from "./abstract-ast-node";
 
 export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
   constructor(
@@ -27,9 +26,6 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
     throw new Error("Method not implemented.");
   }
   compile(): string {
-    throw new Error("Method not implemented.");
-  }
-  aggregateCompileErrors(): CompileError[] {
     throw new Error("Method not implemented.");
   }
 

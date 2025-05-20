@@ -7,6 +7,7 @@ import { Transforms } from "../../interfaces/transforms";
 import { noTypeOptions } from "../../interfaces/type-options";
 import { abstractClassKeywords } from "../../keywords";
 import { ClassSubType, ClassType } from "../../symbols/class-type";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { compileNodes, transforms } from "../ast-helpers";
 import { ClassAsn } from "./class-asn";
 
@@ -66,6 +67,8 @@ export class InterfaceAsn extends ClassAsn {
       mustBeKnownSymbolType(st, name, this.compileErrors, this.fieldId);
       mustBeInterfaceClass(st, name, this.compileErrors, this.fieldId);
     }
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `class ${name} {\r
   static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r

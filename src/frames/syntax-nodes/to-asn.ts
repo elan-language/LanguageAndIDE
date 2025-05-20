@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -10,10 +9,6 @@ export class ToAsn extends AbstractAstNode implements AstIdNode {
     public readonly fieldId: string,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors.concat(this.to.aggregateCompileErrors());
   }
 
   compile(): string {

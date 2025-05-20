@@ -1,4 +1,3 @@
-import { CompileError } from "../../compile-error";
 import { singleIndent } from "../../frame-helpers";
 import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
@@ -37,9 +36,5 @@ export class AssertAsn extends FrameAsn implements AstNode {
     const actual = this.actual.compile();
     const actualFunc = `async () => ${actual}`;
     return `${this.indent()}_outcomes.push(await system.assert(${ignored ? `""` : actualFunc}, ${ignored ? `""` : expected}, "${this.fieldId}", _stdlib, ${ignored}));`;
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    throw new Error("Method not implemented.");
   }
 }

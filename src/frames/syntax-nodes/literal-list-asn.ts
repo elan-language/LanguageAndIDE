@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import { mustBeAssignableType } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
@@ -19,14 +18,6 @@ export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode
     super();
   }
 
-  aggregateCompileErrors(): CompileError[] {
-    let cc: CompileError[] = [];
-    for (const i of this.items) {
-      cc = cc.concat(i.aggregateCompileErrors());
-    }
-    return this.compileErrors.concat(cc);
-  }
-
   compile(): string {
     this.compileErrors = [];
     const ofType = this.items[0]?.symbolType();
@@ -36,6 +27,8 @@ export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode
     }
 
     const it = this.items.map((p) => p.compile()).join(", ");
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return `system.list([${it}])`;
   }
 

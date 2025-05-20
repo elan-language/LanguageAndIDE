@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import {
   mustBeAssignableType,
   mustBeImmutableGenericType,
@@ -25,10 +24,6 @@ export class LiteralDictionaryImmutableAsn extends AbstractAstNode implements As
     super();
   }
 
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors.concat(this.list.aggregateCompileErrors());
-  }
-
   compile(): string {
     this.compileErrors = [];
     const items = this.list.items as KvpAsn[];
@@ -51,6 +46,7 @@ export class LiteralDictionaryImmutableAsn extends AbstractAstNode implements As
     mustBeImmutableGenericType(st, ofValueType, this.compileErrors, this.fieldId);
 
     const itemList = this.list.items.map((p) => p.compile()).join(", ");
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return `system.dictionaryImmutable([${itemList}])`;
   }
 

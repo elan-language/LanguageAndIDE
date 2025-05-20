@@ -5,7 +5,7 @@ import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Scope } from "../../interfaces/scope";
 import { SymbolType } from "../../interfaces/symbol-type";
 import { ClassType } from "../../symbols/class-type";
-import { getClassScope } from "../../symbols/symbol-helpers";
+import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { transforms } from "../ast-helpers";
 import { FrameAsn } from "../frame-asn";
@@ -51,6 +51,8 @@ export class PropertyAsn extends FrameAsn implements ElanSymbol {
     );
 
     mustBeKnownSymbolType(st, getId(this.type), this.compileErrors, this.fieldId);
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     if (this.isGlobalClass(st)) {
       return `${this.indent()}_${pName};\r

@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
@@ -26,9 +25,6 @@ export class FrameWithStatementsAsn extends FrameAsn implements AstNode {
     throw new Error("Method not implemented.");
   }
   compile(): string {
-    throw new Error("Method not implemented.");
-  }
-  aggregateCompileErrors(): CompileError[] {
     throw new Error("Method not implemented.");
   }
 

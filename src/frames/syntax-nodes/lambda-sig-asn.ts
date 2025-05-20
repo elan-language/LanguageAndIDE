@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Frame } from "../interfaces/frame";
@@ -26,14 +25,6 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
 
   getParentScope(): Scope {
     return this.scope;
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    let cc: CompileError[] = [];
-    for (const i of this.parameters) {
-      cc = cc.concat(i.aggregateCompileErrors());
-    }
-    return this.compileErrors.concat(cc);
   }
 
   symbolType() {

@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import {
   mustBeFunctionRefIfFunction,
   mustBeGlobalFunctionIfRef,
@@ -13,6 +12,7 @@ import { ChainedAsn } from "../interfaces/chained-asn";
 import { Scope } from "../interfaces/scope";
 import { NullScope } from "../symbols/null-scope";
 import {
+  getGlobalScope,
   isDeconstructedType,
   isDefinitionStatement,
   isMemberOnFieldsClass,
@@ -49,10 +49,6 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   }
 
   isAsync: boolean = false;
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors;
-  }
 
   getSymbol() {
     let searchScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
@@ -105,6 +101,8 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
         : scopePrefix(symbol, this.compileErrors, this.scope, this.fieldId);
 
     const postfix = symbol.symbolScope === SymbolScope.outParameter ? "[0]" : "";
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `${prefix}${this.id}${postfix}`;
   }

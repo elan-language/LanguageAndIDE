@@ -8,6 +8,7 @@ import { Transforms } from "../../interfaces/transforms";
 import { noTypeOptions } from "../../interfaces/type-options";
 import { classKeyword } from "../../keywords";
 import { ClassSubType, ClassType } from "../../symbols/class-type";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { compileNodes, transforms } from "../ast-helpers";
 import { ClassAsn } from "./class-asn";
 
@@ -80,6 +81,8 @@ export class ConcreteClassAsn extends ClassAsn {
       this.compileErrors,
       this.fieldId,
     );
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const emptyInitialise = this.getChildren().some((m) => isConstructor(m as any))

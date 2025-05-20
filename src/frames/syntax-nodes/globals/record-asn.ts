@@ -7,6 +7,7 @@ import { Transforms } from "../../interfaces/transforms";
 import { immutableTypeOptions } from "../../interfaces/type-options";
 import { endKeyword, recordKeyword } from "../../keywords";
 import { ClassSubType, ClassType } from "../../symbols/class-type";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { compileNodes, transforms } from "../ast-helpers";
 import { ClassAsn } from "./class-asn";
@@ -64,6 +65,8 @@ export class RecordAsn extends ClassAsn {
     for (const p of this.properties()) {
       mustBeImmutableType(p.name.text, p.symbolType(), this.compileErrors, this.fieldId);
     }
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `class ${name} {\r
   static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r

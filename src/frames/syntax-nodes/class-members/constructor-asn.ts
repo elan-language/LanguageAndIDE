@@ -6,6 +6,7 @@ import { Scope } from "../../interfaces/scope";
 import { Transforms } from "../../interfaces/transforms";
 import { constructorKeyword } from "../../keywords";
 import { ProcedureType } from "../../symbols/procedure-type";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
@@ -32,6 +33,8 @@ export class ConstructorAsn extends FrameWithStatementsAsn implements ElanSymbol
 
   public compile(): string {
     this.compileErrors = [];
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `${this.indent()}async _initialise(${this.params.compile()}) {\r
 ${this.breakPoint(this.debugSymbols())}${this.compileChildren()}\r

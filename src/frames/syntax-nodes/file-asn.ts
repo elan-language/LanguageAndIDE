@@ -1,6 +1,7 @@
 import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
+import { RootAstNode } from "../interfaces/root-ast-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
@@ -14,11 +15,31 @@ import { EnumAsn } from "./globals/enum-asn";
 import { MainAsn } from "./globals/main-asn";
 import { TestAsn } from "./globals/test-asn";
 
-export class FileAsn extends AbstractAstNode implements AstNode, Scope {
+export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   isFile = true;
 
   constructor(private scope: Scope) {
     super();
+  }
+
+  get libraryScope() {
+    return this.scope;
+  }
+
+  compileErrorMap = new Map<string, CompileError[]>();
+
+  addCompileError(error: CompileError) {
+    if (this.compileErrorMap.has(error.locationId)) {
+      this.compileErrorMap.get(error.locationId)?.push(error);
+    } else {
+      this.compileErrorMap.set(error.locationId, [error]);
+    }
+  }
+
+  addCompileErrors(errors: CompileError[]) {
+    for (const error of errors) {
+      this.addCompileError(error);
+    }
   }
 
   getParentScope(): Scope {
@@ -85,10 +106,6 @@ export class FileAsn extends AbstractAstNode implements AstNode, Scope {
   compile(): string {
     const stdlib = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
     return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}`;
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    throw new Error("Method not implemented.");
   }
 
   resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {

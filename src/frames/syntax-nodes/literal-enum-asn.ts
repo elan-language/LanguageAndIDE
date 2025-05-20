@@ -1,10 +1,10 @@
-import { CompileError } from "../compile-error";
 import { mustBeKnownSymbol } from "../compile-rules";
 import { isScope } from "../frame-helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { Scope } from "../interfaces/scope";
 import { EnumType } from "../symbols/enum-type";
 import { NullScope } from "../symbols/null-scope";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
@@ -17,10 +17,6 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
     private readonly scope: Scope,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors;
   }
 
   compile(): string {
@@ -46,7 +42,7 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
         this.fieldId,
       );
     }
-
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return `${this.type.name}.${this.value}`;
   }
 

@@ -7,7 +7,7 @@ import { Member } from "../../interfaces/member";
 import { Scope } from "../../interfaces/scope";
 import { Transforms } from "../../interfaces/transforms";
 import { ProcedureType } from "../../symbols/procedure-type";
-import { getClassScope } from "../../symbols/symbol-helpers";
+import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { transforms } from "../ast-helpers";
 import { FrameAsn } from "../frame-asn";
@@ -48,6 +48,8 @@ export class AbstractProcedureAsn extends FrameAsn implements Member, ElanSymbol
       this.compileErrors,
       this.fieldId,
     );
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `${this.indent()}${name}(${this.params.compile()}) {\r
 ${this.indent()}}\r

@@ -581,7 +581,6 @@ export abstract class AbstractField implements Selectable, Field {
     return this._compileStatus;
   }
   updateCompileStatus(): void {
-    this.compileErrors = this.aggregateCompileErrors(); //Needed in this case because the compile errors will be on the ASTNodes
     this._compileStatus = helper_deriveCompileStatusFromErrors(this.compileErrors);
   }
   select(_withFocus?: boolean, _multiSelect?: boolean, selection?: [number, number]): void {
@@ -729,10 +728,6 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   compileErrors: CompileError[] = [];
-  aggregateCompileErrors(): CompileError[] {
-    const cc = this.astNode ? this.astNode.aggregateCompileErrors() : [];
-    return this.compileErrors.concat(cc);
-  }
 
   symbolType(transforms?: Transforms) {
     const astNode = this.getOrTransformAstNode(transforms);

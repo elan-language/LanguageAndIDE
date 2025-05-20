@@ -246,7 +246,7 @@ export function transform(
     const op = mapOperation(node.unaryOp!.matchedText);
     const operand = transform(node.term, fieldId, scope) as AstNode;
 
-    return new UnaryExprAsn(op, operand, fieldId);
+    return new UnaryExprAsn(op, operand, fieldId, scope);
   }
 
   if (node instanceof BinaryExpression) {
@@ -254,7 +254,7 @@ export function transform(
     const rhs = transform(node.rhs, fieldId, scope) as AstNode;
     const op = mapOperation(node.op!.matchedText);
 
-    return new BinaryExprAsn(op, lhs, rhs, fieldId);
+    return new BinaryExprAsn(op, lhs, rhs, fieldId, scope);
   }
 
   if (node instanceof LitInt) {
@@ -327,7 +327,7 @@ export function transform(
     const out = !!node.out?.matchedNode;
 
     if (isAstIdNode(type)) {
-      return new ParamDefAsn(id, type, out, fieldId);
+      return new ParamDefAsn(id, type, out, fieldId, scope);
     }
 
     return undefined;
@@ -469,7 +469,7 @@ export function transform(
   if (node instanceof DeconstructedList) {
     const hd = transform(node.head, fieldId, scope)!;
     const tl = transform(node.tail, fieldId, scope)!;
-    return new DeconstructedListAsn(hd, tl, fieldId);
+    return new DeconstructedListAsn(hd, tl, fieldId, scope);
   }
 
   if (node instanceof NewInstance) {
@@ -531,18 +531,18 @@ export function transform(
     const from = fromNode ? (transform(fromNode, fieldId, scope) as AstNode) : EmptyAsn.Instance;
     const toNode = node.toIndex?.matchedNode;
     const to = toNode ? (transform(toNode, fieldId, scope) as AstNode) : EmptyAsn.Instance;
-    return new RangeAsn(from, to, fieldId);
+    return new RangeAsn(from, to, fieldId, scope);
   }
 
   if (node instanceof IndexDouble) {
     const index1 = transform(node.index1, fieldId, scope) as AstCollectionNode;
     const index2 = transform(node.index2, fieldId, scope) as AstCollectionNode;
-    return new IndexDoubleAsn(index1, index2, fieldId);
+    return new IndexDoubleAsn(index1, index2, fieldId, scope);
   }
 
   if (node instanceof Index) {
     const index = transform(node.contents, fieldId, scope) as AstCollectionNode;
-    return new IndexAsn(index, fieldId);
+    return new IndexAsn(index, fieldId, scope);
   }
 
   if (node instanceof DotAfter) {
@@ -561,7 +561,7 @@ export function transform(
     const condition = transform(node.condition, fieldId, scope) as AstNode;
     const trueExpression = transform(node.whenTrue, fieldId, scope) as AstNode;
     const falseExpression = transform(node.whenFalse, fieldId, scope) as AstNode;
-    return new IfExprAsn(condition, trueExpression, falseExpression, fieldId);
+    return new IfExprAsn(condition, trueExpression, falseExpression, fieldId, scope);
   }
 
   if (node instanceof EnumVal) {
@@ -585,7 +585,7 @@ export function transform(
   }
 
   if (node instanceof CommentNode) {
-    return new CommentAsn(node.matchedText, fieldId);
+    return new CommentAsn(node.matchedText, fieldId, scope);
   }
 
   if (node instanceof RegExMatchNode) {

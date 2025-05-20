@@ -14,10 +14,6 @@ export class EmptyAsn implements AstNode {
 
   compileErrors: CompileError[] = [];
 
-  aggregateCompileErrors(): CompileError[] {
-    return [];
-  }
-
   compile(): string {
     return ``;
   }

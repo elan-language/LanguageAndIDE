@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
 import { AbstractAstNode } from "./abstract-ast-node";
 
@@ -9,12 +8,6 @@ export class KvpAsn extends AbstractAstNode implements AstNode {
     public readonly fieldId: string,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors
-      .concat(this.key.aggregateCompileErrors())
-      .concat(this.value.aggregateCompileErrors());
   }
 
   compile(): string {

@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import { mustBeAssignableType, mustBeValidKeyType, mustHaveUniqueKeys } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
@@ -18,10 +17,6 @@ export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
     private readonly scope: Scope,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors.concat(this.list.aggregateCompileErrors());
   }
 
   compile(): string {
@@ -45,6 +40,8 @@ export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
     mustBeValidKeyType(st, ofKeyType, this.compileErrors, this.fieldId);
 
     const itemList = this.list.items.map((p) => p.compile()).join(", ");
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return `system.dictionary([${itemList}])`;
   }
 

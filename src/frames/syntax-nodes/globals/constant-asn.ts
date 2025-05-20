@@ -1,4 +1,3 @@
-import { CompileError } from "../../compile-error";
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
 import { AstNode } from "../../interfaces/ast-node";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
@@ -43,11 +42,9 @@ export class ConstantAsn extends FrameAsn implements AstNode, ElanSymbol {
       this.fieldId,
     );
 
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
     return `${name} = ${this.value.compile()};\r
 `;
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    throw new Error("Method not implemented.");
   }
 }

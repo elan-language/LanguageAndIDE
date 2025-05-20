@@ -10,6 +10,7 @@ import {
 import { mapSymbolType } from "../../frame-helpers";
 import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { getIds, transforms, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
@@ -69,6 +70,8 @@ export class SetAsn extends FrameAsn {
     const lhs = wrapDeconstructionLhs(assignableAstNode, exprAstNode, true);
 
     const rhs = wrapDeconstructionRhs(assignableAstNode, exprAstNode, true);
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `${this.indent()}${this.breakPoint(this.debugSymbols())}${lhs} = ${rhs};`;
   }

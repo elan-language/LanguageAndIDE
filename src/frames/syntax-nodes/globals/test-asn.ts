@@ -1,4 +1,3 @@
-import { CompileError } from "../../compile-error";
 import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
 import { SymbolType } from "../../interfaces/symbol-type";
@@ -18,7 +17,7 @@ export class TestAsn extends FrameWithStatementsAsn implements AstNode {
   private compileTestBody() {
     const body = this.compileChildren();
 
-    if (!this.ignored || this.aggregateCompileErrors().length > 0) {
+    if (!this.ignored || this.compileErrors.length > 0) {
       return body;
     }
 
@@ -31,8 +30,5 @@ export class TestAsn extends FrameWithStatementsAsn implements AstNode {
     return `_tests.push(["${this.fieldId}", async (_outcomes) => {\r
 ${this.compileTestBody()}\r
 }]);\r\n`;
-  }
-  aggregateCompileErrors(): CompileError[] {
-    throw new Error("Method not implemented.");
   }
 }

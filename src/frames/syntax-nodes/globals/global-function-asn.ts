@@ -49,6 +49,8 @@ export class GlobalFunctionASn extends FunctionAsn {
 
     mustBeAssignableType(rt, rst, this.compileErrors, this.fieldId);
 
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
     return `async function ${super.compile()}\r
 }
 global["${name}"] = ${name};

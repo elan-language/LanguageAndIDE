@@ -12,7 +12,7 @@ import { SymbolType } from "../../interfaces/symbol-type";
 import { Transforms } from "../../interfaces/transforms";
 
 import { DuplicateSymbol } from "../../symbols/duplicate-symbol";
-import { isFunction, symbolMatches } from "../../symbols/symbol-helpers";
+import { getGlobalScope, isFunction, symbolMatches } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { AbstractAstNode } from "../abstract-ast-node";
@@ -115,6 +115,8 @@ export class ParamList extends AbstractAstNode implements Scope {
       }
 
       this.mustNotBeRedefined(idNode.id, transforms());
+
+      getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
       return parms.compile();
     }

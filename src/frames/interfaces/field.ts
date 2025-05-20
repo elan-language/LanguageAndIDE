@@ -12,7 +12,7 @@ export interface Field extends Selectable {
   compileErrors: CompileError[];
   readCompileStatus(): CompileStatus;
   resetCompileStatusAndErrors(): void;
-  aggregateCompileErrors(): CompileError[];
+
   overtyper: Overtyper;
   updateCompileStatus(): void;
   allPossibleSymbolCompletions: SymbolWrapper[];

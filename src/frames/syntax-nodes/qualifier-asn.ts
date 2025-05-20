@@ -15,11 +15,6 @@ export class QualifierAsn extends AbstractAstNode implements AstQualifierNode {
 
   compileErrors: CompileError[] = [];
 
-  aggregateCompileErrors(): CompileError[] {
-    const q = this.value.aggregateCompileErrors();
-    return this.compileErrors.concat(q);
-  }
-
   compile(): string {
     const s = this.compileAsParameter();
     return s === "" ? "" : `${s}.`;

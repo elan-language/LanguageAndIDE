@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import {
   checkForDeprecation,
   mustBeImmutableGenericType,
@@ -27,14 +26,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     private readonly scope: Scope,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    let cc: CompileError[] = [];
-    for (const i of this.genericParameters) {
-      cc = cc.concat(i.aggregateCompileErrors());
-    }
-    return this.compileErrors.concat(cc);
   }
 
   expectedMinimumGenericParameters() {
@@ -99,11 +90,13 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   compile(): string {
     this.commonCompile();
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return this.id;
   }
 
   compileToEmptyObjectCode(): string {
     this.commonCompile();
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return this.symbolType().initialValue;
   }
 

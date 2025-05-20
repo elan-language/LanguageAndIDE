@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import {
   mustBeKnownSymbol,
   mustBePropertyPrefixedOnMember,
@@ -9,6 +8,7 @@ import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Scope } from "../interfaces/scope";
 import { NullScope } from "../symbols/null-scope";
 import {
+  getGlobalScope,
   isDeconstructedType,
   isMemberOnFieldsClass,
   scopePrefix,
@@ -31,13 +31,6 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     private scope: Scope,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    const q = this.qualifier.aggregateCompileErrors();
-    const i = this.index.aggregateCompileErrors();
-
-    return this.compileErrors.concat(q).concat(i);
   }
 
   isSimpleSubscript() {
@@ -89,6 +82,8 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
       : symbol.symbolScope === SymbolScope.outParameter
         ? "[0]"
         : "";
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     // handles indexing within call statement
     return this.isSimpleSubscript()

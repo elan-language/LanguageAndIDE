@@ -6,7 +6,9 @@ import {
   mustNotBeTwoUnaryExpressions as mustNotBeSequentialUnaryExpressions,
 } from "../compile-rules";
 import { AstNode } from "../interfaces/ast-node";
+import { Scope } from "../interfaces/scope";
 import { BooleanType } from "../symbols/boolean-type";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { mapOperationSymbol } from "./ast-helpers";
 import { OperationSymbol } from "./operation-symbol";
@@ -16,15 +18,12 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
     public readonly op: OperationSymbol,
     private readonly operand: AstNode,
     public readonly fieldId: string,
+    private readonly scope: Scope,
   ) {
     super();
   }
 
   compileErrors: CompileError[] = [];
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors.concat(this.operand.aggregateCompileErrors());
-  }
 
   private opToJs() {
     switch (this.op) {
@@ -55,6 +54,8 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
 
     // not
     mustBeBooleanType(opSt, this.compileErrors, this.fieldId);
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return code;
   }
 

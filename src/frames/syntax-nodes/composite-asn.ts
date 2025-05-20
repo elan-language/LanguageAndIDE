@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import { compilerAssert } from "../compile-rules";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstNode } from "../interfaces/ast-node";
@@ -21,12 +20,6 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
   }
 
   private finalNode?: ChainedAsn;
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors
-      .concat(this.expr1.aggregateCompileErrors())
-      .concat(this.expr2.aggregateCompileErrors());
-  }
 
   setupNodes() {
     const leafNodes = this.expr2.items as ChainedAsn[];

@@ -3,7 +3,7 @@ import { AstNode } from "../../interfaces/ast-node";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Scope } from "../../interfaces/scope";
 import { Transforms } from "../../interfaces/transforms";
-import { isGenericSymbolType } from "../../symbols/symbol-helpers";
+import { getGlobalScope, isGenericSymbolType } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownType } from "../../symbols/unknown-type";
 import { transforms } from "../ast-helpers";
@@ -31,6 +31,8 @@ export class EachAsn extends FrameWithStatementsAsn {
 
     const iterType = this.iter.symbolType();
     mustBeIterable(iterType!, this.compileErrors, this.fieldId);
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `${this.indent()}${this.breakPoint(this.debugSymbols())}for (const ${this.variable.compile()} of ${this.iter.compile()}) {\r
 ${this.compileChildren()}\r

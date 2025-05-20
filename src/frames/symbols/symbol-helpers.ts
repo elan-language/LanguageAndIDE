@@ -1,19 +1,19 @@
 import { ElanCompilerError } from "../../elan-compiler-error";
 import { Property } from "../class-members/property";
 import { CompileError } from "../compile-error";
-import { isClass, isConstant, isFile, isMember, isScope } from "../frame-helpers";
+import { isClass, isConstant, isMember, isScope } from "../frame-helpers";
 import { Enum } from "../globals/enum";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
 import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
 import { ElanSymbol } from "../interfaces/elan-symbol";
-import { File } from "../interfaces/file";
 import { Frame } from "../interfaces/frame";
 import { GenericSymbolType } from "../interfaces/generic-symbol-type";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
+import { RootAstNode } from "../interfaces/root-ast-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
@@ -240,12 +240,16 @@ export function updateScopeInChain(
   return newScope;
 }
 
-export function getGlobalScope(start: Scope): File {
+export function isRoot(f?: Scope | AstNode): f is RootAstNode {
+  return !!f && "isFile" in f;
+}
+
+export function getGlobalScope(start: Scope): RootAstNode {
   if (start instanceof NullScope) {
     throw new ElanCompilerError("Global scope not found");
   }
 
-  if (isFile(start)) {
+  if (isRoot(start)) {
     return start;
   }
 

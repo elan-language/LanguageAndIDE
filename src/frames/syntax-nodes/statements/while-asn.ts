@@ -2,6 +2,7 @@ import { mustBeOfType } from "../../compile-rules";
 import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
 import { BooleanType } from "../../symbols/boolean-type";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
 export class WhileAsn extends FrameWithStatementsAsn {
@@ -18,6 +19,8 @@ export class WhileAsn extends FrameWithStatementsAsn {
   compile(): string {
     this.compileErrors = [];
     mustBeOfType(this.condition, BooleanType.Instance, this.compileErrors, this.fieldId);
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `${this.indent()}${this.breakPoint(this.debugSymbols())}while (${this.condition.compile()}) {\r
 ${this.compileChildren()}\r

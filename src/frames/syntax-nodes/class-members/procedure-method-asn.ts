@@ -5,7 +5,7 @@ import { AstNode } from "../../interfaces/ast-node";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Scope } from "../../interfaces/scope";
 import { Transforms } from "../../interfaces/transforms";
-import { getClassScope } from "../../symbols/symbol-helpers";
+import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { transforms } from "../ast-helpers";
 import { ProcedureAsn } from "../globals/procedure-asn";
@@ -44,6 +44,8 @@ export class ProcedureMethodAsn extends ProcedureAsn {
       this.compileErrors,
       this.fieldId,
     );
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `${this.indent()}async ${super.compile()}\r
 ${this.indent()}}\r

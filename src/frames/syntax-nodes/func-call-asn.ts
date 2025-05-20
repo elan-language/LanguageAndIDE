@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import {
   checkForDeprecation,
   mustBeCallable,
@@ -18,6 +17,7 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { FunctionType } from "../symbols/function-type";
 import { NullScope } from "../symbols/null-scope";
 import {
+  getGlobalScope,
   isDefinitionStatement,
   isMemberOnFieldsClass,
   scopePrefix,
@@ -58,17 +58,6 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
   isAsync: boolean = false;
 
   private isExtensionMethod: boolean = false;
-
-  aggregateCompileErrors(): CompileError[] {
-    const cc = this.precedingNode.aggregateCompileErrors();
-    let pc: CompileError[] = [];
-
-    for (const i of this.parameters) {
-      pc = pc.concat(i.aggregateCompileErrors());
-    }
-
-    return cc.concat(this.compileErrors).concat(pc);
-  }
 
   getSymbolAndType(): [ElanSymbol, SymbolType] {
     let currentScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
@@ -158,6 +147,8 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     const prefix = showPreviousNode
       ? ""
       : scopePrefix(funcSymbol, this.compileErrors, this.scope, this.fieldId);
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `${asyncStart}${prefix}${this.id}(${parms})${asyncEnd}`;
   }

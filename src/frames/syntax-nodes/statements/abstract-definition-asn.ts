@@ -10,7 +10,7 @@ import { AstNode } from "../../interfaces/ast-node";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Scope } from "../../interfaces/scope";
 import { Transforms } from "../../interfaces/transforms";
-import { getDeconstructionIds, symbolMatches } from "../../symbols/symbol-helpers";
+import { getDeconstructionIds, getGlobalScope, symbolMatches } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { getIds, transforms, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
@@ -55,6 +55,8 @@ export abstract class AbstractDefinitionAsn extends FrameAsn implements ElanSymb
     const lhsCode = wrapDeconstructionLhs(lhs, rhs, false);
 
     const rhsCode = wrapDeconstructionRhs(lhs, rhs, false);
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `${this.breakPoint(this.debugSymbols())}${this.indent()}${this.getJsKeyword()} ${lhsCode} = ${rhsCode};`;
   }

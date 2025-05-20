@@ -26,6 +26,7 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
+import { AstNode } from "./interfaces/ast-node";
 import { CodeSource } from "./interfaces/code-source";
 import { editorEvent } from "./interfaces/editor-event";
 import { ElanSymbol } from "./interfaces/elan-symbol";
@@ -102,6 +103,7 @@ export class FileImpl implements File, Scope {
   private _testError?: Error;
   private _frNo: number = 0;
   private _showFrameNos: boolean = true;
+  private ast: AstNode | undefined;
 
   constructor(
     private readonly hash: (toHash: string) => Promise<string>,
@@ -355,9 +357,9 @@ export class FileImpl implements File, Scope {
   }
 
   compile(): string {
-    const ast = this.transform.transform(this, "", undefined);
+    this.ast = this.transform.transform(this, "", undefined);
 
-    return ast?.compile() ?? "";
+    return this.ast?.compile() ?? "";
 
     // const stdlib = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
     // return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}`;

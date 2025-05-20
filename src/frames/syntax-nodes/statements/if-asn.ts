@@ -2,6 +2,7 @@ import { mustBeOfType, mustNotHaveConditionalAfterUnconditionalElse } from "../.
 import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
 import { BooleanType } from "../../symbols/boolean-type";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { compileNodes } from "../ast-helpers";
 import { FrameAsn } from "../frame-asn";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
@@ -49,6 +50,8 @@ export class IfAsn extends FrameWithStatementsAsn {
       mustNotHaveConditionalAfterUnconditionalElse(elses, this.compileErrors, this.fieldId);
       toCompile = this.reconfigureForCompile();
     }
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `${this.indent()}${this.breakPoint(this.debugSymbols())}if (${this.condition.compile()}) {\r
 ${compileNodes(toCompile)}\r

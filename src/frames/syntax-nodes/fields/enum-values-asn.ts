@@ -1,7 +1,7 @@
-import { CompileError } from "../../compile-error";
 import { mustBeUniqueValueInScope, mustNotBeKeyword } from "../../compile-rules";
 import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { UnknownType } from "../../symbols/unknown-type";
 import { AbstractAstNode } from "../abstract-ast-node";
 import { isAstCollectionNode } from "../ast-helpers";
@@ -10,7 +10,7 @@ import { EmptyAsn } from "../empty-asn";
 export class EnumValuesAsn extends AbstractAstNode implements AstNode {
   constructor(
     readonly fieldId: string,
-    _scope: Scope,
+    private readonly scope: Scope,
   ) {
     super();
   }
@@ -38,6 +38,8 @@ export class EnumValuesAsn extends AbstractAstNode implements AstNode {
 
         const itStr = ids.map((n) => `${n} : "${n}"`).join(", ");
 
+        getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
         return `${def}${itStr}`;
       }
 
@@ -45,10 +47,6 @@ export class EnumValuesAsn extends AbstractAstNode implements AstNode {
     }
 
     return "";
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors;
   }
 
   symbolType() {

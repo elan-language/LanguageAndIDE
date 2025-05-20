@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import {
   mustBeConcreteClass,
   mustBeKnownSymbolType,
@@ -10,7 +9,7 @@ import { Scope } from "../interfaces/scope";
 import { constructorKeyword } from "../keywords";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { ProcedureType } from "../symbols/procedure-type";
-import { parameterNamesWithTypes } from "../symbols/symbol-helpers";
+import { getGlobalScope, parameterNamesWithTypes } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
@@ -24,14 +23,6 @@ export class NewAsn extends AbstractAstNode implements AstNode {
     private readonly scope: Scope,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    let cc: CompileError[] = [];
-    for (const i of this.parameters) {
-      cc = cc.concat(i.aggregateCompileErrors());
-    }
-    return this.compileErrors.concat(this.typeNode.aggregateCompileErrors()).concat(cc);
   }
 
   compile(): string {
@@ -72,6 +63,8 @@ export class NewAsn extends AbstractAstNode implements AstNode {
       }
 
       const scope = libScope ? "_stdlib." : "";
+
+      getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
       return `system.initialise(await new ${scope}${type.className}()._initialise(${parametersAsString}))`;
     }

@@ -10,7 +10,7 @@ import { AstNode } from "../../interfaces/ast-node";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Scope } from "../../interfaces/scope";
 import { Transforms } from "../../interfaces/transforms";
-import { getClassScope } from "../../symbols/symbol-helpers";
+import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { transforms } from "../ast-helpers";
 import { FunctionAsn } from "../globals/function-asn";
@@ -61,6 +61,9 @@ export class FunctionMethodAsn extends FunctionAsn {
     const rst = returnStatement.symbolType();
 
     mustBeAssignableType(rt, rst, this.compileErrors, returnStatement!.fieldId);
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
     return `${this.indent()}async ${super.compile()}\r
 ${this.indent()}}\r
 `;

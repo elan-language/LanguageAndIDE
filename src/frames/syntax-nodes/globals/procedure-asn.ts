@@ -54,6 +54,8 @@ export abstract class ProcedureAsn extends FrameWithStatementsAsn implements Ela
       this.fieldId,
     );
 
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
     return `${name}(${this.params.compile()}) {\r
 ${this.breakPoint(this.debugSymbols())}${this.compileChildren()}\r`;
   }

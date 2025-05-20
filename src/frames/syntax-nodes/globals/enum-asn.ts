@@ -1,4 +1,3 @@
-import { CompileError } from "../../compile-error";
 import { mustBeUniqueNameInScope } from "../../compile-rules";
 import { singleIndent } from "../../frame-helpers";
 import { AstNode } from "../../interfaces/ast-node";
@@ -32,12 +31,11 @@ export class EnumAsn extends FrameAsn {
       this.fieldId,
     );
 
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
     return `const ${name} = {\r
 ${singleIndent()}${this.values.compile()}\r
 };\r
 `;
-  }
-  aggregateCompileErrors(): CompileError[] {
-    throw new Error("Method not implemented.");
   }
 }

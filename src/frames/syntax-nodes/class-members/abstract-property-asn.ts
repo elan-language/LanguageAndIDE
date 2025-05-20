@@ -5,7 +5,7 @@ import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Member } from "../../interfaces/member";
 import { Scope } from "../../interfaces/scope";
 import { ClassType } from "../../symbols/class-type";
-import { getClassScope } from "../../symbols/symbol-helpers";
+import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { transforms } from "../ast-helpers";
 import { FrameAsn } from "../frame-asn";
@@ -42,6 +42,8 @@ export class AbstractPropertyAsn extends FrameAsn implements Member, ElanSymbol 
       this.compileErrors,
       this.fieldId,
     );
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `${this.indent()}get ${pName}() {\r
 ${this.indent()}${this.indent()}return ${this.type.compile()};\r

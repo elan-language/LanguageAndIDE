@@ -14,6 +14,7 @@ import { Scope } from "../../interfaces/scope";
 import { Transforms } from "../../interfaces/transforms";
 import { ProcedureType } from "../../symbols/procedure-type";
 import {
+  getGlobalScope,
   isMemberOnFieldsClass,
   scopePrefix,
   updateScopeAndQualifier,
@@ -179,6 +180,8 @@ export class CallAsn extends FrameAsn {
       if (wrappedOutParameters.length > 0) {
         wrappedOutParms = `\n${this.indent()}${wrappedOutParameters.join("; ")};`;
       }
+
+      getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
       return `${wrappedInParms}${this.indent()}${this.breakPoint(this.debugSymbols())}${async}${prefix}${id}(${parms});${wrappedOutParms}`;
     }

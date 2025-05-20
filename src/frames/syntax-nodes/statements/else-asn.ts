@@ -7,6 +7,7 @@ import { Scope } from "../../interfaces/scope";
 import { Transforms } from "../../interfaces/transforms";
 import { BooleanType } from "../../symbols/boolean-type";
 import {
+  getGlobalScope,
   getIds,
   handleDeconstruction,
   isSymbol,
@@ -52,6 +53,9 @@ export class ElseAsn extends FrameAsn {
 
   compile(): string {
     this.compileErrors = [];
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
     return `${this.indent()}} else ${this.compileIfClause()}
 ${compileNodes(this.compileChildren)}`;
   }

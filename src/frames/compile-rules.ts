@@ -43,6 +43,7 @@ import {
   UndefinedSymbolCompileError,
   UnknownCompilerDirectiveCompileError,
 } from "./compile-error";
+import { FileImpl } from "./file-impl";
 import {
   isClass,
   isConstant,
@@ -287,7 +288,7 @@ export function checkForDeprecation(
       return;
     }
 
-    const file = getGlobalScope(scope);
+    const file = getGlobalScope(scope) as unknown as FileImpl; // todo this wont work fix
     const version = file.getVersion();
     const fromMajor = symbolType.deprecated.fromMajor;
     const fromMinor = symbolType.deprecated.fromMinor;
