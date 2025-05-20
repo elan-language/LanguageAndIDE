@@ -7,11 +7,9 @@ import {
   mustBePublicMember,
   mustNotBeKeyword,
 } from "../compile-rules";
-import { isClass } from "../frame-helpers";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
 import { ChainedAsn } from "../interfaces/chained-asn";
-import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { NullScope } from "../symbols/null-scope";
 import {
@@ -24,6 +22,11 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";
+import { ClassAsn } from "./globals/class-asn";
+
+function isClass(s: Scope): s is ClassAsn {
+  return s instanceof ClassAsn;
+}
 
 export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(
@@ -56,8 +59,9 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     if (isClass(searchScope)) {
       return searchScope.resolveOwnSymbol(this.id, transforms());
     }
+
     if (isDefinitionStatement(this.scope)) {
-      searchScope = (this.scope as Frame).getParent();
+      searchScope = this.scope.getParentScope();
     }
 
     return searchScope.resolveSymbol(this.id, transforms(), this.scope);

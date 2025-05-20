@@ -6,17 +6,17 @@ import { Scope } from "../../interfaces/scope";
 import { SymbolType } from "../../interfaces/symbol-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { transforms } from "../ast-helpers";
+import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 
-export class EnumFrameAsn extends FrameAsn {
-  constructor(
-    private name: AstNode,
-    private values: AstNode,
-    fieldId: string,
-    scope: Scope,
-  ) {
+export class EnumAsn extends FrameAsn {
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
+  name: AstNode = EmptyAsn.Instance;
+  values: AstNode = EmptyAsn.Instance;
+
   symbolType(): SymbolType {
     throw new Error("Method not implemented.");
   }
@@ -33,9 +33,9 @@ export class EnumFrameAsn extends FrameAsn {
     );
 
     return `const ${name} = {\r
-   ${singleIndent()}${this.values.compile()}\r
-   };\r
-   `;
+${singleIndent()}${this.values.compile()}\r
+};\r
+`;
   }
   aggregateCompileErrors(): CompileError[] {
     throw new Error("Method not implemented.");

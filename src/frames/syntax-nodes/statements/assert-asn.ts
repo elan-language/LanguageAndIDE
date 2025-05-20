@@ -5,7 +5,7 @@ import { Scope } from "../../interfaces/scope";
 import { SymbolType } from "../../interfaces/symbol-type";
 import { UnknownType } from "../../symbols/unknown-type";
 import { FrameAsn } from "../frame-asn";
-import { TestFrameAsn } from "../globals/test-asn";
+import { TestAsn } from "../globals/test-asn";
 
 export class AssertAsn extends FrameAsn implements AstNode {
   constructor(
@@ -31,7 +31,7 @@ export class AssertAsn extends FrameAsn implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
-    const test = this.scope as unknown as TestFrameAsn;
+    const test = this.scope as unknown as TestAsn;
     const ignored = test.ignored;
     const expected = this.expected.compile();
     const actual = this.actual.compile();

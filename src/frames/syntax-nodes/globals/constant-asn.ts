@@ -1,24 +1,35 @@
 import { CompileError } from "../../compile-error";
-import { mustBeUniqueNameInScope } from "../../compile-rules";
+import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
 import { AstNode } from "../../interfaces/ast-node";
+import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Scope } from "../../interfaces/scope";
 import { SymbolType } from "../../interfaces/symbol-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
+import { SymbolScope } from "../../symbols/symbol-scope";
 import { transforms } from "../ast-helpers";
+import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 
-export class ConstantFrameAsn extends FrameAsn implements AstNode {
-  constructor(
-    private name: AstNode,
-    private value: AstNode,
-    fieldId: string,
-    scope: Scope,
-  ) {
+export class ConstantAsn extends FrameAsn implements AstNode, ElanSymbol {
+  isConstant = true;
+
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
+  }
+
+  name: AstNode = EmptyAsn.Instance;
+  value: AstNode = EmptyAsn.Instance;
+
+  get symbolId() {
+    return getId(this.name);
   }
 
   symbolType(): SymbolType {
     return this.value.symbolType();
+  }
+
+  get symbolScope() {
+    return SymbolScope.program;
   }
 
   compile(): string {
@@ -33,7 +44,7 @@ export class ConstantFrameAsn extends FrameAsn implements AstNode {
     );
 
     return `${name} = ${this.value.compile()};\r
-    `;
+`;
   }
 
   aggregateCompileErrors(): CompileError[] {

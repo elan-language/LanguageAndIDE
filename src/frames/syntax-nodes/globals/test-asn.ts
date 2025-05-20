@@ -5,7 +5,7 @@ import { SymbolType } from "../../interfaces/symbol-type";
 import { compileNodes } from "../ast-helpers";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
-export class TestFrameAsn extends FrameWithStatementsAsn implements AstNode {
+export class TestAsn extends FrameWithStatementsAsn implements AstNode {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }

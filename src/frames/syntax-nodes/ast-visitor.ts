@@ -3,6 +3,8 @@ import { StdLib } from "../../standard-library/std-lib";
 import { StdLibSymbols } from "../../standard-library/std-lib-symbols";
 import { AbstractField } from "../fields/abstract-field";
 import { FileImpl } from "../file-impl";
+import { Constant } from "../globals/constant";
+import { Enum } from "../globals/enum";
 import { MainFrame } from "../globals/main-frame";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
@@ -29,6 +31,7 @@ import { DotAfter } from "../parse-nodes/dot-after";
 import { DottedTerm } from "../parse-nodes/dotted-term";
 import { EmptyOfTypeNode } from "../parse-nodes/empty-of-type-node";
 import { EnumVal } from "../parse-nodes/enum-val";
+import { EnumValuesNode } from "../parse-nodes/enum-values-node";
 import { ExceptionMsgNode } from "../parse-nodes/exception-msg-node";
 import { FunctionRefNode } from "../parse-nodes/function-ref-node";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
@@ -88,10 +91,13 @@ import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { DiscardAsn } from "./discard-asn";
 import { EmptyAsn } from "./empty-asn";
 import { EmptyTypeAsn } from "./empty-type-asn";
+import { EnumValuesAsn } from "./fields/enum-values-asn";
 import { FileAsn } from "./file-asn";
 import { FixedIdAsn } from "./fixed-id-asn";
 import { FuncCallAsn } from "./func-call-asn";
-import { MainFrameAsn } from "./globals/main-asn";
+import { ConstantAsn } from "./globals/constant-asn";
+import { EnumAsn } from "./globals/enum-asn";
+import { MainAsn } from "./globals/main-asn";
 import { IdAsn } from "./id-asn";
 import { IdDefAsn } from "./id-def-asn";
 import { IfExprAsn } from "./if-expr-asn";
@@ -117,6 +123,7 @@ import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
 import { SegmentedStringAsn } from "./segmented-string-asn";
 import { PrintAsn } from "./statements/print-asn";
+import { SetAsn } from "./statements/set-asn";
 import { VariableAsn } from "./statements/variable-asn";
 import { ThisAsn } from "./this-asn";
 import { ToAsn } from "./to-asn";
@@ -168,7 +175,7 @@ export function transform(
   }
 
   if (node instanceof MainFrame) {
-    const mainAsn = new MainFrameAsn(node.getHtmlId(), scope);
+    const mainAsn = new MainAsn(node.getHtmlId(), scope);
 
     mainAsn.children = node
       .getChildren()
@@ -184,6 +191,41 @@ export function transform(
     varAsn.expr = transform(node.expr, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
 
     return varAsn;
+  }
+
+  if (node instanceof SetStatement) {
+    const setAsn = new SetAsn(node.getHtmlId(), scope);
+
+    setAsn.assignable = transform(node.assignable, node.getHtmlId(), setAsn) ?? EmptyAsn.Instance;
+    setAsn.expr = transform(node.expr, node.getHtmlId(), setAsn) ?? EmptyAsn.Instance;
+
+    return setAsn;
+  }
+
+  if (node instanceof Enum) {
+    const enumAsn = new EnumAsn(node.getHtmlId(), scope);
+
+    enumAsn.name = transform(node.name, node.getHtmlId(), enumAsn) ?? EmptyAsn.Instance;
+    enumAsn.values = transform(node.values, node.getHtmlId(), enumAsn) ?? EmptyAsn.Instance;
+
+    return enumAsn;
+  }
+
+  if (node instanceof EnumValuesNode) {
+    const enumValues = new EnumValuesAsn(fieldId, scope);
+
+    enumValues.values = transformMany(node, fieldId, scope);
+
+    return enumValues;
+  }
+
+  if (node instanceof Constant) {
+    const constantAsn = new ConstantAsn(node.getHtmlId(), scope);
+
+    constantAsn.name = transform(node.name, node.getHtmlId(), constantAsn) ?? EmptyAsn.Instance;
+    constantAsn.value = transform(node.value, node.getHtmlId(), constantAsn) ?? EmptyAsn.Instance;
+
+    return constantAsn;
   }
 
   if (node instanceof Print) {

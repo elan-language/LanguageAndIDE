@@ -1,17 +1,21 @@
+import { CompileError } from "../../compile-error";
 import { mustBeUniqueValueInScope, mustNotBeKeyword } from "../../compile-rules";
 import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
+import { UnknownType } from "../../symbols/unknown-type";
 import { AbstractAstNode } from "../abstract-ast-node";
 import { isAstCollectionNode } from "../ast-helpers";
+import { EmptyAsn } from "../empty-asn";
 
-export class EnumValues extends AbstractAstNode {
+export class EnumValuesAsn extends AbstractAstNode implements AstNode {
   constructor(
-    private readonly values: AstNode,
-    private readonly fieldId: string,
+    readonly fieldId: string,
     _scope: Scope,
   ) {
     super();
   }
+
+  values: AstNode = EmptyAsn.Instance;
 
   compile(): string {
     this.compileErrors = [];
@@ -41,5 +45,13 @@ export class EnumValues extends AbstractAstNode {
     }
 
     return "";
+  }
+
+  aggregateCompileErrors(): CompileError[] {
+    return this.compileErrors;
+  }
+
+  symbolType() {
+    return UnknownType.Instance;
   }
 }

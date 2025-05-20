@@ -11,19 +11,16 @@ import { mapSymbolType } from "../../frame-helpers";
 import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
 import { getIds, transforms, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
+import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 
 export class SetAsn extends FrameAsn {
-  isStatement = true;
-
-  constructor(
-    private readonly assignable: AstNode,
-    private readonly expr: AstNode,
-    fieldId: string,
-    scope: Scope,
-  ) {
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
+  assignable: AstNode = EmptyAsn.Instance;
+  expr: AstNode = EmptyAsn.Instance;
 
   ids() {
     return getIds(this.assignable);
@@ -48,7 +45,7 @@ export class SetAsn extends FrameAsn {
 
     mustNotBePropertyOnFunctionMethod(
       assignableAstNode,
-      this.getParent(),
+      this.scope,
       this.compileErrors,
       this.fieldId,
     );

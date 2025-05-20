@@ -9,12 +9,14 @@ import { elanSymbols } from "../symbols/elan-symbols";
 import { isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { ConstantFrameAsn } from "./globals/constant-asn";
-import { EnumFrameAsn } from "./globals/enum-asn";
-import { MainFrameAsn } from "./globals/main-asn";
-import { TestFrameAsn } from "./globals/test-asn";
+import { ConstantAsn } from "./globals/constant-asn";
+import { EnumAsn } from "./globals/enum-asn";
+import { MainAsn } from "./globals/main-asn";
+import { TestAsn } from "./globals/test-asn";
 
 export class FileAsn extends AbstractAstNode implements AstNode, Scope {
+  isFile = true;
+
   constructor(private scope: Scope) {
     super();
   }
@@ -46,11 +48,11 @@ export class FileAsn extends AbstractAstNode implements AstNode, Scope {
     let result = "";
     if (this.children.length > 0) {
       const ss: Array<string> = [];
-      for (const frame of this.children.filter((g) => g instanceof EnumFrameAsn)) {
+      for (const frame of this.children.filter((g) => g instanceof EnumAsn)) {
         ss.push(frame.compile());
       }
 
-      const constants = this.children.filter((g) => g instanceof ConstantFrameAsn);
+      const constants = this.children.filter((g) => g instanceof ConstantAsn);
 
       if (constants.length > 0) {
         ss.push("const global = new class {");
@@ -63,19 +65,19 @@ export class FileAsn extends AbstractAstNode implements AstNode, Scope {
       }
 
       for (const frame of this.children.filter(
-        (g) => !(g instanceof EnumFrameAsn || g instanceof ConstantFrameAsn),
+        (g) => !(g instanceof EnumAsn || g instanceof ConstantAsn),
       )) {
         ss.push(frame.compile());
       }
 
-      if (!this.children.some((g) => g instanceof MainFrameAsn)) {
-        const emptyMain = new MainFrameAsn(this.fieldId, this.scope);
+      if (!this.children.some((g) => g instanceof MainAsn)) {
+        const emptyMain = new MainAsn(this.fieldId, this.scope);
         ss.push(emptyMain.compile());
       }
 
       result = ss.join("\r\n");
 
-      this.hasTests = this.children.some((g) => g instanceof TestFrameAsn);
+      this.hasTests = this.children.some((g) => g instanceof TestAsn);
     }
     return result;
   }

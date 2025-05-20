@@ -18,11 +18,8 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { globalKeyword, libraryKeyword } from "../keywords";
-import { AbstractDefinitionStatement } from "../statements/abstract-definition.statement";
 import { CallStatement } from "../statements/call-statement";
 import { DefinitionAdapter } from "../statements/definition-adapter";
-import { Each } from "../statements/each";
-import { For } from "../statements/for";
 import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import {
   isAstIdNode,
@@ -31,6 +28,9 @@ import {
   transforms,
 } from "../syntax-nodes/ast-helpers";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
+import { AbstractDefinitionAsn } from "../syntax-nodes/statements/abstract-definition-asn";
+import { EachAsn } from "../syntax-nodes/statements/each-asn";
+import { ForAsn } from "../syntax-nodes/statements/for-asn";
 
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
@@ -688,5 +688,5 @@ export function knownType(symbolType: SymbolType) {
 }
 
 export function isDefinitionStatement(s: Scope): boolean {
-  return s instanceof AbstractDefinitionStatement || s instanceof Each || s instanceof For;
+  return s instanceof AbstractDefinitionAsn || s instanceof EachAsn || s instanceof ForAsn;
 }

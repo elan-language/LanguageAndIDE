@@ -9,7 +9,7 @@ import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { transforms } from "../ast-helpers";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
-export class ForASn extends FrameWithStatementsAsn {
+export class ForAsn extends FrameWithStatementsAsn {
   isStatement: boolean = true;
 
   constructor(

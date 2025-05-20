@@ -8,7 +8,7 @@ import { allScopedSymbols } from "../../symbols/symbol-helpers";
 import { transforms } from "../ast-helpers";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
-export class MainFrameAsn extends FrameWithStatementsAsn implements AstNode {
+export class MainAsn extends FrameWithStatementsAsn implements AstNode {
   constructor(
     public readonly fieldId: string,
     scope: Scope,

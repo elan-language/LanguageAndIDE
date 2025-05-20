@@ -47,7 +47,6 @@ import {
   isClass,
   isConstant,
   isFunction,
-  isInsideFunction,
   isInsideFunctionOrConstructor,
   isLet,
   isMember,
@@ -93,6 +92,7 @@ import {
   isAstIdNode,
   isAstIndexableNode,
   isEmptyNode,
+  isInsideFunction,
   transforms,
 } from "./syntax-nodes/ast-helpers";
 import { ThisAsn } from "./syntax-nodes/this-asn";
@@ -878,11 +878,11 @@ export function getId(astNode: AstNode) {
 
 export function mustNotBePropertyOnFunctionMethod(
   assignable: AstNode,
-  parent: Parent,
+  scope: Scope,
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (isInsideFunction(parent)) {
+  if (isInsideFunction(scope)) {
     const s = assignable.symbolScope;
 
     if (s === SymbolScope.member) {

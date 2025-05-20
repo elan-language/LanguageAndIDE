@@ -35,6 +35,8 @@ import { transform, transformMany } from "./ast-visitor";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { EmptyAsn } from "./empty-asn";
+import { FileAsn } from "./file-asn";
+import { FunctionAsn } from "./globals/function-asn";
 import { IndexAsn } from "./index-asn";
 import { OperationSymbol } from "./operation-symbol";
 
@@ -422,4 +424,14 @@ export function compileNodes(nodes: AstNode[]): string {
     result = ss.join("\r\n");
   }
   return result;
+}
+
+export function isInsideFunction(scope: Scope): boolean {
+  if (scope instanceof FunctionAsn) {
+    return true;
+  }
+  if (scope instanceof FileAsn) {
+    return false;
+  }
+  return isInsideFunction(scope.getParentScope());
 }
