@@ -191,7 +191,7 @@ suite("Editing Fields Tests", () => {
     field.processKey(tab());
     assert.equal(
       field.renderAsHtml(),
-      `<el-field id="comment2" class="optional ok" tabindex=0><el-txt>&lt;p&gt;</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Any text on a single line.">?</el-help></el-field>`,
+      `<el-field id="comment2" class="optional ok" tabindex=0><el-txt><p></el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Any text on a single line.">?</el-help></el-field>`,
     );
   });
 

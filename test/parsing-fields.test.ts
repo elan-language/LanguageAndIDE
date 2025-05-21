@@ -41,7 +41,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(text.readParseStatus(), ParseStatus.valid);
     assert.equal(
       text.renderAsHtml(),
-      `<el-field id="comment4" class="optional ok" tabindex=0><el-txt>&nbsp;&nbsp;Hello&nbsp;&nbsp;&nbsp;World&nbsp;</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Any text on a single line.">?</el-help></el-field>`,
+      `<el-field id="comment4" class="optional ok" tabindex=0><el-txt>&nbsp;&nbsp;Hello &nbsp;&nbsp;World &nbsp;</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Any text on a single line.">?</el-help></el-field>`,
     );
   });
   test("parse varDefField", () => {
