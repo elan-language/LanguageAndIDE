@@ -20,9 +20,9 @@ Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and 
 
 <!-- #region Comments-->
 <h3 id="Comment" class="no-TOC">Comments</h3>
-A comment is not an instruction: it is ignored by the compiler and does not change how the program works.
+<p>A comment is not an instruction: it is ignored by the compiler and does not change how the program works.
 Rather, a comment contains information <em>about</em> the program, intended to be read by a person seeking to understand or modify the code.</p>
-Every comment starts with the symbol <el-code>#</el-code> (known as &lsquo;hash&rsquo;) followed by some text or a blank line. The text field in
+<p>Every comment starts with the symbol <el-code>#</el-code> (known as &lsquo;hash&rsquo;) followed by some text or a blank line. The text field in
 a comment may contain any text, except that it must not start with the open-square-bracket symbol - <el-code>[</el-code>.
 Comments may be inserted at the same level as a <a href="#Global">global</a>,
 <a href="#Member">member</a>, or <a href="#statement">statement</a> instruction, by entering <el-code>#</el-code> from the <el-code>new code</el-code> selector.</p>
@@ -32,15 +32,15 @@ Comments may be inserted at the same level as a <a href="#Global">global</a>,
 
 <!--   #region Global Instructions-->
 <!--     #region Heading & Intro-->
-<h1 id="Global">Global Instructions</h1>
+<h1 id="GlobalInstructions">Global Instructions</h1>
 <p>Global instructions (also referred to simply as &lsquo;globals&rsquo;) are located <em>directly</em> within a code file.
   They are never indented from the left-hand edge, nor may they be located <em>within</em> other instructions.
-  Three of the globals &ndash; <el-code>main</el-code>, <el-code>function</el-code>, and <el-code>procedure</el-code> &ndash; are described as &lsquo;methods&rsquo; and these are defined by one or more <a href="#statement">statements</a> within them.</em>
+  Three of the globals &ndash; <el-code>main</el-code>, <el-code>function</el-code>, and <el-code>procedure</el-code> &ndash; are described as &lsquo;methods&rsquo; and these are defined by one or more <a href="#statement">statements</a> within them.
   Four of the globals &ndash; <a href="#record"><el-code>record</el-code></a>, <a href="#class"><el-code>class</el-code></a>, <a href="#Abstract_class"><el-code>abstract class</el-code></a>, and <a href="#interface"><el-code>interface</el-code></a> &ndash; define data structures and these always contain <a href="#Member">members</a>.
   The two remaining globals &ndash; <el-code>constant</el-code>, and <el-code>enum</el-code> &ndash; do not contain any further instructions.</p>
 <p>When you navigate to a <el-code>new code</el-code> at the <em>global</em> level (not indented from the left-hand edge of the code pane),
 you will be shown the 'global selector' listing the set of globals that you may insert there, namely all or only some of:</p>
-<a href="#main"><el-code>main</el-code></a>
+<p><a href="#main"><el-code>main</el-code></a>
 <a href="#Procedure"><el-code>procedure</el-code></a>
 <a href="#Function"><el-code>function</el-code></a>
 <a href="#Test"><el-code>test</el-code></a>
@@ -124,9 +124,10 @@ Unlike a function, a procedure does not return a value.
 <!-- #endregion-->
 <!--     #region Function-->
 <h2 id="function">Function</h2>
-<p>A <el-code>function</el-code> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in a statement or expression.
-Unlike a <a href="#procedure">procedure</a>, a function returns a value. Also unlike a procedure, a function can have no &lsquo;side effects&rsquo; and cannot depend on any <a href="#System_methods">System methods</a>.</p>
-Example of a function:</p>
+<p>A <el-code>function</el-code> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in a statement or expression.</p>
+<p>Unlike a <a href="#procedure">procedure</a>, a function returns a value. Also unlike a procedure, a function can have no &lsquo;side effects&rsquo; and cannot depend on any <a href="#System_methods">System methods</a>.</p>
+<p>The <el-code><el-kw>return</el-kw></el-code> statement is followed by the value returned by the function.</p>
+<p>Example of a function:</p>
 <el-code-block source="score.elan">
 <el-func class="ok multiline" id="func91" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident93" class="ok" tabindex="0"><el-txt>score</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params94" class="optional ok" tabindex="0"><el-txt><el-id>g</el-id> <el-kw>as</el-kw> <el-type>Game</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type95" class="ok" tabindex="0"><el-txt><el-type>Int</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
@@ -138,7 +139,7 @@ Example of a function:</p>
 <!-- #endregion-->
 <!--     #region Parameters-->
 <div id="as"></div>
-<h2 id="parameter">Parameters</h2>
+<h2 id="Parameters">Parameters</h2>
 Parameters for both <el-code>procedures</el-code> and <el-code>functions</el-code> are defined in exactly the same way: each parameter definition takes the form:
 <br>&nbsp;&nbsp;&lt;name&gt; <el-code>as</el-code> &lt;Type&gt;
 <br> for example:
@@ -231,7 +232,7 @@ Procedures and functions may be called or referenced recursively. For example, a
 <el-statement class="ok" id="assert225" tabindex="0"><el-kw>assert </el-kw><el-field id="text226" class="ok" tabindex="0"><el-txt><el-id>g3</el-id>.<el-id>head</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr227" class="ok" tabindex="0"><el-txt><el-method>newSquare</el-method>(<el-lit>22</el-lit>, <el-lit>16</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="warning">not run</el-msg></el-statement>
 <el-kw>end test</el-kw>
 </el-test>
-</el-code-block></p>
+</el-code-block>
 <p>When a test is marked with <el-code>ignore</el-code>, that test will not be executed when the tests are run, and its result will be shown as &lsquo;not run&rsquo;. The overall test status will also show in the &lsquo;warning&rsquo; status (amber colour), even if all the tests that did run passed. This is to discourage you from leaving a test marked <el-code>ignore</el-code> for long.</p>
 <p>The principal reason for marking a test <el-code>ignore</el-code> is when either the test code, or code in any function being called, does not terminate. This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
 <p>If you do create such code without realising it, then when the tests are executed the test runner will &lsquo;time out&rsquo; after a few seconds (most tests will pass in milliseconds), and an error message will be shown in the System info pane. The test that caused the timeout will automatically then be marked <el-code>ignore</el-code>. Your priority should then be to identify the cause of the timeout and attempt to fix it before then restoring the <el-code>test</el-code> by selecting its frame and hitting <el-code>Ctrl-i</el-code> {which is a toggle for setting and unsetting an <el-code>ignore</el-code> status).</p>
@@ -261,7 +262,7 @@ Examples:
 <h2 id="enum">Enum</h2>
 <p>An <el-code>enum</el-code> &ndash; short for &lsquo;enumeration&rsquo; &ndash; is the simplest form of &lsquo;user-defined Type&rsquo;.
 It specifies a set of values, each of which is defined as a name, such that a named value of Type <el-code>enum</el-code> necessarily always holds one of those values.</p>
-<el-code>enum</el-code>s are read-only: once they have been defined it is not possible to add, remove, or update their values.</p>
+<p><el-code>enum</el-code>s are read-only: once they have been defined it is not possible to add, remove, or update their values.</p>
 
 Examples:
 
@@ -296,10 +297,10 @@ The value is specified by the Type name for the specified <el-code>enum</el-code
   <li>Both may define one or more properties, each with a name and Type</li>
   <li>Both may define encapsulated methods</li>
 </ul>
- However a <el-code>record</el-code> differs  from a <el-code>class</el-code> in that:</p>
+<p>However a <el-code>record</el-code> differs  from a <el-code>class</el-code> in that:</p>
  <ul>
   <li>A <el-code>record</el-code> is immutable (like a <el-code>ListImmutable</el-code> or a <el-code>String</el-code>). You can create a copy with specified differences but you cannot modify a <el-code>property</el-code> on a given instance.</li>
-  <li>A <el-code>record<</el-code> instance may be created or copied using a <el-code>with</el-code> clause, whereas <el-code>with</el-code> may not be used on a class instance.</li>
+  <li>A <el-code>record</el-code> instance may be created or copied using a <el-code>with</el-code> clause, whereas <el-code>with</el-code> may not be used on a class instance.</li>
   <li>A <el-code>record</el-code> does not define a constructor</li>
   <li>A <el-code>record</el-code> may define only <i>function</i> methods, since <i>procedure</i> methods would imply the ability to <i>mutate</i> the record.</li>
 </ul>
@@ -330,7 +331,7 @@ Having defined a record Type, such as <el-code>Game</el-code> above, you can cre
 <el-code-block source="newGame from snake_FP.elan">
 <el-statement class="ok" id="let603" tabindex="0"><el-kw>let </el-kw><el-field id="var604" class="ok" tabindex="0"><el-txt><el-id>g1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr605" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Game</el-type>()<el-kw> with </el-kw><br><el-id>head</el-id><el-kw> set to </el-kw><el-method>newSquare</el-method>(<el-lit>22</el-lit>, <el-lit>15</el-lit>), <br><el-id>key</el-id><el-kw> set to </el-kw>"<el-lit>d</el-lit>", <br><el-id>isOn</el-id><el-kw> set to </el-kw><el-id>true</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
-Note that you are not <em>required</em> to provide a value for each property because, where a property is not specified in the &lsquo;<el-code>with</el-code> clause&rsquo; (as above), that property will be given the empty (default) value of the correct Type.</p>
+<p>Note that you are not <em>required</em> to provide a value for each property because, where a property is not specified in the &lsquo;<el-code>with</el-code> clause&rsquo; (as above), that property will be given the empty (default) value of the correct Type.</p>
 <p>You can then read the values from the properties using &lsquo;dot syntax&rsquo; for example:</p>
 <el-code-block source=""><el-statement class="" id="print15" tabindex="0"><el-kw>print </el-kw><el-field id="expr16" class="optional" tabindex="0"><el-txt><el-id>sq</el-id>.<el-id>size</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
 </el-code-block>
@@ -344,7 +345,7 @@ Note that you are not <em>required</em> to provide a value for each property bec
 <el-code-block>
   <el-statement class="" id="let10" tabindex="0"><el-kw>let </el-kw><el-field id="var11" class="ok" tabindex="0"><el-txt><el-id>sq2</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr12" class="" tabindex="0"><el-txt><el-kw>copy</el-kw> <el-id>sq1</el-id><el-kw> with </el-kw><br><el-id>size</el-id><el-kw> set to </el-kw><el-lit><el-lit>2</el-lit>.0</el-lit>, <br><el-id>colour</el-id><el-kw> set to </el-kw><el-id>red</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
 </el-code-block>
-Or even to the same name if that name is a variable:</p>
+<p>Or even to the same name if that name is a variable:</p>
 <el-code-block>
   <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Square</el-type>()<el-kw> with </el-kw><br><el-id>x</el-id><el-kw> set to </el-kw><el-lit><el-lit>3</el-lit>.5</el-lit>, <br><el-id>y</el-id><el-kw> set to </el-kw><el-lit><el-lit>4</el-lit>.0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
@@ -358,7 +359,6 @@ Or even to the same name if that name is a variable:</p>
 <el-code-block>
   <el-statement class="" id="let9" tabindex="0"><el-kw>let </el-kw><el-field id="var10" class="ok" tabindex="0"><el-txt><el-id>sq2</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr11" class="" tabindex="0"><el-txt><el-kw>copy</el-kw> <el-id>sq1</el-id><el-kw> with </el-kw><br><el-id>size</el-id><el-kw> set to </el-kw><el-id>sq1</el-id>.<el-id>size</el-id> + <el-lit>3</el-lit></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class=""></el-msg></el-statement>
 </el-code-block>
-</p>
 
 <h4 class="no-TOC" id="record_deconstruction">Record deconstruction</h4>
 <p>A record may be &lsquo;deconstructed&rsquo;, meaning that its properties are read into separate variables using the same syntax as for deconstructing a <span class="Link">Tuple</span>. For example, assuming that Square is a record defined as in the example above, then this code:</p>
@@ -369,8 +369,10 @@ Or even to the same name if that name is a variable:</p>
 When deconstructing, the names of the values must match the names of the <el-code>properties</el-code> of the <el-code><el-kw>record</el-kw></el-code>. However, the ordering of the names does not have to match the order in which the <el-code>properties</el-code> are defined in the <el-code><el-kw>record</el-kw></el-code>.
 <!-- #endregion-->
 <!--     #region Class-->
-<h2 id="class">Class</h2>
-
+<h2 id="Class">Class</h2>
+<!-- TODO Subclass and Superclass -->
+<div id="Subclass"></div>
+<div id="Superclass"></div>
 <p>See also: <a href="Inheritance">Inheritance</a></p>
 
 <p>A <el-code>class</el-code> is a user-defined Type offering far richer capability than an <el-code>enum</el-code>. </p>
@@ -425,7 +427,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 </el-code-block>
 <p>The created instance may then be used within expressions, like any other variable.</p>
 
-<h3 class="no-TOC" id="Inheritance">Inheritance</h2>
+<h3 class="no-TOC" id="Inheritance">Inheritance</h3>
   <p>An ordinary <a href="class">class</a> (also known as a &lsquo;concrete class&rsquo;) may optionally inherit from just one <a href="Abstract_class"><el-code>abstract class</el-code></a>
     but may additionally inherit from any number of <a href="interface">interfaces</a>.
     The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <el-code>abstract class</el-code> or any <el-code>interface</el-code>s that it inherits from, directly or indirectly.</p>
@@ -448,8 +450,9 @@ Notes:
 </ul>
 <p>As with a concrete class, any of these members may be made <el-code>private</el-code>, after the corresponding frame has been added, by selecting that member frame and pressing Ctrl-p.</p>
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
-<p id="Abstract_function" id="Abstract_procedure">You may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> statement. For example:</p>
-<el-code>abstract function calculateDiscount() as Float</el-code></p>
+<!-- Need the span below as you can't put two id's on the same element -->
+<p id="Abstract_function"><span id="Abstract_procedure">You</span> may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> statement. For example:</p>
+<p><el-code>abstract function calculateDiscount() as Float</el-code></p>
 <p>
 If you wish to have several subclasses of an <el-code>abstract class</el-code> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
 <ul>
@@ -474,7 +477,7 @@ If you wish to have several subclasses of an <el-code>abstract class</el-code> t
 
 <!--   #region Member Instructions-->
 <!--     #region Heading & Intro-->
-<h1 id="Member">Member Instructions</h1>
+<h1 id="MemberInstructions">Member Instructions</h1>
 <p>Member instructions (also referred to simply as &lsquo;members&rsquo;) are located directly within the a: <el-code>record</el-code>, <el-code>class</el-code>, <el-code>abstract class</el-code>, <el-code>interface</el-code>.
   All members, with the exception of <el-code>property</el-code>, define one or more <a href="#statement">statements</a> within them.</p>
 <p>When you navigate to a <el-code>new code</el-code> that is at <em>member</em> level
@@ -500,13 +503,13 @@ If you wish to have several subclasses of an <el-code>abstract class</el-code> t
 <!-- #endregion-->
 <!--     #region Constructor-->
 <h2 id="constructor">Constructor</h2>
-<p>A concrete class <em>may</em> define a single <el-code>constructor</el-code>, which may:</el-code></p>
+<p>A concrete class <em>may</em> define a single <el-code>constructor</el-code>, which may:</p>
 <ul>
 <li>initialise any properties with fixed values</li>
 <li>define one or more parameters, which are then used to initialise properties</li>
 </ul>
 <p>If a class does define a constructor, and the constructor defines any parameters, then when the class is instantiated (using <el-code>new</el-code>) then values of
-the correct types must be provided, for example, if the class <el-code><el-type>Square</el-type></el-code> defines this constructor:</thead></p>
+the correct types must be provided, for example, if the class <el-code><el-type>Square</el-type></el-code> defines this constructor:</p>
 
 <el-code-block>
   <el-constructor class="ok multiline" id="constructor211" tabindex="0">
@@ -591,7 +594,7 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
 <!--     #endregion -->
 <!--   #region Statement Instructions-->
 <!--     #region Heading & Intro-->
-<h1 id="statement">Statement Instructions</h1>
+<h1 id="StatementInstructions">Statement Instructions</h1>
 <p>Statement instructions (also referred to simply as &lsquo;statements&rsquo;) are located within &lsquo;methods&rsquo;. Some of these statements may contain other statements.</p>
 <p>When you navigate to a <el-code>new code</el-code> that is at <em>statement</em> level
   (located within a <a href="#Global">global</a> or a <a href="#Member">member</a> instruction)
@@ -642,8 +645,9 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
 <!--     #endregion-->
 <!--     #region For loop-->
 <h2 id="for">For loop</h2>
+<div id="step"></div>
 <p>The <el-code>for..from..to..step..</el-code> construct specifies looping through a sequence of integer values with a given increment.</p>
-<p>The <el-code>for..</el-code> loop counter variable (which counts from 0) is of Type <el-code><el-type>Int</el-type></el-code> and does not have to have been defined in a <el-code>variable</el-code> statement.
+<p>The <el-code>for..</el-code> loop counter variable (which counts from 0) is of Type <el-code><el-type>Int</el-type></el-code> and does not have to have been defined in a <el-code>variable</el-code> statement.</p>
 <p>The three defining values, <el-code>from</el-code>, <el-code>to</el-code>, and <el-code>step</el-code>, must all be of Type <el-code><el-type>Int</el-type></el-code>, positive or negative.
 and may be defined by literals, variables  or expressions that evaluate to integers.</p>
 <p>Note that, if you require a negative step value, then the literal, variable, or expression must start with a negative sign.
@@ -729,7 +733,7 @@ Note:
 <p>
 The <el-code><el-kw>set</el-kw></el-code> statement is used to assign a new value to an existing variable.
 The new value must be of the same Type as (or a Type compatible with) that of the variable.
-A <el-code><el-kw>set</el-kw></el-code> statement may not assign a new value to a parameter within a procedure.
+A <el-code><el-kw>set</el-kw></el-code> statement may not assign a new value to a parameter within a procedure.</p>
 
 <!--     #endregion-->
 <!--     #region Throw statement-->
@@ -739,7 +743,7 @@ A <el-code><el-kw>set</el-kw></el-code> statement may not assign a new value to 
 <!--     #endregion-->
 <!--     #region Try statement-->
 <h2 id="try">Try statement</h2>
-<p>If you are in mode <i>Advanced level coding</i> (see <a href="IDEguide.html#preferences">Preferences</a>), you can test whether another piece of code might throw an exception by wrapping it in a <el-code>try</el-code> statement. This might arise when calling a <a href="#System_methods">System method</a> that is dependent upon external conditions, for example:
+<p>If you are in mode <i>Advanced level coding</i> (see <a href="IDEguide.html#preferences">Preferences</a>), you can test whether another piece of code might throw an exception by wrapping it in a <el-code>try</el-code> statement. This might arise when calling a <a href="#System_methods">System method</a> that is dependent upon external conditions, for example:</p>
 
 <el-code-block source="tryCatch.elan">
 <el-statement class="ok multiline" id="try18" tabindex="0">
@@ -837,9 +841,9 @@ Writing a value to a specific index location is done through a method such as in
 </pre>
 <!--   #endregion-->
 <!--   #region Operator-->
-<h2 id="operator">Operators</h2>
+<h2 id="Operators">Operators</h2>
 
-<h4 class="no-TOC" id="Arithmetic_operator">Arithmetic operators</h4>
+<h4 class="no-TOC" id="ArithmeticOperators">Arithmetic operators</h4>
 <p>Arithmetic operators can be applied to <el-code>Float</el-code> or <el-code>Int</el-code> arguments. The result may be a <el-code>Float</el-code> or an <el-code>Int</el-code> depending on the arguments.</p>
 <p>For <el-code>^ + - *</el-code>, the result is a <el-code>Float</el-code> if either of the arguments is a <el-code>Float</el-code>, and an <el-code>Int</el-code> if both arguments are <el-code>Int</el-code>.</p>
 <p>For <el-code>/</el-code>, the result is always a <el-code>Float</el-code>.  It can be converted to an <el-code>Int</el-code> using the <a href="LibRef.html#floor">floor()</a> function.</p>
@@ -854,7 +858,7 @@ Writing a value to a specific index location is done through a method such as in
     <el-code>11 div 3</el-code>   &rarr;  <el-code>3</el-code> (integer division)
 </pre>
 <p>Arithmetic operators follow the conventional rules for precedence i.e. &lsquo;BIDMAS&rsquo; (or &lsquo;BODMAS&rsquo;).</p>
-When combining <el-code>div</el-code> or <el-code>mod</el-code> with any other operators within an expression, insert brackets to avoid ambiguity e.g.:
+When combining <el-code>div</el-code> or <el-code>mod</el-code> with any other operators within an expression, insert brackets to avoid ambiguity e.g.:</p>
 <pre>
     <el-code>(5 + 6) mod 3</el-code>
 </pre>
@@ -865,11 +869,15 @@ The minus sign may also be used as a unary operator, and this takes precedence o
 </pre>
 <p>Note that the Elan editor automatically puts spaces around the <el-code>+</el-code> and <el-code>&ndash;</el-code> binary operators, but not around <el-code>^</el-code>, <el-code>/</el-code> or <el-code>*</el-code>. This is just to visually reinforce the precedence.</p>
 
-<h4 class="no-TOC" id="LogicalOperator">Logical operators</h4>
+<h4 class="no-TOC" id="LogicalOperators">Logical operators</h4>
+<!-- TODO table of logical operators -->
+<div id="and"></div>
+<div id="not"></div>
+<div id="or"></div>
 <p>Logical operators are applied to <el-code>Boolean</el-code> arguments and return a <el-code>Boolean</el-code> result.</p>
-<el-code>and</el-code> and <el-code>or</el-code> are binary operators<br>
+<p><el-code>and</el-code> and <el-code>or</el-code> are binary operators<br>
 <el-code>not</el-code> is a unary operator. </p>
-The operator precedence is <el-code>not</el-code> &rarr; <el-code>and</el-code> &rarr; <el-code>or</el-code>, so this
+<p>The operator precedence is <el-code>not</el-code> &rarr; <el-code>and</el-code> &rarr; <el-code>or</el-code>, so this
 example, which implements an &lsquo;exclusive or&rsquo;, need not use brackets and can rely on the operator precedence:</p>
 
 <el-code-block source="xor.elan">
@@ -1004,7 +1012,7 @@ be followed by a 'with clause` in order to specify any property values. Example 
 <p>A 'copy with' expression is used to make a copy of an existing instance, but with a different value for one or more of the properties
   - either to assign to a named value, or as part of a more complex expression..
 It is used extensively within 'functional programming' where you are dealing with<a href="#record">record</a>s or other <i>immutable</i> types.
-Example of use in this manner (taken from the 'Snake - functional' demo program):
+Example of use in this manner (taken from the 'Snake - functional' demo program):</p>
 
 <el-code-block>
 <el-func class="ok multiline" id="func72" tabindex="0">
@@ -1027,10 +1035,10 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 <p>An 'empty of Type' expression is used to make the default (empty) instance of any Type
   - usually only created for comparing to another instance to test whether that other instance is also empty or default.
   This may arise, for example, if a <a href="#class">class</a> or <a href="#record">record</a> is defined with a property that has never had a value assigned to it.
-  The following example is taken from the 'Pathfinder' demo program:
+  The following example is taken from the 'Pathfinder' demo program:</p>
 
 <el-code-block>
-  <el-proc focused ok multiline" id="proc267" tabindex="0">
+  <el-proc class="ok multiline" id="proc267" tabindex="0">
     <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident269" class="ok" tabindex="0"><el-txt>visitNextPoint</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params270" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>parameter definitions</i></el-place><el-compl><i>parameter definitions</i></el-compl></el-field>)</el-top>
     <el-statement class="ok" id="call271" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident272" class="ok" tabindex="0"><el-txt><el-method>updateNeighbours</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args273" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i></i></el-place></el-field>)</el-top></el-statement>
     <el-statement class="ok" id="set274" tabindex="0"><el-kw>set </el-kw><el-field id="ident275" class="ok" tabindex="0"><el-txt><el-kw>property</el-kw>.<el-id>current</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr276" class="ok" tabindex="0"><el-txt><el-method>nextNodeToVisit</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1283,8 +1291,8 @@ defines no parameters. If your intent was to define a <i>reference</i> to the fu
   To avoid the possibility of ambiguity, you may not start your own comments with an open square bracket.
 </p>
 
-<h3 id="mustBeBooleanCondition" class="no-TOC">Condition of 'if' expression does not evaluate to a Boolean.
-  <h3 id="mustNotHaveConditionalAfterUnconditionalElse" class="no-TOC">Cannot have any clause after unconditional 'else'.
+<h3 id="mustBeBooleanCondition" class="no-TOC">Condition of 'if' expression does not evaluate to a Boolean.</h3>
+  <h3 id="mustNotHaveConditionalAfterUnconditionalElse" class="no-TOC">Cannot have any clause after unconditional 'else'.</h3>
 
 <h3 id="mustNotBeKeyword" class="no-TOC">... is a keyword, and may not be used as an identifier.</h3>
 <p>An Elan keyword cannot be used to as the name for a value, property, or method. Try shortening the name, lengthening it, or using a different name</p>
@@ -1336,6 +1344,6 @@ or <el-code><el-kw>not</el-kw></el-code> successively within an expression.</p>
 <!-- #endregion-->
 <!-- #endregion -->
 <hr>
-<b>Elan Language Reference</b> go to the <a href="#top">top</a></h4>
+<p><b>Elan Language Reference</b> go to the <a href="#top">top</a></p>
 </body>
 </html>

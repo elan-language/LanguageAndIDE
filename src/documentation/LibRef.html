@@ -98,7 +98,7 @@ in the range:</li>
 </main>
 </el-code-block>
 
-<p></p>which produces:</p>
+<p>which produces:</p>
 
 <img src="images/Pic88.png">
 
@@ -169,14 +169,14 @@ in the range:</li>
   <ul>
    <li>Maximum value: just over 1.0 &times; 10<sup>308</sup></li>
    <li>Minimum value: approximately 5.0 &times; 10<sup>-324</sup></li>
-  </ul>
+  </ul></li>
  <li>A variable that has been defined as being of Type <el-code><el-type>Float</el-type></el-code> may not be passed as an argument into a method that requires an <el-code><el-type>Int</el-type></el-code>,
     nor as an index into a <el-code><el-type>List</el-type></el-code> or , <el-code><el-type>Array</el-type></el-code> even if the variable contains no fractional part.
     It may, however, be converted into an <el-code><el-type>Int</el-type></el-code> before passing, using the function <el-code>floor</el-code> or <el-code>ceiling</el-code>:
    <ul>
 <li><el-code><el-method>floor</el-method></el-code> returns the integer value left by removing any fractional part, and</li>
-<li><el-code><el-method></el-method>ceiling</el-method></el-code> returns the lowest integer greater than the <el-code><el-type>Float</el-type></el-code> value if it does have a fractional part.</li>
-  </ul>
+<li><el-code><el-method>ceiling</el-method></el-code> returns the lowest integer greater than the <el-code><el-type>Float</el-type></el-code> value if it does have a fractional part.</li>
+  </ul></li>
  <li>If you wish to define a variable to be of Type <el-code><el-type>Float</el-type></el-code> but initialise it with an integer value, then add <el-code>.0</el-code> on the end of the whole number, as in:<br>
 <el-code>variable hour set to 3.0</el-code></li>
 </ul>
@@ -271,7 +271,7 @@ in the range:</li>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>the Unicode value of the <i>first</i> character of the string<br>
    (To convert a Unicode value into a string, use function <a href="#unicode"><el-code><el-method>unicode</el-method></el-code></a>)</td>
- </td><tr id="asRegExp">
+ </tr><tr id="asRegExp">
   <td><el-code><el-method>asRegExp</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
@@ -288,7 +288,7 @@ in the range:</li>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td>(none)</td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td><el-code><el-id>true</el-id></el-code> if the string contains the substring specified as the argument<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise
+  <td><el-code><el-id>true</el-id></el-code> if the string contains the substring specified as the argument<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr id="indexOf_String">
   <td><el-code><el-method>indexOf</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
@@ -347,7 +347,7 @@ in the range:</li>
   <td><el-code><el-method>split</el-method></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td><el-code><el-type>List&lt;of String&gt;</of></el-type></el-code></td>
+  <td><el-code><el-type>List&lt;of String&gt;</el-type></el-code></td>
   <td>a <el-code><el-type>List</el-type></el-code> of the substrings found between occurrences of the argument string</td>
  </tr><tr id="trim">
   <td><el-code><el-method>trim</el-method></el-code></td>
@@ -367,7 +367,7 @@ in the range:</li>
 <p>
 Strings are automatically interpolated, that is you can insert the values of variables or simple expressions within a string by enclosing them in braces.
 For example, assuming that the variables <el-code>a</el-code> and <el-code>b</el-code> are already defined as integers:</p>
-<p><el-code>print "{a} times {b} equals {a*b}"</el-code</p>
+<p><el-code>print "{a} times {b} equals {a*b}"</el-code></p>
 <p>prints the sentence with the values and calculated expression inserted.</p>
 <p>If <el-code>velocity</el-code> and <el-code>fuel</el-code> are already defined as <el-code><el-type>Float</el-type></el-code> then:</p>
 <p><el-code>set message to "LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}"</el-code></p>
@@ -376,7 +376,7 @@ For example, assuming that the variables <el-code>a</el-code> and <el-code>b</el
 <h3 class="no-TOC">Special characters</h3>
 <p>You may insert single quotation marks <el-code>'</el-code>within a string, but not double quotation marks <el-code>"</el-code>. Nor can you include
 the braces <el-code>{</el-code> or <el-code>}</el-code> within a literal string because of their special meanings.
-Instead, you use the constants <el-code><el-id>quotes</el-id></el-code>, <el-code><el-id>openBrace</el-id></el-code> and <el-code><el-id>closeBrace</el-id></el-code> respectively, e.g.
+Instead, you use the constants <el-code><el-id>quotes</el-id></el-code>, <el-code><el-id>openBrace</el-id></el-code> and <el-code><el-id>closeBrace</el-id></el-code> respectively, e.g.</p>
 <p><el-code>print "This is a double quotation mark: " + quotes</el-code></p>
 <p><el-code>print "Here are the curly braces: {openBrace} and {closeBrace}"</el-code></p>
 <p>Alternatively, you can insert their Unicode codepoint values (in decimal or hexadecimal) by means of function <a href="#unicode"><el-code><el-method>unicode</el-method></el-code></a>:</p>
@@ -421,7 +421,7 @@ or into existing variables of the correct Type:</p>
 </ul>
 <!-- #endregion-->
 <!-- #region Standard data structures-->
-<h1 id="standardDataStructures">Standard data structures</h1>
+<h1 id="StandardDataStructures">Standard data structures</h1>
 <table class="tableStructure">
  <tr><th></th><th colspan="4">Standard data structures</th></tr>
  <tr>
@@ -434,7 +434,7 @@ or into existing variables of the correct Type:</p>
   <td>Size</td><td>Static</td><td>Static</td><td>Dynamic</td><td>Dynamic</td></tr>
   <tr><td>Type form<br>(example)</td>
   <td><el-code>Array&lt;of String&gt;</el-code><br>of Type <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code></td>
-  <td><el-code>Array2D&lt;of String&gt;</el-code><br>of Type <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code></el-code>, or <el-code><el-type>Boolean</el-type></el-code></td>
+  <td><el-code>Array2D&lt;of String&gt;</el-code><br>of Type <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code></td>
   <td><el-code>List&lt;of String&gt;</el-code><br>of any Type including <el-code><el-type>Array</el-type></el-code><br> &ndash; or <el-code><el-type>List</el-type></el-code> for 'jagged' data</td>
   <td><el-code>Dictionary&lt;of String, Int&gt;</el-code><br>key must be <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code>, <el-code><el-type>Boolean</el-type></el-code>, or any<el-code>record</el-code>. Value Type may be anything</td>
  </tr><tr>
@@ -485,7 +485,7 @@ with the specified changes &ndash; which is why all such methods have names star
 <p>All four data structures contain values of a single Type &ndash; that Type either being specified explicitly as in
     <el-code>of &lt;<el-kw>procedure</el-kw>&gt; <el-type>Int</el-type></el-code> &ndash; or implicitly if the structure
     is created from its literal definition form. (<el-type>Dictionary</el-type> is defined by two types: one for the 'keys' and one for the 'values').</p>
-</p>
+
 <!--   #region Array-->
 <h2 id="Array">Array</h2>
 
@@ -526,7 +526,7 @@ with the specified changes &ndash; which is why all such methods have names star
   <td><el-code><el-type>Int</el-type></el-code>,<br>item of Array element's Type</td>
   <td><el-code><el-type>Array</el-type></el-code></td>
   <td>a new Array with the item at the (integer) index position</td>
- </tr><tr id="asList">
+ </tr><tr id="asList_Array">
   <td><el-code><el-method>asList</el-method></el-code></td>
   <td><el-code><el-type>Array</el-type></el-code></td>
   <td>(none)</td>
@@ -694,12 +694,12 @@ with the specified changes &ndash; which is why all such methods have names star
   <td><el-code><el-type>List</el-type></el-code></td>
   <td></td>
   <td></td>
- </tr><tr>
+ </tr><tr id="removeAt">
   <td><el-code><el-method>removeAt</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>delete the item at the argument index.</td>
- </tr><tr>
+ </tr><tr id="removeFirst">
   <td><el-code><el-method>removeFirst</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
   <td></td>
@@ -1002,7 +1002,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 <el-code>variable fruit set to {"apple", "orange", "pear"} </el-code>
 
 <h3 class="no-TOC" id="ListImmutable_functions">Function methods on a ListImmutable</h3>
-<table
+<table>
  <tr>
   <th>function<br>dot method</th>
   <th>argument<br>Types</th>
@@ -1173,7 +1173,6 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
   <td>item of Set element's Type</td>
   <td><el-code><el-type>Set</el-type></el-code></td>
   <td>copy of the Set extended with the item provided it differs from all the Set's current elements</td>
- </tr></td>
  </tr><tr id="addFromList">
   <td><el-code><el-method>addFromList</el-method></el-code></td>
   <td><el-code><el-type>Set</el-type></el-code></td>
@@ -1259,11 +1258,11 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
     <li>Both <el-code>Stack </el-code>and<el-code> Queue</el-code> are dynamically extensible, like <el-code><el-type>List</el-type></el-code> and <el-code>ListImmutable</el-code>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer&#8217;s memory limit is reached.</li>
     <li>This same syntax is used to specify the Type if you want to pass a <el-code><el-type>Stack</el-type></el-code> into a function, or specify it as the <el-code><el-kw>return</el-kw></el-code> Type.</li>
     <li><el-code><el-type>Stack</el-type></el-code> and <el-code><el-type>Queue</el-type></el-code> have two methods in common: <el-code><el-method>length</el-method></el-code> and <el-code><el-method>peek</el-method></el-code>.
-    <el-code><el-method>peek</el-method></el-code> returns the next item to be removed, without actually removing it.
+    <el-code><el-method>peek</el-method></el-code> returns the next item to be removed, without actually removing it.</li>
     <li>The methods for adding and removing an item are different for <el-code><el-type>Stack</el-type></el-code> and <el-code><el-type>Queue</el-type></el-code>, as shown here:</li>
 </ul>
 
-<h3 class="no-TOC" id="Stack_functions">Function methods on a Stack</h3>
+<h3 class="no-TOC" id="StackFunctions">Function methods on a Stack</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1304,7 +1303,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 </tr>
 
 </table>
-<h3 class="no-TOC" id="Queue_functions">Function methods on a Queue</h3>
+<h3 class="no-TOC" id="QueueFunctions">Function methods on a Queue</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1316,13 +1315,13 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
   <td><el-code><el-method>enqueue</el-method></el-code></td>
   <td><el-code><el-type>Queue</el-type></el-code></td>
   <td>item of Queue element's Type</td>
-  <td><el-code><el-type>Queue</el-type></td>
+  <td><el-code><el-type>Queue</el-type></el-code></td>
   <td>the Queue with the element add to the end of the Queue</td>
  </tr><tr id="dequeue">
   <td><el-code><el-method>dequeue</el-method></el-code></td>
   <td><el-code><el-type>Queue</el-type></el-code></td>
   <td>(none)</td>
-  <td><el-code><el-type>Queue element Type,<br>Queue</el-type></td>
+  <td><el-code><el-type>Queue element Type,<br>Queue</el-type></el-code></td>
   <td>the next element of the Queue, and the Queue  with the element removed</td>
  </tr><tr id="peek_Queue">
   <td><el-code><el-method>peek</el-method></el-code></td>
@@ -1344,8 +1343,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
   <td>a string representation of the queue (automatically called when printing)</td>
 </tr>
 </table>
-    </p>
-    <p>Example use of a <el-code><el-type>Stack</el-type></el-code>:</p>
+<p>Example use of a <el-code><el-type>Stack</el-type></el-code>:</p>
 <el-code-block source="stack.elan">
 <el-statement class="ok" id="var35" tabindex="0"><el-kw>variable </el-kw><el-field id="var36" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr37" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Stack</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print6" tabindex="0"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1379,15 +1377,15 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 <!-- #region Common dot methods-->
 <h1 id="CommonDotMethods">Common dot methods</h1>
 <h2>Dot methods that work on more than one fundamental Type</h2>
-<p>Although all applicable methods are described under each Type, this table lists those which are applicable to several Types.
+<p>Although all applicable methods are described under each Type, this table lists those which are applicable to several Types.</p>
 <p>The method <el-code><el-method>asString</el-method></el-code> is so widely applicable because it enables you to print
 most variables and data structures to the Display for debugging purposes.</p>
 <p>Click on a <el-id>&#x2714;</el-id> tick to go to the Type and its methods.</p>
 <table >
  <tr><th>Type</th><th colspan="7">method</th></tr>
  <tr><td></td>
-  <td style="text-align:right"><el-code><el-method>asList</el-method></el-code></td>
-  <td style="text-align:center"><el-code><el-method>asString</el-method></el-code></td>
+  <td><el-code><el-method>asList</el-method></el-code></td>
+  <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-method>contains</el-method></el-code></td>
   <td><el-code><el-method>head</el-method></el-code></td>
   <td><el-code><el-method>indexOf</el-method></el-code></td>
@@ -1396,7 +1394,7 @@ most variables and data structures to the Display for debugging purposes.</p>
  </tr><tr>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td></td>
-  <td><a href="#Int">&#x2714;</a></td>
+  <td><a href="#asString_Int">&#x2714;</a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -1405,7 +1403,7 @@ most variables and data structures to the Display for debugging purposes.</p>
  </tr><tr>
   <td><el-code><el-type>Float</el-type></el-code></td>
   <td></td>
-  <td><a href="#Float">&#x2714;</a></td>
+  <td><a href="#asString_Float">&#x2714;</a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -1414,7 +1412,7 @@ most variables and data structures to the Display for debugging purposes.</p>
  </tr><tr>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
   <td></td>
-  <td><a href="#Boolean">&#x2714;</a></td>
+  <td><a href="#asString_Boolean">&#x2714;</a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -1422,44 +1420,44 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td></td>
  </tr><tr>
   <td><el-code><el-type>String</el-type></el-code></td>
-  <td><a href="#String">&#x2714;</a></td>
-  <td><a href="#String">&#x2714;</a></td>
-  <td><a href="#String">&#x2714;</a></td>
+  <td><a href="#asList_String">&#x2714;</a></td>
+  <td><a href="#asString_String">&#x2714;</a></td>
+  <td><a href="#contains_String">&#x2714;</a></td>
   <td></td>
-  <td><a href="#String">&#x2714;</a></td>
-  <td><a href="#String">&#x2714;</a></td>
+  <td><a href="#indexOf_String">&#x2714;</a></td>
+  <td><a href="#length_String">&#x2714;</a></td>
   <td></td>
  </tr><tr>
   <td><el-code><el-type>Array</el-type></el-code></td>
-  <td><a href="#Array">&#x2714;</a></td>
-  <td><a href="#Array">&#x2714;</a></td>
-  <td><a href="#Array">&#x2714;</a></td>
+  <td><a href="#asList_Array">&#x2714;</a></td>
+  <td><a href="#asString_Array">&#x2714;</a></td>
+  <td><a href="#contains_Array">&#x2714;</a></td>
   <td></td>
-  <td><a href="#Array">&#x2714;</a></td>
-  <td><a href="#Array">&#x2714;</a></td>
+  <td><a href="#indexOf_Array">&#x2714;</a></td>
+  <td><a href="#length_Array">&#x2714;</a></td>
   <td></td>
  </tr><tr>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
   <td></td>
-  <td><a href="#Array2D">&#x2714;</a></td>
-  <td><a href="#Array2D">&#x2714;</a></td>
+  <td><a href="#asString_Array2D">&#x2714;</a></td>
+  <td><a href="#contains_Array2D">&#x2714;</a></td>
   <td></td>
-  <td><a href="#Array2D">&#x2714;</a></td>
+  <td><a href="#indexOf_Array2D">&#x2714;</a></td>
   <td></td>
   <td></td>
  </tr><tr>
   <td><el-code><el-type>List</el-type></el-code></td>
   <td></td>
-  <td><a href="#List">&#x2714;</a></td>
-  <td><a href="#List">&#x2714;</a></td>
-  <td><a href="#List">&#x2714;</a></td>
-  <td><a href="#List">&#x2714;</a></td>
-  <td><a href="#List">&#x2714;</a></td>
+  <td><a href="#asStromg_List">&#x2714;</a></td>
+  <td><a href="#contains_List">&#x2714;</a></td>
+  <td><a href="#head_List">&#x2714;</a></td>
+  <td><a href="#indexOf_List">&#x2714;</a></td>
+  <td><a href="#length_List">&#x2714;</a></td>
   <td></td>
  </tr><tr>
   <td><a href="#Dictionary"><el-code><el-type>Dictionary</el-type></el-code></a></td>
-  <td><a href="#Dictionary">&#x2714;</a></td>
-  <td><a href="#Dictionary">&#x2714;</a></td>
+  <td></td>
+  <td><a href="#asString_Dictionary">&#x2714;</a></td>
   <td>see notes</td>
   <td></td>
   <td></td>
@@ -1467,49 +1465,49 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td></td>
  </tr><tr>
   <td><el-code><el-type>ListImmutable</el-type></el-code></td>
-  <td><a href="#ListImmutable">&#x2714;</a></td>
-  <td><a href="#ListImmutable">&#x2714;</a></td>
-  <td><a href="#ListImmutable">&#x2714;</a></td>
-  <td><a href="#ListImmutable">&#x2714;</a></td>
-  <td><a href="#ListImmutable">&#x2714;</a></td>
-  <td><a href="#ListImmutable">&#x2714;</a></td>
+  <td><a href="#asList_ListImmutable">&#x2714;</a></td>
+  <td><a href="#asString_ListImmutable">&#x2714;</a></td>
+  <td><a href="#contains_ListImmutable">&#x2714;</a></td>
+  <td><a href="#head_ListImmutable">&#x2714;</a></td>
+  <td><a href="#indexOf_ListImmutable">&#x2714;</a></td>
+  <td><a href="#length_ListImmutable">&#x2714;</a></td>
   <td></td>
  </tr><tr>
   <td><a href="#DictionaryImmutable"><el-code><el-type>DictionaryImmutable</el-type></el-code></a></td>
   <td></td>
-  <td><a href="#DictionaryImmutable">&#x2714;</a></td>
+  <td><a href="#asString_DictionaryImmutable">&#x2714;</a></td>
   <td>see notes</td>
   <td></td>
   <td></td>
   <td>see notes</td>
-  <td></td
+  <td></td>
  </tr><tr>
   <td><el-code><el-type>Set</el-type></el-code></td>
-  <td><a href="#Set">&#x2714;</a></td>
-  <td><a href="#Set">&#x2714;</a></td>
-  <td><a href="#Set">&#x2714;</a></td>
+  <td><a href="#asList_Set">&#x2714;</a></td>
+  <td><a href="#asString_Set">&#x2714;</a></td>
+  <td><a href="#contains_Set">&#x2714;</a></td>
   <td></td>
   <td></td>
-  <td><a href="#Set">&#x2714;</a></td>
+  <td><a href="#length_Set">&#x2714;</a></td>
   <td></td>
  </tr><tr>
   <td><el-code><el-type>Stack</el-type></el-code></td>
   <td></td>
-  <td><a href="#Stack">&#x2714;</a></td>
+  <td><a href="#asString_Stack">&#x2714;</a></td>
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#Stack">&#x2714;</a></td>
-  <td><a href="#Stack">&#x2714;</a></td>
+  <td><a href="#length_Stack">&#x2714;</a></td>
+  <td><a href="#peek_Stack">&#x2714;</a></td>
  </tr><tr>
   <td><el-code><el-type>Queue</el-type></el-code></td>
   <td></td>
-  <td><a href="#Queue">&#x2714;</a></td>
+  <td><a href="#asString_Queue">&#x2714;</a></td>
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#Queue">&#x2714;</a></td>
-  <td><a href="#Queue">&#x2714;</a></td>
+  <td><a href="#length_Queue">&#x2714;</a></td>
+  <td><a href="#peek_Queue">&#x2714;</a></td>
  </tr>
 </table>
 <h4 class="no-TOC">Notes</h4>
@@ -1632,7 +1630,7 @@ which the dot methods the following methods may be invoked:</p>
 
 <p>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above.
     Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string.
-    Alternatively, you could use the constant <el-code><el-id>quotes</el-id></el-code> within braces as an interpolated field.</li>
+    Alternatively, you could use the constant <el-code><el-id>quotes</el-id></el-code> within braces as an interpolated field.</p>
 
 <h3 class="no-TOC">Using an embedded CSS stylesheet</h3>
 <p>You can also specify a <el-code><el-method>style</el-method></el-code> tag at the start of your Html string, to apply to the whole Html being displayed:</p>
@@ -1720,8 +1718,8 @@ the URL as a <el-code><el-type>String</el-type></el-code>, either as a literal (
     <tr><td><el-code><el-id>height</el-id></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>height to render the image</td></tr>
     <tr><td><el-code><el-id>title</el-id></el-code></td><td><el-code><el-type>String</el-type></el-code></td><td>Textual title to be read by user</td></tr>
     <tr><td><el-code><el-id>width</el-id></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>width to render the image</td></tr>
-    <tr><td><el-code><el-id>x</el-id></el-code></td><el-code><td><el-type>Float</el-type></el-code></td><td>Horizontal position within the pane</td></tr>
-    <tr><td><el-code><el-id>y</el-id></el-code></td><el-code><td><el-type>Float</el-type></el-code></td><td>Vertical position within the pane</td></tr>
+    <tr><td><el-code><el-id>x</el-id></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>Horizontal position within the pane</td></tr>
+    <tr><td><el-code><el-id>y</el-id></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>Vertical position within the pane</td></tr>
 </table>
 <!-- #endregion-->
 <!--   #region Graphics-->
@@ -1803,7 +1801,7 @@ just by passing the required one as the argument to the <el-code><el-method>disp
   <td><el-code><el-type>Int</el-type></el-code> or <el-code><el-type>Float</el-type></el-code>,<br>
       <el-code><el-type>Int</el-type></el-code> or <el-code><el-type>Float</el-type></el-code></td>
   <td>places or repositions the turtle at the x,y position specified</td>
- </tr><trid="show">
+ </tr><tr id="show">
   <td ><el-code><el-method>show</el-method></el-code></td>
   <td><el-code><el-type>Turtle</el-type></el-code></td>
   <td>(none)</td>
@@ -1882,11 +1880,21 @@ just by passing the required one as the argument to the <el-code><el-method>disp
 <!-- #endregion-->
 <!--   #region Vector Graphics-->
 <h2 id="VectorGraphics">Vector graphics</h2>
+<!-- TODO tabulate VG procedures and their arguments -->
+<div id="vectorGraphic"></div>
+<div id="append_VG"></div>
+<div id="centreX"></div>
+<div id="centreY"></div>
+<div id="radius"></div>
+<div id="fillColour"></div>
+<div id="setFillColour"></div>
+<div id="strokeColour"></div>
+<div id="strokeWidth"></div>
 <p>Vector graphics are displayed using SVG (Scalable Vector Graphics) that are a part of the Html specification. The names of the shapes broadly correspond to the names of SVG tags:</p>
 <ul>
  <li id="CircleVG"> <el-code>CircleVG</el-code> for &lt;<el-code>circle../&gt;</el-code></li>
  <li id="LineVG"><el-code>LineVG</el-code> for <el-code>&lt;line../&gt;</el-code></li>
- <li id="RectanleVG"><el-code>RectangleVG</el-code> for <el-code>&lt;rect../&gt;</el-code></li>
+ <li id="RectangleVG"><el-code>RectangleVG</el-code> for <el-code>&lt;rect../&gt;</el-code></li>
  <li id="ImageVG"><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
  <li id="TextVG"><el-code>TextVG</el-code> for <el-code>&lt;text../&gt;</el-code></li>
 </ul>
@@ -1927,7 +1935,7 @@ just by passing the required one as the argument to the <el-code><el-method>disp
    allowing you to make multiple changes before updating the screen. Similarly, the method to add a shape returns a new instance of the <el-code>VectorGraphics</el-code> which must be assigned either to an existing variable, or to a new <el-code><el-kw>let</el-kw></el-code>.</li>
  <li>As with the way that SVG works within Html, the shapes are drawn in the order in which they are added into the list of <el-code><el-type>VectorGraphic</el-type></el-code> instances, with later shapes positioned over earlier shapes.</li>
  <li>The <el-code><el-id>fillColour</el-id></el-code> and <el-code><el-id>strokeColour</el-id></el-code> properties may be specified as described under <a href="#Colours">Colours</a>.
-  The <el-code><el-id>fillColour</el-id></el-code> only may also be specified as <el-code><el-id>transparent</el-id></el-method> (which has the value <el-code>-1</el-code>).
+  The <el-code><el-id>fillColour</el-id></el-code> only may also be specified as <el-code><el-id>transparent</el-id></el-code> (which has the value <el-code>-1</el-code>).</li>
  <li><el-code><el-type>VectorGraphic</el-type></el-code> is the abstract superclass of all <el-code>...VG</el-code> shapes. You would only use it if you wanted to define a method that could work on any shape (using common elements defined on <el-code>VectorGraphic</el-code>) or that could work with a <el-code><el-type>List</el-type></el-code> holding different types of shape.</li>
  <li>The constructor parameters for <el-code><el-type>CircleVG</el-type></el-code> are: <el-code>centreX, centreY, radius, fillColour, strokeColour, strokeWidth</el-code>.</li>
  <li>The constructor parameters for <el-code><el-type>LineVG</el-type></el-code> are: <el-code>x1, y1, x2, y2, strokeColour, strokeWidth</el-code>, all of Type <el-code><el-type>Int</el-type></el-code>.</li>
@@ -1961,7 +1969,7 @@ This pattern is known as <b>Higher order Function (HoF)</b>, and is a key idea i
 just as you would specify the Type of every parameter and the return Type for the function. </p>
 
 <h3 class="no-TOC">Type name</h3>
-<p>The Type of any function< starts with the word <el-code><el-type>Func</el-type></el-code> followed by angle brackets defining the Type of each parameter,
+<p>The Type of any function starts with the word <el-code><el-type>Func</el-type></el-code> followed by angle brackets defining the Type of each parameter,
     and the return Type for that function, following this syntax:</p>
 <el-code>Func&lt;of String, String, Int =&gt; Boolean&gt;</el-code><!-- TODO correct the syntax -->
 <p>This example defines the Type for a function that defines three parameters of Type <el-code><el-type>String</el-type></el-code>, <el-code><el-type>String</el-type></el-code>, and <el-code><el-type>Int</el-type></el-code> respectively, and returns a <el-code><el-type>Boolean</el-type></el-code> value. This Type would match that of a function definition that started:</p>
@@ -2040,7 +2048,7 @@ just as you would specify the Type of every parameter and the return Type for th
 </ul>
 <!-- #endregion-->
 <!-- #region Standalone functions-->
-<h1 id="Standalone_functions">Standalone functions</h1>
+<h1 id="StandaloneFunctions">Standalone functions</h1>
     <p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a variable declaration (variable) or assignment (set), either on their own or within a more complex expression. All standalone library<el-code> function</el-code>s require at least one argument to be passed in brackets, corresponding to the parameters defined for that <el-code>function</el-code>.</p>
 
 <h2 id="unicode">unicode</h2>
@@ -2078,7 +2086,7 @@ just as you would specify the Type of every parameter and the return Type for th
 <el-code-block source="parse_string.elan">
 <el-statement class="ok" id="var5" tabindex="0"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>success</el-id>, <el-id>parsedValue</el-id></el-txt><el-place><i>name</i></el-place>
 </el-field></el-statement>
-   </ed-code-block>
+   </el-code-block></li>
     <li>One use of these parsing methods is for validating user input, but note that an easier way to do this is to use the various <a href="#Input/output">input methods</a>.</li>
 </ul>
 <div id="floor"></div>
@@ -2086,7 +2094,7 @@ just as you would specify the Type of every parameter and the return Type for th
 <div id="round"></div>
 <div id="isNaN"></div>
 <div id="isInfinite"></div>
-<h2>floor, ceiling, round, isNaN, and IsInfinite</h3>
+<h2>floor, ceiling, round, isNaN, and IsInfinite</h2>
     <p> All of these functions are called as 'dot methods' on a numeric value  of type <el-code><el-type>Float</el-type></el-code> or <el-code><el-type>Int</el-type></el-code>).
     <el-code>NaN</el-code> is short for 'Not A (Real) Number' Their use is illustrated with the following tests:</p>
 <el-code-block source="">
@@ -2107,15 +2115,15 @@ just as you would specify the Type of every parameter and the return Type for th
 All the maths functions take a <el-code><el-type>Float</el-type></el-code> argument and return a <el-code><el-type>Float</el-type></el-code> value.
 <table>
 <tr><th>function</th><th>argument<br>Type</th><th>input<br>unit</th><th>returns</th><th>output<br>unit</th></tr>
-<tr id="abs"><td><el-code><el-method>abs</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>absolute value of the input</td><td></td></tr>
-<tr id="acos"><td><el-code><el-method>acos</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>arccosine of the input</td><td>radians</td></tr>
-<tr id="asin"><td><el-code><el-method>asin</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>arcsine of the input</td><td>radians</td></tr>
-<tr id="atan"><td><el-code><el-method>atan</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>arctangent of the input</td><td>radians</td></tr>
-<tr id="acosDeg"><td><el-code><el-method>acosDeg</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>arccosine of the input</td><td>degrees</td></tr>
-<tr id="asinDeg"><td><el-code><el-method>asinDeg</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>arcsine of the input</td><td>degrees</td></tr>
-<tr id="atanDeg"><td><el-code><el-method>atanDeg</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>arctangent of the input</td><td>degrees</td></tr>
-<tr id="cos"><td><el-code><el-method>cos</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>radians</td><td>cosine of the input</td><td></td></tr>
-<tr id="cosDeg"><td><el-code><el-method>cosDeg</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>degrees</td><td>cosine of the input</td><td></td></tr>
+<tr id="abs"><td><el-code><el-method>abs</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td></td><td>absolute value of the input</td><td></td></tr>
+<tr id="acos"><td><el-code><el-method>acos</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td></td><td>arccosine of the input</td><td>radians</td></tr>
+<tr id="asin"><td><el-code><el-method>asin</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td></td><td>arcsine of the input</td><td>radians</td></tr>
+<tr id="atan"><td><el-code><el-method>atan</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td></td><td>arctangent of the input</td><td>radians</td></tr>
+<tr id="acosDeg"><td><el-code><el-method>acosDeg</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td></td><td>arccosine of the input</td><td>degrees</td></tr>
+<tr id="asinDeg"><td><el-code><el-method>asinDeg</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td></td><td>arcsine of the input</td><td>degrees</td></tr>
+<tr id="atanDeg"><td><el-code><el-method>atanDeg</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td></td><td>arctangent of the input</td><td>degrees</td></tr>
+<tr id="cos"><td><el-code><el-method>cos</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>radians</td><td>cosine of the input</td><td></td></tr>
+<tr id="cosDeg"><td><el-code><el-method>cosDeg</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>degrees</td><td>cosine of the input</td><td></td></tr>
 <tr>
   <td id="exp"><el-code><el-id><el-method>exp</el-method></el-id></el-code></td>
   <td><el-code><el-type>Float</el-type></el-code></td>
@@ -2123,16 +2131,16 @@ All the maths functions take a <el-code><el-type>Float</el-type></el-code> argum
   <td>&#x1d452<sup>&#x1d465</sup> where &#x1d465 is the argument and<br>&#x1d452 is Euler's number 2.718281828459045..<br>the base of natural logarithms</td>
   <td></td>
 </tr>
-<tr id="logE"><td><el-code><el-method>logE</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>natural logarithm of the input</td><td></td></tr>
-<tr id="log10"><td><el-code><el-method>log10</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>base-10 logarithm of the input</td><td></td></tr>
-<tr id="log2"><td><el-code><el-method>log2</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>base-2 logarithm of the input</td><td></td></tr>
-<tr id="sin"><td><el-code><el-method>sin</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>radians</td><td>sine of the input</td><td></td></tr>
-<tr id="sinDeg"><td><el-code><el-method>sinDeg</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>degrees</td><td>sine of the input</td><td></td></tr>
-<tr id="sqrt"><td><el-code><el-method>sqrt</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>positive square root of the input</td><td></td></tr>
-<tr id="tan"><td><el-code><el-method>tan</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>radians</td><td>tangent of the input</td><td></td></tr>
-<tr id="tanDeg"><td><el-code><el-method>tanDeg</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>degrees</td><td>tangent of the input</td><td></td></tr>
-<tr id="degToRad"><td><el-code><el-method>degToRad</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>degrees</td><td>converts input from degrees to radians</td><td>radians</td></tr>
-<tr id="radToDeg"><td><el-code><el-method>radToDeg</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>radians</td><td>converts input from radians to degrees</td><td>degrees</td></tr></table>
+<tr id="logE"><td><el-code><el-method>logE</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td></td><td>natural logarithm of the input</td><td></td></tr>
+<tr id="log10"><td><el-code><el-method>log10</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td></td><td>base-10 logarithm of the input</td><td></td></tr>
+<tr id="log2"><td><el-code><el-method>log2</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td></td><td>base-2 logarithm of the input</td><td></td></tr>
+<tr id="sin"><td><el-code><el-method>sin</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>radians</td><td>sine of the input</td><td></td></tr>
+<tr id="sinDeg"><td><el-code><el-method>sinDeg</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>degrees</td><td>sine of the input</td><td></td></tr>
+<tr id="sqrt"><td><el-code><el-method>sqrt</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td></td><td>positive square root of the input</td><td></td></tr>
+<tr id="tan"><td><el-code><el-method>tan</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>radians</td><td>tangent of the input</td><td></td></tr>
+<tr id="tanDeg"><td><el-code><el-method>tanDeg</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>degrees</td><td>tangent of the input</td><td></td></tr>
+<tr id="degToRad"><td><el-code><el-method>degToRad</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>degrees</td><td>converts input from degrees to radians</td><td>radians</td></tr>
+<tr id="radToDeg"><td><el-code><el-method>radToDeg</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>radians</td><td>converts input from radians to degrees</td><td>degrees</td></tr></table>
 <br>
 <p>Examples of some maths functions and constants being tested:</p>
 <el-code-block source="test_maths.elan">
@@ -2261,10 +2269,10 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <!-- #region Standalone procedures-->
 <h1 id="StandaloneProcedures">Standalone procedures</h1>
 <h2 >Standalone procedures</h2>
-<p>All <el-code>procedure</el-code>s are accessed via a <el-code><a href="LangRef.html#call">call</el-code></a> statement.</p>
+<p>All <el-code>procedure</el-code>s are accessed via a <a href="LangRef.html#call"><el-code>call</el-code></a> statement.</p>
 <table class="tableMethod">
  <tr><th>procedure</th><th>input<br>argument<br>Types</th><th>output<br>argument<br>Types</th><th>action</th>
- </tr><tr id-"pause">
+ </tr><tr id="pause">
   <td><el-code><el-method>pause</el-method></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
   <td>(none)</td>
@@ -2351,7 +2359,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 </ul>
 <p>The reason those are system methods is that they have a dependency on variable data that is not passed into them as arguments.</p>
 <br>
-<table
+<table>
  <tr>
   <th>system<br>method</th>
   <th>argument<br>Types</th>
@@ -2486,7 +2494,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 
-<p>And similarly for string comparisons using methods <el-code><el-method>isBefore</el-method></el-code> and <el-code><el-method>isAfter</el-method></el-code>:
+<p>And similarly for string comparisons using methods <el-code><el-method>isBefore</el-method></el-code> and <el-code><el-method>isAfter</el-method></el-code>:</p>
 <el-code-block source="sortBy_String.elan">
 <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>["<el-lit>Simon</el-lit>", "<el-lit>Pauline</el-lit>", "<el-lit>Jason</el-lit>", "<el-lit>Zelda</el-lit>", "<el-lit>Edith</el-lit>", "<el-lit>Lance</el-lit>", "<el-lit>Alice</el-lit>", "<el-lit>Paul</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>names</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id>.<el-method>isAfter</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id>.<el-method>isBefore</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -2494,6 +2502,6 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 </el-code-block>
 <!-- #endregion-->
 <hr>
-<b>Elan Library Reference</b> go to the <a href="#top">top</a></h4>
+<p><b>Elan Library Reference</b> go to the <a href="#top">top</a></p>
 </body>
 </html>
