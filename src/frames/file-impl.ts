@@ -128,6 +128,10 @@ export class FileImpl implements File, Scope {
     this._stdLibSymbols = testSymbols;
   }
 
+  getSymbols(): Scope {
+    return this._stdLibSymbols;
+  }
+
   private version = elanVersion;
   private isProduction = isElanProduction;
 

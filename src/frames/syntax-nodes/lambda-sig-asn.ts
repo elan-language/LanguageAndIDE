@@ -1,6 +1,5 @@
 import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Frame } from "../interfaces/frame";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
@@ -53,7 +52,7 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
       }
     }
     const searchScope = isDefinitionStatement(this.scope)
-      ? (this.scope as Frame).getParent()
+      ? this.scope.getParentScope()
       : this.scope;
 
     return searchScope.resolveSymbol(id, transforms, this.scope);

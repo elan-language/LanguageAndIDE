@@ -3,6 +3,7 @@ import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { RootAstNode } from "../interfaces/root-ast-node";
 import { Scope } from "../interfaces/scope";
+import { Semver } from "../interfaces/semver";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
@@ -19,7 +20,10 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   isFile = true;
   private _nextId: number = 0;
 
-  constructor(private scope: Scope) {
+  constructor(
+    private scope: Scope,
+    private version: Semver,
+  ) {
     super();
   }
   getAllCompileErrors(): CompileError[] {
@@ -45,6 +49,10 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
 
   get libraryScope() {
     return this.scope;
+  }
+
+  getVersion(): Semver {
+    return this.version;
   }
 
   compileErrorMap = new Map<string, CompileError[]>();

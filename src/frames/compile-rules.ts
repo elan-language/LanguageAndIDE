@@ -43,7 +43,6 @@ import {
   UndefinedSymbolCompileError,
   UnknownCompilerDirectiveCompileError,
 } from "./compile-error";
-import { FileImpl } from "./file-impl";
 import { isClass, isConstant, isFunction, isLet, isMember, isProcedure } from "./frame-helpers";
 import { AstNode } from "./interfaces/ast-node";
 import { ElanSymbol } from "./interfaces/elan-symbol";
@@ -281,7 +280,7 @@ export function checkForDeprecation(
       return;
     }
 
-    const file = getGlobalScope(scope) as unknown as FileImpl; // todo this wont work fix
+    const file = getGlobalScope(scope);
     const version = file.getVersion();
     const fromMajor = symbolType.deprecated.fromMajor;
     const fromMinor = symbolType.deprecated.fromMinor;

@@ -1,6 +1,4 @@
 import { ElanCompilerError } from "../../elan-compiler-error";
-import { StdLib } from "../../standard-library/std-lib";
-import { StdLibSymbols } from "../../standard-library/std-lib-symbols";
 import { AbstractFunction } from "../class-members/abstract-function";
 import { AbstractProcedure } from "../class-members/abstract-procedure";
 import { AbstractProperty } from "../class-members/abstract-property";
@@ -229,8 +227,7 @@ export function transform(
   scope: Scope,
 ): AstNode | undefined {
   if (node instanceof FileImpl) {
-    // todo make stdlinsymbols an immutable singleton ?
-    const astRoot = new FileAsn(new StdLibSymbols(new StdLib()));
+    const astRoot = new FileAsn(node.getSymbols(), node.getVersion());
 
     astRoot.children = node
       .getChildren()
