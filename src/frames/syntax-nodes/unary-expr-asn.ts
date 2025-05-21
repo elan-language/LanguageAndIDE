@@ -48,6 +48,7 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
 
     if (this.op === OperationSymbol.Minus) {
       mustBeNumberType(opSt, this.compileErrors, this.fieldId);
+      getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
       // to avoid js compile errors with exponents
       return `(${code})`;
     }

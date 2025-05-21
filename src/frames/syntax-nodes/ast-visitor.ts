@@ -1,6 +1,7 @@
 import { ElanCompilerError } from "../../elan-compiler-error";
 import { StdLib } from "../../standard-library/std-lib";
 import { StdLibSymbols } from "../../standard-library/std-lib-symbols";
+import { Constructor } from "../class-members/constructor";
 import { AbstractField } from "../fields/abstract-field";
 import { InheritsFrom } from "../fields/inheritsFrom";
 import { FileImpl } from "../file-impl";
@@ -91,6 +92,7 @@ import { EnumType } from "../symbols/enum-type";
 import { isAstIdNode, mapOperation } from "./ast-helpers";
 import { BinaryExprAsn } from "./binary-expr-asn";
 import { BracketedAsn } from "./bracketed-asn";
+import { ConstructorAsn } from "./class-members/constructor-asn";
 import { CommentAsn } from "./comment-asn";
 import { CompositeAsn } from "./composite-asn";
 import { CopyWithAsn } from "./copy-with-asn";
@@ -224,6 +226,20 @@ export function transform(
       .map((f) => transform(f, f.getHtmlId(), classAsn)) as AstNode[];
 
     return classAsn;
+  }
+
+  if (node instanceof Constructor) {
+    const constructorAsn = new ConstructorAsn(node.getHtmlId(), scope);
+
+    constructorAsn.params =
+      transform(node.params, node.getHtmlId(), constructorAsn) ?? EmptyAsn.Instance;
+
+    constructorAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), constructorAsn)) as AstNode[];
+
+    return constructorAsn;
   }
 
   if (node instanceof VariableStatement) {

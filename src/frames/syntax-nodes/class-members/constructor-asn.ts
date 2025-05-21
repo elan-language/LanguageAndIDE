@@ -9,6 +9,7 @@ import { ProcedureType } from "../../symbols/procedure-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
+import { EmptyAsn } from "../empty-asn";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
 export class ConstructorAsn extends FrameWithStatementsAsn implements ElanSymbol, Member {
@@ -17,15 +18,11 @@ export class ConstructorAsn extends FrameWithStatementsAsn implements ElanSymbol
   isAbstract = false;
   private = false;
 
-  hrefForFrameHelp: string = "LangRef.html#constructor";
-
-  constructor(
-    protected readonly params: AstNode,
-    fieldId: string,
-    scope: Scope,
-  ) {
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
+  params: AstNode = EmptyAsn.Instance;
 
   getClass(): ConcreteClass {
     return this.getParentScope() as ConcreteClass;
