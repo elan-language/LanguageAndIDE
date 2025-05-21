@@ -8,17 +8,16 @@ import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { transforms } from "../ast-helpers";
+import { EmptyAsn } from "../empty-asn";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
 export abstract class ProcedureAsn extends FrameWithStatementsAsn implements ElanSymbol, Scope {
-  constructor(
-    protected readonly name: AstNode,
-    protected readonly params: AstNode,
-    fieldId: string,
-    scope: Scope,
-  ) {
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
+  name: AstNode = EmptyAsn.Instance;
+  params: AstNode = EmptyAsn.Instance;
 
   isProcedure = true;
 

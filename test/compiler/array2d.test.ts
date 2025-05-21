@@ -539,8 +539,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: columns (Int), rows (Int), initialValue (Generic Parameter T1), Provided: Int, Int, String. Click for more info.LangRef.html#compile_error",
       "Expected: '<of Type>'. Click for more info.LangRef.html#GenericParametersCompileError",
+      "Argument types. Expected: columns (Int), rows (Int), initialValue (Generic Parameter T1), Provided: Int, Int, String. Click for more info.LangRef.html#compile_error",
     ]);
   });
 

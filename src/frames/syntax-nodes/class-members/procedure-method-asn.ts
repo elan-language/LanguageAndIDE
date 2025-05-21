@@ -1,7 +1,6 @@
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
 import { singleIndent } from "../../frame-helpers";
 import { ConcreteClass } from "../../globals/concrete-class";
-import { AstNode } from "../../interfaces/ast-node";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Scope } from "../../interfaces/scope";
 import { Transforms } from "../../interfaces/transforms";
@@ -16,13 +15,8 @@ export class ProcedureMethodAsn extends ProcedureAsn {
   isAbstract = false;
   hrefForFrameHelp: string = "LangRef.html#procedure_method";
 
-  constructor(
-    protected readonly name: AstNode,
-    protected readonly params: AstNode,
-    fieldId: string,
-    scope: Scope,
-  ) {
-    super(name, params, fieldId, scope);
+  constructor(fieldId: string, scope: Scope) {
+    super(fieldId, scope);
   }
 
   getClass(): ConcreteClass {

@@ -10,6 +10,7 @@ import { ProcedureType } from "../../symbols/procedure-type";
 import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { transforms } from "../ast-helpers";
+import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 
 export class AbstractProcedureAsn extends FrameAsn implements Member, ElanSymbol {
@@ -19,15 +20,12 @@ export class AbstractProcedureAsn extends FrameAsn implements Member, ElanSymbol
 
   hrefForFrameHelp: string = "LangRef.html#Abstract_procedure";
 
-  constructor(
-    protected readonly name: AstNode,
-    protected readonly params: AstNode,
-    protected readonly children: AstNode[],
-    fieldId: string,
-    scope: Scope,
-  ) {
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
+  name: AstNode = EmptyAsn.Instance;
+  params: AstNode = EmptyAsn.Instance;
 
   getClass(): ConcreteClass {
     return this.getParentScope() as ConcreteClass;

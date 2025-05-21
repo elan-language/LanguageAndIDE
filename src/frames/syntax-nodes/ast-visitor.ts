@@ -1,16 +1,26 @@
 import { ElanCompilerError } from "../../elan-compiler-error";
 import { StdLib } from "../../standard-library/std-lib";
 import { StdLibSymbols } from "../../standard-library/std-lib-symbols";
+import { AbstractFunction } from "../class-members/abstract-function";
+import { AbstractProcedure } from "../class-members/abstract-procedure";
+import { AbstractProperty } from "../class-members/abstract-property";
 import { Constructor } from "../class-members/constructor";
+import { FunctionMethod } from "../class-members/function-method";
+import { ProcedureMethod } from "../class-members/procedure-method";
+import { Property } from "../class-members/property";
 import { AbstractField } from "../fields/abstract-field";
 import { InheritsFrom } from "../fields/inheritsFrom";
+import { TypeField } from "../fields/type-field";
 import { FileImpl } from "../file-impl";
 import { isSelector } from "../frame-helpers";
+import { AbstractClass } from "../globals/abstract-class";
 import { ConcreteClass } from "../globals/concrete-class";
 import { Constant } from "../globals/constant";
 import { Enum } from "../globals/enum";
 import { GlobalComment } from "../globals/global-comment";
 import { GlobalFunction } from "../globals/global-function";
+import { GlobalProcedure } from "../globals/global-procedure";
+import { InterfaceFrame } from "../globals/interface-frame";
 import { MainFrame } from "../globals/main-frame";
 import { RecordFrame } from "../globals/record-frame";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
@@ -84,17 +94,25 @@ import { UnaryExpression } from "../parse-nodes/unary-expression";
 import { WithClause } from "../parse-nodes/with-clause";
 import { CallStatement } from "../statements/call-statement";
 import { CommentStatement } from "../statements/comment-statement";
+import { Each } from "../statements/each";
 import { LetStatement } from "../statements/let-statement";
 import { Print } from "../statements/print";
 import { ReturnStatement } from "../statements/return-statement";
 import { SetStatement } from "../statements/set-statement";
 import { VariableStatement } from "../statements/variable-statement";
+import { While } from "../statements/while";
 import { FuncName, ImageName, TupleName } from "../symbols/elan-type-names";
 import { EnumType } from "../symbols/enum-type";
 import { isAstIdNode, mapOperation } from "./ast-helpers";
 import { BinaryExprAsn } from "./binary-expr-asn";
 import { BracketedAsn } from "./bracketed-asn";
+import { AbstractFunctionAsn } from "./class-members/abstract-function-asn";
+import { AbstractProcedureAsn } from "./class-members/abstract-procedure-asn";
+import { AbstractPropertyAsn } from "./class-members/abstract-property-asn";
 import { ConstructorAsn } from "./class-members/constructor-asn";
+import { FunctionMethodAsn } from "./class-members/function-method-asn";
+import { ProcedureMethodAsn } from "./class-members/procedure-method-asn";
+import { PropertyAsn } from "./class-members/property-asn";
 import { CommentAsn } from "./comment-asn";
 import { CompositeAsn } from "./composite-asn";
 import { CopyWithAsn } from "./copy-with-asn";
@@ -107,14 +125,18 @@ import { EmptyTypeAsn } from "./empty-type-asn";
 import { EnumValuesAsn } from "./fields/enum-values-asn";
 import { InheritsFromAsn } from "./fields/inherits-from-asn";
 import { ParamListAsn } from "./fields/param-list-asn";
+import { TypeFieldAsn } from "./fields/type-asn";
 import { FileAsn } from "./file-asn";
 import { FixedIdAsn } from "./fixed-id-asn";
 import { FuncCallAsn } from "./func-call-asn";
+import { AbstractClassAsn } from "./globals/abstract-class-asn";
 import { ConcreteClassAsn } from "./globals/concrete-class-asn";
 import { ConstantAsn } from "./globals/constant-asn";
 import { EnumAsn } from "./globals/enum-asn";
 import { GlobalCommentAsn } from "./globals/global-comment-asn";
 import { GlobalFunctionAsn } from "./globals/global-function-asn";
+import { GlobalProcedureAsn } from "./globals/global-procedure-asn";
+import { InterfaceAsn } from "./globals/interface-asn";
 import { MainAsn } from "./globals/main-asn";
 import { RecordAsn } from "./globals/record-asn";
 import { IdAsn } from "./id-asn";
@@ -143,11 +165,13 @@ import { RangeAsn } from "./range-asn";
 import { SegmentedStringAsn } from "./segmented-string-asn";
 import { CallAsn } from "./statements/call-asn";
 import { CommentStatementAsn } from "./statements/comment-asn";
+import { EachAsn } from "./statements/each-asn";
 import { LetAsn } from "./statements/let-asn";
 import { PrintAsn } from "./statements/print-asn";
 import { ReturnAsn } from "./statements/return-asn";
 import { SetAsn } from "./statements/set-asn";
 import { VariableAsn } from "./statements/variable-asn";
+import { WhileAsn } from "./statements/while-asn";
 import { ThisAsn } from "./this-asn";
 import { ToAsn } from "./to-asn";
 import { TypeAsn } from "./type-asn";
@@ -232,8 +256,38 @@ export function transform(
     return classAsn;
   }
 
+  if (node instanceof AbstractClass) {
+    const classAsn = new AbstractClassAsn(node.getHtmlId(), scope);
+
+    classAsn.name = transform(node.name, node.getHtmlId(), classAsn) ?? EmptyAsn.Instance;
+    classAsn.inheritance =
+      transform(node.inheritance, node.getHtmlId(), classAsn) ?? EmptyAsn.Instance;
+
+    classAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), classAsn)) as AstNode[];
+
+    return classAsn;
+  }
+
   if (node instanceof RecordFrame) {
     const recordAsn = new RecordAsn(node.getHtmlId(), scope);
+
+    recordAsn.name = transform(node.name, node.getHtmlId(), recordAsn) ?? EmptyAsn.Instance;
+    recordAsn.inheritance =
+      transform(node.inheritance, node.getHtmlId(), recordAsn) ?? EmptyAsn.Instance;
+
+    recordAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), recordAsn)) as AstNode[];
+
+    return recordAsn;
+  }
+
+  if (node instanceof InterfaceFrame) {
+    const recordAsn = new InterfaceAsn(node.getHtmlId(), scope);
 
     recordAsn.name = transform(node.name, node.getHtmlId(), recordAsn) ?? EmptyAsn.Instance;
     recordAsn.inheritance =
@@ -259,6 +313,24 @@ export function transform(
       .map((f) => transform(f, f.getHtmlId(), constructorAsn)) as AstNode[];
 
     return constructorAsn;
+  }
+
+  if (node instanceof AbstractProperty) {
+    const propertyAsn = new AbstractPropertyAsn(node.getHtmlId(), scope);
+
+    propertyAsn.name = transform(node.name, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
+    propertyAsn.type = transform(node.type, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
+
+    return propertyAsn;
+  }
+
+  if (node instanceof Property) {
+    const propertyAsn = new PropertyAsn(node.getHtmlId(), scope);
+
+    propertyAsn.name = transform(node.name, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
+    propertyAsn.type = transform(node.type, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
+
+    return propertyAsn;
   }
 
   if (node instanceof VariableStatement) {
@@ -352,6 +424,27 @@ export function transform(
     return inheritsAsn;
   }
 
+  if (node instanceof AbstractFunction) {
+    const functionAsn = new AbstractFunctionAsn(node.getHtmlId(), scope);
+
+    functionAsn.name = transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+    functionAsn.params = transform(node.params, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+    functionAsn.returnType =
+      transform(node.returnType, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+
+    return functionAsn;
+  }
+
+  if (node instanceof AbstractProcedure) {
+    const procedureAsn = new AbstractProcedureAsn(node.getHtmlId(), scope);
+
+    procedureAsn.name = transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
+    procedureAsn.params =
+      transform(node.params, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
+
+    return procedureAsn;
+  }
+
   if (node instanceof GlobalFunction) {
     const functionAsn = new GlobalFunctionAsn(node.getHtmlId(), scope);
 
@@ -362,15 +455,93 @@ export function transform(
 
     functionAsn.children = node
       .getChildren()
+      .filter((f) => !isSelector(f))
       .map((f) => transform(f, f.getHtmlId(), functionAsn)) as AstNode[];
 
     return functionAsn;
+  }
+
+  if (node instanceof GlobalProcedure) {
+    const procedureAsn = new GlobalProcedureAsn(node.getHtmlId(), scope);
+
+    procedureAsn.name = transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
+    procedureAsn.params =
+      transform(node.params, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
+
+    procedureAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), procedureAsn)) as AstNode[];
+
+    return procedureAsn;
+  }
+
+  if (node instanceof FunctionMethod) {
+    const functionAsn = new FunctionMethodAsn(node.getHtmlId(), scope);
+
+    functionAsn.name = transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+    functionAsn.params = transform(node.params, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+    functionAsn.returnType =
+      transform(node.returnType, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+
+    functionAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), functionAsn)) as AstNode[];
+
+    return functionAsn;
+  }
+
+  if (node instanceof ProcedureMethod) {
+    const procedureAsn = new ProcedureMethodAsn(node.getHtmlId(), scope);
+
+    procedureAsn.name = transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
+    procedureAsn.params =
+      transform(node.params, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
+
+    procedureAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), procedureAsn)) as AstNode[];
+
+    return procedureAsn;
   }
 
   if (node instanceof Print) {
     const printAsn = new PrintAsn(node.getHtmlId(), scope);
     printAsn.expr = transform(node.expr, node.getHtmlId(), printAsn) ?? EmptyAsn.Instance;
     return printAsn;
+  }
+
+  if (node instanceof Each) {
+    const eachAsn = new EachAsn(node.getHtmlId(), scope);
+    eachAsn.variable = transform(node.variable, node.getHtmlId(), eachAsn) ?? EmptyAsn.Instance;
+    eachAsn.iter = transform(node.iter, node.getHtmlId(), eachAsn) ?? EmptyAsn.Instance;
+
+    eachAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), eachAsn)) as AstNode[];
+
+    return eachAsn;
+  }
+
+  if (node instanceof While) {
+    const whileAsn = new WhileAsn(node.getHtmlId(), scope);
+    whileAsn.condition = transform(node.condition, node.getHtmlId(), whileAsn) ?? EmptyAsn.Instance;
+
+    whileAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), whileAsn)) as AstNode[];
+
+    return whileAsn;
+  }
+
+  if (node instanceof TypeField) {
+    const typeAsn = new TypeFieldAsn(node.getHtmlId());
+    typeAsn.type = transform(node.getRootNode(), node.getHtmlId(), scope) ?? EmptyAsn.Instance;
+    return typeAsn;
   }
 
   if (node instanceof AbstractField) {

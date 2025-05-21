@@ -1,4 +1,3 @@
-import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { ProcedureAsn } from "./procedure-asn";
@@ -7,13 +6,8 @@ export class GlobalProcedureAsn extends ProcedureAsn {
   isGlobal = true;
   hrefForFrameHelp: string = "LangRef.html#procedure";
 
-  constructor(
-    protected readonly name: AstNode,
-    protected readonly params: AstNode,
-    fieldId: string,
-    scope: Scope,
-  ) {
-    super(name, params, fieldId, scope);
+  constructor(fieldId: string, scope: Scope) {
+    super(fieldId, scope);
   }
 
   indent(): string {

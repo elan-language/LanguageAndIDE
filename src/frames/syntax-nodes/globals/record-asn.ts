@@ -56,7 +56,7 @@ export class RecordAsn extends ClassAsn {
     const body = compileNodes(this.children);
 
     for (const p of this.properties()) {
-      mustBeImmutableType(p.name.text, p.symbolType(), this.compileErrors, this.fieldId);
+      mustBeImmutableType(getId(p.name), p.symbolType(), this.compileErrors, this.fieldId);
     }
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);

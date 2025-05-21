@@ -8,6 +8,7 @@ import { ClassType } from "../../symbols/class-type";
 import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { transforms } from "../ast-helpers";
+import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 
 export class AbstractPropertyAsn extends FrameAsn implements Member, ElanSymbol {
@@ -17,15 +18,12 @@ export class AbstractPropertyAsn extends FrameAsn implements Member, ElanSymbol 
   public private: boolean = false;
   hrefForFrameHelp: string = "LangRef.html#Abstract_property";
 
-  constructor(
-    protected readonly name: AstNode,
-    protected readonly type: AstNode,
-
-    fieldId: string,
-    scope: Scope,
-  ) {
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
+  name: AstNode = EmptyAsn.Instance;
+  type: AstNode = EmptyAsn.Instance;
 
   getClass(): ConcreteClass {
     return this.getParentScope() as ConcreteClass;

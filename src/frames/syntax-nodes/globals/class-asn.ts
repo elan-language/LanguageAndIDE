@@ -1,6 +1,4 @@
 import { Deprecated } from "../../../elan-type-interfaces";
-import { AbstractProperty } from "../../class-members/abstract-property";
-import { Property } from "../../class-members/property";
 import {
   getId,
   mustBeInheritableClassOrInterface,
@@ -26,7 +24,10 @@ import { getGlobalScope, isSymbol, symbolMatches } from "../../symbols/symbol-he
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { isAstCollectionNode, isAstIdNode, transforms } from "../ast-helpers";
+import { AbstractPropertyAsn } from "../class-members/abstract-property-asn";
+import { PropertyAsn } from "../class-members/property-asn";
 import { EmptyAsn } from "../empty-asn";
+import { InheritsFromAsn } from "../fields/inherits-from-asn";
 import { FrameAsn } from "../frame-asn";
 
 export abstract class ClassAsn extends FrameAsn implements Class {
@@ -146,10 +147,10 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     return "";
   }
 
-  properties(): (AbstractProperty | Property)[] {
+  properties(): (AbstractPropertyAsn | PropertyAsn)[] {
     return this.getChildren().filter(
-      (c) => c instanceof Property || c instanceof AbstractProperty,
-    ) as (AbstractProperty | Property)[];
+      (c) => c instanceof PropertyAsn || c instanceof AbstractPropertyAsn,
+    ) as (AbstractPropertyAsn | PropertyAsn)[];
   }
 
   protected propertiesToInit() {
@@ -169,8 +170,11 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     if (this.doesInherit()) {
       const superClasses = this.inheritance;
 
-      if (isAstCollectionNode(superClasses)) {
-        const nodes = superClasses.items.filter((i) => isAstIdNode(i));
+      if (
+        superClasses instanceof InheritsFromAsn &&
+        isAstCollectionNode(superClasses.inheritance)
+      ) {
+        const nodes = superClasses.inheritance.items.filter((i) => isAstIdNode(i));
         const typeAndName: [SymbolType, string][] = nodes
           .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
           .map((c) => this.mapSymbol(c));

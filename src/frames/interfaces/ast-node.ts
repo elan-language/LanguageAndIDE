@@ -9,4 +9,6 @@ export interface AstNode {
   compile(): string;
 
   fieldId: string;
+
+  indent(): string;
 }

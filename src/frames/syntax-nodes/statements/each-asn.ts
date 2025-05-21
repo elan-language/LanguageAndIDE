@@ -7,19 +7,18 @@ import { getGlobalScope, isGenericSymbolType } from "../../symbols/symbol-helper
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownType } from "../../symbols/unknown-type";
 import { transforms } from "../ast-helpers";
+import { EmptyAsn } from "../empty-asn";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
 export class EachAsn extends FrameWithStatementsAsn {
   isStatement = true;
 
-  constructor(
-    private readonly variable: AstNode,
-    private readonly iter: AstNode,
-    fieldId: string,
-    scope: Scope,
-  ) {
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
+  variable: AstNode = EmptyAsn.Instance;
+  iter: AstNode = EmptyAsn.Instance;
 
   compile(): string {
     this.compileErrors = [];

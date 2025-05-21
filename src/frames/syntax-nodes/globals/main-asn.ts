@@ -15,6 +15,10 @@ export class MainAsn extends FrameWithStatementsAsn implements AstNode {
     super(fieldId, scope);
   }
 
+  indent() {
+    return "";
+  }
+
   symbolType(): SymbolType {
     throw new Error("Method not implemented.");
   }

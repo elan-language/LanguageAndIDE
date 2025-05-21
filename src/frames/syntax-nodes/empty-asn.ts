@@ -5,6 +5,9 @@ import { UnknownType } from "../symbols/unknown-type";
 
 export class EmptyAsn implements AstNode {
   private constructor(public readonly fieldId: string) {}
+  indent(): string {
+    return "";
+  }
 
   items: AstNode[] = [];
 

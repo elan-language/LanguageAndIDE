@@ -42,11 +42,7 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
   }
 
   indent(): string {
-    // if (this.hasParent()) {
-    //   return this.getParent().indent() + singleIndent();
-    // } else {
-    return singleIndent();
-    //}
+    return (this.scope as unknown as AstNode).indent() + singleIndent();
   }
 
   isNotGlobalOrLib(s: ElanSymbol) {

@@ -1,17 +1,15 @@
 import { isAstType } from "../../frame-helpers";
 import { AstNode } from "../../interfaces/ast-node";
-import { Scope } from "../../interfaces/scope";
 import { AbstractAstNode } from "../abstract-ast-node";
+import { EmptyAsn } from "../empty-asn";
 
-export class TypeAsn extends AbstractAstNode {
+export class TypeFieldAsn extends AbstractAstNode {
   isParseByNodes = true;
-  constructor(
-    private readonly type: AstNode,
-    private readonly fieldId: string,
-    private readonly scope: Scope,
-  ) {
+  constructor(readonly fieldId: string) {
     super();
   }
+
+  type: AstNode = EmptyAsn.Instance;
 
   compile(): string {
     this.compileErrors = [];

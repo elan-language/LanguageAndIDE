@@ -10,6 +10,7 @@ import { FunctionType } from "../../symbols/function-type";
 import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { transforms } from "../ast-helpers";
+import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 
 export class AbstractFunctionAsn extends FrameAsn implements Member, ElanSymbol {
@@ -19,16 +20,13 @@ export class AbstractFunctionAsn extends FrameAsn implements Member, ElanSymbol 
 
   hrefForFrameHelp: string = "LangRef.html#Abstract_function";
 
-  constructor(
-    protected readonly name: AstNode,
-    protected readonly params: AstNode,
-    protected readonly returnType: AstNode,
-    protected readonly children: AstNode[],
-    fieldId: string,
-    scope: Scope,
-  ) {
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
+  name: AstNode = EmptyAsn.Instance;
+  params: AstNode = EmptyAsn.Instance;
+  returnType: AstNode = EmptyAsn.Instance;
 
   getClass(): ConcreteClass {
     return this.getParentScope() as ConcreteClass;
