@@ -1,5 +1,5 @@
 import { CodeSourceFromString } from "../code-source-from-string";
-import { mustBeOfType, mustNotHaveConditionalAfterUnconditionalElse } from "../compile-rules";
+import { mustBeOfType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { CodeSource } from "../interfaces/code-source";
@@ -81,7 +81,7 @@ ${this.indent()}${endKeyword} ${ifKeyword}`;
     let toCompile = this.getChildren();
 
     if (elses.length > 0) {
-      mustNotHaveConditionalAfterUnconditionalElse(elses, this.compileErrors, this.htmlId);
+      //mustNotHaveConditionalAfterUnconditionalElse(elses, this.compileErrors, this.htmlId);
       toCompile = this.reconfigureForCompile();
     }
 

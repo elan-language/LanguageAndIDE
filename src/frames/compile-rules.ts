@@ -88,6 +88,7 @@ import {
   isInsideFunctionOrConstructor,
   transforms,
 } from "./syntax-nodes/ast-helpers";
+import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
 
 export function mustBeOfSymbolType(
@@ -140,7 +141,7 @@ export function mustBeBooleanCondition(
 }
 
 export function mustNotHaveConditionalAfterUnconditionalElse(
-  elses: { hasIf: boolean }[],
+  elses: ElseAsn[],
   compileErrors: CompileError[],
   location: string,
 ) {

@@ -22,17 +22,11 @@ export class ElseAsn extends FrameAsn {
 
   hasIf: boolean = false;
 
-  hrefForFrameHelp: string = "LangRef.html#else";
-
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
 
   condition: AstNode = EmptyAsn.Instance;
-
-  setIfExtension(to: boolean) {
-    this.hasIf = to;
-  }
 
   private compileIfClause(): string {
     if (this.hasIf) {

@@ -106,6 +106,7 @@ import { Print } from "../statements/print";
 import { Repeat } from "../statements/repeat";
 import { ReturnStatement } from "../statements/return-statement";
 import { SetStatement } from "../statements/set-statement";
+import { Throw } from "../statements/throw";
 import { TryStatement } from "../statements/try";
 import { VariableStatement } from "../statements/variable-statement";
 import { While } from "../statements/while";
@@ -185,6 +186,7 @@ import { PrintAsn } from "./statements/print-asn";
 import { RepeatAsn } from "./statements/repeat-asn";
 import { ReturnAsn } from "./statements/return-asn";
 import { SetAsn } from "./statements/set-asn";
+import { ThrowAsn } from "./statements/throw-asn";
 import { TryAsn } from "./statements/try-asn";
 import { VariableAsn } from "./statements/variable-asn";
 import { WhileAsn } from "./statements/while-asn";
@@ -593,6 +595,7 @@ export function transform(
   if (node instanceof Else) {
     const elseAsn = new ElseAsn(node.getHtmlId(), scope);
     elseAsn.condition = transform(node.condition, node.getHtmlId(), elseAsn) ?? EmptyAsn.Instance;
+    elseAsn.hasIf = node.hasIf;
     return elseAsn;
   }
 
@@ -618,6 +621,12 @@ export function transform(
       .map((f) => transform(f, f.getHtmlId(), catchAsn)) as AstNode[];
 
     return catchAsn;
+  }
+
+  if (node instanceof Throw) {
+    const throwAsn = new ThrowAsn(node.getHtmlId(), scope);
+    throwAsn.text = transform(node.text, node.getHtmlId(), throwAsn) ?? EmptyAsn.Instance;
+    return throwAsn;
   }
 
   if (node instanceof For) {
@@ -650,7 +659,12 @@ export function transform(
   }
 
   if (node instanceof AbstractField) {
-    return transform(node.getRootNode(), node.getHtmlId(), scope);
+    const rn = node.getRootNode();
+    if (rn) {
+      return transform(rn, node.getHtmlId(), scope);
+    }
+
+    return EmptyAsn.Instance;
   }
 
   if (node instanceof BracketedExpression) {

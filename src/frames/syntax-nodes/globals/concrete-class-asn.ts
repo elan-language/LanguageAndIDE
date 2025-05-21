@@ -9,6 +9,7 @@ import { classKeyword } from "../../keywords";
 import { ClassSubType, ClassType } from "../../symbols/class-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { compileNodes, transforms } from "../ast-helpers";
+import { InheritsFromAsn } from "../fields/inherits-from-asn";
 import { ClassAsn } from "./class-asn";
 
 export class ConcreteClassAsn extends ClassAsn {
@@ -35,14 +36,9 @@ export class ConcreteClassAsn extends ClassAsn {
       ClassSubType.concrete,
       false,
       noTypeOptions,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      cd ? [] : (this.inheritance as any).symbolTypes(transforms),
+      cd ? [] : (this.inheritance as InheritsFromAsn).symbolTypes(),
       this,
     );
-  }
-
-  doesInherit(): boolean {
-    return this.inheritance.compile() !== "";
   }
 
   public compile(): string {
