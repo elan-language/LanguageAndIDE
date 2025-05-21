@@ -14,6 +14,7 @@ import {
   symbolMatches,
 } from "../../symbols/symbol-helpers";
 import { compileNodes } from "../ast-helpers";
+import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 
 export class ElseAsn extends FrameAsn {
@@ -23,13 +24,11 @@ export class ElseAsn extends FrameAsn {
 
   hrefForFrameHelp: string = "LangRef.html#else";
 
-  constructor(
-    private readonly condition: AstNode,
-    fieldId: string,
-    scope: Scope,
-  ) {
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
+  condition: AstNode = EmptyAsn.Instance;
 
   setIfExtension(to: boolean) {
     this.hasIf = to;

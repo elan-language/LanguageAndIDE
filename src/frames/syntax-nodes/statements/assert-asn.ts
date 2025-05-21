@@ -1,31 +1,21 @@
-import { singleIndent } from "../../frame-helpers";
 import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
 import { SymbolType } from "../../interfaces/symbol-type";
 import { UnknownType } from "../../symbols/unknown-type";
+import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 import { TestAsn } from "../globals/test-asn";
 
 export class AssertAsn extends FrameAsn implements AstNode {
-  constructor(
-    private expected: AstNode,
-    private actual: AstNode,
-    fieldId: string,
-    scope: Scope,
-  ) {
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
 
+  expected: AstNode = EmptyAsn.Instance;
+  actual: AstNode = EmptyAsn.Instance;
+
   symbolType(): SymbolType {
     return UnknownType.Instance;
-  }
-
-  indent(): string {
-    // if (this.hasParent()) {
-    //   return this.getParent().indent() + singleIndent();
-    // } else {
-    return singleIndent();
-    //}
   }
 
   compile(): string {

@@ -9,19 +9,18 @@ import { Transforms } from "../../interfaces/transforms";
 import { catchKeyword, exceptionKeyword, inKeyword } from "../../keywords";
 import { StringType } from "../../symbols/string-type";
 import { SymbolScope } from "../../symbols/symbol-scope";
+import { EmptyAsn } from "../empty-asn";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
 export class CatchAsn extends FrameWithStatementsAsn implements ElanSymbol {
   isStatement = true;
   isCatch = true;
 
-  constructor(
-    private readonly variable: AstNode,
-    fieldId: string,
-    scope: Scope,
-  ) {
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
+  variable: AstNode = EmptyAsn.Instance;
 
   get symbolId() {
     return getId(this.variable);

@@ -8,21 +8,20 @@ import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { transforms } from "../ast-helpers";
+import { EmptyAsn } from "../empty-asn";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
 export class ForAsn extends FrameWithStatementsAsn {
   isStatement: boolean = true;
 
-  constructor(
-    private readonly variable: AstNode,
-    private readonly from: AstNode,
-    private readonly to: AstNode,
-    private readonly step: AstNode,
-    fieldID: string,
-    scope: Scope,
-  ) {
+  constructor(fieldID: string, scope: Scope) {
     super(fieldID, scope);
   }
+
+  variable: AstNode = EmptyAsn.Instance;
+  from: AstNode = EmptyAsn.Instance;
+  to: AstNode = EmptyAsn.Instance;
+  step: AstNode = EmptyAsn.Instance;
 
   compile(): string {
     this.compileErrors = [];

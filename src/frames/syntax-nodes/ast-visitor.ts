@@ -23,6 +23,7 @@ import { GlobalProcedure } from "../globals/global-procedure";
 import { InterfaceFrame } from "../globals/interface-frame";
 import { MainFrame } from "../globals/main-frame";
 import { RecordFrame } from "../globals/record-frame";
+import { TestFrame } from "../globals/test-frame";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
@@ -92,13 +93,20 @@ import { TypeNameNode } from "../parse-nodes/type-name-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
 import { WithClause } from "../parse-nodes/with-clause";
+import { AssertStatement } from "../statements/assert-statement";
 import { CallStatement } from "../statements/call-statement";
+import { CatchStatement } from "../statements/catch-statement";
 import { CommentStatement } from "../statements/comment-statement";
 import { Each } from "../statements/each";
+import { Else } from "../statements/else";
+import { For } from "../statements/for";
+import { IfStatement } from "../statements/if-statement";
 import { LetStatement } from "../statements/let-statement";
 import { Print } from "../statements/print";
+import { Repeat } from "../statements/repeat";
 import { ReturnStatement } from "../statements/return-statement";
 import { SetStatement } from "../statements/set-statement";
+import { TryStatement } from "../statements/try";
 import { VariableStatement } from "../statements/variable-statement";
 import { While } from "../statements/while";
 import { FuncName, ImageName, TupleName } from "../symbols/elan-type-names";
@@ -139,6 +147,7 @@ import { GlobalProcedureAsn } from "./globals/global-procedure-asn";
 import { InterfaceAsn } from "./globals/interface-asn";
 import { MainAsn } from "./globals/main-asn";
 import { RecordAsn } from "./globals/record-asn";
+import { TestAsn } from "./globals/test-asn";
 import { IdAsn } from "./id-asn";
 import { IdDefAsn } from "./id-def-asn";
 import { IfExprAsn } from "./if-expr-asn";
@@ -163,13 +172,20 @@ import { ParamDefAsn } from "./param-def-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
 import { SegmentedStringAsn } from "./segmented-string-asn";
+import { AssertAsn } from "./statements/assert-asn";
 import { CallAsn } from "./statements/call-asn";
+import { CatchAsn } from "./statements/catch-asn";
 import { CommentStatementAsn } from "./statements/comment-asn";
 import { EachAsn } from "./statements/each-asn";
+import { ElseAsn } from "./statements/else-asn";
+import { ForAsn } from "./statements/for-asn";
+import { IfAsn } from "./statements/if-asn";
 import { LetAsn } from "./statements/let-asn";
 import { PrintAsn } from "./statements/print-asn";
+import { RepeatAsn } from "./statements/repeat-asn";
 import { ReturnAsn } from "./statements/return-asn";
 import { SetAsn } from "./statements/set-asn";
+import { TryAsn } from "./statements/try-asn";
 import { VariableAsn } from "./statements/variable-asn";
 import { WhileAsn } from "./statements/while-asn";
 import { ThisAsn } from "./this-asn";
@@ -231,6 +247,17 @@ export function transform(
       .map((f) => transform(f, f.getHtmlId(), mainAsn)) as AstNode[];
 
     return mainAsn;
+  }
+
+  if (node instanceof TestFrame) {
+    const testAsn = new TestAsn(node.getHtmlId(), scope);
+
+    testAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), testAsn)) as AstNode[];
+
+    return testAsn;
   }
 
   if (node instanceof GlobalComment) {
@@ -536,6 +563,84 @@ export function transform(
       .map((f) => transform(f, f.getHtmlId(), whileAsn)) as AstNode[];
 
     return whileAsn;
+  }
+
+  if (node instanceof Repeat) {
+    const repeatAsn = new RepeatAsn(node.getHtmlId(), scope);
+    repeatAsn.condition =
+      transform(node.condition, node.getHtmlId(), repeatAsn) ?? EmptyAsn.Instance;
+
+    repeatAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), repeatAsn)) as AstNode[];
+
+    return repeatAsn;
+  }
+
+  if (node instanceof IfStatement) {
+    const ifAsn = new IfAsn(node.getHtmlId(), scope);
+    ifAsn.condition = transform(node.condition, node.getHtmlId(), ifAsn) ?? EmptyAsn.Instance;
+
+    ifAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), ifAsn)) as AstNode[];
+
+    return ifAsn;
+  }
+
+  if (node instanceof Else) {
+    const elseAsn = new ElseAsn(node.getHtmlId(), scope);
+    elseAsn.condition = transform(node.condition, node.getHtmlId(), elseAsn) ?? EmptyAsn.Instance;
+    return elseAsn;
+  }
+
+  if (node instanceof TryStatement) {
+    const tryAsn = new TryAsn(node.getHtmlId(), scope);
+
+    tryAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), tryAsn)) as AstNode[];
+
+    return tryAsn;
+  }
+
+  if (node instanceof CatchStatement) {
+    const catchAsn = new CatchAsn(node.getHtmlId(), scope);
+
+    catchAsn.variable = transform(node.variable, node.getHtmlId(), catchAsn) ?? EmptyAsn.Instance;
+
+    catchAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), catchAsn)) as AstNode[];
+
+    return catchAsn;
+  }
+
+  if (node instanceof For) {
+    const forAsn = new ForAsn(node.getHtmlId(), scope);
+    forAsn.variable = transform(node.variable, node.getHtmlId(), forAsn) ?? EmptyAsn.Instance;
+    forAsn.from = transform(node.from, node.getHtmlId(), forAsn) ?? EmptyAsn.Instance;
+    forAsn.to = transform(node.to, node.getHtmlId(), forAsn) ?? EmptyAsn.Instance;
+    forAsn.step = transform(node.step, node.getHtmlId(), forAsn) ?? EmptyAsn.Instance;
+
+    forAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), forAsn)) as AstNode[];
+
+    return forAsn;
+  }
+
+  if (node instanceof AssertStatement) {
+    const assertAsn = new AssertAsn(node.getHtmlId(), scope);
+    assertAsn.expected = transform(node.expected, node.getHtmlId(), assertAsn) ?? EmptyAsn.Instance;
+    assertAsn.actual = transform(node.actual, node.getHtmlId(), assertAsn) ?? EmptyAsn.Instance;
+
+    return assertAsn;
   }
 
   if (node instanceof TypeField) {
