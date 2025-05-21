@@ -1,7 +1,7 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-  assertDoesNotCompileWithId,
+  assertDoesNotCompile,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -193,7 +193,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "let15", [
+    assertDoesNotCompile(fileImpl, [
       "The identifier 'x' is already used for a 'let' and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
     ]);
   });
@@ -216,7 +216,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "set15", [
+    assertDoesNotCompile(fileImpl, [
       "May not re-assign the 'let' 'x'. Click for more info.LangRef.html#compile_error",
     ]);
   });
@@ -238,11 +238,8 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr17", [
+    assertDoesNotCompile(fileImpl, [
       "'x' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
-
-    assertDoesNotCompileWithId(fileImpl, "func8", [
       "'x' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
@@ -264,10 +261,8 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr17", [
+    assertDoesNotCompile(fileImpl, [
       "'y' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
-    assertDoesNotCompileWithId(fileImpl, "func5", [
       "'y' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });

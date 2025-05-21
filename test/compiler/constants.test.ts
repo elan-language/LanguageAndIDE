@@ -2,7 +2,6 @@ import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
   assertDoesNotCompile,
-  assertDoesNotCompileWithId,
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -452,7 +451,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "set6", [
+    assertDoesNotCompile(fileImpl, [
       "May not re-assign the constant 'a'. Click for more info.LangRef.html#compile_error",
     ]);
   });
@@ -537,7 +536,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "ident2", [
+    assertDoesNotCompile(fileImpl, [
       "'if' is a keyword, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
     ]);
   });
@@ -556,7 +555,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "ident2", [
+    assertDoesNotCompile(fileImpl, [
       "'break' is a reserved word, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
     ]);
   });
@@ -576,7 +575,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "const1", [
+    assertDoesNotCompile(fileImpl, [
       "Name 'a' not unique in scope. Click for more info.LangRef.html#compile_error",
     ]);
   });

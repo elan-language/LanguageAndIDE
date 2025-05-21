@@ -140,7 +140,7 @@ export abstract class ClassAsn extends FrameAsn implements Class {
   // }
 
   doesInherit(): boolean {
-    return this.inheritance.compile() !== "";
+    return this.getInheritanceItems().length > 0;
   }
 
   indent(): string {
@@ -166,15 +166,20 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     return [c.symbolType(), c.symbolId];
   }
 
+  private getInheritanceItems() {
+    const superClasses = this.inheritance;
+    if (superClasses instanceof InheritsFromAsn && isAstCollectionNode(superClasses.inheritance)) {
+      return superClasses.inheritance.items;
+    }
+    return [];
+  }
+
   public getDirectSuperClassesTypeAndName(transforms: Transforms) {
     if (this.doesInherit()) {
-      const superClasses = this.inheritance;
+      const superClasses = this.getInheritanceItems();
 
-      if (
-        superClasses instanceof InheritsFromAsn &&
-        isAstCollectionNode(superClasses.inheritance)
-      ) {
-        const nodes = superClasses.inheritance.items.filter((i) => isAstIdNode(i));
+      if (superClasses.length > 0) {
+        const nodes = superClasses.filter((i) => isAstIdNode(i));
         const typeAndName: [SymbolType, string][] = nodes
           .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
           .map((c) => this.mapSymbol(c));
@@ -193,6 +198,7 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     // circular dependency detected
     mustNotBeCircularDependency(name, this.compileErrors, this.fieldId);
     // any other compiling is not safe
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return `class ${name} { }\r\n`;
   }
 
@@ -202,10 +208,10 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     transforms: Transforms,
   ): [boolean, string] {
     if (cf.doesInherit()) {
-      const superClasses = cf.inheritance;
+      const superClasses = cf.getInheritanceItems();
 
-      if (isAstCollectionNode(superClasses)) {
-        const nodes = superClasses.items.filter((i) => isAstIdNode(i));
+      if (superClasses.length > 0) {
+        const nodes = superClasses.filter((i) => isAstIdNode(i));
         const symbols = nodes
           .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
           .filter((n) => n instanceof ClassAsn);
@@ -232,10 +238,11 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     transforms: Transforms,
   ) {
     if (cf.doesInherit()) {
-      const superClasses = cf.inheritance;
+      const superClasses = cf.getInheritanceItems();
 
-      if (isAstCollectionNode(superClasses)) {
-        const nodes = superClasses.items.filter((i) => isAstIdNode(i));
+      // TODO move this (and similar elsewhere) to InheritsFromAsn ?
+      if (superClasses.length > 0) {
+        const nodes = superClasses.filter((i) => isAstIdNode(i));
         const symbols = nodes
           .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
           .filter(
