@@ -29,7 +29,7 @@ export class PropertyAsn extends FrameAsn implements ElanSymbol {
   }
 
   getClass(): ConcreteClass {
-    return this.getParent() as ConcreteClass;
+    return this.getParentScope() as ConcreteClass;
   }
 
   isGlobalClass(st: SymbolType) {

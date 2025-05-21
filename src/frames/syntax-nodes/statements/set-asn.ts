@@ -54,16 +54,16 @@ export class SetAsn extends FrameAsn {
     mustBeCompatibleNode(
       assignableAstNode,
       exprAstNode,
-      this.getParent(),
+      this.getParentScope(),
       this.compileErrors,
       this.fieldId,
     );
-    mustNotBeParameter(assignableAstNode, this.getParent(), this.compileErrors, this.fieldId);
+    mustNotBeParameter(assignableAstNode, this.getParentScope(), this.compileErrors, this.fieldId);
     mustNotBeConstant(assignableAstNode, this.compileErrors, this.fieldId);
     mustNotBeCounter(assignableAstNode, this.compileErrors, this.fieldId);
 
     for (const id of ids) {
-      const symbol = this.getParent().resolveSymbol(id, transforms(), this);
+      const symbol = this.getParentScope().resolveSymbol(id, transforms(), this);
       mustNotBeLet(symbol, this.compileErrors, this.fieldId);
     }
 

@@ -32,6 +32,7 @@ import {
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
+import { ConstructorAsn } from "./class-members/constructor-asn";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { EmptyAsn } from "./empty-asn";
@@ -434,4 +435,17 @@ export function isInsideFunction(scope: Scope): boolean {
     return false;
   }
   return isInsideFunction(scope.getParentScope());
+}
+
+export function isInsideFunctionOrConstructor(scope: Scope): boolean {
+  if (scope instanceof FunctionAsn) {
+    return true;
+  }
+  if (scope instanceof ConstructorAsn) {
+    return true;
+  }
+  if (scope instanceof FileAsn) {
+    return false;
+  }
+  return isInsideFunctionOrConstructor(scope.getParentScope());
 }

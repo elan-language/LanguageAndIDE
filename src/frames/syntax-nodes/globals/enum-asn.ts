@@ -72,11 +72,11 @@ ${singleIndent()}${this.values.compile()}\r
       }
     }
 
-    return this.getParent().resolveSymbol(id, transforms, this);
+    return this.getParentScope().resolveSymbol(id, transforms, this);
   }
 
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
-    const otherMatches = this.getParent().symbolMatches(id, all, this);
+    const otherMatches = this.getParentScope().symbolMatches(id, all, this);
     const symbols = this.enumValueSymbols();
     const matches = symbolMatches(id, all, symbols);
     return matches.concat(otherMatches);

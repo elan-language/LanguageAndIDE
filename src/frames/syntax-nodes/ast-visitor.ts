@@ -2,7 +2,10 @@ import { ElanCompilerError } from "../../elan-compiler-error";
 import { StdLib } from "../../standard-library/std-lib";
 import { StdLibSymbols } from "../../standard-library/std-lib-symbols";
 import { AbstractField } from "../fields/abstract-field";
+import { InheritsFrom } from "../fields/inheritsFrom";
 import { FileImpl } from "../file-impl";
+import { isSelector } from "../frame-helpers";
+import { ConcreteClass } from "../globals/concrete-class";
 import { Constant } from "../globals/constant";
 import { Enum } from "../globals/enum";
 import { GlobalFunction } from "../globals/global-function";
@@ -76,6 +79,7 @@ import { TypeNameNode } from "../parse-nodes/type-name-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
 import { WithClause } from "../parse-nodes/with-clause";
+import { LetStatement } from "../statements/let-statement";
 import { Print } from "../statements/print";
 import { ReturnStatement } from "../statements/return-statement";
 import { SetStatement } from "../statements/set-statement";
@@ -95,10 +99,12 @@ import { DiscardAsn } from "./discard-asn";
 import { EmptyAsn } from "./empty-asn";
 import { EmptyTypeAsn } from "./empty-type-asn";
 import { EnumValuesAsn } from "./fields/enum-values-asn";
+import { InheritsFromAsn } from "./fields/inherits-from-asn";
 import { ParamListAsn } from "./fields/param-list-asn";
 import { FileAsn } from "./file-asn";
 import { FixedIdAsn } from "./fixed-id-asn";
 import { FuncCallAsn } from "./func-call-asn";
+import { ConcreteClassAsn } from "./globals/concrete-class-asn";
 import { ConstantAsn } from "./globals/constant-asn";
 import { EnumAsn } from "./globals/enum-asn";
 import { GlobalFunctionAsn } from "./globals/global-function-asn";
@@ -127,6 +133,7 @@ import { ParamDefAsn } from "./param-def-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
 import { SegmentedStringAsn } from "./segmented-string-asn";
+import { LetAsn } from "./statements/let-asn";
 import { PrintAsn } from "./statements/print-asn";
 import { ReturnAsn } from "./statements/return-asn";
 import { SetAsn } from "./statements/set-asn";
@@ -185,9 +192,25 @@ export function transform(
 
     mainAsn.children = node
       .getChildren()
+      .filter((f) => !isSelector(f))
       .map((f) => transform(f, f.getHtmlId(), mainAsn)) as AstNode[];
 
     return mainAsn;
+  }
+
+  if (node instanceof ConcreteClass) {
+    const classAsn = new ConcreteClassAsn(node.getHtmlId(), scope);
+
+    classAsn.name = transform(node.name, node.getHtmlId(), classAsn) ?? EmptyAsn.Instance;
+    classAsn.inheritance =
+      transform(node.inheritance, node.getHtmlId(), classAsn) ?? EmptyAsn.Instance;
+
+    classAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), classAsn)) as AstNode[];
+
+    return classAsn;
   }
 
   if (node instanceof VariableStatement) {
@@ -197,6 +220,15 @@ export function transform(
     varAsn.expr = transform(node.expr, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
 
     return varAsn;
+  }
+
+  if (node instanceof LetStatement) {
+    const letAsn = new LetAsn(node.getHtmlId(), scope);
+
+    letAsn.name = transform(node.name, node.getHtmlId(), letAsn) ?? EmptyAsn.Instance;
+    letAsn.expr = transform(node.expr, node.getHtmlId(), letAsn) ?? EmptyAsn.Instance;
+
+    return letAsn;
   }
 
   if (node instanceof SetStatement) {
@@ -246,6 +278,15 @@ export function transform(
     paramsAsn.parms = transformMany(node, fieldId, scope);
 
     return paramsAsn;
+  }
+
+  if (node instanceof InheritsFrom) {
+    const inheritsAsn = new InheritsFromAsn(node.getHtmlId());
+
+    inheritsAsn.inheritance =
+      transform(node.getRootNode(), node.getHtmlId(), scope) ?? EmptyAsn.Instance;
+
+    return inheritsAsn;
   }
 
   if (node instanceof GlobalFunction) {
@@ -393,8 +434,11 @@ export function transform(
   }
 
   if (node instanceof InheritanceNode) {
-    const types = transformMany(node.typeList as CSV, fieldId, scope).items;
-    return new CsvAsn(types, fieldId);
+    if (node.typeList instanceof CSV) {
+      const types = transformMany(node.typeList, fieldId, scope).items;
+      return new CsvAsn(types, fieldId);
+    }
+    return EmptyAsn.Instance;
   }
 
   if (node instanceof EmptyOfTypeNode) {

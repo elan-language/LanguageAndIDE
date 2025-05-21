@@ -28,7 +28,7 @@ export class ConstructorAsn extends FrameWithStatementsAsn implements ElanSymbol
   }
 
   getClass(): ConcreteClass {
-    return this.getParent() as ConcreteClass;
+    return this.getParentScope() as ConcreteClass;
   }
 
   public compile(): string {

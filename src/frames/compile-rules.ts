@@ -44,18 +44,9 @@ import {
   UnknownCompilerDirectiveCompileError,
 } from "./compile-error";
 import { FileImpl } from "./file-impl";
-import {
-  isClass,
-  isConstant,
-  isFunction,
-  isInsideFunctionOrConstructor,
-  isLet,
-  isMember,
-  isProcedure,
-} from "./frame-helpers";
+import { isClass, isConstant, isFunction, isLet, isMember, isProcedure } from "./frame-helpers";
 import { AstNode } from "./interfaces/ast-node";
 import { ElanSymbol } from "./interfaces/elan-symbol";
-import { Parent } from "./interfaces/parent";
 import { Scope } from "./interfaces/scope";
 import { SymbolType } from "./interfaces/symbol-type";
 import { Transforms } from "./interfaces/transforms";
@@ -94,6 +85,7 @@ import {
   isAstIndexableNode,
   isEmptyNode,
   isInsideFunction,
+  isInsideFunctionOrConstructor,
   transforms,
 } from "./syntax-nodes/ast-helpers";
 import { ThisAsn } from "./syntax-nodes/this-asn";
@@ -914,7 +906,7 @@ function isIndexed(assignable: AstNode) {
 
 export function mustNotBeParameter(
   assignable: AstNode,
-  parent: Parent,
+  parent: Scope,
   compileErrors: CompileError[],
   location: string,
 ) {

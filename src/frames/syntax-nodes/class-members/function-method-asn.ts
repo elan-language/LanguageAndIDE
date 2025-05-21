@@ -25,7 +25,7 @@ export class FunctionMethodAsn extends FunctionAsn {
   }
 
   getClass(): ConcreteClass {
-    return this.getParent() as ConcreteClass;
+    return this.getParentScope() as ConcreteClass;
   }
 
   public override indent(): string {

@@ -35,10 +35,6 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
     this.compileScope = s;
   }
 
-  getParent(): Parent {
-    return this.scope as unknown as Parent;
-  }
-
   getParentScope(): Scope {
     return this.compileScope ?? this.scope;
   }

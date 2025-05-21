@@ -1,7 +1,6 @@
 import { Deprecated } from "../../../elan-type-interfaces";
 import { getId, mustBeDeclaredAbove, mustImplementSuperClasses } from "../../compile-rules";
 import { isConstructor } from "../../frame-helpers";
-import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
 import { SymbolType } from "../../interfaces/symbol-type";
 import { Transforms } from "../../interfaces/transforms";
@@ -13,14 +12,8 @@ import { compileNodes, transforms } from "../ast-helpers";
 import { ClassAsn } from "./class-asn";
 
 export class ConcreteClassAsn extends ClassAsn {
-  constructor(
-    name: AstNode,
-    inheritance: AstNode,
-    children: AstNode[],
-    fieldId: string,
-    scope: Scope,
-  ) {
-    super(name, inheritance, children, fieldId, scope);
+  constructor(fieldId: string, scope: Scope) {
+    super(fieldId, scope);
     this.isConcrete = true;
   }
 

@@ -28,7 +28,7 @@ export class AbstractPropertyAsn extends FrameAsn implements Member, ElanSymbol 
   }
 
   getClass(): ConcreteClass {
-    return this.getParent() as ConcreteClass;
+    return this.getParentScope() as ConcreteClass;
   }
 
   compile(): string {

@@ -1,6 +1,5 @@
 import { Deprecated } from "../../../elan-type-interfaces";
 import { getId, mustBeImmutableType } from "../../compile-rules";
-import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
 import { SymbolType } from "../../interfaces/symbol-type";
 import { Transforms } from "../../interfaces/transforms";
@@ -15,14 +14,8 @@ import { ClassAsn } from "./class-asn";
 export class RecordAsn extends ClassAsn {
   hrefForFrameHelp: string = "LangRef.html#record";
 
-  constructor(
-    name: AstNode,
-    inheritance: AstNode,
-    children: AstNode[],
-    fieldId: string,
-    scope: Scope,
-  ) {
-    super(name, inheritance, children, fieldId, scope);
+  constructor(fieldId: string, scope: Scope) {
+    super(fieldId, scope);
     this.isNotInheritable = true;
     this.isRecord = true;
   }

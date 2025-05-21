@@ -1,13 +1,17 @@
 import { AstNode } from "../../interfaces/ast-node";
 import { SymbolType } from "../../interfaces/symbol-type";
+import { UnknownType } from "../../symbols/unknown-type";
 import { AbstractAstNode } from "../abstract-ast-node";
 import { isAstCollectionNode } from "../ast-helpers";
+import { EmptyAsn } from "../empty-asn";
 
 export class InheritsFromAsn extends AbstractAstNode {
   isParseByNodes = true;
-  constructor(private readonly inheritance: AstNode) {
+  constructor(readonly fieldId: string) {
     super();
   }
+
+  inheritance: AstNode = EmptyAsn.Instance;
 
   symbolTypes(): SymbolType[] {
     if (isAstCollectionNode(this.inheritance)) {
@@ -15,6 +19,10 @@ export class InheritsFromAsn extends AbstractAstNode {
     }
 
     return [];
+  }
+
+  symbolType(): SymbolType {
+    return UnknownType.Instance;
   }
 
   compile(): string {

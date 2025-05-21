@@ -27,6 +27,7 @@ import { getGlobalScope, isSymbol, symbolMatches } from "../../symbols/symbol-he
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { isAstCollectionNode, isAstIdNode, transforms } from "../ast-helpers";
+import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 
 export abstract class ClassAsn extends FrameAsn implements Class {
@@ -42,15 +43,13 @@ export abstract class ClassAsn extends FrameAsn implements Class {
 
   hrefForFrameHelp: string = "LangRef.html#class";
 
-  constructor(
-    protected readonly name: AstNode,
-    protected readonly inheritance: AstNode,
-    protected readonly children: AstNode[],
-    fieldId: string,
-    scope: Scope,
-  ) {
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
+  name: AstNode = EmptyAsn.Instance;
+  inheritance: AstNode = EmptyAsn.Instance;
+  children: AstNode[] = [];
 
   ofTypes: SymbolType[] = [];
 
@@ -279,7 +278,7 @@ export abstract class ClassAsn extends FrameAsn implements Class {
   }
 
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
-    const otherMatches = this.getParent().symbolMatches(id, all, this);
+    const otherMatches = this.getParentScope().symbolMatches(id, all, this);
 
     const symbols = this.getChildren().filter((f) => isSymbol(f)) as ElanSymbol[];
 
@@ -303,7 +302,7 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     const symbol = this.resolveOwnSymbol(id, transforms);
 
     if (symbol instanceof UnknownSymbol) {
-      return this.getParent().resolveSymbol(id, transforms, this);
+      return this.getParentScope().resolveSymbol(id, transforms, this);
     }
 
     return symbol;
@@ -383,12 +382,7 @@ export abstract class ClassAsn extends FrameAsn implements Class {
   }
 
   getClassIndex() {
-    return (
-      this.getParent()
-        .getChildren()
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .indexOf(this as any)
-    );
+    return getGlobalScope(this.scope).children.indexOf(this);
   }
 
   updateBreakpoints(event: BreakpointEvent): void {

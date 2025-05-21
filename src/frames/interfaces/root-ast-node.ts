@@ -8,4 +8,5 @@ export interface RootAstNode extends AstNode, Scope {
   libraryScope: Scope;
   getAllCompileErrors(): CompileError[];
   getCompileErrorsFor(fieldId: string): CompileError[];
+  children: AstNode[];
 }
