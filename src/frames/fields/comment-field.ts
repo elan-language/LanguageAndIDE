@@ -1,4 +1,3 @@
-import { escapeHtmlInclSpaces } from "../frame-helpers";
 import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../interfaces/parse-node";
@@ -28,8 +27,17 @@ export class CommentField extends AbstractField {
     return "comment";
   }
   renderAsHtml(): string {
-    const txt = this.isSelected() ? this.textAsHtml() : escapeHtmlInclSpaces(this.textAsHtml());
+    const txt = this.isSelected()
+      ? this.textAsHtml()
+      : this.handleLeadingAndMultipleSpaces(this.textAsHtml());
     return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex=0><el-txt>${txt}</el-txt><el-place>${this.placeholder}</el-place><el-compl>${this.getCompletion()}</el-compl>${this.getMessage()}<el-help title="${this.help}">?</el-help></el-field>`;
+  }
+
+  // Converts leading spaces to &nbsp; and multi-spaces to a space + &nbsp;s
+  handleLeadingAndMultipleSpaces(raw: string): string {
+    const words = raw.split(" ");
+    const withNbsp = words.map((w) => (w === "" ? "&nbsp;" : w + " "));
+    return withNbsp.join("").trimEnd();
   }
 
   symbolCompletion(): string {
