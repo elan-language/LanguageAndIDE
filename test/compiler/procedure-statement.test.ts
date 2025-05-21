@@ -947,7 +947,7 @@ end procedure
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: a (Int), b (String) Provided: Int, Int. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: a (Int), b (String), Provided: Int, Int. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1024,8 +1024,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: p (Int) Provided: Boolean. Click for more info.LangRef.html#compile_error",
-      "Argument types. Expected: p (Int) Provided: Float. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: p (Int), Provided: Boolean. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: p (Int), Provided: Float. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -1257,8 +1257,8 @@ end procedure`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Cannot do equality operations on Procedures or Functions. Click for more info.LangRef.html#compile_error",
-      "Incompatible types. Expected: Float or Int Provided: Procedure (). Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int Provided: Procedure (). Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: Procedure (). Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: Procedure (). Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -1275,7 +1275,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of Int> Provided: Procedure (Int). Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of Int>, Provided: Procedure (Int). Click for more info.LangRef.html#TypesCompileError",
       "Cannot call procedure 'append' within an expression. Click for more info.LangRef.html#compile_error",
     ]);
   });

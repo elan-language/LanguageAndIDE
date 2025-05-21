@@ -2,7 +2,7 @@ import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
 
 import { ParseNode } from "../interfaces/parse-node";
-import { TypeSimpleNode } from "../parse-nodes/type-simple-node";
+import { TypeNameNode } from "../parse-nodes/type-name-node";
 import { TokenType } from "../symbol-completion-helpers";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
@@ -18,7 +18,7 @@ export class TypeNameField extends AbstractField {
 
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new TypeSimpleNode(new Set<TokenType>());
+    this.rootNode = new TypeNameNode(new Set<TokenType>());
     return this.rootNode;
   }
 

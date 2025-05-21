@@ -1,7 +1,7 @@
 import { TokenType } from "../symbol-completion-helpers";
 import { RegExMatchNode } from "./regex-match-node";
 
-export class TypeSimpleNode extends RegExMatchNode {
+export class TypeNameNode extends RegExMatchNode {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
   override errorLink: string = "#parse_type_name";
 

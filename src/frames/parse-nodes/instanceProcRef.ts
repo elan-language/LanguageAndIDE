@@ -6,12 +6,11 @@ import { DotAfter } from "./dot-after";
 import { IdentifierNode } from "./identifier-node";
 import { InstanceNode } from "./instanceNode";
 import { MethodNameNode } from "./method-name-node";
-import { OptionalNode } from "./optional-node";
 import { PropertyRef } from "./property-ref";
 import { Qualifier } from "./qualifier";
 
 export class InstanceProcRef extends AbstractSequence {
-  prefix: OptionalNode | undefined;
+  prefix: Alternatives | undefined;
   procName: IdentifierNode | undefined;
   tokenTypes = new Set([
     TokenType.id_let,
@@ -28,7 +27,7 @@ export class InstanceProcRef extends AbstractSequence {
       const instance = new InstanceNode();
       const instanceDot = () => new DotAfter(instance);
       const propertyRef = () => new DotAfter(new PropertyRef());
-      this.prefix = new OptionalNode(new Alternatives([propertyRef, qualifierDot, instanceDot]));
+      this.prefix = new Alternatives([propertyRef, qualifierDot, instanceDot]);
       this.procName = new MethodNameNode(
         new Set([TokenType.method_procedure]),
         () => instance.matchedText,
@@ -40,7 +39,7 @@ export class InstanceProcRef extends AbstractSequence {
   }
 
   renderAsHtml(): string {
-    return `${this.prefix!.matchedNode ? this.prefix?.matchedNode.renderAsHtml() : ""}<el-method>${this.procName?.renderAsHtml()}</el-method>`;
+    return `${this.prefix!.bestMatch!.renderAsHtml()}<el-method>${this.procName?.renderAsHtml()}</el-method>`;
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {

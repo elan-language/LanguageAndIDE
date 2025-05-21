@@ -4,8 +4,8 @@ import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { KeywordNode } from "./keyword-node";
 import { Space } from "./parse-node-helpers";
+import { SetToClause } from "./set-to-clause";
 import { SpaceNode } from "./space-node";
-import { ToClause } from "./to-clause";
 
 export class WithClause extends AbstractSequence {
   toClauses: CSV | undefined;
@@ -22,7 +22,7 @@ export class WithClause extends AbstractSequence {
       this.addElement(new SpaceNode(Space.added));
       this.addElement(new KeywordNode(withKeyword));
       this.addElement(new SpaceNode(Space.required));
-      this.toClauses = new CSV(() => new ToClause(this.context), 1);
+      this.toClauses = new CSV(() => new SetToClause(this.context), 1);
       this.addElement(this.toClauses);
       return super.parseText(text);
     }

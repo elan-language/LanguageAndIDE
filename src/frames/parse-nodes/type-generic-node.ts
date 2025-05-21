@@ -9,11 +9,11 @@ import { concreteAndAbstractTypes, Space } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
 import { Sequence } from "./sequence";
 import { SpaceNode } from "./space-node";
+import { TypeNameNode } from "./type-name-node";
 import { TypeNode } from "./type-node";
-import { TypeSimpleNode } from "./type-simple-node";
 
 export class TypeGenericNode extends AbstractSequence {
-  simpleType: TypeSimpleNode | undefined;
+  simpleType: TypeNameNode | undefined;
   generic: Sequence | undefined;
   tokenTypes: Set<TokenType> = new Set<TokenType>();
   concreteAndAbstract = new Set<TokenType>(concreteAndAbstractTypes);
@@ -26,7 +26,7 @@ export class TypeGenericNode extends AbstractSequence {
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      this.simpleType = new TypeSimpleNode(this.tokenTypes);
+      this.simpleType = new TypeNameNode(this.tokenTypes);
       const lt = () => new PunctuationNode(LT);
       const of = () => new KeywordNode(ofKeyword);
       const sp = () => new SpaceNode(Space.required);

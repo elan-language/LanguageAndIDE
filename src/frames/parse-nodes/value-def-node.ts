@@ -3,7 +3,7 @@ import { DeconstructedList } from "./deconstructed-list";
 import { DeconstructedTuple } from "./deconstructed-tuple";
 import { IdentifierNode } from "./identifier-node";
 
-export class VarDefNode extends AbstractAlternatives {
+export class ValueDefNode extends AbstractAlternatives {
   override errorLink: string = "#parse_var_or_let_def";
 
   constructor() {

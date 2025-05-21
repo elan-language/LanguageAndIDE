@@ -1,7 +1,8 @@
 import assert from "assert";
 import { Alternatives } from "../src/frames/parse-nodes/alternatives";
 import { ArgListNode } from "../src/frames/parse-nodes/arg-list-node";
-import { AssertActualNode } from "../src/frames/parse-nodes/assert-actual-node";
+import { AssertTermNode } from "../src/frames/parse-nodes/assert-term-node";
+import { AssignableNode } from "../src/frames/parse-nodes/assignable-node";
 import { BinaryExpression } from "../src/frames/parse-nodes/binary-expression";
 import { BinaryOperation } from "../src/frames/parse-nodes/binary-operation";
 import { CSV } from "../src/frames/parse-nodes/csv";
@@ -15,11 +16,10 @@ import { allIds } from "../src/frames/parse-nodes/parse-node-helpers";
 import { ProcRefNode } from "../src/frames/parse-nodes/proc-ref-node";
 import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
 import { TermSimple } from "../src/frames/parse-nodes/term-simple";
+import { TypeNameNode } from "../src/frames/parse-nodes/type-name-node";
 import { TypeNode } from "../src/frames/parse-nodes/type-node";
-import { TypeSimpleNode } from "../src/frames/parse-nodes/type-simple-node";
 import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-generic";
-import { VarDefNode } from "../src/frames/parse-nodes/var-def-node";
-import { VariableOrProperty } from "../src/frames/parse-nodes/variable-or-property";
+import { ValueDefNode } from "../src/frames/parse-nodes/value-def-node";
 import { ParseStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
@@ -169,7 +169,7 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(),
       "Foo",
       ParseStatus.incomplete,
-      TypeSimpleNode.name,
+      TypeNameNode.name,
       "Foo",
       [TokenType.type_enum],
       [],
@@ -193,7 +193,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("Assignable", () => {
     testSymbolCompletionSpec(
-      new VariableOrProperty(),
+      new AssignableNode(),
       "property.f",
       ParseStatus.valid,
       IdentifierNode.name,
@@ -610,10 +610,10 @@ suite("Symbol Completion Spec", () => {
   });
   test("#930 var def node", () => {
     testSymbolCompletionSpec(
-      new VarDefNode(),
+      new ValueDefNode(),
       "",
       ParseStatus.empty,
-      VarDefNode.name,
+      ValueDefNode.name,
       "",
       [],
       [""],
@@ -622,10 +622,10 @@ suite("Symbol Completion Spec", () => {
   });
   test("#932 assert actual node", () => {
     testSymbolCompletionSpec(
-      new AssertActualNode(),
+      new AssertTermNode(),
       "",
       ParseStatus.empty,
-      AssertActualNode.name,
+      AssertTermNode.name,
       "",
       [TokenType.id_let, TokenType.id_variable, TokenType.method_function, TokenType.method_system],
       [""],

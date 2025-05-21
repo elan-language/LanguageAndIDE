@@ -1398,7 +1398,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: listOfVGs (List<of VectorGraphic>) Provided: List<of Foo>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: listOfVGs (List<of VectorGraphic>), Provided: List<of Foo>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 

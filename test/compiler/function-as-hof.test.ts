@@ -341,7 +341,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int, Int => Int>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>), Provided: Int, Func<of Int, Int => Int>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -365,7 +365,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of Int => Int>) Provided: Int, Func<of Int => String>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>), Provided: Int, Func<of Int => String>. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -493,7 +493,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: Func<of Int => Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: Func<of Int => Int>. Click for more info.LangRef.html#TypesCompileError",
       "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'ref'. Click for more info.LangRef.html#compile_error",
     ]);
   });
@@ -515,7 +515,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int Provided: Func<of Int => Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: Func<of Int => Int>. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
 });

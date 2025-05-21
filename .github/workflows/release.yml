@@ -3,6 +3,11 @@
 
 name: Release 
 
+permissions:
+  contents: read
+  actions: read
+  packages: read
+
 on:
   workflow_dispatch:
     inputs:

@@ -2,11 +2,11 @@ import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
 
 import { ParseNode } from "../interfaces/parse-node";
-import { VarDefNode } from "../parse-nodes/var-def-node";
+import { ValueDefNode } from "../parse-nodes/value-def-node";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
-export class VarDefField extends AbstractField {
+export class ValueDefField extends AbstractField {
   isParseByNodes = true;
   constructor(holder: Frame) {
     super(holder);
@@ -18,7 +18,7 @@ export class VarDefField extends AbstractField {
   }
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
-    this.rootNode = new VarDefNode();
+    this.rootNode = new ValueDefNode();
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
