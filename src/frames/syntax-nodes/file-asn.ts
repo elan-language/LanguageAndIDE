@@ -83,39 +83,39 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
 
   compileGlobals(): string {
     let result = "";
-    if (this.children.length > 0) {
-      const ss: Array<string> = [];
-      for (const frame of this.children.filter((g) => g instanceof EnumAsn)) {
-        ss.push(frame.compile());
-      }
 
-      const constants = this.children.filter((g) => g instanceof ConstantAsn);
-
-      if (constants.length > 0) {
-        ss.push("const global = new class {");
-        for (const frame of constants) {
-          ss.push(`  ${frame.compile()}`);
-        }
-        ss.push("};");
-      } else {
-        ss.push("const global = new class {};");
-      }
-
-      for (const frame of this.children.filter(
-        (g) => !(g instanceof EnumAsn || g instanceof ConstantAsn),
-      )) {
-        ss.push(frame.compile());
-      }
-
-      if (!this.children.some((g) => g instanceof MainAsn)) {
-        const emptyMain = new MainAsn(this.fieldId, this.scope);
-        ss.push(emptyMain.compile());
-      }
-
-      result = ss.join("\r\n");
-
-      this.hasTests = this.children.some((g) => g instanceof TestAsn);
+    const ss: Array<string> = [];
+    for (const frame of this.children.filter((g) => g instanceof EnumAsn)) {
+      ss.push(frame.compile());
     }
+
+    const constants = this.children.filter((g) => g instanceof ConstantAsn);
+
+    if (constants.length > 0) {
+      ss.push("const global = new class {");
+      for (const frame of constants) {
+        ss.push(`  ${frame.compile()}`);
+      }
+      ss.push("};");
+    } else {
+      ss.push("const global = new class {};");
+    }
+
+    for (const frame of this.children.filter(
+      (g) => !(g instanceof EnumAsn || g instanceof ConstantAsn),
+    )) {
+      ss.push(frame.compile());
+    }
+
+    if (!this.children.some((g) => g instanceof MainAsn)) {
+      const emptyMain = new MainAsn(this.fieldId, this);
+      ss.push(emptyMain.compile());
+    }
+
+    result = ss.join("\r\n");
+
+    this.hasTests = this.children.some((g) => g instanceof TestAsn);
+
     return result;
   }
 

@@ -8,6 +8,7 @@ import { isSelector } from "../frame-helpers";
 import { ConcreteClass } from "../globals/concrete-class";
 import { Constant } from "../globals/constant";
 import { Enum } from "../globals/enum";
+import { GlobalComment } from "../globals/global-comment";
 import { GlobalFunction } from "../globals/global-function";
 import { MainFrame } from "../globals/main-frame";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
@@ -79,6 +80,7 @@ import { TypeNameNode } from "../parse-nodes/type-name-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
 import { WithClause } from "../parse-nodes/with-clause";
+import { CommentStatement } from "../statements/comment-statement";
 import { LetStatement } from "../statements/let-statement";
 import { Print } from "../statements/print";
 import { ReturnStatement } from "../statements/return-statement";
@@ -107,6 +109,7 @@ import { FuncCallAsn } from "./func-call-asn";
 import { ConcreteClassAsn } from "./globals/concrete-class-asn";
 import { ConstantAsn } from "./globals/constant-asn";
 import { EnumAsn } from "./globals/enum-asn";
+import { GlobalCommentAsn } from "./globals/global-comment-asn";
 import { GlobalFunctionAsn } from "./globals/global-function-asn";
 import { MainAsn } from "./globals/main-asn";
 import { IdAsn } from "./id-asn";
@@ -133,6 +136,7 @@ import { ParamDefAsn } from "./param-def-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
 import { SegmentedStringAsn } from "./segmented-string-asn";
+import { CommentStatementAsn } from "./statements/comment-asn";
 import { LetAsn } from "./statements/let-asn";
 import { PrintAsn } from "./statements/print-asn";
 import { ReturnAsn } from "./statements/return-asn";
@@ -182,6 +186,7 @@ export function transform(
 
     astRoot.children = node
       .getChildren()
+      .filter((f) => !isSelector(f))
       .map((f) => transform(f, "", astRoot as unknown as Scope)) as AstNode[];
 
     return astRoot;
@@ -196,6 +201,14 @@ export function transform(
       .map((f) => transform(f, f.getHtmlId(), mainAsn)) as AstNode[];
 
     return mainAsn;
+  }
+
+  if (node instanceof GlobalComment) {
+    const commentAsn = new GlobalCommentAsn(node.getHtmlId(), scope);
+
+    commentAsn.text = transform(node.text, node.getHtmlId(), commentAsn) ?? EmptyAsn.Instance;
+
+    return commentAsn;
   }
 
   if (node instanceof ConcreteClass) {
@@ -244,6 +257,12 @@ export function transform(
     const returnAsn = new ReturnAsn(node.getHtmlId(), scope);
     returnAsn.expr = transform(node.expr, node.getHtmlId(), returnAsn) ?? EmptyAsn.Instance;
     return returnAsn;
+  }
+
+  if (node instanceof CommentStatement) {
+    const commentAsn = new CommentStatementAsn(node.getHtmlId(), scope);
+    commentAsn.text = transform(node.text, node.getHtmlId(), commentAsn) ?? EmptyAsn.Instance;
+    return commentAsn;
   }
 
   if (node instanceof Enum) {
