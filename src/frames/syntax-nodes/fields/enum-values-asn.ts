@@ -1,4 +1,4 @@
-import { mustBeUniqueValueInScope, mustNotBeKeyword } from "../../compile-rules";
+import { getId, mustBeUniqueValueInScope, mustNotBeKeyword } from "../../compile-rules";
 import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
@@ -16,6 +16,14 @@ export class EnumValuesAsn extends AbstractAstNode implements AstNode {
   }
 
   values: AstNode = EmptyAsn.Instance;
+
+  get names() {
+    if (isAstCollectionNode(this.values)) {
+      const items = this.values.items;
+      return items.map((i) => getId(i));
+    }
+    return [];
+  }
 
   compile(): string {
     this.compileErrors = [];

@@ -503,6 +503,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "'asList' is not defined. Click for more info.LangRef.html#compile_error",
       "'x' is not defined for type 'Int'. Click for more info.LangRef.html#compile_error",
     ]);
   });

@@ -77,6 +77,7 @@ import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
 import { WithClause } from "../parse-nodes/with-clause";
 import { Print } from "../statements/print";
+import { ReturnStatement } from "../statements/return-statement";
 import { SetStatement } from "../statements/set-statement";
 import { VariableStatement } from "../statements/variable-statement";
 import { FuncName, ImageName, TupleName } from "../symbols/elan-type-names";
@@ -127,6 +128,7 @@ import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
 import { SegmentedStringAsn } from "./segmented-string-asn";
 import { PrintAsn } from "./statements/print-asn";
+import { ReturnAsn } from "./statements/return-asn";
 import { SetAsn } from "./statements/set-asn";
 import { VariableAsn } from "./statements/variable-asn";
 import { ThisAsn } from "./this-asn";
@@ -204,6 +206,12 @@ export function transform(
     setAsn.expr = transform(node.expr, node.getHtmlId(), setAsn) ?? EmptyAsn.Instance;
 
     return setAsn;
+  }
+
+  if (node instanceof ReturnStatement) {
+    const returnAsn = new ReturnAsn(node.getHtmlId(), scope);
+    returnAsn.expr = transform(node.expr, node.getHtmlId(), returnAsn) ?? EmptyAsn.Instance;
+    return returnAsn;
   }
 
   if (node instanceof Enum) {

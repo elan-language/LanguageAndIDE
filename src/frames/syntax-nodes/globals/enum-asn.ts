@@ -1,24 +1,35 @@
-import { mustBeUniqueNameInScope } from "../../compile-rules";
+import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
 import { singleIndent } from "../../frame-helpers";
 import { AstNode } from "../../interfaces/ast-node";
+import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Scope } from "../../interfaces/scope";
 import { SymbolType } from "../../interfaces/symbol-type";
-import { getGlobalScope } from "../../symbols/symbol-helpers";
+import { Transforms } from "../../interfaces/transforms";
+import { EnumType } from "../../symbols/enum-type";
+import { EnumValueType } from "../../symbols/enum-value-type";
+import { getGlobalScope, symbolMatches } from "../../symbols/symbol-helpers";
+import { SymbolScope } from "../../symbols/symbol-scope";
 import { transforms } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
+import { EnumValuesAsn } from "../fields/enum-values-asn";
 import { FrameAsn } from "../frame-asn";
 
-export class EnumAsn extends FrameAsn {
+export class EnumAsn extends FrameAsn implements ElanSymbol {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
+  }
+
+  get symbolId() {
+    return getId(this.name);
+  }
+
+  symbolType(): SymbolType {
+    return new EnumType(this.symbolId);
   }
 
   name: AstNode = EmptyAsn.Instance;
   values: AstNode = EmptyAsn.Instance;
 
-  symbolType(): SymbolType {
-    throw new Error("Method not implemented.");
-  }
   compile(): string {
     this.compileErrors = [];
 
@@ -37,5 +48,37 @@ export class EnumAsn extends FrameAsn {
 ${singleIndent()}${this.values.compile()}\r
 };\r
 `;
+  }
+
+  // TODO move this onto EnumValuesAsn
+  enumValueSymbols() {
+    if (this.values instanceof EnumValuesAsn) {
+      const names = this.values.names;
+
+      return names.map((n) => ({
+        symbolId: n,
+        symbolType: () => new EnumValueType(getId(this.name), n),
+        symbolScope: SymbolScope.program,
+      }));
+    }
+
+    return [];
+  }
+
+  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
+    for (const n of this.enumValueSymbols()) {
+      if (n.symbolId === id) {
+        return n;
+      }
+    }
+
+    return this.getParent().resolveSymbol(id, transforms, this);
+  }
+
+  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
+    const otherMatches = this.getParent().symbolMatches(id, all, this);
+    const symbols = this.enumValueSymbols();
+    const matches = symbolMatches(id, all, symbols);
+    return matches.concat(otherMatches);
   }
 }
