@@ -14,7 +14,6 @@ import { AstNode } from "../../interfaces/ast-node";
 import { Class } from "../../interfaces/class";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Field } from "../../interfaces/field";
-import { Profile } from "../../interfaces/profile";
 import { Scope } from "../../interfaces/scope";
 import { SymbolType } from "../../interfaces/symbol-type";
 import { Transforms } from "../../interfaces/transforms";
@@ -73,9 +72,9 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     return SymbolScope.program;
   }
 
-  getProfile(): Profile {
-    return this.getFile().getProfile();
-  }
+  // getProfile(): Profile {
+  //   return this.getFile().getProfile();
+  // }
 
   // updateCompileStatus(): void {
   //   this.getChildren().forEach((c) => c.updateCompileStatus());

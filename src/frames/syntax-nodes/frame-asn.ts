@@ -1,8 +1,6 @@
 import { singleIndent } from "../frame-helpers";
 import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
-import { File } from "../interfaces/file";
-import { Parent } from "../interfaces/parent";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
@@ -127,10 +125,6 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
 
   debugSymbols() {
     return () => allScopedSymbols(this.getParentScope(), this as unknown as Scope);
-  }
-
-  getFile(): File {
-    return (this.scope as unknown as Parent).getFile();
   }
 
   getNextState(currentState: BreakpointStatus, event: BreakpointEvent) {

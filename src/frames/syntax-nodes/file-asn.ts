@@ -17,6 +17,7 @@ import { TestAsn } from "./globals/test-asn";
 
 export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   isFile = true;
+  private _nextId: number = 0;
 
   constructor(private scope: Scope) {
     super();
@@ -29,6 +30,10 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
     }
 
     return all;
+  }
+
+  getNextId() {
+    return this._nextId++;
   }
 
   getCompileErrorsFor(fieldId: string): CompileError[] {

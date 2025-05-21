@@ -37,21 +37,19 @@ export class CallAsn extends FrameAsn {
   isStatement = true;
   isCall = true;
 
-  constructor(
-    private readonly proc: AstNode,
-    private readonly args: AstNode,
-    fieldId: string,
-    scope: Scope,
-  ) {
+  constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
+  proc: AstNode = EmptyAsn.Instance;
+  args: AstNode = EmptyAsn.Instance;
 
   wrapParameters(
     procSymbol: ElanSymbol,
     callParameters: AstNode[],
     transforms: Transforms,
   ): [string[], string[], string[]] {
-    const postFix = this.getFile().getNextId();
+    const postFix = getGlobalScope(this.scope).getNextId();
     const wrappedInParameters: string[] = [];
     const wrappedOutParameters: string[] = [];
     const passedParameters: string[] = [];

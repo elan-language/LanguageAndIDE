@@ -12,6 +12,7 @@ import { Enum } from "../globals/enum";
 import { GlobalComment } from "../globals/global-comment";
 import { GlobalFunction } from "../globals/global-function";
 import { MainFrame } from "../globals/main-frame";
+import { RecordFrame } from "../globals/record-frame";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstNode } from "../interfaces/ast-node";
@@ -81,6 +82,7 @@ import { TypeNameNode } from "../parse-nodes/type-name-node";
 import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../parse-nodes/unary-expression";
 import { WithClause } from "../parse-nodes/with-clause";
+import { CallStatement } from "../statements/call-statement";
 import { CommentStatement } from "../statements/comment-statement";
 import { LetStatement } from "../statements/let-statement";
 import { Print } from "../statements/print";
@@ -114,6 +116,7 @@ import { EnumAsn } from "./globals/enum-asn";
 import { GlobalCommentAsn } from "./globals/global-comment-asn";
 import { GlobalFunctionAsn } from "./globals/global-function-asn";
 import { MainAsn } from "./globals/main-asn";
+import { RecordAsn } from "./globals/record-asn";
 import { IdAsn } from "./id-asn";
 import { IdDefAsn } from "./id-def-asn";
 import { IfExprAsn } from "./if-expr-asn";
@@ -138,6 +141,7 @@ import { ParamDefAsn } from "./param-def-asn";
 import { QualifierAsn } from "./qualifier-asn";
 import { RangeAsn } from "./range-asn";
 import { SegmentedStringAsn } from "./segmented-string-asn";
+import { CallAsn } from "./statements/call-asn";
 import { CommentStatementAsn } from "./statements/comment-asn";
 import { LetAsn } from "./statements/let-asn";
 import { PrintAsn } from "./statements/print-asn";
@@ -228,6 +232,21 @@ export function transform(
     return classAsn;
   }
 
+  if (node instanceof RecordFrame) {
+    const recordAsn = new RecordAsn(node.getHtmlId(), scope);
+
+    recordAsn.name = transform(node.name, node.getHtmlId(), recordAsn) ?? EmptyAsn.Instance;
+    recordAsn.inheritance =
+      transform(node.inheritance, node.getHtmlId(), recordAsn) ?? EmptyAsn.Instance;
+
+    recordAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), recordAsn)) as AstNode[];
+
+    return recordAsn;
+  }
+
   if (node instanceof Constructor) {
     const constructorAsn = new ConstructorAsn(node.getHtmlId(), scope);
 
@@ -267,6 +286,15 @@ export function transform(
     setAsn.expr = transform(node.expr, node.getHtmlId(), setAsn) ?? EmptyAsn.Instance;
 
     return setAsn;
+  }
+
+  if (node instanceof CallStatement) {
+    const callAsn = new CallAsn(node.getHtmlId(), scope);
+
+    callAsn.proc = transform(node.proc, node.getHtmlId(), callAsn) ?? EmptyAsn.Instance;
+    callAsn.args = transform(node.args, node.getHtmlId(), callAsn) ?? EmptyAsn.Instance;
+
+    return callAsn;
   }
 
   if (node instanceof ReturnStatement) {
