@@ -78,26 +78,21 @@ in the range:</li>
     <li>Maximum: 2<sup>53</sup> &ndash; 1 (which is 9007199254740991)</li>
     <li>Minimum value: &ndash; (2<sup>53</sup> &ndash; 1)</li>
     </ul>
-
-<li>If you go outside the limits given above, the number will be represented with the same precision as if
-    it were being held in an <el-code><el-type>Int</el-type></el-code>, accurate to approximately 15 decimal digits.
-    Larger numbers will be padded with zeros at the end, until they get to the point where they will automatically be shown
-    in exponential (scientific) format, as illustrated by the following code:
-
-<el-code-block source=".elan">
-        <el-statement class="ok multiline" id="for5" tabindex="0">
-        <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-lit>50</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
-        <el-statement class="ok" id="call14" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident15" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args16" class="optional ok" tabindex="0"><el-txt><el-lit>0</el-lit>, <el-id>i</el-id>.<el-method>asString</el-method>()</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
-        <el-statement class="ok" id="call23" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident24" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args25" class="optional ok" tabindex="0"><el-txt><el-lit>10</el-lit>, (<el-lit>2</el-lit>^<el-id>i</el-id>).<el-method>asString</el-method>()</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
-        <el-statement class="ok" id="print70" tabindex="0"><el-kw>print </el-kw><el-field id="expr71" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>expression</i></el-place><el-compl><i>expression</i></el-compl></el-field></el-statement>
-        <el-kw>end for</el-kw>
-        </el-statement>
+ <li>If you go greater than the limit given above, the number will be represented with the same precision as if
+    it were being held in an <el-code><el-type>Int</el-type></el-code>, accurate to approximately 17 decimal digits (as seen for 2<sup>54</sup> below).
+    Larger numbers will be rounded with zeros at the end, until they get to the point (around 2<sup>70</sup>) where they will automatically be shown
+    in exponential (scientific) format, as shown by the output from the following code:</li>
+<el-code-block source="bigInt1.elan">
+<el-statement class="ok multiline" id="for139" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident141" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr142" class="ok" tabindex="0"><el-txt><el-lit>50</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr143" class="ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr144" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
+<el-statement class="ok" id="call145" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident146" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args147" class="optional ok" tabindex="0"><el-txt><el-lit>0</el-lit>, <el-id>i</el-id>.<el-method>asString</el-method>()</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="call152" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident153" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args154" class="optional ok" tabindex="0"><el-txt><el-lit>10</el-lit>, (<el-lit>2</el-lit>^<el-id>i</el-id>).<el-method>asString</el-method>()</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="print176" tabindex="0"><el-kw>print </el-kw><el-field id="expr177" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>expression</i></el-place><el-compl><i>expression</i></el-compl></el-field></el-statement>
+<el-kw>end for</el-kw>
+</el-statement>
 </el-code-block>
-
 <p>which produces:</p>
-
 <img src="images/Pic88.png">
-</li>
 </ul>
 <!--   #endregion-->
 <!--   #region Float-->
@@ -642,7 +637,7 @@ with the specified changes &ndash; which is why all such methods have names star
  and are indexed from <i>0</i> to <i>n-1</i>, but is more flexible because:</p>
 <ul>
  <li>While the elements must all be of one Type, that Type is not limited to the simple value Types:
-  the element Type may also be a user-defined Type such as a <i>Class</i>, <i>Record</i>, another <i>List</i> or an <i>Array</i>.</li>
+  the element Type may also be a user-defined Type such as a <i>class</i>, <i>record</i>, another <i>List</i> or an <i>Array</i>.</li>
  <li>A List is created either empty or initialised from a literal definition.</li>
  <li>A List's size can be dynamically changed.</li>
 </ul>
@@ -883,7 +878,7 @@ with the specified changes &ndash; which is why all such methods have names star
 <!--   #region Dictionary-->
 <h2 id="Dictionary">Dictionary</h2>
 <p>A Dictionary works like an Array, but instead of having a numeric (integer) index, each entry has a <i>key</i>. Each key is associated with a <i>value</i>,
-so the Dictionary is a set of <i>key:value</i> pairs
+so the Dictionary is a set of <i>key:value</i> pairs.
 The key's Type must be one of <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code> or <el-code><el-type>Boolean</el-type></el-code>,
 <i>or</i> it may be a user-defined <i>record</i>. The values may be of any Type, and the Types of both key and value are fixed when the Dictionary is created.</p>
 
@@ -1003,7 +998,7 @@ differences. Immutable data structures are intended specifically to facilitate t
 <!--   #region ListImmutable -->
 <h2 id="ListImmutable">ListImmutable</h2>
 <p>A <el-code>ListImmutable</el-code> is like a <el-code><el-type>List</el-type></el-code> but is <i>immutable</i> (like a <el-code><el-type>String</el-type></el-code>).
-You can still insert, delete, or change elements in a <el-code>ListImmutable</el-code>, but the methods for these operations do not modify the input <el-code>ListImmutable</el-code>: they return a new <el-code>ListImmutable</el-code> based on the input <el-code>ListImmutable</el-code> but with the specified differences.
+You can still insert, delete or change elements in a <el-code>ListImmutable</el-code>, but the methods for these operations do not modify the input <el-code>ListImmutable</el-code>: they return a new <el-code>ListImmutable</el-code> based on the input <el-code>ListImmutable</el-code> with the specified differences.
  You may assign the updated list to the variable that contained the original one.</p>
 
 <h3 class="no-TOC">Type name</h3>
@@ -1094,7 +1089,12 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 <!-- #endregion-->
 <!--   #region DictionaryImmutable -->
 <h2 id="DictionaryImmutable">DictionaryImmutable</h2>
-<p>An immutable dictionary may be defined in a constant.</p>
+<p>A <el-code><el-type>DictionaryImmutable</el-type></el-code> is like a <el-code><el-type>Dictionary</el-type></el-code> but <i>immutable</i>
+ (like a <el-code><el-type>String</el-type></el-code>). You can still insert, delete or change elements in a <el-code><el-type>DictionaryImmutable</el-type></el-code>,
+ but the methods of these operations do not modify the input <el-code><el-type>DictionaryImmutable</el-type></el-code>: they return a new
+ <el-code><el-type>DictionaryImmutable</el-type></el-code> with the specified differences. You may assign the updated dictionary to the variable
+ that contained the original one.</p>
+<p>A <el-code><el-type>DictionaryImmutable</el-type></el-code> may be defined in a constant.</p>
 
 <h3 class="no-TOC">Type name</h3>
 <p>In the following example, the keys are of Type <el-code><el-type>String</el-type></el-code>, and the values associated with the keys are of Type <el-code><el-type>Int</el-type></el-code>:</p>
@@ -1129,7 +1129,7 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
   <td></td>
   <td><el-code><el-type></el-type></el-code></td>
   <td></td>
- </tr><tr id="withPut">
+ </tr><tr id="withPut_DictionaryImmutable">
   <td><el-code><el-method>withPut</el-method></el-code></td>
   <td><el-code><el-type>DictionaryImmutable</el-type></el-code></td>
   <td></td>
@@ -1406,8 +1406,9 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 most variables and data structures to the Display for debugging purposes.</p>
 <p>Click on a Type, or on the <el-id>&#x2714;</el-id> tick to go to the specific method.</p>
 <table >
- <tr><th>Type</th><th colspan="7">method</th></tr>
- <tr><td></td>
+ <tr><th>Type</th><th colspan="8">method</th></tr>
+ <tr>
+  <td></td>
   <td><el-code><el-method>asList</el-method></el-code></td>
   <td><el-code><el-method>asString</el-method></el-code></td>
   <td><el-code><el-method>contains</el-method></el-code></td>
@@ -1415,10 +1416,12 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td><el-code><el-method>indexOf</el-method></el-code></td>
   <td><el-code><el-method>length</el-method></el-code></td>
   <td><el-code><el-method>peek</el-method></el-code></td>
+  <td><el-code><el-method>withPut</el-method></el-code></td>
  </tr><tr>
   <td><a href="#Int"><el-code><el-type>Int</el-type></el-code></a></td>
   <td></td>
   <td><a href="#asString_Int">&#x2714;</a></td>
+  <td></td>
   <td></td>
   <td></td>
   <td></td>
@@ -1433,10 +1436,12 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td></td>
   <td></td>
   <td></td>
+  <td></td>
  </tr><tr>
   <td><a href="#Boolean"><el-code><el-type>Boolean</el-type></el-code></a></td>
   <td></td>
   <td><a href="#asString_Boolean">&#x2714;</a></td>
+  <td></td>
   <td></td>
   <td></td>
   <td></td>
@@ -1451,6 +1456,7 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td><a href="#indexOf_String">&#x2714;</a></td>
   <td><a href="#length_String">&#x2714;</a></td>
   <td></td>
+  <td></td>
  </tr><tr>
   <td><a href="#Array"><el-code><el-type>Array</el-type></el-code></a></td>
   <td><a href="#asList_Array">&#x2714;</a></td>
@@ -1460,6 +1466,7 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td><a href="#indexOf_Array">&#x2714;</a></td>
   <td><a href="#length_Array">&#x2714;</a></td>
   <td></td>
+  <td><a href="#withPut_Array">&#x2714;</a></td>
  </tr><tr>
   <td><a href="#Array2D"><el-code><el-type>Array2D</el-type></el-code></a></td>
   <td></td>
@@ -1469,6 +1476,7 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td><a href="#indexOf_Array2D">&#x2714;</a></td>
   <td></td>
   <td></td>
+  <td><a href="#withPut_Array2D">&#x2714;</a></td>
  </tr><tr>
   <td><a href="#List"><el-code><el-type>List</el-type></el-code></a></td>
   <td></td>
@@ -1478,6 +1486,7 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td><a href="#indexOf_List">&#x2714;</a></td>
   <td><a href="#length_List">&#x2714;</a></td>
   <td></td>
+  <td><a href="#withPut_List">&#x2714;</a></td>
  </tr><tr>
   <td><a href="#Dictionary"><el-code><el-type></el-type>Dictionary</el-code></a></td>
   <td></td>
@@ -1486,6 +1495,7 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td></td>
   <td></td>
   <td>see notes</td>
+  <td></td>
   <td></td>
  </tr><tr>
   <td><a href="#ListImmutable"><el-code><el-type></el-type>ListImmutable</el-code></a></td>
@@ -1496,6 +1506,7 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td><a href="#indexOf_ListImmutable">&#x2714;</a></td>
   <td><a href="#length_ListImmutable">&#x2714;</a></td>
   <td></td>
+  <td><a href="#withPut_ListImmutable">&#x2714;</a></td>
  </tr><tr>
   <td><a href="#DictionaryImmutable"><el-code><el-type>DictionaryImmutable</el-type></el-code></a></td>
   <td></td>
@@ -1505,6 +1516,7 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td></td>
   <td>see notes</td>
   <td></td>
+  <td><a href="#withPut_DictionaryImmutable">&#x2714;</a></td>
  </tr><tr>
   <td><a href="#SetType"><el-code><el-type>Set</el-type></el-code></a></td>
   <td><a href="#asList_Set">&#x2714;</a></td>
@@ -1513,6 +1525,7 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td></td>
   <td></td>
   <td><a href="#length_Set">&#x2714;</a></td>
+  <td></td>
   <td></td>
  </tr><tr>
   <td><a href="#Stack"><el-code><el-type>Stack</el-type></el-code></a></td>
@@ -1523,6 +1536,7 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td></td>
   <td><a href="#length_Stack">&#x2714;</a></td>
   <td><a href="#peek_Stack">&#x2714;</a></td>
+  <td></td>
  </tr><tr>
   <td><a href="#Queue"><el-code><el-type>Queue</el-type></el-code></a></td>
   <td></td>
@@ -1532,6 +1546,7 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td></td>
   <td><a href="#length_Queue">&#x2714;</a></td>
   <td><a href="#peek_Queue">&#x2714;</a></td>
+  <td></td>
  </tr>
 </table>
 
@@ -2120,7 +2135,7 @@ just as you would specify the Type of every parameter and the return Type for th
 <h2>floor, ceiling, round, isNaN, and IsInfinite</h2>
     <p> All of these functions are called as 'dot methods' on a numeric value  of Type<el-code><el-type>Float</el-type></el-code> or <el-code><el-type>Int</el-type></el-code>).
     <el-code>NaN</el-code> is short for 'Not A (Real) Number' Their use is illustrated with the following tests:</p>
-<el-code-block source="">
+<el-code-block source="test_round">
         <el-test class="ok multiline" id="test5" tabindex="0">
             <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment7" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
             <el-statement class="ok" id="let19" tabindex="0"><el-kw>let </el-kw><el-field id="var20" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr21" class="ok" tabindex="0"><el-txt><el-lit><el-lit>3</el-lit>.14159</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>

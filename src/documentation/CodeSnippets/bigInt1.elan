@@ -1,0 +1,9 @@
+# dc2b2edab20f1df2957404c29bf04d02aa4402d220b6779ad97a7102e839e160 Elan 1.1.2 guest default_profile valid
+
+main
+  for i from 50 to 100 step 1
+    call printTab(0, i.asString())
+    call printTab(10, (2^i).asString())
+    print 
+  end for
+end main
