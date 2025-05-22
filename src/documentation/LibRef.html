@@ -482,9 +482,9 @@ with the specified changes &ndash; which is why all such methods have names star
 <p>The array elements' Type must be one of <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code>.</p>
 <p>As in most languages, individual elements may be referenced by their index.</p>
 <p>To modify an element you may either
-<el-code><el-kw>call</el-kw></el-code> the <el-code><el-method>put</el-method></el-code> procedure method, or use
+<el-code><el-kw>call</el-kw></el-code> the <el-code><el-method>put</el-method></el-code> procedure method, or use the
 <el-code><el-method>withPut</el-method></el-code> function method.</p>
-<p>Its size is specified when it is created, along with the single value to which each element is initialised.</p>
+<p>An array's size is specified when it is created, along with the single value to which each element is initialised.</p>
 <p>It is not possible to append further elements to an array, but you can convert an array to a list using method <el-code><el-method>asList</el-method></el-code> and then extend or reduce the list.</p>
 
 <h3 class="no-TOC" id="Array_procedures">Procedure methods on an Array</h3>
@@ -624,11 +624,17 @@ with the specified changes &ndash; which is why all such methods have names star
 </table>
 
 <p>You can read individual elements with a double index, for example:</p>
-<el-code>for col from 0 to 7 step 1</el-code><br>
-<el-code>&nbsp;&nbsp;&nbsp;&nbsp;for row from 0 to 7 step 1</el-code><br>
-<el-code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print board[col, row]</el-code><br>
-<el-code>&nbsp;&nbsp;end for</el-code><br>
-<el-code>end for</el-code>
+<el-code-block source="col_row.elan">
+<el-statement class="ok multiline" id="for13" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident15" class="ok" tabindex="0"><el-txt><el-id>col</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr16" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-lit>7</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr18" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
+<el-statement class="ok multiline" id="for19" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident21" class="ok" tabindex="0"><el-txt><el-id>row</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr22" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr23" class="ok" tabindex="0"><el-txt><el-lit>7</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr24" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
+<el-statement class="ok" id="print25" tabindex="0"><el-kw>print </el-kw><el-field id="expr26" class="optional ok" tabindex="0"><el-txt><el-id>board</el-id>[<el-id>col</el-id>, <el-id>row</el-id>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-kw>end for</el-kw>
+</el-statement>
+<el-kw>end for</el-kw>
+</el-statement>
+</el-code-block>
 <!--   #endregion-->
 <!--   #region List-->
 <h2 id="List">List</h2>
@@ -1099,13 +1105,15 @@ You can still insert, delete, or change elements in a <el-code>ListImmutable</el
 <el-code>variable scrabbleValues set to {"a":1, "b":3, "c":3, "d":2}</el-code>
 
 <h3 class="no-TOC">Using an Immutable Dictionary</h3>
-<p>Try these examples:</p>
-<el-code>variable immD set to new DictionaryImmutable&lt;of String,Int&gt;()</el-code><br>
-<el-code>print immD</el-code><br>
-<el-code>set immD to immD.withPutKey("a", 3)</el-code><br>
-<el-code>print immD["a"]</el-code><br>
-<el-code>set immD to immD.withRemoveAtKey("a")</el-code><br>
-<el-code>print immD</el-code>
+<p>Try this example:</p>
+<el-code-block source="dictImmutable.elan">
+<el-statement class="ok" id="var27" tabindex="0"><el-kw>variable </el-kw><el-field id="var28" class="ok" tabindex="0"><el-txt><el-id>immD</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr29" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>DictionaryImmutable</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Int</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print30" tabindex="0"><el-kw>print </el-kw><el-field id="expr31" class="optional ok" tabindex="0"><el-txt><el-id>immD</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="set32" tabindex="0"><el-kw>set </el-kw><el-field id="ident33" class="ok" tabindex="0"><el-txt><el-id>immD</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr34" class="ok" tabindex="0"><el-txt><el-id>immD</el-id>.<el-method>withPut</el-method>("<el-lit>a</el-lit>", <el-lit>3</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print35" tabindex="0"><el-kw>print </el-kw><el-field id="expr36" class="optional ok" tabindex="0"><el-txt><el-id>immD</el-id>["<el-lit>a</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="set37" tabindex="0"><el-kw>set </el-kw><el-field id="ident38" class="ok" tabindex="0"><el-txt><el-id>immD</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr39" class="ok" tabindex="0"><el-txt><el-id>immD</el-id>.<el-method>withRemoveAt</el-method>("<el-lit>a</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="print40" tabindex="0"><el-kw>print </el-kw><el-field id="expr41" class="optional ok" tabindex="0"><el-txt><el-id>immD</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-code-block>
 
 <h3 class="no-TOC" id="DictionaryImmutable_functions">Function methods on a DictionaryImmutable</h3>
 <table class="tableMethod">
@@ -1719,18 +1727,11 @@ the URL as a <el-code><el-type>String</el-type></el-code>, either as a literal (
 </el-code-block>
 
 <p>Various properties can be set on an <el-code><el-type>ImageVG</el-type></el-code>  using a <el-code><el-kw>with</el-kw></el-code> clause, for example:</p>
-
 <el-code>
-    <main class="ok multiline" id="main3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
-        <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg><el-fr>1</el-fr></el-top>
-        <el-statement class="ok" id="let8" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>url</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>"<el-lit>https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg</el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
-        <el-statement class="ok" id="let11" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>(<el-id>url</el-id>)<el-kw> with </el-kw><br><el-id>alt</el-id><el-kw> set to </el-kw>"<el-lit>shark</el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>3</el-fr></el-statement>
-        <el-kw>end main</el-kw>
-    </main>
+          <el-statement class="ok" id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>url</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>"<el-lit>https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+        <el-statement class="ok" id="let11" tabindex="0"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>(<el-id>url</el-id>)<el-kw> with </el-kw><br><el-id>alt</el-id><el-kw> set to </el-kw>"<el-lit>shark</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code>
-
 <p>The properties are:</p>
-
 <table>
     <tr><th>Property</th><th>Type</th><th>Description</th></tr>
     <tr><td><el-code><el-id>alt</el-id></el-code></td><td><el-code><el-type>String</el-type></el-code></td><td>Alternate textual description (for assessibility)</td></tr>
@@ -2244,7 +2245,7 @@ All the maths functions take a <el-code><el-type>Float</el-type></el-code> argum
   <td><el-code><el-method>bitXor</el-method></el-code></td>
   <td><el-code><el-type>Int, Int</el-type></el-code></td>
   <td><el-code><el-type>Int</el-type></el-code></td>
-  <td>integer whose binary representation is the bitwise XOR of the input</td>
+  <td>integer whose binary representation is the bitwise XOR of the inputs</td>
  </tr><tr id="bitShiftL">
   <td><el-code><el-method>bitShiftL</el-method></el-code></td>
   <td><el-code><el-type>Int, Int</el-type></el-code></td>

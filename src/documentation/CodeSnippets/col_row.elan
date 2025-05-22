@@ -1,0 +1,10 @@
+# 00315982cb28201cb281fcafe541aa175ec2f356b52636052e1bd0eb3c5ac647 Elan 1.1.2 guest default_profile valid
+
+main
+  variable board set to new Array2D<of Int>(40, 30, 0)
+  for col from 0 to 7 step 1
+    for row from 0 to 7 step 1
+      print board[col, row]
+    end for
+  end for
+end main
