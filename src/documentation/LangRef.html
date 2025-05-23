@@ -36,7 +36,7 @@ Comments may be inserted at the same level as a <a href="#Global">global</a>,
 <p>Global instructions (also referred to simply as &lsquo;globals&rsquo;) are located <em>directly</em> within a code file.
   They are never indented from the left-hand edge, nor may they be located <em>within</em> other instructions.
   Three of the globals &ndash; <el-code>main</el-code>, <el-code>function</el-code>, and <el-code>procedure</el-code> &ndash; are described as &lsquo;methods&rsquo; and these are defined by one or more <a href="#statement">statements</a> within them.
-  Four of the globals &ndash; <a href="#record"><el-code>record</el-code></a>, <a href="#class"><el-code>class</el-code></a>, <a href="#Abstract_class"><el-code>abstract class</el-code></a>, and <a href="#interface"><el-code>interface</el-code></a> &ndash; define data structures and these always contain <a href="#Member">members</a>.
+  Four of the globals &ndash; <a href="#record"><el-code>record</el-code></a>, <a href="#class"><el-code>class</el-code></a>, <a href="#AbstractClass"><el-code>abstract class</el-code></a>, and <a href="#interface"><el-code>interface</el-code></a> &ndash; define data structures and these always contain <a href="#Member">members</a>.
   The two remaining globals &ndash; <el-code>constant</el-code>, and <el-code>enum</el-code> &ndash; do not contain any further instructions.</p>
 <p>When you navigate to a <el-code>new code</el-code> at the <em>global</em> level (not indented from the left-hand edge of the code pane),
 you will be shown the 'global selector' listing the set of globals that you may insert there, namely all or only some of:</p>
@@ -51,7 +51,7 @@ you will be shown the 'global selector' listing the set of globals that you may 
 <a href="#ClassAbs"><el-code>abstract</el-code></a>
 <a href="#interface"><el-code>interface</el-code></a>
 <a href="#Comment"><el-code>#</el-code></a></p>
-where <el-code>abstract</el-code> is, in this context, short for <a href="#Abstract_class"><el-code>abstract class</el-code></a>.
+where <el-code>abstract</el-code> is, in this context, short for <a href="#AbstractClass"><el-code>abstract class</el-code></a>.
 
 <el-code><el-global class="selected focused ok empty" id="select0" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-global></el-code>
 
@@ -428,7 +428,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 <p>The created instance may then be used within expressions, like any other variable.</p>
 
 <h3 class="no-TOC" id="Inheritance">Inheritance</h3>
-  <p>An ordinary <a href="class">class</a> (also known as a &lsquo;concrete class&rsquo;) may optionally inherit from just one <a href="Abstract_class"><el-code>abstract class</el-code></a>
+  <p>An ordinary <a href="class">class</a> (also known as a &lsquo;concrete class&rsquo;) may optionally inherit from just one <a href="AbstractClass"><el-code>abstract class</el-code></a>
     but may additionally inherit from any number of <a href="interface">interfaces</a>.
     The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <el-code>abstract class</el-code> or any <el-code>interface</el-code>s that it inherits from, directly or indirectly.</p>
 
@@ -452,7 +452,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 <p>As with a concrete class, any of these members may be made <el-code>private</el-code>, after the corresponding frame has been added, by selecting that member frame and pressing Ctrl-p.</p>
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 <!-- Need the span below as you can't put two id's on the same element -->
-<p id="Abstract_function"><span id="Abstract_procedure">You</span> may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> statement. For example:</p>
+<p id="AbstractFunction"><span id="AbstractProcedure">You</span> may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> statement. For example:</p>
 <p><el-code>abstract function calculateDiscount() as Float</el-code></p>
 <p>
 If you wish to have several subclasses of an <el-code>abstract class</el-code> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
@@ -482,7 +482,7 @@ If you wish to have several subclasses of an <el-code>abstract class</el-code> t
 <p>Member instructions (also referred to simply as &lsquo;members&rsquo;) are located directly within the a: <el-code>record</el-code>, <el-code>class</el-code>, <el-code>abstract class</el-code>, <el-code>interface</el-code>.
   All members, with the exception of <el-code>property</el-code>, define one or more <a href="#statement">statements</a> within them.</p>
 <p>When you navigate to a <el-code>new code</el-code> that is at <em>member</em> level
-  (located directly within a <a href="#record">record</a>, <a href="#class">class</a>, <a href="#abstract_class"><el-code>abstract class</el-code></a>, or <a href="#interface">interface</a>)
+  (located directly within a <a href="#record">record</a>, <a href="#class">class</a>, <a href="#AbstractClass"><el-code>abstract class</el-code></a>, or <a href="#interface">interface</a>)
   you will be shown the set of statements that may be inserted there, for example:</p>
 
   <el-code><el-member class="selected focused ok empty" id="select8" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-member></el-code>
@@ -494,9 +494,9 @@ If you wish to have several subclasses of an <el-code>abstract class</el-code> t
     <a href="#property">property</a>,
     <a href="#procedure">procedure</a>,
     <a href="#function">function</a>,
-    <a href="#abstract_property">abstract property</a>,
-    <a href="#abstract_procedure">abstract procedure</a>,
-    <a href="#abstract_function">abstract function</a>,
+    <a href="#abstractProperty">abstract property</a>,
+    <a href="#abstractProcedure">abstract procedure</a>,
+    <a href="#abstractFunction">abstract function</a>,
     <a href="#property">private property</a>,
     <a href="#procedure">private procedure</a>,
     <a href="#function">private function</a>,
@@ -576,16 +576,16 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
 <!-- #endregion-->
 <!--     #region Abstract Property-->
 <h2 id="AbstractProperty">Abstract Property</h2>
-<p>An abstract property may be defined only on an <a href="#Abstract_class"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
+<p>An abstract property may be defined only on an <a href="#AbstractClass"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
 <!-- #endregion-->
 <!--     #region Abstract Procedure Method-->
-<h2 id="abstract_procedure_method">Abstract Procedure Method</h2>
-<p>An abstract procedure method may be defined only on an <a href="#Abstract_class"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
+<h2 id="AbstractProcedureMethod">Abstract Procedure Method</h2>
+<p>An abstract procedure method may be defined only on an <a href="#AbstractClass"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
 
 <!-- #endregion-->
 <!--     #region Abstract Function Method-->
-<h2 id="abstract_function_method">Abstract Function Method</h2>
-<p>An abstract function method may be defined only on an <a href="#Abstract_class"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
+<h2 id="abstractFunctionMethod">Abstract Function Method</h2>
+<p>An abstract function method may be defined only on an <a href="#AbstractClass"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
 
 <!-- #endregion-->
 <!--     #region # (comment)-->
@@ -606,7 +606,7 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
   <p>The specific statements offered will depend upon the context, and/or upon your user profile.
     The full set of entries is shown here, with links to explanations below:</p>
 
-<a href="#assert">assert</a>
+<a href="LibRef.html#assert">assert</a>
 <a href="#call">call</a>
 <a href="#each">each</a>
 <a href="#else">else</a>
@@ -990,7 +990,7 @@ The &lsquo;if expression&rsquo; is in certain respects similar to an <span class
 <!-- #endregion-->
 <!--   #region New instance-->
 <h2 id="new">New instance</h2>
-<p>A 'new instance' expression is used to create a new instance of a <a href="">library data structure</a>,
+<p>A 'new instance' expression is used to create a new instance of a <a href="LibRef.html#StandardDataStructures">library data structure</a>,
    or a <a href="#class"> user-defined class</a> or <a href="#record">record</a> - either to assign to a named value, or as part
   of a more complex expression. Example of use (taken from the `Snake - procedural` demo):</p>
 
