@@ -10,8 +10,11 @@
 <script type="text/javascript" src="generated_toc.js"></script>
 </head>
 <body>
+Documents that open in a new tab:<br>
+<a href="ElanIndex.html#top" target="_blank">Elan Index and Symbols</a><br>
+<a href="LangRef.html#top" target="_blank">Elan Language Reference</a><br>
+<a href="IDEguide.html#top" target="_blank">Elan IDE Guide</a>
 <div class="docTitle">Elan Library Reference</div>
-Links to documents: <a href="ElanIndex.html#top">Elan Index and Symbols</a> and  <a href="LangRef.html#top">Elan Language Reference</a>
 <div class="docTOC">
 <div id="generated-toc" class="generate_from_h1 generate_for_page"></div></div>
 
@@ -202,8 +205,7 @@ in the range:</li>
 <!--   #endregion-->
 <!--   #region String-->
 <h2 id="String">String</h2>
-<p>A <el-code><el-type>String</el-type></el-code> represents text,  i.e. a sequence of zero or more characters (see <a href="#CharacterSets">Character sets)</a>.</p>
-
+<p>A <el-code><el-type>String</el-type></el-code> represents text,  i.e. a sequence of zero or more characters.</p>
 <table class="tableType">
  <tr>
   <th>name<br>of Type</th>
@@ -219,6 +221,8 @@ in the range:</li>
 <h4 class="no-TOC">Notes</h4>
 <ul>
  <li>A <el-code><el-type>String</el-type></el-code> is always delineated by double quotation marks.</li>
+ <li>When typing from the keyboard into a literal string all the basic ASCII characters (0x20 to 0x7e) can be input. Similarly you can copy from
+ elsewhere into a literal string provided only basic ASCII characters are include. You cannot use Alt-numeric-keypad </li>
  <li>As in most languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never modified. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.
  You may assign the updated string to the variable that contained the original one.</li>
  <li>Strings can be built from other strings by concatenation using the plus operator, for example</li>
@@ -359,20 +363,17 @@ For example, assuming that the variables <el-code>a</el-code> and <el-code>b</el
 <p><el-code>set message to "LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}"</el-code></p>
 <p>updates variable <el-code>message</el-code> with calculated (and printable) integer values.</p>
 
-<h3 class="no-TOC">Special characters</h3>
-<p>You may insert single quotation marks <el-code>'</el-code>within a string, but not double quotation marks <el-code>"</el-code>. Nor can you include
-the braces <el-code>{</el-code> or <el-code>}</el-code> within a literal string because of their special meanings.
+<h3 class="no-TOC" id="SpecialCharacters">Special characters</h3>
+<p>You may include single quotation marks <el-code>'</el-code>within a string, but not double quotation marks <el-code>&quot;</el-code>. Nor can you include
+the braces <el-code>&lbrace;</el-code> or <el-code>&rbrace;</el-code> within a literal string because of their special meanings.
 Instead, you use the constants <el-code><el-id>quotes</el-id></el-code>, <el-code><el-id>openBrace</el-id></el-code> and <el-code><el-id>closeBrace</el-id></el-code> respectively, e.g.</p>
 <p><el-code>print "This is a double quotation mark: " + quotes</el-code></p>
 <p><el-code>print "Here are the curly braces: {openBrace} and {closeBrace}"</el-code></p>
 <p>Alternatively, you can insert their Unicode codepoint values (in decimal or hexadecimal) by means of function <a href="#unicode"><el-code><el-method>unicode</el-method></el-code></a>:</p>
 <p><el-code>print "Here are the curly braces: {unicode(123)} and {unicode(125)}"</el-code></p>
 <p><el-code>print "This is an ASCII double quotation mark: " + unicode(0x22)</el-code></p>
-
 <!--   #endregion-->
 <!-- #endregion-->
-<h3 class="no-TOC" id="CharacterSets">Character sets</h3>
-
 <!-- #region Tuple-->
 <h2 id="Tuple">Tuple</h2>
 A <el-code>tuple</el-code> is a way of holding a small number of values of different Types together as a single reference. It may be considered a lightweight alternative to defining a specific class for some purposes. Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold. Common uses include:
@@ -1488,7 +1489,7 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td></td>
   <td><a href="#withPut_List">&#x2714;</a></td>
  </tr><tr>
-  <td><a href="#Dictionary"><el-code><el-type></el-type>Dictionary</el-code></a></td>
+  <td><a href="#Dictionary"><el-code><el-type>Dictionary</el-type></el-code></a></td>
   <td></td>
   <td><a href="#asString_Dictionary">&#x2714;</a></td>
   <td>see notes</td>
@@ -1498,7 +1499,7 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td></td>
   <td></td>
  </tr><tr>
-  <td><a href="#ListImmutable"><el-code><el-type></el-type>ListImmutable</el-code></a></td>
+  <td><a href="#ListImmutable"><el-code><el-type>ListImmutable</el-type></el-code></a></td>
   <td><a href="#asList_ListImmutable">&#x2714;</a></td>
   <td><a href="#asString_ListImmutable">&#x2714;</a></td>
   <td><a href="#contains_ListImmutable">&#x2714;</a></td>
@@ -1564,15 +1565,39 @@ most variables and data structures to the Display for debugging purposes.</p>
 <h1 id="Input/output">Input/output</h1>
 <!--   #region Reading and writing Text files-->
 <h2 id="TextFileReader">Reading Text Files</h2>
-<p>The <el-code><el-type>TextFileReader</el-type></el-code> class is used to read textual data from a file.
-    An instance is created by the standalone system method <el-code><el-method>openFileForReading</el-method></el-code>, on
-which the dot methods the following methods may be invoked:</p>
-<ul>
-<li id="readLine"> <el-code><el-method>readLine</el-method></el-code></li>
-<li id="readWholeFile"> <el-code><el-method>readWholeFile</el-method></el-code></li>
-<li id="endOfFile"> <el-code><el-method>endOfFile</el-method></el-code></li>
-<li id="close"> <el-code><el-method>close</el-method></el-code></li>
-</ul>
+
+<p>The <el-code><el-type>TextFileReader</el-type></el-code> class is used to read textual data from a file.</p>
+<p>An instance is created by the standalone system method <el-code><el-method>openFileForReading</el-method></el-code>.</p>
+<p>The available procedure methods are:</p>
+<table class="tableMethod">
+ <tr>
+  <th>procedure<br>method</th>
+  <th>argument<br>Type</th>
+  <th>action</th>
+ </tr><tr id="openFileForReading">
+  <td><el-code><el-method>openFileForReading</el-method></el-code></td>
+  <td><el-code><el-type>(none)</el-type></el-code></td>
+  <td>opens a file system dialog to choose the filename to be read, which must have the filetype .txt<br>
+  and returns a file handle</td>
+ </tr><tr id="file system
+  <td><el-code><el-method>readLine</el-method></el-code></td>
+  <td><el-code><el-type>(none)</el-type></el-code></td>
+  <td>reads the next substring from the file that is terminated with a newline</td>
+ </tr><tr id="readWholeFile">
+  <td><el-code><el-method>readWholeFile</el-method></el-code></td>
+  <td><el-code><el-type>(none)</el-type></el-code></td>
+  <td>reads the whole file and closes the file</td>
+ </tr><tr id="endOfFile">
+  <td><el-code><el-method>endOfFile</el-method></el-code></td>
+  <td><el-code><el-type>(none)</el-type></el-code></td>
+  <td>returns <el-code><el-kw>true</el-kw></el-code> after the last line has been read<br>
+  &ndash; otherwise <el-code><el-kw>false</el-kw></el-code></td>
+ </tr><tr id="close">
+  <td><el-code><el-method>close</el-method></el-code></td>
+  <td><el-code><el-type>(none)</el-type></el-code></td>
+  <td>closes the file</td>
+ </tr>
+</table>
 <p>These methods may be used to read a whole file in one go:</p>
 <el-code-block source="TextFileReader_1.elan">
   <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>openFileForReading</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1582,7 +1607,6 @@ which the dot methods the following methods may be invoked:</p>
 </el-code-block>
 <p>or to read a file line by line:</p>
 <el-code-block source="TextFileReader_2.elan">
-  <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
   <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>openFileForReading</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
   <el-statement class="ok" id="var6" tabindex="0"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>lines</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
   <el-statement class="ok multiline" id="while9" tabindex="0">
@@ -1604,14 +1628,34 @@ which the dot methods the following methods may be invoked:</p>
 </ul>
 
 <h2 id="TextFileWriter">Writing text files</h2>
-<p>The <el-code><el-type>TextFileWriter</el-type></el-code> class is used to write textual data to a file.
-    An instance is created by the standalone system method <el-code><el-method>createFileForWriting</el-method></el-code>, on
-which the dot methods the following methods may be invoked:</p>
-<ul>
-<li id="writeLine"> <el-code><el-method>writeLine</el-method></el-code></li>
-<li id="writeWholeFile"> <el-code><el-method>writeWholeFile</el-method></el-code></li>
-<li id="saveAndClose"> <el-code><el-method>saveAndClose</el-method></el-code></li>
-</ul>
+<p>The <el-code><el-type>TextFileWriter</el-type></el-code> class is used to write textual data to a file.</p>
+<p>An instance is created by the standalone system method <el-code><el-method>createFileForWriting</el-method></el-code>.</p>
+<p>The available procedure methods are:</p>
+<table class="tableMethod">
+ <tr>
+  <th>procedure<br>method</th>
+  <th>argument<br>Type</th>
+  <th>action</th>
+ </tr><tr id="createFileForWriting">
+  <td><el-code><el-method>creatFileForWriting</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>sets up a buffer for the data to be output, and specifies a filename (or the empty string)<br>
+  with or without the default filetype of .txt<br>
+  and returns a file handle</td>
+ </tr><tr id="writeLine">
+  <td><el-code><el-method>writeLine</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>writes the string to the buffer</td>
+ </tr><tr id="writeWholeFile">
+  <td><el-code><el-method>writeWholeFile</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>writes the string to the buffer and then outputs the buffer to the file sytsem</td>
+ </tr><tr id="saveAndClose">
+  <td><el-code><el-method>saveAndClose</el-method></el-code></td>
+  <td><el-code><el-type>String</el-type></el-code></td>
+  <td>writes the buffer to the file system</td>
+ </tr>
+</table>
 <p>These methods may be used to write a whole file in one go:</p>
 <el-code-block source="TextFileWriter_1.elan">
     <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>f</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>myFile.txt</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1619,7 +1663,6 @@ which the dot methods the following methods may be invoked:</p>
 </el-code-block>
 <p>or to write a file line by line:</p>
 <el-code-block source="TextFileWriter_2.elan">
-    <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
     <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>squares.txt</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
     <el-statement class="ok multiline" id="for6" tabindex="0">
     <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident8" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
@@ -1627,7 +1670,6 @@ which the dot methods the following methods may be invoked:</p>
     <el-kw>end for</el-kw>
     </el-statement>
     <el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>saveAndClose</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args17" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-    <el-kw>end main</el-kw>
 </el-code-block>
 
 <h4 class="no-TOC">Notes</h4>
@@ -1637,7 +1679,6 @@ which the dot methods the following methods may be invoked:</p>
 <li><el-code>writeWholeFile</el-code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <el-code>saveAndClose</el-code> had been called.</li>
 <li>Calling any method on a file that has already been closed (by calling either <el-code>saveAndClose</el-code> or by <el-code>writeWholeFile</el-code>) will result in a runtime error.</li>
 <li>If the user were to hit Cancel on the save dialog, then the program will exit with an error. If you want to guard against this possibility (if, for example, it might mean the loss of important data) then you should perform the save and close within a <el-code>try..catch</el-code> like this:</li>
-</ul>
 
 <el-code-block source="TextFileWriter_3.elan">
 <el-statement class="ok multiline" id="try35" tabindex="0">
@@ -1650,6 +1691,7 @@ which the dot methods the following methods may be invoked:</p>
 </el-statement>
 </el-code-block>
 <p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
+</ul>
 <!-- #endregion-->
 <!-- #region Displaying Html-->
 <div id="DisplayHtml"></div>
