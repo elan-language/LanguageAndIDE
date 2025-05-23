@@ -56,16 +56,6 @@ body {
   margin-bottom: 10px;
 }
 
-
-
-#centre-bar {
-  cursor: col-resize;
-  flex-basis: 20px;
-}
-#centre-bar:hover, #centre-bar:active {
- background-color: darkblue;
-}
-
 #code-controls {
   display: flex;
   flex-direction: row;
@@ -453,3 +443,66 @@ div.spacer{
   height: fit-content;
   display: block;
 }
+
+/* Experimental layout */
+ .mytabs {
+  display: flex;
+  flex-wrap: wrap;
+}
+.mytabs input[type="radio"] {
+  display: none;
+}
+
+.mytabs label {
+  padding: 5px;
+  font-family: var(--ideTitleFont);
+  color: var(--defaultText);
+  background-color: white;
+  opacity: 50%;
+  margin: 10px;
+  max-height: 30px;
+}
+
+.mytabs .tab {
+  width: 100%;
+  display: none;
+  order: 1;
+}
+
+.mytabs input[type="radio"]:checked + label +.tab {
+  display:block;
+}
+
+.mytabs input[type="radio"]:checked + label {
+  opacity: 100%;
+}
+
+#display-tab, #debug-tab,#documentation-tab {
+  display: flex;
+  flex-direction: column;
+}
+
+#debug-controls {
+  display: flex;
+  flex-direction: row;
+}
+
+#system-info {
+  min-height: 50px;
+}
+
+#clear-display {
+  width: 5em;
+}
+
+#documentation {
+  flex-grow: 1;
+  background-color: var(--panelBackground);
+  white-space: pre-wrap;
+  overflow-wrap:anywhere;
+  padding: 5px;
+  overflow-y: auto;
+}
+
+
+
