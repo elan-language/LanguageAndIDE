@@ -1,0 +1,12 @@
+# 7639f0b4432bdd5c13d82908d62ef753e45dc48453dd364da4cf529a5b59d7a8 Elan 1.1.2 guest default_profile valid
+
+main
+  let t1 be 4
+  let t2 be 30
+  for n from 50 to 72 step 1
+    variable np set to 2^n
+    variable s set to lambda n as Int => n.asString().length()
+    call printTab(t1 - s(n), "{n}")
+    call printTab(t2 - s(np), "{np}\n")
+  end for
+end main
