@@ -241,14 +241,14 @@ Procedures and functions may be called or referenced recursively. For example, a
 <!-- #endregion-->
 <!--     #region Constant-->
 <h2 id="constant">Constant</h2>
-<p>A <el-code>constant</el-code> defines a named value that cannot change and is always defined at global level (directly within a file) and is global in scope.</p>
-<ul>
-<li>A <el-code>constant</el-code> may not be defined within any method. (However, see <a href="#let">let statement</a>).</li>
-<li>The name of a <el-code>constant</el-code> follows the rules for an <a href="#Identifier">Identifier</a>.</li>
-<li>The value to which a constant is set must be a <span class="Link">Literal value</span> of one of the following Types: <el-code>Int</el-code>, <el-code>Float</el-code>, <el-code>Boolean</el-code>, <el-code>String</el-code>, <el-code>Dictionary</el-code> or <el-code>DictionaryImmutable</el-code>.</li>
-</ul>
-Examples:
+<p>A <el-code>constant</el-code> defines a named value that cannot change, is always defined at global level (directly within a file), and is global in scope.</p>
+<p>A constant is created at compile time, so cannot be defined with reference to any function, nor use any operators.</p>
+<p>A constant can be defined as a literal <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>Boolean</el-type></el-code>,
+ <el-code><el-type>String</el-type></el-code>, <el-code><el-type>ListImmutable</el-type></el-code> or <el-code><el-type>DictionaryImmutable</el-type></el-code>.</p>
+<p>A constant may not be defined within any method, but see the description of the <a href="#let"><el-code><el-kw>let</el-kw></a></el-code> statement.</p>
+<p>The name of a <el-code>constant</el-code> follows the rules for an <a href="#Identifier">Identifier</a>.</p>
 
+<p>Some examples:</p>
 <el-code-block source="constants_enum.elan">
 <el-const class="ok multiline" id="const5" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-id>phi</el-id></el-txt><el-place><i>name</i></el-place></el-field></el-top><el-kw> set to </el-kw><el-field id="text7" class="ok" tabindex="0"><el-txt><el-lit><el-lit>1</el-lit>.618</el-lit></el-txt><el-place><i>literal value or data structure</i></el-place></el-field></el-const>
 <el-const class="ok multiline" id="const16" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident17" class="ok" tabindex="0"><el-txt><el-id>maxHits</el-id></el-txt><el-place><i>name</i></el-place></el-field></el-top><el-kw> set to </el-kw><el-field id="text18" class="ok" tabindex="0"><el-txt><el-lit>10</el-lit></el-txt><el-place><i>literal value or data structure</i></el-place></el-field></el-const>
@@ -259,15 +259,14 @@ Examples:
 <el-const class="ok multiline" id="const75" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident76" class="ok" tabindex="0"><el-txt><el-id>colours</el-id></el-txt><el-place><i>name</i></el-place></el-field></el-top><el-kw> set to </el-kw><el-field id="text77" class="ok" tabindex="0"><el-txt>{<el-type>Suit</el-type>.<el-id>spades</el-id>:<el-id>black</el-id>, <el-type>Suit</el-type>.<el-id>hearts</el-id>:<el-id>red</el-id>, <el-type>Suit</el-type>.<el-id>diamonds</el-id>:<el-id>red</el-id>, <el-type>Suit</el-type>.<el-id>clubs</el-id>:<el-id>black</el-id>}</el-txt><el-place><i>literal value or data structure</i></el-place></el-field></el-const>
 <el-const class="ok multiline" id="const65" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident66" class="ok" tabindex="0"><el-txt><el-id>scrabbleValues</el-id></el-txt><el-place><i>name</i></el-place></el-field></el-top><el-kw> set to </el-kw><el-field id="text67" class="ok" tabindex="0"><el-txt>{"<el-lit>A</el-lit>":<el-lit>1</el-lit>, "<el-lit>B</el-lit>":<el-lit>3</el-lit>, "<el-lit>C</el-lit>":<el-lit>3</el-lit>, "<el-lit>D</el-lit>":<el-lit>2</el-lit>, "<el-lit>E</el-lit>":<el-lit>1</el-lit>, "<el-lit>F</el-lit>":<el-lit>4</el-lit>, "<el-lit>G</el-lit>":<el-lit>2</el-lit>, "<el-lit>H</el-lit>":<el-lit>4</el-lit>, "<el-lit>I</el-lit>":<el-lit>1</el-lit>, "<el-lit>J</el-lit>":<el-lit>8</el-lit>, "<el-lit>K</el-lit>":<el-lit>5</el-lit>, "<el-lit>L</el-lit>":<el-lit>1</el-lit>, "<el-lit>M</el-lit>":<el-lit>3</el-lit>, "<el-lit>N</el-lit>":<el-lit>1</el-lit>, "<el-lit>O</el-lit>":<el-lit>1</el-lit>, "<el-lit>P</el-lit>":<el-lit>3</el-lit>, "<el-lit>Q</el-lit>":<el-lit>10</el-lit>, "<el-lit>R</el-lit>":<el-lit>1</el-lit>, "<el-lit>S</el-lit>":<el-lit>1</el-lit>, "<el-lit>T</el-lit>":<el-lit>1</el-lit>, "<el-lit>U</el-lit>":<el-lit>1</el-lit>, "<el-lit>V</el-lit>":<el-lit>4</el-lit>, "<el-lit>W</el-lit>":<el-lit>4</el-lit>, "<el-lit>X</el-lit>":<el-lit>8</el-lit>, "<el-lit>Y</el-lit>":<el-lit>4</el-lit>, "<el-lit>Z</el-lit>":<el-lit>10</el-lit>}</el-txt><el-place><i>literal value or data structure</i></el-place></el-field></el-const>
 </el-code-block>
-<p>In the <el-id>colours</el-id> example above, <el-code>Suit</el-code> is an <a href="#Enum_1">Enum</a>.</p>
+<p>In the <el-id>colours</el-id> example, <el-code>Suit</el-code> is an <a href="#Enum_1">Enum</a>.</p>
 
 <h2 id="enum">Enum</h2>
 <p>An <el-code>enum</el-code> &ndash; short for &lsquo;enumeration&rsquo; &ndash; is the simplest form of &lsquo;user-defined Type&rsquo;.
 It specifies a set of values, each of which is defined as a name, such that a named value of Type <el-code>enum</el-code> necessarily always holds one of those values.</p>
 <p><el-code>enum</el-code>s are read-only: once they have been defined it is not possible to add, remove, or update their values.</p>
 
-Examples:
-
+<p>Some examples:</p>
 <el-code-block source="constants_enum.elan">
 <el-enum class="ok multiline" id="enum120" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>enum </el-kw><el-field id="type121" class="ok" tabindex="0"><el-txt><el-type>Suit</el-type></el-txt><el-place><i>Name</i></el-place></el-field></el-top> <el-field id="enumVals122" class="ok" tabindex="0"><el-txt><el-id>spades</el-id>, <el-id>hearts</el-id>, <el-id>diamonds</el-id>, <el-id>clubs</el-id></el-txt><el-place><i>values</i></el-place></el-field></el-enum>
 <el-enum class="ok multiline" id="enum137" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>enum </el-kw><el-field id="type138" class="ok" tabindex="0"><el-txt><el-type>Action</el-type></el-txt><el-place><i>Name</i></el-place></el-field></el-top> <el-field id="enumVals139" class="ok" tabindex="0"><el-txt><el-id>stand</el-id>, <el-id>draw</el-id></el-txt><el-place><i>values</i></el-place></el-field></el-enum>
@@ -723,7 +722,7 @@ The simplest way to print is with the <el-code>print</el-code> statement. For ex
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-<li>The last line in the example above uses an <a href="LibRef.html#Interpolated_String">interpolated string</a>. Arguments placed within curly braces are evaluated before printing, and these may be separated by literal text and punctuation as needed. This is one recommended way to print more than one value on a line. The other way is to use print procedures.</li>
+<li>The last line in the example above uses an <a href="LibRef.html#InterpolatedString">interpolated strings</a>. Arguments placed within curly braces are evaluated before printing, and these may be separated by literal text and punctuation as needed. This is one recommended way to print more than one value on a line. The other way is to use print procedures.</li>
 </ul>
 <!--     #endregion-->
 <!--     #region Repeat loop-->
@@ -801,7 +800,7 @@ The variable holding the exception (by default named <el-code>e</el-code>, but t
 <p>which this chapter describes.</p>
 <!--   #endregion-->
 <!--   #region Literal value-->
-<h2 id="literal_value">Literal value</h2>
+<h2 id="LiteralValue">Literal value</h2>
 <p>A literal value is where a value is written &lsquo;literally&rsquo; in the code, such as <el-code>3.142</el-code> &ndash; in contrast to a value that is referred to by a name.</p>
 <p>The following data Types may be written as literal values (follow the links to view the form of each literal value):</p>
 <el-code><a href="#Int">Int</a>, <a href="#Float">Float</a>, <a href="#Boolean">Boolean</a>, <a href="#String">String</a>, <a href="#List">List</a>, <a href="#ListImmutable">ListImmutable</a>, <a href="#Dictionary">Dictionary</a>, <a href="#DictionaryImmutable">DictionaryImmutable</a>, <a href="#Tuple">Tuple</a></el-code><br>
@@ -809,7 +808,7 @@ The variable holding the exception (by default named <el-code>e</el-code>, but t
 <!--   #region Named value-->
 <h2 id="named_value">Named value</h2>
 <p>A named value is a value that is associated with a name rather than being defined literally in code. There are various kinds of named value:</p>
-<p><a href="#Constant">Constant</a>, <span class="Hyperlink"><a href="#Let_statement_1">let</a></span> statement, <span class="Hyperlink"><a href="#Variables">variable</a></span> statement, <a href="#Parameter_passing_1">Parameter passing</a>, <span class="Hyperlink"><a href="#Enum_1">enum</a></span> statement.
+<p><a href="#Constant">Constants</a>, <span class="Hyperlink"><a href="#Let_statement_1">let</a></span> statement, <span class="Hyperlink"><a href="#Variables">variable</a></span> statement, <a href="#Parameter_passing_1">Parameter passing</a>, <span class="Hyperlink"><a href="#Enum_1">enum</a></span> statement.
   Once a named value has been defined, it can be referred to by the name.</p>
 <!--   #endregion-->
 <!--   #region Identifier-->
@@ -942,14 +941,14 @@ See <span class="Link">Dot methods on a String</span>.</li>
 <!--   #endregion-->
 <!--   #region Lambda-->
 <h2 id="lambda">Lambda</h2>
-<p>A lambda is a lightweight means to define a function &lsquo;in line&rsquo;. You typically define a <el-code>lambda</el-code>:</p>
+<p>A <el-code><el-kw>lambda</el-kw></el-code> is a lightweight means to define a function &lsquo;in line&rsquo;. You typically define a <el-code>lambda</el-code>:</p>
 <ul>
 <li>If the functionality it defines is needed in only one location: typically for a particular call to a HoF.</li>
 <li>If you need to capture a local variable in the implementation. This is called &lsquo;closing around a variable&rsquo;.</li>
 </ul>
-<p>The syntax for a <el-code>lambda</el-code> is as follows:</p>
+<p>The syntax for a <el-code><el-kw>lambda</el-kw></el-code> is as follows:</p>
 <ul>
-<li>Start with the keyword <el-code>lambda</el-code>.</li>
+<li>Start with the keyword <el-code><el-kw>lambda</el-kw></el-code>.</li>
 <li>Parameter definitions, comma-separated, follow the same form as parameter definitions in a function or procedure, but without surrounding brackets.</li>
 <li>The <el-code>=&gt;</el-code> symbol, which is usually articulated as &lsquo;returns&rsquo;,  &lsquo;yields&rsquo; or even &lsquo;fat arrow&rsquo;.</li>
 <li>An expression that makes use of the parameters, and may also make use of other variables that are in scope. </li>
@@ -965,7 +964,7 @@ Example:
 </el-code-block>
 Notes:
 <ul>
-<li>Although a lambda is commonly defined &lsquo;inline&rsquo; (as shown above) it is possible to assign a lambda to a variable and hence to re-use it within the scope of that variable.</li>
+<li>Although a <el-code><el-kw>lambda</el-kw></el-code> is commonly defined &lsquo;inline&rsquo; (as shown above) it is possible to assign a lambda to a variable and hence to re-use it within the scope of that variable.</li>
 </ul>
 <!--   #endregion-->
 <!--   #region If expression-->

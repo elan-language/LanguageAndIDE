@@ -354,7 +354,7 @@ in the range:</li>
  </tr>
  </table>
 
-<h3 class="no-TOC" id="Interpolated_string">Interpolated strings</h3>
+<h3 class="no-TOC" id="InterpolatedString">Interpolated strings</h3>
 <p>Strings are automatically interpolated, that is you can insert the values of variables or simple expressions within a string by enclosing them in braces.
 For example, assuming that the variables <el-code>a</el-code> and <el-code>b</el-code> are already defined as integers:</p>
 <p><el-code>print "{a} times {b} equals {a*b}"</el-code></p>
@@ -609,7 +609,7 @@ with the specified changes &ndash; which is why all such methods have names star
   <td>item of Array2D element's Type</td>
   <td><el-code><el-type>Int, Int</el-type></el-code></td>
   <td>a Tuple containing the index pair of the first occurrence of the argument's value in the array
-      by searching the columns, or (-1,-1) if no match is found</td>
+      by searching the columns in order, or (-1,-1) if no match is found</td>
  </tr><tr id="row">
   <td><el-code><el-method>rows</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
@@ -618,7 +618,10 @@ with the specified changes &ndash; which is why all such methods have names star
   <td>the number of rows in the array (the maximum <i>y</i> value)</td>
  </tr>
 </table>
-
+Note
+<ul>
+ <li>Since an <el-code><el-type>Array2D</el-type></el-code> has a known fixed size, methods <el-code><el-method>rows</el-method></el-code> and <el-code><el-method>columns</el-method></el-code> are of use only when passing such an array into a procedure or function that needs to discover its size.</li>
+</ul>
 <p>You can read individual elements with a double index, for example:</p>
 <el-code-block source="col_row.elan">
 <el-statement class="ok multiline" id="for13" tabindex="0">
@@ -667,26 +670,6 @@ with the specified changes &ndash; which is why all such methods have names star
   <td>the item is inserted at the index given.<br>
   If the index is negative it is counted from the end.<br>
   If the index is greater than the list's length, the item is inserted at the end.</td>
- </tr><tr id="maxFloat">
-  <td><el-code><el-method>maxFloat</el-method></el-code></td>
-  <td><el-code><el-type>List</el-type></el-code></td>
-  <td><el-code><el-type>List&lt;of Float&gt;</el-type></el-code></td>
-  <td>returns the maximum value found in the List</td>
- </tr><tr id="minFloat">
-  <td><el-code><el-method>minFloat</el-method></el-code></td>
-  <td><el-code><el-type>List</el-type></el-code></td>
-  <td><el-code><el-type>List&lt;of Float&gt;</el-type></el-code></td>
-  <td>returns the minimum value found in the List</td>
- </tr><tr id="maxInt">
-  <td><el-code><el-method>maxInt</el-method></el-code></td>
-  <td><el-code><el-type>List</el-type></el-code></td>
-  <td><el-code><el-type>List&lt;of Int&gt;</el-type></el-code></td>
-  <td>returns the maximum value found in the List</td>
- </tr><tr id="minInt">
-  <td><el-code><el-method>minInt</el-method></el-code></td>
-  <td><el-code><el-type>List</el-type></el-code></td>
-  <td><el-code><el-type>List&lt;of Int&gt;</el-type></el-code></td>
-  <td>returns the minimum value found in the List</td>
  </tr><tr id="prepend">
   <td><el-code><el-method>prepend</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
@@ -759,12 +742,13 @@ with the specified changes &ndash; which is why all such methods have names star
   <td><el-code><el-type>Boolean</el-type></el-code></td>
   <td><el-code><el-id>true</el-id></el-code> if the List  contains the specified element<br>
   &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
- </tr><tr id="filter">
+ </tr><tr id="filter_List">
   <td><el-code><el-method>filter</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td>lambda</td>
+  <td><el-code><el-kw>lambda</el-kw></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td>a new List obtained from applying the lambda to the input List</td>
+  <td>a new List obtained from applying a lambda to the input List<br>
+  see <a href="#filter"><el-code><el-method>filter</el-method></el-code></a> in HoFs</td>
  </tr><tr id="head_List">
   <td><el-code><el-method>head</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
@@ -792,33 +776,62 @@ with the specified changes &ndash; which is why all such methods have names star
  </tr><tr id="map_List">
   <td><el-code><el-method>map</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td>lambda or </td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td>HoF: apply </td>
+  <td><el-code><el-kw>lambda</el-kw></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>a new List obtained from applying a lambda to the input List<br>
+  see <a href="#map"><el-code><el-method>map</el-method></el-code></a> in HoFs</td>
+ </tr><tr id="maxFloat">
+  <td><el-code><el-method>maxFloat</el-method></el-code></td>
+  <td><el-code><el-type>List&lt;of Float&gt;</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>returns the maximum value found in the List</td>
+ </tr><tr id="minFloat">
+  <td><el-code><el-method>minFloat</el-method></el-code></td>
+  <td><el-code><el-type>List&lt;of Float&gt;</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>returns the minimum value found in the List</td>
+ </tr><tr id="maxInt">
+  <td><el-code><el-method>maxInt</el-method></el-code></td>
+  <td><el-code><el-type>List&lt;of Int&gt;</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>returns the maximum value found in the List</td>
+ </tr><tr id="minInt">
+  <td><el-code><el-method>minInt</el-method></el-code></td>
+  <td><el-code><el-type>List&lt;of Int&gt;</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>returns the minimum value found in the List</td>
  </tr><tr id="maxBy_List">
   <td><el-code><el-method>maxBy</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td><el-code><el-kw>lambda</el-kw></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>a new List obtained from applying a lambda to the input List<br>
+  see <a href="#maxBy"><el-code><el-method>maxBy</el-method></el-code></a> in HoFs</td>
  </tr><tr id="minBy_List">
   <td><el-code><el-method>minBy</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td><el-code><el-kw>lambda</el-kw></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>a new List obtained from applying a lambda to the input List<br>
+  see <a href="#minBy"><el-code><el-method>minBy</el-method></el-code></a> in HoFs</td>
  </tr><tr id="reduce_List">
   <td><el-code><el-method>reduce</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td><el-code><el-kw>lambda</el-kw></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>a new List obtained from applying a lambda to the input List<br>
+  see <a href="#reduce"><el-code><el-method>reduce</el-method></el-code></a> in HoFs</td>
  </tr><tr id="sortBy_List">
   <td><el-code><el-method>sortBy</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td><el-code><el-kw>lambda</el-kw></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>a new List obtained from applying a lambda to the input List<br>
+  see <a href="#sortBy"><el-code><el-method>sortBy</el-method></el-code></a> in HoFs</td>
  </tr><tr id="withAppend">
   <td><el-code><el-method>withAppend</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
@@ -2530,7 +2543,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <h1>Library functions that process Lists</h1>
 
 <h2 id="HoFs">Higher order functions (HoFs)</h2>
-<p>These dot methods are called on any <el-code>List,</el-code> <el-code>ListImmutable</el-code> or <el-code><el-type>String</el-type></el-code>. As &#8216;higher order functions&#8217; they take either a <el-code>lambda</el-code> or a function reference as one of their arguments: see <span class="Link">Passing a function as a reference</span>.</p>
+<p>These dot methods are called on any <el-code>List,</el-code> <el-code>ListImmutable</el-code> or <el-code><el-type>String</el-type></el-code>. As &#8216;higher order functions&#8217; they take either a <el-code><el-kw>lambda</el-kw></el-code> or a function reference as one of their arguments: see <span class="Link">Passing a function as a reference</span>.</p>
 <p>Although several of these methods return a <el-code><el-type>ListImmutable</el-type></el-code>, they may be converted to a List using method <el-code><el-method>asList</el-method></el-code>.</p>
 <p>These are not yet fully documented but, for readers familiar with HoFs from another programming language, some examples are shown below.</p>
 
@@ -2563,7 +2576,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
     <el-code>print a.maxBy(lambda x as Int =&gt; x mod 10)</el-code>
 
 <h3 class="no-TOC" id="sortBy">sortBy</h3>
-<p><el-code>sortBy</el-code> takes a <el-code>lambda</el-code> that takes two arguments (of the same Type as that of the <el-code>ListImmutable</el-code> being sorted) and compares them, returning an integer with one of the values -1, 0, or +1, to indicate whether the first argument should be placed respectively before, adjacent to or after the second argument in the sorted result, where &#8216;adjacent to&#8217; means it does not matter whether before or after):</p>
+<p><el-code>sortBy</el-code> takes a <el-code><el-kw>lambda</el-kw></el-code> that takes two arguments (of the same Type as that of the <el-code>ListImmutable</el-code> being sorted) and compares them, returning an integer with one of the values -1, 0, or +1, to indicate whether the first argument should be placed respectively before, adjacent to or after the second argument in the sorted result, where &#8216;adjacent to&#8217; means it does not matter whether before or after):</p>
 
 <el-code-block source="sortBy_Int.elan">
 <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>numbers</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>[<el-lit>27</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>31</el-lit>, <el-lit>37</el-lit>, <el-lit>11</el-lit>, <el-lit>13</el-lit>, <el-lit>17</el-lit>, <el-lit>19</el-lit>, <el-lit>23</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
