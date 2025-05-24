@@ -11,11 +11,11 @@
 <script type="text/javascript" src="generated_toc.js"></script>
 </head>
 <body>
+Documents that open in a new tab:<br>
+<a href="ElanIndex.html#top" target="_blank">Elan Index and Symbols</a><br>
+<a href="LangRef.html#top" target="_blank">Elan Language Reference</a><br>
+<a href="LibRef.html#top" target="_blank">Elan Library Reference</a>
 <div class="docTitle">Elan IDE Guide</div>
-<div>Links to documents:
-      <a href="ElanIndex.html#top">Elan Index and Symbols</a>,
-      <a href="LangRef.html#top">Elan Language Reference</a>
- and  <a href="LibRef.html#top">Elan Library Reference</a></div>
 <div class="docTOC">
   <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
@@ -406,7 +406,14 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
  <tr><td>Ctrl-y</td> <td>Redo last undo<br> provided that the code you undid from was parsing successfully </td> <td></td> </tr>
  <tr><td>Ctrl-z</td> <td>Undo last edit<br> Takes you back to the next most recent version <span>that parsed successfully.<br> </span>Any changes made that did not result in a successful parse will be lost. </td> <td></td> </tr>
 </table>
-
+<h4 class="no-TOC">Notes</h4>
+<ul>
+ <li>When typing from the keyboard into a literal string all the basic ASCII chardacters (0x20 to 0x7e) can be input <i>except</i> &quot; &lbrace; and &rbrace;
+  (see <a href="LibRef.html#SpecialCharacters">Special characters</a>).
+  Similarly you can copy from elsewhere and paste into a literal string provided only those valid ASCII characters are included.</li>
+ <li> You should not use Alt-numeric-keypad (or equivalent techniques) to enter extended ASCII characters (0x80 to 0xFF) &ndash; nor paste those characters &ndash; into
+  a literal string: they will not print correctly.</li>
+</ul>
 <!-- #endregion -->
 <!-- #region Mouse operations-->
 <h2 id="Mouse">Mouse operation &#8211; quick reference</h2>
