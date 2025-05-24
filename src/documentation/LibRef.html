@@ -75,15 +75,14 @@ Documents that open in a new tab:<br>
 <ul>
 <li>A literal integer or a named value of Type <el-code><el-type>Int</el-type></el-code> may
 always be passed into a function or procedure that is expecting a <el-code><el-type>Float</el-type></el-code>.</li>
-<li>The <el-code><el-type>Int</el-type></el-code> Typeis <i>intended</i> to represent whole numbers
+<li>The <el-code><el-type>Int</el-type></el-code> type is <i>intended</i> to represent whole numbers
 in the range:</li>
     <ul>
     <li>Maximum: 2<sup>53</sup> &ndash; 1 (which is 9007199254740991)</li>
     <li>Minimum value: &ndash; (2<sup>53</sup> &ndash; 1)</li>
     </ul>
- <li>If you go greater than the limit given above, the number will be represented with the same precision as if
-    it were being held in an <el-code><el-type>Int</el-type></el-code>, accurate to approximately 17 decimal digits (as seen for 2<sup>54</sup> below).
-    Larger numbers will be rounded with zeros at the end, until they get to the point (around 2<sup>70</sup>) where they will automatically be shown
+ <li>If you go greater than the limit given above, the number will be accurate to approximately 17 decimal digits.
+    Larger numbers will be rounded with zeros at the end, unless they are larger than around 2<sup>70</sup>, when they will automatically be shown
     in exponential (scientific) format, as shown by the output from the following code:</li>
 <el-code-block source="bigInt1.elan">
 <el-statement class="ok multiline" id="for139" tabindex="0">
