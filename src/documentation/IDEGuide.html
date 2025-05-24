@@ -11,11 +11,11 @@
 <script type="text/javascript" src="generated_toc.js"></script>
 </head>
 <body>
+Documents that open in a new tab:<br>
+<a href="ElanIndex.html#top" target="_blank">Elan Index and Symbols</a><br>
+<a href="LangRef.html#top" target="_blank">Elan Language Reference</a><br>
+<a href="LibRef.html#top" target="_blank">Elan Library Reference</a>
 <div class="docTitle">Elan IDE Guide</div>
-<div>Links to documents:
-      <a href="ElanIndex.html#top">Elan Index and Symbols</a>,
-      <a href="LangRef.html#top">Elan Language Reference</a>
- and  <a href="LibRef.html#top">Elan Library Reference</a></div>
 <div class="docTOC">
   <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
@@ -91,13 +91,13 @@ The first line shows a standard Elan 'header' comment, which is required on ever
 <p><b>Auto Save</b> offers a file selection dialog to allow you to specify the name and location where your code will be saved.
     If you use this option, every time you modify the code <i>and its parse status is 'valid'</i> the code will be saved automatically,
     <i>overriding the previous version in the file</i>. Once this option has been selected, the <b>File</b> menu will offer
-    a <b>Cancel Auto Save</b> option, after which you may use <b>Manual Save</b> &ndash; or re-select <b>Auto Save</b>.
+    a <b>Cancel Auto Save</b> option, after which you may use <b>Manual Save</b> &ndash; or re-select <b>Auto Save</b>.</p>
 
 <p>Note that you may auto-save a <b>New</b> code file, even though you haven't added any instructions yet, because the file contains a valid header.</p>
 <!-- #endregion -->
 <!--     #region Manual Save -->
 <h3 class="no-TOC" id="MenuManualSave">Manual Save</h3>
-<b>Manual Save</b> offers a file selection dialog to allow you to specify the name and location where your code will be saved.
+<p><b>Manual Save</b> offers a file selection dialog to allow you to specify the name and location where your code will be saved.
 Unlike <b>Auto Save</b> &ndash; <b>Manual Save</b> is a one-off event &ndash; you must remember to save any subsequent changes if you need them saved.
 As a reminder, if your existing code is not saved, you will see a confirmation dialog:</p>
 <img src="images/Unsaved_warning.png" style="width:30%;">
@@ -302,12 +302,11 @@ or, outside <el-code>main</el-code>:
         <el-statement class="warning" id="return10" tabindex="0"><el-kw>return </el-kw><el-field id="expr11" class="empty warning" tabindex="0"><el-txt></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
         <el-kw>end function</el-kw>
         </el-func>
-        <el-global class="ok empty" id="select0" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-global></div>
+        <el-global class="ok empty" id="select0" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-global>
 </el-code-block>
 
 <p>Note that when an instruction is inserted is is followed by a 'new code' selector, and if, as in the example above, the inserted instruction
     template is for a <a href="#ContainerInstruction">container instruction</a> then the template will contain its own 'new code' selector for inserting further instructions within it.</p>
-</p>
 
 <p>Where two or more instruction start with the same letter(s) typing the initial letter will filter the options.
         For example, if the initial list were:</p>
@@ -317,7 +316,7 @@ or, outside <el-code>main</el-code>:
 </el-code-block>
 <p>then after typing <el-code>t</el-code> you will see:</p>
 
-<el-code><el-statement class="selected focused ok" id="select4" tabindex="0"><el-select><el-txt>t</el-txt><el-place>new code</el-place></el-select></el-statement></el-code>
+<el-code><el-statement class="selected focused warning" id="select4" tabindex="0"><el-select><el-txt>t</el-txt><el-place>new code</el-place><el-help class="selector"> throw try</el-help></el-select></el-statement></el-code>
 
 <p>and the desired instruction can be selected by then typing the second character (<el-code>h</el-code> or <el-code>r</el-code>).
 In the following example, starting from this <a href="#MemberSelector">member selector</a>:</p>
@@ -334,7 +333,7 @@ In the following example, starting from this <a href="#MemberSelector">member se
     </ul>
 
     <p>which means that you won't necessarily see all the instructions shown in this explanation. However, in general there are three
-        distinct forms of 'new code selector': the global selector, the statement selector, and the member selector.<p>
+        distinct forms of 'new code selector': the global selector, the statement selector, and the member selector.</p>
 
 <h3 class="no-TOC" id="GlobalSelector">Global selector</h3>
 
@@ -407,7 +406,14 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
  <tr><td>Ctrl-y</td> <td>Redo last undo<br> provided that the code you undid from was parsing successfully </td> <td></td> </tr>
  <tr><td>Ctrl-z</td> <td>Undo last edit<br> Takes you back to the next most recent version <span>that parsed successfully.<br> </span>Any changes made that did not result in a successful parse will be lost. </td> <td></td> </tr>
 </table>
-
+<h4 class="no-TOC">Notes</h4>
+<ul>
+ <li>When typing from the keyboard into a literal string all the basic ASCII chardacters (0x20 to 0x7e) can be input <i>except</i> &quot; &lbrace; and &rbrace;
+  (see <a href="LibRef.html#SpecialCharacters">Special characters</a>).
+  Similarly you can copy from elsewhere and paste into a literal string provided only those valid ASCII characters are included.</li>
+ <li> You should not use Alt-numeric-keypad (or equivalent techniques) to enter extended ASCII characters (0x80 to 0xFF) &ndash; nor paste those characters &ndash; into
+  a literal string: they will not print correctly.</li>
+</ul>
 <!-- #endregion -->
 <!-- #region Mouse operations-->
 <h2 id="Mouse">Mouse operation &#8211; quick reference</h2>
@@ -424,7 +430,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 
 <p>When an instruction is highlighted, you may right-mouse-click on it, or type <b>Ctrl-m</b> to bring up the context menu, for example:</p>
 
-<img src="Images/Context_menu.png" style="width:40%;">
+<img src="images/Context_menu.png" style="width:40%;">
 <p>Note that several of the options show a keyboard shortcut &ndash; which you may use just by selecting the instruction and pressing
     the specified keys <i>without having to bring up the context menu.</i></p>
 <!-- #endregion -->
@@ -433,14 +439,14 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 <!-- #region The run controls-->
 <h1 id="RunControls">3. Run controls</h1>
 <p>The set of 5 buttons shown below constitute the 'run controls':</p>
-<img src="Images/Run_controls.png" style="width:20%;">
+<img src="images/Run_controls.png" style="width:20%;">
 <p>Reading left-to-right the five controls are:</p>
 <ul>
 <li><b>Run</b> This is the normal way to run the program. It will run at full speed, ignoring any breakpoints, and is the most efficient in terms of memory usage.</li>
 <li><b>Debug</b> Run in 'debug' mode. See <a href="#Debugging">Debugging</a></li>
 <li><b>Stop</b> When a program is running, or is paused, this button will stop and exit the program.</li>
 <li><b>Pause</b> Pause the program (if running in debug mode). See <a href="#Debugging">Debugging</a></li>
-<li><b>Step</b> From a paused state, execute the next instruction only and pause again. See <a href="#Debugging">Debugging</a></i>
+<li><b>Step</b> From a paused state, execute the next instruction only and pause again. See <a href="#Debugging">Debugging</a></li>
 </ul>
 <!-- #endregion -->
 <!-- #endregion -->
@@ -448,7 +454,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 <!-- #region Status panel-->
 <h1 id="StatusPanel">4. Status panel</h1>
 <p>The status panel is shown below:</p>
-<img src="Images/Status_panel.png" style="width:20%;">
+<img src="images/Status_panel.png" style="width:20%;">
 <p>The panel shows four status bars:</p>
 <ul>
     <li><b>Parse status</b> aggregates the parse status of each <a href="#field">field</a> and shows the <i>worst</i> status of any field.
@@ -467,7 +473,7 @@ If the Parse, Compile, or Test status shows amber, or red, you may click on that
 
 <!-- #region Display-->
 <h1 id="Display">5. Display</h1>
-<img src="images/display.png" style="width:20%;">
+<img src="images/Display.png" style="width:20%;">
 <p>The Display pane is always rendered with an aspect ratio of 4:3 &ndash; so if the size of the browser window is changed, the Display will change its dimensions also.</p>
 <p>The pane is used for the following purposes, on their own or in combination:</p>
 
@@ -507,8 +513,8 @@ If the Parse, Compile, or Test status shows amber, or red, you may click on that
 <p>Elan contains some simple debugging tools. To use these tools, you need to run the program via the <a href="#RunControls">Debug button</a>).
     Note that because of the additional overhead involved in debugging, the program may run slower than when run normally.</p>
 
-<p>When debugging, a program may be paused at any point with the <a href="#RunControls">Pause button.
-    The <a href="#StatusPanel">Run status</a> will then show as <el-code>paused</el-code>. Note, however, that:
+<p>When debugging, a program may be paused at any point with the <a href="#RunControls">Pause button</a>.
+    The <a href="#StatusPanel">Run status</a> will then show as <el-code>paused</el-code>. Note, however, that:</p>
     <ul>
         <li>the Pause key is not active if the program is currently waiting for a user input.)</li>
         <li>it is not possible to pause within a loop that is executing very fast. For that you should use a breakpoint (below)</li>
@@ -571,6 +577,6 @@ If the Parse, Compile, or Test status shows amber, or red, you may click on that
 </p>
 <!-- #endregion -->
 <hr>
-<b>Elan IDE Guide</b> go to the <a href="#top">top</a></h4>
+<p><b>Elan IDE Guide</b> go to the <a href="#top">top</a></p>
  </body>
  </html>
