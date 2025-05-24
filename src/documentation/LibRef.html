@@ -641,7 +641,21 @@ with the specified changes &ndash; which is why all such methods have names star
  <li>A List is created either empty or initialised from a literal definition.</li>
  <li>A List's size can be dynamically changed.</li>
 </ul>
-
+<h4 class="no-TOC" id="ListDeconstruction">List Deconstruction</h4>
+<p>A List or ListImmutable may be deconstructed into new variables or named values in a similar way to deconstructing a <a href="#Tuple">Tuple</a>, but in this case:</p>
+<ul>
+ <li>Always use two variable names.</li>
+ <li>Use a colon <el-code>:</el-code> to separate the variable names.</li>
+ <li>The first item in the list (the head) is assigned to the first variable.</li>
+ <li>The rest of the list (the tail) is assigned to the second variable.  If the original list only contains one element, this will be an empty list.</li>
+ <li>Like deconstructing a Tuple, you can use an underscore <el-code>_</el-code> as the variable name to discard either the head or the tail.</li>
+</ul>
+<p><el-code>variable x:xs set to myList</el-code><br>
+<el-code>set h:t to myList</el-code><br>
+<el-code>set h:myList to myList</el-code></p>
+<p>Discarding either the head or tail:</p>
+<p><el-code>variable _:tail set to myList</el-code><br>
+<el-code>variable head:_ set to myList</el-code></p>
 <h3 class="no-TOC" id="List_procedures">Procedure methods on a List</h3>
 <table class="tableMethod">
  <tr>
@@ -1013,6 +1027,10 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <p>A <el-code>ListImmutable</el-code> may be defined in 'literal' form, delimited by curly brace with all the required elements separated by commas. The elements may be literal values but must all be of the same Type, for example:</p>
 <el-code>variable fruit set to {"apple", "orange", "pear"} </el-code>
 
+<h4 class="no-TOC" id="ListImmutableDeconstruction">ListImmutable Deconstruction</h4>
+<p>A <el-code>ListImmutable</el-code> can be <a href="#ListDeconstruction">deconstructed</a> just like a List, using a colon <el-code>:</el-code> to separate two variable names.</p>
+<p><el-code>set h:t to myListImmutable</el-code></p>
+
 <h3 class="no-TOC" id="ListImmutable_functions">Function methods on a ListImmutable</h3>
 <table>
  <tr>
@@ -1134,7 +1152,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-code><el-type>DictionaryImmutable</el-type></el-code></td>
   <td></td>
   <td><el-code><el-type></el-type></el-code></td>
-  <td><tr id="withPutKey">
+ </tr><tr id="withPutKey">
   <td><el-code><el-method>withPutKey</el-method></el-code></td>
   <td><el-code><el-type>DictionaryImmutable</el-type></el-code></td>
   <td></td>
@@ -1280,7 +1298,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
     <li><el-code><el-type>Stack</el-type></el-code> and <el-code><el-type>Queue</el-type></el-code> are similar data structures except that <el-code><el-type>Stack</el-type></el-code> is &#8216;LIFO&#8217; (last in, first out), while <el-code><el-type>Queue</el-type></el-code> is FIFO (first in, first out). The names of the methods for adding/removing are different, but there are also common methods.</li>
     <li>Both a <el-code><el-type>Stack</el-type></el-code> and a <el-code><el-type>Queue</el-type></el-code> are defined with the Type of the items that they can contain, similarly to how <el-code><el-type>List</el-type></el-code> and <el-code>ListImmutable</el-code> have a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <el-code>Stack&lt;of String&gt;, Queue&lt;of Int&gt;, Stack&lt;of (Float, Float)&gt;, Queue&lt;of Square&gt;</el-code>.</li>
     <li>Both <el-code>Stack </el-code>and<el-code> Queue</el-code> are dynamically extensible, like <el-code><el-type>List</el-type></el-code> and <el-code>ListImmutable</el-code>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer&#8217;s memory limit is reached.</li>
-    <li>This same syntax is used to specify the Type if you want to pass a <el-code><el-type>Stack</el-type></el-code> into a function, or specify it as the <el-code><el-kw>return</el-kw></el-code> Type.</li>
+    <li>This same syntax is used to specify the Type if you want to pass a <el-code><el-type>Stack</el-type></el-code> or <el-code><el-type>Queue</el-type></el-code> into a function, or specify it as the <el-code><el-kw>return</el-kw></el-code> Type.</li>
     <li><el-code><el-type>Stack</el-type></el-code> and <el-code><el-type>Queue</el-type></el-code> have two methods in common: <el-code><el-method>length</el-method></el-code> and <el-code><el-method>peek</el-method></el-code>.
     <el-code><el-method>peek</el-method></el-code> returns the next item to be removed, without actually removing it.</li>
     <li>The methods for adding and removing an item are different for <el-code><el-type>Stack</el-type></el-code> and <el-code><el-type>Queue</el-type></el-code>, as shown here:</li>
@@ -1340,7 +1358,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-code><el-type>Queue</el-type></el-code></td>
   <td>item of Queue element's Type</td>
   <td><el-code><el-type>Queue</el-type></el-code></td>
-  <td>the Queue with the element add to the end of the Queue</td>
+  <td>the Queue with the element added to the end of the Queue</td>
  </tr><tr id="dequeue">
   <td><el-code><el-method>dequeue</el-method></el-code></td>
   <td><el-code><el-type>Queue</el-type></el-code></td>
@@ -2090,7 +2108,7 @@ just as you would specify the Type of every parameter and the return Type for th
     <p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a variable declaration (variable) or assignment (set), either on their own or within a more complex expression. All standalone library<el-code> function</el-code>s require at least one argument to be passed in brackets, corresponding to the parameters defined for that <el-code>function</el-code>.</p>
 
 <h2 id="unicode">unicode</h2>
-<p>Function <el-code><el-method>unicode</el-method></el-code> converts a Unicode value (expressed as an integer value in decimal or hexadecimal notation) into a string of a single character. For example:</p>
+<p>Function <el-code><el-method>unicode</el-method></el-code> converts a Unicode value (expressed as an integer value in decimal or hexadecimal notation, or as any expression evaluating to an Int) into a string of a single character. For example:</p>
 <el-code-block source="unicode_hearts.elan">
 <el-func class="ok multiline" id="func3">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident5" class="ok" tabindex="0"><el-txt>hearts</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params6" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="0"><el-txt><el-type>String</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
@@ -2122,8 +2140,7 @@ just as you would specify the Type of every parameter and the return Type for th
     <li>If the parse fails, the second value will become zero, so you should always check the first value to see if the second value is a correct parse or just the default.</li>
     <li> You can &#8216;deconstruct&#8217; the tuple into two variables:
 <el-code-block source="parse_string.elan">
-<el-statement class="ok" id="var5" tabindex="0"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>success</el-id>, <el-id>parsedValue</el-id></el-txt><el-place><i>name</i></el-place>
-</el-field></el-statement>
+<el-statement class="ok" id="var5" tabindex="0"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>success</el-id>, <el-id>parsedValue</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>(<el-id>myString</el-id>)</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
    </el-code-block></li>
     <li>One use of these parsing methods is for validating user input, but note that an easier way to do this is to use the various <a href="#Input/output">input methods</a>.</li>
 </ul>
@@ -2133,7 +2150,7 @@ just as you would specify the Type of every parameter and the return Type for th
 <div id="isNaN"></div>
 <div id="isInfinite"></div>
 <h2>floor, ceiling, round, isNaN, and IsInfinite</h2>
-    <p> All of these functions are called as 'dot methods' on a numeric value  of Type<el-code><el-type>Float</el-type></el-code> or <el-code><el-type>Int</el-type></el-code>).
+    <p> All of these functions are called as 'dot methods' on a numeric value  of Type <el-code><el-type>Float</el-type></el-code> or <el-code><el-type>Int</el-type></el-code>.
     <el-code>NaN</el-code> is short for 'Not A (Real) Number' Their use is illustrated with the following tests:</p>
 <el-code-block source="test_round">
         <el-test class="ok multiline" id="test5" tabindex="0">
@@ -2170,16 +2187,16 @@ All the maths functions take a <el-code><el-type>Float</el-type></el-code> argum
   <td></td>
 </tr>
 
-<tr id="logE"><td><el-code><el-method>logE</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>natural logarithm of the input</td><td></td></tr>
-<tr id="log10"><td><el-code><el-method>log10</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>base-10 logarithm of the input</td><td></td></tr>
-<tr id="log2"><td><el-code><el-method>log2</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>base-2 logarithm of the input</td><td></td></tr>
-<tr id="sin"><td><el-code><el-method>sin</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>radians</td><td>sine of the input</td><td></td></tr>
-<tr id="sinDeg"><td><el-code><el-method>sinDeg</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>degrees</td><td>sine of the input</td><td></td></tr>
-<tr id="sqrt"><td><el-code><el-method>sqrt</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td></td><td>positive square root of the input</td><td></td></tr>
-<tr id="tan"><td><el-code><el-method>tan</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>radians</td><td>tangent of the input</td><td></td></tr>
-<tr id="tanDeg"><td><el-code><el-method>tanDeg</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>degrees</td><td>tangent of the input</td><td></td></tr>
-<tr id="degToRad"><td><el-code><el-method>degToRad</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>degrees</td><td>converts input from degrees to radians</td><td>radians</td></tr>
-<tr id="radToDeg"><td><el-code><el-method>radToDeg</el-method></el-code></td><td><el-code><el-type>Float</el-code></el-type></td><td>radians</td><td>converts input from radians to degrees</td><td>degrees</td></tr></table>
+<tr id="logE"><td><el-code><el-method>logE</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td></td><td>natural logarithm of the input</td><td></td></tr>
+<tr id="log10"><td><el-code><el-method>log10</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td></td><td>base-10 logarithm of the input</td><td></td></tr>
+<tr id="log2"><td><el-code><el-method>log2</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td></td><td>base-2 logarithm of the input</td><td></td></tr>
+<tr id="sin"><td><el-code><el-method>sin</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>radians</td><td>sine of the input</td><td></td></tr>
+<tr id="sinDeg"><td><el-code><el-method>sinDeg</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>degrees</td><td>sine of the input</td><td></td></tr>
+<tr id="sqrt"><td><el-code><el-method>sqrt</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td></td><td>positive square root of the input</td><td></td></tr>
+<tr id="tan"><td><el-code><el-method>tan</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>radians</td><td>tangent of the input</td><td></td></tr>
+<tr id="tanDeg"><td><el-code><el-method>tanDeg</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>degrees</td><td>tangent of the input</td><td></td></tr>
+<tr id="degToRad"><td><el-code><el-method>degToRad</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>degrees</td><td>converts input from degrees to radians</td><td>radians</td></tr>
+<tr id="radToDeg"><td><el-code><el-method>radToDeg</el-method></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>radians</td><td>converts input from radians to degrees</td><td>degrees</td></tr></table>
 
 <p>Examples of some maths functions and constants being tested:</p>
 <el-code-block source="test_maths.elan">
@@ -2495,7 +2512,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <h3 class="no-TOC" id="filter">filter </h3>
 <p>Example function from demo program <el-code>pathfinder.elan</el-code> in which <el-code><el-method>filter</el-method></el-code> applies the <el-code>lambda</el-code> to the <el-id>nodes</el-id> (of class Node) to find one that contains <el-id>p</el-id> (of record Point):</p>
 <el-code-block>
-</<el-func class="ok multiline" id="func333" tabindex="0">
+<el-func class="ok multiline" id="func333" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident335" class="ok" tabindex="0"><el-txt>getNodeFor</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params336" class="optional ok" tabindex="0"><el-txt><el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type337" class="ok" tabindex="0"><el-txt><el-type>Node</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
 <el-statement class="ok" id="let340" tabindex="0"><el-kw>let </el-kw><el-field id="var341" class="ok" tabindex="0"><el-txt><el-id>matches</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr342" class="ok" tabindex="0"><el-txt><el-kw>property</el-kw>.<el-id>nodes</el-id>.<el-method>filter</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Node</el-type> =&gt; <el-id>n</el-id>.<el-id>point</el-id><el-kw> is </el-kw><el-id>p</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="return338" tabindex="0"><el-kw>return </el-kw><el-field id="expr339" class="ok" tabindex="0"><el-txt><el-kw>if </el-kw><el-id>matches</el-id>.<el-method>length</el-method>()<el-kw> is </el-kw><el-lit>1</el-lit><el-kw> then </el-kw><el-id>matches</el-id>.<el-method>head</el-method>()<el-kw><br>else </el-kw><el-kw>empty</el-kw> <el-type>Node</el-type></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -2516,9 +2533,17 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
     </el-code>
 
 <h3 class="no-TOC" id="maxBy">maxBy and minBy</h3><span id="minBy"></span>
-    <p>Alternative implementations of <el-code>max</el-code> and <el-code>min</el-code>:</p>
-    <el-code>variable a set to {33, 4, 0,99, 82, 55}</el-code><br>
-    <el-code>print a.maxBy(lambda x as Int =&gt; x mod 10)</el-code>
+    <p><el-code>maxBy</el-code> and <el-code>minBy</el-code> are dot functions of <el-code>List</el-code> and <el-code>ListImmutable</el-code>.  They take a function as an argument, and return the list element corresponding to  maximum or minimum of the values returned by the function.  This prints "89" and "orange":</p>
+    <p><el-code>variable a set to {33, 4, 0, 92, 89, 55}</el-code><br>
+    <el-code>print a.maxBy(lambda x as Int =&gt; x mod 10)</el-code><br>
+    <el-code>variable fruit set to {"apple", "orange", "pear"}</el-code><br>
+    <el-code>print fruit.maxBy(lambda x as String =&gt; x.length())</el-code></p>
+
+    <p>For simply finding the maximum or minimum value in a List, you can use
+<el-code><el-method>maxFloat</el-method></el-code>,
+<el-code><el-method>minFloat</el-method></el-code>,
+<el-code><el-method>maxInt</el-method></el-code> or
+<el-code><el-method>minInt</el-method></el-code>.</p>
 
 <h3 class="no-TOC" id="sortBy">sortBy</h3>
 <p><el-code>sortBy</el-code> takes a <el-code>lambda</el-code> that takes two arguments (of the same Type as that of the <el-code>ListImmutable</el-code> being sorted) and compares them, returning an integer with one of the values -1, 0, or +1, to indicate whether the first argument should be placed respectively before, adjacent to or after the second argument in the sorted result, where &#8216;adjacent to&#8217; means it does not matter whether before or after):</p>
