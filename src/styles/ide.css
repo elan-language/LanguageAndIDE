@@ -468,6 +468,8 @@ div.spacer{
 
 #tab-buttons input[type="radio"]:checked + label {
   opacity: 100%;
+  margin-bottom: 0px;
+  padding-bottom: 10px;
 }
 
 #display-tab {
