@@ -38,6 +38,10 @@ const pauseButton = document.getElementById("pause") as HTMLButtonElement;
 const stepButton = document.getElementById("step") as HTMLButtonElement;
 const clearSystemInfoButton = document.getElementById("clear-system-info") as HTMLButtonElement;
 const clearDisplayButton = document.getElementById("clear-display") as HTMLButtonElement;
+const clearDocumentationButton = document.getElementById(
+  "clear-documentation",
+) as HTMLButtonElement;
+const loadDocumentationButton = document.getElementById("load-documentation") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
 const newButton = document.getElementById("new") as HTMLButtonElement;
 const demosButton = document.getElementById("demos") as HTMLButtonElement;
@@ -70,6 +74,8 @@ const demoFiles = document.getElementsByClassName("demo-file");
 const displayTab = document.getElementById("display-tab") as HTMLDivElement;
 const documentationTab = document.getElementById("documentation-tab") as HTMLDivElement;
 const debugTab = document.getElementById("debug-tab") as HTMLDivElement;
+
+const documentationIFrame = document.getElementById("doc-iframe") as HTMLIFrameElement;
 
 const inactivityTimeout = 2000;
 const stdlib = new StdLib();
@@ -145,6 +151,7 @@ function resumeProgram() {
 
 async function runProgram() {
   try {
+    displayButton.click();
     if (file.readRunStatus() === RunStatus.paused && runWorker && debugMode) {
       resumeProgram();
       return;
@@ -215,7 +222,6 @@ async function runProgram() {
 
 runButton?.addEventListener("click", async () => {
   debugMode = singleStepping = processingSingleStep = false;
-  displayButton.click();
   await runProgram();
 });
 
@@ -265,6 +271,26 @@ clearSystemInfoButton?.addEventListener("click", () => {
 
 clearDisplayButton?.addEventListener("click", async () => {
   await elanInputOutput.clearDisplay();
+});
+
+clearDocumentationButton?.addEventListener("click", async () => {
+  documentationIFrame.contentWindow?.location.replace("about:blank");
+});
+
+loadDocumentationButton?.addEventListener("click", async () => {
+  try {
+    const [fileHandle] = await window.showOpenFilePicker({
+      startIn: "documents",
+      types: [{ accept: { "text/html": ".html" } }],
+      id: lastDirId,
+    });
+    const codeFile = await fileHandle.getFile();
+    const url = URL.createObjectURL(codeFile);
+    window.open(url, "doc-iframe")?.focus();
+  } catch (_e) {
+    // user cancelled
+    return;
+  }
 });
 
 expandCollapseButton?.addEventListener("click", async () => {
@@ -356,6 +382,7 @@ function showDocumentationTab() {
   displayTab.classList.add("hide");
   documentationTab.classList.remove("hide");
   debugTab.classList.add("hide");
+  documentationIFrame.focus();
 }
 
 function showDebugTab() {
@@ -369,6 +396,8 @@ displayButton.addEventListener("click", showDisplayTab);
 documentationButton.addEventListener("click", showDocumentationTab);
 
 debugButton.addEventListener("click", showDebugTab);
+
+documentationIFrame.addEventListener("load", () => documentationButton.click());
 
 function warningOrError(tgt: HTMLDivElement): [boolean, string] {
   if (tgt.classList.contains("warning")) {
@@ -802,6 +831,7 @@ function updateDisplayValues() {
 
     enable(clearDisplayButton, "Clear display");
     enable(clearSystemInfoButton, "Clear display");
+    enable(clearDocumentationButton, "Clear documentation");
 
     for (const elem of demoFiles) {
       elem.removeAttribute("hidden");
@@ -1182,7 +1212,7 @@ async function updateContent(text: string, editingField: boolean) {
         const href = tgt.dataset.href;
 
         if (href) {
-          window.open(`documentation/${href}`, "_blank")?.focus();
+          window.open(`documentation/${href}`, "doc-iframe")?.focus();
         } else {
           handleEditorEvent(
             event,
@@ -1207,7 +1237,7 @@ async function updateContent(text: string, editingField: boolean) {
       const tgt = ke.target as HTMLDivElement;
       const href = tgt.dataset.href;
       if (href) {
-        window.open(`documentation/${href}`, "_blank")?.focus();
+        window.open(`documentation/${href}`, "doc-iframe")?.focus();
       }
     });
   }
