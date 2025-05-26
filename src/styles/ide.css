@@ -424,7 +424,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
   overflow-y: auto;
 }
 
-iframe {
+#display-html iframe {
   border-image: none;
   border-color: initial;
   border-style: hidden;
@@ -504,5 +504,14 @@ div.spacer{
   overflow-y: auto;
 }
 
+#documentation iframe {
+  border-image: none;
+  border-color: initial;
+  border-style: hidden;
+  border-width: 0cap;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+}
 
 
