@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ElanCutCopyPasteError } from "../elan-cut-copy-paste-error";
 import { ElanRuntimeError } from "../elan-runtime-error";
 import { isElanProduction } from "../environment";
 import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";
@@ -1416,12 +1415,6 @@ async function handleKeyAndRender(e: editorEvent) {
         return;
     }
   } catch (e) {
-    if (e instanceof ElanCutCopyPasteError) {
-      systemInfoPrintSafe(e.message);
-      await renderAsHtml(false);
-      return;
-    }
-
     await showError(e as Error, file.fileName, false);
   }
 }
