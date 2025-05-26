@@ -132,10 +132,7 @@ body {
   color: var(--defaultText);
 }
 
-#rh-footer {
-  display: flex;
-  flex-direction: column;
-}
+
 
 #status span {
   margin-right:10px;
@@ -170,10 +167,6 @@ body {
   background-color: var(--error);
 }
 
-#rh-footer {
-  flex: 1;
-  overflow-y: auto;
-}
 
 #system-info {
   flex-grow: 1;
@@ -453,3 +446,56 @@ div.spacer{
   height: fit-content;
   display: block;
 }
+
+/* Tabs */
+#tab-buttons {
+  display: flex;
+  flex-direction: row;
+}
+#tab-buttons input[type="radio"] {
+  display: none;
+}
+
+#tab-buttons label {
+  padding: 5px;
+  font-family: var(--ideTitleFont);
+  color: var(--defaultText);
+  background-color: white;
+  opacity: 50%;
+  margin: 20px 10px 10px 0;
+  max-height: 30px;
+}
+
+#tab-buttons input[type="radio"]:checked + label {
+  opacity: 100%;
+  margin-bottom: 0px;
+  padding-bottom: 10px;
+}
+
+#display-tab {
+  display: block;
+}
+
+#documentation-tab {
+  display: block;
+  flex-grow: 1;
+}
+
+#debug-tab {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+#display-tab.hide, #documentation-tab.hide, #debug-tab.hide {
+  display: none;
+} 
+
+#debug-controls {
+  display: flex;
+  flex-direction: row;
+}
+
+
+
