@@ -173,6 +173,7 @@ body {
   padding: 5px;
   overflow-y: auto;
   overflow-x: auto;
+  margin-bottom: 10px;
 }
 
 #display {
@@ -443,68 +444,56 @@ div.spacer{
   height: fit-content;
   display: block;
 }
-
-/* Experimental layout */
- .mytabs {
+/* Tabs */
+#tab-buttons {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
 }
-.mytabs input[type="radio"] {
+#tab-buttons input[type="radio"] {
   display: none;
 }
 
-.mytabs label {
+#tab-buttons label {
   padding: 5px;
   font-family: var(--ideTitleFont);
   color: var(--defaultText);
   background-color: white;
   opacity: 50%;
-  margin: 10px;
+  margin: 20px 10px 10px 0;
   max-height: 30px;
 }
 
-.mytabs .tab {
-  width: 100%;
-  display: none;
-  order: 1;
-}
-
-.mytabs input[type="radio"]:checked + label +.tab {
-  display:block;
-}
-
-.mytabs input[type="radio"]:checked + label {
+#tab-buttons input[type="radio"]:checked + label {
   opacity: 100%;
 }
 
-#display-tab, #debug-tab,#documentation-tab {
+#display-tab {
+  display: block;
+}
+
+#documentation-tab {
+  display: block;
+  flex-grow: 1;
+}
+
+#debug-tab {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
 }
+
+#display-tab.hide, #documentation-tab.hide, #debug-tab.hide {
+  display: none;
+} 
 
 #debug-controls {
   display: flex;
   flex-direction: row;
 }
 
-#system-info {
-  min-height: 50px;
-}
-
-#clear-display {
-  width: 5em;
-}
-
-#documentation {
-  flex-grow: 1;
+iframe#doc-iframe {
   background-color: var(--panelBackground);
-  white-space: pre-wrap;
-  overflow-wrap:anywhere;
-  padding: 5px;
-  overflow-y: auto;
-}
-
-#documentation iframe {
   border-image: none;
   border-color: initial;
   border-style: hidden;

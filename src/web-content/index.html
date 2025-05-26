@@ -91,6 +91,14 @@
                         <button id="run-button" class="icon"  tabindex="1"><img src="images/Run.png"></button>
                         <button id="stop" class="icon" disabled  tabindex="1"><img src="images/Stop.png"></button>
                     </div>
+                    <div id="tab-buttons">
+                        <input type="radio" id="display-button" name="mytabs" checked="checked">
+                        <label for="display-button">Display</label>
+                        <input type="radio" id="documentation-button" name="mytabs">
+                        <label for="documentation-button">Documentation</label>
+                        <input type="radio" id="debug-button" name="mytabs">
+                        <label for="debug-button">Debug</label>
+                    </div>
                 </div>
                 <div id="status">
                     <div id="status-names">
@@ -108,44 +116,29 @@
                 </div>
             </div>
 
-            <div class="mytabs">
-                <input type="radio" id="display-button" name="mytabs" checked="checked">
-                <label for="display-button">Display</label>
-                <div class="tab">
-                    <div id="display-tab">
-                        <button id="clear-display" class="plain" tabindex="2">Clear</button>
-                        <div id="display"  tabindex="2">
-                            <div id="print"><span id="printed-text"></span></div>
-                            <div id="display-html"></div>
-                            <div id="block-graphics"></div>
-                            <div id="vector-graphics"></div>
-                        </div>
-                    </div>
+            <div id="display-tab" class="">
+                <div id="display" tabindex="2">
+                    <div id="print"><span id="printed-text"></span></div>
+                    <div id="display-html"></div>
+                    <div id="block-graphics"></div>
+                    <div id="vector-graphics"></div>
                 </div>
-                <input type="radio" id="documentation-button" name="mytabs">
-                <label for="documentation-button">Documentation</label>
-                <div class="tab">
-                    <div id="documentation-tab">
-                        <div id="documentation">
-                            <iframe name="doc-iframe"></iframe>
-                        </div>
-                    </div>
+                <div id="display-title">
+                    <button id="clear-display" class="plain" tabindex="2">Clear</button>
                 </div>
-                <input type="radio" id="debug-button" name="mytabs">
-                <label for="debug-button">Debug</label>
-                <div class="tab">
-                    <div id="debug-tab">
-                        <div id="debug-controls">
-                            <button id="run-debug-button" class="icon"  tabindex="1"><img src="images/Debug.png"></button>
-                            <button id="pause" class="icon" disabled title="Pause" tabindex="1"><img src="images/Pause.png"></button>
-                            <button id="step" class="icon" disabled title="Single Step" tabindex="1"><img src="images/Step.png"></button>
-                        </div>
-                        <div id="system-info-title">
-                                <button id="clear-system-info" class="plain"  tabindex="2">Clear</button>
-                                <span>System info</span>
-                                </div>
-                        <div id="system-info" tabindex="2"> -->
-                    </div>
+            </div>
+            <div id="documentation-tab" class="hide">
+                <iframe name="doc-iframe" id="doc-iframe"></iframe>
+            </div>
+            <div id="debug-tab" class="hide">
+                <div id="debug-controls">
+                <button id="run-debug-button" class="icon"  tabindex="1"><img src="images/Debug.png"></button>
+                <button id="pause" class="icon" disabled title="Pause" tabindex="1"><img src="images/Pause.png"></button>
+                <button id="step" class="icon" disabled title="Single Step" tabindex="1"><img src="images/Step.png"></button>
+                </div>
+                <div id="system-info" tabindex="2"></div>
+                <div id="system-info-title">
+                    <button id="clear-system-info" class="plain"  tabindex="2">Clear</button>
                 </div>
             </div>
         </div>
