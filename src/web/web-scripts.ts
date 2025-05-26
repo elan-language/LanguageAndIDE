@@ -55,6 +55,10 @@ const logoutButton = document.getElementById("logout") as HTMLButtonElement;
 const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLButtonElement;
 const preferencesButton = document.getElementById("preferences") as HTMLButtonElement;
 
+const displayButton = document.getElementById("display-button") as HTMLButtonElement;
+const documentationButton = document.getElementById("documentation-button") as HTMLButtonElement;
+const debugButton = document.getElementById("debug-button") as HTMLButtonElement;
+
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
 const compileStatus = document.getElementById("compile") as HTMLDivElement;
@@ -336,6 +340,30 @@ preferencesButton.addEventListener("click", () => {
 
   dialog.showModal();
 });
+
+function showDisplayTab() {
+  document.getElementById("display-tab")?.classList.remove("hide");
+  document.getElementById("documentation-tab")?.classList.add("hide");
+  document.getElementById("debug-tab")?.classList.add("hide");
+}
+
+function showDocumentationTab() {
+  document.getElementById("display-tab")?.classList.add("hide");
+  document.getElementById("documentation-tab")?.classList.remove("hide");
+  document.getElementById("debug-tab")?.classList.add("hide");
+}
+
+function showdebugTab() {
+  document.getElementById("display-tab")?.classList.add("hide");
+  document.getElementById("documentation-tab")?.classList.add("hide");
+  document.getElementById("debug-tab")?.classList.remove("hide");
+}
+
+displayButton.addEventListener("click", showDisplayTab);
+
+documentationButton.addEventListener("click", showDocumentationTab);
+
+debugButton.addEventListener("click", showdebugTab);
 
 function warningOrError(tgt: HTMLDivElement): [boolean, string] {
   if (tgt.classList.contains("warning")) {
