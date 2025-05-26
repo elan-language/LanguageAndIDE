@@ -56,6 +56,30 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "¬!£$%^&*()@~#|<>'");
   });
+
+  test("Pass_printEscape", async () => {
+    const code = `${testHeader}
+
+main
+  print "\\b\\n"
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.printLine("\\\\b\\n");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "\\b\n");
+  });
+
   test("Pass_CallPrintTab", async () => {
     const code = `${testHeader}
 
