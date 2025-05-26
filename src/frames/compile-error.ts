@@ -513,9 +513,9 @@ export class NotGlobalFunctionRefCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Library or class function '${id}' cannot be preceded by by 'ref'. Click for more info.`,
+      `Library or class function '${id}' cannot be preceded by 'ref'. Click for more info.`,
       location,
-      "LangRef.html#compile_error",
+      "LangRef.html#NotGlobalFunctionRefCompileError",
     );
   }
 }
