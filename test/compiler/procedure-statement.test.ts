@@ -1256,7 +1256,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot do equality operations on Procedures or Functions. Click for more info.LangRef.html#compile_error",
+      "Cannot do equality operations on Procedures or Functions. Click for more info.LangRef.html#CannotCompareProcFunc",
       "Incompatible types. Expected: Float or Int, Provided: Procedure (). Click for more info.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Float or Int, Provided: Procedure (). Click for more info.LangRef.html#TypesCompileError",
     ]);

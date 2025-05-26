@@ -975,7 +975,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot do equality operations on Procedures or Functions. Click for more info.LangRef.html#compile_error",
+      "Cannot do equality operations on Procedures or Functions. Click for more info.LangRef.html#CannotCompareProcFunc",
       "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>. Click for more info.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>. Click for more info.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>. Click for more info.LangRef.html#TypesCompileError",
@@ -1004,7 +1004,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot do equality operations on Procedures or Functions. Click for more info.LangRef.html#compile_error",
+      "Cannot do equality operations on Procedures or Functions. Click for more info.LangRef.html#CannotCompareProcFunc",
       "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'. Click for more info.LangRef.html#compile_error",
       "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'. Click for more info.LangRef.html#compile_error",
       "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>. Click for more info.LangRef.html#TypesCompileError",

@@ -1235,11 +1235,16 @@ defines no parameters. If your intent was to define a <i>reference</i> to the fu
    what it does (for a method), or represents (for a named value).
 </p>
 
-  <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
+<h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
   <p>An index into an array or list cannot have a negative value. If a negative is given in literal form e.g.
     <el-code><el-id>a</el-id>[-<el-lit>3</el-lit>]</el-code> then this will generate a compile error.
     If you use a named value for an index and it is negative, then this will cause a run-time error.</p>
-<h3 id="FailCannotCompareProcFunc" class="no-TOC">Cannot do equality operations on Procedures or Functions.</h3>
+
+<h3 id="CannotCompareProcFunc" class="no-TOC">Cannot do equality operations on Procedures or Functions.</h3>
+<p>It is not possible to apply comparison operations to functions (with or without the <el-code><el-kw>ref</el-kw></el-code> keyword prefix)
+    or procedures as themselves. It is, however, possible to compare the results of two function evaluations. 
+    It is possible that you are seeing this message because you intended to evaluate a function but forgot to
+    add the brackets after the name.</p>
 
 <h3 id="mustBeImmutableType" class="no-TOC">Property ... is not of an immutable type.</h3>
 <p>Properties on a <a href="#record">record</a> may only be of immutable types.</p>
