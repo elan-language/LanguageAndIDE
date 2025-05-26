@@ -489,5 +489,18 @@ div.spacer{
   flex-direction: row;
 }
 
+iframe#doc-iframe {
+  background-color: var(--panelBackground);
+  border-image: none;
+  border-color: initial;
+  border-style: hidden;
+  border-width: 0cap;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+}
 
+button#clear-system-info {
+  margin-bottom: 0;
+}
 
