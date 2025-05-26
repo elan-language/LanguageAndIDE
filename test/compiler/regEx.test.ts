@@ -118,9 +118,9 @@ return [main, _tests];}`;
 main
   variable r set to /a\\/b/
   print "a/b".matchesRegExp(r)
-  print "a\/b".matchesRegExp(r)
-  print "a\b".matchesRegExp(r)
   print "a\\/b".matchesRegExp(r)
+  print "a\\b".matchesRegExp(r)
+  print "a\\\\/b".matchesRegExp(r)
 
 end main`;
 
@@ -129,9 +129,9 @@ const global = new class {};
 async function main() {
   let r = /a\\/b/;
   await system.printLine(_stdlib.matchesRegExp("a/b", r));
-  await system.printLine(_stdlib.matchesRegExp("a/b", r));
-  await system.printLine(_stdlib.matchesRegExp("a\b", r));
-  await system.printLine(_stdlib.matchesRegExp("a\\/b", r));
+  await system.printLine(_stdlib.matchesRegExp("a\\\\/b", r));
+  await system.printLine(_stdlib.matchesRegExp("a\\\\b", r));
+  await system.printLine(_stdlib.matchesRegExp("a\\\\\\\\/b", r));
 }
 return [main, _tests];}`;
 
@@ -141,7 +141,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "truetruefalsetrue");
+    await assertObjectCodeExecutes(fileImpl, "truefalsefalsefalse");
   });
 
   test("fail_missing end slash", async () => {
