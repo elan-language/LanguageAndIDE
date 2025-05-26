@@ -59,4 +59,6 @@ export interface Frame extends Selectable, Scope, ElanSymbol {
   updateBreakpoints(event: BreakpointEvent): void;
 
   setCompileScope(s: Scope): void;
+
+  pasteError: string;
 }

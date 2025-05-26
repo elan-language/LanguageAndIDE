@@ -138,6 +138,15 @@ export function escapeHtmlInclSpaces(str: string): string {
   return escapeHtmlChars(str).replaceAll(/\s/g, "&nbsp;");
 }
 
+export function helper_pastePopUp(loc: Frame | Field): string {
+  let popup = "";
+  if (isFrame(loc) && loc.pasteError) {
+    popup = `<div class="context-menu"><div>${loc.pasteError}</div></div>`;
+    loc.pasteError = "";
+  }
+  return popup;
+}
+
 export function helper_compileMsgAsHtml(loc: Frame | Field): string {
   let msg = "";
   let link = "";
@@ -159,9 +168,14 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
   if (link) {
     cls = cls + " error-link";
   }
+
+  const popUp = helper_pastePopUp(loc);
+
   const toDisplay = escapeHtmlChars(msg);
   const href = link ? ` data-href="${link}"` : "";
-  return cls === "" ? "<el-msg></el-msg>" : ` <el-msg class="${cls}"${href}>${toDisplay}</el-msg>`;
+  return cls === ""
+    ? `<el-msg></el-msg>${popUp}`
+    : ` <el-msg class="${cls}"${href}>${toDisplay}</el-msg>${popUp}`;
 }
 
 export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): CompileStatus {
