@@ -15,8 +15,12 @@ export class LiteralStringAsn extends AbstractAstNode implements AstNode {
     return this.compileErrors;
   }
 
+  sanitise(s: string) {
+    return s.replaceAll("\\", "\\\\").replaceAll("\\\\n", "\\n");
+  }
+
   compile(): string {
-    return `${this.value}`;
+    return `${this.sanitise(this.value)}`;
   }
 
   symbolType() {
