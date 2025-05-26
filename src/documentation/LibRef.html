@@ -18,16 +18,8 @@ Documents that open in a new tab:<br>
 <div class="docTOC">
 <div id="generated-toc" class="generate_from_h1 generate_for_page"></div></div>
 
-<!-- TODO: suggestion -->
-<!-- for temporary note of where change is needed -->
-
-<!-- #region Heading & Intro-->
-<!-- #endregion-->
-
-<!-- #region Value Types, with their methods-->
 <h1 id="ValueTypes">Value Types, with their methods</h1>
 
-<!--   #region Int-->
 <h2 id="Int">Integer</h2>
 <p>An integer is a whole number, i.e. one that has no fractional part. It may be represented in decimal, hexadecimal or binary:</p>
 <p><el-code>100</el-code> (decimal), <el-code>0x64</el-code> (hexadecimal) and <el-code>0b1100100</el-code> all have the same value.</p>
@@ -96,8 +88,7 @@ in the range:</li>
 <p>which produces:</p>
 <img src="images/Pic88.png">
 </ul>
-<!--   #endregion-->
-<!--   #region Float-->
+
 <h2 id="Float">Floating point</h2>
 <p>A floating point number is a decimal number that may have both integer and fractional parts.</p>
 <p>It may be written using exponential (scientific) notation, e.g.
@@ -168,11 +159,10 @@ in the range:</li>
  <li>If you wish to define a variable to be of Type <el-code><el-type>Float</el-type></el-code>, but initialise it with an integer value, then add <el-code>.0</el-code> on the end of the whole number, as in:<br>
  <el-code>variable hour set to 3.0</el-code></li>
 </ul>
-<!--   #endregion-->
-<!--   #region Boolean-->
+
 <h2 id="Boolean">Boolean</h2>
-<p>A <el-code><el-type>Boolean</el-type></el-code> value is either <el-code>true</el-code> or <el-code>false</el-code>.</p>
-<p>The keywords <el-code>true</el-code> and <el-code>false</el-code> must be written in lower case.</p>
+<p>A <el-code><el-type>Boolean</el-type></el-code> value is either <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code>.</p>
+<p>The keywords <el-code><el-id>true</el-id></el-code> and <el-code><el-id>false</el-id></el-code> must be written in lower case.</p>
 <table class="tableType">
  <tr>
   <th>name<br>of Type</th>
@@ -201,8 +191,7 @@ in the range:</li>
   <td>string "true" if <el-code>true</el-code>, "false" if <el-code>false</el-code></td>
  </tr>
  </table>
-<!--   #endregion-->
-<!--   #region String-->
+
 <h2 id="String">String</h2>
 <p>A <el-code><el-type>String</el-type></el-code> represents text,  i.e. a sequence of zero or more characters.</p>
 <table class="tableType">
@@ -222,8 +211,7 @@ in the range:</li>
  <li>A <el-code><el-type>String</el-type></el-code> is always delineated by double quotation marks.</li>
  <li>When typing from the keyboard into a literal string all the basic ASCII characters (0x20 to 0x7e) can be input. Similarly you can copy from
  elsewhere into a literal string provided only basic ASCII characters are include. You cannot use Alt-numeric-keypad </li>
- <li>As in most languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never modified. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.
- You may assign the updated string to the variable that contained the original one.</li>
+ <li>As in most languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never modified. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</li>
  <li>Strings can be built from other strings by concatenation using the plus operator, for example</li>
  <ul><li><el-code>print</el-code> <el-code>"Hello" + " " + "World"</el-code></li></ul>
  <li>A newline may be inserted within a string with <el-code>\n</el-code>, for example:</li>
@@ -353,7 +341,7 @@ in the range:</li>
  </tr>
  </table>
 
-<h3 class="no-TOC" id="Interpolated_string">Interpolated strings</h3>
+<h3 class="no-TOC" id="InterpolatedString">Interpolated strings</h3>
 <p>Strings are automatically interpolated, that is you can insert the values of variables or simple expressions within a string by enclosing them in braces.
 For example, assuming that the variables <el-code>a</el-code> and <el-code>b</el-code> are already defined as integers:</p>
 <p><el-code>print "{a} times {b} equals {a*b}"</el-code></p>
@@ -368,12 +356,10 @@ the braces <el-code>&lbrace;</el-code> or <el-code>&rbrace;</el-code> within a l
 Instead, you use the constants <el-code><el-id>quotes</el-id></el-code>, <el-code><el-id>openBrace</el-id></el-code> and <el-code><el-id>closeBrace</el-id></el-code> respectively, e.g.</p>
 <p><el-code>print "This is a double quotation mark: " + quotes</el-code></p>
 <p><el-code>print "Here are the curly braces: {openBrace} and {closeBrace}"</el-code></p>
-<p>Alternatively, you can insert their Unicode codepoint values (in decimal or hexadecimal) by means of function <a href="#unicode"><el-code><el-method>unicode</el-method></el-code></a>:</p>
+<p>Alternatively, you can insert their Unicode (codepoint) values (in decimal or hexadecimal) by means of function <a href="#unicode"><el-code><el-method>unicode</el-method></el-code></a>:</p>
 <p><el-code>print "Here are the curly braces: {unicode(123)} and {unicode(125)}"</el-code></p>
 <p><el-code>print "This is an ASCII double quotation mark: " + unicode(0x22)</el-code></p>
-<!--   #endregion-->
-<!-- #endregion-->
-<!-- #region Tuple-->
+
 <h2 id="Tuple">Tuple</h2>
 A <el-code>tuple</el-code> is a way of holding a small number of values of different Types together as a single reference. It may be considered a lightweight alternative to defining a specific class for some purposes. Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold. Common uses include:
 <ul>
@@ -399,13 +385,11 @@ or into existing variables of the correct Type:</p>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-<li>As in most languages, an Elan <el-code>tuple</el-code> is immutable. Once defined they are effectively 'read only'. You cannot alter any of the elements in a <el-code>tuple</el-code> nor (unlike a <el-code><el-type>List</el-type></el-code>) can you create a new <el-code>tuple</el-code> from an existing one with specified differences.
- You may assign the updated tuplr to the variable that contained the original one.</li>
+<li>As in most languages, an Elan <el-code>tuple</el-code> is immutable. Once defined they are effectively 'read only'. You cannot alter any of the elements in a <el-code>tuple</el-code> nor (unlike a <el-code><el-type>List</el-type></el-code>) can you create a new <el-code>tuple</el-code> from an existing one with specified differences.</li>
 <li>You cannot deconstruct a <el-code>tuple</el-code> into a mixture of new and existing variables.</li>
 <li>They may be nested: you can define a <el-code>tuple</el-code> within a <el-code>tuple</el-code>.</li>
 </ul>
-<!-- #endregion-->
-<!-- #region Standard (mutabl)e data structures-->
+
 <h1 id="StandardDataStructures">Standard (mutable) data structures</h1>
 <table class="tableStructure">
  <tr><th></th><th colspan="4">Standard (mutable) data structures</th></tr>
@@ -432,7 +416,7 @@ or into existing variables of the correct Type:</p>
   <td>create</td>
   <td><el-code>new Array&lt;of String&gt;(10, "")</el-code><br>any initial value of correct Type</td>
   <td><el-code>new Array2D&lt;of String&gt;(5,8, "")</el-code><br>defines 5 arrays each of 8 elements<br>any initial value of correct Type</td>
-  <td><el-code>new List&lt;of Int&gt;()</el-code><br>created empty<br>can be 'of' any Type</td>
+  <td><el-code>new List&lt;of Int&gt;()</el-code><br>created empty<br>and of any Type</td>
   <td><el-code>new Dictionary&lt;of String, Int&gt;()</el-code><br>Key Type must be simple value or a <el-code>record</el-code><br>Value Type can be any</td>
  </tr><tr>
   <td>read by index</td>
@@ -471,7 +455,7 @@ with the specified changes &ndash; which is why all such methods have names star
     <el-code>of &lt;<el-kw>procedure</el-kw>&gt; <el-type>Int</el-type></el-code> &ndash; or implicitly if the structure
     is created from its literal definition form.</p>
     <p>A <el-type>Dictionary</el-type> is defined with two Types: one for its keys and one for their values.</p>
-<!--   #region Array-->
+
 <h2 id="Array">Array</h2>
 <p>An array is a simple data structure containing <i>n</i> elements of a single Type, indexed from <i>0</i> to <i>n-1</i>.</p>
 <p>The array elements' Type must be one of <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>String</el-type></el-code>, or <el-code><el-type>Boolean</el-type></el-code>.</p>
@@ -543,8 +527,7 @@ with the specified changes &ndash; which is why all such methods have names star
   <td>the number of elements in the array</td>
  </tr>
 </table>
-<!--   #endregion-->
-<!--   #region Array2D-->
+
 <h2 id="Array2D">Array2D</h2>
 <p>The <el-code><el-type>Array2D</el-type></el-code> Type defines a 2-dimensional array of fixed size. The two
  dimensions, which are specified when the array is created, may be of the same size (a square array)
@@ -608,7 +591,7 @@ with the specified changes &ndash; which is why all such methods have names star
   <td>item of Array2D element's Type</td>
   <td><el-code><el-type>Int, Int</el-type></el-code></td>
   <td>a Tuple containing the index pair of the first occurrence of the argument's value in the array
-      by searching the columns, or (-1,-1) if no match is found</td>
+      by searching the columns in order, or (-1,-1) if no match is found</td>
  </tr><tr id="row">
   <td><el-code><el-method>rows</el-method></el-code></td>
   <td><el-code><el-type>Array2D</el-type></el-code></td>
@@ -617,7 +600,10 @@ with the specified changes &ndash; which is why all such methods have names star
   <td>the number of rows in the array (the maximum <i>y</i> value)</td>
  </tr>
 </table>
-
+Note
+<ul>
+ <li>Since an <el-code><el-type>Array2D</el-type></el-code> has a known fixed size, methods <el-code><el-method>rows</el-method></el-code> and <el-code><el-method>columns</el-method></el-code> are of use only when passing such an array into a procedure or function that needs to discover its size.</li>
+</ul>
 <p>You can read individual elements with a double index, for example:</p>
 <el-code-block source="col_row.elan">
 <el-statement class="ok multiline" id="for13" tabindex="0">
@@ -630,8 +616,7 @@ with the specified changes &ndash; which is why all such methods have names star
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
-<!--   #endregion-->
-<!--   #region List-->
+
 <h2 id="List">List</h2>
 <p>A List is similar to an Array in that its <i>n</i> elements are all of one Type
  and are indexed from <i>0</i> to <i>n-1</i>, but is more flexible because:</p>
@@ -680,26 +665,6 @@ with the specified changes &ndash; which is why all such methods have names star
   <td>the item is inserted at the index given.<br>
   If the index is negative it is counted from the end.<br>
   If the index is greater than the list's length, the item is inserted at the end.</td>
- </tr><tr id="maxFloat">
-  <td><el-code><el-method>maxFloat</el-method></el-code></td>
-  <td><el-code><el-type>List</el-type></el-code></td>
-  <td><el-code><el-type>List&lt;of Float&gt;</el-type></el-code></td>
-  <td>returns the maximum value found in the List</td>
- </tr><tr id="minFloat">
-  <td><el-code><el-method>minFloat</el-method></el-code></td>
-  <td><el-code><el-type>List</el-type></el-code></td>
-  <td><el-code><el-type>List&lt;of Float&gt;</el-type></el-code></td>
-  <td>returns the minimum value found in the List</td>
- </tr><tr id="maxInt">
-  <td><el-code><el-method>maxInt</el-method></el-code></td>
-  <td><el-code><el-type>List</el-type></el-code></td>
-  <td><el-code><el-type>List&lt;of Int&gt;</el-type></el-code></td>
-  <td>returns the maximum value found in the List</td>
- </tr><tr id="minInt">
-  <td><el-code><el-method>minInt</el-method></el-code></td>
-  <td><el-code><el-type>List</el-type></el-code></td>
-  <td><el-code><el-type>List&lt;of Int&gt;</el-type></el-code></td>
-  <td>returns the minimum value found in the List</td>
  </tr><tr id="prepend">
   <td><el-code><el-method>prepend</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
@@ -772,12 +737,13 @@ with the specified changes &ndash; which is why all such methods have names star
   <td><el-code><el-type>Boolean</el-type></el-code></td>
   <td><el-code><el-id>true</el-id></el-code> if the List  contains the specified element<br>
   &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
- </tr><tr id="filter">
+ </tr><tr id="filter_List">
   <td><el-code><el-method>filter</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td>lambda</td>
+  <td><el-code><el-kw>lambda</el-kw></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td>a new List obtained from applying the lambda to the input List</td>
+  <td>a new List obtained from applying a lambda to the input List<br>
+  see <a href="#filter"><el-code><el-method>filter</el-method></el-code></a> in HoFs</td>
  </tr><tr id="head_List">
   <td><el-code><el-method>head</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
@@ -805,33 +771,62 @@ with the specified changes &ndash; which is why all such methods have names star
  </tr><tr id="map_List">
   <td><el-code><el-method>map</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td>lambda or </td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td>HoF: apply </td>
+  <td><el-code><el-kw>lambda</el-kw></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>a new List obtained from applying a lambda to the input List<br>
+  see <a href="#map"><el-code><el-method>map</el-method></el-code></a> in HoFs</td>
+ </tr><tr id="maxFloat">
+  <td><el-code><el-method>maxFloat</el-method></el-code></td>
+  <td><el-code><el-type>List&lt;of Float&gt;</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Float</el-type></el-code></td>
+  <td>returns the maximum value found in the List</td>
+ </tr><tr id="minFloat">
+  <td><el-code><el-method>minFloat</el-method></el-code></td>
+  <td><el-code><el-type>List&lt;of Float&gt;</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Float</el-type></el-code></td>
+  <td>returns the minimum value found in the List</td>
+ </tr><tr id="maxInt">
+  <td><el-code><el-method>maxInt</el-method></el-code></td>
+  <td><el-code><el-type>List&lt;of Int&gt;</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>returns the maximum value found in the List</td>
+ </tr><tr id="minInt">
+  <td><el-code><el-method>minInt</el-method></el-code></td>
+  <td><el-code><el-type>List&lt;of Int&gt;</el-type></el-code></td>
+  <td>(none)</td>
+  <td><el-code><el-type>Int</el-type></el-code></td>
+  <td>returns the minimum value found in the List</td>
  </tr><tr id="maxBy_List">
   <td><el-code><el-method>maxBy</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td><el-code><el-kw>lambda</el-kw></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>a new List obtained from applying a lambda to the input List<br>
+  see <a href="#maxBy"><el-code><el-method>maxBy</el-method></el-code></a> in HoFs</td>
  </tr><tr id="minBy_List">
   <td><el-code><el-method>minBy</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td><el-code><el-kw>lambda</el-kw></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>a new List obtained from applying a lambda to the input List<br>
+  see <a href="#minBy"><el-code><el-method>minBy</el-method></el-code></a> in HoFs</td>
  </tr><tr id="reduce_List">
   <td><el-code><el-method>reduce</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td><el-code><el-kw>lambda</el-kw></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>a new List obtained from applying a lambda to the input List<br>
+  see <a href="#reduce"><el-code><el-method>reduce</el-method></el-code></a> in HoFs</td>
  </tr><tr id="sortBy_List">
   <td><el-code><el-method>sortBy</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
-  <td></td>
-  <td><el-code><el-type></el-type></el-code></td>
-  <td></td>
+  <td><el-code><el-kw>lambda</el-kw></el-code></td>
+  <td><el-code><el-type>List</el-type></el-code></td>
+  <td>a new List obtained from applying a lambda to the input List<br>
+  see <a href="#sortBy"><el-code><el-method>sortBy</el-method></el-code></a> in HoFs</td>
  </tr><tr id="withAppend">
   <td><el-code><el-method>withAppend</el-method></el-code></td>
   <td><el-code><el-type>List</el-type></el-code></td>
@@ -888,8 +883,7 @@ with the specified changes &ndash; which is why all such methods have names star
   <td></td>
  </tr>
 </table>
-<!--   #endregion-->
-<!--   #region Dictionary-->
+
 <h2 id="Dictionary">Dictionary</h2>
 <p>A Dictionary works like an Array, but instead of having a numeric (integer) index, each entry has a <i>key</i>. Each key is associated with a <i>value</i>,
 so the Dictionary is a set of <i>key:value</i> pairs.
@@ -944,8 +938,7 @@ The key's Type must be one of <el-code><el-type>Int</el-type></el-code>, <el-cod
     <td>a List containg the values</td>
 </tr>
  </table>
-<!-- #endregion-->
-<!-- #region Immutable data structures -->
+
 <h1 id="ImmutableDataStructures">Immutable data structures</h1>
 <p>In contrast to the <a href="#StandardDataStructures">standard (mutable) data structures</a>, <i>immutable</i>
 data structures cannot be modified directly &ndash; and hence define no <i>procedure</i> dot methods. Instead,
@@ -1009,11 +1002,10 @@ differences. Immutable data structures are intended specifically to facilitate t
   <td>see <a href="#Queue_functions">Function methods on a Queue</a></td>
  </tr>
 </table>
-<!--   #region ListImmutable -->
+
 <h2 id="ListImmutable">ListImmutable</h2>
 <p>A <el-code>ListImmutable</el-code> is like a <el-code><el-type>List</el-type></el-code> but is <i>immutable</i> (like a <el-code><el-type>String</el-type></el-code>).
-You can still insert, delete or change elements in a <el-code>ListImmutable</el-code>, but the methods for these operations do not modify the input <el-code>ListImmutable</el-code>: they return a new <el-code>ListImmutable</el-code> based on the input <el-code>ListImmutable</el-code> with the specified differences.
- You may assign the updated list to the variable that contained the original one.</p>
+You can still insert, delete or change elements in a <el-code>ListImmutable</el-code>, but the methods for these operations do not modify the input <el-code>ListImmutable</el-code>: they return a new <el-code>ListImmutable</el-code> based on the input <el-code>ListImmutable</el-code> with the specified differences.</p>
 
 <h3 class="no-TOC">Type name</h3>
 <p>The Type is specified in the following ways:</p>
@@ -1104,14 +1096,12 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <el-statement class="ok" id="print70" tabindex="0"><el-kw>print </el-kw><el-field id="expr71" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id>[<el-id>fruit</el-id>.<el-method>length</el-method>() - <el-lit>2</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print76" tabindex="0"><el-kw>print </el-kw><el-field id="expr77" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id>.<el-method>contains</el-method>("<el-lit>banana</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
-<!-- #endregion-->
-<!--   #region DictionaryImmutable -->
+
 <h2 id="DictionaryImmutable">DictionaryImmutable</h2>
 <p>A <el-code><el-type>DictionaryImmutable</el-type></el-code> is like a <el-code><el-type>Dictionary</el-type></el-code> but <i>immutable</i>
  (like a <el-code><el-type>String</el-type></el-code>). You can still insert, delete or change elements in a <el-code><el-type>DictionaryImmutable</el-type></el-code>,
  but the methods of these operations do not modify the input <el-code><el-type>DictionaryImmutable</el-type></el-code>: they return a new
- <el-code><el-type>DictionaryImmutable</el-type></el-code> with the specified differences. You may assign the updated dictionary to the variable
- that contained the original one.</p>
+ <el-code><el-type>DictionaryImmutable</el-type></el-code> with the specified differences.</p>                                                                     x
 <p>A <el-code><el-type>DictionaryImmutable</el-type></el-code> may be defined in a constant.</p>
 
 <h3 class="no-TOC">Type name</h3>
@@ -1173,13 +1163,9 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 </tr>
  </table>
 
-<!--#endregion-->
-
-<!--   #region Set-->
 <h2 id="SetType">Set</h2>
     <p>A set is a standard data structure that works somewhat like a <el-code>ListImmutable</el-code> with the important difference that in a set a given element may appear only once. If an item being added to a <el-code>Set</el-code> is identical to an existing item in the <el-code>Set</el-code> then the <el-code>Set</el-code> remains the same length as before. </p>
-    <p>This enables a set to work like a mathematical set so that it is possible to perform standard set operations such as <el-code><el-method>union</el-method></el-code> or <el-code><el-method>intersection</el-method></el-code>. For the same reason, a Set is an immutable data structure: there are no methods modify the set on which they are called, but several of them (including <el-code><el-method>add</el-method></el-code>, <el-code><el-method>remove</el-method></el-code>) return a new set that is based on the original set or sets, with specified differences.
-     You may assign the updated set to the variable that contained the original one.</p>
+    <p>This enables a set to work like a mathematical set so that it is possible to perform standard set operations such as <el-code><el-method>union</el-method></el-code> or <el-code><el-method>intersection</el-method></el-code>. For the same reason, a Set is an immutable data structure: there are no methods modify the set on which they are called, but several of them (including <el-code><el-method>add</el-method></el-code>, <el-code><el-method>remove</el-method></el-code>) return a new set that is based on the original set or sets, with specified differences.</p>
     <p>Example of use:</p>
 <el-code-block source="set.elan">
 <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Set</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1290,8 +1276,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td>a Set containing all the unique elements of the Set and the argument Set (i.e. no duplicates)</td>
  </tr>
  </table>
-<!--   #endregion-->
-<!--   #region Stack and queue-->
+
 <p id="Queue"></p>
 <h2 id="Stack">Stack and Queue</h2>
 <ul>
@@ -1415,9 +1400,9 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <el-statement class="ok" id="print29" tabindex="0"><el-kw>print </el-kw><el-field id="expr30" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print31" tabindex="0"><el-kw>print </el-kw><el-field id="expr32" class="optional ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
-<!-- #endregion-->
-<!-- #region Common dot methods-->
+
 <h1 id="CommonDotMethods">Common dot methods</h1>
+
 <h2>Dot methods that work on more than one fundamental Type</h2>
 <p>Although all applicable methods are described under each Type, this table lists those which are applicable to several Types.</p>
 <p>The method <el-code><el-method>asString</el-method></el-code> is so widely applicable because it enables you to print
@@ -1574,15 +1559,13 @@ most variables and data structures to the Display for debugging purposes.</p>
   <p><el-code>print dict.keys().length()</el-code> &rarr; 15</p>
  <li>Checking whether an item is contained in a <el-code><el-type>Dictionary</el-type></el-code> or <el-code><el-type>DictionaryImmutable</el-type></el-code> can be
   done by applying method <el-code><el-method>contains</el-method></el-code> to the list returned by methods <el-code><el-method>keys</el-method></el-code> and <el-code><el-method>values</el-method></el-code> on the dictionary:</li>
-  <p><el-code>print dict.keys().contains(42)</el-code> &rarr; <el-id>true</el-id> or <el-id>false</el-id></p>
-  <p><el-code>print dict.values().contains("widget")</el-code> &rarr; <el-id>true</el-id> or <el-id>false</el-id></p>
+  <p><el-code>print dict.keys().contains(42)</el-code> &rarr; <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code></p>
+  <p><el-code>print dict.values().contains("widget")</el-code> &rarr; <<el-code>el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code></p>
 </ul>
-<!-- #endregion-->
-<!-- #region Input/output -->
-<h1 id="Input/output">Input/output</h1>
-<!--   #region Reading and writing Text files-->
-<h2 id="TextFileReader">Reading Text Files</h2>
 
+<h1 id="Input/output">Input/output</h1>
+
+<h2 id="TextFileReader">Reading Text Files</h2>
 <p>The <el-code><el-type>TextFileReader</el-type></el-code> class is used to read textual data from a file.</p>
 <p>An instance is created by the standalone system method <el-code><el-method>openFileForReading</el-method></el-code>.</p>
 <p>The available procedure methods are:</p>
@@ -1607,7 +1590,7 @@ most variables and data structures to the Display for debugging purposes.</p>
  </tr><tr id="endOfFile">
   <td><el-code><el-method>endOfFile</el-method></el-code></td>
   <td><el-code><el-type>(none)</el-type></el-code></td>
-  <td>returns <el-code><el-kw>true</el-kw></el-code> after the last line has been read<br>
+  <td>returns <el-code><el-id>true</el-id></el-code> after the last line has been read<br>
   &ndash; otherwise <el-code><el-kw>false</el-kw></el-code></td>
  </tr><tr id="close">
   <td><el-code><el-method>close</el-method></el-code></td>
@@ -1709,9 +1692,8 @@ most variables and data structures to the Display for debugging purposes.</p>
 </el-code-block>
 <p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
 </ul>
-<!-- #endregion-->
-<!-- #region Displaying Html-->
-<div id="DisplayHtml"></div>
+
+div id="DisplayHtml"></div>
 <h2 id="Html">Displaying Html</h2>
 <p>If you attempt to embed Html in a string and then attempt to print it, you will see the string displayed literally - the Html tags
     will not be recognised - this is for security reasons. However, it <i>is</i> possible to display formatted Html on the <b>Display.</b>
@@ -1743,8 +1725,7 @@ most variables and data structures to the Display for debugging purposes.</p>
 
 <p>producing this result:</p>
 <img src="images/Html_2.png" width="277" height="219">
-<!-- #endregion-->
-<!--   #region Displaying images-->
+
 <h2 id="image">Displaying images</h2>
 
 <h3 class="no-TOC">Printing an image on the Display</h3>
@@ -1815,11 +1796,9 @@ the URL as a <el-code><el-type>String</el-type></el-code>, either as a literal (
     <tr><td><el-code><el-id>x</el-id></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>Horizontal position within the pane</td></tr>
     <tr><td><el-code><el-id>y</el-id></el-code></td><td><el-code><el-type>Float</el-type></el-code></td><td>Vertical position within the pane</td></tr>
 </table>
-<!-- #endregion-->
-<!--   #region Graphics-->
+
 <h1>Graphics</h1>
-<!-- #endregion-->
-<!--   #region Block Graphics-->
+
 <h2 id="BlockGraphics">Block graphics</h2>
 <p>Block graphics<el-code> </el-code>provides a simple way to create low resolution graphics, ideal for simple but engaging games for example.
      The graphics are displayed on a grid that is 40 blocks wide by 30 blocks high.</p>
@@ -1841,13 +1820,12 @@ the URL as a <el-code><el-type>String</el-type></el-code>, either as a literal (
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-<li>The <el-code><el-type>Array2D</el-type></el-code> must be of Type<el-code><el-type>Int</el-type></el-code> and of size 40 x 30.</li>
-<li>You may create multiple <el-code><el-type>Array2Ds</el-type></el-code> holding different patterns of blocks, and switch between them
-just by passing the required one as the argument to the <el-code><el-method>displayBlocks</el-method></el-code> method.</li>
-<li>A colour is specified as an <el-code><el-type>Int</el-type></el-code>, as described under <a href="#Colours">Colours</a>.</li>
+ <li>The <el-code><el-type>Array2D</el-type></el-code> must be of Type<el-code><el-type>Int</el-type></el-code> and of size 40 x 30.</li>
+ <li>You may create multiple <el-code><el-type>Array2Ds</el-type></el-code> holding different patterns of blocks, and switch between them
+ just by passing the required one as the argument to the <el-code><el-method>displayBlocks</el-method></el-code> method.</li>
+ <li>A colour is specified as an <el-code><el-type>Int</el-type></el-code>, as described under <a href="#Colours">Colours</a>.</li>
 </ul>
-<!-- #endregion-->
-<!--   #region Turtle Graphics-->
+
 <h2 id="TurtleGraphics">Turtle graphics</h2>
 <p>Turtle graphics are implemented in Elan with output to the Display pane on the screen, i.e. the 'paper' on which the Turtle draws.</p>
 <p>The area is 100 turtle units wide by 75 turtle units high, but floating point (fractional) values of turtle units can be used.</p>
@@ -1975,8 +1953,7 @@ just by passing the required one as the argument to the <el-code><el-method>disp
 <el-const class="ok multiline" id="const64" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident65" class="ok" tabindex="0"><el-txt><el-id>side</el-id></el-txt><el-place><i>name</i></el-place></el-field></el-top><el-kw> set to </el-kw><el-field id="text66" class="ok" tabindex="0"><el-txt><el-lit>60</el-lit></el-txt><el-place><i>literal value or data structure</i></el-place></el-field></el-const>
 </el-code-block>
 <p><img src="images/Pic31.png"  align="MIDDLE" width="479" height="420" ></p>
-<!-- #endregion-->
-<!--   #region Vector Graphics-->
+
 <h2 id="VectorGraphics">Vector graphics</h2>
 <!-- TODO tabulate VG procedures and their arguments -->
 <div id="vectorGraphic"></div>
@@ -2044,7 +2021,7 @@ just by passing the required one as the argument to the <el-code><el-method>disp
  <li><el-code><el-method>displayVectorGraphics</el-method></el-code> takes as an argument either a <el-code><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;()</el-code>
   or a <el-code><el-type>List</el-type></el-code> of any specific Typeof <el-code><el-type>VectorGraphic</el-type></el-code> such as <el-code><el-type>CircleVG</el-type></el-code>.</li>
 </ul>
-<!-- #endregion-->
+
 <h2 id="combiningGraphics">Combining graphic outputs</h2>
 <p>Program outputs, whether text or graphical, can be combined in the Display. In particular, Block graphics and text or Html printing can share the Display
  along with <em>either</em> Vector graphics <em>or</em> Turtle graphics (but not both).</p>
@@ -2056,10 +2033,9 @@ just by passing the required one as the argument to the <el-code><el-method>disp
  <li>Printed text or Html</li>
 </ol>
 <p>so some care is needed to manage the layout in the Display.</p>
-<!-- #endregion-->
-<!-- #region Other Types -->
+
 <h1>Other Types</h1>
-<!--   #region Func-->
+
 <h2 id="Func">Func</h2>
 <p>A function may be passed as an argument into another function (or a procedure), or returned as the result of calling another function.
 This pattern is known as <b>Higher order Function (HoF)</b>, and is a key idea in the Functional Programming.</p>
@@ -2074,10 +2050,9 @@ just as you would specify the Type of every parameter and the return Type for th
 <el-code-block source="functionChars.elan">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident5" class="ok" tabindex="0"><el-txt>charactersMatchAt</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params6" class="optional ok" tabindex="0"><el-txt><el-id>a</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>b</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>position</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="0"><el-txt><el-type>Boolean</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
 </el-code-block>
-<!-- #endregion-->
-<!-- #endregion-->
-<!-- #region constants-->
+
 <h1 id="Constants">Constants</h1>
+
 <h2 id="StringConstants">String constants</h2>
 <table class="tableType">
  <tr>
@@ -2104,7 +2079,7 @@ just as you would specify the Type of every parameter and the return Type for th
  </tr><tr id="true">
   <td><el-code><el-id>true</el-id></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
-  <td><a href="#Boolean"><el-code><el-kw>true</el-kw></el-code></a></td>
+  <td><a href="#Boolean"><el-code><el-id>true</el-id></el-code></a></td>
  </tr><tr id="false">
   <td><el-code><el-id>false</el-id></el-code></td>
   <td><el-code><el-type>Boolean</el-type></el-code></td>
@@ -2143,13 +2118,12 @@ just as you would specify the Type of every parameter and the return Type for th
  <li>a six digit hexadecimal value in the range <el-code>0x000000</el-code> &ndash; <el-code>0xffffff</el-code>
     using the same 'RGB' format as used in Html style, for example <el-code>0xff0000</el-code> for red.</li>
 </ul>
-<!-- #endregion-->
-<!-- #region Standalone functions-->
+
 <h1 id="StandaloneFunctions">Standalone functions</h1>
-    <p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a variable declaration (variable) or assignment (set), either on their own or within a more complex expression. All standalone library<el-code> function</el-code>s require at least one argument to be passed in brackets, corresponding to the parameters defined for that <el-code>function</el-code>.</p>
+    <p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <el-code><el-kw>variable</el-kw></el-code> declaration or a <el-code><el-kw>set</el-kw></el-code> assignment, either on their own or within a more complex expression. All standalone library functions require at least one argument to be passed in brackets, corresponding to the parameters defined for that function.</p>
 
 <h2 id="unicode">unicode</h2>
-<p>Function <el-code><el-method>unicode</el-method></el-code> converts a Unicode value (expressed as an integer value in decimal or hexadecimal notation, or as any expression evaluating to an Int) into a string of a single character. For example:</p>
+<p>Function <el-code><el-method>unicode</el-method></el-code> converts a Unicode (codepoint) value expressed as an integer value in decimal or hexadecimal notation, or as any expression evaluating to an <el-code><el-type>Int</el-type></el-code>, into a string of a single character. For example:</p>
 <el-code-block source="unicode_hearts.elan">
 <el-func class="ok multiline" id="func3">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident5" class="ok" tabindex="0"><el-txt>hearts</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params6" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="0"><el-txt><el-type>String</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
@@ -2159,7 +2133,7 @@ just as you would specify the Type of every parameter and the return Type for th
 </el-code-block>
 
 <h2 id="parseAs">parseAsInt and parseAsFloat</h2>
-    <p><el-code><el-method>parseAsInt</el-method></el-code> attempts to parse the input String as an Int and returns a 2-tuple, the first value of which is Boolean, with true indicating whether or not the parse has succeeded, and the second value being the resulting Int.
+    <p>Function <el-code><el-method>parseAsInt</el-method></el-code> attempts to parse the input <el-code><el-type>String</el-type></el-code> as an <el-code><el-type>Int</el-type></el-code>, and returns a 2-tuple, the first value of which is Boolean, with <el-code><el-id>true</el-id></el-code> indicating whether or not the parse has succeeded, and the second value being the resulting <el-code><el-type>Int</el-type></el-code>.
         <el-code><el-method>parseAsFloat</el-method></el-code> does the equivalent for floating point. Operation is illustrated with by these tests: </p>
 <el-code-block source="test_parse.elan">
 <el-test class="ok multiline" id="test88" tabindex="0">
@@ -2361,9 +2335,8 @@ All the maths functions take a <el-code><el-type>Float</el-type></el-code> argum
 of integer values as defined by the two (integer) parameters: <el-code><el-id>start</el-id></el-code> and <el-code><el-id>end</el-id></el-code>
 (both being <i>inclusive</i> values), for example:</p>
 
-<!-- #endregion-->
-<!-- #region Standalone procedures-->
 <h1 id="StandaloneProcedures">Standalone procedures</h1>
+
 <h2 >Standalone procedures</h2>
 <p>All <el-code>procedure</el-code>s are accessed via a <a href="LangRef.html#call"><el-code>call</el-code></a> statement.</p>
 <table class="tableMethod">
@@ -2430,9 +2403,9 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
-<!-- #endregion-->
-<!-- #region System methods-->
+
 <h1 id="SystemMethods">System methods</h1>
+
 <h2>System methods</h2>
 <p>System methods appear to work like <el-code>functions</el-code>, because:</p>
 <ul>
@@ -2540,13 +2513,11 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td></td>
  </tr>
 </table>
-<div id="input_methods"></div>
-<!-- #endregion-->
-<!-- #region Higher order functions (HoFs)-->
+
 <h1>Library functions that process Lists</h1>
 
 <h2 id="HoFs">Higher order functions (HoFs)</h2>
-<p>These dot methods are called on any <el-code>List,</el-code> <el-code>ListImmutable</el-code> or <el-code><el-type>String</el-type></el-code>. As &#8216;higher order functions&#8217; they take either a <el-code>lambda</el-code> or a function reference as one of their arguments: see <span class="Link">Passing a function as a reference</span>.</p>
+<p>These dot methods are called on any <el-code>List,</el-code> <el-code>ListImmutable</el-code> or <el-code><el-type>String</el-type></el-code>. As &#8216;higher order functions&#8217; they take either a <el-code><el-kw>lambda</el-kw></el-code> or a function reference as one of their arguments: see <span class="Link">Passing a function as a reference</span>.</p>
 <p>Although several of these methods return a <el-code><el-type>ListImmutable</el-type></el-code>, they may be converted to a List using method <el-code><el-method>asList</el-method></el-code>.</p>
 <p>These are not yet fully documented but, for readers familiar with HoFs from another programming language, some examples are shown below.</p>
 
@@ -2587,7 +2558,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <el-code><el-method>minInt</el-method></el-code>.</p>
 
 <h3 class="no-TOC" id="sortBy">sortBy</h3>
-<p><el-code>sortBy</el-code> takes a <el-code>lambda</el-code> that takes two arguments (of the same Type as that of the <el-code>ListImmutable</el-code> being sorted) and compares them, returning an integer with one of the values -1, 0, or +1, to indicate whether the first argument should be placed respectively before, adjacent to or after the second argument in the sorted result, where &#8216;adjacent to&#8217; means it does not matter whether before or after):</p>
+<p><el-code>sortBy</el-code> takes a <el-code><el-kw>lambda</el-kw></el-code> that takes two arguments (of the same Type as that of the <el-code>ListImmutable</el-code> being sorted) and compares them, returning an integer with one of the values -1, 0, or +1, to indicate whether the first argument should be placed respectively before, adjacent to or after the second argument in the sorted result, where &#8216;adjacent to&#8217; means it does not matter whether before or after):</p>
 
 <el-code-block source="sortBy_Int.elan">
 <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>numbers</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>[<el-lit>27</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>31</el-lit>, <el-lit>37</el-lit>, <el-lit>11</el-lit>, <el-lit>13</el-lit>, <el-lit>17</el-lit>, <el-lit>19</el-lit>, <el-lit>23</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -2601,7 +2572,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>names</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id>.<el-method>isAfter</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id>.<el-method>isBefore</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
-<!-- #endregion-->
+
 <hr>
 <p><b>Elan Library Reference</b> go to the <a href="#top">top</a></p>
 </body>
