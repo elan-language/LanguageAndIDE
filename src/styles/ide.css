@@ -336,6 +336,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
   margin-left: -1px;
   padding: 2px;
   border: solid 1px;
+  border-color: black;
 }
 
 .autocomplete-popup>div,

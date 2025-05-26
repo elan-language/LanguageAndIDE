@@ -1,5 +1,4 @@
 import assert from "assert";
-import { ElanCutCopyPasteError } from "../src/elan-cut-copy-paste-error";
 import { Constructor } from "../src/frames/class-members/constructor";
 import { MemberSelector } from "../src/frames/class-members/member-selector";
 import { CommentField } from "../src/frames/fields/comment-field";
@@ -356,16 +355,18 @@ suite("Editing Frames", () => {
     main.processKey(shift_enter());
     const globalSelect = file.getChildren()[0];
     assert.equal(globalSelect.getHtmlId(), "select7");
-    try {
-      globalSelect.processKey(ctrl_v());
-    } catch (e) {
-      assert.equal(
-        "Paste Failed: Cannot paste frame into location",
-        (e as ElanCutCopyPasteError).message,
-      );
-    }
+
+    globalSelect.processKey(ctrl_v());
+
     const newFirst = file.getChildren()[0];
-    assert.equal(newFirst.renderAsHtml(), globalSelect.renderAsHtml());
+
+    assert.ok(
+      globalSelect
+        .renderAsHtml()
+        .includes(
+          `<div class="context-menu"><div>Paste Failed: Cannot paste frame into location</div></div>`,
+        ),
+    );
   });
 
   test("#634 snippet remains in scratchpad if not successfully pasted", async () => {
@@ -386,14 +387,17 @@ suite("Editing Frames", () => {
     const globalSelect = file.getChildren()[0];
     assert.equal(globalSelect.getHtmlId(), "select7");
     globalSelect.select(true, false);
-    try {
-      globalSelect.processKey(ctrl_v());
-    } catch (e) {
-      assert.equal(
-        "Paste Failed: Cannot paste frame into location",
-        (e as ElanCutCopyPasteError).message,
-      );
-    }
+
+    globalSelect.processKey(ctrl_v());
+
+    assert.ok(
+      globalSelect
+        .renderAsHtml()
+        .includes(
+          `<div class="context-menu"><div>Paste Failed: Cannot paste frame into location</div></div>`,
+        ),
+    );
+
     const newFirst = file.getChildren()[0];
     assert.equal(newFirst.renderAsSource(), globalSelect.renderAsSource());
     //Now paste back into main
@@ -417,14 +421,17 @@ suite("Editing Frames", () => {
     class1.processKey(enter());
     const sel18 = file.getById("select18") as GlobalSelector;
     sel18.select(true, false);
-    try {
-      sel18.processKey(ctrl_v());
-    } catch (e) {
-      assert.equal(
-        "Paste Failed: Cannot paste frame into location",
-        (e as ElanCutCopyPasteError).message,
-      );
-    }
+
+    sel18.processKey(ctrl_v());
+
+    assert.ok(
+      sel18
+        .renderAsHtml()
+        .includes(
+          `<div class="context-menu"><div>Paste Failed: Cannot paste frame into location</div></div>`,
+        ),
+    );
+
     assert.equal(scratchpad.readFrames()?.length, 1);
   });
   test("#644 cutting statement when there is already a selector following", async () => {
