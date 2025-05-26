@@ -72,3 +72,9 @@ export function mayBeHtml(text: string) {
 export function sanitiseHtml(text: string) {
   return text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 }
+
+export function encodeCode(code: string) {
+  const bytes = new TextEncoder().encode(code);
+  const binCode = Array.from(bytes, (byte) => String.fromCodePoint(byte)).join("");
+  return "data:text/javascript;base64," + btoa(binCode);
+}

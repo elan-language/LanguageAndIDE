@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ElanCutCopyPasteError } from "../elan-cut-copy-paste-error";
 import { ElanRuntimeError } from "../elan-runtime-error";
 import { isElanProduction } from "../environment";
 import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";
@@ -12,6 +11,7 @@ import { StdLib } from "../standard-library/std-lib";
 import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
 import { checkIsChrome, confirmContinueOnNonChromeBrowser } from "./ui-helpers";
 import {
+  encodeCode,
   fetchDefaultProfile,
   fetchProfile,
   fetchUserConfig,
@@ -165,7 +165,7 @@ async function runProgram() {
       "",
     );
     const jsCode = file.compileAsWorker(path, debugMode, false);
-    const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+    const asUrl = encodeCode(jsCode);
 
     runWorker = new Worker(asUrl, { type: "module" });
 
@@ -327,7 +327,7 @@ saveAsStandaloneButton.addEventListener("click", async () => {
 
   jsCode = api + jsCode;
 
-  const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+  const asUrl = encodeCode(jsCode);
 
   script = script.replace("injected_code", asUrl);
   html = html.replace("injected_code", script);
@@ -1478,12 +1478,6 @@ async function handleKeyAndRender(e: editorEvent) {
         return;
     }
   } catch (e) {
-    if (e instanceof ElanCutCopyPasteError) {
-      systemInfoPrintSafe(e.message);
-      await renderAsHtml(false);
-      return;
-    }
-
     await showError(e as Error, file.fileName, false);
   }
 }
@@ -1902,7 +1896,7 @@ async function runTestsInner() {
       "",
     );
     const jsCode = file.compileAsTestWorker(path);
-    const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+    const asUrl = encodeCode(jsCode);
 
     testWorker = new Worker(asUrl, { type: "module" });
 

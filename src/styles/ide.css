@@ -122,10 +122,7 @@ body {
   color: var(--defaultText);
 }
 
-#rh-footer {
-  display: flex;
-  flex-direction: column;
-}
+
 
 #status span {
   margin-right:10px;
@@ -160,10 +157,6 @@ body {
   background-color: var(--error);
 }
 
-#rh-footer {
-  flex: 1;
-  overflow-y: auto;
-}
 
 #system-info {
   flex-grow: 1;
@@ -334,6 +327,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
   margin-left: -1px;
   padding: 2px;
   border: solid 1px;
+  border-color: black;
 }
 
 .autocomplete-popup>div,
@@ -444,6 +438,7 @@ div.spacer{
   height: fit-content;
   display: block;
 }
+
 /* Tabs */
 #tab-buttons {
   display: flex;
@@ -454,18 +449,19 @@ div.spacer{
 }
 
 #tab-buttons label {
-  padding-left: 5px;
-  padding-right: 5px;
+  padding: 5px;
   font-family: var(--ideTitleFont);
   color: var(--defaultText);
   background-color: white;
   opacity: 50%;
   margin: 20px 10px 10px 0;
-  height: 22px;
+  max-height: 30px;
 }
 
 #tab-buttons input[type="radio"]:checked + label {
   opacity: 100%;
+  margin-bottom: 0px;
+  padding-bottom: 10px;
 }
 
 #display-tab {
@@ -493,19 +489,5 @@ div.spacer{
   flex-direction: row;
 }
 
-iframe#doc-iframe {
-  background-color: var(--panelBackground);
-  border-image: none;
-  border-color: initial;
-  border-style: hidden;
-  border-width: 0cap;
-  overflow: auto;
-  width: 100%;
-  height: 100%;
-}
-
-button#clear-system-info {
-  margin-bottom: 0;
-}
 
 

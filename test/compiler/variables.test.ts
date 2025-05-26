@@ -497,7 +497,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Library or class function 'createFileForWriting' cannot be preceded by by 'ref'. Click for more info.LangRef.html#compile_error",
+      "Library or class function 'createFileForWriting' cannot be preceded by 'ref'. Click for more info.LangRef.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 
