@@ -67,6 +67,10 @@ const runStatus = document.getElementById("run-status") as HTMLDivElement;
 const codeControls = document.getElementById("code-controls") as HTMLDivElement;
 const demoFiles = document.getElementsByClassName("demo-file");
 
+const displayTab = document.getElementById("display-tab") as HTMLDivElement;
+const documentationTab = document.getElementById("documentation-tab") as HTMLDivElement;
+const debugTab = document.getElementById("debug-tab") as HTMLDivElement;
+
 const inactivityTimeout = 2000;
 const stdlib = new StdLib();
 const system = stdlib.system;
@@ -211,6 +215,7 @@ async function runProgram() {
 
 runButton?.addEventListener("click", async () => {
   debugMode = singleStepping = processingSingleStep = false;
+  displayButton.click();
   await runProgram();
 });
 
@@ -342,28 +347,28 @@ preferencesButton.addEventListener("click", () => {
 });
 
 function showDisplayTab() {
-  document.getElementById("display-tab")?.classList.remove("hide");
-  document.getElementById("documentation-tab")?.classList.add("hide");
-  document.getElementById("debug-tab")?.classList.add("hide");
+  displayTab.classList.remove("hide");
+  documentationTab.classList.add("hide");
+  debugTab.classList.add("hide");
 }
 
 function showDocumentationTab() {
-  document.getElementById("display-tab")?.classList.add("hide");
-  document.getElementById("documentation-tab")?.classList.remove("hide");
-  document.getElementById("debug-tab")?.classList.add("hide");
+  displayTab.classList.add("hide");
+  documentationTab.classList.remove("hide");
+  debugTab.classList.add("hide");
 }
 
-function showdebugTab() {
-  document.getElementById("display-tab")?.classList.add("hide");
-  document.getElementById("documentation-tab")?.classList.add("hide");
-  document.getElementById("debug-tab")?.classList.remove("hide");
+function showDebugTab() {
+  displayTab.classList.add("hide");
+  documentationTab.classList.add("hide");
+  debugTab.classList.remove("hide");
 }
 
 displayButton.addEventListener("click", showDisplayTab);
 
 documentationButton.addEventListener("click", showDocumentationTab);
 
-debugButton.addEventListener("click", showdebugTab);
+debugButton.addEventListener("click", showDebugTab);
 
 function warningOrError(tgt: HTMLDivElement): [boolean, string] {
   if (tgt.classList.contains("warning")) {
@@ -1528,6 +1533,7 @@ function handleRunWorkerFinished() {
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
 
 async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<void> {
+  debugButton.click();
   file.setRunStatus(RunStatus.paused);
   console.info("elan program paused");
   const variables = data.value;
@@ -1551,6 +1557,7 @@ async function handleRunWorkerSingleStep(data: WebWorkerBreakpointMessage): Prom
 }
 
 async function handleRunWorkerError(data: WebWorkerStatusMessage) {
+  debugButton.click();
   runWorker?.terminate();
   runWorker = undefined;
   const e = data.error;
