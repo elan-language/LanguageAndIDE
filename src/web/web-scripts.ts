@@ -36,11 +36,7 @@ const runDebugButton = document.getElementById("run-debug-button") as HTMLButton
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
 const pauseButton = document.getElementById("pause") as HTMLButtonElement;
 const stepButton = document.getElementById("step") as HTMLButtonElement;
-const clearSystemInfoButton = document.getElementById("clear-system-info") as HTMLButtonElement;
 const clearDisplayButton = document.getElementById("clear-display") as HTMLButtonElement;
-const clearDocumentationButton = document.getElementById(
-  "clear-documentation",
-) as HTMLButtonElement;
 const loadDocumentationButton = document.getElementById("load-documentation") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
 const newButton = document.getElementById("new") as HTMLButtonElement;
@@ -265,16 +261,8 @@ stopButton?.addEventListener("click", () => {
   }
 });
 
-clearSystemInfoButton?.addEventListener("click", () => {
-  systemInfoDiv.innerHTML = "";
-});
-
 clearDisplayButton?.addEventListener("click", async () => {
   await elanInputOutput.clearDisplay();
-});
-
-clearDocumentationButton?.addEventListener("click", async () => {
-  documentationIFrame.contentWindow?.location.replace("about:blank");
 });
 
 loadDocumentationButton?.addEventListener("click", async () => {
@@ -520,7 +508,6 @@ if (okToContinue) {
       expandCollapseButton,
       undoButton,
       redoButton,
-      clearSystemInfoButton,
       clearDisplayButton,
       saveAsStandaloneButton,
       preferencesButton,
@@ -804,7 +791,6 @@ function updateDisplayValues() {
         undoButton,
         redoButton,
         clearDisplayButton,
-        clearSystemInfoButton,
         fileButton,
         loadButton,
         saveAsStandaloneButton,
@@ -828,10 +814,7 @@ function updateDisplayValues() {
     enable(trimButton, "Remove all 'newCode' selectors that can be removed (shortcut: Alt-t)");
     enable(expandCollapseButton, "Expand / Collapse all code regions");
     enable(preferencesButton, "Set preferences");
-
     enable(clearDisplayButton, "Clear display");
-    enable(clearSystemInfoButton, "Clear display");
-    enable(clearDocumentationButton, "Clear documentation");
 
     for (const elem of demoFiles) {
       elem.removeAttribute("hidden");
