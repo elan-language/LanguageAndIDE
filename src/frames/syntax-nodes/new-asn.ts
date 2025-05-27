@@ -35,6 +35,8 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
     mustBeKnownSymbolType(type, typeAsString, this.compileErrors, this.fieldId);
 
+    let code: string;
+
     if (type instanceof ClassType) {
       mustBeConcreteClass(type, this.compileErrors, this.fieldId);
 
@@ -64,13 +66,14 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
       const scope = libScope ? "_stdlib." : "";
 
-      getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
-
-      return `system.initialise(await new ${scope}${type.className}()._initialise(${parametersAsString}))`;
+      code = `system.initialise(await new ${scope}${type.className}()._initialise(${parametersAsString}))`;
+    } else {
+      mustBeNewable(typeAsString, this.compileErrors, this.fieldId);
+      code = "";
     }
 
-    mustBeNewable(typeAsString, this.compileErrors, this.fieldId);
-    return "";
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+    return code;
   }
 
   symbolType() {

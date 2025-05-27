@@ -132,7 +132,7 @@ import { EmptyTypeAsn } from "./empty-type-asn";
 import { EnumValuesAsn } from "./fields/enum-values-asn";
 import { InheritsFromAsn } from "./fields/inherits-from-asn";
 import { ParamListAsn } from "./fields/param-list-asn";
-import { TypeFieldAsn } from "./fields/type-asn";
+import { TypeFieldAsn } from "./fields/type-field-asn";
 import { FileAsn } from "./file-asn";
 import { FixedIdAsn } from "./fixed-id-asn";
 import { FuncCallAsn } from "./func-call-asn";
