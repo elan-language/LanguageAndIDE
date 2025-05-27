@@ -56,16 +56,6 @@ body {
   margin-bottom: 10px;
 }
 
-
-
-#centre-bar {
-  cursor: col-resize;
-  flex-basis: 20px;
-}
-#centre-bar:hover, #centre-bar:active {
- background-color: darkblue;
-}
-
 #code-controls {
   display: flex;
   flex-direction: row;
@@ -176,6 +166,7 @@ body {
   padding: 5px;
   overflow-y: auto;
   overflow-x: auto;
+  margin-bottom: 10px;
 }
 
 #display {
@@ -428,7 +419,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
   overflow-y: auto;
 }
 
-iframe {
+#display-html iframe {
   border-image: none;
   border-color: initial;
   border-style: hidden;
@@ -458,19 +449,18 @@ div.spacer{
 }
 
 #tab-buttons label {
-  padding: 5px;
+  height: 22px;
+  padding-left: 5px;
+  padding-right: 5px;
   font-family: var(--ideTitleFont);
   color: var(--defaultText);
   background-color: white;
   opacity: 50%;
   margin: 20px 10px 10px 0;
-  max-height: 30px;
 }
 
 #tab-buttons input[type="radio"]:checked + label {
   opacity: 100%;
-  margin-bottom: 0px;
-  padding-bottom: 10px;
 }
 
 #display-tab {
@@ -478,8 +468,25 @@ div.spacer{
 }
 
 #documentation-tab {
-  display: block;
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
+}
+
+iframe#doc-iframe {
+  background-color: var(--panelBackground);
+  border-image: none;
+  border-color: initial;
+  border-style: hidden;
+  border-width: 0cap;
+  overflow: auto;
+  width: 100%;
+  flex-grow: 1;
+}
+
+#doc-buttons {
+  margin-top: 5px;
+  margin-bottom: 0;
 }
 
 #debug-tab {
@@ -498,5 +505,7 @@ div.spacer{
   flex-direction: row;
 }
 
-
+button#clear-system-info {
+  margin-bottom: 0;
+}
 

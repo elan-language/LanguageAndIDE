@@ -38,6 +38,10 @@ const pauseButton = document.getElementById("pause") as HTMLButtonElement;
 const stepButton = document.getElementById("step") as HTMLButtonElement;
 const clearSystemInfoButton = document.getElementById("clear-system-info") as HTMLButtonElement;
 const clearDisplayButton = document.getElementById("clear-display") as HTMLButtonElement;
+const clearDocumentationButton = document.getElementById(
+  "clear-documentation",
+) as HTMLButtonElement;
+const loadDocumentationButton = document.getElementById("load-documentation") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
 const newButton = document.getElementById("new") as HTMLButtonElement;
 const demosButton = document.getElementById("demos") as HTMLButtonElement;
@@ -55,6 +59,10 @@ const logoutButton = document.getElementById("logout") as HTMLButtonElement;
 const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLButtonElement;
 const preferencesButton = document.getElementById("preferences") as HTMLButtonElement;
 
+const displayButton = document.getElementById("display-button") as HTMLButtonElement;
+const documentationButton = document.getElementById("documentation-button") as HTMLButtonElement;
+const debugButton = document.getElementById("debug-button") as HTMLButtonElement;
+
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
 const compileStatus = document.getElementById("compile") as HTMLDivElement;
@@ -62,6 +70,12 @@ const testStatus = document.getElementById("test") as HTMLDivElement;
 const runStatus = document.getElementById("run-status") as HTMLDivElement;
 const codeControls = document.getElementById("code-controls") as HTMLDivElement;
 const demoFiles = document.getElementsByClassName("demo-file");
+
+const displayTab = document.getElementById("display-tab") as HTMLDivElement;
+const documentationTab = document.getElementById("documentation-tab") as HTMLDivElement;
+const debugTab = document.getElementById("debug-tab") as HTMLDivElement;
+
+const documentationIFrame = document.getElementById("doc-iframe") as HTMLIFrameElement;
 
 const inactivityTimeout = 2000;
 const stdlib = new StdLib();
@@ -137,6 +151,7 @@ function resumeProgram() {
 
 async function runProgram() {
   try {
+    displayButton.click();
     if (file.readRunStatus() === RunStatus.paused && runWorker && debugMode) {
       resumeProgram();
       return;
@@ -258,6 +273,26 @@ clearDisplayButton?.addEventListener("click", async () => {
   await elanInputOutput.clearDisplay();
 });
 
+clearDocumentationButton?.addEventListener("click", async () => {
+  documentationIFrame.contentWindow?.location.replace("about:blank");
+});
+
+loadDocumentationButton?.addEventListener("click", async () => {
+  try {
+    const [fileHandle] = await window.showOpenFilePicker({
+      startIn: "documents",
+      types: [{ accept: { "text/html": ".html" } }],
+      id: lastDirId,
+    });
+    const codeFile = await fileHandle.getFile();
+    const url = URL.createObjectURL(codeFile);
+    window.open(url, "doc-iframe")?.focus();
+  } catch (_e) {
+    // user cancelled
+    return;
+  }
+});
+
 expandCollapseButton?.addEventListener("click", async () => {
   file.expandCollapseAll();
   await renderAsHtml(false);
@@ -336,6 +371,33 @@ preferencesButton.addEventListener("click", () => {
 
   dialog.showModal();
 });
+
+function showDisplayTab() {
+  displayTab.classList.remove("hide");
+  documentationTab.classList.add("hide");
+  debugTab.classList.add("hide");
+}
+
+function showDocumentationTab() {
+  displayTab.classList.add("hide");
+  documentationTab.classList.remove("hide");
+  debugTab.classList.add("hide");
+  documentationIFrame.focus();
+}
+
+function showDebugTab() {
+  displayTab.classList.add("hide");
+  documentationTab.classList.add("hide");
+  debugTab.classList.remove("hide");
+}
+
+displayButton.addEventListener("click", showDisplayTab);
+
+documentationButton.addEventListener("click", showDocumentationTab);
+
+debugButton.addEventListener("click", showDebugTab);
+
+documentationIFrame.addEventListener("load", () => documentationButton.click());
 
 function warningOrError(tgt: HTMLDivElement): [boolean, string] {
   if (tgt.classList.contains("warning")) {
@@ -769,6 +831,7 @@ function updateDisplayValues() {
 
     enable(clearDisplayButton, "Clear display");
     enable(clearSystemInfoButton, "Clear display");
+    enable(clearDocumentationButton, "Clear documentation");
 
     for (const elem of demoFiles) {
       elem.removeAttribute("hidden");
@@ -1149,7 +1212,7 @@ async function updateContent(text: string, editingField: boolean) {
         const href = tgt.dataset.href;
 
         if (href) {
-          window.open(`documentation/${href}`, "_blank")?.focus();
+          window.open(`documentation/${href}`, "doc-iframe")?.focus();
         } else {
           handleEditorEvent(
             event,
@@ -1174,7 +1237,7 @@ async function updateContent(text: string, editingField: boolean) {
       const tgt = ke.target as HTMLDivElement;
       const href = tgt.dataset.href;
       if (href) {
-        window.open(`documentation/${href}`, "_blank")?.focus();
+        window.open(`documentation/${href}`, "doc-iframe")?.focus();
       }
     });
   }
@@ -1494,6 +1557,7 @@ function handleRunWorkerFinished() {
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
 
 async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<void> {
+  debugButton.click();
   file.setRunStatus(RunStatus.paused);
   console.info("elan program paused");
   const variables = data.value;
@@ -1517,6 +1581,7 @@ async function handleRunWorkerSingleStep(data: WebWorkerBreakpointMessage): Prom
 }
 
 async function handleRunWorkerError(data: WebWorkerStatusMessage) {
+  debugButton.click();
   runWorker?.terminate();
   runWorker = undefined;
   const e = data.error;
