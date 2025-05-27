@@ -118,6 +118,7 @@ test('debug program', async ({ page }) => {
     button: 'right'
   });
   await page.getByText('set breakpoint (Ctrl-b)').click();
+  await page.getByText('Debug', { exact: true }).click();
   await page.getByRole('button', { name: 'Debug the program' }).click();
   await expect(page.locator('#system-info')).toContainText('a : 100');
   await expect(page.locator('#run-status')).toContainText('paused');
