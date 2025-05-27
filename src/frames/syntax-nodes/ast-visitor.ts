@@ -526,6 +526,7 @@ export function transform(
   if (node instanceof FunctionMethod) {
     const functionAsn = new FunctionMethodAsn(node.getHtmlId(), scope);
     functionAsn.breakpointStatus = node.breakpointStatus;
+    functionAsn.private = node.private;
 
     functionAsn.name = transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
     functionAsn.params = transform(node.params, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
@@ -543,6 +544,7 @@ export function transform(
   if (node instanceof ProcedureMethod) {
     const procedureAsn = new ProcedureMethodAsn(node.getHtmlId(), scope);
     procedureAsn.breakpointStatus = node.breakpointStatus;
+    procedureAsn.private = node.private;
 
     procedureAsn.name = transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
     procedureAsn.params =

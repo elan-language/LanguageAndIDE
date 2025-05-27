@@ -244,6 +244,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Boolean, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Float or Int, Provided: Boolean. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });
@@ -262,6 +263,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Boolean, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Float or Int, Provided: Boolean. Click for more info.LangRef.html#TypesCompileError",
     ]);
   });

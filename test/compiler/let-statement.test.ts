@@ -240,7 +240,6 @@ end function`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "'x' is not defined. Click for more info.LangRef.html#compile_error",
-      "'x' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });
 
@@ -262,7 +261,6 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'y' is not defined. Click for more info.LangRef.html#compile_error",
       "'y' is not defined. Click for more info.LangRef.html#compile_error",
     ]);
   });

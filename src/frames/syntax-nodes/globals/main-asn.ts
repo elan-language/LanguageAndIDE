@@ -1,7 +1,6 @@
 import { mustNotHaveDuplicateMain } from "../../compile-rules";
 import { AstNode } from "../../interfaces/ast-node";
 import { Scope } from "../../interfaces/scope";
-import { SymbolType } from "../../interfaces/symbol-type";
 import { DuplicateSymbol } from "../../symbols/duplicate-symbol";
 import { allScopedSymbols, getGlobalScope } from "../../symbols/symbol-helpers";
 import { transforms } from "../ast-helpers";
@@ -19,8 +18,8 @@ export class MainAsn extends FrameWithStatementsAsn implements AstNode {
     return "";
   }
 
-  symbolType(): SymbolType {
-    throw new Error("Method not implemented.");
+  get symbolId() {
+    return "__main";
   }
 
   debugSymbols() {

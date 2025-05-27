@@ -19,6 +19,8 @@ export class ProcedureMethodAsn extends ProcedureAsn {
     super(fieldId, scope);
   }
 
+  private: boolean = false;
+
   getClass(): ConcreteClass {
     return this.getParentScope() as ConcreteClass;
   }

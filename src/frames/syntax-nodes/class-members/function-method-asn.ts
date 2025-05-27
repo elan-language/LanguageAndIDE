@@ -24,6 +24,8 @@ export class FunctionMethodAsn extends FunctionAsn {
     super(fieldId, scope);
   }
 
+  private: boolean = false;
+
   getClass(): ConcreteClass {
     return this.getParentScope() as ConcreteClass;
   }
