@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ElanCutCopyPasteError } from "../elan-cut-copy-paste-error";
 import { ElanRuntimeError } from "../elan-runtime-error";
 import { isElanProduction } from "../environment";
 import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";
@@ -12,6 +11,7 @@ import { StdLib } from "../standard-library/std-lib";
 import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
 import { checkIsChrome, confirmContinueOnNonChromeBrowser } from "./ui-helpers";
 import {
+  encodeCode,
   fetchDefaultProfile,
   fetchProfile,
   fetchUserConfig,
@@ -36,8 +36,8 @@ const runDebugButton = document.getElementById("run-debug-button") as HTMLButton
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
 const pauseButton = document.getElementById("pause") as HTMLButtonElement;
 const stepButton = document.getElementById("step") as HTMLButtonElement;
-const clearSystemInfoButton = document.getElementById("clear-system-info") as HTMLButtonElement;
 const clearDisplayButton = document.getElementById("clear-display") as HTMLButtonElement;
+const loadDocumentationButton = document.getElementById("load-documentation") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
 const newButton = document.getElementById("new") as HTMLButtonElement;
 const demosButton = document.getElementById("demos") as HTMLButtonElement;
@@ -55,6 +55,10 @@ const logoutButton = document.getElementById("logout") as HTMLButtonElement;
 const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLButtonElement;
 const preferencesButton = document.getElementById("preferences") as HTMLButtonElement;
 
+const displayButton = document.getElementById("display-button") as HTMLButtonElement;
+const documentationButton = document.getElementById("documentation-button") as HTMLButtonElement;
+const debugButton = document.getElementById("debug-button") as HTMLButtonElement;
+
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
 const compileStatus = document.getElementById("compile") as HTMLDivElement;
@@ -62,6 +66,12 @@ const testStatus = document.getElementById("test") as HTMLDivElement;
 const runStatus = document.getElementById("run-status") as HTMLDivElement;
 const codeControls = document.getElementById("code-controls") as HTMLDivElement;
 const demoFiles = document.getElementsByClassName("demo-file");
+
+const displayTab = document.getElementById("display-tab") as HTMLDivElement;
+const documentationTab = document.getElementById("documentation-tab") as HTMLDivElement;
+const debugTab = document.getElementById("debug-tab") as HTMLDivElement;
+
+const documentationIFrame = document.getElementById("doc-iframe") as HTMLIFrameElement;
 
 const inactivityTimeout = 2000;
 const stdlib = new StdLib();
@@ -137,6 +147,7 @@ function resumeProgram() {
 
 async function runProgram() {
   try {
+    displayButton.click();
     if (file.readRunStatus() === RunStatus.paused && runWorker && debugMode) {
       resumeProgram();
       return;
@@ -150,7 +161,7 @@ async function runProgram() {
       "",
     );
     const jsCode = file.compileAsWorker(path, debugMode, false);
-    const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+    const asUrl = encodeCode(jsCode);
 
     runWorker = new Worker(asUrl, { type: "module" });
 
@@ -250,12 +261,24 @@ stopButton?.addEventListener("click", () => {
   }
 });
 
-clearSystemInfoButton?.addEventListener("click", () => {
-  systemInfoDiv.innerHTML = "";
-});
-
 clearDisplayButton?.addEventListener("click", async () => {
   await elanInputOutput.clearDisplay();
+});
+
+loadDocumentationButton?.addEventListener("click", async () => {
+  try {
+    const [fileHandle] = await window.showOpenFilePicker({
+      startIn: "documents",
+      types: [{ accept: { "text/html": ".html" } }],
+      id: lastDirId,
+    });
+    const codeFile = await fileHandle.getFile();
+    const url = URL.createObjectURL(codeFile);
+    window.open(url, "doc-iframe")?.focus();
+  } catch (_e) {
+    // user cancelled
+    return;
+  }
 });
 
 expandCollapseButton?.addEventListener("click", async () => {
@@ -292,7 +315,7 @@ saveAsStandaloneButton.addEventListener("click", async () => {
 
   jsCode = api + jsCode;
 
-  const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+  const asUrl = encodeCode(jsCode);
 
   script = script.replace("injected_code", asUrl);
   html = html.replace("injected_code", script);
@@ -336,6 +359,33 @@ preferencesButton.addEventListener("click", () => {
 
   dialog.showModal();
 });
+
+function showDisplayTab() {
+  displayTab.classList.remove("hide");
+  documentationTab.classList.add("hide");
+  debugTab.classList.add("hide");
+}
+
+function showDocumentationTab() {
+  displayTab.classList.add("hide");
+  documentationTab.classList.remove("hide");
+  debugTab.classList.add("hide");
+  documentationIFrame.focus();
+}
+
+function showDebugTab() {
+  displayTab.classList.add("hide");
+  documentationTab.classList.add("hide");
+  debugTab.classList.remove("hide");
+}
+
+displayButton.addEventListener("click", showDisplayTab);
+
+documentationButton.addEventListener("click", showDocumentationTab);
+
+debugButton.addEventListener("click", showDebugTab);
+
+documentationIFrame.addEventListener("load", () => documentationButton.click());
 
 function warningOrError(tgt: HTMLDivElement): [boolean, string] {
   if (tgt.classList.contains("warning")) {
@@ -458,7 +508,6 @@ if (okToContinue) {
       expandCollapseButton,
       undoButton,
       redoButton,
-      clearSystemInfoButton,
       clearDisplayButton,
       saveAsStandaloneButton,
       preferencesButton,
@@ -742,7 +791,6 @@ function updateDisplayValues() {
         undoButton,
         redoButton,
         clearDisplayButton,
-        clearSystemInfoButton,
         fileButton,
         loadButton,
         saveAsStandaloneButton,
@@ -766,9 +814,7 @@ function updateDisplayValues() {
     enable(trimButton, "Remove all 'newCode' selectors that can be removed (shortcut: Alt-t)");
     enable(expandCollapseButton, "Expand / Collapse all code regions");
     enable(preferencesButton, "Set preferences");
-
     enable(clearDisplayButton, "Clear display");
-    enable(clearSystemInfoButton, "Clear display");
 
     for (const elem of demoFiles) {
       elem.removeAttribute("hidden");
@@ -1149,7 +1195,7 @@ async function updateContent(text: string, editingField: boolean) {
         const href = tgt.dataset.href;
 
         if (href) {
-          window.open(`documentation/${href}`, "_blank")?.focus();
+          window.open(`documentation/${href}`, "doc-iframe")?.focus();
         } else {
           handleEditorEvent(
             event,
@@ -1174,7 +1220,7 @@ async function updateContent(text: string, editingField: boolean) {
       const tgt = ke.target as HTMLDivElement;
       const href = tgt.dataset.href;
       if (href) {
-        window.open(`documentation/${href}`, "_blank")?.focus();
+        window.open(`documentation/${href}`, "doc-iframe")?.focus();
       }
     });
   }
@@ -1415,12 +1461,6 @@ async function handleKeyAndRender(e: editorEvent) {
         return;
     }
   } catch (e) {
-    if (e instanceof ElanCutCopyPasteError) {
-      systemInfoPrintSafe(e.message);
-      await renderAsHtml(false);
-      return;
-    }
-
     await showError(e as Error, file.fileName, false);
   }
 }
@@ -1500,6 +1540,7 @@ function handleRunWorkerFinished() {
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
 
 async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<void> {
+  debugButton.click();
   file.setRunStatus(RunStatus.paused);
   console.info("elan program paused");
   const variables = data.value;
@@ -1523,6 +1564,7 @@ async function handleRunWorkerSingleStep(data: WebWorkerBreakpointMessage): Prom
 }
 
 async function handleRunWorkerError(data: WebWorkerStatusMessage) {
+  debugButton.click();
   runWorker?.terminate();
   runWorker = undefined;
   const e = data.error;
@@ -1837,7 +1879,7 @@ async function runTestsInner() {
       "",
     );
     const jsCode = file.compileAsTestWorker(path);
-    const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+    const asUrl = encodeCode(jsCode);
 
     testWorker = new Worker(asUrl, { type: "module" });
 

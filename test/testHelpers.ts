@@ -31,6 +31,7 @@ import { WebWorkerMessage } from "../src/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
+import { encodeCode } from "../src/web/web-helpers";
 
 
 // flag to update test file
@@ -286,7 +287,7 @@ export async function assertDebugBreakPoint(
 
   const dir = __dirname.replaceAll("\\", "/");
   const jsCode = f.compileAsWorker(`file:///${dir}`, true, false);
-  const asUrl = "data:text/javascript;base64," + btoa(jsCode);
+  const asUrl = encodeCode(jsCode);
 
   const runWorker = new Worker(asUrl, { type: "module" });
 

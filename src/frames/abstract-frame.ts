@@ -1,4 +1,3 @@
-import { ElanCutCopyPasteError } from "../elan-cut-copy-paste-error";
 import { CompileError } from "./compile-error";
 import {
   expandCollapseAll,
@@ -56,6 +55,8 @@ export abstract class AbstractFrame implements Frame {
   protected showContextMenu = false;
   breakpointStatus: BreakpointStatus = BreakpointStatus.none;
   protected paused = false;
+
+  pasteError: string = "";
 
   constructor(parent: Parent) {
     this._parent = parent;
@@ -359,12 +360,14 @@ export abstract class AbstractFrame implements Frame {
     const selected = parentHelper_getAllSelectedChildren(this.getParent());
     const nonSelectors = selected.filter((s) => !(s.initialKeywords() === "selector"));
     if (nonSelectors.length === 0) {
-      throw new ElanCutCopyPasteError("Cut Failed: No code to cut");
+      this.pasteError = "Cut Failed: No code to cut";
+      return;
     }
     const movable = nonSelectors.filter((s) => s.isMovable());
     const last = selected[selected.length - 1];
     if (movable.length !== selected.length) {
-      throw new ElanCutCopyPasteError("Cut Failed: At least one selected frame is not moveable");
+      this.pasteError = "Cut Failed: At least one selected frame is not moveable";
+      return;
     }
     parentHelper_removeAllSelectedChildren(this.getParent());
     const newFocus = parentHelper_getChildAfter(this.getParent(), last);

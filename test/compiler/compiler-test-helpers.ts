@@ -12,7 +12,8 @@ import { StdLib } from "../../src/standard-library/std-lib";
 import { runTests } from "../runner";
 import { TestInputOutput } from "./test-input-output";
 import { getTestSystem } from "./test-system";
-
+import { aggregateCompileErrors } from "../testHelpers";
+import { encodeCode } from "../../src/web/web-helpers";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);
@@ -81,7 +82,7 @@ export function assertDoesNotCompileWithId(file: FileImpl, id: string, msgs: str
 }
 
 function doImport(str: string) {
-  const url = "data:text/javascript;base64," + btoa(str);
+  const url = encodeCode(str);
   return import(url);
 }
 

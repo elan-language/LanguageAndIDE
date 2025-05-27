@@ -1,6 +1,5 @@
-import { ElanCutCopyPasteError } from "../elan-cut-copy-paste-error";
 import { AbstractFrame } from "./abstract-frame";
-import { isFrameWithStatements } from "./frame-helpers";
+import { helper_pastePopUp, isFrameWithStatements } from "./frame-helpers";
 import { CodeSource } from "./interfaces/code-source";
 import { editorEvent } from "./interfaces/editor-event";
 import { Field } from "./interfaces/field";
@@ -126,7 +125,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     this.text = "";
   }
   textToDisplayAsHtml(): string {
-    return `<el-select><el-txt>${this.text}</el-txt><el-place>${this.label}</el-place><el-help class="selector">${this.getCompletion()}</el-help></el-select>`;
+    return `<el-select><el-txt>${this.text}</el-txt><el-place>${this.label}</el-place><el-help class="selector">${this.getCompletion()}</el-help>${helper_pastePopUp(this)}</el-select>`;
   }
   renderAsSource(): string {
     return `${this.indent()}`;
@@ -211,10 +210,10 @@ export abstract class AbstractSelector extends AbstractFrame {
         sp.remove(frames!);
         this.deleteIfPermissible();
       } else {
-        throw new ElanCutCopyPasteError("Paste Failed: Cannot paste frame into location");
+        this.pasteError = "Paste Failed: Cannot paste frame into location";
       }
     } else {
-      throw new ElanCutCopyPasteError("Paste Failed: Nothing to paste");
+      this.pasteError = "Paste Failed: Nothing to paste";
     }
   }
 
