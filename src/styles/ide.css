@@ -166,7 +166,6 @@ body {
   padding: 5px;
   overflow-y: auto;
   overflow-x: auto;
-  margin-bottom: 10px;
 }
 
 #display {
@@ -260,7 +259,8 @@ button.icon:disabled img {
 button.plain,
 button.plain:hover,
 button.plain:active,
-button.plain:focus {
+button.plain:focus
+{
   background-color: var(--panelBackground);
   border: none;
   outline: none;
@@ -459,6 +459,12 @@ div.spacer{
   margin: 20px 10px 10px 0;
 }
 
+#tab-buttons label:hover,
+#tab-buttons label:active,
+#tab-buttons label:focus {
+  text-decoration: underline;
+}
+
 #tab-buttons input[type="radio"]:checked + label {
   opacity: 100%;
 }
@@ -503,9 +509,5 @@ iframe#doc-iframe {
 #debug-controls {
   display: flex;
   flex-direction: row;
-}
-
-button#clear-system-info {
-  margin-bottom: 0;
 }
 
