@@ -5,7 +5,7 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { BreakpointEvent, BreakpointStatus } from "../status-enums";
-import { allScopedSymbols, orderSymbol } from "../symbols/symbol-helpers";
+import { allScopedSymbols, getGlobalScope, orderSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 
@@ -18,6 +18,34 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
   }
 
   breakpointStatus: BreakpointStatus = BreakpointStatus.none;
+
+  setBreakPoint = () => {
+    this.breakpointStatus = BreakpointStatus.active;
+  };
+
+  clearBreakPoint = () => {
+    this.breakpointStatus = BreakpointStatus.none;
+  };
+
+  toggleBreakPoint = () => {
+    if (this.hasBreakpoint()) {
+      this.clearBreakPoint();
+    } else {
+      this.setBreakPoint();
+    }
+  };
+
+  clearAllBreakPoints = () => {
+    getGlobalScope(this.scope).updateBreakpoints(BreakpointEvent.clear);
+  };
+
+  hasBreakpoint() {
+    return (
+      this.breakpointStatus === BreakpointStatus.active ||
+      this.breakpointStatus === BreakpointStatus.disabled
+    );
+  }
+
   protected paused = false;
 
   symbolType(): SymbolType {

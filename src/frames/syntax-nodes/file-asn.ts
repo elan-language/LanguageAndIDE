@@ -1,16 +1,18 @@
 import { CompileError } from "../compile-error";
 import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
-import { RootAstNode } from "../interfaces/root-ast-node";
+import { CompileMode, RootAstNode } from "../interfaces/root-ast-node";
 import { Scope } from "../interfaces/scope";
 import { Semver } from "../interfaces/semver";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
+import { BreakpointEvent } from "../status-enums";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { elanSymbols } from "../symbols/elan-symbols";
 import { isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { FrameAsn } from "./frame-asn";
 import { ConstantAsn } from "./globals/constant-asn";
 import { EnumAsn } from "./globals/enum-asn";
 import { MainAsn } from "./globals/main-asn";
@@ -19,6 +21,8 @@ import { TestAsn } from "./globals/test-asn";
 export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   isFile = true;
   private _nextId: number = 0;
+  private mode: CompileMode = CompileMode.inprocess;
+  private base: string | undefined;
 
   constructor(
     private scope: Scope,
@@ -26,6 +30,12 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   ) {
     super();
   }
+
+  setCompileOptions(mode: CompileMode, base: string | undefined): void {
+    this.mode = mode;
+    this.base = base;
+  }
+
   getAllCompileErrors(): CompileError[] {
     let all: CompileError[] = [];
 
@@ -132,9 +142,73 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
     return result;
   }
 
+  updateBreakpoints(event: BreakpointEvent) {
+    for (const frame of this.children.filter((f) => f instanceof FrameAsn)) {
+      frame.updateBreakpoints(event);
+    }
+  }
+
+  compileAsTestWorker(base: string): string {
+    this.updateBreakpoints(BreakpointEvent.disable);
+    const onmsg = `onmessage = async (e) => {
+    if (e.data.type === "start") {
+      try {
+        const [main, tests] = await program();
+        const outcomes = await system.runTests(tests);
+        postMessage({type : "test", value : outcomes});
+      }
+      catch (e) {
+        postMessage({type : "status", status : "error", error : e});
+      }
+    }
+  };`;
+
+    const stdlib = `import { StdLib } from "${base}/elan-api.js"; let system; let _stdlib; let _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
+    return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
+  }
+
+  compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string {
+    this.updateBreakpoints(debugMode ? BreakpointEvent.activate : BreakpointEvent.disable);
+    const onmsg = `addEventListener("message", async (e) => {
+  if (e.data.type === "start") {
+    try {
+      const [main, tests] = await program();
+      await main();
+      postMessage({type : "status", status : "finished"});
+    }
+    catch (e) {
+      postMessage({type : "status", status : "error", error : e});
+    }
+  }
+  if (e.data.type === "pause") {
+    __pause = true;
+  }
+  });`;
+
+    const imp = standalone ? "" : `import { StdLib } from "${base}/elan-api.js"; `;
+    const stdlib = `${imp}let system; let _stdlib; let _tests = []; let __pause = false; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
+    return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
+  }
+
   compile(): string {
-    const stdlib = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
-    return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}`;
+    if (this.mode === CompileMode.inprocess) {
+      const stdlib = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
+      return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}`;
+    }
+    if (this.mode === CompileMode.worker) {
+      return this.compileAsWorker(this.base!, false, false);
+    }
+    if (this.mode === CompileMode.debugWorker) {
+      return this.compileAsWorker(this.base!, true, false);
+    }
+    if (this.mode === CompileMode.standaloneWorker) {
+      return this.compileAsWorker(this.base!, false, true);
+    }
+    if (this.mode === CompileMode.testWorker) {
+      return this.compileAsTestWorker(this.base!);
+    }
+
+    return "";
   }
 
   resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {

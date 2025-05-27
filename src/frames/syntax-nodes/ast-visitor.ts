@@ -239,6 +239,7 @@ export function transform(
 
   if (node instanceof MainFrame) {
     const mainAsn = new MainAsn(node.getHtmlId(), scope);
+    mainAsn.breakpointStatus = node.breakpointStatus;
 
     mainAsn.children = node
       .getChildren()
@@ -250,6 +251,7 @@ export function transform(
 
   if (node instanceof TestFrame) {
     const testAsn = new TestAsn(node.getHtmlId(), scope);
+    testAsn.breakpointStatus = node.breakpointStatus;
 
     testAsn.children = node
       .getChildren()
@@ -269,6 +271,7 @@ export function transform(
 
   if (node instanceof ConcreteClass) {
     const classAsn = new ConcreteClassAsn(node.getHtmlId(), scope);
+    classAsn.breakpointStatus = node.breakpointStatus;
 
     classAsn.name = transform(node.name, node.getHtmlId(), classAsn) ?? EmptyAsn.Instance;
     classAsn.inheritance =
@@ -284,6 +287,7 @@ export function transform(
 
   if (node instanceof AbstractClass) {
     const classAsn = new AbstractClassAsn(node.getHtmlId(), scope);
+    classAsn.breakpointStatus = node.breakpointStatus;
 
     classAsn.name = transform(node.name, node.getHtmlId(), classAsn) ?? EmptyAsn.Instance;
     classAsn.inheritance =
@@ -299,6 +303,7 @@ export function transform(
 
   if (node instanceof RecordFrame) {
     const recordAsn = new RecordAsn(node.getHtmlId(), scope);
+    recordAsn.breakpointStatus = node.breakpointStatus;
 
     recordAsn.name = transform(node.name, node.getHtmlId(), recordAsn) ?? EmptyAsn.Instance;
     recordAsn.inheritance =
@@ -314,6 +319,7 @@ export function transform(
 
   if (node instanceof InterfaceFrame) {
     const recordAsn = new InterfaceAsn(node.getHtmlId(), scope);
+    recordAsn.breakpointStatus = node.breakpointStatus;
 
     recordAsn.name = transform(node.name, node.getHtmlId(), recordAsn) ?? EmptyAsn.Instance;
     recordAsn.inheritance =
@@ -329,6 +335,7 @@ export function transform(
 
   if (node instanceof Constructor) {
     const constructorAsn = new ConstructorAsn(node.getHtmlId(), scope);
+    constructorAsn.breakpointStatus = node.breakpointStatus;
 
     constructorAsn.params =
       transform(node.params, node.getHtmlId(), constructorAsn) ?? EmptyAsn.Instance;
@@ -343,6 +350,7 @@ export function transform(
 
   if (node instanceof AbstractProperty) {
     const propertyAsn = new AbstractPropertyAsn(node.getHtmlId(), scope);
+    propertyAsn.breakpointStatus = node.breakpointStatus;
 
     propertyAsn.name = transform(node.name, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
     propertyAsn.type = transform(node.type, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
@@ -352,6 +360,7 @@ export function transform(
 
   if (node instanceof Property) {
     const propertyAsn = new PropertyAsn(node.getHtmlId(), scope);
+    propertyAsn.breakpointStatus = node.breakpointStatus;
 
     propertyAsn.name = transform(node.name, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
     propertyAsn.type = transform(node.type, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
@@ -361,6 +370,7 @@ export function transform(
 
   if (node instanceof VariableStatement) {
     const varAsn = new VariableAsn(node.getHtmlId(), scope);
+    varAsn.breakpointStatus = node.breakpointStatus;
 
     varAsn.name = transform(node.name, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
     varAsn.expr = transform(node.expr, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
@@ -370,6 +380,7 @@ export function transform(
 
   if (node instanceof LetStatement) {
     const letAsn = new LetAsn(node.getHtmlId(), scope);
+    letAsn.breakpointStatus = node.breakpointStatus;
 
     letAsn.name = transform(node.name, node.getHtmlId(), letAsn) ?? EmptyAsn.Instance;
     letAsn.expr = transform(node.expr, node.getHtmlId(), letAsn) ?? EmptyAsn.Instance;
@@ -379,6 +390,7 @@ export function transform(
 
   if (node instanceof SetStatement) {
     const setAsn = new SetAsn(node.getHtmlId(), scope);
+    setAsn.breakpointStatus = node.breakpointStatus;
 
     setAsn.assignable = transform(node.assignable, node.getHtmlId(), setAsn) ?? EmptyAsn.Instance;
     setAsn.expr = transform(node.expr, node.getHtmlId(), setAsn) ?? EmptyAsn.Instance;
@@ -388,6 +400,7 @@ export function transform(
 
   if (node instanceof CallStatement) {
     const callAsn = new CallAsn(node.getHtmlId(), scope);
+    callAsn.breakpointStatus = node.breakpointStatus;
 
     callAsn.proc = transform(node.proc, node.getHtmlId(), callAsn) ?? EmptyAsn.Instance;
     callAsn.args = transform(node.args, node.getHtmlId(), callAsn) ?? EmptyAsn.Instance;
@@ -397,6 +410,7 @@ export function transform(
 
   if (node instanceof ReturnStatement) {
     const returnAsn = new ReturnAsn(node.getHtmlId(), scope);
+    returnAsn.breakpointStatus = node.breakpointStatus;
     returnAsn.expr = transform(node.expr, node.getHtmlId(), returnAsn) ?? EmptyAsn.Instance;
     return returnAsn;
   }
@@ -409,6 +423,7 @@ export function transform(
 
   if (node instanceof Enum) {
     const enumAsn = new EnumAsn(node.getHtmlId(), scope);
+    enumAsn.breakpointStatus = node.breakpointStatus;
 
     enumAsn.name = transform(node.name, node.getHtmlId(), enumAsn) ?? EmptyAsn.Instance;
     enumAsn.values = transform(node.values, node.getHtmlId(), enumAsn) ?? EmptyAsn.Instance;
@@ -426,6 +441,7 @@ export function transform(
 
   if (node instanceof Constant) {
     const constantAsn = new ConstantAsn(node.getHtmlId(), scope);
+    constantAsn.breakpointStatus = node.breakpointStatus;
 
     constantAsn.name = transform(node.name, node.getHtmlId(), constantAsn) ?? EmptyAsn.Instance;
     constantAsn.value = transform(node.value, node.getHtmlId(), constantAsn) ?? EmptyAsn.Instance;
@@ -452,6 +468,7 @@ export function transform(
 
   if (node instanceof AbstractFunction) {
     const functionAsn = new AbstractFunctionAsn(node.getHtmlId(), scope);
+    functionAsn.breakpointStatus = node.breakpointStatus;
 
     functionAsn.name = transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
     functionAsn.params = transform(node.params, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
@@ -463,6 +480,7 @@ export function transform(
 
   if (node instanceof AbstractProcedure) {
     const procedureAsn = new AbstractProcedureAsn(node.getHtmlId(), scope);
+    procedureAsn.breakpointStatus = node.breakpointStatus;
 
     procedureAsn.name = transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
     procedureAsn.params =
@@ -473,6 +491,7 @@ export function transform(
 
   if (node instanceof GlobalFunction) {
     const functionAsn = new GlobalFunctionAsn(node.getHtmlId(), scope);
+    functionAsn.breakpointStatus = node.breakpointStatus;
 
     functionAsn.name = transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
     functionAsn.params = transform(node.params, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
@@ -489,6 +508,7 @@ export function transform(
 
   if (node instanceof GlobalProcedure) {
     const procedureAsn = new GlobalProcedureAsn(node.getHtmlId(), scope);
+    procedureAsn.breakpointStatus = node.breakpointStatus;
 
     procedureAsn.name = transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
     procedureAsn.params =
@@ -504,6 +524,7 @@ export function transform(
 
   if (node instanceof FunctionMethod) {
     const functionAsn = new FunctionMethodAsn(node.getHtmlId(), scope);
+    functionAsn.breakpointStatus = node.breakpointStatus;
 
     functionAsn.name = transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
     functionAsn.params = transform(node.params, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
@@ -520,6 +541,7 @@ export function transform(
 
   if (node instanceof ProcedureMethod) {
     const procedureAsn = new ProcedureMethodAsn(node.getHtmlId(), scope);
+    procedureAsn.breakpointStatus = node.breakpointStatus;
 
     procedureAsn.name = transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
     procedureAsn.params =
@@ -535,12 +557,14 @@ export function transform(
 
   if (node instanceof Print) {
     const printAsn = new PrintAsn(node.getHtmlId(), scope);
+    printAsn.breakpointStatus = node.breakpointStatus;
     printAsn.expr = transform(node.expr, node.getHtmlId(), printAsn) ?? EmptyAsn.Instance;
     return printAsn;
   }
 
   if (node instanceof Each) {
     const eachAsn = new EachAsn(node.getHtmlId(), scope);
+    eachAsn.breakpointStatus = node.breakpointStatus;
     eachAsn.variable = transform(node.variable, node.getHtmlId(), eachAsn) ?? EmptyAsn.Instance;
     eachAsn.iter = transform(node.iter, node.getHtmlId(), eachAsn) ?? EmptyAsn.Instance;
 
@@ -554,6 +578,7 @@ export function transform(
 
   if (node instanceof While) {
     const whileAsn = new WhileAsn(node.getHtmlId(), scope);
+    whileAsn.breakpointStatus = node.breakpointStatus;
     whileAsn.condition = transform(node.condition, node.getHtmlId(), whileAsn) ?? EmptyAsn.Instance;
 
     whileAsn.children = node
@@ -566,6 +591,7 @@ export function transform(
 
   if (node instanceof Repeat) {
     const repeatAsn = new RepeatAsn(node.getHtmlId(), scope);
+    repeatAsn.breakpointStatus = node.breakpointStatus;
     repeatAsn.condition =
       transform(node.condition, node.getHtmlId(), repeatAsn) ?? EmptyAsn.Instance;
 
@@ -579,6 +605,7 @@ export function transform(
 
   if (node instanceof IfStatement) {
     const ifAsn = new IfAsn(node.getHtmlId(), scope);
+    ifAsn.breakpointStatus = node.breakpointStatus;
     ifAsn.condition = transform(node.condition, node.getHtmlId(), ifAsn) ?? EmptyAsn.Instance;
 
     ifAsn.children = node
@@ -591,6 +618,7 @@ export function transform(
 
   if (node instanceof Else) {
     const elseAsn = new ElseAsn(node.getHtmlId(), scope);
+    elseAsn.breakpointStatus = node.breakpointStatus;
     elseAsn.condition = transform(node.condition, node.getHtmlId(), elseAsn) ?? EmptyAsn.Instance;
     elseAsn.hasIf = node.hasIf;
     return elseAsn;
@@ -598,6 +626,7 @@ export function transform(
 
   if (node instanceof TryStatement) {
     const tryAsn = new TryAsn(node.getHtmlId(), scope);
+    tryAsn.breakpointStatus = node.breakpointStatus;
 
     tryAsn.children = node
       .getChildren()
@@ -609,6 +638,7 @@ export function transform(
 
   if (node instanceof CatchStatement) {
     const catchAsn = new CatchAsn(node.getHtmlId(), scope);
+    catchAsn.breakpointStatus = node.breakpointStatus;
 
     catchAsn.variable = transform(node.variable, node.getHtmlId(), catchAsn) ?? EmptyAsn.Instance;
 
@@ -622,12 +652,14 @@ export function transform(
 
   if (node instanceof Throw) {
     const throwAsn = new ThrowAsn(node.getHtmlId(), scope);
+    throwAsn.breakpointStatus = node.breakpointStatus;
     throwAsn.text = transform(node.text, node.getHtmlId(), throwAsn) ?? EmptyAsn.Instance;
     return throwAsn;
   }
 
   if (node instanceof For) {
     const forAsn = new ForAsn(node.getHtmlId(), scope);
+    forAsn.breakpointStatus = node.breakpointStatus;
     forAsn.variable = transform(node.variable, node.getHtmlId(), forAsn) ?? EmptyAsn.Instance;
     forAsn.from = transform(node.from, node.getHtmlId(), forAsn) ?? EmptyAsn.Instance;
     forAsn.to = transform(node.to, node.getHtmlId(), forAsn) ?? EmptyAsn.Instance;
@@ -643,6 +675,7 @@ export function transform(
 
   if (node instanceof AssertStatement) {
     const assertAsn = new AssertAsn(node.getHtmlId(), scope);
+    assertAsn.breakpointStatus = node.breakpointStatus;
     assertAsn.expected = transform(node.expected, node.getHtmlId(), assertAsn) ?? EmptyAsn.Instance;
     assertAsn.actual = transform(node.actual, node.getHtmlId(), assertAsn) ?? EmptyAsn.Instance;
 
@@ -651,6 +684,7 @@ export function transform(
 
   if (node instanceof TypeField) {
     const typeAsn = new TypeFieldAsn(node.getHtmlId());
+
     typeAsn.type = transform(node.getRootNode(), node.getHtmlId(), scope) ?? EmptyAsn.Instance;
     return typeAsn;
   }

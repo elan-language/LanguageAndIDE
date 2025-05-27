@@ -3,8 +3,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
-
-import { BreakpointStatus } from "../status-enums";
+import { BreakpointEvent } from "../status-enums";
 import { getIds, isSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { compileNodes } from "./ast-helpers";
@@ -18,7 +17,6 @@ export class FrameWithStatementsAsn extends FrameAsn implements AstNode {
 
   children: AstNode[] = [];
 
-  breakpointStatus: BreakpointStatus = BreakpointStatus.none;
   protected paused = false;
 
   symbolType(): SymbolType {
@@ -84,5 +82,12 @@ export class FrameWithStatementsAsn extends FrameAsn implements AstNode {
     }
 
     return asserts;
+  }
+
+  updateBreakpoints(event: BreakpointEvent): void {
+    super.updateBreakpoints(event);
+    for (const frame of this.children.filter((f) => f instanceof FrameAsn)) {
+      frame.updateBreakpoints(event);
+    }
   }
 }

@@ -34,7 +34,7 @@ import { File } from "./interfaces/file";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { defaultUsername, Profile } from "./interfaces/profile";
-import { RootAstNode } from "./interfaces/root-ast-node";
+import { CompileMode, RootAstNode } from "./interfaces/root-ast-node";
 import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { Semver } from "./interfaces/semver";
@@ -369,26 +369,36 @@ export class FileImpl implements File, Scope {
   }
 
   compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string {
-    this.updateBreakpoints(debugMode ? BreakpointEvent.activate : BreakpointEvent.disable);
-    const onmsg = `addEventListener("message", async (e) => {
-  if (e.data.type === "start") {
-    try {
-      const [main, tests] = await program();
-      await main();
-      postMessage({type : "status", status : "finished"});
-    }
-    catch (e) {
-      postMessage({type : "status", status : "error", error : e});
-    }
-  }
-  if (e.data.type === "pause") {
-    __pause = true;
-  }
-  });`;
+    this.ast = this.transform.transform(this, "", undefined) as RootAstNode | undefined;
+    const mode = debugMode
+      ? CompileMode.debugWorker
+      : standalone
+        ? CompileMode.standaloneWorker
+        : CompileMode.worker;
+    this.ast?.setCompileOptions(mode, base);
 
-    const imp = standalone ? "" : `import { StdLib } from "${base}/elan-api.js"; `;
-    const stdlib = `${imp}let system; let _stdlib; let _tests = []; let __pause = false; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
-    return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
+    return this.ast?.compile() ?? "";
+
+    //   this.updateBreakpoints(debugMode ? BreakpointEvent.activate : BreakpointEvent.disable);
+    //   const onmsg = `addEventListener("message", async (e) => {
+    // if (e.data.type === "start") {
+    //   try {
+    //     const [main, tests] = await program();
+    //     await main();
+    //     postMessage({type : "status", status : "finished"});
+    //   }
+    //   catch (e) {
+    //     postMessage({type : "status", status : "error", error : e});
+    //   }
+    // }
+    // if (e.data.type === "pause") {
+    //   __pause = true;
+    // }
+    // });`;
+
+    //   const imp = standalone ? "" : `import { StdLib } from "${base}/elan-api.js"; `;
+    //   const stdlib = `${imp}let system; let _stdlib; let _tests = []; let __pause = false; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
+    //   return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
   }
 
   compileAsTestWorker(base: string): string {
