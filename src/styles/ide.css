@@ -468,8 +468,25 @@ div.spacer{
 }
 
 #documentation-tab {
-  display: block;
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
+}
+
+iframe#doc-iframe {
+  background-color: var(--panelBackground);
+  border-image: none;
+  border-color: initial;
+  border-style: hidden;
+  border-width: 0cap;
+  overflow: auto;
+  width: 100%;
+  flex-grow: 1;
+}
+
+#doc-buttons {
+  margin-top: 5px;
+  margin-bottom: 0;
 }
 
 #debug-tab {
@@ -486,17 +503,6 @@ div.spacer{
 #debug-controls {
   display: flex;
   flex-direction: row;
-}
-
-iframe#doc-iframe {
-  background-color: var(--panelBackground);
-  border-image: none;
-  border-color: initial;
-  border-style: hidden;
-  border-width: 0cap;
-  overflow: auto;
-  width: 100%;
-  height: 100%;
 }
 
 button#clear-system-info {

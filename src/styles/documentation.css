@@ -12,7 +12,7 @@ h4 { font-size:14pt; font-weight:bold; text-indent:0pt; margin-top:12pt; margin-
 h5 { font-size:12pt; font-weight:bold; text-indent:0pt; margin-top:6pt;  margin-bottom:4pt; }
 h6 { font-size:12pt; font-weight:bold; text-indent:0pt; margin-top:0pt;  margin-bottom:0pt; }
 
-body { font-size:10pt; margin-left:5px; margin-right: 5px; text-decoration:none; font-weight:normal; font-style:normal; text-transform:none; color:rgb(0,0,0); text-align:left; line-height:1.33; }
+body { font-size:10pt; margin-left:5px; text-decoration:none; font-weight:normal; font-style:normal; text-transform:none; color:rgb(0,0,0); text-align:left; line-height:1.33; }
 .bold {
   font-weight: bold;
 }
