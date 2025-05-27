@@ -364,6 +364,7 @@ export function transform(
 
     propertyAsn.name = transform(node.name, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
     propertyAsn.type = transform(node.type, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
+    propertyAsn.private = node.private;
 
     return propertyAsn;
   }

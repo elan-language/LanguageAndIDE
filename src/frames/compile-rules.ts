@@ -50,7 +50,6 @@ import { Scope } from "./interfaces/scope";
 import { SymbolType } from "./interfaces/symbol-type";
 import { Transforms } from "./interfaces/transforms";
 import { allKeywords, reservedWords } from "./keywords";
-import { LetStatement } from "./statements/let-statement";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
 import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
@@ -88,6 +87,7 @@ import {
   transforms,
 } from "./syntax-nodes/ast-helpers";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
+import { LetAsn } from "./syntax-nodes/statements/let-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
 
 export function mustBeOfSymbolType(
@@ -994,7 +994,7 @@ export function mustBeUniqueValueInScope(
 }
 
 export function mustNotBeLet(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
-  if (symbol instanceof LetStatement) {
+  if (symbol instanceof LetAsn) {
     compileErrors.push(new MutateCompileError(symbol.symbolId, mapToPurpose(symbol), location));
   }
 }

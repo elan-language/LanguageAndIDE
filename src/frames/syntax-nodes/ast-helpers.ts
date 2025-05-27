@@ -6,7 +6,7 @@ import {
   mustBeIndexableType,
   mustMatchParameters,
 } from "../compile-rules";
-import { isFile, isFrame, isFunction } from "../frame-helpers";
+import { isFile, isFunction } from "../frame-helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstIndexableNode } from "../interfaces/ast-indexable-node";
@@ -70,11 +70,7 @@ export function InFunctionScope(start: Scope): boolean {
     return false;
   }
 
-  if (isFrame(start)) {
-    return InFunctionScope(start.getParent());
-  }
-
-  return false;
+  return InFunctionScope(start.getParentScope());
 }
 
 export function transforms(): Transforms {

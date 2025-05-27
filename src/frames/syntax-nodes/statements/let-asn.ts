@@ -10,4 +10,6 @@ export class LetAsn extends AbstractDefinitionAsn implements ElanSymbol {
   getJsKeyword(): string {
     return "const";
   }
+
+  isLet = true;
 }

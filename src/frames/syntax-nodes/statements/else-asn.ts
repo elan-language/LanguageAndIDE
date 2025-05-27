@@ -47,10 +47,12 @@ export class ElseAsn extends FrameAsn {
   compile(): string {
     this.compileErrors = [];
 
+    const code = `${this.indent()}} else ${this.compileIfClause()}
+${compileNodes(this.compileChildren)}`;
+
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return `${this.indent()}} else ${this.compileIfClause()}
-${compileNodes(this.compileChildren)}`;
+    return code;
   }
 
   compileChildren: AstNode[] = [];
