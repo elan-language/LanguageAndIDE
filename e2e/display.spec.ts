@@ -17,5 +17,5 @@ test('display html', async ({ page }) => {
   await page.keyboard.press('Enter');
 
   await page.getByRole('button', { name: 'Run the program' }).click();
-  await expect(page.frameLocator('iframe').locator('#test-value')).toContainText('fred');
+  await expect(page.frameLocator('#display-html-sandbox').locator('#test-value')).toContainText('fred');
 });

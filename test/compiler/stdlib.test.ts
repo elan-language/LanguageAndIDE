@@ -240,6 +240,40 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "tuple(true, 10)");
   });
 
+  test("Pass_parseAsFloatExponent", async () => {
+    const code = `${testHeader}
+
+main
+  let a be  parseAsFloat("10.1e2")
+  let b be  parseAsFloat("10.1e+2")
+  let c be  parseAsFloat("10.1e-2")
+  let d be  parseAsFloat("0.12E2")
+  print [a, b, c, d]
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const a = _stdlib.parseAsFloat("10.1e2");
+  const b = _stdlib.parseAsFloat("10.1e+2");
+  const c = _stdlib.parseAsFloat("10.1e-2");
+  const d = _stdlib.parseAsFloat("0.12E2");
+  await system.printLine(system.list([a, b, c, d]));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "[tuple(true, 1010), tuple(true, 1010), tuple(true, 0.101), tuple(true, 12)]",
+    );
+  });
+
   test("Pass_parseAsInt0", async () => {
     const code = `${testHeader}
 

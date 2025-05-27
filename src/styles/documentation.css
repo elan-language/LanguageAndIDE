@@ -3,21 +3,19 @@
 }
 p { margin-top:0; margin-bottom:0; line-height:inherit; }
 
-h1,h2,h3,h4,h5,h6
+h1,h2,h3,h4
    { color: rgb(15,71,97); margin-top:0; margin-bottom:0; line-height:inherit; font-size:inherit; font-weight:inherit; }
-h1 { font-size:20pt; font-weight:bold; text-indent:0pt; margin-top:24pt; margin-bottom:4pt; }
-h2 { font-size:18pt; font-weight:bold; text-indent:0pt; margin-top:20pt; margin-bottom:4pt;  border-style:solid none none none; }
-h3 { font-size:16pt; font-weight:bold; text-indent:0pt; margin-top:16pt; margin-bottom:4pt; }
-h4 { font-size:14pt; font-weight:bold; text-indent:0pt; margin-top:12pt; margin-bottom:4pt; }
-h5 { font-size:12pt; font-weight:bold; text-indent:0pt; margin-top:6pt;  margin-bottom:4pt; }
-h6 { font-size:12pt; font-weight:bold; text-indent:0pt; margin-top:0pt;  margin-bottom:0pt; }
+h1 { font-size:20pt; font-weight:bold; text-indent:0pt; margin-top:20pt; margin-bottom:4pt; }
+h2 { font-size:16pt; font-weight:bold; text-indent:0pt; margin-top:16pt; margin-bottom:4pt;  border-style:solid none none none; }
+h3 { font-size:14pt; font-weight:bold; text-indent:0pt; margin-top:14pt; margin-bottom:4pt; }
+h4 { font-size:12pt; font-weight:bold; text-indent:0pt; margin-top:12pt; margin-bottom:4pt; }
 
-body { font-size:12pt; margin-left: 20px; text-decoration:none; font-weight:normal; font-style:normal; text-transform:none; color:rgb(0,0,0); text-align:left; line-height:1.33; }
+body { font-size:10pt; margin-left:5px; text-decoration:none; font-weight:normal; font-style:normal; text-transform:none; color:rgb(0,0,0); text-align:left; line-height:1.33; }
 .bold {
   font-weight: bold;
 }
 p,img,pre,blockquote,address,td,th,li,ul
-  { font-size:12pt; text-indent:0pt; margin-top:4pt; margin-bottom:4pt; line-height:1.3; }
+  { font-size:10pt; text-indent:0pt; margin-top:4pt; margin-bottom:4pt; line-height:1.3; }
 
 /* show sort direction icons in the sortable column headings */
 table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {content: " \25B4\25BE"}
@@ -40,7 +38,7 @@ table
  tr.subhead td, tr.subhead td * { background-color: rgb(15,71,97); color: white; font-weight: bold; }
 
 /* document title */
-.docTitle { color:rgb(15,71,97); font-size:24pt; font-weight:bold;  text-indent:0pt; margin-top:16pt; margin-bottom:0pt; }
+.docTitle { color:rgb(15,71,97); font-size:24pt; font-weight:bold;  text-indent:0pt;}
 
 /* document table of contents : display as table of h1 and h2*/
 #generated-toc {
