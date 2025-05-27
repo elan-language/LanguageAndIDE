@@ -408,21 +408,12 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 </table>
 <h4 class="no-TOC">Notes</h4>
 <ul>
-<<<<<<< Updated upstream
- <li>When typing from the keyboard into a literal string all the basic ASCII chardacters (0x20 to 0x7e) can be input <i>except</i> &quot; &lbrace; and &rbrace;
-  (see <a href="LibRef.html#SpecialCharacters">Special characters</a>).
-  Similarly you can copy from elsewhere and paste into a literal string provided only those valid ASCII characters are included.</li>
-  <li>However, you should avoid putting a backslash into a literal string in any other context than its use in "\n" for an output newline.</li>
- <li> You should not use Alt-numeric-keypad (or equivalent techniques) to enter extended ASCII characters (0x80 to 0xFF) &ndash; nor paste those characters &ndash; into
-  a literal string: they will not print correctly.</li>
-=======
-    <li>A literal string may contain any characters except &quot; (which would terminate the string) and &lbrace; or &rbrace; which are used to
+<li>A literal string may contain any characters except &quot; (which would terminate the string) and &lbrace; or &rbrace; which are used to
        define 'interpolated' fields. If you want to include those specific characters <i>literally</i> see <a href="LibRef.html#SpecialCharacters">Special characters</a>.
      Similarly you can copy from elsewhere and paste into a literal string provided only valid ASCII characters are included.</li>
      <li>If a literal string includes <el-code><el-lit>\n</el-lit></el-code> this will result in a newline being inserted when the string is printed.
    However a <el-code><el-lit>\</el-lit></el-code> ('backslash') followed by any character other than <el-code><el-lit>\</el-lit></el-code>
    will be printed literally as the two characters.</li>
->>>>>>> Stashed changes
 </ul>
 <!-- #endregion -->
 <!-- #region Mouse operations-->
