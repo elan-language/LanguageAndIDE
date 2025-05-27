@@ -710,12 +710,12 @@ export function transform(
   }
 
   if (node instanceof IdentifierNode) {
-    // kludge - fix
+    // todo kludge - fix
     if (
       (fieldId.startsWith("var") ||
         fieldId.startsWith("ident") ||
         fieldId.startsWith("enumVals")) &&
-      !(scope instanceof SetStatement) // to catch range value
+      !(scope instanceof SetAsn) // to catch range value
     ) {
       return new IdDefAsn(node.matchedText, fieldId, scope);
     }
