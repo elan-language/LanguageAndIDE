@@ -9,11 +9,10 @@ import { Transforms } from "../../src/frames/interfaces/transforms";
 import { ParseStatus } from "../../src/frames/status-enums";
 import { transform, transformMany } from "../../src/frames/syntax-nodes/ast-visitor";
 import { StdLib } from "../../src/standard-library/std-lib";
+import { encodeCode } from "../../src/web/web-helpers";
 import { runTests } from "../runner";
 import { TestInputOutput } from "./test-input-output";
 import { getTestSystem } from "./test-system";
-import { aggregateCompileErrors } from "../testHelpers";
-import { encodeCode } from "../../src/web/web-helpers";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);
