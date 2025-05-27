@@ -10,6 +10,8 @@ import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { transforms } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
+import { OperationSymbol } from "../operation-symbol";
+import { UnaryExprAsn } from "../unary-expr-asn";
 
 export class ForAsn extends FrameWithStatementsAsn {
   isStatement: boolean = true;
@@ -46,10 +48,10 @@ export class ForAsn extends FrameWithStatementsAsn {
     let compare = "<=";
     let incDec = "+";
 
-    if (s.startsWith("-")) {
+    if (this.step instanceof UnaryExprAsn && this.step.op === OperationSymbol.Minus) {
       compare = ">=";
       incDec = "-";
-      s = s.slice(1);
+      s = this.step.operand.compile();
     }
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);

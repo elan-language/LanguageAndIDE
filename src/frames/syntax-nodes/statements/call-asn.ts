@@ -7,7 +7,6 @@ import {
   mustCallExtensionViaQualifier,
   mustCallMemberViaQualifier,
 } from "../../compile-rules";
-import { ProcedureFrame } from "../../globals/procedure-frame";
 import { AstNode } from "../../interfaces/ast-node";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Scope } from "../../interfaces/scope";
@@ -29,6 +28,7 @@ import {
 } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
+import { ProcedureAsn } from "../globals/procedure-asn";
 import { QualifierAsn } from "../qualifier-asn";
 import { LetAsn } from "./let-asn";
 import { VariableAsn } from "./variable-asn";
@@ -55,8 +55,10 @@ export class CallAsn extends FrameAsn {
     const passedParameters: string[] = [];
 
     const parameterDefScopes =
-      procSymbol instanceof ProcedureFrame
-        ? procSymbol.params.symbolMatches("", true, this).map((s) => s.symbolScope)
+      procSymbol instanceof ProcedureAsn
+        ? // todo fix any cast
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (procSymbol.params as any).symbolMatches("", true, this).map((s: any) => s.symbolScope)
         : [];
 
     for (let i = 0; i < callParameters.length; i++) {

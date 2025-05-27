@@ -83,12 +83,14 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
         ? "[0]"
         : "";
 
-    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
-
     // handles indexing within call statement
-    return this.isSimpleSubscript()
+    const code = this.isSimpleSubscript()
       ? this.compileSimpleSubscript(symbol.symbolId, prefix, postfix)
       : `${prefix}${this.id}${postfix}`;
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
+    return code;
   }
 
   rootSymbolType() {
