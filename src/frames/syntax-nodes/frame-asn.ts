@@ -7,6 +7,7 @@ import { Transforms } from "../interfaces/transforms";
 import { BreakpointEvent, BreakpointStatus } from "../status-enums";
 import { allScopedSymbols, getGlobalScope, orderSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
@@ -15,6 +16,9 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
     protected readonly scope: Scope,
   ) {
     super();
+  }
+  compile(): string {
+    throw new Error("Method not implemented.");
   }
 
   breakpointStatus: BreakpointStatus = BreakpointStatus.none;
@@ -49,10 +53,7 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
   protected paused = false;
 
   symbolType(): SymbolType {
-    throw new Error("Method not implemented.");
-  }
-  compile(): string {
-    throw new Error("Method not implemented.");
+    return UnknownType.Instance;
   }
 
   compileScope: Scope | undefined;

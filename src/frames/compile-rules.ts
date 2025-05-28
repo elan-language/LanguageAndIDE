@@ -1,6 +1,5 @@
 import { ElanCompilerError } from "../elan-compiler-error";
 import { Deprecation } from "../elan-type-interfaces";
-import { Property } from "./class-members/property";
 import {
   CannotCallAFunction,
   CannotCallAsAMethod,
@@ -86,6 +85,7 @@ import {
   isInsideFunctionOrConstructor,
   transforms,
 } from "./syntax-nodes/ast-helpers";
+import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { LetAsn } from "./syntax-nodes/statements/let-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
@@ -413,8 +413,8 @@ export function mustBePropertyAndPublic(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (symbol instanceof Property && symbol.private === true) {
-    compileErrors.push(new PrivateMemberCompileError(symbol.name.text, location));
+  if (symbol instanceof PropertyAsn && symbol.private === true) {
+    compileErrors.push(new PrivateMemberCompileError(getId(symbol.name), location));
   }
   if (symbol.symbolScope !== SymbolScope.member) {
     compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, "", location));

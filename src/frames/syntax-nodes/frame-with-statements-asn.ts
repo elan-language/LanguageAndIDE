@@ -1,7 +1,6 @@
 import { AstNode } from "../interfaces/ast-node";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
-import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { BreakpointEvent } from "../status-enums";
 import { getIds, isSymbol } from "../symbols/symbol-helpers";
@@ -18,13 +17,6 @@ export class FrameWithStatementsAsn extends FrameAsn implements AstNode {
   children: AstNode[] = [];
 
   protected paused = false;
-
-  symbolType(): SymbolType {
-    throw new Error("Method not implemented.");
-  }
-  compile(): string {
-    throw new Error("Method not implemented.");
-  }
 
   getFirstChild(): AstNode {
     return this.children[0];

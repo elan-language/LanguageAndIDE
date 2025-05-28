@@ -2,7 +2,6 @@ import { getId } from "../../compile-rules";
 import { singleIndent } from "../../frame-helpers";
 import { AstNode } from "../../interfaces/ast-node";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
-import { Parent } from "../../interfaces/parent";
 import { Scope } from "../../interfaces/scope";
 import { SymbolType } from "../../interfaces/symbol-type";
 import { Transforms } from "../../interfaces/transforms";
@@ -34,12 +33,12 @@ export class CatchAsn extends FrameWithStatementsAsn implements ElanSymbol {
     return SymbolScope.parameter;
   }
 
-  // indent() {
-  //   return this.scope!.indent(); //overrides the additional indent added for most child statements
-  // }
+  indent() {
+    return (this.scope as unknown as AstNode).indent(); //overrides the additional indent added for most child statements
+  }
 
   parentIndent(): string {
-    return (this.scope as Parent).indent();
+    return (this.scope as unknown as AstNode).indent();
   }
 
   keywords = `${catchKeyword} ${exceptionKeyword} ${inKeyword} `;

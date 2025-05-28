@@ -12,6 +12,10 @@ export class TestAsn extends FrameWithStatementsAsn implements AstNode {
     throw new Error("Method not implemented.");
   }
 
+  indent(): string {
+    return "";
+  }
+
   public ignored = false;
 
   private compileTestBody() {
