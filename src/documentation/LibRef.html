@@ -1556,7 +1556,7 @@ most variables and data structures to the Display for debugging purposes.</p>
  <li>Checking whether an item is contained in a <el-code><el-type>Dictionary</el-type></el-code> or <el-code><el-type>DictionaryImmutable</el-type></el-code> can be
   done by applying method <el-code><el-method>contains</el-method></el-code> to the list returned by methods <el-code><el-method>keys</el-method></el-code> and <el-code><el-method>values</el-method></el-code> on the dictionary:</li>
   <p><el-code>print dict.keys().contains(42)</el-code> &rarr; <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code></p>
-  <p><el-code>print dict.values().contains("widget") &rarr; <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code></p>
+  <p><el-code>print dict.values().contains("widget")</el-code> &rarr; <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code></p>
 </ul>
 
 <h1 id="Input/output">Input/output</h1>
@@ -1575,7 +1575,7 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td><el-code><el-type>(none)</el-type></el-code></td>
   <td>opens a file system dialog to choose the filename to be read, which must have the filetype .txt<br>
   and returns a file handle</td>
- </tr><tr id="file system
+ </tr><tr id="readLine">
   <td><el-code><el-method>readLine</el-method></el-code></td>
   <td><el-code><el-type>(none)</el-type></el-code></td>
   <td>reads the next substring from the file that is terminated with a newline</td>
@@ -1689,7 +1689,7 @@ most variables and data structures to the Display for debugging purposes.</p>
 <p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
 </ul>
 
-div id="DisplayHtml"></div>
+<div id="displayHtml"></div>
 <h2 id="Html">Displaying Html</h2>
 <p>If you attempt to embed Html in a string and then attempt to print it, you will see the string displayed literally - the Html tags
     will not be recognised - this is for security reasons. However, it <i>is</i> possible to display formatted Html on the <b>Display.</b>
