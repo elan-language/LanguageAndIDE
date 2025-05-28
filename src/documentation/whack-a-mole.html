@@ -11,13 +11,13 @@
 <title>Worksheet - Introducing Arrays</title>
 </head>
 <body>
-<div class="docTitle">Worksheet - Introducing Arrays with Whack-a-mole</div>
+<div class="docTitle">Worksheet - Introducing Arrays with whack-a-mole</div>
 
 <p>Any array is a simple form of 'data structure' - which is a mechanism for holding multiple, related, data elements (also called 'items')
     such that they may be read or modified all together, but also read or modified individually.</p>
 
-<p>We are going to write a simple version of the game Whack-a-mole, using an array to represent a line of
-    ten 'holes' from which a mole might briefly appear.</p>
+<p>We are going to write a simple version of the game 'whack-a-mole', using an array to represent a line of
+    ten holes from which a mole might briefly appear.</p>
 </p>
 
 <h3>Iteration 1 - Create an array of strings</h3>
@@ -172,9 +172,109 @@
     <ul>
         <li>Calling the <el-method>pause</el-method> procedure was a very simple way to slow down the loop. Unfortunately, during such
         a pause we can't do anything else. Doing things in parallel is <i>possible</i> in programming, but the techniques are more complex.
-        So we'll do it another way. Start by deleting the instruction doing the pause, and repla 
-    </li>
+        What we need instead is create a loop that monitors for a keypress by the user, but - whether or not a keypress is 
+      detected - will exit the loop after one second, so that the mole can be moved again.</li>
+        
+        <li>Start by deleting the instruction doing the pause, and replacing it with:
+
+        <el-code-block>
+            <el-statement class="ok""><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>stop</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr36" class="ok" tabindex="0"><el-txt><el-method>clock</el-method>() + <el-lit>1000</el-lit></el-txt></el-field></el-statement>
+        </el-code-block>
+
+        noting that:
+        <ul>
+            <li>The method <el-method>clock</el-method> returns a single integer representing the current time in milliseconds.</li>
+            <li>By adding <el-lit>1000</el-lit> to this we are defining a <el-id>stop</el-id> (time) as one second after this instruction is executed.</li>
+        </ul></li>
+        On the next line, add another <el-kw>while</el-kw> loop, specifying that the condition for continuing the
+        loop is:
+
+        <el-code-block>
+            <el-method>clock</el-method>() &lt; <el-id>stop</el-id>
+        </el-code-block>
+
+        which is saying 'keep repeating the loop while the <i>current</i> time is less than the defined stop time'.</li>
+
+        <li>Within this new loop, add the instruction:
+
+        <el-code-block>
+            <el-statement class="ok" ></el-statement><el-kw>let </el-kw><el-field id="var44" class="ok" tabindex="0"><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr45" class="ok" tabindex="0"><el-txt><el-method>getKey</el-method>()</el-txt></el-statement>
+        </el-code-block>
+
+        noting that <i>if a key has been pressed</i> (since the last time it was called), the method <el-method>getKey</el-method> 
+        will return that key as a string. If no key has been pressed, it will return the empty string <el-code>""</el-code>.</li>
+        <li>Still within the same loop</li>
+        <li>We now need to detect whether the key that the user has pressed (if any) corresponds to the current <el-id>molePosition</el-id>.
+        So, immediately after the instruction just created, add an <el-kw>if</el-kw> instruction, with the condition:
+
+        <el-code-block>
+            <el-txt><el-id>k</el-id><el-kw> is </el-kw><el-id>molePosition</el-id>.<el-method>asString</el-method>()</el-txt>
+        </el-code-block>
+
+        noting that whereas <el-id>k</el-id> is a <i>string</i>, <el-id>molePosition</el-id> is an <i>integer</i> and 
+        the two cannot be compared directly. Adding <el-code>.<el-method>asString</el-method>()</el-code> returns a string representation
+        of that integer - in other words it is <i>effectively</i> converting <el-lit>7</el-lit> to <el-code>"<el-lit>7</el-lit>"</el-code> - so
+        that it can be directly compared to the string <el-id>k</el-id>.</li>
+        <li>Try removing the <el-code>.<el-method>asString</el-method>()</el-code> and wait a couple of seconds to see
+        the compile error. Take note of what the error message says so that if you see this again in future you
+        will realise that you are trying to compare values of different types. Then restore the <el-code>.<el-method>asString</el-method>()</el-code> -
+        you don't need to type it again, you can just press <b>Ctrl-z</b> (undo).
+        </li>
+        <li>Now within the body of the <el-kw>if</el-kw> instruction add:
+        
+        <el-code-block>
+            <el-statement class="ok" ></el-statement><el-kw>print </el-kw><el-field id="expr53" class="optional ok" tabindex="0"><el-txt>"<el-lit>Hit!</el-lit>"</el-txt></el-field><el-msg></el-msg></el-statement>
+         </el-code-block>    
+        </li>
+        <li>Run the program and see if you can press the numeric key corresponding to the mole's position.
+            You will need to press the <b>Stop</b> button to exit the game.
+            You might find it helpful for your first few games to slow it down further by re-defining the <el-id>stop</el-id>
+            time to the current time plus <i>two</i> seconds instead of one second. Then run again.</li>
+        </ul>
+<h3>Iteration 7 - Keeping score</h3>
+    <ul>
+       <li>To keep track of how many moles you have successfully whacked, define a value named <el-id>score</el-id> initially
+    set to <el-lit>0</el-lit>, right up near the start of <el-kw>main</el-kw> i.e. not within any of the loops. Noting that
+    unlike other named values that we have defined with a <el-kw>let</el-kw> instruction, <el-id>score</el-id> will need to
+    be created as a <el-kw>variable</el-kw> because we are going to change it whenever a mole is whacked.</li>
+    <li>Immediately after the <el-code><el-kw>print </el-kw>"<el-lit>Hit!</el-lit>"</el-code> instruction, 
+    add a new instruction to <el-kw>set</el-kw> the <el-id>score</el-id> to its current value + 1.</li>
+    <li>Now, <i>above</i> the instruction <el-kw>print <el-code></el-kw>"<el-lit>0  1  2  3  4  5  6  7  8  9</el-lit>"</el-code>
+    add a new instruction to print the score::
+
+    <el-code-block>
+        <el-statement class="ok"><el-kw>print </el-kw><el-field><el-txt>"<el-lit>Score: </el-lit>{<el-id>score</el-id>}<el-lit></el-lit>"</el-txt></el-statement>
+    </el-code-block> 
+
+    noting again that we are printing a string that contains some literal text to be printed and an 'interpolated field' (in braces)
+    to get the actual score value.</li>
+    <li>Play the game and see how many moles you can whack!</li>
+    </ul>
+<h3>Optional extensions</h3>
+    <p>Congratulations! You've completed the exercise, written a simple version of whac-a-mole, and learned how to use an array.
+        If you have time, try to refine and/or extend the game in the following ways:
+
+        <ul>
+            <li>Change scoring so that a hit gains 3 points but every miss loses a point, 
+                noting that to detect a <i>miss</i> you must test for <el-id>k</el-id><el-kw> isnt </el-kw><el-code>""</el-code>
+                 - otherwise you will be counting as a miss each iteration of the loop <i>even if no key has been pressed</i>.</li>
+            <li>Make it so that the game doesn't continue indefinitely by changing <el-kw>while true</el-kw> to another
+                condition. You could <i>either</i>:
+            <ul>
+                <li>Run it for a fixed amount of time - 30 seconds say, or...</li>
+                <li>Count the number of times the mole has appeared, and run the outer loop until this reaches, say, 30 appearances.</li>
+            </ul></li>
+            <li>At the start of the game allow the user to specify a difficult level of, say, 1 to 5. Use this number
+                to shorten the <el-id>stop</el-id> time progressively with each increase in level.
+                Make sure you display the difficulty level alongside the score.
+            </li>
+            <li>Also at the start of the game, ask the user to input their name, and display this with the score and difficulty level.</li>
+            <li>As the <el-kw>main</el-kw> loop is now getting quite long, and has several levels of indentation, improve the readability
+            of the code by progressively 'refactoring' - extracting instructions into a new named <el-kw>procedure</el-kw>
+            and calling that procedure from the main routine. A good aim is to get both the main, and each procedure down to
+            a maximum of 10 instructions. Don't forget that a procedure can also delegate work to other procedures.</li>
+        </ul>
+    </p>
     </ul>
 </body>
 </html>
-
