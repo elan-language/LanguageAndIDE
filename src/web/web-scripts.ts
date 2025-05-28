@@ -59,6 +59,12 @@ const displayButton = document.getElementById("display-button") as HTMLButtonEle
 const documentationButton = document.getElementById("documentation-button") as HTMLButtonElement;
 const debugButton = document.getElementById("debug-button") as HTMLButtonElement;
 
+const displayButtonLabel = document.getElementById("display-button-label") as HTMLLabelElement;
+const documentationButtonLabel = document.getElementById(
+  "documentation-button-label",
+) as HTMLLabelElement;
+const debugButtonLabel = document.getElementById("debug-button-label") as HTMLLabelElement;
+
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
 const compileStatus = document.getElementById("compile") as HTMLDivElement;
@@ -379,11 +385,40 @@ function showDebugTab() {
   debugTab.classList.remove("hide");
 }
 
+function _filterKeypress(f: () => void) {
+  return (kp: KeyboardEvent) => {
+    if (kp.key === "Enter" || kp.key === "Space") {
+      f();
+    }
+  };
+}
+
 displayButton.addEventListener("click", showDisplayTab);
+
+displayButtonLabel.addEventListener("keydown", (kp: KeyboardEvent) => {
+  if (kp.key === "Enter" || kp.code === "Space") {
+    displayButton.click();
+    kp.preventDefault();
+  }
+});
 
 documentationButton.addEventListener("click", showDocumentationTab);
 
+documentationButtonLabel.addEventListener("keydown", (kp: KeyboardEvent) => {
+  if (kp.key === "Enter" || kp.code === "Space") {
+    documentationButton.click();
+    kp.preventDefault();
+  }
+});
+
 debugButton.addEventListener("click", showDebugTab);
+
+debugButtonLabel.addEventListener("keydown", (kp: KeyboardEvent) => {
+  if (kp.key === "Enter" || kp.code === "Space") {
+    debugButton.click();
+    kp.preventDefault();
+  }
+});
 
 documentationIFrame.addEventListener("load", () => documentationButton.click());
 
