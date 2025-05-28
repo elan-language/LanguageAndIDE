@@ -8,6 +8,7 @@ import { FunctionType } from "../../symbols/function-type";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { EmptyAsn } from "../empty-asn";
+import { ParamListAsn } from "../fields/param-list-asn";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 import { ReturnAsn } from "../statements/return-asn";
 
@@ -29,9 +30,9 @@ export abstract class FunctionAsn extends FrameWithStatementsAsn implements Elan
     return getId(this.name);
   }
 
-  symbolType(transforms?: Transforms) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [pn, pt] = (this.params as any).symbolNamesAndTypes(transforms);
+  symbolType() {
+    const [pn, pt] =
+      this.params instanceof ParamListAsn ? this.params.symbolNamesAndTypes() : [[], []];
     const rt = this.returnType.symbolType();
     return new FunctionType(pn, pt, rt, false, true, true);
   }
@@ -48,8 +49,10 @@ export abstract class FunctionAsn extends FrameWithStatementsAsn implements Elan
     if (getId(this.name) === id) {
       return this;
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const s = (this.params as any).resolveSymbol(id, transforms, initialScope);
+    const s =
+      this.params instanceof ParamListAsn
+        ? this.params.resolveSymbol(id, transforms, this)
+        : new UnknownSymbol(id);
 
     return s instanceof UnknownSymbol ? super.resolveSymbol(id, transforms, initialScope) : s;
   }
@@ -61,8 +64,8 @@ ${this.breakPoint(this.debugSymbols())}${this.compileChildren()}\r`;
 
   public override symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
     const matches = super.symbolMatches(id, all, initialScope);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const localMatches = (this.params as any).symbolMatches(id, all, initialScope);
+    const localMatches =
+      this.params instanceof ParamListAsn ? this.params.symbolMatches(id, all, initialScope) : [];
     return localMatches.concat(matches);
   }
 }

@@ -73,6 +73,13 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     return SymbolScope.program;
   }
 
+  inheritedSymbols(circular: boolean) {
+    if (!circular && this.inheritance instanceof InheritsFromAsn) {
+      return this.inheritance.symbolTypes();
+    }
+    return [];
+  }
+
   // getProfile(): Profile {
   //   return this.getFile().getProfile();
   // }

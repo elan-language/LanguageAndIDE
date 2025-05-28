@@ -108,6 +108,7 @@ import { Throw } from "../statements/throw";
 import { TryStatement } from "../statements/try";
 import { VariableStatement } from "../statements/variable-statement";
 import { While } from "../statements/while";
+import { ParseStatus } from "../status-enums";
 import { FuncName, ImageName, TupleName } from "../symbols/elan-type-names";
 import { EnumType } from "../symbols/enum-type";
 import { isAstIdNode, mapOperation } from "./ast-helpers";
@@ -451,23 +452,6 @@ export function transform(
     return constantAsn;
   }
 
-  if (node instanceof ParamListNode) {
-    const paramsAsn = new ParamListAsn(fieldId, scope);
-
-    paramsAsn.parms = transformMany(node, fieldId, scope);
-
-    return paramsAsn;
-  }
-
-  if (node instanceof InheritsFrom) {
-    const inheritsAsn = new InheritsFromAsn(node.getHtmlId());
-
-    inheritsAsn.inheritance =
-      transform(node.getRootNode(), node.getHtmlId(), scope) ?? EmptyAsn.Instance;
-
-    return inheritsAsn;
-  }
-
   if (node instanceof AbstractFunction) {
     const functionAsn = new AbstractFunctionAsn(node.getHtmlId(), scope);
     functionAsn.breakpointStatus = node.breakpointStatus;
@@ -686,16 +670,41 @@ export function transform(
     return assertAsn;
   }
 
-  if (node instanceof TypeField) {
-    const typeAsn = new TypeFieldAsn(node.getHtmlId());
+  if (node instanceof ParamListNode) {
+    const paramsAsn = new ParamListAsn(fieldId, scope);
 
-    typeAsn.type = transform(node.getRootNode(), node.getHtmlId(), scope) ?? EmptyAsn.Instance;
-    return typeAsn;
+    paramsAsn.parms = transformMany(node, fieldId, scope);
+
+    return paramsAsn;
+  }
+
+  if (node instanceof InheritsFrom) {
+    const rn = node.getRootNode();
+    if (rn && rn.status === ParseStatus.valid) {
+      const inheritsAsn = new InheritsFromAsn(node.getHtmlId());
+
+      inheritsAsn.inheritance =
+        transform(node.getRootNode(), node.getHtmlId(), scope) ?? EmptyAsn.Instance;
+
+      return inheritsAsn;
+    }
+    return EmptyAsn.Instance;
+  }
+
+  if (node instanceof TypeField) {
+    const rn = node.getRootNode();
+    if (rn && rn.status === ParseStatus.valid) {
+      const typeAsn = new TypeFieldAsn(node.getHtmlId());
+
+      typeAsn.type = transform(node.getRootNode(), node.getHtmlId(), scope) ?? EmptyAsn.Instance;
+      return typeAsn;
+    }
+    return EmptyAsn.Instance;
   }
 
   if (node instanceof AbstractField) {
     const rn = node.getRootNode();
-    if (rn) {
+    if (rn && rn.status === ParseStatus.valid) {
       return transform(rn, node.getHtmlId(), scope);
     }
 

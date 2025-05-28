@@ -23,4 +23,6 @@ export interface RootAstNode extends AstNode, Scope {
   getVersion(): Semver;
   setCompileOptions(mode: CompileMode, base: string | undefined): void;
   updateBreakpoints(event: BreakpointEvent): void;
+  getScopeById(id: string): Scope;
+  setScopeById(id: string, scope: Scope): void;
 }

@@ -10,6 +10,7 @@ import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { EmptyAsn } from "../empty-asn";
+import { ParamListAsn } from "../fields/param-list-asn";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
 export class ConstructorAsn extends FrameWithStatementsAsn implements ElanSymbol, Member {
@@ -41,15 +42,17 @@ ${this.indent()}}\r
   }
 
   resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const s = (this.params as any).resolveSymbol(id, transforms, this);
+    const s =
+      this.params instanceof ParamListAsn
+        ? this.params.resolveSymbol(id, transforms, this)
+        : new UnknownSymbol(id);
     return s instanceof UnknownSymbol ? super.resolveSymbol(id, transforms, initialScope) : s;
   }
 
   public override symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
     const matches = super.symbolMatches(id, all, initialScope);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const localMatches = (this.params as any).symbolMatches(id, all, initialScope);
+    const localMatches =
+      this.params instanceof ParamListAsn ? this.params.symbolMatches(id, all, initialScope) : [];
     return localMatches.concat(matches);
   }
 
@@ -57,9 +60,9 @@ ${this.indent()}}\r
     return `__${constructorKeyword}`;
   }
 
-  symbolType(transforms?: Transforms) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [pn, pt] = (this.params as any).symbolNamesAndTypes(transforms);
+  symbolType() {
+    const [pn, pt] =
+      this.params instanceof ParamListAsn ? this.params.symbolNamesAndTypes() : [[], []];
     return new ProcedureType(pn, pt, false, false);
   }
 

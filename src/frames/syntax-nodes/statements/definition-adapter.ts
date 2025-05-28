@@ -1,10 +1,6 @@
 import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { SymbolType } from "../../interfaces/symbol-type";
-import {
-  getDeconstructionIds,
-  isLetStatement,
-  isVariableStatement,
-} from "../../symbols/symbol-helpers";
+import { getDeconstructionIds, isLet, isVariable } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 
 export class DefinitionAdapter implements ElanSymbol {
@@ -16,12 +12,12 @@ export class DefinitionAdapter implements ElanSymbol {
     this.symbolId = ids[index];
     this.symbolScope = adapted.symbolScope;
 
-    if (isVariableStatement(adapted)) {
+    if (isVariable(adapted)) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (this as any)["isVariableStatement"] = true;
     }
 
-    if (isLetStatement(adapted)) {
+    if (isLet(adapted)) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (this as any)["isLet"] = true;
     }

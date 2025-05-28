@@ -9,7 +9,6 @@ import { classKeyword } from "../../keywords";
 import { ClassSubType, ClassType } from "../../symbols/class-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { compileNodes, transforms } from "../ast-helpers";
-import { InheritsFromAsn } from "../fields/inherits-from-asn";
 import { ClassAsn } from "./class-asn";
 
 export class ConcreteClassAsn extends ClassAsn {
@@ -28,6 +27,7 @@ export class ConcreteClassAsn extends ClassAsn {
   get symbolId() {
     return getId(this.name);
   }
+
   symbolType(transforms?: Transforms) {
     const [cd] = this.lookForCircularDependencies(this, [getId(this.name)], transforms!);
 
@@ -36,7 +36,7 @@ export class ConcreteClassAsn extends ClassAsn {
       ClassSubType.concrete,
       false,
       noTypeOptions,
-      cd ? [] : (this.inheritance as InheritsFromAsn).symbolTypes(),
+      this.inheritedSymbols(cd),
       this,
     );
   }

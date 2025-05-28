@@ -8,7 +8,6 @@ import { abstractClassKeywords } from "../../keywords";
 import { ClassSubType, ClassType } from "../../symbols/class-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { compileNodes, transforms } from "../ast-helpers";
-import { InheritsFromAsn } from "../fields/inherits-from-asn";
 import { ClassAsn } from "./class-asn";
 
 export class AbstractClassAsn extends ClassAsn {
@@ -39,7 +38,7 @@ export class AbstractClassAsn extends ClassAsn {
       ClassSubType.abstract,
       false,
       noTypeOptions,
-      cd ? [] : (this.inheritance as InheritsFromAsn).symbolTypes(),
+      this.inheritedSymbols(cd),
       this,
     );
   }

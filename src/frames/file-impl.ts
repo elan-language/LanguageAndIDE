@@ -40,6 +40,7 @@ import { Selectable } from "./interfaces/selectable";
 import { Semver } from "./interfaces/semver";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { Transforms } from "./interfaces/transforms";
+import { propertyKeyword } from "./keywords";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -68,6 +69,15 @@ import {
   RunStatus,
   TestStatus,
 } from "./status-enums";
+import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "./symbol-completion-helpers";
+import { NullScope } from "./symbols/null-scope";
+import {
+  filteredSymbols,
+  getClassScope,
+  isInsideClass,
+  isProperty,
+  orderSymbol,
+} from "./symbols/symbol-helpers";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -359,25 +369,30 @@ export class FileImpl implements File, Scope {
     return `# ${this.currentHash} ${content}`;
   }
 
-  compile(): string {
-    this.ast = this.transform.transform(this, "", undefined) as RootAstNode | undefined;
+  getAst(invalidate: boolean): RootAstNode | undefined {
+    if (!this.ast || invalidate) {
+      this.ast = this.transform.transform(this, "", undefined) as RootAstNode | undefined;
+    }
+    return this.ast;
+  }
 
-    return this.ast?.compile() ?? "";
+  compile(): string {
+    return this.getAst(true)?.compile() ?? "";
 
     // const stdlib = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
     // return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}`;
   }
 
   compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string {
-    this.ast = this.transform.transform(this, "", undefined) as RootAstNode | undefined;
+    const ast = this.getAst(true);
     const mode = debugMode
       ? CompileMode.debugWorker
       : standalone
         ? CompileMode.standaloneWorker
         : CompileMode.worker;
-    this.ast?.setCompileOptions(mode, base);
+    ast?.setCompileOptions(mode, base);
 
-    return this.ast?.compile() ?? "";
+    return ast?.compile() ?? "";
 
     //   this.updateBreakpoints(debugMode ? BreakpointEvent.activate : BreakpointEvent.disable);
     //   const onmsg = `addEventListener("message", async (e) => {
@@ -402,22 +417,27 @@ export class FileImpl implements File, Scope {
   }
 
   compileAsTestWorker(base: string): string {
-    this.updateBreakpoints(BreakpointEvent.disable);
-    const onmsg = `onmessage = async (e) => {
-  if (e.data.type === "start") {
-    try {
-      const [main, tests] = await program();
-      const outcomes = await system.runTests(tests);
-      postMessage({type : "test", value : outcomes});
-    }
-    catch (e) {
-      postMessage({type : "status", status : "error", error : e});
-    }
-  }
-};`;
+    const ast = this.getAst(true);
+    ast?.setCompileOptions(CompileMode.testWorker, base);
 
-    const stdlib = `import { StdLib } from "${base}/elan-api.js"; let system; let _stdlib; let _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
-    return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
+    return ast?.compile() ?? "";
+
+    //     this.updateBreakpoints(BreakpointEvent.disable);
+    //     const onmsg = `onmessage = async (e) => {
+    //   if (e.data.type === "start") {
+    //     try {
+    //       const [main, tests] = await program();
+    //       const outcomes = await system.runTests(tests);
+    //       postMessage({type : "test", value : outcomes});
+    //     }
+    //     catch (e) {
+    //       postMessage({type : "status", status : "error", error : e});
+    //     }
+    //   }
+    // };`;
+
+    //     const stdlib = `import { StdLib } from "${base}/elan-api.js"; let system; let _stdlib; let _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
+    //     return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
   }
 
   renderHashableContent(): string {
@@ -897,5 +917,31 @@ export class FileImpl implements File, Scope {
 
   updateBreakpoints(event: BreakpointEvent) {
     parentHelper_updateBreakpoints(this, event);
+  }
+
+  allPropertiesInScope(scope: Scope) {
+    const all = scope.symbolMatches("", true, scope);
+    return all.filter((s) => isProperty(s)) as ElanSymbol[];
+  }
+
+  filteredSymbols(spec: SymbolCompletionSpec, htmlId: string) {
+    const ast = this.getAst(false);
+    const scope = ast?.getScopeById(htmlId) ?? NullScope.Instance;
+    let symbols = filteredSymbols(spec, this.transform, scope);
+    if (isInsideClass(scope)) {
+      if (propertyKeyword.startsWith(spec.toMatch)) {
+        const allProperties = this.allPropertiesInScope(getClassScope(scope)).sort(orderSymbol);
+        symbols = symbols.filter((s) => !allProperties.includes(s)).concat(allProperties);
+      } else if (spec.context === propertyKeyword) {
+        const newSpec = new SymbolCompletionSpec(
+          spec.toMatch,
+          new Set<TokenType>([TokenType.id_property]),
+          new Set<KeywordCompletion>(),
+          "",
+        );
+        symbols = filteredSymbols(newSpec, this.transform, scope);
+      }
+    }
+    return symbols;
   }
 }

@@ -3,7 +3,7 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Scope } from "../interfaces/scope";
 import { Transforms } from "../interfaces/transforms";
 import { BreakpointEvent } from "../status-enums";
-import { getIds, isSymbol } from "../symbols/symbol-helpers";
+import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { compileNodes } from "./ast-helpers";
 import { FrameAsn } from "./frame-asn";
@@ -81,5 +81,20 @@ export class FrameWithStatementsAsn extends FrameAsn implements AstNode {
     for (const frame of this.children.filter((f) => f instanceof FrameAsn)) {
       frame.updateBreakpoints(event);
     }
+  }
+
+  symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
+    const matches = this.getParentScope().symbolMatches(id, all, this.getCurrentScope());
+    let localMatches: ElanSymbol[] = [];
+
+    const fst = this.getFirstChild();
+    let range = this.getChildRange(fst, initialScope);
+    if (range.length > 1) {
+      range = range.slice(0, range.length - 1);
+      const symbols = handleDeconstruction(range.filter((r) => isSymbol(r)));
+      localMatches = symbolMatches(id, all, symbols);
+    }
+
+    return localMatches.concat(matches);
   }
 }

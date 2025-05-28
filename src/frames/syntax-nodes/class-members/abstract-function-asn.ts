@@ -5,12 +5,12 @@ import { AstNode } from "../../interfaces/ast-node";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Member } from "../../interfaces/member";
 import { Scope } from "../../interfaces/scope";
-import { Transforms } from "../../interfaces/transforms";
 import { FunctionType } from "../../symbols/function-type";
 import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { transforms } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
+import { ParamListAsn } from "../fields/param-list-asn";
 import { FrameAsn } from "../frame-asn";
 
 export class AbstractFunctionAsn extends FrameAsn implements Member, ElanSymbol {
@@ -65,9 +65,9 @@ ${this.indent()}}\r
     return getId(this.name);
   }
 
-  symbolType(transforms?: Transforms) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [pn, pt] = (this.params as any).symbolNamesAndTypes(transforms);
+  symbolType() {
+    const [pn, pt] =
+      this.params instanceof ParamListAsn ? this.params.symbolNamesAndTypes() : [[], []];
     const rt = this.returnType.symbolType();
     return new FunctionType(pn, pt, rt, false, true, true);
   }

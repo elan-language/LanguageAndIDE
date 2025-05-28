@@ -91,11 +91,11 @@ export function isReifyableSymbolType(
   return !!s && "reify" in s;
 }
 
-export function isVariableStatement(s?: ElanSymbol): boolean {
-  return !!s && "isVariableStatement" in s;
+export function isVariable(s?: ElanSymbol): boolean {
+  return !!s && "isVariable" in s;
 }
 
-export function isLetStatement(s?: ElanSymbol): boolean {
+export function isLet(s?: ElanSymbol): boolean {
   return !!s && "isLet" in s;
 }
 
@@ -550,8 +550,8 @@ export function symbolMatches(id: string, all: boolean, symbols: ElanSymbol[]) {
 export function isId(f: ElanSymbol): f is ElanSymbol {
   return (
     isConstant(f) ||
-    isLetStatement(f) ||
-    isVariableStatement(f) ||
+    isLet(f) ||
+    isVariable(f) ||
     isParameter(f) ||
     isOutParameter(f) ||
     isProperty(f) ||
@@ -578,9 +578,9 @@ export function filterForTokenType(tt: TokenType): (s?: ElanSymbol) => boolean {
     case TokenType.id_constant:
       return isConstant;
     case TokenType.id_let:
-      return isLetStatement;
+      return isLet;
     case TokenType.id_variable:
-      return isVariableStatement;
+      return isVariable;
     case TokenType.id_parameter_regular:
       return isParameter;
     case TokenType.id_parameter_out:

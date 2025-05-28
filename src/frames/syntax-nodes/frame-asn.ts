@@ -16,7 +16,9 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
     protected readonly scope: Scope,
   ) {
     super();
+    getGlobalScope(scope).setScopeById(fieldId, this);
   }
+
   compile(): string {
     throw new Error("Method not implemented.");
   }

@@ -20,14 +20,8 @@ import { propertyKeyword } from "../keywords";
 import { Overtyper } from "../overtyper";
 import { CSV } from "../parse-nodes/csv";
 import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
-import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
-import {
-  filteredSymbols,
-  isInsideClass,
-  isProperty,
-  orderSymbol,
-  removeIfSingleFullMatch,
-} from "../symbols/symbol-helpers";
+import { KeywordCompletion, SymbolCompletionSpec } from "../symbol-completion-helpers";
+import { isProperty, removeIfSingleFullMatch } from "../symbols/symbol-helpers";
 import { SymbolWrapper } from "../symbols/symbol-wrapper";
 import { UnknownType } from "../symbols/unknown-type";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
@@ -742,23 +736,8 @@ export abstract class AbstractField implements Selectable, Field {
     return all.filter((s) => isProperty(s)) as ElanSymbol[];
   }
 
-  matchingSymbolsForId(spec: SymbolCompletionSpec, transforms: Transforms): ElanSymbol[] {
-    const scope = this.getHolder();
-    let symbols = filteredSymbols(spec, transforms, this.getHolder());
-    if (isInsideClass(scope)) {
-      if (propertyKeyword.startsWith(spec.toMatch)) {
-        const allProperties = this.allPropertiesInScope().sort(orderSymbol);
-        symbols = symbols.filter((s) => !allProperties.includes(s)).concat(allProperties);
-      } else if (spec.context === propertyKeyword) {
-        const newSpec = new SymbolCompletionSpec(
-          spec.toMatch,
-          new Set<TokenType>([TokenType.id_property]),
-          new Set<KeywordCompletion>(),
-          "",
-        );
-        symbols = filteredSymbols(newSpec, transforms, scope);
-      }
-    }
+  matchingSymbolsForId(spec: SymbolCompletionSpec): ElanSymbol[] {
+    const symbols = this.getFile().filteredSymbols(spec, this.getHolder().getHtmlId());
     return removeIfSingleFullMatch(symbols, spec.toMatch);
   }
 
@@ -875,7 +854,7 @@ export abstract class AbstractField implements Selectable, Field {
       const keywords = Array.from(spec.keywords)
         .map((k) => new SymbolWrapper(k, transforms, scope))
         .sort(this.orderSymbol);
-      const symbols = this.matchingSymbolsForId(spec, transforms).map(
+      const symbols = this.matchingSymbolsForId(spec).map(
         (s) => new SymbolWrapper(s, transforms, scope),
       );
       this.allPossibleSymbolCompletions = keywords.concat(symbols);

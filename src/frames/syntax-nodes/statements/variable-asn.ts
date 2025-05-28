@@ -10,4 +10,6 @@ export class VariableAsn extends AbstractDefinitionAsn implements ElanSymbol {
   getJsKeyword(): string {
     return "let";
   }
+
+  isVariable = true;
 }

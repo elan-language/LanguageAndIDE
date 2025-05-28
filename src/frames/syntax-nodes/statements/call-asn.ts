@@ -27,6 +27,7 @@ import {
   transforms,
 } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
+import { ParamListAsn } from "../fields/param-list-asn";
 import { FrameAsn } from "../frame-asn";
 import { ProcedureAsn } from "../globals/procedure-asn";
 import { QualifierAsn } from "../qualifier-asn";
@@ -56,9 +57,9 @@ export class CallAsn extends FrameAsn {
 
     const parameterDefScopes =
       procSymbol instanceof ProcedureAsn
-        ? // todo fix any cast
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (procSymbol.params as any).symbolMatches("", true, this).map((s: any) => s.symbolScope)
+        ? procSymbol.params instanceof ParamListAsn
+          ? procSymbol.params.symbolMatches("", true, this).map((s) => s.symbolScope)
+          : []
         : [];
 
     for (let i = 0; i < callParameters.length; i++) {

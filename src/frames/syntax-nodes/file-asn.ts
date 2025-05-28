@@ -9,6 +9,7 @@ import { Transforms } from "../interfaces/transforms";
 import { BreakpointEvent } from "../status-enums";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { elanSymbols } from "../symbols/elan-symbols";
+import { NullScope } from "../symbols/null-scope";
 import { isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -24,11 +25,25 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   private mode: CompileMode = CompileMode.inprocess;
   private base: string | undefined;
 
+  compileErrorMap = new Map<string, CompileError[]>();
+  scopeMap = new Map<string, Scope>();
+
   constructor(
     private scope: Scope,
     private version: Semver,
   ) {
     super();
+  }
+
+  getScopeById(id: string): Scope {
+    if (this.scopeMap.has(id)) {
+      return this.scopeMap.get(id)!;
+    }
+    return NullScope.Instance;
+  }
+
+  setScopeById(id: string, scope: Scope) {
+    this.scopeMap.set(id, scope);
   }
 
   setCompileOptions(mode: CompileMode, base: string | undefined): void {
@@ -64,8 +79,6 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   getVersion(): Semver {
     return this.version;
   }
-
-  compileErrorMap = new Map<string, CompileError[]>();
 
   addCompileError(error: CompileError) {
     if (this.compileErrorMap.has(error.locationId)) {
