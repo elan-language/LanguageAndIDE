@@ -57,13 +57,15 @@ const preferencesButton = document.getElementById("preferences") as HTMLButtonEl
 
 const displayButton = document.getElementById("display-button") as HTMLButtonElement;
 const documentationButton = document.getElementById("documentation-button") as HTMLButtonElement;
+const worksheetButton = document.getElementById("worksheet-button") as HTMLButtonElement;
 const debugButton = document.getElementById("debug-button") as HTMLButtonElement;
 
-const displayButtonLabel = document.getElementById("display-button-label") as HTMLLabelElement;
 const documentationButtonLabel = document.getElementById(
   "documentation-button-label",
 ) as HTMLLabelElement;
+const displayButtonLabel = document.getElementById("display-button-label") as HTMLLabelElement;
 const debugButtonLabel = document.getElementById("debug-button-label") as HTMLLabelElement;
+const worksheetButtonLabel = document.getElementById("worksheet-button-label") as HTMLLabelElement;
 
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
@@ -75,9 +77,11 @@ const demoFiles = document.getElementsByClassName("demo-file");
 
 const displayTab = document.getElementById("display-tab") as HTMLDivElement;
 const documentationTab = document.getElementById("documentation-tab") as HTMLDivElement;
+const worksheetTab = document.getElementById("worksheet-tab") as HTMLDivElement;
 const debugTab = document.getElementById("debug-tab") as HTMLDivElement;
 
 const documentationIFrame = document.getElementById("doc-iframe") as HTMLIFrameElement;
+const worksheetIFrame = document.getElementById("worksheet-iframe") as HTMLIFrameElement;
 
 const inactivityTimeout = 2000;
 const stdlib = new StdLib();
@@ -280,7 +284,7 @@ loadDocumentationButton?.addEventListener("click", async () => {
     });
     const codeFile = await fileHandle.getFile();
     const url = URL.createObjectURL(codeFile);
-    window.open(url, "doc-iframe")?.focus();
+    window.open(url, "worksheet-iframe")?.focus();
   } catch (_e) {
     // user cancelled
     return;
@@ -369,12 +373,22 @@ preferencesButton.addEventListener("click", () => {
 function showDisplayTab() {
   displayTab.classList.remove("hide");
   documentationTab.classList.add("hide");
+  worksheetTab.classList.add("hide");
   debugTab.classList.add("hide");
 }
 
 function showDocumentationTab() {
   displayTab.classList.add("hide");
   documentationTab.classList.remove("hide");
+  worksheetTab.classList.add("hide");
+  debugTab.classList.add("hide");
+  documentationIFrame.focus();
+}
+
+function showWorksheetTab() {
+  displayTab.classList.add("hide");
+  documentationTab.classList.add("hide");
+  worksheetTab.classList.remove("hide");
   debugTab.classList.add("hide");
   documentationIFrame.focus();
 }
@@ -382,6 +396,7 @@ function showDocumentationTab() {
 function showDebugTab() {
   displayTab.classList.add("hide");
   documentationTab.classList.add("hide");
+  worksheetTab.classList.add("hide");
   debugTab.classList.remove("hide");
 }
 
@@ -394,19 +409,18 @@ function filterKeypress(button: HTMLButtonElement) {
   };
 }
 
-displayButton.addEventListener("click", showDisplayTab);
-
-displayButtonLabel.addEventListener("keydown", filterKeypress(displayButton));
-
 documentationButton.addEventListener("click", showDocumentationTab);
-
 documentationButtonLabel.addEventListener("keydown", filterKeypress(documentationButton));
 
-debugButton.addEventListener("click", showDebugTab);
+displayButton.addEventListener("click", showDisplayTab);
+displayButtonLabel.addEventListener("keydown", filterKeypress(displayButton));
 
+debugButton.addEventListener("click", showDebugTab);
 debugButtonLabel.addEventListener("keydown", filterKeypress(debugButton));
 
-documentationIFrame.addEventListener("load", () => documentationButton.click());
+worksheetButton.addEventListener("click", showWorksheetTab);
+worksheetButtonLabel.addEventListener("keydown", filterKeypress(worksheetButton));
+worksheetIFrame.addEventListener("load", () => worksheetButton.click());
 
 function warningOrError(tgt: HTMLDivElement): [boolean, string] {
   if (tgt.classList.contains("warning")) {
