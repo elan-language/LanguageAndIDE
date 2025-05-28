@@ -14,7 +14,7 @@ export class DefinitionAdapter implements ElanSymbol {
 
     if (isVariable(adapted)) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (this as any)["isVariableStatement"] = true;
+      (this as any)["isVariable"] = true;
     }
 
     if (isLet(adapted)) {

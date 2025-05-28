@@ -19,7 +19,6 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { globalKeyword, libraryKeyword } from "../keywords";
 import { CallStatement } from "../statements/call-statement";
-import { DefinitionAdapter } from "../statements/definition-adapter";
 import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import {
   isAstIdNode,
@@ -29,6 +28,7 @@ import {
 } from "../syntax-nodes/ast-helpers";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { AbstractDefinitionAsn } from "../syntax-nodes/statements/abstract-definition-asn";
+import { DefinitionAdapter } from "../syntax-nodes/statements/definition-adapter";
 import { EachAsn } from "../syntax-nodes/statements/each-asn";
 import { ForAsn } from "../syntax-nodes/statements/for-asn";
 
