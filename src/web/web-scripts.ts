@@ -60,6 +60,13 @@ const documentationButton = document.getElementById("documentation-button") as H
 const worksheetButton = document.getElementById("worksheet-button") as HTMLButtonElement;
 const debugButton = document.getElementById("debug-button") as HTMLButtonElement;
 
+const documentationButtonLabel = document.getElementById(
+  "documentation-button-label",
+) as HTMLLabelElement;
+const displayButtonLabel = document.getElementById("display-button-label") as HTMLLabelElement;
+const debugButtonLabel = document.getElementById("debug-button-label") as HTMLLabelElement;
+const worksheetButtonLabel = document.getElementById("worksheet-button-label") as HTMLLabelElement;
+
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
 const compileStatus = document.getElementById("compile") as HTMLDivElement;
@@ -393,14 +400,26 @@ function showDebugTab() {
   debugTab.classList.remove("hide");
 }
 
-displayButton.addEventListener("click", showDisplayTab);
+function filterKeypress(button: HTMLButtonElement) {
+  return (kp: KeyboardEvent) => {
+    if (kp.key === "Enter" || kp.code === "Space") {
+      button.click();
+      kp.preventDefault();
+    }
+  };
+}
 
 documentationButton.addEventListener("click", showDocumentationTab);
+documentationButtonLabel.addEventListener("keydown", filterKeypress(documentationButton));
 
-worksheetButton.addEventListener("click", showWorksheetTab);
+displayButton.addEventListener("click", showDisplayTab);
+displayButtonLabel.addEventListener("keydown", filterKeypress(displayButton));
 
 debugButton.addEventListener("click", showDebugTab);
+debugButtonLabel.addEventListener("keydown", filterKeypress(debugButton));
 
+worksheetButton.addEventListener("click", showWorksheetTab);
+worksheetButtonLabel.addEventListener("keydown", filterKeypress(worksheetButton));
 worksheetIFrame.addEventListener("load", () => worksheetButton.click());
 
 function warningOrError(tgt: HTMLDivElement): [boolean, string] {
