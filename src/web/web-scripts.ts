@@ -385,40 +385,26 @@ function showDebugTab() {
   debugTab.classList.remove("hide");
 }
 
-function _filterKeypress(f: () => void) {
+function filterKeypress(button: HTMLButtonElement) {
   return (kp: KeyboardEvent) => {
-    if (kp.key === "Enter" || kp.key === "Space") {
-      f();
+    if (kp.key === "Enter" || kp.code === "Space") {
+      button.click();
+      kp.preventDefault();
     }
   };
 }
 
 displayButton.addEventListener("click", showDisplayTab);
 
-displayButtonLabel.addEventListener("keydown", (kp: KeyboardEvent) => {
-  if (kp.key === "Enter" || kp.code === "Space") {
-    displayButton.click();
-    kp.preventDefault();
-  }
-});
+displayButtonLabel.addEventListener("keydown", filterKeypress(displayButton));
 
 documentationButton.addEventListener("click", showDocumentationTab);
 
-documentationButtonLabel.addEventListener("keydown", (kp: KeyboardEvent) => {
-  if (kp.key === "Enter" || kp.code === "Space") {
-    documentationButton.click();
-    kp.preventDefault();
-  }
-});
+documentationButtonLabel.addEventListener("keydown", filterKeypress(documentationButton));
 
 debugButton.addEventListener("click", showDebugTab);
 
-debugButtonLabel.addEventListener("keydown", (kp: KeyboardEvent) => {
-  if (kp.key === "Enter" || kp.code === "Space") {
-    debugButton.click();
-    kp.preventDefault();
-  }
-});
+debugButtonLabel.addEventListener("keydown", filterKeypress(debugButton));
 
 documentationIFrame.addEventListener("load", () => documentationButton.click());
 
