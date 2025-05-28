@@ -404,11 +404,12 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 </table>
 <h4 class="no-TOC">Notes</h4>
 <ul>
-    <li>A literal string may contain any characters except &quot; (which woudl terminate the string) and &lbrace; or &rbrace; which are used to
+    <li>A literal string may contain any characters except &quot; (which would terminate the string) and &lbrace; or &rbrace; which are used to
        define 'interpolated' fields. If you want to include those specific characters <i>literally</i> see <a href="LibRef.html#SpecialCharacters">Special characters</a>.
      Similarly you can copy from elsewhere and paste into a literal string provided only those valid ASCII characters are included.</li>
      <li>If a literal string includes <el-code><el-lit>\n</el-lit></el-code> this will result in a newline being inserted when the string is printed.
    However a <el-code><el-lit>\</el-lit></el-code> ('backslash') followed by any other character than <el-code><el-lit>\</el-lit></el-code> 
+
    will be printed literally as the two characters.</li>
 </ul>
 <!-- #endregion -->
