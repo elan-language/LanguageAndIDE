@@ -473,13 +473,13 @@ div.spacer{
   display: block;
 }
 
-#documentation-tab {
+#documentation-tab, #worksheet-tab {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
-iframe#doc-iframe {
+iframe#doc-iframe, iframe#worksheet-iframe {
   background-color: var(--panelBackground);
   border-image: none;
   border-color: initial;
@@ -490,7 +490,7 @@ iframe#doc-iframe {
   flex-grow: 1;
 }
 
-#doc-buttons {
+#doc-buttons, #worksheet-buttons {
   margin-top: 5px;
   margin-bottom: 0;
 }
@@ -502,7 +502,7 @@ iframe#doc-iframe {
   overflow-y: auto;
 }
 
-#display-tab.hide, #documentation-tab.hide, #debug-tab.hide {
+#display-tab.hide, #documentation-tab.hide, #worksheet-tab.hide, #debug-tab.hide {
   display: none;
 } 
 
