@@ -674,6 +674,8 @@ It is recommended that you always use a let in preference to a variable unless y
 </ul>
 
 <h2 id="repeat">Repeat loop</h2>
+<p>The <el-code><el-kw>repeat .. end repeat when</el-kw></el-code> <el-code>condition</el-code> loop is used when you want at least one execution of the enclosed statements followed by a test that chooses either
+further executions or exiting from the loop. The test is made according to the <el-code><el-type>Boolean</el-type></el-code> value of <el-code>condition</el-code>: <el-id>true</el-id> ends the loop, <el-id>false</el-id> resumes the loop. For example:</p>
 
 <h2 id="set">Set statement</h2>
 <p>
@@ -717,8 +719,13 @@ The variable holding the exception (by default named <el-code>e</el-code>, but t
 </el-code-block>
 
 <h2 id="variable">Variable statement</h2>
+<p>The <el-code><el-kw>variable</el-kw></el-code> statement defines the name to be used to store mutable (i.e. changeable) data. The name defined must be a valid <a href="#Identifier">Identifier</a>,
+and the initial value is given by a following expression. For example:</p>
 
 <h2 id="while">While loop</h2>
+<p>The <el-code><el-kw>while condition .. end while</el-kw></el-code> loop is used when you want execution of the enclosed statements to begin
+ only if the <el-code>condition</el-code> is met. The test is made according to the <el-code><el-type>Boolean</el-type></el-code> value of <el-code>condition</el-code>:
+  <el-id>true</el-id> executes the loop's content, <el-id>false</el-id> exits the loop. For example:</p>
 
 <h2 id="statement_comment"># (comment)</h2>
 <p>See <a href="#Comment">Comments</a>.</p>
@@ -1238,7 +1245,7 @@ defines no parameters. If your intent was to define a <i>reference</i> to the fu
 
 <h3 id="CannotCompareProcFunc" class="no-TOC">Cannot do equality operations on Procedures or Functions.</h3>
 <p>It is not possible to apply comparison operations to functions (with or without the <el-code><el-kw>ref</el-kw></el-code> keyword prefix)
-    or procedures as themselves. It is, however, possible to compare the results of two function evaluations. 
+    or procedures as themselves. It is, however, possible to compare the results of two function evaluations.
     It is possible that you are seeing this message because you intended to evaluate a function but forgot to
     add the brackets after the name.</p>
 
