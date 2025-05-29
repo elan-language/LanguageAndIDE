@@ -1824,9 +1824,9 @@ the URL as a <el-code><el-type>String</el-type></el-code>, either as a literal (
 
 <h2 id="TurtleGraphics">Turtle graphics</h2>
 <p>Turtle graphics are implemented in Elan with output to the Display pane on the screen, i.e. the 'paper' on which the Turtle draws.</p>
-<p>The area is 100 turtle units wide by 75 turtle units high, but floating point (fractional) values of turtle units can be used.</p>
-<p>The origin for turtle units (0,0) is at the top left of the display: positive x rightwards, positive y downwards.</p>
-
+<p>The area is 200 turtle units wide by 150 turtle units high, and floating point (fractional) values of turtle units can be used.</p>
+<p>The origin for turtle units (0,0) is at the centre of the area: positive x rightwards, positive y upwards.
+so for example the top left corner of the display is at (-100,75).</p>
 <h3 class="no-TOC" id="List_procedures">Procedure methods on a Turtle</h3>
 <table class="tableMethod">
  <tr>
@@ -1905,7 +1905,7 @@ the URL as a <el-code><el-type>String</el-type></el-code>, either as a literal (
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
- <li>If the turtle is placed or moved outside the 100 &times; 75 area boundary, it will not cause an error,
+ <li>If the turtle is placed or moved outside the 200 &times; 150 area boundary, it will not cause an error,
   but the location of the turtle and any lines outside the boundary will not be visible.</li>
  <li>You can move and turn the turtle, causing lines to be drawn, whether or not the turtle is shown.</li>
  <li>The current location and heading of the turtle may be read using the properties
