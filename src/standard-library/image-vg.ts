@@ -109,6 +109,7 @@ export class ImageVG extends VectorGraphic {
     return copy;
   }
 
+  @elanProperty()
   url: string = "";
 
   @elanFunction([], FunctionOptions.pure)
