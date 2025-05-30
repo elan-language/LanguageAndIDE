@@ -38,8 +38,8 @@ export class Turtle extends GraphicsBase {
 
   constructor() {
     super();
-    this.x = 50;
-    this.y = 37.5;
+    this.x = 0;
+    this.y = 0;
     this.heading = 0;
     this.pen = true;
     this.shown = true;
@@ -49,8 +49,8 @@ export class Turtle extends GraphicsBase {
   }
 
   private reset() {
-    this.x = 50;
-    this.y = 37.5;
+    this.x = 0;
+    this.y = 0;
     this.heading = 0;
     this.pen = true;
     this.shown = true;
@@ -78,18 +78,17 @@ export class Turtle extends GraphicsBase {
 
   @elanProcedure([], ProcedureOptions.async)
   async show() {
-    if (!this.shown) {
-      this.shown = true;
-      this.addTurtleIfShown();
-      await this.stdlib.displayVectorGraphics(this.vg);
-    }
+    this.removeTurtleIfShown();
+    this.shown = true;
+    this.addTurtleIfShown();
+    await this.stdlib.displayVectorGraphics(this.vg);
   }
 
   @elanProcedure([], ProcedureOptions.async)
   async clearAndReset() {
     this.vg = this._system!.initialise(new List<VectorGraphic>());
-    this.x = 50;
-    this.y = 37.5;
+    this.x = 0;
+    this.y = 0;
     this.heading = 0;
     this.pen = true;
     this.colour = 0;
@@ -133,7 +132,6 @@ export class Turtle extends GraphicsBase {
       this.vg.append(pointer);
     }
   }
-
   private removeTurtleIfShown() {
     if (this.shown) {
       const len = this.vg.length();
@@ -144,7 +142,7 @@ export class Turtle extends GraphicsBase {
 
   private getDestination(distance: number): [number, number] {
     const newX = this.x + distance * this.stdlib.sinDeg(this.heading);
-    const newY = this.y - distance * this.stdlib.cosDeg(this.heading);
+    const newY = this.y + distance * this.stdlib.cosDeg(this.heading);
     return [newX, newY];
   }
 
@@ -154,15 +152,23 @@ export class Turtle extends GraphicsBase {
     await this.moveTo(x, y);
   }
 
+  asVGx(x: number) {
+    return x / 2 + 50;
+  }
+
+  asVGy(y: number) {
+    return -y / 2 + 37.5;
+  }
+
   @elanProcedure(["x", "y"], ProcedureOptions.async)
   async moveTo(x: number, y: number) {
     this.removeTurtleIfShown();
     if (this.pen) {
       const line = new LineVG();
-      line.x1 = this.x;
-      line.y1 = this.y;
-      line.x2 = x;
-      line.y2 = y;
+      line.x1 = this.asVGx(this.x);
+      line.y1 = this.asVGy(this.y);
+      line.x2 = this.asVGx(x);
+      line.y2 = this.asVGy(y);
       line.strokeColour = this.colour;
       line.strokeWidth = this.width;
       this.vg.append(line);
@@ -213,4 +219,11 @@ export class Turtle extends GraphicsBase {
   asHtml(): string {
     return this.stdlib.vectorGraphicsAsHtml(this.vg);
   }
+
+/*   @elanProcedure(["otherTurtle"])
+  shareDisplayWith(@elanClassType(Turtle) t2: Turtle) {
+    const vg = t2.vg;
+    vg.appendList(this.vg);
+    this.vg = vg;
+  } */
 }
