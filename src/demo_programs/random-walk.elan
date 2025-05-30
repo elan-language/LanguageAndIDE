@@ -1,0 +1,30 @@
+# ad4a9e2047589d786a0b155596e3409e7925fddd92382bf11f790d679f409af3 Elan 1.1.3 guest default_profile valid
+
+main
+  let radius be 50
+  let pace be 5
+  let t be new Turtle()
+  call t.hide()
+  let segment be 2*radius*pi/360
+  call t.placeAt(-50, 0)
+  for i from 1 to 360 step 1
+    call t.move(segment)
+    call t.turn(1)
+  end for
+  variable totalPaces set to 0
+  let numberOfAttempts be 100
+  for i from 1 to numberOfAttempts step 1
+    call t.placeAt(0, 0)
+    call t.penColour(randomInt(black, white))
+    variable pacesThisAttempt set to 0
+    while sqrt(t.x^2 + t.y^2) < radius
+      call t.move(pace)
+      set pacesThisAttempt to pacesThisAttempt + 1
+      let randomTurn be randomInt(-90, 90)
+      call t.turn(randomTurn)
+    end while
+    set totalPaces to totalPaces + pacesThisAttempt
+  end for
+  let average be (totalPaces/numberOfAttempts).round(2)
+  print "Over {numberOfAttempts} attempts, the average no. of paces to edge was {average}"
+end main
