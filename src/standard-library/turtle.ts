@@ -2,7 +2,6 @@ import {
   ClassOption,
   elanClass,
   ElanClass,
-  elanClassType,
   elanFloatType,
   elanFunction,
   elanIntType,
