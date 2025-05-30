@@ -32,8 +32,8 @@
 <h3 id="Parameter_passing_1">Parameter passing</h3>
 <p>The arguments provided to a method (function or procedure) are passed &#8216;by value&#8217; and not &#8216;by reference&#8217;. If you wish to be able to re-assign the value associated with a parameter, such that that change would be visible to the code that calls the procedure, then you can precede the parameter definition with the keyword <el-code>out</el-code>. This is useful when you are passing in, say, an <el-code>Int</el-code> that refers to an index, and you want the procedure to update the index number it is pointing to.</p>
 <p> Note, however, that mutating an instance of a reference Type held in a variable is not the same thing as re-assigning the variable to a different instance. The first changes the contents of the thing, the second changes the thing for another thing!</p>
-<p>Therefore, if</p
-<ul>>
+<p>Therefore, if</p>
+<ul>
 <li>the method is a <el-code>procedure</el-code> AND</li>
 <li>the Type of the argument is a &#8216;reference Type&#8217; AND</li>
 <li>that Type is mutable such as an <el-code>List</el-code>, <el-code>Dictionary</el-code>, <el-code>Stack</el-code>, <el-code>Queue</el-code>, or a user-defined <el-code>class</el-code></li>

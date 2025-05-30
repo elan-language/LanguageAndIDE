@@ -21,7 +21,7 @@ and it is a very good way to learn all three of them. Elan lays a very strong fo
 that will make it easier for you to transition later on to more languages that are specialised
 towards one of the three programming languages such as Java, C#, or TypeScript for object-oriented programming; 
 or Haskell, OCaml, or F#, for functional programming. Other popular multi-paradigm languages such as Python, 
-VB, C#, and Java do not lay as good a foundation. 
+VB, C#, and Java do not lay as good a foundation.</p>
 
 <p>Functional programming means constructing programs from pure function. A pure function: 
 
@@ -31,6 +31,7 @@ VB, C#, and Java do not lay as good a foundation.
         <li>may not generate any 'side effects'. A side effect is anything information, or change to the state of the system,
              that could be observed by code ouside the function <i>other than</i> the value returned by the function.</li>
     </ul>
+</p>
 
 <p>The reason for these constraints is that pure functions can be combined to form a program where the results are entirely predictable
     and guaranteed. This, surprisingly perhaps, is not the case with impure functions, because external dependencies
@@ -70,7 +71,7 @@ In other words, as well as keeping input/output <i>out</i> of function, you shou
         together constitute as small a propertion of the total number of instructions as possible.</li>
     <li>All types passed to functions, or used within functions should be <i>immutable</i>. This means:
         <ul>
-            <li>Any of the standard value types: <el-code></el-code><el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type>, <el-type>String</el-type></el-code></li>
+            <li>Any of the standard value types: <el-code><el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type>, <el-type>String</el-type></el-code></li>
             <li>These specific library data structures: <el-code><el-type>ListImmutable</el-type></el-code>, <el-code><el-type>DictionaryImmutable</el-type></el-code>, <el-code><el-type>Set</el-type></el-code>, <el-code><el-type>Stack</el-type></el-code>, <el-code><el-type>Queue</el-type></el-code></li>
             <li>User defined types: Enums, Tuples, Records</li>
         </ul>
@@ -85,7 +86,7 @@ In other words, as well as keeping input/output <i>out</i> of function, you shou
             <li><i>Generate</i> random numbers using the standard <el-code><el-method>randomInt</el-method>, <el-method>randomInt</el-method></el-code> system methods but only within
             the main routine or procedures - passing the generated number(s) into the functions that need them as 
             <el-code><el-type>Int</el-type></el-code> or <el-code><el-type>Float</el-type></el-code> values. These methods cannot be used
-            within functions because calling <el-code><el-method>randomInt</el-method> changes the state of the random number generator
+            within functions because calling <el-code><el-method>randomInt</el-method></el-code> changes the state of the random number generator
                 held, invisibly, within the system - in other words the methods have side effects.
         </li>
             <li>Use the library type <el-code><el-type>Random</el-type></el-code> and its methods. These may be safely passed into a function, 
@@ -96,6 +97,7 @@ In other words, as well as keeping input/output <i>out</i> of function, you shou
         </ul>
     </li>
 </ol>
+</p>
 
 <h1>Example 1: Snake - functional</h1>
 
@@ -112,9 +114,9 @@ In other words, as well as keeping input/output <i>out</i> of function, you shou
         <li>The <el-code><el-method>newApple</el-method></el-code> uses recursion to achieve iteration - the requirement being
         to place the apple in a new random position until a location is found that does not overlap the body.</li>
         <li>A Hof (<el-code><el-method>filter</el-method></el-code>) is used to achieve iteration in the <el-code><el-method>bodyOverlaps</el-method></el-code> function.</li>
-        <li>The code defines two types of <el-code><el-kw>record</el-kw></el-code>: <el-code><el-type>Game</el-type>, <el-code><el-type>Square</el-type></el-code>
+        <li>The code defines two types of <el-code><el-kw>record</el-kw></el-code>: <el-code><el-type>Game</el-type></el-code>, <el-code><el-type>Square</el-type></el-code>
         each with properties. (<i>Function</i> methods may be defined on records, but were not used here.) </li>
-        <li>The functional approach to random numbers (using the <el-code><el-type>Random</el-type> type is used.</li>
+        <li>The functional approach to random numbers (using the <el-code><el-type>Random</el-type></el-code> type is used.</li>
         <li>There is a <el-code><el-kw>test</el-kw></el-code> for each of the functions, and each of those tests
         has multiple <el-code><el-kw>assert</el-kw></el-code> instructions i.e. tests multiple cases. This means that overall
         82% of the instructions are covered by automated tests - only the <el-code><el-kw>main</el-kw></el-code> routine
@@ -404,6 +406,7 @@ In other words, as well as keeping input/output <i>out</i> of function, you shou
     <el-statement class="ok" id="assert591" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>assert </el-kw><el-field id="text592" class="ok" tabindex="0"><el-txt><el-id>game</el-id>.<el-id>isOn</el-id></el-txt><el-place><i>computed value</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="help TBD">?</el-help></el-field><el-kw> is </el-kw><el-field id="expr593" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field> <el-msg class="ok">pass</el-msg><el-fr>191</el-fr></el-statement>
     <el-kw>end test</el-kw>
     </el-test>
+    </div>
     </el-code-block>
 
     <h1>Example 2: Wordle solver</h1>

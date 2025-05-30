@@ -27,11 +27,11 @@ import { StringType } from "../src/frames/symbols/string-type";
 import { UnknownType } from "../src/frames/symbols/unknown-type";
 import { StdLib } from "../src/standard-library/std-lib";
 import { hash } from "../src/util";
+import { encodeCode } from "../src/web/web-helpers";
 import { WebWorkerMessage } from "../src/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
-import { encodeCode } from "../src/web/web-helpers";
 
 
 // flag to update test file

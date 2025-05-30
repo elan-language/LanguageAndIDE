@@ -11,6 +11,7 @@
 <title>Worksheet - Introducing Arrays</title>
 </head>
 <body>
+
 <div class="docTitle">Worksheet - Introducing Arrays with Whack-a-mole</div>
 
 <p>Any array is a simple form of 'data structure' - which is a mechanism for holding multiple, related, data elements (also called 'items')
@@ -72,7 +73,6 @@
 
     <li>Add two more similarc <el-kw>call</el-kw> instructions (all before the print instruction) to put an asterisk in element numbers
         0 and 9. Run the program and check that it shows three moles in the expected places.</li>
-
     <li>Change the instruction that modifies element <el-lit>9</el-lit> to specify element <el-lit>10</el-lit>.
     Run the program, which will result in a 'Runtime error'. Make sure you understand the error message, so that you will recognise what is going on
     if you see this message unexpectedly in future.</li>
@@ -92,7 +92,6 @@
         deleting the last three instructions within <el-code>main</el-code>.
         (To delete an instruction, select it by clicking on the keyword at the start of the instruction and then
         press <b>Ctrl-Delete</b> or <b>Ctrl-d</b>). You should be back to this:
-
         <el-code-block>
             <main class="ok multiline">
                 <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg></el-top>
@@ -102,9 +101,7 @@
                 <el-kw>end main</el-kw>
             </main>
         </el-code-block>
-
     </li>
-
     <li><i>After the instruction that creates the array</i>, add this one to label the holes:
         <el-code-block>
             <el-statement class="focused ok" id="print23" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>print </el-kw><el-field id="expr24" class="optional ok" tabindex="0"><el-txt>"<el-lit>0  1  2  3  4  5  6  7  8  9</el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl></el-field></el-statement>
@@ -212,6 +209,7 @@
         </el-code-block>
 
         noting that whereas <el-id>k</el-id> is a <i>string</i>, <el-id>molePosition</el-id> is an <i>integer</i> and
+
         the two cannot be compared directly. Adding <el-code>.<el-method>asString</el-method>()</el-code> returns a string representation
         of that integer - in other words it is <i>effectively</i> converting <el-lit>7</el-lit> to <el-code>"<el-lit>7</el-lit>"</el-code> - so
         that it can be directly compared to the string <el-id>k</el-id>.</li>
@@ -221,7 +219,6 @@
         you don't need to type it again, you can just press <b>Ctrl-z</b> (undo).
         </li>
         <li>Now within the body of the <el-kw>if</el-kw> instruction add:
-
         <el-code-block>
             <el-statement class="ok" ></el-statement><el-kw>print </el-kw><el-field id="expr53" class="optional ok" tabindex="0"><el-txt>"<el-lit>Hit!</el-lit>"</el-txt></el-field><el-msg></el-msg></el-statement>
          </el-code-block>
@@ -260,6 +257,7 @@
 
         <ul>
             <li>Change scoring so that a hit gains 3 points but every miss loses a point,
+
                 noting that to detect a <i>miss</i> you must test for <el-id>k</el-id><el-kw> isnt </el-kw><el-code>""</el-code>
                  - otherwise you will be counting as a miss each iteration of the loop <i>even if no key has been pressed</i>.</li>
             <li>Make it so that the game doesn't continue indefinitely by changing <el-kw>while true</el-kw> to another

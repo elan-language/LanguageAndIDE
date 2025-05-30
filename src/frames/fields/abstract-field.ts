@@ -787,8 +787,6 @@ export abstract class AbstractField implements Selectable, Field {
 
     if (count === 0) {
       this.selectedSymbolCompletion = undefined;
-    } else if (!this.selectedSymbolCompletion && this.symbolToMatch !== "") {
-      this.selectedSymbolCompletion = symbols[0];
     }
 
     for (let i = startIndex; i < lastIndex; i++) {
