@@ -30,7 +30,7 @@ Comments may be inserted at the same level as a <a href="#GlobalInstructions">gl
 <p>Global instructions (also referred to simply as &lsquo;globals&rsquo;) are located <em>directly</em> within a code file.
   They are never indented from the left-hand edge, nor may they be located <em>within</em> other instructions.
   Three of the globals &ndash; <el-code>main</el-code>, <el-code>function</el-code>, and <el-code>procedure</el-code> &ndash; are described as &lsquo;methods&rsquo; and these are defined by one or more <a href="#statement">statements</a> within them.
-  Four of the globals &ndash; <a href="#record"><el-code>record</el-code></a>, <a href="#class"><el-code>class</el-code></a>, <a href="#AbstractClass"><el-code>abstract class</el-code></a>, and <a href="#interface"><el-code>interface</el-code></a> &ndash; define data structures and these always contain <a href="#Member">members</a>.
+  Four of the globals &ndash; <a href="#record"><el-code>record</el-code></a>, <a href="#Class"><el-code>class</el-code></a>, <a href="#AbstractClass"><el-code>abstract class</el-code></a>, and <a href="#interface"><el-code>interface</el-code></a> &ndash; define data structures and these always contain <a href="#Member">members</a>.
   The two remaining globals &ndash; <el-code>constant</el-code>, and <el-code>enum</el-code> &ndash; do not contain any further instructions.</p>
 <p>When you navigate to a <el-code>new code</el-code> at the <em>global</em> level (not indented from the left-hand edge of the code pane),
 you will be shown the 'global selector' listing the set of globals that you may insert there, namely all or only some of:</p>
@@ -41,7 +41,7 @@ you will be shown the 'global selector' listing the set of globals that you may 
 <a href="#Constant"><el-code>constant</el-code></a>
 <a href="#Enum"><el-code>enum</el-code></a>
 <a href="#record"><el-code>record</el-code></a>
-<a href="#class"><el-code>class</el-code></a>
+<a href="#Class"><el-code>class</el-code></a>
 <a href="#ClassAbs"><el-code>abstract</el-code></a>
 <a href="#interface"><el-code>interface</el-code></a>
 <a href="#Comment"><el-code>#</el-code></a></p>
@@ -270,7 +270,7 @@ The value is specified by the Type name for the specified <el-code>enum</el-code
 <p>A <el-code>record</el-code> is a user-defined data structure that is given a Type name (which must begin with an upper case letter).
   The <el-code>record</el-code> defines one or more properties, each of which has a name (starting with a lower case letter) and a Type.
   The Type of a property may be any simple value Type, or a <el-code>ListImmutable</el-code>, or another Type of <el-code>record</el-code> ( or even the same Type of <el-code>record</el-code>).</p>
-  <p>Note that the Type <el-code><el-type>record</el-type></el-code> has some similarity to a <a href="#class"><el-code><el-type>class</el-type></el-code></a> in that:</p>
+  <p>Note that the Type <el-code><el-type>record</el-type></el-code> has some similarity to a <a href="#Class"><el-code><el-type>class</el-type></el-code></a> in that:</p>
 <ul>
   <li>Both are user-defined data structures</li>
   <li>Both are given a &lsquo;Type name&rsquo;</li>
@@ -453,7 +453,7 @@ If you wish to have several subclasses of an <el-code>abstract class</el-code> t
 <p>Member instructions (also referred to simply as &lsquo;members&rsquo;) are located directly within the a: <el-code>record</el-code>, <el-code>class</el-code>, <el-code>abstract class</el-code>, <el-code>interface</el-code>.
   All members, with the exception of <el-code>property</el-code>, define one or more <a href="#statement">statements</a> within them.</p>
 <p>When you navigate to a <el-code>new code</el-code> that is at <em>member</em> level
-  (located directly within a <a href="#record">record</a>, <a href="#class">class</a>, <a href="#AbstractClass"><el-code>abstract class</el-code></a>, or <a href="#interface">interface</a>)
+  (located directly within a <a href="#record">record</a>, <a href="#Class">class</a>, <a href="#AbstractClass"><el-code>abstract class</el-code></a>, or <a href="#interface">interface</a>)
   you will be shown the set of statements that may be inserted there, for example:</p>
 
   <el-code><el-member class="selected focused ok empty" id="select8" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-member></el-code>
@@ -463,14 +463,14 @@ If you wish to have several subclasses of an <el-code>abstract class</el-code> t
 
     <a href="#constructor">constructor</a>,
     <a href="#property">property</a>,
-    <a href="#procedure">procedure</a>,
-    <a href="#function">function</a>,
+    <a href="#procedure_method">procedure</a>,
+    <a href="#function_method">function</a>,
     <a href="#abstractProperty">abstract property</a>,
     <a href="#abstractProcedure">abstract procedure</a>,
     <a href="#abstractFunction">abstract function</a>,
     <a href="#property">private property</a>,
-    <a href="#procedure">private procedure</a>,
-    <a href="#function">private function</a>,
+    <a href="#procedure_method">private procedure</a>,
+    <a href="#function_method">private function</a>,
     <a href="#Comment">#</a>
 <!-- #endregion-->
 <!--     #region Constructor-->
@@ -927,7 +927,7 @@ The &lsquo;if expression&rsquo; is in certain respects similar to an <span class
 
 <h2 id="new">New instance</h2>
 <p>A 'new instance' expression is used to create a new instance of a <a href="LibRef.html#StandardDataStructures">library data structure</a>,
-   or a <a href="#class"> user-defined class</a> or <a href="#record">record</a> - either to assign to a named value, or as part
+   or a <a href="#Class"> user-defined class</a> or <a href="#record">record</a> - either to assign to a named value, or as part
   of a more complex expression. Example of use (taken from the `Snake - procedural` demo):</p>
 
 <el-code-block>
@@ -973,7 +973,7 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 <h2 id="empty">Empty of Type</h2>
 <p>An 'empty of Type' expression is used to make the default (empty) instance of any Type
   - usually only created for comparing to another instance to test whether that other instance is also empty or default.
-  This may arise, for example, if a <a href="#class">class</a> or <a href="#record">record</a> is defined with a property that has never had a value assigned to it.
+  This may arise, for example, if a <a href="#Class">class</a> or <a href="#record">record</a> is defined with a property that has never had a value assigned to it.
   The following example is taken from the 'Pathfinder' demo program:</p>
 
 <el-code-block>
