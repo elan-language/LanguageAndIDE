@@ -135,8 +135,8 @@ ${this.indent()}}`;
     return super.resolveSymbol(id, transforms, initialScope);
   }
 
-  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
-    const matches = super.symbolMatches(id, all, this);
+  symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
+    const matches = super.symbolMatches(id, all, initialScope);
     const localMatches: ElanSymbol[] = [];
 
     const v = this.variable.text;
