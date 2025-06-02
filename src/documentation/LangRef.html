@@ -1111,8 +1111,8 @@ as soon as you see them appear.
 <p>If a class inherits from one or more abstract classes, then the latter must all be already declared (defined) earlier in the code file.</p>
 
 <h3 id="MemberTypeCompileError" class="no-TOC">Member ... must be of type ...</h3>
-<p>This error occurs when a class is defined as inheriting from an abstract class, #
-  and has implemented an inherited member (method or property) with the correct name, but with different type(s).</p>
+<p>This error occurs when a class is defined as inheriting from an abstract class,
+   and has implemented an inherited member (method or property) with the correct name, but with different type(s).</p>
 
   <h3 id="TypesCompileError" class="no-TOC">Incompatible types. Expected: ... Provided: ...</h3>
 
@@ -1244,12 +1244,25 @@ defines no parameters. If your intent was to define a <i>reference</i> to the fu
 <p>An Elan keyword cannot be used to as the name for a value, property, or method. Try shortening the name, lengthening it, or using a different name</p>
 
 <h3 id="mustNotBeReservedWord" class="no-TOC">...  is a reserved word, and may not be used as an identifier.</h3>
-<p>In addition to keywords there are certain other 'reserved words' that cannot be used the name for a value, property, or method.
-  Some of these are potential keywords that <i>might</i> be added to Elan in future releases.
-  The reason you cannot use <el-code>int, float, string, boolean, array, list, dictionary</el-code> as identifiers
-  is because it is not considered good practice to use the name of a type as an identifier
-   <i>even though (in Elan) the capitalisation is different</i>. Instead you should give each identifier a name that indicates
+<p>In addition to Elan keywords there are certain other 'reserved words' that cannot be used to define the name for a 
+  value, property, or method.If you encounter this error you may eliminate the error simply by adding
+   more valid characters to the name - for example just by changing <el-id>case</el-id> to <el-id>case_</el-id>.
+  </p>
+  <p>Why are there any reserved words that are not Elan keywords? There are three kinds of reserved word:
+    
+    <ul>
+<li><i>Potential</i> keywords - that might be added to Elan in future releases.</li>
+  <li>Lower-case versions of Elan type names, such as <el-code>int, float, string, boolean, array, list, dictionary</el-code>.
+   It is not considered good practice to use type names for identifiers: instead you should give each identifier a name that indicates
    what it does (for a method), or represents (for a named value).
+   <li>Words that are keywords in JavaScript (but not in Elan). Elan compiles to JavaScript and
+   use of these words as identifiers could cause errors. (If you are asking, 'Why doesn't the Elan compiler
+   just obfuscate these?' the answer is that we evaluated that option but concluded that it added a lot of 
+   complexity - especially in regard to debugging and interaction with the Elan editor - just to eliminate
+   the minor inconvience of having to extend the word so as to make your identifier distinct.)</li>
+  </ul>
+
+  For reference, the complete list of reserved words is:  <el-code>action, arguments, array, async, await, boolean, break, by, byte, case, catch, char, const, continue, curry, debugger, default, delete, dictionary, do, double, eval, export, extends, final, finally, float, goto, implements, import, in, instanceof, int, into, list, long, match, namespace, native, null, on, optional, otherwise, package, partial, pattern, protected, public, short, static, string, super, switch, system, synchronized, throws, todo, transient, typeof, void, volatile, var, when, yield,</el-code>
 </p>
 
 <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
