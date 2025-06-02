@@ -1,7 +1,7 @@
 import { AssertOutcome } from "../../assert-outcome";
 import { AbstractFrame } from "../abstract-frame";
 
-import { AssertTermField } from "../fields/assert-term-field";
+import { AssertActualField } from "../fields/assert-actual-field";
 import { ExpressionField } from "../fields/expression-field";
 import { helper_compileMsgAsHtml } from "../frame-helpers";
 import { TestFrame } from "../globals/test-frame";
@@ -15,14 +15,14 @@ import { CompileStatus, DisplayColour, TestStatus } from "../status-enums";
 
 export class AssertStatement extends AbstractFrame implements Statement {
   isStatement = true;
-  actual: AssertTermField;
-  expected: AssertTermField;
+  actual: AssertActualField;
+  expected: ExpressionField;
   outcome?: AssertOutcome;
   hrefForFrameHelp: string = "LangRef.html#assert";
 
   constructor(parent: Parent) {
     super(parent);
-    this.actual = new AssertTermField(this);
+    this.actual = new AssertActualField(this);
     this.expected = new ExpressionField(this, /\r|\n/);
     this.expected.setPlaceholder("<i>expected value</i>");
   }

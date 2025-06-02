@@ -213,4 +213,12 @@ suite("Field Parsing Tests", () => {
       ``,
     );
   });
+  test("parse Actual field cannot contain ' is '", () => {
+    const test = new TestFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
+    const assertStatement = new AssertStatement(test);
+    const actual = assertStatement.actual!;
+    actual.setFieldToKnownValidText("a is b");
+    actual.parseCurrentText();
+    assert.equal(actual.readParseStatus(), ParseStatus.invalid);
+  });
 });

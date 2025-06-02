@@ -1015,7 +1015,18 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
   <p>(though in certain very specific contexts some options are disallowed by the compiler.)</p>
 
 <h3 id="parse_assert_actual" class="no-TOC">Invalid assert actual</h3>
-<p>The 'actual' field in an assert statement must be a named value or a function evaluation.</p>
+<p>The 'actual' field should be kept as simple as possible, <i>preferably</i>
+  just a named value or a function evaluation. Generally, if you want to use a more
+  complex expression, it is better to evaluate it in a preceding <el-kw>let</el-kw>
+  instruction and then use the named value in the 'actual' field of the <el-kw>assert</el-kw>
+  instruction. Some more complex expressions are permissible, but these two restrictions apply:
+  <ul>
+    <li>Any expression involving a binary operator (e.g. <el-code>+ <el-kw>and</el-kw> <el-kw>isnt</el-kw></el-code>
+    must have brackets around it.</li>
+    <li>You may <i>not</i> use the <el-kw>is</el-kw> operator within the 'actual' field, because
+       the parser will confuse this with the <el-kw>is</el-kw> keyword that is part of the <el-kw>assert</el-kw> instruction.</li>
+  </ul>
+  </p>
 
 <h3 id="parse_constant_literal" class="no-TOC">Invalid constant value</h3>
 <p>The value of a constant must be a literal value of a type that is not mutable.

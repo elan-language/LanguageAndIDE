@@ -220,7 +220,7 @@ export class Turtle extends GraphicsBase {
     return this.stdlib.vectorGraphicsAsHtml(this.vg);
   }
 
-/*   @elanProcedure(["otherTurtle"])
+  /*   @elanProcedure(["otherTurtle"])
   shareDisplayWith(@elanClassType(Turtle) t2: Turtle) {
     const vg = t2.vg;
     vg.appendList(this.vg);
