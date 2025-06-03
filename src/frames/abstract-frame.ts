@@ -719,7 +719,6 @@ export abstract class AbstractFrame implements Frame {
 
   getContextMenuItems() {
     const map = new Map<string, [string, (() => void) | undefined, string]>();
-    map.set("frameHelp", ["help for this instruction", undefined, this.hrefForFrameHelp]);
     // Must be arrow functions for this binding
     if (this.hasBreakpoint()) {
       map.set("clearBP", ["clear breakpoint (Ctrl-b)", this.clearBreakPoint, ""]);
