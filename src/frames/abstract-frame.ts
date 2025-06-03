@@ -67,6 +67,16 @@ export abstract class AbstractFrame implements Frame {
     this.setMap(map);
   }
 
+  helpId(): string {
+    return this.initialKeywords().replace(/\s/g, "");
+  }
+
+  helpAsHtml(): string {
+    return this.selected
+      ? `<el-help title="Click to open Help for this instruction"><a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe">?</a> </el-help>`
+      : ``;
+  }
+
   compileScope: Scope | undefined;
 
   setCompileScope(s: Scope): void {
@@ -719,7 +729,6 @@ export abstract class AbstractFrame implements Frame {
 
   getContextMenuItems() {
     const map = new Map<string, [string, (() => void) | undefined, string]>();
-    map.set("frameHelp", ["help for this instruction", undefined, this.hrefForFrameHelp]);
     // Must be arrow functions for this binding
     if (this.hasBreakpoint()) {
       map.set("clearBP", ["clear breakpoint (Ctrl-b)", this.clearBreakPoint, ""]);

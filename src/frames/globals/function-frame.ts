@@ -1,5 +1,5 @@
 import { MethodNameField } from "../fields/method-name-field";
-import { ParamList } from "../fields/param-list";
+import { ParamListField } from "../fields/param-list-field";
 import { TypeField } from "../fields/type-field";
 import { isReturnStatement } from "../frame-helpers";
 import { FrameWithStatements } from "../frame-with-statements";
@@ -19,7 +19,7 @@ import { UnknownSymbol } from "../symbols/unknown-symbol";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent, ElanSymbol {
   public name: MethodNameField;
-  public params: ParamList;
+  public params: ParamListField;
   public returnType: TypeField;
   file: File;
   isFunction = true;
@@ -28,7 +28,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
     super(parent);
     this.file = parent as File;
     this.name = new MethodNameField(this);
-    this.params = new ParamList(this);
+    this.params = new ParamListField(this);
     this.returnType = new TypeField(this);
     this.getChildren().push(new ReturnStatement(this));
   }
@@ -66,7 +66,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   }
   public renderAsHtml(): string {
     return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${functionKeyword} </el-kw>${this.helpAsHtml()}<el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>${endKeyword} ${functionKeyword}</el-kw>
 </el-func>`;

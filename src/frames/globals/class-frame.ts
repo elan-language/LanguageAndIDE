@@ -16,7 +16,7 @@ import {
   mustBeUniqueNameInScope,
   mustNotBeCircularDependency,
 } from "../compile-rules";
-import { InheritsFrom } from "../fields/inheritsFrom";
+import { InheritsFromField } from "../fields/inherits-from-field";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
 import { isConstructor, isMember } from "../frame-helpers";
@@ -75,14 +75,14 @@ export abstract class ClassFrame
   isInterface: boolean = false;
   public name: TypeNameField;
   public isNotInheritable = false;
-  public inheritance: InheritsFrom;
+  public inheritance: InheritsFromField;
   private _children: Array<Frame> = new Array<Frame>();
   hrefForFrameHelp: string = "LangRef.html#class";
 
   constructor(parent: File) {
     super(parent);
     this.name = new TypeNameField(this);
-    this.inheritance = new InheritsFrom(this);
+    this.inheritance = new InheritsFromField(this);
     this.getChildren().push(new MemberSelector(this));
   }
 

@@ -18,7 +18,10 @@ export class ExpressionField extends AbstractField {
     super(holder);
     this.readUntil = readUntil;
     this.setPlaceholder("<i>expression</i>");
-    this.help = "Field may contain a literal value, a reference to a variable, or an expression";
+  }
+
+  helpId(): string {
+    return "ExpressionField";
   }
 
   getIdPrefix(): string {

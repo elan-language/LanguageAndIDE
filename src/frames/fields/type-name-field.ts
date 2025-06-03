@@ -13,7 +13,10 @@ export class TypeNameField extends AbstractField {
     super(holder);
     this.useHtmlTags = true;
     this.placeholder = "Name";
-    this.help = `A class name, like any type name, must begin with an upper-case letter, , optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else.`;
+  }
+
+  helpId(): string {
+    return "TypeNameField";
   }
 
   initialiseRoot(): ParseNode {

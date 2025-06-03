@@ -1,7 +1,7 @@
 import { AbstractFrame } from "../abstract-frame";
 
 import { mustBeUniqueNameInScope } from "../compile-rules";
-import { EnumValues } from "../fields/enum-values";
+import { EnumValuesField } from "../fields/enum-values-field";
 import { TypeNameField } from "../fields/type-name-field";
 import { singleIndent } from "../frame-helpers";
 import { CodeSource } from "../interfaces/code-source";
@@ -23,7 +23,7 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
   isCollapsible: boolean = true;
   isGlobal = true;
   name: TypeNameField;
-  values: EnumValues;
+  values: EnumValuesField;
   file: File;
   hrefForFrameHelp: string = "LangRef.html#enum";
 
@@ -32,7 +32,7 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
     this.file = parent;
     this.name = new TypeNameField(this);
     this.name.setPlaceholder("<i>Name</i>");
-    this.values = new EnumValues(this);
+    this.values = new EnumValuesField(this);
   }
 
   protected setClasses() {
@@ -61,7 +61,7 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
     return "enum";
   }
   renderAsHtml(): string {
-    return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>enum </el-kw>${this.name.renderAsHtml()}</el-top> ${this.values.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-enum>`;
+    return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>enum </el-kw>${this.helpAsHtml()}${this.name.renderAsHtml()}</el-top> ${this.values.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-enum>`;
   }
 
   //`<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>constant </el-kw>${this.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${this.value.renderAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-const>`;

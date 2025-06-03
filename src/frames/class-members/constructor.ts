@@ -1,4 +1,4 @@
-import { ParamList } from "../fields/param-list";
+import { ParamListField } from "../fields/param-list-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { ConcreteClass } from "../globals/concrete-class";
 import { CodeSource } from "../interfaces/code-source";
@@ -18,12 +18,12 @@ export class Constructor extends FrameWithStatements implements ElanSymbol, Memb
   isMember = true;
   isAbstract = false;
   private = false;
-  public params: ParamList;
+  public params: ParamListField;
   hrefForFrameHelp: string = "LangRef.html#constructor";
 
   constructor(parent: Parent) {
     super(parent);
-    this.params = new ParamList(this);
+    this.params = new ParamListField(this);
   }
 
   getClass(): ConcreteClass {
@@ -44,7 +44,7 @@ export class Constructor extends FrameWithStatements implements ElanSymbol, Memb
 
   public renderAsHtml(): string {
     return `<el-constructor class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>constructor</el-kw>(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>constructor</el-kw>${this.helpAsHtml()}(${this.params.renderAsHtml()})${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end constructor</el-kw>
 </el-constructor>`;

@@ -1,9 +1,9 @@
-# ad4a9e2047589d786a0b155596e3409e7925fddd92382bf11f790d679f409af3 Elan 1.1.3 guest default_profile valid
+# ebe76a7368783599d07cf7875a8e806f37375a03b1fc7e5cfae0f2c73507e7f4 Elan 1.1.3 guest default_profile valid
 
 main
+  let t be new Turtle()
   let radius be 50
   let pace be 5
-  let t be new Turtle()
   call t.hide()
   let segment be 2*radius*pi/360
   call t.placeAt(-50, 0)

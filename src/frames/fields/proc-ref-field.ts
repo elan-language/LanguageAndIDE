@@ -15,8 +15,12 @@ export class ProcRefField extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("<i>procedureName</i>");
-    this.help = `The name of the procedure to be called (starting lower-case). Alternatively, a 'dotted-call':  the name of a variable or property, followed by a ''' and the name of the procedure method to call on that 'instance'.`;
   }
+
+  helpId(): string {
+    return "ProcRefField";
+  }
+
   getIdPrefix(): string {
     return "ident";
   }

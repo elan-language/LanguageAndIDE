@@ -7,14 +7,18 @@ import { EnumValuesNode } from "../parse-nodes/enum-values-node";
 import { isAstCollectionNode, transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
-export class EnumValues extends AbstractField {
+export class EnumValuesField extends AbstractField {
   isParseByNodes = true;
 
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("<i>values</i>");
-    this.help = `Comma-separated list of names, each of which must start with a lower-case letter, with same possible other characters as a variable name.`;
   }
+
+  helpId(): string {
+    return "EnumValuesField";
+  }
+
   getIdPrefix(): string {
     return "enumVals";
   }

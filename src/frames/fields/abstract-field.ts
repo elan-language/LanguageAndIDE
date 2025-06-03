@@ -53,7 +53,6 @@ export abstract class AbstractField implements Selectable, Field {
   protected astNode?: AstNode;
   protected completion: string = "";
   parseErrorLink: string = "";
-  protected help: string = "help TBD";
   overtyper = new Overtyper();
   codeHasChanged: boolean = false;
   allPossibleSymbolCompletions: SymbolWrapper[] = [];
@@ -73,6 +72,8 @@ export abstract class AbstractField implements Selectable, Field {
   getFile(): File {
     return this.holder.getFile();
   }
+
+  abstract helpId(): string;
 
   getHtmlId(): string {
     return this.htmlId;
@@ -683,8 +684,12 @@ export abstract class AbstractField implements Selectable, Field {
       : helper_compileMsgAsHtml(this);
   }
 
+  helpAsHtml(): string {
+    return `<el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe">?</a></el-help>`;
+  }
+
   renderAsHtml(): string {
-    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex=0><el-txt>${this.textAsHtml()}</el-txt><el-place>${this.placeholder}</el-place><el-compl>${this.getCompletion()}</el-compl>${this.getMessage()}<el-help title="${this.help}">?</el-help></el-field>`;
+    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex=0><el-txt>${this.textAsHtml()}</el-txt><el-place>${this.placeholder}</el-place><el-compl>${this.getCompletion()}</el-compl>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
   }
 
   indent(): string {

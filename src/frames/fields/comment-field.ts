@@ -13,8 +13,11 @@ export class CommentField extends AbstractField {
     super(holder);
     this.setOptional(true);
     this.setPlaceholder("<i>comment</i>");
-    this.help = `Any text on a single line.`;
   }
+  helpId(): string {
+    return "CommentField";
+  }
+
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
     this.rootNode = new CommentNode();
@@ -30,7 +33,7 @@ export class CommentField extends AbstractField {
     const txt = this.isSelected()
       ? this.textAsHtml()
       : this.handleLeadingAndMultipleSpaces(this.textAsHtml());
-    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex=0><el-txt>${txt}</el-txt><el-place>${this.placeholder}</el-place><el-compl>${this.getCompletion()}</el-compl>${this.getMessage()}<el-help title="${this.help}">?</el-help></el-field>`;
+    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex=0><el-txt>${txt}</el-txt><el-place>${this.placeholder}</el-place><el-compl>${this.getCompletion()}</el-compl>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
   }
 
   // Converts leading spaces to &nbsp; and multi-spaces to a space + &nbsp;s
