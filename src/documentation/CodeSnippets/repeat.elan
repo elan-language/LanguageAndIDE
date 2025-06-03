@@ -1,0 +1,12 @@
+# 3d68b5836618dfe94ffa8aa0bb8774f9cf9f73f217ac040e22330b0a5cd9994c Elan 1.1.3 guest default_profile valid
+
+main
+  let names be ["Abel", "Boole", "Cantor", "Descartes"]
+  let file be createFileForWriting("Maths.txt")
+  variable i set to 0
+  repeat
+    call file.writeLine(names[i])
+    set i to i + 1
+  end repeat when i is names.length()
+  call file.saveAndClose()
+end main
