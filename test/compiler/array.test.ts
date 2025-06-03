@@ -521,6 +521,31 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8]");
   });
 
+  test("Pass_FunctionIndex", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to {4, 5, 6, 7, 8}
+  variable b set to a[randomInt(0, 3)]
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.listImmutable([4, 5, 6, 7, 8]);
+  let b = system.safeIndex(a, _stdlib.randomInt(0, 3));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
   test("Fail_ArrayAccessedAs2D", async () => {
     const code = `${testHeader}
 

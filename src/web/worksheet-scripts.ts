@@ -11,7 +11,7 @@ async function hash(toHash: string) {
   return hashHex;
 }
 
-async function getDocumentHash(code : string) {
+async function getDocumentHash(code: string) {
   const toReplace = `<div hidden="" id="hash">.*</div>`;
   const re = new RegExp(toReplace);
 
@@ -19,7 +19,6 @@ async function getDocumentHash(code : string) {
 
   return await hash(code);
 }
-
 
 async function checkHash() {
   const hash1 = document.getElementById("hash")?.innerHTML;
