@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 const updateable = document.querySelectorAll("input, textarea, select");
-const hints = document.getElementsByTagName("el-hint")
+const hints = document.getElementsByTagName("el-hint");
 
-
-async function hash(toHash) {
+async function hash(toHash: string) {
   const msgUint8 = new TextEncoder().encode(toHash); // encode as (utf-8) Uint8Array
   const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8); // hash the message
   const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
@@ -11,7 +12,7 @@ async function hash(toHash) {
 }
 
 async function checkHash() {
-  const hash1 = document.getElementById("hash").innerHTML;
+  const hash1 = document.getElementById("hash")!.innerHTML;
 
   let code = new XMLSerializer().serializeToString(document);
 
@@ -30,14 +31,10 @@ async function checkHash() {
 checkHash();
 
 const autoSaveButton = document.getElementById("auto-save");
-const input1 = document.getElementById("input1");
-const input2 = document.getElementById("input2");
 
-const hint1 = document.getElementById("hint1");
+let fh: FileSystemFileHandle | undefined;
 
-let fh = undefined;
-
-async function chromeSave(code, newName) {
+async function chromeSave(code: string, newName: string) {
   const fh = await showSaveFilePicker({
     suggestedName: newName,
     startIn: "documents",
@@ -54,7 +51,7 @@ async function chromeSave(code, newName) {
 async function getUpdatedDocument() {
   let code = new XMLSerializer().serializeToString(document);
 
-  for (const e of document.querySelectorAll("input[type=text]")) {
+  for (const e of document.querySelectorAll("input[type=text]") as NodeListOf<HTMLInputElement>) {
     const id = e.id;
     const v = e.value;
     const toReplace = `id="${id}" value=".*"`;
@@ -63,7 +60,7 @@ async function getUpdatedDocument() {
     code = code.replace(re, `id="${id}" value="${v}"`);
   }
 
-   for (const e of document.querySelectorAll("input[type=radio]")) {
+  for (const e of document.querySelectorAll("input[type=radio]") as NodeListOf<HTMLInputElement>) {
     const id = e.id;
     const v = e.checked ? "true" : "false";
     const toReplace = `id="${id}" />`;
@@ -72,7 +69,9 @@ async function getUpdatedDocument() {
     code = code.replace(re, `id="${id}" checked="${v}" />`);
   }
 
-   for (const e of document.querySelectorAll("input[type=checkbox]")) {
+  for (const e of document.querySelectorAll(
+    "input[type=checkbox]",
+  ) as NodeListOf<HTMLInputElement>) {
     const id = e.id;
     const v = e.checked ? `checked="true"` : "";
     const toReplace = `id="${id}" />`;
@@ -89,8 +88,6 @@ async function getUpdatedDocument() {
 
     code = code.replace(re, `id="${id}">${v}<`);
   }
-
- 
 
   for (const e of document.getElementsByTagName("select")) {
     const options = e.options;
@@ -111,15 +108,16 @@ async function getUpdatedDocument() {
 
   const hashcode = await hash(code);
 
-  code = code.replace(`<div hidden="" id="hash"></div>`, `<div hidden="" id="hash">${hashcode}</div>`);
-
+  code = code.replace(
+    `<div hidden="" id="hash"></div>`,
+    `<div hidden="" id="hash">${hashcode}</div>`,
+  );
 
   return code;
 }
 
-
-autoSaveButton.addEventListener("click", async () => {
-  let code = await getUpdatedDocument();
+autoSaveButton!.addEventListener("click", async () => {
+  const code = await getUpdatedDocument();
 
   fh = await chromeSave(code, "workSheet");
 });
@@ -135,10 +133,11 @@ async function save() {
 
 for (const e of updateable) {
   e.addEventListener("input", async (e) => {
-    const id = e.target.id;
-    const d = e.data ?? "todo";
+    const ie = e as InputEvent;
+    const id = (ie.target as Element).id;
+    const d = ie.data ?? "todo";
 
-    const changelist = document.getElementById("changes");
+    const changelist = document.getElementById("changes")!;
 
     const change = document.createElement("div");
 
@@ -148,16 +147,16 @@ for (const e of updateable) {
 
     changelist.appendChild(change);
 
-
     await save();
   });
 }
 
 for (const e of hints) {
   e.addEventListener("click", async (e) => {
-    const id = e.target.id;
-    const text = e.target.dataset.hint;
-    hint1.innerHTML = atob(text);
+    const ke = e as any;
+    const id = ke.target.id;
+    const text = ke.target.dataset.hint;
+    ke.target.innerHTML = atob(text);
     document.title = `${id} shown`;
     await save();
   });
