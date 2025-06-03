@@ -1,0 +1,15 @@
+# f057d5aba9a70a2b0e51fa5c1d1441ca10803abab0da93982a7fcfbaf001a530 Elan 1.1.2 guest default_profile valid
+
+main
+  variable names set to empty List<of String>
+  let file be openFileForReading()
+  while not file.endOfFile()
+    let line be file.readLine()
+    call names.append(line)
+  end while
+  call file.close()
+  set names to names.sortBy(lambda x as String, y as String => if x.isAfter(y) then 1 else if x.isBefore(y) then -1 else 0)
+  for i from 0 to names.length() - 1 step 1
+    print names[i]
+  end for
+end main
