@@ -678,6 +678,15 @@ It is recommended that you always use a let in preference to a variable unless y
 <p><el-code>condition</el-code> is either a <el-code><el-type>Boolean</el-type></el-code> variable or an expression that evaluates to a Boolean value.</p>
 <p>If <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code> then the loop ends, if <el-code><el-id>false</el-id></el-code> it resumes. For example:</p>
 
+<el-code-block source="repeat.elan">
+<el-statement class="ok multiline" id="repeat12" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>repeat</el-kw></el-top>
+<el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>writeLine</el-method></el-txt></el-field>(<el-field id="args17" class="optional ok" tabindex="0"><el-txt><el-id>names</el-id>[<el-id>i</el-id>]</el-txt></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="set18" tabindex="0"><el-kw>set </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr20" class="ok" tabindex="0"><el-txt><el-id>i</el-id> + <el-lit>1</el-lit></el-txt></el-field></el-statement>
+<el-kw>end repeat when </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-id>i</el-id><el-kw> is </el-kw><el-id>names</el-id>.<el-method>length</el-method>()</el-txt></el-field>
+</el-statement>
+</el-code-block>
+
 <h2 id="set">Set statement</h2>
 <p>
 The <el-code><el-kw>set</el-kw></el-code> statement is used to assign a new value to an existing variable.
@@ -729,6 +738,14 @@ and the initial value is given by a following expression. For example:</p>
 <p><el-code>condition</el-code> is either a <el-code><el-type>Boolean</el-type></el-code> variable or an expression that evaluates to a Boolean value.</p>
 <p>When <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code> the enclosed code is executed;
  when <el-code><el-id>false</el-id></el-code> the loop is bypassed. For example:</p>
+
+<el-code-block source="while.elan">
+<el-statement id="while6" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>not</el-kw> <el-id>file</el-id>.<el-method>endOfFile</el-method>()</el-txt></el-field></el-top>
+<el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>readLine</el-method>()</el-txt></el-field></el-statement>
+<el-kw>end while</el-kw>
+</el-statement>
+</el-code-block>
 
 <h2 id="statement_comment"># (comment)</h2>
 <p>See <a href="#Comment">Comments</a>.</p>
