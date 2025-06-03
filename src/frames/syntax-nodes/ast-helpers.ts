@@ -36,6 +36,7 @@ import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { EmptyAsn } from "./empty-asn";
 import { IndexAsn } from "./index-asn";
+import { IndexDoubleAsn } from "./index-double-asn";
 import { OperationSymbol } from "./operation-symbol";
 
 export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
@@ -401,7 +402,7 @@ export function compileSimpleSubscript(
   compileErrors: CompileError[],
   fieldId: string,
 ) {
-  if (postfix.includes(",")) {
+  if (index.index instanceof IndexDoubleAsn) {
     mustBeDoubleIndexableType(id, rootType, true, compileErrors, fieldId);
   } else {
     mustBeIndexableType(id, rootType, true, compileErrors, fieldId);
