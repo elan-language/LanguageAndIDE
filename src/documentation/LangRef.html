@@ -584,6 +584,25 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
 <h2 id="assert">Assert statement</h2>
 
 <h2 id="call">Procedure call</h2>
+<p>A <el-code><el-kw>call</el-kw></el-code> statement is used when you want to run a procedure.</p>
+<p>The procedure may be:</p>
+<ul>
+<li>a procedure that you have defined at the global level</li>
+  <el-statement><el-kw>call</el-kw> <el-method>fillRandom</el-method>(<el-id>grid</el-id>)</el-statement>
+<li>a procedure method on an object of a class that you have defined</li>
+  <el-statement><el-kw>call</el-kw> <el-id>apple</el-id>.<el-method>newRandomPosition</el-method>(<el-id>snake</el-id>)</el-statement>
+<li>a procedure method that belongs to the same class as the procedure that you are calling from</li>
+  <el-statement><el-kw>call</el-kw> <el-method>updateNeighbours</el-method>()</el-statement>
+<li>a procedure provided by the standard library</li>
+  <el-statement><el-kw>call</el-kw> <el-method>pause</el-method>(<el-lit>2000</el-lit>)</el-statement>
+<li>a procedure method on an object of a Type provided by the standard library</li>
+  <el-statement><el-kw>call</el-kw> <el-id>vg</el-id>.<el-method>append</el-method>(<el-id>rect</el-id>)</el-statement>
+</ul>
+<p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
+<p>For procedures that you define yourself, <code><el-kw>out</el-kw></code> parameters are allowed.  In this case the corresponding argument must be the name of a variable whose value gets updated by the procedure.</p>
+<p>If the parameter is not an <code><el-kw>out</el-kw></code> parameter, any expression of the correct Type can be used as an argument.</p>
+<p>Procedures may have side-effects, for example input/output or changing a data value in an object.  They can change the contents of any mutable object passed in as an argument.  For this reason, procedures cannot be called from functions, which are not allowed to have side-effects.  <code><el-kw>call</el-kw></code> statements are simply not allowed in functions, to enforce this.</p>
+<p>There is a limit to the complexity of a <code><el-kw>call</el-kw></code> statement.  Only one dot is allowed in the <code>procedure name</code> field, or two dots if the first word is <code><el-kw>property</el-kw></code>.  If you need anything more complicated, use a <code><el-kw>let</el-kw></code> statement on the line above.  See the error message explanation for <a href="#parse_proc_ref">Invalid reference to a procedure</a>.</p>
 
 <h2 id="each">Each loop</h2>
 <p>The <el-code>each..in..</el-code> construct specifies looping sequentially over the elements in a <el-code><el-type>List</el-type></el-code> or  an <el-code><el-type>Array</el-type></el-code>, or over the characters in a <el-code><el-type>String</el-type></el-code>.</p>
@@ -1271,7 +1290,7 @@ defines no parameters. If your intent was to define a <i>reference</i> to the fu
 <li><i>Potential</i> keywords - that might be added to Elan in future releases.</li>
   <li>Lower-case versions of Elan type names, such as <el-code>int, float, string, boolean, array, list, dictionary</el-code>.
    It is not considered good practice to use type names for identifiers: instead you should give each identifier a name that indicates
-   what it does (for a method), or represents (for a named value).
+   what it does (for a method), or represents (for a named value).</li>
    <li>Words that are keywords in JavaScript (but not in Elan). Elan compiles to JavaScript and
    use of these words as identifiers could cause errors. (If you are asking, 'Why doesn't the Elan compiler
    just obfuscate these?' the answer is that we evaluated that option but concluded that it added a lot of 
