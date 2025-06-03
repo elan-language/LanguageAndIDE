@@ -15,28 +15,27 @@
 <div class="docTitle">Worksheet - Title</div>
 <button id="auto-save">AutoSave</button>
 
-<input class="simple-input update" type="text" id="input1" value=""></input>
+<input type="text" id="input1" value=""></input>
 
-<textarea class="update"  id="input2"></textarea>
+<textarea id="input2"></textarea>
 
-<input class="radio-input update" type="radio" name="radio-test" value="t1" id="input3" />
-<input class="radio-input update" type="radio" name="radio-test" value="t2" id="input4" />
+<input type="radio" name="radio-test" value="t1" id="input3" />
+<input type="radio" name="radio-test" value="t2" id="input4" />
 
-<select class="update" name="cars" id="cars">
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="mercedes">Mercedes</option>
-  <option value="audi">Audi</option>
+<input type="checkbox" id="input5" />
+
+<select  name="cars" id="cars">
+  <option>Volvo</option>
+  <option>Saab</option>
+  <option>Mercedes</option>
+  <option>Audi</option>
 </select>
 
 
 <div hidden="" id="hash"></div>
-
-<div hidden="" id="hint1-text">VGhpcyBpcyBhIGhpbnQ=</div>
-
 <div hidden="" id="changes"></div>
 
-<div id="hint1" tabindex="1">Show Hint1</div>
+<el-hint id="hint1" data-hint="VGhpcyBpcyBhIGhpbnQ=">Show Hint1</el-hint>
 
 
 <!-- Worksheet TODOs
