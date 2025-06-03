@@ -58,7 +58,7 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
 
   renderAsHtml(): string {
     return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
-<el-top>${this.bpAsHtml()}<el-kw>${abstractKeyword} ${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-func>
+<el-top>${this.bpAsHtml()}<el-kw>${abstractKeyword} ${functionKeyword} </el-kw>${this.helpAsHtml()}<el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-func>
 `;
   }
 

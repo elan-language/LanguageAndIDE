@@ -67,6 +67,16 @@ export abstract class AbstractFrame implements Frame {
     this.setMap(map);
   }
 
+  helpId(): string {
+    return this.initialKeywords().replace(/\s/g, "");
+  }
+
+  helpAsHtml(): string {
+    return this.selected
+      ? `<el-help title="Click to open Help for this instruction"><a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe">?</a> </el-help>`
+      : ``;
+  }
+
   compileScope: Scope | undefined;
 
   setCompileScope(s: Scope): void {
