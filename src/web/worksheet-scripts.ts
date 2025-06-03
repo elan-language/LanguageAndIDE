@@ -11,17 +11,19 @@ async function hash(toHash: string) {
   return hashHex;
 }
 
-async function checkHash() {
-  const hash1 = document.getElementById("hash")!.innerHTML;
-
-  let code = new XMLSerializer().serializeToString(document);
-
+async function getDocumentHash(code : string) {
   const toReplace = `<div hidden="" id="hash">.*</div>`;
   const re = new RegExp(toReplace);
 
   code = code.replace(re, `<div hidden="" id="hash"></div>`);
 
-  const hash2 = await hash(code);
+  return await hash(code);
+}
+
+
+async function checkHash() {
+  const hash1 = document.getElementById("hash")?.innerHTML;
+  const hash2 = await getDocumentHash(updateDocument());
 
   if (hash1 !== hash2) {
     alert("document has changed outside ide");
@@ -48,7 +50,7 @@ async function chromeSave(code: string, newName: string) {
   return fh;
 }
 
-async function getUpdatedDocument() {
+function updateDocument() {
   let code = new XMLSerializer().serializeToString(document);
 
   for (const e of document.querySelectorAll("input[type=text]") as NodeListOf<HTMLInputElement>) {
@@ -101,12 +103,13 @@ async function getUpdatedDocument() {
     code = code.replace(re, `option selected>${v}`);
   }
 
-  const toReplace = `<div hidden="" id="hash">.*</div>`;
-  const re = new RegExp(toReplace);
+  return code;
+}
 
-  code = code.replace(re, `<div hidden="" id="hash"></div>`);
+async function getUpdatedDocument() {
+  let code = updateDocument();
 
-  const hashcode = await hash(code);
+  const hashcode = await getDocumentHash(code);
 
   code = code.replace(
     `<div hidden="" id="hash"></div>`,
