@@ -1,7 +1,7 @@
 import { AbstractFrame } from "../abstract-frame";
 import { mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
-import { ParamList } from "../fields/param-list";
+import { ParamListField } from "../fields/param-list-field";
 import { singleIndent } from "../frame-helpers";
 import { ConcreteClass } from "../globals/concrete-class";
 import { CodeSource } from "../interfaces/code-source";
@@ -20,13 +20,13 @@ export class AbstractProcedure extends AbstractFrame implements Member, ElanSymb
   isMember: boolean = true;
   private = false;
   public name: IdentifierField;
-  public params: ParamList;
+  public params: ParamListField;
   hrefForFrameHelp: string = "LangRef.html#Abstract_procedure";
 
   constructor(parent: Parent) {
     super(parent);
     this.name = new IdentifierField(this);
-    this.params = new ParamList(this);
+    this.params = new ParamListField(this);
   }
 
   getClass(): ConcreteClass {

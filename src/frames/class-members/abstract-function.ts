@@ -1,7 +1,7 @@
 import { AbstractFrame } from "../abstract-frame";
 import { mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
-import { ParamList } from "../fields/param-list";
+import { ParamListField } from "../fields/param-list-field";
 import { TypeField } from "../fields/type-field";
 import { singleIndent } from "../frame-helpers";
 import { ConcreteClass } from "../globals/concrete-class";
@@ -26,14 +26,14 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
   isMember: boolean = true;
   private = false;
   public name: IdentifierField;
-  public params: ParamList;
+  public params: ParamListField;
   public returnType: TypeField;
   hrefForFrameHelp: string = "LangRef.html#Abstract_function";
 
   constructor(parent: Parent) {
     super(parent);
     this.name = new IdentifierField(this);
-    this.params = new ParamList(this);
+    this.params = new ParamListField(this);
     this.returnType = new TypeField(this);
   }
 

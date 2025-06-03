@@ -235,11 +235,13 @@ el-field.selected ~ el-field.empty el-place, el-field.selected ~ el-field.empty.
 }
 
 /* el-field el-help */
-el-field el-help, el-field.selected.ok el-help {
+el-field el-help {
     display: none;
 }
-el-field.selected el-help, el-field.selected.ok.optional el-help  {
-    display: none;
+el-field.selected el-help, el-field.selected el-help a  {
+    display: inline;
+    background-color: var(--keyword);
+    color: white;
 }
 
 /* el-field el-compl */

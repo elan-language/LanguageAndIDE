@@ -1,7 +1,7 @@
 import { AbstractFrame } from "../abstract-frame";
 
 import { mustBeUniqueNameInScope } from "../compile-rules";
-import { EnumValues } from "../fields/enum-values";
+import { EnumValuesField } from "../fields/enum-values-field";
 import { TypeNameField } from "../fields/type-name-field";
 import { singleIndent } from "../frame-helpers";
 import { CodeSource } from "../interfaces/code-source";
@@ -23,7 +23,7 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
   isCollapsible: boolean = true;
   isGlobal = true;
   name: TypeNameField;
-  values: EnumValues;
+  values: EnumValuesField;
   file: File;
   hrefForFrameHelp: string = "LangRef.html#enum";
 
@@ -32,7 +32,7 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
     this.file = parent;
     this.name = new TypeNameField(this);
     this.name.setPlaceholder("<i>Name</i>");
-    this.values = new EnumValues(this);
+    this.values = new EnumValuesField(this);
   }
 
   protected setClasses() {

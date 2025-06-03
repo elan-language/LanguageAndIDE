@@ -7,13 +7,18 @@ import { InheritanceNode } from "../parse-nodes/inheritanceNode";
 import { isAstCollectionNode, transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
-export class InheritsFrom extends AbstractField {
+export class InheritsFromField extends AbstractField {
   isParseByNodes = true;
   constructor(holder: Frame) {
     super(holder);
     this.setOptional(true);
     this.setPlaceholder("<i>inherits ClassName(s)</i>");
   }
+
+  helpId(): string {
+    return "InheritsFromField";
+  }
+
   getIdPrefix(): string {
     return "text";
   }

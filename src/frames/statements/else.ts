@@ -2,7 +2,7 @@ import { AbstractFrame } from "../abstract-frame";
 import { CodeSourceFromString } from "../code-source-from-string";
 import { mustBeOfType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
-import { IfSelector } from "../fields/if-selector";
+import { IfSelectorField } from "../fields/if-selector-field";
 import { CodeSource } from "../interfaces/code-source";
 import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
@@ -18,7 +18,7 @@ import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "../symbol
 
 export class Else extends AbstractFrame implements Statement {
   isStatement: boolean = true;
-  selectIfClause: IfSelector;
+  selectIfClause: IfSelectorField;
   hasIf: boolean = false;
   condition: ExpressionField;
   hrefForFrameHelp: string = "LangRef.html#else";
@@ -27,7 +27,7 @@ export class Else extends AbstractFrame implements Statement {
     super(parent);
     this.condition = new ExpressionField(this);
     this.condition.setPlaceholder("<i>condition</i>");
-    this.selectIfClause = new IfSelector(this);
+    this.selectIfClause = new IfSelectorField(this);
   }
 
   protected setClasses() {
