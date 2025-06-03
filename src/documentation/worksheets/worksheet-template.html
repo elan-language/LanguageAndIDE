@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- TODO REPLACE DOMAIN WITH https//elan-lang.org/ when the required CSS files have been released-->
+<link href="https://elan-language.github.io/LanguageAndIDE//styles/colourScheme.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE//styles/elanStyle.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE//styles/documentation.css" rel="stylesheet" />
+<title>Worksheet - Template</title>
+</head>
+<body>
+
+<div class="docTitle">Worksheet - Title</div>
+<button id="auto-save">AutoSave</button>
+
+<input type="text" id="input1" value=""></input>
+
+<textarea id="input2"></textarea>
+
+<input type="radio" name="radio-test" value="t1" id="input3" />
+<input type="radio" name="radio-test" value="t2" id="input4" />
+
+<input type="checkbox" id="input5" />
+
+<select  name="cars" id="cars">
+  <option>Volvo</option>
+  <option>Saab</option>
+  <option>Mercedes</option>
+  <option>Audi</option>
+</select>
+
+
+<div hidden="" id="hash"></div>
+<div hidden="" id="changes"></div>
+
+<el-hint id="hint1" data-hint="VGhpcyBpcyBhIGhpbnQ=">Show Hint1</el-hint>
+
+
+<!-- Worksheet TODOs
+
+1. Optional button to set up auto-save of the worksheet to a local file which auto-saves
+  whenever any input field is modified by user. Saves both the original contents of the sheet
+  and the user's inputs. The saved spreadsheet can be manually re-loaded e.g. at start of next session.
+
+2. (If needed, example pattern for various kinds of input fields including short text, multiline text, 
+  radio buttons, drop down list choice)
+
+3. Model for hints. Hint has a label e.g. 'Hint 1'. When you click on it the text of the
+  hint (will always be within one div) is revealed, but the fact of it having been revealed is recorded
+  (and immediately auto-saved). The text would be minimally obfuscated in source, to deter casual cheats,
+  but nothing fancy. The teacher can see, by viewing the saved worksheet which hints were taken e.g.
+  the title changes to 'Hint 1 VIEWED'.
+
+4. Additionally, somehow capture each saved change with a timestamp. (e.g. a log of changes at the bottom)
+
+5. Add some kind of hashing, similar to the mechanism for Elan code, such *if the file has been saved from the IDE*
+(i.e. contains any field updates) then it must have the valid hash to be reloaded.
+
+
+
+-->
+ <script src="https://elan-language.github.io/LanguageAndIDE//worksheet-scripts.js"></script>
+</body>
+</html>
