@@ -17,6 +17,7 @@ function getHashable() {
   const toReplace = `<div hidden="" id="hash">.*</div>`;
   const re = new RegExp(toReplace);
   code = code.replace(re, `<div hidden="" id="hash"></div>`);
+  code = code.replaceAll(" ", "").replaceAll("\n", "").replaceAll("\r", "");
   return code;
 }
 
