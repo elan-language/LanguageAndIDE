@@ -107,19 +107,27 @@
         </el-code-block>
     noting that there are <i>two</i> spaces between each digit.</li>
 
-    <li>Now we want to print the 10 holes individually. When we know, in advance, how many times we want to perform
-        a similar piece of behaviour, we can use a <el-kw>for</el-kw> loop. So as the last instruction within
-        <el-kw>main</el-kw> add a <el-kw>for</el-kw> loop naming the variable <el-id>n</el-id>
-    and counting from 0 to 9.</li>
+    <li>Now we want to print the 10 holes individually. It is possible to do this with a <el-kw>for</el-kw> loop because we know,
+         in advance, how many times we want to print something. But when dealing with arrays (or several other data structures)
+         there's an even simpler mechanism for doing the same thing to, or with, <i>each</i> of the members - called
+         an '<el-kw>each</el-kw> loop'. So as the last instruction within
+        <el-kw>main</el-kw> add an <el-kw>each</el-kw> loop, completed to look like this:</li>
+        <el-code-block>
+            <el-statement class="ok multiline" id="each59" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+                <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident61" class="ok" tabindex="0"><el-txt><el-id>hole</el-id></el-txt><el-place><i>variableName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else.">?</el-help></el-field><el-kw> in </el-kw><el-field id="expr62" class="ok" tabindex="0"><el-txt><el-id>holes</el-id></el-txt><el-place><i>source</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>9</el-fr></el-top>
+                <el-statement class="selected focused ok empty" id="select99" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set throw try variable while #</el-help></el-select></el-statement>
+                <el-kw>end each</el-kw>
+                </el-statement>
+        </el-code-block>
     <li>Within the loop add this instruction:
 
         <el-code-block>
-            <el-statement><el-top><el-kw>call </el-kw><el-field id="ident32" class="ok" tabindex="0"><el-txt><el-method>printNoLine</el-method></el-txt></el-field>(<el-field id="args33" class="optional ok" tabindex="0"><el-txt>"<el-lit></el-lit>{<el-id>holes</el-id>[<el-id>n</el-id>]}<el-lit>  </el-lit>"</el-txt></el-field>)</el-top></el-statement>
+            <el-statement class="selected focused ok" id="call26" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><div class="context-menu"><div class="context-menu-item" data-id="call26" data-func="frameHelp" data-href="LangRef.html#call" title="">help for this instruction</div><div class="context-menu-item" data-id="call26" data-func="setBP" data-href="" title="">set breakpoint (Ctrl-b)</div><div class="context-menu-item" data-id="call26" data-func="cut" data-href="" title="">cut (Ctrl-x)</div><div class="context-menu-item" data-id="call26" data-func="delete" data-href="" title="">delete (Ctrl-Delete or Ctrl-d)</div></div><el-kw>call </el-kw><el-field id="ident27" class="ok" tabindex="0"><el-txt><el-method>printNoLine</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="The name of the procedure to be called (starting lower-case). Alternatively, a 'dotted-call':  the name of a variable or property, followed by a ''' and the name of the procedure method to call on that 'instance'.">?</el-help></el-field>(<el-field id="args28" class="optional ok" tabindex="0"><el-txt>"<el-lit></el-lit>{<el-id>hole</el-id>}<el-lit>  </el-lit>"</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.">?</el-help></el-field>)<el-msg></el-msg><el-fr>10</el-fr></el-top></el-statement>
         </el-code-block>
     noting that:
     <ul>
         <li><el-method>printNoLine</el-method> (make sure you picked that one and not <el-method>printLine</el-method>) is a procedure that works a bit like <el-kw>print</el-kw> but does not print a newline afterwards.</li>
-        <li>We are printing an 'interpolated string' so that hole number <el-id>n</el-id> is inserted into the string
+        <li>We are printing an 'interpolated string' so that <el-id>hole</el-id> is inserted into the string
             between the curly-braces (which will not, themselves, appear in the printed string).</li>
         <li>There are two spaces after the close-brace - to match the two spaces between digit labels.</li>
     </ul></li>
@@ -279,5 +287,9 @@
             a maximum of 10 instructions. Don't forget that a procedure can also delegate work to other procedures.</li>
         </ul>
     </p>
+<h3>Copyright & License</h3>
+<img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+<p>This worksheet is copyright © Richard Pawson 2025. It is protected by the Creative Commons license:
+    Attribution-NonCommercial-NoDerivatives 4.0 International, details of which may be examined <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">here</a>.</p>
 </body>
 </html>
