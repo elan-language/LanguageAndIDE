@@ -11,19 +11,22 @@ async function hash(toHash: string) {
   return hashHex;
 }
 
-async function getDocumentHash(code: string) {
+
+function getHashable() {
+  let code = updateDocument();
   const toReplace = `<div hidden="" id="hash">.*</div>`;
   const re = new RegExp(toReplace);
-
   code = code.replace(re, `<div hidden="" id="hash"></div>`);
+  return code;
+}
 
-  return await hash(code);
+async function getDocumentHash() {
+  return await hash(getHashable());
 }
 
 async function checkHash() {
   const hash1 = document.getElementById("hash")?.innerHTML;
-  const hash2 = await getDocumentHash(updateDocument());
-
+  const hash2 = await getDocumentHash();
   if (hash1 !== hash2) {
     alert("document has changed outside ide");
   }
@@ -107,14 +110,11 @@ function updateDocument() {
 
 async function getUpdatedDocument() {
   let code = updateDocument();
-
-  const hashcode = await getDocumentHash(code);
-
+  const hashcode = await getDocumentHash();
   code = code.replace(
     `<div hidden="" id="hash"></div>`,
     `<div hidden="" id="hash">${hashcode}</div>`,
   );
-
   return code;
 }
 
