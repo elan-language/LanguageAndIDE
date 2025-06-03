@@ -1,0 +1,14 @@
+# a52ba43fef7ffdc2b72b6951cd6eb8474a5a07237627a5dc4cfe23fae72b5a74 Elan 1.1.2 guest default_profile valid
+
+main
+  print 1.20e-2
+  variable tu set to tuple(2, true)
+  print tu
+  set tu to tuple(0, false)
+  print tu
+  print {tu}
+  variable x,_ set to tu
+  print x
+  variable _, y set to tu
+  print y
+end main
