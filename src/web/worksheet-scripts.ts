@@ -11,6 +11,7 @@ async function hash(toHash: string) {
   return hashHex;
 }
 
+
 function getHashable() {
   let code = updateDocument();
   const toReplace = `<div hidden="" id="hash">.*</div>`;
