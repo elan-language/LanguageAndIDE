@@ -134,8 +134,11 @@ async function save() {
 for (const e of updateable) {
   e.addEventListener("input", async (e) => {
     const ie = e as InputEvent;
-    const id = (ie.target as Element).id;
+    const tgt = ie.target as Element;
+    const id = tgt.id;
     const d = ie.data ?? "todo";
+
+    tgt.classList.add("answered");
 
     const changelist = document.getElementById("changes")!;
 
