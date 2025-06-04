@@ -44,10 +44,10 @@ physics, biology, ecology, economics ..., even computer science.
         <el-global class="selected focused ok empty" id="select0" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> main procedure function test constant enum record class abstract interface #</el-help></el-select></el-global></div>
     </elan-code-block>
     if it doesn't then select <b>File > New > OK</b>. Also, if the background to this pane is not white, then the
-    browser focus is somewhere else - just click with the mouse inside the code editor pane, or <b>Tab</b> until it has focus.</li>
+    browser focus is somewhere else - just click with the mouse inside the code editor pane, <i>or</i> <b>Tab</b> until it has focus.</li>
     <li>We will start by creating a 'main' routine. You can see that <el-code>main</el-code> is one of the options offered in 
-        the 'selector (the text with the grey background), 
-    and the only one starting with <el-code>main</el-code>, so just pressing the <b>m</b> key will create the main routine:
+        the 'new code selector (the text with the grey background), 
+    and the only one starting with <el-code>main</el-code>, so just pressing <b>m</b> to create the main routine:
 
     <el-code-block>
         <main class="ok multiline" id="main3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
@@ -58,15 +58,16 @@ physics, biology, ecology, economics ..., even computer science.
     </el-code-block></li>
     <li>The extent of main routine is defined by <el-kw>main</el-kw> and <el-kw>end main</el-kw> and it is currently empty, 
         but will eventually contain multiple 'instructions' which are, in the simplest case, executed in order - like a recipe.
-        Currently, within the main routine there is another grey-background selector showing the instructions that can be added <i>within the main</i>.</li>
-        <li>Type the letter <b>l</b> and you will see the <i>incomplete</i> 'frame' for a <el-kw>let</el-kw> instruction:
-        
-        </li>
-    </li>
+        Currently, within the main routine there is another (grey) 'new code selector' showing the instructions that can be added <i>within the main</i>.</li>
+    <li>Type the letter <b>l</b> and you will see the <i>incomplete</i> 'frame' for a <el-kw>let</el-kw> instruction:
+        <el-code-block>
+            <el-statement class="warning" id="let5" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var6" class="selected focused empty warning" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="0" data-cursorend="0" size="1" style="width: 2px" value=""></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field><el-kw> be </el-kw><el-field id="expr7" class="empty warning" tabindex="0"><el-txt></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg></el-statement>
+        </el-code-block>
+
 </ul>
 
 <h3>Copyright & License</h3>
-<img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41" align="right">
+<img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
 <p>This worksheet is copyright © Richard Pawson 2025. It is protected by the Creative Commons license: 
     Attribution-NonCommercial-NoDerivatives 4.0 International, details of which may be examined <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">here</a>.</p>
 </body>

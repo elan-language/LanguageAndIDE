@@ -9,7 +9,10 @@ export class AssignableField extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("<i>variable</i>");
-    this.help = `A previously defined variable, but NOT a parameter. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)`;
+  }
+
+  helpId(): string {
+    return "AssignableField";
   }
 
   getIdPrefix(): string {

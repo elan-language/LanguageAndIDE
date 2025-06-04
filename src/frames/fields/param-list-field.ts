@@ -22,14 +22,17 @@ import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { isAstCollectionNode, isAstIdNode, transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
-export class ParamList extends AbstractField implements Scope {
+export class ParamListField extends AbstractField implements Scope {
   isParseByNodes = true;
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("<i>parameter definitions</i>");
     this.useHtmlTags = true;
     this.setOptional(true);
-    this.help = `Zero or more parameter definitions comma-separated. Each parameter definition consists of a parameter name followed by the 'as' keyword and a Type. A parameter name follows the same rules as for a variable name - starting with a lower-case letter.`;
+  }
+
+  helpId(): string {
+    return "ParamListField";
   }
 
   getParentScope(): Scope {

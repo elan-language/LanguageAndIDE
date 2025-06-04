@@ -116,17 +116,17 @@ export class Turtle extends GraphicsBase {
   private addTurtleIfShown() {
     if (this.shown) {
       const turtle = new CircleVG();
-      turtle.centreX = this.x;
-      turtle.centreY = this.y;
+      turtle.centreX = this.asVGx(this.x);
+      turtle.centreY = this.asVGy(this.y);
       turtle.radius = 2;
       turtle.fillColour = 0x008000;
       turtle.strokeWidth = 0;
       const [x2, y2] = this.getDestination(2);
       const pointer = new LineVG();
-      pointer.x1 = this.x;
-      pointer.y1 = this.y;
-      pointer.x2 = x2;
-      pointer.y2 = y2;
+      pointer.x1 = this.asVGx(this.x);
+      pointer.y1 = this.asVGy(this.y);
+      pointer.x2 = this.asVGx(x2);
+      pointer.y2 = this.asVGy(y2);
       pointer.strokeWidth = 2;
       this.vg.append(turtle);
       this.vg.append(pointer);

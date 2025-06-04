@@ -1,0 +1,105 @@
+# 006b287a429ff4c99db61e1f1735d5ab087cc00bee363ea092473c1979a31e15 Elan 1.1.2 guest default_profile valid
+
+# Dragon curve
+# Algorithm decides on the fly which way to turn at every corner,
+# and orients the dragon upright on its feet
+# 
+main
+  let sqrt2 be sqrt(2)
+  # turn: turtle's change of heading: 1=left, -1=right
+  variable turn set to 1
+  # segments : number of line segments in dragon
+  variable segments set to 1
+  # length : length of line segment
+  variable length set to 100.0
+  # corner : length of corner part of segment
+  variable corner set to length/10.0
+  # order : order of dragon (user input)
+  variable order set to 1
+  print "Draw dragon curves"
+  print "------------------"
+  while order isnt 0
+    set order to inputInt("Enter order of dragon [1..12] or zero to finish:")
+    if order isnt 0 then
+      if (order >= 1) and (order <= 12) then
+        call clearPrintedText()
+        print "Dragon of order " + order.asString() + " displayed"
+        set segments to 1
+        set length to 100
+        variable n set to 0
+        repeat
+          # set values for chosen order of dragon
+          set length to length/sqrt2
+          set corner to length/10.0
+          set segments to segments*2
+          set n to n + 1
+        end repeat when n is order
+        set segments to segments - 1
+        # orient dragon consistently with feet down
+        variable t set to new Turtle()
+        call t.turnToHeading(180 + (order*45))
+        call t.placeAt(-40, 20)
+        call t.penColour(red)
+        call t.penWidth(10 - order)
+        call t.penDown()
+        call t.show()
+        # draw initial corner and segment
+        call drawLine(t, turn, length, corner)
+        # draw remainder of dragon
+        call drawDragon(t, segments, length, corner, order)
+        call t.hide()
+        call t.penUp()
+      else
+        print "Order in range [1..12], please"
+      end if
+    end if
+  end while
+  print "Finish"
+end main
+
+procedure drawDragon(t as Turtle, segments as Int, length as Float, corner as Float, order as Int)
+  # j : counter
+  variable j set to 0
+  # k : counter value that can decide the turns
+  variable k set to 0
+  # turn : turtle's change of heading: 1=left, -1=right turn :
+  variable turn set to 1
+  # s : segment count
+  variable s set to 0
+  # c : case (-7)
+  variable c set to 0
+  variable exit set to false
+  repeat
+    set j to j + 1
+    set k to j
+    set turn to 1
+    set exit to false
+    repeat
+      set c to k mod 8
+      if (c is 0) or (c is 4) then
+        # c is 0 or 4
+        set k to k div 4
+      else
+        set exit to true
+        if (c is 1) or (c is 2) or (c is 5) then
+          # c os 1, 2 or 5
+          set turn to 1
+        else
+          # c is 3, 4 or 7
+          set turn to -1
+        end if
+        call drawLine(t, turn, length, corner)
+      end if
+    end repeat when exit
+    call pause(50 div order)
+    set s to s + 1
+  end repeat when s is segments
+  set turn to 1
+end procedure
+
+procedure drawLine(t as Turtle, turn as Int, length as Float, corner as Float)
+  call t.turn(-45*turn)
+  call t.move(corner)
+  call t.turn(-45*turn)
+  call t.move(length)
+end procedure

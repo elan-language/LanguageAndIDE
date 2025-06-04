@@ -166,7 +166,6 @@ export const reservedWords = [
   "goto",
   "implements",
   "import",
-  "in",
   "instanceof",
   "int",
   "into",

@@ -167,8 +167,8 @@ return [main, _tests];}`;
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
 <line x1="50%" y1="50%" x2="55%" y2="50%" stroke="#ff0000" stroke-width="0.8999999999999999%"/>
-<circle cx="10%" cy="8.164311994315688e-16%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
-<line x1="10%" y1="8.164311994315688e-16%" x2="12%" y2="9.797174393178826e-16%" stroke="#000000" stroke-width="0.6%"/>
+<circle cx="55%" cy="50%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
+<line x1="55%" y1="50%" x2="56%" y2="50%" stroke="#000000" stroke-width="0.6%"/>
 </svg>
 `,
     );
@@ -212,8 +212,8 @@ return [main, _tests];}`;
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
 <line x1="50%" y1="50%" x2="55%" y2="50%" stroke="#000000" stroke-width="0.3%"/>
 <line x1="57.5%" y1="50%" x2="62.5%" y2="50%" stroke="#000000" stroke-width="0.3%"/>
-<circle cx="25%" cy="2.0410779985789223e-15%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
-<line x1="25%" y1="2.0410779985789223e-15%" x2="27%" y2="2.2043642384652362e-15%" stroke="#000000" stroke-width="0.6%"/>
+<circle cx="62.5%" cy="50%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
+<line x1="62.5%" y1="50%" x2="63.5%" y2="50%" stroke="#000000" stroke-width="0.6%"/>
 </svg>
 `,
     );
@@ -250,8 +250,8 @@ return [main, _tests];}`;
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
 <line x1="50%" y1="50%" x2="55%" y2="50%" stroke="#000000" stroke-width="0.3%"/>
-<circle cx="10%" cy="8.164311994315688e-16%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
-<line x1="10%" y1="8.164311994315688e-16%" x2="12%" y2="9.797174393178826e-16%" stroke="#000000" stroke-width="0.6%"/>
+<circle cx="55%" cy="50%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
+<line x1="55%" y1="50%" x2="56%" y2="50%" stroke="#000000" stroke-width="0.6%"/>
 </svg>
 `,
     );
@@ -323,8 +323,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-<circle cx="20%" cy="40%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
-<line x1="20%" y1="40%" x2="20%" y2="42.666666666666664%" stroke="#000000" stroke-width="0.6%"/>
+<circle cx="60%" cy="30%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
+<line x1="60%" y1="30%" x2="60%" y2="28.666666666666668%" stroke="#000000" stroke-width="0.6%"/>
 </svg>
 `,
     );
@@ -359,8 +359,8 @@ return [main, _tests];}`;
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
 <line x1="50%" y1="50%" x2="60%" y2="30%" stroke="#000000" stroke-width="0.3%"/>
-<circle cx="20%" cy="40%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
-<line x1="20%" y1="40%" x2="20%" y2="42.666666666666664%" stroke="#000000" stroke-width="0.6%"/>
+<circle cx="60%" cy="30%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
+<line x1="60%" y1="30%" x2="60%" y2="28.666666666666668%" stroke="#000000" stroke-width="0.6%"/>
 </svg>
 `,
     );

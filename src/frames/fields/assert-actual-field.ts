@@ -11,6 +11,10 @@ export class AssertActualField extends AbstractField {
     this.setPlaceholder("<i>computed value</i>");
   }
 
+  helpId(): string {
+    return "AssertActualField";
+  }
+
   initialiseRoot(): ParseNode {
     this.astNode = undefined;
     this.rootNode = new AssertActualNode();

@@ -5,13 +5,16 @@ import { ExceptionMsgNode } from "../parse-nodes/exception-msg-node";
 import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
-export class ExceptionMessage extends AbstractField {
+export class ExceptionMessageField extends AbstractField {
   isParseByNodes = true;
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("<i>message</i>");
-    this.help = `message defined as a literal string (in quotes), or the name of a previously-defined variable or constant containing a string.`;
   }
+  helpId(): string {
+    return "ExceptionMessageField";
+  }
+
   getIdPrefix(): string {
     return "msg";
   }
