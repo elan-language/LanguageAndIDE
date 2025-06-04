@@ -2,7 +2,6 @@ import { mustBeOfType } from "../../compile-rules";
 import { singleIndent } from "../../frame-helpers";
 import { AstNode } from "../../interfaces/ast-node";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
-import { Frame } from "../../interfaces/frame";
 import { Scope } from "../../interfaces/scope";
 import { Transforms } from "../../interfaces/transforms";
 import { BooleanType } from "../../symbols/boolean-type";
@@ -71,10 +70,10 @@ ${compileNodes(this.compileChildren)}`;
     return this.getCurrentScope().getParentScope();
   }
 
-  getChildRange(initialScope: Scope) {
+  getChildRange(initialScope: AstNode) {
     const fst = this.compileChildren[0];
     const fi = this.compileChildren.indexOf(fst);
-    const li = this.compileChildren.indexOf(initialScope as unknown as AstNode);
+    const li = this.compileChildren.indexOf(initialScope);
 
     return fi < li
       ? this.compileChildren.slice(fi, li + 1)
@@ -83,7 +82,7 @@ ${compileNodes(this.compileChildren)}`;
 
   resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
     if (this.compileChildren.length > 0) {
-      let range = this.getChildRange(initialScope);
+      let range = this.getChildRange(initialScope as unknown as AstNode);
 
       if (range.length > 1) {
         range = range.slice(0, range.length - 1);
@@ -108,7 +107,7 @@ ${compileNodes(this.compileChildren)}`;
     let localMatches: ElanSymbol[] = [];
 
     if (this.compileChildren.length > 0) {
-      let range = this.getChildRange(initialScope as Frame);
+      let range = this.getChildRange(initialScope as unknown as AstNode);
 
       if (range.length > 1) {
         range = range.slice(0, range.length - 1);

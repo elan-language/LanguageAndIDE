@@ -233,7 +233,7 @@ export function transform(
     astRoot.children = node
       .getChildren()
       .filter((f) => !isSelector(f))
-      .map((f) => transform(f, "", astRoot as unknown as Scope)) as AstNode[];
+      .map((f) => transform(f, "", astRoot)) as AstNode[];
 
     return astRoot;
   }

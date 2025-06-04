@@ -9,7 +9,7 @@ import { compileNodes } from "./ast-helpers";
 import { FrameAsn } from "./frame-asn";
 import { AssertAsn } from "./statements/assert-asn";
 
-export class FrameWithStatementsAsn extends FrameAsn implements AstNode {
+export class FrameWithStatementsAsn extends FrameAsn implements AstNode, Scope {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
@@ -23,7 +23,7 @@ export class FrameWithStatementsAsn extends FrameAsn implements AstNode {
   }
 
   getCurrentScope(): Scope {
-    return this as unknown as Scope;
+    return this;
   }
 
   getChildRange(first: AstNode, last: Scope): AstNode[] {

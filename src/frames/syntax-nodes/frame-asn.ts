@@ -69,7 +69,7 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
   }
 
   getCurrentScope(): Scope {
-    return this as unknown as Scope;
+    return this;
   }
 
   indent(): string {
@@ -143,15 +143,15 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
   }
 
   resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
-    return this.getParentScope().resolveSymbol(id, transforms, this as unknown as Scope);
+    return this.getParentScope().resolveSymbol(id, transforms, this);
   }
 
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
-    return this.getParentScope().symbolMatches(id, all, this as unknown as Scope);
+    return this.getParentScope().symbolMatches(id, all, this);
   }
 
   debugSymbols() {
-    return () => allScopedSymbols(this.getParentScope(), this as unknown as Scope);
+    return () => allScopedSymbols(this.getParentScope(), this);
   }
 
   getNextState(currentState: BreakpointStatus, event: BreakpointEvent) {
