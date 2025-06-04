@@ -7,7 +7,7 @@ import { FunctionMethod } from "../class-members/function-method";
 import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
 import { AbstractField } from "../fields/abstract-field";
-import { InheritsFrom } from "../fields/inheritsFrom";
+import { InheritsFromField } from "../fields/inherits-from-field";
 import { TypeField } from "../fields/type-field";
 import { FileImpl } from "../file-impl";
 import { isSelector } from "../frame-helpers";
@@ -678,7 +678,7 @@ export function transform(
     return paramsAsn;
   }
 
-  if (node instanceof InheritsFrom) {
+  if (node instanceof InheritsFromField) {
     const rn = node.getRootNode();
     if (rn && rn.status === ParseStatus.valid) {
       const inheritsAsn = new InheritsFromAsn(node.getHtmlId());
