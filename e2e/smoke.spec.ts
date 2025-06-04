@@ -202,7 +202,7 @@ test('undo redo', async ({ page }) => {
   await page.keyboard.type('m');
   await expect(page.locator('#code-title')).toContainText('File: code.elan UNSAVED');
   await page.getByRole('button', { name: 'Undo' }).click();
-  await expect(page.locator('el-help')).toContainText(' main procedure function test constant enum record class abstract interface #');
+  await expect(page.locator('.selector')).toContainText(' main procedure function test constant enum record class abstract interface #');
   await page.getByRole('button', { name: 'Redo' }).click();
   await expect(page.locator('el-top')).toContainText('main');
 });
