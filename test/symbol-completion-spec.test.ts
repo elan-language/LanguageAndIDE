@@ -1,7 +1,7 @@
 import assert from "assert";
 import { Alternatives } from "../src/frames/parse-nodes/alternatives";
 import { ArgListNode } from "../src/frames/parse-nodes/arg-list-node";
-import { AssertTermNode } from "../src/frames/parse-nodes/assert-term-node";
+import { AssertActualNode } from "../src/frames/parse-nodes/assert-actual-node";
 import { AssignableNode } from "../src/frames/parse-nodes/assignable-node";
 import { BinaryExpression } from "../src/frames/parse-nodes/binary-expression";
 import { BinaryOperation } from "../src/frames/parse-nodes/binary-operation";
@@ -622,10 +622,10 @@ suite("Symbol Completion Spec", () => {
   });
   test("#932 assert actual node", () => {
     testSymbolCompletionSpec(
-      new AssertTermNode(),
+      new AssertActualNode(),
       "",
       ParseStatus.empty,
-      AssertTermNode.name,
+      AssertActualNode.name,
       "",
       [TokenType.id_let, TokenType.id_variable, TokenType.method_function, TokenType.method_system],
       [""],

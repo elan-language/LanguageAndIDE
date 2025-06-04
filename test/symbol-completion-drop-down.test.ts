@@ -2252,4 +2252,29 @@ end main`;
 
     await assertSymbolCompletionWithString(fileImpl, "args8", "aa", expected);
   });
+
+  test("Pass_withinForLoop", async () => {
+    const code = `${testHeader}
+
+main
+  for i from 1 to 1000 step 1
+    variable pacesThisAttempt set to 0
+    while true
+      set pacesThisAttempt to pacesThisAttempt + 1
+    end while
+    variable totalPaces set to 0
+    set totalPaces to totalPaces + pacesThisAttempt
+  end for
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["pacesThisAttempt", "pacesThisAttempt", "pacesThisAttempt"],
+      ["totalPaces", "totalPaces", "totalPaces"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr20", "totalPaces + pac", expected);
+  });
 });

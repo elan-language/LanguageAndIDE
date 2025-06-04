@@ -234,12 +234,23 @@ el-field.selected ~ el-field.empty el-place, el-field.selected ~ el-field.empty.
     display: inline;
 }
 
-/* el-field el-help */
-el-field el-help, el-field.selected.ok el-help {
+/* el-help */
+el-help {
     display: none;
 }
-el-field.selected el-help, el-field.selected.ok.optional el-help  {
-    display: none;
+
+el-help a {
+    color: white; 
+}
+.selected > el-help, .selected el-top > el-help  {
+    display: inline;
+    background-color: var(--selection);
+    color: white;
+}
+
+el-field.selected > el-help {
+    background-color: var(--keyword);
+    color: white;
 }
 
 /* el-field el-compl */

@@ -1,8 +1,7 @@
-# 018427f82f6a5bf9d8ed1c8d4e98e11998da899b3ebc5cf47a6d8c1aba875b0c Elan 1.1.3 guest default_profile valid
+# 2e4bfaf7765b8315ba1ba1d0cc1f647c981fe5e2a2bc04b2b89927669622fa31 Elan 1.1.3 guest default_profile valid
 
 main
   let file be openFileForReading()
   let text be file.readWholeFile()
-  call file.close()
   print text
 end main

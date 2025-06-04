@@ -9,7 +9,7 @@ import { ParseStatus } from "../status-enums";
 import { AbstractField } from "./abstract-field";
 import { Regexes } from "./regexes";
 
-export class IfSelector extends AbstractField {
+export class IfSelectorField extends AbstractField {
   protected placeholderIsCode: boolean = true;
   private else: Else;
 
@@ -19,7 +19,10 @@ export class IfSelector extends AbstractField {
     this.setPlaceholder("<i>if</i>");
     this.setOptional(true);
     this.setParseStatus(ParseStatus.valid);
-    this.help = `Type 'i' to add an 'if condition' to this 'else clause'.`;
+  }
+
+  helpId(): string {
+    return "IfSelectorField";
   }
 
   initialiseRoot(): ParseNode {

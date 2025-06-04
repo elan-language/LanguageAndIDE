@@ -14,8 +14,12 @@ export class TypeField extends AbstractField {
     super(holder);
     this.useHtmlTags = true;
     this.placeholder = "<i>Type</i>";
-    this.help = `A simple Type name must begin with an upper-case letter. See manual for Array, List, an  Dictionary types, 'generic type', 'tuple type', 'function type' - consult documentation for these.`;
   }
+
+  helpId(): string {
+    return "TypeField";
+  }
+
   getIdPrefix(): string {
     return "type";
   }

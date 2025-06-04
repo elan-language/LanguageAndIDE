@@ -448,7 +448,7 @@ or from within another <el-kw>procedure</el-kw>, it is also possible to make cha
 with the specified changes &ndash; which is why all such methods have names starting <el-code>with...</el-code>.</p>
 
 <p>All four data structures contain values of a single Type, that Type being specified either explicitly &ndash;  as in
-    <el-code>of &lt;<el-kw>procedure</el-kw>&gt; <el-type>Int</el-type> &ndash; or implicitly if the structure
+    <el-code>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-code> &ndash; or implicitly if the structure
     is created from its literal definition form.</p>
     <p>A <el-type>Dictionary</el-type> is defined with two Types: one for its keys and one for their values.</p>
 
@@ -713,7 +713,6 @@ Note
   <td><el-type>List</el-type> whose elements are<br> of an immutable Type</td>
   <td>(none)</td>
   <td><el-type>ListImmutable</el-type></td>
-  <td>a new ListImmutable containing the same elements</td>
  </tr><tr id="asSet">
   <td><el-method>asSet</el-method></td>
   <td><el-type>List</el-type></td>
@@ -1598,7 +1597,6 @@ most variables and data structures to the Display for debugging purposes.</p>
 <el-code-block source="TextFileReader_1.elan">
   <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>openFileForReading</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
   <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>text</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>readWholeFile</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="call9" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident10" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>close</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args11" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
   <el-statement class="ok" id="print12" tabindex="0"><el-kw>print </el-kw><el-field id="expr13" class="optional ok" tabindex="0"><el-txt><el-id>text</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 <p>or to read a file line by line:</p>

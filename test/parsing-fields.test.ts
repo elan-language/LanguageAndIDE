@@ -27,7 +27,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(text.readParseStatus(), ParseStatus.valid);
     assert.equal(
       text.renderAsHtml(),
-      `<el-field id="comment4" class="optional ok" tabindex=0><el-txt>Hello</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Any text on a single line.">?</el-help></el-field>`,
+      `<el-field id="comment4" class="optional ok" tabindex=0><el-txt>Hello</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="doc-iframe">?</a></el-help></el-field>`,
     );
   });
   test("parse CommentFieldWithSpaces", () => {
@@ -41,7 +41,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(text.readParseStatus(), ParseStatus.valid);
     assert.equal(
       text.renderAsHtml(),
-      `<el-field id="comment4" class="optional ok" tabindex=0><el-txt>&nbsp;&nbsp;Hello &nbsp;&nbsp;World &nbsp;</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Any text on a single line.">?</el-help></el-field>`,
+      `<el-field id="comment4" class="optional ok" tabindex=0><el-txt>&nbsp;&nbsp;Hello &nbsp;&nbsp;World &nbsp;</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="doc-iframe">?</a></el-help></el-field>`,
     );
   });
   test("parse varDefField", () => {
@@ -55,7 +55,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(id.readParseStatus(), ParseStatus.valid);
     assert.equal(
       id.renderAsHtml(),
-      `<el-field id=\"var4\" class=\"ok\" tabindex=0><el-txt><el-id>ab_1</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title=\"A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)\">?</el-help></el-field>`,
+      `<el-field id="var4" class="ok" tabindex=0><el-txt><el-id>ab_1</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field>`,
     );
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
@@ -76,7 +76,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(id.readParseStatus(), ParseStatus.valid);
     assert.equal(
       id.renderAsHtml(),
-      `<el-field id=\"var4\" class=\"ok\" tabindex=0><el-txt><el-id>ab_1</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title=\"A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)\">?</el-help></el-field>`,
+      `<el-field id="var4" class="ok" tabindex=0><el-txt><el-id>ab_1</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field>`,
     );
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
@@ -212,5 +212,13 @@ suite("Field Parsing Tests", () => {
       `{{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07`,
       ``,
     );
+  });
+  test("parse Actual field cannot contain ' is '", () => {
+    const test = new TestFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
+    const assertStatement = new AssertStatement(test);
+    const actual = assertStatement.actual!;
+    actual.setFieldToKnownValidText("a is b");
+    actual.parseCurrentText();
+    assert.equal(actual.readParseStatus(), ParseStatus.invalid);
   });
 });

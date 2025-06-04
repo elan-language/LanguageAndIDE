@@ -46,7 +46,7 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
 
-    await assertObjectCodeExecutes(fileImpl, `70 2.86 30`);
+    await assertObjectCodeExecutes(fileImpl, `20 34.64 30`);
   });
 
   test("Pass_HeadingNormalised", async () => {
@@ -131,7 +131,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, `5037.50`);
+    await assertObjectCodeExecutes(fileImpl, `000`);
   });
   test("Pass_AsHtml", async () => {
     const code = `${testHeader}
@@ -166,9 +166,9 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-<line x1="50%" y1="50%" x2="60%" y2="50%" stroke="#ff0000" stroke-width="0.8999999999999999%"/>
-<circle cx="60%" cy="50%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
-<line x1="60%" y1="50%" x2="62%" y2="50%" stroke="#000000" stroke-width="0.6%"/>
+<line x1="50%" y1="50%" x2="55%" y2="50%" stroke="#ff0000" stroke-width="0.8999999999999999%"/>
+<circle cx="55%" cy="50%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
+<line x1="55%" y1="50%" x2="56%" y2="50%" stroke="#000000" stroke-width="0.6%"/>
 </svg>
 `,
     );
@@ -210,10 +210,10 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-<line x1="50%" y1="50%" x2="60%" y2="50%" stroke="#000000" stroke-width="0.3%"/>
-<line x1="65%" y1="50%" x2="75%" y2="50%" stroke="#000000" stroke-width="0.3%"/>
-<circle cx="75%" cy="50%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
-<line x1="75%" y1="50%" x2="77%" y2="50%" stroke="#000000" stroke-width="0.6%"/>
+<line x1="50%" y1="50%" x2="55%" y2="50%" stroke="#000000" stroke-width="0.3%"/>
+<line x1="57.5%" y1="50%" x2="62.5%" y2="50%" stroke="#000000" stroke-width="0.3%"/>
+<circle cx="62.5%" cy="50%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
+<line x1="62.5%" y1="50%" x2="63.5%" y2="50%" stroke="#000000" stroke-width="0.6%"/>
 </svg>
 `,
     );
@@ -249,9 +249,9 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-<line x1="50%" y1="50%" x2="60%" y2="50%" stroke="#000000" stroke-width="0.3%"/>
-<circle cx="60%" cy="50%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
-<line x1="60%" y1="50%" x2="62%" y2="50%" stroke="#000000" stroke-width="0.6%"/>
+<line x1="50%" y1="50%" x2="55%" y2="50%" stroke="#000000" stroke-width="0.3%"/>
+<circle cx="55%" cy="50%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
+<line x1="55%" y1="50%" x2="56%" y2="50%" stroke="#000000" stroke-width="0.6%"/>
 </svg>
 `,
     );
@@ -289,7 +289,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-<line x1="50%" y1="50%" x2="60%" y2="50%" stroke="#000000" stroke-width="0.3%"/>
+<line x1="50%" y1="50%" x2="55%" y2="50%" stroke="#000000" stroke-width="0.3%"/>
 </svg>
 `,
     );
@@ -323,8 +323,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-<circle cx="20%" cy="40%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
-<line x1="20%" y1="40%" x2="20%" y2="37.333333333333336%" stroke="#000000" stroke-width="0.6%"/>
+<circle cx="60%" cy="30%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
+<line x1="60%" y1="30%" x2="60%" y2="28.666666666666668%" stroke="#000000" stroke-width="0.6%"/>
 </svg>
 `,
     );
@@ -358,9 +358,9 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(
       fileImpl,
       `<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-<line x1="50%" y1="50%" x2="20%" y2="40%" stroke="#000000" stroke-width="0.3%"/>
-<circle cx="20%" cy="40%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
-<line x1="20%" y1="40%" x2="20%" y2="37.333333333333336%" stroke="#000000" stroke-width="0.6%"/>
+<line x1="50%" y1="50%" x2="60%" y2="30%" stroke="#000000" stroke-width="0.3%"/>
+<circle cx="60%" cy="30%" r="2.25%" stroke="#000000" stroke-width="0%" fill="#008000"/>
+<line x1="60%" y1="30%" x2="60%" y2="28.666666666666668%" stroke="#000000" stroke-width="0.6%"/>
 </svg>
 `,
     );

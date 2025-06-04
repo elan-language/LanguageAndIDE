@@ -4,7 +4,7 @@ import { MemberSelector } from "../src/frames/class-members/member-selector";
 import { CommentField } from "../src/frames/fields/comment-field";
 import { ConstantValueField } from "../src/frames/fields/constant-value-field";
 import { IdentifierField } from "../src/frames/fields/identifier-field";
-import { InheritsFrom } from "../src/frames/fields/inheritsFrom";
+import { InheritsFromField } from "../src/frames/fields/inherits-from-field";
 import { TypeNameField } from "../src/frames/fields/type-name-field";
 import { FileImpl } from "../src/frames/file-impl";
 import { ConcreteClass } from "../src/frames/globals/concrete-class";
@@ -92,7 +92,7 @@ suite("Editing Frames", () => {
     assert.equal(className.isSelected(), true);
     className.processKey(enter());
     assert.equal(className.isSelected(), false);
-    const text3 = file.getById("text3") as InheritsFrom;
+    const text3 = file.getById("text3") as InheritsFromField;
     assert.equal(text3.isSelected(), true);
     text3.processKey(enter());
     assert.equal(text3.isSelected(), false);

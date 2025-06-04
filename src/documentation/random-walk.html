@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- REPLACE DOMAIN WITH https//elan-lang.org/-->
+<link href="https://elan-language.github.io/LanguageAndIDE//styles/colourScheme.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE//styles/elanStyle.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE//styles/documentation.css" rel="stylesheet" />
+<title>Worksheet - Random Walk</title>
+</head>
+<body>
+<div class="docTitle">Worksheet - Random Walk</div>
+
+<p>If you have never programmed before, this worksheet is a great way to start.
+And if you have previously done a little programming you might still find this exercise interesting.</p>
+
+<p>Our objective is to investigate the mathematical idea of a 'random walk'. 
+Imagine that you are standing in the centre of a circle with a radius of 10 paces.
+But instead of walking straight to the edge, with each pace you make a random turn
+- <i>up to</i> to 90 degrees left or right. How many paces will it take to reach the edge?
+You might answer that it is 'Impossible to say, if the turning is truely random!', 
+and that is correct, <i>for a single journey</i>: for example, the picture below shows 
+three such possible random-walk journeys, and each takes a different number of paces:</p>
+
+<img src="http://127.0.0.1:5500/out/website/documentation/images/random-walk.png" width="50%">
+
+<p>But can we determine the <i>average</i> number of paces to reach the edge? Yes,
+if we could perform the experiment many times. But, you might say, 'What's the point?'
+Well, it turns out that being able to predict the average length of a different kinds of
+random walk has very significant applications in many different fields of study: 
+physics, biology, ecology, economics ..., even computer science. 
+(You may read more about this on <a href="https://en.wikipedia.org/wiki/Random_walk" target="_blank">Wikipedia</a>).</p>
+
+<p>So let's get started.</p>
+
+<h3>Iteration 1: Use 'Turtle graphics' to plot a non-random walk.</h3>
+<ul>
+    <li>Your code editor pane should look like this (allowing that the Elan version number might be greater than shown here):
+
+    <elan-code-block>
+        <el-header># <el-hash>ec2a7054d8d0bdaefee304faa514c071ccee07e8250b73112263c5a92e0eb9a9</el-hash> <el-version>Elan 1.1.3</el-version> <el-user class="hide">guest</el-user> <el-profile class="hide">default_profile</el-profile></el-header>
+        <el-global class="selected focused ok empty" id="select0" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> main procedure function test constant enum record class abstract interface #</el-help></el-select></el-global></div>
+    </elan-code-block>
+    if it doesn't then select <b>File > New > OK</b>. Also, if the background to this pane is not white, then the
+    browser focus is somewhere else - just click with the mouse inside the code editor pane, <i>or</i> <b>Tab</b> until it has focus.</li>
+    <li>We will start by creating a 'main' routine. You can see that <el-code>main</el-code> is one of the options offered in 
+        the 'new code selector (the text with the grey background), 
+    and the only one starting with <el-code>main</el-code>, so just pressing <b>m</b> to create the main routine:
+
+    <el-code-block>
+        <main class="ok multiline" id="main3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+            <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg><el-fr>1</el-fr></el-top>
+            <el-statement class="selected focused ok empty" id="select4" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set throw try variable while #</el-help></el-select></el-statement>
+            <el-kw>end main</el-kw>
+        </main>
+    </el-code-block></li>
+    <li>The extent of main routine is defined by <el-kw>main</el-kw> and <el-kw>end main</el-kw> and it is currently empty, 
+        but will eventually contain multiple 'instructions' which are, in the simplest case, executed in order - like a recipe.
+        Currently, within the main routine there is another (grey) 'new code selector' showing the instructions that can be added <i>within the main</i>.</li>
+    <li>Type the letter <b>l</b> and you will see the <i>incomplete</i> 'frame' for a <el-kw>let</el-kw> instruction:
+        <el-code-block>
+            <el-statement class="warning" id="let5" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var6" class="selected focused empty warning" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="0" data-cursorend="0" size="1" style="width: 2px" value=""></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else. (For'tuple deconstruction' or 'list deconstruction' consult documentation.)">?</el-help></el-field><el-kw> be </el-kw><el-field id="expr7" class="empty warning" tabindex="0"><el-txt></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg></el-statement>
+        </el-code-block>
+
+</ul>
+
+<h3>Copyright & License</h3>
+<img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+<p>This worksheet is copyright © Richard Pawson 2025. It is protected by the Creative Commons license: 
+    Attribution-NonCommercial-NoDerivatives 4.0 International, details of which may be examined <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">here</a>.</p>
+</body>
+</html>

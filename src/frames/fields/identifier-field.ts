@@ -11,7 +11,10 @@ export class IdentifierField extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("<i>name</i>");
-    this.help = `A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else.`;
+  }
+
+  helpId(): string {
+    return "IdentifierField";
   }
 
   initialiseRoot(): ParseNode {
