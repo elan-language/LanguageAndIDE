@@ -15,16 +15,17 @@
 <div class="docTitle">Worksheet - Title</div>
 <button id="auto-save">AutoSave</button>
 
-<input type="text" id="input1" value=""></input>
+<!-- for all updateable controls empty class must be before id - or else appending the answered class breaks the regex -->
+<input type="text" class="" id="input1" value=""></input>
 
-<textarea id="input2"></textarea>
+<textarea class="" id="input2"></textarea>
 
-<input type="radio" name="radio-test" value="t1" id="input3" />
-<input type="radio" name="radio-test" value="t2" id="input4" />
+<input type="radio" class="" name="radio-test" value="t1" id="input3" />
+<input type="radio" class="" name="radio-test" value="t2" id="input4" />
 
-<input type="checkbox" id="input5" />
+<input type="checkbox" class="" id="input5" />
 
-<select  name="cars" id="cars">
+<select class="" name="cars" id="cars">
   <option>Volvo</option>
   <option>Saab</option>
   <option>Mercedes</option>
@@ -61,6 +62,6 @@
 
 
 -->
- <script src="https://elan-language.github.io/LanguageAndIDE//worksheet-scripts.js"></script>
+ <script src="worksheet-scripts.js"></script>
 </body>
 </html>
