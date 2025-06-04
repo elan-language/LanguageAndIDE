@@ -349,9 +349,9 @@ end class
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: Boolean. Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: Boolean. Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: Foo. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: Boolean.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: Boolean.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: Foo.LangRef.html#TypesCompileError",
     ]);
   });
 

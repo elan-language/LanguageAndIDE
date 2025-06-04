@@ -452,7 +452,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the constant 'a'. Click for more info.LangRef.html#compile_error",
+      "May not re-assign the constant 'a'.LangRef.html#compile_error",
     ]);
   });
 
@@ -537,7 +537,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'if' is a keyword, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
+      "'if' is a keyword, and may not be used as an identifier.LangRef.html#compile_error",
     ]);
   });
 
@@ -556,7 +556,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
+      "'break' is a reserved word, and may not be used as an identifier.LangRef.html#compile_error",
     ]);
   });
 
@@ -575,9 +575,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Name 'a' not unique in scope. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope.LangRef.html#compile_error"]);
   });
   test("Pass_usingConstantAsKeyInConstantDictionary", async () => {
     const code = `${testHeader}

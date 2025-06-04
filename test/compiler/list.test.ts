@@ -1114,9 +1114,9 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String. Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: List<of String>. Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: List<of String>, Provided: String. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: List<of String>.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of String>, Provided: String.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -1624,7 +1624,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: other (List<of tuple(Int, Int)>), Provided: tuple(Int, Int). Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: other (List<of tuple(Int, Int)>), Provided: tuple(Int, Int).LangRef.html#compile_error",
     ]);
   });
 

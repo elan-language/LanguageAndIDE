@@ -785,8 +785,8 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'y' is not defined. Click for more info.LangRef.html#compile_error",
-      "Incompatible types. Expected: String, Unknown, Provided: tuple(Int, String). Click for more info.LangRef.html#TypesCompileError",
+      "'y' is not defined.LangRef.html#compile_error",
+      "Incompatible types. Expected: String, Unknown, Provided: tuple(Int, String).LangRef.html#TypesCompileError",
     ]);
   });
 

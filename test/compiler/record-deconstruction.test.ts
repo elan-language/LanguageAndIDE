@@ -784,8 +784,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'b' is not defined. Click for more info.LangRef.html#compile_error",
-      "Incompatible types. Expected: String, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "'b' is not defined.LangRef.html#compile_error",
+      "Incompatible types. Expected: String, Provided: Int.LangRef.html#TypesCompileError",
     ]);
   });
 

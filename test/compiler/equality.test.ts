@@ -243,9 +243,9 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'p1' add brackets. Click for more info.LangRef.html#compile_error",
-      "To evaluate function 'p1' add brackets. Click for more info.LangRef.html#compile_error",
-      "Cannot do equality operations on Procedures or Functions. Click for more info.LangRef.html#CannotCompareProcFunc",
+      "To evaluate function 'p1' add brackets.LangRef.html#compile_error",
+      "To evaluate function 'p1' add brackets.LangRef.html#compile_error",
+      "Cannot do equality operations on Procedures or Functions.LangRef.html#CannotCompareProcFunc",
     ]);
   });
 

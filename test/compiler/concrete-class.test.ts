@@ -1155,9 +1155,9 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'FooBar' is not defined. Click for more info.LangRef.html#compile_error",
-      "'FooBar' is not defined. Click for more info.LangRef.html#compile_error",
-      "Cannot new FooBar. Click for more info.LangRef.html#compile_error",
+      "'FooBar' is not defined.LangRef.html#compile_error",
+      "'FooBar' is not defined.LangRef.html#compile_error",
+      "Cannot new FooBar.LangRef.html#compile_error",
     ]);
   });
 

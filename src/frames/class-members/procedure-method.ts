@@ -23,7 +23,6 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
     return "procedure_method";
   }
 
-
   private modifierAsHtml(): string {
     return this.private ? `<el-kw>private </el-kw>` : "";
   }

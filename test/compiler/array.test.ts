@@ -630,8 +630,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: size (Int), initialValue (Generic Parameter T1), Provided: Int, String.LangRef.html#compile_error",
       "Expected: '<of Type>'.LangRef.html#GenericParametersCompileError",
+      "Argument types. Expected: size (Int), initialValue (Generic Parameter T1), Provided: Int, String.LangRef.html#compile_error",
     ]);
   });
 

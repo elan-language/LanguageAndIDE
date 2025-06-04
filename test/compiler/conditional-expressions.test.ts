@@ -357,8 +357,8 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot determine common type between Bar and Foo. Click for more info.LangRef.html#compile_error",
-      "Incompatible types. Expected: Bar, Provided: Foo. Click for more info.LangRef.html#TypesCompileError",
+      "Cannot determine common type between Bar and Foo.LangRef.html#compile_error",
+      "Incompatible types. Expected: Bar, Provided: Foo.LangRef.html#TypesCompileError",
     ]);
   });
 

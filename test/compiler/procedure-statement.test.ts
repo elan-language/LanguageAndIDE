@@ -1265,8 +1265,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot call procedure 'append' within an expression. Click for more info.LangRef.html#compile_error",
-      "Incompatible types. Expected: List<of Int>, Provided: Procedure (Int). Click for more info.LangRef.html#TypesCompileError",
+      "Cannot call procedure 'append' within an expression.LangRef.html#compile_error",
+      "Incompatible types. Expected: List<of Int>, Provided: Procedure (Int).LangRef.html#TypesCompileError",
     ]);
   });
 

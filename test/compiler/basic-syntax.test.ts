@@ -370,7 +370,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'foo' add brackets. Or to create a reference to 'foo', precede it by 'ref'. Click for more info.LangRef.html#compile_error",
+      "To evaluate function 'foo' add brackets. Or to create a reference to 'foo', precede it by 'ref'.LangRef.html#compile_error",
     ]);
   });
 
@@ -391,7 +391,7 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl,  [
+    assertDoesNotCompile(fileImpl, [
       "To evaluate function 'foo' add brackets. Or to create a reference to 'foo', precede it by 'ref'.LangRef.html#compile_error",
     ]);
   });
