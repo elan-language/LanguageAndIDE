@@ -9,8 +9,6 @@ export class IdentifierNode extends AbstractParseNode {
   private tokenTypes: Set<TokenType>;
   private contextGenerator: () => string;
 
-  override errorLink: string = "#parse_name";
-
   constructor(tokenTypes: Set<TokenType> = new Set<TokenType>(), contextGenerator = () => "") {
     super();
     this.tokenTypes = tokenTypes;

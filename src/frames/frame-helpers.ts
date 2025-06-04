@@ -167,7 +167,7 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
     cls = DisplayColour[compile];
   }
   if (link) {
-    help = `<el-help><a href="documentation/${link}" target ="doc-iframe">?</a></el-help>`;
+    help = `<el-help title="Click to open Help for this error"><a href="documentation/${link}" target ="doc-iframe">?</a></el-help>`;
   }
 
   const popUp = helper_pastePopUp(loc);

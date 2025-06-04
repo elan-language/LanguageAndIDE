@@ -4,8 +4,6 @@ import { InstanceProcRef } from "./instanceProcRef";
 import { MethodNameNode } from "./method-name-node";
 
 export class ProcRefNode extends AbstractAlternatives {
-  override errorLink: string = "#parse_proc_ref";
-
   constructor() {
     super();
     this.alternatives.push(new InstanceProcRef());

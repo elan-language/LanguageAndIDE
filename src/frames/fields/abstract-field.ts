@@ -52,7 +52,6 @@ export abstract class AbstractField implements Selectable, Field {
   protected rootNode?: ParseNode;
   protected astNode?: AstNode;
   protected completion: string = "";
-  parseErrorLink: string = "";
   overtyper = new Overtyper();
   codeHasChanged: boolean = false;
   allPossibleSymbolCompletions: SymbolWrapper[] = [];
@@ -103,7 +102,6 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   parseCompleteTextUsingNode(text: string, root: ParseNode): void {
-    this.parseErrorLink = "";
     if (text.length === 0) {
       this.setParseStatus(this.isOptional() ? ParseStatus.valid : ParseStatus.incomplete);
     } else {
@@ -115,9 +113,6 @@ export abstract class AbstractField implements Selectable, Field {
         this.setParseStatus(root.status);
         this.text = root.renderAsSource();
       }
-    }
-    if (this._parseStatus === ParseStatus.invalid) {
-      this.parseErrorLink = this.rootNode!.errorLink;
     }
   }
 
@@ -673,15 +668,9 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   protected getMessage(): string {
-    let help = "";
-    const href =
-      this.parseErrorLink === "" ? "" : `documentation/LangRef.html${this.parseErrorLink}`;
     const cls = DisplayColour[DisplayColour.error];
-    if (href) {
-      help = `<el-help><a href="${href}" target="doc-iframe">?</a></el-help>`;
-    }
-    return href
-      ? `<el-msg class="${cls}"> Invalid.${help}</el-msg>`
+    return this._parseStatus === ParseStatus.invalid
+      ? `<el-msg class="${cls}"> Invalid.${this.helpAsHtml()}</el-msg>`
       : helper_compileMsgAsHtml(this);
   }
 

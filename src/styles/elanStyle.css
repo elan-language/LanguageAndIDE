@@ -248,10 +248,22 @@ el-help a {
     color: white;
 }
 
-el-field.selected > el-help {
-    background-color: var(--keyword);
-    color: white;
+.selected.error > el-help {
+    display: none; /* Because the error message will contain the help */
 }
+
+el-field.error > el-help {
+    display: inline;
+}
+
+el-field.ok > el-help {
+    display: none;
+}
+
+el-msg.error > el-help {
+    background-color: var(--error);
+}
+
 
 /* el-field el-compl */
 el-field el-compl  {
