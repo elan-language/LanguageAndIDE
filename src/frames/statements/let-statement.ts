@@ -1,11 +1,10 @@
 import { CodeSource } from "../interfaces/code-source";
-import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { beKeyword, letKeyword } from "../keywords";
 import { AbstractDefinitionStatement } from "./abstract-definition.statement";
 
-export class LetStatement extends AbstractDefinitionStatement implements Statement, ElanSymbol {
+export class LetStatement extends AbstractDefinitionStatement implements Statement {
   isStatement = true;
   hrefForFrameHelp: string = "LangRef.html#let";
 

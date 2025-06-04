@@ -2,18 +2,11 @@ import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { CodeSource } from "../interfaces/code-source";
-import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { Parent } from "../interfaces/parent";
-import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
-import { Transforms } from "../interfaces/transforms";
 import { eachKeyword } from "../keywords";
-import { isGenericSymbolType } from "../symbols/symbol-helpers";
-import { SymbolScope } from "../symbols/symbol-scope";
-import { UnknownType } from "../symbols/unknown-type";
-import { transforms } from "../syntax-nodes/ast-helpers";
 
 export class Each extends FrameWithStatements implements Statement {
   isStatement = true;
@@ -61,53 +54,5 @@ ${this.indent()}end each`;
   }
   parseBottom(source: CodeSource): boolean {
     return this.parseStandardEnding(source, "end each");
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
-    const v = this.variable.text;
-
-    if (id === v) {
-      const iterSt = this.iter.symbolType(transforms);
-      const st = isGenericSymbolType(iterSt) ? iterSt.ofTypes[0] : UnknownType.Instance;
-      return {
-        symbolId: id,
-        symbolType: () => st,
-        symbolScope: SymbolScope.counter,
-      };
-    }
-
-    const iter = this.iter.text;
-
-    if (id === iter) {
-      // intercept iter resolve in order to make counter so it's immutable
-      const symbol = super.resolveSymbol(id, transforms, this);
-      return {
-        symbolId: id,
-        symbolType: () => symbol.symbolType(),
-        symbolScope: SymbolScope.counter,
-      };
-    }
-
-    return super.resolveSymbol(id, transforms, initialScope);
-  }
-
-  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
-    const matches = super.symbolMatches(id, all, this);
-    const localMatches: ElanSymbol[] = [];
-
-    const v = this.variable.text;
-
-    if (id === v || all) {
-      const iterSt = this.iter.symbolType(transforms());
-      const st = isGenericSymbolType(iterSt) ? iterSt.ofTypes[0] : UnknownType.Instance;
-      const counter = {
-        symbolId: v,
-        symbolType: () => st,
-        symbolScope: SymbolScope.counter,
-      };
-      localMatches.push(counter);
-    }
-
-    return localMatches.concat(matches);
   }
 }

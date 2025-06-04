@@ -16,9 +16,7 @@ import { Field } from "./interfaces/field";
 import { File } from "./interfaces/file";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
-import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
-import { Transforms } from "./interfaces/transforms";
 import {
   parentHelper_getAllSelectedChildren,
   parentHelper_getChildAfter,
@@ -32,9 +30,8 @@ import {
   DisplayColour,
   ParseStatus,
 } from "./status-enums";
-import { allScopedSymbols, orderSymbol } from "./symbols/symbol-helpers";
+import { orderSymbol } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
-import { UnknownType } from "./symbols/unknown-type";
 
 export abstract class AbstractFrame implements Frame {
   isFrame = true;
@@ -76,34 +73,8 @@ export abstract class AbstractFrame implements Frame {
       : ``;
   }
 
-  compileScope: Scope | undefined;
-
-  setCompileScope(s: Scope): void {
-    this.compileScope = s;
-  }
-
-  getCurrentScope(): Scope {
-    return this;
-  }
-
-  getParentScope(): Scope {
-    return this.compileScope ?? this.getParent();
-  }
-
   hasBeenAddedTo(): void {
     this.isNew = false;
-  }
-
-  get symbolId() {
-    return "__";
-  }
-
-  symbolType(_transforms?: Transforms) {
-    return UnknownType.Instance;
-  }
-
-  get symbolScope() {
-    return SymbolScope.unknown;
   }
 
   isMovable(): boolean {
@@ -126,14 +97,6 @@ export abstract class AbstractFrame implements Frame {
 
   getFrNo(): string {
     return this.getFile().getFrNo();
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
-    return this.getParentScope().resolveSymbol(id, transforms, this);
-  }
-
-  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
-    return this.getParentScope().symbolMatches(id, all, this);
   }
 
   fieldUpdated(_field: Field): void {
@@ -752,10 +715,6 @@ export abstract class AbstractFrame implements Frame {
       return `<div class='context-menu'>${items.join("")}</div>`;
     }
     return "";
-  }
-
-  debugSymbols() {
-    return () => allScopedSymbols(this.getParentScope(), this);
   }
 
   isNotGlobalOrLib(s: ElanSymbol) {

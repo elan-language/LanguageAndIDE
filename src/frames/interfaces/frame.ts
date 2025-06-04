@@ -1,12 +1,10 @@
 import { BreakpointEvent, CompileStatus, ParseStatus } from "../status-enums";
-import { ElanSymbol } from "./elan-symbol";
 import { Field } from "./field";
 import { File } from "./file";
 import { Parent } from "./parent";
-import { Scope } from "./scope";
 import { Selectable } from "./selectable";
 
-export interface Frame extends Selectable, Scope, ElanSymbol {
+export interface Frame extends Selectable {
   isFrame: boolean;
   isNew: boolean; //A frame is 'New' until any field has been edited or any child added
   hasBeenAddedTo(): void;
@@ -53,8 +51,6 @@ export interface Frame extends Selectable, Scope, ElanSymbol {
   deleteIfPermissible(): void;
 
   updateBreakpoints(event: BreakpointEvent): void;
-
-  setCompileScope(s: Scope): void;
 
   pasteError: string;
 }

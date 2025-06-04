@@ -1,6 +1,5 @@
 import { GlobalFrame } from "../interfaces/global-frame";
 import { Parent } from "../interfaces/parent";
-import { SymbolScope } from "../symbols/symbol-scope";
 import { ProcedureFrame } from "./procedure-frame";
 
 export class GlobalProcedure extends ProcedureFrame implements GlobalFrame {
@@ -21,6 +20,4 @@ ${this.renderChildrenAsSource()}\r
 end procedure\r
 `;
   }
-
-  symbolScope = SymbolScope.program;
 }

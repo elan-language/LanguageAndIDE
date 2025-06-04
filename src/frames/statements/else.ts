@@ -3,15 +3,11 @@ import { CodeSourceFromString } from "../code-source-from-string";
 import { ExpressionField } from "../fields/expression-field";
 import { IfSelectorField } from "../fields/if-selector-field";
 import { CodeSource } from "../interfaces/code-source";
-import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Frame } from "../interfaces/frame";
 import { Parent } from "../interfaces/parent";
-import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
-import { Transforms } from "../interfaces/transforms";
 import { elseKeyword, thenKeyword } from "../keywords";
-import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 
 export class Else extends AbstractFrame implements Statement {
   isStatement: boolean = true;
@@ -57,10 +53,6 @@ export class Else extends AbstractFrame implements Statement {
     return this.hasIf ? ` if ${this.condition.renderAsSource()}` : ``;
   }
 
-  getCurrentScope(): Scope {
-    return this.compileScope ?? this;
-  }
-
   indent() {
     return this.getParent()!.indent(); //overrides the additional indent added for most child statements
   }
@@ -87,65 +79,17 @@ export class Else extends AbstractFrame implements Statement {
 
   compileChildren: Frame[] = [];
 
-  setCompileScope(s: Scope) {
-    this.compileScope = s;
-    this.compileChildren = [];
-  }
-
   addChild(f: Frame) {
     this.compileChildren.push(f);
   }
 
-  getOuterScope() {
-    // need to get scope of IfStatement
-    return this.getCurrentScope().getParentScope();
-  }
-
-  getChildRange(initialScope: Scope) {
+  getChildRange(initialScope: Frame) {
     const fst = this.compileChildren[0];
     const fi = this.compileChildren.indexOf(fst);
-    const li = this.compileChildren.indexOf(initialScope as Frame);
+    const li = this.compileChildren.indexOf(initialScope);
 
     return fi < li
       ? this.compileChildren.slice(fi, li + 1)
       : this.compileChildren.slice(li, fi + 1);
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
-    if (this.compileChildren.length > 0) {
-      let range = this.getChildRange(initialScope);
-
-      if (range.length > 1) {
-        range = range.slice(0, range.length - 1);
-
-        for (const f of range) {
-          if (isSymbol(f) && id) {
-            const sids = getIds(f.symbolId);
-            if (sids.includes(id)) {
-              return f;
-            }
-          }
-        }
-      }
-    }
-
-    return this.getOuterScope().resolveSymbol(id, transforms, this.getCurrentScope());
-  }
-
-  symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
-    const matches = this.getOuterScope().symbolMatches(id, all, this.getCurrentScope());
-
-    let localMatches: ElanSymbol[] = [];
-
-    if (this.compileChildren.length > 0) {
-      let range = this.getChildRange(initialScope as Frame);
-
-      if (range.length > 1) {
-        range = range.slice(0, range.length - 1);
-        const symbols = handleDeconstruction(range.filter((r) => isSymbol(r)));
-        localMatches = symbolMatches(id, all, symbols);
-      }
-    }
-    return localMatches.concat(matches);
   }
 }

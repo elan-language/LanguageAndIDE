@@ -3,7 +3,6 @@ import {
   mustNotBeOutParameter,
   mustBeUniqueNameInScope,
 } from "../../compile-rules";
-import { isConstructor } from "../../frame-helpers";
 import { AstIdNode } from "../../interfaces/ast-id-node";
 import { AstNode } from "../../interfaces/ast-node";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
@@ -15,7 +14,7 @@ import { getGlobalScope, isFunction, symbolMatches } from "../../symbols/symbol-
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { AbstractAstNode } from "../abstract-ast-node";
-import { isAstCollectionNode, isAstIdNode, transforms } from "../ast-helpers";
+import { isAstCollectionNode, isAstIdNode, isConstructor, transforms } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 
 export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {

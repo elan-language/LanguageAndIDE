@@ -19,7 +19,6 @@ export class AssignableField extends AbstractField {
     return "ident";
   }
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new AssignableNode();
     return this.rootNode;
   }

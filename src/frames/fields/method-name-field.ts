@@ -17,7 +17,6 @@ export class MethodNameField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new MethodNameNode();
     return this.rootNode;
   }

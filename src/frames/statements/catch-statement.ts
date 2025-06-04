@@ -1,18 +1,12 @@
 import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { CodeSource } from "../interfaces/code-source";
-import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
-import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
-import { SymbolType } from "../interfaces/symbol-type";
-import { Transforms } from "../interfaces/transforms";
 import { catchKeyword, exceptionKeyword, inKeyword } from "../keywords";
-import { StringType } from "../symbols/string-type";
-import { SymbolScope } from "../symbols/symbol-scope";
 
-export class CatchStatement extends FrameWithStatements implements Statement, ElanSymbol {
+export class CatchStatement extends FrameWithStatements implements Statement {
   isStatement = true;
   isCatch = true;
   variable: IdentifierField;
@@ -37,18 +31,6 @@ export class CatchStatement extends FrameWithStatements implements Statement, El
   protected setClasses() {
     super.setClasses();
     this.pushClass(true, "outdent");
-  }
-
-  get symbolId() {
-    return this.variable.text;
-  }
-
-  symbolType(_transforms?: Transforms): SymbolType {
-    return StringType.Instance;
-  }
-
-  get symbolScope() {
-    return SymbolScope.parameter;
   }
 
   initialKeywords(): string {
@@ -91,39 +73,5 @@ ${this.renderChildrenAsSource()}`;
   }
   parseBottom(source: CodeSource): boolean {
     return this.parseStandardEnding(source, "end try");
-  }
-
-  override getParentScope(): Scope {
-    return this.getParent().getParentScope();
-  }
-
-  override getCurrentScope(): Scope {
-    return this.getParent();
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
-    if (this.variable.text === id) {
-      return this;
-    }
-
-    return super.resolveSymbol(id, transforms, initialScope);
-  }
-
-  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
-    const matches = super.symbolMatches(id, all, _initialScope);
-    const localMatches: ElanSymbol[] = [];
-
-    const v = this.variable.text;
-
-    if (id === v || all) {
-      const counter = {
-        symbolId: v,
-        symbolType: () => StringType.Instance,
-        symbolScope: SymbolScope.parameter,
-      };
-      localMatches.push(counter);
-    }
-
-    return localMatches.concat(matches);
   }
 }

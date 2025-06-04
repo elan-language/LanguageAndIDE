@@ -1,7 +1,7 @@
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
 import { singleIndent } from "../../frame-helpers";
-import { ConcreteClass } from "../../globals/concrete-class";
 import { AstNode } from "../../interfaces/ast-node";
+import { Class } from "../../interfaces/class";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Member } from "../../interfaces/member";
 import { Scope } from "../../interfaces/scope";
@@ -27,8 +27,8 @@ export class AbstractProcedureAsn extends FrameAsn implements Member, ElanSymbol
   name: AstNode = EmptyAsn.Instance;
   params: AstNode = EmptyAsn.Instance;
 
-  getClass(): ConcreteClass {
-    return this.getParentScope() as ConcreteClass;
+  getClass(): Class {
+    return this.getParentScope() as Class;
   }
 
   public override indent(): string {

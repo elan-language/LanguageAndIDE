@@ -6,12 +6,12 @@ import {
   mustBeIndexableType,
   mustMatchParameters,
 } from "../compile-rules";
-import { isFile, isFunction } from "../frame-helpers";
 import { AstCollectionNode } from "../interfaces/ast-collection-node";
 import { AstIdNode } from "../interfaces/ast-id-node";
 import { AstIndexableNode } from "../interfaces/ast-indexable-node";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
+import { Member } from "../interfaces/member";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
@@ -58,8 +58,20 @@ export function isAstIdNode(n: AstNode | undefined): n is AstIdNode {
   return !!n && "id" in n;
 }
 
+export function isConstructor(f?: AstNode | Scope): f is ConstructorAsn {
+  return !!f && "isConstructor" in f;
+}
+
 export function isEmptyNode(n: AstNode): n is EmptyAsn {
   return !!n && "isEmpty" in n;
+}
+
+export function isFunction(f?: Scope | Member): f is Member {
+  return !!f && "isFunction" in f;
+}
+
+export function isFile(f?: Scope): f is FileAsn {
+  return !!f && "isFile" in f;
 }
 
 export function InFunctionScope(start: Scope): boolean {

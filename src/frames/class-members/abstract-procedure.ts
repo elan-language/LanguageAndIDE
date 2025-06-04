@@ -2,17 +2,12 @@ import { AbstractFrame } from "../abstract-frame";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamListField } from "../fields/param-list-field";
 import { singleIndent } from "../frame-helpers";
-import { ConcreteClass } from "../globals/concrete-class";
 import { CodeSource } from "../interfaces/code-source";
-import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
-import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { abstractProcedureKeywords } from "../keywords";
-import { ProcedureType } from "../symbols/procedure-type";
-import { SymbolScope } from "../symbols/symbol-scope";
 
-export class AbstractProcedure extends AbstractFrame implements Member, ElanSymbol {
+export class AbstractProcedure extends AbstractFrame {
   isAbstract = true;
   isMember: boolean = true;
   private = false;
@@ -24,10 +19,6 @@ export class AbstractProcedure extends AbstractFrame implements Member, ElanSymb
     super(parent);
     this.name = new IdentifierField(this);
     this.params = new ParamListField(this);
-  }
-
-  getClass(): ConcreteClass {
-    return this.getParent() as ConcreteClass;
   }
 
   initialKeywords(): string {
@@ -62,18 +53,5 @@ export class AbstractProcedure extends AbstractFrame implements Member, ElanSymb
     source.remove("(");
     this.params.parseFrom(source);
     source.remove(")");
-  }
-
-  get symbolId() {
-    return this.name.text;
-  }
-
-  symbolType() {
-    const [pn, pt] = this.params.symbolNamesAndTypes();
-    return new ProcedureType(pn, pt, false, true);
-  }
-
-  get symbolScope() {
-    return SymbolScope.member;
   }
 }

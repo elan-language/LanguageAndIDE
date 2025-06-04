@@ -19,7 +19,6 @@ export class ExceptionMessageField extends AbstractField {
     return "msg";
   }
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new ExceptionMsgNode();
     return this.rootNode;
   }

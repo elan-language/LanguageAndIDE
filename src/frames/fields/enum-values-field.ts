@@ -21,7 +21,6 @@ export class EnumValuesField extends AbstractField {
     return "enumVals";
   }
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new EnumValuesNode();
     return this.rootNode;
   }

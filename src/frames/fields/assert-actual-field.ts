@@ -16,7 +16,6 @@ export class AssertActualField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new AssertActualNode();
     return this.rootNode;
   }

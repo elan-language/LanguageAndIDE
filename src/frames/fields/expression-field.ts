@@ -29,7 +29,6 @@ export class ExpressionField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new ExprNode();
     return this.rootNode;
   }
@@ -43,14 +42,14 @@ export class ExpressionField extends AbstractField {
 
   private completionOverride = "";
 
-  private argumentDescriptions(holder: Scope, transforms: Transforms) {
+  private argumentDescriptions(scope: Scope | undefined, transforms: Transforms) {
     let descriptions = "";
     const an = this.rootNode?.getActiveNode();
     if (an instanceof ArgListNode) {
       const context = an.context();
-      const ps = holder.resolveSymbol(context, transforms, holder);
+      const ps = scope?.resolveSymbol(context, transforms, scope);
       descriptions = "<i>arguments</i>";
-      if (!(ps instanceof UnknownSymbol)) {
+      if (ps && !(ps instanceof UnknownSymbol)) {
         const names = parameterNames(ps.symbolType());
         descriptions = names.length > 0 ? names.join(", ") : "";
       }
@@ -59,7 +58,11 @@ export class ExpressionField extends AbstractField {
   }
 
   public textAsHtml(): string {
-    const descriptions = this.argumentDescriptions(this.getHolder(), transforms());
+    const holder = this.getHolder();
+    const descriptions = this.argumentDescriptions(
+      this.getFile().getAst(false)?.getScopeById(holder.getHtmlId()),
+      transforms(),
+    );
     this.completionOverride = descriptions ? `<i>${descriptions}</i>)` : "";
     return super.textAsHtml();
   }

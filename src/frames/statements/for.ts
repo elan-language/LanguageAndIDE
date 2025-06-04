@@ -2,15 +2,10 @@ import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
 import { CodeSource } from "../interfaces/code-source";
-import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
-import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
-import { Transforms } from "../interfaces/transforms";
 import { forKeyword } from "../keywords";
-import { IntType } from "../symbols/int-type";
-import { SymbolScope } from "../symbols/symbol-scope";
 
 export class For extends FrameWithStatements implements Statement {
   isStatement: boolean = true;
@@ -67,38 +62,5 @@ ${this.indent()}end for`;
   }
   parseBottom(source: CodeSource): boolean {
     return this.parseStandardEnding(source, "end for");
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
-    const v = this.variable.text;
-
-    if (id === v) {
-      const st = this.from.symbolType(transforms);
-      return {
-        symbolId: id,
-        symbolType: () => st,
-        symbolScope: SymbolScope.counter,
-      };
-    }
-
-    return super.resolveSymbol(id, transforms, initialScope);
-  }
-
-  symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
-    const matches = super.symbolMatches(id, all, initialScope);
-    const localMatches: ElanSymbol[] = [];
-
-    const v = this.variable.text;
-
-    if (id === v || all) {
-      const counter = {
-        symbolId: v,
-        symbolType: () => IntType.Instance,
-        symbolScope: SymbolScope.counter,
-      };
-      localMatches.push(counter);
-    }
-
-    return localMatches.concat(matches);
   }
 }

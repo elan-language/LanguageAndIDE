@@ -1,15 +1,12 @@
 import { AbstractFrame } from "../abstract-frame";
-
 import { CommentField } from "../fields/comment-field";
-import { ConcreteClass } from "../globals/concrete-class";
 import { CodeSource } from "../interfaces/code-source";
 import { Field } from "../interfaces/field";
-import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
 import { commentMarker } from "../keywords";
 
-export class CommentStatement extends AbstractFrame implements Statement, Member {
+export class CommentStatement extends AbstractFrame implements Statement {
   isStatement = true;
   isMember = true;
   isAbstract = false;
@@ -20,10 +17,6 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
   constructor(parent: Parent) {
     super(parent);
     this.text = new CommentField(this);
-  }
-
-  getClass(): ConcreteClass {
-    return this.getParent() as ConcreteClass;
   }
 
   initialKeywords(): string {

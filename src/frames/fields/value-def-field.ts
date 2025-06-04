@@ -21,7 +21,6 @@ export class ValueDefField extends AbstractField {
     return "var";
   }
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new ValueDefNode();
     return this.rootNode;
   }

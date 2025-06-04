@@ -1,6 +1,6 @@
-import { Member } from "./member";
+import { MemberFrame } from "./member-frame";
 
-export interface PossiblyPrivateMember extends Member {
+export interface PossiblyPrivateMember extends MemberFrame {
   makePublic: () => void;
   makePrivate: () => void;
 }

@@ -805,7 +805,7 @@ function mustBeCompatibleDeconstruction(
       const childSymbol = childSymbols.find((s) => s.symbolId === id);
       if (childSymbol) {
         const llst = lst.ofTypes[i];
-        const rrst = childSymbol.symbolType(transforms());
+        const rrst = childSymbol.symbolType();
 
         mustBeAssignableType(llst, rrst, compileErrors, location);
       } else {

@@ -1,5 +1,5 @@
-import { ConcreteClass } from "../../globals/concrete-class";
 import { AstNode } from "../../interfaces/ast-node";
+import { Class } from "../../interfaces/class";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Member } from "../../interfaces/member";
 import { Scope } from "../../interfaces/scope";
@@ -25,8 +25,8 @@ export class ConstructorAsn extends FrameWithStatementsAsn implements ElanSymbol
 
   params: AstNode = EmptyAsn.Instance;
 
-  getClass(): ConcreteClass {
-    return this.getParentScope() as ConcreteClass;
+  getClass(): Class {
+    return this.getParentScope() as Class;
   }
 
   public compile(): string {

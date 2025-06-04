@@ -26,7 +26,6 @@ export class IfSelectorField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new OptionalNode(new KeywordNode(ifKeyword));
     return this.rootNode;
   }

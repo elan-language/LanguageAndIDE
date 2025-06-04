@@ -19,7 +19,6 @@ export class CommentField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new CommentNode();
     return this.rootNode;
   }

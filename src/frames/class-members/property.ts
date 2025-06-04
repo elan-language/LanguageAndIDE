@@ -2,21 +2,17 @@ import { AbstractFrame } from "../abstract-frame";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
 import { addPrivateToggleToContextMenu, processTogglePrivate } from "../frame-helpers";
-import { ConcreteClass } from "../globals/concrete-class";
+import { ClassFrame } from "../globals/class-frame";
 import { CodeSource } from "../interfaces/code-source";
 import { editorEvent } from "../interfaces/editor-event";
-import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { PossiblyPrivateMember } from "../interfaces/possibly-private-member";
 import { SymbolType } from "../interfaces/symbol-type";
-import { Transforms } from "../interfaces/transforms";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 import { ClassType } from "../symbols/class-type";
-import { SymbolScope } from "../symbols/symbol-scope";
-import { transforms } from "../syntax-nodes/ast-helpers";
 
-export class Property extends AbstractFrame implements PossiblyPrivateMember, ElanSymbol {
+export class Property extends AbstractFrame implements PossiblyPrivateMember {
   isMember = true;
   isProperty = true;
   isAbstract = false;
@@ -30,10 +26,6 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember, El
     this.name = new IdentifierField(this);
     this.type = new TypeField(this);
     this.private = priv;
-  }
-
-  getClass(): ConcreteClass {
-    return this.getParent() as ConcreteClass;
   }
 
   initialKeywords(): string {
@@ -80,26 +72,6 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember, El
     this.type.parseFrom(source);
   }
 
-  get symbolId() {
-    return this.name.renderAsSource();
-  }
-
-  symbolType(transforms?: Transforms) {
-    return this.type.symbolType(transforms);
-  }
-
-  get symbolScope(): SymbolScope {
-    return SymbolScope.member;
-  }
-
-  public initCode() {
-    const tst = this.symbolType(transforms());
-    if (!this.isGlobalClass(tst)) {
-      return `["${this.name.text}", ${tst.initialValue}]`;
-    }
-    return "";
-  }
-
   processKey(e: editorEvent): boolean {
     let result = false;
     if (this.canBePrivate() && processTogglePrivate(this, e)) {
@@ -111,7 +83,7 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember, El
   }
 
   private canBePrivate(): boolean {
-    const parent = this.getClass();
+    const parent = this.getParent() as unknown as ClassFrame;
     return !parent.isRecord;
   }
 

@@ -4,13 +4,10 @@ import { Regexes } from "./fields/regexes";
 import { isSelector } from "./frame-helpers";
 import { CodeSource } from "./interfaces/code-source";
 import { Collapsible } from "./interfaces/collapsible";
-import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { Profile } from "./interfaces/profile";
-import { Scope } from "./interfaces/scope";
 import { StatementFactory } from "./interfaces/statement-factory";
-import { Transforms } from "./interfaces/transforms";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -35,7 +32,6 @@ import {
 import { AssertStatement } from "./statements/assert-statement";
 import { StatementSelector } from "./statements/statement-selector";
 import { BreakpointEvent } from "./status-enums";
-import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "./symbols/symbol-helpers";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible {
   isFrameWithStatements = true;
@@ -217,40 +213,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
   multipleIds(sid: string) {
     return sid.includes(",") || sid.includes(":");
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
-    const fst = this.getFirstChild();
-    let range = this.getChildRange(fst, initialScope as Frame);
-    if (range.length > 1) {
-      range = range.slice(0, range.length - 1);
-
-      for (const f of range) {
-        if (isSymbol(f) && id) {
-          const sids = getIds(f.symbolId);
-          if (sids.includes(id)) {
-            return f;
-          }
-        }
-      }
-    }
-
-    return this.getParentScope().resolveSymbol(id, transforms, this.getCurrentScope());
-  }
-
-  symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
-    const matches = this.getParentScope().symbolMatches(id, all, this.getCurrentScope());
-    let localMatches: ElanSymbol[] = [];
-
-    const fst = this.getFirstChild();
-    let range = this.getChildRange(fst, initialScope as Frame);
-    if (range.length > 1) {
-      range = range.slice(0, range.length - 1);
-      const symbols = handleDeconstruction(range.filter((r) => isSymbol(r)));
-      localMatches = symbolMatches(id, all, symbols);
-    }
-
-    return localMatches.concat(matches);
   }
 
   getAsserts() {

@@ -1,5 +1,4 @@
 import { ElanCompilerError } from "../../elan-compiler-error";
-import { Property } from "../class-members/property";
 import { CompileError } from "../compile-error";
 import { isClass, isConstant, isMember, isScope } from "../frame-helpers";
 import { AstNode } from "../interfaces/ast-node";
@@ -24,6 +23,7 @@ import {
   isEmptyNode,
   transforms,
 } from "../syntax-nodes/ast-helpers";
+import { PropertyAsn } from "../syntax-nodes/class-members/property-asn";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { EnumAsn } from "../syntax-nodes/globals/enum-asn";
 import { AbstractDefinitionAsn } from "../syntax-nodes/statements/abstract-definition-asn";
@@ -103,7 +103,7 @@ export function isCallStatement(s?: ElanSymbol | Scope): s is CallAsn {
   return !!s && "isCall" in s;
 }
 
-export function isProperty(s?: ElanSymbol): s is Property {
+export function isProperty(s?: ElanSymbol): s is PropertyAsn {
   return !!s && "isProperty" in s;
 }
 

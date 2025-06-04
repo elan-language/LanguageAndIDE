@@ -3,16 +3,12 @@ import { ConstantValueField } from "../fields/constant-value-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../interfaces/code-source";
 import { Collapsible } from "../interfaces/collapsible";
-import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
-import { Scope } from "../interfaces/scope";
-import { Transforms } from "../interfaces/transforms";
 import { constantKeyword } from "../keywords";
-import { SymbolScope } from "../symbols/symbol-scope";
 
-export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, Collapsible {
+export class Constant extends AbstractFrame implements GlobalFrame, Collapsible {
   isCollapsible: boolean = true;
   isGlobal = true;
   name: IdentifierField;
@@ -60,25 +56,5 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
   renderAsSource(): string {
     return `constant ${this.name.renderAsSource()} set to ${this.value.renderAsSource()}\r
 `;
-  }
-
-  get symbolId() {
-    return this.name.renderAsSource();
-  }
-
-  symbolType(transforms?: Transforms) {
-    return this.value.symbolType(transforms);
-  }
-
-  get symbolScope() {
-    return SymbolScope.program;
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
-    if (id === this.symbolId) {
-      return this;
-    }
-
-    return super.resolveSymbol(id, transforms, initialScope);
   }
 }

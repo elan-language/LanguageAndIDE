@@ -1,6 +1,6 @@
 import { getId, mustBeKnownSymbolType, mustBeUniqueNameInScope } from "../../compile-rules";
-import { ConcreteClass } from "../../globals/concrete-class";
 import { AstNode } from "../../interfaces/ast-node";
+import { Class } from "../../interfaces/class";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Scope } from "../../interfaces/scope";
 import { SymbolType } from "../../interfaces/symbol-type";
@@ -26,8 +26,8 @@ export class PropertyAsn extends FrameAsn implements ElanSymbol {
   name: AstNode = EmptyAsn.Instance;
   type: AstNode = EmptyAsn.Instance;
 
-  getClass(): ConcreteClass {
-    return this.getParentScope() as ConcreteClass;
+  getClass(): Class {
+    return this.getParentScope() as Class;
   }
 
   isGlobalClass(st: SymbolType) {

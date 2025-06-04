@@ -7,13 +7,11 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
-import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { enumKeyword } from "../keywords";
 import { EnumType } from "../symbols/enum-type";
 import { EnumValueType } from "../symbols/enum-value-type";
-import { symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 
 export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Collapsible {
@@ -88,22 +86,5 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
       symbolType: () => new EnumValueType(this.name.renderAsSource(), n),
       symbolScope: SymbolScope.program,
     }));
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
-    for (const n of this.enumValueSymbols()) {
-      if (n.symbolId === id) {
-        return n;
-      }
-    }
-
-    return this.getParent().resolveSymbol(id, transforms, this);
-  }
-
-  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
-    const otherMatches = this.getParent().symbolMatches(id, all, this);
-    const symbols = this.enumValueSymbols();
-    const matches = symbolMatches(id, all, symbols);
-    return matches.concat(otherMatches);
   }
 }

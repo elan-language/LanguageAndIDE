@@ -5,7 +5,6 @@ import {
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
 } from "../frame-helpers";
-import { AstNode } from "../interfaces/ast-node";
 import { CodeSource } from "../interfaces/code-source";
 import { editorEvent } from "../interfaces/editor-event";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -17,13 +16,10 @@ import { Selectable } from "../interfaces/selectable";
 import { Transforms } from "../interfaces/transforms";
 import { propertyKeyword } from "../keywords";
 import { Overtyper } from "../overtyper";
-import { CSV } from "../parse-nodes/csv";
 import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
 import { KeywordCompletion, SymbolCompletionSpec } from "../symbol-completion-helpers";
-import { isProperty, removeIfSingleFullMatch } from "../symbols/symbol-helpers";
+import { removeIfSingleFullMatch } from "../symbols/symbol-helpers";
 import { SymbolWrapper } from "../symbols/symbol-wrapper";
-import { UnknownType } from "../symbols/unknown-type";
-import { EmptyAsn } from "../syntax-nodes/empty-asn";
 
 export abstract class AbstractField implements Selectable, Field {
   public isField: boolean = true;
@@ -43,7 +39,6 @@ export abstract class AbstractField implements Selectable, Field {
   cursorPos: number = 0; //Relative to LH end of text
   selectionEnd: number = 0; //Relative to LH end of text
   protected rootNode?: ParseNode;
-  protected astNode?: AstNode;
   protected completion: string = "";
   parseErrorLink: string = "";
   overtyper = new Overtyper();
@@ -567,7 +562,6 @@ export abstract class AbstractField implements Selectable, Field {
     return this._parseStatus!;
   }
   resetCompileStatusAndErrors(): void {
-    this.astNode = undefined;
     this._compileStatus = CompileStatus.default;
   }
   readCompileStatus(): CompileStatus {
@@ -702,40 +696,6 @@ export abstract class AbstractField implements Selectable, Field {
     const root = this.initialiseRoot();
     this.parseCompleteTextUsingNode(this.text, root);
     this._parseStatus = ParseStatus.valid;
-  }
-
-  getOrTransformAstNode(transforms?: Transforms) {
-    if (transforms && (!this.astNode || this.codeHasChanged)) {
-      if (this.rootNode instanceof CSV && this.rootNode.status === ParseStatus.valid) {
-        const scope = this.getHolder();
-        this.astNode = transforms.transformMany(this.rootNode, this.htmlId, scope);
-      } else if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
-        this.astNode = transforms.transform(this.rootNode, this.htmlId, this.getHolder());
-      }
-      this.codeHasChanged = false;
-    }
-    return this.astNode ?? EmptyAsn.Instance;
-  }
-
-  compile(transforms: Transforms): string {
-    if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
-      return this.getOrTransformAstNode(transforms).compile();
-    }
-
-    return "";
-  }
-
-  symbolType(transforms?: Transforms) {
-    const astNode = this.getOrTransformAstNode(transforms);
-    if (astNode) {
-      return astNode.symbolType();
-    }
-    return UnknownType.Instance;
-  }
-
-  allPropertiesInScope() {
-    const all = this.getHolder().symbolMatches("", true, this.getHolder());
-    return all.filter((s) => isProperty(s)) as ElanSymbol[];
   }
 
   matchingSymbolsForId(spec: SymbolCompletionSpec): ElanSymbol[] {

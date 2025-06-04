@@ -1,15 +1,11 @@
 import { Deprecated } from "../../elan-type-interfaces";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
-import { SymbolType } from "../interfaces/symbol-type";
-import { Transforms } from "../interfaces/transforms";
-import { noTypeOptions } from "../interfaces/type-options";
 import { abstractClassKeywords, classKeyword, endKeyword } from "../keywords";
 import {
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
-import { ClassSubType, ClassType } from "../symbols/class-type";
 import { ClassFrame } from "./class-frame";
 
 export class AbstractClass extends ClassFrame {
@@ -20,27 +16,10 @@ export class AbstractClass extends ClassFrame {
     this.isAbstract = true;
   }
 
-  ofTypes: SymbolType[] = [];
-
   deprecated: Deprecated | undefined = undefined;
 
   initialKeywords(): string {
     return abstractClassKeywords;
-  }
-  get symbolId() {
-    return this.name.text;
-  }
-  symbolType(transforms?: Transforms) {
-    const [cd] = this.lookForCircularDependencies(this, [this.name.text], transforms!);
-
-    return new ClassType(
-      this.symbolId,
-      ClassSubType.abstract,
-      false,
-      noTypeOptions,
-      cd ? [] : this.inheritance.symbolTypes(transforms),
-      this,
-    );
   }
 
   doesInherit(): boolean {

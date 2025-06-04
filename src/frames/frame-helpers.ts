@@ -12,6 +12,7 @@ import { File } from "./interfaces/file";
 import { Frame } from "./interfaces/frame";
 import { GlobalFrame } from "./interfaces/global-frame";
 import { Member } from "./interfaces/member";
+import { MemberFrame } from "./interfaces/member-frame";
 import { Parent } from "./interfaces/parent";
 import { PossiblyPrivateMember } from "./interfaces/possibly-private-member";
 import { Scope } from "./interfaces/scope";
@@ -31,11 +32,11 @@ export function isCollapsible(f?: Selectable): f is Collapsible {
   return !!f && "isCollapsible" in f;
 }
 
-export function isFile(f?: Scope): f is File {
+export function isFile(f?: Parent | File): f is File {
   return !!f && "isFile" in f;
 }
 
-export function isMain(f?: Scope): f is MainFrame {
+export function isMain(f?: Frame): f is MainFrame {
   return !!f && "isMain" in f;
 }
 
@@ -47,7 +48,7 @@ export function isGenericClass(f?: ElanSymbol | Scope): f is Class {
   return isClass(f) && f.ofTypes?.length > 0;
 }
 
-export function isFrame(f?: Selectable | Scope): f is Frame {
+export function isFrame(f?: Selectable | Parent): f is Frame {
   return !!f && "isFrame" in f;
 }
 
@@ -67,7 +68,7 @@ export function isConstant(f?: Scope | ElanSymbol): f is ElanSymbol {
   return !!f && "isConstant" in f;
 }
 
-export function isFunction(f?: Scope | Member | ElanSymbol): f is Member {
+export function isFunction(f?: Scope | Member | Parent): f is Member {
   return !!f && "isFunction" in f;
 }
 
@@ -79,7 +80,7 @@ export function isLet(f?: ElanSymbol | Statement): f is Statement {
   return !!f && "isLet" in f;
 }
 
-export function isConstructor(f?: Scope | Member): f is Member {
+export function isConstructor(f?: Frame | MemberFrame | Parent): f is MemberFrame {
   return !!f && "isConstructor" in f;
 }
 
@@ -91,7 +92,7 @@ export function isGlobal(f?: Selectable | GlobalFrame): f is GlobalFrame {
   return !!f && "isGlobal" in f;
 }
 
-export function isReturnStatement(f?: Scope): f is ReturnStatement {
+export function isReturnStatement(f?: Frame): f is ReturnStatement {
   return !!f && "isReturnStatement" in f;
 }
 
@@ -309,7 +310,7 @@ export function currentParameterIndex(text: string) {
   return 0;
 }
 
-export function processTogglePrivate(member: Member, e: editorEvent): boolean {
+export function processTogglePrivate(member: MemberFrame, e: editorEvent): boolean {
   let result = false;
   if (e.key === "p" && e.modKey.control) {
     member.private = !member.private;

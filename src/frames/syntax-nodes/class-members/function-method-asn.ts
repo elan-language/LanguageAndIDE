@@ -5,7 +5,7 @@ import {
   mustBeUniqueNameInScope,
 } from "../../compile-rules";
 import { singleIndent } from "../../frame-helpers";
-import { ConcreteClass } from "../../globals/concrete-class";
+import { Class } from "../../interfaces/class";
 import { ElanSymbol } from "../../interfaces/elan-symbol";
 import { Scope } from "../../interfaces/scope";
 import { Transforms } from "../../interfaces/transforms";
@@ -26,8 +26,8 @@ export class FunctionMethodAsn extends FunctionAsn {
 
   private: boolean = false;
 
-  getClass(): ConcreteClass {
-    return this.getParentScope() as ConcreteClass;
+  getClass(): Class {
+    return this.getParentScope() as Class;
   }
 
   public override indent(): string {

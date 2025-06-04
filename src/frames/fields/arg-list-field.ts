@@ -36,7 +36,6 @@ export class ArgListField extends AbstractField {
     }
   }
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new ArgListNode(() => "");
     return this.rootNode;
   }
@@ -53,18 +52,23 @@ export class ArgListField extends AbstractField {
 
   private completionOverride = "";
 
-  private argumentDescriptions(holder: Scope, transforms: Transforms) {
+  private argumentDescriptions(holder: Frame, scope: Scope | undefined, transforms: Transforms) {
     const proc = (holder as CallStatement).proc.text;
-    const ps = holder.resolveSymbol(proc, transforms, holder);
+    const ps = scope?.resolveSymbol(proc, transforms, scope);
     let descriptions = ["<i>arguments</i>"];
-    if (!(ps instanceof UnknownSymbol)) {
+    if (ps && !(ps instanceof UnknownSymbol)) {
       descriptions = parameterNames(ps.symbolType());
     }
     return descriptions;
   }
 
   public textAsHtml(): string {
-    const descriptions = this.argumentDescriptions(this.getHolder(), transforms());
+    const holder = this.getHolder();
+    const descriptions = this.argumentDescriptions(
+      holder,
+      this.getFile().getAst(false)?.getScopeById(holder.getHtmlId()),
+      transforms(),
+    );
 
     if (this.text) {
       const count = currentParameterIndex(this.text);

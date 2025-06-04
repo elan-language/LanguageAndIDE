@@ -3,17 +3,12 @@ import {
   processTogglePrivate,
   singleIndent,
 } from "../frame-helpers";
-import { ConcreteClass } from "../globals/concrete-class";
 import { FunctionFrame } from "../globals/function-frame";
 import { CodeSource } from "../interfaces/code-source";
 import { editorEvent } from "../interfaces/editor-event";
-import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Parent } from "../interfaces/parent";
 import { PossiblyPrivateMember } from "../interfaces/possibly-private-member";
-import { Scope } from "../interfaces/scope";
-import { Transforms } from "../interfaces/transforms";
 import { endKeyword, functionKeyword, privateKeyword, returnsKeyword } from "../keywords";
-import { SymbolScope } from "../symbols/symbol-scope";
 
 export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMember {
   isMember: boolean = true;
@@ -24,10 +19,6 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
   constructor(parent: Parent, priv = false) {
     super(parent);
     this.private = priv;
-  }
-
-  getClass(): ConcreteClass {
-    return this.getParent() as ConcreteClass;
   }
 
   private modifierAsHtml(): string {
@@ -67,18 +58,6 @@ ${this.renderChildrenAsHtml()}
   }
   parseBottom(source: CodeSource): boolean {
     return super.parseBottom(source);
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
-    if (this.name.text === id) {
-      return this;
-    }
-
-    return super.resolveSymbol(id, transforms, initialScope);
-  }
-
-  get symbolScope() {
-    return SymbolScope.member;
   }
 
   processKey(e: editorEvent): boolean {
