@@ -3,7 +3,13 @@
 const updateable = document.querySelectorAll("input, textarea, select");
 const hints = document.getElementsByTagName("el-hint");
 
-async function hash(toHash: string) {
+async function hash(state: string[]) {
+  // if no state return empty string
+  if (state.length === 0) {
+    return "";
+  }
+  const toHash = state.join(", ");
+
   const msgUint8 = new TextEncoder().encode(toHash); // encode as (utf-8) Uint8Array
   const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8); // hash the message
   const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
@@ -11,17 +17,8 @@ async function hash(toHash: string) {
   return hashHex;
 }
 
-function getHashable() {
-  let code = updateDocument();
-  const toReplace = `<div hidden="" id="hash">.*</div>`;
-  const re = new RegExp(toReplace);
-  code = code.replace(re, `<div hidden="" id="hash"></div>`);
-  code = code.replaceAll(" ", "").replaceAll("\n", "").replaceAll("\r", "");
-  return code;
-}
-
 async function getDocumentHash() {
-  return await hash(getHashable());
+  return await hash(getDocumentState());
 }
 
 async function checkHash() {
@@ -108,14 +105,66 @@ function updateDocument() {
   return code;
 }
 
+function getDocumentState() {
+  const state: string[] = [];
+
+  for (const e of document.querySelectorAll(
+    "input[type=text].answered",
+  ) as NodeListOf<HTMLInputElement>) {
+    const id = e.id;
+    const v = e.value;
+    state.push(`${id}:${v}`);
+  }
+
+  for (const e of document.querySelectorAll(
+    "input[type=radio].answered",
+  ) as NodeListOf<HTMLInputElement>) {
+    const id = e.id;
+    const v = e.checked ? "true" : "false";
+    state.push(`${id}:${v}`);
+  }
+
+  for (const e of document.querySelectorAll(
+    "input[type=checkbox].answered",
+  ) as NodeListOf<HTMLInputElement>) {
+    const id = e.id;
+    const v = e.checked ? "true" : "false";
+    state.push(`${id}:${v}`);
+  }
+
+  for (const e of document.querySelectorAll(
+    "textarea.answered",
+  ) as NodeListOf<HTMLTextAreaElement>) {
+    const id = e.id;
+    const v = e.value;
+    state.push(`${id}:${v}`);
+  }
+
+  for (const e of document.querySelectorAll("select.answered") as NodeListOf<HTMLSelectElement>) {
+    const id = e.id;
+    const options = e.options;
+    const index = options.selectedIndex;
+    const v = options[index].value;
+
+    state.push(`${id}:${v}`);
+  }
+
+  for (const e of document.querySelectorAll("el-hint.taken")) {
+    const id = e.id;
+    const v = e.innerHTML;
+
+    state.push(`${id}:${v}`);
+  }
+
+  return state;
+}
+
 async function getUpdatedDocument() {
-  let code = updateDocument();
+  const code = updateDocument();
   const hashcode = await getDocumentHash();
-  code = code.replace(
-    `<div hidden="" id="hash"></div>`,
-    `<div hidden="" id="hash">${hashcode}</div>`,
-  );
-  return code;
+  const toReplace = `<div hidden="" id="hash">.*</div>`;
+  const re = new RegExp(toReplace);
+  return code.replace(re, `<div hidden="" id="hash">${hashcode}</div>`);
 }
 
 autoSaveButton!.addEventListener("click", async () => {
@@ -159,10 +208,12 @@ for (const e of updateable) {
 for (const e of hints) {
   e.addEventListener("click", async (e) => {
     const ke = e as any;
-    const id = ke.target.id;
-    const text = ke.target.dataset.hint;
-    ke.target.innerHTML = atob(text);
+    const tgt = ke.target as any;
+    const id = tgt.id;
+    const text = tgt.dataset.hint;
+    tgt.innerHTML = atob(text);
     document.title = `${id} shown`;
+    tgt.classList.add("taken");
     await save();
   });
 }
