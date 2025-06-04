@@ -6,8 +6,6 @@ import { AbstractDefinitionStatement } from "./abstract-definition.statement";
 
 export class LetStatement extends AbstractDefinitionStatement implements Statement {
   isStatement = true;
-  hrefForFrameHelp: string = "LangRef.html#let";
-
   constructor(parent: Parent) {
     super(parent);
   }

@@ -15,8 +15,6 @@ export class AssertStatement extends AbstractFrame implements Statement {
   actual: AssertActualField;
   expected: ExpressionField;
   outcome?: AssertOutcome;
-  hrefForFrameHelp: string = "LangRef.html#assert";
-
   constructor(parent: Parent) {
     super(parent);
     this.actual = new AssertActualField(this);

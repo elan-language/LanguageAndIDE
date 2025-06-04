@@ -9,8 +9,6 @@ export class MainFrame extends FrameWithStatements implements GlobalFrame {
   isMain = true;
   isGlobal = true;
   file: File;
-  hrefForFrameHelp: string = "LangRef.html#main";
-
   constructor(parent: File) {
     super(parent);
     this.file = parent;

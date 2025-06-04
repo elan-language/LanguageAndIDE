@@ -9,8 +9,6 @@ import { repeatKeyword } from "../keywords";
 export class Repeat extends FrameWithStatements implements Statement {
   isStatement: boolean = true;
   condition: ExpressionField;
-  hrefForFrameHelp: string = "LangRef.html#repeat";
-
   constructor(parent: Parent) {
     super(parent);
     this.condition = new ExpressionField(this);

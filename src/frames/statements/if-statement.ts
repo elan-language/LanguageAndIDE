@@ -10,8 +10,6 @@ import { endKeyword, ifKeyword, thenKeyword } from "../keywords";
 export class IfStatement extends FrameWithStatements implements Statement {
   isStatement = true;
   condition: ExpressionField;
-  hrefForFrameHelp: string = "LangRef.html#if_statement";
-
   constructor(parent: Parent) {
     super(parent);
     this.condition = new ExpressionField(this);

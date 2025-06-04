@@ -13,8 +13,6 @@ export class For extends FrameWithStatements implements Statement {
   from: ExpressionField;
   to: ExpressionField;
   step: ExpressionField;
-  hrefForFrameHelp: string = "LangRef.html#for";
-
   constructor(parent: Parent) {
     super(parent);
     this.variable = new IdentifierField(this);

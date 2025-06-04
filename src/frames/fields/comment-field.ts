@@ -48,7 +48,6 @@ export class CommentField extends AbstractField {
 
   //Overridden to avoid trimming
   parseCompleteTextUsingNode(text: string, root: ParseNode): void {
-    this.parseErrorLink = "";
     if (text.length === 0) {
       this.setParseStatus(this.isOptional() ? ParseStatus.valid : ParseStatus.incomplete);
     } else {

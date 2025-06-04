@@ -135,7 +135,7 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot discard in record deconstruction. Click for more info.LangRef.html#compile_error",
+      "Cannot discard in record deconstruction.LangRef.html#compile_error",
     ]);
   });
 
@@ -159,7 +159,7 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot discard in record deconstruction. Click for more info.LangRef.html#compile_error",
+      "Cannot discard in record deconstruction.LangRef.html#compile_error",
     ]);
   });
 
@@ -226,7 +226,7 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot discard in record deconstruction. Click for more info.LangRef.html#compile_error",
+      "Cannot discard in record deconstruction.LangRef.html#compile_error",
     ]);
   });
 
@@ -757,8 +757,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Int, Provided: String. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: String, Provided: Int.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -811,8 +811,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
-      "Incompatible types. Expected: String, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
+      "Incompatible types. Expected: String, Provided: Int.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -839,8 +839,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the 'let' 'a'. Click for more info.LangRef.html#compile_error",
-      "May not re-assign the 'let' 'b'. Click for more info.LangRef.html#compile_error",
+      "May not re-assign the 'let' 'a'.LangRef.html#compile_error",
+      "May not re-assign the 'let' 'b'.LangRef.html#compile_error",
     ]);
   });
 
@@ -868,7 +868,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. Click for more info.LangRef.html#TypeCompileError",
+      "Expression must be able to be deconstructed.LangRef.html#TypeCompileError",
     ]);
   });
 
@@ -898,7 +898,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. Click for more info.LangRef.html#TypeCompileError",
+      "Expression must be able to be deconstructed.LangRef.html#TypeCompileError",
     ]);
   });
 
@@ -926,7 +926,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. Click for more info.LangRef.html#TypeCompileError",
+      "Expression must be able to be deconstructed.LangRef.html#TypeCompileError",
     ]);
   });
 });

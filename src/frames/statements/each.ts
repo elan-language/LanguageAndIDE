@@ -12,8 +12,6 @@ export class Each extends FrameWithStatements implements Statement {
   isStatement = true;
   variable: IdentifierField;
   iter: ExpressionField;
-  hrefForFrameHelp: string = "LangRef.html#each";
-
   constructor(parent: File | Parent) {
     super(parent);
     this.variable = new IdentifierField(this);

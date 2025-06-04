@@ -470,7 +470,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the constant 'pi'. Click for more info.LangRef.html#compile_error",
+      "May not re-assign the constant 'pi'.LangRef.html#compile_error",
     ]);
   });
 

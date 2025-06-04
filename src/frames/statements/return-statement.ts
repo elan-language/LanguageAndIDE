@@ -10,8 +10,6 @@ export class ReturnStatement extends AbstractFrame implements Statement {
   isStatement = true;
   isReturnStatement = true;
   expr: ExpressionField;
-  hrefForFrameHelp: string = "LangRef.html#return";
-
   constructor(parent: Parent) {
     super(parent);
     this.movable = false;

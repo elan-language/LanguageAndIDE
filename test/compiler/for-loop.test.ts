@@ -265,9 +265,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Expression must be Int. Click for more info.LangRef.html#TypeCompileError",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Expression must be Int.LangRef.html#TypeCompileError"]);
   });
 
   test("Fail_useOfFloat", async () => {
@@ -287,9 +285,9 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be Int. Click for more info.LangRef.html#TypeCompileError",
-      "Expression must be Int. Click for more info.LangRef.html#TypeCompileError",
-      "Expression must be Int. Click for more info.LangRef.html#TypeCompileError",
+      "Expression must be Int.LangRef.html#TypeCompileError",
+      "Expression must be Int.LangRef.html#TypeCompileError",
+      "Expression must be Int.LangRef.html#TypeCompileError",
     ]);
   });
 
@@ -309,7 +307,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the loop counter 'i'. Click for more info.LangRef.html#compile_error",
+      "May not re-assign the loop counter 'i'.LangRef.html#compile_error",
     ]);
   });
 
@@ -329,9 +327,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'i' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'i' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_missingEnd", async () => {
@@ -416,9 +412,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'id' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'id' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_duplicateId2", async () => {
@@ -436,8 +430,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'id' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'id' is not defined.LangRef.html#compile_error"]);
   });
 });

@@ -89,7 +89,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: arr (List<of List<of Int>>), Provided: Array2D<of Int>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: arr (List<of List<of Int>>), Provided: Array2D<of Int>.LangRef.html#compile_error",
     ]);
   });
 
@@ -452,7 +452,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: column (Int), row (Int), value (String). Click for more info.LangRef.html#compile_error",
+      "Missing argument(s). Expected: column (Int), row (Int), value (String).LangRef.html#compile_error",
     ]);
   });
 
@@ -504,7 +504,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: column (Int), row (Int), value (String), Provided: Int, Int, Boolean. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: column (Int), row (Int), value (String), Provided: Int, Int, Boolean.LangRef.html#compile_error",
     ]);
   });
 
@@ -521,9 +521,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot index Array2D<of String>. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Cannot index Array2D<of String>.LangRef.html#compile_error"]);
   });
 
   test("Fail_missingGenericParameter", async () => {
@@ -539,8 +537,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expected: '<of Type>'. Click for more info.LangRef.html#GenericParametersCompileError",
-      "Argument types. Expected: columns (Int), rows (Int), initialValue (Generic Parameter T1), Provided: Int, Int, String. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: columns (Int), rows (Int), initialValue (Generic Parameter T1), Provided: Int, Int, String.LangRef.html#compile_error",
+      "Expected: '<of Type>'.LangRef.html#GenericParametersCompileError",
     ]);
   });
 

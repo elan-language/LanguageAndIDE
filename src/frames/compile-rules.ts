@@ -132,7 +132,7 @@ export function mustBeBooleanCondition(
   if (knownType(st) && st !== BooleanType.Instance) {
     compileErrors.push(
       new SyntaxCompileError(
-        "Condition of 'if' expression does not evaluate to a Boolean. Click for more info.",
+        "Condition of 'if' expression does not evaluate to a Boolean.",
         location,
       ),
     );
@@ -147,10 +147,7 @@ export function mustNotHaveConditionalAfterUnconditionalElse(
   const unconditionals = elses.filter((s) => !s.hasIf).length;
   if (unconditionals > 1 || (unconditionals === 1 && elses[elses.length - 1].hasIf)) {
     compileErrors.push(
-      new SyntaxCompileError(
-        `Cannot have any clause after unconditional 'else'. Click for more info.`,
-        location,
-      ),
+      new SyntaxCompileError(`Cannot have any clause after unconditional 'else'.`, location),
     );
   }
 }
@@ -192,7 +189,7 @@ export function mustNotBeKeyword(id: string, compileErrors: CompileError[], loca
   if (allKeywords.includes(id)) {
     compileErrors.push(
       new SyntaxCompileError(
-        `'${id}' is a keyword, and may not be used as an identifier. Click for more info.`,
+        `'${id}' is a keyword, and may not be used as an identifier.`,
         location,
       ),
     );
@@ -200,7 +197,7 @@ export function mustNotBeKeyword(id: string, compileErrors: CompileError[], loca
   if (reservedWords.includes(id)) {
     compileErrors.push(
       new SyntaxCompileError(
-        `'${id}' is a reserved word, and may not be used as an identifier. Click for more info.`,
+        `'${id}' is a reserved word, and may not be used as an identifier.`,
         location,
       ),
     );
@@ -294,9 +291,7 @@ export function checkForDeprecation(
 }
 
 export function mustNotBeNegativeIndex(compileErrors: CompileError[], location: string) {
-  compileErrors.push(
-    new SyntaxCompileError("Index cannot be negative. Click for more info.", location),
-  );
+  compileErrors.push(new SyntaxCompileError("Index cannot be negative.", location));
 }
 
 export function mustBeIndexableType(
@@ -624,7 +619,7 @@ function FailNotNumber(lhs: SymbolType, compileErrors: CompileError[], location:
 function FailCannotCompareProcFunc(compileErrors: CompileError[], location: string) {
   compileErrors.push(
     new SyntaxCompileError(
-      "Cannot do equality operations on Procedures or Functions. Click for more info.",
+      "Cannot do equality operations on Procedures or Functions.",
       location,
       "LangRef.html#CannotCompareProcFunc",
     ),
@@ -704,10 +699,7 @@ export function mustBeImmutableType(
 ) {
   if (!type.typeOptions.isImmutable) {
     compileErrors.push(
-      new SyntaxCompileError(
-        `Property ${name} is not of an immutable type. Click for more info.`,
-        location,
-      ),
+      new SyntaxCompileError(`Property ${name} is not of an immutable type.`, location),
     );
   }
 }
@@ -720,10 +712,7 @@ export function mustBeImmutableGenericType(
 ) {
   if (!ofType.typeOptions.isImmutable) {
     compileErrors.push(
-      new SyntaxCompileError(
-        `${type} cannot be of mutable type '${ofType.name}'. Click for more info.`,
-        location,
-      ),
+      new SyntaxCompileError(`${type} cannot be of mutable type '${ofType.name}'.`, location),
     );
   }
 }
@@ -740,10 +729,7 @@ export function mustBeValidKeyType(
       (ofType.typeOptions.isIndexable || ofType.typeOptions.isIterable))
   ) {
     compileErrors.push(
-      new SyntaxCompileError(
-        `${type} cannot have key of type '${ofType.name}'. Click for more info.`,
-        location,
-      ),
+      new SyntaxCompileError(`${type} cannot have key of type '${ofType.name}'.`, location),
     );
   }
 }
@@ -810,8 +796,8 @@ function mustBeCompatibleDeconstruction(
         mustBeAssignableType(llst, rrst, compileErrors, location);
       } else {
         const msg = id
-          ? `No such property '${id}' on record '${rst.name}. Click for more info.`
-          : "Cannot discard in record deconstruction. Click for more info.";
+          ? `No such property '${id}' on record '${rst.name}.`
+          : "Cannot discard in record deconstruction.";
         compileErrors.push(new SyntaxCompileError(msg, location));
       }
     }
@@ -834,10 +820,7 @@ export function mustBeCompatibleDefinitionNode(
     }
     if (rst instanceof TupleType && lst.ofTypes.length !== rst.ofTypes.length) {
       compileErrors.push(
-        new SyntaxCompileError(
-          `Wrong number of deconstructed variables. Click for more info.`,
-          location,
-        ),
+        new SyntaxCompileError(`Wrong number of deconstructed variables.`, location),
       );
     }
   }
@@ -888,12 +871,7 @@ export function mustNotBePropertyOnFunctionMethod(
 }
 
 export function mustBePropertyPrefixedOnMember(compileErrors: CompileError[], location: string) {
-  compileErrors.push(
-    new SyntaxCompileError(
-      `referencing a property requires a prefix. Click for more info.`,
-      location,
-    ),
-  );
+  compileErrors.push(new SyntaxCompileError(`referencing a property requires a prefix.`, location));
 }
 
 function isIndexed(assignable: AstNode) {
@@ -1044,19 +1022,13 @@ export function mustNotBeRedefined(
 
 export function mustNotBeOutParameter(compileErrors: CompileError[], location: string) {
   compileErrors.push(
-    new SyntaxCompileError(
-      "'out' parameters are only supported on procedures. Click for more info.",
-      location,
-    ),
+    new SyntaxCompileError("'out' parameters are only supported on procedures.", location),
   );
 }
 
 export function mustNotHaveDuplicateMain(compileErrors: CompileError[], location: string) {
   compileErrors.push(
-    new SyntaxCompileError(
-      "There can only be one 'main' in a program. Click for more info.",
-      location,
-    ),
+    new SyntaxCompileError("There can only be one 'main' in a program.", location),
   );
 }
 
@@ -1123,9 +1095,7 @@ export function mustBeKnownCompilerDirective(
 }
 
 export function mustNotBeTwoUnaryExpressions(compileErrors: CompileError[], location: string) {
-  compileErrors.push(
-    new SyntaxCompileError("Unsupported operation. Click for more info.", location),
-  );
+  compileErrors.push(new SyntaxCompileError("Unsupported operation.", location));
 }
 
 const compilerAssertions = true;

@@ -46,7 +46,6 @@ export abstract class AbstractFrame implements Frame {
   protected movable: boolean = true;
   private _parseStatus: ParseStatus = ParseStatus.default;
   private _compileStatus: CompileStatus = CompileStatus.default;
-  abstract hrefForFrameHelp: string;
 
   protected showContextMenu = false;
   breakpointStatus: BreakpointStatus = BreakpointStatus.none;

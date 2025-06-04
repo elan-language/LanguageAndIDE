@@ -779,7 +779,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: List<of Int>.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -802,7 +802,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: a (Int). Click for more info.LangRef.html#compile_error",
+      "Missing argument(s). Expected: a (Int).LangRef.html#compile_error",
     ]);
   });
 
@@ -819,9 +819,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'a' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_NotClass1", async () => {
@@ -837,9 +835,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'a' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_NoSuchProperty", async () => {
@@ -859,9 +855,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'b' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'b' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_PrivateProperty", async () => {
@@ -881,7 +875,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot reference private member 'b'. Click for more info.LangRef.html#compile_error",
+      "Cannot reference private member 'b'.LangRef.html#compile_error",
     ]);
   });
 
@@ -902,8 +896,6 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'aa' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'aa' is not defined.LangRef.html#compile_error"]);
   });
 });

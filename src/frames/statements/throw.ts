@@ -9,8 +9,6 @@ import { exceptionKeyword, throwKeyword } from "../keywords";
 export class Throw extends AbstractFrame implements Statement {
   isStatement = true;
   text: ExceptionMessageField;
-  hrefForFrameHelp: string = "LangRef.html#throw";
-
   constructor(parent: Parent) {
     super(parent);
     this.text = new ExceptionMessageField(this);

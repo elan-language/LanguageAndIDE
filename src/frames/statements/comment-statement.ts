@@ -12,8 +12,6 @@ export class CommentStatement extends AbstractFrame implements Statement {
   isAbstract = false;
   private = false;
   public text: CommentField;
-  hrefForFrameHelp: string = "LangRef.html#Comment";
-
   constructor(parent: Parent) {
     super(parent);
     this.text = new CommentField(this);

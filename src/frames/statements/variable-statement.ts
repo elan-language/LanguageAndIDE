@@ -6,8 +6,6 @@ import { AbstractDefinitionStatement } from "./abstract-definition.statement";
 
 export class VariableStatement extends AbstractDefinitionStatement implements Statement {
   isVariableStatement = true;
-  hrefForFrameHelp: string = "LangRef.html#variable";
-
   constructor(parent: Parent) {
     super(parent);
   }

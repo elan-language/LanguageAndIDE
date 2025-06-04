@@ -10,8 +10,6 @@ import { printKeyword } from "../keywords";
 export class Print extends AbstractFrame implements Statement {
   isStatement = true;
   expr: ExpressionField;
-  hrefForFrameHelp: string = "LangRef.html#print";
-
   constructor(parent: Parent) {
     super(parent);
     this.expr = new ExpressionField(this);

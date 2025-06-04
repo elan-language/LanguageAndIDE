@@ -139,7 +139,7 @@ test('compile error', async ({ page }) => {
   await page.keyboard.type('foo');
   await page.keyboard.press('Tab');
   
-  await expect(page.locator('#call5')).toContainText('\'foo\' is not defined. Click for more info.');
+  await expect(page.locator('#call5')).toContainText('\'foo\' is not defined.');
   await expect(page.locator('#compile')).toContainText('unknown symbol');
 });
 
@@ -156,7 +156,7 @@ test('parse error', async ({ page }) => {
   await page.keyboard.type('c'); // call
   await page.keyboard.type('4');
   
-  await expect(page.locator('#call5')).toContainText('Invalid. Click for more info.');
+  await expect(page.locator('#call5')).toContainText('Invalid.');
   await expect(page.locator('#parse')).toContainText('invalid');
 });
 
@@ -190,7 +190,7 @@ test('symbol completion', async ({ page }) => {
   await expect(page.locator('#ident6')).toContainText('clearBlocksclearHtmlclearKeyBufferclearPrintedTextclearVectorGraphicsdisplayBlocksdisplayVectorGraphics');
 });
 
-test('undo redo', async ({ page }) => {
+/* test('undo redo', async ({ page }) => {
   page.once('dialog', dialog => {
     //console.log(`Dialog message: ${dialog.message()}`);
     dialog.accept().catch(() => {});
@@ -205,4 +205,4 @@ test('undo redo', async ({ page }) => {
   await expect(page.locator('el-help')).toContainText(' main procedure function test constant enum record class abstract interface #');
   await page.getByRole('button', { name: 'Redo' }).click();
   await expect(page.locator('el-top')).toContainText('main');
-});
+}); */

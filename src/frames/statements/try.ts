@@ -7,8 +7,6 @@ import { CatchStatement } from "./catch-statement";
 
 export class TryStatement extends FrameWithStatements {
   catch: CatchStatement;
-  hrefForFrameHelp: string = "LangRef.html#try";
-
   constructor(parent: Parent) {
     super(parent);
     this.catch = new CatchStatement(this);

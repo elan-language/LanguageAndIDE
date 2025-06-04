@@ -6,7 +6,6 @@ import { LitValueNode } from "./lit-value-node";
 import { TupleNode } from "./tuple-node";
 
 export class ConstantValueNode extends AbstractAlternatives {
-  errorLink: string = "#parse_constant_literal";
   constructor() {
     super();
     this.completionWhenEmpty = "";

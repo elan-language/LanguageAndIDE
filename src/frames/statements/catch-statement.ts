@@ -10,8 +10,6 @@ export class CatchStatement extends FrameWithStatements implements Statement {
   isStatement = true;
   isCatch = true;
   variable: IdentifierField;
-  hrefForFrameHelp: string = "LangRef.html#catch";
-
   constructor(parent: Parent) {
     super(parent);
     this.variable = new IdentifierField(this);

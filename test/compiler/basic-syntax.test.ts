@@ -391,8 +391,8 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'foo' add brackets. Or to create a reference to 'foo', precede it by 'ref'. Click for more info.LangRef.html#compile_error",
+    assertDoesNotCompile(fileImpl,  [
+      "To evaluate function 'foo' add brackets. Or to create a reference to 'foo', precede it by 'ref'.LangRef.html#compile_error",
     ]);
   });
 
@@ -409,7 +409,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "a comment may not start with [ unless it is a recognised compiler directive. Click for more info.LangRef.html#compile_error",
+      "a comment may not start with [ unless it is a recognised compiler directive.LangRef.html#compile_error",
     ]);
   });
 
@@ -426,7 +426,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "a comment may not start with [ unless it is a recognised compiler directive. Click for more info.LangRef.html#compile_error",
+      "a comment may not start with [ unless it is a recognised compiler directive.LangRef.html#compile_error",
     ]);
   });
 
@@ -442,7 +442,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "a comment may not start with [ unless it is a recognised compiler directive. Click for more info.LangRef.html#compile_error",
+      "a comment may not start with [ unless it is a recognised compiler directive.LangRef.html#compile_error",
     ]);
   });
 });

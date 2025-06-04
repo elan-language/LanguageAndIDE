@@ -14,12 +14,15 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
   isMember: boolean = true;
   private: boolean;
   isAbstract = false;
-  hrefForFrameHelp: string = "LangRef.html#procedure_method";
-
   constructor(parent: Parent, priv = false) {
     super(parent);
     this.private = priv;
   }
+
+  override helpId(): string {
+    return "procedure_method";
+  }
+
 
   private modifierAsHtml(): string {
     return this.private ? `<el-kw>private </el-kw>` : "";

@@ -13,8 +13,6 @@ export class AbstractProcedure extends AbstractFrame {
   private = false;
   public name: IdentifierField;
   public params: ParamListField;
-  hrefForFrameHelp: string = "LangRef.html#Abstract_procedure";
-
   constructor(parent: Parent) {
     super(parent);
     this.name = new IdentifierField(this);

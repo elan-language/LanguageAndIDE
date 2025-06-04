@@ -368,7 +368,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -385,7 +385,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -402,7 +402,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -419,7 +419,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -435,9 +435,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Unsupported operation. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Unsupported operation.LangRef.html#compile_error"]);
   });
 
   test("Fail_DoubleMinus2", async () => {
@@ -453,9 +451,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Unsupported operation. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Unsupported operation.LangRef.html#compile_error"]);
   });
 
   test("Fail_DoubleNot1", async () => {
@@ -470,9 +466,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Unsupported operation. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Unsupported operation.LangRef.html#compile_error"]);
   });
 
   test("Fail_DoubleNot2", async () => {
@@ -488,9 +482,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Unsupported operation. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Unsupported operation.LangRef.html#compile_error"]);
   });
 
   test("Fail_PowerType1", async () => {
@@ -507,7 +499,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -525,7 +517,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
     ]);
   });
 });

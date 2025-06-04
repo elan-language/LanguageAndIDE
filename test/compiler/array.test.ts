@@ -89,7 +89,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: arr (List<of Int>), Provided: Array<of Int>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: arr (List<of Int>), Provided: Array<of Int>.LangRef.html#compile_error",
     ]);
   });
 
@@ -560,7 +560,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: index (Int), value (String). Click for more info.LangRef.html#compile_error",
+      "Too many argument(s). Expected: index (Int), value (String).LangRef.html#compile_error",
     ]);
   });
 
@@ -613,7 +613,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: index (Int), value (String), Provided: Int, Boolean. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: index (Int), value (String), Provided: Int, Boolean.LangRef.html#compile_error",
     ]);
   });
 
@@ -630,8 +630,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expected: '<of Type>'. Click for more info.LangRef.html#GenericParametersCompileError",
-      "Argument types. Expected: size (Int), initialValue (Generic Parameter T1), Provided: Int, String. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: size (Int), initialValue (Generic Parameter T1), Provided: Int, String.LangRef.html#compile_error",
+      "Expected: '<of Type>'.LangRef.html#GenericParametersCompileError",
     ]);
   });
 

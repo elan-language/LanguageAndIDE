@@ -4,8 +4,6 @@ import { ProcedureFrame } from "./procedure-frame";
 
 export class GlobalProcedure extends ProcedureFrame implements GlobalFrame {
   isGlobal = true;
-  hrefForFrameHelp: string = "LangRef.html#procedure";
-
   constructor(parent: Parent) {
     super(parent);
   }

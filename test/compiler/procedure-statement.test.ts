@@ -820,9 +820,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'bar' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'bar' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_TypeSpecifiedBeforeParamName", async () => {
@@ -859,9 +857,7 @@ end procedure
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'main' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'main' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_PassingUnnecessaryParameter", async () => {
@@ -883,7 +879,7 @@ end procedure
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: none. Click for more info.LangRef.html#compile_error",
+      "Too many argument(s). Expected: none.LangRef.html#compile_error",
     ]);
   });
 
@@ -906,7 +902,7 @@ end procedure
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: a (Int), b (String). Click for more info.LangRef.html#compile_error",
+      "Missing argument(s). Expected: a (Int), b (String).LangRef.html#compile_error",
     ]);
   });
 
@@ -924,8 +920,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: value (Int). Click for more info.LangRef.html#compile_error",
-      "Too many argument(s). Expected: value (Int). Click for more info.LangRef.html#compile_error",
+      "Missing argument(s). Expected: value (Int).LangRef.html#compile_error",
+      "Too many argument(s). Expected: value (Int).LangRef.html#compile_error",
     ]);
   });
 
@@ -947,7 +943,7 @@ end procedure
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: a (Int), b (String), Provided: Int, Int. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: a (Int), b (String), Provided: Int, Int.LangRef.html#compile_error",
     ]);
   });
 
@@ -1002,8 +998,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: p (Float). Click for more info.LangRef.html#compile_error",
-      "Missing argument(s). Expected: p (Float). Click for more info.LangRef.html#compile_error",
+      "Too many argument(s). Expected: p (Float).LangRef.html#compile_error",
+      "Missing argument(s). Expected: p (Float).LangRef.html#compile_error",
     ]);
   });
 
@@ -1024,8 +1020,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: p (Int), Provided: Boolean. Click for more info.LangRef.html#compile_error",
-      "Argument types. Expected: p (Int), Provided: Float. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: p (Int), Provided: Boolean.LangRef.html#compile_error",
+      "Argument types. Expected: p (Int), Provided: Float.LangRef.html#compile_error",
     ]);
   });
 
@@ -1048,7 +1044,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the parameter 'a'. Click for more info.LangRef.html#compile_error",
+      "May not re-assign the parameter 'a'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1071,7 +1067,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the parameter 'a'. Click for more info.LangRef.html#compile_error",
+      "May not re-assign the parameter 'a'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1094,7 +1090,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the parameter 'a'. Click for more info.LangRef.html#compile_error",
+      "May not re-assign the parameter 'a'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1114,9 +1110,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'Bar' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
@@ -1135,7 +1129,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'if' is a keyword, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
+      "'if' is a keyword, and may not be used as an identifier.LangRef.html#compile_error",
     ]);
   });
 
@@ -1155,7 +1149,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
+      "'break' is a reserved word, and may not be used as an identifier.LangRef.html#compile_error",
     ]);
   });
 
@@ -1192,7 +1186,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
+      "'break' is a reserved word, and may not be used as an identifier.LangRef.html#compile_error",
     ]);
   });
 
@@ -1213,9 +1207,7 @@ end procedure
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Name 'foo' not unique in scope. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Name 'foo' not unique in scope.LangRef.html#compile_error"]);
   });
 
   test("Fail_NotUniqueParameterName", async () => {
@@ -1230,9 +1222,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Name 'a' not unique in scope. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope.LangRef.html#compile_error"]);
   });
 
   test("Fail_OperatorsAndProcedures", async () => {
@@ -1256,9 +1246,9 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot do equality operations on Procedures or Functions. Click for more info.LangRef.html#CannotCompareProcFunc",
-      "Incompatible types. Expected: Float or Int, Provided: Procedure (). Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: Procedure (). Click for more info.LangRef.html#TypesCompileError",
+      "Cannot do equality operations on Procedures or Functions.LangRef.html#CannotCompareProcFunc",
+      "Incompatible types. Expected: Float or Int, Provided: Procedure ().LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: Procedure ().LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -1296,7 +1286,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot pass '0' as an out parameter. Click for more info.LangRef.html#compile_error",
+      "Cannot pass '0' as an out parameter.LangRef.html#compile_error",
     ]);
   });
 
@@ -1318,7 +1308,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot pass 'a + b' as an out parameter. Click for more info.LangRef.html#compile_error",
+      "Cannot pass 'a + b' as an out parameter.LangRef.html#compile_error",
     ]);
   });
 
@@ -1339,7 +1329,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot pass 'let a' as an out parameter. Click for more info.LangRef.html#compile_error",
+      "Cannot pass 'let a' as an out parameter.LangRef.html#compile_error",
     ]);
   });
 
@@ -1363,7 +1353,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot pass 'bar()' as an out parameter. Click for more info.LangRef.html#compile_error",
+      "Cannot pass 'bar()' as an out parameter.LangRef.html#compile_error",
     ]);
   });
 
@@ -1392,7 +1382,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot pass 'f.ff' as an out parameter. Click for more info.LangRef.html#compile_error",
+      "Cannot pass 'f.ff' as an out parameter.LangRef.html#compile_error",
     ]);
   });
 
@@ -1413,7 +1403,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot pass 'f[0]' as an out parameter. Click for more info.LangRef.html#compile_error",
+      "Cannot pass 'f[0]' as an out parameter.LangRef.html#compile_error",
     ]);
   });
 
@@ -1436,7 +1426,7 @@ end procedure`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'bar' is not defined for type 'Foo'. Click for more info.LangRef.html#compile_error",
+      "'bar' is not defined for type 'Foo'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1453,7 +1443,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'. Click for more info.LangRef.html#compile_error",
+      "ListImmutable cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1471,7 +1461,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'reverse' is not defined for type 'String'. Click for more info.LangRef.html#compile_error",
+      "'reverse' is not defined for type 'String'.LangRef.html#compile_error",
     ]);
   });
 });
