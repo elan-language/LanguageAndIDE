@@ -221,7 +221,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot reference private member 'p2'. Click for more info.LangRef.html#compile_error",
+      "Cannot reference private member 'p2'.LangRef.html#compile_error",
     ]);
   });
 
@@ -250,7 +250,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot reference private member 'p2'. Click for more info.LangRef.html#compile_error",
+      "Cannot reference private member 'p2'.LangRef.html#compile_error",
     ]);
   });
 
@@ -279,7 +279,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot reference private member 'setP1'. Click for more info.LangRef.html#compile_error",
+      "Cannot reference private member 'setP1'.LangRef.html#compile_error",
     ]);
   });
 
@@ -308,7 +308,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot reference private member 'ff'. Click for more info.LangRef.html#compile_error",
+      "Cannot reference private member 'ff'.LangRef.html#compile_error",
     ]);
   });
 
@@ -341,7 +341,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot reference private member 'p2'. Click for more info.LangRef.html#compile_error",
+      "Cannot reference private member 'p2'.LangRef.html#compile_error",
     ]);
   });
 
@@ -370,7 +370,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot reference private member 'ff'. Click for more info.LangRef.html#compile_error",
+      "Cannot reference private member 'ff'.LangRef.html#compile_error",
     ]);
   });
 });

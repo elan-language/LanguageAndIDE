@@ -708,7 +708,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: val (Int). Click for more info.LangRef.html#compile_error",
+      "Missing argument(s). Expected: val (Int).LangRef.html#compile_error",
     ]);
   });
 
@@ -737,7 +737,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: val (Int), Provided: Float. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: val (Int), Provided: Float.LangRef.html#compile_error",
     ]);
   });
 
@@ -765,7 +765,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: none. Click for more info.LangRef.html#compile_error",
+      "Too many argument(s). Expected: none.LangRef.html#compile_error",
     ]);
   });
 
@@ -811,9 +811,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'Foo' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_IncompatibleClassAsProcedureParameter", async () => {
@@ -847,7 +845,7 @@ end procedure
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: bar (Bar), Provided: Foo. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: bar (Bar), Provided: Foo.LangRef.html#compile_error",
     ]);
   });
 
@@ -882,7 +880,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: bar (Bar), Provided: Foo. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: bar (Bar), Provided: Foo.LangRef.html#compile_error",
     ]);
   });
 
@@ -904,9 +902,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'Bar' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_DuplicateNames", async () => {
@@ -933,9 +929,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Name 'Foo' not unique in scope. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Name 'Foo' not unique in scope.LangRef.html#compile_error"]);
   });
 
   test("Fail_DuplicatePropertyNames", async () => {
@@ -957,9 +951,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Name 'p1' not unique in scope.LangRef.html#compile_error"]);
   });
 
   test("Fail_DuplicateFunctionNames", async () => {
@@ -985,9 +977,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Name 'ff' not unique in scope. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.LangRef.html#compile_error"]);
   });
 
   test("Fail_DuplicateProcedureNames", async () => {
@@ -1011,9 +1001,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Name 'ff' not unique in scope. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.LangRef.html#compile_error"]);
   });
 
   test("Fail_DuplicateMemberNames1", async () => {
@@ -1036,9 +1024,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Name 'ff' not unique in scope. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.LangRef.html#compile_error"]);
   });
 
   test("Fail_DuplicateMemberNames2", async () => {
@@ -1062,9 +1048,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Name 'ff' not unique in scope. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.LangRef.html#compile_error"]);
   });
 
   test("Fail_DuplicateMemberNames3", async () => {
@@ -1089,9 +1073,7 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Name 'ff' not unique in scope. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Name 'ff' not unique in scope.LangRef.html#compile_error"]);
   });
 
   test("Fail_ConstructorWithCall", async () => {
@@ -1139,7 +1121,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type> was not expected here. Click for more info.LangRef.html#GenericParametersCompileError",
+      "<of Type> was not expected here.LangRef.html#GenericParametersCompileError",
     ]);
   });
 
@@ -1156,7 +1138,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type> was not expected here. Click for more info.LangRef.html#GenericParametersCompileError",
+      "<of Type> was not expected here.LangRef.html#GenericParametersCompileError",
     ]);
   });
 
@@ -1173,8 +1155,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'FooBar' is not defined. Click for more info.LangRef.html#compile_error",
-      "Cannot new FooBar. Click for more info.LangRef.html#compile_error",
+      "'FooBar' is not defined.LangRef.html#compile_error",
+      "Cannot new FooBar.LangRef.html#compile_error",
     ]);
   });
 
@@ -1190,9 +1172,7 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot new Int. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Cannot new Int.LangRef.html#compile_error"]);
   });
 
   test("Fail_PropertyIsNotDefined", async () => {
@@ -1219,7 +1199,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'noSuch' is not defined for type 'CircleVG'. Click for more info.LangRef.html#compile_error",
+      "'noSuch' is not defined for type 'CircleVG'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1239,7 +1219,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Class/interface 'Foo' cannot inherit from itself. Click for more info.LangRef.html#compile_error",
+      "Class/interface 'Foo' cannot inherit from itself.LangRef.html#compile_error",
     ]);
   });
 
@@ -1267,7 +1247,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Class/interface 'Yon' cannot inherit from itself. Click for more info.LangRef.html#compile_error",
+      "Class/interface 'Yon' cannot inherit from itself.LangRef.html#compile_error",
     ]);
   });
 
@@ -1295,7 +1275,7 @@ end interface`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Class/interface 'Bar' cannot inherit from itself. Click for more info.LangRef.html#compile_error",
+      "Class/interface 'Bar' cannot inherit from itself.LangRef.html#compile_error",
     ]);
   });
 
@@ -1323,7 +1303,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Class/interface 'Bar' cannot inherit from itself. Click for more info.LangRef.html#compile_error",
+      "Class/interface 'Bar' cannot inherit from itself.LangRef.html#compile_error",
     ]);
   });
 
@@ -1345,7 +1325,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'constructor' is not defined for type 'Foo'. Click for more info.LangRef.html#compile_error",
+      "'constructor' is not defined for type 'Foo'.LangRef.html#compile_error",
     ]);
   });
 });

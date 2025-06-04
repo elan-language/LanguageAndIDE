@@ -453,7 +453,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set6", [
-      "May not re-assign the constant 'a'. Click for more info.LangRef.html#compile_error",
+      "May not re-assign the constant 'a'.LangRef.html#compile_error",
     ]);
   });
 
@@ -471,7 +471,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the constant 'pi'. Click for more info.LangRef.html#compile_error",
+      "May not re-assign the constant 'pi'.LangRef.html#compile_error",
     ]);
   });
 
@@ -538,7 +538,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "ident2", [
-      "'if' is a keyword, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
+      "'if' is a keyword, and may not be used as an identifier.LangRef.html#compile_error",
     ]);
   });
 
@@ -557,7 +557,7 @@ end main
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "ident2", [
-      "'break' is a reserved word, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
+      "'break' is a reserved word, and may not be used as an identifier.LangRef.html#compile_error",
     ]);
   });
 
@@ -577,7 +577,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "const1", [
-      "Name 'a' not unique in scope. Click for more info.LangRef.html#compile_error",
+      "Name 'a' not unique in scope.LangRef.html#compile_error",
     ]);
   });
   test("Pass_usingConstantAsKeyInConstantDictionary", async () => {

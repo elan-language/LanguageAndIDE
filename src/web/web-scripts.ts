@@ -1247,16 +1247,11 @@ async function updateContent(text: string, editingField: boolean) {
     }
   }
 
-  const items = document.querySelectorAll(".error-link");
+  const helpLinks = document.querySelectorAll("el-help a");
 
-  for (const item of items) {
+  for (const item of helpLinks) {
     item.addEventListener("click", (event) => {
-      const ke = event as PointerEvent;
-      const tgt = ke.target as HTMLDivElement;
-      const href = tgt.dataset.href;
-      if (href) {
-        window.open(`documentation/${href}`, "doc-iframe")?.focus();
-      }
+      event.stopPropagation();
     });
   }
 

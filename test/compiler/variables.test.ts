@@ -328,7 +328,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set6", [
-      "Incompatible types. Expected: String, Provided: Float. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: String, Provided: Float.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -384,7 +384,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "var3", [
-      "'if' is a keyword, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
+      "'if' is a keyword, and may not be used as an identifier.LangRef.html#compile_error",
     ]);
   });
 
@@ -400,7 +400,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "var3", [
-      "'break' is a reserved word, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
+      "'break' is a reserved word, and may not be used as an identifier.LangRef.html#compile_error",
     ]);
   });
 
@@ -426,16 +426,16 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set22", [
-      "Incompatible types. Expected: Boolean, Provided: Float. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Boolean, Provided: Float.LangRef.html#TypesCompileError",
     ]);
     assertDoesNotCompileWithId(fileImpl, "set25", [
-      "Incompatible types. Expected: Int, Provided: Boolean. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Boolean.LangRef.html#TypesCompileError",
     ]);
     assertDoesNotCompileWithId(fileImpl, "set28", [
-      "Incompatible types. Expected: String, Provided: ListImmutable<of Float>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: String, Provided: ListImmutable<of Float>.LangRef.html#TypesCompileError",
     ]);
     assertDoesNotCompileWithId(fileImpl, "set31", [
-      "Incompatible types. Expected: Int, Provided: Float. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -456,15 +456,15 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set12", [
-      "Incompatible types. Expected: List<of String>, Provided: ListImmutable<of Float>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of String>, Provided: ListImmutable<of Float>.LangRef.html#TypesCompileError",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set15", [
-      "Incompatible types. Expected: ListImmutable<of Float> try converting with '.asListImmutable()', Provided: List<of String>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: ListImmutable<of Float> try converting with '.asListImmutable()', Provided: List<of String>.LangRef.html#TypesCompileError",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "set18", [
-      "Incompatible types. Expected: Dictionary<of String, Float>, Provided: ListImmutable<of Float>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Dictionary<of String, Float>, Provided: ListImmutable<of Float>.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -480,7 +480,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "expr5", [
-      "'x' is not defined. Click for more info.LangRef.html#compile_error",
+      "'x' is not defined.LangRef.html#compile_error",
     ]);
   });
 
@@ -497,7 +497,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Library or class function 'createFileForWriting' cannot be preceded by 'ref'. Click for more info.LangRef.html#NotGlobalFunctionRefCompileError",
+      "Library or class function 'createFileForWriting' cannot be preceded by 'ref'.LangRef.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 
@@ -515,7 +515,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "expr11", [
-      "'x' is not defined for type 'Int'. Click for more info.LangRef.html#compile_error",
+      "'x' is not defined for type 'Int'.LangRef.html#compile_error",
     ]);
   });
 
