@@ -10,8 +10,6 @@ export class VariableStatement
   implements Statement, ElanSymbol
 {
   isVariableStatement = true;
-  hrefForFrameHelp: string = "LangRef.html#variable";
-
   constructor(parent: Parent) {
     super(parent);
   }

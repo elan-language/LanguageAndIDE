@@ -24,8 +24,6 @@ export class SetStatement extends AbstractFrame implements Statement {
   isStatement = true;
   assignable: AssignableField;
   expr: ExpressionField;
-  hrefForFrameHelp: string = "LangRef.html#set";
-
   constructor(parent: Parent) {
     super(parent);
     this.assignable = new AssignableField(this);

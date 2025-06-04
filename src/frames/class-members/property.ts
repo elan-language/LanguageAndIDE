@@ -26,8 +26,6 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember, El
   name: IdentifierField;
   type: TypeField;
   public private: boolean = false;
-  hrefForFrameHelp: string = "LangRef.html#property";
-
   constructor(parent: Parent, priv = false) {
     super(parent);
     this.name = new IdentifierField(this);

@@ -330,10 +330,10 @@ el-field.selected el-msg, el-field.selected el-msg * {
     background-color: var(--reverseText);
     color: var(--optional);
   }
-  el-select el-help {
+  el-select .options {
     display: none; 
   }
-  .selected > el-select el-help {
+  .selected > el-select .options {
     border-style: solid;
     border-color: black;
     border-width: 1px;
@@ -341,6 +341,13 @@ el-field.selected el-msg, el-field.selected el-msg * {
     background-color: var(--optional);
     color: var(--reverseText);
   }
+
+  .selected > el-select el-help,   .selected > el-select el-help a {
+    display: inline;
+    background-color: var(--optional);
+    color: var(--reverseText);
+  }
+    
   .selected > el-select el-txt {
     color: var(--defaultText);
   }
