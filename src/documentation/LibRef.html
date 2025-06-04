@@ -235,7 +235,7 @@ in the range:</li>
   <td><el-method>asList</el-method></td>
   <td><el-type>String</el-type></td>
   <td>(none)</td>
-  <td><el-code> <el-type>List&lt;of String&gt;</el-type></td>
+  <td><el-code><el-type>List</el-type>&lt;of <el-type>String</el-type>&gt;</el-code></td>
   <td>a List of the individual characters</td>
  </tr><tr id="asUnicode">
   <td><el-method>asUnicode</el-method></td>
@@ -320,7 +320,7 @@ in the range:</li>
   <td><el-method>split</el-method></td>
   <td><el-type>String</el-type></td>
   <td><el-type>String</el-type></td>
-  <td><el-type>List&lt;of String&gt;</el-type></td>
+  <td><el-code><el-type>List</el-type>&lt;of <el-type>String</el-type>&gt;</el-code></td>
   <td>a <el-type>List</el-type> of the substrings found between occurrences of the argument string</td>
  </tr><tr id="trim">
   <td><el-method>trim</el-method></td>
@@ -398,10 +398,10 @@ or into existing variables of the correct Type:</p>
  </tr><tr>
   <td>Size</td><td>Static</td><td>Static</td><td>Dynamic</td><td>Dynamic</td></tr>
   <tr><td>Type form<br>(example)</td>
-  <td><el-code>Array&lt;of String&gt;</el-code><br>of Type <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type>, or <el-type>Boolean</el-type></td>
-  <td><el-code>Array2D&lt;of String&gt;</el-code><br>of Type <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type>, or <el-type>Boolean</el-type></td>
-  <td><el-code>List&lt;of String&gt;</el-code><br>of any Type including <el-type>Array</el-type><br> &ndash; or <el-type>List</el-type> for 'jagged' data</td>
-  <td><el-code>Dictionary&lt;of String, Int&gt;</el-code><br>key must be <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type>, <el-type>Boolean</el-type>, or any<el-code>record</el-code>. Value Type may be anything</td>
+  <td><el-code><el-type>Array</el-type>&lt;of <el-type>String</el-type>&gt;</el-code><br>of Type <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type>, or <el-type>Boolean</el-type></td>
+  <td><el-code><el-type>Array2D</el-type>&lt;of <el-type>String</el-type>&gt;</el-code><br>of Type <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type>, or <el-type>Boolean</el-type></td>
+  <td><el-code><el-type>List</el-type>&lt;of <el-type>String</el-type>&gt;</el-code><br>of any Type including <el-type>Array</el-type><br> &ndash; or <el-type>List</el-type> for 'jagged' data</td>
+  <td><el-code><el-type>Dictionary</el-type>&lt;of <el-type>String</el-type>, <el-type>Int</el-type>&gt;</el-code><br>key must be <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type>, <el-type>Boolean</el-type>, or any<el-code>record</el-code>. Value Type may be anything</td>
  </tr><tr>
   <td>literal</td>
   <td>n/a, but can convert literal list:<br><el-code>["a","b","c"].asArray()</el-code></td>
@@ -410,10 +410,10 @@ or into existing variables of the correct Type:</p>
   <td><el-code>["a":3, "b":5]</el-code></td>
  </tr><tr>
   <td>create</td>
-  <td><el-code>new Array&lt;of String&gt;(10, "")</el-code><br>any initial value of correct Type</td>
-  <td><el-code>new Array2D&lt;of String&gt;(5,8, "")</el-code><br>defines 5 arrays each of 8 elements<br>any initial value of correct Type</td>
-  <td><el-code>new List&lt;of Int&gt;()</el-code><br>created empty<br>and of any Type</td>
-  <td><el-code>new Dictionary&lt;of String, Int&gt;()</el-code><br>Key Type must be simple value or a <el-code>record</el-code><br>Value Type can be any</td>
+  <td><el-code>new <el-type>Array</el-type>&lt;of <el-type>String</el-type>&gt;(10, "")</el-code><br>any initial value of correct Type</td>
+  <td><el-code>new <el-type>Array2D</el-type>&lt;of <el-type>String</el-type>&gt;(5,8, "")</el-code><br>defines 5 arrays each of 8 elements<br>any initial value of correct Type</td>
+  <td><el-code>new <el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;()</el-code><br>created empty<br>and of any Type</td>
+  <td><el-code>new <el-type>Dictionary</el-type>&lt;of <el-type>String</el-type>, <el-type>Int</el-type>&gt;()</el-code><br>Key Type must be simple value or a <el-code>record</el-code><br>Value Type can be any</td>
  </tr><tr>
   <td>read by index</td>
   <td><el-code>a[3]</el-code></td>
@@ -448,7 +448,7 @@ or from within another <el-kw>procedure</el-kw>, it is also possible to make cha
 with the specified changes &ndash; which is why all such methods have names starting <el-code>with...</el-code>.</p>
 
 <p>All four data structures contain values of a single Type, that Type being specified either explicitly &ndash;  as in
-    <el-code>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-code> &ndash; or implicitly if the structure
+    <el-code>of &lt;<el-kw>procedure</el-kw>&gt; <el-type>Int</el-type></el-code> &ndash; or implicitly if the structure
     is created from its literal definition form.</p>
     <p>A <el-type>Dictionary</el-type> is defined with two Types: one for its keys and one for their values.</p>
 
@@ -713,6 +713,7 @@ Note
   <td><el-type>List</el-type> whose elements are<br> of an immutable Type</td>
   <td>(none)</td>
   <td><el-type>ListImmutable</el-type></td>
+  <td>a new ListImmutable containing the same elements</td>
  </tr><tr id="asSet">
   <td><el-method>asSet</el-method></td>
   <td><el-type>List</el-type></td>
@@ -753,7 +754,7 @@ Note
   <td>index of the first occurrence of the argument value in the List,<br>or -1 if no match is found</td>
  </tr><tr id="join">
   <td><el-method>join</el-method></td>
-  <td><el-type>List&lt;of String&gt;<br></el-type></td>
+  <td><el-code>List&lt;of <el-type>String</el-type>&gt;</el-code></td>
   <td><el-type>String</el-type></td>
   <td><el-type>String</el-type></td>
   <td>a single String that joins all the elements in the list,<br>with the specified String (which can be empty) inserted between the elements</td>
@@ -772,25 +773,25 @@ Note
   see <a href="#map"><el-method>map</el-method></a> in HoFs</td>
  </tr><tr id="maxFloat">
   <td><el-method>maxFloat</el-method></td>
-  <td><el-type>List&lt;of Float&gt;</el-type></td>
+  <td><el-code>List&lt;of <el-type>Float</el-type>&gt;</el-code></td>
   <td>(none)</td>
   <td><el-type>Float</el-type></td>
   <td>returns the maximum value found in the List</td>
  </tr><tr id="minFloat">
   <td><el-method>minFloat</el-method></td>
-  <td><el-type>List&lt;of Float&gt;</el-type></td>
+  <td><el-code>List&lt;of <el-type>Float</el-type>&gt;</el-code></td>
   <td>(none)</td>
   <td><el-type>Float</el-type></td>
   <td>returns the minimum value found in the List</td>
  </tr><tr id="maxInt">
   <td><el-method>maxInt</el-method></td>
-  <td><el-type>List&lt;of Int&gt;</el-type></td>
+  <td><el-code>List&lt;of <el-type>Int</el-type>&gt;</el-code></td>
   <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>returns the maximum value found in the List</td>
  </tr><tr id="minInt">
   <td><el-method>minInt</el-method></td>
-  <td><el-type>List&lt;of Int&gt;</el-type></td>
+  <td><el-code>List&lt;of <el-type>Int</el-type>&gt;</el-code></td>
   <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>returns the minimum value found in the List</td>
@@ -955,11 +956,11 @@ differences. Immutable data structures are intended specifically to facilitate t
   <td>Size</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td>
  </tr><tr>
   <td>Type</td>
-  <td><el-code>ListImmutable&lt;of String&gt;</el-code><br>element Type must be immutable</td>
-  <td><el-code>DictionaryImmutable&lt;of String, Int&gt;</el-code><br>Key Type must be <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type>, <el-type>Boolean</el-type> or any <el-code>record</el-code><br>Value Type may be any immutable Type</td>
-  <td><el-code>Set&lt;of String&gt;</el-code><br>element Type must be immutable</td>
-  <td><el-code>Stack&lt;of String&gt;</el-code><br>element Type must be immutable</td>
-  <td><el-code>Queue&lt;of String&gt;</el-code><br>element Type must be immutable</td>
+  <td><el-code><el-type>ListImmutable</el-type>&lt;of <el-type>String</el-type>&gt;</el-code><br>element Type must be immutable</td>
+  <td><el-code><el-type>DictionaryImmutable</el-type>&lt;of <el-type>String</el-type>, <el-type>Int</el-type>&gt;</el-code><br>Key Type must be <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type>, <el-type>Boolean</el-type> or any <el-code>record</el-code><br>Value Type may be any immutable Type</td>
+  <td><el-code><el-type>Set</el-type>&lt;of <el-type>String</el-type>&gt;</el-code><br>element Type must be immutable</td>
+  <td><el-code><el-type>Stack</el-type>&lt;of <el-type>String</el-type>&gt;</el-code><br>element Type must be immutable</td>
+  <td><el-code><el-type>Queue</el-type>&lt;of <el-type>String</el-type>&gt;</el-code><br>element Type must be immutable</td>
  </tr><tr>
   <td>literal</td>
   <td><el-code>{a","b","c"}</el-code></td>
@@ -969,11 +970,11 @@ differences. Immutable data structures are intended specifically to facilitate t
   <td>None</td>
  </tr><tr>
   <td>create</td>
-  <td><el-code>new ListImmutable&lt;ofString&gt;()</el-code><br>created empty<br>must be 'of' an immutable Type</td>
-  <td><el-code>new DictionaryImmutable&lt;of String, Int&gt;()</el-code><br>created empty <br>Key <em>and</em> Value Types must be immutable</td>
-  <td><el-code>new Set&lt;of String&gt;()</el-code><br> created empty<br>must be 'of' an immutable Type</td>
-  <td><el-code>new Stack&lt;of String&gt;()</el-code></td>
-  <td><el-code>new Queue&lt;of String&gt;()</el-code></td>
+  <td><el-code>new <el-type>ListImmutable</el-type>&lt;of <el-type>String</el-type>&gt;()</el-code><br>created empty<br>must be 'of' an immutable Type</td>
+  <td><el-code>new <el-type>DictionaryImmutable</el-type>&lt;of <el-type>String</el-type>, <el-type>Int</el-type>&gt;()</el-code><br>created empty <br>Key <em>and</em> Value Types must be immutable</td>
+  <td><el-code>new <el-type>Set</el-type>&lt;of <el-type>String</el-type>&gt;()</el-code><br> created empty<br>must be 'of' an immutable Type</td>
+  <td><el-code>new <el-type>Stack</el-type>&lt;of <el-type>String</el-type>&gt;()</el-code></td>
+  <td><el-code>new <el-type>Queue</el-type>&lt;of <el-type>String</el-type>&gt;()</el-code></td>
  </tr><tr>
   <td>read by Key</td>
   <td><el-code>lim[2]</el-code></td>
@@ -1005,9 +1006,9 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <h3 class="no-TOC">Type name</h3>
 <p>The Type is specified in the following ways:</p>
 <ul>
- <li><el-code>ListImmutable&lt;of String&gt;</el-code> for a ListImmutable of Type <el-type>String</el-type></li>
- <li><el-code>ListImmutable&lt;of Int&gt;</el-code> for a ListImmutable  of Type <el-type>Int</el-type></li>
- <li><el-code>ListImmutable&lt;of ListImmutable&lt;of Int&gt;&gt;</el-code> for a ListImmutable of such lists each of Type <el-type>Int</el-type></li>
+ <li><<el-type>ListImmutable</el-type>&lt;of <el-type>String</el-type>&gt; for a <el-type>ListImmutable</el-type> of Type <el-type>String</el-type></li>
+ <li><el-code><el-type>ListImmutable</el-type>&lt;of <el-type>Int</el-type>&gt;</el-code> for a <el-type>ListImmutable</el-type> of Type <el-type>Int</el-type></li>
+ <li><el-code><el-type>ListImmutable</el-type>&lt;of <el-type>ListImmutable</el-type>&lt;of <el-type>Int</el-type>&gt;</el-code> for a <el-type>ListImmutable</el-type> of such lists each of Type <el-type>Int</el-type></li>
 </ul>
 
 <h3 class="no-TOC">Creating a ListImmutable</h3>
@@ -1039,7 +1040,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-method>asList</el-method></td>
   <td>(none)</td>
   <td><el-type>ListImmutable</el-type></td>
-  <td>copy of the List</td>
+  <td>copy of the <el-type>ListImmutable</el-type> as a <el-type>List</el-type></td>
  </tr><tr id="asString_ListImmutable">
   <td><el-method>asString</el-method></td>
   <td>(none)</td>
@@ -1101,10 +1102,10 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 
 <h3 class="no-TOC">Type name</h3>
 <p>In the following example, the keys are of Type <el-type>String</el-type>, and the values associated with the keys are of Type <el-type>Int</el-type>:</p>
-<el-code>DictionaryImmutable&lt;of String, Int&gt;</el-code>
+<el-code><el-type>DictionaryImmutable</el-type>&lt;of <el-type>String</el-type>, <el-type>Int</el-type>&gt;</el-code>
 
 <h3 class="no-TOC">Defining a literal DictionaryImmutable</h3>
-<p>A literal<el-code> DictionaryImmutable</el-code> is defined as a comma-separated list of <i>key:value</i> pairs surrounded by curly braces:</p>
+<p>A literal <el-type>DictionaryImmutable</el-type> is defined as a comma-separated list of <i>key:value</i> pairs surrounded by curly braces:</p>
 <el-code>variable scrabbleValues set to {"a":1, "b":3, "c":3, "d":2}</el-code>
 
 <h3 class="no-TOC">Using an Immutable Dictionary</h3>
@@ -1178,7 +1179,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <h4 class="no-TOC">Notes</h4>
 <ul>
     <li> When creating a set, the Type of the elements must be specified in the form
-    <el-code>Set&lt;of String&gt;</el-code>. This applies both when creating a new, empty set and when defining the Type of a parameter to be a <el-code>Set</el-code>.</li>
+    <el-code><el-type>Set</el-type>&lt;of <el-type>String</el-type>&gt;</el-code>. This applies both when creating a new, empty set and when defining the Type of a parameter to be a <el-code>Set</el-code>.</li>
     <li>You can add elements: individually with <el-method>add</el-method>, or multiple elements with <el-code>addFromList</el-code> and <el-code>addFromList</el-code>.</li>
     <li>You can create a new set from an existing list or <el-code>ListImmutable</el-code> by calling <el-code>asSet</el-code> on it.</li>
 </ul>
@@ -1276,8 +1277,8 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <h2 id="Stack">Stack and Queue</h2>
 <ul>
     <li><el-type>Stack</el-type> and <el-type>Queue</el-type> are similar data structures except that <el-type>Stack</el-type> is &#8216;LIFO&#8217; (last in, first out), while <el-type>Queue</el-type> is FIFO (first in, first out). The names of the methods for adding/removing are different, but there are also common methods.</li>
-    <li>Both a <el-type>Stack</el-type> and a <el-type>Queue</el-type> are defined with the Type of the items that they can contain, similarly to how <el-type>List</el-type> and <el-code>ListImmutable</el-code> have a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <el-code>Stack&lt;of String&gt;, Queue&lt;of Int&gt;, Stack&lt;of (Float, Float)&gt;, Queue&lt;of Square&gt;</el-code>.</li>
-    <li>Both <el-code>Stack </el-code>and<el-code> Queue</el-code> are dynamically extensible, like <el-type>List</el-type> and <el-code>ListImmutable</el-code>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer&#8217;s memory limit is reached.</li>
+    <li>Both a <el-type>Stack</el-type> and a <el-type>Queue</el-type> are defined with the Type of the items that they can contain, similarly to how <el-type>List</el-type> and <el-type>ListImmutable</el-type> have a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <el-code><el-type>Stack</el-type>&lt;of <el-type><el-type>String</el-type></el-type>&gt;, <el-type>Queue</el-type>&lt;of <el-type>Int</el-type>&gt;, <el-type>Stack</el-type>&lt;of (<el-type>Float</el-type>, <el-type>Float</el-type>)&gt;, <el-type>Queue</el-type>&lt;of <el-type>Square</el-type>&gt;</el-code>.</li>
+    <li>Both <el-type>Stack </el-type>and<el-type> Queue</el-type> are dynamically extensible, like <el-type>List</el-type> and <el-type>ListImmutable</el-type>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer&#8217;s memory limit is reached.</li>
     <li>This same syntax is used to specify the Type if you want to pass a <el-type>Stack</el-type> or <el-type>Queue</el-type> into a function, or specify it as the <el-kw>return</el-kw> Type.</li>
     <li><el-type>Stack</el-type> and <el-type>Queue</el-type> have two methods in common: <el-method>length</el-method> and <el-method>peek</el-method>.
     <el-method>peek</el-method> returns the next item to be removed, without actually removing it.</li>
@@ -1597,6 +1598,7 @@ most variables and data structures to the Display for debugging purposes.</p>
 <el-code-block source="TextFileReader_1.elan">
   <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>openFileForReading</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
   <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>text</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>readWholeFile</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+  <el-statement class="ok" id="call9" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident10" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>close</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args11" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
   <el-statement class="ok" id="print12" tabindex="0"><el-kw>print </el-kw><el-field id="expr13" class="optional ok" tabindex="0"><el-txt><el-id>text</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 <p>or to read a file line by line:</p>
@@ -1723,16 +1725,15 @@ most variables and data structures to the Display for debugging purposes.</p>
 <h2 id="image">Displaying images</h2>
 
 <h3 class="no-TOC">Printing an image on the Display</h3>
-<p>An image that can be accessed via a URL may be printed on the display using the <el-kw>image</el-kw> keyword followed by the URL. Here, the URL is <i>not</i> bounded by quotes:</p>
-<el-code>
+<p>An image that can be accessed via a URL may be printed on the display using the <el-kw>image</el-kw> keyword
+followed by the URL. Here, the URL is <i>not</i> bounded by quotes:</p>
+<el-code-block>
 <el-statement class="ok" id="print3" tabindex="0"><el-kw>print </el-kw><el-field id="expr4" class="selected focused optional ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="88" data-cursorend="88" size="87" style="width: 88ch" value="image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg"></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code>
-
+</el-code-block>
 <p>As soon as you leave the field the text will change to show a thumbnail copy of the image:</p>
-
-<el-code>
+<el-code-block>
 <el-statement class="ok" id="print3" tabindex="0"><el-kw>print </el-kw><el-field id="expr4" class="optional ok" tabindex="0"><el-txt><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg"></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code>
+</el-code-block>
 <p>If you edit the field again, the keyword and URL will be shown.</p>
 
 <p>Acknowledgement: The idea of displaying an image value as a thumbnail within the code was inspired by
@@ -1743,26 +1744,26 @@ who showed us this feature in confidence before its release, but nonetheless gen
 <p>When the code is run the image will be printed on the <b>Display</b>, but still thumbnail sized.
     You can specify dimensions by using a <el-kw>with</el-kw> clause like this:</p>
 
-<el-code>
+<el-code-block>
 <el-statement class="ok" id="print3" tabindex="0"><el-kw>print </el-kw><el-field id="expr4" class="selected focused optional ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="129" data-cursorend="129" size="128" style="width: 129ch" value="image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg with width set to 200, height set to 110"></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code>
+</el-code-block>
 
 <p>The <el-kw>with</el-kw> clause also permits you to specify a title for the image, which shows up as a tooltip on the image. It is good practice to do this for meeting accessibility guidelines.The <el-kw>with</el-kw> clause
 also offers position properties <el-code><el-id>x</el-id></el-code> and <el-code><el-id>y</el-id></el-code>. These are ignored when <i>printing</i> an image, but are useful in the context of drawing <a href="#VectorGraphics">Vector Graphics</a>.</p>
 
 <p>An image specified in this way may also be assigned to a named value, or defined inline as an argument to a method, for example:</p>
 
-<el-code>
+<el-code-block>
 <el-statement class="ok" id="let5" tabindex="0"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>shark</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg"></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code>
+</el-code-block>
 
 <p>The Type of a named value that holds an image is <el-type>ImageVG</el-type> &ndash; the 'VG' indicating that
     this Typeis compatible with <a href="#VectorGraphics">vector graphics</a>, so an image may be added to a <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;</el-code> or displayed
     directly by:</p>
 
-<el-code>
+<el-code-block>
 <el-statement class="ok" id="call5" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-method>displayVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args7" class="selected focused optional ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="1" data-cursorend="1" size="89" style="width: 90ch" value="[image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg]"></el-txt><el-place><i>listOfVGs</i></el-place></el-field>)</el-top></el-statement>
-</el-code>
+</el-code-block>
 
 <p>In this usage the position may be controlled by specifying the <el-code><el-id>x</el-id></el-code> and <el-code><el-id>y</el-id></el-code> coordinates for the top-left corner.</p>
 
@@ -1776,10 +1777,10 @@ the URL as a <el-type>String</el-type>, either as a literal (by surrounding it w
 </el-code-block>
 
 <p>Various properties can be set on an <el-type>ImageVG</el-type>  using a <el-kw>with</el-kw> clause, for example:</p>
-<el-code>
+<el-code-block>
           <el-statement class="ok" id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>url</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>"<el-lit>https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
         <el-statement class="ok" id="let11" tabindex="0"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>(<el-id>url</el-id>)<el-kw> with </el-kw><br><el-id>alt</el-id><el-kw> set to </el-kw>"<el-lit>shark</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code>
+</el-code-block>
 <p>The properties are:</p>
 <table>
     <tr><th>Property</th><th>Type</th><th>Description</th></tr>
@@ -2039,7 +2040,8 @@ just as you would specify the Type of every parameter and the return Type for th
 <h3 class="no-TOC">Type name</h3>
 <p>The Type of any function starts with the word <el-type>Func</el-type> followed by angle brackets defining the Type of each parameter,
     and the return Type for that function, following this syntax:</p>
-<el-code>Func&lt;of String, String, Int =&gt; Boolean&gt;</el-code><!-- TODO correct the syntax -->
+<!-- TODO correct the syntax -->
+<el-code><el-type>Func</el-type>&lt;of <el-type>String</el-type>, <el-type>String</el-type>, <el-type>Int</el-type> =&gt; <el-type>Boolean</el-type>&gt;</el-code>
 <p>This example defines the Type for a function that defines three parameters of Type <el-type>String</el-type>, <el-type>String</el-type>, and <el-type>Int</el-type> respectively, and returns a <el-type>Boolean</el-type> value. This Type would match that of a function definition that started:</p>
 <el-code-block source="functionChars.elan">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident5" class="ok" tabindex="0"><el-txt>charactersMatchAt</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params6" class="optional ok" tabindex="0"><el-txt><el-id>a</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>b</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>position</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="0"><el-txt><el-type>Boolean</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
@@ -2532,11 +2534,11 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 
 <h3 class="no-TOC" id="reduce">reduce</h3>
     <p>Usage:</p>
-    <el-code>
+    <el-code-block>
     let d2 be possibleAnswers.reduce(d, <br>
     &nbsp;&nbsp;lambda dd as Dictionary&lt;of String, Int&gt;, possAnswer as String =&gt;<br>
     &nbsp;&nbsp;incrementCount(dd, possAnswer, attempt))
-    </el-code>
+    </el-code-block>
 
 <h3 class="no-TOC" id="maxBy">maxBy and minBy</h3><span id="minBy"></span>
     <p><el-code>maxBy</el-code> and <el-code>minBy</el-code> are dot functions of <el-code>List</el-code> and <el-code>ListImmutable</el-code>.  They take a function as an argument, and return the list element corresponding to  maximum or minimum of the values returned by the function.  This prints "89" and "orange":</p>
