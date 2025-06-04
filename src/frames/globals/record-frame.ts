@@ -1,5 +1,4 @@
 import { Deprecated } from "../../elan-type-interfaces";
-import { mustBeImmutableType } from "../compile-rules";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
@@ -7,7 +6,6 @@ import { Transforms } from "../interfaces/transforms";
 import { immutableTypeOptions } from "../interfaces/type-options";
 import { endKeyword, recordKeyword } from "../keywords";
 import {
-  parentHelper_compileChildren,
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
@@ -73,23 +71,6 @@ end record\r\n`;
 
   public getDirectSuperClassesTypeAndName(_transforms: Transforms) {
     return [];
-  }
-
-  public compile(transforms: Transforms): string {
-    this.compileErrors = [];
-
-    const name = this.getName(transforms);
-    const body = parentHelper_compileChildren(this, transforms);
-
-    for (const p of this.properties()) {
-      mustBeImmutableType(p.name.text, p.symbolType(), this.compileErrors, this.htmlId);
-    }
-
-    return `class ${name} {\r
-  static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
-  async _initialise() { return this; }\r
-${body}\r
-}\r\n`;
   }
 
   topKeywords(): string {

@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import { BreakpointEvent, CompileStatus, ParseStatus } from "../status-enums";
 import { ElanSymbol } from "./elan-symbol";
 import { Field } from "./field";
@@ -6,7 +5,6 @@ import { File } from "./file";
 import { Parent } from "./parent";
 import { Scope } from "./scope";
 import { Selectable } from "./selectable";
-import { Transforms } from "./transforms";
 
 export interface Frame extends Selectable, Scope, ElanSymbol {
   isFrame: boolean;
@@ -19,7 +17,6 @@ export interface Frame extends Selectable, Scope, ElanSymbol {
 
   renderAsHtml(): string;
   renderAsSource(): string;
-  compile(transforms: Transforms): string;
 
   indent(): string;
 
@@ -43,7 +40,6 @@ export interface Frame extends Selectable, Scope, ElanSymbol {
 
   expandCollapseAll(): void;
 
-  compileErrors: CompileError[];
   readCompileStatus(): CompileStatus;
   updateCompileStatus(): void;
   resetCompileStatusAndErrors(): void;

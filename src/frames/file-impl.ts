@@ -325,44 +325,6 @@ export class FileImpl implements File, Scope {
     return `<el-profile class="${cls}">${profileName}</el-profile>`;
   }
 
-  compileGlobals(): string {
-    let result = "";
-    if (this._children.length > 0) {
-      const ss: Array<string> = [];
-      for (const frame of this._children.filter((g) => g instanceof Enum)) {
-        ss.push(frame.compile(this.transform));
-      }
-
-      const constants = this._children.filter((g) => g instanceof Constant);
-
-      if (constants.length > 0) {
-        ss.push("const global = new class {");
-        for (const frame of constants) {
-          ss.push(`  ${frame.compile(this.transform)}`);
-        }
-        ss.push("};");
-      } else {
-        ss.push("const global = new class {};");
-      }
-
-      for (const frame of this._children.filter(
-        (g) => !(isSelector(g) || g instanceof Enum || g instanceof Constant),
-      )) {
-        ss.push(frame.compile(this.transform));
-      }
-
-      if (!this._children.some((g) => g instanceof MainFrame)) {
-        const emptyMain = new MainFrame(this);
-        ss.push(emptyMain.compile(this.transform));
-      }
-
-      result = ss.join("\r\n");
-
-      this.hasTests = this._children.some((g) => g instanceof TestFrame);
-    }
-    return result;
-  }
-
   async renderAsSource(): Promise<string> {
     const content = this.renderHashableContent();
     this.currentHash = await this.getHash(content);

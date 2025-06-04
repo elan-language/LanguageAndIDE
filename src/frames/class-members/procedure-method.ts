@@ -1,4 +1,3 @@
-import { mustBeUniqueNameInScope } from "../compile-rules";
 import {
   addPrivateToggleToContextMenu,
   processTogglePrivate,
@@ -14,7 +13,6 @@ import { PossiblyPrivateMember } from "../interfaces/possibly-private-member";
 import { Scope } from "../interfaces/scope";
 import { Transforms } from "../interfaces/transforms";
 import { privateKeyword } from "../keywords";
-import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 
 export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMember {
@@ -57,17 +55,6 @@ ${this.indent()}end procedure\r
 ${this.renderChildrenAsHtml()}
 <el-kw>end procedure</el-kw>
 </el-proc>`;
-  }
-
-  public override compile(transforms: Transforms): string {
-    this.compileErrors = [];
-
-    const name = this.name.compile(transforms);
-    mustBeUniqueNameInScope(name, getClassScope(this), transforms, this.compileErrors, this.htmlId);
-
-    return `${this.indent()}async ${super.compile(transforms)}\r
-${this.indent()}}\r
-`;
   }
 
   parseTop(source: CodeSource): void {

@@ -4,7 +4,6 @@ import { CodeSource } from "../interfaces/code-source";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
-import { Transforms } from "../interfaces/transforms";
 import { exceptionKeyword, throwKeyword } from "../keywords";
 
 export class Throw extends AbstractFrame implements Statement {
@@ -37,10 +36,5 @@ export class Throw extends AbstractFrame implements Statement {
 
   renderAsSource(): string {
     return `${this.indent()}${throwKeyword} ${exceptionKeyword} ${this.text.renderAsSource()}`;
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}throw new Error(${this.text.compile(transforms)});`;
   }
 }

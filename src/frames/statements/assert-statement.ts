@@ -1,15 +1,12 @@
 import { AssertOutcome } from "../../assert-outcome";
 import { AbstractFrame } from "../abstract-frame";
-
 import { AssertActualField } from "../fields/assert-actual-field";
 import { ExpressionField } from "../fields/expression-field";
 import { helper_compileMsgAsHtmlNew } from "../frame-helpers";
-import { TestFrame } from "../globals/test-frame";
 import { CodeSource } from "../interfaces/code-source";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
-import { Transforms } from "../interfaces/transforms";
 import { assertKeyword } from "../keywords";
 import { CompileStatus, DisplayColour, TestStatus } from "../status-enums";
 
@@ -53,16 +50,6 @@ export class AssertStatement extends AbstractFrame implements Statement {
 
   renderAsSource(): string {
     return `${this.indent()}assert ${this.actual.renderAsSource()} is ${this.expected.renderAsSource()}`;
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    const test = this.getParent() as TestFrame;
-    const ignored = test.ignored;
-    const expected = this.expected.compile(transforms);
-    const actual = this.actual.compile(transforms);
-    const actualFunc = `async () => ${actual}`;
-    return `${this.indent()}_outcomes.push(await system.assert(${ignored ? `""` : actualFunc}, ${ignored ? `""` : expected}, "${this.htmlId}", _stdlib, ${ignored}));`;
   }
 
   setOutcome(outcome: AssertOutcome) {

@@ -106,11 +106,6 @@ ${this.renderChildrenAsHtml()}
     return s instanceof UnknownSymbol ? super.resolveSymbol(id, transforms, initialScope) : s;
   }
 
-  public compile(transforms: Transforms): string {
-    return `${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
-${this.breakPoint(this.debugSymbols())}${this.compileChildren(transforms)}\r`;
-  }
-
   public override symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
     const matches = super.symbolMatches(id, all, initialScope);
     const localMatches = this.params.symbolMatches(id, all, initialScope);

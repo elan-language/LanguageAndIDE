@@ -1,6 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSourceFromString } from "../code-source-from-string";
-import { mustBeOfType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { IfSelectorField } from "../fields/if-selector-field";
 import { CodeSource } from "../interfaces/code-source";
@@ -12,8 +11,6 @@ import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
 import { Transforms } from "../interfaces/transforms";
 import { elseKeyword, thenKeyword } from "../keywords";
-import { compileStatements } from "../parent-helpers";
-import { BooleanType } from "../symbols/boolean-type";
 import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 
 export class Else extends AbstractFrame implements Statement {
@@ -60,19 +57,6 @@ export class Else extends AbstractFrame implements Statement {
     return this.hasIf ? ` if ${this.condition.renderAsSource()}` : ``;
   }
 
-  private compileIfClause(transforms: Transforms): string {
-    if (this.hasIf) {
-      mustBeOfType(
-        this.condition.getOrTransformAstNode(transforms),
-        BooleanType.Instance,
-        this.compileErrors,
-        this.htmlId,
-      );
-      return `if (${this.condition.compile(transforms)}) {`;
-    }
-    return `{`;
-  }
-
   getCurrentScope(): Scope {
     return this.compileScope ?? this;
   }
@@ -88,12 +72,6 @@ export class Else extends AbstractFrame implements Statement {
 
   renderAsSource(): string {
     return `${this.indent()}${elseKeyword}${this.ifClauseAsSource()}${this.hasIf ? " " + thenKeyword : ""}`;
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    return `${this.indent()}} else ${this.compileIfClause(transforms)}
-${compileStatements(transforms, this.compileChildren)}`;
   }
 
   parseFrom(source: CodeSource): void {

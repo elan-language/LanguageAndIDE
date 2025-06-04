@@ -2,7 +2,6 @@ import { AbstractSelector } from "./abstract-selector";
 import { isSelector } from "./frame-helpers";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
-import { Transforms } from "./interfaces/transforms";
 import { BreakpointEvent, CompileStatus, ParseStatus } from "./status-enums";
 
 export function worstParseStatus(prev: ParseStatus, cur: ParseStatus) {
@@ -102,18 +101,6 @@ export function isNotSelectorFrame(f: Frame) {
   return !!f && !("isSelector" in f);
 }
 
-export function compileStatements(transforms: Transforms, statements: Frame[]): string {
-  let result = "";
-  if (statements.length > 0) {
-    const ss: Array<string> = [];
-    for (const frame of statements.filter(isNotSelectorFrame)) {
-      ss.push(frame.compile(transforms));
-    }
-    result = ss.join("\r\n");
-  }
-  return result;
-}
-
 export function parentHelper_renderChildrenAsSource(parent: Parent): string {
   let result = "";
   if (parent.getChildren().length > 0) {
@@ -124,22 +111,6 @@ export function parentHelper_renderChildrenAsSource(parent: Parent): string {
     result = ss.join("\r\n");
   }
   return result;
-}
-
-export function parentHelper_compileFrames(frames: Frame[], transforms: Transforms): string {
-  let result = "";
-  if (frames.length > 0) {
-    const ss: Array<string> = [];
-    for (const frame of frames.filter(isNotSelectorFrame)) {
-      ss.push(frame.compile(transforms));
-    }
-    result = ss.join("\r\n");
-  }
-  return result;
-}
-
-export function parentHelper_compileChildren(parent: Parent, transforms: Transforms): string {
-  return parentHelper_compileFrames(parent.getChildren(), transforms);
 }
 
 export function parentHelper_insertOrGotoChildSelector(

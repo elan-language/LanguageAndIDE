@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import {
   escapeHtmlChars,
   helper_CompileOrParseAsDisplayStatus,
@@ -570,7 +569,6 @@ export abstract class AbstractField implements Selectable, Field {
   resetCompileStatusAndErrors(): void {
     this.astNode = undefined;
     this._compileStatus = CompileStatus.default;
-    this.compileErrors = [];
   }
   readCompileStatus(): CompileStatus {
     return this._compileStatus;
@@ -720,15 +718,12 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   compile(transforms: Transforms): string {
-    this.compileErrors = [];
     if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
       return this.getOrTransformAstNode(transforms).compile();
     }
 
     return "";
   }
-
-  compileErrors: CompileError[] = [];
 
   symbolType(transforms?: Transforms) {
     const astNode = this.getOrTransformAstNode(transforms);

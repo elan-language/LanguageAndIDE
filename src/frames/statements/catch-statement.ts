@@ -1,5 +1,4 @@
 import { IdentifierField } from "../fields/identifier-field";
-import { singleIndent } from "../frame-helpers";
 import { FrameWithStatements } from "../frame-with-statements";
 import { CodeSource } from "../interfaces/code-source";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -92,14 +91,6 @@ ${this.renderChildrenAsSource()}`;
   }
   parseBottom(source: CodeSource): boolean {
     return this.parseStandardEnding(source, "end try");
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    const vid = this.variable.compile(transforms);
-    return `${this.parentIndent()}} catch (_${vid}) {\r
-${this.indent()}${singleIndent()}let ${vid} = _${vid}.message;
-${this.compileChildren(transforms)}\r`;
   }
 
   override getParentScope(): Scope {

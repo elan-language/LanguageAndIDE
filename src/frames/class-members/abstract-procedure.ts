@@ -1,5 +1,4 @@
 import { AbstractFrame } from "../abstract-frame";
-import { mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamListField } from "../fields/param-list-field";
 import { singleIndent } from "../frame-helpers";
@@ -9,10 +8,8 @@ import { ElanSymbol } from "../interfaces/elan-symbol";
 import { Field } from "../interfaces/field";
 import { Member } from "../interfaces/member";
 import { Parent } from "../interfaces/parent";
-import { Transforms } from "../interfaces/transforms";
 import { abstractProcedureKeywords } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
-import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 
 export class AbstractProcedure extends AbstractFrame implements Member, ElanSymbol {
@@ -56,17 +53,6 @@ export class AbstractProcedure extends AbstractFrame implements Member, ElanSymb
 
   public override renderAsSource(): string {
     return `${this.indent()}abstract procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
-`;
-  }
-
-  public override compile(transforms: Transforms): string {
-    this.compileErrors = [];
-
-    const name = this.name.compile(transforms);
-    mustBeUniqueNameInScope(name, getClassScope(this), transforms, this.compileErrors, this.htmlId);
-
-    return `${this.indent()}${name}(${this.params.compile(transforms)}) {\r
-${this.indent()}}\r
 `;
   }
 

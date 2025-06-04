@@ -147,37 +147,6 @@ export function helper_pastePopUp(loc: Frame | Field): string {
   return popup;
 }
 
-export function helper_compileMsgAsHtml(loc: Frame | Field): string {
-  let msg = "";
-  let link = "";
-  const first = loc.compileErrors[0];
-  const n = loc.compileErrors.length;
-  if (n > 0) {
-    const highest = loc.compileErrors.reduce(
-      (prev, curr) => (curr.priority < prev.priority ? curr : prev),
-      first,
-    );
-    msg = highest.message;
-    link = highest.link ?? "";
-  }
-  let cls = "";
-  const compile = helper_compileStatusAsDisplayStatus(loc.readCompileStatus());
-  if (compile === DisplayColour.error || compile === DisplayColour.warning) {
-    cls = DisplayColour[compile];
-  }
-  if (link) {
-    cls = cls + " error-link";
-  }
-
-  const popUp = helper_pastePopUp(loc);
-
-  const toDisplay = escapeHtmlChars(msg);
-  const href = link ? ` data-href="${link}"` : "";
-  return cls === ""
-    ? `<el-msg></el-msg>${popUp}`
-    : ` <el-msg class="${cls}"${href}>${toDisplay}</el-msg>${popUp}`;
-}
-
 export function helper_compileMsgAsHtmlNew(file: File, loc: Frame | Field): string {
   let msg = "";
   let link = "";

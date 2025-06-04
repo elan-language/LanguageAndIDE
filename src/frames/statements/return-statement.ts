@@ -1,11 +1,9 @@
 import { AbstractFrame } from "../abstract-frame";
-
 import { ExpressionField } from "../fields/expression-field";
 import { CodeSource } from "../interfaces/code-source";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
-import { Transforms } from "../interfaces/transforms";
 import { returnKeyword } from "../keywords";
 
 export class ReturnStatement extends AbstractFrame implements Statement {
@@ -38,11 +36,6 @@ export class ReturnStatement extends AbstractFrame implements Statement {
 
   renderAsSource(): string {
     return `${this.indent()}return ${this.expr.renderAsSource()}`;
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}return ${this.expr.compile(transforms)};`;
   }
 
   parseFrom(source: CodeSource): void {

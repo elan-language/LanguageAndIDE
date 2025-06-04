@@ -11,9 +11,7 @@ import { editorEvent } from "../interfaces/editor-event";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
-import { Transforms } from "../interfaces/transforms";
 import { ignoreKeyword, testKeyword } from "../keywords";
-import { parentHelper_compileFrames } from "../parent-helpers";
 import { AssertStatement } from "../statements/assert-statement";
 import { BreakpointStatus, DisplayColour, TestStatus } from "../status-enums";
 
@@ -102,24 +100,6 @@ end test\r
   }
   parseBottom(source: CodeSource): boolean {
     return this.parseStandardEnding(source, "end test");
-  }
-
-  private compileTestBody(transforms: Transforms) {
-    const body = this.compileChildren(transforms);
-
-    if (!this.ignored || this.compileErrors.length > 0) {
-      return body;
-    }
-
-    // just return the asserts
-    return parentHelper_compileFrames(this.getAsserts(), transforms);
-  }
-
-  public compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    return `_tests.push(["${this.htmlId}", async (_outcomes) => {\r
-${this.compileTestBody(transforms)}\r
-}]);\r\n`;
   }
 
   setAssertOutcomes(outcomes: AssertOutcome[]) {

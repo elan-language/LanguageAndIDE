@@ -1,5 +1,4 @@
 import { AbstractFrame } from "../abstract-frame";
-import { mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamListField } from "../fields/param-list-field";
 import { TypeField } from "../fields/type-field";
@@ -18,7 +17,6 @@ import {
   returnsKeyword,
 } from "../keywords";
 import { FunctionType } from "../symbols/function-type";
-import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 
 export class AbstractFunction extends AbstractFrame implements Member, ElanSymbol {
@@ -65,23 +63,6 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
   public override renderAsSource(): string {
     return `${this.indent()}${abstractKeyword} ${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnsKeyword} ${this.returnType.renderAsSource()}\r
 `;
-  }
-
-  public override compile(transforms: Transforms): string {
-    this.compileErrors = [];
-
-    const name = this.name.compile(transforms);
-    mustBeUniqueNameInScope(name, getClassScope(this), transforms, this.compileErrors, this.htmlId);
-
-    this.returnType.compile(transforms);
-
-    if (name !== "asString") {
-      return `${this.indent()}async ${name}(${this.params.compile(transforms)}) {\r
-${this.indent()}${this.indent()}return ${this.returnType.compile(transforms)};\r
-${this.indent()}}\r
-`;
-    }
-    return "";
   }
 
   parseFrom(source: CodeSource): void {

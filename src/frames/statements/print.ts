@@ -5,7 +5,6 @@ import { CodeSource } from "../interfaces/code-source";
 import { Field } from "../interfaces/field";
 import { Parent } from "../interfaces/parent";
 import { Statement } from "../interfaces/statement";
-import { Transforms } from "../interfaces/transforms";
 import { printKeyword } from "../keywords";
 
 export class Print extends AbstractFrame implements Statement {
@@ -41,12 +40,5 @@ export class Print extends AbstractFrame implements Statement {
 
   renderAsSource(): string {
     return `${this.indent()}print ${this.expr.renderAsSource()}`;
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-
-    const toPrint = this.expr.compile(transforms) || '""';
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}await system.printLine(${toPrint});`;
   }
 }

@@ -1,9 +1,6 @@
 import { AbstractFrame } from "../abstract-frame";
-
-import { mustBeUniqueNameInScope } from "../compile-rules";
 import { EnumValuesField } from "../fields/enum-values-field";
 import { TypeNameField } from "../fields/type-name-field";
-import { singleIndent } from "../frame-helpers";
 import { CodeSource } from "../interfaces/code-source";
 import { Collapsible } from "../interfaces/collapsible";
 import { ElanSymbol } from "../interfaces/elan-symbol";
@@ -16,7 +13,7 @@ import { Transforms } from "../interfaces/transforms";
 import { enumKeyword } from "../keywords";
 import { EnumType } from "../symbols/enum-type";
 import { EnumValueType } from "../symbols/enum-value-type";
-import { getGlobalScope, symbolMatches } from "../symbols/symbol-helpers";
+import { symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 
 export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Collapsible {
@@ -71,24 +68,6 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
   }
   renderAsSource(): string {
     return `enum ${this.name.renderAsSource()} ${this.values.renderAsSource()}\r
-`;
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-
-    const name = this.name.compile(transforms);
-    mustBeUniqueNameInScope(
-      name,
-      getGlobalScope(this),
-      transforms,
-      this.compileErrors,
-      this.htmlId,
-    );
-
-    return `const ${name} = {\r
-${singleIndent()}${this.values.compile(transforms)}\r
-};\r
 `;
   }
 

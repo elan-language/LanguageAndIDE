@@ -1,4 +1,3 @@
-import { mustBeUniqueNameInScope } from "../compile-rules";
 import { MethodNameField } from "../fields/method-name-field";
 import { ParamListField } from "../fields/param-list-field";
 import { FrameWithStatements } from "../frame-with-statements";
@@ -11,7 +10,6 @@ import { Scope } from "../interfaces/scope";
 import { Transforms } from "../interfaces/transforms";
 import { procedureKeyword } from "../keywords";
 import { ProcedureType } from "../symbols/procedure-type";
-import { getGlobalScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 
@@ -76,20 +74,6 @@ ${this.renderChildrenAsHtml()}
     const s = this.params.resolveSymbol(id, transforms, initialScope);
 
     return s instanceof UnknownSymbol ? super.resolveSymbol(id, transforms, initialScope) : s;
-  }
-
-  public compile(transforms: Transforms): string {
-    const name = this.name.compile(transforms);
-    mustBeUniqueNameInScope(
-      name,
-      getGlobalScope(this),
-      transforms,
-      this.compileErrors,
-      this.htmlId,
-    );
-
-    return `${name}(${this.params.compile(transforms)}) {\r
-${this.breakPoint(this.debugSymbols())}${this.compileChildren(transforms)}\r`;
   }
 
   public override symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {

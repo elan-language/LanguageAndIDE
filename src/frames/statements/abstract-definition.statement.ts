@@ -1,11 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
 
-import {
-  mustBeCompatibleDefinitionNode,
-  mustBeDeconstructableType,
-  mustNotBeKeyword,
-  mustNotBeRedefined,
-} from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { ValueDefField } from "../fields/value-def-field";
 import { mapSymbolType } from "../frame-helpers";
@@ -17,7 +11,7 @@ import { Scope } from "../interfaces/scope";
 import { Statement } from "../interfaces/statement";
 import { Transforms } from "../interfaces/transforms";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../syntax-nodes/ast-helpers";
+import { getIds } from "../syntax-nodes/ast-helpers";
 
 export abstract class AbstractDefinitionStatement
   extends AbstractFrame
@@ -50,32 +44,6 @@ export abstract class AbstractDefinitionStatement
 
   ids(transforms?: Transforms) {
     return getIds(this.name.getOrTransformAstNode(transforms));
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    const ids = this.ids(transforms);
-
-    if (ids.length > 1) {
-      mustBeDeconstructableType(this.symbolType(transforms), this.compileErrors, this.htmlId);
-    }
-
-    for (const i of ids) {
-      mustNotBeKeyword(i, this.compileErrors, this.htmlId);
-      const symbol = this.getParent().resolveSymbol(i!, transforms, this);
-      mustNotBeRedefined(symbol, this.compileErrors, this.htmlId);
-    }
-
-    const lhs = this.name.getOrTransformAstNode(transforms);
-    const rhs = this.expr.getOrTransformAstNode(transforms);
-
-    mustBeCompatibleDefinitionNode(lhs, rhs, this.getParent(), this.compileErrors, this.htmlId);
-
-    const lhsCode = wrapDeconstructionLhs(lhs, rhs, false);
-
-    const rhsCode = wrapDeconstructionRhs(lhs, rhs, false);
-
-    return `${this.breakPoint(this.debugSymbols())}${this.indent()}${this.getJsKeyword()} ${lhsCode} = ${rhsCode};`;
   }
 
   get symbolId() {

@@ -1,4 +1,3 @@
-import { isAstType } from "../frame-helpers";
 import { CodeSource } from "../interfaces/code-source";
 import { Frame } from "../interfaces/frame";
 import { ParseNode } from "../interfaces/parse-node";
@@ -37,15 +36,6 @@ export class TypeField extends AbstractField {
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToEndOfLine();
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    const astNode = this.getOrTransformAstNode(transforms);
-    if (isAstType(astNode)) {
-      return astNode.compileToEmptyObjectCode();
-    }
-    return super.compile(transforms);
-  }
 
   symbolType(transforms?: Transforms) {
     return this.getOrTransformAstNode(transforms).symbolType();

@@ -1,6 +1,4 @@
 import { AbstractFrame } from "../abstract-frame";
-
-import { mustBeKnownSymbolType, mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
 import { addPrivateToggleToContextMenu, processTogglePrivate } from "../frame-helpers";
@@ -15,7 +13,6 @@ import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 import { ClassType } from "../symbols/class-type";
-import { getClassScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { transforms } from "../syntax-nodes/ast-helpers";
 
@@ -68,34 +65,6 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember, El
   isGlobalClass(st: SymbolType) {
     // todo rework when tests working
     return st instanceof ClassType && !st.typeOptions.isIndexable;
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    const pName = this.name.compile(transforms);
-    const st = this.type.symbolType(transforms);
-
-    mustBeUniqueNameInScope(
-      pName,
-      getClassScope(this),
-      transforms,
-      this.compileErrors,
-      this.htmlId,
-    );
-
-    mustBeKnownSymbolType(st, this.type.renderAsSource(), this.compileErrors, this.htmlId);
-
-    if (this.isGlobalClass(st)) {
-      return `${this.indent()}_${pName};\r
-${this.indent()}get ${pName}() {\r
-${this.indent()}${this.indent()}return this._${pName} ??= ${this.type.compile(transforms)};\r
-${this.indent()}}\r
-${this.indent()}set ${pName}(${pName}) {\r
-${this.indent()}${this.indent()}this._${pName} = ${pName};\r
-${this.indent()}}\r\n`;
-    }
-
-    return `${this.indent()}${pName} = ${this.type.compile(transforms)};\r\n`;
   }
 
   parseFrom(source: CodeSource): void {

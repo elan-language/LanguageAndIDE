@@ -1,6 +1,4 @@
 import { AbstractFrame } from "../abstract-frame";
-
-import { mustBeUniqueNameInScope } from "../compile-rules";
 import { ConstantValueField } from "../fields/constant-value-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../interfaces/code-source";
@@ -12,7 +10,6 @@ import { GlobalFrame } from "../interfaces/global-frame";
 import { Scope } from "../interfaces/scope";
 import { Transforms } from "../interfaces/transforms";
 import { constantKeyword } from "../keywords";
-import { getGlobalScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 
 export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, Collapsible {
@@ -62,21 +59,6 @@ export class Constant extends AbstractFrame implements ElanSymbol, GlobalFrame, 
   }
   renderAsSource(): string {
     return `constant ${this.name.renderAsSource()} set to ${this.value.renderAsSource()}\r
-`;
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    const name = this.name.compile(transforms);
-    mustBeUniqueNameInScope(
-      name,
-      getGlobalScope(this),
-      transforms,
-      this.compileErrors,
-      this.htmlId,
-    );
-
-    return `${name} = ${this.value.compile(transforms)};\r
 `;
   }
 

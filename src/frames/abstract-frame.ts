@@ -1,4 +1,3 @@
-import { CompileError } from "./compile-error";
 import {
   expandCollapseAll,
   helper_compileMsgAsHtmlNew,
@@ -135,10 +134,6 @@ export abstract class AbstractFrame implements Frame {
 
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
     return this.getParentScope().symbolMatches(id, all, this);
-  }
-
-  compile(_transforms: Transforms): string {
-    throw new Error("Method not implemented.");
   }
 
   fieldUpdated(_field: Field): void {
@@ -645,14 +640,11 @@ export abstract class AbstractFrame implements Frame {
     this._compileStatus = newStatus;
   }
   resetCompileStatusAndErrors(): void {
-    this.compileErrors = [];
     this.getFields().forEach((f) => f.resetCompileStatusAndErrors());
     this._compileStatus = CompileStatus.default;
   }
 
   abstract parseFrom(source: CodeSource): void;
-
-  compileErrors: CompileError[] = [];
 
   compileMsgAsHtml() {
     return helper_compileMsgAsHtmlNew(this.getFile(), this);

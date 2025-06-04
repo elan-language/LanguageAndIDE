@@ -12,10 +12,8 @@ import { Scope } from "./interfaces/scope";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { Transforms } from "./interfaces/transforms";
 import {
-  compileStatements,
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
-  parentHelper_compileChildren,
   parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
@@ -163,9 +161,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   protected renderChildrenAsSource(): string {
     return parentHelper_renderChildrenAsSource(this);
   }
-  protected compileChildren(transforms: Transforms): string {
-    return parentHelper_compileChildren(this, transforms);
-  }
 
   selectFirstField(): boolean {
     let result = super.selectFirstField();
@@ -218,10 +213,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
       result = true;
     }
     return result;
-  }
-
-  protected compileChildStatements(transforms: Transforms): string {
-    return compileStatements(transforms, this._children);
   }
 
   multipleIds(sid: string) {

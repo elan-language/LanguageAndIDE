@@ -1,5 +1,4 @@
 import { Deprecated } from "../../elan-type-interfaces";
-import { mustBeInterfaceClass, mustBeKnownSymbolType } from "../compile-rules";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { SymbolType } from "../interfaces/symbol-type";
@@ -7,7 +6,6 @@ import { Transforms } from "../interfaces/transforms";
 import { noTypeOptions } from "../interfaces/type-options";
 import { abstractClassKeywords, endKeyword, interfaceKeyword } from "../keywords";
 import {
-  parentHelper_compileChildren,
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
@@ -68,28 +66,6 @@ ${parentHelper_renderChildrenAsHtml(this)}
     return `${interfaceKeyword} ${this.name.renderAsSource()}${this.inheritanceAsSource()}\r
 ${parentHelper_renderChildrenAsSource(this)}\r
 ${endKeyword} ${interfaceKeyword}\r\n`;
-  }
-
-  public compile(transforms: Transforms): string {
-    this.compileErrors = [];
-
-    const name = this.getName(transforms);
-    const [cd, cdName] = this.lookForCircularDependencies(this, [name], transforms);
-    if (cd) {
-      return this.circularDependency(cdName);
-    }
-
-    const typeAndName = this.getDirectSuperClassesTypeAndName(transforms);
-
-    for (const [st, name] of typeAndName) {
-      mustBeKnownSymbolType(st, name, this.compileErrors, this.htmlId);
-      mustBeInterfaceClass(st, name, this.compileErrors, this.htmlId);
-    }
-
-    return `class ${name} {\r
-  static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
-${parentHelper_compileChildren(this, transforms)}\r
-}\r\n`;
   }
 
   topKeywords(): string {

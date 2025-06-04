@@ -1,4 +1,3 @@
-import { mustBeIterable, mustNotBeRedefined } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
@@ -52,22 +51,6 @@ ${this.renderChildrenAsHtml()}
     return `${this.indent()}each ${this.variable.renderAsSource()} in ${this.iter.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end each`;
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-
-    const id = this.variable.getOrTransformAstNode(transforms).compile();
-    const symbol = this.getParent().resolveSymbol(id, transforms, this);
-
-    mustNotBeRedefined(symbol, this.compileErrors, this.htmlId);
-
-    const iterType = this.iter.getOrTransformAstNode(transforms).symbolType();
-    mustBeIterable(iterType!, this.compileErrors, this.htmlId);
-
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}for (const ${this.variable.compile(transforms)} of ${this.iter.compile(transforms)}) {\r
-${this.compileChildren(transforms)}\r
-${this.indent()}}`;
   }
 
   parseTop(source: CodeSource): void {

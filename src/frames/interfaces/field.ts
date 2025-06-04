@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import { File } from "../interfaces/file";
 import { Overtyper } from "../overtyper";
 import { CompileStatus } from "../status-enums";
@@ -9,7 +8,6 @@ import { Selectable } from "./selectable";
 export interface Field extends Selectable {
   isField: boolean;
   getHolder(): Frame | File; //File because of GlobalSelector
-  compileErrors: CompileError[];
   readCompileStatus(): CompileStatus;
   resetCompileStatusAndErrors(): void;
 

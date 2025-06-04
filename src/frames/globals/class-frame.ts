@@ -261,7 +261,7 @@ export abstract class ClassFrame
 
   protected circularDependency(name: string) {
     // circular dependency detected
-    mustNotBeCircularDependency(name, this.compileErrors, this.htmlId);
+    mustNotBeCircularDependency(name, [], this.htmlId);
     // any other compiling is not safe
     return `class ${name} { }\r\n`;
   }
@@ -487,13 +487,7 @@ export abstract class ClassFrame
 
   getName(transforms: Transforms) {
     const name = this.name.text;
-    mustBeUniqueNameInScope(
-      name,
-      getGlobalScope(this),
-      transforms,
-      this.compileErrors,
-      this.htmlId,
-    );
+    mustBeUniqueNameInScope(name, getGlobalScope(this), transforms, [], this.htmlId);
     return name;
   }
 
@@ -502,15 +496,15 @@ export abstract class ClassFrame
     let implement = "";
 
     for (const [st, name] of typeAndName) {
-      mustBeKnownSymbolType(st, name, this.compileErrors, this.htmlId);
-      mustBeInheritableClassOrInterface(st, name, this.compileErrors, this.htmlId);
+      mustBeKnownSymbolType(st, name, [], this.htmlId);
+      mustBeInheritableClassOrInterface(st, name, [], this.htmlId);
 
       if (st instanceof ClassType && st.subType === ClassSubType.abstract) {
         implement = `extends ${name} `;
       }
     }
 
-    mustBeSingleAbstractSuperClass(typeAndName, this.compileErrors, this.htmlId);
+    mustBeSingleAbstractSuperClass(typeAndName, [], this.htmlId);
 
     return implement;
   }

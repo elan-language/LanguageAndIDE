@@ -57,16 +57,6 @@ ${this.indent()}end constructor\r
 `;
   }
 
-  public compile(transforms: Transforms): string {
-    this.compileErrors = [];
-
-    return `${this.indent()}async _initialise(${this.params.compile(transforms)}) {\r
-${this.breakPoint(this.debugSymbols())}${this.compileChildren(transforms)}\r
-${this.indent()}${this.indent()}return this;\r
-${this.indent()}}\r
-`;
-  }
-
   parseTop(source: CodeSource): void {
     source.removeIndent();
     source.remove("constructor(");

@@ -1,4 +1,3 @@
-import { mustBeOfSymbolType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { FrameWithStatements } from "../frame-with-statements";
@@ -12,7 +11,6 @@ import { Transforms } from "../interfaces/transforms";
 import { forKeyword } from "../keywords";
 import { IntType } from "../symbols/int-type";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { UnknownSymbol } from "../symbols/unknown-symbol";
 
 export class For extends FrameWithStatements implements Statement {
   isStatement: boolean = true;
@@ -55,55 +53,6 @@ ${this.renderChildrenAsHtml()}
     return `${this.indent()}for ${this.variable.renderAsSource()} from ${this.from.renderAsSource()} to ${this.to.renderAsSource()} step ${this.step.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end for`;
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    const v = this.variable.compile(transforms);
-    const f = this.from.compile(transforms);
-    const t = this.to.compile(transforms);
-    let s = this.step.text;
-
-    const id = this.getParentScope().resolveSymbol(v, transforms, this);
-    let declare = "";
-
-    if (id instanceof UnknownSymbol) {
-      declare = "let ";
-    } else {
-      mustBeOfSymbolType(id.symbolType(), IntType.Instance, this.compileErrors, this.htmlId);
-    }
-
-    mustBeOfSymbolType(
-      this.from.symbolType(transforms),
-      IntType.Instance,
-      this.compileErrors,
-      this.htmlId,
-    );
-    mustBeOfSymbolType(
-      this.to.symbolType(transforms),
-      IntType.Instance,
-      this.compileErrors,
-      this.htmlId,
-    );
-    mustBeOfSymbolType(
-      this.step.symbolType(transforms),
-      IntType.Instance,
-      this.compileErrors,
-      this.htmlId,
-    );
-
-    let compare = "<=";
-    let incDec = "+";
-
-    if (s.startsWith("-")) {
-      compare = ">=";
-      incDec = "-";
-      s = s.slice(1);
-    }
-
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}for (${declare}${v} = ${f}; ${v} ${compare} ${t}; ${v} = ${v} ${incDec} ${s}) {\r
-${this.compileChildren(transforms)}\r
-${this.indent()}}`;
   }
 
   parseTop(source: CodeSource): void {

@@ -1,12 +1,9 @@
-import { mustNotHaveDuplicateMain } from "../compile-rules";
 import { FrameWithStatements } from "../frame-with-statements";
 import { CodeSource } from "../interfaces/code-source";
 import { Field } from "../interfaces/field";
 import { File } from "../interfaces/file";
 import { GlobalFrame } from "../interfaces/global-frame";
-import { Transforms } from "../interfaces/transforms";
 import { mainKeyword } from "../keywords";
-import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 
 export class MainFrame extends FrameWithStatements implements GlobalFrame {
   isMain = true;
@@ -54,20 +51,6 @@ end main\r
 `;
   }
 
-  public compile(transforms: Transforms): string {
-    this.compileErrors = [];
-
-    const existingMain = this.resolveSymbol("__main", transforms, this);
-
-    if (existingMain instanceof DuplicateSymbol) {
-      mustNotHaveDuplicateMain(this.compileErrors, this.htmlId);
-    }
-
-    return `async function main() {\r
-${this.breakPoint(this.debugSymbols())}${this.compileChildren(transforms)}\r
-}\r
-`;
-  }
   parseTop(source: CodeSource) {
     source.remove("main");
   }
