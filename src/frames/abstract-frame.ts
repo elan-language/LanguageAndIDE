@@ -1,7 +1,7 @@
 import { CompileError } from "./compile-error";
 import {
   expandCollapseAll,
-  helper_compileMsgAsHtml,
+  helper_compileMsgAsHtmlNew,
   helper_CompileOrParseAsDisplayStatus,
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
@@ -627,12 +627,15 @@ export abstract class AbstractFrame implements Frame {
       .map((g) => g.readCompileStatus())
       .reduce((prev, cur) => (cur < prev ? cur : prev), CompileStatus.default);
   }
+
   readCompileStatus(): CompileStatus {
     return this._compileStatus;
   }
 
   updateCompileStatus(): void {
-    const own = helper_deriveCompileStatusFromErrors(this.compileErrors);
+    const own = helper_deriveCompileStatusFromErrors(
+      this.getFile().getAst(false)?.getCompileErrorsFor(this.htmlId) ?? [],
+    );
     this.getFields().forEach((f) => f.updateCompileStatus());
     const worstField = this.worstCompileStatusOfFields();
     this._compileStatus = Math.min(own, worstField);
@@ -652,7 +655,7 @@ export abstract class AbstractFrame implements Frame {
   compileErrors: CompileError[] = [];
 
   compileMsgAsHtml() {
-    return helper_compileMsgAsHtml(this);
+    return helper_compileMsgAsHtmlNew(this.getFile(), this);
   }
 
   getNextState(currentState: BreakpointStatus, event: BreakpointEvent) {

@@ -3,7 +3,7 @@ import { AbstractFrame } from "../abstract-frame";
 
 import { AssertActualField } from "../fields/assert-actual-field";
 import { ExpressionField } from "../fields/expression-field";
-import { helper_compileMsgAsHtml } from "../frame-helpers";
+import { helper_compileMsgAsHtmlNew } from "../frame-helpers";
 import { TestFrame } from "../globals/test-frame";
 import { CodeSource } from "../interfaces/code-source";
 import { Field } from "../interfaces/field";
@@ -78,7 +78,7 @@ export class AssertStatement extends AbstractFrame implements Statement {
     if (this.readCompileStatus() === CompileStatus.ok) {
       msg = this.testMsgAsHtml();
     } else {
-      msg = helper_compileMsgAsHtml(this);
+      msg = helper_compileMsgAsHtmlNew(this.getFile(), this);
     }
     return msg;
   }

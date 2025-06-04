@@ -378,9 +378,6 @@ export class FileImpl implements File, Scope {
 
   compile(): string {
     return this.getAst(true)?.compile() ?? "";
-
-    // const stdlib = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
-    // return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}`;
   }
 
   compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string {
@@ -393,27 +390,6 @@ export class FileImpl implements File, Scope {
     ast?.setCompileOptions(mode, base);
 
     return ast?.compile() ?? "";
-
-    //   this.updateBreakpoints(debugMode ? BreakpointEvent.activate : BreakpointEvent.disable);
-    //   const onmsg = `addEventListener("message", async (e) => {
-    // if (e.data.type === "start") {
-    //   try {
-    //     const [main, tests] = await program();
-    //     await main();
-    //     postMessage({type : "status", status : "finished"});
-    //   }
-    //   catch (e) {
-    //     postMessage({type : "status", status : "error", error : e});
-    //   }
-    // }
-    // if (e.data.type === "pause") {
-    //   __pause = true;
-    // }
-    // });`;
-
-    //   const imp = standalone ? "" : `import { StdLib } from "${base}/elan-api.js"; `;
-    //   const stdlib = `${imp}let system; let _stdlib; let _tests = []; let __pause = false; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
-    //   return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
   }
 
   compileAsTestWorker(base: string): string {
@@ -421,23 +397,6 @@ export class FileImpl implements File, Scope {
     ast?.setCompileOptions(CompileMode.testWorker, base);
 
     return ast?.compile() ?? "";
-
-    //     this.updateBreakpoints(BreakpointEvent.disable);
-    //     const onmsg = `onmessage = async (e) => {
-    //   if (e.data.type === "start") {
-    //     try {
-    //       const [main, tests] = await program();
-    //       const outcomes = await system.runTests(tests);
-    //       postMessage({type : "test", value : outcomes});
-    //     }
-    //     catch (e) {
-    //       postMessage({type : "status", status : "error", error : e});
-    //     }
-    //   }
-    // };`;
-
-    //     const stdlib = `import { StdLib } from "${base}/elan-api.js"; let system; let _stdlib; let _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
-    //     return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
   }
 
   renderHashableContent(): string {
@@ -600,8 +559,9 @@ export class FileImpl implements File, Scope {
     this.getChildren().forEach((c) => c.updateCompileStatus());
     this._compileStatus = parentHelper_readWorstCompileStatusOfChildren(this);
   }
+
   resetAllCompileStatusAndErrors(): void {
-    this.getChildren().forEach((c) => c.resetCompileStatusAndErrors());
+    this.ast = undefined;
     this._compileStatus = CompileStatus.default;
     this._testError = undefined;
   }

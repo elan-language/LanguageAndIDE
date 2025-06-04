@@ -2,7 +2,7 @@ import { CompileError } from "../compile-error";
 import {
   escapeHtmlChars,
   helper_CompileOrParseAsDisplayStatus,
-  helper_compileMsgAsHtml,
+  helper_compileMsgAsHtmlNew,
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
 } from "../frame-helpers";
@@ -576,7 +576,9 @@ export abstract class AbstractField implements Selectable, Field {
     return this._compileStatus;
   }
   updateCompileStatus(): void {
-    this._compileStatus = helper_deriveCompileStatusFromErrors(this.compileErrors);
+    this._compileStatus = helper_deriveCompileStatusFromErrors(
+      this.getFile().getAst(false)?.getCompileErrorsFor(this.htmlId) ?? [],
+    );
   }
   select(_withFocus?: boolean, _multiSelect?: boolean, selection?: [number, number]): void {
     this.deselectAll();
@@ -678,7 +680,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
     return this.parseErrorLink !== ""
       ? `<el-msg class="${cls}" ${href}> Invalid. Click for more info.</el-msg>`
-      : helper_compileMsgAsHtml(this);
+      : helper_compileMsgAsHtmlNew(this.getFile(), this);
   }
 
   helpAsHtml(): string {
