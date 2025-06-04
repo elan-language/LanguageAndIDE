@@ -855,12 +855,12 @@ export abstract class AbstractField implements Selectable, Field {
     const spec = this.getSymbolCompletionSpec();
     if (this.showAutoComplete(spec)) {
       this.symbolToMatch = spec.toMatch;
-      const scope = this.getHolder();
+      const scope = this.getFile().getAst(false)?.getScopeById(this.getHolder().getHtmlId());
       const keywords = Array.from(spec.keywords)
-        .map((k) => new SymbolWrapper(k, transforms, scope))
+        .map((k) => new SymbolWrapper(k, transforms, scope!))
         .sort(this.orderSymbol);
       const symbols = this.matchingSymbolsForId(spec).map(
-        (s) => new SymbolWrapper(s, transforms, scope),
+        (s) => new SymbolWrapper(s, transforms, scope!),
       );
       this.allPossibleSymbolCompletions = keywords.concat(symbols);
       popupAsHtml = this.popupAsHtml();

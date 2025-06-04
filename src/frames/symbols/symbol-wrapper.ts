@@ -4,6 +4,7 @@ import { Scope } from "../interfaces/scope";
 import { Transforms } from "../interfaces/transforms";
 import { propertyKeyword } from "../keywords";
 import { KeywordCompletion } from "../symbol-completion-helpers";
+import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import {
   isAbstractTypeName,
   isCallStatement,
@@ -107,7 +108,7 @@ export class SymbolWrapper {
       return `${propertyKeyword}.${symbol.symbolId}`;
     }
 
-    if (isCallStatement(this.scope) && this.scope.args.cursorPos === 0) {
+    if (isCallStatement(this.scope) && this.scope.args instanceof EmptyAsn) {
       return `${this.name}.`;
     }
 

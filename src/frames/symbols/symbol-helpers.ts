@@ -2,7 +2,6 @@ import { ElanCompilerError } from "../../elan-compiler-error";
 import { Property } from "../class-members/property";
 import { CompileError } from "../compile-error";
 import { isClass, isConstant, isMember, isScope } from "../frame-helpers";
-import { Enum } from "../globals/enum";
 import { AstNode } from "../interfaces/ast-node";
 import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
 import { Class } from "../interfaces/class";
@@ -18,7 +17,6 @@ import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
 import { globalKeyword, libraryKeyword } from "../keywords";
-import { CallStatement } from "../statements/call-statement";
 import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import {
   isAstIdNode,
@@ -27,7 +25,9 @@ import {
   transforms,
 } from "../syntax-nodes/ast-helpers";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
+import { EnumAsn } from "../syntax-nodes/globals/enum-asn";
 import { AbstractDefinitionAsn } from "../syntax-nodes/statements/abstract-definition-asn";
+import { CallAsn } from "../syntax-nodes/statements/call-asn";
 import { DefinitionAdapter } from "../syntax-nodes/statements/definition-adapter";
 import { EachAsn } from "../syntax-nodes/statements/each-asn";
 import { ForAsn } from "../syntax-nodes/statements/for-asn";
@@ -99,7 +99,7 @@ export function isLet(s?: ElanSymbol): boolean {
   return !!s && "isLet" in s;
 }
 
-export function isCallStatement(s?: ElanSymbol | Scope): s is CallStatement {
+export function isCallStatement(s?: ElanSymbol | Scope): s is CallAsn {
   return !!s && "isCall" in s;
 }
 
@@ -124,11 +124,11 @@ export function isEnumValue(s?: ElanSymbol): boolean {
 }
 
 export function isEnum(s?: ElanSymbol): boolean {
-  return !!s && s instanceof Enum;
+  return !!s && s instanceof EnumAsn;
 }
 
-export function isEnumDef(s?: ElanSymbol): s is Enum {
-  return !!s && s instanceof Enum;
+export function isEnumDef(s?: ElanSymbol): s is EnumAsn {
+  return !!s && s instanceof EnumAsn;
 }
 
 export function isMemberOnFieldsClass(s: ElanSymbol, transforms: Transforms, scope: Scope) {

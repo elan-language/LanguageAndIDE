@@ -15,6 +15,7 @@ import { ElanSymbol } from "./elan-symbol";
 import { Frame } from "./frame";
 import { Parent } from "./parent";
 import { Profile } from "./profile";
+import { RootAstNode } from "./root-ast-node";
 import { Scope } from "./scope";
 import { Selectable } from "./selectable";
 import { Semver } from "./semver";
@@ -114,4 +115,6 @@ export interface File extends Parent {
   getVersionString(): string;
 
   filteredSymbols(spec: SymbolCompletionSpec, htmlId: string): ElanSymbol[];
+
+  getAst(invalidate: boolean): RootAstNode | undefined;
 }
