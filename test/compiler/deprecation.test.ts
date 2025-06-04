@@ -233,7 +233,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      `Code change required. Method was removed in v0.0. Click for more info.LibRef.html#Xxxx`,
+      `Code change required. Method was removed in v0.0.LibRef.html#Xxxx`,
     ]);
   });
 
@@ -252,7 +252,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      `Code change required. Method was removed in v0.0. Click for more info.LibRef.html#Xxxx`,
+      `Code change required. Method was removed in v0.0.LibRef.html#Xxxx`,
     ]);
   });
 
@@ -271,7 +271,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      `Code change required. Class was removed in v0.0. Click for more info.LibRef.html#Xxxx`,
+      `Code change required. Class was removed in v0.0.LibRef.html#Xxxx`,
     ]);
   });
 
@@ -290,7 +290,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      `Code change required. Class was removed in v0.0. Click for more info.LibRef.html#Xxxx`,
+      `Code change required. Class was removed in v0.0.LibRef.html#Xxxx`,
     ]);
   });
 
@@ -309,7 +309,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      `Code change required. Class was removed in v0.0. Click for more info.LibRef.html#Xxxx`,
+      `Code change required. Class was removed in v0.0.LibRef.html#Xxxx`,
     ]);
   });
 
@@ -328,8 +328,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: none. Click for more info.LangRef.html#compile_error",
-      `Code change required. Parameters for method were changed in v0.0. Click for more info.LibRef.html#Xxxx`,
+      "Too many argument(s). Expected: none.LangRef.html#compile_error",
+      `Code change required. Parameters for method were changed in v0.0.LibRef.html#Xxxx`,
     ]);
   });
 
@@ -348,8 +348,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: s (String). Click for more info.LangRef.html#compile_error",
-      `Code change required. Parameters for method were changed in v0.0. Click for more info.LibRef.html#Xxxx`,
+      "Missing argument(s). Expected: s (String).LangRef.html#compile_error",
+      `Code change required. Parameters for method were changed in v0.0.LibRef.html#Xxxx`,
     ]);
   });
 
@@ -368,8 +368,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: none. Click for more info.LangRef.html#compile_error",
-      `Code change required. Parameters for method were changed in v0.0. Click for more info.LibRef.html#Xxxx`,
+      "Too many argument(s). Expected: none.LangRef.html#compile_error",
+      `Code change required. Parameters for method were changed in v0.0.LibRef.html#Xxxx`,
     ]);
   });
 
@@ -388,8 +388,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: s (String). Click for more info.LangRef.html#compile_error",
-      `Code change required. Parameters for method were changed in v0.0. Click for more info.LibRef.html#Xxxx`,
+      "Missing argument(s). Expected: s (String).LangRef.html#compile_error",
+      `Code change required. Parameters for method were changed in v0.0.LibRef.html#Xxxx`,
     ]);
   });
 
@@ -408,8 +408,8 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "<of Type> was not expected here. Click for more info.LangRef.html#GenericParametersCompileError",
-      `Code change required. Parameters for class were changed in v0.0. Click for more info.LibRef.html#Xxxx`,
+      "<of Type> was not expected here.LangRef.html#GenericParametersCompileError",
+      `Code change required. Parameters for class were changed in v0.0.LibRef.html#Xxxx`,
     ]);
   });
 });

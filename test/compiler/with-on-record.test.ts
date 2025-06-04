@@ -674,7 +674,7 @@ end record`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: List<of Int>.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -691,9 +691,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'a' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_NotClass1", async () => {
@@ -709,9 +707,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'a' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_NoSuchProperty", async () => {
@@ -731,9 +727,7 @@ end record`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'b' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'b' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_PrivateProperty", async () => {
@@ -766,8 +760,6 @@ end record`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'aa' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'aa' is not defined.LangRef.html#compile_error"]);
   });
 });

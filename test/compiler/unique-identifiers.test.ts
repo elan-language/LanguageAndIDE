@@ -97,7 +97,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
+      "'break' is a reserved word, and may not be used as an identifier.LangRef.html#compile_error",
     ]);
   });
 
@@ -114,7 +114,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'id' is already used for a variable and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
+      "The identifier 'id' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
     ]);
   });
 });

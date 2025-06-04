@@ -763,7 +763,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Int, Provided: tuple(Int, String). Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: String, Int, Provided: tuple(Int, String).LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -785,8 +785,8 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Unknown, Provided: tuple(Int, String). Click for more info.LangRef.html#TypesCompileError",
-      "'y' is not defined. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: String, Unknown, Provided: tuple(Int, String).LangRef.html#TypesCompileError",
+      "'y' is not defined.LangRef.html#compile_error",
     ]);
   });
 
@@ -808,7 +808,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'z' is already used for a variable and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
+      "The identifier 'z' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
     ]);
   });
 
@@ -829,7 +829,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, _, Provided: tuple(Int, String). Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: String, _, Provided: tuple(Int, String).LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -852,8 +852,8 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the 'let' 'y'. Click for more info.LangRef.html#compile_error",
-      "May not re-assign the 'let' 'z'. Click for more info.LangRef.html#compile_error",
+      "May not re-assign the 'let' 'y'.LangRef.html#compile_error",
+      "May not re-assign the 'let' 'z'.LangRef.html#compile_error",
     ]);
   });
 
@@ -872,7 +872,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. Click for more info.LangRef.html#TypeCompileError",
+      "Expression must be able to be deconstructed.LangRef.html#TypeCompileError",
     ]);
   });
 
@@ -891,7 +891,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. Click for more info.LangRef.html#TypeCompileError",
+      "Expression must be able to be deconstructed.LangRef.html#TypeCompileError",
     ]);
   });
 
@@ -910,8 +910,6 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'y' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'y' is not defined.LangRef.html#compile_error"]);
   });
 });

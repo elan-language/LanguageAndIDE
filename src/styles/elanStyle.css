@@ -242,7 +242,7 @@ el-help {
 el-help a {
     color: white; 
 }
-.selected > el-help, .selected el-top > el-help  {
+.selected > el-help, .selected el-top > el-help, el-msg > el-help  {
     display: inline;
     background-color: var(--selection);
     color: white;

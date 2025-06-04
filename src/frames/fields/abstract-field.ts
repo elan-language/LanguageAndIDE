@@ -673,14 +673,15 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   protected getMessage(): string {
+    let help = "";
     const href =
-      this.parseErrorLink === "" ? "" : ` data-href="LangRef.html${this.parseErrorLink}"`;
-    let cls = DisplayColour[DisplayColour.error];
-    if (this.parseErrorLink !== "") {
-      cls = cls + " error-link";
+      this.parseErrorLink === "" ? "" : `documentation/LangRef.html${this.parseErrorLink}`;
+    const cls = DisplayColour[DisplayColour.error];
+    if (href) {
+      help = `<el-help><a href="${href}" target="doc-iframe">?</a></el-help>`;
     }
-    return this.parseErrorLink !== ""
-      ? `<el-msg class="${cls}" ${href}> Invalid. Click for more info.</el-msg>`
+    return href
+      ? `<el-msg class="${cls}"> Invalid.${help}</el-msg>`
       : helper_compileMsgAsHtml(this);
   }
 

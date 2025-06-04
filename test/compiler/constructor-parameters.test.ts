@@ -31,7 +31,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the parameter 'p_1'. Click for more info.LangRef.html#compile_error",
+      "May not re-assign the parameter 'p_1'.LangRef.html#compile_error",
     ]);
   });
 
@@ -71,7 +71,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "referencing a property requires a prefix. Click for more info.LangRef.html#compile_error",
+      "referencing a property requires a prefix.LangRef.html#compile_error",
     ]);
   });
 
@@ -90,7 +90,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'out' parameters are only supported on procedures. Click for more info.LangRef.html#compile_error",
+      "'out' parameters are only supported on procedures.LangRef.html#compile_error",
     ]);
   });
 });
