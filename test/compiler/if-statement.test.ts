@@ -537,7 +537,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot have any clause after unconditional 'else'. Click for more info.LangRef.html#compile_error",
+      "Cannot have any clause after unconditional 'else'.LangRef.html#compile_error",
     ]);
   });
 
@@ -560,7 +560,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot have any clause after unconditional 'else'. Click for more info.LangRef.html#compile_error",
+      "Cannot have any clause after unconditional 'else'.LangRef.html#compile_error",
     ]);
   });
 
@@ -580,9 +580,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Expression must be Boolean. Click for more info.LangRef.html#TypeCompileError",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Expression must be Boolean.LangRef.html#TypeCompileError"]);
   });
 
   test("Fail_ElseConditionNotBool", async () => {
@@ -603,9 +601,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Expression must be Boolean. Click for more info.LangRef.html#TypeCompileError",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Expression must be Boolean.LangRef.html#TypeCompileError"]);
   });
 
   test("Fail_RedefineVariable in if", async () => {
@@ -627,7 +623,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
     ]);
   });
 
@@ -650,7 +646,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
     ]);
   });
 
@@ -673,7 +669,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
     ]);
   });
 
@@ -695,8 +691,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'b' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'b' is not defined.LangRef.html#compile_error"]);
   });
 });

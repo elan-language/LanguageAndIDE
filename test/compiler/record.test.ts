@@ -66,7 +66,7 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: none. Click for more info.LangRef.html#compile_error",
+      "Too many argument(s). Expected: none.LangRef.html#compile_error",
     ]);
   });
 
@@ -402,9 +402,9 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Property p1 is not of an immutable type. Click for more info.LangRef.html#compile_error",
-      "Property p2 is not of an immutable type. Click for more info.LangRef.html#compile_error",
-      "Property p3 is not of an immutable type. Click for more info.LangRef.html#compile_error",
+      "Property p1 is not of an immutable type.LangRef.html#compile_error",
+      "Property p2 is not of an immutable type.LangRef.html#compile_error",
+      "Property p3 is not of an immutable type.LangRef.html#compile_error",
     ]);
   });
 });

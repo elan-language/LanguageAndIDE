@@ -43,8 +43,6 @@ export class CallStatement extends AbstractFrame implements Statement {
   isCall = true;
   proc: ProcRefField;
   args: ArgListField;
-  hrefForFrameHelp: string = "LangRef.html#call";
-
   constructor(parent: Parent) {
     super(parent);
     this.proc = new ProcRefField(this);

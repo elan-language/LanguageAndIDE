@@ -317,7 +317,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'. Click for more info.LangRef.html#compile_error",
+      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'.LangRef.html#compile_error",
     ]);
   });
 
@@ -341,7 +341,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of Int => Int>), Provided: Int, Func<of Int, Int => Int>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>), Provided: Int, Func<of Int, Int => Int>.LangRef.html#compile_error",
     ]);
   });
 
@@ -365,7 +365,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (Func<of Int => Int>), Provided: Int, Func<of Int => String>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: i (Int), f (Func<of Int => Int>), Provided: Int, Func<of Int => String>.LangRef.html#compile_error",
     ]);
   });
 
@@ -390,7 +390,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: parameter0 (Int). Click for more info.LangRef.html#compile_error",
+      "Missing argument(s). Expected: parameter0 (Int).LangRef.html#compile_error",
     ]);
   });
 
@@ -415,7 +415,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'. Click for more info.LangRef.html#compile_error",
+      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'.LangRef.html#compile_error",
     ]);
   });
 
@@ -441,7 +441,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'. Click for more info.LangRef.html#compile_error",
+      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'.LangRef.html#compile_error",
     ]);
   });
 
@@ -472,7 +472,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'ref'. Click for more info.LangRef.html#compile_error",
+      "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'ref'.LangRef.html#compile_error",
     ]);
   });
 
@@ -493,8 +493,8 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: Func<of Int => Int>. Click for more info.LangRef.html#TypesCompileError",
-      "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'ref'. Click for more info.LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int, Provided: Func<of Int => Int>.LangRef.html#TypesCompileError",
+      "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'ref'.LangRef.html#compile_error",
     ]);
   });
 
@@ -515,7 +515,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: Func<of Int => Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: Func<of Int => Int>.LangRef.html#TypesCompileError",
     ]);
   });
 });

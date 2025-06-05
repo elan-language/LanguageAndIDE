@@ -285,9 +285,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'p' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'p' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_MissingSelfCausesCompileErrorDueToAssigningToParam", async () => {
@@ -316,7 +314,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the parameter 'p1'. Click for more info.LangRef.html#compile_error",
+      "May not re-assign the parameter 'p1'.LangRef.html#compile_error",
     ]);
   });
 
@@ -332,7 +330,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot use 'this' outside class context. Click for more info.LangRef.html#ThisCompileError",
+      "Cannot use 'this' outside class context.LangRef.html#ThisCompileError",
     ]);
   });
 });

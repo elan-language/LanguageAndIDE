@@ -10,7 +10,6 @@ import { TypeNode } from "./type-node";
 export class InheritanceNode extends AbstractSequence {
   inherits: KeywordNode | undefined;
   typeList: CSV | undefined;
-  override errorLink: string = "#parse_inheritance";
 
   parseText(text: string): void {
     if (text.length > 0) {

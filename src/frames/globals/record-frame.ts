@@ -16,8 +16,6 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import { ClassFrame } from "./class-frame";
 
 export class RecordFrame extends ClassFrame {
-  hrefForFrameHelp: string = "LangRef.html#record";
-
   constructor(parent: File) {
     super(parent);
     this.isNotInheritable = true;

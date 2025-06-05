@@ -24,11 +24,13 @@ export class MemberSelector extends AbstractSelector implements Member {
   isAbstract = false;
   private = false;
   private class: ClassFrame;
-  hrefForFrameHelp: string = "LangRef.html#Member_selector";
-
   constructor(parent: Parent) {
     super(parent);
     this.class = parent as ClassFrame;
+  }
+
+  override helpId(): string {
+    return "MemberInstructions";
   }
 
   getClass(): ClassFrame {

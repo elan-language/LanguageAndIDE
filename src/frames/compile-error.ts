@@ -35,7 +35,7 @@ export class TypeCompileError extends CompileError {
     super(
       DisplayPriority.fourth,
       Severity.error,
-      `Expression must be ${type}. Click for more info.`,
+      `Expression must be ${type}.`,
       location,
       "LangRef.html#TypeCompileError",
     );
@@ -47,7 +47,7 @@ export class ThisCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Cannot use 'this' outside class context. Click for more info.`,
+      `Cannot use 'this' outside class context.`,
       location,
       "LangRef.html#ThisCompileError",
     );
@@ -59,7 +59,7 @@ export class DeclaredAboveCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Abstract Class '${type}' must be declared before it is used. Click for more info.`,
+      `Abstract Class '${type}' must be declared before it is used.`,
       location,
       "LangRef.html#DeclaredAboveCompileError",
     );
@@ -71,7 +71,7 @@ export class MemberTypeCompileError extends CompileError {
     super(
       DisplayPriority.fourth,
       Severity.error,
-      `Member '${name}' must be of type ${type}. Click for more info.`,
+      `Member '${name}' must be of type ${type}.`,
       location,
       "LangRef.html#MemberTypeCompileError",
     );
@@ -83,7 +83,7 @@ export class TypesCompileError extends CompileError {
     super(
       DisplayPriority.fourth,
       Severity.error,
-      `Incompatible types. Expected: ${type2}${addInfo}, Provided: ${type1}. Click for more info.`,
+      `Incompatible types. Expected: ${type2}${addInfo}, Provided: ${type1}.`,
       location,
       "LangRef.html#TypesCompileError",
     );
@@ -95,7 +95,7 @@ export class TernaryCompileError extends CompileError {
     super(
       DisplayPriority.fourth,
       Severity.error,
-      `Cannot determine common type between ${type1} and ${type2}. Click for more info.`,
+      `Cannot determine common type between ${type1} and ${type2}.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -115,7 +115,7 @@ export class UndefinedSymbolCompileError extends CompileError {
     super(
       DisplayPriority.third,
       Severity.warning,
-      `'${id}' is not defined${postfix}. Click for more info.`,
+      `'${id}' is not defined${postfix}.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -127,7 +127,7 @@ export class CannotCallAFunction extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Cannot call a function as a procedure. Click for more info.`,
+      `Cannot call a function as a procedure.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -139,7 +139,7 @@ export class CannotUseSystemMethodInAFunction extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Cannot use a system method in a function. Click for more info.`,
+      `Cannot use a system method in a function.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -174,7 +174,7 @@ export class IsDeprecated extends CompileError {
     super(
       DisplayPriority.first,
       Severity.error,
-      `Code change required. ${reasonString(reason)} in v${fromMajor}.${fromMinor}. Click for more info.`,
+      `Code change required. ${reasonString(reason)} in v${fromMajor}.${fromMinor}.`,
       location,
       help,
     );
@@ -186,7 +186,7 @@ export class CannotUseLikeAFunction extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Cannot call procedure '${id}' within an expression. Click for more info.`,
+      `Cannot call procedure '${id}' within an expression.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -198,7 +198,7 @@ export class CannotCallAsAMethod extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Cannot invoke ${symbolType} '${id}' as a method. Click for more info.`,
+      `Cannot invoke ${symbolType} '${id}' as a method.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -211,7 +211,7 @@ export class NotIndexableCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Cannot ${dbl}index ${type}. Click for more info.`,
+      `Cannot ${dbl}index ${type}.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -223,7 +223,7 @@ export class NotRangeableCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Cannot range ${type}. Click for more info.`,
+      `Cannot range ${type}.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -235,7 +235,7 @@ export class NotNewableCompileError extends CompileError {
     super(
       DisplayPriority.fourth,
       Severity.error,
-      `Cannot new ${type}. Click for more info.`,
+      `Cannot new ${type}.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -259,7 +259,7 @@ export class MustBeAbstractCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Superclass '${type}' must be inheritable class. Click for more info.`,
+      `Superclass '${type}' must be inheritable class.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -271,7 +271,7 @@ export class MustBeInterfaceCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Superclass '${type}' must be an interface. Click for more info.`,
+      `Superclass '${type}' must be an interface.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -283,7 +283,7 @@ export class MustNotBeCircularDependencyCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Class/interface '${type}' cannot inherit from itself. Click for more info.`,
+      `Class/interface '${type}' cannot inherit from itself.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -295,7 +295,7 @@ export class MustBeSingleAbstractCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `There must be only one abstract superclass, ${types.join(", ")} are abstract classes. Click for more info.`,
+      `There must be only one abstract superclass, ${types.join(", ")} are abstract classes.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -307,7 +307,7 @@ export class PrivateMemberCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Cannot reference private member '${id}'. Click for more info.`,
+      `Cannot reference private member '${id}'.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -319,7 +319,7 @@ export class MustImplementCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `${classType} must implement ${superClassType}.${id}. Click for more info.`,
+      `${classType} must implement ${superClassType}.${id}.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -331,7 +331,7 @@ export class MustBeConcreteCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `${type} must be concrete to new. Click for more info.`,
+      `${type} must be concrete to new.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -343,7 +343,7 @@ export class OutParameterCompileError extends CompileError {
     super(
       DisplayPriority.fourth,
       Severity.error,
-      `Cannot pass '${name}' as an out parameter. Click for more info.`,
+      `Cannot pass '${name}' as an out parameter.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -355,7 +355,7 @@ export class ExtensionCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Cannot call extension method directly. Click for more info.`,
+      `Cannot call extension method directly.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -367,7 +367,7 @@ export class PropertyCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Cannot prefix function with 'property'. Click for more info.`,
+      `Cannot prefix function with 'property'.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -379,7 +379,7 @@ export class MissingParameterCompileError extends CompileError {
     super(
       DisplayPriority.third,
       Severity.warning,
-      `Missing argument(s). Expected: ${description}. Click for more info.`,
+      `Missing argument(s). Expected: ${description}.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -392,7 +392,7 @@ export class ExtraParameterCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Too many argument(s). Expected: ${description}. Click for more info.`,
+      `Too many argument(s). Expected: ${description}.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -404,7 +404,7 @@ export class ParameterTypesCompileError extends CompileError {
     super(
       DisplayPriority.fourth,
       Severity.error,
-      `Argument types. Expected: ${description}, Provided: ${provided}. Click for more info.`,
+      `Argument types. Expected: ${description}, Provided: ${provided}.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -425,13 +425,7 @@ export class GenericParametersCompileError extends CompileError {
     } else {
       msg = `Number of Types specified in '<of ...>' is not correct. Expected: ${expected}, Provided: ${actual}.`;
     }
-    super(
-      priority,
-      severity,
-      `${msg} Click for more info.`,
-      location,
-      "LangRef.html#GenericParametersCompileError",
-    );
+    super(priority, severity, `${msg}`, location, "LangRef.html#GenericParametersCompileError");
   }
 }
 
@@ -440,7 +434,7 @@ export class MutateCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `May not re-assign the ${purpose} '${name}'. Click for more info.`,
+      `May not re-assign the ${purpose} '${name}'.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -452,7 +446,7 @@ export class NotUniqueNameCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Name '${name}' not unique in scope${postFix}. Click for more info.`,
+      `Name '${name}' not unique in scope${postFix}.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -464,7 +458,7 @@ export class ReassignInFunctionCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `May not set ${thing} in a function. Click for more info.`,
+      `May not set ${thing} in a function.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -476,7 +470,7 @@ export class RedefinedCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `The identifier '${id}' is already used for a ${purpose} and cannot be re-defined here. Click for more info.`,
+      `The identifier '${id}' is already used for a ${purpose} and cannot be re-defined here.`,
       location,
       "LangRef.html#compile_error",
     );
@@ -488,7 +482,7 @@ export class DuplicateKeyCompileError extends CompileError {
     super(
       DisplayPriority.fourth,
       Severity.error,
-      `Duplicate Dictionary key(s). Click for more info.`,
+      `Duplicate Dictionary key(s).`,
       location,
       "LangRef.html#compile_error",
     );
@@ -501,7 +495,7 @@ export class FunctionRefCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `To evaluate function '${id}' add brackets.${postfix} Click for more info.`,
+      `To evaluate function '${id}' add brackets.${postfix}`,
       location,
       "LangRef.html#compile_error",
     );
@@ -513,7 +507,7 @@ export class NotGlobalFunctionRefCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Library or class function '${id}' cannot be preceded by 'ref'. Click for more info.`,
+      `Library or class function '${id}' cannot be preceded by 'ref'.`,
       location,
       "LangRef.html#NotGlobalFunctionRefCompileError",
     );
@@ -525,7 +519,7 @@ export class UnknownCompilerDirectiveCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `a comment may not start with [ unless it is a recognised compiler directive. Click for more info.`,
+      `a comment may not start with [ unless it is a recognised compiler directive.`,
       location,
       "LangRef.html#compile_error",
     );
