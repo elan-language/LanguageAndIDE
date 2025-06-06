@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- REPLACE DOMAIN WITH https//elan-lang.org/-->
+<link href="https://elan-language.github.io/LanguageAndIDE//styles/colourScheme.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE//styles/elanStyle.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE//styles/documentation.css" rel="stylesheet" />
+<title>Worksheet - Random Walk</title>
+</head>
+<body>
+<div class="docTitle">Worksheet - Random Walk</div>
+
+<p>If you have never programmed before, this worksheet is a great way to start.
+And if you have already done some programming you might still find this exercise interesting.</p>
+
+<p>Our objective is to investigate the mathematical idea of a 'random walk'. 
+Imagine that you are standing in the centre of a circle with a radius of 10 paces.
+But instead of walking straight to the edge, with each pace you make a random turn
+- of <i>up to</i> to 90 degrees left or right. How many paces will it take to reach the edge?
+If the turning is truely random then each attempt will take a different number: for example, the picture below shows 
+three such possible random-walk journeys:</p>
+
+<img src="http://127.0.0.1:5500/out/website/documentation/images/random-walk.png" width="50%">
+
+<p>But can we determine the <i>average</i> number of paces to reach the edge? Yes,
+if we could perform the experiment many times. 
+And it turns out that being able to predict the average length of a different kinds of
+random walk has very significant applications in many different fields of study: 
+physics, biology, ecology, economics ..., even computer science. 
+(You may read more about this on <a href="https://en.wikipedia.org/wiki/Random_walk" target="_blank">Wikipedia</a>).</p>
+
+<p>So we are going to build just such a simulation.</p>
+
+<h3>Iteration 1: Use 'Turtle graphics' to plot a non-random walk.</h3>
+<ul>
+    <li>Start with <b>File > New > OK</b> and make sure the code editor has focus (white background) by clicking on it, or tabbing to it.</li>
+    <li>From the new code options, press <b>m</b> to create an empty <el-kw>main</el-kw> routine.</li>
+    <li>Within the main routine add a <el-kw>let</el-kw> instruction, and edit its two fields to look like this.
+</ul>
+
+<img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+<p class="license">This worksheet is copyright &#x00A9; Richard Pawson 2025, and protected by the Creative Commons license:
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+   If you <i>modify</i> this worksheet you may <i>not</i> distribute your modified version (outside your own teaching institution) without the author's permission.
+   Please <a href="mailto:rpawson@nakedobjects.org">email</a> to report errors or suggest improvements.</p>
+</body>
+</html>
