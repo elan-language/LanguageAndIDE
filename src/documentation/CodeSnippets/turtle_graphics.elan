@@ -1,12 +1,12 @@
-# 3f69518519955768546766557a5dc8c3fda2aee71c2bb594ba5b3b2cc119e526 Elan 1.1.4 guest default_profile valid
+# ea522712639fd58c10b3d92274e09c1174af394ced605ef02e7e5f0a9bd09968 Elan 1.1.3 guest default_profile valid
 
 main
   let t be new Turtle()
-  call t.placeAt(10, 10)
+  call t.placeAt(-75, 50)
   call t.show()
   for i from 1 to 4 step 1
     call t.turn(90)
-    call t.move(40)
+    call t.move(80)
     call pause(500)
   end for
 end main
