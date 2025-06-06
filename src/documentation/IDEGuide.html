@@ -7,118 +7,102 @@
 <link href="../styles/colourScheme.css" rel="stylesheet" />
 <link href="../styles/documentation.css" rel="stylesheet" />
 <link href="../styles/elanStyle.css" rel="stylesheet" />
-<title>Elan IDE Guide</title>
+<title>Elan IDE Reference</title>
 <script type="text/javascript" src="generated_toc.js"></script>
 </head>
 <body>
-<div class="docTitle">Elan IDE Guide</div>
+<div class="docTitle">Elan IDE Reference</div>
 <div class="docTOC">
   <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
 
 <p></p>
 <p>IDE means <b>Integrated Development Environment</b> which, for Elan, is one browser page in which code is written and tested,
-and in which text and graphic outputs are displayed.
-It looks like this:</p>
+and in which text and graphic outputs are displayed. It looks like this:</p>
 
-<img src="images/IDE-overview.png" style="width:80%;">
+<img src="images/IDE_Overview.png" style="width:80%;">
 
-<!-- #region Menu -->
 <h1 id="Menu">1. Menu</h1>
 
 <p>At the top left of the screen is the 'menu' of commands:</p>
 
-<img src="images/menu.png" style="width:30%;">
+<img src="images/IDE_Menu.png" style="width:40%;">
 
-<p>Some of the options shown act like a button to  perform that command directly; others, when clicked will show a drop-down sub-menu
-    of further commands. Individual commands may be greyed-out if unavailable. If you use the mouse to hover over any option
-    you will usually be shown a 'tooltip' that provides a description and/or information about why the option is currently
-    unavailable.
+<p>Some of the options shown act like a button to  perform that command directly; others, when clicked will show a drop-down submenu
+of further commands. Individual commands may be greyed-out if unavailable. If you use the mouse to hover over any option
+you will usually be shown a 'tooltip' that provides a description or information about why the option is currently
+unavailable.</p>
+<p>To the right of the buttons is the name of the Elan file currently loaded. When starting afresh, it is given the default name 'code.elan'.</p>
+<p>
 </p>
 
-<!--   #region Demo -->
 <h2 id="ButtonDemo">Demo</h2>
 
-<p>If the <b>Demo</b> button is shown, clicking on it will show a list of available demo programs,
-    which you may load just by selecting the program name. You can then run the program with the <a href="#RunControls">Run button</a>.</p>
+<p>If the <b>Demo</b> button is shown, clicking on it shows the list of available demo programs,
+which you may load by selecting the program name. You can then run the program with the <a href="#RunControls">Run button</a>.</p>
 
-<!-- #endregion -->
-<!--   #region Help-->
-<h2 id="ButtonHelp">Help</h2>
-<p>The <b>Help</b> menu offers links to online documentation.
-    Each link will open in a new tab in the browser so that you don't lose your current work.</p>
-
-<p>Note that the <a href="#ContextMenu">Context Menu</a> opened on a selected instruction offers a direct link to help concerning that specific instruction.
-As with the main <b>Help</b> menu, the documentation will open in a separate browser tab.</p>
-<!-- #endregion -->
-<!--   #region   File -->
 <h2 id="ButtonFile">File</h2>
-<!--     #region New -->
+
+The <b>File</b> button has a drop-down menu with the following actions:
+
 <h3 class="no-TOC" id="New">New</h3>
-<p><b>New</b> will clear the current code &ndash; allowing you to start writing a new program. The code editor will then show this:</p>
+<p><b>New</b> clears the current code, allowing you to start writing a new program. The code editor will then show this:</p>
 
-<div class="elan-code" data-code=""><el-header># <el-hash>c377a2f208351144cd5801840b7421b393b20140c4ff9ce06e81fde21150afad</el-hash> <el-version>Elan 1.0.0</el-version> <el-user class="hide">guest</el-user> <el-profile class="hide">Default_Profile</el-profile></el-header>
- <el-global class="selected focused ok empty" id="select0" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> main procedure function test constant enum #</el-help></el-select></el-global>
-</div>
+<el-code-block>
+<div class="elan-code" data-code=""><el-header># <el-hash>c3a9b1928be74fe1bd94ec5d2cd07c9763a1031fbefe8de4d44d76669c1ad8f6</el-hash> <el-version>Elan 1.1.4</el-version> <el-user class="hide">guest</el-user> <el-profile class="hide">default_profile</el-profile></el-header>
+<el-global class="selected focused ok empty" id="select0" tabindex="0"><el-select><el-place>new code</el-place><el-help class="selector"> main procedure function test constant enum record class abstract interface #<el-help><a href="LangRef.html#GlobalInstructions" target="doc-iframe"> ?</a></el-help></el-select></el-global></div>
+</el-code-block>
 
-The first line shows a standard Elan 'header' comment, which is required on every code file, and which you are not able to move, edit, or delete.
-    The second line shows the <a href="#GlobalSelector">Global selector</a>.
-<!--     #endregion -->
-<!--     #region Load -->
+<p>The first line shows a standard Elan 'header' comment, which is required on every code file, and which you are not able to move, edit, or delete.
+ The second line shows the <a href="#GlobalSelector">Global selector</a>.</p>
+
 <h3 class="no-TOC" id="MenuLoad">Load</h3>
-<p><b>Load</b> will present you with a file-selector dialog, from which you can navigate to, and load a <el-code>.elan</el-code> file,
-     which will be loaded in place of your current code. As with <b>New</b> (above) if your existing code is not saved, you will see a confirmation dialog.</p>
-
-     <p>The name of the file that has been loaded is displayed above the code editor.</p>
-     <p>Note: you may only load a valid Elan file &ndash; one that has been created and saved by the Elan IDE. Loading any other file will result in
-    a message in <a href="#SystemInfo">System info</a>:</p>
+<p><b>Load</b> presents you with a file selector dialog from which you can navigate to and then load an <el-code>.elan</el-code> file:
+it will be loaded in place of your current code. As with <b>New</b> (above) if your existing code is not saved, you will see a confirmation dialog.</p>
+<p>The name of the file that has been loaded is displayed to the right of the buttons above the code editor.</p>
+<p>Note: you may only load a valid Elan file, i.e. one that has been created and saved by the Elan IDE. No other type of file can be loaded: trying to do so will result in
+a message in the <a href="#DebugDisplay">Debug display</a>:</p>
 
 <el-code>Cannot load file: it has been created or modified outside Elan IDE</el-code>
-<!-- #endregion -->
-<!--     #region Append -->
+
 <h3 class="no-TOC" id="MenuAppend">Append</h3>
 
-<p><b>Append</b>, like <b>Load</b> offers a file selection dialog. If you select a valid <el-code>.elan</el-code> file
+<p><b>Append</b>, like <b>Load</b>, offers a file selection dialog. If you select a valid <el-code>.elan</el-code> file
      it will be <i>appended</i> onto the end of your current code. From there the appended code may be moved within
     the existing code See <a href="#EditingCode">Editing code</a>.</p>
-<!-- #endregion -->
-<!--     #region Auto Save -->
+
 <h3 class="no-TOC" id="MenuAutoSave">Auto Save</h3>
 <p><b>Auto Save</b> offers a file selection dialog to allow you to specify the name and location where your code will be saved.
     If you use this option, every time you modify the code <i>and its parse status is 'valid'</i> the code will be saved automatically,
     <i>overriding the previous version in the file</i>. Once this option has been selected, the <b>File</b> menu will offer
-    a <b>Cancel Auto Save</b> option, after which you may use <b>Manual Save</b> &ndash; or re-select <b>Auto Save</b>.</p>
+    a <b>Cancel Auto Save</b> option, after which you may use <b>Manual Save</b>, or re-select <b>Auto Save</b>.</p>
 
 <p>Note that you may auto-save a <b>New</b> code file, even though you haven't added any instructions yet, because the file contains a valid header.</p>
-<!-- #endregion -->
-<!--     #region Manual Save -->
+
 <h3 class="no-TOC" id="MenuManualSave">Manual Save</h3>
-<p><b>Manual Save</b> offers a file selection dialog to allow you to specify the name and location where your code will be saved.
-Unlike <b>Auto Save</b> &ndash; <b>Manual Save</b> is a one-off event &ndash; you must remember to save any subsequent changes if you need them saved.
+<p><b>Manual Save</b> offers a file selection dialog to allow you to specify the name and location where your code will be saved.</p>
+<p>Unlike <b>Auto Save</b>, the <b>Manual Save</b> option is a one-off event. You must remember to save any subsequent changes if you need them saved.
 As a reminder, if your existing code is not saved, you will see a confirmation dialog:</p>
-<img src="images/Unsaved_warning.png" style="width:30%;">
-<p>Note that for both <b>Auto Save</b> and <b>Manual Save</b>, code may be saved <i>only when its parse status is 'valid'</i>. However,
-    it <i>may</i> then be saved even if it does not compile, or pass any tests.</p>
-<!-- #endregion -->
-<!--     #region Save as Standalone -->
+<img src="images/IDE_UnsavedWarning.png" style="width:30%;">
+<p>Note that for both <b>Auto Save</b> and <b>Manual Save</b>, code may be saved <i>only when its parse status is 'valid'</i>. It may, however,
+then be saved even if it does not compile or pass any tests.</p>
+
 <h3 class="no-TOC" id="MenuSaveAsStandalone">Save as Standalone</h3>
 <p><b>Save as Standalone</b> permits a compiling program to be saved as a standalone Html file, which allows your application to be run without the Elan IDE.
     This file can be opened from your desktop, emailed to others, or installed on a web-server.
     When the file is opened in a browser:</p>
 <ul>
-    <li>The page shows just the <b>Display</b> pane from the IDE, magnified to the full visible browser height but preserving the 4:3 ratio needed in case the program uses Block Graphics.</li>
-    <li>The Elan program is run as soon as the page is opened - or refreshed. It is up to the the programmer to provide options for exiting the program or running it again, if desired.</li>
+ <li>The page shows just the <b>Display</b> pane from the IDE, magnified to the full visible browser height but preserving the 4:3 ratio needed in case the program uses Block Graphics.</li>
+ <li>The Elan program is run as soon as the page is opened - or refreshed. It is up to you to provide options for exiting the program or running it again, if desired.</li>
+</ul>
+<p>The standalone web page includes the the program, compiled to JavaScript, and the .css for styling.
+ The latter may be easily customised by editing the .html file directory. For example, if you wish to:</p>
+<ul>
+ <li>Alter the size of the Display area, and (if Block Graphics are not used) the aspect-ratio.</li>
+ <li>Add any text around the Display area</li>
+ <li>Edit the title attribute for the web page</li>
 </ul>
 
-<p>The standalone web page includes the the program, compiled to JavaScript, and the .css for styling.
-    The latter may be easily customised by editing the .html file directory - for example if you wish to:</p>
-<ul>
-    <li>Alter the size of the Display area, and (if Block Graphics are not used) the aspect-ratio.</li>
-    <li>Add any text around the Display area</li>
-    <li>Edit the title attribute for the web page</li>
-</ul>
-<!-- #endregion -->
-<!--     #region Preferences -->
 <h3 class="no-TOC" id="preferences">Preferences</h3>
 
 <p>Selecting <b>Preferences</b> brings up a dialog, currently showing only one option (there will be more in future releases):</p>
@@ -126,15 +110,13 @@ As a reminder, if your existing code is not saved, you will see a confirmation d
     <li><b>CVD colour scheme</b> changes the colour scheme to use colours and tones
     likely to be more distinct to users with CVD.</li>
 </ul>
-<!-- #endregion -->
-<!--   #region Trim -->
+
 <h2 id="ButtonTrim">Trim</h2>
 <p>The <b>Trim</b> command is used to neaten up your code: it removes any 'new code' selectors from your code <i>that can be removed</i> which is typically most of them.
 Where a 'new code' selector is not removed by <b>Trim</b> this indicates that code is still expected in that location.</p>
 
-<p>The keyboard shortcut for <b>Trim</b> is <b>Alt-t</b>. (This is because <b>Ctrl-t</b> is a key sequence used for standard browser functionality).</p>
-<!-- #endregion -->
- <!--   #region Outlining -->
+<p>The keyboard shortcut for <b>Trim</b> is <b>Alt-t</b>. (This is because browsers use <b>Ctrl-t</b> to open a new tab).</p>
+
 <h2 id="ButtonOutlining">Outlining</h2>
 
 <p>The outlining menu command is labelled <b>+/-</b>. Pressing it toggles the presentation of the code between its expanded (normal)
@@ -163,8 +145,6 @@ format, and an outline format, where instructions are collapsed to a single line
 The background colour for the <b>+</b> shows the status of the code that is currently hidden so that you
 may easily find the parts of code that contain issues.</p>
 
-<!-- #endregion -->
- <!--   #region Undo & Redo -->
 <div id="ButtonUndo"></div>
 <h2 id="ButtonRedo">Undo & Redo</h2>
  <p>The <b>Undo</b> command allows you to undo recent change(s) and go back to the <i>last point at which the code parsed as 'valid'</i> &ndash; you cannot go back to any state when the code was still parsing as 'incomplete' or 'invalid'.
@@ -172,11 +152,7 @@ may easily find the parts of code that contain issues.</p>
     Use the <b>Redo</b> command to revert the last <b>Undo</b> if you went back too far.</p>
 
     <p>The keyboard shortcut for <b>Undo</b> is <b>Ctrl-z</b>, and for <b>Redo</b> is <b>Ctrl-y</b>.</p>
-<!-- #endregion -->
-<!-- #endregion -->
 
-<!-- #region Code editor-->
- <!-- #region Heading & Intro-->
 <h1 id="Editor">2. Code editor</h1>
 
 <p>The main pane within the IDE is the 'code editor'.</p>
@@ -231,7 +207,7 @@ The following example shows a <i>single instruction</i> that has been formatted 
     <el-statement class="selected focused ok" id="let15" tabindex="0"><el-kw>let </el-kw><el-field id="var16" class="ok" tabindex="0"><el-txt><el-id>b</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>cx</el-id><el-kw> set to </el-kw><el-id>i</el-id>*<el-lit>5</el-lit> + <el-lit>2</el-lit>, <br><el-id>cy</el-id><el-kw> set to </el-kw><el-lit>75</el-lit>, <br><el-id>r</el-id><el-kw> set to </el-kw><el-lit>1</el-lit>, <br><el-id>fill</el-id><el-kw> set to </el-kw>-<el-lit>1</el-lit>, <br><el-id>stroke</el-id><el-kw> set to </el-kw><el-id>white</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 
-<h3 class="no-TOC" id="Field">Fields</h3>
+<h3 class="no-TOC" id="field">Fields</h3>
 
 <p>Instructions consist of fixed (or 'templated') code &ndash; keywords and sometimes symbols &ndash; plus a number of 'fields' which is where you enter code that define specific details for that instruction.
     When the field is highlighted it will be highlighted with a background colour and a thin black border. This indicates that you may now enter or edit code in that field, for example:</p>
@@ -256,8 +232,7 @@ The following example shows a <i>single instruction</i> that has been formatted 
 <p>If a field background turns red as you type, it is best to hit <b>Backspace</b> until it goes green or amber again, so that you can identify the <i>first</i> character that caused the issue.</p>
 
 <p>If the background to a field is grey, it means that that field is <i>optional</i> &ndash; you may enter valid text or move on to the next field, or the next instruction.</p>
-<!-- #endregion -->
- <!-- #region Adding Instructions-->
+
 <h2 id="Selector">Adding Instructions into a program</h2>
 
  <p>At various places in the code you may see a 'new code' selector, for example:</p>
@@ -336,9 +311,10 @@ In the following example, starting from this <a href="#MemberSelector">member se
 rather than within <a href="#ContainerInstruction">container instruction</a>. When given focus, it will list the <a href="LangRef.html#global"></a>global instructions that
 you may insert. This is the full list:</p>
 
-<el-code>
-<el-global class="selected focused ok empty" id="select0" tabindex="0"><el-select><el-place>new code</el-place><el-help class="selector"> main procedure function test constant enum record class abstract interface #</el-help></el-select></el-global>
-</el-code>
+<el-code-block>
+<div>
+<el-global class="selected focused ok empty" id="select0" tabindex="0"><el-select><el-place>new code</el-place><el-help class="selector"> main procedure function test constant enum record class abstract interface #</div><el-help> <a href="documentation/LangRef.html#GlobalInstructions" target="doc-iframe">?</a></el-help></el-select></el-global></div>
+</el-code-block>
 
 Note that <el-code>main</el-code> will not be shown if the program already contains a <el-code>main</el-code> routine.
 
@@ -354,10 +330,9 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 </ul>
 
 <h3 class="no-TOC" >How to remove unneeded new code selectors</h3>
+
 <!-- TODO  Delete and Trim-->
 
- <!-- #endregion -->
-<!-- #region Keyboard navigation-->
 <h2 id="Keyboard">Navigation &#8211; using the keyboard</h2>
 <p>Note for Apple Mac users: commands that use the Ctrl key in this reference should use the  macOS &#x2318; Command key instead.</p>
 <p>
@@ -377,8 +352,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
  <tr><td>Ctrl-O <br>Ctrl-Shift-o</td> <td>Toggle (expand/collapse) outlining on all frames.</td> <td>Toggle (expand/collapse) outlining on all frames.</td> </tr>
  </table>
  </p>
-<!-- endregion -->
-<!-- #region Keyboard Editing-->
+
 <h2 id="EditingCode">Editing code</h2>
  <table>
  <tr><th style="width:8%">Keystroke</th><th style="width:46%">On a selected Frame</th> <th style="width:46%">On a selected Field</th> </tr>
@@ -407,12 +381,11 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
        define 'interpolated' fields. If you want to include those specific characters <i>literally</i> see <a href="LibRef.html#SpecialCharacters">Special characters</a>.
      Similarly you can copy from elsewhere and paste into a literal string provided only those valid ASCII characters are included.</li>
      <li>If a literal string includes <el-code><el-lit>\n</el-lit></el-code> this will result in a newline being inserted when the string is printed.
-   However a <el-code><el-lit>\</el-lit></el-code> ('backslash') followed by any other character than <el-code><el-lit>\</el-lit></el-code> 
+   However a <el-code><el-lit>\</el-lit></el-code> ('backslash') followed by any other character than <el-code><el-lit>\</el-lit></el-code>
 
    will be printed literally as the two characters.</li>
 </ul>
-<!-- #endregion -->
-<!-- #region Mouse operations-->
+
 <h2 id="Mouse">Mouse operation &#8211; quick reference</h2>
  <ul>
  <li>To select a frame, click on the keyword at the start the frame. (You can successfully click in several other places within the frame, but the simplest rule to remember is click on the starting keyword).</li>
@@ -421,54 +394,62 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
  <li>To collapse a multi-line frame, double-click on the keyword at the start of the frame</li>
  <li>To expand a collapsed frame, double-click on the keyword at the start of the frame (or the &#8216;+&#8217; symbol in front of it).</li>
 </ul>
- <!-- #endregion -->
-<!-- #region Context menu-->
+
 <h2 id="ContextMenu">Context menu</h2>
 
 <p>When an instruction is highlighted, you may right-mouse-click on it, or type <b>Ctrl-m</b> to bring up the context menu, for example:</p>
 
-<img src="images/Context_menu.png" style="width:40%;">
+<img src="images/IDE_ContextMenu.png" style="width:25%;">
 <p>Note that several of the options show a keyboard shortcut &ndash; which you may use just by selecting the instruction and pressing
     the specified keys <i>without having to bring up the context menu.</i></p>
-<!-- #endregion -->
-<!-- #endregion -->
 
-<!-- #region The run controls-->
-<h1 id="RunControls">3. Run controls</h1>
-<p>The set of 5 buttons shown below constitute the 'run controls':</p>
-<img src="images/Run_controls.png" style="width:20%;">
-<p>Reading left-to-right the five controls are:</p>
+<h1 id="RunControls">3. Controls</h1>
+<p>The top two buttons shown here are the initial 'run controls':</p>
 <ul>
+<img src="images/IDE_Controls.png" style="width:20%;">
 <li><b>Run</b> This is the normal way to run the program. It will run at full speed, ignoring any breakpoints, and is the most efficient in terms of memory usage.</li>
-<li><b>Debug</b> Run in 'debug' mode. See <a href="#Debugging">Debugging</a></li>
 <li><b>Stop</b> When a program is running, or is paused, this button will stop and exit the program.</li>
+</ul>
+<p>When the <b>Debug</b> button is clicked, the lower three buttons provide further run controls:</p>
+<ul>
+<img src="images/IDE_Debug.png" style="width:20%;">
+<li><b>Debug</b> Run in 'debug' mode. See <a href="#Debugging">Debugging</a></li>
 <li><b>Pause</b> Pause the program (if running in debug mode). See <a href="#Debugging">Debugging</a></li>
 <li><b>Step</b> From a paused state, execute the next instruction only and pause again. See <a href="#Debugging">Debugging</a></li>
 </ul>
-<!-- #endregion -->
-<!-- #endregion -->
 
-<!-- #region Status panel-->
-<h1 id="StatusPanel">4. Status panel</h1>
-<p>The status panel is shown below:</p>
-<img src="images/Status_panel.png" style="width:20%;">
-<p>The panel shows four status bars:</p>
+<h2 id="ButtonHelp">Help</h2>
+<p>The <b>Help</b> button offers links to online documentation:</p>
 <ul>
-    <li><b>Parse status</b> aggregates the parse status of each <a href="#field">field</a> and shows the <i>worst</i> status of any field.
-    <i>It is important to get the Parse Status to green ('ok') at the earliest opportunity because unless the parse status is green/ok, Elan
-        cannot attempt to <i>compile</i> the code, and nor can it <i>save</i> the code to a file. If the parse status is amber/incomplete or red/error
-    </i></li>
-    <li><b>Compile status</b> If the <i>parse status</i> is green/ok, Elan will attempt to <i>compile</i> the code, and will then shown</li>
-    <li><b>Test status</b></li>
-    <li><b>Run status</b></li>
+<img src="images/IDE_HelpRef.png" style="width:20%;">
+ <li><b>Reference Manual</b>: drop-down menu to access the reference manuals.</li>
+<img src="images/IDE_HelpOther.png" style="width:30%;">
+ <li><b>Other Help</b>: drop-down menu to access other resources.</li>
 </ul>
+<p>Each link will open in a new tab in the browser so that you don't lose your current work.</p>
+<p>Note that the <a href="#ContextMenu">Context Menu</a> opened on a selected instruction offers a direct link to help concerning that specific instruction.</p>
+<p>As with the main <b>Help</b> menus, the documentation will open in a separate browser tab.</p>
+
+<h1 id="Status">4. Status</h1>
+<p>The status panel shows the current status of four conditions:</p>
+<ul>
+ <li><b>Parse</b>: this indicator aggregates the parse status of each <a href="#field">field</a> and shows the <i>worst</i> status of any field.
+    It is important to get the Parse Status to green <b>ok</b> at the earliest opportunity because, unless the parse status is green <b>ok</b>, Elan
+        cannot attempt to <i>compile</i> the code. Nor can it <i>save</i> the code to a file, when the parse status is amber <b>incomplete</b> or red <b>error</b>.
+    </i></li>
+ <li><b>Compile</b>: if the <i>parse</i> status is green <b>ok</b>, Elan will attempt to <i>compile</i> the code.</li>
+ <li><b>Test</b>: 'pass' or 'fail' of the tests in the code</li>
+ <li><b>Run</b>: 'running' to indicate the code is executing</li>
+</ul>
+<p>Here are examples of the status display:</p>
+<img src="images/IDE_ParseIncomplete.png" style="width:15%;">
+<img src="images/IDE_CompileUnknown.png" style="width:15%;">
+<img src="images/IDE_TestFail.png" style="width:15%;">
+<img src="images/IDE_Running.png" style="width:15%;">
 <p>Each of the four status bars may appear with a green, amber, or red background &ndash; with a superimposed word to clarify the meaning.
 Alternatively the bar may be replaced by the blue background, with no text, indicating that that particular status is not relevant at present.</p>
-<p>
-If the Parse, Compile, or Test status shows amber, or red, you may click on that status bar to highlight the first location in your code where the status shown was identified.</p>
-<!-- #endregion -->
+<p>If the Parse, Compile, or Test status shows amber or red, you can click on that status bar to highlight the first location in your code where the status shown was identified.</p>
 
-<!-- #region Display-->
 <h1 id="Display">5. Display</h1>
 <img src="images/Display.png" style="width:20%;">
 <p>The Display pane is always rendered with an aspect ratio of 4:3 &ndash; so if the size of the browser window is changed, the Display will change its dimensions also.</p>
@@ -485,26 +466,22 @@ If the Parse, Compile, or Test status shows amber, or red, you may click on that
  <p>Any of the three forms of graphics may be overlaid with printed text or Html, or each other, with the one exception that Turtle graphics and Vector graphics may not be used together &ndash; as the former makes exclusive use of the latter.</p>
 <p id="ButtonClearDisplay">The <b>Clear</b> button will clear all of contents of the Display, irrespective of the mechanism by which it was generated.
     However, the individual forms of display listed above may be cleared individually using specific methods (see the links above).</p>
-<!-- #endregion -->
-<!-- #System info-->
-<h1 id="SystemInfo">6. System info</h1>
 
-<img src="images/System_info.png" style="width:50%;">
+<h1 id="DebugDisplay">Debug display</h1>
 
- <p>The <b>System info</b> pane shows only messages generated by the Elan system, of three forms:</p>
+<!--<img src="images/System_info.png" style="width:50%;"> -->
+
+ <p>The <b>Debug display</b> shows only messages generated by the Elan system. They are  of three forms:</p>
  <ul>
     <li>Feedback on a user-action, for example: <el-code>Paste Failed: Nothing to paste</el-code></li>
     <li>Run-time error messages, as shown in the screenshot above. Following the error message (the first two lines), you will see a 'stack trace',
         the top-most line of which indicates the routine (function, procedure, or main) in which the error occurred.
          If it is not obvious which instruction within the routine caused the error, you can use the <a href="#Debugging">Debugging</a> facilities.</li>
-    <li>Status of all variable, whenever program execution is paused. See <a>Debugging</a></li>
+    <li>Status of all variables, whenever program execution is paused. See <a href="#Debugging>Debugging</a></li>
  </ul>
 
  <p>If the information presented exceeds the space available for the pane, a scroll-bar will be shown.</p>
-<!-- #endregion -->
 
-<!-- #Debugging-->
-<!--   # Heading & Intro-->
 <h1 id="Debugging">Debugging</h1>
 
 <p>Elan contains some simple debugging tools. To use these tools, you need to run the program via the <a href="#RunControls">Debug button</a>).
@@ -525,8 +502,7 @@ If the Parse, Compile, or Test status shows amber, or red, you may click on that
 
 <p>From the paused state, you may continue execution of the program by clicking the Debug key, or you may execute <i>just the next instruction</i>
      by clicking the <a href="#RunControls">Single step</a> button.</p>
-<!-- #endregion -->
-<!--   #Breakpoints-->
+
 <h2 id="Breakpoint">Breakpoints</h2>
 <p>You can place a breakpoint on an instruction, by selecting the instruction and then hitting <b>Ctrl-b</b>,
     or by bringing up the <a href="#ContextMenu">Context menu</a> and selecting <b>set breakpoint</b>.
@@ -561,10 +537,9 @@ If the Parse, Compile, or Test status shows amber, or red, you may click on that
 </el-statement>
 </el-code-block>
 
-        <p>and the <a href="#SystemInfo">System info</a> will display the current value of each named value that is defined in the current scope.</p>
-<!-- #endregion -->
-<!-- #endregion -->
+        <p>and the Debug tab</a> will display the current value of each named value that is defined in the current scope.</p>
+
 <hr>
 <p><b>Elan IDE Guide</b> go to the <a href="#top">top</a></p>
- </body>
- </html>
+</body>
+</html>
