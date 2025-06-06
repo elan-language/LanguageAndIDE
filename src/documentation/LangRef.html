@@ -28,7 +28,7 @@ Comments may be inserted at the same level as a <a href="#GlobalInstructions">gl
 
 <h1 id="GlobalInstructions">Global Instructions</h1>
 
-  <a href="#main">main</a>
+  <p><a href="#main">main</a>
   <a href="#procedure">procedure</a>
   <a href="#function">function</a>
   <a href="#test">test</a>
@@ -566,6 +566,16 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
   are located within &lsquo;methods&rsquo;. Some of these statements may contain other statements.</p>
 
 <h2 id="assert">Assert statement</h2>
+<p>See <a href="#test">Tests</a> for the use of the <el-kw>assert</el-kw> statement.</p>
+<p>Some other programming languages have a feature for making assertions
+while your program is running.  In Elan, you can get equivalent functionality
+by <a href="#throw">throwing an exception</a> like this:</p>
+<el-statement class="ok multiline" id="if601" tabindex="0">
+<el-top><el-kw>if </el-kw><el-field id="expr603" class="ok" tabindex="0"><el-txt><el-id>yp</el-id><el-kw> is </el-kw><el-lit>0</el-lit></el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top>
+<el-statement class="ok" id="throw604" tabindex="0"><el-kw>throw exception </el-kw><el-field id="msg605" class="ok" tabindex="0"><el-txt>"<el-lit>yp is zero: </el-lit>{<el-id>xp</el-id>}<el-lit>,</el-lit>{<el-id>yp</el-id>}<el-lit> + </el-lit>{<el-id>xq</el-id>}<el-lit>,</el-lit>{<el-id>yq</el-id>}<el-lit></el-lit>"</el-txt><el-place><i>message</i></el-place></el-field></el-statement>
+<el-kw>end if</el-kw>
+</el-statement>
+<p>which will stop the program and print the message in the Debug window (unless caught by a <a href="#try"><el-kw>try</el-kw></a> statement).</p>
 
 <h2 id="call">Procedure call</h2>
 <p>A <el-code><el-kw>call</el-kw></el-code> statement is used when you want to run a procedure.</p>
@@ -575,22 +585,24 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
   <el-statement><el-kw>call</el-kw> <el-method>fillRandom</el-method>(<el-id>grid</el-id>)</el-statement>
 <li>a procedure method on an object of a class that you have defined</li>
   <el-statement><el-kw>call</el-kw> <el-id>apple</el-id>.<el-method>newRandomPosition</el-method>(<el-id>snake</el-id>)</el-statement>
+  <el-statement><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>hand</el-id>.<el-method>draw</el-method>()</el-statement>
 <li>a procedure method that belongs to the same class as the procedure that you are calling from</li>
   <el-statement><el-kw>call</el-kw> <el-method>updateNeighbours</el-method>()</el-statement>
 <li>a procedure provided by the standard library</li>
   <el-statement><el-kw>call</el-kw> <el-method>pause</el-method>(<el-lit>2000</el-lit>)</el-statement>
 <li>a procedure method on an object of a Type provided by the standard library</li>
   <el-statement><el-kw>call</el-kw> <el-id>vg</el-id>.<el-method>append</el-method>(<el-id>rect</el-id>)</el-statement>
+  <el-statement><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>cards</el-id>.<el-method>append</el-method>(<el-id>card</el-id>)</el-statement>
 </ul>
 <p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
-<p>For procedures that you define yourself, <code><el-kw>out</el-kw></code> parameters are allowed.  In this case the corresponding argument must be the name of a variable whose value gets updated by the procedure.</p>
-<p>If the parameter is not an <code><el-kw>out</el-kw></code> parameter, any expression of the correct Type can be used as an argument.</p>
-<p>Procedures may have side-effects, for example input/output or changing a data value in an object.  They can change the contents of any mutable object passed in as an argument.  For this reason, procedures cannot be called from functions, which are not allowed to have side-effects.  <code><el-kw>call</el-kw></code> statements are simply not allowed in functions, to enforce this.</p>
-<p>There is a limit to the complexity of a <code><el-kw>call</el-kw></code> statement.  Only one dot is allowed in the <code>procedure name</code> field, or two dots if the first word is <code><el-kw>property</el-kw></code>.  If you need anything more complicated, use a <code><el-kw>let</el-kw></code> statement on the line above.  See the error message explanation for <a href="#parse_proc_ref">Invalid reference to a procedure</a>.</p>
+<p>For procedures that you define yourself, <el-code><el-kw>out</el-kw></el-code> parameters are allowed.  In this case the corresponding argument must be the name of a variable whose value gets updated by the procedure.</p>
+<p>If the parameter is not an <el-code><el-kw>out</el-kw></el-code> parameter, any expression of the correct Type can be used as an argument.</p>
+<p>Procedures may have side-effects, for example input/output or changing a data value in an object.  They can change the contents of any mutable object passed in as an argument.  For this reason, procedures cannot be called from functions, which are not allowed to have side-effects.  <el-code><el-kw>call</el-kw></el-code> statements are simply not allowed in functions, to enforce this.</p>
+<p>There is a limit to the complexity of a <el-code><el-kw>call</el-kw></el-code> statement.  Only one dot is allowed in the <el-code>procedure name</el-code> field, or two dots if the first word is <el-code><el-kw>property</el-kw></el-code>.  If you need anything more complicated, use a <el-code><el-kw>let</el-kw></el-code> statement on the line above.  See the error message explanation for <a href="#parse_proc_ref">Invalid reference to a procedure</a>.</p>
 
 <h2 id="each">Each loop</h2>
 <p>The <el-code>each..in..</el-code> construct specifies looping sequentially over the elements in a <el-code><el-type>List</el-type></el-code> or  an <el-code><el-type>Array</el-type></el-code>, or over the characters in a <el-code><el-type>String</el-type></el-code>.</p>
-<p>The <el-code>each..</el-code> loop counter variable (which counts from 0) is of Type <el-code><el-type>Int</el-type></el-code> and does not have to have been defined in a <el-code>variable</el-code> statement.</p>
+<p>The <el-code>each..</el-code> loop variable is of the same Type as the elements in the List or Array, or is of Type String if looping over the characters in a String. The variable does not have to have been defined in a <el-code>variable</el-code> statement.</p>
 <p>Example:</p>
 <el-code-block source="each.elan">
 <el-statement class="ok" id="var16" tabindex="0"><el-kw>variable </el-kw><el-field id="var17" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr18" class="ok" tabindex="0"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
