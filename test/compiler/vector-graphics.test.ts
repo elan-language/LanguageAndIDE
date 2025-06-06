@@ -26,7 +26,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "VectorGraphic must be concrete to new. Click for more info.LangRef.html#compile_error",
+      "VectorGraphic must be concrete to new.LangRef.html#compile_error",
     ]);
   });
 

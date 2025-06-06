@@ -23,12 +23,14 @@ import { ParseStatus } from "../status-enums";
 export class GlobalSelector extends AbstractSelector implements GlobalFrame {
   isGlobal = true;
   file: File;
-  hrefForFrameHelp: string = "LangRef.html#Global_selector";
-
   constructor(parent: File) {
     super(parent);
     this.file = parent;
     this.setParseStatus(ParseStatus.default);
+  }
+
+  override helpId(): string {
+    return "GlobalInstructions";
   }
 
   defaultOptions(): [string, (parent: Parent) => Frame][] {

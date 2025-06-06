@@ -1,11 +1,11 @@
-# eca0e63ed7748bbb01e59646c0d95b5b441fcacdd83dcd33060299f8fb3aac35 Elan 1.1.3 guest default_profile valid
+# 7342b95b78b7285bfd0b8ff8cdfad62aa365900e646c52135f79f032a2b44ce6 Elan 1.1.3 guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
   let blocks be new Array2D<of Int>(40, 30, white)
   variable head set to [20, 15]
   variable tail set to head
-  variable body set to [head]
+  let body be [head]
   variable currentDir set to "right"
   variable gameOn set to true
   variable apple set to [0, 0]

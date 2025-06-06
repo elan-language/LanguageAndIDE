@@ -7,7 +7,7 @@ export abstract class AbstractParseNode implements ParseNode {
   matchedText: string = "";
   completionWhenEmpty: string = "";
   remainingText: string = "";
-  errorLink: string = ``;
+
   activeNodeForSymbolCompl: ParseNode = this;
   //'done' means that parseNode is valid and that no more text may be taken
   //Most parse nodes are never 'done'. Only ones that can return true are:
@@ -36,11 +36,10 @@ export abstract class AbstractParseNode implements ParseNode {
     return this.matchedText.trim();
   } //TODO make abstract
 
-  protected set(status: ParseStatus, matched: string, remaining: string, errorLink = "") {
+  protected set(status: ParseStatus, matched: string, remaining: string) {
     this.status = status;
     this.matchedText = matched;
     this.remainingText = remaining;
-    this.errorLink = errorLink;
   }
 
   protected numLeadingSpaces(text: string): number {
@@ -51,7 +50,6 @@ export abstract class AbstractParseNode implements ParseNode {
     this.status = other.status;
     this.matchedText = other.matchedText;
     this.remainingText = other.remainingText;
-    this.errorLink = other.errorLink;
   }
 
   symbolCompletion_getSpec(): SymbolCompletionSpec {

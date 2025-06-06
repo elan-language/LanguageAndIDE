@@ -1140,7 +1140,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'if' is a keyword, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
+      "'if' is a keyword, and may not be used as an identifier.LangRef.html#compile_error",
     ]);
   });
 
@@ -1164,7 +1164,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
+      "'break' is a reserved word, and may not be used as an identifier.LangRef.html#compile_error",
     ]);
   });
 
@@ -1190,7 +1190,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "referencing a property requires a prefix. Click for more info.LangRef.html#compile_error",
+      "referencing a property requires a prefix.LangRef.html#compile_error",
     ]);
   });
 
@@ -1217,7 +1217,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "referencing a property requires a prefix. Click for more info.LangRef.html#compile_error",
+      "referencing a property requires a prefix.LangRef.html#compile_error",
     ]);
   });
 
@@ -1248,7 +1248,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "referencing a property requires a prefix. Click for more info.LangRef.html#compile_error",
+      "referencing a property requires a prefix.LangRef.html#compile_error",
     ]);
   });
 
@@ -1278,7 +1278,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "referencing a property requires a prefix. Click for more info.LangRef.html#compile_error",
+      "referencing a property requires a prefix.LangRef.html#compile_error",
     ]);
   });
 
@@ -1315,7 +1315,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "referencing a property requires a prefix. Click for more info.LangRef.html#compile_error",
+      "referencing a property requires a prefix.LangRef.html#compile_error",
     ]);
   });
 
@@ -1355,7 +1355,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "referencing a property requires a prefix. Click for more info.LangRef.html#compile_error",
+      "referencing a property requires a prefix.LangRef.html#compile_error",
     ]);
   });
 
@@ -1395,7 +1395,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "referencing a property requires a prefix. Click for more info.LangRef.html#compile_error",
+      "referencing a property requires a prefix.LangRef.html#compile_error",
     ]);
   });
 
@@ -1414,7 +1414,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot prefix function with 'property'. Click for more info.LangRef.html#compile_error",
+      "Cannot prefix function with 'property'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1437,7 +1437,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot prefix function with 'property'. Click for more info.LangRef.html#compile_error",
+      "Cannot prefix function with 'property'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1458,7 +1458,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'aa' is not defined for type 'Bar'. Click for more info.LangRef.html#compile_error",
+      "'aa' is not defined for type 'Bar'.LangRef.html#compile_error",
     ]);
   });
 });

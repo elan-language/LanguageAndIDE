@@ -6,8 +6,6 @@ import { IdentifierNode } from "./identifier-node";
 import { PropertyRef } from "./property-ref";
 
 export class AssignableNode extends AbstractAlternatives {
-  errorLink: string = "#parse_assignable";
-
   tokenTypes = new Set<TokenType>([
     TokenType.id_parameter_out,
     TokenType.id_property,

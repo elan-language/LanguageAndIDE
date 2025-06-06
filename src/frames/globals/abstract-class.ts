@@ -15,8 +15,6 @@ import { ClassSubType, ClassType } from "../symbols/class-type";
 import { ClassFrame } from "./class-frame";
 
 export class AbstractClass extends ClassFrame {
-  hrefForFrameHelp: string = "LangRef.html#Abstract_class";
-
   constructor(parent: File) {
     super(parent);
     this.isAbstract = true;

@@ -276,7 +276,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Condition of 'if' expression does not evaluate to a Boolean. Click for more info.LangRef.html#compile_error",
+      "Condition of 'if' expression does not evaluate to a Boolean.LangRef.html#compile_error",
     ]);
   });
 
@@ -294,7 +294,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot determine common type between Int and String. Click for more info.LangRef.html#compile_error",
+      "Cannot determine common type between Int and String.LangRef.html#compile_error",
     ]);
   });
 
@@ -313,7 +313,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -332,7 +332,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -357,7 +357,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Bar, Provided: Foo. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Bar, Provided: Foo.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -382,7 +382,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot determine common type between Foo and Bar. Click for more info.LangRef.html#compile_error",
+      "Cannot determine common type between Foo and Bar.LangRef.html#compile_error",
     ]);
   });
 
@@ -411,7 +411,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Bar, Provided: Foo. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Bar, Provided: Foo.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -440,7 +440,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Bar, Provided: Foo. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Bar, Provided: Foo.LangRef.html#TypesCompileError",
     ]);
   });
 });

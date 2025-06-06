@@ -523,7 +523,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: String, Provided: Int.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -544,7 +544,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of String>, Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of String>, Provided: List<of Int>.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -565,7 +565,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of String>, Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of String>, Provided: List<of Int>.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -586,7 +586,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: List<of Int>.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -607,7 +607,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of Int>, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of Int>, Provided: Int.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -628,7 +628,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: ListImmutable<of Int>, Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: ListImmutable<of Int>, Provided: List<of Int>.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -648,7 +648,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: ListImmutable<of String> or List<of String>, Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: ListImmutable<of String> or List<of String>, Provided: List<of Int>.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -668,7 +668,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of String>, Provided: List<of Int>. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: List<of String>, Provided: List<of Int>.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -687,7 +687,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. Click for more info.LangRef.html#TypeCompileError",
+      "Expression must be able to be deconstructed.LangRef.html#TypeCompileError",
     ]);
   });
 
@@ -706,7 +706,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. Click for more info.LangRef.html#TypeCompileError",
+      "Expression must be able to be deconstructed.LangRef.html#TypeCompileError",
     ]);
   });
 
@@ -725,7 +725,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. Click for more info.LangRef.html#TypeCompileError",
+      "Expression must be able to be deconstructed.LangRef.html#TypeCompileError",
     ]);
   });
 
@@ -744,7 +744,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. Click for more info.LangRef.html#TypeCompileError",
+      "Expression must be able to be deconstructed.LangRef.html#TypeCompileError",
     ]);
   });
 
@@ -765,7 +765,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. Click for more info.LangRef.html#TypeCompileError",
+      "Expression must be able to be deconstructed.LangRef.html#TypeCompileError",
     ]);
   });
 
@@ -786,7 +786,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expression must be able to be deconstructed. Click for more info.LangRef.html#TypeCompileError",
+      "Expression must be able to be deconstructed.LangRef.html#TypeCompileError",
     ]);
   });
 
@@ -849,8 +849,8 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the 'let' 'x'. Click for more info.LangRef.html#compile_error",
-      "May not re-assign the 'let' 'y'. Click for more info.LangRef.html#compile_error",
+      "May not re-assign the 'let' 'x'.LangRef.html#compile_error",
+      "May not re-assign the 'let' 'y'.LangRef.html#compile_error",
     ]);
   });
 
@@ -869,8 +869,6 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'y' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'y' is not defined.LangRef.html#compile_error"]);
   });
 });

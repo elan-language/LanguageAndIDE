@@ -391,7 +391,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: listOfInt (List<of Int>), Provided: ListImmutable<of Int>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: listOfInt (List<of Int>), Provided: ListImmutable<of Int>.LangRef.html#compile_error",
     ]);
   });
 
@@ -666,7 +666,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: listOfInt (List<of Int>), Provided: List<of Float>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: listOfInt (List<of Int>), Provided: List<of Float>.LangRef.html#compile_error",
     ]);
   });
 
@@ -880,7 +880,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: listOfInt (List<of Int>), Provided: List<of String>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: listOfInt (List<of Int>), Provided: List<of String>.LangRef.html#compile_error",
     ]);
   });
 
@@ -897,7 +897,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: lambdaOrFunctionRef (Func<of String => Float>), Provided: Func<of String => String>. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: lambdaOrFunctionRef (Func<of String => Float>), Provided: Func<of String => String>.LangRef.html#compile_error",
     ]);
   });
 
@@ -914,7 +914,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'keys' add brackets. Click for more info.LangRef.html#compile_error",
+      "To evaluate function 'keys' add brackets.LangRef.html#compile_error",
     ]);
   });
 });

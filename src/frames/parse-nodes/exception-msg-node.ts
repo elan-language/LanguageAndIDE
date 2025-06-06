@@ -14,5 +14,4 @@ export class ExceptionMsgNode extends AbstractAlternatives {
     this.alternatives.push(new LitString());
     this.alternatives.push(new IdentifierNode(this.tokenTypes));
   }
-  override errorLink: string = "#parse_exception_message";
 }

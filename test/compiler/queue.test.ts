@@ -77,7 +77,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: parameter0 (String), Provided: Int. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: parameter0 (String), Provided: Int.LangRef.html#compile_error",
     ]);
   });
 
@@ -95,7 +95,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: parameter0 (String), Provided: Int. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: parameter0 (String), Provided: Int.LangRef.html#compile_error",
     ]);
   });
 
@@ -168,7 +168,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Expected: '<of Type>'. Click for more info.LangRef.html#GenericParametersCompileError",
+      "Expected: '<of Type>'.LangRef.html#GenericParametersCompileError",
     ]);
   });
 
@@ -188,7 +188,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Queue cannot be of mutable type 'Foo'. Click for more info.LangRef.html#compile_error",
+      "Queue cannot be of mutable type 'Foo'.LangRef.html#compile_error",
     ]);
   });
 });

@@ -27,6 +27,12 @@ export abstract class AbstractSelector extends AbstractFrame {
     return "selector";
   }
 
+  helpAsHtml(): string {
+    return this.isSelected()
+      ? `<el-help title="Click to open Help for any of these instructions"> <a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe">?</a></el-help>`
+      : ``;
+  }
+
   abstract defaultOptions(): [string, (parent: Parent) => Frame][];
   abstract profileAllows(keyword: string): boolean;
   abstract validWithinCurrentContext(keyword: string, userEntry: boolean): boolean;
@@ -125,7 +131,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     this.text = "";
   }
   textToDisplayAsHtml(): string {
-    return `<el-select><el-txt>${this.text}</el-txt><el-place>${this.label}</el-place><el-help class="selector">${this.getCompletion()}</el-help>${helper_pastePopUp(this)}</el-select>`;
+    return `<el-select><el-txt>${this.text}</el-txt><el-place>${this.label}</el-place><div class="options">${this.getCompletion()}</div>${helper_pastePopUp(this)}${this.helpAsHtml()}</el-select>`;
   }
   renderAsSource(): string {
     return `${this.indent()}`;

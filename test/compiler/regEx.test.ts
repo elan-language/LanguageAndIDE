@@ -171,7 +171,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: regExp (RegExp), Provided: String. Click for more info.LangRef.html#compile_error",
+      "Argument types. Expected: regExp (RegExp), Provided: String.LangRef.html#compile_error",
     ]);
   });
 });

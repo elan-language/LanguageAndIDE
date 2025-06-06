@@ -11,8 +11,6 @@ import { BooleanType } from "../symbols/boolean-type";
 export class While extends FrameWithStatements {
   isStatement = true;
   condition: ExpressionField;
-  hrefForFrameHelp: string = "LangRef.html#while";
-
   constructor(parent: Parent) {
     super(parent);
     this.condition = new ExpressionField(this);

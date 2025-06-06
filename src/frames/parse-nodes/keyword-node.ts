@@ -28,7 +28,7 @@ export class KeywordNode extends FixedTextNode {
         } else if (target.startsWith(trimmed)) {
           this.set(ParseStatus.incomplete, text, "");
         } else {
-          this.set(ParseStatus.invalid, "", text, super.getErrorMessage());
+          this.set(ParseStatus.invalid, "", text);
         }
       }
     }

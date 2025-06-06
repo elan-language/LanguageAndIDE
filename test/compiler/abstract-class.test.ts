@@ -988,9 +988,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Bar must implement Foo.prop. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.prop.LangRef.html#compile_error"]);
   });
 
   test("Fail_DoesntImplementFunc", async () => {
@@ -1024,9 +1022,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Bar must implement Foo.func. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.func.LangRef.html#compile_error"]);
   });
 
   test("Fail_DoesntImplementProc", async () => {
@@ -1060,9 +1056,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Bar must implement Foo.proc. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.proc.LangRef.html#compile_error"]);
   });
 
   test("Fail_DoesntImplementIndirectProp", async () => {
@@ -1101,9 +1095,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Bar must implement Foo1.prop. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Foo1.prop.LangRef.html#compile_error"]);
   });
 
   test("Fail_DoesntImplementIndirectProp1", async () => {
@@ -1142,9 +1134,7 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Bar must implement Foo1.prop. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Bar must implement Foo1.prop.LangRef.html#compile_error"]);
   });
 
   test("Fail_InheritSelf", async () => {
@@ -1163,7 +1153,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Class/interface 'Foo' cannot inherit from itself. Click for more info.LangRef.html#compile_error",
+      "Class/interface 'Foo' cannot inherit from itself.LangRef.html#compile_error",
     ]);
   });
 
@@ -1191,7 +1181,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Class/interface 'Yon' cannot inherit from itself. Click for more info.LangRef.html#compile_error",
+      "Class/interface 'Yon' cannot inherit from itself.LangRef.html#compile_error",
     ]);
   });
 
@@ -1219,7 +1209,7 @@ end interface`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Class/interface 'Bar' cannot inherit from itself. Click for more info.LangRef.html#compile_error",
+      "Class/interface 'Bar' cannot inherit from itself.LangRef.html#compile_error",
     ]);
   });
 
@@ -1243,7 +1233,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'prop' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. Click for more info.LangRef.html#compile_error",
+      "Name 'prop' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.LangRef.html#compile_error",
     ]);
   });
 
@@ -1267,7 +1257,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'prop' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface. Click for more info.LangRef.html#compile_error",
+      "Name 'prop' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.LangRef.html#compile_error",
     ]);
   });
 
@@ -1291,7 +1281,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Superclass 'Foo' must be inheritable class. Click for more info.LangRef.html#compile_error",
+      "Superclass 'Foo' must be inheritable class.LangRef.html#compile_error",
     ]);
   });
 
@@ -1335,7 +1325,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'ff2' is not defined for type 'Foo1'. Click for more info.LangRef.html#compile_error",
+      "'ff2' is not defined for type 'Foo1'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1383,7 +1373,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "There must be only one abstract superclass, Foo, Foo1, Foo2 are abstract classes. Click for more info.LangRef.html#compile_error",
+      "There must be only one abstract superclass, Foo, Foo1, Foo2 are abstract classes.LangRef.html#compile_error",
     ]);
   });
 
@@ -1400,7 +1390,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'. Click for more info.LangRef.html#compile_error",
+      "ListImmutable cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1417,7 +1407,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "ListImmutable cannot be of mutable type 'List<of Int>'. Click for more info.LangRef.html#compile_error",
+      "ListImmutable cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
     ]);
   });
 });

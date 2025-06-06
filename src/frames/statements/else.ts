@@ -21,8 +21,6 @@ export class Else extends AbstractFrame implements Statement {
   selectIfClause: IfSelectorField;
   hasIf: boolean = false;
   condition: ExpressionField;
-  hrefForFrameHelp: string = "LangRef.html#else";
-
   constructor(parent: Parent) {
     super(parent);
     this.condition = new ExpressionField(this);

@@ -194,7 +194,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "let15", [
-      "The identifier 'x' is already used for a 'let' and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
+      "The identifier 'x' is already used for a 'let' and cannot be re-defined here.LangRef.html#compile_error",
     ]);
   });
 
@@ -217,7 +217,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "set15", [
-      "May not re-assign the 'let' 'x'. Click for more info.LangRef.html#compile_error",
+      "May not re-assign the 'let' 'x'.LangRef.html#compile_error",
     ]);
   });
 
@@ -239,11 +239,11 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "expr17", [
-      "'x' is not defined. Click for more info.LangRef.html#compile_error",
+      "'x' is not defined.LangRef.html#compile_error",
     ]);
 
     assertDoesNotCompileWithId(fileImpl, "func8", [
-      "'x' is not defined. Click for more info.LangRef.html#compile_error",
+      "'x' is not defined.LangRef.html#compile_error",
     ]);
   });
 
@@ -265,10 +265,10 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompileWithId(fileImpl, "expr17", [
-      "'y' is not defined. Click for more info.LangRef.html#compile_error",
+      "'y' is not defined.LangRef.html#compile_error",
     ]);
     assertDoesNotCompileWithId(fileImpl, "func5", [
-      "'y' is not defined. Click for more info.LangRef.html#compile_error",
+      "'y' is not defined.LangRef.html#compile_error",
     ]);
   });
 

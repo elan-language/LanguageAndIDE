@@ -27,29 +27,24 @@ Comments may be inserted at the same level as a <a href="#GlobalInstructions">gl
   This comment is known as the &lsquo; file-header&rsquo; and shows the version of Elan being run.</p>
 
 <h1 id="GlobalInstructions">Global Instructions</h1>
+
+  <a href="#main">main</a>
+  <a href="#procedure">procedure</a>
+  <a href="#function">function</a>
+  <a href="#test">test</a>
+  <a href="#constant">constant</a>
+  <a href="#enum">enum</a>
+  <a href="#record">record</a>
+  <a href="#class">class</a>
+  <a href="#abstractclass">abstract</a>
+  <a href="#interface">interface</a>
+  <a href="#Comment">#</a></p>
+
 <p>Global instructions (also referred to simply as &lsquo;globals&rsquo;) are located <em>directly</em> within a code file.
   They are never indented from the left-hand edge, nor may they be located <em>within</em> other instructions.
   Three of the globals &ndash; <el-code>main</el-code>, <el-code>function</el-code>, and <el-code>procedure</el-code> &ndash; are described as &lsquo;methods&rsquo; and these are defined by one or more <a href="#statement">statements</a> within them.
-  Four of the globals &ndash; <a href="#record"><el-code>record</el-code></a>, <a href="#Class"><el-code>class</el-code></a>, <a href="#AbstractClass"><el-code>abstract class</el-code></a>, and <a href="#interface"><el-code>interface</el-code></a> &ndash; define data structures and these always contain <a href="#Member">members</a>.
+  Four of the globals &ndash; record, class, abstract (class), and interface &ndash; define data structures and these always contain <a href="#Member">members</a>.
   The two remaining globals &ndash; <el-code>constant</el-code>, and <el-code>enum</el-code> &ndash; do not contain any further instructions.</p>
-<p>When you navigate to a <el-code>new code</el-code> at the <em>global</em> level (not indented from the left-hand edge of the code pane),
-you will be shown the 'global selector' listing the set of globals that you may insert there, namely all or only some of:</p>
-<p><a href="#main"><el-code>main</el-code></a>
-<a href="#Procedure"><el-code>procedure</el-code></a>
-<a href="#Function"><el-code>function</el-code></a>
-<a href="#Test"><el-code>test</el-code></a>
-<a href="#Constant"><el-code>constant</el-code></a>
-<a href="#Enum"><el-code>enum</el-code></a>
-<a href="#record"><el-code>record</el-code></a>
-<a href="#Class"><el-code>class</el-code></a>
-<a href="#ClassAbs"><el-code>abstract</el-code></a>
-<a href="#interface"><el-code>interface</el-code></a>
-<a href="#Comment"><el-code>#</el-code></a></p>
-where <el-code>abstract</el-code> is, in this context, short for <a href="#AbstractClass"><el-code>abstract class</el-code></a>.
-
-<el-code><el-global class="selected focused ok empty" id="select0" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-global></el-code>
-
-<p>The specific globals offered will depend upon your user profile.</p>
 
 <h2 id="main">Main</h2>
 <p>A program file must have a <el-code>main</el-code> method, sometimes called its main routine, if it is intended to be run as a program. You may, however, develop and test code that does not have a <el-code>main</el-code> method, either as a coding exercise or for subsequent use within another program.</p>
@@ -270,7 +265,7 @@ The value is specified by the Type name for the specified <el-code>enum</el-code
 <p>A <el-code>record</el-code> is a user-defined data structure that is given a Type name (which must begin with an upper case letter).
   The <el-code>record</el-code> defines one or more properties, each of which has a name (starting with a lower case letter) and a Type.
   The Type of a property may be any simple value Type, or a <el-code>ListImmutable</el-code>, or another Type of <el-code>record</el-code> ( or even the same Type of <el-code>record</el-code>).</p>
-  <p>Note that the Type <el-code><el-type>record</el-type></el-code> has some similarity to a <a href="#Class"><el-code><el-type>class</el-type></el-code></a> in that:</p>
+  <p>Note that the Type <el-code><el-type>record</el-type></el-code> has some similarity to a <a href="#class"><el-code><el-type>class</el-type></el-code></a> in that:</p>
 <ul>
   <li>Both are user-defined data structures</li>
   <li>Both are given a &lsquo;Type name&rsquo;</li>
@@ -348,7 +343,7 @@ Having defined a record Type, such as <el-code>Game</el-code> above, you can cre
 <p>will read the <el-code>properties</el-code> into the four names defined.</p>
 When deconstructing, the names of the values must match the names of the <el-code>properties</el-code> of the <el-code><el-kw>record</el-kw></el-code>. However, the ordering of the names does not have to match the order in which the <el-code>properties</el-code> are defined in the <el-code><el-kw>record</el-kw></el-code>.
 
-<h2 id="Class">Class</h2>
+<h2 id="class">Class</h2>
 <!-- TODO Subclass and Superclass -->
 <div id="Subclass"></div>
 <div id="Superclass"></div>
@@ -407,7 +402,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 <p>The created instance may then be used within expressions, like any other variable.</p>
 
 <h3 class="no-TOC" id="Inheritance">Inheritance</h3>
-  <p>An ordinary <a href="#Class">class</a> (also known as a &lsquo;concrete class&rsquo;) may optionally inherit from just one <a href="#AbstractClass"><el-code>abstract class</el-code></a>
+  <p>An ordinary <a href="#class">class</a> (also known as a &lsquo;concrete class&rsquo;) may optionally inherit from just one <a href="#abstractclass"><el-code>abstract class</el-code></a>
     but may additionally inherit from any number of <a href="#interface">interfaces</a>.
     The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <el-code>abstract class</el-code> or any <el-code>interface</el-code>s that it inherits from, directly or indirectly.</p>
 
@@ -419,7 +414,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
   <li>The various &lsquo;super-Types&rsquo; (abstract classes and <el-code>interface</el-code>s) that a concrete <el-code>class</el-code> inherits from must not define conflicting members, e.g. members with the same name but having different Type signatures.</li>
 </ul>
 
-<h2 id="AbstractClass">Abstract class</h2>
+<h2 id="abstractclass">Abstract class</h2>
 <p>See also: <a href="#Inheritance">Inheritance</a></p>
 <p>An <el-code>abstract class</el-code> may not be instantiated (and hence may not define a constructor). It may define concrete members i.e.:</p>
 <ul>
@@ -430,7 +425,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 <p>As with a concrete class, any of these members may be made <el-code>private</el-code>, after the corresponding frame has been added, by selecting that member frame and pressing Ctrl-p.</p>
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 <!-- Need the span below as you can't put two id's on the same element -->
-<p id="AbstractFunction"><span id="AbstractProcedure">You</span> may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> statement. For example:</p>
+<p id="abstractfunction"><span id="abstractprocedure">You</span> may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> statement. For example:</p>
 <p><el-code>abstract function calculateDiscount() as Float</el-code></p>
 <p>
 If you wish to have several subclasses of an <el-code>abstract class</el-code> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
@@ -450,28 +445,23 @@ If you wish to have several subclasses of an <el-code>abstract class</el-code> t
 <p>See <a href="#Comment">Comments</a>.</p>
 
 <h1 id="MemberInstructions">Member Instructions</h1>
-<p>Member instructions (also referred to simply as &lsquo;members&rsquo;) are located directly within the a: <el-code>record</el-code>, <el-code>class</el-code>, <el-code>abstract class</el-code>, <el-code>interface</el-code>.
-  All members, with the exception of <el-code>property</el-code>, define one or more <a href="#statement">statements</a> within them.</p>
-<p>When you navigate to a <el-code>new code</el-code> that is at <em>member</em> level
-  (located directly within a <a href="#record">record</a>, <a href="#Class">class</a>, <a href="#AbstractClass"><el-code>abstract class</el-code></a>, or <a href="#interface">interface</a>)
-  you will be shown the set of statements that may be inserted there, for example:</p>
 
-  <el-code><el-member class="selected focused ok empty" id="select8" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-member></el-code>
+<a href="#constructor">constructor</a>,
+<a href="#property">property</a>,
+<a href="#procedure_method">procedure</a>,
+<a href="#function_method">function</a>,
+<a href="#abstractproperty">abstract property</a>,
+<a href="#abstractprocedure">abstract procedure</a>,
+<a href="#abstractfunction">abstract function</a>,
+<a href="#property">private property</a>,
+<a href="#procedure_method">private procedure</a>,
+<a href="#function_method">private function</a>,
+<a href="#Comment">#</a>
 
-  <p>The specific members offered will depend upon the context, and/or upon your user profile.
-    The full set of entries is shown here, with links to explanations below:</p>
+<p>Member instructions (also sometimes referred to simply as &lsquo;members&rsquo;) 
+  are located within a <el-kw>class</el-kw>, <el-kw>abstract class</el-kw>, <el-kw>interface</el-kw>, or <el-kw>record</el-kw>.
+  A different subset of the total list above will be offered in the four different contexts.</p>
 
-    <a href="#constructor">constructor</a>,
-    <a href="#property">property</a>,
-    <a href="#procedure_method">procedure</a>,
-    <a href="#function_method">function</a>,
-    <a href="#abstractProperty">abstract property</a>,
-    <a href="#abstractProcedure">abstract procedure</a>,
-    <a href="#abstractFunction">abstract function</a>,
-    <a href="#property">private property</a>,
-    <a href="#procedure_method">private procedure</a>,
-    <a href="#function_method">private function</a>,
-    <a href="#Comment">#</a>
 <!-- #endregion-->
 <!--     #region Constructor-->
 <h2 id="constructor">Constructor</h2>
@@ -542,28 +532,19 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
 <li>asString method. This is just a regular function method with a specific name, no parameters and returning a String. If defined for a class, then if an instance of the class is printed, the <el-code>asString</el-code> function method will automatically be used. Typically <el-code>asString</el-code> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
 </ul>
 
-<h2 id="AbstractProperty">Abstract Property</h2>
-<p>An abstract property may be defined only on an <a href="#AbstractClass"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
+<h2 id="abstractproperty">Abstract Property</h2>
+<p>An abstract property may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
 
 <h2 id="AbstractProcedureMethod">Abstract Procedure Method</h2>
-<p>An abstract procedure method may be defined only on an <a href="#AbstractClass"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
+<p>An abstract procedure method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
 
 <h2 id="abstractFunctionMethod">Abstract Function Method</h2>
-<p>An abstract function method may be defined only on an <a href="#AbstractClass"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
+<p>An abstract function method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
 
 <h2 id="member_comment"># (comment)</h2>
 <p>See <a href="#Comment">Comments</a>.</p>
 
 <h1 id="StatementInstructions">Statement Instructions</h1>
-<p>Statement instructions (also referred to simply as &lsquo;statements&rsquo;) are located within &lsquo;methods&rsquo;. Some of these statements may contain other statements.</p>
-<p>When you navigate to a <el-code>new code</el-code> that is at <em>statement</em> level
-  (located within a <a href="#Global">global</a> or a <a href="#Member">member</a> instruction)
-  you will be shown the set of statements that may be inserted there, for example:</p>
-
-  <el-code><el-statement class="selected focused ok empty" id="select4" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-statement></el-code>
-
-  <p>The specific statements offered will depend upon the context, and/or upon your user profile.
-    The full set of entries is shown here, with links to explanations below:</p>
 
 <a href="LibRef.html#assert">assert</a>
 <a href="#call">call</a>
@@ -580,6 +561,9 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
 <a href="#variable">variable</a>
 <a href="#while">while</a>
 <a href="#Comment">#</a>
+
+<p>Statement instructions (also sometimes referred to simply as &lsquo;statements&rsquo;) 
+  are located within &lsquo;methods&rsquo;. Some of these statements may contain other statements.</p>
 
 <h2 id="assert">Assert statement</h2>
 
@@ -963,14 +947,14 @@ The &lsquo;if expression&rsquo; is in certain respects similar to an <span class
 
 <h2 id="new">New instance</h2>
 <p>A 'new instance' expression is used to create a new instance of a <a href="LibRef.html#StandardDataStructures">library data structure</a>,
-   or a <a href="#Class"> user-defined class</a> or <a href="#record">record</a> - either to assign to a named value, or as part
+   or a <a href="#class"> user-defined class</a> or <a href="#record">record</a> - either to assign to a named value, or as part
   of a more complex expression. Example of use (taken from the `Snake - procedural` demo):</p>
 
 <el-code-block>
 <el-statement id="var5" tabindex="0"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>blocks</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Array2D</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;(<el-lit>40</el-lit>, <el-lit>30</el-lit>, <el-id>white</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 
-<p>Where the new instance is of a <a href="#Class"> user-defined class</a> or <a href="#record">record</a> the expression may optionally
+<p>Where the new instance is of a <a href="#class"> user-defined class</a> or <a href="#record">record</a> the expression may optionally
 be followed by a 'with clause` in order to specify any property values. Example of this use:</p>
 
 <el-code-block source="dealCard.elan">
@@ -1009,7 +993,7 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 <h2 id="empty">Empty of Type</h2>
 <p>An 'empty of Type' expression is used to make the default (empty) instance of any Type
   - usually only created for comparing to another instance to test whether that other instance is also empty or default.
-  This may arise, for example, if a <a href="#Class">class</a> or <a href="#record">record</a> is defined with a property that has never had a value assigned to it.
+  This may arise, for example, if a <a href="#class">class</a> or <a href="#record">record</a> is defined with a property that has never had a value assigned to it.
   The following example is taken from the 'Pathfinder' demo program:</p>
 
 <el-code-block>
@@ -1030,97 +1014,6 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 </el-code-block>
 
 <p>It is also possible explicitly to set a property or a named value to an empty instance of the appropriate Type.</p>
-
-<h1 id="errors_and_warnings">Errors and warnings</h1>
-
-<h2 id="parse_error">Parse errors</h2>
-
-<p>A parse error occurs when the text entered into a field cannot be matched against any of the valid formats for contents of that fields.
-  The field will display in red (for the default colour scheme) with a message alongside it containing a link to
-  one of the headings below. The <b>Parse</b> status in the status panel in the IDE will show as <b>Invalid</b>.
-</p>
-
-<h3 id="parse_arg_list" class="no-TOC">Invalid argument list</h3>
-<p>An argument list passed into a function or procedure call, must consist of one or more arguments separated by commas.
-  Each argument may in general be any of:</p>
-  <ul>
-    <li>A literal value</li>
-    <li>A named value</li>
-    <li>An expression</li>
-  </ul>
-  <p>(though in certain very specific contexts some options are disallowed by the compiler.)</p>
-
-<h3 id="parse_assert_actual" class="no-TOC">Invalid assert actual</h3>
-<p>The 'actual' field should be kept as simple as possible, <i>preferably</i>
-  just a named value or a function evaluation. Generally, if you want to use a more
-  complex expression, it is better to evaluate it in a preceding <el-kw>let</el-kw>
-  instruction and then use the named value in the 'actual' field of the <el-kw>assert</el-kw>
-  instruction. Some more complex expressions are permissible, but these two restrictions apply:
-  <ul>
-    <li>Any expression involving a binary operator (e.g. <el-code>+ <el-kw>and</el-kw> <el-kw>isnt</el-kw></el-code>
-    must have brackets around it.</li>
-    <li>You may <i>not</i> use the <el-kw>is</el-kw> operator within the 'actual' field, because
-       the parser will confuse this with the <el-kw>is</el-kw> keyword that is part of the <el-kw>assert</el-kw> instruction.</li>
-  </ul>
-  </p>
-
-<h3 id="parse_constant_literal" class="no-TOC">Invalid constant value</h3>
-<p>The value of a constant must be a literal value of a type that is not mutable.
-  This can be a simple value (e.g. a number or string), or an <i>immutable</i> List or Dictionary.</p>
-
-<h3 id="parse_enum_values" class="no-TOC">Invalid enum value(s)</h3>
-<p>Enum values must each be a valid identifier, separated by commas.</p>
-
-<h3 id="parse_exception_message" class="no-TOC">Invalid exception message</h3>
-<p>An exception message must either be a literal string or a named value holding a string.</p>
-
-<h3 id="parse_expression" class="no-TOC">Invalid expression</h3>
-<p>The field you are entering must be a valid <a href="#Expression">expression</a>.</p>
-
-<h3 id="parse_name" class="no-TOC">Invalid name</h3>
-<p>The name defined for any variable, constant, let, parameter, function, procedure, or property
-  must follow the rules for an <a href="#identifier">identifier</a>.</p>
-
-<h3 id="parse_inheritance" class="no-TOC">Invalid inheritance clause</h3>
-<p>An inheritance clause, if used, must consist of the keyword <el-code><el-kw>inherits</el-kw></el-code>
-followed by a space and then one or more Type names separated by commas.</p>
-
-<h3 id="parse_params" class="no-TOC">Invalid parameter list</h3>
-<p>Each parameter definition takes the form:</p>
-<el-code><el-id>name</el-id> <el-kw>as</el-kw> <el-type>Type</el-type></el-code>
-<p>The name must follow the rules for an <a href="#identifier">identifier</a>.</p>
-<p>The type must follow the rules for an <a href="#parse_type">type</a>.</p>
-<p>If more than one parameter is defined, the definitions must be separated by commas.</p>
-
-<h3 id="parse_proc_ref" class="no-TOC">Invalid reference to a procedure</h3>
-<p>Valid forms for a procedure call are</p>
-<ul>
-  <li><el-code><el-kw>call</el-kw> <el-method>procedureName</el-method>()</el-code></li>
-  <li><el-code><el-kw>call</el-kw> <el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</el-code></li>
-  <li><el-code><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>propertyName</el-id>.<el-method>procedureMethodName</el-method>()</el-code></li>
-  <li><el-code><el-kw>call</el-kw> <el-kw>library</el-kw>.<el-method>procedureName</el-method>()</el-code></li>
- </ul>
-
-<p>The last one is used only if there is a need to disambiguate between a library procedure and a user-defined (global)
-  procedure with the same name.
-</p>
-
-<h3 id="parse_type" class="no-TOC">Invalid Type format</h3>
-<p>For certain types the name may be followed by an <el-code><el-kw>of</el-kw></el-code> clause, for example:</p>
-
-<el-code><el-Type>List</el-Type>&lt;<el-kw>of</el-kw> <el-Type>Int</el-Type>&gt;</el-code>
-<el-code><el-Type>Dictionary</el-Type>&lt;<el-kw>of</el-kw> <el-Type>String</el-Type>, <el-Type>Int</el-Type>&gt;</el-code>
-
-<h3 id="parse_type_name" class="no-TOC">Invalid Type name</h3>
-<p>Type names always begin with a capital letter,  optionally followed by letters or either case, numeric digits,
-  or underscore symbols. Nothing else.
-</p>
-
-<h3 id="parse_var_or_let_def" class="no-TOC">Invalid variable or let definition</h3>
-<p>The definition for a variable, or for a <el-code><el-kw>let</el-kw></el-code> statement is most commonly
-a simple <a href="#parse_name">name</a>. Less commonly, it may take the form of:
-<a href="LibRef.html#Tuple">tuple deconstruction</a>, list deconstruction, or <a href="#record_deconstruction">record deconstruction</a>.
-</p>
 
 <h2 id="compile_error">Compile Errors and Warnings</h2>
 
@@ -1342,24 +1235,85 @@ imply the possibility of creating a side effect).</p>
 or <el-code><el-kw>not</el-kw></el-code> successively within an expression.</p>
 
 <h3>Field help</h3>
-<p>THIS IS WORK-IN-PROGRESS - TO BE REFINED AND FLESHED-OUT</p>
+
 <h4 id="ArgListField">'arguments' field in a call instruction</h4>
+<p>An argument list passed into a function or procedure call, must consist of one or more arguments separated by commas.
+  Each argument may in general be any of:</p>
+  <ul>
+    <li>A literal value</li>
+    <li>A named value</li>
+    <li>An expression</li>
+  </ul>
+  <p>(though in certain very specific contexts some options are disallowed by the compiler.)</p>
+
 <h4 id="AssertActualField">'computed value' field in an assert instruction</h4>
+<p>The 'actual' field should be kept as simple as possible, <i>preferably</i>
+  just a named value or a function evaluation. Generally, if you want to use a more
+  complex expression, it is better to evaluate it in a preceding <el-kw>let</el-kw>
+  instruction and then use the named value in the 'actual' field of the <el-kw>assert</el-kw>
+  instruction. Some more complex expressions are permissible, but these two restrictions apply:
+  <ul>
+    <li>Any expression involving a binary operator (e.g. <el-code>+ <el-kw>and</el-kw> <el-kw>isnt</el-kw></el-code>
+    must have brackets around it.</li>
+    <li>You may <i>not</i> use the <el-kw>is</el-kw> operator within the 'actual' field, because
+       the parser will confuse this with the <el-kw>is</el-kw> keyword that is part of the <el-kw>assert</el-kw> instruction.</li>
+  </ul>
+  </p>
 <h4 id="AssignableField">'variable name' field in a set instruction</h4>
+<p>The first field in a <el-kw>set</el-kw>set instruction most commonly takes the name of an existing variable.
+It may, however, may also take the following forms:
+<ul>
+  <li>Within a <el-kw>class</el-kw> it may take the form <el-kw>property</el-kw><el-code>.</el-code><el-id>name</el-id> to set the property <el-id>name</el-id></li>
+  <li>A tuple deconstruction. See <a href="LibRef.html#Tuple">Tuple</a></li>
+  <li>A list deconstruction. See <a href="LibRef.html#List">List</a></li>
+</ul></p>
 <h4 id="CommentField">'comment' field</h4>
 <h4 id="ConstantValueField">'literal value or data structure in a constant</h4>
+<p>The value of a constant must be a literal value of a type that is not mutable.
+  This can be a simple value (e.g. a number or string), or an <i>immutable</i> List or Dictionary.</p>
 <h4 id="EnumValuesField">'values' field in an enum definition</h4>
+<p>Enum values must each be a valid identifier, separated by commas.</p>
 <h4 id="ExceptionMessageField">'message' field in a throw instruction</h4>
+<p>An exception message must either be a literal string or a named value holding a string.</p>
 <h4 id="ExpressionField">expression field - used within multiple instructions</h4>
+<p>This field expects an expression. For the various forms of expression see <a href="#Expression">expression</a>.</p>
 <h4 id="IdentifierField">identifier field - used within multiple instructions</h4>
 <h4 id="IfSelectorField">'if' field in an else clause</h4>
 <h4 id="InheritsFromField">'inherits ClassName` field in a class</h4>
+<p>An inheritance clause, if used, must consist of the keyword <el-code><el-kw>inherits</el-kw></el-code>
+  followed by a space and then one or more Type names separated by commas.</p>
 <h4 id="MethodNameField">'name' field in a function or procedure definition</h4>
+<p>A method name follow the rules for an <a href="#identifier">identifier</a>.</p>
 <h4 id="ParamListField">'parameter definitions' in a function or procedure definition</h4>
+<p>Each parameter definition takes the form:</p>
+<el-code><el-id>name</el-id> <el-kw>as</el-kw> <el-type>Type</el-type></el-code>
+<p>The name must follow the rules for an <a href="#identifier">identifier</a>.</p>
+<p>The type must follow the rules for an <a href="#parse_type">type</a>.</p>
+<p>If more than one parameter is defined, the definitions must be separated by commas.</p>
 <h4 id="ProcRefField">'procedureName' in a call statement</h4>
+<p>Valid forms for a procedure call are
+<ul>
+  <li><el-code><el-kw>call</el-kw> <el-method>procedureName</el-method>()</el-code></li>
+  <li><el-code><el-kw>call</el-kw> <el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</el-code></li>
+  <li><el-code><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>propertyName</el-id>.<el-method>procedureMethodName</el-method>()</el-code></li>
+  <li><el-code><el-kw>call</el-kw> <el-kw>library</el-kw>.<el-method>procedureName</el-method>()</el-code></li>
+ </ul>
+
+The last one is used only if there is a need to disambiguate between a library procedure and a user-defined (global)
+  procedure with the same name.</p>
 <h4 id="TypeField">'Type' field in a function or property definition</h4>
+<p>For certain types the name may be followed by an <el-code><el-kw>of</el-kw></el-code> clause, for example:</p>
+
+<el-code><el-Type>List</el-Type>&lt;<el-kw>of</el-kw> <el-Type>Int</el-Type>&gt;</el-code>
+<el-code><el-Type>Dictionary</el-Type>&lt;<el-kw>of</el-kw> <el-Type>String</el-Type>, <el-Type>Int</el-Type>&gt;</el-code>
 <h4 id="TypeNameField">'Name' field in a class or enum definition</h4>
+<p>Type names always begin with a capital letter,  optionally followed by letters or either case, numeric digits,
+  or underscore symbols. Nothing else.</p>
 <h4 id="ValueDefField">'name' field in a let or variable instruction</h4>
+<p>The definition for a variable, or for a <el-code><el-kw>let</el-kw></el-code> statement is most commonly
+  a simple <a href="#parse_name">name</a>. Less commonly, it may take the form of:
+  <a href="LibRef.html#Tuple">tuple deconstruction</a>, list deconstruction, or <a href="#record_deconstruction">record deconstruction</a>.
+  </p>
 <hr>
 <p><b>Elan Language Reference</b> go to the <a href="#top">top</a></p>
 </body>

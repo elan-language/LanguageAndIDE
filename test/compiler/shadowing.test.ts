@@ -489,7 +489,7 @@ end procedure`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a parameter and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a parameter and cannot be re-defined here.LangRef.html#compile_error",
     ]);
   });
 
@@ -507,7 +507,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a variable and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.LangRef.html#compile_error",
     ]);
   });
 
@@ -525,7 +525,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a 'let' and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a 'let' and cannot be re-defined here.LangRef.html#compile_error",
     ]);
   });
 
@@ -543,7 +543,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a 'let' and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a 'let' and cannot be re-defined here.LangRef.html#compile_error",
     ]);
   });
 
@@ -618,7 +618,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a parameter and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a parameter and cannot be re-defined here.LangRef.html#compile_error",
     ]);
   });
 
@@ -640,7 +640,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a parameter and cannot be re-defined here. Click for more info.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a parameter and cannot be re-defined here.LangRef.html#compile_error",
     ]);
   });
 });

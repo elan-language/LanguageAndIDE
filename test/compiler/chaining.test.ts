@@ -666,7 +666,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Provided: Int. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: String, Provided: Int.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -702,7 +702,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'fd' is not defined for type 'Bar'. Click for more info.LangRef.html#compile_error",
+      "'fd' is not defined for type 'Bar'.LangRef.html#compile_error",
     ]);
   });
 });

@@ -77,8 +77,6 @@ export abstract class ClassFrame
   public isNotInheritable = false;
   public inheritance: InheritsFromField;
   private _children: Array<Frame> = new Array<Frame>();
-  hrefForFrameHelp: string = "LangRef.html#class";
-
   constructor(parent: File) {
     super(parent);
     this.name = new TypeNameField(this);

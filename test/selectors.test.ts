@@ -85,7 +85,7 @@ suite("Selector tests", () => {
     assert.equal(help, " constant class");
     assert.equal(
       g.renderAsHtml(),
-      `<el-global class="none" id='select1' tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt>c</el-txt><el-place>new code</el-place><el-help class="selector"> constant class</el-help></el-select></el-global>`,
+      `<el-global class="none" id='select1' tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt>c</el-txt><el-place>new code</el-place><div class="options"> constant class</div></el-select></el-global>`,
     );
   });
 
@@ -113,7 +113,7 @@ suite("Selector tests", () => {
     assert.equal(help, " property procedure");
     assert.equal(
       s.renderAsHtml(),
-      `<el-member class="ok" id='select5' tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt>private pro</el-txt><el-place>new code</el-place><el-help class="selector"> property procedure</el-help></el-select></el-member>`,
+      `<el-member class="ok" id='select5' tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt>private pro</el-txt><el-place>new code</el-place><div class="options"> property procedure</div></el-select></el-member>`,
     );
   });
 
@@ -135,7 +135,7 @@ suite("Selector tests", () => {
     assert.equal(s.getCompletion(), " property procedure");
     assert.equal(
       s.renderAsHtml(),
-      `<el-member class="ok" id='select5' tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt>abstract pro</el-txt><el-place>new code</el-place><el-help class="selector"> property procedure</el-help></el-select></el-member>`,
+      `<el-member class="ok" id='select5' tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt>abstract pro</el-txt><el-place>new code</el-place><div class="options"> property procedure</div></el-select></el-member>`,
     );
   });
 
@@ -160,7 +160,7 @@ suite("Selector tests", () => {
     assert.equal(help, " throw try");
     assert.equal(
       s.renderAsHtml(),
-      `<el-statement class="ok" id='select3' tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt>t</el-txt><el-place>new code</el-place><el-help class="selector"> throw try</el-help></el-select></el-statement>`,
+      `<el-statement class="ok" id='select3' tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt>t</el-txt><el-place>new code</el-place><div class="options"> throw try</div></el-select></el-statement>`,
     );
   });
 

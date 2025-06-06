@@ -3,8 +3,6 @@ import { CSV } from "./csv";
 import { ExprNode } from "./expr-node";
 
 export class ArgListNode extends CSV {
-  errorLink: string = "#parse_arg_list";
-
   context: () => string;
 
   constructor(context: () => string) {

@@ -150,6 +150,7 @@ export function helper_pastePopUp(loc: Frame | Field): string {
 export function helper_compileMsgAsHtml(loc: Frame | Field): string {
   let msg = "";
   let link = "";
+  let help = "";
   const first = loc.compileErrors[0];
   const n = loc.compileErrors.length;
   if (n > 0) {
@@ -166,7 +167,7 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
     cls = DisplayColour[compile];
   }
   if (link) {
-    cls = cls + " error-link";
+    help = `<el-help title="Click to open Help for this error"><a href="documentation/${link}" target ="doc-iframe">?</a></el-help>`;
   }
 
   const popUp = helper_pastePopUp(loc);
@@ -175,7 +176,7 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
   const href = link ? ` data-href="${link}"` : "";
   return cls === ""
     ? `<el-msg></el-msg>${popUp}`
-    : ` <el-msg class="${cls}"${href}>${toDisplay}</el-msg>${popUp}`;
+    : ` <el-msg class="${cls}"${href}>${toDisplay}${help}</el-msg>${popUp}`;
 }
 
 export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): CompileStatus {

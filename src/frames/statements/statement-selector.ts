@@ -24,11 +24,13 @@ import {
 export class StatementSelector extends AbstractSelector {
   isStatement = true;
   private factory: StatementFactory;
-  hrefForFrameHelp: string = "LangRef.html#Statement_selector";
-
   constructor(parent: FrameWithStatements) {
     super(parent);
     this.factory = parent.getFactory();
+  }
+
+  override helpId(): string {
+    return "StatementInstructions";
   }
 
   defaultOptions(): [string, (parent: Parent) => Frame][] {

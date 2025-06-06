@@ -80,7 +80,7 @@ end procedure
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot call procedure 'foo' within an expression. Click for more info.LangRef.html#compile_error",
+      "Cannot call procedure 'foo' within an expression.LangRef.html#compile_error",
     ]);
   });
 
@@ -101,7 +101,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot call a function as a procedure. Click for more info.LangRef.html#compile_error",
+      "Cannot call a function as a procedure.LangRef.html#compile_error",
     ]);
   });
 
@@ -144,7 +144,7 @@ end function
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot use a system method in a function. Click for more info.LangRef.html#compile_error",
+      "Cannot use a system method in a function.LangRef.html#compile_error",
     ]);
   });
 });

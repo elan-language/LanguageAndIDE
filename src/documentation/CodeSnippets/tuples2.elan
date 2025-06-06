@@ -1,4 +1,4 @@
-# a52ba43fef7ffdc2b72b6951cd6eb8474a5a07237627a5dc4cfe23fae72b5a74 Elan 1.1.2 guest default_profile valid
+# f443852eb4330bda5eba231a7887e15b768ee78fa88d5dc410340693dac67c75 Elan 1.1.4 guest default_profile valid
 
 main
   print 1.20e-2
@@ -7,7 +7,7 @@ main
   set tu to tuple(0, false)
   print tu
   print {tu}
-  variable x,_ set to tu
+  variable x, _ set to tu
   print x
   variable _, y set to tu
   print y

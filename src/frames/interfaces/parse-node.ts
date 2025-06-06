@@ -5,7 +5,6 @@ export interface ParseNode {
   status: ParseStatus;
   matchedText: string;
   remainingText: string;
-  errorLink: string;
 
   parseText(text: string): void;
 

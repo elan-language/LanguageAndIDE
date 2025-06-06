@@ -403,8 +403,8 @@ enum Fruit apple, orange, pear`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String. Click for more info.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: Fruit. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: Fruit.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -465,7 +465,7 @@ enum Fruit apple, orange, pear`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Fruit. Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Fruit.LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -480,9 +480,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'Fruit' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'Fruit' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_undefinedEnumValue", async () => {
@@ -498,9 +496,7 @@ enum Fruit apple, orange, pear`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'kiwi' is not defined. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'kiwi' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
@@ -532,7 +528,7 @@ enum Fruit apple, orange, if`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'if' is a keyword, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
+      "'if' is a keyword, and may not be used as an identifier.LangRef.html#compile_error",
     ]);
   });
 
@@ -550,7 +546,7 @@ enum Fruit apple, orange, break`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'break' is a reserved word, and may not be used as an identifier. Click for more info.LangRef.html#compile_error",
+      "'break' is a reserved word, and may not be used as an identifier.LangRef.html#compile_error",
     ]);
   });
 
@@ -569,9 +565,7 @@ enum Fruit apple, orange, pear`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Name 'Fruit' not unique in scope. Click for more info.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Name 'Fruit' not unique in scope.LangRef.html#compile_error"]);
   });
 
   test("Fail_DuplicateValues", async () => {
@@ -588,7 +582,7 @@ enum Fruit apple, orange, pear, orange`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'orange' not unique in scope. Click for more info.LangRef.html#compile_error",
+      "Name 'orange' not unique in scope.LangRef.html#compile_error",
     ]);
   });
 });

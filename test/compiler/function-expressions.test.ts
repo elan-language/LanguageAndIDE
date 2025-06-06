@@ -206,7 +206,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'max' is not defined for type 'String'. Click for more info.LangRef.html#compile_error",
+      "'max' is not defined for type 'String'.LangRef.html#compile_error",
     ]);
   });
 
@@ -222,7 +222,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot call a function as a procedure. Click for more info.LangRef.html#compile_error",
+      "Cannot call a function as a procedure.LangRef.html#compile_error",
     ]);
   });
 
@@ -252,7 +252,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot call a function as a procedure. Click for more info.LangRef.html#compile_error",
+      "Cannot call a function as a procedure.LangRef.html#compile_error",
     ]);
   });
 });

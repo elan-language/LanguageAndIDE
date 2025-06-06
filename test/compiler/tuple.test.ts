@@ -233,7 +233,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Wrong number of deconstructed variables. Click for more info.LangRef.html#compile_error",
+      "Wrong number of deconstructed variables.LangRef.html#compile_error",
     ]);
   });
 
@@ -254,7 +254,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: _, Int, Provided: tuple(Int, String). Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: _, Int, Provided: tuple(Int, String).LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -288,7 +288,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: tuple(Int, String), Provided: tuple(String, String). Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: tuple(Int, String), Provided: tuple(String, String).LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -307,7 +307,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: tuple(Int, String, Int), Provided: tuple(Int, String). Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: tuple(Int, String, Int), Provided: tuple(Int, String).LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -326,7 +326,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: tuple(Int, String), Provided: tuple(Int, String, Int). Click for more info.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: tuple(Int, String), Provided: tuple(Int, String, Int).LangRef.html#TypesCompileError",
     ]);
   });
 });
