@@ -110,7 +110,7 @@ Unlike a function, a procedure does not return a value.
 <h2 id="function">Function</h2>
 <p>A <el-code>function</el-code> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in a statement or expression.</p>
 <p>Unlike a <a href="#procedure">procedure</a>, a function returns a value. Also unlike a procedure, a function can have no &lsquo;side effects&rsquo; and cannot depend on any <a href="LibRef.html#SystemMethods">System methods</a>.</p>
-<p>The <el-code><el-kw>return</el-kw></el-code> statement is followed by the value returned by the function.</p>
+<p>The <el-kw>return</el-kw> statement is followed by the value returned by the function.</p>
 <p>Example of a function:</p>
 <el-code-block source="score.elan">
 <el-func class="ok multiline" id="func91" tabindex="0">
@@ -199,7 +199,7 @@ Procedures and functions may be called or referenced recursively. For example, a
 
 <p>If this occurs, mark the tests that you added since the last successful test run with <el-code>ignore</el-code> (see below), and then remove their ignore status one by one until the cause is identified and fixed.</p>
 
-<h4 class="no-TOC" id="ignore">Marking a test with <el-code><el-kw>ignore</el-kw></el-code></h4>
+<h4 class="no-TOC" id="ignore">Marking a test with <el-kw>ignore</el-kw></h4>
 <p>It is possible to mark a <el-code>test</el-code> with the <el-code>ignore</el-code> keyword, by selecting the <el-code>test</el-code> frame and then hitting Ctrl-i, as in this example:</p>
 
 <el-code-block source="test_ignore.elan">
@@ -219,9 +219,9 @@ Procedures and functions may be called or referenced recursively. For example, a
 <h2 id="constant">Constant</h2>
 <p>A <el-code>constant</el-code> defines a named value that cannot change, is always defined at global level (directly within a file), and is global in scope.</p>
 <p>A constant is created at compile time, so cannot be defined with reference to any function, nor use any operators.</p>
-<p>A constant can be defined as a literal <el-code><el-type>Int</el-type></el-code>, <el-code><el-type>Float</el-type></el-code>, <el-code><el-type>Boolean</el-type></el-code>,
- <el-code><el-type>String</el-type></el-code>, <el-code><el-type>ListImmutable</el-type></el-code> or <el-code><el-type>DictionaryImmutable</el-type></el-code>.</p>
-<p>A constant may not be defined within any method, but see the description of the <a href="#let"><el-code><el-kw>let</el-kw></el-code></a> statement.</p>
+<p>A constant can be defined as a literal <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type>,
+ <el-type>String</el-type>, <el-type>ListImmutable</el-type> or <el-type>DictionaryImmutable</el-type>.</p>
+<p>A constant may not be defined within any method, but see the description of the <a href="#let"><el-kw>let</el-kw></a> statement.</p>
 <p>The name of a <el-code>constant</el-code> follows the rules for an <a href="#Identifier">Identifier</a>.</p>
 
 <p>Some examples:</p>
@@ -265,7 +265,7 @@ The value is specified by the Type name for the specified <el-code>enum</el-code
 <p>A <el-code>record</el-code> is a user-defined data structure that is given a Type name (which must begin with an upper case letter).
   The <el-code>record</el-code> defines one or more properties, each of which has a name (starting with a lower case letter) and a Type.
   The Type of a property may be any simple value Type, or a <el-code>ListImmutable</el-code>, or another Type of <el-code>record</el-code> ( or even the same Type of <el-code>record</el-code>).</p>
-  <p>Note that the Type <el-code><el-type>record</el-type></el-code> has some similarity to a <a href="#class"><el-code><el-type>class</el-type></el-code></a> in that:</p>
+  <p>Note that the Type <el-type>record</el-type> has some similarity to a <a href="#class"><el-type>class</el-type></a> in that:</p>
 <ul>
   <li>Both are user-defined data structures</li>
   <li>Both are given a &lsquo;Type name&rsquo;</li>
@@ -310,7 +310,7 @@ Having defined a record Type, such as <el-code>Game</el-code> above, you can cre
 <p>You can then read the values from the properties using &lsquo;dot syntax&rsquo; for example:</p>
 <el-code-block source=""><el-statement class="" id="print15" tabindex="0"><el-kw>print </el-kw><el-field id="expr16" class="optional" tabindex="0"><el-txt><el-id>sq</el-id>.<el-id>size</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
 </el-code-block>
-<p><el-code><el-kw>record</el-kw></el-code> Types are immutable: the properties on an instance may not be changed, directly.
+<p><el-kw>record</el-kw> Types are immutable: the properties on an instance may not be changed, directly.
   However, you can easily create another instance that is a copy of the original,
   with all the same property values except for any specific changes made in another <el-code>with</el-code> clause.
   The newly-minted copy (with changes) must be assigned to a new named value. For example:</p>
@@ -341,7 +341,7 @@ Having defined a record Type, such as <el-code>Game</el-code> above, you can cre
   <el-statement class="" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>x</el-id>, <el-id>y</el-id>, <el-id>size</el-id>, <el-id>colour</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="" tabindex="0"><el-txt><el-id>mySquare</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
 </el-code-block>
 <p>will read the <el-code>properties</el-code> into the four names defined.</p>
-When deconstructing, the names of the values must match the names of the <el-code>properties</el-code> of the <el-code><el-kw>record</el-kw></el-code>. However, the ordering of the names does not have to match the order in which the <el-code>properties</el-code> are defined in the <el-code><el-kw>record</el-kw></el-code>.
+When deconstructing, the names of the values must match the names of the <el-code>properties</el-code> of the <el-kw>record</el-kw>. However, the ordering of the names does not have to match the order in which the <el-code>properties</el-code> are defined in the <el-kw>record</el-kw>.
 
 <h2 id="class">Class</h2>
 <!-- TODO Subclass and Superclass -->
@@ -350,7 +350,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 <p>See also: <a href="#Inheritance">Inheritance</a></p>
 
 <p>A <el-code>class</el-code> is a user-defined Type offering far richer capability than an <el-code>enum</el-code>. </p>
-<p>Note that a <el-code><el-kw>record</el-kw></el-code> is in some ways similar to a <el-code>class</el-code> but simpler: it defines properties, but has no constructor and no methods. See <a href="#record">Working with records</a>.</p>
+<p>Note that a <el-kw>record</el-kw> is in some ways similar to a <el-code>class</el-code> but simpler: it defines properties, but has no constructor and no methods. See <a href="#record">Working with records</a>.</p>
 
 <h4 class="no-TOC">Definition</h4>
 <p>Here is an example of <el-code>class</el-code> definition, taken from the Snake OOP demo program:</p>
@@ -418,7 +418,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 <p>See also: <a href="#Inheritance">Inheritance</a></p>
 <p>An <el-code>abstract class</el-code> may not be instantiated (and hence may not define a constructor). It may define concrete members i.e.:</p>
 <ul>
-<li>a <el-code><el-kw>property</el-kw></el-code> </li>
+<li>a <el-kw>property</el-kw> </li>
 <li>a <el-code>function</el-code></li>
 <li>a <el-code>procedure</el-code></li>
 </ul>
@@ -458,7 +458,7 @@ If you wish to have several subclasses of an <el-code>abstract class</el-code> t
 <a href="#function_method">private function</a>,
 <a href="#Comment">#</a>
 
-<p>Member instructions (also sometimes referred to simply as &lsquo;members&rsquo;) 
+<p>Member instructions (also sometimes referred to simply as &lsquo;members&rsquo;)
   are located within a <el-kw>class</el-kw>, <el-kw>abstract class</el-kw>, <el-kw>interface</el-kw>, or <el-kw>record</el-kw>.
   A different subset of the total list above will be offered in the four different contexts.</p>
 
@@ -471,7 +471,7 @@ If you wish to have several subclasses of an <el-code>abstract class</el-code> t
 <li>define one or more parameters, which are then used to initialise properties</li>
 </ul>
 <p>If a class does define a constructor, and the constructor defines any parameters, then when the class is instantiated (using <el-code>new</el-code>) then values of
-the correct types must be provided, for example, if the class <el-code><el-type>Square</el-type></el-code> defines this constructor:</p>
+the correct types must be provided, for example, if the class <el-type>Square</el-type> defines this constructor:</p>
 
 <el-code-block>
   <el-constructor class="ok multiline" id="constructor211" tabindex="0">
@@ -495,13 +495,13 @@ the correct types must be provided, for example, if the class <el-code><el-type>
 <el-code>property head as Square</el-code><br>
 <el-code>property body as [Square]</el-code><br>
 <ul>
-<li>A <el-code><el-kw>property</el-kw></el-code> is defined on a <span class="Link">Class</span> and must <el-code>specify</el-code> a name (conforming to the rules for an <a href="#identifier">Identifier</a>) and a Type.</li>
-<li>A <el-code><el-kw>property</el-kw></el-code> may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and pressing Ctrl-p. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
+<li>A <el-kw>property</el-kw> is defined on a <span class="Link">Class</span> and must <el-code>specify</el-code> a name (conforming to the rules for an <a href="#identifier">Identifier</a>) and a Type.</li>
+<li>A <el-kw>property</el-kw> may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and pressing Ctrl-p. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 <li>If not marked <el-code>private</el-code>, a property may be read but not be written to. Properties may only be modified from outside the class by means of a <span class="Link">Procedure method</span>.</li>
 <li>A property may be given an initial value in the <el-code>constructor</el-code>.</li>
 </ul>
 <p>
-If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the constructor then it will automatically be given the <el-code>empty</el-code> value for that Type. You may test whether a property contains this default value by writing e.g.:<br>
+If the <el-kw>property</el-kw> is not initialised within the constructor then it will automatically be given the <el-code>empty</el-code> value for that Type. You may test whether a property contains this default value by writing e.g.:<br>
 <el-code>if head is empty Square</el-code></p>
 <ul>
 <li>Whenever you wish to access a property from within a method (or from within the constructor) on the same class, then the name of the property must be prefixed with the &lsquo;qualifier&rsquo;: <el-code>property. </el-code>(&lsquo;property-dot&rsquo;). This applies whether you are reading or setting the property. By this means you can have a method parameter with the same name as a property, but they are unambiguous, because the property must be prefixed. A common pattern is to use the same name in a &lsquo;setter&rsquo; method, for example:</li>
@@ -518,7 +518,7 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
 <p>A &lsquo;procedure method&rsquo; follows the same syntax and rules as a global <a href="#procedure">procedure</a>. The differences are:</p>
 <ul>
 <li>A procedure method, like a function method, is always referenced (used) by code outside the class using &lsquo;dot syntax&rsquo; on an instance.</li>
-<li>A procedure method may read, or write to, any <el-code><el-kw>property</el-kw></el-code> defined on the class.</li>
+<li>A procedure method may read, or write to, any <el-kw>property</el-kw> defined on the class.</li>
 <li>A procedure method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then pressing Ctrl-p. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 </ul>
 
@@ -526,20 +526,20 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
 <p>A function method follows the same syntax and rules as a global <a href="#function">function</a>. The differences are:</p>
 <ul>
 <li>A <el-code>function</el-code> method is always referenced (used) by code outside the class using &lsquo;dot syntax&rsquo; on an instance.</li>
-<li>A <el-code>function</el-code> method may directly reference (read only) any <el-code><el-kw>property</el-kw></el-code> defined on the class as though it were a variable/parameter.</li>
+<li>A <el-code>function</el-code> method may directly reference (read only) any <el-kw>property</el-kw> defined on the class as though it were a variable/parameter.</li>
 <li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then pressing Ctrl-p. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 <li>asString() method</li>
 <li>asString method. This is just a regular function method with a specific name, no parameters and returning a String. If defined for a class, then if an instance of the class is printed, the <el-code>asString</el-code> function method will automatically be used. Typically <el-code>asString</el-code> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
 </ul>
 
 <h2 id="abstractproperty">Abstract Property</h2>
-<p>An abstract property may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
+<p>An abstract property may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
 
 <h2 id="AbstractProcedureMethod">Abstract Procedure Method</h2>
-<p>An abstract procedure method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
+<p>An abstract procedure method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
 
 <h2 id="abstractFunctionMethod">Abstract Function Method</h2>
-<p>An abstract function method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete sub-class must then implement a concrete (regular) property to match.</p>
+<p>An abstract function method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
 
 <h2 id="member_comment"># (comment)</h2>
 <p>See <a href="#Comment">Comments</a>.</p>
@@ -562,7 +562,7 @@ If the <el-code><el-kw>property</el-kw></el-code> is not initialised within the 
 <a href="#while">while</a>
 <a href="#Comment">#</a>
 
-<p>Statement instructions (also sometimes referred to simply as &lsquo;statements&rsquo;) 
+<p>Statement instructions (also sometimes referred to simply as &lsquo;statements&rsquo;)
   are located within &lsquo;methods&rsquo;. Some of these statements may contain other statements.</p>
 
 <h2 id="assert">Assert statement</h2>
@@ -578,7 +578,7 @@ by <a href="#throw">throwing an exception</a> like this:</p>
 <p>which will stop the program and print the message in the Debug window (unless caught by a <a href="#try"><el-kw>try</el-kw></a> statement).</p>
 
 <h2 id="call">Procedure call</h2>
-<p>A <el-code><el-kw>call</el-kw></el-code> statement is used when you want to run a procedure.</p>
+<p>A <el-kw>call</el-kw> statement is used when you want to run a procedure.</p>
 <p>The procedure may be:</p>
 <ul>
 <li>a procedure that you have defined at the global level</li>
@@ -595,14 +595,14 @@ by <a href="#throw">throwing an exception</a> like this:</p>
   <el-statement><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>cards</el-id>.<el-method>append</el-method>(<el-id>card</el-id>)</el-statement>
 </ul>
 <p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
-<p>For procedures that you define yourself, <el-code><el-kw>out</el-kw></el-code> parameters are allowed.  In this case the corresponding argument must be the name of a variable whose value gets updated by the procedure.</p>
-<p>If the parameter is not an <el-code><el-kw>out</el-kw></el-code> parameter, any expression of the correct Type can be used as an argument.</p>
-<p>Procedures may have side-effects, for example input/output or changing a data value in an object.  They can change the contents of any mutable object passed in as an argument.  For this reason, procedures cannot be called from functions, which are not allowed to have side-effects.  <el-code><el-kw>call</el-kw></el-code> statements are simply not allowed in functions, to enforce this.</p>
-<p>There is a limit to the complexity of a <el-code><el-kw>call</el-kw></el-code> statement.  Only one dot is allowed in the <el-code>procedure name</el-code> field, or two dots if the first word is <el-code><el-kw>property</el-kw></el-code>.  If you need anything more complicated, use a <el-code><el-kw>let</el-kw></el-code> statement on the line above.  See the error message explanation for <a href="#parse_proc_ref">Invalid reference to a procedure</a>.</p>
+<p>For procedures that you define yourself, <el-kw>out</el-kw> parameters are allowed.  In this case the corresponding argument must be the name of a variable whose value gets updated by the procedure.</p>
+<p>If the parameter is not an <el-kw>out</el-kw> parameter, any expression of the correct Type can be used as an argument.</p>
+<p>Procedures may have side-effects, for example input/output or changing a data value in an object. They can change the contents of any mutable object passed in as an argument.  For this reason, procedures cannot be called from functions, which are not allowed to have side-effects.  <el-kw>call</el-kw> statements are simply not allowed in functions, to enforce this.</p>
+<p>There is a limit to the complexity of a <el-kw>call</el-kw> statement.  Only one dot is allowed in the <el-code>procedure name</el-code> field, or two dots if the first word is <el-kw>property</el-kw>.  If you need anything more complicated, use a <el-kw>let</el-kw> statement on the line above.  See the error message explanation for <a href="#parse_proc_ref">Invalid reference to a procedure</a>.</p>
 
 <h2 id="each">Each loop</h2>
-<p>The <el-code>each..in..</el-code> construct specifies looping sequentially over the elements in a <el-code><el-type>List</el-type></el-code> or  an <el-code><el-type>Array</el-type></el-code>, or over the characters in a <el-code><el-type>String</el-type></el-code>.</p>
-<p>The <el-code>each..</el-code> loop variable is of the same Type as the elements in the List or Array, or is of Type String if looping over the characters in a String. The variable does not have to have been defined in a <el-code>variable</el-code> statement.</p>
+<p>The <el-code>each..in..</el-code> construct specifies looping sequentially over the elements in a <el-type>List</el-type> or  an <el-type>Array</el-type>, or over the characters in a <el-type>String</el-type>.</p>
+<p>The <el-code>each..</el-code> loop counter variable is of the same Type as the elements in the List or Array, or is of Type String if looping over the characters in a String. The variable does not have to have been defined in a <el-code>variable</el-code> statement.</p>
 <p>Example:</p>
 <el-code-block source="each.elan">
 <el-statement class="ok" id="var16" tabindex="0"><el-kw>variable </el-kw><el-field id="var17" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr18" class="ok" tabindex="0"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -617,8 +617,8 @@ by <a href="#throw">throwing an exception</a> like this:</p>
 <h2 id="for">For loop</h2>
 <div id="step"></div>
 <p>The <el-code>for..from..to..step..</el-code> construct specifies looping through a sequence of integer values with a given increment.</p>
-<p>The <el-code>for..</el-code> loop counter variable (which counts from 0) is of Type <el-code><el-type>Int</el-type></el-code> and does not have to have been defined in a <el-code>variable</el-code> statement.</p>
-<p>The three defining values, <el-code>from</el-code>, <el-code>to</el-code>, and <el-code>step</el-code>, must all be of Type <el-code><el-type>Int</el-type></el-code>, positive or negative.
+<p>The <el-code>for..</el-code> loop counter variable (which counts from 0) is of Type <el-type>Int</el-type> and does not have to have been defined in a <el-code>variable</el-code> statement.</p>
+<p>The three defining values, <el-code>from</el-code>, <el-code>to</el-code>, and <el-code>step</el-code>, must all be of Type <el-type>Int</el-type>, positive or negative.
 and may be defined by literals, variables  or expressions that evaluate to integers.</p>
 <p>Note that, if you require a negative step value, then the literal, variable, or expression must start with a negative sign.
 This is needed at compile time to determine the nature of the exit condition.
@@ -667,11 +667,11 @@ Example 2:
 </el-code-block>
 
 <h2 id="let">Let statement</h2>
-<p>The <el-code><el-kw>let</el-kw></el-code> statement may be thought of as being between a constant and a variable.
-Like a variable a <el-code><el-kw>let</el-kw></el-code>  may be defined only within a routine, but unlike a variable it may not be re-assigned once defined.
+<p>The <el-kw>let</el-kw> statement may be thought of as being between a constant and a variable.
+Like a variable a <el-kw>let</el-kw>  may be defined only within a routine, but unlike a variable it may not be re-assigned once defined.
 It is recommended that you always use a let in preference to a variable unless you need to be able to assign a new value to it.
 </p>
-<p>You can put a <el-code><el-kw>let</el-kw></el-code> in a loop, so the variable gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
+<p>You can put a <el-kw>let</el-kw> in a loop, so the variable gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
 
 <h2 id="print">Print statement</h2>
 <p>The simplest way to print is with the <el-code>print</el-code> statement. For example:</p>
@@ -689,8 +689,8 @@ It is recommended that you always use a let in preference to a variable unless y
 </ul>
 
 <h2 id="repeat">Repeat loop</h2>
-<p>The <el-code><el-kw>repeat .. end repeat when</el-kw></el-code> <el-code>condition</el-code> loop is used when you want at least one execution of the enclosed statements followed by a test that chooses either to execute them again or to exit from the loop.</p>
-<p><el-code>condition</el-code> is either a <el-code><el-type>Boolean</el-type></el-code> variable or an expression that evaluates to a Boolean value.</p>
+<p>The <el-kw>repeat .. end repeat when</el-kw> <el-code>condition</el-code> loop is used when you want at least one execution of the enclosed statements followed by a test that chooses either to execute them again or to exit from the loop.</p>
+<p><el-code>condition</el-code> is either a <el-type>Boolean</el-type> variable or an expression that evaluates to a Boolean value.</p>
 <p>If <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code> then the loop ends, if <el-code><el-id>false</el-id></el-code> it resumes. For example:</p>
 
 <el-code-block source="repeat.elan">
@@ -704,9 +704,9 @@ It is recommended that you always use a let in preference to a variable unless y
 
 <h2 id="set">Set statement</h2>
 <p>
-The <el-code><el-kw>set</el-kw></el-code> statement is used to assign a new value to an existing variable.
+The <el-kw>set</el-kw> statement is used to assign a new value to an existing variable.
 The new value must be of the same Type as (or a Type compatible with) that of the variable.
-A <el-code><el-kw>set</el-kw></el-code> statement may not assign a new value to a parameter within a procedure.</p>
+A <el-kw>set</el-kw> statement may not assign a new value to a parameter within a procedure.</p>
 
 <h2 id="throw">Throw statement</h2>
 <p>If you are in mode <i>Advanced level coding</i> (see <a href="IDEguide.html#preferences">Preferences</a>), you can deliberately generate, or &lsquo;throw&rsquo;, an exception when a specific circumstance is identified, using a <el-code>throw</el-code> statement, for example:</p>
@@ -726,7 +726,7 @@ A <el-code><el-kw>set</el-kw></el-code> statement may not assign a new value to 
 <el-kw>end try</el-kw>
 </el-statement>
 </el-code-block>
-The variable holding the exception (by default named <el-code>e</el-code>, but this may be changed by you) is of Type <el-code><el-type>String</el-type></el-code>. You can compare the exception message to one or more expected messages and, if the message does not match an expected exception, you may choose to throw the exception 'up', as in this example:
+The variable holding the exception (by default named <el-code>e</el-code>, but this may be changed by you) is of Type <el-type>String</el-type>. You can compare the exception message to one or more expected messages and, if the message does not match an expected exception, you may choose to throw the exception 'up', as in this example:
 <el-code-block source="tryCatch.elan">
 <el-statement class="ok multiline" id="try141" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>try </el-kw></el-top>
@@ -744,13 +744,13 @@ The variable holding the exception (by default named <el-code>e</el-code>, but t
 </el-code-block>
 
 <h2 id="variable">Variable statement</h2>
-<p>The <el-code><el-kw>variable</el-kw></el-code> statement defines the name to be used to store mutable (i.e. changeable) data. The name defined must be a valid <a href="#Identifier">Identifier</a>,
+<p>The <el-kw>variable</el-kw> statement defines the name to be used to store mutable (i.e. changeable) data. The name defined must be a valid <a href="#Identifier">Identifier</a>,
 and the initial value is given by a following expression. For example:</p>
 
 <h2 id="while">While loop</h2>
-<p>The <el-code><el-kw>while condition .. end while</el-kw></el-code> loop is used when you want execution of the enclosed statements to begin
+<p>The <el-kw>while condition .. end while</el-kw> loop is used when you want execution of the enclosed statements to begin
  only if <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code>.</p>
-<p><el-code>condition</el-code> is either a <el-code><el-type>Boolean</el-type></el-code> variable or an expression that evaluates to a Boolean value.</p>
+<p><el-code>condition</el-code> is either a <el-type>Boolean</el-type> variable or an expression that evaluates to a Boolean value.</p>
 <p>When <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code> the enclosed code is executed;
  when <el-code><el-id>false</el-id></el-code> the loop is bypassed. For example:</p>
 
@@ -868,7 +868,7 @@ example, which implements an &lsquo;exclusive or&rsquo;, need not use brackets a
 <h4 class="no-TOC" id="EqualityTesting">Equality testing</h4>
 <p>Equality testing uses the <el-code>is</el-code> and <el-code>isnt</el-code> keywords with two arguments. The arguments may be of any Type.</p>
 <ul>
-<li><el-code> a is b</el-code> returns <el-code><el-kw><el-id>true</el-id></el-kw></el-code>, if <el-code>a</el-code> and <el-code>b</el-code> are both of the same Type and their values are equal. The only exception is that if one argument is of Type <el-code>Float</el-code> and the other is of Type <el-code>Int</el-code>, then <el-code>is</el-code> will return <el-code>true</el-code> if their values are the same, i.e. are the same whole number.</li>
+<li><el-code> a is b</el-code> returns <el-kw><el-id>true</el-id></el-kw>, if <el-code>a</el-code> and <el-code>b</el-code> are both of the same Type and their values are equal. The only exception is that if one argument is of Type <el-code>Float</el-code> and the other is of Type <el-code>Int</el-code>, then <el-code>is</el-code> will return <el-code>true</el-code> if their values are the same, i.e. are the same whole number.</li>
 <li><el-code>isnt</el-code> returns the opposite of <el-code>is</el-code>.</li>
 <p>Note that in Elan equality testing is always &lsquo;equality by value&rsquo;; there is no such thing as &lsquo;equality by reference&rsquo;.</p>
 <li>Where a binary operator is expected, as soon as you type <el-code>is</el-code> the editor will automatically insert a space after it. To enter <el-code>isnt</el-code> you need to delete the space (using the Backspace key) and then type <el-code>nt</el-code>.</li>
@@ -916,14 +916,14 @@ See <a href="LibRef.html#upperCase">Dot methods on a String</a>.</li>
 </ul>
 
 <h2 id="lambda">Lambda</h2>
-<p>A <el-code><el-kw>lambda</el-kw></el-code> is a lightweight means to define a function &lsquo;in line&rsquo;. You typically define a <el-code>lambda</el-code>:</p>
+<p>A <el-kw>lambda</el-kw> is a lightweight means to define a function &lsquo;in line&rsquo;. You typically define a <el-code>lambda</el-code>:</p>
 <ul>
 <li>If the functionality it defines is needed in only one location: typically for a particular call to a <a href="LibRef.html#HoFs">Higher order Function</a> (HoF).</li>
 <li>If you need to capture a local variable in the implementation. This is called &lsquo;closing around a variable&rsquo;.</li>
 </ul>
-<p>The syntax for a <el-code><el-kw>lambda</el-kw></el-code> is as follows:</p>
+<p>The syntax for a <el-kw>lambda</el-kw> is as follows:</p>
 <ul>
-<li>Start with the keyword <el-code><el-kw>lambda</el-kw></el-code>.</li>
+<li>Start with the keyword <el-kw>lambda</el-kw>.</li>
 <li>Parameter definitions, comma-separated, follow the same form as parameter definitions in a function or procedure, but without surrounding brackets.</li>
 <li>The <el-code>=&gt;</el-code> symbol, which is usually articulated as &lsquo;returns&rsquo;,  &lsquo;yields&rsquo; or even &lsquo;fat arrow&rsquo;.</li>
 <li>An expression that makes use of the parameters, and may also make use of other variables that are in scope. </li>
@@ -939,7 +939,7 @@ Example:
 </el-code-block>
 Notes:
 <ul>
-<li>Although a <el-code><el-kw>lambda</el-kw></el-code> is commonly defined &lsquo;inline&rsquo; (as shown above) it is possible to assign a lambda to a variable and hence to re-use it within the scope of that variable.</li>
+<li>Although a <el-kw>lambda</el-kw> is commonly defined &lsquo;inline&rsquo; (as shown above) it is possible to assign a lambda to a variable and hence to re-use it within the scope of that variable.</li>
 </ul>
 
 <h2 id="if_expression">If expression</h2>
@@ -998,8 +998,8 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 </el-func>
 </el-code-block>
 
-<p>However, <el-code><el-kw>copy with</el-kw></el-code> may also be used in object-oriented programming, with instances of regular (<i>mutable</i>) classes. Also,
-  note that a <el-code><el-kw>with</el-kw></el-code> clause (following the same syntax as in a <el-code><el-kw>copy with</el-kw></el-code> expression), may be used
+<p>However, <el-kw>copy with</el-kw> may also be used in object-oriented programming, with instances of regular (<i>mutable</i>) classes. Also,
+  note that a <el-kw>with</el-kw> clause (following the same syntax as in a <el-kw>copy with</el-kw> expression), may be used
   within a new instance expression to set up properties for the object not specified in the constructor.</p>
 
 <h2 id="empty">Empty of Type</h2>
@@ -1024,308 +1024,313 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
     <el-kw>end procedure</el-kw>
     </el-proc>
 </el-code-block>
-
 <p>It is also possible explicitly to set a property or a named value to an empty instance of the appropriate Type.</p>
 
-<h2 id="compile_error">Compile Errors and Warnings</h2>
+<h1 id="compile_error">Compile Errors and Warnings</h1>
 
-<p>Q: What is the difference between a compile <i>error</i> and a <i>warning</i>.
-A: A warning usually indicates that the fix may involved <i>adding</i> some more code,
-for example adding a definition for an unknown identifier. An error usually indicates
-that you will need to <i>alter</i> code to fix the error.
-But they are similar in that
-you will not be able to run your program until the issues are fixed. In all programming
-languages it is a good practice 'treat all compile warnings as errors' i.e. fix them
-as soon as you see them appear.
-</p>
+<h2></h2>
+
+ <p>Q: What is the difference between a compile <i>error</i> and a <i>warning</i>.</p>
+ <p>A: A warning usually indicates that the fix may involve <i>adding</i> some more code,
+ for example adding a definition for an unknown identifier. An error usually indicates
+ that you will need to <i>alter</i> code to fix the error.
+ But they are similar in that you will not be able to run your program until the issues are fixed. In all programming
+ languages it is a good practice 'treat all compile warnings as errors' i.e. fix them as soon as you see them appear.</p>
+
+<h2>Messages</h2>
 
 <h3 id="TypeCompileError" class="no-TOC">Expression must be ...</h3>
-<p>An expression, when evaluated, results in a value of a type that is not compatible with its 'target',
-  for example: if the result of the expression is being assigned to an existing variable, or if an expression is defined 'inline' as
-  an argument into a method call.
-</p>
+ <p>An expression, when evaluated, results in a value of a Type that is not compatible with its 'target',
+ for example: if the result of the expression is being assigned to an existing variable, or if an expression is defined 'inline' as
+ an argument into a method call.</p>
 
 <h3 id="ThisCompileError" class="no-TOC">Cannot use 'this' outside class context</h3>
-<p>The keyword <el-code><el-kw>this</el-kw></el-code> may only be used within an instance method on a class to refer to the current instance.</p>
+ <p>The keyword <el-kw>this</el-kw> may only be used within an instance method on a class to refer to the current instance.</p>
 
 <h3 id="DeclaredAboveCompileError" class="no-TOC">Abstract Class ... must be declared before it is used</h3>
-<p>If a class inherits from one or more abstract classes, then the latter must all be already declared (defined) earlier in the code file.</p>
+ <p>If a class inherits from one or more abstract classes, then the latter must all have already been declared (defined) earlier in the code file.</p>
 
 <h3 id="MemberTypeCompileError" class="no-TOC">Member ... must be of type ...</h3>
-<p>This error occurs when a class is defined as inheriting from an abstract class,
-   and has implemented an inherited member (method or property) with the correct name, but with different type(s).</p>
+ <p>This error occurs when a class is defined as inheriting from an abstract class,
+ and has implemented an inherited member (method or property) with the correct name, but with different Types.</p>
 
-  <h3 id="TypesCompileError" class="no-TOC">Incompatible types. Expected: ... Provided: ...</h3>
+<h3 id="TypesCompileError" class="no-TOC">Incompatible types. Expected: ... Provided: ...</h3>
 
 <h3 id="TernaryCompileError" class="no-TOC">Cannot determine common type between ... and ...</h3>
 
 <h3 id="UndefinedSymbolCompileError" class="no-TOC"> ... is not defined for type ...</h3>
-<p>Arises when 'dot-calling' a member (method or property) that does not exist on the type of the named value or expression before the dot.</p>
+ <p>Arises when 'dot calling' a member (method or property) that does not exist on the Type of the named value or expression before the dot.</p>
 
 <h3 id="CannotCallAFunction" class="no-TOC">Cannot call a function as a procedure</h3>
-<p>A function (or function-method) is to be used within an expression, not via a <el-code><el-kw>call</el-kw></el-code> instruction.</p>
+ <p>A function (or function method) is to be used within an expression, not via a <el-kw>call</el-kw> instruction.</p>
 
 <h3 id="CannotUseSystemMethodInAFunction" class="no-TOC">Cannot use a system method in a function</h3>
-<p>A 'system method' (defined in the Standard Library) returns a value like a function does. However, because a system method
-  either makes changes to the system and/or depends on external inputs, it may be used only within a procedure or the main routine.
-</p>
+ <p>A 'system method' (defined in the Standard Library) returns a value like a function does. However, because a system method
+ either makes changes to the system and/or depends on external inputs, it may be used only within a procedure or the main routine.</p>
 
 <h3 id="IsDeprecated" class="no-TOC">Code change required ...</h3>
-<p>Indicates that a library method or class has been changed since the version in which your Elan code was written. The link in the
-  message should take you directly to information in the Library Reference documentation on how to update your code to cope with the change.
-</p>
+ <p>Indicates that a library method or class has been changed since the version in which your Elan code was written. The link in the
+ message should take you directly to information in the Library Reference documentation on how to update your code to cope with the change.</p>
 
 <h3 id="CannotUseLikeAFunction" class="no-TOC">Cannot call procedure ... within an expression</h3>
-<p>A procedure may only be used within a <el-code><el-kw>call</el-kw></el-code> instruction.</p>
+ <p>A procedure may be used only within a <el-kw>call</el-kw> instruction.</p>
 
 <h3 id="CannotCallAsAMethod" class="no-TOC">Cannot invoke ... as a method</h3>
-<p>The code is attempting to use a free-standing method (function or procedure) as a 'dotted-method' on a named value or the result of an expression.</p>
+ <p>The code is attempting to use a free-standing method (function or procedure) as a 'dot method' on a named value or the result of an expression.</p>
 
 <h3 id="NotIndexableCompileError" class="no-TOC">Cannot ...index ...</h3>
-<p>An index (in square brackets) may be applied only to certain data structure types: String, Array, Array2D, List, ImmutableList, Dictionary, and ImmutableDictionary.</p>
+ <p>An index (in square brackets) may be applied only to certain data structure Types: <el-type>String</el-type>, <el-type>Array</el-type>, <el-type>Array2D</el-type>,
+ <el-type>List</el-type>, <el-type>ListImmutable</el-type>, <el-type>Dictionary</el-type>, and <el-type>DictionaryImmutable</el-type>.</p>
 
 <h3 id="NotRangeableCompileError" class="no-TOC">Cannot range ...</h3>
-<p>An range may be applied only to certain data structure types: String, Array, List, and ImmutableList.</p>
+ <p>A range may be applied only to certain data structure Types: <el-type>String</el-type>, <el-type>Array</el-type>, <el-type>List</el-type>, and <el-type>ListImmutable</el-type>.</p>
 
 <h3 id="NotNewableCompileError" class="no-TOC">Cannot new ...</h3>
-<p>The type specified after the <el-code><el-kw>call</el-kw></el-code> keyword cannot be instantiated. Either the type is unknown,
-or it is an abstract class, or an interface.</p>
+ <p>The Type specified after the <el-kw>call</el-kw> keyword cannot be instantiated. Either the Type is unknown,
+ or it is an abstract class or interface.</p>
 
 <h3 id="InvalidSourceForEachCompileError" class="no-TOC">Source for 'each' must be an Array, List, or String.</h3>
 
 <h3 id="MustBeAbstractCompileError" class="no-TOC">Superclass ... must be inheritable class</h3>
-<p>A concrete class may inherit from an abstract class, and/or an interface, but not from another concrete class.</p>
+ <p>A concrete class may inherit from an abstract class, and/or an interface, but not from another concrete class.
+ In Elan, all classes must be either abstract or 'final' &ndash; a final class being concrete and not-inheritable.</p>
 
-<p>In Elan, all classes must be either abstract or 'final' - a final class being concrete and not-inheritable.</p>
 <h3 id="MustBeInterfaceCompileError" class="no-TOC">Superclass ... must be an interface</h3>
-
-<p>An interface may inherit from other interfaces, but not from any class.</p>
+ <p>An interface may inherit from other interfaces, but not from any class.</p>
 
 <h3 id="MustNotBeCircularDependencyCompileError" class="no-TOC">Class/interface ... cannot inherit from itself</h3>
-<p>The message is self explanatory.</p>
+ <p>The message is self explanatory.</p>
 
 <h3 id="MustBeSingleAbstractCompileError" class="no-TOC">There must be only one abstract superclass ...</h3>
-<p>A class may inherit from only one abstract class. However, it may additionally inherit from one or more interfaces.</p>
+ <p>A class may inherit from only one abstract class. However, it may additionally inherit from one or more interfaces.</p>
 
 <h3 id="PrivateMemberCompileError" class="no-TOC">Cannot reference private member ...</h3>
-<p>A private member (method or property) may be accessed only by code within the class, or within sub-classes of it.
-  It may not be accessed by any code outside the class hierarchy.
-</p>
+ <p>A private member (method or property) may be accessed only by code within the class, or within subclasses of it.
+ It may not be accessed by any code outside the class hierarchy.</p>
 
 <h3 id="MustImplementCompileError" class="no-TOC">... must implement ...</h3>
-<p>If a concrete class inherits from any abstract class or interface(s) it must implement all abstract methods defined in those types.</p>
+ <p>If a concrete class inherits from any abstract class or interface(s) it must implement all abstract methods defined in those Types.</p>
 
 <h3 id="MustBeConcreteCompileError" class="no-TOC">... must be concrete to new</h3>
-<p>You cannot create an instance of any abstract class or interface - only of a concrete class.</p>
+ <p>You cannot create an instance of any abstract class or interface - only of a concrete class.</p>
 
 <h3 id="OutParameterCompileError" class="no-TOC">Cannot pass ... as an out parameter</h3>
-<p>If a parameter of a procedure is marked with <el-code><el-kw>out</el-kw></el-code> then this means that the parameter may be
-reassigned within the procedure. Therefore you must pass in a variable that can be re-assigned. You cannot pass in: a
-constant, a literal value, or a named value that is defined by a <el-code><el-kw>let</el-kw></el-code> instruction.</p>
+ <p>If a parameter of a procedure is marked with <el-kw>out</el-kw> then this means that the parameter may be
+ reassigned within the procedure. Therefore you must pass in a variable that can be re-assigned. You cannot pass in: a
+ constant, a literal value, or a named value that is defined by a <el-kw>let</el-kw> instruction.</p>
 
 <h3 id="ExtensionCompileError" class="no-TOC">Cannot call extension method directly</h3>
-
-<p>A method that is defined within the Library as an 'extension method', such as <el-code><el-method>asString</el-method></el-code> may only be called using 'dot-syntax' on a named
-  value or an expression.</p>
+ <p>A method that is defined within the Library as an 'extension method', such as <el-method>asString</el-method> may only be called using 'dot-syntax' on a named
+ value or an expression.</p>
 
 <h3 id="PropertyCompileError" class="no-TOC">Cannot prefix function with 'property'</h3>
-<p>The prefix <el-code><el-kw>out</el-kw>.</el-code> may only be used before a property name - not a function name.</p>
+ <p>The prefix <el-kw>out</el-kw>.</el-code> may only be used before a property name - not a function name.</p>
 
 <h3 id="MissingParameterCompileError" class="no-TOC">Missing argument(s) ...</h3>
-<p>The method being called expects more arguments than have been provided.</p>
+ <p>The method being called expects more arguments than have been provided.</p>
 
 <h3 id="ExtraParameterCompileError" class="no-TOC">Too many argument(s) ...</h3>
-<p>A method has been passed more arguments than it expects.</p>
+ <p>A method has been passed more arguments than it expects.</p>
 
 <h3 id="ParameterTypesCompileError" class="no-TOC">Argument types ...</h3>
-<p>One or more arguments provided to the method are of the wrong type.</p>
+ <p>One or more arguments provided to the method are of the wrong Type.</p>
 
 <h3 id="GenericParametersCompileError" class="no-TOC">...&lt;of Type&gt;...</h3>
-<p>Certain data structure types, including <el-code><el-type>Array</el-type></el-code>, <el-code><el-type>Array2D</el-type></el-code>,
-  <el-code><el-type>List</el-type></el-code> must specify the Type of their members, for example <el-code><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-code>.
-  Failure to specify the 'of Type' on these types will give an error, as will specifying 'of Type' where it is <i>not</i> required.
-Dictionaries require Types to be specified for both the keys and the values,
-for example: <el-code><el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Float</el-type>&gt;</el-code>.</p>
+ <p>Certain data structure Types, including <el-type>Array</el-type>, <el-type>Array2D</el-type>,
+ <el-type>List</el-type> must specify the Type of their members, for example <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-code>.
+ Failure to specify the '&lt;of Type&gt;' on these Types will give an error, as will specifying 'of Type' where it is <i>not</i> required.
+ Dictionaries require Types to be specified for both the keys and the values,
+ for example: <el-code><el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Float</el-type>&gt;</el-code>.</p>
 
 <h3 id="MutateCompileError" class="no-TOC">May not re-assign the ...</h3>
-<p>Attempting to re-assign, or mutate, a named value that may not be re-assigned in the current context.</p>
+ <p>Attempting to re-assign, or mutate, a named value that may not be re-assigned in the current context.</p>
 
 <h3 id="NotUniqueNameCompileError" class="no-TOC">Name ... not unique in scope ...</h3>
-<p>Attempting to create an identifier with the same name as one already defined <i>within the same scope</i>.</p>
+ <p>Attempting to create an identifier with the same name as one already defined <i>within the same scope</i>.</p>
 
 <h3 id="ReassignInFunctionCompileError" class="no-TOC">May not set ... in a function</h3>
-<p>A property cannot be re-assigned only within a procedure method, not within a function - because re-assigning a property is a 'side effect'.</p>
+ <p>A property cannot be re-assigned only within a procedure method, not within a function - because re-assigning a property is a 'side effect'.</p>
 
 <h3 id="RedefinedCompileError" class="no-TOC">The identifier ... is already used for a ... and cannot be re-defined here.</h3>
-<p>An existing named value may not be defined again within the same scope.</p>
+ <p>An existing named value may not be defined again within the same scope.</p>
 
 <h3 id="DuplicateKeyCompileError" class="no-TOC">Duplicate Dictionary key(s)</h3>
-<p>Attempting to define a literal <el-code><el-type>Dictionary</el-type></el-code> or <el-code><el-type>DictionaryImmutable</el-type></el-code>
-with one or more duplicated keys in the definition.</p>
+ <p>Attempting to define a literal <el-type>Dictionary</el-type> or <el-type>DictionaryImmutable</el-type>
+ with one or more duplicated keys in the definition.</p>
 
 <h3 id="FunctionRefCompileError" class="no-TOC">To evaluate function ... add brackets ...</h3>
-<p>If you intend to <i>evaluate</i> a function, the function name must be followed by brackets even if the function
-defines no parameters. If your intent was to define a <i>reference</i> to the function (a pattern used commonly in
-'Functional Programming' then the name of the function must be preceded by the keyword <el-code><el-kw>ref</el-kw></el-code> and a single space.</p>
+ <p>If you intend to <i>evaluate</i> a function, the function name must be followed by brackets even if the function
+ defines no parameters. If your intent was to define a <i>reference</i> to the function (a pattern used commonly in
+ 'Functional Programming' then the name of the function must be preceded by the keyword <el-kw>ref</el-kw> and a single space.</p>
 
 <h3 id="NotGlobalFunctionRefCompileError" class="no-TOC">Library or class function ... cannot be preceded by by 'ref'</h3>
-<p>The keyword <el-code><el-kw>ref</el-kw></el-code> may be applied only to functions that you have defined in your own code as a standalone (global) function.
-  It may not be applied to a function method defined on a class, nor to a library function.
-  (You may, however, define your own function that simply <i>delegates</i> its implementation to a library function.)</p>
+ <p>The keyword <el-kw>ref</el-kw> may be applied only to functions that you have defined in your own code as a standalone (global) function.
+ It may not be applied to a function method defined on a class, nor to a library function.
+ (You may, however, define your own function that simply <i>delegates</i> its implementation to a library function.)</p>
 
-  <h3 id="UnknownCompilerDirectiveCompileError" class="no-TOC">a comment may not start with [ unless it is a recognised compiler directive</h3>
-<p>Compiler directives are a planned future capability - they will look like comments, but begin with an open-square bracket.
-  To avoid the possibility of ambiguity, you may not start your own comments with an open square bracket.
-</p>
+<h3 id="UnknownCompilerDirectiveCompileError" class="no-TOC">a comment may not start with [ unless it is a recognised compiler directive</h3>
+ <p>Compiler directives are a planned future capability - they will look like comments, but begin with an open-square bracket.
+ To avoid the possibility of ambiguity, you may not start your own comments with an open square bracket.</p>
 
 <h3 id="mustBeBooleanCondition" class="no-TOC">Condition of 'if' expression does not evaluate to a Boolean.</h3>
-  <h3 id="mustNotHaveConditionalAfterUnconditionalElse" class="no-TOC">Cannot have any clause after unconditional 'else'.</h3>
+
+<h3 id="mustNotHaveConditionalAfterUnconditionalElse" class="no-TOC">Cannot have any clause after unconditional 'else'.</h3>
 
 <h3 id="mustNotBeKeyword" class="no-TOC">... is a keyword, and may not be used as an identifier.</h3>
-<p>An Elan keyword cannot be used to as the name for a value, property, or method. Try shortening the name, lengthening it, or using a different name</p>
+ <p>An Elan keyword cannot be used to as the name for a value, property, or method. Try shortening the name, lengthening it, or using a different name</p>
 
 <h3 id="mustNotBeReservedWord" class="no-TOC">...  is a reserved word, and may not be used as an identifier.</h3>
-<p>In addition to Elan keywords there are certain other 'reserved words' that cannot be used to define the name for a 
-  value, property, or method.If you encounter this error you may eliminate the error simply by adding
-   more valid characters to the name - for example just by changing <el-id>case</el-id> to <el-id>case_</el-id>.
-  </p>
-  <p>Why are there any reserved words that are not Elan keywords? There are three kinds of reserved word:
-    
-    <ul>
-<li><i>Potential</i> keywords - that might be added to Elan in future releases.</li>
-  <li>Lower-case versions of Elan type names, such as <el-code>int, float, string, boolean, array, list, dictionary</el-code>.
-   It is not considered good practice to use type names for identifiers: instead you should give each identifier a name that indicates
-   what it does (for a method), or represents (for a named value).</li>
-   <li>Words that are keywords in JavaScript (but not in Elan). Elan compiles to JavaScript and
-   use of these words as identifiers could cause errors. (If you are asking, 'Why doesn't the Elan compiler
-   just obfuscate these?' the answer is that we evaluated that option but concluded that it added a lot of 
-   complexity - especially in regard to debugging and interaction with the Elan editor - just to eliminate
-   the minor inconvience of having to extend the word so as to make your identifier distinct.)</li>
-  </ul>
-
-  For reference, the complete list of reserved words is:  <el-code>action, arguments, array, async, await, boolean, break, by, byte, case, catch, char, const, continue, curry, debugger, default, delete, dictionary, do, double, eval, export, extends, final, finally, float, goto, implements, import, in, instanceof, int, into, list, long, match, namespace, native, null, on, optional, otherwise, package, partial, pattern, protected, public, short, static, string, super, switch, system, synchronized, throws, todo, transient, typeof, void, volatile, var, when, yield,</el-code>
-</p>
+ <p>In addition to Elan keywords there are certain other 'reserved words' that cannot be used to define the name for a
+ value, property, or method.If you encounter this error you may eliminate the error simply by adding
+  more valid characters to the name - for example just by changing <el-id>case</el-id> to <el-id>case_</el-id>.</p>
+ <p>Why are there any reserved words that are not Elan keywords? There are three kinds of reserved word:
+ <ul>
+  <li><i>Potential</i> keywords that might be added to Elan in future releases.</li>
+  <li>Lower-case versions of Elan Type names, such as <el-code>int, float, string, boolean, array, list, dictionary</el-code>.
+  It is not considered good practice to use Type names for identifiers: instead you should give each identifier a name that indicates
+  what it does (for a method), or represents (for a named value).</li>
+  <li>Words that are keywords in JavaScript (but not in Elan). Elan compiles to JavaScript and
+  use of these words as identifiers could cause errors. (If you are asking, 'Why doesn't the Elan compiler
+  just obfuscate these?' the answer is that we evaluated that option but concluded that it added a lot of
+  complexity - especially in regard to debugging and interaction with the Elan editor - just to eliminate
+  the minor inconvience of having to extend the word so as to make your identifier distinct.)</li>
+ </ul>
+<p>For reference, the complete list of reserved words is:<br><el-code>action, arguments, array, async, await, boolean, break, by, byte, case, catch, char, const, continue, curry, debugger, default, delete, dictionary, do, double, eval, export, extends, final, finally, float, goto, implements, import, in, instanceof, int, into, list, long, match, namespace, native, null, on, optional, otherwise, package, partial, pattern, protected, public, short, static, string, super, switch, system, synchronized, throws, todo, transient, typeof, void, volatile, var, when, yield</el-code></p>
 
 <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
-  <p>An index into an array or list cannot have a negative value. If a negative is given in literal form e.g.
-    <el-code><el-id>a</el-id>[-<el-lit>3</el-lit>]</el-code> then this will generate a compile error.
-    If you use a named value for an index and it is negative, then this will cause a run-time error.</p>
+ <p>An index into an array or list cannot have a negative value. If a negative is given in literal form e.g.
+ <el-code><el-id>a</el-id>[-<el-lit>3</el-lit>]</el-code> then this will generate a compile error.
+ If you use a named value for an index and it is negative, then this will cause a run-time error.</p>
 
 <h3 id="CannotCompareProcFunc" class="no-TOC">Cannot do equality operations on Procedures or Functions.</h3>
-<p>It is not possible to apply comparison operations to functions (with or without the <el-code><el-kw>ref</el-kw></el-code> keyword prefix)
-    or procedures as themselves. It is, however, possible to compare the results of two function evaluations.
-    It is possible that you are seeing this message because you intended to evaluate a function but forgot to
-    add the brackets after the name.</p>
+ <p>It is not possible to apply comparison operations to functions (with or without the <el-kw>ref</el-kw> keyword prefix)
+ or procedures as themselves. It is, however, possible to compare the results of two function evaluations.
+ It is possible that you are seeing this message because you intended to evaluate a function but forgot to
+ add the brackets after the name.</p>
 
 <h3 id="mustBeImmutableType" class="no-TOC">Property ... is not of an immutable type.</h3>
-<p>Properties on a <a href="#record">record</a> may only be of immutable types.</p>
+ <p>Properties on a <a href="#record">record</a> may only be of immutable Types.</p>
 
 <h3 id="mustBeImmutableGenericType" class="no-TOC">... cannot be of mutable type ...</h3>
-<p>Element type for a <a href="LibRef.html#ListImmutable">ListImmutable</a> must itself be an immutable type.
-Similarly, for an <a href="LibRef.html#DictionaryImmutable">DictionaryImmutable</a> the types for both the key and the value must be immutable types.</p>
+ <p>Element Type for a <a href="LibRef.html#ListImmutable">ListImmutable</a> must itself be an immutable Type.
+ Similarly, for an <a href="LibRef.html#DictionaryImmutable">DictionaryImmutable</a> the Types for both the key and the value must be immutable ones.</p>
 
 <h3 id="mustBeValidKeyType" class="no-TOC">... cannot have key of type ...</h3>
-<p>The type of the key for any dictionary <a href="LibRef.html#Dictionary">Dictionary</a> must be an immutable type, and not itself an indexable type.</p>
+ <p>The Type of the key for any dictionary <a href="LibRef.html#Dictionary">Dictionary</a> must be an immutable Type, and not itself an indexable Type.</p>
 
 <h3 id="invalidPropertyInRecordDeconstruction" class="no-TOC">No such property ... on record ...</h3>
-
-<p>The property name given in the record deconstruction does not match a property on the given type of record.</p>
+ <p>The property name given in the record deconstruction does not match a property on the given Type of record.</p>
 
 <h3 id="discardInRecordDeconstruction" class="no-TOC">Cannot discard in record deconstruction ...</h3>
+
 <h3 id="mustBeCompatibleDefinitionNode" class="no-TOC">Wrong number of deconstructed variables.</h3>
+
 <h3 id="mustBePropertyPrefixedOnMember" class="no-TOC">referencing a property requires a prefix.</h3>
+ <p>If you are referring to a property of a class <i>from code defined within the class</i> then the
+ property name must be preceded by <el-kw>property</el-kw>.</el-code></p>
 
-<p>If you are referring to a property of a class <i>from code defined within the class</i> then the
-property name must be preceded by <el-code><el-kw>property</el-kw>.</el-code></p>
 <h3 id="mustNotBeOutParameter" class="no-TOC">'out' parameters are only supported on procedures.</h3>
-<p>You cannot defined an <el-code><el-kw>out</el-kw></el-code> parameter in a function (because that would
-imply the possibility of creating a side effect).</p>
+ <p>You cannot defined an <el-kw>out</el-kw> parameter in a function (because that would
+ imply the possibility of creating a side effect).</p>
+
 <h3 id="mustNotHaveDuplicateMain" class="no-TOC">There can only be one 'main' in a program.</h3>
+
 <h3 id="mustNotBeTwoUnaryExpressions" class="no-TOC">Unsupported operation.</h3>
+ <p>You cannot chain two 'unary' operators (those that apply to a single value) - such as <el-code>-</el-code>
+ or <el-kw>not</el-kw> successively within an expression.</p>
 
-<p>You cannot chain two 'unary' operators (those that apply to a single value) - such as <el-code>-</el-code>
-or <el-code><el-kw>not</el-kw></el-code> successively within an expression.</p>
+<h2>Field help</h2>
 
-<h3>Field help</h3>
-
-<h4 id="ArgListField">'arguments' field in a call instruction</h4>
-<p>An argument list passed into a function or procedure call, must consist of one or more arguments separated by commas.
-  Each argument may in general be any of:</p>
-  <ul>
-    <li>A literal value</li>
-    <li>A named value</li>
-    <li>An expression</li>
-  </ul>
-  <p>(though in certain very specific contexts some options are disallowed by the compiler.)</p>
-
-<h4 id="AssertActualField">'computed value' field in an assert instruction</h4>
-<p>The 'actual' field should be kept as simple as possible, <i>preferably</i>
-  just a named value or a function evaluation. Generally, if you want to use a more
-  complex expression, it is better to evaluate it in a preceding <el-kw>let</el-kw>
-  instruction and then use the named value in the 'actual' field of the <el-kw>assert</el-kw>
-  instruction. Some more complex expressions are permissible, but these two restrictions apply:
-  <ul>
-    <li>Any expression involving a binary operator (e.g. <el-code>+ <el-kw>and</el-kw> <el-kw>isnt</el-kw></el-code>
-    must have brackets around it.</li>
-    <li>You may <i>not</i> use the <el-kw>is</el-kw> operator within the 'actual' field, because
-       the parser will confuse this with the <el-kw>is</el-kw> keyword that is part of the <el-kw>assert</el-kw> instruction.</li>
-  </ul>
-  </p>
-<h4 id="AssignableField">'variable name' field in a set instruction</h4>
-<p>The first field in a <el-kw>set</el-kw>set instruction most commonly takes the name of an existing variable.
-It may, however, may also take the following forms:
+<h4 id="ArgListField" class="no-TOC">'arguments' field in a call instruction</h4>
+ <p>An argument list passed into a function or procedure call, must consist of one or more arguments separated by commas.
+ Each argument may in general be any of:</p>
 <ul>
+ <li>A literal value</li>
+ <li>A named value</li>
+ <li>An expression</li>
+</ul>
+ <p>In certain very specific contexts, however, some options are disallowed by the compiler.</p>
+
+<h3 id="AssertActualField" class="no-TOC">'computed value' field in an assert instruction</h3>
+ <p>The 'actual' field should be kept as simple as possible, <i>preferably</i>
+ just a named value or a function evaluation. Generally, if you want to use a more
+ complex expression, it is better to evaluate it in a preceding <el-kw>let</el-kw>
+ instruction and then use the named value in the 'actual' field of the <el-kw>assert</el-kw>
+ instruction. Some more complex expressions are permissible, but these two restrictions apply:</p>
+ <ul>
+  <li>Any expression involving a binary operator such as <el-code>+<el-code>, <el-kw>isnt</el-kw>, etc.,
+  must have brackets around it.</li>
+  <li>You may <i>not</i> use the <el-kw>is</el-kw> operator within the 'actual' field, because
+  the parser will confuse this with the <el-kw>is</el-kw> keyword that is part of the <el-kw>assert</el-kw> instruction.</li>
+ </ul>
+
+<h3 id="AssignableField" class="no-TOC">'variable name' field in a set instruction</h3>
+ <p>The first field in a <el-kw>set</el-kw> instruction most commonly takes the name of an existing variable.
+ It may, however, may also take the following forms:
+ <ul>
   <li>Within a <el-kw>class</el-kw> it may take the form <el-kw>property</el-kw><el-code>.</el-code><el-id>name</el-id> to set the property <el-id>name</el-id></li>
   <li>A tuple deconstruction. See <a href="LibRef.html#Tuple">Tuple</a></li>
   <li>A list deconstruction. See <a href="LibRef.html#List">List</a></li>
-</ul></p>
-<h4 id="CommentField">'comment' field</h4>
-<h4 id="ConstantValueField">'literal value or data structure in a constant</h4>
-<p>The value of a constant must be a literal value of a type that is not mutable.
-  This can be a simple value (e.g. a number or string), or an <i>immutable</i> List or Dictionary.</p>
-<h4 id="EnumValuesField">'values' field in an enum definition</h4>
-<p>Enum values must each be a valid identifier, separated by commas.</p>
-<h4 id="ExceptionMessageField">'message' field in a throw instruction</h4>
-<p>An exception message must either be a literal string or a named value holding a string.</p>
-<h4 id="ExpressionField">expression field - used within multiple instructions</h4>
-<p>This field expects an expression. For the various forms of expression see <a href="#Expression">expression</a>.</p>
-<h4 id="IdentifierField">identifier field - used within multiple instructions</h4>
-<h4 id="IfSelectorField">'if' field in an else clause</h4>
-<h4 id="InheritsFromField">'inherits ClassName` field in a class</h4>
-<p>An inheritance clause, if used, must consist of the keyword <el-code><el-kw>inherits</el-kw></el-code>
-  followed by a space and then one or more Type names separated by commas.</p>
-<h4 id="MethodNameField">'name' field in a function or procedure definition</h4>
-<p>A method name follow the rules for an <a href="#identifier">identifier</a>.</p>
-<h4 id="ParamListField">'parameter definitions' in a function or procedure definition</h4>
-<p>Each parameter definition takes the form:</p>
-<el-code><el-id>name</el-id> <el-kw>as</el-kw> <el-type>Type</el-type></el-code>
-<p>The name must follow the rules for an <a href="#identifier">identifier</a>.</p>
-<p>The type must follow the rules for an <a href="#parse_type">type</a>.</p>
-<p>If more than one parameter is defined, the definitions must be separated by commas.</p>
-<h4 id="ProcRefField">'procedureName' in a call statement</h4>
-<p>Valid forms for a procedure call are
-<ul>
-  <li><el-code><el-kw>call</el-kw> <el-method>procedureName</el-method>()</el-code></li>
-  <li><el-code><el-kw>call</el-kw> <el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</el-code></li>
-  <li><el-code><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>propertyName</el-id>.<el-method>procedureMethodName</el-method>()</el-code></li>
-  <li><el-code><el-kw>call</el-kw> <el-kw>library</el-kw>.<el-method>procedureName</el-method>()</el-code></li>
+ </ul></p>
+
+<h3 id="CommentField" class="no-TOC">'comment' field</h3>
+
+<h3 id="ConstantValueField" class="no-TOC">literal value or data structure in a constant</h3>
+ <p>The value of a constant must be a literal value of a Type that is not mutable.
+ This can be a simple value (e.g. a number or string), or an <i>immutable</i> List or Dictionary.</p>
+
+<h3 id="EnumValuesField" class="no-TOC">'values' field in an enum definition</h3>
+ <p><el-kw>enum</el-kw> values must each be a valid identifier, separated by commas.</p>
+
+<h3 id="ExceptionMessageField" class="no-TOC">'message' field in a throw instruction</h3>
+ <p>An exception message must  be either a literal string or a named value holding a string.</p>
+
+<h3 id="ExpressionField" class="no-TOC">expression field - used within multiple instructions</h3>
+ <p>This field expects an expression. For the various forms of expression see <a href="#Expression">Expressions</a>.</p>
+
+<h3 id="IdentifierField" class="no-TOC">identifier field - used within multiple instructions</h3>
+
+<h3 id="IfSelectorField" class="no-TOC">'if' field in an else clause</h3>
+
+<h3 id="InheritsFromField" class="no-TOC">'inherits ClassName' field in a class</h3>
+ <p>An inheritance clause, if used, must consist of the keyword <el-kw>inherits</el-kw>
+ followed by a space and then one or more Type names separated by commas.</p>
+
+<h3 id="MethodNameField" class="no-TOC">'name' field in a function or procedure definition</h3>
+ <p>A method name must follow the rules for an <a href="#identifier">identifier</a>.</p>
+
+<h3 id="ParamListField" class="no-TOC">'parameter definitions' in a function or procedure definition</h3>
+ <p>Each parameter definition takes the form:</p>
+ <el-code><el-id>name</el-id> <el-kw>as</el-kw> <el-type>Type</el-type></el-code>
+ <p>The name must follow the rules for an <a href="#identifier">identifier</a>.</p>
+ <p>The Type must follow the rules for a <a href="#parse_type">Type</a>.</p>
+ <p>If more than one parameter is defined, the definitions must be separated by commas.</p>
+
+<h3 id="ProcRefField" class="no-TOC">'procedureName' in a call statement</h3>
+ <p>Valid forms for a procedure call are
+ <ul>
+  <li><el-kw>call</el-kw> <el-method>procedureName</el-method>()</el-code></li>
+  <li><el-kw>call</el-kw> <el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</el-code></li>
+  <li><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>propertyName</el-id>.<el-method>procedureMethodName</el-method>()</el-code></li>
+  <li><el-kw>call</el-kw> <el-kw>library</el-kw>.<el-method>procedureName</el-method>()</el-code></li>
  </ul>
+ The last one is used only if there is a need to disambiguate between a library procedure and a user-defined (global)
+ procedure with the same name.</p>
 
-The last one is used only if there is a need to disambiguate between a library procedure and a user-defined (global)
-  procedure with the same name.</p>
-<h4 id="TypeField">'Type' field in a function or property definition</h4>
-<p>For certain types the name may be followed by an <el-code><el-kw>of</el-kw></el-code> clause, for example:</p>
+<h3 id="TypeField" class="no-TOC">'Type' field in a function or property definition</h3>
+ <p>For certain Types the name may be followed by an <el-kw>of</el-kw> clause, for example:</p>
 
-<el-code><el-Type>List</el-Type>&lt;<el-kw>of</el-kw> <el-Type>Int</el-Type>&gt;</el-code>
-<el-code><el-Type>Dictionary</el-Type>&lt;<el-kw>of</el-kw> <el-Type>String</el-Type>, <el-Type>Int</el-Type>&gt;</el-code>
-<h4 id="TypeNameField">'Name' field in a class or enum definition</h4>
-<p>Type names always begin with a capital letter,  optionally followed by letters or either case, numeric digits,
-  or underscore symbols. Nothing else.</p>
-<h4 id="ValueDefField">'name' field in a let or variable instruction</h4>
-<p>The definition for a variable, or for a <el-code><el-kw>let</el-kw></el-code> statement is most commonly
-  a simple <a href="#parse_name">name</a>. Less commonly, it may take the form of:
-  <a href="LibRef.html#Tuple">tuple deconstruction</a>, list deconstruction, or <a href="#record_deconstruction">record deconstruction</a>.
-  </p>
+<el-type>List</el-Type>&lt;<el-kw>of</el-kw> <el-Type>Int</el-Type>&gt;</el-code>
+<el-code><el-type>Dictionary</el-Type>&lt;<el-kw>of</el-kw> <el-Type>String</el-Type>, <el-Type>Int</el-Type>&gt;</el-code>
+<h3 id="TypeNameField" class="no-TOC">'Name' field in a class or enum definition</h3>
+ <p>Type names always begin with a capital letter,  optionally followed by letters of either case, numeric digits,
+ or underscore symbols. Nothing else.</p>
+
+<h3 id="ValueDefField" class="no-TOC">'name' field in a let or variable instruction</h3>
+ <p>The definition for a variable or for a <el-kw>let</el-kw> statement is most commonly
+ a simple <a href="#parse_name">name</a>. Less commonly, it may take the form of:
+ <a href="LibRef.html#Tuple">tuple deconstruction</a>, list deconstruction, or <a href="#record_deconstruction">record deconstruction</a>.</p>
+
 <hr>
 <p><b>Elan Language Reference</b> go to the <a href="#top">top</a></p>
 </body>
