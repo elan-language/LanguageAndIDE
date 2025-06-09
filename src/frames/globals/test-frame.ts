@@ -180,12 +180,12 @@ ${this.compileTestBody(transforms)}\r
   };
 
   getContextMenuItems() {
-    const map = new Map<string, [string, () => void, string]>(); //Normally: = super.getContextMenuItems()
+    const map = new Map<string, [string, () => void]>(); //Normally: = super.getContextMenuItems()
     // Must be arrow functions for this binding
     if (this.ignored) {
-      map.set("unignore", ["un-ignore test (Ctrl-i)", this.unignore, ""]);
+      map.set("unignore", ["un-ignore test (Ctrl-i)", this.unignore]);
     } else {
-      map.set("ignore", ["ignore test (Ctrl-i)", this.ignore, ""]);
+      map.set("ignore", ["ignore test (Ctrl-i)", this.ignore]);
     }
     return map;
   }
