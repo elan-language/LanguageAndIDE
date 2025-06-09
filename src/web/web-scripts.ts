@@ -1373,10 +1373,11 @@ async function localAndAutoSave(field: HTMLElement | undefined, editingField: bo
   undoRedoHash = file.currentHash;
   undoRedoing = false;
 
-  code = code ?? (await file.renderAsSource());
-
-  // autosave if setup
-  autoSave(code);
+  if (file.readParseStatus() === ParseStatus.valid) {
+    // autosave if setup
+    code = code ?? (await file.renderAsSource());
+    autoSave(code);
+  }
 }
 
 function updateIndexes(indexJustUsed: number) {
