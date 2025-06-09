@@ -691,6 +691,11 @@ export class StdLib {
   }
 
   @elanFunction([], FunctionOptions.impureAsync, ElanString)
+  async waitForKey(): Promise<string> {
+    return await this.system!.elanInputOutput.waitForKey();
+  }
+
+  @elanFunction([], FunctionOptions.impureAsync, ElanString)
   async getKey(): Promise<string> {
     return await this.system!.elanInputOutput.getKey();
   }

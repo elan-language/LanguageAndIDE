@@ -261,6 +261,18 @@ export class WebInputOutput implements ElanInputOutput {
     });
   }
 
+  waitForKey(): Promise<string> {
+    return new Promise<string>((rs) => {
+      const timeOut = setInterval(async () => {
+        const key = await this.getKey();
+        if (key !== "") {
+          clearInterval(timeOut);
+          rs(key);
+        }
+      }, 250);
+    });
+  }
+
   getKey() {
     this.display.focus();
     const evt = this.keyBuffer[0];

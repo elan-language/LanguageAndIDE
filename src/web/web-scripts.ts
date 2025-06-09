@@ -1533,6 +1533,10 @@ async function handleWorkerIO(data: WebWorkerWriteMessage) {
       await elanInputOutput.waitForAnyKey();
       runWorker?.postMessage(readMsg(""));
       break;
+    case "waitForKey":
+      const wkey = await elanInputOutput.waitForKey();
+      runWorker?.postMessage(readMsg(wkey));
+      break;
     case "getKey":
       const key = await elanInputOutput.getKey();
       runWorker?.postMessage(readMsg(key));
