@@ -417,7 +417,7 @@ documentationButton.addEventListener("click", showDocumentationTab);
 documentationButtonLabel.addEventListener("keydown", filterKeypress(documentationButton));
 
 documentationHome.addEventListener("click", () => {
-  window.open("documentation/ElanIndex.html", "doc-iframe")?.focus();
+  window.open("documentation/Home.html", "doc-iframe")?.focus();
 });
 
 documentationBack.addEventListener("click", () => {
