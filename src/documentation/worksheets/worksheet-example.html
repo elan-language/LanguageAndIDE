@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- TODO REPLACE DOMAIN WITH https//elan-lang.org/ when the required CSS files have been released-->
+<link href="https://elan-language.github.io/LanguageAndIDE//styles/colourScheme.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE//styles/elanStyle.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE//styles/documentation.css" rel="stylesheet" />
+<link href="/out/website/styles/worksheet.css" rel="stylesheet" />
+<style></style>
+
+<title>Worksheet - Example</title>
+</head>
+<body>
+
+<div class="docTitle">Worksheet - Example</div>
+
+
+<button id="auto-save">Auto Save</button>
+<p>To continue: save the worksheet to your local file system. This will then save your progress automatically.</p>
+
+<!-- for all updateable controls empty class must be before id - or else appending the answered class breaks the regex -->
+<div class="step complete" id="step1">
+  <h3>Step 1</h3>
+  <input type="text" class="" id="input1" value="" disabled></input>
+</div>
+<label for="done1">Done</label>
+<input type="checkbox" class="done" id="done1" checked="checked" disabled />
+
+
+<div class="step" id="step2">
+  <h3>Step 2</h3>
+</div>
+<input type="checkbox" class="done" id="done2" />
+
+<div class="step" id="step3" >
+  <h3>Step 3</h3>
+</div>
+<input type="checkbox" class="done" id="done3" />
+
+<div class="step" id="step4">
+  <h3>Step 4</h3>
+</div>
+<input type="checkbox" class="done" id="done4" />
+
+
+<div hidden="" id="hash"></div>
+<div hidden="" id="changes"></div>
+
+
+
+
+<script src="/out/website/worksheet-scripts.js"></script>
+
+<br>
+<div class="license">
+<img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+This worksheet is copyright &#x00A9; Richard Pawson 2025, and protected by the Creative Commons license:
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+   If you copy and <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+   Please <a href="mailto:rpawson@nakedobjects.org">email the author</a> to report errors or suggest improvements.
+</div>
+</body>
+</html>
