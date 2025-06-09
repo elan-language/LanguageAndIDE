@@ -137,6 +137,6 @@ export class ImageVG extends VectorGraphic {
   }
 
   async asString() {
-    return `<img src="${this.url}" width="${this.width}" height="${this.height}" title="${this.title}" alt="${this.alt}">`; //TODO style, size etc
+    return `<img src='${this.url}' width='${this.width}' height='${this.height}' title='${this.title}' alt='${this.alt}'>`; //TODO style, size etc
   }
 }

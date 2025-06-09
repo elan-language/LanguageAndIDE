@@ -80,6 +80,10 @@ const documentationTab = document.getElementById("documentation-tab") as HTMLDiv
 const worksheetTab = document.getElementById("worksheet-tab") as HTMLDivElement;
 const debugTab = document.getElementById("debug-tab") as HTMLDivElement;
 
+const documentationHome = document.getElementById("doc-home") as HTMLButtonElement;
+const documentationBack = document.getElementById("doc-back") as HTMLButtonElement;
+const documentationForward = document.getElementById("doc-forward") as HTMLButtonElement;
+
 const documentationIFrame = document.getElementById("doc-iframe") as HTMLIFrameElement;
 const worksheetIFrame = document.getElementById("worksheet-iframe") as HTMLIFrameElement;
 
@@ -411,6 +415,18 @@ function filterKeypress(button: HTMLButtonElement) {
 
 documentationButton.addEventListener("click", showDocumentationTab);
 documentationButtonLabel.addEventListener("keydown", filterKeypress(documentationButton));
+
+documentationHome.addEventListener("click", () => {
+  window.open("documentation/ElanIndex.html", "doc-iframe")?.focus();
+});
+
+documentationBack.addEventListener("click", () => {
+  documentationIFrame.contentWindow?.history.back();
+});
+
+documentationForward.addEventListener("click", () => {
+  documentationIFrame.contentWindow?.history.forward();
+});
 
 displayButton.addEventListener("click", showDisplayTab);
 displayButtonLabel.addEventListener("keydown", filterKeypress(displayButton));
