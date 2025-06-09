@@ -2,7 +2,7 @@
 
 const updateable = document.querySelectorAll("input, textarea, select");
 const hints = document.getElementsByTagName("el-hint");
-const doneCheckboxes = document.querySelectorAll("input[type=checkbox].done");
+const doneCheckboxes = document.querySelectorAll("input[type=checkbox].step");
 
 /* async function hash(state: string[]) {
   // if no state return empty string
@@ -109,9 +109,9 @@ function updateDocument() {
     code = code.replace(re, `option selected>${v}`);
   }
 
-  const toReplace = `<button .*>Auto Save</button>`;
+  const toReplace = `<button.*id="auto-save".*>Auto-save file locally to continue</button>`;
   const re = new RegExp(toReplace);
-  code = code.replace(re, '<button id="auto-save">Auto Save</button>');
+  code = code.replace(re, '<button id="auto-save">Auto-save file locally to continue</button>');
 
   return code;
 }
