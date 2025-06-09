@@ -1227,22 +1227,17 @@ async function updateContent(text: string, editingField: boolean) {
         const tgt = ke.target as HTMLDivElement;
         const id = tgt.dataset.id;
         const func = tgt.dataset.func;
-        const href = tgt.dataset.href;
 
-        if (href) {
-          window.open(`documentation/${href}`, "doc-iframe")?.focus();
-        } else {
-          handleEditorEvent(
-            event,
-            "contextmenu",
-            "frame",
-            getModKey(ke),
-            id,
-            "ContextMenu",
-            undefined,
-            func,
-          );
-        }
+        handleEditorEvent(
+          event,
+          "contextmenu",
+          "frame",
+          getModKey(ke),
+          id,
+          "ContextMenu",
+          undefined,
+          func,
+        );
       });
     }
   }
@@ -1251,6 +1246,12 @@ async function updateContent(text: string, editingField: boolean) {
 
   for (const item of helpLinks) {
     item.addEventListener("click", (event) => {
+      if ((event.target as any).target === "doc-iframe") {
+        // can't use the load event as if the page is already loaded with url it doesn#t fore agaon so
+        // no focus
+        documentationButton.click();
+      }
+
       event.stopPropagation();
     });
   }
