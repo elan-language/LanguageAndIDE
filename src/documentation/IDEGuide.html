@@ -18,7 +18,8 @@
 
 <p></p>
 <p>IDE means <b>Integrated Development Environment</b> which, for Elan, is one browser page in which code is written and tested,
-and in which text and graphic outputs are displayed. It looks like this:</p>
+and in which text and graphic outputs are displayed.</p>
+<p> It looks like this:</p>
 
 <img src="images/IDE_Overview.png" style="width:80%;">
 
@@ -404,6 +405,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
     the specified keys <i>without having to bring up the context menu.</i></p>
 
 <h1 id="RunControls">3. Controls</h1>
+<h2>Run controls</h2>
 <p>The top two buttons shown here are the initial 'run controls':</p>
 <ul>
 <img src="images/IDE_Controls.png" style="width:20%;">
@@ -411,7 +413,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 <li><b>Stop</b> When a program is running, or is paused, this button will stop and exit the program.</li>
 </ul>
 <p>When the <b>Debug</b> button is clicked, the lower three buttons provide further run controls:</p>
-<ul>
+<ul id="DebugButton">
 <img src="images/IDE_Debug.png" style="width:20%;">
 <li><b>Debug</b> Run in 'debug' mode. See <a href="#Debugging">Debugging</a></li>
 <li><b>Pause</b> Pause the program (if running in debug mode). See <a href="#Debugging">Debugging</a></li>
@@ -430,7 +432,18 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 <p>Note that the <a href="#ContextMenu">Context Menu</a> opened on a selected instruction offers a direct link to help concerning that specific instruction.</p>
 <p>As with the main <b>Help</b> menus, the documentation will open in a separate browser tab.</p>
 
+<h2>Display</h2>
+<p>The <b>Display</b> button switches to the program's <a href="#Display">output display</a>.</p>
+<p>Below the pane is provided button <b>Clear display</b>.</p>
+
+<h2>Debug</h2>
+<p>The <b>Debug</b> button switches to debugging mode, showing the Debug, Pause and Step buttons to control <a href="#Debugging">debugging</a>.</p>
+
+<h2>Worksheet</h2>
+<p>The <b>Worksheet</b> button opens buttons <b>Standard worksheets</b> and <b>Load external worksheet</b> to provide training materials.</p>
+
 <h1 id="Status">4. Status</h1>
+<h2>Status panel</h2>
 <p>The status panel shows the current status of four conditions:</p>
 <ul>
  <li><b>Parse</b>: this indicator aggregates the parse status of each <a href="#field">field</a> and shows the <i>worst</i> status of any field.
@@ -451,62 +464,70 @@ Alternatively the bar may be replaced by the blue background, with no text, indi
 <p>If the Parse, Compile, or Test status shows amber or red, you can click on that status bar to highlight the first location in your code where the status shown was identified.</p>
 
 <h1 id="Display">5. Display</h1>
-<img src="images/Display.png" style="width:20%;">
-<p>The Display pane is always rendered with an aspect ratio of 4:3 &ndash; so if the size of the browser window is changed, the Display will change its dimensions also.</p>
-<p>The pane is used for the following purposes, on their own or in combination:</p>
+<h2>Help display</h2>
+<p>The chosen documentation file is shown here.</p>
 
+<h2>Program output display</h2>
+<p>The <b>Display</b> button switches to the program's output pane which is blank initially, but when the program is run it shows its text and graphics output.</p>
+<p>For example, here is the block graphics output from the demo program maze-generator.elan:</p>
+<img src="images/IDE_Maze.png" style="width:40%;">
+<p>This Display pane is always rendered with an aspect ratio of 4:3 so, if the size of the browser window is changed, the pane will change its dimensions also.</p>
+<p>The pane is used for the following purposes, on their own or in combination:</p>
 <ul>
- <li>to generate plain text, or formatted Html, using the <a href="LangRef.html#print">print instructions</a> and/or <a href="LibRef.html#Lib_proc">print procedures</a>.</li>
- <li>to input text from the keyboard using various <a href="LibRef.html#System_methods">system methods</a>.</li>
+ <li>to display plain text or formatted Html, using the <a href="LangRef.html#print">print instructions</a> and <a href="LibRef.html#StandaloneProcedures">print procedures</a>.</li>
+ <li>to input text from the keyboard using various <a href="LibRef.html#SystemMethods">system methods</a>.</li>
  <li>for <a href="LibRef.html#BlockGraphics">Block graphics</a> (as shown in the 'maze' example above)</li>
  <li>for <a href="LibRef.html#VectorGraphics">Vector graphics</a></li>
- <li>for <a href="LibRef.html#Turtle">Turtle graphics</a></li>
+ <li>for <a href="LibRef.html#TurtleGraphics">Turtle graphics</a></li>
+</ul>
+<p>Any of the three forms of graphics may be overlaid with printed text or Html, or each other, with the one exception that Turtle graphics and Vector graphics may not be used together &ndash; as the former makes exclusive use of the latter.</p>
+<p id="ButtonClearDisplay">The <b>Clear display</b> button clears all of contents of the Display pane, irrespective of the mechanism by which it was generated.
+However, the individual forms of display listed above may be cleared individually using specific methods (see the links above).</p>
+
+<h2 id="DebugDisplay">Debug display</h2>
+
+<img src="images/IDE_RuntimeError.png" style="width:40%;">
+
+<p>The <b>Debug display</b> pane shows only messages generated by the Elan system. They are  of three forms:</p>
+ <ul>
+ <li>Feedback on a user action, for example: <el-code>Paste Failed: Nothing to paste</el-code></li>
+ <li>Runtime error messages, as shown in the screenshot above. Following the error message (the first two lines), you may also see a 'stack trace',
+     the topmost line of which indicates the routine (function, procedure, or main) in which the error occurred.
+     If it is not obvious which instruction within the routine caused the error, you can use the <a href="#Debugging">Debugging</a> facilities.</li>
+ <li>Status of all variables, whenever program execution is paused. See <a href="#Debugging">Debugging</a></li>
 </ul>
 
- <p>Any of the three forms of graphics may be overlaid with printed text or Html, or each other, with the one exception that Turtle graphics and Vector graphics may not be used together &ndash; as the former makes exclusive use of the latter.</p>
-<p id="ButtonClearDisplay">The <b>Clear</b> button will clear all of contents of the Display, irrespective of the mechanism by which it was generated.
-    However, the individual forms of display listed above may be cleared individually using specific methods (see the links above).</p>
+ <p>If the information presented exceeds the space available for the pane, a vertical scroll bar will be shown.</p>
 
-<h1 id="DebugDisplay">Debug display</h1>
-
-<!--<img src="images/System_info.png" style="width:50%;"> -->
-
- <p>The <b>Debug display</b> shows only messages generated by the Elan system. They are  of three forms:</p>
- <ul>
-    <li>Feedback on a user-action, for example: <el-code>Paste Failed: Nothing to paste</el-code></li>
-    <li>Run-time error messages, as shown in the screenshot above. Following the error message (the first two lines), you will see a 'stack trace',
-        the top-most line of which indicates the routine (function, procedure, or main) in which the error occurred.
-         If it is not obvious which instruction within the routine caused the error, you can use the <a href="#Debugging">Debugging</a> facilities.</li>
-    <li>Status of all variables, whenever program execution is paused. See <a href="#Debugging>Debugging</a></li>
- </ul>
-
- <p>If the information presented exceeds the space available for the pane, a scroll-bar will be shown.</p>
+<h2>Worksheet display</h2>
+<p>The chosen worksheet is shown in the Display pane.</p>
 
 <h1 id="Debugging">Debugging</h1>
-
+<h2>Debug tools</h2>
 <p>Elan contains some simple debugging tools. To use these tools, you need to run the program via the <a href="#RunControls">Debug button</a>).
     Note that because of the additional overhead involved in debugging, the program may run slower than when run normally.</p>
 
 <p>When debugging, a program may be paused at any point with the <a href="#RunControls">Pause button</a>.
-    The <a href="#StatusPanel">Run status</a> will then show as <el-code>paused</el-code>. Note, however, that:</p>
-    <ul>
-        <li>the Pause key is not active if the program is currently waiting for a user input.)</li>
-        <li>it is not possible to pause within a loop that is executing very fast. For that you should use a breakpoint (below)</li>
-    </ul>
+The <a href="#StatusPanel">Run status</a> will then show as <el-code>paused</el-code>. Note, however, that:</p>
+<ul>
+ <li>the <b>Pause</b> button is not active if the program is currently waiting for a user input.)</li>
+ <li>it is not possible to pause within a loop that is executing very fast. For that you should use a breakpoint (below)</li>
+</ul>
+<h2>Variables dump</h2>
 
 <p>Whenever the run status is shown as <el-code>paused</el-code> ,
     the instruction that would have been executed next will be highlighted with an amber background, and
     the <a href="#SystemInfo">System info</a> will display the current value of each named value that is defined in the current scope, for example:</p>
 
-<img src="images/Variable_dump.png" style="width:50%;">
+<img src="images/IDE_DebugPause.png" style="width:40%;">
 
-<p>From the paused state, you may continue execution of the program by clicking the Debug key, or you may execute <i>just the next instruction</i>
+<p>From the paused state, you may continue execution of the program by clicking the Debug button, or you may execute <i>just the next instruction</i>
      by clicking the <a href="#RunControls">Single step</a> button.</p>
 
 <h2 id="Breakpoint">Breakpoints</h2>
-<p>You can place a breakpoint on an instruction, by selecting the instruction and then hitting <b>Ctrl-b</b>,
+<p>You can place a <b>breakpoint</b> on an instruction, by selecting the instruction and then hitting <b>Ctrl-b</b>,
     or by bringing up the <a href="#ContextMenu">Context menu</a> and selecting <b>set breakpoint</b>.
-    The breakpoint will be shown as a (red' flash adjacent to the instruction:</p>
+    The breakpoint will be shown as a red flash adjacent to the instruction:</p>
 
 <el-code-block source="breakpoint1.elan">
 <el-statement class="ok multiline" id="if5" tabindex="0">
@@ -522,7 +543,7 @@ Alternatively the bar may be replaced by the blue background, with no text, indi
     <p>Pressing <b>Ctrl-b</b> on a selected instruction that already has a breakpoint will clear that breakpoint.
     The context menu also offers options to clear a breakpoint that has been set, or to clear <i>all</i> breakpoints from the program in one go.</p>
 
-    <p>Breakpoints are active <i>only when running the program via the</i> <a href="#RunControls">Debug button</a>.
+    <p>Breakpoints are active <i>only when running the program via the</i> <a href="#DebugButton">Debug button</a>.
         Then,whenever a breakpoint is reached, execution will be paused, and the instruction containing the breakpoint will be
         highlighted with an amber background:</p>
 
@@ -536,9 +557,7 @@ Alternatively the bar may be replaced by the blue background, with no text, indi
 <el-kw>end if</el-kw>
 </el-statement>
 </el-code-block>
-
-        <p>and the Debug tab</a> will display the current value of each named value that is defined in the current scope.</p>
-
+<p>and the Debug pane will display the current value of each named value that is defined in the current scope.</p>
 <hr>
 <p><b>Elan IDE Guide</b> go to the <a href="#top">top</a></p>
 </body>
