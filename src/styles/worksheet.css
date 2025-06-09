@@ -1,0 +1,11 @@
+.step, .done {
+    display: none;
+}
+
+.step.complete, input.done:checked, input.done:checked + .step, input.done:checked + .step + input.done {
+    display: block;
+}
+
+.license, .license img {
+    display: block;
+}

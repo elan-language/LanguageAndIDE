@@ -3,7 +3,7 @@
 const updateable = document.querySelectorAll("input, textarea, select");
 const hints = document.getElementsByTagName("el-hint");
 
-async function hash(state: string[]) {
+/* async function hash(state: string[]) {
   // if no state return empty string
   if (state.length === 0) {
     return "";
@@ -15,9 +15,9 @@ async function hash(state: string[]) {
   const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
   const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join(""); // convert bytes to hex string
   return hashHex;
-}
+} */
 
-async function getDocumentHash() {
+/* async function getDocumentHash() {
   return await hash(getDocumentState());
 }
 
@@ -29,7 +29,7 @@ async function checkHash() {
   }
 }
 
-checkHash();
+checkHash(); */
 
 const autoSaveButton = document.getElementById("auto-save");
 
@@ -104,7 +104,7 @@ function updateDocument() {
 
   return code;
 }
-
+/* 
 function getDocumentState() {
   const state: string[] = [];
 
@@ -157,14 +157,14 @@ function getDocumentState() {
   }
 
   return state;
-}
+} */
 
 async function getUpdatedDocument() {
   const code = updateDocument();
-  const hashcode = await getDocumentHash();
+  /*   const hashcode = await getDocumentHash();
   const toReplace = `<div hidden="" id="hash">.*</div>`;
-  const re = new RegExp(toReplace);
-  return code.replace(re, `<div hidden="" id="hash">${hashcode}</div>`);
+  const re = new RegExp(toReplace); */
+  return code; //.replace(re, `<div hidden="" id="hash">${hashcode}</div>`);
 }
 
 autoSaveButton!.addEventListener("click", async () => {
