@@ -2,6 +2,7 @@
 
 const updateable = document.querySelectorAll("input, textarea, select");
 const hints = document.getElementsByTagName("el-hint");
+const doneCheckboxes = document.querySelectorAll("input[type=checkbox].done");
 
 /* async function hash(state: string[]) {
   // if no state return empty string
@@ -36,17 +37,23 @@ const autoSaveButton = document.getElementById("auto-save");
 let fh: FileSystemFileHandle | undefined;
 
 async function chromeSave(code: string, newName: string) {
-  const fh = await showSaveFilePicker({
-    suggestedName: newName,
-    startIn: "documents",
-    types: [{ accept: { "text/html": ".html" } }],
-    id: "",
-  });
+  try {
+    const fh = await showSaveFilePicker({
+      suggestedName: newName,
+      startIn: "documents",
+      types: [{ accept: { "text/html": ".html" } }],
+      id: "",
+    });
 
-  const writeable = await fh.createWritable();
-  await writeable.write(code);
-  await writeable.close();
-  return fh;
+    const writeable = await fh.createWritable();
+    await writeable.write(code);
+    await writeable.close();
+    autoSaveButton?.classList.add("saved");
+    return fh;
+  } catch {
+    // cancelled
+    return undefined;
+  }
 }
 
 function updateDocument() {
@@ -101,6 +108,10 @@ function updateDocument() {
 
     code = code.replace(re, `option selected>${v}`);
   }
+
+  const toReplace = `<button .*>Auto Save</button>`;
+  const re = new RegExp(toReplace);
+  code = code.replace(re, '<button id="auto-save">Auto Save</button>');
 
   return code;
 }
@@ -217,3 +228,19 @@ for (const e of hints) {
     await save();
   });
 }
+
+for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
+  cb.addEventListener("click", async (_e) => {
+    const id = cb.id.slice(4);
+    cb.disabled = true;
+    const step = document.getElementById(`step${id}`);
+    if (step) {
+      step.classList.add("complete");
+      for (const inp of step.getElementsByTagName("input")) {
+        inp.disabled = true;
+      }
+    }
+  });
+}
+
+setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 10);
