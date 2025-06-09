@@ -224,7 +224,7 @@ test('help focus', async ({ page }) => {
 
   // click help and expect help to be visible
   await page.getByRole('link', { name: '?' }).click();
-  await expect(page.getByRole('button', { name: 'Reference Manual' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Home' })).toBeVisible();
 
   // click worksheet button and expect tab to be visible
   await page.getByText('Worksheet', { exact: true }).click();
@@ -232,7 +232,7 @@ test('help focus', async ({ page }) => {
 
   // click help and expect help to again be visible
   await page.getByRole('link', { name: '?' }).click();
-  await expect(page.getByRole('button', { name: 'Reference Manual' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Home' })).toBeVisible();
   
 }); 
 
