@@ -87,8 +87,8 @@ Unlike a function, a procedure does not return a value.
   <el-statement class="ok multiline" id="if33" tabindex="0">
   <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr35" class="ok" tabindex="0"><el-txt><el-id>arr</el-id>[<el-id>i</el-id>] &gt; <el-id>arr</el-id>[<el-id>i</el-id> + <el-lit>1</el-lit>]</el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top>
   <el-statement class="ok" id="let36" tabindex="0"><el-kw>let </el-kw><el-field id="var37" class="ok" tabindex="0"><el-txt><el-id>temp</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr38" class="ok" tabindex="0"><el-txt><el-id>arr</el-id>[<el-id>i</el-id>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="call39" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident40" class="ok" tabindex="0"><el-txt><el-id>arr</el-id>.<el-method>putAt</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args41" class="optional ok" tabindex="0"><el-txt><el-id>i</el-id>, <el-id>arr</el-id>[<el-id>i</el-id> + <el-lit>1</el-lit>]</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-  <el-statement class="ok" id="call42" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident43" class="ok" tabindex="0"><el-txt><el-id>arr</el-id>.<el-method>putAt</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args44" class="optional ok" tabindex="0"><el-txt><el-id>i</el-id> + <el-lit>1</el-lit>, <el-id>temp</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+  <el-statement class="ok" id="call39" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident40" class="ok" tabindex="0"><el-txt><el-id>arr</el-id>.<el-method>put</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args41" class="optional ok" tabindex="0"><el-txt><el-id>i</el-id>, <el-id>arr</el-id>[<el-id>i</el-id> + <el-lit>1</el-lit>]</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+  <el-statement class="ok" id="call42" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident43" class="ok" tabindex="0"><el-txt><el-id>arr</el-id>.<el-method>put</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args44" class="optional ok" tabindex="0"><el-txt><el-id>i</el-id> + <el-lit>1</el-lit>, <el-id>temp</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
   <el-statement class="ok" id="set45" tabindex="0"><el-kw>set </el-kw><el-field id="ident46" class="ok" tabindex="0"><el-txt><el-id>changes</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr47" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
   <el-kw>end if</el-kw>
   </el-statement>
@@ -214,7 +214,7 @@ Procedures and functions may be called or referenced recursively. For example, a
 </el-code-block>
 <p>When a test is marked with <el-code>ignore</el-code>, that test will not be executed when the tests are run, and its result will be shown as &lsquo;not run&rsquo;. The overall test status will also show in the &lsquo;warning&rsquo; status (amber colour), even if all the tests that did run passed. This is to discourage you from leaving a test marked <el-code>ignore</el-code> for long.</p>
 <p>The principal reason for marking a test <el-code>ignore</el-code> is when either the test code, or code in any function being called, does not terminate. This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
-<p>If you do create such code without realising it, then when the tests are executed the test runner will &lsquo;time out&rsquo; after a few seconds (most tests will pass in milliseconds), and an error message will be shown in the System info pane. The test that caused the timeout will automatically then be marked <el-code>ignore</el-code>. Your priority should then be to identify the cause of the timeout and attempt to fix it before then restoring the <el-code>test</el-code> by selecting its frame and hitting <el-code>Ctrl-i</el-code> {which is a toggle for setting and unsetting an <el-code>ignore</el-code> status).</p>
+<p>If you do create such code without realising it, then when the tests are executed the test runner will &lsquo;time out&rsquo; after a few seconds (most tests will pass in milliseconds), and an error message will be shown in the System info pane. The test that caused the timeout will automatically then be marked <el-code>ignore</el-code>. Your priority should then be to identify the cause of the timeout and attempt to fix it before then restoring the <el-code>test</el-code> by selecting its frame and hitting <el-code>Ctrl-i</el-code> (which is a toggle for setting and unsetting an <el-code>ignore</el-code> status).</p>
 
 <h2 id="constant">Constant</h2>
 <p>A <el-code>constant</el-code> defines a named value that cannot change, is always defined at global level (directly within a file), and is global in scope.</p>
@@ -576,7 +576,7 @@ by <a href="#throw">throwing an exception</a> like this:</p>
 <p>which will stop the program and print the message in the Debug window (unless caught by a <a href="#try"><el-kw>try</el-kw></a> statement).</p>
 
 <h2 id="call">Procedure call</h2>
-<p>A <el-kw>call</el-kw> statement is used when you want to run a procedure.</p>
+<p>A <el-kw>call</el-kw> statement is used when you want to run a <a href="#procedure">procedure</a>.</p>
 <p>The procedure may be:</p>
 <ul>
 <li>a procedure that you have defined at the global level</li>
@@ -683,7 +683,7 @@ It is recommended that you always use a let in preference to a variable unless y
 
 <h4 class="no-TOC">Note</h4>
 <ul>
-<li>The last line in the example above uses an <a href="LibRef.html#InterpolatedString">interpolated strings</a>. Arguments placed within curly braces are evaluated before printing, and these may be separated by literal text and punctuation as needed. This is one recommended way to print more than one value on a line. The other way is to use print procedures.</li>
+<li>The last line in the example above uses an <a href="LibRef.html#InterpolatedString">interpolated strings</a>. Arguments placed within curly braces are evaluated before printing, and these may be separated by literal text and punctuation as needed. This is one recommended way to print more than one value on a line. The other way is to use <a href="LibRef.html#printLine">print procedures</a>.</li>
 </ul>
 
 <h2 id="repeat">Repeat loop</h2>
@@ -707,11 +707,11 @@ The new value must be of the same Type as (or a Type compatible with) that of th
 A <el-kw>set</el-kw> statement may not assign a new value to a parameter within a procedure.</p>
 
 <h2 id="throw">Throw statement</h2>
-<p>If you are in mode <i>Advanced level coding</i> (see <a href="IDEGuide.html#preferences">Preferences</a>), you can deliberately generate, or &lsquo;throw&rsquo;, an exception when a specific circumstance is identified, using a <el-code>throw</el-code> statement, for example:</p>
+<p>You can deliberately generate, or &lsquo;throw&rsquo;, an exception when a specific circumstance is identified, using a <el-code>throw</el-code> statement, for example:</p>
 <el-code>throw exception "something has happened"</el-code><br>
 
 <h2 id="try">Try statement</h2>
-<p>If you are in mode <i>Advanced level coding</i> (see <a href="IDEGuide.html#preferences">Preferences</a>), you can test whether another piece of code might throw an exception by wrapping it in a <el-code>try</el-code> statement. This might arise when calling a <a href="LibRef.html#SystemMethods">System method</a> that is dependent upon external conditions, for example:</p>
+<p>You can test whether another piece of code might throw an exception by wrapping it in a <el-code>try</el-code> statement. This might arise when calling a <a href="LibRef.html#SystemMethods">System method</a> that is dependent upon external conditions, for example:</p>
 
 <el-code-block source="tryCatch.elan">
 <el-statement class="ok multiline" id="try18" tabindex="0">
@@ -806,10 +806,10 @@ If a variable is of an indexable Type, then an index or index range may be appli
 <p>Important: unlike in many languages, indexes in Elan (whether, single, multiple, or a range) are only ever used for <em>reading</em> values.
 Writing a value to a specific index location is done through a method such as in these examples:</p>
 <pre>
-    <el-code>putAt</el-code>            on a   <el-code>List</el-code>
-    <el-code>withPut</el-code>        on a    <el-code>ListImmutable</el-code>
-    <el-code>putAtKey</el-code>      on a    <el-code>Dictionary</el-code>
-    <el-code>withPutKey</el-code>  on a    <el-code>DictionaryImmutable</el-code>
+    <el-code>put</el-code>           on a   <el-code>List</el-code>
+    <el-code>withPut</el-code>   on a    <el-code>ListImmutable</el-code>
+    <el-code>put</el-code>           on a    <el-code>Dictionary</el-code>
+    <el-code>withPut</el-code>   on a    <el-code>DictionaryImmutable</el-code>
 </pre>
 
 <h2 id="Operators">Operators</h2>
@@ -818,7 +818,7 @@ Writing a value to a specific index location is done through a method such as in
 <p>Arithmetic operators can be applied to <el-code>Float</el-code> or <el-code>Int</el-code> arguments. The result may be a <el-code>Float</el-code> or an <el-code>Int</el-code> depending on the arguments.</p>
 <p>For <el-code>^ + - *</el-code>, the result is a <el-code>Float</el-code> if either of the arguments is a <el-code>Float</el-code>, and an <el-code>Int</el-code> if both arguments are <el-code>Int</el-code>.</p>
 <p>For <el-code>/</el-code>, the result is always a <el-code>Float</el-code>.  It can be converted to an <el-code>Int</el-code> using the <a href="LibRef.html#floor">floor()</a> function.</p>
-<p id="mod"><el-code>mod</el-code> and <el-code>div</el-code> only operate on <el-code>Int</el-code> arguments, and the result is <el-code>Int</el-code>.
+<p id="mod"><el-code>mod</el-code> and <el-code>div</el-code> only operate on <el-code>Int</el-code> arguments, and the result is <el-code>Int</el-code>.</p>
 <pre>
     <el-code>2^3</el-code>             &rarr;  <el-code>8</el-code>
     <el-code>2/3</el-code>             &rarr;  <el-code>0.666...</el-code>
@@ -829,7 +829,7 @@ Writing a value to a specific index location is done through a method such as in
     <el-code>11 div 3</el-code>   &rarr;  <el-code>3</el-code> (integer division)
 </pre>
 <p>Arithmetic operators follow the conventional rules for precedence i.e. &lsquo;BIDMAS&rsquo; (or &lsquo;BODMAS&rsquo;).</p>
-When combining <el-code>div</el-code> or <el-code>mod</el-code> with any other operators within an expression, insert brackets to avoid ambiguity e.g.:</p>
+<p>When combining <el-code>div</el-code> or <el-code>mod</el-code> with any other operators within an expression, insert brackets to avoid ambiguity e.g.:</p>
 <pre>
     <el-code>(5 + 6) mod 3</el-code>
 </pre>
@@ -981,7 +981,7 @@ be followed by a 'with clause` in order to specify any property values. Example 
 <h2 id="copy_with">Copy with</h2>
 <p>A 'copy with' expression is used to make a copy of an existing instance, but with a different value for one or more of the properties
   &ndash; either to assign to a named value, or as part of a more complex expression..
-It is used extensively within 'functional programming' where you are dealing with<a href="#record">record</a>s or other <i>immutable</i> types.
+It is used extensively within 'functional programming' where you are dealing with <a href="#record">record</a>s or other <i>immutable</i> types.
 Example of use in this manner (taken from the 'Snake - functional' demo program):</p>
 
 <el-code-block>
@@ -1122,7 +1122,7 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
  value or an expression.</p>
 
 <h3 id="PropertyCompileError" class="no-TOC">Cannot prefix function with 'property'</h3>
- <p>The prefix <el-kw>out</el-kw>.</el-code> may only be used before a property name: not a function name.</p>
+ <p>The prefix <el-kw>property.</el-kw> may only be used before a property name: not a function name.</p>
 
 <h3 id="MissingParameterCompileError" class="no-TOC">Missing argument(s) ...</h3>
  <p>The method being called expects more arguments than have been provided.</p>
@@ -1135,7 +1135,7 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 
 <h3 id="GenericParametersCompileError" class="no-TOC">...&lt;of Type&gt;...</h3>
  <p>Certain data structure Types, including <el-type>Array</el-type>, <el-type>Array2D</el-type>,
- <el-type>List</el-type> must specify the Type of their members, for example <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-code>.
+ <el-type>List</el-type> must specify the Type of their members, for example <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;.
  Failure to specify the '&lt;of Type&gt;' on these Types will give an error, as will specifying 'of Type' where it is <i>not</i> required.
  Dictionaries require Types to be specified for both the keys and the values,
  for example: <el-code><el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Float</el-type>&gt;</el-code>.</p>
@@ -1181,7 +1181,7 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
  <p>In addition to Elan keywords there are certain other 'reserved words' that cannot be used to define the name for a
  value, property, or method.If you encounter this error you may eliminate the error simply by adding
   more valid characters to the name &ndash; for example just by changing <el-id>case</el-id> to <el-id>case_</el-id>.</p>
- <p>Why are there any reserved words that are not Elan keywords? There are three kinds of reserved word:
+ <p>Why are there any reserved words that are not Elan keywords? There are three kinds of reserved word:</p>
  <ul>
   <li><i>Potential</i> keywords that might be added to Elan in future releases.</li>
   <li>Lower case versions of Elan Type names, such as <el-code>int, float, string, boolean, array, list, dictionary</el-code>.
@@ -1225,7 +1225,7 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 
 <h3 id="mustBePropertyPrefixedOnMember" class="no-TOC">referencing a property requires a prefix.</h3>
  <p>If you are referring to a property of a class <i>from code defined within the class</i> then the
- property name must be preceded by <el-kw>property</el-kw>.</el-code></p>
+ property name must be preceded by <el-kw>property</el-kw>.</p>
 
 <h3 id="mustNotBeOutParameter" class="no-TOC">'out' parameters are only supported on procedures.</h3>
  <p>You cannot defined an <el-kw>out</el-kw> parameter in a function (because that would
@@ -1307,18 +1307,18 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 <h3 id="ProcRefField" class="no-TOC">'procedureName' in a call statement</h3>
  <p>Valid forms for a procedure call are
  <ul>
-  <li><el-kw>call</el-kw> <el-method>procedureName</el-method>()</el-code></li>
-  <li><el-kw>call</el-kw> <el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</el-code></li>
-  <li><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>propertyName</el-id>.<el-method>procedureMethodName</el-method>()</el-code></li>
-  <li><el-kw>call</el-kw> <el-kw>library</el-kw>.<el-method>procedureName</el-method>()</el-code></li>
+  <li><el-kw>call</el-kw> <el-method>procedureName</el-method>()</li>
+  <li><el-kw>call</el-kw> <el-id>instanceName</el-id>.<el-method>procedureMethodName</el-method>()</li>
+  <li><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>propertyName</el-id>.<el-method>procedureMethodName</el-method>()</li>
+  <li><el-kw>call</el-kw> <el-kw>library</el-kw>.<el-method>procedureName</el-method>()</li>
  </ul>
  The last one is used only if there is a need to disambiguate between a library procedure and a user-defined (global)
  procedure with the same name.</p>
 
 <h3 id="TypeField" class="no-TOC">'Type' field in a function or property definition</h3>
  <p>For certain Types the name may be followed by an <el-kw>of</el-kw> clause, for example:</p>
-<el-type>List</el-Type>&lt;<el-kw>of</el-kw> <el-Type>Int</el-Type>&gt;<br>
-<el-type>Dictionary</el-Type>&lt;<el-kw>of</el-kw> <el-Type>String</el-Type>, <el-Type>Int</el-Type>&gt;
+<el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-Type>Int</el-Type>&gt;<br>
+<el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-Type>String</el-Type>, <el-Type>Int</el-Type>&gt;
 
 <h3 id="TypeNameField" class="no-TOC">'Name' field in a class or enum definition</h3>
  <p>Type names always begin with a capital letter,  optionally followed by letters of either case, numeric digits,
