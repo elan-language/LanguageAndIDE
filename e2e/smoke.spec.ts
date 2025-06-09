@@ -206,3 +206,32 @@ test('undo redo', async ({ page }) => {
   await page.getByRole('button', { name: 'Redo' }).click();
   await expect(page.locator('el-top')).toContainText('main');
 }); 
+
+test('help focus', async ({ page }) => {
+  page.once('dialog', dialog => {
+    console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#code-title')).toContainText('File: code.elan');
+  await page.getByText('main procedure function test').click();
+  await page.keyboard.type('m');
+ 
+  // click worksheet button and expect tab to be visible
+  await page.getByText('Worksheet', { exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Standard worksheets' })).toBeVisible();
+
+  // click help and expect help to be visible
+  await page.getByRole('link', { name: '?' }).click();
+  await expect(page.getByRole('button', { name: 'Reference Manual' })).toBeVisible();
+
+  // click worksheet button and expect tab to be visible
+  await page.getByText('Worksheet', { exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Standard worksheets' })).toBeVisible();
+
+  // click help and expect help to again be visible
+  await page.getByRole('link', { name: '?' }).click();
+  await expect(page.getByRole('button', { name: 'Reference Manual' })).toBeVisible();
+  
+}); 
