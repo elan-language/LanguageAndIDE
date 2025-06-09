@@ -235,3 +235,25 @@ test('help focus', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Reference Manual' })).toBeVisible();
   
 }); 
+
+test('display image', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('m');
+  await page.keyboard.type('l');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('image https://elan-lang.org/documentation/images/logo.png');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('c');
+  await page.keyboard.type('displayHtml(a.asString())');
+
+  await page.getByRole('button', { name: 'Run the program' }).click();
+  await expect(page.locator('img[src="https://elan-lang.org/documentation/images/logo.png"]')).toBeVisible();;
+});
