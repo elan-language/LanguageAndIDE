@@ -4,40 +4,42 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<!-- REPLACE DOMAIN WITH https//elan-lang.org/-->
 <link href="https://elan-language.github.io/LanguageAndIDE//styles/colourScheme.css" rel="stylesheet" />
 <link href="https://elan-language.github.io/LanguageAndIDE//styles/elanStyle.css" rel="stylesheet" />
 <link href="https://elan-language.github.io/LanguageAndIDE//styles/documentation.css" rel="stylesheet" />
-<title>Worksheet - Random Walk</title>
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
 </head>
 <body>
-<div class="docTitle">Worksheet - Random Walk</div>
+<div class="docTitle">Simulating a Random Walk</div>
 
-<p>If you have never programmed before, this worksheet is a great way to start.
-And if you have already done some programming you might still find this exercise interesting.</p>
+<button id="auto-save">Auto-save file locally to continue</button>
 
+<div class="step" id="step0">
 <p>Our objective is to investigate the mathematical idea of a 'random walk'. 
 Imagine that you are standing in the centre of a circle with a radius of 10 paces.
 But instead of walking straight to the edge, with each pace you make a random turn
 - of <i>up to</i> to 90 degrees left or right. How many paces will it take to reach the edge?
-If the turning is truely random then each attempt will take a different number: for example, the picture below shows 
-three such possible random-walk journeys:</p>
+If the turning is truely random then each attempt will take a different number: the picture below shows 
+three such paths taken:</p>
 
 <img src="http://127.0.0.1:5500/out/website/documentation/images/random-walk.png" width="50%">
 
-<p>But can we determine the <i>average</i> number of paces to reach the edge? Yes,
+<p>Can we determine the <i>average</i> number of paces to reach the edge? Yes,
 if we could perform the experiment many times. 
 And it turns out that being able to predict the average length of a different kinds of
-random walk has very significant applications in many different fields of study: 
-physics, biology, ecology, economics ..., even computer science. 
-(You may read more about this on <a href="https://en.wikipedia.org/wiki/Random_walk" target="_blank">Wikipedia</a>).</p>
+random walk has significant applications in many different fields of study: 
+physics, biology, ecology, economics ..., even computer science. So we are going to build just such a simulation.</p>
+<label class="done" for "done0">Continue</label>
+</div>
+<input type="checkbox" class="step" id="done0" />
 
-<p>So we are going to build just such a simulation.</p>
-
+<div class="step" id="step1">
 <h3>Iteration 1: Draw a shape with 'turtle graphics'</h3>
 <ul>
     <li>Start with <b>File > New > OK</b> and make sure the code editor has focus (white background) by clicking on it, or tabbing to it.</li>
-    <li>From the new code options, press <b>m</b> to create an empty <el-kw>main</el-kw> routine.</li>
+    <li>Select <b>File > New</b> to start a new program, then <b>File > Auto Save</b>, specifying where the file should be saved.</li>
+    <li>Make sure the code editor has focus  i.e. has a white background.</li>
+     <li>From the new code options, press <b>m</b> to create an empty <el-kw>main</el-kw> routine.</li>
     <li>Within the main routine add a <el-kw>let</el-kw> instruction, and edit its two fields to look like the following, making as much
         use as possible of the options offered in the drop-down list (by cursoring down to the chosen item and pressing <b>Enter</b>)
         because this reduces errors:
@@ -151,6 +153,11 @@ physics, biology, ecology, economics ..., even computer science.
         Run the program and check that it draws what you expect.
     </li>
 </ul>
+<label class="done" for "done1">Iteration completed</label>
+</div>
+<input type="checkbox" class="step" id="done1" />
+
+<div class="step" id="step2">
 <h3>Iteration 2 - Draw the circle with a radius of 10 paces</h3>
 
 <p>Returning to our problem we defined the specific random walk to be simulated as getting from the centre to the edge of a circle with a 
@@ -184,6 +191,11 @@ physics, biology, ecology, economics ..., even computer science.
     </li>
     <li>Run the program and check that it draws a large circle that fits within the display. Note of where the turtle finishes.</li>
 </ul>
+<label class="done" for "done2">Iteration completed</label>
+</div>
+<input type="checkbox" class="step" id="done2" />
+
+<div class="step" id="step3">
 <h3>Iteration 3 - Draw a random walk</h3>
 <p>To simulate the random work we need to repeatedly move the turtle one pace, and turn though a random angle of up to 90 degrees in
     either direction (to turn to the left, just make the angle negative). The method <el-method>random</el-method><el-code>()</el-code>
@@ -272,6 +284,11 @@ physics, biology, ecology, economics ..., even computer science.
 
     </li>
 </ul>
+<label class="done" for "done3">Iteration completed</label>
+</div>
+<input type="checkbox" class="step" id="done3" />
+
+<div class="step" id="step4">
 <h3>Iteration 4 - simulate multiple walks</h3>
 <p>Our goal is to determine the <i>average</i> number of paces for a random walk to reach the edge of the circle. 
 So the next step is to perform multiple walks.</p>
@@ -318,7 +335,11 @@ So the next step is to perform multiple walks.</p>
         as writing <el-code><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>16777215</el-lit>)</el-code</li>. 
         Writing it as we did is easier to remember, and, arguably, makes the <i>intention</i> clearer.
     </ul>
+<label class="done" for "done4">Iteration completed</label>
+</div>
+<input type="checkbox" class="step" id="done4" />
 
+<div class="step" id="step5">
 <h3>Iteration 5 - Calculating the average number of paces</h3>
 <ul>
     <li>The first step to calculating the average is to count how many paces each walk takes. </i>Immediately above</i>
@@ -354,7 +375,7 @@ So the next step is to perform multiple walks.</p>
     </el-code-block>
 </li>
    
-</li>Finally, we need to calculate the average and present it on the display. This could be done with a single instruction
+</li>We need to calculate the average and present it on the display. This could be done with a single instruction
 but using two instructions is a bit clearer. First calculate the average by adding these two instructions as final instructions in the main routine:
 
 <el-code-block>
@@ -362,29 +383,48 @@ but using two instructions is a bit clearer. First calculate the average by addi
     <el-statement class="ok" id="print75" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>print </el-kw><el-field id="expr76" class="optional ok" tabindex="0"><el-txt>"<el-lit>Average: </el-lit>{<el-id>average</el-id>}<el-lit></el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>24</el-fr></el-statement>
 </el-code-block>
 
-The print it with the following:
+<li>Finally, for the small number of walks simulated it is inappropriate to quote the average number of paces to
+    so many decimal places. Edit the expression for calculating the average to the following, to round the result to just one decimal place: </li>
 
+<el-code-block>
+    (<el-id>totalPaces</el-id>/<el-id>numberOfAttempts</el-id>).<el-method>round</el-method>(<el-lit>1</el-lit>)
+</el-code-block>
 
-<!-- TODO add in the '.round(2)'
-  If you have time, run it with 100 
-Then investigate making the pace smaller and the radius of 20 paces - what is the relationship between pace, distance and average numbe
-Can also very the angles.
---> 
+<label class="done" for "done5">Interation completed</label>
+</div>
+<input type="checkbox" class="step" id="done5" />
 
+<div class="step" id="step6">
+    <p>Well done - you've now completed the worksheet.</p>
 
-
-<ul>
-    <li></li>
-</ul>
-
-</ul>
-
-
-
-<img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41" align="center">
-<p class="license">This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
-    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
-   If you <i>modify</i> this worksheet you may <i>not</i> distribute your modified version (outside your own teaching institution) without the author's permission.
-   Please <a href="mailto:rpawson@nakedobjects.org">email</a> to report errors or suggest improvements.</p>
-</body>
-</html>
+    <p>If you have time left, try any of the following:
+        
+    <ul>
+        <li>Simulate a larger number of walks e.g. 100. This will give a more accurate figure for the average number of paces.</li>
+        <li>Make the <el-id>pace</el-id> smaller but keep the circle's <el-id>radius</el-id> the same size as now. 
+            The average number of paces to reach the edge will be larger. But does it increase in proportion? Try
+            three different values and plot the average against pace size. 
+        </li>
+        <li>Go back to the original values, but make a small change to the range of possible turn-angles between paces:
+            -60 to + 60 degrees, or -120 to + 120, say.  
+            How does this change the average number of paces? Is the relationship linear?</li>
+        <li>Read more about the nature and application of Random Walks here: <a href="https://en.wikipedia.org/wiki/Random_walk" target="_blank">Wikipedia</a>).</li>
+    </ul>
+  
+    <div class="license">
+      <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+      This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
+          <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+         If you copy and <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+         Please <a href="mailto:rpawson@nakedobjects.org">email the author</a> to report errors or suggest improvements.
+    </div>
+  </div>
+  
+  <div hidden="" id="hash"></div>
+  <div hidden="" id="changes"></div>
+  
+  <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
+  <br>
+  
+  </body>
+  </html>
