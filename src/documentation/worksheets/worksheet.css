@@ -1,0 +1,43 @@
+.step, 
+.step *,
+.step + input {
+    display: none;
+}
+label {
+    float:left;
+}
+.step + input {
+    float: left;
+    margin-left: 1em;
+}
+
+.step, 
+.step *,
+.step + input {
+    display: none;
+}
+
+#auto-save.saved {
+    display: none;
+}
+
+#auto-save.saved + .step, 
+#auto-save.saved + .step *,
+#auto-save.saved + .step +  input {
+    display: block;
+}
+
+#auto-save.saved ~ .step.complete, 
+#auto-save.saved ~ .step.complete *,
+#auto-save.saved ~ .step.complete + input,
+#auto-save.saved ~ .step.complete + input + .step,
+#auto-save.saved ~ .step.complete + input + .step *,
+#auto-save.saved ~ .step.complete + input + .step + input
+{
+    display: block;
+}
+
+.license, .license img {
+    display: block;
+}
+

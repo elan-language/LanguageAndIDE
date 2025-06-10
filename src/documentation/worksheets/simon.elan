@@ -1,0 +1,53 @@
+# 4f36602c89ab75f838ba7fb7d322df75534568029e1129b85a88f125eb090be5 Elan 1.1.3 guest default_profile valid
+
+main
+  let sequence be new List<of Int>()
+  variable ok set to true
+  variable interval set to 1000
+  while ok
+    call simonsTurn(sequence, interval)
+    call clearVectorGraphics()
+    call playersTurn(sequence, ok)
+    set interval to interval - 50
+  end while
+  print "Your score: {sequence.length()}"
+end main
+
+procedure simonsTurn(sequence as List<of Int>, interval as Int)
+  call sequence.append(randomInt(0, 3))
+  each move in sequence
+    call displayMove(move)
+    # play tone (might act as the pause?)
+    call pause(interval)
+  end each
+end procedure
+
+procedure displayMove(move as Int)
+  call clearVectorGraphics()
+  let colours be [red, yellow, blue, green]
+  let circle be new CircleVG() with centreX set to 10 + 10*move, centreY set to 10, radius set to 5, fillColour set to colours[move]
+  # Need some position indicator - pref. not numbers
+  call displayVectorGraphics([circle])
+end procedure
+
+procedure playersTurn(sequence as List<of Int>, out ok as Boolean)
+  variable counter set to 0
+  while ok and (counter < sequence.length())
+    # To be simplified (#1449)
+    variable k set to ""
+    while k is ""
+      set k to getKey()
+    end while
+    let valid, digit be parseAsInt(k)
+    if valid and (sequence[counter] is digit) then
+      call displayMove(digit)
+      set counter to counter + 1
+    else
+      set ok to false
+    end if
+  end while
+  call pause(1000)
+  call clearPrintedText()
+  print if ok then "Correct!" else "Wrong!"
+  call pause(2000)
+end procedure

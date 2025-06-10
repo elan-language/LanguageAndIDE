@@ -190,9 +190,9 @@ test('symbol completion', async ({ page }) => {
   await expect(page.locator('#ident6')).toContainText('clearBlocksclearHtmlclearKeyBufferclearPrintedTextclearVectorGraphicsdisplayBlocksdisplayVectorGraphics');
 });
 
-/* test('undo redo', async ({ page }) => {
+test('undo redo', async ({ page }) => {
   page.once('dialog', dialog => {
-    //console.log(`Dialog message: ${dialog.message()}`);
+    console.log(`Dialog message: ${dialog.message()}`);
     dialog.accept().catch(() => {});
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
@@ -202,7 +202,58 @@ test('symbol completion', async ({ page }) => {
   await page.keyboard.type('m');
   await expect(page.locator('#code-title')).toContainText('File: code.elan UNSAVED');
   await page.getByRole('button', { name: 'Undo' }).click();
-  await expect(page.locator('el-help')).toContainText(' main procedure function test constant enum record class abstract interface #');
+  await expect(page.locator('div.options')).toContainText('  main procedure function test constant enum record class abstract interface #');
   await page.getByRole('button', { name: 'Redo' }).click();
   await expect(page.locator('el-top')).toContainText('main');
-}); */
+}); 
+
+test('help focus', async ({ page }) => {
+  page.once('dialog', dialog => {
+    console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#code-title')).toContainText('File: code.elan');
+  await page.getByText('main procedure function test').click();
+  await page.keyboard.type('m');
+ 
+  // click worksheet button and expect tab to be visible
+  await page.getByText('Worksheet', { exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Standard worksheets' })).toBeVisible();
+
+  // click help and expect help to be visible
+  await page.getByRole('link', { name: '?' }).click();
+  await expect(page.getByRole('button', { name: 'Home' })).toBeVisible();
+
+  // click worksheet button and expect tab to be visible
+  await page.getByText('Worksheet', { exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Standard worksheets' })).toBeVisible();
+
+  // click help and expect help to again be visible
+  await page.getByRole('link', { name: '?' }).click();
+  await expect(page.getByRole('button', { name: 'Home' })).toBeVisible();
+  
+}); 
+
+test('display image', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('m');
+  await page.keyboard.type('l');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('image https://elan-lang.org/documentation/images/logo.png');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('c');
+  await page.keyboard.type('displayHtml(a.asString())');
+
+  await page.getByRole('button', { name: 'Run the program' }).click();
+  await expect(page.locator('img[src="https://elan-lang.org/documentation/images/logo.png"]')).toBeVisible();;
+});

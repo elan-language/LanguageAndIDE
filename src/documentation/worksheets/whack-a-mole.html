@@ -4,23 +4,24 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<!-- REPLACE DOMAIN WITH https//elan-lang.org/-->
 <link href="https://elan-language.github.io/LanguageAndIDE//styles/colourScheme.css" rel="stylesheet" />
 <link href="https://elan-language.github.io/LanguageAndIDE//styles/elanStyle.css" rel="stylesheet" />
 <link href="https://elan-language.github.io/LanguageAndIDE//styles/documentation.css" rel="stylesheet" />
-<title>Worksheet - Introducing Arrays</title>
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
 </head>
 <body>
 
-<div class="docTitle">Worksheet - Introducing Arrays with Whack-a-mole</div>
+<div class="docTitle">Whack-a-mole</div>
+
+<button id="auto-save">Auto-save file locally to continue</button>
+
+<div class="step" id="step1">
+<h3>Iteration 1 - Create an array of strings</h3>
 
 <p>Any array is a simple form of 'data structure' - which is a mechanism for holding multiple, related, data elements (also called 'items')
-    such that they may be read or modified all together, but also read or modified individually.</p>
-
-<p>We are going to write a simple version of the game 'Whack-a-mole', using an array to represent a line of
+    such that they may be read or modified all together, but also read or modified individually. We are going to write a simple version of the game 'Whack-a-mole', using an array to represent a line of
     ten holes from which a mole might briefly appear.</p>
 
-<h3>Iteration 1 - Create an array of strings</h3>
 <ul>
     <li>Set the browser to full-screen mode, to give yourself as much room as possible.</li>
     <li>Select <b>File > New</b> to start a new program, then <b>File > Auto Save</b>, specifying where the file should be saved.</li>
@@ -48,6 +49,10 @@
     </li>
     <li>Add an instruction to print the holes, then run the program, noting that the 10 elements of this array are printed successively - separated by a comma-and-space - and surrounded by square brackets.</li>
  </ul>
+ <label class="done" for "done1">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done1" />
+<div class="step" id="step2">
 <h3>Iteration 2 - put a value into a specific element</h3>
 <ul>
   <li>Change the instruction that defined the array so that, instead of an asterisk, each element is initialised to a single
@@ -76,7 +81,10 @@
     Run the program, which will result in a 'Runtime error'. Make sure you understand the error message, so that you will recognise what is going on
     if you see this message unexpectedly in future.</li>
 </ul>
-
+<label class="done" for "done2">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done2" />
+<div class="step" id="step3">
 <h3>Iteration 3 - display the array of holes in a more useful way</h3>
 <ul>
     <li>We have learned how to <i>write</i> an individual element using the <el-method>put</el-method>. We can also
@@ -133,7 +141,10 @@
     </ul></li>
     <li>Run the program and check that you see see the labels for the holes and the mole appearing in hole 1.</li>
     </ul>
-
+    <label class="done" for "done3">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done3" />
+<div class="step" id="step4">
     <h3>Iteration 4 - put the mole in a random hole</h3>
     <ul>
     <li>To make the mole(s) unpredictable, we need to generate a random integer in the range of 0 to 9.
@@ -144,7 +155,10 @@
      specifically into hole 1, you put it into the hole defined as <el-id>molePosition</el-id>.</li>
     <li>Run the program more than once and check that the mole typically appears at a different hole each time you run (it will occasionally pick the same hole).</li>
     </ul>
-
+<label class="done" for "done4">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done4" />
+<div class="step" id="step5">
     <h3>Iteration 5 - Move the mole randomly, once a second</h3>
     <ul>
         <li>When we want to repeat a piece of behaviour indefinitely, we use an 'indefinite' loop, which is a
@@ -176,6 +190,10 @@
             with an empty hole (a single space in quotes) - then run again. It should be <i>beginning</i> to look more like a game,
             but now we need to be able to interact with it.</li>
     </ul>
+<label class="done" for "done5">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done5" />
+<div class="step" id="step6">
     <h3>Iteration 6 - Read a keypress dynamically and whack the mole if the digit matches</h3>
     <ul>
         <li>Calling the <el-method>pause</el-method> procedure was a very simple way to slow down the loop. Unfortunately, during such
@@ -238,6 +256,10 @@
             You might find it helpful for your first few games to slow it down further by re-defining the <el-id>stopTime</el-id>
             time to the current time plus <i>three</i> seconds instead of two seconds. Then run again.</li>
         </ul>
+<label class="done" for "done6">Step completed</label>
+    </div>
+    <input type="checkbox" class="step" id="done6" />
+    <div class="step" id="step7">
 <h3>Iteration 7 - Keep the score</h3>
     <ul>
        <li>To keep track of how many moles you have successfully whacked, define a value named <el-id>score</el-id> initially
@@ -259,10 +281,13 @@
     <li>Play the game and see how many moles you can whack.
         Once you've got the hang of it reduce the time interval from <el-lit>2000</el-lit> milliseconds
         to <el-lit>1000</el-lit>, say, and try again.</li>
-
-</ul>
-<h3>Optional extensions</h3>
+    </ul>
+<label class="done" for "done7">Step completed</label>
+    </div>
+    <input type="checkbox" class="step" id="done7" />
+    <div class="step" id="step8">
     <p>Congratulations! You've completed the exercise, written a simple version of Whack-a-mole, and learned how to use an array.
+        <h3>Optional extensions</h3>
         If you have time, try to refine and/or extend the game in the following ways:
 
         <ul>
@@ -287,12 +312,19 @@
             a maximum of 10 instructions. Don't forget that a procedure can also delegate work to other procedures.</li>
         </ul>
     </p>
-
-
+    <br>
+    <div class="license">
     <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
-    <p class="license">This worksheet is copyright &#x00A9; Richard Pawson 2025, and protected by the Creative Commons license:
+    This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
         <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
-       If you <i>modify</i> this worksheet you may <i>not</i> distribute your modified version (outside your own teaching institution) without the author's permission.
-       Please <a href="mailto:rpawson@nakedobjects.org">email</a> to report errors or suggest improvements.</p>
+       If you copy and <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+       Please <a href="mailto:rpawson@nakedobjects.org">email the author</a> to report errors or suggest improvements.
+    </div>
+    </div>
+
+    <div hidden="" id="hash"></div>
+    <div hidden="" id="changes"></div>
+    
+    <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
 </body>
 </html>

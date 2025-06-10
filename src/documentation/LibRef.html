@@ -767,26 +767,26 @@ Note
   see <a href="#map"><el-method>map</el-method></a> in HoFs</td>
  </tr><tr id="maxFloat">
   <td><el-method>maxFloat</el-method></td>
+  <td>(not a dot method)</td>
   <td><el-code>List&lt;of <el-type>Float</el-type>&gt;</el-code></td>
-  <td>(none)</td>
   <td><el-type>Float</el-type></td>
   <td>returns the maximum value found in the List</td>
  </tr><tr id="minFloat">
   <td><el-method>minFloat</el-method></td>
+  <td>(not a dot method)</td>
   <td><el-code>List&lt;of <el-type>Float</el-type>&gt;</el-code></td>
-  <td>(none)</td>
   <td><el-type>Float</el-type></td>
   <td>returns the minimum value found in the List</td>
  </tr><tr id="maxInt">
   <td><el-method>maxInt</el-method></td>
+  <td>(not a dot method)</td>
   <td><el-code>List&lt;of <el-type>Int</el-type>&gt;</el-code></td>
-  <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>returns the maximum value found in the List</td>
  </tr><tr id="minInt">
   <td><el-method>minInt</el-method></td>
+  <td>(not a dot method)</td>
   <td><el-code>List&lt;of <el-type>Int</el-type>&gt;</el-code></td>
-  <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>returns the minimum value found in the List</td>
  </tr><tr id="maxBy_List">
@@ -926,8 +926,8 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
     <td>(none)</td>
     <td><el-type></el-type></td>
     <td></td>
-</tr><tr id="leys">
-    <td id="keys"><el-method>keys</el-method></td>
+</tr><tr id="keys">
+    <td><el-method>keys</el-method></td>
     <td><el-type>Dictionary</el-type></td>
     <td>(none)</td>
     <td><el-type>List</el-type></td>
@@ -1024,9 +1024,9 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <h3 class="no-TOC">Type name</h3>
 <p>The Type is specified in the following ways:</p>
 <ul>
- <li><<el-type>ListImmutable</el-type>&lt;of <el-type>String</el-type>&gt; for a <el-type>ListImmutable</el-type> of Type <el-type>String</el-type></li>
+ <li><el-type>ListImmutable</el-type>&lt;of <el-type>String</el-type>&gt; for a <el-type>ListImmutable</el-type> of Type <el-type>String</el-type></li>
  <li><el-code><el-type>ListImmutable</el-type>&lt;of <el-type>Int</el-type>&gt;</el-code> for a <el-type>ListImmutable</el-type> of Type <el-type>Int</el-type></li>
- <li><el-code><el-type>ListImmutable</el-type>&lt;of <el-type>ListImmutable</el-type>&lt;of <el-type>Int</el-type>&gt;</el-code> for a <el-type>ListImmutable</el-type> of such lists each of Type <el-type>Int</el-type></li>
+ <li><el-code><el-type>ListImmutable</el-type>&lt;of <el-type>ListImmutable</el-type>&lt;of <el-type>Int</el-type>&gt;&gt;</el-code> for a <el-type>ListImmutable</el-type> of such lists each of Type <el-type>Int</el-type></li>
 </ul>
 
 <h3 class="no-TOC">Creating a ListImmutable</h3>
@@ -1255,7 +1255,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-method>contains</el-method></td>
   <td><el-type>Set</el-type></td>
   <td>item of Set element's Type</td>
-  <td><el-code>Boolean<el-type></el-type></td>
+  <td><el-type>Boolean</el-type></td>
   <td><el-code><el-id>true</el-id></el-code> if the Set contains the item<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr id="difference">
   <td><el-method>difference</el-method></td>
@@ -1820,7 +1820,7 @@ also offers position properties <el-code><el-id>x</el-id></el-code> and <el-code
 </el-code-block>
 
 <p>The Type of a named value that holds an image is <el-type>ImageVG</el-type> &ndash; the 'VG' indicating that
-    this Typeis compatible with <a href="#VectorGraphics">vector graphics</a>, so an image may be added to a <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;</el-code> or displayed
+    this Typeis compatible with <a href="#VectorGraphics">vector graphics</a>, so an image may be added to a <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt; or displayed
     directly by:</p>
 
 <el-code-block>
@@ -1888,7 +1888,7 @@ the URL as a <el-type>String</el-type>, either as a literal (by surrounding it w
 <p>The area is 200 turtle units wide by 150 turtle units high, and floating point (fractional) values of turtle units can be used.</p>
 <p>The origin for turtle units (0,0) is at the centre of the area: positive x rightwards, positive y upwards.
 so for example the top left corner of the display is at (-100,75).</p>
-<h3 class="no-TOC" id="List_procedures">Procedure methods on a Turtle</h3>
+<h3 class="no-TOC" id="Turtle_procedures">Procedure methods on a Turtle</h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -2062,7 +2062,7 @@ so for example the top left corner of the display is at (-100,75).</p>
 <h4 class="no-TOC">Notes</h4>
 <ul>
  <li>The constructor for each VG Type requires arguments corresponding the Html attributes for the corresponding SVGType.</li>
- <li>As with <span class="Link">Block</span> graphics the screen is not updated until the <el-method>displayVectorGraphics</el-method> method is called,
+ <li>As with <a href="#BlockGraphics">Block</a> graphics the screen is not updated until the <el-method>displayVectorGraphics</el-method> method is called,
    allowing you to make multiple changes before updating the screen. Similarly, the method to add a shape returns a new instance of the <el-code>VectorGraphics</el-code> which must be assigned either to an existing variable, or to a new <el-kw>let</el-kw>.</li>
  <li>As with the way that SVG works within Html, the shapes are drawn in the order in which they are added into the list of <el-type>VectorGraphic</el-type> instances, with later shapes positioned over earlier shapes.</li>
  <li>The <el-code><el-id>fillColour</el-id></el-code> and <el-code><el-id>strokeColour</el-id></el-code> properties may be specified as described under <a href="#Colours">Colours</a>.
@@ -2072,9 +2072,9 @@ so for example the top left corner of the display is at (-100,75).</p>
  <li>The constructor parameters for <el-type>LineVG</el-type> are: <el-code>x1, y1, x2, y2, strokeColour, strokeWidth</el-code>, all of Type <el-type>Int</el-type>.</li>
  <li>The constructor parameters for <el-type>LineVG</el-type> are: <el-code>x, y, width, height, fillColour, strokeColour, strokeWidth</el-code>.</li>
  <li>All parameters for the three constructors above are of Type<el-type>Int</el-type>.</li>
- <li>Individual properties of any of the VGTypes may be modified by calling the corresponding <el-method>set...</el-method> procedure method
+ <li>Individual properties of any of the VG Types may be modified by calling the corresponding <el-method>set...</el-method> procedure method
   or, if working within a function, by using the corresponding <el-method>with...</el-method> function dot method.</li>
- <li><el-method>displayVectorGraphics</el-method> takes as an argument either a <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;()</el-code>
+ <li><el-method>displayVectorGraphics</el-method> takes as an argument either a <el-code><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;()</el-code>
   or a <el-type>List</el-type> of any specific Typeof <el-type>VectorGraphic</el-type> such as <el-type>CircleVG</el-type>.</li>
 </ul>
 
@@ -2212,7 +2212,7 @@ just as you would specify the Type of every parameter and the return Type for th
     <li>If the parse fails, the second value will become zero, so you should always check the first value to see if the second value is a correct parse or just the default.</li>
     <li> You can &#8216;deconstruct&#8217; the tuple into two variables:
 <el-code-block source="parse_string.elan">
-<el-statement class="ok" id="var5" tabindex="0"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>success</el-id>, <el-id>parsedValue</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>(<el-id>myString</el-id>)</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
+<el-statement class="ok" id="var5" tabindex="0"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>success</el-id>, <el-id>parsedValue</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>(<el-id>myString</el-id>)</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field></el-statement>
    </el-code-block></li>
     <li>One use of these parsing methods is for validating user input, but note that an easier way to do this is to use the various <a href="#Input/output">input methods</a>.</li>
 </ul>
@@ -2330,8 +2330,8 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
   <th>argument<br>Types</th>
   <th>return<br>Type</th>
   <th>returns</th>
- </tr><tr id="asBinary">
-  <td id="bitAnd"><el-method>bitAnd</el-method></td>
+ </tr><tr id="bitAnd">
+  <td><el-method>bitAnd</el-method></td>
   <td><el-type>Int, Int</el-type></td>
   <td><el-type>Int</el-type></td>
   <td>integer whose binary representation is the bitwise AND of the inputs</td>
@@ -2385,7 +2385,7 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
-<p>The result of <el-method>bitNot</el-method>(<el-id>a</el-id>)</el-code> being <el-code>-14</el-code> , when <el-code><el-id>a</el-id></el-code> is <el-code>13</el-code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as <el-code>00000000000000000000000000001101</el-code>, and applying <el-method>bitNot</el-method> gives <el-code>11111111111111111111111111110010 </el-code>which is the value <el-code>-14 </el-code>in signed two&#8217;s complement format, the left-most bit being the sign (<el-code>0</el-code> positive, <el-code>1</el-code> negative).</p>
+<p>The result of <el-method>bitNot</el-method>(<el-id>a</el-id>) being <el-code>-14</el-code> , when <el-code><el-id>a</el-id></el-code> is <el-code>13</el-code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as <el-code>00000000000000000000000000001101</el-code>, and applying <el-method>bitNot</el-method> gives <el-code>11111111111111111111111111110010 </el-code>which is the value <el-code>-14 </el-code>in signed two&#8217;s complement format, the left-most bit being the sign (<el-code>0</el-code> positive, <el-code>1</el-code> negative).</p>
 
 <h2 id="sequence">Sequence</h2>
 <p>The <el-method>sequence</el-method> is used to create a <el-type>List</el-type> containing a sequence
@@ -2548,7 +2548,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td><el-type>Float</el-type></td>
   <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
   provided that it is a number with a value in the (inclusive) range.<br> The first range value must be less than or equal to the second</td>
- </tr><tr id="openFileForReading">
+ </tr><tr id="openFileForReading_system">
   <td><el-method>openFileForReading</el-method></td>
   <td>(none)</td>
   <td><el-class>TextFileReader</el-class></td>

@@ -7,6 +7,7 @@ import {
   elanClassExport,
   elanClassType,
   elanConstant,
+  elanDeprecated,
   ElanFloat,
   elanFunction,
   elanGenericParamT1Type,
@@ -41,6 +42,7 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphic } from "./vector-graphic";
+import { Deprecation } from "../elan-type-interfaces";
 
 export class StdLib {
   constructor() {
@@ -685,9 +687,24 @@ export class StdLib {
 
   // Graphics
 
+  @elanDeprecated(Deprecation.methodHidden, 1, 1, "")
   @elanProcedure([], ProcedureOptions.async)
   async waitForAnyKey() {
     return await this.system.elanInputOutput.waitForAnyKey();
+  }
+
+  @elanProcedure(["prompt"], ProcedureOptions.async)
+  async pressAnyKeyToContinue(prompt: boolean) {
+    if (prompt) {
+      await this.prompt("Press any key to continue");
+    }
+    await this.waitForKey();
+    return;
+  }
+
+  @elanFunction([], FunctionOptions.impureAsync, ElanString)
+  async waitForKey(): Promise<string> {
+    return await this.system!.elanInputOutput.waitForKey();
   }
 
   @elanFunction([], FunctionOptions.impureAsync, ElanString)

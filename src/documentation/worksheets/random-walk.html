@@ -4,47 +4,427 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<!-- REPLACE DOMAIN WITH https//elan-lang.org/-->
 <link href="https://elan-language.github.io/LanguageAndIDE//styles/colourScheme.css" rel="stylesheet" />
 <link href="https://elan-language.github.io/LanguageAndIDE//styles/elanStyle.css" rel="stylesheet" />
 <link href="https://elan-language.github.io/LanguageAndIDE//styles/documentation.css" rel="stylesheet" />
-<title>Worksheet - Random Walk</title>
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
 </head>
 <body>
-<div class="docTitle">Worksheet - Random Walk</div>
+<div class="docTitle">Simulating a Random Walk</div>
 
-<p>If you have never programmed before, this worksheet is a great way to start.
-And if you have already done some programming you might still find this exercise interesting.</p>
+<button id="auto-save">Auto-save file locally to continue</button>
 
+<div class="step" id="step0">
 <p>Our objective is to investigate the mathematical idea of a 'random walk'. 
 Imagine that you are standing in the centre of a circle with a radius of 10 paces.
 But instead of walking straight to the edge, with each pace you make a random turn
 - of <i>up to</i> to 90 degrees left or right. How many paces will it take to reach the edge?
-If the turning is truely random then each attempt will take a different number: for example, the picture below shows 
-three such possible random-walk journeys:</p>
+If the turning is truely random then each attempt will take a different number: the picture below shows 
+three such paths taken:</p>
 
 <img src="http://127.0.0.1:5500/out/website/documentation/images/random-walk.png" width="50%">
 
-<p>But can we determine the <i>average</i> number of paces to reach the edge? Yes,
+<p>Can we determine the <i>average</i> number of paces to reach the edge? Yes,
 if we could perform the experiment many times. 
 And it turns out that being able to predict the average length of a different kinds of
-random walk has very significant applications in many different fields of study: 
-physics, biology, ecology, economics ..., even computer science. 
-(You may read more about this on <a href="https://en.wikipedia.org/wiki/Random_walk" target="_blank">Wikipedia</a>).</p>
+random walk has significant applications in many different fields of study: 
+physics, biology, ecology, economics ..., even computer science. So we are going to build just such a simulation.</p>
+<label class="done" for "done0">Continue</label>
+</div>
+<input type="checkbox" class="step" id="done0" />
 
-<p>So we are going to build just such a simulation.</p>
-
-<h3>Iteration 1: Use 'Turtle graphics' to plot a non-random walk.</h3>
+<div class="step" id="step1">
+<h3>Iteration 1: Draw a shape with 'turtle graphics'</h3>
 <ul>
     <li>Start with <b>File > New > OK</b> and make sure the code editor has focus (white background) by clicking on it, or tabbing to it.</li>
-    <li>From the new code options, press <b>m</b> to create an empty <el-kw>main</el-kw> routine.</li>
-    <li>Within the main routine add a <el-kw>let</el-kw> instruction, and edit its two fields to look like this.
-</ul>
+    <li>Select <b>File > New</b> to start a new program, then <b>File > Auto Save</b>, specifying where the file should be saved.</li>
+    <li>Make sure the code editor has focus  i.e. has a white background.</li>
+     <li>From the new code options, press <b>m</b> to create an empty <el-kw>main</el-kw> routine.</li>
+    <li>Within the main routine add a <el-kw>let</el-kw> instruction, and edit its two fields to look like the following, making as much
+        use as possible of the options offered in the drop-down list (by cursoring down to the chosen item and pressing <b>Enter</b>)
+        because this reduces errors:
 
-<img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
-<p class="license">This worksheet is copyright &#x00A9; Richard Pawson 2025, and protected by the Creative Commons license:
-    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
-   If you <i>modify</i> this worksheet you may <i>not</i> distribute your modified version (outside your own teaching institution) without the author's permission.
-   Please <a href="mailto:rpawson@nakedobjects.org">email</a> to report errors or suggest improvements.</p>
-</body>
-</html>
+        <el-code-block>
+            <el-statement class="ok" id="let3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Turtle</el-type>()</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
+        </el-code-block>
+
+        <ul>
+            <li>This instrucction reates a new 'Turtle' which we will be commanding to move around the Display holding a 'pen' that shows the path it has taken.</li>
+            <li><el-type>Turtle</el-type> is a 'type' of thing and type names always begin with a capital letter</li>
+            <li>We have named this turtle <el-id>t</el-id> - picking a short name because we will be referring to it often and isn't likely
+            to be confused with anuthing else. We could have given it a longer name, and we will use longer names shortly. Names (also called 'identifiers') that we give
+            to things always begin with a lower-case letter. You'll also note that identifiers and types are shown in different colours in the editor.
+            </li>
+            <li>The 'empty' brackets after <el-type>Turtle</el-type> are necessary, but don't worry about why they are needed just now
+            that will gradually become clearer. Note also that if you selected <el-type>Turtle</el-type> from the drop-down options you
+            will have seen a prompt (white characters) telling you that brackets were needed, like this:
+            <el-code-block>
+                <el-statement class="warning" id="let5" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr7" class="selected focused warning" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="10" data-cursorend="10" size="9" style="width: 10ch" value="new Turtle"></el-txt><el-place><i>expression</i></el-place><el-compl>()</el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
+            </el-code-block>
+            at which point just pressing <b>Tab</b> will insert the prompted characters.</li>
+            <li>Whenever you see a question mark next to a field or instruction, clicking it will open the <b>Help</b> tab. 
+                This may be useful when you start to write your own programs, but shouldn't be necessary in this worksheet.</li>
+        </li>
+            
+        </ul></li>
+    <li>Follow this by adding this <el-kw>call</el-kw> instruction:
+
+        <el-code-block>
+            <el-statement class="selected focused ok" id="call8" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident9" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>show</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args10" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#call" target="doc-iframe">?</a></el-help><el-msg></el-msg><el-fr>3</el-fr></el-top></el-statement>
+        </el-code-block>
+    
+        Noting that:
+
+        <ul>
+            <li>This instruction is best verbalised as 'call the <el-method>show</el-method> procedure on t (the turtle).</li>
+            <li>A procedure is a named piece of a code that makes a change to the system. This may also be referered to as a 'method' -
+                a procedure being a particular type of method.</li>
+            <li>This syntax - which takes the form of <i>nameOfThing.methodName</i> is known as a 'dotted method'. You'll be calling a 
+            lot of dotted methods on the turtle <el-id>t</el-id>.</li>
+            <li>Methods are rendered in a different colour to identifiers and types.</li>
+        </ul></li>
+    <li>Run the program, noting that:
+        <ul>
+            <li>the <b>Display</b> shows the turtle as a small green circle. When first created it is located in
+                the centre of the <b>Display</b>, with the 'x,y' coordinates of 0,0.</li>
+            <li>In turtle terms the <b>Display</b> measures 200 turtle units wide, and 150 turtle units deep.</li>
+            <li>The short black line on the turtle shows that it is currently heading North.</li>
+            <li>Having shown the turtle this program stops, so you can click on the code editor to give it focus
+                and resume editing the code.
+            </li>
+        </ul> 
+    <li>Add three more instructions below the <el-kw>call</el-kw>:
+        <el-code-block>
+            <el-statement class="ok" id="call17" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident18" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>move</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args19" class="optional ok" tabindex="0"><el-txt><el-lit>10</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>4</el-fr></el-top></el-statement>
+            <el-statement class="ok" id="call28" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident29" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>turn</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args30" class="optional ok" tabindex="0"><el-txt><el-lit>45</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>5</el-fr></el-top></el-statement>
+            <el-statement class="ok" id="call37" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident38" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>move</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args39" class="optional ok" tabindex="0"><el-txt><el-lit>10</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>6</el-fr></el-top></el-statement>
+        </el-code-block>
+        <ul>
+            <li>Here we again calling two different procedure methods on the turtle, their names suggesting what the turtle will do.</li>
+            <li>Both of these methods require you to specify a value (representing the distance to move, and the angle - in degrees - to turn, respectively) 
+                which is placed within the brackets. That's what the brackets are there for when using a methods.</li>
+            <li>A value given to a method (within the brackets) is known as an 'argument' (the same term is used in Mathematics).
+                Later we will encounter methods that require more than one argument. Some methods - <el-method>show</el-method> for example -
+                don't require any arguments, but they still need the brackets.
+            </li>
+        </ul>
+
+        then run the program again and make sure that you understand how the trail left by the turtle's pen corresponds to the three instructions that you added.</li>
+    <li>Delete the last <kw>call</kw> instruction by selecting the instruction and pressing <b>Ctrl-Delete</b> (or <b>Ctrl-d</b>. 
+        In its place, add a <el-kw>for</el-kw> instruction and edit its fields to read this:
+        <el-code-block>
+            <el-statement class="ok multiline" id="for60" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+                <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident62" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt><el-place><i>variableName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#IdentifierField" target="doc-iframe">?</a></el-help></el-field><el-kw> from </el-kw><el-field id="expr63" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-kw> to </el-kw><el-field id="expr64" class="ok" tabindex="0"><el-txt><el-lit>8</el-lit></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-kw> step </el-kw><el-field id="expr65" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>6</el-fr></el-top>
+                <el-statement class="ok empty" id="select61" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
+                <el-kw>end for</el-kw>
+            </el-statement>
+        </el-code-block>
+
+        <ul>
+            <li>A <el-kw>for</el-kw> instruction is a kind of 'loop' which will execute the instructions placed inside it a fixed number of times.
+            In this case it will execute them 8 times - counting from 1 to 8 <i>inclusive</i>.</li>
+            <li>We have to give a name to the 'counter' - in this case we have named it <el-id>n</el-id>. 
+                Sometimes this counter will be used within the loop - if we need to know where we are in the counting. In this case, we are not going
+                to use it, though.
+            </li>
+            <li>This looping activity is formally known in Computer Science as 'iteration'.</li>
+        </ul></li>
+    <li>Move the two <el-kw>call</el-kw> instuctions that <el-method>move</el-method> and <el-method>turn</el-method> the turtle <i>inside</i> the loop. 
+        You may do this one at a time, or both together:</li> 
+        <ul>
+            <li>Select the instruction(s) to move</li>
+            <li>Press <b>Ctrl-x</b> to cut the instruction(s) to the clipboard</li>
+            <li>Select the 'new code' selector where you want to locate the cut instructions</li>
+            <li>Press <b>Ctrl-v</b> to paste the instructions</li>
+        </ul>
+        You should now have two <kw>call</kw> instructions inside the <el-kw>for</el-kw> loop, which will execute the pair of them 8 times.
+        <i>Before</i> you run the program, try to predict what you will see on the display. Then run the program.</li>
+
+    <li>Now modify the code to draw a 12-sided regular polygon.The <i>loop</i> will need to execute 12 times, and each turn will need to
+        be 1/12<sup>th</sup> of 360 degrees. You <i>could</i> work that one out for yourself, 
+        but you can also just specify the turn instruction like this:
+    
+        <el-code-block>
+            <el-statement class="ok" id="call28" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident29" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>turn</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args30" class="optional ok" tabindex="0"><el-txt><el-lit>360</el-lit>/<el-lit>12</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>6</el-fr></el-top></el-statement>
+        </el-code-block>
+
+        In most places in code where a value can be specified, it is possible to specify an expression - such as <el-lit>360</el-lit>/<el-lit>12</el-lit>,
+        or a far more complex expression - and that expression will be evaluated automatically and the result passed as the argument to the method.
+        Run the program and check that it draws what you expect.
+    </li>
+</ul>
+<label class="done" for "done1">Iteration completed</label>
+</div>
+<input type="checkbox" class="step" id="done1" />
+
+<div class="step" id="step2">
+<h3>Iteration 2 - Draw the circle with a radius of 10 paces</h3>
+
+<p>Returning to our problem we defined the specific random walk to be simulated as getting from the centre to the edge of a circle with a 
+    radius of 10 paces. We now know how to draw a regular polygon and a circle may be descrbed as a regular polygon with an infinite number of sides.
+    But since the display's resolution is infinite we can get away with less than that! 360 sides, turning 1 degree each time should suffice.</p>
+
+<ul>
+    <li>Modify the <el-kw>for</el-kw> loop so that it executes 360 times.</li>
+    <li>Set the argument passed to the <el-method>turn</el-method> method to <el-lit>1</el-lit>. Now we need to calc</li>
+    <li>To calculate the length of the 'side' used for each of the 360 steps, we can use the following code, which reads very 
+        like the way we would read out the calculation in mathematics:
+      
+         <el-code-block>
+            <el-statement class="ok" id="let86" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var87" class="ok" tabindex="0"><el-txt><el-id>pace</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr88" class="ok" tabindex="0"><el-txt><el-lit>5</el-lit></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field></el-statement>
+            <el-statement class="ok" id="let111" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var112" class="ok" tabindex="0"><el-txt><el-id>radius</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr113" class="ok" tabindex="0"><el-txt><el-lit>10</el-lit>*<el-id>pace</el-id></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field></el-statement>
+            <el-statement class="ok" id="let95" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var96" class="ok" tabindex="0"><el-txt><el-id>side</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr97" class="ok" tabindex="0"><el-txt><el-lit>2</el-lit>*<el-id>radius</el-id>*<el-id>pi</el-id>/<el-lit>360</el-lit></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field></el-statement>
+        </el-code-block>
+
+      We need to calculate thes values <i>before</i> we use them, so add these three new instructions <i>at the top<</i> of the main.
+    </li> 
+    <li>Now change the argument passed into the <el-method>move</el-method> from <el-lit>10</el-lit> to <el-id>side.</el-id></li>
+    <li>We'd also like get the circle centred on the display. To do this we need to <i>start</i> the turtle 
+        by the circle's radius to the left of the centre, meaning that the x-coordinate will be <el-code>-<el-id>radius</el-id></el-code>, still facing North. 
+        The <el-method>placeAt</el-method> procedure method on the turtle
+    allows the turtle to be placed ar specific x,y coordinates <i>without</i> drawing a line from where it was before.
+     So <i>above the <el-kw>for</el-kw> instruction, insert:</i>
+    <el-code-block>
+        <el-statement class="ok" id="call145" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident146" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>placeAt</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args147" class="optional ok" tabindex="0"><el-txt>-<el-id>radius</el-id>, <el-lit>0</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>7</el-fr></el-top></el-statement>
+    </el-code-block>
+    noting that the <el-method>placeAt</el-method> requires <i>two</i> arguments, and these are separated by a comma)
+    </li>
+    <li>Run the program and check that it draws a large circle that fits within the display. Note of where the turtle finishes.</li>
+</ul>
+<label class="done" for "done2">Iteration completed</label>
+</div>
+<input type="checkbox" class="step" id="done2" />
+
+<div class="step" id="step3">
+<h3>Iteration 3 - Draw a random walk</h3>
+<p>To simulate the random work we need to repeatedly move the turtle one pace, and turn though a random angle of up to 90 degrees in
+    either direction (to turn to the left, just make the angle negative). The method <el-method>random</el-method><el-code>()</el-code>
+    will generate a fractional number in the range 0 to 1, but there is also <el-method>randomInt</el-method> 
+    ('Int' being short for integer) that will generate a random whole number within a range specified by two integer arguments. </p>
+
+    <p>We could use another <el-kw>for</el-kw> for repetition, but the problem is that we don't know how many steps it will take
+    to get from the centre to the edge. What we need is a loop that executes as many times as is needed - until something decides
+    that it is time to stop. There are two such forms of loop: a <el-kw>while</el-kw> loop and a <el-kw>repeat</el-kw> loop, each
+    one optimised toward slightly different circumstances, but for this particular challenge they would work equally well, 
+    so we'll just pick the first one.</p>
+<ul>
+    <li>After the last instruction within the main, add an instruction to place the turtle back in the centre of the circle.</li>
+    <li>Then add a <el-kw>while</el-kw> instruction, and notice that it has just one field
+        - to specify the condition for continuing:
+
+    <el-code-block>
+        <el-statement class="warning multiline" id="while220" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+            <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr222" class="selected focused empty warning" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="0" data-cursorend="0" size="1" style="width: 2px" value=""></el-txt><el-place><i>condition</i></el-place><el-compl><i>expression</i></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>12</el-fr></el-top>
+            <el-statement class="ok empty" id="select221" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
+            <el-kw>end while</el-kw>
+        </el-statement>
+    </el-code-block>
+
+    This condition needs to be a 'logical' expression that evaluates to <el-id>true</el-id> (in which case the loop runs again) 
+    or <el-id>false</el-id> (in which case the loop terminates) and the program moves on to the next instruction after the
+    <el-kw>end loop</el-kw>. We'll work out the proper expression for the condition. For the meantime just enter <el-id>true</el-id>,
+    which is a constant value defined in the Elan library (like <el-id>pi</el-id>). Because this expression will <i>always</i>
+    be true the loop is never going to exit - this is known as an 'indefinite loop'.</li>
+    <li>Within the <el-kw>while</el-kw> loop, add these two instructions:
+
+    <el-code-block>
+        <el-statement class="ok" id="call269" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident270" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>move</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args271" class="optional ok" tabindex="0"><el-txt><el-id>pace</el-id></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)</el-top></el-statement>
+        <el-statement class="ok" id="call290" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident291" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>turn</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args292" class="optional ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(-<el-lit>90</el-lit>, <el-lit>90</el-lit>)</el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)</el-top></el-statement>
+    </el-code-block>
+
+    Then run the program and observe the random walk. When it heads outside the visible display area press the <b>Stop</b> button.</li>
+    <li>What we want is for the random walk to continue only 'while' its distance from the centre is less than one radius. 
+        If we know the x and y coordinates of the turtle at every point we could calculate the distance from the centre of the screen
+        using Pythagoras' theorem. The following tips will be useful:
+        <ul>
+            <li>We can read the current coordinates of the turtle by <el-id>t</el-id>.<el-id>x</el-id> and <el-id>t</el-id>.<el-id>y</el-id></li>
+            <li>We can square a value using <el-code><el-id>n</el-id>^</el-code><el-lit></el-lit> - 'n raised to the power of 2'.</li>
+            <li>The method <el-method>sqrt</el-method> calculates the square root of its argument.</li>
+        </ul>
+        
+        So, edit the condition field of the <el-kw>while</el-kw> loop to read: 
+        
+        <el-code-block>
+        <el-method>sqrt</el-method>(<el-id>t</el-id>.<el-id>x</el-id>^<el-lit>2</el-lit> + <el-id>t</el-id>.<el-id>y</el-id>^<el-lit>2</el-lit>) &lt; <el-id>radius</el-id>
+        </el-code-block>
+
+        Noting that:
+        <ul>
+            <li>Precedence for the arithmetic operators follows the same rules as in maths - which you might have learned as 'BIDMAS' or 'BODMAS'.</li>
+            <li><el-code>&lt</el-code> is another operator which always evaluates to either <el-id>true</el-id> or <el-id>false</el-id>.</li>
+        </ul>
+
+        Run the program - more than once - checking that the random walk is different in each case, but halts when it reaches (or steps over)
+        the line of the circle.
+    </li>
+    <li>Improve the program slightly with the following  three'tweaks', running the program between each one to check the changed output:
+        <ul>
+            <li>Just before the <el-kw>while</el-kw>> loop add this instruction:
+
+                <el-code-block>
+                    <el-statement class="ok" id="call545" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident546" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>penColour</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args547" class="optional ok" tabindex="0"><el-txt><el-id>red</el-id></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)</el-top></el-statement>
+                </el-code-block>
+            You should be able to predict how this will change the output.</li>
+            <li>Slow down the random walk a little to make the movement more visible. After the last instruction within the <el-kw>while</el-kw>> loop
+                 add the instruction:
+                 <el-code-block>
+                    <el-statement class="ok" id="call420" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident421" class="ok" tabindex="0"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args422" class="optional ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>milliseconds</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)</el-top></el-statement>
+                 </el-code-block>
+                 which puts in a 100 millisecond pause - not very long but just enough to make the walk more obvious. Note that this instruction
+                does <i>not</i> say <el-id>t</el-id>,<el-method>pause</el-method>, because <el-method>pause</el-method> is not a procedure belonging
+                to a turtle - it is a 'freestanding' procedure, and can be used whether or not you are using turtle graphics.</li>
+            <li>
+                Change the instruction that calls the <el-method>show</el-method> method on the turtle to calling its <el-method>hide</el-method>
+                method instead. You will find that it still produces the same set of marks, but no longer shows you the green turtle itself.
+            </li>
+            <li>If you prefer to see the turtle, you can revert to <el-method>show</el-method>, and you may also adjust the argument
+            of the <el-method>pause</el-method> method to speed up, or slow down the movement.</li>
+        </li>
+        </ul>
+
+    </li>
+</ul>
+<label class="done" for "done3">Iteration completed</label>
+</div>
+<input type="checkbox" class="step" id="done3" />
+
+<div class="step" id="step4">
+<h3>Iteration 4 - simulate multiple walks</h3>
+<p>Our goal is to determine the <i>average</i> number of paces for a random walk to reach the edge of the circle. 
+So the next step is to perform multiple walks.</p>
+<ul>
+    <li>After the <el-kw>while</el-kw> loop add:
+    <el-code-block>
+        <el-statement class="ok" id="let629" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var630" class="ok" tabindex="0"><el-txt><el-id>numberOfWalks</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr631" class="ok" tabindex="0"><el-txt><el-lit>3</el-lit></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field></el-statement>
+    </el-code-block>
+    then after that add a new <el-kw>for</el-kw> loop that counts from 1 to <el-id>numberOfWalks. The counter may again be defined
+        as <el-id>n</el-id> because the loop that we used <el-id>n</el-id> in previously, has terminated by this point in the program.
+    </el-id>. 
+    </li>
+    <li>Using <b>Shift-&#x2191;</b> multi-select these three instructions:
+        <el-code-block>
+                <el-statement class="selected ok" id="call236" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident237" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>placeAt</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args238" class="optional ok" tabindex="0"><el-txt><el-lit>0</el-lit>, <el-lit>0</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#call" target="doc-iframe">?</a></el-help></el-top></el-statement>
+                <el-statement class="selected ok" id="call545" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident546" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>penColour</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args547" class="optional ok" tabindex="0"><el-txt><el-id>red</el-id></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#call" target="doc-iframe">?</a></el-help></el-top></el-statement>
+                <el-statement class="selected focused ok multiline" id="while220" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+                <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr222" class="ok" tabindex="0"><el-txt><el-method>sqrt</el-method>(<el-id>t</el-id>.<el-id>x</el-id>^<el-lit>2</el-lit> + <el-id>t</el-id>.<el-id>y</el-id>^<el-lit>2</el-lit>) &lt; <el-id>radius</el-id></el-txt><el-place><i>condition</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#while" target="doc-iframe">?</a></el-help></el-top>
+                <el-statement class="ok" id="call269" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident270" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>move</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args271" class="optional ok" tabindex="0"><el-txt><el-id>pace</el-id></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>14</el-fr></el-top></el-statement>
+                <el-statement class="ok" id="call290" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident291" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>turn</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args292" class="optional ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(-<el-lit>90</el-lit>, <el-lit>90</el-lit>)</el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>15</el-fr></el-top></el-statement>
+                <el-statement class="ok" id="call420" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident421" class="ok" tabindex="0"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args422" class="optional ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>milliseconds</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>16</el-fr></el-top></el-statement>
+                <el-kw>end while</el-kw>
+                </el-statement>
+        </el-code-block>
+    Then cut them and paste them <i>inside</i> the new <el-kw>for</el-kw> loop that you just created. Run the program and check that
+    it 'walks' from the centre to the edge three times.</li>
+    <li>Make the following tweaks:
+    <ul>
+        <li>Increase the number of attempts to 20.</li>
+        <li>Remove the instruction that pauses the program - as otherwise it will now run too slowly</li>
+        <li>Change the instruction that specifies the <el-method>penColour</el-method> changing <el-id>red</el-id>
+        to <el-code><el-method>randomInt</el-method>(<el-id>black</el-id>, <el-id>white</el-id>)</el-code>
+    </li>
+    </ul>
+    <i>Before running the program, what do you think will happen to the colours of the walks?</i>. Run the program and see.</li>
+    <li>If you thought that <el-code><el-method>randomInt</el-method>(<el-id>black</el-id>, <el-id>white</el-id>)</el-code> would result
+        in a random mix of black or white, or of many shades of grey, don't feel bad - both would seem quite logical! But why has it actually
+        produced a range of <i>colours</i>? The answer
+        is that each of the named (constant) colours (e.g. <el-id>red</el-id>) just holds an integer value in the range
+        0 (black) to 16,777,215 (white) - so it is possible to display 16+ million different colours. These are created from all the permutations of 
+        mixing 256 shades of red, 256 shades of blue, and 256 shades of green. 
+        This is known as the '24-bit RGB colour scheme' and is used throughout the web.
+        So our <el-code><el-method>randomInt</el-method>(<el-id>black</el-id>, <el-id>white</el-id>)</el-code> has the same effect
+        as writing <el-code><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>16777215</el-lit>)</el-code</li>. 
+        Writing it as we did is easier to remember, and, arguably, makes the <i>intention</i> clearer.
+    </ul>
+<label class="done" for "done4">Iteration completed</label>
+</div>
+<input type="checkbox" class="step" id="done4" />
+
+<div class="step" id="step5">
+<h3>Iteration 5 - Calculating the average number of paces</h3>
+<ul>
+    <li>The first step to calculating the average is to count how many paces each walk takes. </i>Immediately above</i>
+    the <el-kw>while</el-kw> loop insert a new instruction:
+
+    <el-code-block>
+        <el-statement class="ok" id="var51" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>variable </el-kw><el-field id="var52" class="ok" tabindex="0"><el-txt><el-id>pacesThisAttempt</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> set to </el-kw><el-field id="expr53" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field></el-statement>
+    </el-code-block>
+
+    What is the difference between writing this and the using the <el-kw>let</el-kw> instruction, as we have been so far?
+    The answer is that a <el-kw>variable</el-kw> is intended to <i>change</i> in value - a <el-kw>let</el-kw> doesn't change.
+    We need <el-id>pacesThisWalk</el-id> to change because we will add 1 to it with each paces taken. So, now do that by adding
+    <i>as the first instruction inside</i> the <el-kw>while</el-kw> loop:
+
+    <el-code-block>
+        <el-statement class="ok" id="set837" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>set </el-kw><el-field id="ident838" class="ok" tabindex="0"><el-txt><el-id>pacesThisWalk</el-id></el-txt><el-place><i>variableName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#AssignableField" target="doc-iframe">?</a></el-help></el-field><el-kw> to </el-kw><el-field id="expr839" class="ok" tabindex="0"><el-txt><el-id>pacesThisWalk</el-id> + <el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>17</el-fr></el-statement>
+    </el-code-block>
+
+    After the <el-kw>end while</el-kw> add, <i>as a temporary check</i>:
+
+    <el-code-block>
+        <el-statement class="ok" id="print869" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>print </el-kw><el-field id="expr870" class="optional ok" tabindex="0"><el-txt><el-id>pacesThisWalk</el-id></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field></el-statement>
+    </el-code-block>
+
+    and run the program. As each walk reaches the circle you should see the number of paces printed on the left-hand side of the display.
+    After this trial run, delete the <el-kw>print</el-kw> instruction</li>
+    <li>Now we need to calculate the total paces across all the attempts. So just <i>above</i> the start of the <el-kw>for</el-kw> loop
+    that executes the number of walks, define a new <el-kw>variable</el-kw> named <el-id>totalPaces</el-id>, also initially set to 0.
+    And <i>inside</i> the <el-kw>for</el-kw> loop, at the very end (after the <el-kw>end while</el-kw>) add:
+
+    <el-code-block>
+        <el-statement class="ok" id="set951" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>set </el-kw><el-field id="ident952" class="ok" tabindex="0"><el-txt><el-id>totalPlaces</el-id></el-txt><el-place><i>variableName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#AssignableField" target="doc-iframe">?</a></el-help></el-field><el-kw> to </el-kw><el-field id="expr953" class="ok" tabindex="0"><el-txt><el-id>totalPlaces</el-id> + <el-id>pacesThisWalk</el-id></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field></el-statement>
+    </el-code-block>
+</li>
+   
+</li>We need to calculate the average and present it on the display. This could be done with a single instruction
+but using two instructions is a bit clearer. First calculate the average by adding these two instructions as final instructions in the main routine:
+
+<el-code-block>
+    <el-statement class="ok" id="let72" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var73" class="ok" tabindex="0"><el-txt><el-id>average</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr74" class="ok" tabindex="0"><el-txt><el-id>totalPaces</el-id>/<el-id>numberOfAttempts</el-id></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>23</el-fr></el-statement>
+    <el-statement class="ok" id="print75" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>print </el-kw><el-field id="expr76" class="optional ok" tabindex="0"><el-txt>"<el-lit>Average: </el-lit>{<el-id>average</el-id>}<el-lit></el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>24</el-fr></el-statement>
+</el-code-block>
+
+<li>Finally, for the small number of walks simulated it is inappropriate to quote the average number of paces to
+    so many decimal places. Edit the expression for calculating the average to the following, to round the result to just one decimal place: </li>
+
+<el-code-block>
+    (<el-id>totalPaces</el-id>/<el-id>numberOfAttempts</el-id>).<el-method>round</el-method>(<el-lit>1</el-lit>)
+</el-code-block>
+
+<label class="done" for "done5">Interation completed</label>
+</div>
+<input type="checkbox" class="step" id="done5" />
+
+<div class="step" id="step6">
+    <p>Well done - you've now completed the worksheet.</p>
+
+    <p>If you have time left, try any of the following:
+        
+    <ul>
+        <li>Simulate a larger number of walks e.g. 100. This will give a more accurate figure for the average number of paces.</li>
+        <li>Make the <el-id>pace</el-id> smaller but keep the circle's <el-id>radius</el-id> the same size as now. 
+            The average number of paces to reach the edge will be larger. But does it increase in proportion? Try
+            three different values and plot the average against pace size. 
+        </li>
+        <li>Go back to the original values, but make a small change to the range of possible turn-angles between paces:
+            -60 to + 60 degrees, or -120 to + 120, say.  
+            How does this change the average number of paces? Is the relationship linear?</li>
+        <li>Read more about the nature and application of Random Walks here: <a href="https://en.wikipedia.org/wiki/Random_walk" target="_blank">Wikipedia</a>).</li>
+    </ul>
+  
+    <div class="license">
+      <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+      This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
+          <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+         If you copy and <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+         Please <a href="mailto:rpawson@nakedobjects.org">email the author</a> to report errors or suggest improvements.
+    </div>
+  </div>
+  
+  <div hidden="" id="hash"></div>
+  <div hidden="" id="changes"></div>
+  
+  <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
+  <br>
+  
+  </body>
+  </html>

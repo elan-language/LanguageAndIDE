@@ -78,15 +78,14 @@
                         <button id="stop" class="icon" disabled  tabindex="1"><img src="images/Stop.png"></button>
                     </div>
                     <div id="tab-buttons">
-                        <input type="radio" id="documentation-button" name="mytabs" checked="checked">
-                        <label for="documentation-button" id="documentation-button-label" tabindex="2">Help</label>
                         <input type="radio" id="display-button" name="mytabs">
                         <label for="display-button"id="display-button-label" tabindex="2">Display</label>
                         <input type="radio" id="debug-button" name="mytabs">
                         <label for="debug-button" id="debug-button-label" tabindex="2">Debug</label>
+                        <input type="radio" id="documentation-button" name="mytabs" checked="checked">
+                        <label for="documentation-button" id="documentation-button-label" tabindex="2">Help</label>
                         <input type="radio" id="worksheet-button" name="mytabs">
                         <label for="worksheet-button" id="worksheet-button-label" tabindex="2">Worksheet</label>
-
                     </div>
                 </div>
                 <div id="status">
@@ -105,30 +104,6 @@
                 </div>
             </div>
 
-            <div id="documentation-tab" class=""> <!-- now 'Help` tab-->
-                <div id="doc-buttons">
-                    <div class="dropdown">
-                        <button id="ref-manual" class="plain" tabindex="2">Reference Manual</button>
-                        <div class="dropdown-content" tabindex="2">
-                            <div class="menu-item help-file"><a href="documentation/IDEGuide.html"  target="doc-iframe" tabindex="3">IDE Reference</a></div>
-                            <div class="menu-item help-file"><a href="documentation/LangRef.html" target="doc-iframe"  tabindex="3">Language Reference</a></div>
-                            <div class="menu-item help-file"><a href="documentation/LibRef.html" target="doc-iframe"  tabindex="3">Library Reference</a></div>
-                            <div class="menu-item help-file"><a href="documentation/ElanIndex.html" target="doc-iframe"   tabindex="3">Index</a></div>
-                        </div>
-                    </div>
-                    <div class="dropdown">
-                        <button id="help" class="plain" tabindex="1">Other Help</button>
-                        <div class="dropdown-content">
-                            <div class="menu-item help-file"><a href="https://www.loom.com/share/655a4b7e12de44568a34c2284378c4ad?sid=b65ddbd5-670a-43c8-8d68-f4d9488548a0" target="_blank" rel="noopener noreferrer" tabindex="3">Video - Introduction (opens new tab)</a></div>
-                            <div class="menu-item help-file"><a href="https://www.loom.com/share/0183d6113cfe4233833e3c1b127ebce9?sid=a814c941-547d-48a4-a679-2c709d6c2cce" target="_blank" rel="noopener noreferrer" tabindex="3">Video - The Code Editor (opens new tab)</a></div>
-                            <div class="menu-item help-file"><a href="documentation/AboutElan.html" target="doc-iframe"  tabindex="3">About Elan</a></div>
-                            <div class="menu-item help-file"><a href="version-history.html" target="doc-iframe"  tabindex="3">Version history</a></div>
-                        </div>
-                    </div>
-                </div>
-
-                <iframe name="doc-iframe" id="doc-iframe"></iframe>
-            </div>
             <div id="display-tab" class="hide">
                 <div id="display" tabindex="2">
                     <div id="print"><span id="printed-text"></span></div>
@@ -145,13 +120,25 @@
                 <button id="step" class="icon" disabled title="Single Step" tabindex="2"><img src="images/Step.png"></button>
                 </div>
                 <div id="system-info" tabindex="2"></div>
+            </div>
+            <div id="documentation-tab" class=""> <!-- now 'Help` tab-->
+                  <div id="doc-buttons">
+                    <button id="doc-home" class="plain" tabindex="2">Home</button>
+                    <button id="doc-back" class="plain" tabindex="2">Back</button>
+                    <button id="doc-forward" class="plain" tabindex="2">Forward</button>
+                </div>
+                <iframe name="doc-iframe" id="doc-iframe" src="documentation/Home.html"></iframe>
             </div>       
             <div id="worksheet-tab" class="hide">
                 <div id="worksheet-buttons">
                     <div class="dropdown">
                         <button id="help" class="plain" tabindex="1">Standard worksheets</button>
                         <div class="dropdown-content">
-                             <div class="menu-item help-file"><a href="documentation/whack-a-mole.html" target="worksheet-iframe"  tabindex="3">Introducing Arrays - with whack-a-mole</a></div>
+                            <div class="menu-item help-file"><a href="documentation/worksheets/guide.html" target="worksheet-iframe"  tabindex="3">Guide to the worksheets</a></div>
+                            <div class="menu-item help-file"><a href="documentation/worksheets/exploring-code.html" target="worksheet-iframe"  tabindex="3">Exploring code</a></div>
+                            <div class="menu-item help-file"><a href="documentation/worksheets/random-walk.html" target="worksheet-iframe"  tabindex="3">Random Walk</a></div>
+                            <div class="menu-item help-file"><a href="documentation/worksheets/whack-a-mole.html" target="worksheet-iframe"  tabindex="3">Whack-a-mole</a></div>
+                            
                         </div>
                     </div>
                     <button id="load-documentation" class="plain" tabindex="2">Load external worksheet</button>
