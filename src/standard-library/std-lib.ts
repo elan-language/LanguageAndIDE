@@ -690,6 +690,15 @@ export class StdLib {
     return await this.system.elanInputOutput.waitForAnyKey();
   }
 
+  @elanProcedure([], ProcedureOptions.async)
+  async pressAnyKeyToContinue(prompt: boolean) {
+    if (prompt) {
+      await this.prompt("Press any key to continue");
+    }
+    await this.waitForKey();
+    return;
+  }
+
   @elanFunction([], FunctionOptions.impureAsync, ElanString)
   async waitForKey(): Promise<string> {
     return await this.system!.elanInputOutput.waitForKey();
