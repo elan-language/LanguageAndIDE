@@ -9,6 +9,7 @@ import {
   elanConstant,
   elanDeprecated,
   ElanFloat,
+  elanFloatType,
   elanFunction,
   elanGenericParamT1Type,
   ElanInt,
@@ -793,11 +794,11 @@ export class StdLib {
     return await this.system!.elanInputOutput.clearHtml();
   }
 
-  @elanProcedure(["duration", "frequency", "volume"], ProcedureOptions.async)
+  @elanProcedure(["durationMs", "frequencyHz", "volume"], ProcedureOptions.async)
   async tone(
     @elanIntType() duration: number,
     @elanIntType() frequency: number,
-    @elanIntType() volume: number,
+    @elanFloatType() volume: number,
   ) {
     await this.system!.elanInputOutput.tone(duration, frequency, volume);
   }
