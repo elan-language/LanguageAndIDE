@@ -792,4 +792,13 @@ export class StdLib {
   async clearHtml(): Promise<void> {
     return await this.system!.elanInputOutput.clearHtml();
   }
+
+  @elanProcedure(["duration", "frequency", "volume"], ProcedureOptions.async)
+  async tone(
+    @elanIntType() duration: number,
+    @elanIntType() frequency: number,
+    @elanIntType() volume: number,
+  ) {
+    await this.system!.elanInputOutput.tone(duration, frequency, volume);
+  }
 }

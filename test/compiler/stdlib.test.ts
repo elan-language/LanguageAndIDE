@@ -1510,4 +1510,26 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertGraphicsContains(fileImpl, 0, "");
   });
+
+  test("Pass_tone", async () => {
+    const code = `${testHeader}
+
+main
+  call tone(10, 10, 10)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.tone(10, 10, 10);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+  });
 });

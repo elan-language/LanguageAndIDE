@@ -341,4 +341,8 @@ export class WebInputOutput implements ElanInputOutput {
     document.getElementById("display-html")!.innerHTML = "";
     return Promise.resolve();
   }
+
+  tone(_duration: number, _frequency: number, _volume: number): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
 }
