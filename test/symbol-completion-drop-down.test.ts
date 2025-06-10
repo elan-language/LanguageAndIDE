@@ -59,7 +59,6 @@ end main`;
       ["foo", "foo", "foo"],
       ["createFileForWriting", "createFileForWriting", "createFileForWriting("],
       ["openFileForReading", "openFileForReading", "openFileForReading("],
-      ["waitForKey", "waitForKey", "waitForKey("],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "fo", expected);
@@ -115,7 +114,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 78);
+    await assertSymbolCompletionWithString(fileImpl, "expr5", " ", 77);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -365,6 +364,7 @@ end main`;
       ["foo", "foo", "foo."],
       ["foobar", "foobar", "foobar."],
       ["fooyon", "fooyon", "fooyon"],
+      ["waitForAnyKey", "waitForAnyKey", "waitForAnyKey"],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "ident14", "o", 1, expected);
@@ -524,7 +524,6 @@ end main`;
       ["foo", "*", "*"],
       ["createFileForWriting", "*", "*"],
       ["openFileForReading", "*", "*"],
-      ["waitForKey", "waitForKey", "waitForKey("],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "o", 1, expected);
@@ -545,7 +544,6 @@ end main`;
       ["foo", "*", "*"],
       ["createFileForWriting", "*", "*"],
       ["openFileForReading", "*", "*"],
-      ["waitForKey", "waitForKey", "waitForKey("],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "o", 5, expected);
@@ -571,7 +569,6 @@ end function`;
       ["foobar", "*", "*"],
       ["createFileForWriting", "*", "*"],
       ["openFileForReading", "*", "*"],
-      ["waitForKey", "waitForKey", "waitForKey("],
     ] as [string, string, string][];
 
     await assertAutocompletes(fileImpl, "expr8", "o", 5, expected);

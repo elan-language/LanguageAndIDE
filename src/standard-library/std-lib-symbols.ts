@@ -9,7 +9,6 @@ import {
 } from "../elan-type-interfaces";
 import { ElanSymbol } from "../frames/interfaces/elan-symbol";
 import { Scope } from "../frames/interfaces/scope";
-import { SymbolType } from "../frames/interfaces/symbol-type";
 import { Transforms } from "../frames/interfaces/transforms";
 import { NullScope } from "../frames/symbols/null-scope";
 import { symbolMatches } from "../frames/symbols/symbol-helpers";
@@ -62,14 +61,8 @@ export class StdLibSymbols implements Scope {
     }
   }
 
-  isDeprecated(s: SymbolType): boolean {
-    return "deprecated" in s && !!s.deprecated;
-  }
-
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
-    return symbolMatches(id, all, [...this.symbols.values()]).filter(
-      (s) => !this.isDeprecated(s.symbolType()),
-    );
+    return symbolMatches(id, all, [...this.symbols.values()]);
   }
 
   getParentScope(): Scope {

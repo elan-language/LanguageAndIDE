@@ -151,7 +151,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      `<img src='https://elan-language.github.io/LanguageAndIDE/images/Debug.png' width='50' height='50' title='foo' alt='bar'>`,
+      `<img src="https://elan-language.github.io/LanguageAndIDE/images/Debug.png" width="50" height="50" title="foo" alt="bar">`,
     );
   });
   test("Pass_PrintUncloseHtmlTag", async () => {

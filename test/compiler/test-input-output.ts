@@ -26,10 +26,6 @@ export class TestInputOutput implements ElanInputOutput {
     return Promise.resolve("");
   }
 
-  waitForKey(): Promise<string> {
-    return Promise.resolve("");
-  }
-
   getKeyWithModifier(): Promise<[string, string]> {
     const t = ["", ""] as [string, string];
     return  Promise.resolve(t);
