@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="docTitle">Simon</div>
+
+<button id="auto-save" class="saved">Auto-save file locally to continue</button>
+
+<div class="step" id="step1">
+  <p>In the classic hand-held electronic game, Simon:
+  <img src="https://en.wikipedia.org/wiki/Simon_(game)#/media/File:Simon_Electronic_Game.jpg">
+  the device played sequence made up of 'moves' and the players task was to remember and reproduce
+  the sequence. Each of the four possible moves had a different colour (red, yellow, blue, green)
+  associated with a different physical position, and with a different audible tone. If the player
+  reproduced the sequence correctly, the device played the sequence again with one more move added
+  (the first sequence being just one move). Also, as the sequence lengthened, each moved was
+  shown for a shorter duration. If the player makes a single incorrect move the game is over
+  and the score reflects the longest length of sequence that the player reproduced correctly.</p>
+  <p>You are now going to build a simulation of the Simon game, with the four colours shown
+    as large circles in a row, complete with audible tones. The player will use the four numeric keys
+    <b>1 2 3 4</b> to represent the moves - the numbers corresponding to the four positions in the row.</p>
+
+  <p>We are going to make more than one use of a 'List' data structure in this program. A List works somewhat like an
+    Array but - unlike an Array which is set to a fixed size - a List can be extended indefinitely
+    (within in the limits of a computer's memory). A list can even start off empty and grow from there.</p>
+
+  <h3>Iteration 1 - Draw a solid circle</h3>
+  <ul>
+    <li>Start a new file and add a <el-kw>main</el-kw> routine. Within that add a <el-kw>let</el-kw>
+      instruction, defining the name <el-id>circle</el-id> to be <el-field id="expr10" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field>
+      noting that the <el-type>VG</el-type> in <el-type>CircleVG</el-type> is short for 'vector graphic' which is
+      a way to draw very high resolution graphics - with more flexibility and greater speed than is possible using
+    Turtle graphics, for example.</li>
+    <li>Follow this with:
+      <el-code-block>
+        <el-statement class="ok" id="call11" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-method>displayVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args13" class="optional ok" tabindex="0"><el-txt>[<el-id>circle</el-id>]</el-txt><el-place><i>listOfVGs</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)</el-top></el-statement>
+      </el-code-block>
+
+      noting that the square brackets used in <el-code>[<el-id>circle</el-id>]</li>]</el-code> defines a List -
+      in this case a List with just one member - the circle. The procedure method 
+      <el-method>displayVectorGraphics</el-method>, because in a typical application using VectorGraphics 
+      would want to display multiple shapes - lines, circles, rectangles and more - at once, and we could
+      just include them all within the square bracket, separated by commas. This application is unusual because
+      we will be displaying just one circle at a time. We will be making a more interesting use of List later on.
+    </li>
+    <li>Run the application and note that it displays a circle in the centre of the <b>Display</b> - but
+    why is it yellow, and what determined the size and position? It uses some default values - just so
+    that you see something. Now we want to specify various properties of the circle.</li>
+    <li>Select the second field in the <el-kw>let</el-kw> statement, and at the right hand end type 
+       type <el-kw>with</el-kw> or select it from the drop-down options. You will now be presented with a 
+      a list of the 'properties' that can be specified with for a circle. Select the first option, <el-id>centreX</el-id>
+      then <b>Tab</b> to add the prompted words <el-kw>set to</el-kw> followed by the value <el-lit>15</el-lit> and a comma.
+      Repeat this sequence to set the <el-id>centreY</el-id> to <el-lit>15</el-lit>, the <el-id>radius</el-id> to <el-lit>10</el-lit>,
+      and the <el-id>strokeWidth</el-id> to <el-lit>0</el-lit> - so lose the black line around the circle.
+      How do we know approximately what values to use?  The <b>Display</b> measures 100 units wide by 75 units deep, with coordinates
+      0,0 being located at the top left, and 100, 75 bottom right. <br> Run the program again and confirm that a larger yellow circle, no edge appears near the top-left corner.</li>
+
+
+      
+    
+    </li>
+  </ul>
+
+
+  <label class="done" for="done1">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done1" />
+
+
+<div class="step" id="step5">
+  Worksheet completed.
+
+  <div class="license">
+    <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+    This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+       If you copy and <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+       Please <a href="mailto:rpawson@nakedobjects.org">email the author</a> to report errors or suggest improvements.
+  </div>
+</div>
+
+<div hidden="" id="hash"></div>
+<div hidden="" id="changes"></div>
+
+<script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
+<br>
+
+</body>
+</html>

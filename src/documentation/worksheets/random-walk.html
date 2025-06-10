@@ -29,7 +29,7 @@ if we could perform the experiment many times.
 And it turns out that being able to predict the average length of a different kinds of
 random walk has significant applications in many different fields of study: 
 physics, biology, ecology, economics ..., even computer science. So we are going to build just such a simulation.</p>
-<label class="done" for "done0">Continue</label>
+<label class="done" for="done0">Continue</label>
 </div>
 <input type="checkbox" class="step" id="done0" />
 
@@ -153,7 +153,7 @@ physics, biology, ecology, economics ..., even computer science. So we are going
         Run the program and check that it draws what you expect.
     </li>
 </ul>
-<label class="done" for "done1">Iteration completed</label>
+<label class="done" for="done1">Iteration completed</label>
 </div>
 <input type="checkbox" class="step" id="done1" />
 
@@ -191,7 +191,7 @@ physics, biology, ecology, economics ..., even computer science. So we are going
     </li>
     <li>Run the program and check that it draws a large circle that fits within the display. Note of where the turtle finishes.</li>
 </ul>
-<label class="done" for "done2">Iteration completed</label>
+<label class="done" for="done2">Iteration completed</label>
 </div>
 <input type="checkbox" class="step" id="done2" />
 
@@ -284,7 +284,7 @@ physics, biology, ecology, economics ..., even computer science. So we are going
 
     </li>
 </ul>
-<label class="done" for "done3">Iteration completed</label>
+<label class="done" for="done3">Iteration completed</label>
 </div>
 <input type="checkbox" class="step" id="done3" />
 
@@ -335,7 +335,7 @@ So the next step is to perform multiple walks.</p>
         as writing <el-code><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>16777215</el-lit>)</el-code</li>. 
         Writing it as we did is easier to remember, and, arguably, makes the <i>intention</i> clearer.
     </ul>
-<label class="done" for "done4">Iteration completed</label>
+<label class="done" for="done4">Iteration completed</label>
 </div>
 <input type="checkbox" class="step" id="done4" />
 
@@ -384,13 +384,14 @@ but using two instructions is a bit clearer. First calculate the average by addi
 </el-code-block>
 
 <li>Finally, for the small number of walks simulated it is inappropriate to quote the average number of paces to
-    so many decimal places. Edit the expression for calculating the average to the following, to round the result to just one decimal place: </li>
+    so many decimal places. Edit the expression for calculating the average to the following, to round the result to just one decimal place:
 
-<el-code-block>
-    (<el-id>totalPaces</el-id>/<el-id>numberOfAttempts</el-id>).<el-method>round</el-method>(<el-lit>1</el-lit>)
-</el-code-block>
-
-<label class="done" for "done5">Interation completed</label>
+    <el-code-block>
+        (<el-id>totalPaces</el-id>/<el-id>numberOfAttempts</el-id>).<el-method>round</el-method>(<el-lit>1</el-lit>)
+    </el-code-block>
+    </li>
+</ul>
+<label class="done" for="done5">Interation completed</label>
 </div>
 <input type="checkbox" class="step" id="done5" />
 

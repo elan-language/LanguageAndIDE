@@ -1,4 +1,4 @@
-# 4f36602c89ab75f838ba7fb7d322df75534568029e1129b85a88f125eb090be5 Elan 1.1.3 guest default_profile valid
+# 5ead149c15c212b2aaaf9126befa564b691159850d4e75c6a5c6a8a026f03f0c Elan 1.1.4 guest default_profile valid
 
 main
   let sequence be new List<of Int>()
@@ -7,47 +7,48 @@ main
   while ok
     call simonsTurn(sequence, interval)
     call clearVectorGraphics()
-    call playersTurn(sequence, ok)
-    set interval to interval - 50
+    call playersTurn(sequence, interval, ok)
+    set interval to interval - 25
   end while
-  print "Your score: {sequence.length()}"
+  print "Your score: {sequence.length() - 1}"
 end main
 
 procedure simonsTurn(sequence as List<of Int>, interval as Int)
-  call sequence.append(randomInt(0, 3))
+  call sequence.append(randomInt(1, 4))
   each move in sequence
     call displayMove(move)
-    # play tone (might act as the pause?)
-    call pause(interval)
+    call tone(interval, tones[move - 1].floor(), 1)
+    call clearVectorGraphics()
+    call pause(100)
   end each
 end procedure
 
 procedure displayMove(move as Int)
   call clearVectorGraphics()
-  let colours be [red, yellow, blue, green]
-  let circle be new CircleVG() with centreX set to 10 + 10*move, centreY set to 10, radius set to 5, fillColour set to colours[move]
-  # Need some position indicator - pref. not numbers
+  let circle be new CircleVG() with centreX set to 20*move - 5, centreY set to 15, radius set to 10, fillColour set to colours[move - 1], strokeWidth set to 0
   call displayVectorGraphics([circle])
 end procedure
 
-procedure playersTurn(sequence as List<of Int>, out ok as Boolean)
+procedure playersTurn(sequence as List<of Int>, interval as Int, out ok as Boolean)
   variable counter set to 0
   while ok and (counter < sequence.length())
-    # To be simplified (#1449)
-    variable k set to ""
-    while k is ""
-      set k to getKey()
-    end while
+    let k be waitForKey()
     let valid, digit be parseAsInt(k)
     if valid and (sequence[counter] is digit) then
-      call displayMove(digit)
       set counter to counter + 1
+      call displayMove(digit)
+      call tone(interval, tones[digit - 1].floor(), 1)
+      call clearVectorGraphics()
+      call pause(100)
     else
       set ok to false
     end if
   end while
   call pause(1000)
-  call clearPrintedText()
-  print if ok then "Correct!" else "Wrong!"
+  call clearVectorGraphics()
   call pause(2000)
 end procedure
+
+constant colours set to {red, yellow, blue, green}
+
+constant tones set to {164.81, 220, 277.18, 329.63}
