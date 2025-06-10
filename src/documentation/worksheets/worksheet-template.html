@@ -4,70 +4,75 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<!-- TODO REPLACE DOMAIN WITH https//elan-lang.org/ when the required CSS files have been released-->
-<link href="https://elan-language.github.io/LanguageAndIDE//styles/colourScheme.css" rel="stylesheet" />
-<link href="https://elan-language.github.io/LanguageAndIDE//styles/elanStyle.css" rel="stylesheet" />
-<link href="https://elan-language.github.io/LanguageAndIDE//styles/documentation.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
 <title>Worksheet - Template</title>
 </head>
+
 <body>
+<div class="docTitle">Worksheet - Template</div>
 
-<div class="docTitle">Worksheet - Title</div>
-<button id="auto-save">AutoSave</button>
+<button id="auto-save">Auto-save file locally to continue</button>
 
-<!-- for all updateable controls empty class must be before id - or else appending the answered class breaks the regex -->
-<input type="text" class="" id="input1" value=""></input>
+<div class="step" id="step1">
+  <h3>Step 1</h3>
+  <label for="input1">Input some text</label>
+  <input type="text" class="" id="input1" value=""></input>
+  <label for="done1">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done1" />
 
-<textarea class="" id="input2"></textarea>
+<div class="step" id="step2">
+  <h3>Step 2</h3>
+  <label for="input2a">Red</label>
+  <label for="input2b">White</label>
+  <input type="radio" class="" name="radio-test" value="t1" id="input2a" />
+  <input type="radio" class="" name="radio-test" value="t2" id="input2b" />
+  <label for="done2">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done2" />
 
-<input type="radio" class="" name="radio-test" value="t1" id="input3" />
-<input type="radio" class="" name="radio-test" value="t2" id="input4" />
+<div class="step" id="step3" >
+  <h3>Step 3</h3>
+  <label for="input3">Write a paragraph</label>
+  <textarea class="" id="input3"></textarea>
+  <el-hint class="hint" id="hint3a" data-hint="VGhpcyBpcyBhIGhpbnQ=">Show Hint 1</el-hint>
+  <el-hint class="hint" id="hint3b" data-hint="VGhpcyBpcyBhIGhpbnQ=">Show Hint 2</el-hint>
+  <el-hint class="hint" id="hint3c" data-hint="VGhpcyBpcyBhIGhpbnQ=">Show me the code</el-hint>
+  <label for="done3">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done3" />
 
-<input type="checkbox" class="" id="input5" />
+<div class="step" id="step4">
+  <h3>Step 4</h3>
+  <label for="input4">Make your choice:</label>
+  <select class="" name="cars" id="input4">
+    <option>Volvo</option>
+    <option>Saab</option>
+    <option>Mercedes</option>
+    <option>Audi</option>
+  </select>
+  <label for="done4">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done4" />
 
-<select class="" name="cars" id="cars">
-  <option>Volvo</option>
-  <option>Saab</option>
-  <option>Mercedes</option>
-  <option>Audi</option>
-</select>
-
+<div class="step" id="step5">
+  Worksheet completed.
+</div>
 
 <div hidden="" id="hash"></div>
 <div hidden="" id="changes"></div>
 
-<el-hint id="hint1" data-hint="VGhpcyBpcyBhIGhpbnQ=">Show Hint1</el-hint>
-
-
-<!-- Worksheet TODOs
-
-1. Optional button to set up auto-save of the worksheet to a local file which auto-saves
-  whenever any input field is modified by user. Saves both the original contents of the sheet
-  and the user's inputs. The saved spreadsheet can be manually re-loaded e.g. at start of next session.
-
-2. (If needed, example pattern for various kinds of input fields including short text, multiline text, 
-  radio buttons, drop down list choice)
-
-3. Model for hints. Hint has a label e.g. 'Hint 1'. When you click on it the text of the
-  hint (will always be within one div) is revealed, but the fact of it having been revealed is recorded
-  (and immediately auto-saved). The text would be minimally obfuscated in source, to deter casual cheats,
-  but nothing fancy. The teacher can see, by viewing the saved worksheet which hints were taken e.g.
-  the title changes to 'Hint 1 VIEWED'.
-
-4. Additionally, somehow capture each saved change with a timestamp. (e.g. a log of changes at the bottom)
-
-5. Add some kind of hashing, similar to the mechanism for Elan code, such *if the file has been saved from the IDE*
-(i.e. contains any field updates) then it must have the valid hash to be reloaded.
-
-
-
--->
- <script src="worksheet-scripts.js"></script>
-
- <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
-<p class="license">This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
+<script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
+<br>
+<div class="license">
+<img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
     <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
-   If you <i>modify</i> this worksheet you may <i>not</i> distribute your modified version (outside your own teaching institution) without the author's permission.
-   Please <a href="mailto:rpawson@nakedobjects.org">email</a> to report errors or suggest improvements.</p>
+   If you copy and <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+   Please <a href="mailto:rpawson@nakedobjects.org">email the author</a> to report errors or suggest improvements.
+</div>
 </body>
 </html>
