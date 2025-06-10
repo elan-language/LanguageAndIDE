@@ -2483,7 +2483,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td><el-method>pause</el-method></td>
   <td><el-type>Int</el-type></td>
   <td>(none)</td>
-  <td>pauses the execution of a program for the specified number of milliseconds,<br> e.g. for a game <el-code>pause(100)</el-code> delays execution for one tenth of a second</td>
+  <td>pauses execution of the program for the specified number of milliseconds,<br> e.g. for a game <el-code>pause(100)</el-code> delays execution for one tenth of a second</td>
  </tr><tr id="clearPrintedText">
   <td><el-method>clearPrintedText</el-method></td>
   <td>(none)</td>
@@ -2494,6 +2494,16 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td>(none)</td>
   <td>(none)</td>
   <td>clears the IDE's keyboard input</td>
+ </tr><tr id="getKey">
+  <td><el-method>getKey</el-method></td>
+  <td>(none)</td>
+  <td>(none)</td>
+  <td>returns the last character pressed on the keyboard during program execution</td>
+ </tr><tr id="pressAnyKeyToContinue">
+  <td><el-method>pressAnyKeyToContinue</el-method></td>
+  <td>(none)</td>
+  <td>(none)</td>
+  <td>pauses execution of the program until a keyboard key is pressed</td>
  </tr><tr id="printLine">
   <td><el-method>printLine</el-method></td>
   <td><el-type>String</el-type></td>
@@ -2513,6 +2523,11 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td><el-type>Int, String</el-type></td>
   <td>(none)</td>
   <td>prints the string to the Display starting at the tab position given (from 0)</td>
+ </tr><tr id="waitForKey">
+  <td><el-method>waitForKey</el-method></td>
+  <td><el-type>String</el-type></td>
+  <td>(none)</td>
+  <td>pauses execution of the program until the first character of the string is input from the keyboard </td>
  </tr>
 </table>
 
@@ -2579,11 +2594,6 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>returns the current value (in  milliseconds) of a system clock.<br>Useful for measuring elapsed time by comparing the values returned by two calls</td>
- </tr><tr id="getKey">
-  <td><el-method>getKey</el-method></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>returns the character of the keyboard key pressed</td>
  </tr><tr id="getKeyWithModifier">
   <td><el-method>getKeyWithModifier</el-method></td>
   <td>(none)</td>
@@ -2651,12 +2661,9 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td><el-method>waitForAnyKey</el-method></td>
   <td></td>
   <td></td>
-  <td><i>deprecated</i>: see <el-method>waitForKey</el-method> below</td>
- </tr><tr id="waitForKey">
-  <td><el-method>waitForKey</el-method></td>
-  <td></td>
-  <td></td>
-  <td></td>
+  <td><i>deprecated</i>: see procedures <a href="#waitForKey"><el-method>waitForKey</el-method></a>,
+   <a href="#getKey"><el-method>getKey</el-method></a> and
+   <a href="#pressAnyKeyToContinue"><el-method>pressAnyKeyToContinue</el-method></a></td>
  </tr>
 </table>
 
