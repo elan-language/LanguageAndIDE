@@ -427,11 +427,11 @@ or into existing variables of the correct Type:</p>
   <td>see <a href="#List_procedures">Procedure methods on a List</a></td>
   <td>see <a href="#Dictionary_procedures">Procedure methods on a Dictionary</a></td>
  </tr><tr>
-  <td>function methods</td>
-  <td>see <a href="#Array_functions">Function methods on an Array</a></td>
-  <td>see <a href="#Array2D_functions">Function methods on an Array2D</a></td>
-  <td>see <a href="#List_functions">Function methods on a List</a></td>
-  <td>see <a href="#Dictionary_functions">Function methods on a Dictionary</a></td>
+  <td>function dot methods</td>
+  <td>see <a href="#Array_functions">Function dot methods on an Array</a></td>
+  <td>see <a href="#Array2D_functions">Function dot methods on an Array2D</a></td>
+  <td>see <a href="#List_functions">Function dot methods on a List</a></td>
+  <td>see <a href="#Dictionary_functions">Function dot methods on a Dictionary</a></td>
  </tr>
 </table>
 <p>All four are 'mutable' &ndash; meaning that their contents may be changed directly by calling the various <i>procedure</i> dot methods that each
@@ -452,7 +452,7 @@ with the specified changes &ndash; which is why all such methods have names star
 <p>As in most languages, individual elements may be referenced by their index.</p>
 <p>To modify an element you may either
 <el-kw>call</el-kw> the <el-method>put</el-method> procedure method, or use the
-<el-method>withPut</el-method> function method.</p>
+<el-method>withPut</el-method> function dot method.</p>
 <p>An array's size is specified when it is created, along with the single value to which each element is initialised.</p>
 <p>It is not possible to append further elements to an array, but you can convert an array to a list using method <el-method>asList</el-method> and then extend or reduce the list.</p>
 
@@ -471,7 +471,7 @@ with the specified changes &ndash; which is why all such methods have names star
  </tr>
 </table>
 
-<h3 class="no-TOC" id="Array_functions">Function methods on an Array</h3>
+<h3 class="no-TOC" id="Array_functions">Function dot methods on an Array</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>method</th>
@@ -479,12 +479,6 @@ with the specified changes &ndash; which is why all such methods have names star
   <th>argument<br>Types</th>
   <th>return<br>Type</th>
   <th>returns</th>
- </tr><tr id="withPut_Array">
-  <td><el-method>withPut</el-method></td>
-  <td><el-type>Array</el-type></td>
-  <td><el-type>Int</el-type>,<br>item of Array element's Type</td>
-  <td><el-type>Array</el-type></td>
-  <td>a new Array with the item at the (integer) index position</td>
  </tr><tr id="asList_Array">
   <td><el-method>asList</el-method></td>
   <td><el-type>Array</el-type></td>
@@ -515,6 +509,12 @@ with the specified changes &ndash; which is why all such methods have names star
   <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>the number of elements in the array</td>
+ </tr><tr id="withPut_Array">
+  <td><el-method>withPut</el-method></td>
+  <td><el-type>Array</el-type></td>
+  <td><el-type>Int</el-type>,<br>item of Array element's Type</td>
+  <td><el-type>Array</el-type></td>
+  <td>a new Array with the item at the (integer) index position</td>
  </tr>
 </table>
 
@@ -543,7 +543,7 @@ with the specified changes &ndash; which is why all such methods have names star
  </tr>
 </table>
 
-<h3 class="no-TOC" id="Array2D_functions">Function methods on an Array2D</h3>
+<h3 class="no-TOC" id="Array2D_functions">Function dot methods on an Array2D</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -551,12 +551,6 @@ with the specified changes &ndash; which is why all such methods have names star
   <th>argument<br>Types</th>
   <th>return<br>Type</th>
   <th>returns</th>
- </tr><tr id="withPut_Array2D">
-  <td><el-method>withPut</el-method></td>
-  <td><el-type>Array2D</el-type></td>
-  <td><el-type>Int, Int</el-type>,<br>item of Array2D element's Type</td>
-  <td><el-type>Array2D</el-type></td>
-  <td>a new Array2D with the item at the (two integers) index position in the array</td>
  </tr><tr id="asString_Array2D">
   <td><el-method>asString</el-method></td>
   <td><el-type>Array2D</el-type></td>
@@ -588,6 +582,12 @@ with the specified changes &ndash; which is why all such methods have names star
   <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>the number of rows in the array (the maximum <i>y</i> value)</td>
+ </tr><tr id="withPut_Array2D">
+  <td><el-method>withPut</el-method></td>
+  <td><el-type>Array2D</el-type></td>
+  <td><el-type>Int, Int</el-type>,<br>item of Array2D element's Type</td>
+  <td><el-type>Array2D</el-type></td>
+  <td>a new Array2D with the item at the (two integers) index position in the array</td>
  </tr>
 </table>
 Note
@@ -641,7 +641,7 @@ Note
  </tr><tr id="append">
   <td><el-method>append</el-method></td>
   <td><el-type>List</el-type></td>
-  <td>item of List element's Type</td>
+  <td>item of <el-type>List element's Type</el-type></td>
   <td>the item is added to the end of the List</td>
  </tr><tr id="appendList">
   <td><el-method>appendList</el-method></td>
@@ -651,14 +651,14 @@ Note
  </tr><tr id="insert">
   <td><el-method>insert</el-method></td>
   <td><el-type>List</el-type></td>
-  <td><el-type>Int</el-type>,<br> item of List element's Type</td>
+  <td><el-type>Int</el-type>,<br> item of <el-type>List element's Type</el-type></td>
   <td>the item is inserted at the index given.<br>
   If the index is negative it is counted from the end.<br>
   If the index is greater than the list's length, the item is inserted at the end.</td>
  </tr><tr id="prepend">
   <td><el-method>prepend</el-method></td>
   <td><el-type>List</el-type></td>
-  <td>item of List element's Type</td>
+  <td>item of <el-type>List element's Type</el-type></td>
   <td>the item is is added to the start of the List</td>
  </tr><tr id="prependList">
   <td><el-method>prependList</el-method></td>
@@ -668,7 +668,7 @@ Note
  </tr><tr id="put_List">
   <td><el-method>put</el-method></td>
   <td><el-type>List</el-type></td>
-  <td><el-type>Int</el-type>,<br> item of List element's Type</td>
+  <td><el-type>Int</el-type>,<br> item of <el-type>List element's Type</el-type></td>
   <td>replace the item at the given index with the argument item</td>
  </tr><tr>
   <td><el-method>removeAll</el-method></td>
@@ -688,7 +688,7 @@ Note
  </tr>
 </table>
 
-<h3 class="no-TOC" id="List_functions">Function methods on a List</h3>
+<h3 class="no-TOC" id="List_functions">Function dot methods on a List</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -723,7 +723,7 @@ Note
  </tr><tr id="contains_List">
   <td><el-method>contains</el-method></td>
   <td><el-type>List</el-type></td>
-  <td>List element's Type</td>
+  <td>item of <el-type>List element's Type</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-code><el-id>true</el-id></el-code> if the List  contains the specified element<br>
   &ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
@@ -738,12 +738,12 @@ Note
   <td><el-method>head</el-method></td>
   <td><el-type>List</el-type></td>
   <td>(none)</td>
-  <td>List element's Type</td>
+  <td><el-type>List element's Type</el-type></td>
   <td>the first element of the List</td>
  </tr><tr id="indexOf_List">
   <td><el-method>indexOf</el-method></td>
   <td><el-type>List</el-type></td>
-  <td>List element's Type</td>
+  <td>item of <el-type>List element's Type</el-type></td>
   <td><el-type>Int</el-type></td>
   <td>index of the first occurrence of the argument value in the List,<br>or -1 if no match is found</td>
  </tr><tr id="join">
@@ -859,7 +859,7 @@ Note
   <td></td>
   <td><el-type></el-type></td>
   <td></td>
- </tr><tr id="withRemoveAt">
+ </tr><tr id="withRemoveAt_List">
   <td><el-method>withRemoveAt</el-method></td>
   <td><el-type>List</el-type></td>
   <td></td>
@@ -900,7 +900,7 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
  </tr>
 </table>
 
-<h3 class="no-TOC" id="Dictionary_functions">Function methods on a Dictionary</h3>
+<h3 class="no-TOC" id="Dictionary_functions">Function dot methods on a Dictionary</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -908,12 +908,24 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
   <th>argument<br>Types</th>
   <th>return<br>Type</th>
   <th>returns</th>
- </tr><tr id="asString_Dictionary">
+ </tr><tr id="asDictionaryImmutable_Dictionary">
+    <td><el-method>asDictionaryImmutable</el-method></td>
+    <td><el-type>Dictionary</el-type></td>
+    <td>(none)</td>
+    <td><el-type>DictionaryImmutable</el-type></td>
+    <td></td>
+</tr><tr id="asString_Dictionary">
     <td><el-method>asString</el-method></td>
     <td><el-type>Dictionary</el-type></td>
     <td>(none)</td>
     <td><el-type>String</el-type></td>
     <td>a string representation of the dictionary (automatically called when printing)</td>
+</tr><tr id="hasKey">
+    <td><el-method>hasKey</el-method></td>
+    <td><el-type>Dictionary</el-type></td>
+    <td>(none)</td>
+    <td><el-type></el-type></td>
+    <td></td>
 </tr><tr id="leys">
     <td id="keys"><el-method>keys</el-method></td>
     <td><el-type>Dictionary</el-type></td>
@@ -926,7 +938,19 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
     <td>(none)</td>
     <td><el-type>List</el-type></td>
     <td>a List containg the values</td>
-</tr>
+</tr><tr id="withPut_Dictionary">
+  <td><el-method>withPut</el-method></td>
+  <td><el-type>Dictionary</el-type></td>
+  <td><el-type>Int</el-type>, item of <el-type>List element's Type</el-type></td>
+  <td><el-type>Dictionary</el-type></td>
+  <td>copy of the Dictionary with the item replacing what was at specified position</td>
+ </tr><tr id="withRemoveAt_Dictionary">
+  <td><el-method>withRemoveAt</el-method></td>
+  <td><el-type>Dictionary</el-type></td>
+  <td><el-type>Int</el-type>, item of <el-type>List element's Type</el-type></td>
+  <td><el-type>Dictionary</el-type></td>
+  <td>copy of the Dictionary with the item replacing what was at specified position</td>
+ </tr>
  </table>
 
 <h1 id="ImmutableDataStructures">Immutable data structures</h1>
@@ -984,12 +1008,12 @@ differences. Immutable data structures are intended specifically to facilitate t
   <td>n/a</td>
   <td>n/a</td>
  </tr><tr>
-  <td>function methods</td>
-  <td>see <a href="#ListImmutable_functions">Function methods on a ListImmutable</a></td>
-  <td>see <a href="#DictionaryImmutable_functions">Function methods on a DictionaryImmutable</a></td>
-  <td>see <a href="#Set_functions">Function methods on a Set</a></td>
-  <td>see <a href="#Stack_functions">Function methods on a Stack</a></td>
-  <td>see <a href="#Queue_functions">Function methods on a Queue</a></td>
+  <td>function dot methods</td>
+  <td>see <a href="#ListImmutable_functions">Function dot methods on a ListImmutable</a></td>
+  <td>see <a href="#DictionaryImmutable_functions">Function dot methods on a DictionaryImmutable</a></td>
+  <td>see <a href="#Set_functions">Function dot methods on a Set</a></td>
+  <td>see <a href="#Stack_functions">Function dot methods on a Stack</a></td>
+  <td>see <a href="#Queue_functions">Function dot methods on a Queue</a></td>
  </tr>
 </table>
 
@@ -1013,66 +1037,84 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <p>A <el-code>ListImmutable</el-code> can be <a href="#ListDeconstruction">deconstructed</a> just like a List, using a colon <el-code>:</el-code> to separate two variable names.</p>
 <p><el-code>set h:t to myListImmutable</el-code></p>
 
-<h3 class="no-TOC" id="ListImmutable_functions">Function methods on a ListImmutable</h3>
+<h3 class="no-TOC" id="ListImmutable_functions">Function dot methods on a ListImmutable</h3>
 <table>
  <tr>
   <th>function<br>dot method</th>
+  <th>on<br>Type</th>
   <th>argument<br>Types</th>
   <th>return<br>Type</th>
   <th>returns</th>
- </tr><tr id="contains_ListImmutable">
-  <td><el-method>contains</el-method></td>
-  <td>item of List element's Type</td>
-  <td><el-type>Boolean</el-type></td>
-  <td><el-code><el-id>true</el-id></el-code> if the List contains the item<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
- </tr><tr id="head_ListImmutable">
-  <td><el-method>head</el-method></td>
-  <td>(none)</td>
-  <td>item of List element's Type</td>
-  <td>the first item in the List</td>
  </tr><tr id="asList_ListImmutable">
   <td><el-method>asList</el-method></td>
+  <td><el-type>ListImmutable</el-type></td>
   <td>(none)</td>
   <td><el-type>List</el-type></td>
   <td>copy of the <el-type>ListImmutable</el-type> as a <el-type>List</el-type></td>
  </tr><tr id="asSet_ListImmutable">
   <td><el-method>asSet</el-method></td>
+  <td><el-type>ListImmutable</el-type></td>
   <td>(none)</td>
   <td><el-type>Set</el-type></td>
   <td>a new Set containing all the <i>unique</i> elements in the List</td>
  </tr><tr id="asString_ListImmutable">
   <td><el-method>asString</el-method></td>
+  <td><el-type>ListImmutable</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
   <td>a String that is a comma+space-separated list of the List's elements enclosed in braces</td>
+ </tr><tr id="contains_ListImmutable">
+  <td><el-method>contains</el-method></td>
+  <td><el-type>ListImmutable</el-type></td>
+  <td>item of <el-type>List element's Type</el-type></td>
+  <td><el-type>Boolean</el-type></td>
+  <td><el-code><el-id>true</el-id></el-code> if the List contains the item<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
+ </tr><tr id="head_ListImmutable">
+  <td><el-method>head</el-method></td>
+  <td><el-type>ListImmutable</el-type></td>
+  <td>(none)</td>
+  <td>item of <el-type>List element's Type</el-type></td>
+  <td>the first item in the List</td>
+ </tr><tr id="indexOf_ListImmutable">
+  <td><el-method>indexOf</el-method></td>
+  <td><el-type>ListImmutable</el-type></td>
+  <td>item of <el-type>List element's Type</el-type></td>
+  <td><el-type>Int</el-type></td>
+  <td>index of the first occurrence of the argument value in the List,<br>or -1 if no match is found</td>
  </tr><tr id="length_ListImmutable">
   <td><el-method>length</el-method></td>
+  <td><el-type>ListImmutable</el-type></td>
   <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>the number of elements in the List</td>
  </tr><tr id="insert_ListImmutable">
   <td><el-method>withInsert</el-method></td>
-  <td><el-type>Int</el-type>, item of List element's Type</td>
+  <td><el-type>ListImmutable</el-type></td>
+  <td><el-type>Int</el-type>, item of <el-type>List element's Type</el-type></td>
   <td><el-type>ListImmutable</el-type></td>
   <td>copy of the List with the item inserted at specified position</td>
  </tr><tr id="withPut_ListImmutable">
   <td><el-method>withPut</el-method></td>
-  <td><el-type>Int</el-type>, item of List element's Type</td>
+  <td><el-type>ListImmutable</el-type></td>
+  <td><el-type>Int</el-type>, item of <el-type>List element's Type</el-type></td>
   <td><el-type>ListImmutable</el-type></td>
   <td>copy of the List with the item replacing what was at specified position</td>
  </tr><tr id="withRemoveAt_ListImmutable">
   <td><el-method>withRemoveAt</el-method></td>
+  <td><el-type>ListImmutable</el-type></td>
   <td><el-type>Int</el-type></td>
   <td><el-type>ListImmutable</el-type></td>
   <td>copy of the List with the item at specified position removed</td>
  </tr><tr id="withRemoveFirst_ListImmutable">
   <td><el-method>withRemoveFirst</el-method></td>
-  <td>item of List element's Type</td>
+  <td><el-type>ListImmutable</el-type></td>
+  <td>item of <el-type>List element's Type</el-type></td>
   <td><el-type>ListImmutable</el-type></td>
   <td>copy of the List with the first occurrence of the item removed</td>
  </tr><tr id="withRemoveAll_ListImmutable">
   <td><el-method>withRemoveAll</el-method></td>
-  <td>item of List element's Type</td>
+  <td><el-type>ListImmutable</el-type></td>
+  <td>item of <el-type>List element's Type</el-type></td>
   <td><el-type>ListImmutable</el-type></td>
   <td>copy of the List with all occurrences of the item removed</td>
  </tr>
@@ -1118,7 +1160,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <el-statement class="ok" id="print40" tabindex="0"><el-kw>print </el-kw><el-field id="expr41" class="optional ok" tabindex="0"><el-txt><el-id>immD</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 
-<h3 class="no-TOC" id="DictionaryImmutable_functions">Function methods on a DictionaryImmutable</h3>
+<h3 class="no-TOC" id="DictionaryImmutable_functions">Function dot methods on a DictionaryImmutable</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1126,7 +1168,13 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <th>argument<br>Types</th>
   <th>return<br>Type</th>
   <th>returns</th>
- </tr><tr id="hasKey">
+ </tr><tr id="asString_DictionaryImmutable">
+  <td><el-method>asString</el-method></td>
+  <td><el-type>DictionaryImmutable</el-type></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>a string representation of the immutable dictionary (automatically called when printing)</td>
+</tr><tr id="hasKey">
   <td><el-method>hasKey</el-method></td>
   <td><el-type>DictionaryImmutable</el-type></td>
   <td></td>
@@ -1137,25 +1185,13 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>DictionaryImmutable</el-type></td>
   <td></td>
   <td><el-type></el-type></td>
- </tr><tr id="withPutKey">
-  <td><el-method>withPutKey</el-method></td>
+ </tr><tr id="withRemoveAt_DictionaryImmutable">
+  <td><el-method>withRemoveAt</el-method></td>
   <td><el-type>DictionaryImmutable</el-type></td>
   <td></td>
   <td><el-type></el-type></td>
   <td></td>
- </tr><tr id="withRemoveAtKey">
-  <td><el-method>withRemoveAtKey</el-method></td>
-  <td><el-type>DictionaryImmutable</el-type></td>
-  <td></td>
-  <td><el-type></el-type></td>
-  <td></td>
- </tr><tr id="asString_DictionaryImmutable">
-    <td><el-method>asString</el-method></td>
-    <td><el-type>DictionaryImmutable</el-type></td>
-    <td>(none)</td>
-    <td><el-type>String</el-type></td>
-    <td>a string representation of the immutable dictionary (automatically called when printing)</td>
-</tr>
+ </tr>
  </table>
 
 <h2 id="SetType">Set</h2>
@@ -1183,7 +1219,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
     <li>You can create a new set from an existing list or <el-code>ListImmutable</el-code> by calling <el-code>asSet</el-code> on it.</li>
 </ul>
 
-<h3 class="no-TOC" id="Set_functions">Function methods on a Set</h3>
+<h3 class="no-TOC" id="Set_functions">Function dot methods on a Set</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1284,7 +1320,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
     <li>The methods for adding and removing an item are different for <el-type>Stack</el-type> and <el-type>Queue</el-type>, as shown here:</li>
 </ul>
 
-<h3 class="no-TOC" id="StackFunctions">Function methods on a Stack</h3>
+<h3 class="no-TOC" id="StackFunctions">Function dot methods on a Stack</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1325,7 +1361,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 </tr>
 </table>
 
-<h3 class="no-TOC" id="QueueFunctions">Function methods on a Queue</h3>
+<h3 class="no-TOC" id="QueueFunctions">Function dot methods on a Queue</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1402,12 +1438,13 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <p>Although all applicable methods are described under each Type, this table lists those which are applicable to several Types.</p>
 <p>The method <el-method>asString</el-method> is so widely applicable because it enables you to print
 most variables and data structures to the Display for debugging purposes.</p>
-<p>Click on a Type, or on the <el-id>&#x2714;</el-id> tick to go to the specific method.</p>
+<p>Click on a Type to go to the Type's dot methods, or on the <el-id>&#x2714;</el-id> tick to go to the specific method.</p>
 <table >
- <tr><th>Type</th><th colspan="8">method</th></tr>
+ <tr><th>Type</th><th colspan="10">method</th></tr>
  <tr>
   <td></td>
   <td><el-method>asList</el-method></td>
+  <td><el-method>asSet</el-method></td>
   <td><el-method>asString</el-method></td>
   <td><el-method>contains</el-method></td>
   <td><el-method>head</el-method></td>
@@ -1415,10 +1452,13 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td><el-method>length</el-method></td>
   <td><el-method>peek</el-method></td>
   <td><el-method>withPut</el-method></td>
+  <td><el-method>withRemoveAt</el-method></td>
  </tr><tr>
   <td><a href="#Int"><el-type>Int</el-type></a></td>
   <td></td>
+  <td></td>
   <td><a href="#asString_Int">&#x2714;</a></td>
+  <td></td>
   <td></td>
   <td></td>
   <td></td>
@@ -1428,7 +1468,9 @@ most variables and data structures to the Display for debugging purposes.</p>
  </tr><tr>
   <td><a href="#Float"><el-type>Float</el-type></a></td>
   <td></td>
+  <td></td>
   <td><a href="#asString_Float">&#x2714;</a></td>
+  <td></td>
   <td></td>
   <td></td>
   <td></td>
@@ -1438,7 +1480,9 @@ most variables and data structures to the Display for debugging purposes.</p>
  </tr><tr>
   <td><a href="#Boolean"><el-type>Boolean</el-type></a></td>
   <td></td>
+  <td></td>
   <td><a href="#asString_Boolean">&#x2714;</a></td>
+  <td></td>
   <td></td>
   <td></td>
   <td></td>
@@ -1448,6 +1492,7 @@ most variables and data structures to the Display for debugging purposes.</p>
  </tr><tr>
   <td><a href="#String"><el-type>String</el-type></a></td>
   <td><a href="#asList_String">&#x2714;</a></td>
+  <td></td>
   <td><a href="#asString_String">&#x2714;</a></td>
   <td><a href="#contains_String">&#x2714;</a></td>
   <td></td>
@@ -1455,9 +1500,11 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td><a href="#length_String">&#x2714;</a></td>
   <td></td>
   <td></td>
+  <td></td>
  </tr><tr>
   <td><a href="#Array"><el-type>Array</el-type></a></td>
   <td><a href="#asList_Array">&#x2714;</a></td>
+  <td></td>
   <td><a href="#asString_Array">&#x2714;</a></td>
   <td><a href="#contains_Array">&#x2714;</a></td>
   <td></td>
@@ -1465,8 +1512,10 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td><a href="#length_Array">&#x2714;</a></td>
   <td></td>
   <td><a href="#withPut_Array">&#x2714;</a></td>
+  <td></td>
  </tr><tr>
   <td><a href="#Array2D"><el-type>Array2D</el-type></a></td>
+  <td></td>
   <td></td>
   <td><a href="#asString_Array2D">&#x2714;</a></td>
   <td><a href="#contains_Array2D">&#x2714;</a></td>
@@ -1475,9 +1524,11 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td></td>
   <td></td>
   <td><a href="#withPut_Array2D">&#x2714;</a></td>
+  <td></td>
  </tr><tr>
   <td><a href="#List"><el-type>List</el-type></a></td>
   <td></td>
+  <td><a href="#asSet_List">&#x2714;</a></td>
   <td><a href="#asString_List">&#x2714;</a></td>
   <td><a href="#contains_List">&#x2714;</a></td>
   <td><a href="#head_List">&#x2714;</a></td>
@@ -1485,8 +1536,22 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td><a href="#length_List">&#x2714;</a></td>
   <td></td>
   <td><a href="#withPut_List">&#x2714;</a></td>
+  <td><a href="#withRemoveAt_List">&#x2714;</a></td>
  </tr><tr>
+  <td><a href="#ListImmutable"><el-type>ListImmutable</el-type></a></td>
+  <td><a href="#asList_ListImmutable">&#x2714;</a></td>
+  <td><a href="#asSet_ListImmutable">&#x2714;</a></td>
+  <td><a href="#contains_ListImmutable">&#x2714;</a></td>
+  <td><a href="#head_ListImmutable">&#x2714;</a></td>
+  <td><a href="#indexOf_ListImmutable">&#x2714;</a></td>
+  <td><a href="#length_ListImmutable">&#x2714;</a></td>
+  <td><a href="#length_ListImmutable">&#x2714;</a></td>
+  <td></td>
+  <td><a href="#withPut_ListImmutable">&#x2714;</a></td>
+  <td><a href="#withRemoveAt_ListImmutable">&#x2714;</a></td>
+  </tr><tr>
   <td><a href="#Dictionary"><el-type>Dictionary</el-type></a></td>
+  <td></td>
   <td></td>
   <td><a href="#asString_Dictionary">&#x2714;</a></td>
   <td>see notes</td>
@@ -1494,19 +1559,11 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td></td>
   <td>see notes</td>
   <td></td>
-  <td></td>
- </tr><tr>
-  <td><a href="#ListImmutable"><el-type>ListImmutable</el-type></a></td>
-  <td><a href="#asList_ListImmutable">&#x2714;</a></td>
-  <td><a href="#asString_ListImmutable">&#x2714;</a></td>
-  <td><a href="#contains_ListImmutable">&#x2714;</a></td>
-  <td><a href="#head_ListImmutable">&#x2714;</a></td>
-  <td><a href="#indexOf_ListImmutable">&#x2714;</a></td>
-  <td><a href="#length_ListImmutable">&#x2714;</a></td>
-  <td></td>
-  <td><a href="#withPut_ListImmutable">&#x2714;</a></td>
+  <td><a href="#withPut_Dictionary">&#x2714;</a></td>
+  <td><a href="#withRemoveAt_Dictionary">&#x2714;</a></td>
  </tr><tr>
   <td><a href="#DictionaryImmutable"><el-type>DictionaryImmutable</el-type></a></td>
+  <td></td>
   <td></td>
   <td><a href="#asString_DictionaryImmutable">&#x2714;</a></td>
   <td>see notes</td>
@@ -1515,9 +1572,11 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td>see notes</td>
   <td></td>
   <td><a href="#withPut_DictionaryImmutable">&#x2714;</a></td>
+  <td><a href="#withRemoveAt_DictionaryImmutable">&#x2714;</a></td>
  </tr><tr>
   <td><a href="#SetType"><el-type>Set</el-type></a></td>
   <td><a href="#asList_Set">&#x2714;</a></td>
+  <td></td>
   <td><a href="#asString_Set">&#x2714;</a></td>
   <td><a href="#contains_Set">&#x2714;</a></td>
   <td></td>
@@ -1525,8 +1584,10 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td><a href="#length_Set">&#x2714;</a></td>
   <td></td>
   <td></td>
+  <td></td>
  </tr><tr>
   <td><a href="#Stack"><el-type>Stack</el-type></a></td>
+  <td></td>
   <td></td>
   <td><a href="#asString_Stack">&#x2714;</a></td>
   <td></td>
@@ -1535,8 +1596,10 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td><a href="#length_Stack">&#x2714;</a></td>
   <td><a href="#peek_Stack">&#x2714;</a></td>
   <td></td>
+  <td></td>
  </tr><tr>
   <td><a href="#Queue"><el-type>Queue</el-type></a></td>
+  <td></td>
   <td></td>
   <td><a href="#asString_Queue">&#x2714;</a></td>
   <td></td>
@@ -1544,6 +1607,7 @@ most variables and data structures to the Display for debugging purposes.</p>
   <td></td>
   <td><a href="#length_Queue">&#x2714;</a></td>
   <td><a href="#peek_Queue">&#x2714;</a></td>
+  <td></td>
   <td></td>
  </tr>
 </table>
@@ -2009,7 +2073,7 @@ so for example the top left corner of the display is at (-100,75).</p>
  <li>The constructor parameters for <el-type>LineVG</el-type> are: <el-code>x, y, width, height, fillColour, strokeColour, strokeWidth</el-code>.</li>
  <li>All parameters for the three constructors above are of Type<el-type>Int</el-type>.</li>
  <li>Individual properties of any of the VGTypes may be modified by calling the corresponding <el-method>set...</el-method> procedure method
-  or, if working within a function, by using the corresponding <el-method>with...</el-method> function method.</li>
+  or, if working within a function, by using the corresponding <el-method>with...</el-method> function dot method.</li>
  <li><el-method>displayVectorGraphics</el-method> takes as an argument either a <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;()</el-code>
   or a <el-type>List</el-type> of any specific Typeof <el-type>VectorGraphic</el-type> such as <el-type>CircleVG</el-type>.</li>
 </ul>
