@@ -693,7 +693,7 @@ export class StdLib {
     return await this.system.elanInputOutput.waitForAnyKey();
   }
 
-  @elanProcedure([], ProcedureOptions.async)
+  @elanProcedure(["prompt"], ProcedureOptions.async)
   async pressAnyKeyToContinue(prompt: boolean) {
     if (prompt) {
       await this.prompt("Press any key to continue");

@@ -4,34 +4,6 @@ const updateable = document.querySelectorAll("input, textarea, select");
 const hints = document.getElementsByTagName("el-hint");
 const doneCheckboxes = document.querySelectorAll("input[type=checkbox].step");
 
-/* async function hash(state: string[]) {
-  // if no state return empty string
-  if (state.length === 0) {
-    return "";
-  }
-  const toHash = state.join(", ");
-
-  const msgUint8 = new TextEncoder().encode(toHash); // encode as (utf-8) Uint8Array
-  const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8); // hash the message
-  const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
-  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join(""); // convert bytes to hex string
-  return hashHex;
-} */
-
-/* async function getDocumentHash() {
-  return await hash(getDocumentState());
-}
-
-async function checkHash() {
-  const hash1 = document.getElementById("hash")?.innerHTML;
-  const hash2 = await getDocumentHash();
-  if (hash1 !== hash2) {
-    alert("document has changed outside ide");
-  }
-}
-
-checkHash(); */
-
 const autoSaveButton = document.getElementById("auto-save");
 
 let fh: FileSystemFileHandle | undefined;
@@ -115,73 +87,25 @@ function updateDocument() {
 
   return code;
 }
-/* 
-function getDocumentState() {
-  const state: string[] = [];
-
-  for (const e of document.querySelectorAll(
-    "input[type=text].answered",
-  ) as NodeListOf<HTMLInputElement>) {
-    const id = e.id;
-    const v = e.value;
-    state.push(`${id}:${v}`);
-  }
-
-  for (const e of document.querySelectorAll(
-    "input[type=radio].answered",
-  ) as NodeListOf<HTMLInputElement>) {
-    const id = e.id;
-    const v = e.checked ? "true" : "false";
-    state.push(`${id}:${v}`);
-  }
-
-  for (const e of document.querySelectorAll(
-    "input[type=checkbox].answered",
-  ) as NodeListOf<HTMLInputElement>) {
-    const id = e.id;
-    const v = e.checked ? "true" : "false";
-    state.push(`${id}:${v}`);
-  }
-
-  for (const e of document.querySelectorAll(
-    "textarea.answered",
-  ) as NodeListOf<HTMLTextAreaElement>) {
-    const id = e.id;
-    const v = e.value;
-    state.push(`${id}:${v}`);
-  }
-
-  for (const e of document.querySelectorAll("select.answered") as NodeListOf<HTMLSelectElement>) {
-    const id = e.id;
-    const options = e.options;
-    const index = options.selectedIndex;
-    const v = options[index].value;
-
-    state.push(`${id}:${v}`);
-  }
-
-  for (const e of document.querySelectorAll("el-hint.taken")) {
-    const id = e.id;
-    const v = e.innerHTML;
-
-    state.push(`${id}:${v}`);
-  }
-
-  return state;
-} */
 
 async function getUpdatedDocument() {
   const code = updateDocument();
-  /*   const hashcode = await getDocumentHash();
-  const toReplace = `<div hidden="" id="hash">.*</div>`;
-  const re = new RegExp(toReplace); */
-  return code; //.replace(re, `<div hidden="" id="hash">${hashcode}</div>`);
+  return code;
 }
 
 autoSaveButton!.addEventListener("click", async () => {
   const code = await getUpdatedDocument();
 
   fh = await chromeSave(code, "workSheet");
+
+  const le = Array.from(
+    document.querySelectorAll(
+      "#auto-save.saved + .step, #auto-save.saved ~ .step.complete, #auto-save.saved ~ .step.complete + input + .step",
+    ),
+  );
+  if (le.length > 0) {
+    le[le.length - 1].scrollIntoView(false);
+  }
 });
 
 async function save() {
@@ -240,7 +164,10 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
         inp.disabled = true;
       }
     }
+    const dt = new Date();
+    const sp = document.createElement("span");
+    sp.classList.add("timestamp");
+    sp.innerText = `${dt.toLocaleTimeString()} ${dt.toLocaleDateString()}`;
+    cb.append(sp);
   });
 }
-
-setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 10);
