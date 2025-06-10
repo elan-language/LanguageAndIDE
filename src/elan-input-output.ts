@@ -35,4 +35,6 @@ export interface ElanInputOutput {
   drawHtml(html: string): Promise<void>;
 
   clearHtml(): Promise<void>;
+
+  tone(duration: number, frequency: number, volume: number): Promise<void>;
 }

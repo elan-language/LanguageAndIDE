@@ -3,6 +3,7 @@ import { checkForUnclosedHtmlTag } from "../../src/web/web-helpers";
 
 export class TestInputOutput implements ElanInputOutput {
 
+
   drawHtml(html: string): Promise<void> {
     this.drawn = html;
     return Promise.resolve();
@@ -91,6 +92,9 @@ export class TestInputOutput implements ElanInputOutput {
   }
   clearHtml(): Promise<void> {
     this.drawn = "";
+    return Promise.resolve();
+  }
+    tone(_duration: number, _frequency: number, _volume: number): Promise<void> {
     return Promise.resolve();
   }
 }

@@ -329,4 +329,20 @@ export class StubInputOutput implements ElanInputOutput {
       postMessage(this.writeMsg("clearHtml"));
     });
   }
+
+  tone(duration: number, frequency: number, volume: number): Promise<void> {
+    return new Promise<void>((rs, rj) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs();
+        }
+        if (data.type === "status" && data.status === "error") {
+          rj(data.error as string);
+        }
+      };
+      postMessage(this.writeMsg("tone", [duration, frequency, volume]));
+    });
+  }
 }

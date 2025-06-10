@@ -341,4 +341,33 @@ export class WebInputOutput implements ElanInputOutput {
     document.getElementById("display-html")!.innerHTML = "";
     return Promise.resolve();
   }
+
+  _audioCtx: AudioContext | undefined;
+
+  get audioCtx() {
+    if (!this._audioCtx) {
+      this._audioCtx = new AudioContext();
+    }
+    return this._audioCtx;
+  }
+
+  tone(duration: number, frequency: number, volume: number): Promise<void> {
+    return new Promise((rs) => {
+      const ac = this.audioCtx;
+      const oscillator = ac.createOscillator();
+      const gainNode = ac.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(ac.destination);
+
+      gainNode.gain.value = volume;
+      oscillator.frequency.value = frequency;
+      oscillator.type = "sine";
+
+      oscillator.onended = (_e) => rs();
+
+      oscillator.start(ac.currentTime);
+      oscillator.stop(ac.currentTime + duration / 1000);
+    });
+  }
 }
