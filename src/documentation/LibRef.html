@@ -939,7 +939,7 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
   <td><el-type>String</el-type></td>
   <td>a string that is a comma+space-separated list of the Dictionary's <i>key:value</i> pairs, enclosed in square brackets</td>
 </tr><tr>
-  <td id="hasKey"><el-method>hasKey</el-method></td>
+  <td id="hasKey_Dictionary"><el-method>hasKey</el-method></td>
   <td><el-type>Dictionary</el-type></td>
   <td>(none)</td>
   <td><el-type>Boolean</el-type></td>
@@ -1206,10 +1206,10 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>String</el-type></td>
   <td>a string that is a comma+space-separated list of the DictionaryImmutable's <i>key:valu</i>e pairs,
   enclosed in braces</td>
-</tr><tr id="hasKey">
+</tr><tr id="hasKey_DictionaryImmutable">
   <td><el-method>hasKey</el-method></td>
   <td><el-type>DictionaryImmutable</el-type></td>
-  <td></td>
+  <td><el-type>Boolean</el-type></td>
   <td><el-type></el-type></td>
   <td></td>
  </tr><tr id="withPut_DictionaryImmutable">
@@ -2263,7 +2263,7 @@ just as you would specify the Type of every parameter and the return Type for th
 
 <h2 id="parseAs">parseAsInt and parseAsFloat</h2>
 
-    <p>Function <el-method>parseAsInt</el-method> attempts to parse the input <el-type>String</el-type> as an <el-type>Int</el-type>, and returns a 2-tuple, the first value of which is Boolean, with <el-code><el-id>true</el-id></el-code> indicating whether or not the parse has succeeded, and the second value being the resulting <el-type>Int</el-type>.
+    <p>Function <el-method>parseAsInt</el-method> attempts to parse the input <el-type>String</el-type> as an <el-type>Int</el-type>, and returns a 2-tuple, the first value of which is <el-type>Boolean</el-type>, with <el-code><el-id>true</el-id></el-code> indicating whether or not the parse has succeeded, and the second value being the resulting <el-type>Int</el-type>.
         <el-method>parseAsFloat</el-method> does the equivalent for floating point. Operation is illustrated by these tests: </p>
 <el-code-block source="test_parse.elan">
 <el-test class="ok multiline" id="test88" tabindex="0">
@@ -2373,7 +2373,7 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 
     <p>Elan's regular expressions are modelled on those of JavaScript, including the syntax for literal regular expressions. See, for example this <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions">Guide to Regular Expressions</a>.</p>
     <p>More functions for using regular expressions will be added in a future release of Elan. For now&#8230;</p>
-    <p>The method <el-code>matchesRegExp</el-code> is applied to a <el-type>String</el-type> using dot syntax and requires a <el-code>RegExp</el-code> parameter specified as a literal or as variable. It returns a Boolean. For example:</p>
+    <p>The method <el-code>matchesRegExp</el-code> is applied to a <el-type>String</el-type> using dot syntax and requires a <el-code>RegExp</el-code> parameter specified as a literal or as variable. It returns a <el-type>Boolean</el-type>. For example:</p>
 <el-code-block source="test_regexp_1.elan">
 <el-test class="ok multiline" id="test1" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
