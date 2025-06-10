@@ -1,20 +1,16 @@
-.step, 
-.step *,
-.step + input {
-    display: none;
-}
 label {
     float:left;
-}
-.step + input {
-    float: left;
-    margin-left: 1em;
 }
 
 .step, 
 .step *,
 .step + input {
-    display: none;
+    visibility: hidden;
+}
+
+.step + input {
+    float: left;
+    margin-left: 1em;
 }
 
 #auto-save.saved {
@@ -24,7 +20,7 @@ label {
 #auto-save.saved + .step, 
 #auto-save.saved + .step *,
 #auto-save.saved + .step +  input {
-    display: block;
+    visibility: visible;
 }
 
 #auto-save.saved ~ .step.complete, 
@@ -34,7 +30,7 @@ label {
 #auto-save.saved ~ .step.complete + input + .step *,
 #auto-save.saved ~ .step.complete + input + .step + input
 {
-    display: block;
+    visibility: visible;
 }
 
 .license, .license img {
