@@ -168,10 +168,10 @@ test('load and run demo with graphics', async ({ page }) => {
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
   await page.getByRole('button', { name: 'Demo' }).hover();
-  await page.getByText('Snake - procedural').click();
+  await page.getByText('Burrow').click();
 
   await page.getByRole('button', { name: 'Run the program' }).click();
-  await expect(page.locator('[style="background-color:#ff0000;"]')).toContainText("");
+  await expect(page.locator('[style="background-color:#000000;"]')).toContainText("");
 });
 
 test('symbol completion', async ({ page }) => {
