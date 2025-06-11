@@ -168,6 +168,6 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
     const sp = document.createElement("span");
     sp.classList.add("timestamp");
     sp.innerText = `${dt.toLocaleTimeString()} ${dt.toLocaleDateString()}`;
-    cb.append(sp);
+    cb.after(sp);
   });
 }
