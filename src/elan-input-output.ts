@@ -22,6 +22,8 @@ export interface ElanInputOutput {
 
   getKey(): Promise<string>;
 
+  waitForKey(): Promise<string>;
+
   getKeyWithModifier(): Promise<[string, string]>;
 
   clearKeyBuffer(): Promise<void>;
