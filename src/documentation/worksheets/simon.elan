@@ -1,4 +1,4 @@
-# bd155f1d122821207360dac28306d10342dd8a29041a9e9e23e9b30aec7a6db0 Elan 1.2.0 guest default_profile valid
+# f1cd955f995fa4e5ac4ade88a04c740e864b0451b4697d15155611bc2241626e Elan 1.2.0 guest default_profile valid
 
 main
   let sequence be new List<of Int>()
@@ -24,7 +24,7 @@ procedure displayMove(move as Int, interval as Int)
   call clearVectorGraphics()
   let circle be new CircleVG() with centreX set to 20*move - 5, centreY set to 15, radius set to 10, fillColour set to colours[move - 1], strokeWidth set to 0
   call displayVectorGraphics([circle])
-  call tone(interval, tones[move - 1].floor(), 0.1)
+  call tone(interval, tones[move - 1], 0.1)
   call clearVectorGraphics()
   call pause(100)
 end procedure
