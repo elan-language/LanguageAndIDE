@@ -10,7 +10,7 @@ export enum Deprecation {
   classRemoved,
   methodParametersChanged,
   classParametersChanged,
-  methodHidden
+  methodHidden,
 }
 
 export interface Deprecated {

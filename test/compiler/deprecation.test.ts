@@ -137,7 +137,7 @@ end main`;
     assertCompiles(fileImpl);
   });
 
-   test("Pass_hiddenDeprecated", async () => {
+  test("Pass_hiddenDeprecated", async () => {
     const code = `${testHeader}
 
 main
