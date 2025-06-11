@@ -36,7 +36,7 @@
   <h3>Iteration 1 - Draw a solid circle</h3>
   <ul>
     <li>Start a new file and add a <el-kw>main</el-kw> routine. Within that add a <el-kw>let</el-kw>
-      instruction, defining the name <el-id>circle</el-id> to be <el-field id="expr10" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field>
+      instruction, defining the name <el-id>circle</el-id> to be <el-field id="expr10" class="ok" tabindex="0"><el-code><el-kw>new</el-kw> <el-type>CircleVG</el-type>()</el-code>
       noting that the <el-type>VG</el-type> in <el-type>CircleVG</el-type> is short for 'vector graphic' which is
       a way to draw very high resolution graphics - with more flexibility and greater speed than is possible using
     Turtle graphics, for example.</li>
@@ -45,38 +45,129 @@
         <el-statement class="ok" id="call11" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-method>displayVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args13" class="optional ok" tabindex="0"><el-txt>[<el-id>circle</el-id>]</el-txt><el-place><i>listOfVGs</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)</el-top></el-statement>
       </el-code-block>
 
-      noting that the square brackets used in <el-code>[<el-id>circle</el-id>]</li>]</el-code> defines a List -
+      noting that the square brackets used in <el-code>[<el-id>circle</el-id>]</el-code> defines a List -
       in this case a List with just one member - the circle. The procedure method 
-      <el-method>displayVectorGraphics</el-method>, because in a typical application using VectorGraphics 
-      would want to display multiple shapes - lines, circles, rectangles and more - at once, and we could
-      just include them all within the square bracket, separated by commas. This application is unusual because
-      we will be displaying just one circle at a time. We will be making a more interesting use of List later on.
+      <el-method>displayVectorGraphics</el-method> takes a list, because in a typical application using VectorGraphics 
+      would want to display multiple shapes - lines, circles, rectangles and more - and we could
+      just include them all within the square brackets, separated by commas. This application is unusual because
+      we will be displaying just one circle at a time. We will be making a more interesting use of Lists later on.
     </li>
     <li>Run the application and note that it displays a circle in the centre of the <b>Display</b> - but
     why is it yellow, and what determined the size and position? It uses some default values - just so
-    that you see something. Now we want to specify various properties of the circle.</li>
+    that you see something. Now we want to specify those properties.</li>
     <li>Select the second field in the <el-kw>let</el-kw> statement, and at the right hand end type 
        type <el-kw>with</el-kw> or select it from the drop-down options. You will now be presented with a 
       a list of the 'properties' that can be specified with for a circle. Select the first option, <el-id>centreX</el-id>
       then <b>Tab</b> to add the prompted words <el-kw>set to</el-kw> followed by the value <el-lit>15</el-lit> and a comma.
       Repeat this sequence to set the <el-id>centreY</el-id> to <el-lit>15</el-lit>, the <el-id>radius</el-id> to <el-lit>10</el-lit>,
-      and the <el-id>strokeWidth</el-id> to <el-lit>0</el-lit> - so lose the black line around the circle.
-      How do we know approximately what values to use?  The <b>Display</b> measures 100 units wide by 75 units deep, with coordinates
-      0,0 being located at the top left, and 100, 75 bottom right. <br> Run the program again and confirm that a larger yellow circle, no edge appears near the top-left corner.</li>
+      and the <el-id>strokeWidth</el-id> to <el-lit>0</el-lit> - to get rid of the black line around the circle.
+      <br>When you press <b>Enter</b> at the end of this field, the instruction will automatically reformat
+      over several lines for readability:
 
+      <el-code-block>
+        <el-statement class="ok" id="let5" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>circle</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
+      </el-code-block>
 
-      
-    
+      but note that this is still one instruction, and if you were to edit it again the field would still be one long line.
+      <br>How do we know what values to use, even approximately?  The <b>Display</b> measures 100 units wide by 75 units deep, 
+      with the top-left corner having coordinates 0,0, and the bottom-right 100, 75. 
+      <br>Run the program again and confirm that a larger yellow circle, no edge appears near the top-left corner.
     </li>
   </ul>
-
-
   <label class="done" for="done1">Step completed</label>
 </div>
 <input type="checkbox" class="step" id="done1" />
 
+<div class="step" id="step2">
+  <h3>Iteration 2- Draw circle in 4 different locations and colours</h3>
+  <p>Although the game will only show one circle at a time, we want to position
+    in one of four places in a row, and a different colour for each location.
+    We already know that we will be using the <b>1 2 3 4</b> keys so - even
+    though we aren't yet handling the keyboard input, let's assume that
+    we will somehow end up with a name <el-id>move</el-id> which holds
+    one of those four integer values.
+  </p>
+  <li><i>Above</i> the first <el-kw>let</el-kw> instruction add another
+    <el-kw>let</el-kw> that defines <el-id>move</el-id> as <el-lit>4</el-lit>.
+    Then we'll use that to adjust the horizontal position of the circle.
+    Given that the circle has radius of 10, we want the four positions
+    to be spaced 20 apart, so that the locations are distinct. So change
+    the value specified for <el-id>centreX</el-id> from <el-lit>15</el-lit>
+    to:
+    
+    <el-code-block>
+      <el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>
+    </el-code-block>
+    Run the program and check that the circle is now further to the right.</li>
+    <li>Now we want to be able to specify the colour according to the position
+      (i.e. according to the value of <el-id>move</el-id>). So let's first 
+      define the four values as a list. Add this immediately above the <el-kw>let</el-kw>
+      that defines <el-id>circle</el-id>:
+      <el-statement class="ok" id="let35" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var36" class="ok" tabindex="0"><el-txt><el-id>colours</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr37" class="ok" tabindex="0"><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>3</el-fr></el-statement>
+      Again, this could have been an Array - because we won't be needing to extend it -
+      but if we already know the values, it is just easier to create a List, using
+      the square brackets than it is to define an Array.</li>
+      <li>Back on the definition of the circle, edit the properties, adding:
+        <el-code>, <el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-code>
+        This is using <el-id>move</el-id> as the index to select a numbered element within the list of colours
+        much as you have already done when using an Array. The reason we had to subtract
+        <el-lit>1</el-lit> is that <el-id>move</el-id> will have the values 1,2,3, or 4
+        but the indexes for a list of Four elements, as in an Array, are numbered from 0.
+        <br>Run the program, again varying the value for <el-id>move</el-id> from 1 to 4
+        to check that each value puts the circle in a different place and colour.      
+      </li>
 
-<div class="step" id="step5">
+  <label class="done" for="done2">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done2" />
+
+<div class="step" id="step3"></div>
+
+<p>Thinking ahead to the fact that we need to display moves both when the program
+  is playing the sequence and when the player is attempting to re-create the sequence
+  it will be useful to have the code that does the display in a separate procedure
+  that can be called from more than one place in the main routine. But even if we
+  can't think that far ahead, it is always good practice to extract code into
+  named procedures (or, later, functions) - because as programs expand, this 
+  makes them easier to read and to manage.
+</p>
+<ul>
+  <li>Select the <el-code>new code</el-code> selector that follows <el-kw>end main</el-kw>
+  or if there isn't one, select <el-kw>main</el-kw> and hit <b>Enter</b>.
+  From this, press <b>p</b> to insert a <el-kw>procedure</el-kw> and specify
+  its name as <el-method>displayMove</el-method>. Then in the field between
+  the brackets, add <el-id>move</el-id><el-kw> as </el-kw><el-type>Int</el-type>.
+  This specifies that when you call <el-method>displayMove</el-method> you must
+  provide a value that is an integer.</li>
+  <li>
+    Now cut and paste the last three instructions from main
+    into this procedure, and then within main call the procedure,
+    using the defined value <el-id>move</el-id> as the argument. 
+    Then run the program.
+
+    <div class="hint" id="hint3a" data-hint="">
+      <span class="show">Hint 1</span><span class="shown"> - USED</span>
+
+
+
+    <div>
+    <div class="hint" id="hint3a" data-hint="">
+        <span class="show">The whole code</span><span class="shown"> - USED</span>
+        
+  
+  
+      <div>
+
+  </li>
+
+
+</ul>
+
+<label class="done" for="done3">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done3" />
+
+<div class="step" id="stepFinal">
   Worksheet completed.
 
   <div class="license">
