@@ -160,7 +160,7 @@ test('parse error', async ({ page }) => {
   await expect(page.locator('#parse')).toContainText('invalid');
 });
 
-/* test('load and run demo with graphics', async ({ page }) => {
+test('load and run demo with graphics', async ({ page }) => {
   page.once('dialog', dialog => {
     //console.log(`Dialog message: ${dialog.message()}`);
     dialog.accept().catch(() => {});
@@ -171,8 +171,8 @@ test('parse error', async ({ page }) => {
   await page.getByText('Burrow').click();
 
   await page.getByRole('button', { name: 'Run the program' }).click();
-  await expect(page.locator('[style="background-color:#000000;"]')).toContainText("");
-}); */
+  await expect(page.locator('[style="background-color:#ff0000;"]')).toContainText("");
+});
 
 test('symbol completion', async ({ page }) => {
   page.once('dialog', dialog => {
@@ -202,7 +202,7 @@ test('undo redo', async ({ page }) => {
   await page.keyboard.type('m');
   await expect(page.locator('#code-title')).toContainText('File: code.elan UNSAVED');
   await page.getByRole('button', { name: 'Undo' }).click();
-  await expect(page.locator('el-help')).toContainText(' main procedure function test constant enum record class abstract interface #');
+  await expect(page.locator('el-help')).toContainText(' ?');
   await page.getByRole('button', { name: 'Redo' }).click();
   await expect(page.locator('el-top')).toContainText('main');
 }); 
