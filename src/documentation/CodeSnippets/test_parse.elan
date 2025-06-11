@@ -1,4 +1,4 @@
-# e893b34e29c08c55722e11b038b3bdafb46535f3f5843ae5473b294dcb73e00f Elan 1.1.4 guest default_profile valid
+# ac8e39c0c25f873bfa5e8202ea9aaaaaacc21d5dd7a0fd78829cf8c902e772d7 Elan 1.2.0 guest default_profile valid
 
 test 
   assert parseAsInt("31") is tuple(true, 31)
