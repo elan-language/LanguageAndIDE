@@ -23,10 +23,13 @@ export class For extends FrameWithStatements implements Statement {
   constructor(parent: Parent) {
     super(parent);
     this.variable = new IdentifierField(this);
-    this.variable.setPlaceholder("<i>variableName</i>");
+    this.variable.setPlaceholder("<i>counterName</i>");
     this.from = new ExpressionField(this, / to /);
+    this.from.setPlaceholder("<i>firstValue</i>");
     this.to = new ExpressionField(this, / step /);
+    this.to.setPlaceholder("<i>lastValue</i>");
     this.step = new ExpressionField(this);
+    this.step.setPlaceholder("<i>stepValue</i>");
     this.step.setFieldToKnownValidText("1");
   }
 

@@ -54,6 +54,10 @@ class TestStdLib {
   @elanProcedure([])
   deprecatedProcedure() {}
 
+  @elanDeprecated(Deprecation.methodHidden, 0, 0, "LibRef.html#Xxxx")
+  @elanProcedure([])
+  hiddenDeprecatedProcedure() {}
+
   @elanDeprecated(Deprecation.methodRemoved, 2, 0, "LibRef.html#Xxxx")
   @elanFunction([])
   notYetDeprecated1(): number {
@@ -121,6 +125,23 @@ end main`;
 
 main
   variable x set to notYetDeprecated2()
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
+
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertCompiles(fileImpl);
+  });
+
+   test("Pass_hiddenDeprecated", async () => {
+    const code = `${testHeader}
+
+main
+  call hiddenDeprecatedProcedure()
 end main`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
