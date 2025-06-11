@@ -428,6 +428,8 @@ or into existing variables of the correct Type:</p>
   <td>see <a href="#Dictionary_procedures">Procedure methods on a Dictionary</a></td>
  </tr><tr>
   <td>function dot methods</td>
+ </tr><tr>
+  <td>function dot methods</td>
   <td>see <a href="#Array_functions">Function dot methods on an Array</a></td>
   <td>see <a href="#Array2D_functions">Function dot methods on an Array2D</a></td>
   <td>see <a href="#List_functions">Function dot methods on a List</a></td>
@@ -669,8 +671,8 @@ Note
   <td><el-method>put</el-method></td>
   <td><el-type>List</el-type></td>
   <td><el-type>Int</el-type>,<br> item of <el-type>List element's Type</el-type></td>
-  <td>replace the item at the given index with the argument item</td>
- </tr><tr>
+  <td>replace the item at the given index with the new item</td>
+ </tr><tr id="removeAll">
   <td><el-method>removeAll</el-method></td>
   <td><el-type>List</el-type></td>
   <td></td>
@@ -1820,8 +1822,7 @@ also offers position properties <el-code><el-id>x</el-id></el-code> and <el-code
 </el-code-block>
 
 <p>The Type of a named value that holds an image is <el-type>ImageVG</el-type> &ndash; the 'VG' indicating that
-    this Typeis compatible with <a href="#VectorGraphics">vector graphics</a>, so an image may be added to a <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;</el-code> or displayed
-    directly by:</p>
+this Type is compatible with <a href="#VectorGraphics">vector graphics</a>, so an image may be added to a <el-type>List</el-type>&lt;<el-kw>of</el-kw><el-type>VectorGraphic</el-type>&gt; or displayed directly by:</p>
 
 <el-code-block>
 <el-statement class="ok" id="call5" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-method>displayVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args7" class="selected focused optional ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="1" data-cursorend="1" size="89" style="width: 90ch" value="[image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg]"></el-txt><el-place><i>listOfVGs</i></el-place></el-field>)</el-top></el-statement>
@@ -1895,6 +1896,11 @@ so for example the top left corner of the display is at (-100,75).</p>
   <th>on<br>Type</th>
   <th>argument<br>Types</th>
   <th>action</th>
+ </tr><tr id="clearAndReset">
+  <td><el-method>clearAndReset</el-method></td>
+  <td><el-type>Turtle</el-type></td>
+  <td>(none)</td>
+  <td>clears the turtle display and moves the turtle to its starting position and direction</td>
  </tr><tr id="hide">
   <td><el-method>hide</el-method></td>
   <td><el-type>Turtle</el-type></td>
@@ -1905,6 +1911,12 @@ so for example the top left corner of the display is at (-100,75).</p>
   <td><el-type>Turtle</el-type></td>
   <td><el-type>Int</el-type> or <el-type>Float</el-type></td>
   <td>moves the turtle the specified number of turtle units in the direction it is facing or,<br>if negative, in the opposite direction</td>
+ </tr><tr id="moveTo">
+  <td><el-method>moveTo</el-method></td>
+  <td><el-type>Turtle</el-type></td>
+  <td><el-type>Int</el-type> or <el-type>Float</el-type>,<br>
+      <el-type>Int</el-type> or <el-type>Float</el-type></td>
+  <td>moves to the x,y position specified; this is unlike "move" which moves relative to the current position and orientation; it draws a line if the pen is down, unlike placeAt</td>
  </tr><tr id="penColour">
   <td><el-method>penColour</el-method></td>
   <td><el-type>Turtle</el-type></td>
@@ -1941,8 +1953,8 @@ so for example the top left corner of the display is at (-100,75).</p>
   <td><el-type>Turtle</el-type></td>
   <td><el-type>Int</el-type> or <el-type>Float</el-type></td>
   <td>turns the turtle through the specified number of degrees clockwise or,<br>if negative, anticlockwise</td>
- </tr><tr id="turnTo">
-  <td><el-method>turnTo</el-method></td>
+ </tr><tr id="turnToHeading">
+  <td><el-method>turnToHeading</el-method></td>
   <td><el-type>Turtle</el-type></td>
   <td><el-type>Int</el-type> or <el-type>Float</el-type></td>
   <td>turns the turtle to face in the direction specified in degrees<br>where 0 is upward and increasing values go clockwise from there</td>
@@ -1971,6 +1983,7 @@ so for example the top left corner of the display is at (-100,75).</p>
  <li>You can move and turn the turtle, causing lines to be drawn, whether or not the turtle is shown.</li>
  <li>The current location and heading of the turtle may be read using the properties
   <el-code><el-id>x</el-id></el-code>, <el-code><el-id>y</el-id></el-code>, and <el-code><el-id>heading</el-id></el-code>.</li>
+<li>The turtle starts facing upwards (<el-id>heading</el-id> 0), so that <el-method>move</el-method> moves in the y-direction.</li>
 </ul>
 <p>Here is a more sophisticated example, using a procedure and recursion, that produces a fractal snowflake:</p>
 <el-code-block source="turtle_snowflake.elan">
@@ -2068,14 +2081,16 @@ so for example the top left corner of the display is at (-100,75).</p>
  <li>The <el-code><el-id>fillColour</el-id></el-code> and <el-code><el-id>strokeColour</el-id></el-code> properties may be specified as described under <a href="#Colours">Colours</a>.
   The <el-code><el-id>fillColour</el-id></el-code> only may also be specified as <el-code><el-id>transparent</el-id></el-code> (which has the value <el-code>-1</el-code>).</li>
  <li><el-type>VectorGraphic</el-type> is the abstract superclass of all <el-code>...VG</el-code> shapes. You would only use it if you wanted to define a method that could work on any shape (using common elements defined on <el-code>VectorGraphic</el-code>) or that could work with a <el-type>List</el-type> holding different types of shape.</li>
- <li>The constructor parameters for <el-type>CircleVG</el-type> are: <el-code>centreX, centreY, radius, fillColour, strokeColour, strokeWidth</el-code>.</li>
- <li>The constructor parameters for <el-type>LineVG</el-type> are: <el-code>x1, y1, x2, y2, strokeColour, strokeWidth</el-code>, all of Type <el-type>Int</el-type>.</li>
- <li>The constructor parameters for <el-type>LineVG</el-type> are: <el-code>x, y, width, height, fillColour, strokeColour, strokeWidth</el-code>.</li>
- <li>All parameters for the three constructors above are of Type<el-type>Int</el-type>.</li>
- <li>Individual properties of any of the VGTypes may be modified by calling the corresponding <el-method>set...</el-method> procedure method
-  or, if working within a function, by using the corresponding <el-method>with...</el-method> function dot method.</li>
- <li><el-method>displayVectorGraphics</el-method> takes as an argument either a <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;()</el-code>
-  or a <el-type>List</el-type> of any specific Typeof <el-type>VectorGraphic</el-type> such as <el-type>CircleVG</el-type>.</li>
+ <li>To make it easier for simple programs, the VectorGraphic shapes all have default values for their parameters, and you only have to specify the ones that you want different.
+So the constructors do not take any parameters, and instead you add a <el-kw>with</el-kw> clause listing those parameters which you want to have different values.  See <a href="LangRef.html#new">New instance</a> for more about <el-kw>with</el-kw> clauses.</li>
+ <li>The parameters that can appear in a <el-kw>with</el-kw> clause for CircleVG are: <el-code>centreX, centreY, radius, fillColour, strokeColour, strokeWidth</el-code>.</li>
+ <li>The parameters that can appear in a <el-kw>with</el-kw> clause for <el-type>LineVG</el-type> are: <el-code>x1, y1, x2, y2, strokeColour, strokeWidth</el-code>.</li>
+ <li>The parameters that can appear in a <el-kw>with</el-kw> clause for <el-type>RectangleVG</el-type> are: <el-code>x, y, width, height, fillColour, strokeColour, strokeWidth</el-code>.</li>
+ <li>All parameters for the three Types above are of Type <el-type>Int</el-type>.</li>
+ <li>Individual properties of any of the VG Types may be modified by calling the corresponding <el-method>set...</el-method> procedure method
+  or, if working within a function, by using the corresponding <el-method>with...</el-method> function dot method, for example <el-method>setCentreX</el-method> or <el-method>withCentreX</el-method>.</li>
+ <li><el-method>displayVectorGraphics</el-method> takes as an argument either a <el-code><el-type>List</el-type>&lt;<el-kw>of</el-kw><el-type>VectorGraphic</el-type>&gt;()</el-code>
+  or a <el-type>List</el-type> of any specific Type of <el-type>VectorGraphic</el-type> such as <el-type>CircleVG</el-type>.</li>
 </ul>
 
 <h2 id="combiningGraphics">Combining graphic outputs</h2>
@@ -2158,7 +2173,7 @@ just as you would specify the Type of every parameter and the return Type for th
 <table class="tableColours">
 <tr><th>colour</th><th></th><th>decimal</th><th>decimal<br></th><th>hexadecimal</th></tr>
 <tr><th>name</th><th></th><th>integer</th><th style="font-family:monospace;">&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;&nbsp;G&nbsp;&nbsp;&nbsp;&nbsp;B</th><th style="font-family:monospace;">&nbsp;0xrrggbb</th></tr>
-    <tr><td><el-code><el-id>black</el-id></el-code></td><td style="color:#000000">&#x25fc;</td><td>0</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0x000000</el-code></td></tr>
+    <tr><td><el-code><el-id>black</el-id></el-code></td><td style="color:#000000">&#x25fc;</td><td>0</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0x000000</el-code></td></tr>
     <tr><td><el-code><el-id>white</el-id></el-code></td><td style="color:#ffffff">&#x25fc;</td><td>16777215</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;255</td><td><el-code>0xffffff</el-code></td></tr>
     <tr><td><el-code><el-id>red</el-id></el-code></td><td style="color:#ff0000">&#x25fc;</td><td>16711680</td><td>&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0xff0000</el-code></td></tr>
     <tr><td><el-code><el-id>green</el-id></el-code></td><td style="color:#008000">&#x25fc;</td><td>32768</td><td>&nbsp;&nbsp;0&nbsp;&nbsp;128&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0x008000</el-code></td></tr>
@@ -2190,7 +2205,8 @@ just as you would specify the Type of every parameter and the return Type for th
 </el-code-block>
 
 <h2 id="parseAs">parseAsInt and parseAsFloat</h2>
-    <p>Function <el-method>parseAsInt</el-method> attempts to parse the input <el-type>String</el-type> as an <el-type>Int</el-type>, and returns a 2-tuple, the first value of which is Boolean, with <el-code><el-id>true</el-id></el-code> indicating whether or not the parse has succeeded, and the second value being the resulting <el-type>Int</el-type>.
+
+    <p>Function <el-method>parseAsInt</el-method> attempts to parse the input <el-type>String</el-type> as an <el-type>Int</el-type>, and returns a <a href="#Tuple">2-tuple</a>, the first value of which is <el-type>Boolean</el-type>, with <el-code><el-id>true</el-id></el-code> indicating whether or not the parse has succeeded, and the second value being the resulting <el-type>Int</el-type>.
         <el-method>parseAsFloat</el-method> does the equivalent for floating point. Operation is illustrated by these tests: </p>
 <el-code-block source="test_parse.elan">
 <el-test class="ok multiline" id="test88" tabindex="0">
@@ -2210,11 +2226,11 @@ just as you would specify the Type of every parameter and the return Type for th
 <ul>
     <li>Any string that parses as an <el-type>Int</el-type> will also parse as a <el-type>Float</el-type>.</li>
     <li>If the parse fails, the second value will become zero, so you should always check the first value to see if the second value is a correct parse or just the default.</li>
-    <li> You can &#8216;deconstruct&#8217; the tuple into two variables:
+    <li> You can &#8216;<a href="#Tuple">deconstruct</a>&#8217; the tuple into two variables:
 <el-code-block source="parse_string.elan">
-<el-statement class="ok" id="var5" tabindex="0"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>success</el-id>, <el-id>parsedValue</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>(<el-id>myString</el-id>)</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
+<el-statement class="ok" id="var5" tabindex="0"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>success</el-id>, <el-id>parsedValue</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>(<el-id>myString</el-id>)</el-txt></el-field></el-statement>
    </el-code-block></li>
-    <li>One use of these parsing methods is for validating user input, but note that an easier way to do this is to use the various <a href="#Input/output">input methods</a>.</li>
+    <li>One use of these parsing methods is for validating user input, but note that an easier way to do this is to use the various <a href="#SystemMethods">input methods</a>.</li>
 </ul>
 <div id="floor"></div>
 <div id="ceiling"></div>
@@ -2388,9 +2404,12 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 <p>The result of <el-method>bitNot</el-method>(<el-id>a</el-id>)</el-code> being <el-code>-14</el-code> , when <el-code><el-id>a</el-id></el-code> is <el-code>13</el-code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as <el-code>00000000000000000000000000001101</el-code>, and applying <el-method>bitNot</el-method> gives <el-code>11111111111111111111111111110010 </el-code>which is the value <el-code>-14 </el-code>in signed two&#8217;s complement format, the left-most bit being the sign (<el-code>0</el-code> positive, <el-code>1</el-code> negative).</p>
 
 <h2 id="sequence">Sequence</h2>
-<p>The <el-method>sequence</el-method> is used to create a <el-type>List</el-type> containing a sequence
+
+<p>The <el-method>sequence</el-method> function is used to create a <el-type>List</el-type> containing a sequence
 of integer values as defined by the two (integer) parameters: <el-code><el-id>start</el-id></el-code> and <el-code><el-id>end</el-id></el-code>
-(both being <i>inclusive</i> values), for example:</p>
+(both being <i>inclusive</i> values).</p>
+<p>Here is an example which uses <a href="#HoFs">higher order functions</a> to print the prime numbers between 2 and 30:</p>
+<el-statement class="ok" id="print8"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-method>sequence</el-method>(<el-lit>2</el-lit>, <el-lit>30</el-lit>).<el-method>filter</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-method>sequence</el-method>(<el-lit>2</el-lit>, <el-method>sqrt</el-method>(<el-id>n</el-id>).<el-method>floor</el-method>()).<el-method>reduce</el-method>(<el-id>true</el-id>, <el-kw>lambda</el-kw> <el-id>c</el-id> <el-kw>as</el-kw> <el-type>Boolean</el-type>, <el-id>m</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>c</el-id><el-kw> and </el-kw>((<el-id>n</el-id><el-kw> mod </el-kw><el-id>m</el-id>)<el-kw> isnt </el-kw><el-lit>0</el-lit>)))</el-txt></el-field></el-statement>
 
 <h1 id="StandaloneProcedures">Standalone procedures</h1>
 
