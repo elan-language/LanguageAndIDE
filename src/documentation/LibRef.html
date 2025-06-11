@@ -17,7 +17,6 @@
 <h1 id="ValueTypes">Value Types, with their methods</h1>
 
 <h2 id="Int">Integer</h2>
-
 <p>An integer is a whole number, i.e. one that has no fractional part. It may be represented in decimal, hexadecimal or binary:</p>
 <p><el-code>100</el-code> (decimal), <el-code>0x64</el-code> (hexadecimal) and <el-code>0b1100100</el-code> all have the same value.</p>
 
@@ -38,7 +37,6 @@
 </table>
 
 <h3 class="no-TOC">Dot methods on an <el-type>Int</el-type></h3>
-
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -57,7 +55,7 @@
   <td><el-type>Int</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
-  <td>a string of decimal digits representing the argument's integer value</td>
+  <td>string of decimal digits representing the argument's integer value</td>
  </tr>
 </table>
 
@@ -88,7 +86,6 @@ in the range:</li>
 </ul>
 
 <h2 id="Float">Floating point</h2>
-
 <p>A floating point number is a decimal number that may have both integer and fractional parts.</p>
 <p>It may be written using exponential (scientific) notation, e.g.
  <el-code>120.0</el-code> &equals; <el-code>1.20e2</el-code>, and
@@ -99,19 +96,18 @@ in the range:</li>
   <th>name<br>of Type</th>
   <th>examples of defining<br>a literal value</th>
   <th>default value</th>
- </tr><tr>
+</tr><tr>
   <td><el-type>Float</el-type></td>
   <td><el-code>variable phi set to 1.618</el-code></td>
   <td>0.0</td>
- </tr><tr>
+</tr><tr>
   <td><el-type>Float</el-type></td>
   <td><el-code>variable reading set to 1.1e-10</el-code></td>
   <td>0.0</td>
- </tr>
+</tr>
 </table>
 
 <h3 class="no-TOC">Dot methods on a <el-type>Float</el-type></h3>
-
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -124,7 +120,7 @@ in the range:</li>
   <td><el-type>Float</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
-  <td>a string representing the argument's floating point value</td>
+  <td>string representing the argument's floating point value</td>
  </tr><tr>
   <td><el-method>ceiling</el-method></td>
   <td><el-type>Float</el-type></td>
@@ -161,7 +157,6 @@ in the range:</li>
 </ul>
 
 <h2 id="Boolean">Boolean</h2>
-
 <p>A <el-type>Boolean</el-type> value is either <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code>.</p>
 <p>The keywords <el-code><el-id>true</el-id></el-code> and <el-code><el-id>false</el-id></el-code> must be written in lower case.</p>
 <table class="tableType">
@@ -169,15 +164,14 @@ in the range:</li>
   <th>name<br>of Type</th>
   <th>examples of defining<br>a literal value</th>
   <th>default value</th>
- </tr><tr>
+</tr><tr>
   <td><el-type>Boolean</el-type></td>
   <td><el-code>variable fact set to true</el-code></td>
   <td><el-code>false</el-code></td>
- </tr>
+</tr>
 </table>
 
 <h3 class="no-TOC">Dot method on a <el-type>Boolean</el-type></h3>
-
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -190,23 +184,22 @@ in the range:</li>
   <td><el-type>Boolean</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
-  <td>the string "true" if <el-code>true</el-code>, "false" if <el-code>false</el-code></td>
+  <td>string "true" if <el-code>true</el-code>, "false" if <el-code>false</el-code></td>
  </tr>
-</table>
+ </table>
 
 <h2 id="String">String</h2>
-
 <p>A <el-type>String</el-type> represents text,  i.e. a sequence of zero or more characters.</p>
 <table class="tableType">
  <tr>
   <th>name<br>of Type</th>
   <th>examples of defining<br>a literal value</th>
   <th>default value</th>
- </tr><tr>
+</tr><tr>
   <td><el-type>String</el-type></td>
   <td><el-code>variable greeting set to "hello"</el-code></td>
   <td><el-code>"", i.e. the empty string</el-code></td>
- </tr>
+</tr>
 </table>
 
 <h4 class="no-TOC">Notes</h4>
@@ -216,7 +209,7 @@ in the range:</li>
  elsewhere into a literal string provided only basic ASCII characters are include. You cannot use Alt-numeric-keypad </li>
  <li>As in most languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never modified. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</li>
  <li>Strings can be built from other strings by concatenation using the plus operator, for example</li>
- <ul><li><el-code>print "Hello" + " " + "World"</el-code></li></ul>
+ <ul><li><el-code>print</el-code> <el-code>"Hello" + " " + "World"</el-code></li></ul>
  <li>A newline may be inserted within a string with <el-code>\n</el-code>, for example:</li>
  <ul><li><el-code>print "Hello\nWorld"</el-code></li></ul>
 <li>There are no 'substring' methods in Elan because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth character to the seventh character inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <em>exclusive</em>.
@@ -225,7 +218,6 @@ in the range:</li>
 </ul>
 
 <h3 class="no-TOC">Dot methods on a <el-type>String</el-type></h3>
-
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -337,10 +329,9 @@ in the range:</li>
   <td><el-type>String</el-type></td>
   <td>a new string with the original rendered in upper case</td>
  </tr>
-</table>
+ </table>
 
 <h3 class="no-TOC" id="InterpolatedString">Interpolated strings</h3>
-
 <p>Strings are automatically interpolated, that is you can insert the values of variables or simple expressions within a string by enclosing them in braces.
 For example, assuming that the variables <el-code>a</el-code> and <el-code>b</el-code> are already defined as integers:</p>
 <p><el-code>print "{a} times {b} equals {a*b}"</el-code></p>
@@ -350,7 +341,6 @@ For example, assuming that the variables <el-code>a</el-code> and <el-code>b</el
 <p>updates variable <el-code>message</el-code> with calculated (and printable) integer values.</p>
 
 <h3 class="no-TOC" id="SpecialCharacters">Special characters</h3>
-
 <p>You may include single quotation marks <el-code>'</el-code>within a string, but not double quotation marks <el-code>&quot;</el-code>. Nor can you include
 the braces <el-code>&lbrace;</el-code> or <el-code>&rbrace;</el-code> within a literal string because of their special meanings.
 Instead, you use the constants <el-code><el-id>quotes</el-id></el-code>, <el-code><el-id>openBrace</el-id></el-code> and <el-code><el-id>closeBrace</el-id></el-code> respectively, e.g.</p>
@@ -361,7 +351,6 @@ Instead, you use the constants <el-code><el-id>quotes</el-id></el-code>, <el-cod
 <p><el-code>print "This is an ASCII double quotation mark: " + unicode(0x22)</el-code></p>
 
 <h2 id="Tuple">Tuple</h2>
-
 A <el-code>tuple</el-code> is a way of holding a small number of values of different Types together as a single reference. It may be considered a lightweight alternative to defining a specific class for some purposes. Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold. Common uses include:
 <ul>
  <li>Holding a pair of x and y coordinates (each of Type <el-type>Float</el-type>) as a single unit.</li>
@@ -370,7 +359,6 @@ A <el-code>tuple</el-code> is a way of holding a small number of values of diffe
 </ul>
 
 <h3 class="no-TOC">Using a tuple</h3>
-
 <p>You may pass a tuple into a function, or return one from a function, for example:</p>
 <el-code>variable d set to distanceBetween(point1, tuple(12.34, 20.0))</el-code>
 <p>An existing <el-code>tuple</el-code> (for example <el-code>point1 </el-code>below) may be deconstructed into new variables or named values (where the number of variables or names must match the number of elements in the <el-code>tuple</el-code>): </p>
@@ -393,12 +381,9 @@ or into existing variables of the correct Type:</p>
 </ul>
 
 <h1 id="StandardDataStructures">Standard (mutable) data structures</h1>
-
 <table class="tableStructure">
+ <tr><th></th><th colspan="4">Standard (mutable) data structures</th></tr>
  <tr>
-  <th></th>
-  <th colspan="4">Standard (mutable) data structures</th>
- </tr><tr>
   <th></th>
   <th>Array</th>
   <th>Array2D</th>
@@ -422,8 +407,7 @@ or into existing variables of the correct Type:</p>
   <td><el-code>new <el-type>Array</el-type>&lt;of <el-type>String</el-type>&gt;(10, "")</el-code><br>any initial value of correct Type</td>
   <td><el-code>new <el-type>Array2D</el-type>&lt;of <el-type>String</el-type>&gt;(5,8, "")</el-code><br>defines 5 arrays each of 8 elements<br>any initial value of correct Type</td>
   <td><el-code>new <el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;()</el-code><br>created empty<br>and of any Type</td>
-  <td><el-code>new <el-type>Dictionary</el-type>&lt;of <el-type>String</el-type>, <el-type>Int</el-type>&gt;()</el-code><br>
-   Key Type must be simple value or a <el-code>record</el-code><br>Value Type can be any</td>
+  <td><el-code>new <el-type>Dictionary</el-type>&lt;of <el-type>String</el-type>, <el-type>Int</el-type>&gt;()</el-code><br>Key Type must be simple value or a <el-code>record</el-code><br>Value Type can be any</td>
  </tr><tr>
   <td>read by index</td>
   <td><el-code>a[3]</el-code></td>
@@ -450,22 +434,29 @@ or into existing variables of the correct Type:</p>
   <td>see <a href="#Dictionary_functions">Function dot methods on a Dictionary</a></td>
  </tr>
 </table>
+<p>All four are 'mutable' &ndash; meaning that their contents may be changed directly by calling the various <i>procedure</i> dot methods that each
+Type defines.
+However, since procedure methods may be called only from within the <el-kw>main</el-kw> routine,
+or from within another <el-kw>procedure</el-kw>, it is also possible to make changes via
+<el-kw>function</el-kw> dot methods &ndash; which return a copy of the data structure,
+with the specified changes &ndash; which is why all such methods have names starting <el-code>with...</el-code>.</p>
 
-<p>All four are 'mutable' &ndash; meaning that their contents may be changed directly by calling the various <i>procedure</i> dot methods that each Type defines. However, since procedure methods may be called only from within the <el-kw>main</el-kw> routine, or from within another <el-kw>procedure</el-kw>, it is also possible to make changes via <el-kw>function</el-kw> dot methods &ndash; which return a copy of the data structure, with the specified changes &ndash; which is why all such methods have names starting <el-code>with...</el-code>.</p>
-<p>All four data structures contain values of a single Type, that Type being specified either explicitly &ndash; as in <el-code>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-code> &ndash; or implicitly if the structure is created from its literal definition form.</p>
-<p>A <el-type>Dictionary</el-type> is defined with two Types: one for its keys and one for their values.</p>
+<p>All four data structures contain values of a single Type, that Type being specified either explicitly &ndash;  as in
+    <el-code>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-code> &ndash; or implicitly if the structure
+    is created from its literal definition form.</p>
+    <p>A <el-type>Dictionary</el-type> is defined with two Types: one for its keys and one for their values.</p>
 
 <h2 id="Array">Array</h2>
-
 <p>An array is a simple data structure containing <i>n</i> elements of a single Type, indexed from <i>0</i> to <i>n-1</i>.</p>
 <p>The array elements' Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type>, or <el-type>Boolean</el-type>.</p>
 <p>As in most languages, individual elements may be referenced by their index.</p>
-<p>To modify an element you may either <el-kw>call</el-kw> the <el-method>put</el-method> procedure method, or use the <el-method>withPut</el-method> function dot method.</p>
+<p>To modify an element you may either
+<el-kw>call</el-kw> the <el-method>put</el-method> procedure method, or use the
+<el-method>withPut</el-method> function dot method.</p>
 <p>An array's size is specified when it is created, along with the single value to which each element is initialised.</p>
 <p>It is not possible to append further elements to an array, but you can convert an array to a list using method <el-method>asList</el-method> and then extend or reduce the list.</p>
 
 <h3 class="no-TOC" id="Array_procedures">Procedure methods on an Array</h3>
-
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -481,7 +472,6 @@ or into existing variables of the correct Type:</p>
 </table>
 
 <h3 class="no-TOC" id="Array_functions">Function dot methods on an Array</h3>
-
 <table class="tableMethod">
  <tr>
   <th>function<br>method</th>
@@ -500,7 +490,7 @@ or into existing variables of the correct Type:</p>
   <td><el-type>Array</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
-  <td>a string that is a comma+space-separated list of the Array's elements, enclosed in square brackets</td>
+  <td>a String that is a comma+space-separated list of the Array's elements enclosed in square brackets</td>
  </tr><tr id="contains_Array">
   <td><el-method>contains</el-method></td>
   <td><el-type>Array</el-type></td>
@@ -513,7 +503,7 @@ or into existing variables of the correct Type:</p>
   <td>item of Array element's Type</td>
   <td><el-type>Int</el-type></td>
   <td>the index position of the first occurrence of the argument value in the array, <br>or -1 if no match is found</td>
- </tr><tr id="length_Array ">
+ </tr><tr id="length_Array">
   <td><el-method>length</el-method></td>
   <td><el-type>Array</el-type></td>
   <td>(none)</td>
@@ -529,13 +519,16 @@ or into existing variables of the correct Type:</p>
 </table>
 
 <h2 id="Array2D">Array2D</h2>
-
-<p>The <el-type>Array2D</el-type> Type defines a 2-dimensional array of fixed size. The two dimensions, which are specified when the array is created, may be of the same size (a square array) or different (a rectangular array). If you want to create a 'jagged' array, you should use a <el-type>List</el-type> of Lists.</p>
-<p>The convention is to refer to the position of an element in such an array by two index values <i>(x,y)</i>, where <i>x</i> is the column number and <i>y</i> is the row number of a rectangular grid.</p>
-<p>The Type for the elements is also specified when the Array is defined and must be one of: <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type>, or <el-type>Boolean</el-type>.</p>
+<p>The <el-type>Array2D</el-type> Type defines a 2-dimensional array of fixed size. The two
+ dimensions, which are specified when the array is created, may be of the same size (a square array)
+ or different (a rectangular array). If you want to create a 'jagged' array, you should use a <el-type>List</el-type> of Lists.</p>
+<p>The convention is to refer to the position of an element in such an array by two index values
+<i>(x,y)</i>, where <i>x</i> is the column number and <i>y</i> is the row number of a rectangular grid.</p>
+<p>The Type for the elements is also specified when the Array is defined and must be
+ one of: <el-type>Int</el-type>, <el-type>Float</el-type>,
+ <el-type>String</el-type>, or <el-type>Boolean</el-type>.</p>
 
 <h3 class="no-TOC" id="Array2D_procedures">Procedure methods on an Array2D</h3>
-
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -551,7 +544,6 @@ or into existing variables of the correct Type:</p>
 </table>
 
 <h3 class="no-TOC" id="Array2D_functions">Function dot methods on an Array2D</h3>
-
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -564,7 +556,7 @@ or into existing variables of the correct Type:</p>
   <td><el-type>Array2D</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
-  <td>a string that is a comma+space-separated list of the Array2D's columns each of which contains a comma+space-separated list of row values enclosed in square brackets, the whole enclosed in square brackets</td>
+  <td>a String that is a comma+space-separated list of the Array2D's columns each of which contains a comma+space-separated list of row values enclosed in square brackets, the whole enclosed in square brackets</td>
  </tr><tr id="columns">
   <td><el-method>columns</el-method></td>
   <td><el-type>Array2D</el-type></td>
@@ -598,7 +590,6 @@ or into existing variables of the correct Type:</p>
   <td>a new Array2D with the item at the (two integers) index position in the array</td>
  </tr>
 </table>
-
 Note
 <ul>
  <li>Since an <el-type>Array2D</el-type> has a known fixed size, methods <el-method>rows</el-method> and <el-method>columns</el-method> are of use only when passing such an array into a procedure or function that needs to discover its size.</li>
@@ -617,7 +608,6 @@ Note
 </el-code-block>
 
 <h2 id="List">List</h2>
-
 <p>A List is similar to an Array in that its <i>n</i> elements are all of one Type
  and are indexed from <i>0</i> to <i>n-1</i>, but is more flexible because:</p>
 <ul>
@@ -626,9 +616,7 @@ Note
  <li>A List is created either empty or initialised from a literal definition.</li>
  <li>A List's size can be dynamically changed.</li>
 </ul>
-
-<h3 class="no-TOC" id="ListDeconstruction">List Deconstruction</h3>
-
+<h4 class="no-TOC" id="ListDeconstruction">List Deconstruction</h4>
 <p>A List or ListImmutable may be deconstructed into new variables or named values in a similar way to deconstructing a <a href="#Tuple">Tuple</a>, but in this case:</p>
 <ul>
  <li>Always use two variable names.</li>
@@ -643,9 +631,7 @@ Note
 <p>Discarding either the head or tail:</p>
 <p><el-code>variable _:tail set to myList</el-code><br>
 <el-code>variable head:_ set to myList</el-code></p>
-
 <h3 class="no-TOC" id="List_procedures">Procedure methods on a List</h3>
-
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -667,8 +653,8 @@ Note
   <td><el-type>List</el-type></td>
   <td><el-type>Int</el-type>,<br> item of <el-type>List element's Type</el-type></td>
   <td>the item is inserted at the index given.<br>
-  If the index is negative it is counted from the end<br>
-  If the index is greater than the list's length, the item is inserted at the end</td>
+  If the index is negative it is counted from the end.<br>
+  If the index is greater than the list's length, the item is inserted at the end.</td>
  </tr><tr id="prepend">
   <td><el-method>prepend</el-method></td>
   <td><el-type>List</el-type></td>
@@ -683,27 +669,26 @@ Note
   <td><el-method>put</el-method></td>
   <td><el-type>List</el-type></td>
   <td><el-type>Int</el-type>,<br> item of <el-type>List element's Type</el-type></td>
-  <td>replace the item at the given index with the new item</td>
- </tr><tr id="removeAll">
+  <td>replace the item at the given index with the argument item</td>
+ </tr><tr>
   <td><el-method>removeAll</el-method></td>
   <td><el-type>List</el-type></td>
-  <td>item of <el-type>List element's Type</el-type></td>
-  <td>delete all items equal to the given item</td>
+  <td></td>
+  <td></td>
  </tr><tr id="removeAt">
   <td><el-method>removeAt</el-method></td>
   <td><el-type>List</el-type></td>
   <td><el-type>Int</el-type></td>
-  <td>delete the item at the given index</td>
+  <td>delete the item at the argument index</td>
  </tr><tr id="removeFirst">
   <td><el-method>removeFirst</el-method></td>
   <td><el-type>List</el-type></td>
-  <td>item of <el-type>List element's Type</el-type></td>
-  <td>delete the first item equal to the given item</td>
+  <td></td>
+  <td></td>
  </tr>
 </table>
 
 <h3 class="no-TOC" id="List_functions">Function dot methods on a List</h3>
-
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -734,7 +719,7 @@ Note
   <td><el-type>List</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
-  <td>a string that is a comma+space-separated list of the List's elements, enclosed in square brackets</td>
+  <td>a String that is a comma+space-separated list of the List's elements enclosed in square brackets</td>
  </tr><tr id="contains_List">
   <td><el-method>contains</el-method></td>
   <td><el-type>List</el-type></td>
@@ -760,7 +745,7 @@ Note
   <td><el-type>List</el-type></td>
   <td>item of <el-type>List element's Type</el-type></td>
   <td><el-type>Int</el-type></td>
-  <td>the index of the first occurrence of the argument value in the List,<br>or -1 if no match is found</td>
+  <td>index of the first occurrence of the argument value in the List,<br>or -1 if no match is found</td>
  </tr><tr id="join">
   <td><el-method>join</el-method></td>
   <td><el-code>List&lt;of <el-type>String</el-type>&gt;</el-code></td>
@@ -782,41 +767,41 @@ Note
   see <a href="#map"><el-method>map</el-method></a> in HoFs</td>
  </tr><tr id="maxFloat">
   <td><el-method>maxFloat</el-method></td>
-  <td>(not a dot method)</td>
   <td><el-code>List&lt;of <el-type>Float</el-type>&gt;</el-code></td>
+  <td>(none)</td>
   <td><el-type>Float</el-type></td>
-  <td>the maximum value found in the List</td>
+  <td>returns the maximum value found in the List</td>
  </tr><tr id="minFloat">
   <td><el-method>minFloat</el-method></td>
-  <td>(not a dot method)</td>
   <td><el-code>List&lt;of <el-type>Float</el-type>&gt;</el-code></td>
+  <td>(none)</td>
   <td><el-type>Float</el-type></td>
-  <td>the minimum value found in the List</td>
+  <td>returns the minimum value found in the List</td>
  </tr><tr id="maxInt">
   <td><el-method>maxInt</el-method></td>
-  <td>(not a dot method)</td>
   <td><el-code>List&lt;of <el-type>Int</el-type>&gt;</el-code></td>
+  <td>(none)</td>
   <td><el-type>Int</el-type></td>
-  <td>the maximum value found in the List</td>
+  <td>returns the maximum value found in the List</td>
  </tr><tr id="minInt">
   <td><el-method>minInt</el-method></td>
-  <td>(not a dot method)</td>
   <td><el-code>List&lt;of <el-type>Int</el-type>&gt;</el-code></td>
+  <td>(none)</td>
   <td><el-type>Int</el-type></td>
-  <td>the minimum value found in the List</td>
+  <td>returns the minimum value found in the List</td>
  </tr><tr id="maxBy_List">
   <td><el-method>maxBy</el-method></td>
   <td><el-type>List</el-type></td>
   <td><el-kw>lambda</el-kw></td>
   <td><el-type>List element's Type</el-type></td>
-  <td>the list element corresponding to maximum of the values returned by a lambda<br>
+  <td>list element corresponding to maximum of the values returned by a lambda<br>
   see <a href="#maxBy"><el-method>maxBy</el-method></a> in HoFs</td>
  </tr><tr id="minBy_List">
   <td><el-method>minBy</el-method></td>
   <td><el-type>List</el-type></td>
   <td><el-kw>lambda</el-kw></td>
   <td><el-type>List element's Type</el-type></td>
-  <td>the list element corresponding to minimum of the values returned by a lambda<br>
+  <td>list element corresponding to minimum of the values returned by a lambda<br>
   see <a href="#minBy"><el-method>minBy</el-method></a> in HoFs</td>
  </tr><tr id="reduce_List">
   <td><el-method>reduce</el-method></td>
@@ -835,69 +820,67 @@ Note
  </tr><tr id="withAppend">
   <td><el-method>withAppend</el-method></td>
   <td><el-type>List</el-type></td>
-  <td>item of <el-type>List element's Type</el-type></td>
-  <td><el-type>List</el-type></td>
-  <td>a new List lengthened with the item added after to end</td>
+  <td></td>
+  <td><el-type></el-type></td>
+  <td></td>
  </tr><tr id="withAppendList">
   <td><el-method>withAppendList</el-method></td>
   <td><el-type>List</el-type></td>
-  <td><el-type>List</el-type> of same Type</td>
-  <td><el-type>List</el-type></td>
-  <td>a new List lengthened by appending the given List</td>
+  <td></td>
+  <td><el-type></el-type></td>
+  <td></td>
  </tr><tr id="withInsert">
   <td><el-method>withInsert</el-method></td>
   <td><el-type>List</el-type></td>
-  <td><el-type>Int</el-type>,<br>item of <el-type>List element's Type</el-type></td>
+  <td></td>
   <td><el-type></el-type></td>
-  <td>a new List with the item inserted after the element at the given index position</td>
+  <td></td>
  </tr><tr id="withPrepend">
   <td><el-method>withPrepend</el-method></td>
   <td><el-type>List</el-type></td>
-  <td>item of <el-type>List element's Type</el-type></td>
-  <td><el-type>List</el-type></td>
-  <td>a new List lengthened with the item added before the beginning</td>
+  <td></td>
+  <td><el-type></el-type></td>
+  <td></td>
  </tr><tr id="withPrependList">
   <td><el-method>withPrependList</el-method></td>
   <td><el-type>List</el-type></td>
-  <td><el-type>List</el-type> of same Type</td>
-  <td><el-type>List</el-type></td>
-  <td>a new List lengthened by prepending the given List</td>
+  <td></td>
+  <td><el-type></el-type></td>
+  <td></td>
  </tr><tr id="withPut_List">
   <td><el-method>withPut</el-method></td>
   <td><el-type>List</el-type></td>
-  <td><el-type>Int</el-type>,<br>item of <el-type>List element's Type</el-type></td>
-  <td><el-type>List</el-type></td>
-  <td>a new List with the item replacing that at the given index</td>
+  <td></td>
+  <td><el-type></el-type></td>
+  <td></td>
  </tr><tr id="withRemoveAll">
   <td><el-method>withRemoveAll</el-method></td>
   <td><el-type>List</el-type></td>
-  <td>item of <el-type>List element's Type</el-type></td>
-  <td><el-type>List</el-type></td>
-  <td>a new List with items equal to the given item removed</td>
+  <td></td>
+  <td><el-type></el-type></td>
+  <td></td>
  </tr><tr id="withRemoveAt_List">
   <td><el-method>withRemoveAt</el-method></td>
   <td><el-type>List</el-type></td>
-  <td><el-type>Int</el-type></td>
-  <td><el-type>List</el-type></td>
-  <td>a new List with item at the given index removed</td>
+  <td></td>
+  <td><el-type></el-type></td>
+  <td></td>
  </tr><tr id="withRemoveFirst">
   <td><el-method>withRemoveFirst</el-method></td>
   <td><el-type>List</el-type></td>
-  <td>item of <el-type>List element's Type</el-type></td>
-  <td><el-type>List</el-type></td>
-  <td>a new List with the first item equal to the given item removed</td>
+  <td></td>
+  <td><el-type></el-type></td>
+  <td></td>
  </tr>
 </table>
 
 <h2 id="Dictionary">Dictionary</h2>
-
 <p>A Dictionary works like an Array, but instead of having a numeric (integer) index, each entry has a <i>key</i>. Each key is associated with a <i>value</i>,
 so the Dictionary is a set of <i>key:value</i> pairs.
 The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type>,
 <i>or</i> it may be a user-defined <i>record</i>. The values may be of any Type, and the Types of both key and value are fixed when the Dictionary is created.</p>
 
 <h3 class="no-TOC" id="Dictionary_procedures">Procedure methods on a Dictionary</h3>
-
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -908,7 +891,7 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
   <td><el-method>put</el-method></td>
   <td><el-type>Dictionary</el-type></td>
   <td>key's Type, value's Type</td>
-  <td>replace the value at an existing key, or add a <i>key:value</i> pair</td>
+  <td>replace the value at an existing key, or add a key:value pair</td>
  </tr><tr id="RemoveAt">
   <td><el-method>removeAt</el-method></td>
   <td><el-type>Dictionary</el-type></td>
@@ -918,7 +901,6 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
 </table>
 
 <h3 class="no-TOC" id="Dictionary_functions">Function dot methods on a Dictionary</h3>
-
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -927,52 +909,51 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
   <th>return<br>Type</th>
   <th>returns</th>
  </tr><tr id="asDictionaryImmutable_Dictionary">
-  <td><el-method>asDictionaryImmutable</el-method></td>
-  <td><el-type>Dictionary</el-type></td>
-  <td>(none)</td>
-  <td><el-type>DictionaryImmutable</el-type></td>
-  <td></td>
+    <td><el-method>asDictionaryImmutable</el-method></td>
+    <td><el-type>Dictionary</el-type></td>
+    <td>(none)</td>
+    <td><el-type>DictionaryImmutable</el-type></td>
+    <td></td>
 </tr><tr id="asString_Dictionary">
-  <td><el-method>asString</el-method></td>
-  <td><el-type>Dictionary</el-type></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>a string that is a comma+space-separated list of the Dictionary's <i>key:value</i> pairs, enclosed in square brackets</td>
-</tr><tr>
-  <td id="hasKey_Dictionary"><el-method>hasKey</el-method></td>
-  <td><el-type>Dictionary</el-type></td>
-  <td>(none)</td>
-  <td><el-type>Boolean</el-type></td>
-  <td></td>
-</tr><tr id="keys">
-  <td><el-method>keys</el-method></td>
-  <td><el-type>Dictionary</el-type></td>
-  <td>(none)</td>
-  <td><el-type>List</el-type></td>
-  <td>a List containing the keys</td>
+    <td><el-method>asString</el-method></td>
+    <td><el-type>Dictionary</el-type></td>
+    <td>(none)</td>
+    <td><el-type>String</el-type></td>
+    <td>a string representation of the dictionary (automatically called when printing)</td>
+</tr><tr id="hasKey">
+    <td><el-method>hasKey</el-method></td>
+    <td><el-type>Dictionary</el-type></td>
+    <td>(none)</td>
+    <td><el-type></el-type></td>
+    <td></td>
+</tr><tr id="leys">
+    <td id="keys"><el-method>keys</el-method></td>
+    <td><el-type>Dictionary</el-type></td>
+    <td>(none)</td>
+    <td><el-type>List</el-type></td>
+    <td>a List containing the keys</td>
 </tr><tr id="values">
-  <td><el-method>values</el-method></td>
-  <td><el-type>Dictionary</el-type></td>
-  <td>(none)</td>
-  <td><el-type>List</el-type></td>
-  <td>a List containg the values</td>
+    <td><el-method>values</el-method></td>
+    <td><el-type>Dictionary</el-type></td>
+    <td>(none)</td>
+    <td><el-type>List</el-type></td>
+    <td>a List containg the values</td>
 </tr><tr id="withPut_Dictionary">
   <td><el-method>withPut</el-method></td>
   <td><el-type>Dictionary</el-type></td>
   <td><el-type>Int</el-type>, item of <el-type>List element's Type</el-type></td>
   <td><el-type>Dictionary</el-type></td>
-  <td>a new Dictionary with the item replacing what was at specified position</td>
+  <td>copy of the Dictionary with the item replacing what was at specified position</td>
  </tr><tr id="withRemoveAt_Dictionary">
   <td><el-method>withRemoveAt</el-method></td>
   <td><el-type>Dictionary</el-type></td>
   <td><el-type>Int</el-type>, item of <el-type>List element's Type</el-type></td>
   <td><el-type>Dictionary</el-type></td>
-  <td>a new Dictionary with the item replacing what was at specified position</td>
+  <td>copy of the Dictionary with the item replacing what was at specified position</td>
  </tr>
-</table>
+ </table>
 
 <h1 id="ImmutableDataStructures">Immutable data structures</h1>
-
 <p>In contrast to the <a href="#StandardDataStructures">standard (mutable) data structures</a>, <i>immutable</i>
 data structures cannot be modified directly &ndash; and hence define no <i>procedure</i> dot methods. Instead,
 changes are made by using <i>function</i> dot methods that copy the existing data structure, but with specified
@@ -981,10 +962,8 @@ differences. Immutable data structures are intended specifically to facilitate t
 
 <p>The five immutable data structures defined in the Elan library are summarised in this table. More details on each Type are given below the table.</p>
 <table class="tableStructure">
+ <tr><th></th><th colspan="5">Immutable data structures</th></tr>
  <tr>
-  <th></th>
-  <th colspan="5">Immutable data structures</th>
- </tr><tr>
   <th></th>
   <th>ListImmutable</th>
   <th>DictionaryImmutable</th>
@@ -1039,32 +1018,27 @@ differences. Immutable data structures are intended specifically to facilitate t
 </table>
 
 <h2 id="ListImmutable">ListImmutable</h2>
-
 <p>A <el-code>ListImmutable</el-code> is like a <el-type>List</el-type> but is <i>immutable</i> (like a <el-type>String</el-type>).
 You can still insert, delete or change elements in a <el-code>ListImmutable</el-code>, but the methods for these operations do not modify the input <el-code>ListImmutable</el-code>: they return a new <el-code>ListImmutable</el-code> based on the input <el-code>ListImmutable</el-code> with the specified differences.</p>
 
 <h3 class="no-TOC">Type name</h3>
-
 <p>The Type is specified in the following ways:</p>
 <ul>
- <li><el-type>ListImmutable</el-type>&lt;of <el-type>String</el-type>&gt; for a <el-type>ListImmutable</el-type> of Type <el-type>String</el-type></li>
+ <li><<el-type>ListImmutable</el-type>&lt;of <el-type>String</el-type>&gt; for a <el-type>ListImmutable</el-type> of Type <el-type>String</el-type></li>
  <li><el-code><el-type>ListImmutable</el-type>&lt;of <el-type>Int</el-type>&gt;</el-code> for a <el-type>ListImmutable</el-type> of Type <el-type>Int</el-type></li>
- <li><el-code><el-type>ListImmutable</el-type>&lt;of <el-type>ListImmutable</el-type>&lt;of <el-type>Int</el-type>&gt;&gt;</el-code> for a <el-type>ListImmutable</el-type> of such lists each of Type <el-type>Int</el-type></li>
+ <li><el-code><el-type>ListImmutable</el-type>&lt;of <el-type>ListImmutable</el-type>&lt;of <el-type>Int</el-type>&gt;</el-code> for a <el-type>ListImmutable</el-type> of such lists each of Type <el-type>Int</el-type></li>
 </ul>
 
 <h3 class="no-TOC">Creating a ListImmutable</h3>
-
 <p>A <el-code>ListImmutable</el-code> may be defined in 'literal' form, delimited by curly brace with all the required elements separated by commas. The elements may be literal values but must all be of the same Type, for example:</p>
 <el-code>variable fruit set to {"apple", "orange", "pear"} </el-code>
 
-<h3 class="no-TOC" id="ListImmutableDeconstruction">ListImmutable Deconstruction</h3>
-
+<h4 class="no-TOC" id="ListImmutableDeconstruction">ListImmutable Deconstruction</h4>
 <p>A <el-code>ListImmutable</el-code> can be <a href="#ListDeconstruction">deconstructed</a> just like a List, using a colon <el-code>:</el-code> to separate two variable names.</p>
 <p><el-code>set h:t to myListImmutable</el-code></p>
 
 <h3 class="no-TOC" id="ListImmutable_functions">Function dot methods on a ListImmutable</h3>
-
-<table class="tableMethod">
+<table>
  <tr>
   <th>function<br>dot method</th>
   <th>on<br>Type</th>
@@ -1076,7 +1050,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>ListImmutable</el-type></td>
   <td>(none)</td>
   <td><el-type>List</el-type></td>
-  <td>a new List with the same content as the  <el-type>ListImmutable</el-type></td>
+  <td>copy of the <el-type>ListImmutable</el-type> as a <el-type>List</el-type></td>
  </tr><tr id="asSet_ListImmutable">
   <td><el-method>asSet</el-method></td>
   <td><el-type>ListImmutable</el-type></td>
@@ -1088,7 +1062,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>ListImmutable</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
-  <td>a string that is a comma+space-separated list of the List's elements, enclosed in braces</td>
+  <td>a String that is a comma+space-separated list of the List's elements enclosed in braces</td>
  </tr><tr id="contains_ListImmutable">
   <td><el-method>contains</el-method></td>
   <td><el-type>ListImmutable</el-type></td>
@@ -1118,38 +1092,38 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>ListImmutable</el-type></td>
   <td><el-type>Int</el-type>, item of <el-type>List element's Type</el-type></td>
   <td><el-type>ListImmutable</el-type></td>
-  <td>a new ListImmutable with the item inserted at the specified position</td>
+  <td>copy of the List with the item inserted at specified position</td>
  </tr><tr id="withPut_ListImmutable">
   <td><el-method>withPut</el-method></td>
   <td><el-type>ListImmutable</el-type></td>
   <td><el-type>Int</el-type>, item of <el-type>List element's Type</el-type></td>
   <td><el-type>ListImmutable</el-type></td>
-  <td>a new ListImmutable with the item replacing what was at specified position</td>
+  <td>copy of the List with the item replacing what was at specified position</td>
  </tr><tr id="withRemoveAt_ListImmutable">
   <td><el-method>withRemoveAt</el-method></td>
   <td><el-type>ListImmutable</el-type></td>
   <td><el-type>Int</el-type></td>
   <td><el-type>ListImmutable</el-type></td>
-  <td>a new ListImmutable with the item at the specified position removed</td>
+  <td>copy of the List with the item at specified position removed</td>
  </tr><tr id="withRemoveFirst_ListImmutable">
   <td><el-method>withRemoveFirst</el-method></td>
   <td><el-type>ListImmutable</el-type></td>
   <td>item of <el-type>List element's Type</el-type></td>
   <td><el-type>ListImmutable</el-type></td>
-  <td>a new ListImmutable with the first occurrence of the item removed</td>
+  <td>copy of the List with the first occurrence of the item removed</td>
  </tr><tr id="withRemoveAll_ListImmutable">
   <td><el-method>withRemoveAll</el-method></td>
   <td><el-type>ListImmutable</el-type></td>
   <td>item of <el-type>List element's Type</el-type></td>
   <td><el-type>ListImmutable</el-type></td>
-  <td>a new ListImmutable with all occurrences of the item removed</td>
+  <td>copy of the List with all occurrences of the item removed</td>
  </tr>
 </table>
 
 <p>Try these examples:</p>
 <el-code-block source="listImmutable.elan">
 <el-statement><el-comment class="ok" id="com64" tabindex="0"><el-top><el-kw># </el-kw><el-field id="comment65" class="optional ok" tabindex="0"><el-txt>reusing variable fruit for each new ListImmutable</el-txt><el-place><i>comment</i></el-place></el-field></el-top></el-comment></el-statement>
-<el-statement class="ok" id="var5" tabindex="0"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-kw>empty</el-kw><el-type>ListImmutable</el-type>&lt;<el-kw>of</el-kw><el-type>String</el-type>&gt;</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="var5" tabindex="0"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-kw>empty</el-kw> <el-type>ListImmutable</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print11" tabindex="0"><el-kw>print </el-kw><el-field id="expr12" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="set53" tabindex="0"><el-kw>set </el-kw><el-field id="ident54" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr55" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id>.<el-method>withAppend</el-method>("<el-lit>apple</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="set58" tabindex="0"><el-kw>set </el-kw><el-field id="ident59" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr60" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id>.<el-method>withAppend</el-method>("<el-lit>pear</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1161,7 +1135,6 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 </el-code-block>
 
 <h2 id="DictionaryImmutable">DictionaryImmutable</h2>
-
 <p>A <el-type>DictionaryImmutable</el-type> is like a <el-type>Dictionary</el-type> but <i>immutable</i>
  (like a <el-type>String</el-type>). You can still insert, delete or change elements in a <el-type>DictionaryImmutable</el-type>,
  but the methods of these operations do not modify the input <el-type>DictionaryImmutable</el-type>: they return a new
@@ -1169,20 +1142,17 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <p>A <el-type>DictionaryImmutable</el-type> may be defined in a constant.</p>
 
 <h3 class="no-TOC">Type name</h3>
-
 <p>In the following example, the keys are of Type <el-type>String</el-type>, and the values associated with the keys are of Type <el-type>Int</el-type>:</p>
 <el-code><el-type>DictionaryImmutable</el-type>&lt;of <el-type>String</el-type>, <el-type>Int</el-type>&gt;</el-code>
 
 <h3 class="no-TOC">Defining a literal DictionaryImmutable</h3>
-
 <p>A literal <el-type>DictionaryImmutable</el-type> is defined as a comma-separated list of <i>key:value</i> pairs surrounded by curly braces:</p>
 <el-code>variable scrabbleValues set to {"a":1, "b":3, "c":3, "d":2}</el-code>
 
 <h3 class="no-TOC">Using an Immutable Dictionary</h3>
-
 <p>Try this example:</p>
 <el-code-block source="dictImmutable.elan">
-<el-statement class="ok" id="var27" tabindex="0"><el-kw>variable </el-kw><el-field id="var28" class="ok" tabindex="0"><el-txt><el-id>immD</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr29" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw><el-type>DictionaryImmutable</el-type>&lt;<el-kw>of</el-kw><el-type>String</el-type>, <el-type>Int</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="var27" tabindex="0"><el-kw>variable </el-kw><el-field id="var28" class="ok" tabindex="0"><el-txt><el-id>immD</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr29" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>DictionaryImmutable</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Int</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print30" tabindex="0"><el-kw>print </el-kw><el-field id="expr31" class="optional ok" tabindex="0"><el-txt><el-id>immD</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="set32" tabindex="0"><el-kw>set </el-kw><el-field id="ident33" class="ok" tabindex="0"><el-txt><el-id>immD</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr34" class="ok" tabindex="0"><el-txt><el-id>immD</el-id>.<el-method>withPut</el-method>("<el-lit>a</el-lit>", <el-lit>3</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print35" tabindex="0"><el-kw>print </el-kw><el-field id="expr36" class="optional ok" tabindex="0"><el-txt><el-id>immD</el-id>["<el-lit>a</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1191,7 +1161,6 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 </el-code-block>
 
 <h3 class="no-TOC" id="DictionaryImmutable_functions">Function dot methods on a DictionaryImmutable</h3>
-
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1204,12 +1173,11 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>DictionaryImmutable</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
-  <td>a string that is a comma+space-separated list of the DictionaryImmutable's <i>key:valu</i>e pairs,
-  enclosed in braces</td>
-</tr><tr id="hasKey_DictionaryImmutable">
+  <td>a string representation of the immutable dictionary (automatically called when printing)</td>
+</tr><tr id="hasKey">
   <td><el-method>hasKey</el-method></td>
   <td><el-type>DictionaryImmutable</el-type></td>
-  <td><el-type>Boolean</el-type></td>
+  <td></td>
   <td><el-type></el-type></td>
   <td></td>
  </tr><tr id="withPut_DictionaryImmutable">
@@ -1217,7 +1185,6 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>DictionaryImmutable</el-type></td>
   <td></td>
   <td><el-type></el-type></td>
-  <td></td>
  </tr><tr id="withRemoveAt_DictionaryImmutable">
   <td><el-method>withRemoveAt</el-method></td>
   <td><el-type>DictionaryImmutable</el-type></td>
@@ -1225,15 +1192,14 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type></el-type></td>
   <td></td>
  </tr>
-</table>
+ </table>
 
 <h2 id="SetType">Set</h2>
-
     <p>A set is a standard data structure that works somewhat like a <el-code>ListImmutable</el-code> with the important difference that in a set a given element may appear only once. If an item being added to a <el-code>Set</el-code> is identical to an existing item in the <el-code>Set</el-code> then the <el-code>Set</el-code> remains the same length as before. </p>
     <p>This enables a set to work like a mathematical set so that it is possible to perform standard set operations such as <el-method>union</el-method> or <el-method>intersection</el-method>. For the same reason, a Set is an immutable data structure: there are no methods that modify the set on which they are called, but several of them (including <el-method>add</el-method>, <el-method>remove</el-method>) return a new set that is based on the original set or sets, with specified differences.</p>
     <p>Example of use:</p>
 <el-code-block source="set.elan">
-<el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw><el-type>Set</el-type>&lt;<el-kw>of</el-kw><el-type>Int</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Set</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="set6" tabindex="0"><el-kw>set </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>addFromList</el-method>([<el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>])</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="set11" tabindex="0"><el-kw>set </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>add</el-method>(<el-lit>7</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1254,7 +1220,6 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 </ul>
 
 <h3 class="no-TOC" id="Set_functions">Function dot methods on a Set</h3>
-
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1267,13 +1232,13 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>Set</el-type></td>
   <td>item of Set element's Type</td>
   <td><el-type>Set</el-type></td>
-  <td>a new Set extended with the item, provided it differs from all the Set's current elements</td>
+  <td>copy of the Set extended with the item provided it differs from all the Set's current elements</td>
  </tr><tr id="addFromList">
   <td><el-method>addFromList</el-method></td>
   <td><el-type>Set</el-type></td>
   <td><el-type>List</el-type></td>
   <td><el-type>Set</el-type></td>
-  <td>a new Set extended with those items from the List that are not already in the Set</td>
+  <td>copy of the Set extended with those items from the List that are not already in the Set</td>
  </tr><tr id="asList_Set">
   <td><el-method>asList</el-method></td>
   <td><el-type>Set</el-type></td>
@@ -1285,12 +1250,12 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>Set</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
-  <td>a string that is a comma+space-separated list of the Set's elements, enclosed in braces</td>
+  <td>a String that is a comma+space-separated list of the Set's elements enclosed in braces</td>
  </tr><tr id="contains_Set">
   <td><el-method>contains</el-method></td>
   <td><el-type>Set</el-type></td>
   <td>item of Set element's Type</td>
-  <td><el-type>Boolean</el-type></td>
+  <td><el-code>Boolean<el-type></el-type></td>
   <td><el-code><el-id>true</el-id></el-code> if the Set contains the item<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
  </tr><tr id="difference">
   <td><el-method>difference</el-method></td>
@@ -1333,7 +1298,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>Set</el-type></td>
   <td>item of Set element's Type</td>
   <td><el-type>Set</el-type></td>
-  <td>a new Set with the argument item removed (if present)</td>
+  <td>copy of the Set with the argument item removed (if present)</td>
  </tr><tr id="union">
   <td><el-method>union</el-method></td>
   <td><el-type>Set</el-type></td>
@@ -1341,11 +1306,10 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>Set</el-type></td>
   <td>a Set containing all the unique elements of the Set and the argument Set (i.e. no duplicates)</td>
  </tr>
-</table>
+ </table>
 
-<div id="Queue"></div>
+<p id="Queue"></p>
 <h2 id="Stack">Stack and Queue</h2>
-
 <ul>
     <li><el-type>Stack</el-type> and <el-type>Queue</el-type> are similar data structures except that <el-type>Stack</el-type> is &#8216;LIFO&#8217; (last in, first out), while <el-type>Queue</el-type> is FIFO (first in, first out). The names of the methods for adding/removing are different, but there are also common methods.</li>
     <li>Both a <el-type>Stack</el-type> and a <el-type>Queue</el-type> are defined with the Type of the items that they can contain, similarly to how <el-type>List</el-type> and <el-type>ListImmutable</el-type> have a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <el-code><el-type>Stack</el-type>&lt;of <el-type><el-type>String</el-type></el-type>&gt;, <el-type>Queue</el-type>&lt;of <el-type>Int</el-type>&gt;, <el-type>Stack</el-type>&lt;of (<el-type>Float</el-type>, <el-type>Float</el-type>)&gt;, <el-type>Queue</el-type>&lt;of <el-type>Square</el-type>&gt;</el-code>.</li>
@@ -1357,7 +1321,6 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 </ul>
 
 <h3 class="no-TOC" id="StackFunctions">Function dot methods on a Stack</h3>
-
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1390,17 +1353,15 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>Int</el-type></td>
   <td>the number of elements in the Stack</td>
  </tr><tr id="asString_Stack">
-  <td><el-method>asString</el-method></td>
-  <td><el-type>Stack</el-type></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>a string that is a comma+space-separated list of the Stack's elements,  enclosed in square brackets,<br>
-   last element pushed listed first</td>
- </tr>
+    <td><el-method>asString</el-method></td>
+    <td><el-type>Stack</el-type></td>
+    <td>(none)</td>
+    <td><el-type>String</el-type></td>
+    <td>a string representation of the stack (automatically called when printing)</td>
+</tr>
 </table>
 
 <h3 class="no-TOC" id="QueueFunctions">Function dot methods on a Queue</h3>
-
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1437,14 +1398,12 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>Queue</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
-  <td>a string that is a comma+space-separated list of the Queue's elements,  enclosed in square brackets,<br>
-   first element enqueued listed first</td>
- </tr>
+  <td>a string representation of the queue (automatically called when printing)</td>
+</tr>
 </table>
-
 <p>Example use of a <el-type>Stack</el-type>:</p>
 <el-code-block source="stack.elan">
-<el-statement class="ok" id="var35" tabindex="0"><el-kw>variable </el-kw><el-field id="var36" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr37" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw><el-type>Stack</el-type>&lt;<el-kw>of</el-kw><el-type>String</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="var35" tabindex="0"><el-kw>variable </el-kw><el-field id="var36" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr37" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Stack</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print6" tabindex="0"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="set47" tabindex="0"><el-kw>set </el-kw><el-field id="ident48" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr49" class="ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>push</el-method>("<el-lit>apple</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="set52" tabindex="0"><el-kw>set </el-kw><el-field id="ident53" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr54" class="ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>push</el-method>("<el-lit>Pear</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1459,7 +1418,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 </el-code-block>
     <p>Example use of a <el-type>Queue</el-type>:</p>
 <el-code-block source="queue.elan">
-<el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>qu</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw><el-type>Queue</el-type>&lt;<el-kw>of</el-kw><el-type>String</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>qu</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Queue</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print6" tabindex="0"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="set8" tabindex="0"><el-kw>set </el-kw><el-field id="ident9" class="ok" tabindex="0"><el-txt><el-id>qu</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>enqueue</el-method>("<el-lit>apple</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="set11" tabindex="0"><el-kw>set </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-id>qu</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>enqueue</el-method>("<el-lit>Pear</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1476,14 +1435,13 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <h1 id="CommonDotMethods">Common dot methods</h1>
 
 <h2>Dot methods that work on more than one fundamental Type</h2>
-
 <p>Although all applicable methods are described under each Type, this table lists those which are applicable to several Types.</p>
+<p>The method <el-method>asString</el-method> is so widely applicable because it enables you to print
+most variables and data structures to the Display for debugging purposes.</p>
 <p>Click on a Type to go to the Type's dot methods, or on the <el-id>&#x2714;</el-id> tick to go to the specific method.</p>
-<table class="tableMethod">
+<table >
+ <tr><th>Type</th><th colspan="10">method</th></tr>
  <tr>
-  <th>Type</th>
-  <th colspan="10">method</th>
- </tr><tr>
   <td></td>
   <td><el-method>asList</el-method></td>
   <td><el-method>asSet</el-method></td>
@@ -1656,10 +1614,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
- <li>The method <el-method>asString</el-method> is so widely applicable because it enables you to print
-  variables and data structures to the Display for debugging purposes.</li>
- <li>The length of a <el-type>Dictionary</el-type> or <el-type>DictionaryImmutable</el-type> can be found by applying method <el-method>length</el-method>
-  to the list returned by method <el-method>keys</el-method> on the dictionary:</li>
+ <li>The length of a <el-type>Dictionary</el-type> or <el-type>DictionaryImmutable</el-type> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:</li>
   <p><el-code>print dict.keys().length()</el-code> &rarr; 15</p>
  <li>Checking whether an item is contained in a <el-type>Dictionary</el-type> or <el-type>DictionaryImmutable</el-type> can be
   done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:</li>
@@ -1670,11 +1625,9 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <h1 id="Input/output">Input/output</h1>
 
 <h2 id="TextFileReader">Reading Text Files</h2>
-
 <p>The <el-type>TextFileReader</el-type> class is used to read textual data from a file.</p>
 <p>An instance is created by the standalone system method <el-method>openFileForReading</el-method>.</p>
 <p>The available procedure methods are:</p>
-
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -1704,7 +1657,6 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td>closes the file</td>
  </tr>
 </table>
-
 <p>These methods may be used to read a whole file in one go:</p>
 <el-code-block source="TextFileReader_1.elan">
   <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>openFileForReading</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1714,9 +1666,9 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <p>or to read a file line by line:</p>
 <el-code-block source="TextFileReader_2.elan">
   <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>openFileForReading</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="var6" tabindex="0"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>lines</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>empty</el-kw><el-type>List</el-type>&lt;<el-kw>of</el-kw><el-type>String</el-type>&gt;</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+  <el-statement class="ok" id="var6" tabindex="0"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>lines</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
   <el-statement class="ok multiline" id="while9" tabindex="0">
-  <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-kw>not</el-kw><el-id>file</el-id>.<el-method>endOfFile</el-method>()</el-txt><el-place><i>condition</i></el-place></el-field></el-top>
+  <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-kw>not</el-kw> <el-id>file</el-id>.<el-method>endOfFile</el-method>()</el-txt><el-place><i>condition</i></el-place></el-field></el-top>
   <el-statement class="ok" id="let12" tabindex="0"><el-kw>let </el-kw><el-field id="var13" class="ok" tabindex="0"><el-txt><el-id>line</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>readLine</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
   <el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>lines</el-id>.<el-method>append</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args17" class="optional ok" tabindex="0"><el-txt><el-id>line</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
   <el-kw>end while</el-kw>
@@ -1734,11 +1686,9 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 </ul>
 
 <h2 id="TextFileWriter">Writing text files</h2>
-
 <p>The <el-type>TextFileWriter</el-type> class is used to write textual data to a file.</p>
 <p>An instance is created by the standalone system method <el-method>createFileForWriting</el-method>.</p>
 <p>The available procedure methods are:</p>
-
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -1764,9 +1714,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td>writes the buffer to the file system</td>
  </tr>
 </table>
-
 <p>These methods may be used to write a whole file in one go:</p>
-
 <el-code-block source="TextFileWriter_1.elan">
     <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>f</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>myFile.txt</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
     <el-statement class="ok" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>f</el-id>.<el-method>writeWholeFile</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt>"<el-lit>this is\nmyText</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
@@ -1776,7 +1724,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
     <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>squares.txt</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
     <el-statement class="ok multiline" id="for6" tabindex="0">
     <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident8" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
-    <el-statement class="ok" id="call12" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>writeLine</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args14" class="optional ok" tabindex="0"><el-txt>"<el-lit></el-lit>{<el-id>i</el-id>}<el-lit></el-lit>{<el-id>i</el-id>*<el-id>i</el-id>}<el-lit></el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+    <el-statement class="ok" id="call12" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>writeLine</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args14" class="optional ok" tabindex="0"><el-txt>"<el-lit></el-lit>{<el-id>i</el-id>}<el-lit> </el-lit>{<el-id>i</el-id>*<el-id>i</el-id>}<el-lit></el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
     <el-kw>end for</el-kw>
     </el-statement>
     <el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>saveAndClose</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args17" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
@@ -1805,7 +1753,6 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 
 <div id="displayHtml"></div>
 <h2 id="Html">Displaying Html</h2>
-
 <p>If you attempt to embed Html in a string and then attempt to print it, you will see the string displayed literally - the Html tags
     will not be recognised - this is for security reasons. However, it <i>is</i> possible to display formatted Html on the <b>Display.</b>
     The following code:</p>
@@ -1828,7 +1775,6 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
     Alternatively, you could use the constant <el-code><el-id>quotes</el-id></el-code> within braces as an interpolated field.</p>
 
 <h3 class="no-TOC">Using an embedded CSS stylesheet</h3>
-
 <p>You can also specify a <el-method>style</el-method> tag at the start of your Html string, to apply to the whole Html being displayed:</p>
 <el-code-block source="Html_2.elan">
     <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>style</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>"<el-lit>&lt;style&gt; h1 </el-lit>{<el-id>openBrace</el-id>}<el-lit> color: DarkRed; font-size: 24pt; </el-lit>{<el-id>closeBrace</el-id>}<el-lit> p </el-lit>{<el-id>openBrace</el-id>}<el-lit> font-family: Serif;</el-lit>{<el-id>closeBrace</el-id>}<el-lit> &lt;/style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1841,7 +1787,6 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <h2 id="image">Displaying images</h2>
 
 <h3 class="no-TOC">Printing an image on the Display</h3>
-
 <p>An image that can be accessed via a URL may be printed on the display using the <el-kw>image</el-kw> keyword
 followed by the URL. Here, the URL is <i>not</i> bounded by quotes:</p>
 <el-code-block>
@@ -1875,7 +1820,8 @@ also offers position properties <el-code><el-id>x</el-id></el-code> and <el-code
 </el-code-block>
 
 <p>The Type of a named value that holds an image is <el-type>ImageVG</el-type> &ndash; the 'VG' indicating that
-this Type is compatible with <a href="#VectorGraphics">vector graphics</a>, so an image may be added to a <el-type>List</el-type>&lt;<el-kw>of</el-kw><el-type>VectorGraphic</el-type>&gt; or displayed directly by:</p>
+    this Typeis compatible with <a href="#VectorGraphics">vector graphics</a>, so an image may be added to a <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;</el-code> or displayed
+    directly by:</p>
 
 <el-code-block>
 <el-statement class="ok" id="call5" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-method>displayVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args7" class="selected focused optional ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="1" data-cursorend="1" size="89" style="width: 90ch" value="[image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg]"></el-txt><el-place><i>listOfVGs</i></el-place></el-field>)</el-top></el-statement>
@@ -1888,39 +1834,36 @@ the URL as a <el-type>String</el-type>, either as a literal (by surrounding it w
 
 <el-code-block>
 <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>url</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>"<el-lit>https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="let7" tabindex="0"><el-kw>let </el-kw><el-field id="var8" class="ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw><el-type>ImageVG</el-type>(<el-id>url</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="let7" tabindex="0"><el-kw>let </el-kw><el-field id="var8" class="ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>(<el-id>url</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print10" tabindex="0"><el-kw>print </el-kw><el-field id="expr11" class="optional ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 
 <p>Various properties can be set on an <el-type>ImageVG</el-type>  using a <el-kw>with</el-kw> clause, for example:</p>
 <el-code-block>
           <el-statement class="ok" id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>url</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>"<el-lit>https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="let11" tabindex="0"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw><el-type>ImageVG</el-type>(<el-id>url</el-id>)<el-kw> with </el-kw><br><el-id>alt</el-id><el-kw> set to </el-kw>"<el-lit>shark</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+        <el-statement class="ok" id="let11" tabindex="0"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>(<el-id>url</el-id>)<el-kw> with </el-kw><br><el-id>alt</el-id><el-kw> set to </el-kw>"<el-lit>shark</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
-
 <p>The properties are:</p>
-
-<table class="tableMethod">
- <tr><th>Property</th><th>Type</th><th>Description</th></tr>
- <tr><td><el-code><el-id>alt</el-id></el-code></td><td><el-type>String</el-type></td><td>Alternate textual description (for assessibility)</td></tr>
- <tr><td><el-code><el-id>height</el-id></el-code></td><td><el-type>Float</el-type></td><td>height to render the image</td></tr>
- <tr><td><el-code><el-id>title</el-id></el-code></td><td><el-type>String</el-type></td><td>Textual title to be read by user</td></tr>
- <tr><td><el-code><el-id>width</el-id></el-code></td><td><el-type>Float</el-type></td><td>width to render the image</td></tr>
- <tr><td><el-code><el-id>x</el-id></el-code></td><td><el-type>Float</el-type></td><td>Horizontal position within the pane</td></tr>
- <tr><td><el-code><el-id>y</el-id></el-code></td><td><el-type>Float</el-type></td><td>Vertical position within the pane</td></tr>
+<table>
+    <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+    <tr><td><el-code><el-id>alt</el-id></el-code></td><td><el-type>String</el-type></td><td>Alternate textual description (for assessibility)</td></tr>
+    <tr><td><el-code><el-id>height</el-id></el-code></td><td><el-type>Float</el-type></td><td>height to render the image</td></tr>
+    <tr><td><el-code><el-id>title</el-id></el-code></td><td><el-type>String</el-type></td><td>Textual title to be read by user</td></tr>
+    <tr><td><el-code><el-id>width</el-id></el-code></td><td><el-type>Float</el-type></td><td>width to render the image</td></tr>
+    <tr><td><el-code><el-id>x</el-id></el-code></td><td><el-type>Float</el-type></td><td>Horizontal position within the pane</td></tr>
+    <tr><td><el-code><el-id>y</el-id></el-code></td><td><el-type>Float</el-type></td><td>Vertical position within the pane</td></tr>
 </table>
 
 <h1>Graphics</h1>
 
 <h2 id="BlockGraphics">Block graphics</h2>
-
-<p>Block graphic sprovides a simple way to create low resolution graphics, ideal for simple but engaging games for example.
+<p>Block graphics<el-code> </el-code>provides a simple way to create low resolution graphics, ideal for simple but engaging games for example.
      The graphics are displayed on a grid that is 40 blocks wide by 30 blocks high.</p>
 <p>Each block is be rendered as a solid colour.</p>
 <p>An example of block graphics to produce a rapidly changing pattern of coloured blocks:</p>
 
 <el-code-block source="block_graphics.elan">
-<el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>blocks</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw><el-type>Array2D</el-type>&lt;<el-kw>of</el-kw><el-type>Int</el-type>&gt;(<el-lit>40</el-lit>, <el-lit>30</el-lit>, <el-id>white</el-id>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>blocks</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Array2D</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;(<el-lit>40</el-lit>, <el-lit>30</el-lit>, <el-id>white</el-id>)</el-txt></el-field></el-statement>
 <el-statement class="ok multiline" id="while6" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt></el-field></el-top>
 <el-statement class="ok" id="let9" tabindex="0"><el-kw>let </el-kw><el-field id="var10" class="ok" tabindex="0"><el-txt><el-id>x</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>39</el-lit>)</el-txt></el-field></el-statement>
@@ -1941,25 +1884,17 @@ the URL as a <el-type>String</el-type>, either as a literal (by surrounding it w
 </ul>
 
 <h2 id="TurtleGraphics">Turtle graphics</h2>
-
 <p>Turtle graphics are implemented in Elan with output to the Display pane on the screen, i.e. the 'paper' on which the Turtle draws.</p>
 <p>The area is 200 turtle units wide by 150 turtle units high, and floating point (fractional) values of turtle units can be used.</p>
 <p>The origin for turtle units (0,0) is at the centre of the area: positive x rightwards, positive y upwards.
 so for example the top left corner of the display is at (-100,75).</p>
-
 <h3 class="no-TOC" id="List_procedures">Procedure methods on a Turtle</h3>
-
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
   <th>on<br>Type</th>
   <th>argument<br>Types</th>
   <th>action</th>
- </tr><tr id="clearAndReset">
-  <td><el-method>clearAndReset</el-method></td>
-  <td><el-type>Turtle</el-type></td>
-  <td>(none)</td>
-  <td>clears the turtle display and moves the turtle to its starting position and direction</td>
  </tr><tr id="hide">
   <td><el-method>hide</el-method></td>
   <td><el-type>Turtle</el-type></td>
@@ -1970,12 +1905,6 @@ so for example the top left corner of the display is at (-100,75).</p>
   <td><el-type>Turtle</el-type></td>
   <td><el-type>Int</el-type> or <el-type>Float</el-type></td>
   <td>moves the turtle the specified number of turtle units in the direction it is facing or,<br>if negative, in the opposite direction</td>
- </tr><tr id="moveTo">
-  <td><el-method>moveTo</el-method></td>
-  <td><el-type>Turtle</el-type></td>
-  <td><el-type>Int</el-type> or <el-type>Float</el-type>,<br>
-      <el-type>Int</el-type> or <el-type>Float</el-type></td>
-  <td>moves to the x,y position specified; this is unlike "move" which moves relative to the current position and orientation; it draws a line if the pen is down, unlike placeAt</td>
  </tr><tr id="penColour">
   <td><el-method>penColour</el-method></td>
   <td><el-type>Turtle</el-type></td>
@@ -2012,18 +1941,16 @@ so for example the top left corner of the display is at (-100,75).</p>
   <td><el-type>Turtle</el-type></td>
   <td><el-type>Int</el-type> or <el-type>Float</el-type></td>
   <td>turns the turtle through the specified number of degrees clockwise or,<br>if negative, anticlockwise</td>
- </tr><tr id="turnToHeading">
-  <td><el-method>turnToHeading</el-method></td>
+ </tr><tr id="turnTo">
+  <td><el-method>turnTo</el-method></td>
   <td><el-type>Turtle</el-type></td>
   <td><el-type>Int</el-type> or <el-type>Float</el-type></td>
   <td>turns the turtle to face in the direction specified in degrees<br>where 0 is upward and increasing values go clockwise from there</td>
  </tr>
 </table>
-
 <p>Example:</p>
-
 <el-code-block source="turtle_graphics.elan">
-<el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw><el-type>Turtle</el-type>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Turtle</el-type>()</el-txt></el-field></el-statement>
 <el-statement class="ok" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>placeAt</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt>-<el-lit>75</el-lit>, <el-lit>50</el-lit></el-txt></el-field>)</el-top></el-statement>
 <el-statement class="ok" id="call9" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident10" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>show</el-method></el-txt></el-field>(<el-field id="args11" class="empty optional ok" tabindex="0"><el-txt></el-txt></el-field>)</el-top></el-statement>
 <el-statement class="ok multiline" id="for12" tabindex="0">
@@ -2044,13 +1971,12 @@ so for example the top left corner of the display is at (-100,75).</p>
  <li>You can move and turn the turtle, causing lines to be drawn, whether or not the turtle is shown.</li>
  <li>The current location and heading of the turtle may be read using the properties
   <el-code><el-id>x</el-id></el-code>, <el-code><el-id>y</el-id></el-code>, and <el-code><el-id>heading</el-id></el-code>.</li>
-<li>The turtle starts facing upwards (<el-id>heading</el-id> 0), so that <el-method>move</el-method> moves in the y-direction.</li>
 </ul>
 <p>Here is a more sophisticated example, using a procedure and recursion, that produces a fractal snowflake:</p>
 <el-code-block source="turtle_snowflake.elan">
 <main class="ok multiline" id="main1" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
-<el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw><el-type>Turtle</el-type>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Turtle</el-type>()</el-txt></el-field></el-statement>
 <el-statement class="ok" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>placeAt</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt>-<el-lit>50</el-lit>, <el-lit>30</el-lit></el-txt></el-field>)</el-top></el-statement>
 <el-statement class="ok" id="call9" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident10" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>turn</el-method></el-txt></el-field>(<el-field id="args11" class="optional ok" tabindex="0"><el-txt><el-lit>90</el-lit></el-txt></el-field>)</el-top></el-statement>
 <el-statement class="ok multiline" id="for12" tabindex="0">
@@ -2062,7 +1988,7 @@ so for example the top left corner of the display is at (-100,75).</p>
 <el-kw>end main</el-kw>
 </main>
 <el-proc class="ok multiline" id="proc24" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident26" class="ok" tabindex="0"><el-txt>drawSide</el-txt></el-field></el-method>(<el-field id="params27" class="optional ok" tabindex="0"><el-txt><el-id>length</el-id><el-kw>as</el-kw><el-type>Float</el-type>, <el-id>t</el-id><el-kw>as</el-kw><el-type>Turtle</el-type></el-txt></el-field>)</el-top>
+<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident26" class="ok" tabindex="0"><el-txt>drawSide</el-txt></el-field></el-method>(<el-field id="params27" class="optional ok" tabindex="0"><el-txt><el-id>length</el-id> <el-kw>as</el-kw> <el-type>Float</el-type>, <el-id>t</el-id> <el-kw>as</el-kw> <el-type>Turtle</el-type></el-txt></el-field>)</el-top>
 <el-statement class="ok multiline" id="if28" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr30" class="ok" tabindex="0"><el-txt>(<el-id>length</el-id> &gt; <el-lit>1</el-lit>)</el-txt></el-field><el-kw> then</el-kw></el-top>
 <el-statement class="ok" id="let31" tabindex="0"><el-kw>let </el-kw><el-field id="var32" class="ok" tabindex="0"><el-txt><el-id>third</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr33" class="ok" tabindex="0"><el-txt><el-id>length</el-id>/<el-lit>3</el-lit></el-txt></el-field></el-statement>
@@ -2085,7 +2011,6 @@ so for example the top left corner of the display is at (-100,75).</p>
 <p><img src="images/snowflake.png"  align="MIDDLE" width="479" height="420" ></p>
 
 <h2 id="VectorGraphics">Vector graphics</h2>
-
 <!-- TODO tabulate VG procedures and their arguments -->
 <div id="vectorGraphic"></div>
 <div id="append_VG"></div>
@@ -2098,7 +2023,7 @@ so for example the top left corner of the display is at (-100,75).</p>
 <div id="strokeWidth"></div>
 <p>Vector graphics are displayed using SVG (Scalable Vector Graphics) that are a part of the Html specification. The names of the shapes broadly correspond to the names of SVG tags:</p>
 <ul>
- <li id="CircleVG"><el-code>CircleVG</el-code> for &lt;<el-code>circle../&gt;</el-code></li>
+ <li id="CircleVG"> <el-code>CircleVG</el-code> for &lt;<el-code>circle../&gt;</el-code></li>
  <li id="LineVG"><el-code>LineVG</el-code> for <el-code>&lt;line../&gt;</el-code></li>
  <li id="RectangleVG"><el-code>RectangleVG</el-code> for <el-code>&lt;rect../&gt;</el-code></li>
  <li id="ImageVG"><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
@@ -2108,8 +2033,8 @@ so for example the top left corner of the display is at (-100,75).</p>
 <p>The &#8216;canvas&#8217; on which vector graphics are drawn (the Display pane in the user interface) is 100 units wide, by 75 units high. All numeric values specified for attributes of vector graphic shapes may be integer or floating point.</p>
 <p>Example:</p>
 <el-code-block source="VG_circle.elan">
-        <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>vg</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw><el-type>List</el-type>&lt;<el-kw>of</el-kw><el-type>VectorGraphic</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>circ</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw><el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-lit>20</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>20</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>5</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>red</el-id>, <br><el-id>strokeColour</el-id><el-kw> set to </el-kw><el-id>green</el-id>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>2</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+        <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>vg</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+        <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>circ</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-lit>20</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>20</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>5</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>red</el-id>, <br><el-id>strokeColour</el-id><el-kw> set to </el-kw><el-id>green</el-id>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>2</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
         <el-statement class="ok" id="call9" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident10" class="ok" tabindex="0"><el-txt><el-id>vg</el-id>.<el-method>append</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args11" class="optional ok" tabindex="0"><el-txt><el-id>circ</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
         <el-statement class="ok" id="call12" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="0"><el-txt><el-method>displayVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args14" class="optional ok" tabindex="0"><el-txt><el-id>vg</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
 </el-code-block>
@@ -2119,8 +2044,8 @@ so for example the top left corner of the display is at (-100,75).</p>
 <p>
 </p>
 <el-code-block source="VG_2circles.elan">
-        <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>vg</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw><el-type>List</el-type>&lt;<el-kw>of</el-kw><el-type>VectorGraphic</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>circ</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw><el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-lit>50</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>37</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>30</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>green</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+        <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>vg</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+        <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>circ</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-lit>50</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>37</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>30</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>green</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
         <el-statement class="ok" id="call9" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident10" class="ok" tabindex="0"><el-txt><el-id>vg</el-id>.<el-method>append</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args11" class="optional ok" tabindex="0"><el-txt><el-id>circ</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
         <el-statement class="ok multiline" id="while12" tabindex="0">
         <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>condition</i></el-place></el-field></el-top>
@@ -2137,22 +2062,20 @@ so for example the top left corner of the display is at (-100,75).</p>
 <h4 class="no-TOC">Notes</h4>
 <ul>
  <li>The constructor for each VG Type requires arguments corresponding the Html attributes for the corresponding SVGType.</li>
- <li>As with <a href="#BlockGraphics">Block</a> graphics the screen is not updated until the <el-method>displayVectorGraphics</el-method> method is called,
+ <li>As with <span class="Link">Block</span> graphics the screen is not updated until the <el-method>displayVectorGraphics</el-method> method is called,
    allowing you to make multiple changes before updating the screen. Similarly, the method to add a shape returns a new instance of the <el-code>VectorGraphics</el-code> which must be assigned either to an existing variable, or to a new <el-kw>let</el-kw>.</li>
  <li>As with the way that SVG works within Html, the shapes are drawn in the order in which they are added into the list of <el-type>VectorGraphic</el-type> instances, with later shapes positioned over earlier shapes.</li>
  <li>The <el-code><el-id>fillColour</el-id></el-code> and <el-code><el-id>strokeColour</el-id></el-code> properties may be specified as described under <a href="#Colours">Colours</a>.
   The <el-code><el-id>fillColour</el-id></el-code> only may also be specified as <el-code><el-id>transparent</el-id></el-code> (which has the value <el-code>-1</el-code>).</li>
  <li><el-type>VectorGraphic</el-type> is the abstract superclass of all <el-code>...VG</el-code> shapes. You would only use it if you wanted to define a method that could work on any shape (using common elements defined on <el-code>VectorGraphic</el-code>) or that could work with a <el-type>List</el-type> holding different types of shape.</li>
- <li>To make it easier for simple programs, the VectorGraphic shapes all have default values for their parameters, and you only have to specify the ones that you want different.
-So the constructors do not take any parameters, and instead you add a <el-kw>with</el-kw> clause listing those parameters which you want to have different values.  See <a href="LangRef.html#new">New instance</a> for more about <el-kw>with</el-kw> clauses.</li>
- <li>The parameters that can appear in a <el-kw>with</el-kw> clause for CircleVG are: <el-code>centreX, centreY, radius, fillColour, strokeColour, strokeWidth</el-code>.</li>
- <li>The parameters that can appear in a <el-kw>with</el-kw> clause for <el-type>LineVG</el-type> are: <el-code>x1, y1, x2, y2, strokeColour, strokeWidth</el-code>.</li>
- <li>The parameters that can appear in a <el-kw>with</el-kw> clause for <el-type>RectangleVG</el-type> are: <el-code>x, y, width, height, fillColour, strokeColour, strokeWidth</el-code>.</li>
- <li>All parameters for the three Types above are of Type <el-type>Int</el-type>.</li>
- <li>Individual properties of any of the VG Types may be modified by calling the corresponding <el-method>set...</el-method> procedure method
-  or, if working within a function, by using the corresponding <el-method>with...</el-method> function dot method, for example <el-method>setCentreX</el-method> or <el-method>withCentreX</el-method>.</li>
- <li><el-method>displayVectorGraphics</el-method> takes as an argument either a <el-code><el-type>List</el-type>&lt;<el-kw>of</el-kw><el-type>VectorGraphic</el-type>&gt;()</el-code>
-  or a <el-type>List</el-type> of any specific Type of <el-type>VectorGraphic</el-type> such as <el-type>CircleVG</el-type>.</li>
+ <li>The constructor parameters for <el-type>CircleVG</el-type> are: <el-code>centreX, centreY, radius, fillColour, strokeColour, strokeWidth</el-code>.</li>
+ <li>The constructor parameters for <el-type>LineVG</el-type> are: <el-code>x1, y1, x2, y2, strokeColour, strokeWidth</el-code>, all of Type <el-type>Int</el-type>.</li>
+ <li>The constructor parameters for <el-type>LineVG</el-type> are: <el-code>x, y, width, height, fillColour, strokeColour, strokeWidth</el-code>.</li>
+ <li>All parameters for the three constructors above are of Type<el-type>Int</el-type>.</li>
+ <li>Individual properties of any of the VGTypes may be modified by calling the corresponding <el-method>set...</el-method> procedure method
+  or, if working within a function, by using the corresponding <el-method>with...</el-method> function dot method.</li>
+ <li><el-method>displayVectorGraphics</el-method> takes as an argument either a <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;()</el-code>
+  or a <el-type>List</el-type> of any specific Typeof <el-type>VectorGraphic</el-type> such as <el-type>CircleVG</el-type>.</li>
 </ul>
 
 <h2 id="combiningGraphics">Combining graphic outputs</h2>
@@ -2162,36 +2085,32 @@ So the constructors do not take any parameters, and instead you add a <el-kw>wit
 <p>The order in which the outputs are displayed (and therefore overwrite) is:</p>
 <ol>
  <li>Block graphics</li>
- <li>Vector <i>or</i> Turtle graphics</li>
- <li>Printed text <i>or</i> Html</li>
+ <li>Vector <em>or</em> Turtle graphics</li>
+ <li>Printed text or Html</li>
 </ol>
-<p>So some care is needed to manage the layout in the Display.</p>
-<p>Note that, while vector graphics are being drawn, printed text that exceeds the height of the display does not scroll until the graphic completes.</p>
+<p>so some care is needed to manage the layout in the Display.</p>
 
 <h1>Other Types</h1>
 
 <h2 id="Func">Func</h2>
-
 <p>A function may be passed as an argument into another function (or a procedure), or returned as the result of calling another function.
 This pattern is known as <b>Higher order Function (HoF)</b>, and is a key idea in the Functional Programming.</p>
 <p>To define a function that takes in another function as a parameter, or returns a function, you need to specify the Type of the function,
 just as you would specify the Type of every parameter and the return Type for the function. </p>
 
 <h3 class="no-TOC">Type name</h3>
-
 <p>The Type of any function starts with the word <el-type>Func</el-type> followed by angle brackets defining the Type of each parameter,
     and the return Type for that function, following this syntax:</p>
 <!-- TODO correct the syntax -->
 <el-code><el-type>Func</el-type>&lt;of <el-type>String</el-type>, <el-type>String</el-type>, <el-type>Int</el-type> =&gt; <el-type>Boolean</el-type>&gt;</el-code>
 <p>This example defines the Type for a function that defines three parameters of Type <el-type>String</el-type>, <el-type>String</el-type>, and <el-type>Int</el-type> respectively, and returns a <el-type>Boolean</el-type> value. This Type would match that of a function definition that started:</p>
 <el-code-block source="functionChars.elan">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident5" class="ok" tabindex="0"><el-txt>charactersMatchAt</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params6" class="optional ok" tabindex="0"><el-txt><el-id>a</el-id><el-kw>as</el-kw><el-type>String</el-type>, <el-id>b</el-id><el-kw>as</el-kw><el-type>String</el-type>, <el-id>position</el-id><el-kw>as</el-kw><el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="0"><el-txt><el-type>Boolean</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident5" class="ok" tabindex="0"><el-txt>charactersMatchAt</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params6" class="optional ok" tabindex="0"><el-txt><el-id>a</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>b</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>position</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="0"><el-txt><el-type>Boolean</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
 </el-code-block>
 
 <h1 id="Constants">Constants</h1>
 
 <h2 id="StringConstants">String constants</h2>
-
 <table class="tableType">
  <tr>
   <th>name</th><th>Type</th><th >value</th>
@@ -2211,7 +2130,6 @@ just as you would specify the Type of every parameter and the return Type for th
 </table>
 
 <h2 id="BooleanConstants">Boolean constants</h2>
-
 <table class="tableType">
  <tr>
   <th>name</th><th>Type</th><th >value</th>
@@ -2227,7 +2145,6 @@ just as you would specify the Type of every parameter and the return Type for th
 </table>
 
 <h2 id="MathsConstant">Maths constant</h2>
-
 <table class="tableType">
  <tr><th>name</th><th>Type</th><th>value</th></tr>
 <tr id="pi">
@@ -2238,11 +2155,10 @@ just as you would specify the Type of every parameter and the return Type for th
 </table>
 
 <h2 id="Colours">Colours</h2>
-
 <table class="tableColours">
 <tr><th>colour</th><th></th><th>decimal</th><th>decimal<br></th><th>hexadecimal</th></tr>
 <tr><th>name</th><th></th><th>integer</th><th style="font-family:monospace;">&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;&nbsp;G&nbsp;&nbsp;&nbsp;&nbsp;B</th><th style="font-family:monospace;">&nbsp;0xrrggbb</th></tr>
-    <tr><td><el-code><el-id>black</el-id></el-code></td><td style="color:#000000">&#x25fc;</td><td>0</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0x000000</el-code></td></tr>
+    <tr><td><el-code><el-id>black</el-id></el-code></td><td style="color:#000000">&#x25fc;</td><td>0</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0x000000</el-code></td></tr>
     <tr><td><el-code><el-id>white</el-id></el-code></td><td style="color:#ffffff">&#x25fc;</td><td>16777215</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;255</td><td><el-code>0xffffff</el-code></td></tr>
     <tr><td><el-code><el-id>red</el-id></el-code></td><td style="color:#ff0000">&#x25fc;</td><td>16711680</td><td>&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0xff0000</el-code></td></tr>
     <tr><td><el-code><el-id>green</el-id></el-code></td><td style="color:#008000">&#x25fc;</td><td>32768</td><td>&nbsp;&nbsp;0&nbsp;&nbsp;128&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0x008000</el-code></td></tr>
@@ -2261,11 +2177,9 @@ just as you would specify the Type of every parameter and the return Type for th
 </ul>
 
 <h1 id="StandaloneFunctions">Standalone functions</h1>
-
     <p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <el-kw>variable</el-kw> declaration or a <el-kw>set</el-kw> assignment, either on their own or within a more complex expression. All standalone library functions require at least one argument to be passed in brackets, corresponding to the parameters defined for that function.</p>
 
 <h2 id="unicode">unicode</h2>
-
 <p>Function <el-method>unicode</el-method> converts a Unicode (codepoint) value expressed as an integer value in decimal or hexadecimal notation, or as any expression evaluating to an <el-type>Int</el-type>, into a string of a single character. For example:</p>
 <el-code-block source="unicode_hearts.elan">
 <el-func class="ok multiline" id="func3">
@@ -2276,19 +2190,18 @@ just as you would specify the Type of every parameter and the return Type for th
 </el-code-block>
 
 <h2 id="parseAs">parseAsInt and parseAsFloat</h2>
-
-    <p>Function <el-method>parseAsInt</el-method> attempts to parse the input <el-type>String</el-type> as an <el-type>Int</el-type>, and returns a <a href="#Tuple">2-tuple</a>, the first value of which is <el-type>Boolean</el-type>, with <el-code><el-id>true</el-id></el-code> indicating whether or not the parse has succeeded, and the second value being the resulting <el-type>Int</el-type>.
+    <p>Function <el-method>parseAsInt</el-method> attempts to parse the input <el-type>String</el-type> as an <el-type>Int</el-type>, and returns a 2-tuple, the first value of which is Boolean, with <el-code><el-id>true</el-id></el-code> indicating whether or not the parse has succeeded, and the second value being the resulting <el-type>Int</el-type>.
         <el-method>parseAsFloat</el-method> does the equivalent for floating point. Operation is illustrated by these tests: </p>
 <el-code-block source="test_parse.elan">
 <el-test class="ok multiline" id="test88" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment90" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
-<el-statement class="ok" id="assert91" tabindex="0"><el-kw>assert </el-kw><el-field id="text92" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>("<el-lit>31</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr93" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>true</el-id>, <el-lit>31</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert94" tabindex="0"><el-kw>assert </el-kw><el-field id="text95" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>("<el-lit>0</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr96" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>true</el-id>, <el-lit>0</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert97" tabindex="0"><el-kw>assert </el-kw><el-field id="text98" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>("<el-lit>thirty one</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr99" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>false</el-id>, <el-lit>0</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert100" tabindex="0"><el-kw>assert </el-kw><el-field id="text101" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>("<el-lit>3.1</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr102" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>false</el-id>, <el-lit>0</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert103" tabindex="0"><el-kw>assert </el-kw><el-field id="text104" class="ok" tabindex="0"><el-txt><el-method>parseAsFloat</el-method>("<el-lit>31</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr105" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>true</el-id>, <el-lit>31</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert106" tabindex="0"><el-kw>assert </el-kw><el-field id="text107" class="ok" tabindex="0"><el-txt><el-method>parseAsFloat</el-method>("<el-lit>0</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr108" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>true</el-id>, <el-lit>0</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert109" tabindex="0"><el-kw>assert </el-kw><el-field id="text110" class="ok" tabindex="0"><el-txt><el-method>parseAsFloat</el-method>("<el-lit>3.1</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr111" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>true</el-id>, <el-lit><el-lit>3</el-lit>.1</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert91" tabindex="0"><el-kw>assert </el-kw><el-field id="text92" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>("<el-lit>31</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr93" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>true</el-id>, <el-lit>31</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert94" tabindex="0"><el-kw>assert </el-kw><el-field id="text95" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>("<el-lit>0</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr96" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>true</el-id>, <el-lit>0</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert97" tabindex="0"><el-kw>assert </el-kw><el-field id="text98" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>("<el-lit>thirty one</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr99" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>false</el-id>, <el-lit>0</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert100" tabindex="0"><el-kw>assert </el-kw><el-field id="text101" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>("<el-lit>3.1</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr102" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>false</el-id>, <el-lit>0</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert103" tabindex="0"><el-kw>assert </el-kw><el-field id="text104" class="ok" tabindex="0"><el-txt><el-method>parseAsFloat</el-method>("<el-lit>31</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr105" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>true</el-id>, <el-lit>31</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert106" tabindex="0"><el-kw>assert </el-kw><el-field id="text107" class="ok" tabindex="0"><el-txt><el-method>parseAsFloat</el-method>("<el-lit>0</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr108" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>true</el-id>, <el-lit>0</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert109" tabindex="0"><el-kw>assert </el-kw><el-field id="text110" class="ok" tabindex="0"><el-txt><el-method>parseAsFloat</el-method>("<el-lit>3.1</el-lit>")</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr111" class="ok" tabindex="0"><el-txt><el-kw>tuple</el-kw>(<el-id>true</el-id>, <el-lit><el-lit>3</el-lit>.1</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
@@ -2297,41 +2210,37 @@ just as you would specify the Type of every parameter and the return Type for th
 <ul>
     <li>Any string that parses as an <el-type>Int</el-type> will also parse as a <el-type>Float</el-type>.</li>
     <li>If the parse fails, the second value will become zero, so you should always check the first value to see if the second value is a correct parse or just the default.</li>
-    <li> You can &#8216;<a href="#Tuple">deconstruct</a>&#8217; the tuple into two variables:
+    <li> You can &#8216;deconstruct&#8217; the tuple into two variables:
 <el-code-block source="parse_string.elan">
-<el-statement class="ok" id="var5" tabindex="0"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>success</el-id>, <el-id>parsedValue</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>(<el-id>myString</el-id>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var5" tabindex="0"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>success</el-id>, <el-id>parsedValue</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>(<el-id>myString</el-id>)</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
    </el-code-block></li>
-    <li>One use of these parsing methods is for validating user input, but note that an easier way to do this is to use the various <a href="#SystemMethods">input methods</a>.</li>
+    <li>One use of these parsing methods is for validating user input, but note that an easier way to do this is to use the various <a href="#Input/output">input methods</a>.</li>
 </ul>
-
 <div id="floor"></div>
 <div id="ceiling"></div>
 <div id="round"></div>
 <div id="isNaN"></div>
 <div id="isInfinite"></div>
 <h2>floor, ceiling, round, isNaN, and IsInfinite</h2>
-
     <p> All of these functions are called as 'dot methods' on a numeric value  of Type <el-type>Float</el-type> or <el-type>Int</el-type>.
     <el-code>NaN</el-code> is short for 'Not A (Real) Number' Their use is illustrated with the following tests:</p>
 <el-code-block source="test_round">
         <el-test class="ok multiline" id="test5" tabindex="0">
             <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment7" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
             <el-statement class="ok" id="let19" tabindex="0"><el-kw>let </el-kw><el-field id="var20" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr21" class="ok" tabindex="0"><el-txt><el-lit><el-lit>3</el-lit>.14159</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="assert26" tabindex="0"><el-kw>assert </el-kw><el-field id="text27" class="ok" tabindex="0"><el-txt><el-id>n</el-id>.<el-method>floor</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr28" class="ok" tabindex="0"><el-txt><el-lit>3</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-            <el-statement class="ok" id="assert33" tabindex="0"><el-kw>assert </el-kw><el-field id="text34" class="ok" tabindex="0"><el-txt><el-id>n</el-id>.<el-method>ceiling</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr35" class="ok" tabindex="0"><el-txt><el-lit>4</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-            <el-statement class="ok" id="assert46" tabindex="0"><el-kw>assert </el-kw><el-field id="text47" class="ok" tabindex="0"><el-txt><el-id>n</el-id>.<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr48" class="ok" tabindex="0"><el-txt><el-lit><el-lit>3</el-lit>.142</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-            <el-statement class="ok" id="assert53" tabindex="0"><el-kw>assert </el-kw><el-field id="text54" class="ok" tabindex="0"><el-txt><el-method>sqrt</el-method>(-<el-lit>1</el-lit>).<el-method>isNaN</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr55" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
+            <el-statement class="ok" id="assert26" tabindex="0"><el-kw>assert </el-kw><el-field id="text27" class="ok" tabindex="0"><el-txt><el-id>n</el-id>.<el-method>floor</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr28" class="ok" tabindex="0"><el-txt><el-lit>3</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+            <el-statement class="ok" id="assert33" tabindex="0"><el-kw>assert </el-kw><el-field id="text34" class="ok" tabindex="0"><el-txt><el-id>n</el-id>.<el-method>ceiling</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr35" class="ok" tabindex="0"><el-txt><el-lit>4</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+            <el-statement class="ok" id="assert46" tabindex="0"><el-kw>assert </el-kw><el-field id="text47" class="ok" tabindex="0"><el-txt><el-id>n</el-id>.<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr48" class="ok" tabindex="0"><el-txt><el-lit><el-lit>3</el-lit>.142</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+            <el-statement class="ok" id="assert53" tabindex="0"><el-kw>assert </el-kw><el-field id="text54" class="ok" tabindex="0"><el-txt><el-method>sqrt</el-method>(-<el-lit>1</el-lit>).<el-method>isNaN</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr55" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
             <el-statement class="ok" id="let64" tabindex="0"><el-kw>let </el-kw><el-field id="var65" class="ok" tabindex="0"><el-txt><el-id>x</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr66" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit>/<el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="assert60" tabindex="0"><el-kw>assert </el-kw><el-field id="text61" class="ok" tabindex="0"><el-txt><el-id>x</el-id>.<el-method>isInfinite</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr62" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
+            <el-statement class="ok" id="assert60" tabindex="0"><el-kw>assert </el-kw><el-field id="text61" class="ok" tabindex="0"><el-txt><el-id>x</el-id>.<el-method>isInfinite</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr62" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
             <el-kw>end test</el-kw>
             </el-test>
     </el-code-block>
 
 <h2 class="no-TOC" id="MathsFunctions">Maths functions</h2>
-
 All the maths functions take a <el-type>Float</el-type> argument and return a <el-type>Float</el-type> value.
-
-<table class="tableMethod">
+<table>
 <tr><th>function</th><th>argument<br>Type</th><th>input<br>unit</th><th>returns</th><th>output<br>unit</th></tr>
 <tr id="abs"><td><el-method>abs</el-method></td><td><el-type>Float</el-type></td><td></td><td>absolute value of the input</td><td></td></tr>
 <tr id="acos"><td><el-method>acos</el-method></td><td><el-type>Float</el-type></td><td></td><td>arccosine of the input</td><td>radians</td></tr>
@@ -2365,37 +2274,36 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 <el-code-block source="test_maths.elan">
 <el-test class="ok multiline" id="test1" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
-<el-statement class="ok" id="assert28" tabindex="0"><el-kw>assert </el-kw><el-field id="text29" class="ok" tabindex="0"><el-txt><el-id>pi</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr30" class="ok" tabindex="0"><el-txt><el-lit><el-lit>3</el-lit>.141592653589793</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert31" tabindex="0"><el-kw>assert </el-kw><el-field id="text32" class="ok" tabindex="0"><el-txt><el-method>abs</el-method>(-<el-lit><el-lit>3</el-lit>.7</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr33" class="ok" tabindex="0"><el-txt><el-lit><el-lit>3</el-lit>.7</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert37" tabindex="0"><el-kw>assert </el-kw><el-field id="text38" class="ok" tabindex="0"><el-txt><el-method>asin</el-method>(<el-lit><el-lit>0</el-lit>.5</el-lit>).<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr39" class="ok" tabindex="0"><el-txt><el-lit><el-lit>0</el-lit>.524</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert34" tabindex="0"><el-kw>assert </el-kw><el-field id="text35" class="ok" tabindex="0"><el-txt><el-method>acos</el-method>(<el-lit><el-lit>0</el-lit>.5</el-lit>).<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr36" class="ok" tabindex="0"><el-txt><el-lit><el-lit>1</el-lit>.047</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert40" tabindex="0"><el-kw>assert </el-kw><el-field id="text41" class="ok" tabindex="0"><el-txt><el-method>atan</el-method>(<el-lit>1</el-lit>).<el-method>round</el-method>(<el-lit>2</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr42" class="ok" tabindex="0"><el-txt><el-lit><el-lit>0</el-lit>.79</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert65" tabindex="0"><el-kw>assert </el-kw><el-field id="text66" class="ok" tabindex="0"><el-txt><el-method>sin</el-method>(<el-id>pi</el-id>/<el-lit>6</el-lit>).<el-method>round</el-method>(<el-lit>2</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr67" class="ok" tabindex="0"><el-txt><el-lit><el-lit>0</el-lit>.5</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert43" tabindex="0"><el-kw>assert </el-kw><el-field id="text44" class="ok" tabindex="0"><el-txt><el-method>cos</el-method>(<el-id>pi</el-id>/<el-lit>4</el-lit>).<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr45" class="ok" tabindex="0"><el-txt><el-lit><el-lit>0</el-lit>.707</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert70" tabindex="0"><el-kw>assert </el-kw><el-field id="text71" class="ok" tabindex="0"><el-txt><el-method>tan</el-method>(<el-id>pi</el-id>/<el-lit>4</el-lit>).<el-method>round</el-method>(<el-lit>2</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr72" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert46" tabindex="0"><el-kw>assert </el-kw><el-field id="text47" class="ok" tabindex="0"><el-txt><el-method>exp</el-method>(<el-lit>2</el-lit>).<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr48" class="ok" tabindex="0"><el-txt><el-lit><el-lit>7</el-lit>.389</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert49" tabindex="0"><el-kw>assert </el-kw><el-field id="text50" class="ok" tabindex="0"><el-txt><el-method>logE</el-method>(<el-lit><el-lit>7</el-lit>.389</el-lit>).<el-method>round</el-method>(<el-lit>2</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr51" class="ok" tabindex="0"><el-txt><el-lit>2</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert52" tabindex="0"><el-kw>assert </el-kw><el-field id="text53" class="ok" tabindex="0"><el-txt><el-method>log10</el-method>(<el-lit>1000</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr54" class="ok" tabindex="0"><el-txt><el-lit>3</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert55" tabindex="0"><el-kw>assert </el-kw><el-field id="text56" class="ok" tabindex="0"><el-txt><el-method>log2</el-method>(<el-lit>65536</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr57" class="ok" tabindex="0"><el-txt><el-lit>16</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert58" tabindex="0"><el-kw>assert </el-kw><el-field id="text59" class="ok" tabindex="0"><el-txt><el-method>log2</el-method>(<el-lit>0x10000</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr60" class="ok" tabindex="0"><el-txt><el-lit>16</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert61" tabindex="0"><el-kw>assert </el-kw><el-field id="text62" class="ok" tabindex="0"><el-txt><el-method>sqrt</el-method>(<el-lit>2</el-lit>).<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr63" class="ok" tabindex="0"><el-txt><el-lit><el-lit>1</el-lit>.414</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert28" tabindex="0"><el-kw>assert </el-kw><el-field id="text29" class="ok" tabindex="0"><el-txt><el-id>pi</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr30" class="ok" tabindex="0"><el-txt><el-lit><el-lit>3</el-lit>.141592653589793</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert31" tabindex="0"><el-kw>assert </el-kw><el-field id="text32" class="ok" tabindex="0"><el-txt><el-method>abs</el-method>(-<el-lit><el-lit>3</el-lit>.7</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr33" class="ok" tabindex="0"><el-txt><el-lit><el-lit>3</el-lit>.7</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert37" tabindex="0"><el-kw>assert </el-kw><el-field id="text38" class="ok" tabindex="0"><el-txt><el-method>asin</el-method>(<el-lit><el-lit>0</el-lit>.5</el-lit>).<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr39" class="ok" tabindex="0"><el-txt><el-lit><el-lit>0</el-lit>.524</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert34" tabindex="0"><el-kw>assert </el-kw><el-field id="text35" class="ok" tabindex="0"><el-txt><el-method>acos</el-method>(<el-lit><el-lit>0</el-lit>.5</el-lit>).<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr36" class="ok" tabindex="0"><el-txt><el-lit><el-lit>1</el-lit>.047</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert40" tabindex="0"><el-kw>assert </el-kw><el-field id="text41" class="ok" tabindex="0"><el-txt><el-method>atan</el-method>(<el-lit>1</el-lit>).<el-method>round</el-method>(<el-lit>2</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr42" class="ok" tabindex="0"><el-txt><el-lit><el-lit>0</el-lit>.79</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert65" tabindex="0"><el-kw>assert </el-kw><el-field id="text66" class="ok" tabindex="0"><el-txt><el-method>sin</el-method>(<el-id>pi</el-id>/<el-lit>6</el-lit>).<el-method>round</el-method>(<el-lit>2</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr67" class="ok" tabindex="0"><el-txt><el-lit><el-lit>0</el-lit>.5</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert43" tabindex="0"><el-kw>assert </el-kw><el-field id="text44" class="ok" tabindex="0"><el-txt><el-method>cos</el-method>(<el-id>pi</el-id>/<el-lit>4</el-lit>).<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr45" class="ok" tabindex="0"><el-txt><el-lit><el-lit>0</el-lit>.707</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert70" tabindex="0"><el-kw>assert </el-kw><el-field id="text71" class="ok" tabindex="0"><el-txt><el-method>tan</el-method>(<el-id>pi</el-id>/<el-lit>4</el-lit>).<el-method>round</el-method>(<el-lit>2</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr72" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert46" tabindex="0"><el-kw>assert </el-kw><el-field id="text47" class="ok" tabindex="0"><el-txt><el-method>exp</el-method>(<el-lit>2</el-lit>).<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr48" class="ok" tabindex="0"><el-txt><el-lit><el-lit>7</el-lit>.389</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert49" tabindex="0"><el-kw>assert </el-kw><el-field id="text50" class="ok" tabindex="0"><el-txt><el-method>logE</el-method>(<el-lit><el-lit>7</el-lit>.389</el-lit>).<el-method>round</el-method>(<el-lit>2</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr51" class="ok" tabindex="0"><el-txt><el-lit>2</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert52" tabindex="0"><el-kw>assert </el-kw><el-field id="text53" class="ok" tabindex="0"><el-txt><el-method>log10</el-method>(<el-lit>1000</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr54" class="ok" tabindex="0"><el-txt><el-lit>3</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert55" tabindex="0"><el-kw>assert </el-kw><el-field id="text56" class="ok" tabindex="0"><el-txt><el-method>log2</el-method>(<el-lit>65536</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr57" class="ok" tabindex="0"><el-txt><el-lit>16</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert58" tabindex="0"><el-kw>assert </el-kw><el-field id="text59" class="ok" tabindex="0"><el-txt><el-method>log2</el-method>(<el-lit>0x10000</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr60" class="ok" tabindex="0"><el-txt><el-lit>16</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert61" tabindex="0"><el-kw>assert </el-kw><el-field id="text62" class="ok" tabindex="0"><el-txt><el-method>sqrt</el-method>(<el-lit>2</el-lit>).<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr63" class="ok" tabindex="0"><el-txt><el-lit><el-lit>1</el-lit>.414</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
 
 <h2 id="RegExp">Regular expressions</h2>
-
     <p>Elan's regular expressions are modelled on those of JavaScript, including the syntax for literal regular expressions. See, for example this <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions">Guide to Regular Expressions</a>.</p>
     <p>More functions for using regular expressions will be added in a future release of Elan. For now&#8230;</p>
-    <p>The method <el-code>matchesRegExp</el-code> is applied to a <el-type>String</el-type> using dot syntax and requires a <el-code>RegExp</el-code> parameter specified as a literal or as variable. It returns a <el-type>Boolean</el-type>. For example:</p>
+    <p>The method <el-code>matchesRegExp</el-code> is applied to a <el-type>String</el-type> using dot syntax and requires a <el-code>RegExp</el-code> parameter specified as a literal or as variable. It returns a Boolean. For example:</p>
 <el-code-block source="test_regexp_1.elan">
 <el-test class="ok multiline" id="test1" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
 <el-statement class="ok" id="let77" tabindex="0"><el-kw>let </el-kw><el-field id="var78" class="ok" tabindex="0"><el-txt><el-id>s1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr79" class="ok" tabindex="0"><el-txt>"<el-lit>hello</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="let80" tabindex="0"><el-kw>let </el-kw><el-field id="var81" class="ok" tabindex="0"><el-txt><el-id>s2</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr82" class="ok" tabindex="0"><el-txt>"<el-lit>World</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="let83" tabindex="0"><el-kw>let </el-kw><el-field id="var84" class="ok" tabindex="0"><el-txt><el-id>r</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr85" class="ok" tabindex="0"><el-txt>/<el-regex>^[a-z]*$</el-regex>/</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="assert86" tabindex="0"><el-kw>assert </el-kw><el-field id="text87" class="ok" tabindex="0"><el-txt><el-id>s1</el-id>.<el-method>matchesRegExp</el-method>(<el-id>r</el-id>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr88" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert89" tabindex="0"><el-kw>assert </el-kw><el-field id="text90" class="ok" tabindex="0"><el-txt><el-id>s2</el-id>.<el-method>matchesRegExp</el-method>(<el-id>r</el-id>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr91" class="ok" tabindex="0"><el-txt><el-id>false</el-id></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert86" tabindex="0"><el-kw>assert </el-kw><el-field id="text87" class="ok" tabindex="0"><el-txt><el-id>s1</el-id>.<el-method>matchesRegExp</el-method>(<el-id>r</el-id>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr88" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert89" tabindex="0"><el-kw>assert </el-kw><el-field id="text90" class="ok" tabindex="0"><el-txt><el-id>s2</el-id>.<el-method>matchesRegExp</el-method>(<el-id>r</el-id>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr91" class="ok" tabindex="0"><el-txt><el-id>false</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
@@ -2406,15 +2314,14 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 <el-statement class="ok" id="let77" tabindex="0"><el-kw>let </el-kw><el-field id="var78" class="ok" tabindex="0"><el-txt><el-id>s1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr79" class="ok" tabindex="0"><el-txt>"<el-lit>hello</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="let80" tabindex="0"><el-kw>let </el-kw><el-field id="var81" class="ok" tabindex="0"><el-txt><el-id>s2</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr82" class="ok" tabindex="0"><el-txt>"<el-lit>World</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="let83" tabindex="0"><el-kw>let </el-kw><el-field id="var84" class="ok" tabindex="0"><el-txt><el-id>r</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr85" class="ok" tabindex="0"><el-txt>"<el-lit>^[a-z]*$</el-lit>".<el-method>asRegExp</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="assert86" tabindex="0"><el-kw>assert </el-kw><el-field id="text87" class="ok" tabindex="0"><el-txt><el-id>s1</el-id>.<el-method>matchesRegExp</el-method>(<el-id>r</el-id>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr88" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert89" tabindex="0"><el-kw>assert </el-kw><el-field id="text90" class="ok" tabindex="0"><el-txt><el-id>s2</el-id>.<el-method>matchesRegExp</el-method>(<el-id>r</el-id>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr91" class="ok" tabindex="0"><el-txt><el-id>false</el-id></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert86" tabindex="0"><el-kw>assert </el-kw><el-field id="text87" class="ok" tabindex="0"><el-txt><el-id>s1</el-id>.<el-method>matchesRegExp</el-method>(<el-id>r</el-id>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr88" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert89" tabindex="0"><el-kw>assert </el-kw><el-field id="text90" class="ok" tabindex="0"><el-txt><el-id>s2</el-id>.<el-method>matchesRegExp</el-method>(<el-id>r</el-id>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr91" class="ok" tabindex="0"><el-txt><el-id>false</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
     <p>Although it is recommended that literal regular expressions are written with <el-code>/../</el-code> delimiters, the ability to convert a <el-code>string</el-code> allows you to input a regular expression into a running program.</p>
 
 <h2 id="BitwiseFunctions">Bitwise functions</h2>
-
     <p>These functions take in an integer value, and manipulate the bit representation of that value.</p>
 
 <table class="tableMethod">
@@ -2423,8 +2330,8 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
   <th>argument<br>Types</th>
   <th>return<br>Type</th>
   <th>returns</th>
- </tr><tr id="bitAnd">
-  <td><el-method>bitAnd</el-method></td>
+ </tr><tr id="asBinary">
+  <td id="bitAnd"><el-method>bitAnd</el-method></td>
   <td><el-type>Int, Int</el-type></td>
   <td><el-type>Int</el-type></td>
   <td>integer whose binary representation is the bitwise AND of the inputs</td>
@@ -2460,38 +2367,34 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 <el-test class="ok multiline" id="test3" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment5" class="optional ok" tabindex="0"><el-txt>bitwise</el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
 <el-statement class="ok" id="var12" tabindex="0"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-lit>13</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="assert15" tabindex="0"><el-kw>assert </el-kw><el-field id="text16" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-lit>0xd</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert18" tabindex="0"><el-kw>assert </el-kw><el-field id="text19" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr20" class="ok" tabindex="0"><el-txt><el-lit>0b1101</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert21" tabindex="0"><el-kw>assert </el-kw><el-field id="text22" class="ok" tabindex="0"><el-txt><el-id>a</el-id>.<el-method>asBinary</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr23" class="ok" tabindex="0"><el-txt>"<el-lit>1101</el-lit>"</el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert15" tabindex="0"><el-kw>assert </el-kw><el-field id="text16" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-lit>0xd</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert18" tabindex="0"><el-kw>assert </el-kw><el-field id="text19" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr20" class="ok" tabindex="0"><el-txt><el-lit>0b1101</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert21" tabindex="0"><el-kw>assert </el-kw><el-field id="text22" class="ok" tabindex="0"><el-txt><el-id>a</el-id>.<el-method>asBinary</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr23" class="ok" tabindex="0"><el-txt>"<el-lit>1101</el-lit>"</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-statement class="ok" id="var24" tabindex="0"><el-kw>variable </el-kw><el-field id="var25" class="ok" tabindex="0"><el-txt><el-id>b</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr26" class="ok" tabindex="0"><el-txt><el-lit>30</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="assert27" tabindex="0"><el-kw>assert </el-kw><el-field id="text28" class="ok" tabindex="0"><el-txt><el-id>b</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr29" class="ok" tabindex="0"><el-txt><el-lit>0b11110</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert30" tabindex="0"><el-kw>assert </el-kw><el-field id="text31" class="ok" tabindex="0"><el-txt><el-method>bitAnd</el-method>(<el-id>a</el-id>, <el-id>b</el-id>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr32" class="ok" tabindex="0"><el-txt><el-lit>0b1100</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert27" tabindex="0"><el-kw>assert </el-kw><el-field id="text28" class="ok" tabindex="0"><el-txt><el-id>b</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr29" class="ok" tabindex="0"><el-txt><el-lit>0b11110</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert30" tabindex="0"><el-kw>assert </el-kw><el-field id="text31" class="ok" tabindex="0"><el-txt><el-method>bitAnd</el-method>(<el-id>a</el-id>, <el-id>b</el-id>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr32" class="ok" tabindex="0"><el-txt><el-lit>0b1100</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-statement class="ok" id="var36" tabindex="0"><el-kw>variable </el-kw><el-field id="var37" class="ok" tabindex="0"><el-txt><el-id>aob</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr38" class="ok" tabindex="0"><el-txt><el-method>bitOr</el-method>(<el-id>a</el-id>, <el-id>b</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="assert33" tabindex="0"><el-kw>assert </el-kw><el-field id="text34" class="ok" tabindex="0"><el-txt><el-id>aob</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr35" class="ok" tabindex="0"><el-txt><el-lit>0b11111</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert33" tabindex="0"><el-kw>assert </el-kw><el-field id="text34" class="ok" tabindex="0"><el-txt><el-id>aob</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr35" class="ok" tabindex="0"><el-txt><el-lit>0b11111</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-statement class="ok" id="var41" tabindex="0"><el-kw>variable </el-kw><el-field id="var42" class="ok" tabindex="0"><el-txt><el-id>axb</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr43" class="ok" tabindex="0"><el-txt><el-method>bitXor</el-method>(<el-id>a</el-id>, <el-id>b</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="assert44" tabindex="0"><el-kw>assert </el-kw><el-field id="text45" class="ok" tabindex="0"><el-txt><el-id>axb</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr46" class="ok" tabindex="0"><el-txt><el-lit>0b10011</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert44" tabindex="0"><el-kw>assert </el-kw><el-field id="text45" class="ok" tabindex="0"><el-txt><el-id>axb</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr46" class="ok" tabindex="0"><el-txt><el-lit>0b10011</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-statement class="ok" id="var47" tabindex="0"><el-kw>variable </el-kw><el-field id="var48" class="ok" tabindex="0"><el-txt><el-id>nota</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr49" class="ok" tabindex="0"><el-txt><el-method>bitNot</el-method>(<el-id>a</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="assert50" tabindex="0"><el-kw>assert </el-kw><el-field id="text51" class="ok" tabindex="0"><el-txt><el-id>nota</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr52" class="ok" tabindex="0"><el-txt>-<el-lit>14</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert50" tabindex="0"><el-kw>assert </el-kw><el-field id="text51" class="ok" tabindex="0"><el-txt><el-id>nota</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr52" class="ok" tabindex="0"><el-txt>-<el-lit>14</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-statement class="ok" id="var53" tabindex="0"><el-kw>variable </el-kw><el-field id="var54" class="ok" tabindex="0"><el-txt><el-id>aL</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr55" class="ok" tabindex="0"><el-txt><el-method>bitShiftL</el-method>(<el-id>a</el-id>, <el-lit>2</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="assert56" tabindex="0"><el-kw>assert </el-kw><el-field id="text57" class="ok" tabindex="0"><el-txt><el-id>aL</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr58" class="ok" tabindex="0"><el-txt><el-lit>0b110100</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert59" tabindex="0"><el-kw>assert </el-kw><el-field id="text60" class="ok" tabindex="0"><el-txt><el-method>bitShiftR</el-method>(<el-id>a</el-id>, <el-lit>2</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr61" class="ok" tabindex="0"><el-txt><el-lit>0b11</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field><el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert56" tabindex="0"><el-kw>assert </el-kw><el-field id="text57" class="ok" tabindex="0"><el-txt><el-id>aL</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr58" class="ok" tabindex="0"><el-txt><el-lit>0b110100</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert59" tabindex="0"><el-kw>assert </el-kw><el-field id="text60" class="ok" tabindex="0"><el-txt><el-method>bitShiftR</el-method>(<el-id>a</el-id>, <el-lit>2</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr61" class="ok" tabindex="0"><el-txt><el-lit>0b11</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
-<p>The result of <el-method>bitNot</el-method>(<el-id>a</el-id>) being <el-code>-14</el-code> , when <el-code><el-id>a</el-id></el-code> is <el-code>13</el-code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as <el-code>00000000000000000000000000001101</el-code>, and applying <el-method>bitNot</el-method> gives <el-code>11111111111111111111111111110010 </el-code>which is the value <el-code>-14 </el-code>in signed two&#8217;s complement format, the left-most bit being the sign (<el-code>0</el-code> positive, <el-code>1</el-code> negative).</p>
+<p>The result of <el-method>bitNot</el-method>(<el-id>a</el-id>)</el-code> being <el-code>-14</el-code> , when <el-code><el-id>a</el-id></el-code> is <el-code>13</el-code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as <el-code>00000000000000000000000000001101</el-code>, and applying <el-method>bitNot</el-method> gives <el-code>11111111111111111111111111110010 </el-code>which is the value <el-code>-14 </el-code>in signed two&#8217;s complement format, the left-most bit being the sign (<el-code>0</el-code> positive, <el-code>1</el-code> negative).</p>
 
 <h2 id="sequence">Sequence</h2>
-
-<p>The <el-method>sequence</el-method> function is used to create a <el-type>List</el-type> containing a sequence
+<p>The <el-method>sequence</el-method> is used to create a <el-type>List</el-type> containing a sequence
 of integer values as defined by the two (integer) parameters: <el-code><el-id>start</el-id></el-code> and <el-code><el-id>end</el-id></el-code>
-(both being <i>inclusive</i> values).</p>
-<p>Here is an example which uses <a href="#HoFs">higher order functions</a> to print the prime numbers between 2 and 30:</p>
-<el-statement class="ok" id="print8"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-method>sequence</el-method>(<el-lit>2</el-lit>, <el-lit>30</el-lit>).<el-method>filter</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-method>sequence</el-method>(<el-lit>2</el-lit>, <el-method>sqrt</el-method>(<el-id>n</el-id>).<el-method>floor</el-method>()).<el-method>reduce</el-method>(<el-id>true</el-id>, <el-kw>lambda</el-kw> <el-id>c</el-id> <el-kw>as</el-kw> <el-type>Boolean</el-type>, <el-id>m</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>c</el-id><el-kw> and </el-kw>((<el-id>n</el-id><el-kw> mod </el-kw><el-id>m</el-id>)<el-kw> isnt </el-kw><el-lit>0</el-lit>)))</el-txt></el-field></el-statement>
+(both being <i>inclusive</i> values), for example:</p>
 
 <h1 id="StandaloneProcedures">Standalone procedures</h1>
 
 <h2 >Standalone procedures</h2>
-
 <p>All <el-code>procedure</el-code>s are accessed via a <a href="LangRef.html#call"><el-code>call</el-code></a> statement.</p>
 <table class="tableMethod">
  <tr><th>procedure</th><th>input<br>argument<br>Types</th><th>output<br>argument<br>Types</th><th>action</th>
@@ -2499,7 +2402,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td><el-method>pause</el-method></td>
   <td><el-type>Int</el-type></td>
   <td>(none)</td>
-  <td>pauses execution of the program for the specified number of milliseconds,<br> e.g. for a game <el-code>pause(100)</el-code> delays execution for one tenth of a second</td>
+  <td>pauses the execution of a program for the specified number of milliseconds,<br> e.g. for a game <el-code>pause(100)</el-code> delays execution for one tenth of a second</td>
  </tr><tr id="clearPrintedText">
   <td><el-method>clearPrintedText</el-method></td>
   <td>(none)</td>
@@ -2510,16 +2413,6 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td>(none)</td>
   <td>(none)</td>
   <td>clears the IDE's keyboard input</td>
- </tr><tr id="getKey">
-  <td><el-method>getKey</el-method></td>
-  <td>(none)</td>
-  <td>(none)</td>
-  <td>returns the last character pressed on the keyboard during program execution</td>
- </tr><tr id="pressAnyKeyToContinue">
-  <td><el-method>pressAnyKeyToContinue</el-method></td>
-  <td>(none)</td>
-  <td>(none)</td>
-  <td>pauses execution of the program until a keyboard key is pressed</td>
  </tr><tr id="printLine">
   <td><el-method>printLine</el-method></td>
   <td><el-type>String</el-type></td>
@@ -2532,21 +2425,15 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td><el-type>String</el-type></td>
   <td>(none)</td>
   <td>prints the string to the Display without appending a newline so<br>
-  a following call will output on the same line<br>
+  a following call will output on the same line.<br>
   You can put your own "\n" newlines in the argument string</td>
  </tr><tr id="printTab">
   <td><el-method>printTab</el-method></td>
   <td><el-type>Int, String</el-type></td>
   <td>(none)</td>
   <td>prints the string to the Display starting at the tab position given (from 0)</td>
- </tr><tr id="waitForKey">
-  <td><el-method>waitForKey</el-method></td>
-  <td><el-type>String</el-type></td>
-  <td>(none)</td>
-  <td>pauses execution of the program until the first character of the string is input from the keyboard </td>
  </tr>
 </table>
-
 <p>Method <el-method>printTab</el-method> helps in the layout of information printed to the Display, in particular, when printing columns of data.
  For example:</p>
 <el-code-block source="printTab.elan">
@@ -2568,7 +2455,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <el-statement class="ok multiline" id="for9" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident11" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr12" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt>(<el-id>tab</el-id> - <el-lit>1</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
 <el-statement class="ok" id="var15" tabindex="0"><el-kw>variable </el-kw><el-field id="var16" class="ok" tabindex="0"><el-txt><el-id>j</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-lit>9</el-lit>^<el-id>i</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="var55" tabindex="0"><el-kw>variable </el-kw><el-field id="var56" class="ok" tabindex="0"><el-txt><el-id>f</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr57" class="ok" tabindex="0"><el-txt><el-kw>lambda</el-kw><el-id>j</el-id><el-kw>as</el-kw><el-type>Int</el-type> =&gt; <el-id>j</el-id>.<el-method>asString</el-method>().<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="var55" tabindex="0"><el-kw>variable </el-kw><el-field id="var56" class="ok" tabindex="0"><el-txt><el-id>f</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr57" class="ok" tabindex="0"><el-txt><el-kw>lambda</el-kw> <el-id>j</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>j</el-id>.<el-method>asString</el-method>().<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="call18" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args20" class="optional ok" tabindex="0"><el-txt><el-id>tab</el-id> - <el-method>f</el-method>(<el-id>j</el-id>), "<el-lit></el-lit>{<el-id>j</el-id>}<el-lit>\n</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
@@ -2577,7 +2464,6 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <h1 id="SystemMethods">System methods</h1>
 
 <h2>System methods</h2>
-
 <p>System methods appear to work like <el-code>functions</el-code>, because:</p>
 <ul>
  <li>they may require one or more arguments to be provided.</li>
@@ -2598,8 +2484,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
  <li>Some system methods are not concerned with input/output, e.g. some generate random numbers.</li>
 </ul>
 <p>The reason those are system methods is that they have a dependency on variable data that is not passed into them as arguments.</p>
-
-<table class="tableMethod">
+<table>
  <tr>
   <th>system<br>method</th>
   <th>argument<br>Types</th>
@@ -2610,6 +2495,11 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>returns the current value (in  milliseconds) of a system clock.<br>Useful for measuring elapsed time by comparing the values returned by two calls</td>
+ </tr><tr id="getKey">
+  <td><el-method>getKey</el-method></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>returns the character of the keyboard key pressed</td>
  </tr><tr id="getKeyWithModifier">
   <td><el-method>getKeyWithModifier</el-method></td>
   <td>(none)</td>
@@ -2658,7 +2548,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td><el-type>Float</el-type></td>
   <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
   provided that it is a number with a value in the (inclusive) range.<br> The first range value must be less than or equal to the second</td>
- </tr><tr id="openFileForReading_system">
+ </tr><tr id="openFileForReading">
   <td><el-method>openFileForReading</el-method></td>
   <td>(none)</td>
   <td><el-class>TextFileReader</el-class></td>
@@ -2677,39 +2567,33 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td><el-method>waitForAnyKey</el-method></td>
   <td></td>
   <td></td>
-  <td><i>deprecated</i>: see procedures <a href="#waitForKey"><el-method>waitForKey</el-method></a>,
-   <a href="#getKey"><el-method>getKey</el-method></a> and
-   <a href="#pressAnyKeyToContinue"><el-method>pressAnyKeyToContinue</el-method></a></td>
+  <td></td>
  </tr>
 </table>
 
 <h1>Library functions that process Lists</h1>
 
 <h2 id="HoFs">Higher order functions (HoFs)</h2>
-
-<p>These dot methods are called on any <el-code>List,</el-code><el-code>ListImmutable</el-code> or <el-type>String</el-type>. As &#8216;higher order functions&#8217; they take either a <el-kw>lambda</el-kw> or a function reference as one of their arguments: see <span class="Link">Passing a function as a reference</span>.</p>
+<p>These dot methods are called on any <el-code>List,</el-code> <el-code>ListImmutable</el-code> or <el-type>String</el-type>. As &#8216;higher order functions&#8217; they take either a <el-kw>lambda</el-kw> or a function reference as one of their arguments: see <span class="Link">Passing a function as a reference</span>.</p>
 <p>Although several of these methods return a <el-type>ListImmutable</el-type>, they may be converted to a List using method <el-method>asList</el-method>.</p>
 <p>These are not yet fully documented but, for readers familiar with HoFs from another programming language, some examples are shown below.</p>
 
 <h3 class="no-TOC" id="filter">filter </h3>
-
 <p>Example function from demo program <el-code>pathfinder.elan</el-code> in which <el-method>filter</el-method> applies the <el-code>lambda</el-code> to the <el-id>nodes</el-id> (of class Node) to find one that contains <el-id>p</el-id> (of record Point):</p>
 <el-code-block>
 <el-func class="ok multiline" id="func333" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident335" class="ok" tabindex="0"><el-txt>getNodeFor</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params336" class="optional ok" tabindex="0"><el-txt><el-id>p</el-id><el-kw>as</el-kw><el-type>Point</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type337" class="ok" tabindex="0"><el-txt><el-type>Node</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
-<el-statement class="ok" id="let340" tabindex="0"><el-kw>let </el-kw><el-field id="var341" class="ok" tabindex="0"><el-txt><el-id>matches</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr342" class="ok" tabindex="0"><el-txt><el-kw>property</el-kw>.<el-id>nodes</el-id>.<el-method>filter</el-method>(<el-kw>lambda</el-kw><el-id>n</el-id><el-kw>as</el-kw><el-type>Node</el-type> =&gt; <el-id>n</el-id>.<el-id>point</el-id><el-kw> is </el-kw><el-id>p</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="return338" tabindex="0"><el-kw>return </el-kw><el-field id="expr339" class="ok" tabindex="0"><el-txt><el-kw>if </el-kw><el-id>matches</el-id>.<el-method>length</el-method>()<el-kw> is </el-kw><el-lit>1</el-lit><el-kw> then </el-kw><el-id>matches</el-id>.<el-method>head</el-method>()<el-kw><br>else </el-kw><el-kw>empty</el-kw><el-type>Node</el-type></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident335" class="ok" tabindex="0"><el-txt>getNodeFor</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params336" class="optional ok" tabindex="0"><el-txt><el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type337" class="ok" tabindex="0"><el-txt><el-type>Node</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
+<el-statement class="ok" id="let340" tabindex="0"><el-kw>let </el-kw><el-field id="var341" class="ok" tabindex="0"><el-txt><el-id>matches</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr342" class="ok" tabindex="0"><el-txt><el-kw>property</el-kw>.<el-id>nodes</el-id>.<el-method>filter</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Node</el-type> =&gt; <el-id>n</el-id>.<el-id>point</el-id><el-kw> is </el-kw><el-id>p</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="return338" tabindex="0"><el-kw>return </el-kw><el-field id="expr339" class="ok" tabindex="0"><el-txt><el-kw>if </el-kw><el-id>matches</el-id>.<el-method>length</el-method>()<el-kw> is </el-kw><el-lit>1</el-lit><el-kw> then </el-kw><el-id>matches</el-id>.<el-method>head</el-method>()<el-kw><br>else </el-kw><el-kw>empty</el-kw> <el-type>Node</el-type></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
 
 <h3 class="no-TOC" id="map">map</h3>
-
     <p>Usage:</p>
     <el-code>let next be cellRange.map(lambda n as Int =&gt; nextCellValue(cells, n))</el-code>
 
 <h3 class="no-TOC" id="reduce">reduce</h3>
-
     <p>Usage:</p>
     <el-code-block>
     let d2 be possibleAnswers.reduce(d, <br>
@@ -2717,10 +2601,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
     &nbsp;&nbsp;incrementCount(dd, possAnswer, attempt))
     </el-code-block>
 
-<div id="maxBy"></div>
-<div id="minBy"></div>
-<h3 class="no-TOC">maxBy and minBy</h3>
-
+<h3 class="no-TOC" id="maxBy">maxBy and minBy</h3><span id="minBy"></span>
     <p><el-code>maxBy</el-code> and <el-code>minBy</el-code> are dot functions of <el-code>List</el-code> and <el-code>ListImmutable</el-code>.  They take a function as an argument, and return the list element corresponding to  maximum or minimum of the values returned by the function.  This prints "89" and "orange":</p>
     <p><el-code>variable a set to {33, 4, 0, 92, 89, 55}</el-code><br>
     <el-code>print a.maxBy(lambda x as Int =&gt; x mod 10)</el-code><br>
@@ -2734,19 +2615,18 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <el-method>minInt</el-method>.</p>
 
 <h3 class="no-TOC" id="sortBy">sortBy</h3>
-
 <p><el-code>sortBy</el-code> takes a <el-kw>lambda</el-kw> that takes two arguments (of the same Type as that of the <el-code>ListImmutable</el-code> being sorted) and compares them, returning an integer with one of the values -1, 0, or +1, to indicate whether the first argument should be placed respectively before, adjacent to or after the second argument in the sorted result, where &#8216;adjacent to&#8217; means it does not matter whether before or after):</p>
 
 <el-code-block source="sortBy_Int.elan">
 <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>numbers</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>[<el-lit>27</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>31</el-lit>, <el-lit>37</el-lit>, <el-lit>11</el-lit>, <el-lit>13</el-lit>, <el-lit>17</el-lit>, <el-lit>19</el-lit>, <el-lit>23</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>numbers</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw><el-id>x</el-id><el-kw>as</el-kw><el-type>Int</el-type>, <el-id>y</el-id><el-kw>as</el-kw><el-type>Int</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id> &gt; <el-id>y</el-id><el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id> &lt; <el-id>y</el-id><el-kw> then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>numbers</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id> &gt; <el-id>y</el-id><el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id> &lt; <el-id>y</el-id><el-kw> then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 
 <p>And similarly for string comparisons using methods <el-method>isBefore</el-method> and <el-method>isAfter</el-method>:</p>
 <el-code-block source="sortBy_String.elan">
 <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>["<el-lit>Simon</el-lit>", "<el-lit>Pauline</el-lit>", "<el-lit>Jason</el-lit>", "<el-lit>Zelda</el-lit>", "<el-lit>Edith</el-lit>", "<el-lit>Lance</el-lit>", "<el-lit>Alice</el-lit>", "<el-lit>Paul</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>names</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw><el-id>x</el-id><el-kw>as</el-kw><el-type>String</el-type>, <el-id>y</el-id><el-kw>as</el-kw><el-type>String</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id>.<el-method>isAfter</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id>.<el-method>isBefore</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>names</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id>.<el-method>isAfter</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id>.<el-method>isBefore</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 
