@@ -1,0 +1,54 @@
+# 5ead149c15c212b2aaaf9126befa564b691159850d4e75c6a5c6a8a026f03f0c Elan 1.1.4 guest default_profile valid
+
+main
+  let sequence be new List<of Int>()
+  variable ok set to true
+  variable interval set to 1000
+  while ok
+    call simonsTurn(sequence, interval)
+    call clearVectorGraphics()
+    call playersTurn(sequence, interval, ok)
+    set interval to interval - 25
+  end while
+  print "Your score: {sequence.length() - 1}"
+end main
+
+procedure simonsTurn(sequence as List<of Int>, interval as Int)
+  call sequence.append(randomInt(1, 4))
+  each move in sequence
+    call displayMove(move)
+    call tone(interval, tones[move - 1].floor(), 1)
+    call clearVectorGraphics()
+    call pause(100)
+  end each
+end procedure
+
+procedure displayMove(move as Int)
+  call clearVectorGraphics()
+  let circle be new CircleVG() with centreX set to 20*move - 5, centreY set to 15, radius set to 10, fillColour set to colours[move - 1], strokeWidth set to 0
+  call displayVectorGraphics([circle])
+end procedure
+
+procedure playersTurn(sequence as List<of Int>, interval as Int, out ok as Boolean)
+  variable counter set to 0
+  while ok and (counter < sequence.length())
+    let k be waitForKey()
+    let valid, digit be parseAsInt(k)
+    if valid and (sequence[counter] is digit) then
+      set counter to counter + 1
+      call displayMove(digit)
+      call tone(interval, tones[digit - 1].floor(), 1)
+      call clearVectorGraphics()
+      call pause(100)
+    else
+      set ok to false
+    end if
+  end while
+  call pause(1000)
+  call clearVectorGraphics()
+  call pause(2000)
+end procedure
+
+constant colours set to {red, yellow, blue, green}
+
+constant tones set to {164.81, 220, 277.18, 329.63}

@@ -780,7 +780,7 @@ export class StdLib {
   @elanProcedure(["durationMs", "frequencyHz", "volume"], ProcedureOptions.async)
   async tone(
     @elanIntType() duration: number,
-    @elanIntType() frequency: number,
+    @elanFloatType() frequency: number,
     @elanFloatType() volume: number,
   ) {
     await this.system!.elanInputOutput.tone(duration, frequency, volume);
