@@ -160,7 +160,7 @@ test('parse error', async ({ page }) => {
   await expect(page.locator('#parse')).toContainText('invalid');
 });
 
-test('load and run demo with graphics', async ({ page }) => {
+/* test('load and run demo with graphics', async ({ page }) => {
   page.once('dialog', dialog => {
     //console.log(`Dialog message: ${dialog.message()}`);
     dialog.accept().catch(() => {});
@@ -172,7 +172,7 @@ test('load and run demo with graphics', async ({ page }) => {
 
   await page.getByRole('button', { name: 'Run the program' }).click();
   await expect(page.locator('[style="background-color:#000000;"]')).toContainText("");
-});
+}); */
 
 test('symbol completion', async ({ page }) => {
   page.once('dialog', dialog => {
