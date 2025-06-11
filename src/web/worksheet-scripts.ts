@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 const updateable = document.querySelectorAll("input, textarea, select");
-const hints = document.getElementsByTagName("el-hint");
+const hints = document.querySelectorAll("span.show");
 const doneCheckboxes = document.querySelectorAll("input[type=checkbox].step");
 
 const autoSaveButton = document.getElementById("auto-save");
@@ -143,12 +143,13 @@ for (const e of updateable) {
 for (const e of hints) {
   e.addEventListener("click", async (e) => {
     const ke = e as any;
-    const tgt = ke.target as any;
-    const id = tgt.id;
-    const text = tgt.dataset.hint;
-    tgt.innerHTML = atob(text);
+    const span = ke.target as HTMLSpanElement;
+    const hint = span.parentElement as HTMLDivElement;
+    const id = span.id;
+    const text = hint.dataset.hint || "";
+    hint.innerText = atob(text);
     document.title = `${id} shown`;
-    tgt.classList.add("taken");
+    hint.classList.add("taken");
     await save();
   });
 }
