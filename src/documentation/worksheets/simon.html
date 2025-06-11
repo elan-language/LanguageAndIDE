@@ -13,9 +13,9 @@
 <body>
 <div class="docTitle">Simon</div>
 
-<button class="saved">Auto-save file locally to continue</button>
+<button id="auto-save">Auto-save file locally to continue</button>
 
-<div class="step">
+<div class="step" id="step1">
   <p>In the classic hand-held electronic game, <a href="https://en.wikipedia.org/wiki/Simon_(game)" target="_blank">Simon</a>
   the device played sequence made up of 'moves' and the players task was to remember and reproduce
   the sequence. Each of the four possible moves had a different colour (red, yellow, blue, green)
@@ -75,9 +75,9 @@
   </ul>
   <label class="done" for="done1">Step completed</label>
 </div>
-<input type="checkbox" class="step" />
+<input type="checkbox" class="step" id="done1" />
 
-<div class="step">
+<div class="step"  id="step2">
   <h3>Iteration 2- Draw circle in 4 different locations and colours</h3>
   <p>Although the game will only show one circle at a time, we want to position
     in one of four places in a row, and a different colour for each location.
@@ -119,9 +119,9 @@
     </ul>
   <label class="done" for="done2">Step completed</label>
 </div>
-<input type="checkbox" class="step" />
+<input type="checkbox" class="step" id="done2"/>
 
-<div class="step">
+<div class="step"  id="step3">
 
   <h3>Iteration 3 - Move the display capability into a procedure</h3>
 <p>Thinking ahead to the fact that we need to display moves both when the program
@@ -188,9 +188,9 @@
 </ul>
   <label class="done" for="done3">Step completed</label>
 </div>
- <input type="checkbox" class="step" />
+ <input type="checkbox" class="step" id="done3"/>
 
-<div class="step">
+<div class="step"  id="step4">
   <h3>Iteration 4: Play a sequence</h3>
 
   <ul>
@@ -306,9 +306,9 @@
   </ul>
   <label class="done" for="done4">Step completed</label>
 </div>
-<input type="checkbox" class="step" />
+<input type="checkbox" class="step" id="done4"/>
 
-<div class="step">
+<div class="step"  id="step5">
   <h3>Iteration 5: Add sound</h3>
 
   <ul>
@@ -346,9 +346,9 @@
 
   <label class="done" for="done5">Step completed</label>
 </div>
-<input type="checkbox" class="step" />
+<input type="checkbox" class="step" id="done5" />
 
-<div class="step">
+<div class="step" id="step6">
   <h3>Iteration 6: Build the random sequence</h3>
   <ul>
     <li>To append a value to a list we call the <el-method>append</el-method> procedure on the list (as a 'dotted method'). So,
@@ -360,11 +360,11 @@
   change it to a random value.
 
 
-  <label class="done" for="done5">Step completed</label>
+  <label class="done" for="done6">Step completed</label>
 </div>
-<input type="checkbox" class="step" />
+<input type="checkbox" class="step" id="done6"/>
 
-<div class="step">
+<div class="step"  id="stepFinal">
   Worksheet completed.
 
   <div class="license">
