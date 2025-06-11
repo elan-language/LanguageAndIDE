@@ -1,4 +1,4 @@
-# 5ead149c15c212b2aaaf9126befa564b691159850d4e75c6a5c6a8a026f03f0c Elan 1.1.4 guest default_profile valid
+# bd155f1d122821207360dac28306d10342dd8a29041a9e9e23e9b30aec7a6db0 Elan 1.2.0 guest default_profile valid
 
 main
   let sequence be new List<of Int>()
@@ -16,17 +16,17 @@ end main
 procedure simonsTurn(sequence as List<of Int>, interval as Int)
   call sequence.append(randomInt(1, 4))
   each move in sequence
-    call displayMove(move)
-    call tone(interval, tones[move - 1].floor(), 1)
-    call clearVectorGraphics()
-    call pause(100)
+    call displayMove(move, interval)
   end each
 end procedure
 
-procedure displayMove(move as Int)
+procedure displayMove(move as Int, interval as Int)
   call clearVectorGraphics()
   let circle be new CircleVG() with centreX set to 20*move - 5, centreY set to 15, radius set to 10, fillColour set to colours[move - 1], strokeWidth set to 0
   call displayVectorGraphics([circle])
+  call tone(interval, tones[move - 1].floor(), 0.1)
+  call clearVectorGraphics()
+  call pause(100)
 end procedure
 
 procedure playersTurn(sequence as List<of Int>, interval as Int, out ok as Boolean)
@@ -36,10 +36,7 @@ procedure playersTurn(sequence as List<of Int>, interval as Int, out ok as Boole
     let valid, digit be parseAsInt(k)
     if valid and (sequence[counter] is digit) then
       set counter to counter + 1
-      call displayMove(digit)
-      call tone(interval, tones[digit - 1].floor(), 1)
-      call clearVectorGraphics()
-      call pause(100)
+      call displayMove(digit, interval)
     else
       set ok to false
     end if
