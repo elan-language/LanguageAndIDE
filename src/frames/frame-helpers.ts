@@ -173,10 +173,9 @@ export function helper_compileMsgAsHtml(loc: Frame | Field): string {
   const popUp = helper_pastePopUp(loc);
 
   const toDisplay = escapeHtmlChars(msg);
-  const href = link ? ` data-href="${link}"` : "";
   return cls === ""
     ? `<el-msg></el-msg>${popUp}`
-    : ` <el-msg class="${cls}"${href}>${toDisplay}${help}</el-msg>${popUp}`;
+    : ` <el-msg class="${cls}">${toDisplay}${help}</el-msg>${popUp}`;
 }
 
 export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): CompileStatus {
@@ -320,11 +319,11 @@ export function processTogglePrivate(member: Member, e: editorEvent): boolean {
 
 export function addPrivateToggleToContextMenu(
   member: PossiblyPrivateMember,
-  menu: Map<string, [string, (() => void) | undefined, string]>,
+  menu: Map<string, [string, (() => void) | undefined]>,
 ) {
   if (member.private) {
-    menu.set("makePublic", ["make public (Ctrl-p)", member.makePublic, ""]);
+    menu.set("makePublic", ["make public (Ctrl-p)", member.makePublic]);
   } else {
-    menu.set("makePrivate", ["make private (Ctrl-p)", member.makePrivate, ""]);
+    menu.set("makePrivate", ["make private (Ctrl-p)", member.makePrivate]);
   }
 }

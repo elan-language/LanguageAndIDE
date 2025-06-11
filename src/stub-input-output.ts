@@ -207,6 +207,19 @@ export class StubInputOutput implements ElanInputOutput {
     });
   }
 
+  waitForKey(): Promise<string> {
+    return new Promise<string>((rs) => {
+      onmessage = (e) => {
+        const data = e.data as WebWorkerMessage;
+
+        if (data.type === "read") {
+          rs(data.value as string);
+        }
+      };
+      postMessage(this.writeMsg("waitForKey"));
+    });
+  }
+
   getKey() {
     return new Promise<string>((rs) => {
       onmessage = (e) => {

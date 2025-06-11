@@ -26,6 +26,10 @@ export class TestInputOutput implements ElanInputOutput {
     return Promise.resolve("");
   }
 
+  waitForKey(): Promise<string> {
+    return Promise.resolve("");
+  }
+
   getKeyWithModifier(): Promise<[string, string]> {
     const t = ["", ""] as [string, string];
     return  Promise.resolve(t);
@@ -90,7 +94,8 @@ export class TestInputOutput implements ElanInputOutput {
     this.drawn = "";
     return Promise.resolve();
   }
-    tone(_duration: number, _frequency: number, _volume: number): Promise<void> {
+  
+  tone(_duration: number, _frequency: number, _volume: number): Promise<void> {
     return Promise.resolve();
   }
 }
