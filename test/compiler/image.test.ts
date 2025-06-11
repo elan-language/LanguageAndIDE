@@ -38,7 +38,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      `<img src='http://website.image.png' width='13.2' height='13.2' title='' alt=''>`,
+      `<img src="http://website.image.png" width="13.2" height="13.2" title="" alt="">`,
     );
   });
 
@@ -66,7 +66,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(
       fileImpl,
-      `<img src='http://website.image.png' width='100' height='200' title='' alt=''>`,
+      `<img src="http://website.image.png" width="100" height="200" title="" alt="">`,
     );
   });
 

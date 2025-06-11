@@ -17,7 +17,6 @@ body { font-size:10pt; margin-left:5px; text-decoration:none; font-weight:normal
 p,img,pre,blockquote,address,td,th,li,ul
   { font-size:10pt; text-indent:0pt; margin-top:4pt; margin-bottom:4pt; line-height:1.3; }
 
-
 /* show sort direction icons in the sortable column headings */
 table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {content: " \25B4\25BE"}
 
@@ -87,11 +86,6 @@ table
 el-code, el-code *, el-code-block, el-code-block * {font-family: Consolas, Courier, monospace;}
 el-code, el-code-block {color: black} /* This is default - used only when the code is plain text. Overridden when code is marked up with tags*/
 el-code-block {display:block; margin-top:12pt; margin-bottom:12pt;}
-
-el-code-block img {
-  height: 0.9em;
-  margin: 0;
-}
 
 /* Links in index */
 a:link {text-decoration: none}

@@ -80,10 +80,6 @@ const documentationTab = document.getElementById("documentation-tab") as HTMLDiv
 const worksheetTab = document.getElementById("worksheet-tab") as HTMLDivElement;
 const debugTab = document.getElementById("debug-tab") as HTMLDivElement;
 
-const documentationHome = document.getElementById("doc-home") as HTMLButtonElement;
-const documentationBack = document.getElementById("doc-back") as HTMLButtonElement;
-const documentationForward = document.getElementById("doc-forward") as HTMLButtonElement;
-
 const documentationIFrame = document.getElementById("doc-iframe") as HTMLIFrameElement;
 const worksheetIFrame = document.getElementById("worksheet-iframe") as HTMLIFrameElement;
 
@@ -415,18 +411,6 @@ function filterKeypress(button: HTMLButtonElement) {
 
 documentationButton.addEventListener("click", showDocumentationTab);
 documentationButtonLabel.addEventListener("keydown", filterKeypress(documentationButton));
-
-documentationHome.addEventListener("click", () => {
-  window.open("documentation/Home.html", "doc-iframe")?.focus();
-});
-
-documentationBack.addEventListener("click", () => {
-  documentationIFrame.contentWindow?.history.back();
-});
-
-documentationForward.addEventListener("click", () => {
-  documentationIFrame.contentWindow?.history.forward();
-});
 
 displayButton.addEventListener("click", showDisplayTab);
 displayButtonLabel.addEventListener("keydown", filterKeypress(displayButton));
@@ -1243,17 +1227,22 @@ async function updateContent(text: string, editingField: boolean) {
         const tgt = ke.target as HTMLDivElement;
         const id = tgt.dataset.id;
         const func = tgt.dataset.func;
+        const href = tgt.dataset.href;
 
-        handleEditorEvent(
-          event,
-          "contextmenu",
-          "frame",
-          getModKey(ke),
-          id,
-          "ContextMenu",
-          undefined,
-          func,
-        );
+        if (href) {
+          window.open(`documentation/${href}`, "doc-iframe")?.focus();
+        } else {
+          handleEditorEvent(
+            event,
+            "contextmenu",
+            "frame",
+            getModKey(ke),
+            id,
+            "ContextMenu",
+            undefined,
+            func,
+          );
+        }
       });
     }
   }
@@ -1262,12 +1251,6 @@ async function updateContent(text: string, editingField: boolean) {
 
   for (const item of helpLinks) {
     item.addEventListener("click", (event) => {
-      if ((event.target as any).target === "doc-iframe") {
-        // can't use the load event as if the page is already loaded with url it doesn#t fore agaon so
-        // no focus
-        documentationButton.click();
-      }
-
       event.stopPropagation();
     });
   }
@@ -1390,11 +1373,10 @@ async function localAndAutoSave(field: HTMLElement | undefined, editingField: bo
   undoRedoHash = file.currentHash;
   undoRedoing = false;
 
-  if (file.readParseStatus() === ParseStatus.valid) {
-    // autosave if setup
-    code = code ?? (await file.renderAsSource());
-    autoSave(code);
-  }
+  code = code ?? (await file.renderAsSource());
+
+  // autosave if setup
+  autoSave(code);
 }
 
 function updateIndexes(indexJustUsed: number) {
@@ -1532,10 +1514,6 @@ async function handleWorkerIO(data: WebWorkerWriteMessage) {
     case "waitForAnyKey":
       await elanInputOutput.waitForAnyKey();
       runWorker?.postMessage(readMsg(""));
-      break;
-    case "waitForKey":
-      const wkey = await elanInputOutput.waitForKey();
-      runWorker?.postMessage(readMsg(wkey));
       break;
     case "getKey":
       const key = await elanInputOutput.getKey();
