@@ -1,0 +1,86 @@
+.step, 
+.step *,
+.step + input {
+    visibility: hidden;
+}
+
+.step + input {
+    margin-left: 1em;
+}
+
+#auto-save.saved {
+    display: none;
+}
+
+#auto-save.saved + .step, 
+#auto-save.saved + .step *,
+#auto-save.saved + .step +  input {
+    visibility: visible;
+}
+
+#auto-save.saved ~ .step.complete, 
+#auto-save.saved ~ .step.complete *,
+#auto-save.saved ~ .step.complete + input,
+#auto-save.saved ~ .step.complete + input + .timestamp + .step,
+#auto-save.saved ~ .step.complete + input + .timestamp + .step *,
+#auto-save.saved ~ .step.complete + input + .timestamp + .step + input
+{
+    visibility: visible;
+}
+
+.step.complete label.done {
+    display: none;
+}
+
+.done {
+    color: rgb(15, 71, 97);
+    font-weight: bold;
+}
+
+.timestamp {
+    margin-left: 5px;
+    font-size: 8pt;
+}
+
+.license, .license img {
+    display: block;
+    font-size: 8pt;
+    margin-top: 1em;
+}
+
+.hint span.show.taken ~, .hint span.show.taken ~ * {
+    visibility: visible;
+}
+
+/* Hint */
+.hint span.show.taken ~, .hint span.show.taken ~ * {
+    visibility: visible;
+}
+
+#auto-save.saved + .step .hint * {
+    display: none;
+}
+
+#auto-save.saved + .step .hint.taken * {
+    display: block;
+}
+#auto-save.saved + .step .hint.taken span {
+    display: inline;
+}
+
+#auto-save.saved + .step .hint .show {
+    display: block;
+}
+
+#auto-save.saved + .step .hint.taken *{
+    display: block;
+}
+
+.hint + .hint {
+    display: none;
+}
+
+.hint.taken + .hint {
+    display: block;
+}
+
