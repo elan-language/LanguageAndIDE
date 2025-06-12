@@ -76,3 +76,11 @@
     display: block;
 }
 
+.hint + .hint {
+    display: none;
+}
+
+.hint.taken + .hint {
+    display: block;
+}
+
