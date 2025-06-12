@@ -48,12 +48,31 @@
     margin-top: 1em;
 }
 
-.hint span.show ~, 
-.hint span.show ~ * 
-#auto-save.saved ~ .step + input + .timestamp + .step .hint ~ *{
-    visibility: hidden;
-}
-
 .hint span.show.taken ~, .hint span.show.taken ~ * {
     visibility: visible;
 }
+
+/* Hint */
+.hint span.show.taken ~, .hint span.show.taken ~ * {
+    visibility: visible;
+}
+
+#auto-save.saved + .step .hint * {
+    display: none;
+}
+
+#auto-save.saved + .step .hint.taken * {
+    display: block;
+}
+#auto-save.saved + .step .hint.taken span {
+    display: inline;
+}
+
+#auto-save.saved + .step .hint .show {
+    display: block;
+}
+
+#auto-save.saved + .step .hint.taken *{
+    display: block;
+}
+
