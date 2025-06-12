@@ -166,8 +166,8 @@ in the range:</li>
   <th>default value</th>
 </tr><tr>
   <td><el-type>Boolean</el-type></td>
-  <td><el-code>variable fact set to true</el-code></td>
-  <td><el-code>false</el-code></td>
+  <td><el-code>variable fact set to <el-id>true</el-id></el-code></td>
+  <td><el-code><el-id>false</el-id></el-code></td>
 </tr>
 </table>
 
@@ -184,10 +184,10 @@ in the range:</li>
   <td><el-type>Boolean</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
-  <td>a string "true" if <el-code>true</el-code>, "false" if <el-code>false</el-code></td>
+  <td>string "true" if <el-code><el-id>true</el-id></el-code>, "false" if <el-code><el-id>false</el-id></el-code></td>
  </tr>
  </table>
-
+  
 <h2 id="String">String</h2>
 <p>A <el-type>String</el-type> represents text,  i.e. a sequence of zero or more characters.</p>
 <table class="tableType">
@@ -2131,9 +2131,11 @@ So the constructors do not take any parameters, and instead you add a <el-kw>wit
 
 <h1>Other Types</h1>
 
+<h2 id="Random">Random</h2>
+
 <h2 id="Func">Func</h2>
 <p>A function may be passed as an argument into another function (or a procedure), or returned as the result of calling another function.
-This pattern is known as <b>Higher order Function (HoF)</b>, and is a key idea in the Functional Programming.</p>
+This pattern is known as <b>Higher-order Function (HoF)</b>, and is a key idea in the Functional Programming.</p>
 <p>To define a function that takes in another function as a parameter, or returns a function, you need to specify the Type of the function,
 just as you would specify the Type of every parameter and the return Type for the function. </p>
 
@@ -2278,7 +2280,7 @@ just as you would specify the Type of every parameter and the return Type for th
             </el-test>
     </el-code-block>
 
-<h2 class="no-TOC" id="MathsFunctions">Maths functions</h2>
+<h2 id="MathsFunctions">Maths functions</h2>
 All the maths functions take a <el-type>Float</el-type> argument and return a <el-type>Float</el-type> value.
 <table class="tableMethod">
 <tr><th>function</th><th>argument<br>Type</th><th>input<br>unit</th><th>returns</th><th>output<br>unit</th></tr>
@@ -2433,7 +2435,7 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 <p>The <el-method>sequence</el-method> function is used to create a <el-type>List</el-type> containing a sequence
 of integer values as defined by the two (integer) parameters: <el-code><el-id>start</el-id></el-code> and <el-code><el-id>end</el-id></el-code>
 (both being <i>inclusive</i> values).</p>
-<p>Here is an example which uses <a href="#HoFs">higher order functions</a> to print the prime numbers between 2 and 30:</p>
+<p>Here is an example which uses <a href="#HoFs">Higher-order Functions</a> to print the prime numbers between 2 and 30:</p>
 <el-statement class="ok" id="print8"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-method>sequence</el-method>(<el-lit>2</el-lit>, <el-lit>30</el-lit>).<el-method>filter</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-method>sequence</el-method>(<el-lit>2</el-lit>, <el-method>sqrt</el-method>(<el-id>n</el-id>).<el-method>floor</el-method>()).<el-method>reduce</el-method>(<el-id>true</el-id>, <el-kw>lambda</el-kw> <el-id>c</el-id> <el-kw>as</el-kw> <el-type>Boolean</el-type>, <el-id>m</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>c</el-id><el-kw> and </el-kw>((<el-id>n</el-id><el-kw> mod </el-kw><el-id>m</el-id>)<el-kw> isnt </el-kw><el-lit>0</el-lit>)))</el-txt></el-field></el-statement>
 
 <h1 id="StandaloneProcedures">Standalone procedures</h1>
@@ -2446,7 +2448,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td><el-method>pause</el-method></td>
   <td><el-type>Int</el-type></td>
   <td>(none)</td>
-  <td>pauses the execution of a program for the specified number of milliseconds,<br> e.g. for a game <el-code>pause(1000)</el-code> delays execution for one tenth of a second</td>
+  <td>pauses the execution of a program for the specified number of milliseconds,<br> e.g. for a game <el-code>pause(1000)</el-code> delays execution for one second</td>
  </tr><tr id="clearPrintedText">
   <td><el-method>clearPrintedText</el-method></td>
   <td>(none)</td>
@@ -2457,6 +2459,13 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td>(none)</td>
   <td>(none)</td>
   <td>clears the IDE's keyboard input</td>
+ </tr><tr id="pressAnyKeyToContinue">
+  <td><el-method>pressAnyKeyToContinue</el-method></td>
+  <td><el-type>Boolean</el-type></td>
+  <td>(none)</td>
+  <td>pauses execution of the program until a keyboard key is pressed<br>
+  if the argument is <el-code><el-id>true</el-id></el-code> 'Press any key to continue' is first displayed,<br>
+   if <el-code><el-id>false</el-id></el-code> nothing is displayed </td>
  </tr><tr id="printLine">
   <td><el-method>printLine</el-method></td>
   <td><el-type>String</el-type></td>
@@ -2478,6 +2487,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td>prints the string to the Display starting at the tab position given (from 0)</td>
  </tr>
 </table>
+
 <p>Method <el-method>printTab</el-method> helps in the layout of information printed to the Display, in particular, when printing columns of data.
  For example:</p>
 <el-code-block source="printTab.elan">
@@ -2612,29 +2622,45 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td><el-method>random</el-method></td>
   <td>(none)</td>
   <td><el-type>Float</el-type></td>
-  <td>returns a random number in the range [0..1]</td>
+  <td>returns a random number in the range [0..1]<br>Not usable from a function: see note</td>
  </tr><tr id="randomInt">
   <td><el-method>randomInt</el-method></td>
   <td><el-type>Int</el-type>, <el-type>Int</el-type></td>
   <td><el-type>Int</el-type></td>
-  <td>returns a random number in the (inclusive) range between the two arguments</td>
- </tr><tr id="waitForKey">
-  <td><el-method>waitForKey</el-method></td>
-  <td><el-type>String</el-type></td>
-  <td>(none)</td>
-  <td>pauses execution of the program until the first character of the string is input from the keyboard </td>
+  <td>returns a random number in the (inclusive) range between the two arguments<br>Not usable from a function: see note</td>
  </tr><tr>
   <td><el-method>waitForAnyKey</el-method></td>
   <td></td>
-  <td><i>deprecated</i>: see procedures <a href="#waitForKey"><el-method>waitForKey</el-method></a>,
+  <td></td>
+  <td><b><i>deprecated</i></b> see method <a href="#waitForKey"><el-method>waitForKey</el-method></a>,
    <a href="#getKey"><el-method>getKey</el-method></a> and
    <a href="#pressAnyKeyToContinue"><el-method>pressAnyKeyToContinue</el-method></a></td>
+ </tr><tr id="waitForKey">
+  <td><el-method>waitForKey</el-method></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>pauses execution of the program until a key is pressed on the keyboard,<br>
+  and returns either a character or the name of a non-character key</td>
+ </tr>
 </table>
 
-<h1>Library functions that process Lists</h1>
+<h4 class="no-TOC">Note</h4><ul>
+ <li>Methods <el-method>random</el-method> and <el-method>randomInt</el-method> cannot be used in a function because
+ of their dependence on external factors, i.e. they are subject to side effects.<br>
+ To obtain random numbers within a function, use Type <a href="#Random"><el-type>Random</el-type></a>.</li></ul>
 
-<h2 id="HoFs">Higher order functions (HoFs)</h2>
-<p>These dot methods are called on any <el-code>List,</el-code> <el-code>ListImmutable</el-code> or <el-type>String</el-type>. As &#8216;higher order functions&#8217; they take either a <el-kw>lambda</el-kw> or a function reference as one of their arguments: see <span class="Link">Passing a function as a reference</span>.</p>
+<h1 id="HoFs">Higher-order Functions (HoFs)</h1>
+<p>A <b>higher-order function</b> (HoF) is one that takes in a reference to another function as a parameter, or (less commonly) that returns a reference to another function as its result. </p>
+
+<h2>Standard HoFs</h2>
+<p>The Elan standard library contains several HoFs that are widely recognised and used within functional programming.</p>
+
+<h2 id="ref">Passing a function as a reference</h2>
+
+<h2>Defining your own HoFs</h2>
+
+<h2>Library functions that process Lists</h2>
+<p>These dot methods are called on any <el-code>List,</el-code> <el-code>ListImmutable</el-code> or <el-type>String</el-type>. As Higher-order Functions they take either a <el-kw>lambda</el-kw> or a function reference as one of their arguments: see <span class="Link">Passing a function as a reference</span>.</p>
 <p>Although several of these methods return a <el-type>ListImmutable</el-type>, they may be converted to a List using method <el-method>asList</el-method>.</p>
 <p>These are not yet fully documented but, for readers familiar with HoFs from another programming language, some examples are shown below.</p>
 
