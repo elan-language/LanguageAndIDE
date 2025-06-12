@@ -146,8 +146,10 @@ for (const e of hints) {
     const span = ke.target as HTMLSpanElement;
     const hint = span.parentElement as HTMLDivElement;
     const id = span.id;
-    const text = hint.dataset.hint || "";
-    hint.innerText = atob(text);
+    const encryptedText = hint.dataset.hint || "";
+    if (encryptedText !== "") {
+      hint.innerText = atob(encryptedText);
+    }
     document.title = `${id} shown`;
     hint.classList.add("taken");
     await save();
