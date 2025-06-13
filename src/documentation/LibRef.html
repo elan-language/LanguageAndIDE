@@ -2004,7 +2004,7 @@ so for example the top left corner of the display is at (-100,75).</p>
  <li>If the turtle is placed or moved outside the 200 &times; 150 area boundary, it will not cause an error,
   but the location of the turtle and any lines outside the boundary will not be visible.</li>
  <li>You can move and turn the turtle, causing lines to be drawn, whether or not the turtle is shown.</li>
- <li>The current location and heading of the turtle may be read using the properties
+ <li id="heading">The current location and heading of the turtle may be read using the properties
   <el-code><el-id>x</el-id></el-code>, <el-code><el-id>y</el-id></el-code>, and <el-code><el-id>heading</el-id></el-code>.</li>
 <li>The turtle starts facing upwards (<el-id>heading</el-id> 0), so that <el-method>move</el-method> moves in the y-direction.</li>
 </ul>
@@ -2063,7 +2063,6 @@ so for example the top left corner of the display is at (-100,75).</p>
  <li id="LineVG"><el-code>LineVG</el-code> for <el-code>&lt;line../&gt;</el-code></li>
  <li id="RectangleVG"><el-code>RectangleVG</el-code> for <el-code>&lt;rect../&gt;</el-code></li>
  <li id="ImageVG"><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
- <li id="TextVG"><el-code>TextVG</el-code> for <el-code>&lt;text../&gt;</el-code></li>
 </ul>
 <p>The properties of the Elan VG shapes match the names of the attributes used in the SVG tags, except that the <el-code>stroke-width</el-code> attribute is changed to <el-code>strokeWidth</el-code> to make it a valid <a href="LangRef.html#identifier">Identifier</a>.</p>
 <p>The &#8216;canvas&#8217; on which vector graphics are drawn (the Display pane in the user interface) is 100 units wide, by 75 units high. All numeric values specified for attributes of vector graphic shapes may be integer or floating point.</p>
@@ -2103,7 +2102,7 @@ so for example the top left corner of the display is at (-100,75).</p>
  <li>As with the way that SVG works within Html, the shapes are drawn in the order in which they are added into the list of <el-type>VectorGraphic</el-type> instances, with later shapes positioned over earlier shapes.</li>
  <li>The <el-code><el-id>fillColour</el-id></el-code> and <el-code><el-id>strokeColour</el-id></el-code> properties may be specified as described under <a href="#Colours">Colours</a>.
   The <el-code><el-id>fillColour</el-id></el-code> only may also be specified as <el-code><el-id>transparent</el-id></el-code> (which has the value <el-code>-1</el-code>).</li>
- <li><el-type>VectorGraphic</el-type> is the abstract superclass of all <el-code>...VG</el-code> shapes. You would only use it if you wanted to define a method that could work on any shape (using common elements defined on <el-code>VectorGraphic</el-code>) or that could work with a <el-type>List</el-type> holding different types of shape.</li>
+ <li><el-type>VectorGraphic</el-type> is the abstract superclass of all <el-code>...VG</el-code> shapes. You use it if you want to define a <el-type>List</el-type> holding different types of shape.</li>
  <li>To make it easier for simple programs, the VectorGraphic shapes all have default values for their parameters, and you only have to specify the ones that you want different.
 So the constructors do not take any parameters, and instead you add a <el-kw>with</el-kw> clause listing those parameters which you want to have different values.  See <a href="LangRef.html#new">New instance</a> for more about <el-kw>with</el-kw> clauses.</li>
  <li>The parameters that can appear in a <el-kw>with</el-kw> clause for CircleVG are: <el-code>centreX, centreY, radius, fillColour, strokeColour, strokeWidth</el-code>.</li>
@@ -2436,7 +2435,9 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 of integer values as defined by the two (integer) parameters: <el-code><el-id>start</el-id></el-code> and <el-code><el-id>end</el-id></el-code>
 (both being <i>inclusive</i> values).</p>
 <p>Here is an example which uses <a href="#HoFs">Higher-order Functions</a> to print the prime numbers between 2 and 30:</p>
+<el-code-block source="sequence.elan">
 <el-statement class="ok" id="print8"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-method>sequence</el-method>(<el-lit>2</el-lit>, <el-lit>30</el-lit>).<el-method>filter</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-method>sequence</el-method>(<el-lit>2</el-lit>, <el-method>sqrt</el-method>(<el-id>n</el-id>).<el-method>floor</el-method>()).<el-method>reduce</el-method>(<el-id>true</el-id>, <el-kw>lambda</el-kw> <el-id>c</el-id> <el-kw>as</el-kw> <el-type>Boolean</el-type>, <el-id>m</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>c</el-id><el-kw> and </el-kw>((<el-id>n</el-id><el-kw> mod </el-kw><el-id>m</el-id>)<el-kw> isnt </el-kw><el-lit>0</el-lit>)))</el-txt></el-field></el-statement>
+</el-code-block>
 
 <h1 id="StandaloneProcedures">Standalone procedures</h1>
 
