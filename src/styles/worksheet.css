@@ -1,37 +1,85 @@
-.step, 
-.step *,
-.step + input {
-    visibility: hidden;
-}
+/* Initially, all steps hidden - just title & auto-save visible */
+    .step, 
+    .step *,
+    .step + input {
+        visibility: hidden;
+    }
 
-.step + input {
-    margin-left: 1em;
-}
+/* After saving ... */
+    #auto-save.saved {
+        display: none;
+    }
+    /* ... show first step & its checkbox */
+    #auto-save.saved + .step, 
+    #auto-save.saved + .step *,
+    #auto-save.saved + .step +  input {
+        visibility: visible;
+    }
 
-#auto-save.saved {
-    display: none;
-}
+/* When a step is complete, show the next one  through to its input...*/
+    #auto-save.saved ~ .step.complete, 
+    #auto-save.saved ~ .step.complete *,
+    #auto-save.saved ~ .step.complete + input,
+    #auto-save.saved ~ .step.complete + input + .timestamp + .step,
+    #auto-save.saved ~ .step.complete + input + .timestamp + .step *,
+    #auto-save.saved ~ .step.complete + input + .timestamp + .step + input
+    {
+        visibility: visible;
+    }
+    /* ...and hide the completion label */
+    .step.complete label.done {
+        display: none;
+    }
 
-#auto-save.saved + .step, 
-#auto-save.saved + .step *,
-#auto-save.saved + .step +  input {
-    visibility: visible;
-}
+/* Hints */
+    /* Hide hints by default */
+    .hint, .hint *
+    {
+        display: none;
+    }
 
-#auto-save.saved ~ .step.complete, 
-#auto-save.saved ~ .step.complete *,
-#auto-save.saved ~ .step.complete + input,
-#auto-save.saved ~ .step.complete + input + .timestamp + .step,
-#auto-save.saved ~ .step.complete + input + .timestamp + .step *,
-#auto-save.saved ~ .step.complete + input + .timestamp + .step + input
-{
-    visibility: visible;
-}
+    /* After saving, first hint of 1st step, or first hint of step after completed step will be shown, including label */
+     #auto-save.saved + .step .hint:first-child,
+     #auto-save.saved ~ .step.complete + input + .timestamp + .step .hint:first-child {
+        display: block;
+        visibility: visible;
+     }
+     #auto-save.saved + .step .hint:first-child span.show,
+     #auto-save.saved ~ .step.complete + input + .timestamp + .step .hint:first-child span.show {
+        display: inline;
+        visibility: visible;
+     }
 
-.step.complete label.done {
-    display: none;
-}
+    /* By default hide any follow-on hints until a hint is taken - to enforce progression */
+    .hint + hint {
+        display: none;
+    }
+    #auto-save.saved ~ .step.complete + input + .timestamp + .step .hint * {
+        display: none;
+    }
 
+    /* When a hint is taken...*/
+        /* Display all its contents */
+        .hint.taken *
+        {
+            display: block;
+            visibility: visible;
+        }
+        /* Display the NEXT Hint ... */
+        .hint.taken +.hint
+         {
+            display: block;
+            visibility: visible;
+        }
+        /* ... and its label */
+        .hint.taken + .hint + span.show
+        {
+            display: inline;
+            visibility: visible;
+        }
+
+
+/*Styling only */
 .done {
     color: rgb(15, 71, 97);
     font-weight: bold;
@@ -43,44 +91,6 @@
 }
 
 .license, .license img {
-    display: block;
     font-size: 8pt;
     margin-top: 1em;
 }
-
-.hint span.show.taken ~, .hint span.show.taken ~ * {
-    visibility: visible;
-}
-
-/* Hint */
-.hint span.show.taken ~, .hint span.show.taken ~ * {
-    visibility: visible;
-}
-
-#auto-save.saved + .step .hint * {
-    display: none;
-}
-
-#auto-save.saved + .step .hint.taken * {
-    display: block;
-}
-#auto-save.saved + .step .hint.taken span {
-    display: inline;
-}
-
-#auto-save.saved + .step .hint .show {
-    display: block;
-}
-
-#auto-save.saved + .step .hint.taken *{
-    display: block;
-}
-
-.hint + .hint {
-    display: none;
-}
-
-.hint.taken + .hint {
-    display: block;
-}
-

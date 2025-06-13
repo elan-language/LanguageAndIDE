@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
+<link href="http://127.0.0.1:5500/src/styles/worksheet.css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="docTitle">Template</div>
+
+<button id="auto-save">Auto-save file locally to continue</button>
+
+<div class="step" id="step1">
+  <h3>Step 1</h3>
+  <div class="hint" id="hint0" data-hint="">
+    <span class="show">Hint 2</span>
+
+    <el-code-block>
+      <main class="ok multiline" >
+      <el-top><el-kw>constant</el-kw></el-top>
+      </main>
+    </el-code-block>
+  </div>
+  <label class="done" for="done1">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done1" />
+
+<div class="step" id="step2">
+  <h3>Step 2</h3>
+
+  <div class="hint" id="hint1" data-hint="">
+    <span class="show">Hint 1</span>
+
+    <el-code-block>
+      <main class="ok multiline" >
+      <el-top><el-kw>main</el-kw></el-top>
+      <el-statement ><el-kw>let </el-kw>...</el-statement>
+      <el-kw>end main</el-kw>
+      </main>
+    </el-code-block>
+  </div>
+
+  <div class="hint" id="hint2" data-hint="">
+    <span class="show">Hint 2</span>
+
+    <el-code-block>
+      <main class="ok multiline" >
+      <el-top><el-kw>procedure</el-kw></el-top>
+      <el-kw>end procedure</el-kw>
+      </main>
+    </el-code-block>
+  </div>
+
+  <div class="hint" id="hint3" data-hint="">
+    <span class="show">Hint 3</span>
+
+    <el-code-block>
+      <main class="ok multiline" >
+      <el-top><el-kw>function</el-kw></el-top>
+      <el-kw>end function</el-kw>
+      </main>
+    </el-code-block>
+  </div>
+
+  <label class="done" for="done2">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done12 />
+
+
+<div hidden="" id="hash"></div>
+<div hidden="" id="changes"></div>
+
+<script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
+</body>
+</html>
