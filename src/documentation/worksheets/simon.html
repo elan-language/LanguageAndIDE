@@ -195,10 +195,9 @@
 
   <ul>
     <li>Edit the first <el-kw>let</el-kw> in main so that, replacing the name <el-id>move</el-id>
-      with <el-id>sequence</el-id> and replacing the single value with a list of a few randomly-chosen integers,
-      each in the range 1-4, for example: 
-      <el-code>[<el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-code>
-      ensuring that you have at least one example of the same number twice in succession. This change will produce a temporary <i>error</i>
+      with <el-id>sequence</el-id> and replacing the single value with this list: 
+      <el-code>[<el-lit>3</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>2</el-lit>, <el-lit>4</el-lit>]</el-code>
+      This change will produce a temporary <i>error</i>
       because <el-id>move</el-id> is now 'unknown' - but we'll fix that...</li>
      <li>Below the <el-kw>let</el-kw> insert an <el-kw>each</el-kw> instruction that defines the variable name <el-id>move</el-id>
       and uses <el-id>sequence</el-id> as the source.</li> 
@@ -211,7 +210,7 @@
         <el-code-block>
           <main class="ok multiline" >
             <el-top><el-kw>main</el-kw></el-top>
-            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-lit>1</el-lit>, <el-lit>3</el-lit>, <el-lit>2</el-lit>, <el-lit>4</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-txt></el-field></el-statement>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-lit>3</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>2</el-lit>, <el-lit>4</el-lit>]</el-txt></el-field></el-statement>
             <el-statement class="ok multiline" >
             <el-top><el-kw>each </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> in </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field></el-top>
             <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id></el-txt></el-field>)</el-top></el-statement>
@@ -223,21 +222,10 @@
       </div>
       <div class="hint" id="hint4b" data-hint="">
         <span class="show">Show the whole code for <el-method>displayMove</el-method></span>
-        <el-code-block>
-          <main class="ok multiline" >
-            <el-top><el-kw>main</el-kw></el-top>
-            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-lit>1</el-lit>, <el-lit>3</el-lit>, <el-lit>2</el-lit>, <el-lit>4</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-txt></el-field></el-statement>
-            <el-statement class="ok multiline" >
-            <el-top><el-kw>each </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> in </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field></el-top>
-            <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id></el-txt></el-field>)</el-top></el-statement>
-           <el-kw>end each</el-kw>
-            </el-statement>
-            <el-kw>end main</el-kw>
-            </main>
-        </el-code-block>
+        TO BE DONE
       </div>
       </li>
-      <li>Since we shall eventually want to vary the speed that the sequence plays, replace the literal value for the pause time
+      <li>Since we will eventually want to vary the speed that the sequence plays, replace the literal value for the pause time
         with a <el-kw>variable</el-kw> named <el-id>interval</el-id> at the very top of the main routine, initialised to <el-lit>1000</el-lit>.
         Then pass <el-id>interval</el-id> as a second argument into the call to <el-method>displayMove</el-method>, separated from 
         <el-id>move</el-id> by a comma. This will initially give you an error because the definition of <el-method>displayMove</el-method> 
@@ -251,7 +239,7 @@
           <main class="ok multiline" >
             <el-top><el-kw>main</el-kw></el-top>
             <el-statement ><el-kw>variable </el-kw><el-field><el-txt><el-id>interval</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-lit>1000</el-lit></el-txt></el-field></el-statement>
-            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-lit>1</el-lit>, <el-lit>3</el-lit>, <el-lit>2</el-lit>, <el-lit>4</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-txt></el-field></el-statement>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-lit>3</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>2</el-lit>, <el-lit>4</el-lit>]</el-txt></el-field></el-statement>
             <el-statement class="ok multiline" >
             <el-top><el-kw>each </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> in </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field></el-top>
             <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
@@ -353,18 +341,201 @@
   <ul>
     <li>To append a value to a list we call the <el-method>append</el-method> procedure on the list (as a 'dotted method'). So,
       within main, immediately after the <el-id>sequence</el-id> has been defined, write an instruction to append
-      a new single value (1 to 4 still) to that list.
-  </ul>
-  hint - new instruction
+      a new single value (1 to 4 still) to that list. The run the program and check that the new move was added to the sequence
+    <div class="hint" id="hint6a">Hint: the complete new instruction</div>
+    <div class="content" id="hint6acontent">
+      <el-code-block>
+        <el-statement class="ok" id="call47" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident48" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args49" class="optional ok" tabindex="0"><el-txt><el-lit>3</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>4</el-fr></el-top></el-statement>
+      </el-code-block>
+      You may append a different value than <el-lit>3</el-lit>>.
+    </div>
+    </li>
+    <li>Now change that new instruction so that instead of appending a specific value, it appends a new random value
+      in the range 1-4.
+      <div class="hint" id="hint6b">Hint 1</div>
+      <div class="content" id="hint6bcontent">
+        The code to generate a random value in the range 1-4
+        <el-code-block>
+          <el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)
+        </el-code-block>
+      </div>
+      <div class="hint" id="hint6c">Hint2: the complete changed instruction</div>
+      <div class="content" id="hint6ccontent">
+        <el-code-block>
+          <el-statement class="ok" id="call47" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident48" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args49" class="optional ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>4</el-fr></el-top></el-statement>
+        </el-code-block>
+      </div>
+    </li>
+    <li>Now we will do this repeatedly. Underneath the last instruction written, add a loop that
+      will execute exactly 5 times, and then cut and paste the instruction doing the <el-method>append</el-method>
+      to be <i>inside</i> that loop, and run the program to check that the sequence now has multiple, randomly defined
+      moves on the end.
+      <div class="hint" id="hint6d">Hint 1</div>
+      <div class="content" id="hint6dcontent">
+        <ul>
+          <li>Use a <kw>for</kw> loop to execute something a fixed number of times. </li>
+          <li>For the counter use  a short name that hasn't been used elsewhere - for example <el-id>n</el-id></li>
+          <li>To move the instruction, select it, press <b>Ctrl-x</b>, then select the <el-code>new code</el-code>
+          selector within the loop, and press <b>Ctrl-v</b>.</li>
+        </ul>
+      </div>
+      <div class="hint" id="hint6e">The complete loop</div>
+      <div class="content" id="hint6econtent">
+        <el-code-block>
+          <el-statement class="ok multiline" id="for12" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+            <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident14" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt><el-place><i>counterName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#IdentifierField" target="doc-iframe">?</a></el-help></el-field><el-kw> from </el-kw><el-field id="expr15" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>firstValue</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-kw> to </el-kw><el-field id="expr16" class="ok" tabindex="0"><el-txt><el-lit>5</el-lit></el-txt><el-place><i>lastValue</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-kw> step </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>stepValue</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>4</el-fr></el-top>
+            <el-statement class="ok" id="call9" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident10" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args11" class="optional ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>5</el-fr></el-top></el-statement>
+            <el-kw>end for</el-kw>
+            </el-statement>
+        </el-code-block>
+      </div>
+    </li>
+    </ul>
+    <label class="done" for="done6">Step completed</label>
+  </div>
+  <input type="checkbox" class="step" id="done5" />
+  
+  <div class="step" id="step7">
+    <h3>Iteration 7: Create the simonsTurn procedure</h3>
+    <p>Now we're ready to finish the computer's role in the game - to repeatedly play a sequence of moves, adding 
+      a new random move each time. (We will later add the Player's role, interleaving between these plays). To keep the growing
+      program easy to read, we will build the computer's role into a new procdure.
+    </p>
+    <ul>
+      <li>Underneath the main routine, but before the existing procedure (though actually, the order in
+        which these 'global' instructions are defined doesn't matter) create a new procedure named <el-method>SimonsTurn</el-method>.
+        <div class="hint" id="hint7a">The new procedure</div>
+        <div class="content" id="hint7acontent">
+          <el-code-block>
+            <el-proc class="ok multiline" id="proc92" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+              <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident94" class="ok" tabindex="0"><el-txt>simonsTurn</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#MethodNameField" target="doc-iframe">?</a></el-help></el-field></el-method>(<el-field id="params95" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>parameter definitions</i></el-place><el-compl><i>parameter definitions</i></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>8</el-fr></el-top>
+              <el-statement class="ok empty" id="select249" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
+              <el-kw>end procedure</el-kw>
+              </el-proc>
+          </el-code-block>
+        </div>
+      </li>
+      <li>Move into this the instruction that does the <el-method>append</el-method>. This will create an
+      error because <el-id>sequence</el-id> isn't visible inside the procedure - we need to define
+      it as a parameter. So add to the procedure definition a parameter named <el-id>sequence</el-id> having
+      the type <el-code><el-type>List</el-type>&lt;<el-kw>of </el-kw><el-type>Int</el-type>&gt;</el-code><div class=""></div>
+      <div class="hint" id="hint7b">Hint: The updated procedure</div>
+      <div class="content" id="hint7bcontent">
+        <el-code-block>
+          <el-proc class="ok multiline" id="proc24" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+            <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident26" class="ok" tabindex="0"><el-txt>simonsTurn</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#MethodNameField" target="doc-iframe">?</a></el-help></el-field></el-method>(<el-field id="params27" class="optional ok" tabindex="0"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>8</el-fr></el-top>
+            <el-statement class="ok" id="call28" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident29" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args30" class="optional ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>9</el-fr></el-top></el-statement>
+            <el-kw>end procedure</el-kw>
+          </el-proc>
+        </el-code-block>
+      </div>
+    </li>
+    <li>Following the same pattern, now move the <el-kw>each</el-kw> loop from main into <el-method>simonsTurn</el-method>,
+    which will again require the definition of a new parameter in order to compile.
+    <div class="hint" id="hint7c">Hint: The updated procedure</div>
+    <div class="content" id="hint7ccontent">
+      <el-code-block>
+        <el-proc class="ok multiline" id="proc24" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+          <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident26" class="ok" tabindex="0"><el-txt>simonsTurn</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#MethodNameField" target="doc-iframe">?</a></el-help></el-field></el-method>(<el-field id="params27" class="optional ok" tabindex="0"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>8</el-fr></el-top>
+          <el-statement class="ok" id="call28" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident29" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args30" class="optional ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>9</el-fr></el-top></el-statement>
+          <el-statement class="ok multiline" id="each31" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+          <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident33" class="ok" tabindex="0"><el-txt><el-id>move</el-id></el-txt><el-place><i>elementName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#IdentifierField" target="doc-iframe">?</a></el-help></el-field><el-kw> in </el-kw><el-field id="expr34" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id></el-txt><el-place><i>source</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>10</el-fr></el-top>
+          <el-statement class="ok" id="call35" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident36" class="ok" tabindex="0"><el-txt><el-method>displayMove</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args37" class="optional ok" tabindex="0"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>11</el-fr></el-top></el-statement>
+          <el-kw>end each</el-kw>
+          </el-statement>
+          <el-kw>end procedure</el-kw>
+          </el-proc>
+      </el-code-block>
+    </div>
+    </li>
+    <li>Go back to the <kw>for</kw> loop within the main, and define three new instructions (in the order listed here):
+      <ul>
+        <li>a new instruction to call <el-method>simonsTurn</el-method>, 
+           passing in the named values corresponding to the two arguments it will require.</li>
+        <li>an instruction to clear the vector graphics (you have one like this somewhere else).</li>
+        <li>an instruction to pause for a full second.</li>
+      </ul>
+      Then change the definition of <el-id>sequence</el-id> (near the top of main) so that it starts
+      with an empty list. Because it is empty, we need to specify the type of the elements it will
+      accept. The full statement now needs to be:
+      <el-code-block>
+        <el-statement class="ok" id="let6" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>3</el-fr></el-statement>
+      </el-code-block>
+      Run the program the program and test that it plays a growing sequence, one move, then two moves, up to five moves, with
+      a one second pause between.
+      <div class="hint" id="hint7d">Hint: The revised main</div>
+      <div class="content" id="hint7dcontent">
+        <el-code-block>
+          <main class="ok multiline" id="main1" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+            <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg><el-fr>1</el-fr></el-top>
+            <el-statement class="ok" id="var3" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>interval</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-lit>1000</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
+            <el-statement class="ok" id="let6" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>3</el-fr></el-statement>
+            <el-statement class="ok multiline" id="for9" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+            <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident11" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt><el-place><i>counterName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#IdentifierField" target="doc-iframe">?</a></el-help></el-field><el-kw> from </el-kw><el-field id="expr12" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>firstValue</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-kw> to </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-lit>5</el-lit></el-txt><el-place><i>lastValue</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-kw> step </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>stepValue</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>4</el-fr></el-top>
+            <el-statement class="ok" id="call15" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-method>simonsTurn</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args17" class="optional ok" tabindex="0"><el-txt><el-id>sequence</el-id>, <el-id>interval</el-id></el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>5</el-fr></el-top></el-statement>
+            <el-statement class="ok" id="call94" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident95" class="ok" tabindex="0"><el-txt><el-method>clearVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args96" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>6</el-fr></el-top></el-statement>
+            <el-statement class="ok" id="call105" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident106" class="ok" tabindex="0"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args107" class="optional ok" tabindex="0"><el-txt><el-lit>1000</el-lit></el-txt><el-place><i>milliseconds</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>7</el-fr></el-top></el-statement>
+            <el-kw>end for</el-kw>
+            </el-statement>
+            <el-kw>end main</el-kw>
+          </main>
+        </el-code-block>
+      </div>
+  </li>
+    </ul>
 
-  change it to a random value.
-
-
-  <label class="done" for="done6">Step completed</label>
+  <label class="done" for="done7">Step completed</label>
 </div>
-<input type="checkbox" class="step" id="done6"/>
+<input type="checkbox" class="step" id="done7"/>
 
-<div class="step"  id="stepFinal">
+<div class="step" id="step8">
+  <h3>Iteration 8: Player's turn</h3>
+  <ul>
+  <li>We're now ready to make a start on managing the player's turn. Start by creating a new procedure
+    named <el-method>playersTurn</el-method> (located underneath <el-method>simonsTurn</el-method> ), and initially defining
+    just one parameter - <el-id>sequence</el-id> - defined the same way as it was for <el-method>simonsTurn</el-method>.
+    <el-method>playersTurn</el-method>.
+    <div class="hint" id="hint8a">Hint: The new procedure</div>
+    <div class="content" id="hint8acontent">
+      <el-code-block>
+        <el-proc class="ok multiline" id="proc136" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+          <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident138" class="ok" tabindex="0"><el-txt>playersTurn</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#MethodNameField" target="doc-iframe">?</a></el-help></el-field></el-method>(<el-field id="params139" class="optional ok" tabindex="0"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>12</el-fr></el-top>
+          <el-statement class="ok empty" id="select137" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
+          <el-kw>end procedure</el-kw>
+        </el-proc>
+      </el-code-block>
+    </div>
+  </li>
+  <li>Now we need a way for the running program to detect a single key stroke. You might or might not have already
+    used an <el-method>input</el-method> method, but that would also require <b>Enter</b> to be pressed after each key
+    which would be cumbersome in the game Simon. So instead add these two instructions within <el-method>playersTurn</el-method>:
+    <el-code-block>
+      <el-statement class="ok" id="let176" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var177" class="ok" tabindex="0"><el-txt><el-id>k</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr178" class="ok" tabindex="0"><el-txt><el-method>waitForKey</el-method>()</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>13</el-fr></el-statement>
+      <el-statement class="ok" id="let188" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var189" class="ok" tabindex="0"><el-txt><el-id>valid</el-id>, <el-id>move</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr190" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>(<el-id>k</el-id>)</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>14</el-fr></el-statement>
+    </el-code-block>
+    The first instruction should be fairly clear, but what is the second one for? Why couldn't we just write, say:
+    <el-code-block>
+      <el-statement class="ok" id="let176" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var177" class="ok" tabindex="0"><el-txt><el-id>move</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr178" class="ok" tabindex="0"><el-txt><el-method>waitForKey</el-method>()</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>13</el-fr></el-statement>
+    </el-code-block>
+    The problem is that if you press, say, the 1 key, the <el-method>waitForKey</el-method> method returns a single-character
+    <i>string</i> - equivalent to having written <el-code-block>
+      <el-statement class="ok" id="let176" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>let </el-kw><el-field id="var177" class="ok" tabindex="0"><el-txt><el-id>k</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr178" class="ok" tabindex="0"><el-txt>"<el-lit>1</el-lit>"</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>13</el-fr></el-statement>
+    </el-code-block>
+    <el-method>parseAsInt</el-method> takes a string argument and attempts to turn it into an <i>integer</i> value: from <el-code>"<el-lit>1</el-lit>"</el-code> to <el-lit>1</el-lit>
+    (it's not <i>actually</i> stripping off quote marks, but that's the easiest way to describe it for now). The problem then is
+    what would happen if you had inadvertently pressed the <el-lit>q</el-lit> key underneath the <el-lit>1</el-lit>? That
+    can't be be converted into an integer. So the <el-method>parseAsInt</el-method> actually returns two values: the first
+    is a Boolean value that tells us whether or not the given string was successfully parsed into an integer. <i>If</i> it was
+    (i.e. the first returned value is <el-id>true</el-id>) then the second value will hold the integer. If the first returned
+    value is <el-id>true</el-id> then the second value should be ignored. Our instruction names these two returned values
+    <el-id>valid</el-id> and  <el-id>move</el-id> respectively.
+  </li>
+  <li>
+    
+  </li>
+
+  </ul>
+
   Worksheet completed.
 
   <div class="license">
@@ -375,9 +546,6 @@
        Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
   </div>
 </div>
-
-<div hidden=""></div>
-<div hidden=""></div>
 
 <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
 </body>
