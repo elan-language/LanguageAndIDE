@@ -75,7 +75,7 @@
     <li>You might have been surprised that the mole <i>didn't</i> appear at the first hole. That's because the elements in an
         array are <i>always</i> numbered from <i>zero</i>. So the <i>last</i> element in an array of 10 elements is number 9.</li>
 
-    <li>Add two more similarc <el-kw>call</el-kw> instructions (all before the print instruction) to put an asterisk in element numbers
+    <li>Add two more similar <el-kw>call</el-kw> instructions (all before the print instruction) to put an asterisk in element numbers
         0 and 9. Run the program and check that it shows three moles in the expected places.</li>
     <li>Change the instruction that modifies element <el-lit>9</el-lit> to specify element <el-lit>10</el-lit>.
     Run the program, which will result in a 'Runtime error'. Make sure you understand the error message, so that you will recognise what is going on
@@ -88,7 +88,7 @@
 <h3>Iteration 3 - display the array of holes in a more useful way</h3>
 <ul>
     <li>We have learned how to <i>write</i> an individual element using the <el-method>put</el-method>. We can also
-    <i>read</i> an indivdual element just by using an index. For example <el-code><el-id>holes</el-id>[<el-lit>5</el-lit>]</el-code>
+    <i>read</i> an individual element just by using an index. For example <el-code><el-id>holes</el-id>[<el-lit>5</el-lit>]</el-code>
     will access element number 5, and, assuming we have defined an integer value named <el-id>n</el-id> then
     <el-code><el-id>holes</el-id>[<el-id>n</el-id>]</el-code> will read element number <el-id>n</el-id>.
 
@@ -167,7 +167,7 @@
             putting the fixed value <el-kw>true</el-kw> into the condition field.</li>
         <li> Cut all the instructions within <el-kw>main</el-kw> except the initial definition of
             the <el-id>holes</el-id> array and the <el-kw>while</el-kw>, and paste them into the <el-kw>while</el-kw> loop. To do this,
-            select the top-most instruction you want to move, then press <b>Ctr-&#8595;</b> to include successive
+            select the top-most instruction you want to move, then press <b>Ctrl-&#8595;</b> to include successive
             instructions below it, and press <b>Ctrl-x</b> to cut them. Then select the <el-code>new code</el-code>
             within the <el-kw>while</el-kw> loop and paste in the cut instructions with <b>Ctrl-v</b>.
             (You may also perform cut and paste from the context menu, which you access with <b>right-mouse-click</b>
@@ -182,7 +182,7 @@
             is specified in <i>milliseconds</i> so use a value of <el-lit>2000</el-lit> to start with.
             This can be reduced later to say 1000 (one second) to make the game more challenging once you
             have got the hang of it and finished testing.
-            Add this instuction
+            Add this instruction
             <i>before</i> the one that clears the text, then run again.</li>
         <li>The results should be better, but still not what we want: instead of moving the mole, we are
             <i>adding</i> a mole each time, soon filling all the holes. So now, after the instruction that clears the printed text,
@@ -324,7 +324,7 @@
 
     <div hidden="" id="hash"></div>
     <div hidden="" id="changes"></div>
-    
+
     <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
 </body>
 </html>

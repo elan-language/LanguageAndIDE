@@ -19,17 +19,17 @@
 </ul>
 and it is a very good way to learn all three of them. Elan lays a very strong foundation
 that will make it easier for you to transition later on to more languages that are specialised
-towards one of the three programming languages such as Java, C#, or TypeScript for object-oriented programming; 
-or Haskell, OCaml, or F#, for functional programming. Other popular multi-paradigm languages such as Python, 
+towards one of the three programming languages such as Java, C#, or TypeScript for object-oriented programming;
+or Haskell, OCaml, or F#, for functional programming. Other popular multi-paradigm languages such as Python,
 VB, C#, and Java do not lay as good a foundation.</p>
 
-<p>Functional programming means constructing programs from pure function. A pure function: 
+<p>Functional programming means constructing programs from pure function. A pure function:
 
     <ul>
         <li>returns a value that is derived solely and deterministically from the values passed to it as parameters</li>
         <li>may call other pure functions but may not depend upon any information other than was passed to it as parameters</li>
         <li>may not generate any 'side effects'. A side effect is anything information, or change to the state of the system,
-             that could be observed by code ouside the function <i>other than</i> the value returned by the function.</li>
+             that could be observed by code outside the function <i>other than</i> the value returned by the function.</li>
     </ul>
 </p>
 
@@ -40,7 +40,7 @@ and side-effects can result in unexpected interference between the combined func
 <p>However, as Simon Peyton Jones, one of the leading exponents of functional programming and lead developer of Haskell has said,</p>
 
 <p><i>'The problem is that the whole point of systems is to produce side-effects'</i>, meaning that if a program doesn't <i>at minimum</i> produce
-any output - whether displayed on a screen, stored in a file, transmitted over a network, 
+any output - whether displayed on a screen, stored in a file, transmitted over a network,
 or driving an actuator in a mechanical device A-level. Then it isn't doing anything useful!</p>
 
 <p>Pure functional programming languages such as Haskell enforce that <i>all</i> functions are pure - even functions that are responsible
@@ -49,26 +49,26 @@ to write whole applications in a pure functional language is difficult.</p>
 
 <p>If you want to learn functional programming in a multi-paradigm language such as Python, VB, or C#, say, then you have
     to split your program into the pure parts that cover the core data transformations, and the 'impure' parts that handle.
-    The problem with that approach, is that those languages cannot enforce that separation, and it is all to easy to 
+    The problem with that approach, is that those languages cannot enforce that separation, and it is all to easy to
     find side-effects and dependencies creeping into your supposedly-pure core functionality.</p>
 
 <p>Elan is almost unique amongst multi-paradigm languages in that it enforces that <i>all</i> functions are pure - thus offering
 the full benefit of guaranteed safe combination of functions. Input/output must handled in the main routine or procedures,
 and there is no danger of these getting mixed up because you can call functions from main or a procedure, but never <i>vice versa</i>.
 Additionally, because Elan offers a powerful and easy-to-use mechanism for automated testing of <i>functions</i>, Elan gives
-you a strong incentive to implement as much of your application as possivble using functions. Indeed it would be good practice when programming in any paradigm to 
+you a strong incentive to implement as much of your application as possible using functions. Indeed it would be good practice when programming in any paradigm to
 implement as much of the logic as possible in pure functions, and to keep the main and any procedures as 'thin' as possible.
 In other words, as well as keeping input/output <i>out</i> of function, you should aim to as much of the application logic as possible out of the main and procedures.
  These design principles apply, <i>whichever programming paradigm you are adopting</i>.</p>
 
-<p>So what is the difference, then, between adopting the functional programming paradigm in Elan, as distinct from adopting the procedural, 
+<p>So what is the difference, then, between adopting the functional programming paradigm in Elan, as distinct from adopting the procedural,
     or object-oriented paradigms? We suggest the following principles should be adopted when adopting the functional programming paradigm:
 
 <ol>
     <li>As much of the application logic as possible should be implemented in functions - which, in Elan, are necessarily 'pure' functions.
         The main routine (which is needed for any application that may be executed) and any supporting procedures, should be
         restricted to the direct implementation of input/output or other behaviour dependent upon the system - and these should
-        together constitute as small a propertion of the total number of instructions as possible.</li>
+        together constitute as small a proportion of the total number of instructions as possible.</li>
     <li>All types passed to functions, or used within functions should be <i>immutable</i>. This means:
         <ul>
             <li>Any of the standard value types: <el-code><el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type>, <el-type>String</el-type></el-code></li>
@@ -76,7 +76,7 @@ In other words, as well as keeping input/output <i>out</i> of function, you shou
             <li>User defined types: Enums, Tuples, Records</li>
         </ul>
         All other types, whether defined within the Elan library or as user-defined classes, are <i>mutable</i> and should be avoided.</li>
-    <li>The body of every function should consist only of the <el-code><el-kw>return</el-kw></el-code> instruction, <i>optionally</i> 
+    <li>The body of every function should consist only of the <el-code><el-kw>return</el-kw></el-code> instruction, <i>optionally</i>
         preceded by one or more <el-code><el-kw>let</el-kw></el-code> instructions. This combination means that you aren't ever mutating anything
     even <i>inside</i> the functions. It also means that all 'iteration' within functions is achieved by using higher-order functions - such
     as <el-code><el-method>map</el-method></el-code>, <el-code><el-method>filter</el-method></el-code>, <el-code><el-method>reduce</el-method></el-code>
@@ -84,13 +84,13 @@ In other words, as well as keeping input/output <i>out</i> of function, you shou
     <li>Random numbers pose a special challenge to functional programming. There are two options:
         <ul>
             <li><i>Generate</i> random numbers using the standard <el-code><el-method>randomInt</el-method>, <el-method>randomInt</el-method></el-code> system methods but only within
-            the main routine or procedures - passing the generated number(s) into the functions that need them as 
+            the main routine or procedures - passing the generated number(s) into the functions that need them as
             <el-code><el-type>Int</el-type></el-code> or <el-code><el-type>Float</el-type></el-code> values. These methods cannot be used
             within functions because calling <el-code><el-method>randomInt</el-method></el-code> changes the state of the random number generator
                 held, invisibly, within the system - in other words the methods have side effects.
         </li>
-            <li>Use the library type <el-code><el-type>Random</el-type></el-code> and its methods. These may be safely passed into a function, 
-            because the <el-code><el-method>next</el-method>, <el-method>nextInt</el-method></el-code> methods (which are pure functions) 
+            <li>Use the library type <el-code><el-type>Random</el-type></el-code> and its methods. These may be safely passed into a function,
+            because the <el-code><el-method>next</el-method>, <el-method>nextInt</el-method></el-code> methods (which are pure functions)
             return the random value together with a new instance of <el-code><el-type>Random</el-type></el-code> - which must then be used to
             generate the next random number, and which itself should be returned from the function that uses it.
         </li>
@@ -104,11 +104,11 @@ In other words, as well as keeping input/output <i>out</i> of function, you shou
 <p>The code below implements the game of Snake adopting the all of the principles listed above: Notice the following:
 
     <ul>
-        <li>Exclusing the <el-code><el-kw>test</el-kw></el-code> code, which is all at the end, the entire program
+        <li>Excluding the <el-code><el-kw>test</el-kw></el-code> code, which is all at the end, the entire program
         code consists of 65 instructions.</li>
         <li>The <el-code><el-kw>main</el-kw></el-code> routine is just 12 instructions.</li>
         <li>All the rest of the logic is held in standalone (global) functions. It did not prove necessary to use any procedures, though
-            that would have been allowed, indeed desirable if the alternative would have meant a significanly larger <el-code><el-kw>main</el-kw></el-code>.</li>
+            that would have been allowed, indeed desirable if the alternative would have meant a significantly larger <el-code><el-kw>main</el-kw></el-code>.</li>
         <li>All functions contain only <el-code><el-kw>let</el-kw></el-code> and <el-code><el-kw>return</el-kw></el-code> instructions.</li>
         <li>If expressions are used twice in the <el-code><el-method>moveSnake</el-method></el-code> function.</li>
         <li>The <el-code><el-method>newApple</el-method></el-code> uses recursion to achieve iteration - the requirement being
@@ -121,7 +121,7 @@ In other words, as well as keeping input/output <i>out</i> of function, you shou
         has multiple <el-code><el-kw>assert</el-kw></el-code> instructions i.e. tests multiple cases. This means that overall
         82% of the instructions are covered by automated tests - only the <el-code><el-kw>main</el-kw></el-code> routine
         is not covered, and must be tested manually.
-     </li>    
+     </li>
     </ul>
 </p>
 
@@ -411,6 +411,6 @@ In other words, as well as keeping input/output <i>out</i> of function, you shou
 
     <h1>Example 2: Wordle solver</h1>
 
-    
+
 </body>
 </html>
