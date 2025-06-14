@@ -21,7 +21,7 @@
     <li>Play a few hands of the card-game Blackjack (also known as 'twenty-one') learning:
         <ul>
             <li>How to load, run, and stop an existing Elan program.</li>
-            <li>The rules of Blackjack and how it is played and some of the important terminology such as 'draw', 'stand', 'bust', 'soft-ace', and 'dealer face-card'.</li>
+            <li>The rules of Blackjack and how it is played and some of the important terminology such as 'draw', 'stand', 'bust', 'soft-ace', and 'dealer face card'.</li>
         </ul>
     </li>
     <li>Explore the code for the ready-made Elan Blackjack program, learning:
@@ -46,7 +46,7 @@
             <li>How to run a single simulated hand of Blackjack for the Dealer, and both your automated players.</li>
             <li>How to run the same simulation 10,000 times and compare how each player, and the Dealer, have scored (known as 'looping' or 'iteration')</li>
             <li>How to add a 'decision' into a strategy, by using a 'condition' or 'selection'.</li>
-            <li>How to refine an automated player's decision to make proper use of a 'soft ace'.</li>
+            <li>How to refine an automated player's decision to make proper use of a 'soft-ace'.</li>
             <li>How to determine whether the dealer's face card makes a difference, by analysing how often the Dealer goes bust from different face cards.</li>
             <li>How to refine the player's strategy to make best use of this information.</li>
         </ul>
@@ -64,8 +64,8 @@
 
 <h2>Load and Run the program</h2>
 
-<p>From the Elan page, select <b>File</b> then <b>Load</b> and use the file-selector dialog to find the file <b>Blackjack.elan</b>. 
-    Your screen should then look something like this (the text might be slighlty different due to version changes):</p>
+<p>From the Elan page, select <b>File</b> then <b>Load</b> and use the file-selector dialog to find the file <b>Blackjack.elan</b>.
+    Your screen should then look something like this (the text might be slightly different due to version changes):</p>
 
 <img src="images/bj1-1.png">
 
@@ -73,12 +73,12 @@
 <ul>
     <li>The <b>System info</b> pane at the bottom-right should be empty. If it contains an error message at this stage it
     means that the program was not loaded successfully and you will need to ask your teacher for help.</li>
-    <li>The large pane on the left hand side of the screen is the 'code editor' 
-        - it shows the instructions (also often called the 'code') that makes up the program. 
-        You will be learning how to read, modify and extend this code in later sections. 
+    <li>The large pane on the left hand side of the screen is the 'code editor'
+        - it shows the instructions (also often called the 'code') that makes up the program.
+        You will be learning how to read, modify and extend this code in later sections.
         But you don't need to be able to understand any of it to run and use the Blackjack program.</li>
     <li>At the top right you can see the status bar, which should show that the <b>Parse</b> status is 'valid',
-        and that the <b>Compile</b> status is 'ok'. Both have a green background, to reinforce the message that this 
+        and that the <b>Compile</b> status is 'ok'. Both have a green background, to reinforce the message that this
         is the desired status. (If you have difficulty seeing the colours referred to, ask your teacher,
         who can set up a different colour profile for you, both for the Elan tool, and for this documentation).</li>
  </ul>
@@ -86,7 +86,7 @@
  <p>Assuming everything is as described above you will now be able to run the program. Click on the <b>Run</b> button - the triangular icon shown
 at the top of the screen.<p>
 
-</p>(Note that the button next to it looks similar but with a 'bug' inside it. You will learn about how to use that later. 
+</p>(Note that the button next to it looks similar but with a 'bug' inside it. You will learn about how to use that later.
 If you pressed this button it would also run the program, but it may run slower because it is having to do more work. So always
 run with the plain <b>Run</b> button until you understand how and when to use <b>Debug</b>.)</p>
 
@@ -103,8 +103,8 @@ run with the plain <b>Run</b> button until you understand how and when to use <b
 
 <!-- #region Playing Blackjack-->
 <h2>Playing Blackjack</h2>
-<p>In the program you are the only <i>player</i>, playing against the dealer. Each of you has been dealt  an initial 'hand' of two cards. 
-    You can see both of your own cards and you can also see <i>one of the dealer's two cards</i>, known as the dealer's 'face card'. 
+<p>In the program you are the only <i>player</i>, playing against the dealer. Each of you has been dealt  an initial 'hand' of two cards.
+    You can see both of your own cards and you can also see <i>one of the dealer's two cards</i>, known as the dealer's 'face card'.
     Alongside your hand you can see the total value of the hand.</p>
 
     <h4>Note:</h4>
@@ -112,10 +112,10 @@ run with the plain <b>Run</b> button until you understand how and when to use <b
         <li>Number cards (two to ten) have their obvious value.</li>
         <li>Royal cards (Jack, Queen, King) each has the value of 10.</li>
         <li>If your hand includes an Ace, this will initially be valued at 11.</li>
-        <li>The program is offering you the option to 'stand' (take no more cards) or to 'draw' (be dealt another card). The pale blue bar 
+        <li>The program is offering you the option to 'stand' (take no more cards) or to 'draw' (be dealt another card). The pale blue bar
             indicates that it is expecting you to type a response - either <b>s</b> or <b>d</b>.
         </li>
-        <li>Your aim is to get the total value of the hand as close to 21 as you dare. 
+        <li>Your aim is to get the total value of the hand as close to 21 as you dare.
             However, if you draw a card and that card takes the total value over 21 then your hand will be 'bust' and you cannot continue.
         The exception is that if your hand has an Ace valued at 11, it will automatically be de-valued to 1, so you will not then be bust.</li>
         <li>At each point that you are asked whether you want to stand or draw, you must weigh up the risks of going bust, against
@@ -132,13 +132,13 @@ run with the plain <b>Run</b> button until you understand how and when to use <b
         <li>You will be playing first. Only when you have finished playing your hand will the dealer play out their hand, and then the outcome of the round will be determined.</li>
     </ul>
 
-    <p>So play out the hand by responding, each time you are asked with <b>s</b> or <b>d</b> and then pressing <b>Enter</b> to finish inputing the value.
-        (You can also try entering a different character. What happens?). Continue until either you have decided to stand in which case status 
+    <p>So play out the hand by responding, each time you are asked with <b>s</b> or <b>d</b> and then pressing <b>Enter</b> to finish inputting the value.
+        (You can also try entering a different character. What happens?). Continue until either you have decided to stand in which case status
         will change from 'playing' to 'standing' - <i>or</i> you go bust. When either of these occurs then after a short delay
         the dealer will then start playing the dealer's hand - until it either stands or goes bust. Again after a short delay
     the outcome of the round will be determined, and the scores updated. The following shows one possible such scenario:</p>
     <p>
-    
+
         <img src="images/bj1-3.png">
 
         <h4>Note:</h4>
@@ -150,13 +150,13 @@ run with the plain <b>Run</b> button until you understand how and when to use <b
                 </ul>
             </li>
             <li>The outcome from each round will be that <i>you</i> either win, lose, or draw.</li>
-            <li>Both you and the dealer started with 1000 points each. 
-                The total number of points will always add up to 2000. 
+            <li>Both you and the dealer started with 1000 points each.
+                The total number of points will always add up to 2000.
                 After each round points will be moved from the dealer to the player or <i>vice versa</i>, unless the outcome is a draw.</li>
             <li>If you are fortunate enough to get Blackjack, <i>and the dealer doesn't </i> then two points will be transferred from the dealer to you.</li>
-            <li>If you go bust then the outcome is automatically that you lose, <i>even if the dealer then also goes bust</i>. 
+            <li>If you go bust then the outcome is automatically that you lose, <i>even if the dealer then also goes bust</i>.
                 This rule is what gives a casino (which always plays the role of dealer in Blackjack) the 'advantage' over players.
-                In this exercise we are going to explore the possibility of how clever decision making can reduce that advantage.</li>       
+                In this exercise we are going to explore the possibility of how clever decision making can reduce that advantage.</li>
         </ul>
 
         <p>The program now offers you the option to 'Enter p for play again, or x for exit'. Enter 'p' and play a total of 10 rounds.
@@ -167,14 +167,14 @@ run with the plain <b>Run</b> button until you understand how and when to use <b
 <!-- #region program-->
 <h1>Exploring the program</h1>
 
-<p>Terminate the program, either by entering <b>x</b> when you are asked if you want to play again, 
-    or just by pressing the square <b>Stop</b> button at the top of the screen at any point. 
-    Then click somewhere withn the code editor so that its background goes white again, indicating that it now has the browser's 'focus'.</p>
+<p>Terminate the program, either by entering <b>x</b> when you are asked if you want to play again,
+    or just by pressing the square <b>Stop</b> button at the top of the screen at any point.
+    Then click somewhere within the code editor so that its background goes white again, indicating that it now has the browser's 'focus'.</p>
 
-<p>Scrolling up to the top of the code (if necessary) you will see the word <el-code><el-kw>main</el-kw></el-code> on its own line. 
+<p>Scrolling up to the top of the code (if necessary) you will see the word <el-code><el-kw>main</el-kw></el-code> on its own line.
     It might be highlighted in pale blue as shown below (indicating that this is the part of the code with the current 'focus')
-    or that hightlight might currently be elsewhere in the code - it doesn't matter for now:</p>
-        
+    or that highlight might currently be elsewhere in the code - it doesn't matter for now:</p>
+
 <el-code-block>
     <main class="selected focused ok multiline" id="main1" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
         <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg><el-fr>1</el-fr></el-top>
@@ -185,7 +185,7 @@ run with the plain <b>Run</b> button until you understand how and when to use <b
 
 <h4>Note:</h4>
 <ul>
-    <li>The word <el-code><el-kw>main</el-kw></el-code> is coloured dark blue. This indicates that it is a 'keyword'. Almost all programming languages define a set of such keywords - 
+    <li>The word <el-code><el-kw>main</el-kw></el-code> is coloured dark blue. This indicates that it is a 'keyword'. Almost all programming languages define a set of such keywords -
 some are the same, or similar, across multiple languages, but most languages also define their own unique keywords. How many
 other keywords can you see in the code without scrolling?</li>
 <li>Every instruction within the Elan program starts on a new line and with a keyword and that first keyword on the line defines the nature of the instruction</li>
@@ -193,7 +193,7 @@ other keywords can you see in the code without scrolling?</li>
 <li>You will see other keywords within a line, each contributing to the definition of the instruction.</li>
 </ul>
 
-<p>If you click with the mouse on any <i>keyword</i> then the whole instruction will be highlighted in pale blue. 
+<p>If you click with the mouse on any <i>keyword</i> then the whole instruction will be highlighted in pale blue.
     Try doing this on the following keywords all of which should be visible without having to scroll:</p>
 <ul>
     <li><el-code><el-kw>main</el-kw></el-code></li>
@@ -221,34 +221,34 @@ other keywords can you see in the code without scrolling?</li>
     <li>A piece of text coloured yellow-brown - for example <el-code><el-method>playGame</el-method></el-code>
     - defines the name of a method. A method is another piece of code that is given a name and which does something. It may
     be helpful to think of the methods as the <i>verbs</i> used within the language. Many of the method names sound read like
-    English verbs - or phrases that contain a verb. There is no rule that says they have to be English words or phrases but it is 
+    English verbs - or phrases that contain a verb. There is no rule that says they have to be English words or phrases but it is
     considered good practice to give them names that describe what they do to some degree.
     Find at least four <i>different</i> method names within the code.</li>
     <li>A piece of text coloured purple - for example <el-code><el-id>dealer</el-id></el-code> - defines a 'named value':
         (a single item of data or a grouping of multiple related items of data). It may
-        be helpful to think of these named values as the <i>nouns</i> used within the language - and you will see that many of them 
+        be helpful to think of these named values as the <i>nouns</i> used within the language - and you will see that many of them
         read like English nouns, or noun phrases, and this is again considered good practice. Find at least four <i>different</i>
         examples of named values.
-    </li>   
-    <li>The first character of all method names and named values is a lower-case <i>letter</i> (a-z), but this may be followed by a mix of lower- and/or 
+    </li>
+    <li>The first character of all method names and named values is a lower-case <i>letter</i> (a-z), but this may be followed by a mix of lower- and/or
         upper-case letters, numeric digits, or underscore characters (_) - but no spaces or other characters. Named values
-        may be defined by a <i>single</i> lower-case character, but it is considered good practice to give them longer, 
+        may be defined by a <i>single</i> lower-case character, but it is considered good practice to give them longer,
         more descriptive names in most cases. Where the name is made up from multiple English words it is considered good practice
         to make them more readable by making the first letter of each new word upper-case. This is often referred to as 'camel-case' -
         because of the humps formed by the upper-case characters, though strictly speaking having the <i>first</i> letter as lower-case makes it is 'Pascal case'.</li>
-    <li>A piece of text coloured dark-red is a known as a 'literal value'. 
+    <li>A piece of text coloured dark-red is a known as a 'literal value'.
         These include numbers. Find at least two examples of literal numbers defined within the code.</li>
     <li>You will also see examples of 'literal Strings' - where String is short for 'string of characters'.
-         These are not names of things - they are pieces of text that must be processed as text without the text having to 
+         These are not names of things - they are pieces of text that must be processed as text without the text having to
         have any specific <i>meaning</i>. Notice that the dark-red text is always bounded at each end by (black) double quotation marks.
     (sometimes you will see black 'curly braces' within the literal string which is a mechanism to insert named values into a specific el-place
     within the string - we will explore that later). Oftentimes, though
-not always, literal strings are used to define messages that will be displayed to the user. 
+not always, literal strings are used to define messages that will be displayed to the user.
 Find at least two different examples of messages defined in the code, which correspond to messages you saw on the screen
 while playing the game.</li>
 <li>Finally, you can find text that is written in dark green, where the line always starts with the hash symbol <b>#</b> - as used in a 'hashtag' on social media.
 These lines are 'comments' - they play no role in the operation of the program - they are optionally added to provide commentary
- or explaination to a <i>person</i> reading the code. The top line of any file is a comment generated by the system (and which may not be edited, moved or deleted), but other
+ or explanation to a <i>person</i> reading the code. The top line of any file is a comment generated by the system (and which may not be edited, moved or deleted), but other
 comments are written - optionally - by a 'programmer' (a person writing the code).</li>
 </ul>
 
@@ -262,15 +262,15 @@ comments are written - optionally - by a 'programmer' (a person writing the code
     <li>If you scroll to and then click on an instruction number the instruction will be highlighted, just
         as if you had clicked on the first keyword in that instruction.</li>
     <li>Comments and blank lines are not given instruction numbers - they are not instructions.</li>
-    <li>A container instruction has a single instruction number - the final line (beginning with <el-code><el-kw>procedure</el-kw></el-code>) 
+    <li>A container instruction has a single instruction number - the final line (beginning with <el-code><el-kw>procedure</el-kw></el-code>)
     is not given a separate instruction number.</li>
 </ul>
 
 <h2>Outlining</h2>
-<p>Find the button at the top of the screen labelled <b>+/-</b> and click it once to show the 'outline' view of the code - where each container instruction is collapsed to its top line, 
+<p>Find the button at the top of the screen labelled <b>+/-</b> and click it once to show the 'outline' view of the code - where each container instruction is collapsed to its top line,
     and then shown with a <b>+</b> symbol in front of it. Double-clicking this <b>+</b> will expand just that one instruction
     although the expanded view may contain other instructions that are still collapsed. You can expand the whole code
-again by clicking the <b>+/-</b> button at the top (you might need to click it twice if the view contains a mixture of 
+again by clicking the <b>+/-</b> button at the top (you might need to click it twice if the view contains a mixture of
 expanded and collapsed instructions.</p>
 <!-- #endregion-->
 
@@ -324,7 +324,7 @@ expanded and collapsed instructions.</p>
 
 <h2>Try varying the threshold up or down</h2>
 
-<h2>Take account of softace</h2>
+<h2>Take account of soft-ace</h2>
 <elan-code-block>
     <el-func class="ok multiline" id="func81" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
         <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident83" class="ok" tabindex="0"><el-txt>getActionForPlayerA</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else.">?</el-help></el-field></el-method>(<el-field id="params84" class="optional ok" tabindex="0"><el-txt><el-id>hand</el-id> <el-kw>as</el-kw> <el-type>Hand</el-type>, <el-id>dealerFaceUp</el-id> <el-kw>as</el-kw> <el-type>Card</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Zero or more parameter definitions comma-separated. Each parameter definition consists of a parameter name followed by the 'as' keyword and a Type. A parameter name follows the same rules as for a variable name - starting with a lower-case letter.">?</el-help></el-field>)<el-kw> returns </el-kw><el-field id="type85" class="ok" tabindex="0"><el-txt><el-type>Action</el-type></el-txt><el-place><i>Type</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A simple Type name must begin with an upper-case letter. See manual for List, ListImmutable, an  Dictionary types, 'generic type', 'tuple type', 'function type' - consult documentation for these.">?</el-help></el-field><el-msg></el-msg><el-fr>28</el-fr></el-top>
@@ -338,12 +338,12 @@ expanded and collapsed instructions.</p>
 
 <p>Work through each of the face card values and capture the scores</p>
 
-<h2>Use the dealer facecard to vary the two thresholds</h2>
+<h2>Use the dealer face card to vary the two thresholds</h2>
 
 <h2>Optimise the thresholds - using machine learning</h2>
 
  <p>Running overnight</p>
  <p>You have 20 values each in the range 12-20, so 180 calculations, each of 10,000 games </p>
- 
+
 </body>
 </html>

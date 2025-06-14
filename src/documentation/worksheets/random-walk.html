@@ -15,19 +15,19 @@
 <button id="auto-save">Auto-save file locally to continue</button>
 
 <div class="step" id="step0">
-<p>Our objective is to investigate the mathematical idea of a 'random walk'. 
+<p>Our objective is to investigate the mathematical idea of a 'random walk'.
 Imagine that you are standing in the centre of a circle with a radius of 10 paces.
 But instead of walking straight to the edge, with each pace you make a random turn
 - of <i>up to</i> to 90 degrees left or right. How many paces will it take to reach the edge?
-If the turning is truely random then each attempt will take a different number: the picture below shows 
+If the turning is truly random then each attempt will take a different number: the picture below shows
 three such paths taken:</p>
 
 <img src="https://elan-language.github.io/LanguageAndIDE/documentation/images/random-walk.png" width="50%">
 
 <p>Can we determine the <i>average</i> number of paces to reach the edge? Yes,
-if we could perform the experiment many times. 
+if we could perform the experiment many times.
 And it turns out that being able to predict the average length of a different kinds of
-random walk has significant applications in many different fields of study: 
+random walk has significant applications in many different fields of study:
 physics, biology, ecology, economics ..., even computer science. So we are going to build just such a simulation.</p>
 <label class="done" for="done0">Continue</label>
 </div>
@@ -49,10 +49,10 @@ physics, biology, ecology, economics ..., even computer science. So we are going
         </el-code-block>
 
         <ul>
-            <li>This instrucction reates a new 'Turtle' which we will be commanding to move around the Display holding a 'pen' that shows the path it has taken.</li>
+            <li>This instruction creates a new 'Turtle' which we will be commanding to move around the Display holding a 'pen' that shows the path it has taken.</li>
             <li><el-type>Turtle</el-type> is a 'type' of thing and type names always begin with a capital letter</li>
             <li>We have named this turtle <el-id>t</el-id> - picking a short name because we will be referring to it often and isn't likely
-            to be confused with anuthing else. We could have given it a longer name, and we will use longer names shortly. Names (also called 'identifiers') that we give
+            to be confused with anything else. We could have given it a longer name, and we will use longer names shortly. Names (also called 'identifiers') that we give
             to things always begin with a lower-case letter. You'll also note that identifiers and types are shown in different colours in the editor.
             </li>
             <li>The 'empty' brackets after <el-type>Turtle</el-type> are necessary, but don't worry about why they are needed just now
@@ -62,24 +62,24 @@ physics, biology, ecology, economics ..., even computer science. So we are going
                 <el-statement class="warning" id="let5"><el-kw>let </el-kw><el-field id="var6" class="ok"><el-txt><el-id>t</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr7" class="selected focused warning"><el-txt><input spellcheck="false" data-cursorstart="10" data-cursorend="10" size="9" style="width: 10ch" value="new Turtle"></el-txt><el-place><i>expression</i></el-place><el-compl>()</el-compl></el-field></el-statement>
             </el-code-block>
             at which point just pressing <b>Tab</b> will insert the prompted characters.</li>
-            <li>Whenever you see a question mark next to a field or instruction, clicking it will open the <b>Help</b> tab. 
+            <li>Whenever you see a question mark next to a field or instruction, clicking it will open the <b>Help</b> tab.
                 This may be useful when you start to write your own programs, but shouldn't be necessary in this worksheet.</li>
         </li>
-            
+
         </ul></li>
     <li>Follow this by adding this <el-kw>call</el-kw> instruction:
 
         <el-code-block>
             <el-statement class="selected focused ok" id="call8"><el-top><el-kw>call </el-kw><el-field id="ident9" class="ok"><el-txt><el-id>t</el-id>.<el-method>show</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args10" class="empty optional ok"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
         </el-code-block>
-    
+
         Noting that:
 
         <ul>
             <li>This instruction can be verbalised as 'call the <el-method>show</el-method> procedure on the turtle t'.</li>
-            <li>A procedure is a named piece of a code that makes a change to the system. This may also be referered to as a 'method' -
+            <li>A procedure is a named piece of a code that makes a change to the system. This may also be referred to as a 'method' -
                 a procedure being a particular type of method.</li>
-            <li>This syntax - which takes the form of <i>nameOfThing.methodName</i> is known as a 'dotted method'. You'll be calling a 
+            <li>This syntax - which takes the form of <i>nameOfThing.methodName</i> is known as a 'dotted method'. You'll be calling a
             lot of dotted methods on the turtle <el-id>t</el-id>.</li>
             <li>Methods are rendered in a different colour to identifiers and types.</li>
         </ul></li>
@@ -92,7 +92,7 @@ physics, biology, ecology, economics ..., even computer science. So we are going
             <li>Having shown the turtle this program stops, so you can click on the code editor to give it focus
                 and resume editing the code.
             </li>
-        </ul> 
+        </ul>
     <li>Add three more instructions below the <el-kw>call</el-kw>:
         <el-code-block>
             <el-statement class="ok" id="call17"><el-top><el-kw>call </el-kw><el-field id="ident18" class="ok"><el-txt><el-id>t</el-id>.<el-method>move</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args19" class="optional ok"><el-txt><el-lit>10</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
@@ -101,7 +101,7 @@ physics, biology, ecology, economics ..., even computer science. So we are going
         </el-code-block>
         <ul>
             <li>Here we again calling two different procedure methods on the turtle, their names suggesting what the turtle will do.</li>
-            <li>Both of these methods require you to specify a value (representing the distance to move, and the angle - in degrees - to turn, respectively) 
+            <li>Both of these methods require you to specify a value (representing the distance to move, and the angle - in degrees - to turn, respectively)
                 which is placed within the brackets. That's what the brackets are there for when using a methods.</li>
             <li>A value given to a method (within the brackets) is known as an 'argument' (the same term is used in Mathematics).
                 Later we will encounter methods that require more than one argument. Some methods - <el-method>show</el-method> for example -
@@ -110,7 +110,7 @@ physics, biology, ecology, economics ..., even computer science. So we are going
         </ul>
 
         then run the program again and make sure that you understand how the trail left by the turtle's pen corresponds to the three instructions that you added.</li>
-    <li>Delete the last <kw>call</kw> instruction by selecting the instruction and pressing <b>Ctrl-Delete</b> (or <b>Ctrl-d</b>. 
+    <li>Delete the last <kw>call</kw> instruction by selecting the instruction and pressing <b>Ctrl-Delete</b> (or <b>Ctrl-d</b>.
         In its place, add a <el-kw>for</el-kw> instruction and edit its fields to read this:
         <el-code-block>
             <el-statement class="ok multiline" id="for60">
@@ -123,14 +123,14 @@ physics, biology, ecology, economics ..., even computer science. So we are going
         <ul>
             <li>A <el-kw>for</el-kw> instruction is a kind of 'loop' which will execute the instructions placed inside it a fixed number of times.
             In this case it will execute them 8 times - counting from 1 to 8 <i>inclusive</i>.</li>
-            <li>We have to give a name to the 'counter' - in this case we have named it <el-id>n</el-id>. 
+            <li>We have to give a name to the 'counter' - in this case we have named it <el-id>n</el-id>.
                 Sometimes this counter will be used within the loop - if we need to know where we are in the counting. In this case, we are not going
                 to use it, though.
             </li>
             <li>This looping activity is formally known in Computer Science as 'iteration'.</li>
         </ul></li>
-    <li>Move the two <el-kw>call</el-kw> instuctions that <el-method>move</el-method> and <el-method>turn</el-method> the turtle <i>inside</i> the loop. 
-        You may do this one at a time, or both together:</li> 
+    <li>Move the two <el-kw>call</el-kw> instructions that <el-method>move</el-method> and <el-method>turn</el-method> the turtle <i>inside</i> the loop.
+        You may do this one at a time, or both together:</li>
         <ul>
             <li>Select the instruction(s) to move</li>
             <li>Press <b>Ctrl-x</b> to cut the instruction(s) to the clipboard</li>
@@ -141,9 +141,9 @@ physics, biology, ecology, economics ..., even computer science. So we are going
         <i>Before</i> you run the program, try to predict what you will see on the display. Then run the program.</li>
 
     <li>Now modify the code to draw a 12-sided regular polygon.The <i>loop</i> will need to execute 12 times, and each turn will need to
-        be 1/12<sup>th</sup> of 360 degrees. You <i>could</i> work that one out for yourself, 
+        be 1/12<sup>th</sup> of 360 degrees. You <i>could</i> work that one out for yourself,
         but you can also just specify the turn instruction like this:
-    
+
         <el-code-block>
             <el-statement class="ok" id="call28"><el-top><el-kw>call </el-kw><el-field id="ident29" class="ok"><el-txt><el-id>t</el-id>.<el-method>turn</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args30" class="optional ok"><el-txt><el-lit>360</el-lit>/<el-lit>12</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
         </el-code-block>
@@ -160,27 +160,27 @@ physics, biology, ecology, economics ..., even computer science. So we are going
 <div class="step" id="step2">
 <h3>Iteration 2 - Draw the circle with a radius of 10 paces</h3>
 
-<p>Returning to our problem we defined the specific random walk to be simulated as getting from the centre to the edge of a circle with a 
-    radius of 10 paces. We now know how to draw a regular polygon and a circle may be descrbed as a regular polygon with an infinite number of sides.
+<p>Returning to our problem we defined the specific random walk to be simulated as getting from the centre to the edge of a circle with a
+    radius of 10 paces. We now know how to draw a regular polygon and a circle may be described as a regular polygon with an infinite number of sides.
     But since the display's resolution is infinite we can get away with less than that! 360 sides, turning 1 degree each time should suffice.</p>
 
 <ul>
     <li>Modify the <el-kw>for</el-kw> loop so that it executes 360 times.</li>
     <li>Set the argument passed to the <el-method>turn</el-method> method to <el-lit>1</el-lit>. Now we need to calc</li>
-    <li>To calculate the length of the 'side' used for each of the 360 steps, we can use the following code, which reads very 
+    <li>To calculate the length of the 'side' used for each of the 360 steps, we can use the following code, which reads very
         like the way we would read out the calculation in mathematics:
-      
+
          <el-code-block>
             <el-statement class="ok" id="let86"><el-kw>let </el-kw><el-field id="var87" class="ok"><el-txt><el-id>pace</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr88" class="ok"><el-txt><el-lit>5</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
             <el-statement class="ok" id="let111"><el-kw>let </el-kw><el-field id="var112" class="ok"><el-txt><el-id>radius</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr113" class="ok"><el-txt><el-lit>10</el-lit>*<el-id>pace</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
             <el-statement class="ok" id="let95"><el-kw>let </el-kw><el-field id="var96" class="ok"><el-txt><el-id>side</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr97" class="ok"><el-txt><el-lit>2</el-lit>*<el-id>radius</el-id>*<el-id>pi</el-id>/<el-lit>360</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
         </el-code-block>
 
-      We need to calculate thes values <i>before</i> we use them, so add these three new instructions <i>at the top<</i> of the main.
-    </li> 
+      We need to calculate these values <i>before</i> we use them, so add these three new instructions <i>at the top<</i> of the main.
+    </li>
     <li>Now change the argument passed into the <el-method>move</el-method> from <el-lit>10</el-lit> to <el-id>side.</el-id></li>
-    <li>We'd also like get the circle centred on the display. To do this we need to <i>start</i> the turtle 
-        by the circle's radius to the left of the centre, meaning that the x-coordinate will be <el-code>-<el-id>radius</el-id></el-code>, still facing North. 
+    <li>We'd also like get the circle centred on the display. To do this we need to <i>start</i> the turtle
+        by the circle's radius to the left of the centre, meaning that the x-coordinate will be <el-code>-<el-id>radius</el-id></el-code>, still facing North.
         The <el-method>placeAt</el-method> procedure method on the turtle
     allows the turtle to be placed ar specific x,y coordinates <i>without</i> drawing a line from where it was before.
      So <i>above the <el-kw>for</el-kw> instruction, insert:</i>
@@ -199,13 +199,13 @@ physics, biology, ecology, economics ..., even computer science. So we are going
 <h3>Iteration 3 - Draw a random walk</h3>
 <p>To simulate the random work we need to repeatedly move the turtle one pace, and turn though a random angle of up to 90 degrees in
     either direction (to turn to the left, just make the angle negative). The method <el-method>random</el-method><el-code>()</el-code>
-    will generate a fractional number in the range 0 to 1, but there is also <el-method>randomInt</el-method> 
+    will generate a fractional number in the range 0 to 1, but there is also <el-method>randomInt</el-method>
     ('Int' being short for integer) that will generate a random whole number within a range specified by two integer arguments. </p>
 
     <p>We could use another <el-kw>for</el-kw> for repetition, but the problem is that we don't know how many steps it will take
     to get from the centre to the edge. What we need is a loop that executes as many times as is needed - until something decides
     that it is time to stop. There are two such forms of loop: a <el-kw>while</el-kw> loop and a <el-kw>repeat</el-kw> loop, each
-    one optimised toward slightly different circumstances, but for this particular challenge they would work equally well, 
+    one optimised toward slightly different circumstances, but for this particular challenge they would work equally well,
     so we'll just pick the first one.</p>
 <ul>
     <li>After the last instruction within the main, add an instruction to place the turtle back in the centre of the circle.</li>
@@ -220,7 +220,7 @@ physics, biology, ecology, economics ..., even computer science. So we are going
         </el-statement>
     </el-code-block>
 
-    This condition needs to be a 'logical' expression that evaluates to <el-id>true</el-id> (in which case the loop runs again) 
+    This condition needs to be a 'logical' expression that evaluates to <el-id>true</el-id> (in which case the loop runs again)
     or <el-id>false</el-id> (in which case the loop terminates) and the program moves on to the next instruction after the
     <el-kw>end loop</el-kw>. We'll work out the proper expression for the condition. For the meantime just enter <el-id>true</el-id>,
     which is a constant value defined in the Elan library (like <el-id>pi</el-id>). Because this expression will <i>always</i>
@@ -233,7 +233,7 @@ physics, biology, ecology, economics ..., even computer science. So we are going
     </el-code-block>
 
     Then run the program and observe the random walk. When it heads outside the visible display area press the <b>Stop</b> button.</li>
-    <li>What we want is for the random walk to continue only 'while' its distance from the centre is less than one radius. 
+    <li>What we want is for the random walk to continue only 'while' its distance from the centre is less than one radius.
         If we know the x and y coordinates of the turtle at every point we could calculate the distance from the centre of the screen
         using Pythagoras' theorem. The following tips will be useful:
         <ul>
@@ -241,9 +241,9 @@ physics, biology, ecology, economics ..., even computer science. So we are going
             <li>We can square a value using <el-code><el-id>n</el-id>^</el-code><el-lit></el-lit> - 'n raised to the power of 2'.</li>
             <li>The method <el-method>sqrt</el-method> calculates the square root of its argument.</li>
         </ul>
-        
-        So, edit the condition field of the <el-kw>while</el-kw> loop to read: 
-        
+
+        So, edit the condition field of the <el-kw>while</el-kw> loop to read:
+
         <el-code-block>
         <el-method>sqrt</el-method>(<el-id>t</el-id>.<el-id>x</el-id>^<el-lit>2</el-lit> + <el-id>t</el-id>.<el-id>y</el-id>^<el-lit>2</el-lit>) &lt; <el-id>radius</el-id>
         </el-code-block>
@@ -290,7 +290,7 @@ physics, biology, ecology, economics ..., even computer science. So we are going
 
 <div class="step" id="step4">
 <h3>Iteration 4 - simulate multiple walks</h3>
-<p>Our goal is to determine the <i>average</i> number of paces for a random walk to reach the edge of the circle. 
+<p>Our goal is to determine the <i>average</i> number of paces for a random walk to reach the edge of the circle.
 So the next step is to perform multiple walks.</p>
 <ul>
     <li>After the <el-kw>while</el-kw> loop add:
@@ -299,7 +299,7 @@ So the next step is to perform multiple walks.</p>
     </el-code-block>
     then after that add a new <el-kw>for</el-kw> loop that counts from 1 to <el-id>numberOfWalks</el-id>. The counter may again be defined
         as <el-id>n</el-id> because the loop that we used <el-id>n</el-id> in previously, has terminated by this point in the program.
-    </el-id>. 
+    </el-id>.
     </li>
     <li>Using <b>Shift-&#x2191;</b> multi-select these three instructions:
         <el-code-block>
@@ -328,11 +328,11 @@ So the next step is to perform multiple walks.</p>
         in a random mix of black or white, or of many shades of grey, don't feel bad - both would seem quite logical! But why has it actually
         produced a range of <i>colours</i>? The answer
         is that each of the named (constant) colours (e.g. <el-id>red</el-id>) just holds an integer value in the range
-        0 (black) to 16,777,215 (white) - so it is possible to display 16+ million different colours. These are created from all the permutations of 
-        mixing 256 shades of red, 256 shades of blue, and 256 shades of green. 
+        0 (black) to 16,777,215 (white) - so it is possible to display 16+ million different colours. These are created from all the permutations of
+        mixing 256 shades of red, 256 shades of blue, and 256 shades of green.
         This is known as the '24-bit RGB colour scheme' and is used throughout the web.
         So our <el-code><el-method>randomInt</el-method>(<el-id>black</el-id>, <el-id>white</el-id>)</el-code> has the same effect
-        as writing <el-code><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>16777215</el-lit>)</el-code></li>. 
+        as writing <el-code><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>16777215</el-lit>)</el-code></li>.
         Writing it as we did is easier to remember, and, arguably, makes the <i>intention</i> clearer.
     </ul>
 <label class="done" for="done4">Iteration completed</label>
@@ -374,7 +374,7 @@ So the next step is to perform multiple walks.</p>
         <el-statement class="ok" id="set951"><el-kw>set </el-kw><el-field id="ident952" class="ok"><el-txt><el-id>totalPlaces</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr953" class="ok"><el-txt><el-id>totalPlaces</el-id> + <el-id>pacesThisWalk</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
     </el-code-block>
 </li>
-   
+
 </li>We need to calculate the average and present it on the display. This could be done with a single instruction
 but using two instructions is a bit clearer. First calculate the average by adding these two instructions as final instructions in the main routine:
 
@@ -391,7 +391,7 @@ but using two instructions is a bit clearer. First calculate the average by addi
     </el-code-block>
     </li>
 </ul>
-<label class="done" for="done5">Interation completed</label>
+<label class="done" for="done5">Iteration completed</label>
 </div>
 <input type="checkbox" class="step" id="done5" />
 
@@ -399,19 +399,19 @@ but using two instructions is a bit clearer. First calculate the average by addi
     <p>Well done - you've now completed the worksheet.</p>
 
     <p>If you have time left, try any of the following:
-        
+
     <ul>
         <li>Simulate a larger number of walks e.g. 100. This will give a more accurate figure for the average number of paces.</li>
-        <li>Make the <el-id>pace</el-id> smaller but keep the circle's <el-id>radius</el-id> the same size as now. 
+        <li>Make the <el-id>pace</el-id> smaller but keep the circle's <el-id>radius</el-id> the same size as now.
             The average number of paces to reach the edge will be larger. But does it increase in proportion? Try
-            three different values and plot the average against pace size. 
+            three different values and plot the average against pace size.
         </li>
         <li>Go back to the original values, but make a small change to the range of possible turn-angles between paces:
-            -60 to + 60 degrees, or -120 to + 120, say.  
+            -60 to + 60 degrees, or -120 to + 120, say.
             How does this change the average number of paces? Is the relationship linear?</li>
         <li>Read more about the nature and application of Random Walks on <a href="https://en.wikipedia.org/wiki/Random_walk" target="_blank">Wikipedia</a>.</li>
     </ul>
-  
+
     <div class="license">
         <div class="license">
             <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
@@ -421,10 +421,10 @@ but using two instructions is a bit clearer. First calculate the average by addi
                Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
           </div>
         </div>
-        
+
         <div hidden="" id="hash"></div>
         <div hidden="" id="changes"></div>
-        
+
     <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
   </body>
   </html>

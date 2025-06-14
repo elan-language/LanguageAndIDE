@@ -45,8 +45,8 @@
       </el-code-block>
 
       noting that the square brackets used in <el-code>[<el-id>circle</el-id>]</el-code> defines a List -
-      in this case a List with just one member - the circle. The procedure method 
-      <el-method>displayVectorGraphics</el-method> takes a list, because in a typical application using VectorGraphics 
+      in this case a List with just one member - the circle. The procedure method
+      <el-method>displayVectorGraphics</el-method> takes a list, because in a typical application using VectorGraphics
       would want to display multiple shapes - lines, circles, rectangles and more - and we could
       just include them all within the square brackets, separated by commas. This application is unusual because
       we will be displaying just one circle at a time. We will be making a more interesting use of Lists later on.
@@ -54,8 +54,8 @@
     <li>Run the application and note that it displays a circle in the centre of the <b>Display</b> - but
     why is it yellow, and what determined the size and position? It uses some default values - just so
     that you see something. Now we want to specify those properties.</li>
-    <li>Select the second field in the <el-kw>let</el-kw> statement, and at the right hand end type 
-       type <el-kw>with</el-kw> or select it from the drop-down options. You will now be presented with a 
+    <li>Select the second field in the <el-kw>let</el-kw> statement, and at the right hand end type
+       type <el-kw>with</el-kw> or select it from the drop-down options. You will now be presented with a
       a list of the 'properties' that can be specified with for a circle. Select the first option, <el-id>centreX</el-id>
       then <b>Tab</b> to add the prompted words <el-kw>set to</el-kw> followed by the value <el-lit>15</el-lit> and a comma.
       Repeat this sequence to set the <el-id>centreY</el-id> to <el-lit>15</el-lit>, the <el-id>radius</el-id> to <el-lit>10</el-lit>,
@@ -68,8 +68,8 @@
       </el-code-block>
 
       but note that this is still one instruction, and if you were to edit it again the field would still be one long line.
-      <br>How do we know what values to use, even approximately?  The <b>Display</b> measures 100 units wide by 75 units deep, 
-      with the top-left corner having coordinates 0,0, and the bottom-right 100, 75. 
+      <br>How do we know what values to use, even approximately?  The <b>Display</b> measures 100 units wide by 75 units deep,
+      with the top-left corner having coordinates 0,0, and the bottom-right 100, 75.
       <br>Run the program again and confirm that a larger yellow circle, no edge appears near the top-left corner.
     </li>
   </ul>
@@ -94,13 +94,13 @@
     to be spaced 20 apart, so that the locations are distinct. So change
     the value specified for <el-id>centreX</el-id> from <el-lit>15</el-lit>
     to:
-    
+
     <el-code-block>
       <el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>
     </el-code-block>
     Run the program and check that the circle is now further to the right.</li>
     <li>Now we want to be able to specify the colour according to the position
-      (i.e. according to the value of <el-id>move</el-id>). So let's first 
+      (i.e. according to the value of <el-id>move</el-id>). So let's first
       define the four values as a list. Add this immediately above the <el-kw>let</el-kw>
       that defines <el-id>circle</el-id>:
       <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
@@ -114,7 +114,7 @@
         <el-lit>1</el-lit> is that <el-id>move</el-id> will have the values 1,2,3, or 4
         but the indexes for a list of Four elements, as in an Array, are numbered from 0.
         <br>Run the program, again varying the value for <el-id>move</el-id> from 1 to 4
-        to check that each value puts the circle in a different place and colour.      
+        to check that each value puts the circle in a different place and colour.
       </li>
     </ul>
   <label class="done" for="done2">Step completed</label>
@@ -129,7 +129,7 @@
   it will be useful to have the code that does the display in a separate procedure
   that can be called from more than one place in the main routine. But even if we
   can't think that far ahead, it is always good practice to extract code into
-  named procedures (or, later, functions) - because as programs expand, this 
+  named procedures (or, later, functions) - because as programs expand, this
   makes them easier to read and to manage.
 </p>
 <ul>
@@ -143,7 +143,7 @@
   <li>
     Now cut and paste the last three instructions from main
     into this procedure, and then within main call the procedure,
-    using the defined value <el-id>move</el-id> as the argument. 
+    using the defined value <el-id>move</el-id> as the argument.
     Then run the program and check that it does the same as the previous iteration.
 
     <div class="hint" id="hint3" data-hint="">
@@ -165,7 +165,7 @@
         </el-proc>
       </el-code-block>
     </div>
-  
+
     <div class="hint" id="hint" data-hint="">
         <span class="show">Hint 2: Show the whole code</span>
         <el-code-block>
@@ -196,14 +196,14 @@
   <ul>
     <li>Edit the first <el-kw>let</el-kw> in main so that, replacing the name <el-id>move</el-id>
       with <el-id>sequence</el-id> and replacing the single value with a list of a few randomly-chosen integers,
-      each in the range 1-4, for example: 
+      each in the range 1-4, for example:
       <el-code>[<el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-code>
       ensuring that you have at least one example of the same number twice in succession. This change will produce a temporary <i>error</i>
       because <el-id>move</el-id> is now 'unknown' - but we'll fix that...</li>
      <li>Below the <el-kw>let</el-kw> insert an <el-kw>each</el-kw> instruction that defines the variable name <el-id>move</el-id>
-      and uses <el-id>sequence</el-id> as the source.</li> 
+      and uses <el-id>sequence</el-id> as the source.</li>
       <li>Cut and paste the existing call to <el-method>displayMove</el-method> into the new <el-kw>each</el-kw> loop</li>.
-      <li>Within the <el-method>displayMove</el-method> procedure add, at the end, an instruction to pause for a full second - 
+      <li>Within the <el-method>displayMove</el-method> procedure add, at the end, an instruction to pause for a full second -
         otherwise things will happen too quickly to see. Then run the program and describe what you observe here:<br>
         <textarea class=""></textarea>
       <div class="hint" id="hint4a" data-hint="">
@@ -239,8 +239,8 @@
       </li>
       <li>Since we shall eventually want to vary the speed that the sequence plays, replace the literal value for the pause time
         with a <el-kw>variable</el-kw> named <el-id>interval</el-id> at the very top of the main routine, initialised to <el-lit>1000</el-lit>.
-        Then pass <el-id>interval</el-id> as a second argument into the call to <el-method>displayMove</el-method>, separated from 
-        <el-id>move</el-id> by a comma. This will initially give you an error because the definition of <el-method>displayMove</el-method> 
+        Then pass <el-id>interval</el-id> as a second argument into the call to <el-method>displayMove</el-method>, separated from
+        <el-id>move</el-id> by a comma. This will initially give you an error because the definition of <el-method>displayMove</el-method>
         currently expects only one parameter. So, within that procedure definition, define a second parameter, separated from the first
         by a comma, giving it the name <el-id>interval</el-id> and the type for an integer. Then use that parameter name <el-id>interval</el-id>
         instead of the literal number currently given as an argument to <el-method>pause</el-method>. Run the program to check that
@@ -284,7 +284,7 @@
           <span class="show">Show the two new instructions</el-method></span>
           <el-code-block>
             <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
-            <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>100</el-lit></el-txt></el-field>)</el-top></el-statement>   
+            <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>100</el-lit></el-txt></el-field>)</el-top></el-statement>
           </el-code-block>
         </div>
         <div class="hint" id="hint4f" data-hint="">
@@ -320,11 +320,11 @@
     but please, if you are working in a classroom <i>set the volume to the lowest setting where you can still just hear the tones.</i>
     <li>The next requirement is that, just as the four moves are represented by different colours, in different locations, they
       should also have different tones. The original Simon game used four musical notes - E, A, C#, and E (one octave higher) -
-      such that they could combine in any order for a pleasing sound. The frequenies, in Hz, for these four notes are: 164.81, 220, 277.18, and 329.63.
-      Earlier, you defined a list of colours. Now, just under that definition of colours, create a similar definition named 
+      such that they could combine in any order for a pleasing sound. The frequencies, in Hz, for these four notes are: 164.81, 220, 277.18, and 329.63.
+      Earlier, you defined a list of colours. Now, just under that definition of colours, create a similar definition named
       <el-id>tones</el-id> (with an 's') and containing the four numeric values just given. Then, just as you earlier used
       <el-code><el-id>colours</el-id>[move -1]</el-code> to get the colour corresponding to the <el-id>move</el-id>,
-       in the call to the <el-method>tone</el-method> procedure, 
+       in the call to the <el-method>tone</el-method> procedure,
        replace the specific value of <el-lit>256</el-lit> with a similar construct to get the tone corresponding to the <el-id>move</el-id>.
        Then run the program to verify that you now hear a 'melody' corresponding to the sequence of moves.
     </li>
