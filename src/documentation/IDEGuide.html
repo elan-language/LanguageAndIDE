@@ -51,7 +51,7 @@ The <b>File</b> button has a drop-down menu with the following actions:
 
 <el-code-block>
 <div class="elan-code" data-code=""><el-header># <el-hash>c3a9b1928be74fe1bd94ec5d2cd07c9763a1031fbefe8de4d44d76669c1ad8f6</el-hash> <el-version>Elan 1.1.4</el-version> <el-user class="hide">guest</el-user> <el-profile class="hide">default_profile</el-profile></el-header>
-<el-global class="selected focused ok empty" id="select0" tabindex="0"><el-select><el-place>new code</el-place><el-help class="selector"> main procedure function test constant enum record class abstract interface #<el-help><a href="LangRef.html#GlobalInstructions" target="doc-iframe"> ?</a></el-help></el-select></el-global></div>
+<el-global class="selected focused ok empty" id="select0" tabindex="0"><el-select><el-place>new code</el-place><el-help class="selector"> main procedure function test constant enum record class abstract interface #</el-help><el-help><a href="LangRef.html#GlobalInstructions" target="doc-iframe"> ?</a></el-help></el-select></el-global></div>
 </el-code-block>
 
 <p>The first line shows a standard Elan 'header' comment, which is required on every code file, and which you are not able to move, edit, or delete.
@@ -208,7 +208,7 @@ The following example shows a <i>single instruction</i> that has been formatted 
     <el-statement class="selected focused ok" id="let15" tabindex="0"><el-kw>let </el-kw><el-field id="var16" class="ok" tabindex="0"><el-txt><el-id>b</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>cx</el-id><el-kw> set to </el-kw><el-id>i</el-id>*<el-lit>5</el-lit> + <el-lit>2</el-lit>, <br><el-id>cy</el-id><el-kw> set to </el-kw><el-lit>75</el-lit>, <br><el-id>r</el-id><el-kw> set to </el-kw><el-lit>1</el-lit>, <br><el-id>fill</el-id><el-kw> set to </el-kw>-<el-lit>1</el-lit>, <br><el-id>stroke</el-id><el-kw> set to </el-kw><el-id>white</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 
-<h3 class="no-TOC" id="field">Fields</h3>
+<h3 class="no-TOC" id="Field">Fields</h3>
 
 <p>Instructions consist of fixed (or 'templated') code &ndash; keywords and sometimes symbols &ndash; plus a number of 'fields' which is where you enter code that define specific details for that instruction.
     When the field is highlighted it will be highlighted with a background colour and a thin black border. This indicates that you may now enter or edit code in that field, for example:</p>
@@ -264,7 +264,7 @@ or, outside <el-code>main</el-code>:
 
     <p>When a new code selector has focus (for example as shown above)
         in most cases you can type just the first character of the instruction to be inserted. And you will then see
-        the template for that instruction including any mandatory and/or optional <a href="">fields</a>.
+        the template for that instruction including any mandatory and/or optional <a href="#Field">fields</a>.
         For example, given the initial list shown above, typing <el-code>f</el-code> will result in this being inserted:</p>
 
 <el-code-block>
@@ -309,12 +309,11 @@ In the following example, starting from this <a href="#MemberSelector">member se
 <h3 class="no-TOC" id="GlobalSelector">Global selector</h3>
 
 <p>The global selector appears only at 'global' level &ndash; in other words when the 'new code' is located <i>directly</i> within the file,
-rather than within <a href="#ContainerInstruction">container instruction</a>. When given focus, it will list the <a href="LangRef.html#global"></a>global instructions that
+rather than within <a href="#ContainerInstruction">container instruction</a>. When given focus, it will list the <a href="LangRef.html#GlobalInstructions">global instructions</a> that
 you may insert. This is the full list:</p>
 
 <el-code-block>
-<div>
-<el-global class="selected focused ok empty" id="select0" tabindex="0"><el-select><el-place>new code</el-place><el-help class="selector"> main procedure function test constant enum record class abstract interface #</div><el-help> <a href="documentation/LangRef.html#GlobalInstructions" target="doc-iframe">?</a></el-help></el-select></el-global></div>
+<el-global class="selected focused ok empty" id="select0" tabindex="0"><el-select><el-place>new code</el-place><el-help class="selector"> main procedure function test constant enum record class abstract interface #</el-help><el-help> <a href="documentation/LangRef.html#GlobalInstructions" target="doc-iframe">?</a></el-help></el-select></el-global>
 </el-code-block>
 
 Note that <el-code>main</el-code> will not be shown if the program already contains a <el-code>main</el-code> routine.
@@ -443,13 +442,13 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 <p>The <b>Worksheet</b> button opens buttons <b>Standard worksheets</b> and <b>Load external worksheet</b> to provide training materials.</p>
 
 <h1 id="Status">4. Status</h1>
-<h2>Status panel</h2>
+<h2 id="StatusPanel">Status panel</h2>
 <p>The status panel shows the current status of four conditions:</p>
 <ul>
- <li><b>Parse</b>: this indicator aggregates the parse status of each <a href="#field">field</a> and shows the <i>worst</i> status of any field.
+ <li><b>Parse</b>: this indicator aggregates the parse status of each <a href="#Field">field</a> and shows the <i>worst</i> status of any field.
     It is important to get the Parse Status to green <b>ok</b> at the earliest opportunity because, unless the parse status is green <b>ok</b>, Elan
         cannot attempt to <i>compile</i> the code. Nor can it <i>save</i> the code to a file, when the parse status is amber <b>incomplete</b> or red <b>error</b>.
-    </i></li>
+    </li>
  <li><b>Compile</b>: if the <i>parse</i> status is green <b>ok</b>, Elan will attempt to <i>compile</i> the code.</li>
  <li><b>Test</b>: 'pass' or 'fail' of the tests in the code</li>
  <li><b>Run</b>: 'running' to indicate the code is executing</li>
