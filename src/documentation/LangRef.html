@@ -258,12 +258,12 @@ The value is specified by the Type name for the specified <el-code>enum</el-code
   <li>Both are user-defined data structures</li>
   <li>Both are given a &lsquo;Type name&rsquo;</li>
   <li>Both may define one or more properties, each with a name and Type</li>
+  <li>Both may be created or copied using a <el-code>with</el-code> clause</li>
   <li>Both may define encapsulated methods</li>
 </ul>
 <p>However a <el-code>record</el-code> differs  from a <el-code>class</el-code> in that:</p>
  <ul>
   <li>A <el-code>record</el-code> is immutable (like a <el-code>ListImmutable</el-code> or a <el-code>String</el-code>). You can create a copy with specified differences but you cannot modify a <el-code>property</el-code> on a given instance.</li>
-  <li>A <el-code>record</el-code> instance may be created or copied using a <el-code>with</el-code> clause, whereas <el-code>with</el-code> may not be used on a class instance.</li>
   <li>A <el-code>record</el-code> does not define a constructor</li>
   <li>A <el-code>record</el-code> may define only <i>function</i> methods, since <i>procedure</i> methods would imply the ability to <i>mutate</i> the record.</li>
 </ul>
@@ -522,22 +522,22 @@ If the <el-kw>property</el-kw> is not initialised within the constructor then it
 <p>An abstract property may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
 
 <h2 id="AbstractProcedureMethod">Abstract Procedure Method</h2>
-<p>An abstract procedure method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
+<p>An abstract procedure method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) procedure to match.</p>
 
 <h2 id="abstractFunctionMethod">Abstract Function Method</h2>
-<p>An abstract function method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
+<p>An abstract function method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
 
 <h2 id="member_comment"># (comment)</h2>
 <p>See <a href="#Comment">Comments</a>.</p>
 
 <h1 id="StatementInstructions">Statement Instructions</h1>
 
-<a href="LibRef.html#assert">assert</a>
+<a href="#assert">assert</a>
 <a href="#call">call</a>
 <a href="#each">each</a>
-<a href="#else">else</a>
+<a href="#if_statement">else</a>
 <a href="#for">for</a>
-<a href="#if">if</a>
+<a href="#if_statement">if</a>
 <a href="#let">let</a>
 <a href="#print">print</a>
 <a href="#repeat">repeat</a>
@@ -584,7 +584,7 @@ by <a href="#throw">throwing an exception</a> like this:</p>
 <p>For procedures that you define yourself, <el-kw>out</el-kw> parameters are allowed.  In this case the corresponding argument must be the name of a variable whose value gets updated by the procedure.</p>
 <p>If the parameter is not an <el-kw>out</el-kw> parameter, any expression of the correct Type can be used as an argument.</p>
 <p>Procedures may have side-effects, for example input/output or changing a data value in an object. They can change the contents of any mutable object passed in as an argument.  For this reason, procedures cannot be called from functions, which are not allowed to have side-effects.  <el-kw>call</el-kw> statements are simply not allowed in functions, to enforce this.</p>
-<p>There is a limit to the complexity of a <el-kw>call</el-kw> statement.  Only one dot is allowed in the <el-code>procedure name</el-code> field, or two dots if the first word is <el-kw>property</el-kw>.  If you need anything more complicated, use a <el-kw>let</el-kw> statement on the line above.  See the error message explanation for <a href="#parse_proc_ref">Invalid reference to a procedure</a>.</p>
+<p>There is a limit to the complexity of a <el-kw>call</el-kw> statement.  Only one dot is allowed in the <el-code>procedure name</el-code> field, or two dots if the first word is <el-kw>property</el-kw>.  If you need anything more complicated, use a <el-kw>let</el-kw> statement on the line above.  See the error message explanation for <a href="#ProcRefField">'procedureName' in a call statement</a>.</p>
 
 <h2 id="each">Each loop</h2>
 <p>The <el-code>each..in..</el-code> construct specifies looping sequentially over the elements in a <el-type>List</el-type> or  an <el-type>Array</el-type>, or over the characters in a <el-type>String</el-type>.</p>
@@ -763,12 +763,25 @@ and the initial value is given by a following expression. For example:</p>
 
 <h2 id="LiteralValue">Literal value</h2>
 <p>A literal value is where a value is written &lsquo;literally&rsquo; in the code, such as <el-code>3.142</el-code> &ndash; in contrast to a value that is referred to by a name.</p>
-<p>The following data Types may be written as literal values (follow the links to view the form of each literal value):</p>
-<el-code><a href="#Int">Int</a>, <a href="#Float">Float</a>, <a href="#Boolean">Boolean</a>, <a href="#String">String</a>, <a href="#List">List</a>, <a href="#ListImmutable">ListImmutable</a>, <a href="#Dictionary">Dictionary</a>, <a href="#DictionaryImmutable">DictionaryImmutable</a>, <a href="#Tuple">Tuple</a></el-code><br>
+<p>Here is a table showing some example literal values.  Follow the links for more information about each type.</p>
+<table>
+<tr><th>Type</th><th>Example of literal</th></tr>
+<tr><td><a href="LibRef.html#Int">Int</a></td><td><el-code>3</el-code></td></tr>
+<tr><td><a href="LibRef.html#Float">Float</a></td><td><el-code>2.0</el-code></td></tr>
+<tr><td><a href="LibRef.html#Boolean">Boolean</a></td><td><el-code>true</el-code></td></tr>
+<tr><td><a href="LibRef.html#String">String</a></td><td><el-code>"Hello"</el-code></td></tr>
+<tr><td><a href="LibRef.html#Tuple">Tuple</a></td><td><el-code>tuple(3, "banana")</el-code></td></tr>
+<tr><td><a href="LibRef.html#List">List</a></td><td><el-code>["lemon", "lime", "orange"]</el-code></td></tr>
+<tr><td><a href="LibRef.html#Dictionary">Dictionary</a></td><td><el-code>["a":3, "b":5]</el-code></td></tr>
+<tr><td><a href="LibRef.html#ListImmutable">ListImmutable</a></td><td><el-code>{"lemon", "lime", "orange"}</el-code></td></tr>
+<tr><td><a href="LibRef.html#DictionaryImmutable">DictionaryImmutable</a></td><td><el-code>{"a":3, "b":5}</el-code></td></tr>
+</table>
+<p>For more about List and Dictionary literals see the <a href="LibRef.html#StandardDataStructures">Standard (mutable) data structures</a> table.<br>
+For more about ListImmutable and DictionaryImmutable literals see the <a href="LibRef.html#ImmutableDataStructures">Immutable data structures</a> table.</p>
 
 <h2 id="named_value">Named value</h2>
 <p>A named value is a value that is associated with a name rather than being defined literally in code. There are various kinds of named value:</p>
-<p><a href="#Constant">Constants</a>, <span class="Hyperlink"><a href="#Let_statement_1">let</a></span> statement, <span class="Hyperlink"><a href="#Variables">variable</a></span> statement, <a href="#Parameter_passing_1">Parameter passing</a>, <span class="Hyperlink"><a href="#Enum_1">enum</a></span> statement.
+<p><a href="#constant">Constants</a>, <span class="Hyperlink"><a href="#Let_statement_1">let</a></span> statement, <span class="Hyperlink"><a href="#Variables">variable</a></span> statement, <a href="#Parameter_passing_1">Parameter passing</a>, <span class="Hyperlink"><a href="#Enum_1">enum</a></span> statement.
   Once a named value has been defined, it can be referred to by the name.</p>
 
 <h2 id="Identifier">Identifier</h2>
@@ -791,7 +804,16 @@ If a variable is of an indexable Type, then an index or index range may be appli
     <el-code>print a[..7]</el-code>    &rarr; <el-code>Hello W</el-code>   (since the upper bound of a range is <em>exclusive</em>)
     <el-code>print a[0..4]</el-code>  &rarr; <el-code>Hell</el-code>         (for the same reason)
 </pre>
-<p>See also: <a href="#Using_a_List">Using a List</a>, <a href="#Using_a_Dictionary">Using a Dictionary</a></p>
+<p>In the examples above, the result is of type String in all cases.
+When using indexing on other types:</p>
+<ul>
+<li>with a single index, the result is the same type as the elements of the data structure being indexed</li>
+<li>with an index range, the result is the same type as the data structure itself</li>
+</ul>
+<p>Indexable types are <a href="LibRef.html#String">String</a>, <a href="LibRef.html#StandardDataStructures">Array, Array2D, List, Dictionary</a>, <a href="LibRef.html#ImmutableDataStructures">ListImmutable and DictionaryImmutable</a>.</p>
+<p>Index ranges cannot be applied to Dictionary or DictionaryImmutable.</p>
+<p>If the index values in a range are equal, or the second is smaller than the first,
+then an empty data structure of the correct type is generated.</p>
 <p>Important: unlike in many languages, indexes in Elan (whether, single, multiple, or a range) are only ever used for <em>reading</em> values.
 Writing a value to a specific index location is done through a method such as in these examples:</p>
 <pre>
@@ -857,9 +879,11 @@ example, which implements an &lsquo;exclusive or&rsquo;, need not use brackets a
 <ul>
 <li><el-code> a is b</el-code> returns <el-kw><el-id>true</el-id></el-kw>, if <el-code>a</el-code> and <el-code>b</el-code> are both of the same Type and their values are equal. The only exception is that if one argument is of Type <el-code>Float</el-code> and the other is of Type <el-code>Int</el-code>, then <el-code>is</el-code> will return <el-code>true</el-code> if their values are the same, i.e. are the same whole number.</li>
 <li><el-code>isnt</el-code> returns the opposite of <el-code>is</el-code>.</li>
-<p>Note that in Elan equality testing is always &lsquo;equality by value&rsquo;; there is no such thing as &lsquo;equality by reference&rsquo;.</p>
 <li>Where a binary operator is expected, as soon as you type <el-code>is</el-code> the editor will automatically insert a space after it. To enter <el-code>isnt</el-code> you need to delete the space (using the Backspace key) and then type <el-code>nt</el-code>.</li>
 </ul>
+<p>Note that in Elan equality testing is always &lsquo;equality by value&rsquo;; there is no such thing as &lsquo;equality by reference&rsquo;.</p>
+<p>If the items being compared are composite types, the elements within them are compared recursively to see if the objects are equal.  For example two distinct instances of the same class compare equal if the values of all their properties compare equal.  And two Lists compare equal if they contain the same elements in the same order.</p>
+<p>The compiler rejects any attempt to compare instances of different classes unless abstract classes and inheritance are involved.  Two instances which are subclasses of the same abstract class compare equal only if they are of the same class (and have the same property vlaues).</p>
 
 <h4 class="no-TOC">Numeric comparison</h4>
 <p>The numeric comparison operators are:</p>
@@ -1317,8 +1341,8 @@ Comments may be inserted at the same level as a <a href="#GlobalInstructions">gl
 
 <h3 id="TypeField" class="no-TOC">'Type' field in a function or property definition</h3>
  <p>For certain Types the name may be followed by an <el-kw>of</el-kw> clause, for example:</p>
-<el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-Type>Int</el-Type>&gt;<br>
-<el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-Type>String</el-Type>, <el-Type>Int</el-Type>&gt;
+<el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;<br>
+<el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Int</el-type>&gt;
 
 <h3 id="TypeNameField" class="no-TOC">'Name' field in a class or enum definition</h3>
  <p>Type names always begin with a capital letter,  optionally followed by letters of either case, numeric digits,
