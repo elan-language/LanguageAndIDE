@@ -1,32 +1,38 @@
-/* Initially, all steps hidden - just title & auto-save visible */
-    .step, 
-    .step *,
-    .step + input {
-        visibility: hidden;
+/* Initially, everything hidden except the Save button and message */
+
+    .docTitle *,
+    #auto-save,
+    #auto-save + span
+    {
+        display: block;
     }
 
 /* After saving ... */
-    #auto-save.saved {
+    #worksheet.saved auto-save,
+    #worksheet.saved auto-save + span
+    {
         display: none;
     }
-    /* ... show first step & its checkbox */
-    #auto-save.saved + .step, 
-    #auto-save.saved + .step *,
-    #auto-save.saved + .step +  input {
-        visibility: visible;
+
+/* Steps */
+    /* Preliminaries only */
+    #preliminaries.complete {
+        display: none;
+    }
+    #worksheet.saved #userName{
+        display: block;
     }
 
-/* When a step is complete, show the next one  through to its input...*/
-    #auto-save.saved ~ .step.complete, 
-    #auto-save.saved ~ .step.complete *,
-    #auto-save.saved ~ .step.complete + input,
-    #auto-save.saved ~ .step.complete + input + .timestamp + .step,
-    #auto-save.saved ~ .step.complete + input + .timestamp + .step *,
-    #auto-save.saved ~ .step.complete + input + .timestamp + .step + input
-    {
-        visibility: visible;
+    /* By default, invisible */
+    .step {
+        display: none;
     }
-    /* ...and hide the completion label */
+    /* Show complete & active steps, when worksheet is saved */
+    #worksheet.saved .step.complete,
+    #worksheet.saved .step.active {
+        display: block;
+    }
+    /* When step is complete hide the completion label */
     .step.complete label.done {
         display: none;
     }
@@ -38,46 +44,24 @@
         display: none;
     }
 
-    /* After saving, first hint of 1st step, or first hint of step after completed step will be shown, including label */
-     #auto-save.saved + .step .hint:first-child,
-     #auto-save.saved ~ .step.complete + input + .timestamp + .step .hint:first-child {
+    /* First hint of active step will be shown */
+    #worksheet.saved .step.active .hint:first-child
+    {
         display: block;
-        visibility: visible;
-     }
-     #auto-save.saved + .step .hint:first-child span.show,
-     #auto-save.saved ~ .step.complete + input + .timestamp + .step .hint:first-child span.show {
-        display: inline;
-        visibility: visible;
-     }
-
-    /* By default hide any follow-on hints until a hint is taken - to enforce progression */
-    .hint + hint {
-        display: none;
-    }
-    #auto-save.saved ~ .step.complete + input + .timestamp + .step .hint * {
-        display: none;
     }
 
     /* When a hint is taken...*/
-        /* Display all its contents */
-        .hint.taken *
-        {
-            display: block;
-            visibility: visible;
-        }
-        /* Display the NEXT Hint ... */
-        .hint.taken +.hint
-         {
-            display: block;
-            visibility: visible;
-        }
-        /* ... and its label */
-        .hint.taken + .hint + span.show
-        {
-            display: inline;
-            visibility: visible;
-        }
-
+    /* Display the contents */
+    .hint.taken + .content
+    {
+        display: block;
+        visibility: visible;
+    }
+    /* ...and display the NEXT Hint */
+    .hint.taken + content + .hint
+    {
+        display: block;
+    }
 
 /*Styling only */
 .done {
