@@ -185,6 +185,11 @@ export class WebInputOutput implements ElanInputOutput {
     return this.clearVectorGraphics();
   }
 
+  finished() {
+    this.cancelWaits = true;
+  }
+
+  cancelWaits: boolean = false;
   printedText: string = "";
   currentInterval?: any;
 
@@ -232,13 +237,17 @@ export class WebInputOutput implements ElanInputOutput {
 
     inp.focus();
 
+    this.cancelWaits = false;
     return new Promise<string>((rs) => {
       let entered = false;
       inp.addEventListener("keydown", (k: KeyboardEvent) => {
         entered = k.key === "Enter";
       });
       this.currentInterval = setInterval(async () => {
-        if (entered) {
+        if (this.cancelWaits) {
+          clearInterval(this.currentInterval);
+          rs("");
+        } else if (entered) {
           rs(inp.value);
           this.stopReading();
           const v = inp.value.replace(/</g, "&lt;");
@@ -251,9 +260,10 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   waitForAnyKey(): Promise<void> {
+    this.cancelWaits = false;
     return new Promise<void>((rs) => {
       const timeOut = setInterval(async () => {
-        if ((await this.getKey()) !== "") {
+        if (this.cancelWaits || (await this.getKey()) !== "") {
           clearInterval(timeOut);
           rs();
         }
@@ -262,10 +272,11 @@ export class WebInputOutput implements ElanInputOutput {
   }
 
   waitForKey(): Promise<string> {
+    this.cancelWaits = false;
     return new Promise<string>((rs) => {
       const timeOut = setInterval(async () => {
         const key = await this.getKey();
-        if (key !== "") {
+        if (this.cancelWaits || key !== "") {
           clearInterval(timeOut);
           rs(key);
         }
