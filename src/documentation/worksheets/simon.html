@@ -4,10 +4,10 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
-<link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
-<link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
-<link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
+<link href="../../../out/website/styles/colourScheme.css" rel="stylesheet" />
+<link href="../../../out/website/styles/elanStyle.css" rel="stylesheet" />
+<link href="../../../out/website/styles/documentation.css" rel="stylesheet" />
+<link href="../../../out/website/styles/worksheet.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -21,7 +21,7 @@
     <ul>
       <li>
         <label for="input0">Enter your name: </label>
-        <input type="text" id="username" />
+        <input type="text" id="input0" />
       </li>
       <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
       <li>Select <b>File > New</b> to start a new program, 
@@ -95,7 +95,7 @@
         <br>Run the program again and confirm that a larger yellow circle, with no edge, appears near the top-left corner.
       </li>
     </ul>
-    <div class="hint" id="hint1" data-hint="">The <el-kw>main</el-kw> so far</div>
+    <div class="hint" id="hint1" data-hint="">Hint: The main so far</div>
     <div class="content" id="hint1content">
       <el-code-block>
         <main class="ok multiline" id="main1" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
@@ -107,8 +107,8 @@
       </el-code-block>
     </div>
     <label class="done" for="done1">Step completed</label>
-  </div>
-  <input type="checkbox" class="step" id="done1" />
+  <input type="checkbox"  id="done1" />
+</div>
 
   <div class="step"  id="step2">
     <h3>Iteration 2- Draw circle in four different locations and colours</h3>
@@ -150,7 +150,7 @@
           to check that each value puts the circle in a different place and colour.
         </li>
       </ul>
-      <div class="hint" id="hint2" data-hint="">The <el-kw>main</el-kw> so far</div>
+      <div class="hint" id="hint2" data-hint="">Hint: The main so far</div>
       <div class="content" id="hint2content">
         <el-code-block>
           <main class="ok multiline" id="main1" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
@@ -164,8 +164,8 @@
         </el-code-block>
       </div>
     <label class="done" for="done2">Step completed</label>
-  </div>
-  <input type="checkbox" class="step" id="done2"/>
+  <input type="checkbox"  id="done2"/>
+</div>
 
   <div class="step"  id="step3">
     <h3>Iteration 3 - Move the display capability into a procedure</h3>
@@ -233,8 +233,8 @@
     </li>
   </ul>
     <label class="done" for="done3">Step completed</label>
-  </div>
-  <input type="checkbox" class="step" id="done3"/>
+  <input type="checkbox"  id="done3"/>
+</div>
 
   <div class="step"  id="step4">
     <h3>Iteration 4: Play a sequence</h3>
@@ -303,7 +303,7 @@
           by a comma, giving it the name <el-id>interval</el-id> and the type for an integer. Then use that parameter name <el-id>interval</el-id>
           instead of the literal number currently given as an argument to <el-method>pause</el-method>. Run the program to check that
           it still works the same way.
-        <div class="hint" id="hint4c" data-hint="">Show the whole code for <el-kw>main</el-kw></div>
+        <div class="hint" id="hint4c" data-hint="">Hint: Show the whole code for main</div>
         <div class="content" id="hint4ccontent">
           <el-code-block>
             <main class="ok multiline" >
@@ -319,7 +319,7 @@
             </main>
           </el-code-block>
         </div>
-        <div class="hint" id="hint4d" data-hint="">Show the whole code for <el-method>displayMove</el-method></div>
+        <div class="hint" id="hint4d" data-hint="">Hint: Show the whole code for <el-method>displayMove</el-method></div>
         <div class="content" id="hint4dcontent">
           <el-code-block>
             <el-proc class="focused ok multiline" >
@@ -338,14 +338,14 @@
           after each move and add a <i>shorter</i> and <i>fixed-length</i> pause. So after the <i>existing</i> <el-id>pause</el-id> instruction within <el-method>displayMove</el-method>
           add a call to <el-method>clearVectorGraphics</el-method> and follow this by a fixed pause of 1/10th of a second. Run again
           and check that any repeated digits are now distinct visually.
-          <div class="hint" id="hint4e" data-hint="">Show the abbreviated instructions</el-method></div>
+          <div class="hint" id="hint4e" data-hint="">Hint: Show the abbreviated instructions</el-method></div>
         <div class="content" id="hint4econtent">
             <el-code-block>
               <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
               <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>100</el-lit></el-txt></el-field>)</el-top></el-statement>
             </el-code-block>
           </div>
-          <div class="hint" id="hint4f" data-hint="">Show the whole code</el-method></div>
+          <div class="hint" id="hint4f" data-hint="">Hint: Show the whole code</el-method></div>
         <div class="content" id="hint4fcontent">
             <el-code-block>
               <!-- TODO -->
@@ -354,8 +354,8 @@
         </li>
     </ul>
     <label class="done" for="done4">Step completed</label>
-  </div>
-  <input type="checkbox" class="step" id="done4"/>
+  <input type="checkbox"  id="done4"/>
+</div>
 
   <div class="step"  id="step5">
     <h3>Iteration 5: Add sound</h3>
@@ -392,20 +392,10 @@
     </div>
 
     <label class="done" for="done5">Step completed</label>
-  </div>
-  <input type="checkbox" class="step" id="done5" />
+  <input type="checkbox"  id="done5" />
+</div>
 
-  <div class="step" id="step6">
-    <h3>Iteration 6: Build the random sequence</h3>
-    <ul>
-      <li>To append a value to a list we call the <el-method>append</el-method> procedure on the list (as a 'dotted method'). So,
-        within <el-kw>main</el-kw>, immediately after the <el-id>sequence</el-id> has been defined, write an instruction to append
-        the value <el-lit>2</el-lit> to that list.
-    </ul>
-  </div>
-  <input type="checkbox" class="step" id="done5" />
-
-  <div class="step" id="step6">
+<div class="step" id="step6">
     <h3>Iteration 6: Build the random sequence</h3>
     <ul>
       <li>To append a value to a list we call the <el-method>append</el-method> procedure on the list (as a 'dotted method'). So,
@@ -448,7 +438,7 @@
             selector within the loop, and press <b>Ctrl-v</b>.</li>
           </ul>
         </div>
-        <div class="hint" id="hint6e">The complete loop</div>
+        <div class="hint" id="hint6e">Hint: The complete loop</div>
         <div class="content" id="hint6econtent">
           <el-code-block>
             <el-statement class="ok multiline" id="for12" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
@@ -461,8 +451,8 @@
       </li>
       </ul>
       <label class="done" for="done6">Step completed</label>
-  </div>
-  <input type="checkbox" class="step" id="done6" />
+  <input type="checkbox"  id="done6" />
+</div>
       
   <div class="step" id="step7">
       <h3>Iteration 7: Create the simonsTurn procedure</h3>
@@ -473,7 +463,7 @@
       <ul>
         <li>Underneath the main routine, but before the existing procedure (though actually, the order in
           which these 'global' instructions are defined doesn't matter) create a new procedure named <el-method>SimonsTurn</el-method>.
-          <div class="hint" id="hint7a">The new procedure</div>
+          <div class="hint" id="hint7a">Hint: The new procedure</div>
           <div class="content" id="hint7acontent">
             <el-code-block>
               <el-proc class="ok multiline" id="proc92" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
@@ -554,8 +544,8 @@
       </ul>
   
     <label class="done" for="done7">Step completed</label>
-  </div>
-  <input type="checkbox" class="step" id="done7"/>
+  <input type="checkbox"  id="done7"/>
+</div>
     
   <div class="step" id="step8">
     <h3>Iteration 8: Start work on Player's turn</h3>
@@ -644,8 +634,8 @@
     </li>
     </ul>
     <label class="done" for="done8">Step completed</label>
-  </div>
-  <input type="checkbox" class="step" id="done8"/>
+  <input type="checkbox"  id="done8"/>
+</div>
     
   <div class="step" id="step9">
     <h3>Iteration 9: Require the player to reproduce the whole sequence</h3>
@@ -742,8 +732,8 @@
     </li>
     </ul>
     <label class="done" for="done9">Step completed</label>
-  </div>
-  <input type="checkbox" class="step" id="done9"/>
+  <input type="checkbox"  id="done9"/>
+</div>
     
   <div class="step" id="step10">
     <h3>Iteration 10: Polishing the game</h3>
@@ -830,8 +820,8 @@
       </ul>
   
       <label class="done" for="done10">Step completed</label>
-    </div>
-    <input type="checkbox" class="step" id="done10"/>
+    <input type="checkbox"  id="done10"/>
+</div>
       
   <div class="step" id="stepLast">
     Worksheet completed!
@@ -856,6 +846,6 @@
   </div>
 </div>
 
-<script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
+<script src="../../../out/website/worksheet-scripts.js"></script>
 </body>
 </html>

@@ -161,7 +161,7 @@ for (const e of answers) {
 
 function updateHintsTaken() {
   for (const ht of hintsTaken as NodeListOf<HTMLSpanElement>) {
-    const count = document.getElementsByClassName("hint-taken").length;
+    const count = document.getElementsByClassName("taken").length;
     ht.innerText = `${count}`;
   }
 }
@@ -169,19 +169,19 @@ function updateHintsTaken() {
 for (const e of hints) {
   e.addEventListener("click", async (e) => {
     const hint = e.target as HTMLDivElement;
-    const encryptedText = hint.dataset.hint || "";
-    if (encryptedText !== "") {
-      const content = document.getElementById(`${hint.id}content`);
-      if (content) {
-        content.innerHTML = atob(encryptedText);
+    if (!hint.classList.contains("taken")) {
+      const encryptedText = hint.dataset.hint || "";
+      if (encryptedText !== "") {
+        const content = document.getElementById(`${hint.id}content`);
+        if (content) {
+          content.innerHTML = atob(encryptedText);
+        }
       }
+      hint.classList.add("taken");
+      hint.append(getTimestamp());
+      updateHintsTaken();
+      await save();
     }
-    hint.classList.add("hint-taken");
-    hint.append(getTimestamp());
-
-    updateHintsTaken();
-
-    await save();
   });
 }
 
@@ -205,10 +205,10 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
       const answeredInputs = step.querySelectorAll(
         "input.answered, textarea.answered, select.answered",
       );
-      if (allInputs.length !== answeredInputs.length) {
+      if (allInputs.length !== answeredInputs.length + 1) {
         const msg = document.createElement("div");
         msg.classList.add("temp-msg");
-        msg.innerText = "All must be answered to continue";
+        msg.innerText = "All required inputs must be completed to continue";
         cb.after(msg);
         e.preventDefault();
         return;
