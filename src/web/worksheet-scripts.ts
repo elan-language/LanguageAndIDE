@@ -190,6 +190,7 @@ function getTimestamp() {
 for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
   cb.addEventListener("click", async (e) => {
     const step = cb.parentElement;
+    const id = cb.id.slice(4);
     if (step) {
       const allInputs = step.querySelectorAll("input, textarea, select") as NodeListOf<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -210,7 +211,7 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
         inp.disabled = true;
       }
 
-      const nextId = parseInt(step.id!) + 1;
+      const nextId = parseInt(id!) + 1;
       const nextStep = document.getElementById(`step${nextId}`);
       if (nextStep) {
         nextStep.classList.add("active");
