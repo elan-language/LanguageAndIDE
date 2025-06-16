@@ -13,7 +13,28 @@
 <body>
 <div class="docTitle">Template</div>
 
-<button id="auto-save">Auto-save file locally to continue</button>
+<button id="auto-save">Auto-save to file</button><span>to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future - at which point you will be asked to auto-save it again).</span>
+
+<div class="step" id="step0">
+  <h3>Preliminaries</h3>
+  <ul>
+    <li>
+      <label for="input0">Enter your name: </label>
+      <input type="text" id="input0" />
+    </li>
+    <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
+    <li>Select <b>File > New</b> to start a new program, 
+      then select <b>File > Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
+      Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b> to undo recent changes.</li>
+    <li>Remember that if the code editor has a tinted background it does not have focus and will not respond
+        to edits. To give it focus click within the editor, or <b>Tab</b> to it. (If a program is running, you will need to stop it first.)
+    </li>
+    <li>Use the auto-completion options as much as possible, because as well as saving effort this reduces errors.</li>
+    <li>Use the <i>Hints</i> only when you <i>need</i> them - as all use of hints is recorded. Use of <b>Help</b> is encouraged and not recorded.</li>
+  </ul>
+  <label class="done" for="done0">Preliminaries completed</label>
+</div>
+<input type="checkbox" class="step" id="done0" />
 
 <div class="step" id="step1">
   <h3>Step 1</h3>

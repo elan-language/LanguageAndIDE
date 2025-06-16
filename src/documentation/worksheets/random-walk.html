@@ -12,9 +12,32 @@
 <body>
 <div class="docTitle">Simulating a Random Walk</div>
 
-<button id="auto-save">Auto-save file locally to continue</button>
+<button id="auto-save">Auto-save to file</button><span>to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future - at which point you will be asked to auto-save it again).</span>
 
 <div class="step" id="step0">
+  <h3>Preliminaries</h3>
+  <ul>
+    <li>
+      <label for="input0">Enter your name: </label>
+      <input type="text" id="input0" />
+    </li>
+    <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
+    <li>Select <b>File > New</b> to start a new program, 
+      then select <b>File > Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
+      Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b> to undo recent changes.</li>
+    <li>Remember that if the code editor has a tinted background it does not have focus and will not respond
+        to edits. To give it focus click within the editor, or <b>Tab</b> to it. (If a program is running, you will need to stop it first.)
+    </li>
+    <li>Use the auto-completion options as much as possible, because as well as saving effort this reduces errors.</li>
+    <li>Use the <i>Hints</i> only when you <i>need</i> them - as all use of hints is recorded. Use of <b>Help</b> is encouraged and not recorded.</li>
+  </ul>
+  <label class="done" for="done0">Preliminaries completed</label>
+</div>
+<input type="checkbox" class="step" id="done0" />
+
+<div class="step" id="step1">
+<h3>Iteration 1: Draw a shape with 'turtle graphics'</h3>
+<h3>Purpose of this worksheet</h3>
 <p>Our objective is to investigate the mathematical idea of a 'random walk'.
 Imagine that you are standing in the centre of a circle with a radius of 10 paces.
 But instead of walking straight to the edge, with each pace you make a random turn
@@ -29,15 +52,7 @@ if we could perform the experiment many times.
 And it turns out that being able to predict the average length of a different kinds of
 random walk has significant applications in many different fields of study:
 physics, biology, ecology, economics ..., even computer science. So we are going to build just such a simulation.</p>
-<label class="done" for="done0">Continue</label>
-</div>
-<input type="checkbox" class="step" id="done0" />
-
-<div class="step" id="step1">
-<h3>Iteration 1: Draw a shape with 'turtle graphics'</h3>
 <ul>
-    <li>Start with <b>File > New > OK</b> and make sure the code editor has focus (white background) by clicking on it, or tabbing to it.</li>
-    <li>Select <b>File > New</b> to start a new program, then <b>File > Auto Save</b>, specifying where the file should be saved.</li>
     <li>Make sure the code editor has focus  i.e. has a white background.</li>
      <li>From the new code options, press <b>m</b> to create an empty <el-kw>main</el-kw> routine.</li>
     <li>Within the main routine add a <el-kw>let</el-kw> instruction, and edit its two fields to look like the following, making as much
@@ -64,9 +79,8 @@ physics, biology, ecology, economics ..., even computer science. So we are going
             at which point just pressing <b>Tab</b> will insert the prompted characters.</li>
             <li>Whenever you see a question mark next to a field or instruction, clicking it will open the <b>Help</b> tab.
                 This may be useful when you start to write your own programs, but shouldn't be necessary in this worksheet.</li>
-        </li>
-
-        </ul></li>
+        </ul>
+    </li>
     <li>Follow this by adding this <el-kw>call</el-kw> instruction:
 
         <el-code-block>
@@ -82,7 +96,8 @@ physics, biology, ecology, economics ..., even computer science. So we are going
             <li>This syntax - which takes the form of <i>nameOfThing.methodName</i> is known as a 'dotted method'. You'll be calling a
             lot of dotted methods on the turtle <el-id>t</el-id>.</li>
             <li>Methods are rendered in a different colour to identifiers and types.</li>
-        </ul></li>
+        </ul>
+    </li>
     <li>Run the program, noting that:
         <ul>
             <li>the <b>Display</b> shows the turtle as a small green circle. When first created it is located in
@@ -109,7 +124,8 @@ physics, biology, ecology, economics ..., even computer science. So we are going
             </li>
         </ul>
 
-        then run the program again and make sure that you understand how the trail left by the turtle's pen corresponds to the three instructions that you added.</li>
+        then run the program again and make sure that you understand how the trail left by the turtle's pen corresponds to the three instructions that you added.
+    </li>
     <li>Delete the last <kw>call</kw> instruction by selecting the instruction and pressing <b>Ctrl-Delete</b> (or <b>Ctrl-d</b>.
         In its place, add a <el-kw>for</el-kw> instruction and edit its fields to read this:
         <el-code-block>
@@ -119,7 +135,6 @@ physics, biology, ecology, economics ..., even computer science. So we are going
                 <el-kw>end for</el-kw>
             </el-statement>
         </el-code-block>
-
         <ul>
             <li>A <el-kw>for</el-kw> instruction is a kind of 'loop' which will execute the instructions placed inside it a fixed number of times.
             In this case it will execute them 8 times - counting from 1 to 8 <i>inclusive</i>.</li>
@@ -128,7 +143,8 @@ physics, biology, ecology, economics ..., even computer science. So we are going
                 to use it, though.
             </li>
             <li>This looping activity is formally known in Computer Science as 'iteration'.</li>
-        </ul></li>
+        </ul>
+    </li>
     <li>Move the two <el-kw>call</el-kw> instructions that <el-method>move</el-method> and <el-method>turn</el-method> the turtle <i>inside</i> the loop.
         You may do this one at a time, or both together:</li>
         <ul>
@@ -138,7 +154,8 @@ physics, biology, ecology, economics ..., even computer science. So we are going
             <li>Press <b>Ctrl-v</b> to paste the instructions</li>
         </ul>
         You should now have two <kw>call</kw> instructions inside the <el-kw>for</el-kw> loop, which will execute the pair of them 8 times.
-        <i>Before</i> you run the program, try to predict what you will see on the display. Then run the program.</li>
+        <i>Before</i> you run the program, try to predict what you will see on the display. Then run the program.
+    </li>
 
     <li>Now modify the code to draw a 12-sided regular polygon.The <i>loop</i> will need to execute 12 times, and each turn will need to
         be 1/12<sup>th</sup> of 360 degrees. You <i>could</i> work that one out for yourself,
