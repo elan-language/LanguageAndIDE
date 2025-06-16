@@ -13,11 +13,11 @@
     {
         display: none;
     }
-    
+
 
 /* Steps */
-    /* Preliminaries only */
-    #preliminaries.complete {
+    /* step0 (preliminaries) only */
+    #step0.complete {
         display: none;
     }
     #worksheet.saved #userName{
