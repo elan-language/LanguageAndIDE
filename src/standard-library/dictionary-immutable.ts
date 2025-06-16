@@ -77,7 +77,7 @@ export class DictionaryImmutable<T1, T2> {
     return this.contents.has(rk);
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClassName("DictionaryImmutable"))
+  @elanFunction([], FunctionOptions.pure, ElanClassName("Dictionary"))
   asDictionary() {
     return this.system!.dictionaryImmutableAsDictionary(this);
   }

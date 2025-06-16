@@ -8,6 +8,7 @@
 <link href="https://elan-language.github.io/LanguageAndIDE//styles/colourScheme.css" rel="stylesheet" />
 <link href="https://elan-language.github.io/LanguageAndIDE//styles/elanStyle.css" rel="stylesheet" />
 <link href="https://elan-language.github.io/LanguageAndIDE//styles/documentation.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
 <title>Worksheet</title>
 </head>
 <body>
@@ -23,62 +24,62 @@
 <h3>Loading and running a program</h3>
 
 <ul>
-    <li>From the <b>Demo</b> menu (top-left of screen) select <b>Life</b></li> to load an Elan code file into the editor. 
+    <li>From the <b>Demo</b> menu (top-left of screen) select <b>Life</b></li> to load an Elan code file into the editor.
     'Life' is a version of a program originally written by John Conway in 1970 and which has fascinated computer
     scientists ever since. You can read more about it <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">here</a>.</li>
     <li>Run the program by pressing the <b>Run</b> button (the white triangle at the top of the screen) and briefly observe its dynamic
         output on the <b>Display</b>. Notice that the 'status' panel (top right of the window) shows
         the program is currently <b>running</b>. Notice also that the code editor window now has a pale tint over it, indicating that
-        it does not have focus. 
+        it does not have focus.
     </li>
     <li>Some programs will stop automatically at a certain point, this one doesn't - though the Display will <i>eventually</i>
     end up in as a stable oscillating pattern. Stop the program now by pressing the <b>Stop</b> button (white square).</li>
-    <li>Click anywhere within the code editor pane to give it the focus (white background). 
-        Or you can navigate to it by pressing <b>Tab</b> repeatedly, until the code editor's 
+    <li>Click anywhere within the code editor pane to give it the focus (white background).
+        Or you can navigate to it by pressing <b>Tab</b> repeatedly, until the code editor's
     background turns white). <i>Remember that if the code editor has a tinted background it doesn't have focus and won't respond to
     your inputs.</i> Now we shall explore the code that defines this program.</li>
 </ul>
 
 <h3>1. Navigating around code</h3>
 
-        <li>The code is made up of instructructions</li>
+        <li>The code is made up of instructions</li>
         <li>Each instruction is numbered on the right hand side. These 'instruction' numbers are not part of the code itself -
-            they play no part in what the code <i>does</i> - the editor adds the numbers to the code to make it easy for 
+            they play no part in what the code <i>does</i> - the editor adds the numbers to the code to make it easy for
             people to refer to specific instructions.</li>
         <li>At the top of file you will see a single like that starts with <el-comment># Elan</el-comment> and tells you which version of Elan
             you are using. This line, and any other line that begins with a # ('hash') symbol is called a 'comment'. A comment is
-            <i>not</i> an instruction - and hence has no instruction number - and plays no part in what the code <i>does</i>. 
+            <i>not</i> an instruction - and hence has no instruction number - and plays no part in what the code <i>does</i>.
             Comments provide information to the user about the code. This version comment is always present at the top of
             an Elan code file - it cannot be edited, nor moved</li>
         <li>Each <i>instruction</i> starts with a 'keyword': a single word written in lower case and rendered in dark blue.
             Within <i>some</i> instructions you will some some additional keywords. However, the <i>first</i> keyword in the instruction
              defines the nature of the instruction, and it is useful to refer to an instruction by that starting keyword.</li>
         <li>Having just loaded this code, the first instruction is highlighted in a pale blue, as is its instruction number.
-            This is highlighted instruction is called the 'main' (sometimes referred to as the 'main routine'). 
-            This is the instruction that will be executed <i>first</i> when the program is run. 
-            There can only ever be one main routine in a code file. It doesn't have to be the first instruction in the file, 
+            This is highlighted instruction is called the 'main' (sometimes referred to as the 'main routine').
+            This is the instruction that will be executed <i>first</i> when the program is run.
+            There can only ever be one main routine in a code file. It doesn't have to be the first instruction in the file,
             but it is a helpful 'convention' to put the main at the start of the file.</li>
         <li>Main is an example 'compound instruction' - meaning that it contains other instructions. The blue highlighting shows
             the extent of the instructions that it contains. Compound instructions almost all end with the <el-kw>end</el-kw> followed by
             the starting keyword for the instructions. Notice also that all contained instructions - as well as being located between the start and
             end - are indented by two characters. This is just to make the structure easier to read.</li>
-        <li>A `simple instruction` occupies just one line (unless it is so long that the editor will 'wrap' it onto several lines, indenting 
-            the wrapped code by one character. 
+        <li>A `simple instruction` occupies just one line (unless it is so long that the editor will 'wrap' it onto several lines, indenting
+            the wrapped code by one character.
             Note that an instruction wrapped in this way is still <i>one</i> instruction, and hence has just one instruction number).</li>
-        <li>A compound instruction can contain simple instructions, or <i>other compound isntructions</i>. 
+        <li>A compound instruction can contain simple instructions, or <i>other compound instructions</i>.
             For example, the main routine contains a 'while' instruction,
             which in turn contains three simple instructions - which are consequently indented two levels from the left-hand edge.</li>
     </ul>
     </li>You can scroll to the bottom of the code using the scroll bar on the right of the editor, or the scroll-wheel if your
         mouse has one. Holding down the <b>Ctrl</b> button while using the scroll wheel will change the magnification of the text.</li>
-    <li>To move the highlight onto another instruction you click either on the starting keyword in the instruction, 
+    <li>To move the highlight onto another instruction you click either on the starting keyword in the instruction,
         or on the instruction number.</li>
     <li>You can also navigate using the cursor keys &#x2190;, &#x2191;, &#x2192;, &#x2193;, <b>Home</b>, and <b>End</b>. Note that:
         &#x2191; and &#x2193; <b>Home</b>, and <b>End</b> move the highlight between instructions at or within <i>the same level of indentation</i>.
-        &#x2190; and &#x2192; move the hightlight between levels of indentation. Try identifying an instruction at random and navigating
+        &#x2190; and &#x2192; move the highlight between levels of indentation. Try identifying an instruction at random and navigating
         to that instruction just using the cursor keys.</li>
     <li>Using either mechanism, get the highlight onto the first instruction <i>within</i> the main, which starts with the keyword
-        <el-kw>variable</el-kw> and is described as a 'variable declaration'. Then press <b>Ctrl-Delete</b></li>     
+        <el-kw>variable</el-kw> and is described as a 'variable declaration'. Then press <b>Ctrl-Delete</b></li>
     </ul>
 
     <h3>2. Deleting or moving instructions</h3>
@@ -88,7 +89,7 @@
         instruction and move the highlight onto the next instruction.(The requirement to use the <b>Ctrl</b> key is to reduce the risk of doing this accidentally).</li>
         <li>Restore the deleted instruction by clicking the <b>Undo</b> button at the top of the window, or by pressing <b>Ctrl-z</b>.(If in the next few steps
         you get into a complete mess, then remember that you can just reload the <b>Life</b> program from the <b>Demo</b> menu.)</li>
-        <li>Now navigate to the <el-kw>procedure</el-kw> instruction immediately below the main, which defined a procedure named 
+        <li>Now navigate to the <el-kw>procedure</el-kw> instruction immediately below the main, which defined a procedure named
             <el-method>fillRandom</el-method>. Delete this instruction,  noting that this also deletes all the instructions it contains.</li>
         <li>Notice that this new deletion has had a bigger impact: the status panel (top-right of the screen)
              now shows that the <b>Compile</b> status is no longer <b>ok</b> -
@@ -99,9 +100,9 @@
         </li>
         <li>Selecting the main routine again (it might be already) now press <b>Ctrl-&#x2193;</b> three times, noting that
         this <i>moves</i> the main - together with all the instructions it contains - down below the next instruction that is
-        <i>at the same level of identation</i>. Press <b>Ctrl-&#x2191;</b> to move it back again (or undo the change).</li>
+        <i>at the same level of indentation</i>. Press <b>Ctrl-&#x2191;</b> to move it back again (or undo the change).</li>
          <li>Still with the main routine selected, press <b>Ctrl-&#x2193;</b> twice noting that this <i>extends</i> the
-        selection to include multiple instructions <i>at the same level of identation</i>. You will find that having made
+        selection to include multiple instructions <i>at the same level of indentation</i>. You will find that having made
         such a selection, you can move, or delete them all together. Try it and then restore the original code.</li>
     </ul>
 
@@ -111,14 +112,14 @@
         But most instructions contain 'fields' that can be edited. Look for example at the first variable definition within the main routine.
         If you mouse-click on the word 'grid' you will see that this piece of text changes background colour and shows a thin black outline
         to indicate that it has the focus. This is a 'field'.</li>
-    <li>When a field is highlighted you can navigate and edit the code within that field like a standard text-editor, using &#x2190;,&#x2192;, <b>Home</b>, <b>End</b>. <b>Delete</b>, and <b>Backspace</b>, 
+    <li>When a field is highlighted you can navigate and edit the code within that field like a standard text-editor, using &#x2190;,&#x2192;, <b>Home</b>, <b>End</b>. <b>Delete</b>, and <b>Backspace</b>,
     and by selecting, cutting, copying, and pasting with <b>Ctrl-x</b>, <b>Ctrl-c</b>, <b>Ctrl-v</b>.</li>
-    <li>Similarly if you click  anywhere after the <el-kw>set to</el-kw> keyword you will see that the remainder of the text forms another field. 
+    <li>Similarly if you click  anywhere after the <el-kw>set to</el-kw> keyword you will see that the remainder of the text forms another field.
         Code <i>within</i> fields can be freely edited, like normal text, though depending on what you do to the text such changes may result in errors
-            - as indicated by a change in background colour and a change in the status panel, sometimes accompanied by a message. Try a few changes, 
+            - as indicated by a change in background colour and a change in the status panel, sometimes accompanied by a message. Try a few changes,
         reverting to the original code each time. We are not concerned, right now, with the meaning of these errors  - just with understanding
         which parts of code you can edit and how.</li>
-    <li>Another way to select fields is to navigate first to an <i>instruction</i> of interest. 
+    <li>Another way to select fields is to navigate first to an <i>instruction</i> of interest.
     With the instruction highlighted pressing the <b>Tab</b> key will select the next <i>field</i> and then cycle back to selecting the whole
     instruction. (<b>Shift-Tab</b> does the same thing in reverse.)</li>
     <li>After experimenting with editing fields, restore the original code.</li>
@@ -134,12 +135,12 @@
     <li>Note that the letter <b>p</b> was sufficient to create the <el-kw>print</el-kw> instruction because only one of the keywords shown began
         with that letter. In some circumstances, the first letter will narrow the selection, and further letters are needed to match just
         one option.</li>
-    <li>The newly-created <el-kw>print</el-kw> instruction has a single field into which you can enter a valid expression, and there is also 
+    <li>The newly-created <el-kw>print</el-kw> instruction has a single field into which you can enter a valid expression, and there is also
         a new drop-down list suggesting possible things you could add into that field. However, the <i>grey</i>
     background to this field indicates that this particular field is <i>optional</i> - it may be left blank, which we will do in this case.</li>
     <li>So, instead of writing into this field, just press <b>Enter</b>, which takes you to the next line, noting that the 'new code'
     line now has focus, and is again offering you instructions to select from.</li>
-    <li>Ignore this, and instead cursor-up twice to select the <el-kw>variable</el-kw> instruction again. 
+    <li>Ignore this, and instead cursor-up twice to select the <el-kw>variable</el-kw> instruction again.
         From there press <b>Shift-Enter</b> to insert another new code selector, this time <i>above</i> the instruction you were on.</li>
     <li>If you realise that you don't need to insert new code, then if a new code selector has focus then you can delete it like any instruction.
         Or you can press the <b>Trim</b> button (above the code editor), which will remove <i>all</i> unused new code selectors - except
@@ -151,11 +152,11 @@
 <h3>5. Cutting & Pasting instructions</h3>
 
 <ul>
-    <li>If you highlight an instruction and press <b>Ctrl-x</b> the editor will cut the instruction 
+    <li>If you highlight an instruction and press <b>Ctrl-x</b> the editor will cut the instruction
         (including any other instructions it contains, if it is compound) and put
     it into the clipboard.</li>
     <li>This will also work if you select multiple adjacent instructions (as shown earlier).</li>
-    <li>The instruction(s) in the clipboard may be pasted onto a new code selector elsewhere in the 
+    <li>The instruction(s) in the clipboard may be pasted onto a new code selector elsewhere in the
         code. So either navigate to an existing new code selector, or insert one (see above) where you want to
         paste the instructions. The press <b>Ctrl-v</b> to paste. Note that this paste command will work only
             if:
@@ -168,7 +169,7 @@
             </ul>
         If pasting is unsuccessful a pop-up message box will appear.
     </li>
-    <li>(It is not currently possible to <i>copy</i> and paste whole instructions. 
+    <li>(It is not currently possible to <i>copy</i> and paste whole instructions.
         That capability will be added in a future version.</li>
 </ul>
 
@@ -176,7 +177,7 @@
 <ul>
     <li>Press the button (above the code editor) marked <b>+/-</b>. This collapses the code to an outline. All the code is still there - so the
     program will still run - but some code is hidden from view. All compound instructions have been reduced to just their top line, with a plus
-    alongside it. This can be very helpful in navigating around a longer program. It is also useful, though, to give you a high-level 
+    alongside it. This can be very helpful in navigating around a longer program. It is also useful, though, to give you a high-level
     summary of a program that you are looking at for the first time - so you can see the main components of the code. Pressing the button again
     will expand the code.
 </li>
@@ -186,14 +187,14 @@
     use the outline button. (Sometimes, when the code is <i>partially</i> collapsed to an outline, you might need to do this twice
     to get to the presentation that you want.)
 </li>
-    <li>The background forthe plus sign on each collapsed instruction should be green, but if you had any errors or warnings in the code, this would be reflected in
+    <li>The background for the plus sign on each collapsed instruction should be green, but if you had any errors or warnings in the code, this would be reflected in
     the background colour of the plus sign. (Though remember that clicking on the status bar would also take you to the first error/warning,
     expanding the outline as needed.)
 </li>
 </ul>
 <h3>6. Finish</h3>
 
-<p>You have now used most of the features of the code editor - both to navigate and to change code. 
+<p>You have now used most of the features of the code editor - both to navigate and to change code.
     So you are ready to move on to the next worksheet, where you will learn how to create a program from scratch.</p>
 
 <p>Meantime, please note that the various keyboard and mouse commands recognised by the editor are
@@ -205,10 +206,9 @@
     </ul>
 </p>
 
-<img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
-<p class="license">This worksheet is copyright &#x00A9; Richard Pawson 2025, and protected by the Creative Commons license:
-    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
-   If you <i>modify</i> this worksheet you may <i>not</i> distribute your modified version (outside your own teaching institution) without the author's permission.
-   Please <a href="mailto:rpawson@nakedobjects.org">email</a> to report errors or suggest improvements.</p>
+<div hidden="" id="hash"></div>
+<div hidden="" id="changes"></div>
+
+<script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
 </body>
 </html>

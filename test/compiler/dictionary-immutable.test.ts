@@ -535,7 +535,8 @@ return [main, _tests];}`;
 
 main
   let a be {"a":1, "b":3, "z":10}
-  let b be a.asDictionary()
+  variable b set to empty Dictionary<of String, Int>
+  set b to a.asDictionary()
   print a
   print b
 end main`;
@@ -544,7 +545,8 @@ end main`;
 const global = new class {};
 async function main() {
   const a = system.dictionaryImmutable([["a", 1], ["b", 3], ["z", 10]]);
-  const b = a.asDictionary();
+  let b = system.initialise(_stdlib.Dictionary.emptyInstance());
+  b = a.asDictionary();
   await system.printLine(a);
   await system.printLine(b);
 }

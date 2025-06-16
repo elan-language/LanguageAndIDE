@@ -17,7 +17,7 @@ export class ExpressionField extends AbstractField {
   constructor(holder: Frame, readUntil = /\r?\n/) {
     super(holder);
     this.readUntil = readUntil;
-    this.setPlaceholder("<i>expression</i>");
+    this.setPlaceholder("<i>value or expression</i>");
   }
 
   helpId(): string {

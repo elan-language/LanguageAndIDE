@@ -160,6 +160,8 @@ function reasonString(reason: Deprecation) {
       return "Parameters for class were changed";
     case Deprecation.methodParametersChanged:
       return "Parameters for method were changed";
+    case Deprecation.methodHidden:
+      return "Method was hidden";
   }
 }
 

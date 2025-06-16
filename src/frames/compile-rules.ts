@@ -268,6 +268,11 @@ export function checkForDeprecation(
   if (symbolType.deprecated) {
     const reason = symbolType.deprecated.reason;
 
+    if (reason === Deprecation.methodHidden) {
+      // no compile error when hidden
+      return;
+    }
+
     if (
       (reason === Deprecation.classParametersChanged ||
         reason === Deprecation.methodParametersChanged) &&

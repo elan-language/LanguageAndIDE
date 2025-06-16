@@ -1,0 +1,384 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
+<link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="docTitle">Simon</div>
+
+<button id="auto-save">Auto-save file locally to continue</button>
+
+<div class="step" id="step1">
+  <p>In the classic hand-held electronic game, <a href="https://en.wikipedia.org/wiki/Simon_(game)" target="_blank">Simon</a>
+  the device played sequence made up of 'moves' and the players task was to remember and reproduce
+  the sequence. Each of the four possible moves had a different colour (red, yellow, blue, green)
+  associated with a different physical position, and with a different audible tone. If the player
+  reproduced the sequence correctly, the device played the sequence again with one more move added
+  (the first sequence being just one move). Also, as the sequence lengthened, each moved was
+  shown for a shorter duration. If the player makes a single incorrect move the game is over
+  and the score reflects the longest length of sequence that the player reproduced correctly.</p>
+  <p>You are now going to build a simulation of the Simon game, with the four colours shown
+    as large circles in a row, complete with audible tones. The player will use the four numeric keys
+    <b>1 2 3 4</b> to represent the moves - the numbers corresponding to the four positions in the row.</p>
+
+  <p>We are going to make more than one use of a 'List' data structure in this program. A List works somewhat like an
+    Array but - unlike an Array which is set to a fixed size - a List can be extended indefinitely
+    (within in the limits of a computer's memory). A list can even start off empty and grow from there.</p>
+
+  <h3>Iteration 1 - Draw a solid circle</h3>
+  <ul>
+    <li>Start a new file and add a <el-kw>main</el-kw> routine. Within that add a <el-kw>let</el-kw>
+      instruction, defining the name <el-id>circle</el-id> to be <el-field><el-code><el-kw>new</el-kw> <el-type>CircleVG</el-type>()</el-code>
+      noting that the <el-type>VG</el-type> in <el-type>CircleVG</el-type> is short for 'vector graphic' which is
+      a way to draw very high resolution graphics - with more flexibility and greater speed than is possible using
+    Turtle graphics, for example.</li>
+    <li>Follow this with:
+      <el-code-block>
+        <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
+      </el-code-block>
+
+      noting that the square brackets used in <el-code>[<el-id>circle</el-id>]</el-code> defines a List -
+      in this case a List with just one member - the circle. The procedure method
+      <el-method>displayVectorGraphics</el-method> takes a list, because in a typical application using VectorGraphics
+      would want to display multiple shapes - lines, circles, rectangles and more - and we could
+      just include them all within the square brackets, separated by commas. This application is unusual because
+      we will be displaying just one circle at a time. We will be making a more interesting use of Lists later on.
+    </li>
+    <li>Run the application and note that it displays a circle in the centre of the <b>Display</b> - but
+    why is it yellow, and what determined the size and position? It uses some default values - just so
+    that you see something. Now we want to specify those properties.</li>
+    <li>Select the second field in the <el-kw>let</el-kw> statement, and at the right hand end type
+       type <el-kw>with</el-kw> or select it from the drop-down options. You will now be presented with a
+      a list of the 'properties' that can be specified with for a circle. Select the first option, <el-id>centreX</el-id>
+      then <b>Tab</b> to add the prompted words <el-kw>set to</el-kw> followed by the value <el-lit>15</el-lit> and a comma.
+      Repeat this sequence to set the <el-id>centreY</el-id> to <el-lit>15</el-lit>, the <el-id>radius</el-id> to <el-lit>10</el-lit>,
+      and the <el-id>strokeWidth</el-id> to <el-lit>0</el-lit> - to get rid of the black line around the circle.
+      <br>When you press <b>Enter</b> at the end of this field, the instruction will automatically reformat
+      over several lines for readability:
+
+      <el-code-block>
+        <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit></el-txt></el-field></el-statement>
+      </el-code-block>
+
+      but note that this is still one instruction, and if you were to edit it again the field would still be one long line.
+      <br>How do we know what values to use, even approximately?  The <b>Display</b> measures 100 units wide by 75 units deep,
+      with the top-left corner having coordinates 0,0, and the bottom-right 100, 75.
+      <br>Run the program again and confirm that a larger yellow circle, no edge appears near the top-left corner.
+    </li>
+  </ul>
+  <label class="done" for="done1">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done1" />
+
+<div class="step"  id="step2">
+  <h3>Iteration 2- Draw circle in 4 different locations and colours</h3>
+  <p>Although the game will only show one circle at a time, we want to position
+    in one of four places in a row, and a different colour for each location.
+    We already know that we will be using the <b>1 2 3 4</b> keys so - even
+    though we aren't yet handling the keyboard input, let's assume that
+    we will somehow end up with a name <el-id>move</el-id> which holds
+    one of those four integer values.
+  </p>
+  <ul>
+  <li><i>Above</i> the first <el-kw>let</el-kw> instruction add another
+    <el-kw>let</el-kw> that defines <el-id>move</el-id> as <el-lit>4</el-lit>.
+    Then we'll use that to adjust the horizontal position of the circle.
+    Given that the circle has radius of 10, we want the four positions
+    to be spaced 20 apart, so that the locations are distinct. So change
+    the value specified for <el-id>centreX</el-id> from <el-lit>15</el-lit>
+    to:
+
+    <el-code-block>
+      <el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>
+    </el-code-block>
+    Run the program and check that the circle is now further to the right.</li>
+    <li>Now we want to be able to specify the colour according to the position
+      (i.e. according to the value of <el-id>move</el-id>). So let's first
+      define the four values as a list. Add this immediately above the <el-kw>let</el-kw>
+      that defines <el-id>circle</el-id>:
+      <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
+      Again, this could have been an Array - because we won't be needing to extend it -
+      but if we already know the values, it is just easier to create a List, using
+      the square brackets than it is to define an Array.</li>
+      <li>Back on the definition of the circle, edit the properties, adding:
+        <el-code>, <el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-code>
+        This is using <el-id>move</el-id> as the index to select a numbered element within the list of colours
+        much as you have already done when using an Array. The reason we had to subtract
+        <el-lit>1</el-lit> is that <el-id>move</el-id> will have the values 1,2,3, or 4
+        but the indexes for a list of Four elements, as in an Array, are numbered from 0.
+        <br>Run the program, again varying the value for <el-id>move</el-id> from 1 to 4
+        to check that each value puts the circle in a different place and colour.
+      </li>
+    </ul>
+  <label class="done" for="done2">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done2"/>
+
+<div class="step"  id="step3">
+
+  <h3>Iteration 3 - Move the display capability into a procedure</h3>
+<p>Thinking ahead to the fact that we need to display moves both when the program
+  is playing the sequence and when the player is attempting to re-create the sequence
+  it will be useful to have the code that does the display in a separate procedure
+  that can be called from more than one place in the main routine. But even if we
+  can't think that far ahead, it is always good practice to extract code into
+  named procedures (or, later, functions) - because as programs expand, this
+  makes them easier to read and to manage.
+</p>
+<ul>
+  <li>Select the <el-code>new code</el-code> selector that follows <el-kw>end main</el-kw>
+  or if there isn't one, select <el-kw>main</el-kw> and hit <b>Enter</b>.
+  From this, press <b>p</b> to insert a <el-kw>procedure</el-kw> and specify
+  its name as <el-method>displayMove</el-method>. Then in the field between
+  the brackets, add <el-id>move</el-id><el-kw> as </el-kw><el-type>Int</el-type>.
+  This specifies that when you call <el-method>displayMove</el-method> you must
+  provide a value that is an integer.</li>
+  <li>
+    Now cut and paste the last three instructions from main
+    into this procedure, and then within main call the procedure,
+    using the defined value <el-id>move</el-id> as the argument.
+    Then run the program and check that it does the same as the previous iteration.
+
+    <div class="hint" id="hint3" data-hint="">
+      <span class="show">Hint 1</span>
+
+      <el-code-block>
+        <main class="ok multiline" >
+        <el-top><el-kw>main</el-kw></el-top>
+        <el-statement ><el-kw>let </el-kw>...</el-statement>
+        <el-statement ><el-top><el-kw>call </el-kw>...</el-statement>
+        <el-kw>end main</el-kw>
+        </main>
+        <el-proc class="ok multiline" >
+        <el-top><el-kw>procedure </el-kw><el-method><el-field><el-txt>displayMove</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+        <el-statement ><el-kw>let </el-kw>...</el-statement>
+        <el-statement ><el-kw>let </el-kw>...</el-statement>
+        <el-statement ><el-top><el-kw>call </el-kw>...</el-statement>
+        <el-kw>end procedure</el-kw>
+        </el-proc>
+      </el-code-block>
+    </div>
+
+    <div class="hint" id="hint" data-hint="">
+        <span class="show">Hint 2: Show the whole code</span>
+        <el-code-block>
+          <main class="ok multiline" >
+          <el-top><el-kw>main</el-kw></el-top>
+          <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field></el-statement>
+          <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id></el-txt></el-field>)</el-top></el-statement>
+          <el-kw>end main</el-kw>
+          </main>
+          <el-proc class="ok multiline" >
+          <el-top><el-kw>procedure </el-kw><el-method><el-field><el-txt>displayMove</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+          <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
+          <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
+          <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
+          <el-kw>end procedure</el-kw>
+          </el-proc>
+        </el-code-block>
+      </div>
+  </li>
+</ul>
+  <label class="done" for="done3">Step completed</label>
+</div>
+ <input type="checkbox" class="step" id="done3"/>
+
+<div class="step"  id="step4">
+  <h3>Iteration 4: Play a sequence</h3>
+
+  <ul>
+    <li>Edit the first <el-kw>let</el-kw> in main so that, replacing the name <el-id>move</el-id>
+      with <el-id>sequence</el-id> and replacing the single value with a list of a few randomly-chosen integers,
+      each in the range 1-4, for example:
+      <el-code>[<el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-code>
+      ensuring that you have at least one example of the same number twice in succession. This change will produce a temporary <i>error</i>
+      because <el-id>move</el-id> is now 'unknown' - but we'll fix that...</li>
+     <li>Below the <el-kw>let</el-kw> insert an <el-kw>each</el-kw> instruction that defines the variable name <el-id>move</el-id>
+      and uses <el-id>sequence</el-id> as the source.</li>
+      <li>Cut and paste the existing call to <el-method>displayMove</el-method> into the new <el-kw>each</el-kw> loop</li>.
+      <li>Within the <el-method>displayMove</el-method> procedure add, at the end, an instruction to pause for a full second -
+        otherwise things will happen too quickly to see. Then run the program and describe what you observe here:<br>
+        <textarea class=""></textarea>
+      <div class="hint" id="hint4a" data-hint="">
+        <span class="show">Show the whole code for <el-kw>main</el-kw></span>
+        <el-code-block>
+          <main class="ok multiline" >
+            <el-top><el-kw>main</el-kw></el-top>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-lit>1</el-lit>, <el-lit>3</el-lit>, <el-lit>2</el-lit>, <el-lit>4</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-txt></el-field></el-statement>
+            <el-statement class="ok multiline" >
+            <el-top><el-kw>each </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> in </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field></el-top>
+            <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id></el-txt></el-field>)</el-top></el-statement>
+           <el-kw>end each</el-kw>
+            </el-statement>
+            <el-kw>end main</el-kw>
+            </main>
+        </el-code-block>
+      </div>
+      <div class="hint" id="hint4b" data-hint="">
+        <span class="show">Show the whole code for <el-method>displayMove</el-method></span>
+        <el-code-block>
+          <main class="ok multiline" >
+            <el-top><el-kw>main</el-kw></el-top>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-lit>1</el-lit>, <el-lit>3</el-lit>, <el-lit>2</el-lit>, <el-lit>4</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-txt></el-field></el-statement>
+            <el-statement class="ok multiline" >
+            <el-top><el-kw>each </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> in </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field></el-top>
+            <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id></el-txt></el-field>)</el-top></el-statement>
+           <el-kw>end each</el-kw>
+            </el-statement>
+            <el-kw>end main</el-kw>
+            </main>
+        </el-code-block>
+      </div>
+      </li>
+      <li>Since we shall eventually want to vary the speed that the sequence plays, replace the literal value for the pause time
+        with a <el-kw>variable</el-kw> named <el-id>interval</el-id> at the very top of the main routine, initialised to <el-lit>1000</el-lit>.
+        Then pass <el-id>interval</el-id> as a second argument into the call to <el-method>displayMove</el-method>, separated from
+        <el-id>move</el-id> by a comma. This will initially give you an error because the definition of <el-method>displayMove</el-method>
+        currently expects only one parameter. So, within that procedure definition, define a second parameter, separated from the first
+        by a comma, giving it the name <el-id>interval</el-id> and the type for an integer. Then use that parameter name <el-id>interval</el-id>
+        instead of the literal number currently given as an argument to <el-method>pause</el-method>. Run the program to check that
+        it still works the same way.
+      <div class="hint" id="hint4c" data-hint="">
+        <span class="show">Show the whole code for <el-kw>main</el-kw>></span>
+        <el-code-block>
+          <main class="ok multiline" >
+            <el-top><el-kw>main</el-kw></el-top>
+            <el-statement ><el-kw>variable </el-kw><el-field><el-txt><el-id>interval</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-lit>1000</el-lit></el-txt></el-field></el-statement>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-lit>1</el-lit>, <el-lit>3</el-lit>, <el-lit>2</el-lit>, <el-lit>4</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-txt></el-field></el-statement>
+            <el-statement class="ok multiline" >
+            <el-top><el-kw>each </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> in </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field></el-top>
+            <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+            <el-kw>end each</el-kw>
+            </el-statement>
+            <el-kw>end main</el-kw>
+          </main>
+        </el-code-block>
+      </div>
+      <div class="hint" id="hint4d" data-hint="">
+        <span class="show">Show the whole code for <el-method>displayMove</el-method></span>
+        <el-code-block>
+          <el-proc class="focused ok multiline" >
+            <el-top><el-kw>procedure </el-kw><el-method><el-field><el-txt>displayMove</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
+            <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
+            <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+            <el-kw>end procedure</el-kw>
+          </el-proc>
+        </el-code-block>
+      </div>
+      </li>
+      <li>You might have noticed that where your sequence has the same number twice (or more) in succession that this just shows as a one longer
+        move - which is going to be hard to detect clearly, especially if the game speeds up. To fix this we should clear the display
+        after each move and add a <i>shorter</i> and <i>fixed-length</i> pause. So after the last instruction within <el-method>displayMove</el-method>
+        add a call to <el-method>clearVectorGraphics</el-method> and follow this by a pause of 1/10th of a second. Run again
+        and check that any repeated digits are now distinct visually.
+        <div class="hint" id="hint4e" data-hint="">
+          <span class="show">Show the two new instructions</el-method></span>
+          <el-code-block>
+            <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
+            <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>100</el-lit></el-txt></el-field>)</el-top></el-statement>
+          </el-code-block>
+        </div>
+        <div class="hint" id="hint4f" data-hint="">
+          <span class="show">Show the whole procedure</el-method></span>
+          <el-code-block>
+            <el-proc class="focused ok multiline" >
+              <el-top><el-kw>procedure </el-kw><el-method><el-field><el-txt>displayMove</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+              <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
+              <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
+              <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
+              <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+              <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
+              <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>100</el-lit></el-txt></el-field>)</el-top></el-statement>
+              <el-kw>end procedure</el-kw>
+            </el-proc>
+          </el-code-block>
+        </div>
+      </li>
+  </ul>
+  <label class="done" for="done4">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done4"/>
+
+<div class="step"  id="step5">
+  <h3>Iteration 5: Add sound</h3>
+
+  <ul>
+    <li>Edit the instruction <el-code><el-kw>call </el-kw><el-method>pause</el-method>(<el-id>interval</el-id>)</el-code>
+    to read <el-code><el-kw>call </el-kw><el-method>tone</el-method>(<el-id>interval</el-id>, <el-lit>256</el-lit>, 0.1)</el-code></li>
+    which instead of just pausing, plays a tone for the same interval. The second argument defines the frequency of the tone - in
+    this case 256Hz, which musicians may recognise as 'middle C'. The third argument specifies the volume. Run the program.
+    If you do not hear any tones, investigate the sound settings on your computer. Then adjust the value up or down from <el-lit>0.1</el-lit>,
+    but please, if you are working in a classroom <i>set the volume to the lowest setting where you can still just hear the tones.</i>
+    <li>The next requirement is that, just as the four moves are represented by different colours, in different locations, they
+      should also have different tones. The original Simon game used four musical notes - E, A, C#, and E (one octave higher) -
+      such that they could combine in any order for a pleasing sound. The frequencies, in Hz, for these four notes are: 164.81, 220, 277.18, and 329.63.
+      Earlier, you defined a list of colours. Now, just under that definition of colours, create a similar definition named
+      <el-id>tones</el-id> (with an 's') and containing the four numeric values just given. Then, just as you earlier used
+      <el-code><el-id>colours</el-id>[move -1]</el-code> to get the colour corresponding to the <el-id>move</el-id>,
+       in the call to the <el-method>tone</el-method> procedure,
+       replace the specific value of <el-lit>256</el-lit> with a similar construct to get the tone corresponding to the <el-id>move</el-id>.
+       Then run the program to verify that you now hear a 'melody' corresponding to the sequence of moves.
+    </li>
+  </ul>
+
+  <div class="hint" id="hint5a" data-hint="">
+    <span class="show">Hint: the instruction defining the list of tones
+    <el-code-block>
+      <el-statement><el-kw>let </el-kw><el-field id="var226" class="ok" tabindex="0"><el-txt><el-id>tones</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr227" class="ok" tabindex="0"><el-txt>[<el-lit><el-lit>164</el-lit>.81</el-lit>, <el-lit>220</el-lit>, <el-lit><el-lit>277</el-lit>.18</el-lit>, <el-lit><el-lit>329</el-lit>.63</el-lit>]</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>8</el-fr></el-statement>
+    </el-code-block>
+  </div>
+
+  <div class="hint" id="hint5b" data-hint="">
+    <span class="show">Hint:the <el-kw>call</el-kw> <el-method>tone</el-method> instruction
+    <el-code-block>
+      <el-statement class="ok" id="call152" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-top><el-kw>call </el-kw><el-field id="ident153" class="ok" tabindex="0"><el-txt><el-method>tone</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args154" class="optional ok" tabindex="0"><el-txt><el-id>interval</el-id>, <el-id>tones</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>], <el-lit><el-lit>0</el-lit>.1</el-lit></el-txt><el-place><i>milliseconds</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>11</el-fr></el-top></el-statement>
+    </el-code-block>
+  </div>
+
+  <label class="done" for="done5">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done5" />
+
+<div class="step" id="step6">
+  <h3>Iteration 6: Build the random sequence</h3>
+  <ul>
+    <li>To append a value to a list we call the <el-method>append</el-method> procedure on the list (as a 'dotted method'). So,
+      within main, immediately after the <el-id>sequence</el-id> has been defined, write an instruction to append
+      a new single value (1 to 4 still) to that list.
+  </ul>
+  hint - new instruction
+
+  change it to a random value.
+
+
+  <label class="done" for="done6">Step completed</label>
+</div>
+<input type="checkbox" class="step" id="done6"/>
+
+<div class="step"  id="stepFinal">
+  Worksheet completed.
+
+  <div class="license">
+    <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+    This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+       If you copy and <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+       Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
+  </div>
+</div>
+
+<div hidden=""></div>
+<div hidden=""></div>
+
+<script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
+</body>
+</html>

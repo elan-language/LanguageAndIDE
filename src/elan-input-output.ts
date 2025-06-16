@@ -22,6 +22,8 @@ export interface ElanInputOutput {
 
   getKey(): Promise<string>;
 
+  waitForKey(): Promise<string>;
+
   getKeyWithModifier(): Promise<[string, string]>;
 
   clearKeyBuffer(): Promise<void>;
@@ -33,4 +35,6 @@ export interface ElanInputOutput {
   drawHtml(html: string): Promise<void>;
 
   clearHtml(): Promise<void>;
+
+  tone(duration: number, frequency: number, volume: number): Promise<void>;
 }
