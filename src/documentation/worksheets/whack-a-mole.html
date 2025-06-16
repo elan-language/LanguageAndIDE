@@ -10,321 +10,339 @@
 <link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
 </head>
 <body>
+<div id="worksheet">
+    <div class="docTitle">Whack-a-mole</div>
 
-<div class="docTitle">Whack-a-mole</div>
+    <button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future - at which point you will be asked to auto-save it again).</span>
 
-<button id="auto-save">Auto-save file locally to continue</button>
+    <div class="step" id="preliminaries">
+        <h3>Preliminaries</h3>
+        <ul>
+          <li>
+            <label for="input0">Enter your name: </label>
+            <input type="text" id="username" />
+          </li>
+          <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
+          <li>Select <b>File > New</b> to start a new program, 
+            then select <b>File > Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
+            Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b> to undo recent changes.</li>
+          <li>Remember that if the code editor has a tinted background it does not have focus and will not respond
+              to edits. To give it focus click within the editor, or <b>Tab</b> to it. (If a program is running, you will need to stop it first.)
+          </li>
+          <li>Use the auto-completion options as much as possible, because as well as saving effort this reduces errors.</li>
+          <li>Use the <i>Hints</i> only when you <i>need</i> them - as all use of hints is recorded. Use of <b>Help</b> is encouraged and not recorded.</li>
+        </ul>
+        <label class="done" for="done0">Preliminaries completed</label>
+        <input type="checkbox" class="step-complete" id="donepreliminaries" />
+      </div>
 
-<div class="step" id="step1">
-<h3>Iteration 1 - Create an array of strings</h3>
+    <div class="step" id="step1">
+    <h3>Iteration 1 - Create an array of strings</h3>
 
-<p>Any array is a simple form of 'data structure' - which is a mechanism for holding multiple, related, data elements (also called 'items')
-    such that they may be read or modified all together, but also read or modified individually. We are going to write a simple version of the game 'Whack-a-mole', using an array to represent a line of
-    ten holes from which a mole might briefly appear.</p>
+    <p>Any array is a simple form of 'data structure' - which is a mechanism for holding multiple, related, data elements (also called 'items')
+        such that they may be read or modified all together, but also read or modified individually. We are going to write a simple version of the game 'Whack-a-mole', using an array to represent a line of
+        ten holes from which a mole might briefly appear.</p>
 
-<ul>
-    <li>Set the browser to full-screen mode, to give yourself as much room as possible.</li>
-    <li>Select <b>File > New</b> to start a new program, then <b>File > Auto Save</b>, specifying where the file should be saved.</li>
-    <li>Add a <el-kw>main</el-kw> routine, and within it write this instruction, using the auto-completion
-        options as much as possible - because this reduces errors:
+    <ul>
+        <li>Add a <el-kw>main</el-kw>, and within it write this instruction:
+            <el-code-block>
+                <el-statement class="ok" id="let5">
+                    <el-kw>let </el-kw>
+                    <el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>holes</el-id></el-txt></el-field>
+                    <el-kw> be </el-kw>
+                    <el-field id="expr7" class="ok" ><el-txt><el-kw>new</el-kw> <el-type>Array</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;(<el-lit>10</el-lit>, "<el-lit>*</el-lit>")</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="">?</el-help></el-field>
+                </el-statement>
+            </el-code-block>
+            <p>and noting the following:</p>
+            <ul>
+                <li>The array is given a name just like any other named value.</li>
+                <li>All elements within an array must be of the <i>same</i> type, and we have specified that this type is a string
+                by writing <el-code><el-type>Array</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>></el-code>, but we could have created an <el-code><el-type>Array</el-type>&lt;<el-kw>of</el-kw> <el-type>Float</el-type>></el-code>, for example.</li>
+                <li>An array (unlike other data structures that we will discover in future) is created with a <i>fixed size</i>: in this case
+                    <el-lit>10</el-lit>, to represent 10 holes.
+                </li>
+                <li>We must also specify an <i>initial</i> value to be applied to each element, which must be of the
+                correct type - in this case a string. We have chosen an asterisk "<el-lit>*</el-lit>", to represent a mole.</li>
+            </ul>
+        </li>
+        <li>Add an instruction to print the holes, then run the program, noting that the 10 elements of this array are printed successively - separated by a comma-and-space - and surrounded by square brackets.</li>
+    </ul>
+    <label class="done" for="done1">Step completed</label>
+    </div>
+    <input type="checkbox" class="step" id="done1" />
+    <div class="step" id="step2">
+    <h3>Iteration 2 - put a value into a specific element</h3>
+    <ul>
+    <li>Change the instruction that defined the array so that, instead of an asterisk, each element is initialised to a single
+        space - to represent an empty hole, and run the program to check that you are now just seeing spaces between the commas.</li>
+    <li>Insert a new instruction immediately <i>after</i> the <el-kw>let</el-kw> instruction (select that instruction and press <b>Enter</b> to insert new code below it)
+        and create this instruction:
         <el-code-block>
-            <el-statement class="ok" id="let5">
-                <el-kw>let </el-kw>
-                <el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>holes</el-id></el-txt></el-field>
-                <el-kw> be </el-kw>
-                <el-field id="expr7" class="ok" ><el-txt><el-kw>new</el-kw> <el-type>Array</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;(<el-lit>10</el-lit>, "<el-lit>*</el-lit>")</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="">?</el-help></el-field>
+            <el-statement class="ok"><el-top><el-kw>call </el-kw>
+            <el-field id="ident10" class="ok" tabindex="0"><el-txt><el-id>holes</el-id>.<el-method>put</el-method></el-txt></el-field>(<el-field id="args11" class="optional ok" tabindex="0"><el-txt><el-lit>1</el-lit>, "<el-lit>*</el-lit>"</el-txt></el-field>)</el-top>
             </el-statement>
         </el-code-block>
-        <p>and noting the following:</p>
-        <ul>
-            <li>The array is given a name just like any other named value.</li>
-            <li>All elements within an array must be of the <i>same</i> type, and we have specified that this type is a string
-            by writing <el-code><el-type>Array</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>></el-code>, but we could have created an <el-code><el-type>Array</el-type>&lt;<el-kw>of</el-kw> <el-type>Float</el-type>></el-code>, for example.</li>
-            <li>An array (unlike other data structures that we will discover in future) is created with a <i>fixed size</i>: in this case
-                <el-lit>10</el-lit>, to represent 10 holes.
-            </li>
-            <li>We must also specify an <i>initial</i> value to be applied to each element, which must be of the
-            correct type - in this case a string. We have chosen an asterisk "<el-lit>*</el-lit>", to represent a mole.</li>
-        </ul>
-    </li>
-    <li>Add an instruction to print the holes, then run the program, noting that the 10 elements of this array are printed successively - separated by a comma-and-space - and surrounded by square brackets.</li>
- </ul>
- <label class="done" for="done1">Step completed</label>
-</div>
-<input type="checkbox" class="step" id="done1" />
-<div class="step" id="step2">
-<h3>Iteration 2 - put a value into a specific element</h3>
-<ul>
-  <li>Change the instruction that defined the array so that, instead of an asterisk, each element is initialised to a single
-    space - to represent an empty hole, and run the program to check that you are now just seeing spaces between the commas.</li>
-  <li>Insert a new instruction immediately <i>after</i> the <el-kw>let</el-kw> instruction (select that instruction and press <b>Enter</b> to insert new code below it)
-     and create this instruction:
-    <el-code-block>
-        <el-statement class="ok"><el-top><el-kw>call </el-kw>
-        <el-field id="ident10" class="ok" tabindex="0"><el-txt><el-id>holes</el-id>.<el-method>put</el-method></el-txt></el-field>(<el-field id="args11" class="optional ok" tabindex="0"><el-txt><el-lit>1</el-lit>, "<el-lit>*</el-lit>"</el-txt></el-field>)</el-top>
-        </el-statement>
-    </el-code-block>
-    noting that:
-    <ul>
-        <li><el-method>put</el-method> is a procedure method that can be applied to an array.</li>
-        <li>The syntax <el-id>holes</el-id>.<el-method>put</el-method> is known as a 'dot method' call whereby
-        you specify a thing (<el-id>holes</el-id>) and then <i>apply</i> (indicated by the dot) a specified method to it.</li>
-    </ul>
-    </li>
-    <li>Run the program and make careful note of where the the asterisk (mole) has appeared.</li>
-    <li>You might have been surprised that the mole <i>didn't</i> appear at the first hole. That's because the elements in an
-        array are <i>always</i> numbered from <i>zero</i>. So the <i>last</i> element in an array of 10 elements is number 9.</li>
-
-    <li>Add two more similar <el-kw>call</el-kw> instructions (all before the print instruction) to put an asterisk in element numbers
-        0 and 9. Run the program and check that it shows three moles in the expected places.</li>
-    <li>Change the instruction that modifies element <el-lit>9</el-lit> to specify element <el-lit>10</el-lit>.
-    Run the program, which will result in a 'Runtime error'. Make sure you understand the error message, so that you will recognise what is going on
-    if you see this message unexpectedly in future.</li>
-</ul>
-<label class="done" for="done2">Step completed</label>
-</div>
-<input type="checkbox" class="step" id="done2" />
-<div class="step" id="step3">
-<h3>Iteration 3 - display the array of holes in a more useful way</h3>
-<ul>
-    <li>We have learned how to <i>write</i> an individual element using the <el-method>put</el-method>. We can also
-    <i>read</i> an individual element just by using an index. For example <el-code><el-id>holes</el-id>[<el-lit>5</el-lit>]</el-code>
-    will access element number 5, and, assuming we have defined an integer value named <el-id>n</el-id> then
-    <el-code><el-id>holes</el-id>[<el-id>n</el-id>]</el-code> will read element number <el-id>n</el-id>.
-
-</li>
-    <li>In the game of Whack-a-mole we just want to present the 10 holes, each with or without a mole coming out of it.
-        Also, we need to have the holes numbered because the player must be able to identify the hole number
-        quickly and press the corresponding digit on the keyboard. We can do this with a loop. Start by
-        deleting the last three instructions within <el-code>main</el-code>.
-        (To delete an instruction, select it by clicking on the keyword at the start of the instruction and then
-        press <b>Ctrl-Delete</b> or <b>Ctrl-d</b>). You should be back to this:
-        <el-code-block>
-            <main class="ok multiline">
-                <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg></el-top>
-                <el-statement class="ok"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>holes</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Array</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;(<el-lit>10</el-lit>, "<el-lit> </el-lit>")</el-txt></el-field></el-statement>
-                <el-statement class="ok"><el-top><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-id>holes</el-id>.<el-method>put</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args13" class="optional ok" tabindex="0"><el-txt><el-lit>1</el-lit>, "<el-lit>*</el-lit>"</el-txt></el-field>)</el-top></el-statement>
-                <el-statement class="ok empty"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-statement>
-                <el-kw>end main</el-kw>
-            </main>
-        </el-code-block>
-    </li>
-    <li><i>After the instruction that creates the array</i>, add this one to label the holes:
-        <el-code-block>
-            <el-statement class="focused ok" id="print23" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>print </el-kw><el-field id="expr24" class="optional ok" tabindex="0"><el-txt>"<el-lit>0  1  2  3  4  5  6  7  8  9</el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl></el-field></el-statement>
-        </el-code-block>
-    noting that there are <i>two</i> spaces between each digit.</li>
-
-    <li>Now we want to print the 10 holes individually. It is possible to do this with a <el-kw>for</el-kw> loop because we know,
-         in advance, how many times we want to print something. But when dealing with arrays (or several other data structures)
-         there's an even simpler mechanism for doing the same thing to, or with, <i>each</i> of the members - called
-         an '<el-kw>each</el-kw> loop'. So as the last instruction within
-        <el-kw>main</el-kw> add an <el-kw>each</el-kw> loop, completed to look like this:</li>
-        <el-code-block>
-            <el-statement class="ok multiline" id="each59" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
-                <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident61" class="ok" tabindex="0"><el-txt><el-id>hole</el-id></el-txt><el-place><i>variableName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else.">?</el-help></el-field><el-kw> in </el-kw><el-field id="expr62" class="ok" tabindex="0"><el-txt><el-id>holes</el-id></el-txt><el-place><i>source</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>9</el-fr></el-top>
-                <el-statement class="focused ok empty" id="select99" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set throw try variable while #</el-help></el-select></el-statement>
-                <el-kw>end each</el-kw>
-                </el-statement>
-        </el-code-block>
-    <li>Within the loop add this instruction:
-
-        <el-code-block>
-            <el-statement class="ok"><el-top><el-kw>call </el-kw><el-field id="ident27" class="ok" tabindex="0"><el-txt><el-method>printNoLine</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="The name of the procedure to be called (starting lower-case). Alternatively, a 'dotted-call':  the name of a variable or property, followed by a ''' and the name of the procedure method to call on that 'instance'.">?</el-help></el-field>(<el-field id="args28" class="optional ok" tabindex="0"><el-txt>"<el-lit></el-lit>{<el-id>hole</el-id>}<el-lit>  </el-lit>"</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.">?</el-help></el-field>)<el-msg></el-msg><el-fr>10</el-fr></el-top></el-statement>
-        </el-code-block>
-    noting that:
-    <ul>
-        <li><el-method>printNoLine</el-method> (make sure you picked that one and not <el-method>printLine</el-method>) is a procedure that works a bit like <el-kw>print</el-kw> but does not print a newline afterwards.</li>
-        <li>We are printing an 'interpolated string' so that the <i>value</i> of <el-id>hole</el-id> is inserted into the string
-            between the curly-braces (which will not, themselves, appear in the printed string).</li>
-        <li>There are <i>two</i> spaces after the close-brace - to match the two spaces between digit labels in the earlier <el-kw>print</el-kw> instruction.</li>
-    </ul></li>
-    <li>Run the program and check that you see see the labels for the holes and the mole appearing in hole 1.</li>
-    </ul>
-    <label class="done" for="done3">Step completed</label>
-</div>
-<input type="checkbox" class="step" id="done3" />
-<div class="step" id="step4">
-    <h3>Iteration 4 - put the mole in a random hole</h3>
-    <ul>
-    <li>To make the mole(s) unpredictable, we need to generate a random integer in the range of 0 to 9.
-         So, add a new <el-kw>let</el-kw> instruction, immediately after the instruction that defines the array, defining the name
-         <el-id>molePosition</el-id> with the value generated by the expression <el-code><el-method>randomInt</el-method></el-code>(<el-lit>0</el-lit>, <el-lit>9</el-lit>)
-    </li>
-    <li>Change the <el-kw>call</el-kw> instruction below this so that instead of putting the mole ( <el-code>"<el-lit>*</el-lit>"</el-code> )
-     specifically into hole 1, you put it into the hole defined as <el-id>molePosition</el-id>.</li>
-    <li>Run the program more than once and check that the mole typically appears at a different hole each time you run (it will occasionally pick the same hole).</li>
-    </ul>
-<label class="done" for="done4">Step completed</label>
-</div>
-<input type="checkbox" class="step" id="done4" />
-<div class="step" id="step5">
-    <h3>Iteration 5 - Move the mole randomly, once a second</h3>
-    <ul>
-        <li>When we want to repeat a piece of behaviour indefinitely, we use an 'indefinite' loop, which is a
-            loop where the 'condition' for continuing the loop <i>never</i> evaluates to <el-kw>false</el-kw>.
-            So, after the last instruction within <el-kw>main</el-kw> insert a <el-kw>while</el-kw> instruction,
-            putting the fixed value <el-kw>true</el-kw> into the condition field.</li>
-        <li> Cut all the instructions within <el-kw>main</el-kw> except the initial definition of
-            the <el-id>holes</el-id> array and the <el-kw>while</el-kw>, and paste them into the <el-kw>while</el-kw> loop. To do this,
-            select the top-most instruction you want to move, then press <b>Ctrl-&#8595;</b> to include successive
-            instructions below it, and press <b>Ctrl-x</b> to cut them. Then select the <el-code>new code</el-code>
-            within the <el-kw>while</el-kw> loop and paste in the cut instructions with <b>Ctrl-v</b>.
-            (You may also perform cut and paste from the context menu, which you access with <b>right-mouse-click</b>
-             on an instruction).</li>
-        <li>If you try running the program now - noting that because the loop never exits you will need to press the
-            <b>Stop</b> button to resume editing the code - you will see that the Display repeatedly <i>adds</i> new text
-        instead of over-writing it. We can fix this with a <el-kw>call</el-kw> to the <el-method>clearPrintedText</el-method>
-        procedure (which requires no arguments between the brackets). Add this as the <i>last instruction within the</i> <el-kw>while</el-kw> loop -
-        after the <el-kw>end for</el-kw>.</li>
-        <li>Also, we need to slow things down by calling the <el-method>pause</el-method> procedure, which requires the length
-            of pause to be specified as an argument (i.e. between the brackets after the procedure name). The length
-            is specified in <i>milliseconds</i> so use a value of <el-lit>2000</el-lit> to start with.
-            This can be reduced later to say 1000 (one second) to make the game more challenging once you
-            have got the hang of it and finished testing.
-            Add this instruction
-            <i>before</i> the one that clears the text, then run again.</li>
-        <li>The results should be better, but still not what we want: instead of moving the mole, we are
-            <i>adding</i> a mole each time, soon filling all the holes. So now, after the instruction that clears the printed text,
-            call the <el-method>put</el-method> procedure on <el-id>holes</el-id> to replace the mole at the current <el-id>molePosition</el-id>
-            with an empty hole (a single space in quotes) - then run again. It should be <i>beginning</i> to look more like a game,
-            but now we need to be able to interact with it.</li>
-    </ul>
-<label class="done" for="done5">Step completed</label>
-</div>
-<input type="checkbox" class="step" id="done5" />
-<div class="step" id="step6">
-    <h3>Iteration 6 - Read a keypress dynamically and whack the mole if the digit matches</h3>
-    <ul>
-        <li>Calling the <el-method>pause</el-method> procedure was a very simple way to slow down the loop. Unfortunately, during such
-        a pause we can't do anything else. Doing things in parallel is <i>possible</i> in programming, but the techniques are more complex.
-        What we need instead is to create a loop that monitors for a keypress by the user, but - whether or not a keypress is
-      detected - will exit the loop after one second, so that the mole can be moved again.</li>
-
-        <li>Start by deleting the instruction doing the pause, and replacing it with:
-
-        <el-code-block>
-            <el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>stopTime</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr36" class="ok" tabindex="0"><el-txt><el-method>clock</el-method>() + <el-lit>2000</el-lit></el-txt></el-field></el-statement>
-        </el-code-block>
-
         noting that:
         <ul>
-            <li>The method <el-method>clock</el-method> returns a single integer representing the current time in milliseconds.</li>
-            <li>By adding <el-lit>2000</el-lit> to this we are defining a <el-id>stopTime</el-id> (time) as two seconds after this instruction is executed.</li>
-        </ul></li>
-        <li>On the next line, add another <el-kw>while</el-kw> loop, specifying that the condition for continuing the
-        loop is:
-
-        <el-code-block>
-            <el-method>clock</el-method>() &lt; <el-id>stopTime</el-id>
-        </el-code-block>
-
-        which is saying 'keep repeating the loop while the <i>current</i> time is less than the defined stop time'.</li>
-
-        <li>Within this new loop, add the instruction:
-
-        <el-code-block>
-            <el-statement class="ok" ><el-kw>let </el-kw><el-field id="var44" class="ok" tabindex="0"><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr45" class="ok" tabindex="0"><el-txt><el-method>getKey</el-method>()</el-txt></el-field></el-statement>
-        </el-code-block>
-
-        noting that <i>if a key has been pressed</i> (since the last time it was called), the method <el-method>getKey</el-method>
-        will return that key as a string. If no key has been pressed, it will return the empty string <el-code>""</el-code>.</li>
-        <li>We now need to detect whether the key that the user has pressed (if any) corresponds to the current <el-id>molePosition</el-id>.
-        So, immediately after the instruction just created, add an <el-kw>if</el-kw> instruction, with the condition:
-
-        <el-code-block>
-            <el-txt><el-id>k</el-id><el-kw> is </el-kw><el-id>molePosition</el-id>.<el-method>asString</el-method>()</el-txt>
-        </el-code-block>
-
-        noting that whereas <el-id>k</el-id> is a <i>string</i>, <el-id>molePosition</el-id> is an <i>integer</i> and
-
-        the two cannot be compared directly. Adding <el-code>.<el-method>asString</el-method>()</el-code> returns a string representation
-        of that integer - in other words it is <i>effectively</i> converting <el-lit>7</el-lit> to <el-code>"<el-lit>7</el-lit>"</el-code> - so
-        that it can be directly compared to the string <el-id>k</el-id>.</li>
-        <li>Try removing the <el-code>.<el-method>asString</el-method>()</el-code> and wait a couple of seconds to see
-        the compile error. Take note of what the error message says so that if you see this again in future you
-        will realise that you are trying to compare values of different types. Then restore the <el-code>.<el-method>asString</el-method>()</el-code> -
-        you don't need to type it again, you can just press <b>Ctrl-z</b> (undo).
-        </li>
-        <li>Now within the body of the <el-kw>if</el-kw> instruction add:
-        <el-code-block>
-            <el-statement class="ok" ><el-kw>print </el-kw><el-field id="expr53" class="optional ok" tabindex="0"><el-txt>"<el-lit>Hit!</el-lit>"</el-txt></el-field><el-msg></el-msg></el-statement>
-         </el-code-block>
-        </li>
-        <li>Run the program and see if you can press the numeric key corresponding to the mole's position.
-            You will need to press the <b>Stop</b> button to exit the game.
-            You might find it helpful for your first few games to slow it down further by re-defining the <el-id>stopTime</el-id>
-            time to the current time plus <i>three</i> seconds instead of two seconds. Then run again.</li>
+            <li><el-method>put</el-method> is a procedure method that can be applied to an array.</li>
+            <li>The syntax <el-id>holes</el-id>.<el-method>put</el-method> is known as a 'dot method' call whereby
+            you specify a thing (<el-id>holes</el-id>) and then <i>apply</i> (indicated by the dot) a specified method to it.</li>
         </ul>
-<label class="done" for="done6">Step completed</label>
-    </div>
-    <input type="checkbox" class="step" id="done6" />
-    <div class="step" id="step7">
-<h3>Iteration 7 - Keep the score</h3>
-    <ul>
-       <li>To keep track of how many moles you have successfully whacked, define a value named <el-id>score</el-id> initially
-    set to <el-lit>0</el-lit>, right up near the start of <el-kw>main</el-kw> i.e. not within any of the loops. Note that
-    unlike other named values that we have defined with a <el-kw>let</el-kw> instruction, <el-id>score</el-id> will need to
-    be created as a <el-kw>variable</el-kw> because we are going to change it whenever a mole is whacked.</li>
-    <li>Immediately after the <el-code><el-kw>print </el-kw>"<el-lit>Hit!</el-lit>"</el-code> instruction,
-    add a new instruction to <el-kw>set</el-kw> the <el-id>score</el-id> to its current value + 1.</li>
-    <li>Now, <i>above</i> the instruction <el-code><el-kw>print </el-kw>"<el-lit>0  1  2  3  4  5  6  7  8  9</el-lit>"</el-code>
-    add a new instruction to print the score:
+        </li>
+        <li>Run the program and make careful note of where the the asterisk (mole) has appeared.</li>
+        <li>You might have been surprised that the mole <i>didn't</i> appear at the first hole. That's because the elements in an
+            array are <i>always</i> numbered from <i>zero</i>. So the <i>last</i> element in an array of 10 elements is number 9.</li>
 
-    <el-code-block>
-        <el-statement class="ok"><el-kw>print </el-kw><el-field><el-txt>"<el-lit>Score: </el-lit>{<el-id>score</el-id>}<el-lit></el-lit>"</el-txt></el-field></el-statement>
-    </el-code-block>
-
-    noting again that we are printing a string that contains some literal text and an 'interpolated field' (in braces)
-    to get the actual score value.</li>
-
-    <li>Play the game and see how many moles you can whack.
-        Once you've got the hang of it reduce the time interval from <el-lit>2000</el-lit> milliseconds
-        to <el-lit>1000</el-lit>, say, and try again.</li>
+        <li>Add two more similar <el-kw>call</el-kw> instructions (all before the print instruction) to put an asterisk in element numbers
+            0 and 9. Run the program and check that it shows three moles in the expected places.</li>
+        <li>Change the instruction that modifies element <el-lit>9</el-lit> to specify element <el-lit>10</el-lit>.
+        Run the program, which will result in a 'Runtime error'. Make sure you understand the error message, so that you will recognise what is going on
+        if you see this message unexpectedly in future.</li>
     </ul>
-<label class="done" for="done7">Step completed</label>
+    <label class="done" for="done2">Step completed</label>
     </div>
-    <input type="checkbox" class="step" id="done7" />
-    <div class="step" id="step8">
-    <p>Congratulations! You've completed the exercise, written a simple version of Whack-a-mole, and learned how to use an array.
-        <h3>Optional extensions</h3>
-        If you have time, try to refine and/or extend the game in the following ways:
+    <input type="checkbox" class="step" id="done2" />
+    <div class="step" id="step3">
+    <h3>Iteration 3 - display the array of holes in a more useful way</h3>
+    <ul>
+        <li>We have learned how to <i>write</i> an individual element using the <el-method>put</el-method>. We can also
+        <i>read</i> an individual element just by using an index. For example <el-code><el-id>holes</el-id>[<el-lit>5</el-lit>]</el-code>
+        will access element number 5, and, assuming we have defined an integer value named <el-id>n</el-id> then
+        <el-code><el-id>holes</el-id>[<el-id>n</el-id>]</el-code> will read element number <el-id>n</el-id>.
 
+    </li>
+        <li>In the game of Whack-a-mole we just want to present the 10 holes, each with or without a mole coming out of it.
+            Also, we need to have the holes numbered because the player must be able to identify the hole number
+            quickly and press the corresponding digit on the keyboard. We can do this with a loop. Start by
+            deleting the last three instructions within <el-code>main</el-code>.
+            (To delete an instruction, select it by clicking on the keyword at the start of the instruction and then
+            press <b>Ctrl-Delete</b> or <b>Ctrl-d</b>). You should be back to this:
+            <el-code-block>
+                <main class="ok multiline">
+                    <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg></el-top>
+                    <el-statement class="ok"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>holes</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Array</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;(<el-lit>10</el-lit>, "<el-lit> </el-lit>")</el-txt></el-field></el-statement>
+                    <el-statement class="ok"><el-top><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-id>holes</el-id>.<el-method>put</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args13" class="optional ok" tabindex="0"><el-txt><el-lit>1</el-lit>, "<el-lit>*</el-lit>"</el-txt></el-field>)</el-top></el-statement>
+                    <el-statement class="ok empty"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-statement>
+                    <el-kw>end main</el-kw>
+                </main>
+            </el-code-block>
+        </li>
+        <li><i>After the instruction that creates the array</i>, add this one to label the holes:
+            <el-code-block>
+                <el-statement class="focused ok" id="print23" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>print </el-kw><el-field id="expr24" class="optional ok" tabindex="0"><el-txt>"<el-lit>0  1  2  3  4  5  6  7  8  9</el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl></el-field></el-statement>
+            </el-code-block>
+        noting that there are <i>two</i> spaces between each digit.</li>
+
+        <li>Now we want to print the 10 holes individually. It is possible to do this with a <el-kw>for</el-kw> loop because we know,
+            in advance, how many times we want to print something. But when dealing with arrays (or several other data structures)
+            there's an even simpler mechanism for doing the same thing to, or with, <i>each</i> of the members - called
+            an '<el-kw>each</el-kw> loop'. So as the last instruction within
+            <el-kw>main</el-kw> add an <el-kw>each</el-kw> loop, completed to look like this:</li>
+            <el-code-block>
+                <el-statement class="ok multiline" id="each59" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+                    <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident61" class="ok" tabindex="0"><el-txt><el-id>hole</el-id></el-txt><el-place><i>variableName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else.">?</el-help></el-field><el-kw> in </el-kw><el-field id="expr62" class="ok" tabindex="0"><el-txt><el-id>holes</el-id></el-txt><el-place><i>source</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>9</el-fr></el-top>
+                    <el-statement class="focused ok empty" id="select99" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set throw try variable while #</el-help></el-select></el-statement>
+                    <el-kw>end each</el-kw>
+                    </el-statement>
+            </el-code-block>
+        <li>Within the loop add this instruction:
+
+            <el-code-block>
+                <el-statement class="ok"><el-top><el-kw>call </el-kw><el-field id="ident27" class="ok" tabindex="0"><el-txt><el-method>printNoLine</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="The name of the procedure to be called (starting lower-case). Alternatively, a 'dotted-call':  the name of a variable or property, followed by a ''' and the name of the procedure method to call on that 'instance'.">?</el-help></el-field>(<el-field id="args28" class="optional ok" tabindex="0"><el-txt>"<el-lit></el-lit>{<el-id>hole</el-id>}<el-lit>  </el-lit>"</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="list of zero or more arguments, comma separated. Each argument may be a literal value, variable, or simple expression.">?</el-help></el-field>)<el-msg></el-msg><el-fr>10</el-fr></el-top></el-statement>
+            </el-code-block>
+        noting that:
         <ul>
-            <li>Change scoring so that a hit gains 3 points but every miss loses a point,
-
-                noting that to detect a <i>miss</i> you must test for <el-id>k</el-id><el-kw> isnt </el-kw><el-code>""</el-code>
-                 - otherwise you will be counting as a miss each iteration of the loop <i>even if no key has been pressed</i>.</li>
-            <li>Make it so that the game doesn't continue indefinitely by changing <el-kw>while true</el-kw> to another
-                condition. You could <i>either</i>:
-            <ul>
-                <li>Run it for a fixed amount of time - 30 seconds say, or...</li>
-                <li>Count the number of times the mole has appeared, and run the outer loop until this reaches, say, 30 appearances.</li>
-            </ul></li>
-            <li>At the start of the game allow the user to specify a difficulty level of, say, 1 to 5. Use this number
-                to <i>shorten</i> the <el-id>stopTime</el-id> progressively with each increase in level.
-                Make sure you display the difficulty level alongside the score.
-            </li>
-            <li>Also at the start of the game, ask the user to input their name, and display this with the score and difficulty level.</li>
-            <li>As the <el-kw>main</el-kw> loop is now getting quite long, and has several levels of indentation, improve the readability
-            of the code by progressively 'refactoring' - extracting instructions into a new named <el-kw>procedure</el-kw>
-            and calling that procedure from the main routine. A good aim is to get both the main, and each procedure down to
-            a maximum of 10 instructions. Don't forget that a procedure can also delegate work to other procedures.</li>
+            <li><el-method>printNoLine</el-method> (make sure you picked that one and not <el-method>printLine</el-method>) is a procedure that works a bit like <el-kw>print</el-kw> but does not print a newline afterwards.</li>
+            <li>We are printing an 'interpolated string' so that the <i>value</i> of <el-id>hole</el-id> is inserted into the string
+                between the curly-braces (which will not, themselves, appear in the printed string).</li>
+            <li>There are <i>two</i> spaces after the close-brace - to match the two spaces between digit labels in the earlier <el-kw>print</el-kw> instruction.</li>
+        </ul></li>
+        <li>Run the program and check that you see see the labels for the holes and the mole appearing in hole 1.</li>
         </ul>
-    </p>
-    <br>
-    <div class="license">
-    <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
-    This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
-        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
-       If you copy and <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
-       Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
+        <label class="done" for="done3">Step completed</label>
     </div>
+    <input type="checkbox" class="step" id="done3" />
+    <div class="step" id="step4">
+        <h3>Iteration 4 - put the mole in a random hole</h3>
+        <ul>
+        <li>To make the mole(s) unpredictable, we need to generate a random integer in the range of 0 to 9.
+            So, add a new <el-kw>let</el-kw> instruction, immediately after the instruction that defines the array, defining the name
+            <el-id>molePosition</el-id> with the value generated by the expression <el-code><el-method>randomInt</el-method></el-code>(<el-lit>0</el-lit>, <el-lit>9</el-lit>)
+        </li>
+        <li>Change the <el-kw>call</el-kw> instruction below this so that instead of putting the mole ( <el-code>"<el-lit>*</el-lit>"</el-code> )
+        specifically into hole 1, you put it into the hole defined as <el-id>molePosition</el-id>.</li>
+        <li>Run the program more than once and check that the mole typically appears at a different hole each time you run (it will occasionally pick the same hole).</li>
+        </ul>
+    <label class="done" for="done4">Step completed</label>
+    </div>
+    <input type="checkbox" class="step" id="done4" />
+    <div class="step" id="step5">
+        <h3>Iteration 5 - Move the mole randomly, once a second</h3>
+        <ul>
+            <li>When we want to repeat a piece of behaviour indefinitely, we use an 'indefinite' loop, which is a
+                loop where the 'condition' for continuing the loop <i>never</i> evaluates to <el-kw>false</el-kw>.
+                So, after the last instruction within <el-kw>main</el-kw> insert a <el-kw>while</el-kw> instruction,
+                putting the fixed value <el-kw>true</el-kw> into the condition field.</li>
+            <li> Cut all the instructions within <el-kw>main</el-kw> except the initial definition of
+                the <el-id>holes</el-id> array and the <el-kw>while</el-kw>, and paste them into the <el-kw>while</el-kw> loop. To do this,
+                select the top-most instruction you want to move, then press <b>Ctrl-&#8595;</b> to include successive
+                instructions below it, and press <b>Ctrl-x</b> to cut them. Then select the <el-code>new code</el-code>
+                within the <el-kw>while</el-kw> loop and paste in the cut instructions with <b>Ctrl-v</b>.
+                (You may also perform cut and paste from the context menu, which you access with <b>right-mouse-click</b>
+                on an instruction).</li>
+            <li>If you try running the program now - noting that because the loop never exits you will need to press the
+                <b>Stop</b> button to resume editing the code - you will see that the Display repeatedly <i>adds</i> new text
+            instead of over-writing it. We can fix this with a <el-kw>call</el-kw> to the <el-method>clearPrintedText</el-method>
+            procedure (which requires no arguments between the brackets). Add this as the <i>last instruction within the</i> <el-kw>while</el-kw> loop -
+            after the <el-kw>end for</el-kw>.</li>
+            <li>Also, we need to slow things down by calling the <el-method>pause</el-method> procedure, which requires the length
+                of pause to be specified as an argument (i.e. between the brackets after the procedure name). The length
+                is specified in <i>milliseconds</i> so use a value of <el-lit>2000</el-lit> to start with.
+                This can be reduced later to say 1000 (one second) to make the game more challenging once you
+                have got the hang of it and finished testing.
+                Add this instruction
+                <i>before</i> the one that clears the text, then run again.</li>
+            <li>The results should be better, but still not what we want: instead of moving the mole, we are
+                <i>adding</i> a mole each time, soon filling all the holes. So now, after the instruction that clears the printed text,
+                call the <el-method>put</el-method> procedure on <el-id>holes</el-id> to replace the mole at the current <el-id>molePosition</el-id>
+                with an empty hole (a single space in quotes) - then run again. It should be <i>beginning</i> to look more like a game,
+                but now we need to be able to interact with it.</li>
+        </ul>
+    <label class="done" for="done5">Step completed</label>
+    </div>
+    <input type="checkbox" class="step" id="done5" />
+    <div class="step" id="step6">
+        <h3>Iteration 6 - Read a keypress dynamically and whack the mole if the digit matches</h3>
+        <ul>
+            <li>Calling the <el-method>pause</el-method> procedure was a very simple way to slow down the loop. Unfortunately, during such
+            a pause we can't do anything else. Doing things in parallel is <i>possible</i> in programming, but the techniques are more complex.
+            What we need instead is to create a loop that monitors for a keypress by the user, but - whether or not a keypress is
+        detected - will exit the loop after one second, so that the mole can be moved again.</li>
+
+            <li>Start by deleting the instruction doing the pause, and replacing it with:
+
+            <el-code-block>
+                <el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>stopTime</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr36" class="ok" tabindex="0"><el-txt><el-method>clock</el-method>() + <el-lit>2000</el-lit></el-txt></el-field></el-statement>
+            </el-code-block>
+
+            noting that:
+            <ul>
+                <li>The method <el-method>clock</el-method> returns a single integer representing the current time in milliseconds.</li>
+                <li>By adding <el-lit>2000</el-lit> to this we are defining a <el-id>stopTime</el-id> (time) as two seconds after this instruction is executed.</li>
+            </ul></li>
+            <li>On the next line, add another <el-kw>while</el-kw> loop, specifying that the condition for continuing the
+            loop is:
+
+            <el-code-block>
+                <el-method>clock</el-method>() &lt; <el-id>stopTime</el-id>
+            </el-code-block>
+
+            which is saying 'keep repeating the loop while the <i>current</i> time is less than the defined stop time'.</li>
+
+            <li>Within this new loop, add the instruction:
+
+            <el-code-block>
+                <el-statement class="ok" ><el-kw>let </el-kw><el-field id="var44" class="ok" tabindex="0"><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr45" class="ok" tabindex="0"><el-txt><el-method>getKey</el-method>()</el-txt></el-field></el-statement>
+            </el-code-block>
+
+            noting that <i>if a key has been pressed</i> (since the last time it was called), the method <el-method>getKey</el-method>
+            will return that key as a string. If no key has been pressed, it will return the empty string <el-code>""</el-code>.</li>
+            <li>We now need to detect whether the key that the user has pressed (if any) corresponds to the current <el-id>molePosition</el-id>.
+            So, immediately after the instruction just created, add an <el-kw>if</el-kw> instruction, with the condition:
+
+            <el-code-block>
+                <el-txt><el-id>k</el-id><el-kw> is </el-kw><el-id>molePosition</el-id>.<el-method>asString</el-method>()</el-txt>
+            </el-code-block>
+
+            noting that whereas <el-id>k</el-id> is a <i>string</i>, <el-id>molePosition</el-id> is an <i>integer</i> and
+
+            the two cannot be compared directly. Adding <el-code>.<el-method>asString</el-method>()</el-code> returns a string representation
+            of that integer - in other words it is <i>effectively</i> converting <el-lit>7</el-lit> to <el-code>"<el-lit>7</el-lit>"</el-code> - so
+            that it can be directly compared to the string <el-id>k</el-id>.</li>
+            <li>Try removing the <el-code>.<el-method>asString</el-method>()</el-code> and wait a couple of seconds to see
+            the compile error. Take note of what the error message says so that if you see this again in future you
+            will realise that you are trying to compare values of different types. Then restore the <el-code>.<el-method>asString</el-method>()</el-code> -
+            you don't need to type it again, you can just press <b>Ctrl-z</b> (undo).
+            </li>
+            <li>Now within the body of the <el-kw>if</el-kw> instruction add:
+            <el-code-block>
+                <el-statement class="ok" ><el-kw>print </el-kw><el-field id="expr53" class="optional ok" tabindex="0"><el-txt>"<el-lit>Hit!</el-lit>"</el-txt></el-field><el-msg></el-msg></el-statement>
+            </el-code-block>
+            </li>
+            <li>Run the program and see if you can press the numeric key corresponding to the mole's position.
+                You will need to press the <b>Stop</b> button to exit the game.
+                You might find it helpful for your first few games to slow it down further by re-defining the <el-id>stopTime</el-id>
+                time to the current time plus <i>three</i> seconds instead of two seconds. Then run again.</li>
+            </ul>
+    <label class="done" for="done6">Step completed</label>
+        </div>
+        <input type="checkbox" class="step" id="done6" />
+        <div class="step" id="step7">
+    <h3>Iteration 7 - Keep the score</h3>
+        <ul>
+        <li>To keep track of how many moles you have successfully whacked, define a value named <el-id>score</el-id> initially
+        set to <el-lit>0</el-lit>, right up near the start of <el-kw>main</el-kw> i.e. not within any of the loops. Note that
+        unlike other named values that we have defined with a <el-kw>let</el-kw> instruction, <el-id>score</el-id> will need to
+        be created as a <el-kw>variable</el-kw> because we are going to change it whenever a mole is whacked.</li>
+        <li>Immediately after the <el-code><el-kw>print </el-kw>"<el-lit>Hit!</el-lit>"</el-code> instruction,
+        add a new instruction to <el-kw>set</el-kw> the <el-id>score</el-id> to its current value + 1.</li>
+        <li>Now, <i>above</i> the instruction <el-code><el-kw>print </el-kw>"<el-lit>0  1  2  3  4  5  6  7  8  9</el-lit>"</el-code>
+        add a new instruction to print the score:
+
+        <el-code-block>
+            <el-statement class="ok"><el-kw>print </el-kw><el-field><el-txt>"<el-lit>Score: </el-lit>{<el-id>score</el-id>}<el-lit></el-lit>"</el-txt></el-field></el-statement>
+        </el-code-block>
+
+        noting again that we are printing a string that contains some literal text and an 'interpolated field' (in braces)
+        to get the actual score value.</li>
+
+        <li>Play the game and see how many moles you can whack.
+            Once you've got the hang of it reduce the time interval from <el-lit>2000</el-lit> milliseconds
+            to <el-lit>1000</el-lit>, say, and try again.</li>
+        </ul>
+    <label class="done" for="done7">Step completed</label>
+        </div>
+        <input type="checkbox" class="step" id="done7" />
+        <div class="step" id="step8">
+        <p>Congratulations! You've completed the exercise, written a simple version of Whack-a-mole, and learned how to use an array.
+            <h3>Optional extensions</h3>
+            If you have time, try to refine and/or extend the game in the following ways:
+
+            <ul>
+                <li>Change scoring so that a hit gains 3 points but every miss loses a point,
+
+                    noting that to detect a <i>miss</i> you must test for <el-id>k</el-id><el-kw> isnt </el-kw><el-code>""</el-code>
+                    - otherwise you will be counting as a miss each iteration of the loop <i>even if no key has been pressed</i>.</li>
+                <li>Make it so that the game doesn't continue indefinitely by changing <el-kw>while true</el-kw> to another
+                    condition. You could <i>either</i>:
+                <ul>
+                    <li>Run it for a fixed amount of time - 30 seconds say, or...</li>
+                    <li>Count the number of times the mole has appeared, and run the outer loop until this reaches, say, 30 appearances.</li>
+                </ul></li>
+                <li>At the start of the game allow the user to specify a difficulty level of, say, 1 to 5. Use this number
+                    to <i>shorten</i> the <el-id>stopTime</el-id> progressively with each increase in level.
+                    Make sure you display the difficulty level alongside the score.
+                </li>
+                <li>Also at the start of the game, ask the user to input their name, and display this with the score and difficulty level.</li>
+                <li>As the <el-kw>main</el-kw> loop is now getting quite long, and has several levels of indentation, improve the readability
+                of the code by progressively 'refactoring' - extracting instructions into a new named <el-kw>procedure</el-kw>
+                and calling that procedure from the main routine. A good aim is to get both the main, and each procedure down to
+                a maximum of 10 instructions. Don't forget that a procedure can also delegate work to other procedures.</li>
+            </ul>
+        </p>
+        <br>
+        <div class="license">
+        <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+        This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
+            <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+        If you copy and <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+        Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
+        </div>
     </div>
 
     <div hidden="" id="hash"></div>
     <div hidden="" id="changes"></div>
-
+</div>
     <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
 </body>
 </html>

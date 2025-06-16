@@ -2,7 +2,7 @@
 
 const updateable = document.querySelectorAll("input, textarea, select");
 const hints = document.querySelectorAll("div.hint");
-const doneCheckboxes = document.querySelectorAll("input[type=checkbox].step");
+const doneCheckboxes = document.querySelectorAll("div.step > input[type=checkbox]");
 
 const hintsTotal = document.querySelectorAll("span.hints-total");
 const hintsTaken = document.querySelectorAll("span.hints-taken");
@@ -23,7 +23,7 @@ async function chromeSave(code: string, newName: string) {
     const writeable = await fh.createWritable();
     await writeable.write(code);
     await writeable.close();
-    autoSaveButton?.classList.add("saved");
+    document.getElementById("worksheet")?.classList.add("saved");
     return fh;
   } catch {
     // cancelled
@@ -189,9 +189,7 @@ function getTimestamp() {
 
 for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
   cb.addEventListener("click", async (e) => {
-    const id = cb.id.slice(4);
-
-    const step = document.getElementById(`step${id}`);
+    const step = cb.parentElement;
     if (step) {
       const allInputs = step.querySelectorAll("input, textarea, select") as NodeListOf<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -212,7 +210,7 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
         inp.disabled = true;
       }
 
-      const nextId = parseInt(id) + 1;
+      const nextId = parseInt(step.id!) + 1;
       const nextStep = document.getElementById(`step${nextId}`);
       if (nextStep) {
         nextStep.classList.add("active");
