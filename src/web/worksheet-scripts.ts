@@ -194,11 +194,11 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
       const allInputs = step.querySelectorAll("input, textarea, select") as NodeListOf<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
       >;
+      
       const answeredInputs = step.querySelectorAll(
         "input.answered, textarea.answered, select.answered",
       );
-
-      if (allInputs.length !== answeredInputs.length) {
+      if (allInputs.length !== answeredInputs.length + 1) { /* + 1 is kludge for 'done' checkbox */
         e.preventDefault();
         return;
       }
