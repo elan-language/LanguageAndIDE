@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-const updateable = document.querySelectorAll("input, textarea, select");
+const answersSelector = "input:not(.step-complete), textarea, select";
+const answers = document.querySelectorAll(answersSelector);
 const hints = document.querySelectorAll("div.hint");
-const doneCheckboxes = document.querySelectorAll("div.step > input[type=checkbox]");
+const doneCheckboxes = document.querySelectorAll("div.step > input.step-complete");
 
 const hintsTotal = document.querySelectorAll("span.hints-total");
 const hintsTaken = document.querySelectorAll("span.hints-taken");
@@ -122,7 +123,7 @@ async function save() {
   }
 }
 
-for (const e of updateable) {
+for (const e of answers) {
   e.addEventListener("input", async (e) => {
     const ie = e as InputEvent;
     const tgt = ie.target as Element;
@@ -137,6 +138,11 @@ for (const e of updateable) {
       for (const e of allradio) {
         e.classList.add("answered");
       }
+    }
+
+    const allMsgs = document.querySelectorAll(`.temp-msg`);
+    for (const m of allMsgs) {
+      m.remove();
     }
 
     const changelist = document.getElementById("changes")!;
@@ -192,7 +198,7 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
     const step = cb.parentElement;
     const id = cb.id.slice(4);
     if (step) {
-      const allInputs = step.querySelectorAll("input, textarea, select") as NodeListOf<
+      const allInputs = step.querySelectorAll(answersSelector) as NodeListOf<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
       >;
 
@@ -200,7 +206,10 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
         "input.answered, textarea.answered, select.answered",
       );
       if (allInputs.length !== answeredInputs.length + 1) {
-        /* + 1 is kludge for 'done' checkbox */
+        const msg = document.createElement("div");
+        msg.classList.add("temp-msg");
+        msg.innerText = "All required inputs must be completed to continue";
+        cb.after(msg);
         e.preventDefault();
         return;
       }
