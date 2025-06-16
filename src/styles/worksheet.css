@@ -94,3 +94,7 @@
     font-size: 8pt;
     margin-top: 1em;
 }
+
+.step textarea {
+    width: 100%;
+}
