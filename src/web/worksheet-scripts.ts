@@ -155,7 +155,7 @@ for (const e of updateable) {
 
 function updateHintsTaken() {
   for (const ht of hintsTaken as NodeListOf<HTMLSpanElement>) {
-    const count = document.getElementsByClassName("hint-taken").length;
+    const count = document.getElementsByClassName("taken").length;
     ht.innerText = `${count}`;
   }
 }
@@ -163,19 +163,19 @@ function updateHintsTaken() {
 for (const e of hints) {
   e.addEventListener("click", async (e) => {
     const hint = e.target as HTMLDivElement;
-    const encryptedText = hint.dataset.hint || "";
-    if (encryptedText !== "") {
-      const content = document.getElementById(`${hint.id}content`);
-      if (content) {
-        content.innerHTML = atob(encryptedText);
+    if (!hint.classList.contains("taken")) {
+      const encryptedText = hint.dataset.hint || "";
+      if (encryptedText !== "") {
+        const content = document.getElementById(`${hint.id}content`);
+        if (content) {
+          content.innerHTML = atob(encryptedText);
+        }
       }
+      hint.classList.add("taken");
+      hint.append(getTimestamp());
+      updateHintsTaken();
+      await save();
     }
-    hint.classList.add("hint-taken");
-    hint.append(getTimestamp());
-
-    updateHintsTaken();
-
-    await save();
   });
 }
 
@@ -195,11 +195,12 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
       const allInputs = step.querySelectorAll("input, textarea, select") as NodeListOf<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
       >;
-      
+
       const answeredInputs = step.querySelectorAll(
         "input.answered, textarea.answered, select.answered",
       );
-      if (allInputs.length !== answeredInputs.length + 1) { /* + 1 is kludge for 'done' checkbox */
+      if (allInputs.length !== answeredInputs.length + 1) {
+        /* + 1 is kludge for 'done' checkbox */
         e.preventDefault();
         return;
       }

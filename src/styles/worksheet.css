@@ -1,10 +1,13 @@
 /* Initially, everything hidden except the Save button and message */
 
     .docTitle *,
-    #auto-save,
-    #auto-save + span
+    #auto-save
     {
         display: block;
+    }
+    #auto-save + span
+    {
+        display: inline;
     }
 
 /* After saving ... */
@@ -17,10 +20,10 @@
 
 /* Steps */
     /* step0 (preliminaries) only */
-    #step0.complete {
+    #worksheet.saved #step0.complete {
         display: none;
     }
-    #worksheet.saved #userName{
+    #worksheet.saved #step0.complete #userName{
         display: block;
     }
 
@@ -40,31 +43,39 @@
 
 /* Hints */
     /* Hide hints by default */
-    .hint, .hint *
+    .hint, .content
     {
         display: none;
     }
 
     /* First hint of active step will be shown */
-    #worksheet.saved .step.active .hint:first-child
+    #worksheet.saved .step.active .hint:first-of-type
     {
         display: block;
     }
 
     /* When a hint is taken...*/
     /* Display the contents */
+    .hint.taken,
     .hint.taken + .content
     {
         display: block;
-        visibility: visible;
     }
     /* ...and display the NEXT Hint */
-    .hint.taken + content + .hint
+    .hint.taken + .content + .hint
     {
         display: block;
     }
 
 /*Styling only */
+.hint {
+    font-size: 10pt;
+    font-weight: bold;
+    margin-top: 10pt;
+    margin-bottom: 4pt;
+    color: rgb(15, 71, 97);
+}
+
 .done {
     color: rgb(15, 71, 97);
     font-weight: bold;
@@ -82,4 +93,9 @@
 
 .step textarea {
     width: 100%;
+}
+
+input[type="text"] {
+    border: 1px;
+    border-style: solid;
 }
