@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<div class="docTitle">Simon</div>
+<div class="docTitle">Simon game</div>
 
 <button id="auto-save">Auto-save to file</button><span>to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future - at which point you will be asked to auto-save it again).</span>
 
@@ -94,8 +94,7 @@
       <br>Run the program again and confirm that a larger yellow circle, with no edge, appears near the top-left corner.
     </li>
   </ul>
-  <div class="hint" id="hint1" data-hint="">
-    <span class="show">The <el-kw>main</el-kw> so far</span>
+  <div class="hint" id="hint1" data-hint="">The <el-kw>main</el-kw> so far</div>
     <el-code-block>
       <main class="ok multiline" id="main1" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
         <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg><el-fr>1</el-fr></el-top>
@@ -149,8 +148,7 @@
         to check that each value puts the circle in a different place and colour.
       </li>
     </ul>
-    <div class="hint" id="hint2" data-hint="">
-      <span class="show">The <el-kw>main</el-kw> so far</span>
+    <div class="hint" id="hint2" data-hint="">The <el-kw>main</el-kw> so far</div>
       <el-code-block>
         <main class="ok multiline" id="main1" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
           <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg><el-fr>1</el-fr></el-top>
@@ -191,8 +189,9 @@
     using the defined value <el-id>move</el-id> as the argument.
     Then run the program and check that it does the same as the previous iteration.
 
-    <div class="hint" id="hint3" data-hint="">
-      <span class="show">Hint 1</span>
+    <div class="hint" id="hint3a" data-hint="">Hint 1</div>
+      <div class="content" id="hint3acontent">
+  
       The <i>structure</i> of your code should look like this:
       <el-code-block>
         <main class="ok multiline" >
@@ -211,8 +210,8 @@
       </el-code-block>
     </div>
 
-    <div class="hint" id="hint" data-hint="">
-        <span class="show">Hint 2: Show the whole code</span>
+    <div class="hint" id="hint" data-hint="">Hint 2: Show the whole code</div>
+      <div class="content" id="hintcontent">
         <el-code-block>
           <main class="ok multiline" >
           <el-top><el-kw>main</el-kw></el-top>
@@ -251,8 +250,8 @@
       <li>Within the <el-method>displayMove</el-method> procedure add, at the end, an instruction to pause for a full second -
         otherwise things will happen too quickly to see.
         <textarea id="input4a"></textarea>
-      <div class="hint" id="hint4a" data-hint="">
-        <span class="show">Hint: Show the abbreviated instructions</span>
+      <div class="hint" id="hint4a" data-hint="">Hint: Show the abbreviated instructions</div>
+      <div class="content" id="hint4acontent">
         <el-code-block>
           <main class="ok multiline">
             <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg><el-fr>1</el-fr></el-top>
@@ -272,8 +271,8 @@
           </el-proc>
         </el-code-block>
       </div>
-      <div class="hint" id="hint4b" data-hint="">
-        <span class="show">Hint: Show the whole code.</span>
+      <div class="hint" id="hint4b" data-hint="">Hint: Show the whole code.</div>
+      <div class="content" id="hint4bcontent">
         <el-code-block>
           <main class="ok multiline" id="main1" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
             <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg><el-fr>1</el-fr></el-top>
@@ -302,8 +301,8 @@
         by a comma, giving it the name <el-id>interval</el-id> and the type for an integer. Then use that parameter name <el-id>interval</el-id>
         instead of the literal number currently given as an argument to <el-method>pause</el-method>. Run the program to check that
         it still works the same way.
-      <div class="hint" id="hint4c" data-hint="">
-        <span class="show">Show the whole code for <el-kw>main</el-kw>></span>
+      <div class="hint" id="hint4c" data-hint="">Show the whole code for <el-kw>main</el-kw></div>
+      <div class="content" id="hint4ccontent">
         <el-code-block>
           <main class="ok multiline" >
             <el-top><el-kw>main</el-kw></el-top>
@@ -318,8 +317,8 @@
           </main>
         </el-code-block>
       </div>
-      <div class="hint" id="hint4d" data-hint="">
-        <span class="show">Show the whole code for <el-method>displayMove</el-method></span>
+      <div class="hint" id="hint4d" data-hint="">Show the whole code for <el-method>displayMove</el-method></div>
+      <div class="content" id="hint4dcontent">
         <el-code-block>
           <el-proc class="focused ok multiline" >
             <el-top><el-kw>procedure </el-kw><el-method><el-field><el-txt>displayMove</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
@@ -337,15 +336,15 @@
         after each move and add a <i>shorter</i> and <i>fixed-length</i> pause. So after the <i>existing</i> <el-id>pause</el-id> instruction within <el-method>displayMove</el-method>
         add a call to <el-method>clearVectorGraphics</el-method> and follow this by a fixed pause of 1/10th of a second. Run again
         and check that any repeated digits are now distinct visually.
-        <div class="hint" id="hint4e" data-hint="">
-          <span class="show">Show the abbreviated instructions</el-method></span>
+        <div class="hint" id="hint4e" data-hint="">Show the abbreviated instructions</el-method></div>
+      <div class="content" id="hint4econtent">
           <el-code-block>
             <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
             <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>100</el-lit></el-txt></el-field>)</el-top></el-statement>
           </el-code-block>
         </div>
-        <div class="hint" id="hint4f" data-hint="">
-          <span class="show">Show the whole code</el-method></span>
+        <div class="hint" id="hint4f" data-hint="">Show the whole code</el-method></div>
+      <div class="content" id="hint4fcontent">
           <el-code-block>
             <!-- TODO -->
           </el-code-block>
@@ -378,14 +377,14 @@
     </li>
   </ul>
 
-  <div class="hint" id="hint5a" data-hint="">
-    <span class="show">Hint 1: abbreviated version of the instructions
+  <div class="hint" id="hint5a" data-hint="">Hint 1: abbreviated version of the instructions</div>
+      <div class="content" id="hint5acontent">
     <el-code-block>
        </el-code-block>
   </div>
 
-  <div class="hint" id="hint5b" data-hint="">
-    <span class="show">Hint 2: complete code
+  <div class="hint" id="hint5b" data-hint="">Hint 2: complete code</div>
+      <div class="content" id="hint5bcontent">
     <el-code-block>
     </el-code-block>
   </div>
@@ -617,7 +616,7 @@
     loop in main, and add a the last instruction to call <el-method>playersTurn</el-method> passing the same arguments as to
     <el-method>simonsTurn</el-method> above it. 
     <div class="hint" id="hint8c">Hint: The modified <el-kw>main</el-kw>.</div>
-    <div class="content" id="hint8bcontent">
+    <div class="content" id="hint8ccontent">
       <el-code-block>
         <main class="ok multiline" id="main1" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
           <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg><el-fr>1</el-fr></el-top>
