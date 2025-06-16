@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 const updateable = document.querySelectorAll("input, textarea, select");
-const hints = document.querySelectorAll("span.show");
+const hints = document.querySelectorAll("div.hint");
 const doneCheckboxes = document.querySelectorAll("input[type=checkbox].step");
 
 const autoSaveButton = document.getElementById("auto-save");
@@ -98,13 +98,15 @@ autoSaveButton!.addEventListener("click", async () => {
 
   fh = await chromeSave(code, "workSheet");
 
-  const le = Array.from(
-    document.querySelectorAll(
-      "#auto-save.saved + .step, #auto-save.saved ~ .step.complete, #auto-save.saved ~ .step.complete + input + .step",
-    ),
-  );
-  if (le.length > 0) {
-    le[le.length - 1].scrollIntoView(false);
+  const activeAndCompleteSteps = document.querySelectorAll("div.complete, div.active");
+  if (activeAndCompleteSteps.length === 0) {
+    const firstStep = document.querySelector("div.step");
+    firstStep?.classList.add("active");
+    firstStep?.scrollIntoView(false);
+  } else {
+    const arr = Array.from(activeAndCompleteSteps);
+    const lastElement = arr[arr.length - 1];
+    lastElement.scrollIntoView(false);
   }
 });
 
@@ -126,6 +128,14 @@ for (const e of updateable) {
 
     tgt.classList.add("answered");
 
+    if ((tgt as HTMLInputElement).type === "radio") {
+      const name = (tgt as any).name;
+      const allradio = document.querySelectorAll(`input[name=${name}]`);
+      for (const e of allradio) {
+        e.classList.add("answered");
+      }
+    }
+
     const changelist = document.getElementById("changes")!;
 
     const change = document.createElement("div");
@@ -142,35 +152,61 @@ for (const e of updateable) {
 
 for (const e of hints) {
   e.addEventListener("click", async (e) => {
-    const ke = e as any;
-    const span = ke.target as HTMLSpanElement;
-    const hint = span.parentElement as HTMLDivElement;
-    const id = span.id;
+    const hint = e.target as HTMLDivElement;
     const encryptedText = hint.dataset.hint || "";
     if (encryptedText !== "") {
-      hint.innerText = atob(encryptedText);
+      const content = document.getElementById(`${hint.id}content`);
+      if (content) {
+        content.innerHTML = atob(encryptedText);
+      }
     }
-    document.title = `${id} shown`;
-    hint.classList.add("taken");
+    hint.classList.add("hint-taken");
+    hint.append(getTimestamp());
+
     await save();
   });
 }
 
+function getTimestamp() {
+  const dt = new Date();
+  const sp = document.createElement("span");
+  sp.classList.add("timestamp");
+  sp.innerText = `${dt.toLocaleTimeString()} ${dt.toLocaleDateString()}`;
+  return sp;
+}
+
 for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
-  cb.addEventListener("click", async (_e) => {
+  cb.addEventListener("click", async (e) => {
     const id = cb.id.slice(4);
-    cb.disabled = true;
+
     const step = document.getElementById(`step${id}`);
     if (step) {
+      const allInputs = step.querySelectorAll("input, textarea, select") as NodeListOf<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >;
+      const answeredInputs = step.querySelectorAll(
+        "input.answered, textarea.answered, select.answered",
+      );
+
+      if (allInputs.length !== answeredInputs.length) {
+        e.preventDefault();
+        return;
+      }
+
+      cb.disabled = true;
+      step.classList.remove("active");
       step.classList.add("complete");
-      for (const inp of step.getElementsByTagName("input")) {
+      for (const inp of allInputs) {
         inp.disabled = true;
       }
+
+      const nextId = parseInt(id) + 1;
+      const nextStep = document.getElementById(`step${nextId}`);
+      if (nextStep) {
+        nextStep.classList.add("active");
+      }
     }
-    const dt = new Date();
-    const sp = document.createElement("span");
-    sp.classList.add("timestamp");
-    sp.innerText = `${dt.toLocaleTimeString()} ${dt.toLocaleDateString()}`;
-    cb.after(sp);
+
+    cb.after(getTimestamp());
   });
 }

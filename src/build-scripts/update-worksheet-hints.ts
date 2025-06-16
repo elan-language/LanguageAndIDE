@@ -25,21 +25,17 @@ export function updateHints(contents: string) {
   const hints = document.querySelectorAll("div.hint") as NodeListOf<HTMLDivElement>;
 
   for (const hint of hints) {
-    const spans = Array.from(document.querySelectorAll(`#${hint.id} > span`));
-    for (const s of spans) {
-      hint.removeChild(s);
+    const id = hint.id;
+    const content = document.getElementById(`${id}content`);
+
+    if (content) {
+      const contentAsString = content.innerHTML;
+
+      const encoded = btoa(contentAsString);
+
+      hint.setAttribute("data-hint", encoded);
+      content.innerHTML = "";
     }
-
-    const content = hint.innerHTML;
-    hint.innerHTML = "";
-
-    for (const s of spans) {
-      hint.appendChild(s);
-    }
-
-    const encoded = btoa(content);
-
-    hint.setAttribute("data-hint", encoded);
   }
 
   const newContents = jsdom.window.document.documentElement.outerHTML;
