@@ -4,6 +4,9 @@ const updateable = document.querySelectorAll("input, textarea, select");
 const hints = document.querySelectorAll("div.hint");
 const doneCheckboxes = document.querySelectorAll("input[type=checkbox].step");
 
+const hintsTotal = document.querySelectorAll("span.hints-total");
+const hintsTaken = document.querySelectorAll("span.hints-taken");
+
 const autoSaveButton = document.getElementById("auto-save");
 
 let fh: FileSystemFileHandle | undefined;
@@ -150,6 +153,13 @@ for (const e of updateable) {
   });
 }
 
+function updateHintsTaken() {
+  for (const ht of hintsTaken as NodeListOf<HTMLSpanElement>) {
+    const count = document.getElementsByClassName("hint-taken").length;
+    ht.innerText = `${count}`;
+  }
+}
+
 for (const e of hints) {
   e.addEventListener("click", async (e) => {
     const hint = e.target as HTMLDivElement;
@@ -162,6 +172,8 @@ for (const e of hints) {
     }
     hint.classList.add("hint-taken");
     hint.append(getTimestamp());
+
+    updateHintsTaken();
 
     await save();
   });
@@ -210,3 +222,10 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
     cb.after(getTimestamp());
   });
 }
+
+for (const ht of hintsTotal as NodeListOf<HTMLSpanElement>) {
+  const count = hints.length;
+  ht.innerText = `${count}`;
+}
+
+updateHintsTaken();
