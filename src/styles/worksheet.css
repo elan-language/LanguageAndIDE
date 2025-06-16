@@ -8,11 +8,12 @@
     }
 
 /* After saving ... */
-    #worksheet.saved auto-save,
-    #worksheet.saved auto-save + span
+    #worksheet.saved #auto-save,
+    #worksheet.saved #auto-save + span
     {
         display: none;
     }
+    
 
 /* Steps */
     /* Preliminaries only */
