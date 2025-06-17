@@ -154,17 +154,6 @@ for (const e of answers) {
     }
 
     clearTempMsgs();
-
-    const changelist = document.getElementById("changes")!;
-
-    const change = document.createElement("div");
-
-    const changeText = document.createTextNode(`${id}:${d}`);
-
-    change.appendChild(changeText);
-
-    changelist.appendChild(change);
-
     await save();
   });
 }
