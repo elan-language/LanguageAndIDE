@@ -112,10 +112,22 @@ function scrollToActiveElement() {
 
 autoSaveButton!.addEventListener("click", async () => {
   const code = getUpdatedDocument();
+  if (autoSaveButton?.classList.contains("test-only")) {
+    // fake out saving
+    document.getElementById("worksheet")?.classList.add("saved");
+  } else {
+    fh = await chromeSave(code, "workSheet");
+  }
 
-  fh = await chromeSave(code, "workSheet");
   scrollToActiveElement();
 });
+
+function clearTempMsgs() {
+  const allMsgs = document.querySelectorAll(`.temp-msg`);
+  for (const m of allMsgs) {
+    m.remove();
+  }
+}
 
 async function save() {
   if (fh) {
@@ -141,10 +153,7 @@ for (const e of answers) {
       }
     }
 
-    const allMsgs = document.querySelectorAll(`.temp-msg`);
-    for (const m of allMsgs) {
-      m.remove();
-    }
+    clearTempMsgs();
 
     const changelist = document.getElementById("changes")!;
 
@@ -167,9 +176,8 @@ function updateHintsTaken() {
   }
 }
 
-for (const e of hints) {
-  e.addEventListener("click", async (e) => {
-    const hint = e.target as HTMLDivElement;
+for (const hint of hints as NodeListOf<HTMLDivElement>) {
+  hint.addEventListener("click", async (_e) => {
     if (!hint.classList.contains("taken")) {
       const encryptedText = hint.dataset.hint || "";
       if (encryptedText !== "") {
@@ -196,6 +204,7 @@ function getTimestamp() {
 
 for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
   cb.addEventListener("click", async (e) => {
+    clearTempMsgs();
     const step = cb.parentElement;
     const id = cb.id.slice(4);
     if (step) {
