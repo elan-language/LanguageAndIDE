@@ -1,85 +1,81 @@
-/* Initially, all steps hidden - just title & auto-save visible */
-    .step, 
-    .step *,
-    .step + input {
-        visibility: hidden;
+/* Initially, everything hidden except the Save button and message */
+
+    .docTitle *,
+    #auto-save
+    {
+        display: block;
+    }
+    #auto-save + span
+    {
+        display: inline;
     }
 
 /* After saving ... */
-    #auto-save.saved {
+    #worksheet.saved #auto-save,
+    #worksheet.saved #auto-save + span
+    {
         display: none;
     }
-    /* ... show first step & its checkbox */
-    #auto-save.saved + .step, 
-    #auto-save.saved + .step *,
-    #auto-save.saved + .step +  input {
-        visibility: visible;
+
+
+/* Steps */
+    /* step0 (preliminaries) only */
+    #worksheet.saved #step0.complete * {
+        display: none;
+    }
+    #worksheet.saved #step0.complete #username{
+        display: block;
     }
 
-/* When a step is complete, show the next one  through to its input...*/
-    #auto-save.saved ~ .step.complete, 
-    #auto-save.saved ~ .step.complete *,
-    #auto-save.saved ~ .step.complete + input,
-    #auto-save.saved ~ .step.complete + input + .timestamp + .step,
-    #auto-save.saved ~ .step.complete + input + .timestamp + .step *,
-    #auto-save.saved ~ .step.complete + input + .timestamp + .step + input
-    {
-        visibility: visible;
+    /* By default, invisible */
+    .step {
+        display: none;
     }
-    /* ...and hide the completion label */
+    /* Show complete & active steps, when worksheet is saved */
+    #worksheet.saved .step.complete,
+    #worksheet.saved .step.active {
+        display: block;
+    }
+    /* When step is complete hide the completion label */
     .step.complete label.done {
         display: none;
     }
 
 /* Hints */
     /* Hide hints by default */
-    .hint, .hint *
+    .hint, .content
     {
         display: none;
     }
 
-    /* After saving, first hint of 1st step, or first hint of step after completed step will be shown, including label */
-     #auto-save.saved + .step .hint:first-child,
-     #auto-save.saved ~ .step.complete + input + .timestamp + .step .hint:first-child {
+    /* First hint of active step will be shown */
+    #worksheet.saved .step.active .hint:first-of-type
+    {
         display: block;
-        visibility: visible;
-     }
-     #auto-save.saved + .step .hint:first-child span.show,
-     #auto-save.saved ~ .step.complete + input + .timestamp + .step .hint:first-child span.show {
-        display: inline;
-        visibility: visible;
-     }
-
-    /* By default hide any follow-on hints until a hint is taken - to enforce progression */
-    .hint + hint {
-        display: none;
-    }
-    #auto-save.saved ~ .step.complete + input + .timestamp + .step .hint * {
-        display: none;
     }
 
     /* When a hint is taken...*/
-        /* Display all its contents */
-        .hint.taken *
-        {
-            display: block;
-            visibility: visible;
-        }
-        /* Display the NEXT Hint ... */
-        .hint.taken +.hint
-         {
-            display: block;
-            visibility: visible;
-        }
-        /* ... and its label */
-        .hint.taken + .hint + span.show
-        {
-            display: inline;
-            visibility: visible;
-        }
-
+    /* Display the contents */
+    .hint.taken,
+    .hint.taken + .content
+    {
+        display: block;
+    }
+    /* ...and display the NEXT Hint */
+    .hint.taken + .content + .hint
+    {
+        display: block;
+    }
 
 /*Styling only */
+.hint {
+    font-size: 10pt;
+    font-weight: bold;
+    margin-top: 10pt;
+    margin-bottom: 4pt;
+    color: rgb(15, 71, 97);
+}
+
 .done {
     color: rgb(15, 71, 97);
     font-weight: bold;
@@ -93,4 +89,14 @@
 .license, .license img {
     font-size: 8pt;
     margin-top: 1em;
+}
+
+.step textarea {
+    width: 100%;
+}
+
+input[type="text"]
+{
+    border: 1px;
+    border-style: solid;
 }

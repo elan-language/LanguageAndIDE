@@ -1,5 +1,5 @@
 import assert from "assert";
-import { updateHints } from "../src/build-scripts/update-worksheet-hints";
+import { updateHints } from "../src/build-scripts/update-worksheets";
 
 suite("Build", () => {
   test("Pass", async () => {
@@ -12,15 +12,11 @@ suite("Build", () => {
 
 <body>
 
-<div class="hint" id="hint3a" data-hint="">
-  <span class="show">Hint 1</span><span class="taken"> - USED</span>
-  <!-- content of hint goes here-->
-</div>
+<div class="hint" id="hint3a" data-hint="">Hint3</div>
+<div class="content" id="hint3acontent"><el-code>something</el-code></div>
 
-<div class="hint" id="hint4a" data-hint="">
-  <span class="show">Hint 2</span><span class="taken"> - USED</span>
-  <!-- content of hint goes here-->
-</div>
+<div class="hint" id="hint4a" data-hint="">Hint4</div>
+<div class="content" id="hint4acontent"><el-code>something else</el-code></div>
 
 </body>
 </html>`;
@@ -34,9 +30,11 @@ suite("Build", () => {
 
 <body>
 
-<div class="hint" id="hint3a" data-hint="CiAgCiAgPCEtLSBjb250ZW50IG9mIGhpbnQgZ29lcyBoZXJlLS0+Cg=="><span class="show">Hint 1</span><span class="taken"> - USED</span></div>
+<div class="hint" id="hint3a" data-hint="PGVsLWNvZGU+c29tZXRoaW5nPC9lbC1jb2RlPg==">Hint3</div>
+<div class="content" id="hint3acontent"></div>
 
-<div class="hint" id="hint4a" data-hint="CiAgCiAgPCEtLSBjb250ZW50IG9mIGhpbnQgZ29lcyBoZXJlLS0+Cg=="><span class="show">Hint 2</span><span class="taken"> - USED</span></div>
+<div class="hint" id="hint4a" data-hint="PGVsLWNvZGU+c29tZXRoaW5nIGVsc2U8L2VsLWNvZGU+">Hint4</div>
+<div class="content" id="hint4acontent"></div>
 
 
 </body></html>`;

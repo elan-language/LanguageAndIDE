@@ -1,5 +1,6 @@
 import { JSDOM } from "jsdom";
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { isElanProduction } from "../environment";
 
 const rootdir = `${__dirname}/../../..`;
 
@@ -9,7 +10,7 @@ function loadFile(fileName: string): string {
   return readFileSync(fileName, "utf-8");
 }
 
-function updateFile(fileName: string, newContent: string) {
+function saveFile(fileName: string, newContent: string) {
   writeFileSync(fileName, newContent);
 }
 
@@ -25,21 +26,17 @@ export function updateHints(contents: string) {
   const hints = document.querySelectorAll("div.hint") as NodeListOf<HTMLDivElement>;
 
   for (const hint of hints) {
-    const spans = Array.from(document.querySelectorAll(`#${hint.id} > span`));
-    for (const s of spans) {
-      hint.removeChild(s);
+    const id = hint.id;
+    const content = document.getElementById(`${id}content`);
+
+    if (content) {
+      const contentAsString = content.innerHTML;
+
+      const encoded = btoa(contentAsString);
+
+      hint.setAttribute("data-hint", encoded);
+      content.innerHTML = "";
     }
-
-    const content = hint.innerHTML;
-    hint.innerHTML = "";
-
-    for (const s of spans) {
-      hint.appendChild(s);
-    }
-
-    const encoded = btoa(content);
-
-    hint.setAttribute("data-hint", encoded);
   }
 
   const newContents = jsdom.window.document.documentElement.outerHTML;
@@ -49,14 +46,23 @@ export function updateHints(contents: string) {
 ${newContents}`;
 }
 
-function updateHintsFile(fileName: string) {
+function updatePaths(contents: string) {
+  const repoUrl = `../../../out/website/`;
+  const prodUrl = `https://elan-lang.org/`;
+  const devUrl = `https://elan-language.github.io/LanguageAndIDE/`;
+  const from = repoUrl;
+  const to = isElanProduction ? prodUrl : devUrl;
+  const newContents = contents.replaceAll(from, to);
+  return newContents;
+}
+
+function updateFile(fileName: string) {
   const contents = loadFile(fileName);
-
-  const newContents = updateHints(contents);
-
-  updateFile(fileName, newContents);
+  let newContents = updateHints(contents);
+  newContents = updatePaths(newContents);
+  saveFile(fileName, newContents);
 }
 
 for (const fn of getWorksheets(worksheets)) {
-  updateHintsFile(`${worksheets}${fn}`);
+  updateFile(`${worksheets}${fn}`);
 }

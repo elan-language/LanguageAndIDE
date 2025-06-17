@@ -1,12 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-const updateable = document.querySelectorAll("input, textarea, select");
-const hints = document.querySelectorAll("span.show");
-const doneCheckboxes = document.querySelectorAll("input[type=checkbox].step");
+const answersSelector = "input:not(.step-complete), textarea, select";
+const answers = document.querySelectorAll(answersSelector);
+const hints = document.querySelectorAll("div.hint");
+const doneCheckboxes = document.querySelectorAll("div.step > input.step-complete");
+
+const hintsTotal = document.querySelectorAll("span.hints-total");
+const hintsTaken = document.querySelectorAll("span.hints-taken");
 
 const autoSaveButton = document.getElementById("auto-save");
 
 let fh: FileSystemFileHandle | undefined;
+
+if (fh) {
+  document.getElementById("worksheet")?.classList.add("saved");
+} else {
+  document.getElementById("worksheet")?.classList.remove("saved");
+}
+
+async function write(code: string, fh: FileSystemFileHandle) {
+  const writeable = await fh.createWritable();
+  await writeable.write(code);
+  await writeable.close();
+  document.getElementById("worksheet")?.classList.add("saved");
+}
 
 async function chromeSave(code: string, newName: string) {
   try {
@@ -16,11 +33,7 @@ async function chromeSave(code: string, newName: string) {
       types: [{ accept: { "text/html": ".html" } }],
       id: "",
     });
-
-    const writeable = await fh.createWritable();
-    await writeable.write(code);
-    await writeable.close();
-    autoSaveButton?.classList.add("saved");
+    await write(code, fh);
     return fh;
   } catch {
     // cancelled
@@ -28,7 +41,7 @@ async function chromeSave(code: string, newName: string) {
   }
 }
 
-function updateDocument() {
+function getUpdatedDocument() {
   let code = new XMLSerializer().serializeToString(document);
 
   for (const e of document.querySelectorAll("input[type=text]") as NodeListOf<HTMLInputElement>) {
@@ -81,43 +94,49 @@ function updateDocument() {
     code = code.replace(re, `option selected>${v}`);
   }
 
-  const toReplace = `<button.*id="auto-save".*>Auto-save file locally to continue</button>`;
-  const re = new RegExp(toReplace);
-  code = code.replace(re, '<button id="auto-save">Auto-save file locally to continue</button>');
-
   return code;
 }
 
-async function getUpdatedDocument() {
-  const code = updateDocument();
-  return code;
+function scrollToActiveElement() {
+  const activeAndCompleteSteps = document.querySelectorAll("div.complete, div.active");
+  if (activeAndCompleteSteps.length === 0) {
+    const firstStep = document.querySelector("div.step");
+    firstStep?.classList.add("active");
+    firstStep?.scrollIntoView(false);
+  } else {
+    const arr = Array.from(activeAndCompleteSteps);
+    const lastElement = arr[arr.length - 1];
+    lastElement.scrollIntoView(false);
+  }
 }
 
 autoSaveButton!.addEventListener("click", async () => {
-  const code = await getUpdatedDocument();
-
-  fh = await chromeSave(code, "workSheet");
-
-  const le = Array.from(
-    document.querySelectorAll(
-      "#auto-save.saved + .step, #auto-save.saved ~ .step.complete, #auto-save.saved ~ .step.complete + input + .step",
-    ),
-  );
-  if (le.length > 0) {
-    le[le.length - 1].scrollIntoView(false);
+  const code = getUpdatedDocument();
+  if (autoSaveButton?.classList.contains("test-only")) {
+    // fake out saving
+    document.getElementById("worksheet")?.classList.add("saved");
+  } else {
+    fh = await chromeSave(code, "workSheet");
   }
+
+  scrollToActiveElement();
 });
 
-async function save() {
-  if (fh) {
-    const code = await getUpdatedDocument();
-    const writeable = await fh.createWritable();
-    await writeable.write(code);
-    await writeable.close();
+function clearTempMsgs() {
+  const allMsgs = document.querySelectorAll(`.temp-msg`);
+  for (const m of allMsgs) {
+    m.remove();
   }
 }
 
-for (const e of updateable) {
+async function save() {
+  if (fh) {
+    const code = getUpdatedDocument();
+    await write(code, fh);
+  }
+}
+
+for (const e of answers) {
   e.addEventListener("input", async (e) => {
     const ie = e as InputEvent;
     const tgt = ie.target as Element;
@@ -125,6 +144,16 @@ for (const e of updateable) {
     const d = ie.data ?? "todo";
 
     tgt.classList.add("answered");
+
+    if ((tgt as HTMLInputElement).type === "radio") {
+      const name = (tgt as any).name;
+      const allradio = document.querySelectorAll(`input[name=${name}]`);
+      for (const e of allradio) {
+        e.classList.add("answered");
+      }
+    }
+
+    clearTempMsgs();
 
     const changelist = document.getElementById("changes")!;
 
@@ -140,37 +169,90 @@ for (const e of updateable) {
   });
 }
 
-for (const e of hints) {
-  e.addEventListener("click", async (e) => {
-    const ke = e as any;
-    const span = ke.target as HTMLSpanElement;
-    const hint = span.parentElement as HTMLDivElement;
-    const id = span.id;
-    const encryptedText = hint.dataset.hint || "";
-    if (encryptedText !== "") {
-      hint.innerText = atob(encryptedText);
+function updateHintsTaken() {
+  for (const ht of hintsTaken as NodeListOf<HTMLSpanElement>) {
+    const count = document.getElementsByClassName("taken").length;
+    ht.innerText = `${count}`;
+  }
+}
+
+for (const hint of hints as NodeListOf<HTMLDivElement>) {
+  hint.addEventListener("click", async (_e) => {
+    if (!hint.classList.contains("taken")) {
+      const encryptedText = hint.dataset.hint || "";
+      if (encryptedText !== "") {
+        const content = document.getElementById(`${hint.id}content`);
+        if (content) {
+          content.innerHTML = atob(encryptedText);
+        }
+      }
+      hint.classList.add("taken");
+      hint.append(getTimestamp());
+      updateHintsTaken();
+      await save();
     }
-    document.title = `${id} shown`;
-    hint.classList.add("taken");
+  });
+}
+
+function getTimestamp() {
+  const dt = new Date();
+  const sp = document.createElement("span");
+  sp.classList.add("timestamp");
+  sp.innerText = `${dt.toLocaleTimeString()} ${dt.toLocaleDateString()}`;
+  return sp;
+}
+
+for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
+  cb.addEventListener("click", async (e) => {
+    clearTempMsgs();
+    const step = cb.parentElement;
+    const id = cb.id.slice(4);
+    if (step) {
+      const allInputs = step.querySelectorAll(answersSelector) as NodeListOf<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >;
+
+      const answeredInputs = step.querySelectorAll(
+        "input.answered, textarea.answered, select.answered",
+      );
+      if (allInputs.length !== answeredInputs.length) {
+        const msg = document.createElement("div");
+        msg.classList.add("temp-msg");
+        msg.innerText = "All required inputs must be completed to continue";
+        cb.after(msg);
+        e.preventDefault();
+        return;
+      }
+
+      cb.disabled = true;
+      cb.setAttribute("checked", "true");
+      step.classList.remove("active");
+      step.classList.add("complete");
+      for (const inp of allInputs) {
+        inp.disabled = true;
+      }
+
+      const nextId = parseInt(id!) + 1;
+      const nextStep = document.getElementById(`step${nextId}`);
+      if (nextStep) {
+        nextStep.classList.add("active");
+      }
+    }
+
+    cb.after(getTimestamp());
     await save();
   });
 }
 
-for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
-  cb.addEventListener("click", async (_e) => {
-    const id = cb.id.slice(4);
-    cb.disabled = true;
-    const step = document.getElementById(`step${id}`);
-    if (step) {
-      step.classList.add("complete");
-      for (const inp of step.getElementsByTagName("input")) {
-        inp.disabled = true;
-      }
-    }
-    const dt = new Date();
-    const sp = document.createElement("span");
-    sp.classList.add("timestamp");
-    sp.innerText = `${dt.toLocaleTimeString()} ${dt.toLocaleDateString()}`;
-    cb.after(sp);
-  });
+for (const ht of hintsTotal as NodeListOf<HTMLSpanElement>) {
+  const count = hints.length;
+  ht.innerText = `${count}`;
 }
+
+updateHintsTaken();
+
+window.addEventListener("message", (m) => {
+  if (m.data === "hasFocus") {
+    scrollToActiveElement();
+  }
+});

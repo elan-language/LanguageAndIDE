@@ -26,7 +26,7 @@ import { TupleNode } from "./tuple-node";
 export class ExprNode extends AbstractAlternatives {
   constructor() {
     super();
-    this.completionWhenEmpty = "<i>expression</i>";
+    this.completionWhenEmpty = "<i>value or expression</i>";
   }
 
   parseText(text: string): void {

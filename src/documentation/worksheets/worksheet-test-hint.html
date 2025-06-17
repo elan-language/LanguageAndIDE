@@ -4,10 +4,10 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
-<link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
-<link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
-<link href="http://127.0.0.1:5500/src/styles/worksheet.css" rel="stylesheet" />
+<link href="../../../out/website/styles/colourScheme.css" rel="stylesheet" />
+<link href="../../../out/website/styles/elanStyle.css" rel="stylesheet" />
+<link href="../../../out/website/styles/documentation.css" rel="stylesheet" />
+<link href="../../../out/website/styles/worksheet.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -15,27 +15,33 @@
 
 <button id="auto-save">Auto-save file locally to continue</button>
 
-<div class="step" id="step1">
-  <h3>Step 1</h3>
-  <div class="hint" id="hint0" data-hint="">
-    <span class="show">Hint 2</span>
+<p>Hints taken : <span class="hints-taken"></span>/<span class="hints-total"></span></p>
 
-    <el-code-block>
-      <main class="ok multiline" >
-      <el-top><el-kw>constant</el-kw></el-top>
-      </main>
-    </el-code-block>
-  </div>
-  <label class="done" for="done1">Step completed</label>
+<div class="step" id="step0">
+  <label for="username">Enter your name: </label>
+  <input type="text" id="username" />
+  <h3>Preliminaries</h3>
+  <ul>
+    <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
+    <li>Select <b>File > New</b> to start a new program, 
+      then select <b>File > Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
+      Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b>) to undo recent changes.</li>
+    <li>Remember that if the code editor has a tinted background it does not have focus and will not respond
+        to edits. To give it focus click within the editor, or <b>Tab</b> to it. (If a program is running, you will need to stop it first.)
+    </li>
+    <li>Use the auto-completion options as much as possible, because as well as saving effort this reduces errors.</li>
+    <li>Use the <i>Hints</i> only when you <i>need</i> them - as all use of hints is recorded. Use of <b>Help</b> is encouraged and not recorded.</li>
+  </ul>
+  <label class="done" for="done0">Preliminaries completed</label>
+  <input type="checkbox" class="step-complete" id="done0" />
+<span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
-<input type="checkbox" class="step" id="done1" />
 
 <div class="step" id="step2">
   <h3>Step 2</h3>
 
-  <div class="hint" id="hint1" data-hint="">
-    <span class="show">Hint 1</span>
-
+  <div class="hint" id="hint1" data-hint="">Hint1</div>
+  <div class="content" id="hint1content">
     <el-code-block>
       <main class="ok multiline" >
       <el-top><el-kw>main</el-kw></el-top>
@@ -44,21 +50,20 @@
       </main>
     </el-code-block>
   </div>
-
-  <div class="hint" id="hint2" data-hint="">
-    <span class="show">Hint 2</span>
-
-    <el-code-block>
-      <main class="ok multiline" >
-      <el-top><el-kw>procedure</el-kw></el-top>
-      <el-kw>end procedure</el-kw>
-      </main>
-    </el-code-block>
   </div>
 
-  <div class="hint" id="hint3" data-hint="">
-    <span class="show">Hint 3</span>
+  <div class="hint" id="hint2" data-hint="">Hint2</div>
+  <div class="content" id="hint2content">
+    <el-code-block>
+      <main class="ok multiline">
+        <el-top><el-kw>procedure</el-kw></el-top>
+        <el-kw>end procedure</el-kw>
+      </main>
+    </el-code-block></div>
 
+
+  <div class="hint" id="hint3" data-hint="">Hint3</div>
+  <div class="content" id="hint3content">
     <el-code-block>
       <main class="ok multiline" >
       <el-top><el-kw>function</el-kw></el-top>
@@ -67,14 +72,19 @@
     </el-code-block>
   </div>
 
+  <div class="hint" id="hint3a" data-hint="PGVsLWNvZGU+c29tZXRoaW5nPC9lbC1jb2RlPg==">Hint3</div>
+  <div class="content" id="hint3acontent"></div>
+
   <label class="done" for="done2">Step completed</label>
+  <input type="checkbox" class="step-complete" id="done12 />
+<span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
-<input type="checkbox" class="step" id="done12 />
+
 
 
 <div hidden="" id="hash"></div>
 <div hidden="" id="changes"></div>
 
-<script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
+<script src="../../../out/website/worksheet-scripts.js"></script>
 </body>
 </html>

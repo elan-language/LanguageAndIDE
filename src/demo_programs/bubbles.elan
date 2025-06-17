@@ -1,4 +1,4 @@
-# 9afe14ade24aed81bbc62c0149b39e93dcaf00c7933cfb60981971a1b008f803 Elan 1.2.0 guest default_profile valid
+# 57d472f0d5f81deeefc59892f0c5e76749801efd06aec9c174ef4f551f27eb52 Elan 1.2.1 guest default_profile valid
 
 main
   let bubbles be new List<of CircleVG>()
@@ -7,20 +7,23 @@ main
     let b be new CircleVG() with centreX set to i*5 + 2, centreY set to 75, radius set to 1, fillColour set to transparent, strokeColour set to randomInt(0, white)
     call bubbles.append(b)
   end for
-  # move, grow, and burst bubbles, continuously
   while true
-    each b in bubbles
-      if random() < 0.05 then
-        # 1/20 chance bubble 'bursts', and is replaced by new one at the bottom
-        call b.setCentreY(75)
-        call b.setRadius(1)
-      else
-        # bubble rises and grows slightly
-        call b.setCentreY(b.centreY - 1)
-        call b.setRadius(b.radius + 0.2)
-      end if
-    end each
-    call displayVectorGraphics(bubbles)
-    call pause(50)
+    call moveGrowBurst(bubbles)
   end while
 end main
+
+procedure moveGrowBurst(bubbles as List<of CircleVG>)
+  each b in bubbles
+    if random() < 0.05 then
+      # 1/20 chance bubble 'bursts', and is replaced by new one at the bottom
+      call b.setCentreY(75)
+      call b.setRadius(1)
+    else
+      # bubble rises and grows slightly
+      call b.setCentreY(b.centreY - 1)
+      call b.setRadius(b.radius + 0.2)
+    end if
+  end each
+  call displayVectorGraphics(bubbles)
+  call pause(50)
+end procedure

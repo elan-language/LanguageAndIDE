@@ -394,7 +394,8 @@ function showWorksheetTab() {
   documentationTab.classList.add("hide");
   worksheetTab.classList.remove("hide");
   debugTab.classList.add("hide");
-  documentationIFrame.focus();
+  worksheetIFrame.focus();
+  worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
 }
 
 function showDebugTab() {
@@ -1583,6 +1584,7 @@ function clearPaused() {
 function handleRunWorkerFinished() {
   runWorker?.terminate();
   runWorker = undefined;
+  elanInputOutput.finished();
   console.info("elan program completed OK");
   file.setRunStatus(RunStatus.default);
   clearPaused();
@@ -1619,6 +1621,7 @@ async function handleRunWorkerError(data: WebWorkerStatusMessage) {
   debugButton.click();
   runWorker?.terminate();
   runWorker = undefined;
+  elanInputOutput.finished();
   const e = data.error;
   const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
   await showError(err, file.fileName, false);
@@ -1966,4 +1969,18 @@ async function runTestsInner() {
     file.setTestStatus(TestStatus.error);
     updateDisplayValues();
   }
+}
+
+if (!isElanProduction) {
+  // <div class="menu-item help-file"><a href="documentation/worksheets/whack-a-mole.html" target="worksheet-iframe"  tabindex="3">Whack-a-mole</a></div>
+  const testWs = document.createElement("div");
+  testWs.classList.add("menu-item", "help-file");
+  const testLink = document.createElement("a");
+  testLink.href = "documentation/worksheets/worksheet-test-only.html";
+  testLink.target = "worksheet-iframe";
+  testLink.tabIndex = 3;
+  testLink.innerText = "Test Worksheet";
+  testWs.append(testLink);
+
+  document.querySelector("#worksheet-tab .dropdown-content")?.append(testWs);
 }
