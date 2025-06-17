@@ -37,12 +37,17 @@ suite("Parsing - Completions", () => {
 
   test("ExprNode2", () => {
     testCompletion(new ExprNode(), "a + b", ParseStatus.valid, "");
-    testCompletion(new ExprNode(), "a +", ParseStatus.incomplete, "<i>expression</i>");
-    testCompletion(new ExprNode(), "a + ", ParseStatus.incomplete, "<i>expression</i>");
+    testCompletion(new ExprNode(), "a +", ParseStatus.incomplete, "<i>value or expression</i>");
+    testCompletion(new ExprNode(), "a + ", ParseStatus.incomplete, "<i>value or expression</i>");
     //testCompletion(new ExprNode2(), "(", ParseStatus.incomplete, "<i>expression</i>)");
-    testCompletion(new ExprNode(), "(a +", ParseStatus.incomplete, "<i>expression</i>)");
+    testCompletion(new ExprNode(), "(a +", ParseStatus.incomplete, "<i>value or expression</i>)");
     testCompletion(new ExprNode(), "(a + b", ParseStatus.incomplete, ")");
-    testCompletion(new ExprNode(), "(a + b)*", ParseStatus.incomplete, "<i>expression</i>");
+    testCompletion(
+      new ExprNode(),
+      "(a + b)*",
+      ParseStatus.incomplete,
+      "<i>value or expression</i>",
+    );
   });
 
   test("CSV of Identifier", () => {
@@ -79,9 +84,24 @@ suite("Parsing - Completions", () => {
   });
 
   test("BinaryExpression", () => {
-    testCompletion(new BinaryExpression(), "a + ", ParseStatus.incomplete, "<i>expression</i>");
-    testCompletion(new BinaryExpression(), "a +", ParseStatus.incomplete, "<i>expression</i>");
-    testCompletion(new BinaryExpression(), "a+ ", ParseStatus.incomplete, "<i>expression</i>");
+    testCompletion(
+      new BinaryExpression(),
+      "a + ",
+      ParseStatus.incomplete,
+      "<i>value or expression</i>",
+    );
+    testCompletion(
+      new BinaryExpression(),
+      "a +",
+      ParseStatus.incomplete,
+      "<i>value or expression</i>",
+    );
+    testCompletion(
+      new BinaryExpression(),
+      "a+ ",
+      ParseStatus.incomplete,
+      "<i>value or expression</i>",
+    );
   });
 
   test("NewInstance", () => {
@@ -131,34 +151,39 @@ suite("Parsing - Completions", () => {
       new Lambda(),
       "lambda ",
       ParseStatus.incomplete,
-      "<i>name</i> as <i>Type</i>, ...=> <i>expression</i>",
+      "<i>name</i> as <i>Type</i>, ...=> <i>value or expression</i>",
     );
     testCompletion(
       new Lambda(),
       "lambda x as Int ",
       ParseStatus.incomplete,
-      "=> <i>expression</i>",
+      "=> <i>value or expression</i>",
     );
     testCompletion(
       new Lambda(),
       "lambda x as Int,",
       ParseStatus.incomplete,
-      "<i>name</i> as <i>Type</i> => <i>expression</i>",
+      "<i>name</i> as <i>Type</i> => <i>value or expression</i>",
     );
     testCompletion(
       new Lambda(),
       "lambda x as Int =",
       ParseStatus.incomplete,
-      "> <i>expression</i>",
+      "> <i>value or expression</i>",
     );
-    testCompletion(new Lambda(), "lambda => ", ParseStatus.incomplete, "<i>expression</i>");
+    testCompletion(
+      new Lambda(),
+      "lambda => ",
+      ParseStatus.incomplete,
+      "<i>value or expression</i>",
+    );
   });
   test("#884", () => {
     testCompletion(
       new ExprNode(),
       "3 +  ", //extra space
       ParseStatus.incomplete,
-      "<i>expression</i>",
+      "<i>value or expression</i>",
     );
   });
 });
