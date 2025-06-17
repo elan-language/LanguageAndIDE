@@ -205,7 +205,7 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
       const answeredInputs = step.querySelectorAll(
         "input.answered, textarea.answered, select.answered",
       );
-      if (allInputs.length !== answeredInputs.length + 1) {
+      if (allInputs.length !== answeredInputs.length) {
         const msg = document.createElement("div");
         msg.classList.add("temp-msg");
         msg.innerText = "All required inputs must be completed to continue";
