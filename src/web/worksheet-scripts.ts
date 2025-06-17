@@ -97,11 +97,7 @@ function getUpdatedDocument() {
   return code;
 }
 
-autoSaveButton!.addEventListener("click", async () => {
-  const code = getUpdatedDocument();
-
-  fh = await chromeSave(code, "workSheet");
-
+function scrollToActiveElement() {
   const activeAndCompleteSteps = document.querySelectorAll("div.complete, div.active");
   if (activeAndCompleteSteps.length === 0) {
     const firstStep = document.querySelector("div.step");
@@ -112,6 +108,13 @@ autoSaveButton!.addEventListener("click", async () => {
     const lastElement = arr[arr.length - 1];
     lastElement.scrollIntoView(false);
   }
+}
+
+autoSaveButton!.addEventListener("click", async () => {
+  const code = getUpdatedDocument();
+
+  fh = await chromeSave(code, "workSheet");
+  scrollToActiveElement();
 });
 
 async function save() {
@@ -238,3 +241,9 @@ for (const ht of hintsTotal as NodeListOf<HTMLSpanElement>) {
 }
 
 updateHintsTaken();
+
+window.addEventListener("message", (m) => {
+  if (m.data === "hasFocus") {
+    scrollToActiveElement();
+  }
+});
