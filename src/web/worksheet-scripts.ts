@@ -12,6 +12,19 @@ const autoSaveButton = document.getElementById("auto-save");
 
 let fh: FileSystemFileHandle | undefined;
 
+if (fh) {
+  document.getElementById("worksheet")?.classList.add("saved");
+} else {
+  document.getElementById("worksheet")?.classList.remove("saved");
+}
+
+async function write(code: string, fh: FileSystemFileHandle) {
+  const writeable = await fh.createWritable();
+  await writeable.write(code);
+  await writeable.close();
+  document.getElementById("worksheet")?.classList.add("saved");
+}
+
 async function chromeSave(code: string, newName: string) {
   try {
     const fh = await showSaveFilePicker({
@@ -20,11 +33,7 @@ async function chromeSave(code: string, newName: string) {
       types: [{ accept: { "text/html": ".html" } }],
       id: "",
     });
-
-    const writeable = await fh.createWritable();
-    await writeable.write(code);
-    await writeable.close();
-    document.getElementById("worksheet")?.classList.add("saved");
+    await write(code, fh);
     return fh;
   } catch {
     // cancelled
@@ -32,7 +41,7 @@ async function chromeSave(code: string, newName: string) {
   }
 }
 
-function updateDocument() {
+function getUpdatedDocument() {
   let code = new XMLSerializer().serializeToString(document);
 
   for (const e of document.querySelectorAll("input[type=text]") as NodeListOf<HTMLInputElement>) {
@@ -85,23 +94,10 @@ function updateDocument() {
     code = code.replace(re, `option selected>${v}`);
   }
 
-  const toReplace = `<button.*id="auto-save".*>Auto-save file locally to continue</button>`;
-  const re = new RegExp(toReplace);
-  code = code.replace(re, '<button id="auto-save">Auto-save file locally to continue</button>');
-
   return code;
 }
 
-async function getUpdatedDocument() {
-  const code = updateDocument();
-  return code;
-}
-
-autoSaveButton!.addEventListener("click", async () => {
-  const code = await getUpdatedDocument();
-
-  fh = await chromeSave(code, "workSheet");
-
+function scrollToActiveElement() {
   const activeAndCompleteSteps = document.querySelectorAll("div.complete, div.active");
   if (activeAndCompleteSteps.length === 0) {
     const firstStep = document.querySelector("div.step");
@@ -112,14 +108,19 @@ autoSaveButton!.addEventListener("click", async () => {
     const lastElement = arr[arr.length - 1];
     lastElement.scrollIntoView(false);
   }
+}
+
+autoSaveButton!.addEventListener("click", async () => {
+  const code = getUpdatedDocument();
+
+  fh = await chromeSave(code, "workSheet");
+  scrollToActiveElement();
 });
 
 async function save() {
   if (fh) {
-    const code = await getUpdatedDocument();
-    const writeable = await fh.createWritable();
-    await writeable.write(code);
-    await writeable.close();
+    const code = getUpdatedDocument();
+    await write(code, fh);
   }
 }
 
@@ -215,6 +216,7 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
       }
 
       cb.disabled = true;
+      cb.setAttribute("checked", "true");
       step.classList.remove("active");
       step.classList.add("complete");
       for (const inp of allInputs) {
@@ -229,6 +231,7 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
     }
 
     cb.after(getTimestamp());
+    await save();
   });
 }
 
@@ -238,3 +241,9 @@ for (const ht of hintsTotal as NodeListOf<HTMLSpanElement>) {
 }
 
 updateHintsTaken();
+
+window.addEventListener("message", (m) => {
+  if (m.data === "hasFocus") {
+    scrollToActiveElement();
+  }
+});
