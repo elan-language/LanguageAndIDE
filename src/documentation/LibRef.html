@@ -1836,7 +1836,7 @@ who showed us this feature in confidence before its release, but nonetheless gen
 </el-code-block>
 
 <p>The <el-kw>with</el-kw> clause also permits you to specify a title for the image, which shows up as a tooltip on the image. It is good practice to do this for meeting accessibility guidelines.The <el-kw>with</el-kw> clause
-also offers position properties <el-code><el-id>x</el-id></el-code> and <el-code><el-id>y</el-id></el-code>. These are ignored when <i>printing</i> an image, but are useful in the context of drawing <a href="#VectorGraphics">Vector Graphics</a>.</p>
+also offers position properties <el-code><el-id>x</el-id></el-code> and <el-code><el-id>y</el-id></el-code>. These are ignored when <i>printing</i> an image, but are required in the context of drawing <a href="#VectorGraphics">Vector Graphics</a>.</p>
 
 <p>An image specified in this way may also be assigned to a named value, or defined inline as an argument to a method, for example:</p>
 
@@ -1851,7 +1851,7 @@ this Type is compatible with <a href="#VectorGraphics">vector graphics</a>, so a
 <el-statement class="ok" id="call5" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-method>displayVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args7" class="selected focused optional ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="1" data-cursorend="1" size="89" style="width: 90ch" value="[image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg]"></el-txt><el-place><i>listOfVGs</i></el-place></el-field>)</el-top></el-statement>
 </el-code-block>
 
-<p>In this usage the position may be controlled by specifying the <el-code><el-id>x</el-id></el-code> and <el-code><el-id>y</el-id></el-code> coordinates for the top-left corner.</p>
+<p>In this usage the position may be controlled by specifying the <el-code><el-id>x</el-id></el-code> and <el-code><el-id>y</el-id></el-code> coordinates for the top left corner.</p>
 
 <p>It is also possible to instantiate an <el-type>ImageVG</el-type> explicitly, but in this case you must provide
 the URL as a <el-type>String</el-type>, either as a literal (by surrounding it with quotes) or as a named value, for example:</p>
@@ -1867,16 +1867,7 @@ the URL as a <el-type>String</el-type>, either as a literal (by surrounding it w
           <el-statement class="ok" id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>url</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>"<el-lit>https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
         <el-statement class="ok" id="let11" tabindex="0"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>(<el-id>url</el-id>)<el-kw> with </el-kw><br><el-id>alt</el-id><el-kw> set to </el-kw>"<el-lit>shark</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
-<p>The properties are:</p>
-<table class="tableMethod">
-    <tr><th>Property</th><th>Type</th><th>Description</th></tr>
-    <tr><td><el-code><el-id>alt</el-id></el-code></td><td><el-type>String</el-type></td><td>Alternate textual description (for accessibility)</td></tr>
-    <tr><td><el-code><el-id>height</el-id></el-code></td><td><el-type>Float</el-type></td><td>height to render the image</td></tr>
-    <tr><td><el-code><el-id>title</el-id></el-code></td><td><el-type>String</el-type></td><td>Textual title to be read by user</td></tr>
-    <tr><td><el-code><el-id>width</el-id></el-code></td><td><el-type>Float</el-type></td><td>width to render the image</td></tr>
-    <tr><td><el-code><el-id>x</el-id></el-code></td><td><el-type>Float</el-type></td><td>Horizontal position within the pane</td></tr>
-    <tr><td><el-code><el-id>y</el-id></el-code></td><td><el-type>Float</el-type></td><td>Vertical position within the pane</td></tr>
-</table>
+<p>The properties are listed in <a href="#Properties_VG">Vector Graphics Properties</a>.</p>
 
 <h1>Graphics</h1>
 
@@ -1908,10 +1899,10 @@ the URL as a <el-type>String</el-type>, either as a literal (by surrounding it w
 </ul>
 
 <h2 id="TurtleGraphics">Turtle graphics</h2>
-<p>Turtle graphics are implemented in Elan with output to the Display pane on the screen, i.e. the 'paper' on which the Turtle draws.</p>
-<p>The area is 200 turtle units wide by 150 turtle units high, and floating point (fractional) values of turtle units can be used.</p>
+<p>Turtle graphics are implemented in Elan with output to the Display pane on in the user interface, i.e. the 'paper' on which the Turtle draws.</p>
+<p>The area is 200 turtle units wide by 150 turtle units high, and both integer and floating point values of turtle units can be used.</p>
 <p>The origin for turtle units (0,0) is at the centre of the area: positive x rightwards, positive y upwards.
-so for example the top left corner of the display is at (-100,75).</p>
+So for example the top left corner of the display is at (-100,75).</p>
 <h3 class="no-TOC" id="Turtle_procedures">Procedure methods on a Turtle</h3>
 <table class="tableMethod">
  <tr>
@@ -2047,25 +2038,157 @@ so for example the top left corner of the display is at (-100,75).</p>
 <p><img src="images/snowflake.png"  align="MIDDLE" width="479" height="420" ></p>
 
 <h2 id="VectorGraphics">Vector graphics</h2>
-<!-- TODO tabulate VG procedures and their arguments -->
-<div id="vectorGraphic"></div>
 <div id="append_VG"></div>
-<div id="centreX"></div>
-<div id="centreY"></div>
-<div id="radius"></div>
-<div id="fillColour"></div>
-<div id="setFillColour"></div>
-<div id="strokeColour"></div>
-<div id="strokeWidth"></div>
-<p>Vector graphics are displayed using SVG (Scalable Vector Graphics) that are a part of the Html specification. The names of the shapes broadly correspond to the names of SVG tags:</p>
+<div id="displayVectorGraphics"></div>
+<p>Vector graphics are implemented in Elan using SVG (Scalable Vector Graphics) which are a part of the Html specification.</p>
+<p>The names of the shapes broadly correspond to the names of SVG tags:</p>
 <ul>
  <li id="CircleVG"> <el-code>CircleVG</el-code> for &lt;<el-code>circle../&gt;</el-code></li>
  <li id="LineVG"><el-code>LineVG</el-code> for <el-code>&lt;line../&gt;</el-code></li>
  <li id="RectangleVG"><el-code>RectangleVG</el-code> for <el-code>&lt;rect../&gt;</el-code></li>
  <li id="ImageVG"><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
 </ul>
-<p>The properties of the Elan VG shapes match the names of the attributes used in the SVG tags, except that the <el-code>stroke-width</el-code> attribute is changed to <el-code>strokeWidth</el-code> to make it a valid <a href="LangRef.html#identifier">Identifier</a>.</p>
-<p>The &#8216;canvas&#8217; on which vector graphics are drawn (the Display pane in the user interface) is 100 units wide, by 75 units high. All numeric values specified for attributes of vector graphic shapes may be integer or floating point.</p>
+<p>The properties of the Elan shapes match the names of the attributes used in the SVG tags, except that the <el-code>stroke-width</el-code> attribute is changed to <el-code>strokeWidth</el-code> to make it a valid <a href="LangRef.html#identifier">Identifier</a>.</p>
+<p>Vector graphics are output to the Display pane in the user interface.
+<p>The area is 100 units wide by 75 units high, and both integer and floating point values of the units can be used.<p>
+<p>The origin for SVG units (0,0) is a the top left corner of the display: positive x rightwards, positive y downwards.
+So for exxample the centre of the display is at (50, 37.5).</p>
+<p>As with using SVG from Html, the shapes are drawn in the order in which they are added to the <el-type>VectorGraphic</el-type> instance:
+ later shapes are positioned over earlier ones.</p>
+
+<h3 class="no-TOC" id="Properties_VG">Vector graphics properties</h3>
+<table class="tableMethod">
+ <tr>
+  <th>Property</th>
+  <th>Property</th>
+  <th colspan="4">Vector graphic shape</th>
+  <th></th>
+ </tr><tr>
+  <th>name</th>
+  <th>Type</th>
+  <th>CircleVG</th>
+  <th>ImageVG</th>
+  <th>LineVG</th>
+  <th>RectangleVG</th>
+  <th>Description</th>
+ </tr><tr>
+  <td id="alt"><el-id>alt</el-id></td>
+  <td><el-type>String</el-type></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td></td>
+  <td>alternate textual description (for accessibility)</td>
+ </tr><tr>
+  <td id="centreX"><el-id>centreX</el-id></td>
+  <td><el-type>Float</el-type></td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>horizontal position of circle centre</td>
+ </tr><tr>
+  <td id="centreY"><el-id>centreY</el-id></td>
+  <td><el-type>Float</el-type></td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>vertical position of circle centre</td>
+ </tr><tr>
+  <td id="fillColour"><el-id>fillColour</el-id></td>
+  <td><el-type>Int</el-type></td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td>colour to fill the shape</td>
+ </tr><tr>
+  <td id="height"><el-id>height</el-id></td>
+  <td><el-type>Float</el-type></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td>height to render the shape or the image</td>
+ </tr><tr>
+  <td id="radius"><el-id>radius</el-id></td>
+  <td><el-type>Float</el-type></td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>radius of circle</td>
+ </tr><tr>
+  <td id="strokeColour"><el-id>strokeColour</el-id></td>
+  <td><el-type>Int</el-type></td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td>colour of the strokes in the shape</td>
+ </tr><tr>
+  <td id="strokeWidth"><el-id>strokeWidth</el-id></td>
+  <td><el-type>Int</el-type></td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td>width of the strokes in the shape</td>
+ </tr><tr>
+  <td id="title"><el-id>title</el-id></td>
+  <td><el-type>Float</el-type></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td></td>
+  <td>textual title to be read by user</td>
+ </tr><tr>
+  <td id="url"><el-id>url</el-id></td>
+  <td><el-type>String</el-type></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td></td>
+  <td>URL of the image to be displayed</td>
+ </tr><tr>
+  <td id="width"><el-id>width</el-id></td>
+  <td><el-type>Float</el-type></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td>width to render the shape or the image</td>
+ </tr><tr>
+  <td id="xy"><el-id>x, y</el-id></td>
+  <td><el-type>Float</el-type>, <el-type>Float</el-type></td>
+  <td></td>
+  <td>&#x2714; &#x2714;</td>
+  <td></td>
+  <td>&#x2714; &#x2714;</td>
+  <td>image's x,y position from top left</td>
+ </tr><tr>
+  <td id="x1y1"><el-id>x1, y1</el-id></td>
+  <td><el-type>Float</el-type>, <el-type>Float</el-type></td>
+  <td></td>
+  <td></td>
+  <td>&#x2714; &#x2714;</td>
+  <td></td>
+  <td>line's starting x,y position from top left</td>
+ </tr><tr>
+  <td id="x2y2"><el-id>x2, y2</el-id></td>
+  <td><el-type>Float</el-type>, <el-type>Float</el-type></td>
+  <td></td>
+  <td></td>
+  <td>&#x2714; &#x2714;</td>
+  <td></td>
+  <td>line's ending x,y position from top left</td>
+ </tr>
+</table>
+
+<h3 class="no-TOC">Note</h3>
+<p>All the properties for a new instance of a vector graphic Type must have values specified.</p>
+
 <p>Example:</p>
 <el-code-block source="VG_circle.elan">
         <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>vg</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -2096,7 +2219,7 @@ so for example the top left corner of the display is at (-100,75).</p>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
- <li>The constructor for each VG Type requires arguments corresponding the Html attributes for the corresponding SVGType.</li>
+ <li>The constructor for each VG Type requires arguments corresponding to the Html attributes for the corresponding SVG Type.</li>
  <li>As with <a href="#BlockGraphics">Block</a> graphics the screen is not updated until the <el-method>displayVectorGraphics</el-method> method is called,
    allowing you to make multiple changes before updating the screen. Similarly, the method to add a shape returns a new instance of the <el-code>VectorGraphics</el-code> which must be assigned either to an existing variable, or to a new <el-kw>let</el-kw>.</li>
  <li>As with the way that SVG works within Html, the shapes are drawn in the order in which they are added into the list of <el-type>VectorGraphic</el-type> instances, with later shapes positioned over earlier shapes.</li>

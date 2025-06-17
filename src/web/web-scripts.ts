@@ -1583,6 +1583,7 @@ function clearPaused() {
 function handleRunWorkerFinished() {
   runWorker?.terminate();
   runWorker = undefined;
+  elanInputOutput.finished();
   console.info("elan program completed OK");
   file.setRunStatus(RunStatus.default);
   clearPaused();
@@ -1619,6 +1620,7 @@ async function handleRunWorkerError(data: WebWorkerStatusMessage) {
   debugButton.click();
   runWorker?.terminate();
   runWorker = undefined;
+  elanInputOutput.finished();
   const e = data.error;
   const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
   await showError(err, file.fileName, false);
