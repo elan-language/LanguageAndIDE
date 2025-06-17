@@ -1970,3 +1970,17 @@ async function runTestsInner() {
     updateDisplayValues();
   }
 }
+
+if (!isElanProduction) {
+  // <div class="menu-item help-file"><a href="documentation/worksheets/whack-a-mole.html" target="worksheet-iframe"  tabindex="3">Whack-a-mole</a></div>
+  const testWs = document.createElement("div");
+  testWs.classList.add("menu-item", "help-file");
+  const testLink = document.createElement("a");
+  testLink.href = "documentation/worksheets/worksheet-test-only.html";
+  testLink.target = "worksheet-iframe";
+  testLink.tabIndex = 3;
+  testLink.innerText = "Test Worksheet";
+  testWs.append(testLink);
+
+  document.querySelector("#worksheet-tab .dropdown-content")?.append(testWs);
+}
