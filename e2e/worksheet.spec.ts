@@ -23,6 +23,8 @@ test('load and run worksheet', async ({ page }) => {
 
   await expect(workSheetFrame().getByRole('button', { name: 'Auto-save to file' })).toBeVisible();
 
+  await expect(workSheetFrame().getByRole('checkbox', {name : 'Preliminaries completed'})).not.toBeVisible();
+
   await workSheetFrame().getByRole('button', { name: 'Auto-save to file' }).click();
 
   await expect(workSheetFrame().getByRole('checkbox', {name : 'Preliminaries completed'})).toBeVisible();
@@ -36,6 +38,8 @@ test('load and run worksheet', async ({ page }) => {
   await workSheetFrame().getByRole('checkbox', {name : 'Preliminaries completed'}).click();
 
   await expect(workSheetFrame().getByText('All required inputs must be completed to continue')).not.toBeVisible();
+
+  await expect(workSheetFrame().getByRole('checkbox', {name : 'Preliminaries completed'})).not.toBeVisible();
 
   await expect(workSheetFrame().getByText('Step 1')).toBeVisible();
 
