@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="../styles/colourScheme.css" rel="stylesheet" />
+<link href="../styles/documentation.css" rel="stylesheet" />
+<link href="../styles/elanStyle.css" rel="stylesheet" />
+<title>Elan Concepts</title>
+<script type="text/javascript" src="generated_toc.js"></script>
+</head>
+<body>
+<div class="docTitle">Elan Concepts</div>
+<div id="docTOC">
+<div id="generated-toc" class="generate_from_h1 generate_for_page"></div></div>
+
+<h1 id="Introduction">Introduction</h1>
+<p>There are some concepts in the design of the Elan language and Integrated Development Environment which don't belong with any particular keyword or language construct described in the <a href="LangRef.html">Language Reference</a> or any particular data type or functionality in the <a href="LibRef.html">Library Reference</a>.</p>
+<p>This Concepts document is the place for those descriptions and explanations.</p>
+
+<h1 id="LanguageFeatures">Language Features</h1>
+<h2>Type Names</h2>
+<p>The Elan language has been carefully designed so that it supports static typing without the need for beginners to include the names of types in their programs.
+For example you can write a program that counts to 10 without using the type name "Int".</p>
+<p>But there comes a point when you need to refer to the names of types when defining:</p>
+<ul>
+<li>the parameters of a function or procedure</li>
+<li>the return value of a function</li>
+<li>the properties of a record or class</li>
+<li>a variable with an empty value, for example an empty List</li>
+<li>a data type whose elements have a particular type, for example an Array&lt;of Int&gt;</li>
+</ul>
+<p>The names of all the built-in types are specified in the <a href="LibRef.html">Library Reference</a>.
+You can create your own types as <a href="LangRef.html#class">class</a>es, <a href="LangRef.html#record">record</a>s and <a href="LangRef.html#enum">enum</a>s.</p>
+
+<h2 id="Methods">Method</h2>
+<p>We use the word "method" to describe functions and procedures in general.</p>
+
+<h2 id="DotMethods">Dot method</h2>
+<p>There are many functions and procedures which belong to system-defined types or user-defined classes, and operate on an instance of that type or class.</p>
+<p>For example the function <el-method>asString</el-method> can be invoked on an object instance <el-id>molePosition</el-id> like this:</p>
+<el-statement><el-code>if k is molePosition.asString() then</el-code></el-statement>
+<p>In this case, the variable <el-id>molePosition</el-id> is of type <el-type>Int</el-type>, and the Elan library provides the method <el-method>asString</el-method>.</p>
+<p>A procedure may be invoked like this:</p>
+<el-statement><el-code>call holes.put(molePosition, "*")</el-code></el-statement>
+<p>The variable <el-id>holes</el-id> is of type <el-type>Array&lt;of String&gt;</el-type>, and the Elan library provides the method <a href="LibRef.html#put_Array"><el-method>put</el-method></a> for changing one element of an Array.</p>
+<p>Functions and procedures that are defined as part of a user-defined <a href="LangRef.html#class">class</a>
+are also invoked from outside the class using a dot. For example a function:</p>
+<el-statement><el-code>set property.head to tail.getAdjacentSquare(property.currentDir)</el-code></el-statement>
+<p>and a procedure:</p>
+<el-statement><el-code>call apple.newRandomPosition(snake)</el-code></el-statement>
+<p>Collectively, these are known as dot methods.
+The functions and procedures that you define at a global level (ie not in a <a href="LangRef.html#class">class</a> or <a href="LangRef.html#record">record</a>) are not dot methods.
+There are also functions (eg <a href="LibRef.html#abs">abs</a>) and procedures (eg <a href="LibRef.html#clearPrintedText">clearPrintedText</a>)
+provided by the Elan Library which are standalone.
+That is, they are not dot methods, and are used without a dot.</p>
+
+<h2>Mutability</h2>
+<p>Some data structures are mutable and some are immutable.</p>
+<p>The properties or contents of an instance of an immutable type may not be changed,
+directly. However, you can easily create another instance that is a copy of the
+original, with all the same property values except for any specific changes
+that you want to make. The newly-minted copy (with changes) must be assigned
+to a new, or the same, named value.</p>
+<p>For examples of immutable types, see the five types described in the <a href="LibRef.html#ImmutableDataStructures">Immutable data structures</a> section of the Library Reference.
+<a href="LibRef.html#String">String</a>s are also immutable.</p>
+<p>The simple value types (Int, Float and Boolean) are also effectively immutable.  You can't change a single digit in a number in situ; you have to create a new number and assign it back to the original variable.</p>
+<p>User-defined <a href="LangRef.html#record">record</a>s are also immutable.</p>
+<p>User-defined <a href="LangRef.html#class">class</a>es are always treated as mutable.
+For example, you cannot put instances of classes into a ListImmutable or DictionaryImmutable,
+or use them as keys in a Dictionary.
+This applies even if the class has no procedure members, so is effectively immutable in practice (but then you may as well use a record).</p>
+<p><a href="LibRef.html#Tuple">tuple</a>s cannot be directly changed once they have been made, for eample you can't change just one element of a tuple.  But tuples are allowed to contain mutable types, eg a List&lt;of Int&gt;, so they are actually treated as mutable.</p>
+<p>The reason why mutability is of interest to computer scientists is that you can prove the correctness of programs more easily if they work with immutable data objects.  It also can reduce the number of bugs in your code, and can allow more optimisations when running a program.  It is widely used when writing code according to the functional programming paradigm.</p>
+
+<h2>Static typing</h2>
+<p>Elan is a statically typed language.
+Every variable and parameter has a defined type.</p>
+<p>For variables, the compiler can work out the type of the expression used to initialise the variable when it is declared.
+For example if you write this:</p>
+<el-statement><el-code>set n to 4</el-code></el-statement>
+<p>then the compiler defines the variable n to be of type <el-type>Int</el-type>, and only allows expressions of type <el-type>Int</el-type> to be assigned to it from there on.</p>
+<p>For parameters, and properties in classes and records, the programmer has to write in the type name, eg "<el-type>Int</el-type>":</p>
+<el-statement><el-code>function willLive(cell as Int, liveNeighbours as Int) returns Boolean</el-code></el-statement>
+<p>The return type of every function is also defined, which enables the compiler to decide the type of every expression.</p>
+
+<h2>Sound</h2>
+<p>To be written.</p>
+
+<h2>Case sensitivity</h2>
+<p>As far as we know, everything in Elan is case-sensitive.
+That is, no case folding is done, and the upper and lower case versions of a letter count as different characters.
+When you refer to a method or variable that you have defined, you must spell it exactly the same as the definition.</p>
+<p>If case folding is desired in a running program, you can do it explicitly by calling upperCase or lowerCase.</p>
+
+<h2>Parsing</h2>
+<p>[I wrote this before discovering the <a href="IDEGuide.html#StatusPanel">Status panel</a> section in the IDE Guide, which covers some of the same ground]</p>
+<p>Automatically, as you type your code, the Integrated Development Environment parses it.
+That is, it scans through the code trying to make sense of what it sees.
+Initially, the line of code is incomplete, and the Parse status in the top right hand corner shows "incomplete" on an orange background.
+As you type more, eventually the line will be complete enough that the parse status changes to "valid" on a green background.
+At this point you can type some more if you wish: for example "set n to n" is valid, but you may actually want to say "set n to n + 1".</p>
+<p>If you type something which could never be right, however much you add, the Parse status will go to "invalid" on a red background.  Any part of the line can be changed to make it right: every time you change any character, the parser starts again and re-evaluates the situation.</p>
+<p>For example, you may be trying to write "(n + 1)*2" but initially forget about the brackets and type "n + 1", then remember the brackets and type "n + 1)".  At this point it goes red, but don't be fazed: it is fine to go back to the start of the field, using the mouse or the left-arrow key, and change it to "(n + 1)", and at that point it will go green again.</p>
+
+<h2>Compilation</h2>
+<p>Once the Parse status is valid, the compilation stage starts.  The result is one of:</p>
+<ul>
+  <li>"ok" on a green background</li>
+  <li>"unknown" on an orange backgound</li>
+  <li>"error" on a red background</li>
+</ul>
+<p>In either of the error states, you can click on the coloured status and it will scroll the code window to (one of) the error(s). Clicking on the erroneous line should give further information as to what the problem is. If the message is unhelpful, please let us know how it can be improved.</p>
+<p>The unknown status usually appears if there is a name which it does not recognise.
+There is not much difference in practice between the "unknown" and "error" states.
+In neither case can the program be run.</p>
+<p>The idea is that the "error" state can usually be corrected by editing the line with the error,
+but the "unknown" state may need another variable, function etc defining before it is resolved.</p>
+
+<hr>
+<p><b>Elan Concepts</b> go to the <a href="#top">top</a></p>
+</body>
+</html>
+
