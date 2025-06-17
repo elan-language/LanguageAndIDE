@@ -140,8 +140,6 @@ for (const e of answers) {
   e.addEventListener("input", async (e) => {
     const ie = e as InputEvent;
     const tgt = ie.target as Element;
-    const id = tgt.id;
-    const d = ie.data ?? "todo";
 
     tgt.classList.add("answered");
 
@@ -154,17 +152,6 @@ for (const e of answers) {
     }
 
     clearTempMsgs();
-
-    const changelist = document.getElementById("changes")!;
-
-    const change = document.createElement("div");
-
-    const changeText = document.createTextNode(`${id}:${d}`);
-
-    change.appendChild(changeText);
-
-    changelist.appendChild(change);
-
     await save();
   });
 }

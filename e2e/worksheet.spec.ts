@@ -23,6 +23,8 @@ test('load and run worksheet', async ({ page }) => {
 
   await expect(workSheetFrame().getByRole('button', { name: 'Auto-save to file' })).toBeVisible();
 
+  await expect(workSheetFrame().getByRole('checkbox', {name : 'Preliminaries completed'})).not.toBeVisible();
+
   await workSheetFrame().getByRole('button', { name: 'Auto-save to file' }).click();
 
   await expect(workSheetFrame().getByRole('checkbox', {name : 'Preliminaries completed'})).toBeVisible();
@@ -40,13 +42,19 @@ test('load and run worksheet', async ({ page }) => {
 
   await expect(workSheetFrame().getByText('All required inputs must be completed to continue')).not.toBeVisible();
 
+  await expect(workSheetFrame().getByRole('checkbox', {name : 'Preliminaries completed'})).not.toBeVisible();
+
   await expect(workSheetFrame().getByText('Step 1')).toBeVisible();
 
   await expect(workSheetFrame().getByText('Hint1: Title')).toBeVisible();
 
   await expect(workSheetFrame().getByText('Total hints used: 0/2')).toBeVisible();
 
+  await expect(workSheetFrame().getByText('Simple content')).not.toBeVisible();
+
   await workSheetFrame().getByText('Hint1: Title').click();
+
+  await expect(workSheetFrame().getByText('Simple content')).toBeVisible();
 
   await expect(workSheetFrame().getByText('Total hints used: 1/2')).toBeVisible();
 
@@ -54,9 +62,17 @@ test('load and run worksheet', async ({ page }) => {
 
   await expect(workSheetFrame().getByText('Hint2: Title')).toBeVisible();
 
+  await expect(workSheetFrame().getByText('Code content')).not.toBeVisible();
+
   await workSheetFrame().getByText('Hint2: Title').click();
+
+  await expect(workSheetFrame().getByText('Code content')).toBeVisible();
 
   await expect(workSheetFrame().getByText('Total hints used: 2/2')).toBeVisible();
 
   await expect(workSheetFrame().locator('.timestamp')).toHaveCount(3);
+
+  await workSheetFrame().getByRole('checkbox', {name : 'Step completed'}).click();
+
+  await expect(workSheetFrame().getByText('Worksheet completed')).toBeVisible();
 });
