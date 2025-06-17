@@ -394,7 +394,8 @@ function showWorksheetTab() {
   documentationTab.classList.add("hide");
   worksheetTab.classList.remove("hide");
   debugTab.classList.add("hide");
-  documentationIFrame.focus();
+  worksheetIFrame.focus();
+  worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
 }
 
 function showDebugTab() {
