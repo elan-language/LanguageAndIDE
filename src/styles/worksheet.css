@@ -95,7 +95,8 @@
     width: 100%;
 }
 
-input[type="text"] {
+input[type="text"]
+{
     border: 1px;
     border-style: solid;
 }
