@@ -16,16 +16,14 @@
     <button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future - at which point you will be asked to auto-save it again).</span>
 
     <div class="step" id="step0">
+        <label for="input0">Enter your name: </label>
+        <input type="text" id="username" />
         <h3>Preliminaries</h3>
         <ul>
-          <li>
-            <label for="input0">Enter your name: </label>
-            <input type="text" id="username" />
-          </li>
           <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
           <li>Select <b>File > New</b> to start a new program, 
             then select <b>File > Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
-            Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b> to undo recent changes.</li>
+            Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b>) to undo recent changes.</li>
           <li>Remember that if the code editor has a tinted background it does not have focus and will not respond
               to edits. To give it focus click within the editor, or <b>Tab</b> to it. (If a program is running, you will need to stop it first.)
           </li>
@@ -69,7 +67,7 @@
         <li>Add an instruction to print the holes, then run the program, noting that the 10 elements of this array are printed successively - separated by a comma-and-space - and surrounded by square brackets.</li>
     </ul>
     <label class="done" for="done1">Step completed</label>
-    <input type="checkbox"  id="done1" />
+    <input type="checkbox" class="step-complete" id="done1" />
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
     <div class="step" id="step2">
@@ -102,7 +100,7 @@
         if you see this message unexpectedly in future.</li>
     </ul>
     <label class="done" for="done2">Step completed</label>
-    <input type="checkbox"  id="done2" />
+    <input type="checkbox" class="step-complete" id="done2" />
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
     <div class="step" id="step3">
@@ -163,7 +161,7 @@
         <li>Run the program and check that you see see the labels for the holes and the mole appearing in hole 1.</li>
         </ul>
         <label class="done" for="done3">Step completed</label>
-    <input type="checkbox"  id="done3" />
+    <input type="checkbox" class="step-complete" id="done3" />
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
     <div class="step" id="step4">
@@ -178,7 +176,7 @@
         <li>Run the program more than once and check that the mole typically appears at a different hole each time you run (it will occasionally pick the same hole).</li>
         </ul>
     <label class="done" for="done4">Step completed</label>
-    <input type="checkbox"  id="done4" />
+    <input type="checkbox" class="step-complete" id="done4" />
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
     <div class="step" id="step5">
@@ -214,7 +212,7 @@
                 but now we need to be able to interact with it.</li>
         </ul>
     <label class="done" for="done5">Step completed</label>
-    <input type="checkbox"  id="done5" />
+    <input type="checkbox" class="step-complete" id="done5" />
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
     <div class="step" id="step6">
@@ -281,7 +279,7 @@
                 time to the current time plus <i>three</i> seconds instead of two seconds. Then run again.</li>
             </ul>
     <label class="done" for="done6">Step completed</label>
-        <input type="checkbox"  id="done6" />
+        <input type="checkbox" class="step-complete" id="done6" />
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
         <div class="step" id="step7">
@@ -308,7 +306,7 @@
             to <el-lit>1000</el-lit>, say, and try again.</li>
         </ul>
     <label class="done" for="done7">Step completed</label>
-        <input type="checkbox"  id="done7" />
+        <input type="checkbox" class="step-complete" id="done7" />
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
         <div class="step" id="step8">

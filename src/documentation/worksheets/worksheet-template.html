@@ -4,13 +4,13 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
-<link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
-<link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
-<link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
+<link href="../../../out/website/styles/colourScheme.css" rel="stylesheet" />
+<link href="../../../out/website/styles/elanStyle.css" rel="stylesheet" />
+<link href="../../../out/website/styles/documentation.css" rel="stylesheet" />
+<link href="../../../out/website/styles/worksheet.css" rel="stylesheet" />
 </head>
 
-<!-- To test locally, replace https://elan-language.github.io/LanguageAndIDE with ../../../out/website -->
+<!-- To test locally, replace ../../../out/website with ../../../out/website -->
 
 <body>
 <div id="worksheet">
@@ -19,16 +19,14 @@
   <button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future - at which point you will be asked to auto-save it again).</span>
 
   <div class="step" id="step0">
+    <label for="input0">Enter your name: </label>
+    <input type="text" id="username" />
     <h3>Preliminaries</h3>
     <ul>
-      <li>
-        <label for="input0">Enter your name: </label>
-        <input type="text" id="username" />
-      </li>
       <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
       <li>Select <b>File > New</b> to start a new program, 
         then select <b>File > Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
-        Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b> to undo recent changes.</li>
+        Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b>) to undo recent changes.</li>
       <li>Remember that if the code editor has a tinted background it does not have focus and will not respond
           to edits. To give it focus click within the editor, or <b>Tab</b> to it. (If a program is running, you will need to stop it first.)
       </li>
@@ -67,6 +65,6 @@
   <div hidden="" id="hash"></div>
   <div hidden="" id="changes"></div>
 </div>
-<script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
+<script src="../../../out/website/worksheet-scripts.js"></script>
 </body>
 </html>

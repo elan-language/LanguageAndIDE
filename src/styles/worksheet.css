@@ -20,10 +20,10 @@
 
 /* Steps */
     /* step0 (preliminaries) only */
-    #worksheet.saved #step0.complete {
+    #worksheet.saved #step0.complete * {
         display: none;
     }
-    #worksheet.saved #step0.complete #userName{
+    #worksheet.saved #step0.complete #username{
         display: block;
     }
 
