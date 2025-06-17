@@ -1,5 +1,5 @@
 import assert from "assert";
-import { updateHints } from "../src/build-scripts/update-worksheet-hints";
+import { updateHints } from "../src/build-scripts/update-worksheets";
 
 suite("Build", () => {
   test("Pass", async () => {
