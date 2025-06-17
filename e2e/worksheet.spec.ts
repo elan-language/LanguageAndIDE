@@ -28,7 +28,10 @@ test('load and run worksheet', async ({ page }) => {
   await expect(workSheetFrame().getByRole('checkbox', {name : 'Preliminaries completed'})).toBeVisible();
 
   await workSheetFrame().getByRole('checkbox', {name : 'Preliminaries completed'}).click();
+  // click twice to check for multiple errors bug
+  await workSheetFrame().getByRole('checkbox', {name : 'Preliminaries completed'}).click();
 
+  // this will fail if multiple
   await expect(workSheetFrame().getByText('All required inputs must be completed to continue')).toBeVisible();
 
   await workSheetFrame().getByRole('textbox').fill("a user");
@@ -39,13 +42,21 @@ test('load and run worksheet', async ({ page }) => {
 
   await expect(workSheetFrame().getByText('Step 1')).toBeVisible();
 
-  await expect(workSheetFrame().getByText('Hint: Title')).toBeVisible();
+  await expect(workSheetFrame().getByText('Hint1: Title')).toBeVisible();
 
-  await expect(workSheetFrame().getByText('Total hints used: 0/1')).toBeVisible();
+  await expect(workSheetFrame().getByText('Total hints used: 0/2')).toBeVisible();
 
-  await workSheetFrame().getByText('Hint: Title').click();
+  await workSheetFrame().getByText('Hint1: Title').click();
 
-  await expect(workSheetFrame().getByText('Total hints used: 1/1')).toBeVisible();
+  await expect(workSheetFrame().getByText('Total hints used: 1/2')).toBeVisible();
 
   await expect(workSheetFrame().locator('.timestamp')).toHaveCount(2);
+
+  await expect(workSheetFrame().getByText('Hint2: Title')).toBeVisible();
+
+  await workSheetFrame().getByText('Hint2: Title').click();
+
+  await expect(workSheetFrame().getByText('Total hints used: 2/2')).toBeVisible();
+
+  await expect(workSheetFrame().locator('.timestamp')).toHaveCount(3);
 });
