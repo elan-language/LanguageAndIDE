@@ -24,11 +24,11 @@ suite("Editing Fields Tests", () => {
     expr.processKey(key(" "));
     assert.equal(expr.text, "3 ");
     assert.equal(expr.cursorPos, 2);
-    assert.equal(expr.getCompletion(), "<i>operator </i><i>expression</i>");
+    assert.equal(expr.getCompletion(), "<i>operator </i><i>value or expression</i>");
     expr.processKey(key("+"));
     assert.equal(expr.text, "3 + ");
     assert.equal(expr.cursorPos, 4);
-    assert.equal(expr.getCompletion(), "<i>expression</i>");
+    assert.equal(expr.getCompletion(), "<i>value or expression</i>");
     expr.processKey(key("4"));
     assert.equal(expr.text, "3 + 4");
     assert.equal(expr.cursorPos, 5);
@@ -164,16 +164,16 @@ suite("Editing Fields Tests", () => {
     expr.processKey(key(" "));
     assert.equal(expr.text, "a ");
     assert.equal(expr.cursorPos, 2);
-    assert.equal(expr.getCompletion(), "<i>operator </i><i>expression</i>");
+    assert.equal(expr.getCompletion(), "<i>operator </i><i>value or expression</i>");
     expr.processKey(key("i"));
     assert.equal(expr.text, "a i");
     assert.equal(expr.cursorPos, 3);
-    assert.equal(expr.getCompletion(), "s<i>expression</i>");
+    assert.equal(expr.getCompletion(), "s<i>value or expression</i>");
     expr.processKey(key("s"));
     expr.processKey(key(" "));
     assert.equal(expr.text, "a is ");
     assert.equal(expr.cursorPos, 5);
-    assert.equal(expr.getCompletion(), "<i>expression</i>");
+    assert.equal(expr.getCompletion(), "<i>value or expression</i>");
   });
 
   test("Ensure Html tag in a comment is not recognised - #840", () => {
@@ -209,15 +209,15 @@ suite("Editing Fields Tests", () => {
     expr.processKey(key("a"));
     expr.processKey(key(" "));
     assert.equal(expr.text, "lambda a ");
-    assert.equal(expr.getCompletion(), "as <i>Type</i> => <i>expression</i>");
+    assert.equal(expr.getCompletion(), "as <i>Type</i> => <i>value or expression</i>");
     expr.processKey(key("Tab"));
     assert.equal(expr.text, "lambda a as ");
-    assert.equal(expr.getCompletion(), "<i>Type</i> => <i>expression</i>");
+    assert.equal(expr.getCompletion(), "<i>Type</i> => <i>value or expression</i>");
     expr.processKey(key("I"));
     expr.processKey(key("n"));
     expr.processKey(key("t"));
     assert.equal(expr.text, "lambda a as Int");
-    assert.equal(expr.getCompletion(), " => <i>expression</i>");
+    assert.equal(expr.getCompletion(), " => <i>value or expression</i>");
     expr.processKey(key("Enter"));
     assert.equal(expr.text, "lambda a as Int => ");
   });
