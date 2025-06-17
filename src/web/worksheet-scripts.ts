@@ -112,8 +112,13 @@ function scrollToActiveElement() {
 
 autoSaveButton!.addEventListener("click", async () => {
   const code = getUpdatedDocument();
+  if (autoSaveButton?.classList.contains("test-only")) {
+    // fake out saving
+    document.getElementById("worksheet")?.classList.add("saved");
+  } else {
+    fh = await chromeSave(code, "workSheet");
+  }
 
-  fh = await chromeSave(code, "workSheet");
   scrollToActiveElement();
 });
 
