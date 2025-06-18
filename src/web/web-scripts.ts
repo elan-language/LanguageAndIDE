@@ -287,7 +287,12 @@ loadDocumentationButton?.addEventListener("click", async () => {
       id: lastDirId,
     });
     const codeFile = await fileHandle.getFile();
-    const url = URL.createObjectURL(codeFile);
+    const code = await codeFile.text();
+
+    const BOM = new Uint8Array([0xef, 0xbb, 0xbf]);
+    const b = new Blob([BOM, code], { type: "text/html" });
+
+    const url = URL.createObjectURL(b);
     window.open(url, "worksheet-iframe")?.focus();
   } catch (_e) {
     // user cancelled
