@@ -619,6 +619,7 @@ Note
  <li>A List is created either empty or initialised from a literal definition.</li>
  <li>A List's size can be dynamically changed.</li>
 </ul>
+<div id="tail"></div>
 <h3 class="no-TOC" id="ListDeconstruction">List Deconstruction</h3>
 <p>A List or ListImmutable may be deconstructed into new variables or named values in a similar way to deconstructing a <a href="#Tuple">Tuple</a>, but in this case:</p>
 <ul>
@@ -1327,6 +1328,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
     <li>The methods for adding and removing an item are different for <el-type>Stack</el-type> and <el-type>Queue</el-type>, as shown here:</li>
 </ul>
 
+<div id="Stack_functions"></div><!-- so it works with both spellings -->
 <h3 class="no-TOC" id="StackFunctions">Function dot methods on a Stack</h3>
 <table class="tableMethod">
  <tr>
@@ -1369,6 +1371,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
  </tr>
 </table>
 
+<div id="Queue_functions"></div><!-- so it works with both spellings -->
 <h3 class="no-TOC" id="QueueFunctions">Function dot methods on a Queue</h3>
 <table class="tableMethod">
  <tr>
@@ -1649,6 +1652,33 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 </ul>
 
 <h1 id="Input/output">Input/output</h1>
+
+<h2>Reading keys &#8216;on the fly&#8217;</h2>
+<p>In some applications &#8211; especially in games, for example &#8211; you want the program to react to a key pressed by the user, but without holding up the program to wait for value to be input. </p>
+<p>Whether your application makes use graphics, or just uses the <i>Console</i> for text, reading keystrokes &#8216;on the fly&#8217; is done via one of two methods:</p>
+<el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKey</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key2</el-id>, <el-id>modifier</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKeyWithModifier</el-method>()</el-txt></el-field></el-statement>
+<p><b>Notes</b></p>
+<ul>
+<li>When the <el-method>getKey</el-method> function is called, the system <i>does not wait for a response</i>. If a key has been pressed then that will be returned as a <b>String</b> e.g. <el-code>"a"</el-code>.</li>
+<li>Non-printable keys will be returned in the form: <b>"Backspace"</b>,"<b>Enter"</b>,<b>"ArrowDown"</b>,..</li>
+<li>If no key has been pressed (since the last time the method was called), it will return the empty string <el-code>""</el-code>. </li>
+<li>Pressing <i>just</i> the <b>Shift</b>, <b>Ctrl (Cmd under macOS)</b>, or <b>Alt</b> keys will not be detected by <el-method>getKey</el-method>. To read those keys use&#8230;</li>
+<li> <el-method>getKeyWithModifier</el-method> which returns a 2-tuple containing  the key pressed plus any &#8216;modifier&#8217; key such a <el-code>Shift</el-code>, <el-code>Ctrl</el-code>, or <el-code>Alt</el-code> (or the empty string if no modifier key is pressed).</li>
+<li>Both of these <el-method>getKey</el-method> methods are System methods because they have a dependency on the system and so may only be used within a <el-code>procedure</el-code> or in <el-code>main</el-code>.</li>
+</ul>
+<p>Use the procedure method <el-method>clearKeyBuffer()</el-method> if you want to enforce that the user cannot get too far ahead of the program by hitting keys in very rapid succession.</p>
+<p><el-method>waitForKey</el-method> waits for a key to be pressed, and returns it.  <el-method>pressAnyKeyToContinue</el-method> gives an optional prompt and is used when you don't need to know which key was pressed.</p>
+<el-code-block>
+<main class="ok multiline">
+<el-top><el-kw>main</el-kw></el-top>
+<el-statement class="ok"><el-top><el-kw>call </el-kw><el-field class="ok"><el-txt><el-method>pressAnyKeyToContinue</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>true</el-id></el-txt></el-field>)</el-top></el-statement>
+<el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>OK, press A or B</el-lit>"</el-txt></el-field></el-statement>
+<el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>mykey</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>That was </el-lit>{<el-id>mykey</el-id>}<el-lit></el-lit>"</el-txt></el-field></el-statement>
+<el-kw>end main</el-kw>
+</main>
+</el-code-block>
 
 <h2 id="TextFileReader">Reading Text Files</h2>
 <p>The <el-type>TextFileReader</el-type> class is used to read textual data from a file.</p>
@@ -2266,6 +2296,32 @@ So the constructors do not take any properties, and instead you add a <el-kw>wit
 <h1>Other Types</h1>
 
 <h2 id="Random">Random</h2>
+<h4 class="no-TOC">Generating random numbers within a function</h4>
+<p>It is <i>not</i> possible to use the system methods <el-method>random()</el-method> or <el-method>randomInt()</el-method> within a function because they create unseen side-effects. You <i>may</i> use those system methods outside the function and pass the resulting random number (as an <el-type>Int</el-type> or a <el-type>Float</el-type>) as an argument <i>into </i>a function.</p>
+<p>It <i>is possible</i> to create and use random numbers <i>within a function</i>, but it requires a different approach and is a little more complex, using a special <i>Type</i> named <el-type>Random</el-type> (note that the <el-code>R</el-code> is in upper-case), as in this example:</p>
+<el-code-block source="func_random.elan">
+<main class="ok multiline">
+<el-top><el-kw>main</el-kw></el-top>
+<el-statement class="ok"><el-kw>variable </el-kw><el-field class="ok"><el-txt><el-id>rnd</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field class="ok"><el-txt><el-kw>new</el-kw> <el-type>Random</el-type>()</el-txt></el-field></el-statement>
+<el-statement class="ok"><el-top><el-kw>call </el-kw><el-field class="ok"><el-txt><el-id>rnd</el-id>.<el-method>initialiseFromClock</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
+<el-statement class="ok"><el-kw>variable </el-kw><el-field class="ok"><el-txt><el-id>dice</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field class="ok"><el-txt><el-lit>0</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok multiline">
+<el-top><el-kw>for </el-kw><el-field class="ok"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field class="ok"><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field class="ok"><el-txt><el-lit>10</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field class="ok"><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
+<el-statement class="ok"><el-kw>set </el-kw><el-field class="ok"><el-txt><el-id>dice</el-id>, <el-id>rnd</el-id></el-txt></el-field><el-kw> to </el-kw><el-field class="ok"><el-txt><el-method>rollDice</el-method>(<el-id>rnd</el-id>)</el-txt></el-field></el-statement>
+<el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt><el-id>dice</el-id></el-txt></el-field></el-statement>
+<el-kw>end for</el-kw>
+</el-statement>
+<el-kw>end main</el-kw>
+</main>
+<el-func class="ok multiline">
+<el-top><el-kw>function </el-kw><el-method><el-field class="ok"><el-txt>rollDice</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>rnd</el-id> <el-kw>as</el-kw> <el-type>Random</el-type></el-txt></el-field>)<el-kw> returns </el-kw><el-field class="ok"><el-txt>(<el-type>Int</el-type>, <el-type>Random</el-type>)</el-txt></el-field></el-top>
+<el-statement class="ok"><el-kw>return </el-kw><el-field class="ok"><el-txt><el-id>rnd</el-id>.<el-method>nextInt</el-method>(<el-lit>1</el-lit>, <el-lit>6</el-lit>)</el-txt></el-field></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
+</el-code-block>
+<p>The <el-type>Random</el-type> Type defines two &#8216;function methods&#8217;: <el-method>next</el-method> and <el-method>nextInt</el-method>.</p>
+<p>Both of them return a 2-Tuple consisting of the random value (as either a <el-code>Float</el-code> or an <el-code>Int</el-code> respectively) plus a new <el-type>Random</el-type>. The <i>new</i> (returned) <el-type>Random</el-type> must be used for generating the subsequent random number (if more are required). If you call <el-code>next</el-code> repeatedly on the same instance of Random, you will always get the same value. </p>
+<p>As shown in the example, when<i> first created </i>you should call <el-method>initialiseWithClock()</el-method> on it. If you remove that call statement from the code above, the program will still generate a sequence of randomised values, <i>but the sequence will be exactly the same each time you run the program.</i> Initialising from the clock ensures that you get a different sequence each run. Using Random <i>without</i> so initialising, however, can be extremely useful for testing purposes since the results are repeatable.</p>
 
 <h2 id="Func">Func</h2>
 <p>A function may be passed as an argument into another function (or a procedure), or returned as the result of calling another function.
@@ -2691,11 +2747,6 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td>(none)</td>
   <td><el-type>String</el-type></td>
   <td>returns the last character pressed on the keyboard during program execution</td>
- </tr><tr id="getKey">
-  <td><el-method>getKey</el-method></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>returns the character of the keyboard key pressed</td>
  </tr><tr id="getKeyWithModifier">
   <td><el-method>getKeyWithModifier</el-method></td>
   <td>(none)</td>
@@ -2749,11 +2800,6 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
   <td>(none)</td>
   <td><el-class>TextFileReader</el-class></td>
   <td>see <a href="#Input/output">Input/output</a></td>
- </tr><tr id="pressAnyKeyToContinue">
-  <td><el-method>pressAnyKeyToContinue</el-method></td>
-  <td>(none)</td>
-  <td>(none)</td>
-  <td>pauses execution of the program until a keyboard key is pressed</td>
  </tr><tr id="random">
   <td><el-method>random</el-method></td>
   <td>(none)</td>
@@ -2792,6 +2838,16 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <p>The Elan standard library contains several HoFs that are widely recognised and used within functional programming.</p>
 
 <h2 id="ref">Passing a function as a reference</h2>
+<p>To use a higher-order function (HoF), you have to pass in a reference to a function.
+This can be either a <a href="#lambda"><el-kw>lambda</el-kw></a> or the keyword <el-kw>ref</el-kw> followed by the name of a function.</p>
+<p>It is also possible to use references to functions not in the context of HoFs.</p>
+<p>On most occasions when you write the name of an existing function elsewhere in code your intent is to <i>evaluate</i> the function and, to do so, you write the name of the function followed by brackets containing such arguments as are required by the function. For this reason if you forget to add the brackets, you will get an error, for example:</p>
+<p><el-code>To evaluate function 'myfunction' add brackets. Or to create a reference to 'myfunction', precede it by 'ref'.</el-code></p>
+<p>The second sentence in this error message is for when your intention is <i>not</i> to evaluate the function, but to create a <i>reference </i>to the function. This is a valid thing to do in functional programming but is not generally done in procedural programming. As the error message says, to create a reference to a function you need to precede it by <el-code>ref</el-code> and the name of the function should then <i>not</i> be followed by brackets (or any arguments). For example:</p>
+<el-statement><el-code>variable passes set to allPupils.filter(ref passedMathsTest)</el-code></el-statement>
+<el-statement><el-code>function passedMathsTest(p as Pupil) as Boolean</el-code></el-statement>
+<el-statement><el-code>&#160; return p.mathsPercent &gt; 35</el-code></el-statement>
+<el-statement><el-code>end function</el-code></el-statement>
 
 <h2>Defining your own HoFs</h2>
 

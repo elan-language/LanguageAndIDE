@@ -287,7 +287,12 @@ loadDocumentationButton?.addEventListener("click", async () => {
       id: lastDirId,
     });
     const codeFile = await fileHandle.getFile();
-    const url = URL.createObjectURL(codeFile);
+    const code = await codeFile.text();
+
+    const BOM = new Uint8Array([0xef, 0xbb, 0xbf]);
+    const b = new Blob([BOM, code], { type: "text/html" });
+
+    const url = URL.createObjectURL(b);
     window.open(url, "worksheet-iframe")?.focus();
   } catch (_e) {
     // user cancelled
@@ -1969,4 +1974,18 @@ async function runTestsInner() {
     file.setTestStatus(TestStatus.error);
     updateDisplayValues();
   }
+}
+
+if (!isElanProduction) {
+  // <div class="menu-item help-file"><a href="documentation/worksheets/whack-a-mole.html" target="worksheet-iframe"  tabindex="3">Whack-a-mole</a></div>
+  const testWs = document.createElement("div");
+  testWs.classList.add("menu-item", "help-file");
+  const testLink = document.createElement("a");
+  testLink.href = "documentation/worksheets/worksheet-test-only.html";
+  testLink.target = "worksheet-iframe";
+  testLink.tabIndex = 3;
+  testLink.innerText = "Test Worksheet";
+  testWs.append(testLink);
+
+  document.querySelector("#worksheet-tab .dropdown-content")?.append(testWs);
 }

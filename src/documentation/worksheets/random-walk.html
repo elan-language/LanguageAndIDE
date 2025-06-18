@@ -4,10 +4,10 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="https://elan-language.github.io/LanguageAndIDE//styles/colourScheme.css" rel="stylesheet" />
-<link href="https://elan-language.github.io/LanguageAndIDE//styles/elanStyle.css" rel="stylesheet" />
-<link href="https://elan-language.github.io/LanguageAndIDE//styles/documentation.css" rel="stylesheet" />
-<link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
+<link href="../../../out/website//styles/colourScheme.css" rel="stylesheet" />
+<link href="../../../out/website//styles/elanStyle.css" rel="stylesheet" />
+<link href="../../../out/website//styles/documentation.css" rel="stylesheet" />
+<link href="../../../out/website/styles/worksheet.css" rel="stylesheet" />
 </head>
 <body>
 <div id="worksheet">
@@ -16,21 +16,20 @@
     <button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future - at which point you will be asked to auto-save it again).</span>
 
     <div class="step" id="step0">
+        <label for="username">Enter your name: </label>
+        <input type="text" class="question" id="username" />
         <h3>Preliminaries</h3>
         <ul>
-          <li>
-            <label for="input0">Enter your name: </label>
-            <input type="text" id="username" />
-          </li>
           <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
           <li>Select <b>File > New</b> to start a new program, 
             then select <b>File > Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
-            Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b> to undo recent changes.</li>
+            Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b>) to undo recent changes.</li>
           <li>Remember that if the code editor has a tinted background it does not have focus and will not respond
-              to edits. To give it focus click within the editor, or <b>Tab</b> to it. (If a program is running, you will need to stop it first.)
+              to edits. To give it focus click within the editor. (If a program is running, you will need to stop it first.)
           </li>
-          <li>Use the auto-completion options as much as possible, because as well as saving effort this reduces errors.</li>
+          <li>Use the auto-completion options as much as possible, because this reduces errors.</li>
           <li>Use the <i>Hints</i> only when you <i>need</i> them - as all use of hints is recorded. Use of <b>Help</b> is encouraged and not recorded.</li>
+          <li>Use the <b>Trim</b> button periodically to remove leftover <el-code>new code</el-code> selectors.</li>
         </ul>
         <label class="done" for="done0">Preliminaries completed</label>
         <input type="checkbox" class="step-complete" id="done0" />
@@ -47,7 +46,7 @@
     If the turning is truly random then each attempt will take a different number: the picture below shows
     three such paths taken:</p>
 
-    <img src="https://elan-language.github.io/LanguageAndIDE/documentation/images/random-walk.png" width="50%">
+    <img src="../../../out/website/documentation/images/random-walk.png" width="50%">
 
     <p>Can we determine the <i>average</i> number of paces to reach the edge? Yes,
     if we could perform the experiment many times.
@@ -173,7 +172,7 @@
         </li>
     </ul>
     <label class="done" for="done1">Iteration completed</label>
-    <input type="checkbox"  id="done1" />
+    <input type="checkbox" class="step-complete" id="done1" />
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
 
@@ -212,7 +211,7 @@
         <li>Run the program and check that it draws a large circle that fits within the display. Note of where the turtle finishes.</li>
     </ul>
     <label class="done" for="done2">Iteration completed</label>
-    <input type="checkbox"  id="done2" />
+    <input type="checkbox" class="step-complete" id="done2" />
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
 
@@ -306,7 +305,7 @@
         </li>
     </ul>
     <label class="done" for="done3">Iteration completed</label>
-    <input type="checkbox"  id="done3" />
+    <input type="checkbox" class="step-complete" id="done3" />
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
 
@@ -358,7 +357,7 @@
             Writing it as we did is easier to remember, and, arguably, makes the <i>intention</i> clearer.
         </ul>
     <label class="done" for="done4">Iteration completed</label>
-    <input type="checkbox"  id="done4" />
+    <input type="checkbox" class="step-complete" id="done4" />
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
 
@@ -415,7 +414,7 @@
         </li>
     </ul>
     <label class="done" for="done5">Iteration completed</label>
-    <input type="checkbox"  id="done5" />
+    <input type="checkbox" class="step-complete" id="done5" />
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
 
@@ -450,6 +449,6 @@
         <div hidden="" id="changes"></div>
     </div>
 </div>
-<script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
+<script src="../../../out/website/worksheet-scripts.js"></script>
 </body>
 </html>

@@ -66,7 +66,7 @@ el-regex {
 }
 
 /* Header & comments (also test description) */
-el-comment *, el-comment el-field el-txt, el-test el-top el-field el-txt  {
+el-comment, el-comment *, el-comment el-field el-txt, el-test el-top el-field el-txt  {
     color: var(--comment);
 }
 

@@ -1,10 +1,9 @@
 /* Initially, everything hidden except the Save button and message */
 
-    .docTitle *,
-    #auto-save
-    {
-        display: block;
+    .docTitle * {
+        display: block
     }
+    #auto-save,
     #auto-save + span
     {
         display: inline;
@@ -20,10 +19,10 @@
 
 /* Steps */
     /* step0 (preliminaries) only */
-    #worksheet.saved #step0.complete {
+    #worksheet.saved #step0.complete * {
         display: none;
     }
-    #worksheet.saved #step0.complete #userName{
+    #worksheet.saved #step0.complete #username{
         display: block;
     }
 
@@ -95,7 +94,8 @@
     width: 100%;
 }
 
-input[type="text"] {
+input[type="text"]
+{
     border: 1px;
     border-style: solid;
 }

@@ -373,16 +373,19 @@ export abstract class AbstractFrame implements Frame {
       return;
     }
     const movable = nonSelectors.filter((s) => s.isMovable());
-    const last = selected[selected.length - 1];
-    if (movable.length !== selected.length) {
+
+    if (movable.length !== nonSelectors.length) {
       this.pasteError = "Cut Failed: At least one selected frame is not moveable";
       return;
     }
+
     parentHelper_removeAllSelectedChildren(this.getParent());
+
+    const last = selected[selected.length - 1];
     const newFocus = parentHelper_getChildAfter(this.getParent(), last);
     newFocus.select(true, false);
     const sp = this.getScratchPad();
-    sp.addSnippet(selected);
+    sp.addSnippet(nonSelectors);
     if (!isSelector(newFocus) && !newFocus.getParent().minimumNumberOfChildrenExceeded()) {
       newFocus.insertPeerSelector(false);
     }
