@@ -19,8 +19,9 @@ if (fh) {
 }
 
 async function write(code: string, fh: FileSystemFileHandle) {
+  const te = new TextEncoder();
   const writeable = await fh.createWritable();
-  await writeable.write(code);
+  await writeable.write(te.encode(code));
   await writeable.close();
   document.getElementById("worksheet")?.classList.add("saved");
 }
