@@ -381,4 +381,12 @@ export class WebInputOutput implements ElanInputOutput {
       oscillator.stop(ac.currentTime + duration / 1000);
     });
   }
+
+  async readDataFile(name: string): Promise<string> {
+    const response = await fetch(name, { mode: "same-origin" });
+    if (response.ok) {
+      return response.text();
+    }
+    return Promise.reject("Read failed");
+  }
 }

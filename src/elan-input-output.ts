@@ -37,4 +37,6 @@ export interface ElanInputOutput {
   clearHtml(): Promise<void>;
 
   tone(duration: number, frequency: number, volume: number): Promise<void>;
+
+  readDataFile(name: string): Promise<string>;
 }

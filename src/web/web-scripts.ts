@@ -46,6 +46,7 @@ const systemInfoDiv = document.getElementById("system-info") as HTMLDivElement;
 const displayDiv = document.getElementById("display") as HTMLDivElement;
 const loadButton = document.getElementById("load") as HTMLButtonElement;
 const appendButton = document.getElementById("append") as HTMLButtonElement;
+const appendFromServerButton = document.getElementById("append-from-server") as HTMLButtonElement;
 const saveButton = document.getElementById("save") as HTMLButtonElement;
 const autoSaveButton = document.getElementById("auto-save") as HTMLButtonElement;
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
@@ -313,6 +314,10 @@ loadButton.addEventListener("click", chooser(getUploader()));
 
 appendButton.addEventListener("click", chooser(getAppender()));
 
+appendFromServerButton.addEventListener("click", () => {
+  const fn = prompt("Please enter file to append");
+});
+
 saveButton.addEventListener("click", getDownloader());
 
 autoSaveButton.addEventListener("click", handleChromeAutoSave);
@@ -552,6 +557,7 @@ if (okToContinue) {
       stepButton,
       loadButton,
       appendButton,
+      appendFromServerButton,
       saveButton,
       autoSaveButton,
       newButton,
@@ -834,6 +840,7 @@ function updateDisplayValues() {
         runButton,
         loadButton,
         appendButton,
+        appendFromServerButton,
         saveButton,
         autoSaveButton,
         newButton,
@@ -861,6 +868,7 @@ function updateDisplayValues() {
     enable(fileButton, "File actions");
     enable(loadButton, "Load code from a file");
     enable(appendButton, "Append code from a file onto the end of the existing code");
+    enable(appendFromServerButton, "Append code from a file onto the end of the existing code");
     enable(newButton, "Clear the current code and start afresh");
     enable(demosButton, "Load a demonstration program");
     enable(trimButton, "Remove all 'newCode' selectors that can be removed (shortcut: Alt-t)");
@@ -1549,6 +1557,14 @@ async function handleWorkerIO(data: WebWorkerWriteMessage) {
     case "readFile":
       try {
         const file = await elanInputOutput.readFile();
+        runWorker?.postMessage(readMsg(file));
+      } catch (e) {
+        runWorker?.postMessage(errorMsg(e));
+      }
+      break;
+    case "readDataFile":
+      try {
+        const file = await elanInputOutput.readDataFile(data.parameters[0] as string);
         runWorker?.postMessage(readMsg(file));
       } catch (e) {
         runWorker?.postMessage(errorMsg(e));

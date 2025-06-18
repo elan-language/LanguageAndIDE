@@ -802,4 +802,9 @@ export class StdLib {
   ) {
     await this.system!.elanInputOutput.tone(duration, frequency, volume);
   }
+
+  @elanFunction(["name"], FunctionOptions.impureAsync, ElanString)
+  async readDataFile(name: string): Promise<string> {
+    return await this.system!.elanInputOutput.readDataFile(name);
+  }
 }
