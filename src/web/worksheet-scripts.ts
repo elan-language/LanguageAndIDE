@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-const answersSelector = "input:not(.step-complete), textarea, select";
+const answersSelector = "input.question, textarea.question, select.question";
 const answers = document.querySelectorAll(answersSelector);
 const hints = document.querySelectorAll("div.hint");
 const doneCheckboxes = document.querySelectorAll("div.step > input.step-complete");
@@ -200,7 +200,7 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
       >;
 
       const answeredInputs = step.querySelectorAll(
-        "input.answered, textarea.answered, select.answered",
+        "input.question.answered, textarea.question.answered, select.question.answered",
       );
       if (allInputs.length !== answeredInputs.length) {
         const msg = document.createElement("div");
