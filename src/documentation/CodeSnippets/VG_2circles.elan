@@ -1,8 +1,8 @@
-# 37d0d1a7ddb003859bbb018106d7780f9783eb76dd1f9869a82a560992d320c9 Elan 1.2.1 guest default_profile valid
+# 8491c587344dd80d5d0fa66db7e7ff4c631e77826377e690795ed680bd0be42b Elan 1.2.1 guest default_profile valid
 
 main
   variable vg set to new List<of VectorGraphic>()
-  let circ be new CircleVG() with centreX set to 50, centreY set to 37, radius set to 30, fillColour set to green
+  let circ be new CircleVG() with centreX set to 50, centreY set to 37.5, radius set to 30, fillColour set to green
   call vg.append(circ)
   while true
     call displayVectorGraphics(vg)

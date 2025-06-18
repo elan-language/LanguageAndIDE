@@ -1447,196 +1447,197 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <h1 id="CommonDotMethods">Common dot methods</h1>
 
 <h2>Dot methods that work on more than one fundamental Type</h2>
-<p>Although all applicable methods are described under each Type, this table lists those which are applicable to several Types.</p>
-<p>Click on a Type to go to the Type's dot methods, or on the <el-id>&#x2714;</el-id> tick to go to the specific method.</p>
+<p>Although all applicable methods are described in earlier sections under each Type, this table lists those which are applicable to several Types.</p>
+<p>Click on a Type to go to the Type's dot methods, or on the <el-id>&#x2714;</el-id> tick to go to the specific method on that Type.</p>
+
 <table >
  <tr>
-  <th>Type</th>
-  <th colspan="11">method</th>
- </tr><tr>
+  <th>Method</th>
+  <th colspan="13">Type</th>
+ </tr><tr><!---->
   <td></td>
-  <td><el-method>asList</el-method></td>
-  <td><el-method>asSet</el-method></td>
-  <td><el-method>asString</el-method></td>
-  <td><el-method>contains</el-method></td>
-  <td><el-method>hasKey</el-method></td>
-  <td><el-method>head</el-method></td>
-  <td><el-method>indexOf</el-method></td>
-  <td><el-method>length</el-method></td>
-  <td><el-method>peek</el-method></td>
-  <td><el-method>withPut</el-method></td>
-  <td><el-method>withRemoveAt</el-method></td>
- </tr><tr>
   <td><a href="#Int"><el-type>Int</el-type></a></td>
-  <td></td>
-  <td></td>
-  <td><a href="#asString_Int">&#x2714;</a></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr>
   <td><a href="#Float"><el-type>Float</el-type></a></td>
-  <td></td>
-  <td></td>
-  <td><a href="#asString_Float">&#x2714;</a></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr>
   <td><a href="#Boolean"><el-type>Boolean</el-type></a></td>
-  <td></td>
-  <td></td>
-  <td><a href="#asString_Boolean">&#x2714;</a></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr>
   <td><a href="#String"><el-type>String</el-type></a></td>
-  <td><a href="#asList_String">&#x2714;</a></td>
-  <td></td>
-  <td><a href="#asString_String">&#x2714;</a></td>
-  <td><a href="#contains_String">&#x2714;</a></td>
-  <td></td>
-  <td></td>
-  <td><a href="#indexOf_String">&#x2714;</a></td>
-  <td><a href="#length_String">&#x2714;</a></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr>
   <td><a href="#Array"><el-type>Array</el-type></a></td>
+  <td><a href="#Array2D"><el-type>Array2D</el-type></a></td>
+  <td><a href="#List"><el-type>List</el-type></a></td>
+  <td><a href="#ListImmutable"><el-type>List<br>Immutable</el-type></a></td>
+  <td><a href="#Dictionary"><el-type>Dictionary</el-type></a></td>
+  <td><a href="#DictionaryImmutable"><el-type>Dictionary<br>Immutable</el-type></a></td>
+  <td><a href="#SetType"><el-type>Set</el-type></a></td>
+  <td><a href="#Stack"><el-type>Stack</el-type></a></td>
+  <td><a href="#Queue"><el-type>Queue</el-type></a></td>
+ </tr><tr><!---->
+  <td><el-method>asList</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#asList_String">&#x2714;</a></td>
   <td><a href="#asList_Array">&#x2714;</a></td>
   <td></td>
-  <td><a href="#asString_Array">&#x2714;</a></td>
-  <td><a href="#contains_Array">&#x2714;</a></td>
   <td></td>
-  <td></td>
-  <td><a href="#indexOf_Array">&#x2714;</a></td>
-  <td><a href="#length_Array">&#x2714;</a></td>
-  <td></td>
-  <td><a href="#withPut_Array">&#x2714;</a></td>
-  <td></td>
- </tr><tr>
-  <td><a href="#Array2D"><el-type>Array2D</el-type></a></td>
-  <td></td>
-  <td></td>
-  <td><a href="#asString_Array2D">&#x2714;</a></td>
-  <td><a href="#contains_Array2D">&#x2714;</a></td>
-  <td></td>
-  <td></td>
-  <td><a href="#indexOf_Array2D">&#x2714;</a></td>
-  <td></td>
-  <td></td>
-  <td><a href="#withPut_Array2D">&#x2714;</a></td>
-  <td></td>
- </tr><tr>
-  <td><a href="#List"><el-type>List</el-type></a></td>
-  <td></td>
-  <td><a href="#asSet_List">&#x2714;</a></td>
-  <td><a href="#asString_List">&#x2714;</a></td>
-  <td><a href="#contains_List">&#x2714;</a></td>
-  <td></td>
-  <td><a href="#head_List">&#x2714;</a></td>
-  <td><a href="#indexOf_List">&#x2714;</a></td>
-  <td><a href="#length_List">&#x2714;</a></td>
-  <td></td>
-  <td><a href="#withPut_List">&#x2714;</a></td>
-  <td><a href="#withRemoveAt_List">&#x2714;</a></td>
- </tr><tr>
-  <td><a href="#ListImmutable"><el-type>ListImmutable</el-type></a></td>
   <td><a href="#asList_ListImmutable">&#x2714;</a></td>
-  <td><a href="#asSet_ListImmutable">&#x2714;</a></td>
-  <td><a href="#contains_ListImmutable">&#x2714;</a></td>
-  <td><a href="#head_ListImmutable">&#x2714;</a></td>
-  <td></td>
-  <td><a href="#indexOf_ListImmutable">&#x2714;</a></td>
-  <td><a href="#length_ListImmutable">&#x2714;</a></td>
-  <td><a href="#length_ListImmutable">&#x2714;</a></td>
-  <td></td>
-  <td><a href="#withPut_ListImmutable">&#x2714;</a></td>
-  <td><a href="#withRemoveAt_ListImmutable">&#x2714;</a></td>
- </tr><tr>
-  <td><a href="#Dictionary"><el-type>Dictionary</el-type></a></td>
   <td></td>
   <td></td>
-  <td><a href="#asString_Dictionary">&#x2714;</a></td>
-  <td>see notes</td>
-  <td><a href="#hasKey_Dictionary">&#x2714;</a></td>
-  <td></td>
-  <td></td>
-  <td>see notes</td>
-  <td></td>
-  <td><a href="#withPut_Dictionary">&#x2714;</a></td>
-  <td><a href="#withRemoveAt_Dictionary">&#x2714;</a></td>
- </tr><tr>
-  <td><a href="#DictionaryImmutable"><el-type>DictionaryImmutable</el-type></a></td>
-  <td></td>
-  <td></td>
-  <td><a href="#asString_DictionaryImmutable">&#x2714;</a></td>
-  <td>see notes</td>
-  <td><a href="#hasKey_DictionaryImmutable">&#x2714;</a></td>
-  <td></td>
-  <td></td>
-  <td>see notes</td>
-  <td></td>
-  <td><a href="#withPut_DictionaryImmutable">&#x2714;</a></td>
-  <td><a href="#withRemoveAt_DictionaryImmutable">&#x2714;</a></td>
- </tr><tr>
-  <td><a href="#SetType"><el-type>Set</el-type></a></td>
   <td><a href="#asList_Set">&#x2714;</a></td>
   <td></td>
+  <td></td>
+ </tr><tr><!---->
+  <td><el-method>asSet</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#asSet_List">&#x2714;</a></td>
+  <td><a href="#asSet_ListImmutable">&#x2714;</a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr><!---->
+  <td><el-method>asString</el-method></td>
+  <td><a href="#asString_Int">&#x2714;</a></td>
+  <td><a href="#asString_Float">&#x2714;</a></td>
+  <td><a href="#asString_Boolean">&#x2714;</a></td>
+  <td><a href="#asString_String">&#x2714;</a></td>
+  <td><a href="#asString_Array">&#x2714;</a></td>
+  <td><a href="#asString_Array2D">&#x2714;</a></td>
+  <td><a href="#asString_List">&#x2714;</a></td>
+  <td><a href="#asString_ListImmutable">&#x2714;</a></td>
+  <td><a href="#asString_Dictionary">&#x2714;</a></td>
+  <td><a href="#asString_DictionaryImmutable">&#x2714;</a></td>
   <td><a href="#asString_Set">&#x2714;</a></td>
+  <td><a href="#asString_Stack">&#x2714;</a></td>
+  <td><a href="#asString_Queue">&#x2714;</a></td>
+ </tr><tr><!---->
+  <td><el-method>contains</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#contains_String">&#x2714;</a></td>
+  <td><a href="#contains_Array">&#x2714;</a></td>
+  <td><a href="#contains_Array2D">&#x2714;</a></td>
+  <td><a href="#contains_List">&#x2714;</a></td>
+  <td><a href="#contains_ListImmutable">&#x2714;</a></td>
+  <td>see notes</td>
+  <td>see notes</td>
   <td><a href="#contains_Set">&#x2714;</a></td>
   <td></td>
   <td></td>
+ </tr><tr><!---->
+  <td><el-method>hasKey</el-method></td>
   <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#hasKey_Dictionary">&#x2714;</a></td>
+  <td><a href="#hasKey_DictionaryImmutable">&#x2714;</a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr><!---->
+  <td><el-method>head</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#head_List">&#x2714;</a></td>
+  <td><a href="#head_ListImmutable">&#x2714;</a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr><!---->
+  <td><el-method>indexOf</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#indexOf_String">&#x2714;</a></td>
+  <td><a href="#indexOf_Array">&#x2714;</a></td>
+  <td><a href="#indexOf_Array2D">&#x2714;</a></td>
+  <td><a href="#indexOf_List">&#x2714;</a></td>
+  <td><a href="#indexOf_ListImmutable">&#x2714;</a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr><!---->
+  <td><el-method>length</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#length_String">&#x2714;</a></td>
+  <td><a href="#length_Array">&#x2714;</a></td>
+  <td></td>
+  <td><a href="#length_List">&#x2714;</a></td>
+  <td><a href="#length_ListImmutable">&#x2714;</a></td>
+  <td>see notes</td>
+  <td>see notes</td>
   <td><a href="#length_Set">&#x2714;</a></td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr><tr>
-  <td><a href="#Stack"><el-type>Stack</el-type></a></td>
-  <td></td>
-  <td></td>
-  <td><a href="#asString_Stack">&#x2714;</a></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
   <td><a href="#length_Stack">&#x2714;</a></td>
-  <td><a href="#peek_Stack">&#x2714;</a></td>
-  <td></td>
-  <td></td>
- </tr><tr>
-  <td><a href="#Queue"><el-type>Queue</el-type></a></td>
-  <td></td>
-  <td></td>
-  <td><a href="#asString_Queue">&#x2714;</a></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
   <td><a href="#length_Queue">&#x2714;</a></td>
+ </tr><tr><!---->
+  <td><el-method>peek</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#peek_Stack">&#x2714;</a></td>
   <td><a href="#peek_Queue">&#x2714;</a></td>
+ </tr><tr><!---->
+  <td><el-method>withPut</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#withPut_Array">&#x2714;</a></td>
+  <td><a href="#withPut_Array2D">&#x2714;</a></td>
+  <td><a href="#withPut_List">&#x2714;</a></td>
+  <td><a href="#withPut_ListImmutable">&#x2714;</a></td>
+  <td><a href="#withPut_Dictionary">&#x2714;</a></td>
+  <td><a href="#withPut_DictionaryImmutable">&#x2714;</a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr><!---->
+  <td><el-method>withRemoveAt</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#withRemoveAt_List">&#x2714;</a></td>
+  <td><a href="#withRemoveAt_ListImmutable">&#x2714;</a></td>
+  <td><a href="#withRemoveAt_Dictionary">&#x2714;</a></td>
+  <td><a href="#withRemoveAt_DictionaryImmutable">&#x2714;</a></td>
+  <td></td>
   <td></td>
   <td></td>
  </tr>
 </table>
+</body>
+</html>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
