@@ -1,10 +1,10 @@
-# 57d472f0d5f81deeefc59892f0c5e76749801efd06aec9c174ef4f551f27eb52 Elan 1.2.1 guest default_profile valid
+# c3daccc76653dc12e9b95bafbf56c2be1e5664f576c92776c9b0ef47c66cf768 Elan 1.2.1 guest default_profile valid
 
 main
   let bubbles be new List<of CircleVG>()
   # create 20 small bubbles at the bottom
   for i from 1 to 20 step 1
-    let b be new CircleVG() with centreX set to i*5 + 2, centreY set to 75, radius set to 1, fillColour set to transparent, strokeColour set to randomInt(0, white)
+    let b be new CircleVG() with centreX set to i*5 + 2, centreY set to 75, radius set to 0, fillColour set to transparent, strokeColour set to randomInt(0, white)
     call bubbles.append(b)
   end for
   while true
@@ -15,9 +15,9 @@ end main
 procedure moveGrowBurst(bubbles as List<of CircleVG>)
   each b in bubbles
     if random() < 0.05 then
-      # 1/20 chance bubble 'bursts', and is replaced by new one at the bottom
+      # 5% chance bubble 'bursts' and starts again tiny at bottom
+      call b.setRadius(0)
       call b.setCentreY(75)
-      call b.setRadius(1)
     else
       # bubble rises and grows slightly
       call b.setCentreY(b.centreY - 1)
