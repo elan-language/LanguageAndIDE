@@ -1,10 +1,9 @@
 /* Initially, everything hidden except the Save button and message */
 
-    .docTitle *,
-    #auto-save
-    {
-        display: block;
+    .docTitle * {
+        display: block
     }
+    #auto-save,
     #auto-save + span
     {
         display: inline;

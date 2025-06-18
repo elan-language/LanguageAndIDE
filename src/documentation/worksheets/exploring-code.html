@@ -47,7 +47,7 @@
     </li>
     <li>Before we move on to explore the code, if your mouse has a scroll-wheel then - with the focus on the
         code editor - hold down the <b>Ctrl</b> key and scroll the mouse wheel, both ways. What is the effect?
-        <textarea id="input1">
+        <textarea id="input1"></textarea>
     </li>
 </ul>
 
@@ -69,7 +69,7 @@
         <el-kw>let</el-kw> instruction, or simply as 'a <el-kw>call</el-kw>' or 'a <el-kw>let</el-kw>'.</li>  
         <li>Find at least five different keywords that define instructions within this program - not including <el-kw>end</el-kw>
         (we'll explain that one shortly) - and enter them here:
-        <textarea id="input2"> </li>         
+        <textarea id="input2"></textarea></li>         
         <li>A line that begins with a <el-comment>#</el-comment> ('hash symbol') and is coloured <el-comment>like this</el-comment> is
         called  a 'comment'. A comment is <i>not</i> an instruction - hence it does not have an instruction number - and plays no part in what the code <i>does</i>.
         Comments can provide additional information <i>about the code</i> for the human reader's benefit.
@@ -98,11 +98,11 @@
         by that initial keyword - which is why a line beginning <el-kw>end</el-kw> is <i>not</i> an
         instruction in its own right. Compound instructions can even contain other compound instructions which
         is sometimes called 'nesting'. How many different compound instructions can you identify in this
-        code - enter only the initial keyword of each different kind: <textarea id="input3a"></li>
+        code - enter only the initial keyword of each different kind: <textarea id="input3a"></textarea></li>
         <li>Press cursor-right to navigate <i>into</i> the <el-kw>for</el-kw>
         instruction, and then use the up/down keys. Also try the <b>Home</b> and <b>End</b> keys if your keyboard
         has them. Either way, how far can you move the highlight up and down
-        from here <textarea id="input3b"></li>
+        from here <textarea id="input3b"></textarea></li>
         <li>Now press cursor left to go back <i>out</i>to the enclosing compound instruction, and then try 
             cursor up/down, <b>Home</b> and <b>End</b>. What you will discover is that up/own, <b>Home</b> and <b>End</b>
             apply to instructions within the same indentation level, and that you need to use left/right to
@@ -122,11 +122,11 @@
         The requirement for <b>Ctrl</b> is to reduce the risk of accidental deletion. Notice that all the instructions following
         the one deleted have been renumbered.</li>
         <li><i>In this case</i>, despite the deleted instruction, the program will still run. Run it and
-        briefly describe the difference it has made to the behaviour of the program: <textarea id="input4"></li>
+        briefly describe the difference it has made to the behaviour of the program: <textarea id="input4"></textarea></li>
         <li>Restore the deleted instruction by pressing <b>Ctrl-z</b> (alternatively, you may  use the <b>Undo</b> button.</li>
         <li>Select the restored instruction number 10 again, and then press <b>Ctrl-&#x2193;</b>. Describe what this
-            has done: <textarea id="input4a"></li>
-        <li>What happens if you press <b>Ctrl-&#x2193;</b> <i>again</i>? <textarea id="input4b"></li>
+            has done: <textarea id="input4a"></textarea></li>
+        <li>What happens if you press <b>Ctrl-&#x2193;</b> <i>again</i>? <textarea id="input4b"></textarea></li>
         <li>Restore the original code, either by applying the opposite action (<b>Ctrl-&#x21931;</b>), or you may again just undo the action.</li>
     </ul>
     <label class="done" for="done4">Step completed</label>
@@ -160,7 +160,7 @@
         <li>Press <b>Backspace</b> <i>once</i> to delete the 5, and then type 1 and <b>Enter</b>. The field
         returns to its unselected form, and - because this was the <i>last</i> field (in this case the only field)
         for the instruction, the focus has now moved on to the next instruction or comment. Run the program
-        again and briefly describe what difference you notice. <textarea id="input5a"></li>
+        again and briefly describe what difference you notice. <textarea id="input5a"></textarea></li>
         <li>Select that same field again, and this time delete the whole value <el-lit>0.05</el-lit>.
         Now the field's background colour will have changed, and also the 'Parse' status in the 'status panel'
         (top-right corner of the screen) will have changed - both indicating that a field
@@ -176,7 +176,7 @@
         the <el-method>pause</el-method> and then again to select the second field, which holds the value <el-lit>50</el-lit>.
         Edit this value to <el-lit>250</el-lit> and run the program to test that it is much slower. Leave the change
         in place as that will help us in our next step.</li>
-    <li>From the field, press <b>Tab</b> multiple happens. Briefly describe what happens: <textarea id="input5b">.</li>
+    <li>From the field, press <b>Tab</b> multiple happens. Briefly describe what happens: <textarea id="input5b"></textarea>.</li>
 </ul>
 <label class="done" for="done5">Step completed</label>
 <input type="checkbox" class="step-complete" id="done5"/>
@@ -212,7 +212,7 @@
         should show that all is good. So run the program.</li>
     <li>If you don't hear <i>anything</i>, check the sound settings on your computer. And, if you
         are working in a classroom, <i>please turn the volume as low as possible while still audible.
-            Once you can hear something, describe what you hear: <textarea id="input6a">.</li>
+            Once you can hear something, describe what you hear: <textarea id="input6a"></textarea>.</li>
     <li>We got a result - the very short duration means that it sounds more like a 'click' but 
         that's OK. But the clicks shouldn't be regular - they should be <i>irregular</i>, occurring
         whenever a bubble bursts. We've put the instruction in the wrong place! It needs to be
@@ -263,10 +263,10 @@
       </div>
     </div>
   
-</div>
-<div hidden="" id="hash"></div>
-<div hidden="" id="changes"></div>
 
-<script src="../../../out/website/worksheet-scripts.js"></script>
+    <div hidden="" id="hash"></div>
+    <div hidden="" id="changes"></div>
+</div>
+    <script src="../../../out/website/worksheet-scripts.js"></script>
 </body>
 </html>
