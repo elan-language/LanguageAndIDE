@@ -19,8 +19,9 @@ if (fh) {
 }
 
 async function write(code: string, fh: FileSystemFileHandle) {
+  const te = new TextEncoder();
   const writeable = await fh.createWritable();
-  await writeable.write(code);
+  await writeable.write(te.encode(code));
   await writeable.close();
   document.getElementById("worksheet")?.classList.add("saved");
 }
@@ -42,58 +43,40 @@ async function chromeSave(code: string, newName: string) {
 }
 
 function getUpdatedDocument() {
-  let code = new XMLSerializer().serializeToString(document);
-
   for (const e of document.querySelectorAll("input[type=text]") as NodeListOf<HTMLInputElement>) {
-    const id = e.id;
     const v = e.value;
-    const toReplace = `id="${id}" value=".*"`;
-    const re = new RegExp(toReplace);
 
-    code = code.replace(re, `id="${id}" value="${v}"`);
+    e.setAttribute("value", v);
   }
 
   for (const e of document.querySelectorAll("input[type=radio]") as NodeListOf<HTMLInputElement>) {
-    const id = e.id;
     const v = e.checked ? "true" : "false";
-    const toReplace = `id="${id}" />`;
-    const re = new RegExp(toReplace);
 
-    code = code.replace(re, `id="${id}" checked="${v}" />`);
+    e.setAttribute("checked", v);
   }
 
   for (const e of document.querySelectorAll(
     "input[type=checkbox]",
   ) as NodeListOf<HTMLInputElement>) {
-    const id = e.id;
-    const v = e.checked ? `checked="true"` : "";
-    const toReplace = `id="${id}" />`;
-    const re = new RegExp(toReplace);
-
-    code = code.replace(re, `id="${id}" ${v} />`);
+    if (e.checked) {
+      e.setAttribute("checked", "true");
+    }
   }
 
   for (const e of document.getElementsByTagName("textarea")) {
-    const id = e.id;
     const v = e.value;
-    const toReplace = `id="${id}">.*<`;
-    const re = new RegExp(toReplace);
 
-    code = code.replace(re, `id="${id}">${v}<`);
+    e.innerText = v;
   }
 
   for (const e of document.getElementsByTagName("select")) {
     const options = e.options;
     const index = options.selectedIndex;
 
-    const v = options[index].value;
-
-    const toReplace = `option>${v}`;
-    const re = new RegExp(toReplace);
-
-    code = code.replace(re, `option selected>${v}`);
+    options[index].setAttribute("selected", "");
   }
 
+  const code = new XMLSerializer().serializeToString(document);
   return code;
 }
 
