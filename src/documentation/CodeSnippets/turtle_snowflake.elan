@@ -1,8 +1,8 @@
-# 5aff43a646eea4b801e86f33aab2452ce56dd12852a1d49cc5a5fb228535b8fa Elan 1.2.1 guest default_profile valid
+# ca092b5aa1cbce9233bc7760955848c904659b5f77323879183a260c49d3a557 Elan 1.2.2 guest default_profile valid
 
 main
   variable t set to new Turtle()
-  call t.placeAt(20, 20)
+  call t.placeAt(-50, 30)
   call t.turn(90)
   call t.show()
   for i from 1 to 3 step 1

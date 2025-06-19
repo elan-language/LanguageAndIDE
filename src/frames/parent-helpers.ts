@@ -35,7 +35,8 @@ export function parentHelper_removeChild(parent: Parent, child: Frame): void {
 
 export function parentHelper_removeAllSelectedChildren(parent: Parent): Frame[] {
   const selected = parentHelper_getAllSelectedChildren(parent);
-  for (const child of selected) {
+  const nonSelectors = selected.filter((s) => !(s.initialKeywords() === "selector"));
+  for (const child of nonSelectors) {
     parentHelper_removeChild(parent, child);
   }
   return selected;
