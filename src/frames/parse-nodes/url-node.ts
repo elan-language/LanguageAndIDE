@@ -16,11 +16,16 @@ export class UrlNode extends AbstractParseNode {
 
   validateUrl(text: string) {
     try {
-      const url = text.split(" ");
-      const remainingText = url.length === 1 ? "" : url.slice(1).join("");
+      let url = text;
+      let remainingText = "";
+      const firstSpace = text.indexOf(" ");
+      if (firstSpace > 0) {
+        url = text.slice(0, firstSpace);
+        remainingText = text.slice(firstSpace);
+      }
 
-      new URL(url[0]);
-      this.set(ParseStatus.valid, text, remainingText);
+      new URL(url);
+      this.set(ParseStatus.valid, url, remainingText);
     } catch {
       this.set(ParseStatus.invalid, text, "");
     }
@@ -53,7 +58,7 @@ export class UrlNode extends AbstractParseNode {
     }
   }
 
-  renderAsSource(): string {
-    return this.matchedText; // Overridden to avoid trimming
-  }
+  // renderAsSource(): string {
+  //   return this.matchedText; // Overridden to avoid trimming
+  // }
 }
