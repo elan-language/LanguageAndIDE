@@ -99,7 +99,8 @@ autoSaveButton!.addEventListener("click", async () => {
     // fake out saving
     document.getElementById("worksheet")?.classList.add("saved");
   } else {
-    fh = await chromeSave(code, "workSheet");
+    const suggestedName = document.getElementsByClassName("docTitle")[0].innerHTML;
+    fh = await chromeSave(code, suggestedName);
   }
 
   scrollToActiveElement();
