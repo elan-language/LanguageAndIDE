@@ -1,16 +1,17 @@
-# f1cd955f995fa4e5ac4ade88a04c740e864b0451b4697d15155611bc2241626e Elan 1.2.0 guest default_profile valid
+# 02b5b6e8d506f613190dad98538953c4c4cbb22c3de5c16da1de2854edb443c3 Elan 1.2.1 guest default_profile valid
 
 main
-  let sequence be new List<of Int>()
   variable ok set to true
   variable interval set to 1000
+  let sequence be empty List<of Int>
   while ok
     call simonsTurn(sequence, interval)
     call clearVectorGraphics()
+    call pause(1000)
     call playersTurn(sequence, interval, ok)
-    set interval to interval - 25
+    call clearVectorGraphics()
   end while
-  print "Your score: {sequence.length() - 1}"
+  print "Game over. You scored: {sequence.length() - 1}"
 end main
 
 procedure simonsTurn(sequence as List<of Int>, interval as Int)
@@ -20,31 +21,28 @@ procedure simonsTurn(sequence as List<of Int>, interval as Int)
   end each
 end procedure
 
+procedure playersTurn(sequence as List<of Int>, interval as Int, out ok as Boolean)
+  variable counter set to 0
+  variable correctSoFar set to true
+  while (counter < sequence.length()) and correctSoFar
+    let k be waitForKey()
+    let valid, move be parseAsInt(k)
+    if valid and (sequence[counter] is move) then
+      call displayMove(move, interval)
+    else
+      set correctSoFar to false
+      set ok to false
+    end if
+    set counter to counter + 1
+  end while
+end procedure
+
 procedure displayMove(move as Int, interval as Int)
-  let circle be new CircleVG() with centreX set to 20*move - 5, centreY set to 15, radius set to 10, fillColour set to colours[move - 1], strokeWidth set to 0
+  let colours be [red, yellow, blue, green]
+  let tones be [164.81, 220, 277.18, 329.63]
+  let circle be new CircleVG() with centreX set to move*20 - 5, centreY set to 15, radius set to 10, strokeWidth set to 0, fillColour set to colours[move - 1]
   call displayVectorGraphics([circle])
   call tone(interval, tones[move - 1], 0.1)
   call clearVectorGraphics()
   call pause(100)
 end procedure
-
-procedure playersTurn(sequence as List<of Int>, interval as Int, out ok as Boolean)
-  variable counter set to 0
-  while ok and (counter < sequence.length())
-    let k be waitForKey()
-    let valid, digit be parseAsInt(k)
-    if valid and (sequence[counter] is digit) then
-      set counter to counter + 1
-      call displayMove(digit, interval)
-    else
-      set ok to false
-    end if
-  end while
-  call pause(1000)
-  call clearVectorGraphics()
-  call pause(2000)
-end procedure
-
-constant colours set to {red, yellow, blue, green}
-
-constant tones set to {164.81, 220, 277.18, 329.63}
