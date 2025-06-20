@@ -166,7 +166,7 @@
           <main class="ok multiline" id="main3">
             <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
             <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field></el-statement>
-            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="selected focused ok"><el-txt><input spellcheck="false" data-cursorstart="26" data-cursorend="26" size="25" style="width: 26ch" value="[red, yellow, blue, green]"></el-txt></el-field></el-statement>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
             <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
             <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
             <el-kw>end main</el-kw>
@@ -926,7 +926,7 @@
         </li>
         <li>Within the <el-method>playersTurn</el-method> procedure, delete the instruction <el-code><el-kw>print</el-kw> "<el-lit>Wrong!</el-lit>"</el-code> and
         replace it with one that sets the value of <el-id>ok</el-id> to false.
-        <div class="hint" id="hint10b2">Hint: the revised procedure first line</div>
+        <div class="hint" id="hint10b2">Hint: the whole revised procedure</div>
         <div class="content" id="hint10b2content">
         <el-code-block>
           <el-proc class="ok multiline">
