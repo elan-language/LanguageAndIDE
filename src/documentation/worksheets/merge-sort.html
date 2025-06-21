@@ -92,9 +92,11 @@
         </ul>
       </p>
     </div>
-    <div class="hint" id="hint4" data-hint="">Hint 4: Some useful coding idioms</div> 
+    <div class="hint" id="hint4" data-hint="">Hint 4: Some useful coding idioms and hints</div> 
     <div class="content" id="hint4content">
         <ul>
+          <li>Define a <el-kw>variable</el-kw> <i>only</i> where the named value must later be re-assigned. 
+          In all other cases, define a named value with a <el/kw>let</el>.</li>
           <li>The method <el-method>length</el-method> - called as a 'dotted' method on a named value
           holding a list returns its length as an integer.</li>
           <li>You can use a 'range index' to extract a part of a list as a new list of the same
@@ -102,10 +104,9 @@
             at indexes 3, 4, 5, and 6 (the upper bound is <i>exclusive</i>) - but remembed that you
             can use named values for either or both of those bounds.</li>
           <li>Indexes for lists (like arrays) always start from 0.</li>
-          <li>To calculate the index for the mid-point of this list, divide the length by two, but
-            since this will, by default, result in a <el-type>Float</el-type> rather than an <el-type>Int</el-type>
-            - which you need - you can use the dotted method <el-method>floor</el-method> to find
-            the first integer value that is less-than-or-equal to the floating point value.
+          <li>To calculate the index for the mid-point of this list, use <i>integer division</i> to divide
+            the length by two:  <el-kw>div </el-kw><el-lit>2</el-lit>, rather than <el-code>/ <el-lit>2</el-lit></el-code>.
+            Think: why is that distinction important?
           </li>
         </ul>
       </p>
