@@ -69,7 +69,7 @@
         <li>A line that begins with a <el-comment>#</el-comment> ('hash symbol') is
         called  a 'comment'. A comment is <i>not</i> an instruction &ndash; hence it does not have an instruction number &ndash; and plays no part in what the code <i>does</i>.
         Comments provide additional information <i>about the code</i> for the human reader's benefit.
-        At the top of file you will see comment that tells you which version of Elan you are using.
+        At the top of file you will see a comment that tells you which version of Elan you are using.
         This version comment is always present at the top of an Elan code file &ndash; it cannot be edited, deleted, or moved.</li>
     </ul>
     <label class="done" for="done2">Step completed</label>
@@ -100,7 +100,7 @@
         by that initial keyword. (This is why a line beginning <el-kw>end</el-kw> is <i>not</i> an
         instruction in its own right &ndash; and doesn't have its own instruction number.) Compound instructions can even contain other compound instructions which
         is sometimes called 'nesting'. How many different compound instructions can you identify in this
-        code? (Enter only the initial keyword of each kind.) <textarea class="question" id="input3c"></textarea></li>
+        code, and what they? (Enter only the initial keyword of each kind.) <textarea class="question" id="input3c"></textarea></li>
         <li>Now press cursor-right to move back to the <i>first</i> instruction <i>within</i>
             the outer (compound) instruction.
             Then press cursor-left and -right a few times to explore the limits of how far you
@@ -152,7 +152,7 @@
         </li>
         <li>This highlighted area is a 'field'. Fields are the <i>editable</i> parts of an instruction.
         Most instructions define one, two, or three fields (<el-kw>main</el-kw> is an exception, having no fields).
-        The rest of the instruction is made up of keywords and, less-commonly, punctuation symbols.
+        The rest of the instruction is made up of keywords and, less commonly, punctuation symbols.
         These <i>fixed</i> parts cannot be edited because they define the essential and invariant nature of the instruction
          &ndash; so they may only be removed from the code by deleting the whole instruction as you have previously done.
          By contrast, in most programming languages you can edit every character in the code,
