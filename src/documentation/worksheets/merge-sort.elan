@@ -1,32 +1,30 @@
-# 1bde33be68ea2c04e6622117ba86d0aec724594bd155979403a89034882d682c Elan 1.2.3 guest default_profile valid
+# 743fadcefa91cea7f366bbe915b2b1a6b1fb30e610ca75728c023d50b299e88d Elan 1.2.2 guest default_profile valid
 
+# This code is the start-point for Worksheet 'Merge sort' where the task is to implement the 'sort' function properly, and hence get all tests passing.
 function sort(li as List<of String>) returns List<of String>
-  variable result set to li
-  # Write your implementation here, using the 'mergeSort' algorithm
-  return result
+  return ["x"]
 end function
 
 test sort
-  # 1. Edge case: empty
-  let l1 be empty List<of String>
-  assert sort(l1) is l1
-  # 2. Edge case: one item
+  # Edge case: empty
+  let emptyList be empty List<of String>
+  assert sort(emptyList) is emptyList
+  # Edge case: one item
   let li2 be ["plum"]
   assert sort(li2) is li2
-  # 3. Happy case: odd number of members
+  # Happy case: odd number of members
   let li3 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
+  # Happy case: even number of members
   let sorted3 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"]
   assert sort(li3) is sorted3
-  # 4. Happy case: even number of members
   let li4 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"]
   let sorted4 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"]
   assert sort(li4) is sorted4
-  # 5. Edge case: already sorted
+  # Edge case: already sorted
   let li5 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"]
   assert sort(li5) is li5
 end test
 
-# Merges two already-sorted lists (of potentially different lengths) into one sorted list
 function merge(a as List<of String>, b as List<of String>) returns List<of String>
   variable result set to empty List<of String>
   if a.length() is 0 then
@@ -42,14 +40,14 @@ function merge(a as List<of String>, b as List<of String>) returns List<of Strin
 end function
 
 test merge
-  let le be empty List<of String>
-  let l1 be ["apple", "lime", "pear"]
-  let l2 be ["apricot", "lemon", "plum", "watermelon"]
-  assert merge(le, le) is le
+  let emptyList be empty List<of String>
+  assert merge(emptyList, emptyList) is emptyList
   assert merge(["orange"], ["melon"]) is ["melon", "orange"]
-  assert merge(l1, l2) is ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
-  assert merge(l2, l1) is ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
-  assert merge(l1, le) is l1
-  assert merge(le, l2) is l2
+  let l1 be ["apple", "lime", "pear"]
+  let l2 be ["apricot", "lemon", "plum"]
+  assert merge(l1, l2) is ["apple", "apricot", "lemon", "lime", "pear", "plum"]
+  assert merge(l2, l1) is ["apple", "apricot", "lemon", "lime", "pear", "plum"]
+  assert merge(l1, emptyList) is l1
+  assert merge(emptyList, l2) is l2
   assert merge(l1, l1) is ["apple", "apple", "lime", "lime", "pear", "pear"]
 end test

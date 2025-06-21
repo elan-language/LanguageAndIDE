@@ -15,7 +15,7 @@
 <div id="worksheet">
 <div class="docTitle">Exploring and editing code</div>
 
-<button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future - at which point you will be asked to auto-save it again).</span>
+<button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span>
 
 <div class="step" id="step0">
   <label for="username">Enter your name: </label>
@@ -37,12 +37,12 @@
         by clicking the white, triangular <b>Run</b> button, you will need to stop it by clicking
         the white, square <b>Stop</b> button next to it. So now go ahead and run the program for
         a few seconds only, then stop, and click the <b>Worksheet</b> tab to return to here.</li>
-    <li>Notice that the code editor window (left of screen) now has a tint over it - 
+    <li>Notice that the code editor window (left of screen) now has a tint over it -
         so click somewhere on white space within the code editor pane to give it the focus (white background).
         <i>Remember that if the code editor has a tinted background it doesn't have focus and won't respond to
     your inputs.</i></li>
-    <li>If your mouse has a scroll-wheel then - with the focus on the
-        code editor - hold down the <b>Ctrl</b> key and scroll the mouse wheel, both ways. What is the effect?
+    <li>If your mouse has a scroll-wheel then &ndash; with the focus on the
+        code editor &ndash; hold down the <b>Ctrl</b> key and scroll the mouse wheel, both ways. What is the effect?
         <textarea class="question" id="input1"></textarea>
     </li>
 </ul>
@@ -56,21 +56,21 @@
     <ul>
         <li>The code is made up of instructions</li>
         <li>Each instruction is numbered on the right hand side. These 'instruction' numbers are not part of the code itself -
-            they play no part in what the code <i>does</i> - the editor adds the numbers to the code to make it easy for
+            they play no part in what the code <i>does</i> &ndash; the editor adds the numbers to the code to make it easy for
             us to draw attention to a specific instruction.</li>
-        <li>An instruction always starts with a 'keyword' which is coloured like <el-kw>this</el-kw> and is always lower-case. 
-             Within <i>some</i> instructions you will see some additional keywords. 
+        <li>An instruction always starts with a 'keyword' which is coloured like <el-kw>this</el-kw> and is always lower-case.
+             Within <i>some</i> instructions you will see some additional keywords.
              However, it is the <i>initial</i> keyword that defines the nature of the instruction.
-             Thus we might refer to a '<el-kw>call</el-kw> instruction' or 'a 
-        <el-kw>let</el-kw> instruction, or simply 'a <el-kw>call</el-kw>' or 'a <el-kw>let</el-kw>'.</li>  
-        <li>Find at least five different keywords that define instructions within this program - not including <el-kw>end</el-kw>
-        (we'll explain that one shortly) - and enter them here:
-        <textarea class="question" id="input2"></textarea></li>         
+             Thus we might refer to a '<el-kw>call</el-kw> instruction' or 'a
+        <el-kw>let</el-kw> instruction, or simply 'a <el-kw>call</el-kw>' or 'a <el-kw>let</el-kw>'.</li>
+        <li>Find at least five different keywords that define instructions within this program &ndash; not including <el-kw>end</el-kw>
+        (we'll explain that one shortly) &ndash; and enter them here:
+        <textarea class="question" id="input2"></textarea></li>
         <li>A line that begins with a <el-comment>#</el-comment> ('hash symbol') is
-        called  a 'comment'. A comment is <i>not</i> an instruction - hence it does not have an instruction number - and plays no part in what the code <i>does</i>.
+        called  a 'comment'. A comment is <i>not</i> an instruction &ndash; hence it does not have an instruction number &ndash; and plays no part in what the code <i>does</i>.
         Comments provide additional information <i>about the code</i> for the human reader's benefit.
-        At the top of file you will see comment that tells you which version of Elan you are using. 
-        This version comment is always present at the top of an Elan code file - it cannot be edited, deleted, or moved.</li>
+        At the top of file you will see a comment that tells you which version of Elan you are using.
+        This version comment is always present at the top of an Elan code file &ndash; it cannot be edited, deleted, or moved.</li>
     </ul>
     <label class="done" for="done2">Step completed</label>
     <input type="checkbox" class="step-complete" id="done2"/>
@@ -81,30 +81,30 @@
     <ul>
         <li>In order to edit, move, or delete, an instruction (we'll do all three of those, shortly)
             you first need to 'select' (highlight) it. There are several different ways to do this.</li>
-        <li>Locate instruction number 11 on the right-hand side and click <i>on the number</i>. 
+        <li>Locate instruction number 11 on the right-hand side and click <i>on the number</i>.
             This will <span style="background-color: var(--selection);">highlight</span>
-            the whole of that instruction - including the instruction number.</li>
+            the whole of that instruction &ndash; including the instruction number.</li>
         <li>Now select instruction number 14, but this time, instead of clicking on the number, click
             on the initial keyword in that instruction (<el-kw>call</el-kw>). You can select an
-            instruction either way - it makes no difference.</li>
+            instruction either way &ndash; it makes no difference.</li>
         <li>Press the cursor-down key (<b>&#x2193;</b>) which will select the next instruction (or comment).
             And then cursor-up to return to the one above.</li>
-        <li>This time press <b>Shift-&#x2193;</b>. 
+        <li>This time press <b>Shift-&#x2193;</b>.
             What difference does holding down the <b>Shift</b> make? <textarea class="question" id="3a"></textarea></li>
-        <li>Try pressing cursor-up and down (with no <b>Shift</b>) a few times. 
+        <li>Try pressing cursor-up and down (with no <b>Shift</b>) a few times.
             How far can you move the highlight this way? <textarea class="question" id="3b"></textarea></li>
         <li>Now press the cursor-left key and you will see that this shifts the highlight to instruction
-            number 10 - an <el-kw>if</el-kw> instruction - and that the highlight has a more complex shape. <el-kw>if</el-kw> is an example of a 'compound' instruction: it <i>contains</i>
+            number 10 &ndash; an <el-kw>if</el-kw> instruction &ndash; and that the highlight has a more complex shape. <el-kw>if</el-kw> is an example of a 'compound' instruction: it <i>contains</i>
         other instructions, all of which are indented by two characters just to make the structure
         clearer. All compound instructions start with a keyword and end with <el-kw>end</el-kw> followed
         by that initial keyword. (This is why a line beginning <el-kw>end</el-kw> is <i>not</i> an
-        instruction in its own right - and doesn't have its own instruction number.) Compound instructions can even contain other compound instructions which
+        instruction in its own right &ndash; and doesn't have its own instruction number.) Compound instructions can even contain other compound instructions which
         is sometimes called 'nesting'. How many different compound instructions can you identify in this
-        code? (Enter only the initial keyword of each kind.) <textarea class="question" id="input3c"></textarea></li>
+        code, and what they? (Enter only the initial keyword of each kind.) <textarea class="question" id="input3c"></textarea></li>
         <li>Now press cursor-right to move back to the <i>first</i> instruction <i>within</i>
-            the outer (compound) instruction. 
+            the outer (compound) instruction.
             Then press cursor-left and -right a few times to explore the limits of how far you
-            can move the highlight in these directions.</li> 
+            can move the highlight in these directions.</li>
      </ul>
     <label class="done" for="done3">Step completed</label>
     <input type="checkbox" class="step-complete" id="done3"/>
@@ -113,15 +113,15 @@
 <div class="step" id="step4">
     <h3>4. Deleting or moving instructions</h3>
     <ul>
-        <li>Select instruction number 11. Then delete this instruction by pressing <b>Ctrl-Delete</b> 
-            - or <b>Ctrl-d</b> if your keyboard doesn't have a <b>Delete</b> key.
+        <li>Select instruction number 11. Then delete this instruction by pressing <b>Ctrl-Delete</b>
+            &ndash; or <b>Ctrl-d</b> if your keyboard doesn't have a <b>Delete</b> key.
         (The requirement for <b>Ctrl</b> is to reduce the risk of accidental deletion.)
          Notice that all the instructions following the one deleted have been renumbered.</li>
         <li><i>In this case</i>, despite the deleted instruction, the program will still run. Run it and
-        briefly describe the difference it has made to the behaviour of the program? 
+        briefly describe the difference it has made to the behaviour of the program?
         <textarea class="question" id="input4a"></textarea></li>
-        <li>Restore the deleted instruction by pressing <b>Ctrl-z</b> 
-            - alternatively, you may  use the <b>Undo</b> button.</li>
+        <li>Restore the deleted instruction by pressing <b>Ctrl-z</b>
+            &ndash; alternatively, you may  use the <b>Undo</b> button.</li>
         <li>Select instruction number 11 again, and then press <b>Ctrl-&#x2193;</b>. Describe what this
             has done? <textarea class="question" id="input4b"></textarea></li>
         <li>Restore the original code, either by applying the opposite action (<b>Ctrl-&#x2191;</b>),
@@ -138,11 +138,11 @@
         you sometimes need this ability. However, more commonly you will need to edit code <i>within</i>
         an instruction, so we'll do that now.</p>
     <ul>
-        <li>In this program, each bubble is updated - in position and size - multiple times per second, 
-            but as you can read from the comment above instruction 11 - with each update
-            there is a 5% chance of it bursting, which is simulated by reducing its 
+        <li>In this program, each bubble is updated &ndash; in position and size &ndash; multiple times per second,
+            but as you can read from the comment above instruction 11 &ndash; with each update
+            there is a 5% chance of it bursting, which is simulated by reducing its
             <el-id>radius</el-id> to <el-lit>0</el-lit> (instruction 11), and its
-            position back to the bottom of the screen (instruction 12). 
+            position back to the bottom of the screen (instruction 12).
             Let's experiment with reducing that probability.</li>
         <li>The 5% chance is represented by the value <el-lit>0.05</el-lit> in instruction 10.
             There are two ways to get the focus onto this value: either click directly on that value, or
@@ -150,44 +150,44 @@
             <i>part</i> of the instruction being highlighted like this:
             <el-code><el-field id="expr31" class="selected focused ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="15" data-cursorend="15" size="14" style="width: 15ch" value="random() &lt; 0.05"></el-txt><el-place><i>condition</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field></el-code>
         </li>
-        <li>This highlighted area is a 'field'. Fields are the <i>editable</i> parts of an instruction. 
+        <li>This highlighted area is a 'field'. Fields are the <i>editable</i> parts of an instruction.
         Most instructions define one, two, or three fields (<el-kw>main</el-kw> is an exception, having no fields).
-        The rest of the instruction is made up of keywords and, less-commonly, punctuation symbols. 
+        The rest of the instruction is made up of keywords and, less commonly, punctuation symbols.
         These <i>fixed</i> parts cannot be edited because they define the essential and invariant nature of the instruction
-         - so they may only be removed from the code by deleting the whole instruction as you have previously done. 
-         By constrast, in most programming languages you can edit every character in the code,
+         &ndash; so they may only be removed from the code by deleting the whole instruction as you have previously done.
+         By contrast, in most programming languages you can edit every character in the code,
           but this very commonly leads to errors ('syntax errors') that may be hard to diagnose.</li>
-        <li>Whennever a field has focus, it has: a coloured background, a thin black outline, and
+        <li>Whenever a field has focus, it has: a coloured background, a thin black outline, and
             a flashing line to indicate the cursor position, which defaults to the right-hand end.</li>
-        <li>Press <b>Backspace</b> <i>once</i> to delete the 5, and then type 1 (thereby reducing the chance to 1%) 
-            and then press <b>Enter</b>. The updated field returns to its unselected form, 
-            and - because this was the <i>last</i>, or in this case the <i>only</i>, field)
-        for the instruction - the focus has now moved on to the next instruction or comment. Run the program
+        <li>Press <b>Backspace</b> <i>once</i> to delete the 5, and then type 1 (thereby reducing the chance to 1%)
+            and then press <b>Enter</b>. The updated field returns to its unselected form,
+            and &ndash; because this was the <i>last</i>, or in this case the <i>only</i>, field)
+        for the instruction &ndash; the focus has now moved on to the next instruction or comment. Run the program
         again. What difference do you notice? <textarea class="question" id="input5a"></textarea></li>
         <li>Select that same field again, and this time <b>Backspace</b> four times to delete the whole value (<el-lit>0.01</el-lit>).
         Now the field's background colour will have changed, and also the 'Parse' status in the 'status panel'
-        (top-right corner of the screen) will have changed - both indicating that a field
+        (top-right corner of the screen) will have changed &ndash; both indicating that a field
         is incomplete. Also a 'prompt' (white text) indicates that a 'value or expression' is expected.
-        Try typing in <el-lit>.01</el-lit> (without a leading <el-lit>0</el-lit> ). 
-        The field background - and the parse status - turn red, 
-        indicating that this is an invalid entry 
+        Try typing in <el-lit>.01</el-lit> (without a leading <el-lit>0</el-lit> ).
+        The field background &ndash; and the parse status &ndash; turn red,
+        indicating that this is an invalid entry
         (because Elan requires that fractional numbers must always begin with a digit).
-        So correct the entry back to <el-lit>0.01</el-lit> 
-        - you can use the cursor-keys to move the cursor, you don't have  to delete all the characters.</li> 
-        <li>A useful rule of thumb is that if you are 
+        So correct the entry back to <el-lit>0.01</el-lit>
+        &ndash; you can use the cursor-keys to move the cursor, you don't have  to delete all the characters.</li>
+        <li>A useful rule of thumb is that if you are
         entering code into the right-hand end of a field and it turns red, use <b>Backspace</b> to remove characters until it turns
-         green or amber and try to work out why the first character that made it turn red was wrong. 
+         green or amber and try to work out why the first character that made it turn red was wrong.
          Identifying the cause of some errors takes time to learn, but at least with this editor you do get
          the error message as soon as you type one wrong character.</li>
     <li> Now select instruction number 17 and press <b>Tab</b> to select the first field which
          specifies a <el-method>pause</el-method>
          and then <b>Tab</b> again to select the second field,
          which holds the value <el-lit>50</el-lit>
-         (which specifies the pause lenght - <el-lit>50</el-lit> milliseconds at present).
+         (which specifies the pause length &ndash; <el-lit>50</el-lit> milliseconds at present).
           Edit this value to <el-lit>250</el-lit></li>
-     <li>From the field, press <b>Tab</b> multiple happens. What happens? 
+     <li>From the field, press <b>Tab</b> multiple happens. What happens?
         <textarea class="question" id="input5b"></textarea></li>
-     <li>Run the program to test that bubbles rise and expand more slowly. 
+     <li>Run the program to test that bubbles rise and expand more slowly.
         Leave the change in place as that will help us in our next step.</li>
 </ul>
 <label class="done" for="done5">Step completed</label>
@@ -198,66 +198,66 @@
 <h3>6. Inserting new instructions</h3>
 <p>We are now going to insert a new instruction to make an audible noise when a bubble bursts.</p>
 <ul>
-    <li>Select instruction number 17, and then hit <b>Enter</b>. 
+    <li>Select instruction number 17, and then hit <b>Enter</b>.
         This will insert a 'selector', where new code can be entered, <i>below</i> the current instruction
-        and the focus will have moved there. 
+        and the focus will have moved there.
         The selector shows the initial keyword for each kind of instruction
-        that may legitimately be inserted <i>at this location</i>. 
+        that may legitimately be inserted <i>at this location</i>.
         You select the instruction by starting to type it.
-        in <i>most</i> cases just the first letter is needed; in a few cases more characters are needed to 
+        in <i>most</i> cases just the first letter is needed; in a few cases more characters are needed to
         distinguish between instructions that start the same way.</li>
-    <li>Type <b>c</b> to insert a <el-kw>call</el-kw> instruction, noting that:t the <i>fixed</i> code
+    <li>Type <b>c</b> to insert a <el-kw>call</el-kw> instruction, noting that the <i>fixed</i> code
     has been added, the focus has shifted to the first field, and there is already a pop-up menu of options.
     What we want is the procedure named <el-method>tone</el-method>, but as that would be a long way down
     the list, just type a <b>t</b> and now you will see <el-method>tone</el-method> in the list of matching options
-    - at the top, in this case. Cursor-down to select <el-method>tone</el-method> and press <b>Enter</b>
+    &ndash; at the top, in this case. Cursor-down to select <el-method>tone</el-method> and press <b>Enter</b>
     to insert it in the field. You should
         always use the pop-up options <i>where you can</i><div class=""></div> not only because it saves typing, but because
         it reduces errors.</li>
-    <li>Press <b>Enter</b> which causes the second field to appear - between the brackets. This field
-        indicates what is expected (in white text) - three values representing:
+    <li>Press <b>Enter</b> which causes the second field to appear &ndash; between the brackets. This field
+        indicates what is expected (in white text) &ndash; three values representing:
         <ul>
             <li>The duration of the tone, in milliseconds.</li>
             <li>The frequency of the tone, in Hz.</li>
-            <li>The volumne of the tone</li>
+            <li>The volume of the tone</li>
         </ul>
         separated by commas. Type this:  <el-code>10, 500, 0.1</el-code> and hit <b>Enter</b>.
         Assuming you haven't made an error in the typing, the status panel (after a second or two)
         will show that all is good. So run the program.</li>
     <li>If you don't hear <i>anything</i>, check the sound settings on your computer. And, if you
         are working in a classroom, <i>please turn the volume as low as possible while still audible</i>.
-            Once you can hear something, describe what you hear? 
-            <textarea class="question" id="input6a"></textarea>.</li>
-    <li>We got a result. The very short duration means that it sounds more like a 'click' than a tone, but 
-        that's OK. However, the clicks shouldn't be sounding with every update - they should be occurring
+            Once you can hear something, describe what you hear?
+            <textarea class="question" id="input6a"></textarea></li>
+    <li>We got a result. The very short duration means that it sounds more like a 'click' than a tone, but
+        that's OK. However, the clicks shouldn't be sounding with every update &ndash; they should be occurring
         irregularly, whenever a bubble bursts. We've put the instruction in the wrong place! It needs to be
         just under instruction number 12, which simulates the burst. However, we can't just move
         the instruction upwards as we did before, because it needs be moved inside
         another compound instruction. So instead we will cut and paste it.</li>
      <li>Select the new instruction (number 18) then press <b>Ctrl-x</b> to
-    cut it - into the (invisible) clipboard. Now select instruction number 13 and hit <b>Shift-Enter</b> to
+    cut it &ndash; into the (invisible) clipboard. Now select instruction number 13 and hit <b>Shift-Enter</b> to
         create a new code selector <i>above</i> that instruction. (Yes, in this case you
-        could have selected instruction 12 and pressed <b>Enter</b> to insert the code 
-        <i>below</i> that - but you won't always have both options so it is useful
+        could have selected instruction 12 and pressed <b>Enter</b> to insert the code
+        <i>below</i> that &ndash; but you won't always have both options so it is useful
         to remember both). <i>But remember that you may only ever paste instructions
-        onto a new code selector, in focus</i>. Then press <b>Ctrl-v</b> to paste. 
+        onto a new code selector, in focus</i>. Then press <b>Ctrl-v</b> to paste.
         Assuming that any instruction(s) you are trying paste are valid for the target location (as it will be in this case)
-        the cut code will reappear - and instructions renumbered accordingly.
+        the cut code will reappear &ndash; and instructions renumbered accordingly.
         (We said 'instruction(s)' because it is possible to select <i>multiple</i>
-        <i>consecutive</i> instructions - as we did earlier - and move, delete, or 
+        <i>consecutive</i> instructions &ndash; as we did earlier &ndash; and move, delete, or
         copy and paste, them in one go.)
     </li>
     <li>Run the program and hopefully the clicks will now be irregular. If it is not clear
         that they <i>do</i> correspond with burst bubbles, slow down the program execution
-        again by increasing the length of the pause in the (now) instruction number 16.
+        again by increasing the length of the pause in the (now) instruction number 18.
     </li>
     <li>Lastly you may already have noticed that underneath instruction 18 you have been left with another
         selector for new code (it just shows as <el-code>new code</el-code> when it does not have focus).
-        When entering or editing a longer program it is not uncommon to end up with several of these 
-        surplus-to-requirements. They can selected and deleted individually, but the the <b>Trim</b>
-        button above the editor will remove all that can be removed - and this leaves
+        When entering or editing a longer program it is not uncommon to end up with several of these
+        surplus-to-requirements. They can selected and deleted individually, but the <b>Trim</b>
+        button above the editor will remove all that can be removed &ndash; and this leaves
         your code looking neater. (Any that it leaves indicate places where
-        further instructions are expected - because the code would make no sense without them).
+        further instructions are expected &ndash; because the code would make no sense without them).
     </li>
 </ul>
 <label class="done" for="done6">Step completed</label>
@@ -267,8 +267,8 @@
 <div class="step" id="step7">
 
     <p>Congratulations! You have finished the worksheet, and you now know enough about navigating and editing
-    code to start writing your first program - with the help of another Worksheet. Meantime,
-    click <b>Help > Home > IDE Reference > Code editor</b> - for a handy summary of all the above
+    code to start writing your first program &ndash; with the help of another Worksheet. Meantime,
+    click <b>Help > Home > IDE Reference > Code editor</b> &ndash; for a handy summary of all the above
     operations, and a few more that you can also try out here.</p>
 
     <div class="license">
@@ -279,7 +279,7 @@
           Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
       </div>
     </div>
-  
+
 
     <div hidden="" id="hash"></div>
     <div hidden="" id="changes"></div>
