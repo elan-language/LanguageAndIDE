@@ -1,10 +1,10 @@
-# df20981b011d9ba39255c49ce6bd51045d07ed03f5fc9e872d49a06be43544e9 Elan 1.2.2 guest default_profile valid
+# 009c8bd328acdb5098ddca9966d62e36dcb8005859811b1aa2178d673bbda868 Elan 1.2.2 guest default_profile valid
 
 function sort(li as List<of String>) returns List<of String>
   variable result set to li
   let len be li.length()
   if len > 1 then
-    let mid be (len/2).floor()
+    let mid be len div 2
     let frontHalf be sort(li[..mid])
     let backHalf be sort(li[mid..])
     set result to merge(frontHalf, backHalf)
