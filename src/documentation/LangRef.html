@@ -15,23 +15,22 @@
 <div id="generated-toc" class="generate_from_h1 generate_for_page"></div></div>
 
 <h1 id="GlobalInstructions">Global Instructions</h1>
-
-  <p><a href="#main">main</a>
-  <a href="#procedure">procedure</a>
-  <a href="#function">function</a>
-  <a href="#test">test</a>
-  <a href="#constant">constant</a>
-  <a href="#enum">enum</a>
-  <a href="#record">record</a>
-  <a href="#class">class</a>
-  <a href="#abstractclass">abstract</a>
-  <a href="#interface">interface</a>
-  <a href="#Comment">#</a></p>
-
+<p>
+ <a href="#main">main</a>,
+ <a href="#procedure">procedure</a>,
+ <a href="#function">function</a>,
+ <a href="#test">test</a>,
+ <a href="#constant">constant</a>,
+ <a href="#enum">enum</a>,
+ <a href="#record">record</a>,
+ <a href="#class">class</a>,
+ <a href="#abstractclass">abstract</a>,
+ <a href="#interface">interface</a>
+</p>
 <p>Global instructions (also referred to simply as &lsquo;globals&rsquo;) are located <em>directly</em> within a code file.
   They are never indented from the left-hand edge, nor may they be located <em>within</em> other instructions.
   Three of the globals &ndash; <el-code>main</el-code>, <el-code>function</el-code>, and <el-code>procedure</el-code> &ndash; are described as &lsquo;methods&rsquo; and these are defined by one or more <a href="#statement">statements</a> within them.
-  Four of the globals &ndash; record, class, abstract (class), and interface &ndash; define data structures and these always contain <a href="#Member">members</a>.
+  Four of the globals &ndash; <el-code>record</el-code>, <el-code>class</el-code>, <el-code>abstract</el-code> (class), and <el-code>interface</el-code> &ndash; define data structures and these always contain <a href="#Member">members</a>.
   The two remaining globals &ndash; <el-code>constant</el-code>, and <el-code>enum</el-code> &ndash; do not contain any further instructions.</p>
 
 <h2 id="main">Main</h2>
@@ -432,23 +431,19 @@ If you wish to have several subclasses of an <el-code>abstract class</el-code> t
 <p>An <el-code>interface</el-code> may inherit only from other <el-code>interface</el-code>s.</p>
 <p>Important: An <el-code>interface</el-code> must not re-declare abstract interfaces that are defined in any <el-code>interface</el-code> it inherits from, directly or indirectly.</p>
 
-<h2 id="global_comment"># (comment)</h2>
-<p>See <a href="#Comment">Comments</a>.</p>
-
-<h1 id="MemberInstructions">Member Instructions</h1>
-
-<a href="#constructor">constructor</a>,
-<a href="#property">property</a>,
-<a href="#procedure_method">procedure</a>,
-<a href="#function_method">function</a>,
-<a href="#abstractproperty">abstract property</a>,
-<a href="#abstractprocedure">abstract procedure</a>,
-<a href="#abstractfunction">abstract function</a>,
-<a href="#property">private property</a>,
-<a href="#procedure_method">private procedure</a>,
-<a href="#function_method">private function</a>,
-<a href="#Comment">#</a>
-
+<h1 id="MemberInstructions">Member instructions</h1>
+<p>
+ <a href="#constructor">constructor</a>,
+ <a href="#property">property</a>,
+ <a href="#procedure_method">procedure</a>,
+ <a href="#function_method">function</a>,
+ <a href="#abstractproperty">abstract property</a>,
+ <a href="#abstractprocedure">abstract procedure</a>,
+ <a href="#abstractfunction">abstract function</a>,
+ <a href="#property">private property</a>,
+ <a href="#procedure_method">private procedure</a>,
+ <a href="#function_method">private function</a>
+</p>
 <p>Member instructions (also sometimes referred to simply as &lsquo;members&rsquo;)
   are located within a <el-kw>class</el-kw>, <el-kw>abstract class</el-kw>, <el-kw>interface</el-kw>, or <el-kw>record</el-kw>.
   A different subset of the total list above will be offered in the four different contexts.</p>
@@ -530,27 +525,23 @@ If the <el-kw>property</el-kw> is not initialised within the constructor then it
 <h2 id="abstractFunctionMethod">Abstract Function Method</h2>
 <p>An abstract function method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
 
-<h2 id="member_comment"># (comment)</h2>
-<p>See <a href="#Comment">Comments</a>.</p>
-
-<h1 id="StatementInstructions">Statement Instructions</h1>
-
-<a href="#assert">assert</a>
-<a href="#call">call</a>
-<a href="#each">each</a>
-<a href="#else">else</a>
-<a href="#for">for</a>
-<a href="#if">if</a>
-<a href="#let">let</a>
-<a href="#print">print</a>
-<a href="#repeat">repeat</a>
-<a href="#set">set</a>
-<a href="#throw">throw</a>
-<a href="#try">try</a>
-<a href="#variable">variable</a>
-<a href="#while">while</a>
-<a href="#Comment">#</a>
-
+<h1 id="StatementInstructions">Statement instructions</h1>
+<p>
+ <a href="#assert">assert</a>,
+ <a href="#call">call</a>,
+ <a href="#each">each</a>,
+ <a href="#else">else</a>,
+ <a href="#for">for</a>,
+ <a href="#if">if</a>,
+ <a href="#let">let</a>,
+ <a href="#print">print</a>,
+ <a href="#repeat">repeat</a>,
+ <a href="#set">set</a>,
+ <a href="#throw">throw</a>,
+ <a href="#try">try</a>,
+ <a href="#variable">variable</a>,
+ <a href="#while">while</a>
+</p>
 <p>Statement instructions (also sometimes referred to simply as &lsquo;statements&rsquo;)
   are located within &lsquo;methods&rsquo;. Some of these statements may contain other statements.</p>
 
@@ -754,9 +745,6 @@ and the initial value is given by a following expression. For example:</p>
 <el-kw>end while</el-kw>
 </el-statement>
 </el-code-block>
-
-<h2 id="statement_comment"># (comment)</h2>
-<p>See <a href="#Comment">Comments</a>.</p>
 
 <h1 id="Expression">Expressions</h1>
 <p>One of the most important constructs in programming is the &lsquo;expression&rsquo;. An expression is evaluated to return a value. An expression is made up of the following possible elements:</p>
@@ -1054,10 +1042,11 @@ Example of use in this manner (taken from the 'Snake - functional' demo program)
 <h2># comment</h2>
 <p>A comment is not an instruction: it is ignored by the compiler and does not change how the program works.
 Rather, a comment contains information <em>about</em> the program, intended to be read by a person seeking to understand or modify the code.</p>
-<p>Every comment starts with the symbol <el-code>#</el-code> (known as &lsquo;hash&rsquo;) followed by some text or a blank line. The text field in
-a comment may contain any text, except that it must not start with the open square bracket symbol ' <el-code>[</el-code>'.
-Comments may be inserted at the same level as a <a href="#GlobalInstructions">global</a>,
-<a href="#Member">member</a>, or <a href="#statement">statement</a> instruction, by entering <el-code>#</el-code> from the <el-code>new code</el-code> selector.</p>
+<p>Every comment starts with the symbol '<el-code>#</el-code>' (known as 'hash') followed by some text or a blank line. The text field in
+a comment may contain any text, except that it must not start with the open square bracket symbol '<el-code>[</el-code>'.</p>
+<p>Comments may be inserted at any level: in the <a href="#GlobalInstructions">Global</a>,
+<a href="#MemberInstructions">Member</a>, or <a href="#StatementInstructions">Statement</a> instruction levels,
+as well a from the <el-code>new code</el-code> selector, i.e. every <a href="IDEguide.html#Selector">selector</a> provides a <el-code>#</el-code> for entering a comment.</p>
 <p> Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user.
   This comment is known as the 'file header' and shows the version of Elan being run.</p>
 
