@@ -21,7 +21,7 @@
         <h3>Preliminaries</h3>
         <ul>
           <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
-          <li>Select <b>File > New</b> to start a new program, 
+          <li>Select <b>File > New</b> to start a new program,
             then select <b>File > Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
             Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b>) to undo recent changes.</li>
           <li>Remember that if the code editor has a tinted background it does not have focus and will not respond
@@ -118,7 +118,7 @@
             <ul>
                 <li>Here we again calling two different procedure methods on the turtle, their names suggesting what the turtle will do.</li>
                 <li>Both of these methods require you to specify a value (representing the distance to move, and the angle - in degrees - to turn, respectively)
-                    which is placed within the brackets. That's what the brackets are there for when using a methods.</li>
+                    which is placed within the brackets. That's what the brackets are for when using a method.</li>
                 <li>A value given to a method (within the brackets) is known as an 'argument' (the same term is used in Mathematics).
                     Later we will encounter methods that require more than one argument. Some methods - <el-method>show</el-method> for example -
                     don't require any arguments, but they still need the brackets.
@@ -181,12 +181,12 @@
 
     <p>Returning to our problem we defined the specific random walk to be simulated as getting from the centre to the edge of a circle with a
         radius of 10 paces. We now know how to draw a regular polygon and a circle may be described as a regular polygon with an infinite number of sides.
-        But since the display's resolution is infinite we can get away with less than that! 360 sides, turning 1 degree each time should suffice.</p>
+        But since the display's resolution is not infinite we can get away with less than that! 360 sides, turning 1 degree each time should suffice.</p>
 
     <ul>
         <li>Modify the <el-kw>for</el-kw> loop so that it executes 360 times.</li>
-        <li>Set the argument passed to the <el-method>turn</el-method> method to <el-lit>1</el-lit>. Now we need to calc</li>
-        <li>To calculate the length of the 'side' used for each of the 360 steps, we can use the following code, which reads very
+        <li>Set the argument passed to the <el-method>turn</el-method> method to <el-lit>1</el-lit>.</li>
+        <li>Now we need to calculate the length of the 'side' used for each of the 360 steps, we can use the following code, which reads very
             like the way we would read out the calculation in mathematics:
 
             <el-code-block>
@@ -195,7 +195,7 @@
                 <el-statement class="ok" id="let95"><el-kw>let </el-kw><el-field id="var96" class="ok"><el-txt><el-id>side</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr97" class="ok"><el-txt><el-lit>2</el-lit>*<el-id>radius</el-id>*<el-id>pi</el-id>/<el-lit>360</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
             </el-code-block>
 
-        We need to calculate these values <i>before</i> we use them, so add these three new instructions <i>at the top<</i> of the main.
+        We need to calculate these values <i>before</i> we use them, so add these three new instructions <i>at the top</i> of the main.
         </li>
         <li>Now change the argument passed into the <el-method>move</el-method> from <el-lit>10</el-lit> to <el-id>side.</el-id></li>
         <li>We'd also like get the circle centred on the display. To do this we need to <i>start</i> the turtle
@@ -208,7 +208,7 @@
         </el-code-block>
         noting that the <el-method>placeAt</el-method> requires <i>two</i> arguments, and these are separated by a comma)
         </li>
-        <li>Run the program and check that it draws a large circle that fits within the display. Note of where the turtle finishes.</li>
+        <li>Run the program and check that it draws a large circle that fits within the display. Note where the turtle finishes.</li>
     </ul>
     <label class="done" for="done2">Iteration completed</label>
     <input type="checkbox" class="step-complete" id="done2" />
@@ -217,7 +217,7 @@
 
     <div class="step" id="step3">
     <h3>Iteration 3 - Draw a random walk</h3>
-    <p>To simulate the random work we need to repeatedly move the turtle one pace, and turn though a random angle of up to 90 degrees in
+    <p>To simulate the random walk we need to repeatedly move the turtle one pace, and turn though a random angle of up to 90 degrees in
         either direction (to turn to the left, just make the angle negative). The method <el-method>random</el-method><el-code>()</el-code>
         will generate a fractional number in the range 0 to 1, but there is also <el-method>randomInt</el-method>
         ('Int' being short for integer) that will generate a random whole number within a range specified by two integer arguments. </p>
@@ -244,7 +244,7 @@
         or <el-id>false</el-id> (in which case the loop terminates) and the program moves on to the next instruction after the
         <el-kw>end loop</el-kw>. We'll work out the proper expression for the condition. For the meantime just enter <el-id>true</el-id>,
         which is a constant value defined in the Elan library (like <el-id>pi</el-id>). Because this expression will <i>always</i>
-        be true the loop is never going to exit - this is known as an 'indefinite loop'.</li>
+        be true the loop is never going to exit - this is known as an 'infinite loop'.</li>
         <li>Within the <el-kw>while</el-kw> loop, add these two instructions:
 
         <el-code-block>
@@ -277,21 +277,21 @@
             Run the program - more than once - checking that the random walk is different in each case, but halts when it reaches (or steps over)
             the line of the circle.
         </li>
-        <li>Improve the program slightly with the following  three'tweaks', running the program between each one to check the changed output:
+        <li>Improve the program slightly with the following  three 'tweaks', running the program between each one to check the changed output:
             <ul>
-                <li>Just before the <el-kw>while</el-kw>> loop add this instruction:
+                <li>Just before the <el-kw>while</el-kw> loop add this instruction:
 
                     <el-code-block>
                         <el-statement class="ok" id="call545"><el-top><el-kw>call </el-kw><el-field id="ident546" class="ok"><el-txt><el-id>t</el-id>.<el-method>penColour</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args547" class="optional ok"><el-txt><el-id>red</el-id></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
                     </el-code-block>
                 You should be able to predict how this will change the output.</li>
-                <li>Slow down the random walk a little to make the movement more visible. After the last instruction within the <el-kw>while</el-kw>> loop
+                <li>Slow down the random walk a little to make the movement more visible. After the last instruction within the <el-kw>while</el-kw> loop
                     add the instruction:
                     <el-code-block>
                         <el-statement class="ok" id="call420"><el-top><el-kw>call </el-kw><el-field id="ident421" class="ok"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args422" class="optional ok"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>milliseconds</i></el-place></el-field>)</el-top></el-statement>
                     </el-code-block>
                     which puts in a 100 millisecond pause - not very long but just enough to make the walk more obvious. Note that this instruction
-                    does <i>not</i> say <el-id>t</el-id>,<el-method>pause</el-method>, because <el-method>pause</el-method> is not a procedure belonging
+                    does <i>not</i> say <el-id>t</el-id>.<el-method>pause</el-method>, because <el-method>pause</el-method> is not a procedure belonging
                     to a turtle - it is a 'freestanding' procedure, and can be used whether or not you are using turtle graphics.</li>
                 <li>
                     Change the instruction that calls the <el-method>show</el-method> method on the turtle to calling its <el-method>hide</el-method>
@@ -344,7 +344,7 @@
             to <el-code><el-method>randomInt</el-method>(<el-id>black</el-id>, <el-id>white</el-id>)</el-code>
         </li>
         </ul>
-        <i>Before running the program, what do you think will happen to the colours of the walks?</i>. Run the program and see.</li>
+        <i>Before running the program, what do you think will happen to the colours of the walks?</i> Run the program and see.</li>
         <li>If you thought that <el-code><el-method>randomInt</el-method>(<el-id>black</el-id>, <el-id>white</el-id>)</el-code> would result
             in a random mix of black or white, or of many shades of grey, don't feel bad - both would seem quite logical! But why has it actually
             produced a range of <i>colours</i>? The answer
@@ -368,12 +368,12 @@
         the <el-kw>while</el-kw> loop insert a new instruction:
 
         <el-code-block>
-            <el-statement class="ok" id="var51"><el-kw>variable </el-kw><el-field id="var52" class="ok"><el-txt><el-id>pacesThisAttempt</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr53" class="ok"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="var51"><el-kw>variable </el-kw><el-field id="var52" class="ok"><el-txt><el-id>pacesThisWalk</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr53" class="ok"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
         </el-code-block>
 
-        What is the difference between writing this and the using the <el-kw>let</el-kw> instruction, as we have been so far?
+        What is the difference between writing this and using the <el-kw>let</el-kw> instruction that we have been doing thus far?
         The answer is that a <el-kw>variable</el-kw> is intended to <i>change</i> in value - a <el-kw>let</el-kw> doesn't change.
-        We need <el-id>pacesThisWalk</el-id> to change because we will add 1 to it with each paces taken. So, now do that by adding
+        We need <el-id>pacesThisWalk</el-id> to change because we will add 1 to it with each pace taken. So, now do that by adding
         <i>as the first instruction inside</i> the <el-kw>while</el-kw> loop:
 
         <el-code-block>
@@ -401,7 +401,7 @@
     but using two instructions is a bit clearer. First calculate the average by adding these two instructions as final instructions in the main routine:
 
     <el-code-block>
-        <el-statement class="ok" id="let72"><el-kw>let </el-kw><el-field id="var73" class="ok"><el-txt><el-id>average</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr74" class="ok"><el-txt><el-id>totalPaces</el-id>/<el-id>numberOfAttempts</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+        <el-statement class="ok" id="let72"><el-kw>let </el-kw><el-field id="var73" class="ok"><el-txt><el-id>average</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr74" class="ok"><el-txt><el-id>totalPaces</el-id>/<el-id>numberOfWalks</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
         <el-statement class="ok" id="print75"><el-kw>print </el-kw><el-field id="expr76" class="optional ok"><el-txt>"<el-lit>Average: </el-lit>{<el-id>average</el-id>}<el-lit></el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
     </el-code-block>
 
@@ -409,7 +409,7 @@
         so many decimal places. Edit the expression for calculating the average to the following, to round the result to just one decimal place:
 
         <el-code-block>
-            (<el-id>totalPaces</el-id>/<el-id>numberOfAttempts</el-id>).<el-method>round</el-method>(<el-lit>1</el-lit>)
+            (<el-id>totalPaces</el-id>/<el-id>numberOfWalks</el-id>).<el-method>round</el-method>(<el-lit>1</el-lit>)
         </el-code-block>
         </li>
     </ul>
