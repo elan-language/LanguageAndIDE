@@ -2005,6 +2005,34 @@ So for example the top left corner of the display is at (-100,75).</p>
   <td>turns the turtle to face in the direction specified in degrees<br>where 0 is upward and increasing values go clockwise from there</td>
  </tr>
 </table>
+<h3 class="no-TOC" id="Turtle_properties">Properties of a Turtle</h3>
+<table class="tableMethod">
+ <tr>
+  <th colspan="2">Property</th>
+  <th colspan="2"></th>
+ </tr><tr>
+  <th>name</th>
+  <th>Type</th>
+  <th>description</th>
+  <th>default</th>
+ </tr><tr id="heading">
+  <td><el-method>heading</el-method></td>
+  <td><el-type>Float</el-type></td>
+  <td>the direction in which the turtle is pointing<br>in degrees clockwise from North</td>
+  <td>0.0 degrees,<br>i.e. upward in the Display</td>
+  <tr id="x_Turtle">
+  <td><el-method>x</el-method></td>
+  <td><el-type>Float</el-type></td>
+  <td>the x-coordinate of the turtle's current position</td>
+  <td>0.0</td>
+ </tr><tr id="y_Turtle">
+  <td><el-method>y</el-method></td>
+  <td><el-type>Float</el-type></td>
+  <td>the y-coordinate of the turtle's current position</td>
+  <td>0.0</td>
+ </tr>
+</table>
+
 <p>Example:</p>
 <el-code-block source="turtle_graphics.elan">
 <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Turtle</el-type>()</el-txt></el-field></el-statement>
@@ -2091,7 +2119,7 @@ later shapes are positioned over earlier ones.</p>
  and the assembled list is then displayed by a call to procedure<el-method> displayVectorGraphics</el-method> with the List as its argument. Examples
 are shown below the table of properties.</p>
 
-<h3 class="no-TOC" id="Properties_VG">Vector graphics properties</h3>
+<h3 class="no-TOC" id="Properties_VG">Properties of Vector graphic shapes</h3>
 <table class="tableMethod">
  <tr>
   <th colspan="2">Property</th>
