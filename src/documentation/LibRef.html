@@ -231,12 +231,6 @@ in the range:</li>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
   <td> the string itself</td>
- </tr><tr id="asList_String">
-  <td><el-method>asList</el-method></td>
-  <td><el-type>String</el-type></td>
-  <td>(none)</td>
-  <td><el-code><el-type>List</el-type>&lt;of <el-type>String</el-type>&gt;</el-code></td>
-  <td>a List of the individual characters</td>
  </tr><tr id="asUnicode">
   <td><el-method>asUnicode</el-method></td>
   <td><el-type>String</el-type></td>
@@ -315,7 +309,8 @@ in the range:</li>
   <td><el-type>String</el-type></td>
   <td><el-type>String</el-type></td>
   <td><el-code><el-type>List</el-type>&lt;of <el-type>String</el-type>&gt;</el-code></td>
-  <td>a <el-type>List</el-type> of the substrings found between occurrences of the argument string</td>
+  <td>a <el-type>List</el-type> of the substrings found between occurrences of the argument string<br>
+  if the argument is the empty string then the list is of all the individual characters</td>
  </tr><tr id="trim">
   <td><el-method>trim</el-method></td>
   <td><el-type>String</el-type></td>
@@ -1478,7 +1473,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#asList_String">&#x2714;</a></td>
+  <td></td>
   <td><a href="#asList_Array">&#x2714;</a></td>
   <td></td>
   <td></td>
