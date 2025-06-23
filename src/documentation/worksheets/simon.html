@@ -316,7 +316,7 @@
           At a future stage we will want to be able to change the duration for which the circles appear, so define a
            <el-kw>variable</el-kw> named <el-id>interval</el-id> at the very top of <el-kw>main</el-kw>, initialised to <el-lit>1000</el-lit>.
           Then pass <el-id>interval</el-id> as a second argument into the <el-kw>call</el-kw> to <el-method>displayMove</el-method>, separated from
-          <el-id>move</el-id> by a comma. This will initially give you an error because the definition of <el-method>displayMove</el-method>
+          <el-id>move</el-id> by a comma. This will initially give you an error because the definition of the <el-kw>procedure </el-kw><el-method>displayMove</el-method>
           currently expects only one parameter. So, within that procedure definition, define a second parameter, separated from the first
           by a comma, giving it the name <el-id>interval</el-id> and the type for an integer. Then use that parameter name <el-id>interval</el-id>
           instead of the literal number currently given as an argument to <el-method>pause</el-method>. Run the program to check that
@@ -362,7 +362,7 @@
               <el-kw>end main</el-kw>
             </main>
             <el-proc class="ok multiline">
-              <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>displayMove</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+              <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method>displayMove</el-method>(<el-field class="optional ok"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
               <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
               <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
               <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
@@ -410,7 +410,7 @@
     <h3>Iteration 5: Add sound</h3>
 
     <ul>
-      <li>Edit <i>both</i> fields of instruction 10 so that it reads
+      <li>Edit <i>both</i> fields of the instruction <el-code><el-kw>call </el-kw><el-method>pause</el-method>(<el-id>interval</el-id>)</el-code> so that it reads
         <el-code-block>
           <el-kw>call </el-kw><el-method>tone</el-method>(<el-id>interval</el-id>, <el-lit>256</el-lit>, <el-lit>0.1</el-lit>)
         </el-code-block>
@@ -445,7 +445,7 @@
         <div class="content" id="hint5bcontent">
       <el-code-block>
         <el-proc class="ok multiline">
-          <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>displayMove</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+          <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method>displayMove</el-method>(<el-field class="optional ok"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
           <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
           <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>tones</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-lit><el-lit>164</el-lit>.81</el-lit>, <el-lit>220</el-lit>, <el-lit><el-lit>277</el-lit>.18</el-lit>, <el-lit><el-lit>329</el-lit>.63</el-lit>]</el-txt></el-field></el-statement>
           <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
@@ -605,19 +605,13 @@
           </el-code-block>
         </div>
       </li>
-        <li>Go back to the (now empty) <kw>for</kw> loop within the main, and define three new instructions (in the order listed here):
+        <li>Go back to the (now empty) <el-kw>for</el-kw> loop within the main, and define three new instructions (in the order listed here):
         <ul>
           <li>a new instruction to call <el-method>simonsTurn</el-method>, 
             passing in the named values corresponding to the two arguments it will require.</li>
           <li>an instruction to clear the vector graphics (you have already done this somewhere else in the code).</li>
           <li>an instruction to pause for a full second (at the end of the sequence).</li>
         </ul></li>
-        <li>Change the definition of <el-id>sequence</el-id> (near the top of main) so that it starts
-        with an empty list. Because it is empty, we need to specify the type of the elements it will
-        accept. The full statement now needs to be:
-        <el-code-block>
-          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field></el-statement>
-        </el-code-block></li>
         <li>Run the program the program and test that it plays a growing sequence, one move, then two moves, up to five moves, with
         a one second pause between.</li>
         <div class="hint" id="hint7d">Hint: The revised main</div>
@@ -663,18 +657,18 @@
       <el-code-block>
         <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
       </el-code-block>
-      The problem is that if you press, say, the 1 key, the <el-method>waitForKey</el-method> method returns a single-character
+      The problem is that if you press, say, the <b>1</b> key, the <el-method>waitForKey</el-method> method returns a single-character
       <i>string</i> - equivalent to this instruction, say:<el-code-block>
         <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>"<el-lit>1</el-lit>"</el-txt></el-field></el-statement>
       </el-code-block>
       but we really need it <i>as an integer value</i> so that we can compare it to the integer values stored in <el-id>sequence</el-id>.
       <el-method>parseAsInt</el-method> takes a string argument and attempts to turn it into an <i>integer</i> value. 
-      The problem then is: what would happen if you had inadvertently pressed the <el-lit>q</el-lit> key underneath
-       the <el-lit>1</el-lit>? That can't be be converted into an integer - which would cause the whole program to fail
+      The problem then is: what would happen if you had inadvertently pressed the <b>q</b> key underneath
+       the <b>1</b>? That can't be be converted into an integer - which would cause the whole program to fail
         with a 'run time error'. 
       To handle this scenario the <el-method>parseAsInt</el-method> actually returns two values: the first
-      is a Boolean value (<el-id>true</el-id>/<el-id>false</el-id>)  that tells us whether or not the given string was successfully parsed into an integer.
-       If it <i>was</i> (i.e. the first returned value is <el-id>true</el-id>) then the second value will hold the integer. 
+      is a Boolean value (<el-id>true</el-id>/<el-id>false</el-id>)  that tells us whether or not the given string successfully parsed into an integer.
+       If it <i>did</i> (i.e. the first returned value is <el-id>true</el-id>) then the second value will hold the integer. 
        If the first returned value is <el-id>false</el-id> then the second value should be ignored - as it will be meaningless. 
        Our instruction names these two returned values <el-id>valid</el-id> and <el-id>move</el-id> respectively.</li>
     <li>So, to use this information add a third instruction within <el-method>playersTurn</el-method>, an <el-kw>if</el-kw> instruction 
@@ -696,7 +690,7 @@
     <div class="content" id="hint8bcontent">
       <el-code-block>
         <el-proc class="ok multiline">
-          <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>playersTurn</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+          <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method>playersTurn</el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
           <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
           <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>valid</el-id>, <el-id>move</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>parseAsInt</el-method>(<el-id>k</el-id>)</el-txt></el-field></el-statement>
           <el-statement class="ok multiline">
@@ -735,7 +729,7 @@
     </div>
     </li>
     <li>Run the program. Simon should play a sequence (initially just one move) and then do nothing until
-      you press one of the keys <b>1 - 4</b> - which should then immediately initiate Simon's turn. <i>Stop the
+      you press <i>any</i> of the keys <b>1 - 4</b> - which should then immediately initiate Simon's turn. <i>Stop the
         program at that point.</i>
       </i>
     </li>
@@ -753,7 +747,7 @@
       suggest using a <el-kw>for</el-kw>, or an <el-kw>each</el-kw> loop. The problem
       is that if the user makes a mistake (enters the wrong move, or a key that isn't a valid move)
       that's game over: we don't want to continue with the loop. So when the number of iterations
-      through the loop is <i>not</i> fixed up front we must use a 'conditional
+      through the loop is <i>not</i> fixed up-front we must use a 'conditional
       loop'. The condition for the loop continuing is that the user has hit the correct keys <i>so far</i>
       and that they haven't yet got to the end of the sequence.
     </p>
@@ -765,13 +759,16 @@
       <el-code-block>
         <el-txt>(<el-id>counter</el-id> &lt; <el-id>sequence</el-id>.<el-method>length</el-method>())<el-kw> and </el-kw><el-id>correctSoFar</el-id></el-txt>
       </el-code-block>
-      and then cut and paste all the instructions remaining below it (within <el-method>playersTurn</el-method>) into the <el-kw>while</el-kw> loop.</li>
-      <li>Then, as the <i>last</i> instruction within the loop, add one to the existing value of <el-id>counter</el-id>.</li>
+      noting the use of brackets to specify operator priority. This is almost always necessary
+    when you combined <i>logical</i> operators (<el-kw>and</el-kw>, <el-kw>or</el-kw>, <el-kw>not</el-kw> with 
+    <i>comparison</i> operators (<el-kw>is</el-kw>, <el-kw>isnt</el-kw>, <el-code>&gt</el-code>, etc).</li>
+      <li>Cut and paste all the instructions remaining below it (within <el-method>playersTurn</el-method>) into the <el-kw>while</el-kw> loop.</li>
+      <li>Add a new <i>last</i> instruction within the loop, add one to the existing value of <el-id>counter</el-id>.</li>
       <div class="hint" id="hint9a">Hint: Complete revised <el-method>playersTurn</el-method> procedure</div>
       <div class="content" id="hint9acontent">
         <el-code-block>
           <el-proc class="ok multiline">
-            <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>playersTurn</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+            <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method>playersTurn</el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
             <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>counter</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-lit>0</el-lit></el-txt></el-field></el-statement>
             <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>correctSoFar</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-id>true</el-id></el-txt></el-field></el-statement>
             <el-statement class="ok multiline">
@@ -800,15 +797,43 @@
     <el-code-block>
       <el-txt><el-id>valid</el-id><el-kw> and </el-kw>(<el-id>sequence</el-id>[<el-id>counter</el-id>]<el-kw> is </el-kw><el-id>move</el-id>)</el-txt>
     </el-code-block>
+    again noting the use of brackets to specify operator priority.
     </li> 
     <li>Within the <el-kw>if</el-kw>, add an <el-kw>else</el-kw> clause <i>after</i> the call to <el-method>displayMove</el-method>
     and underneath the <el-kw>else</el-kw>, set the value of <el-id>correctSoFar</el-id> to <el-id>false</el-id> followed by an
     instruction to print the message 'Wrong!' (this is a temporary action - to be refined later).
-    <div class="hint" id="hint9b">Hint: Complete revised <el-method>playersTurn</el-method> procedure</div>
+    <div class="hint" id="hint9b">Hint: Abbreviated instructions for <el-method>playersTurn</el-method> procedure</div>
     <div class="content" id="hint9bcontent">
       <el-code-block>
         <el-proc class="ok multiline">
-          <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>playersTurn</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+          <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method>playersTurn</el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+          <el-statement><el-kw>variable </el-kw></el-statement>
+          <el-statement><el-kw>variable </el-kw></el-statement>
+          <el-statement class="ok multiline">
+          <el-top><el-expand>+</el-expand><el-kw>while </el-kw></el-top>
+          <el-statement><el-kw>let </el-kw></el-statement>
+          <el-statement><el-kw>let </el-kw></el-statement>
+          <el-statement class="ok multiline">
+          <el-top><el-expand>+</el-expand><el-kw>if </el-kw></el-top>
+          <el-statement><el-top><el-kw>call </el-kw></el-statement>
+          <el-statement class="ok outdent"><el-top>
+              <el-kw>else </el-kw><el-field class="empty optional ok"><el-txt></el-txt></el-field></el-top></el-statement>
+          <el-statement><el-kw>set </el-kw></el-statement>
+          <el-statement><el-kw>print </el-kw></el-statement>
+          <el-kw>end if</el-kw>
+          </el-statement>
+          <el-statement><el-kw>set </el-kw></el-statement>
+          <el-kw>end while</el-kw>
+          </el-statement>
+          <el-kw>end procedure</el-kw>
+          </el-proc>
+      </el-code-block>
+    </div>
+    <div class="hint" id="hint9c">Hint: Complete revised <el-method>playersTurn</el-method> procedure</div>
+    <div class="content" id="hint9ccontent">
+      <el-code-block>
+        <el-proc class="ok multiline">
+          <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method>playersTurn</el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
           <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>counter</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-lit>0</el-lit></el-txt></el-field></el-statement>
           <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>correctSoFar</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-id>true</el-id></el-txt></el-field></el-statement>
           <el-statement class="ok multiline">
@@ -877,6 +902,8 @@
                 <el-statement><el-kw>call </el-kw></el-statement>
                 <el-statement><el-kw>call </el-kw></el-statement>
                 <el-statement><el-kw>call </el-kw></el-statement>
+                <el-statement><el-kw>call </el-kw></el-statement>
+                <el-statement><el-kw>call </el-kw></el-statement>
                 <el-kw>end while</el-kw>
                 </el-statement>
                 <el-kw>end main</el-kw>
@@ -898,7 +925,8 @@
                 <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-top></el-statement>
                 <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>playersTurn</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
                 <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
-                <el-statement><el-kw>set </el-kw><el-field><el-txt><el-id>ok</el-id></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-id>false</el-id></el-txt></el-field></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>2000</el-lit></el-txt></el-field>)</el-top></el-statement>    
                 <el-kw>end while</el-kw>
                 </el-statement>
                 <el-kw>end main</el-kw>
@@ -930,7 +958,7 @@
         <div class="content" id="hint10b2content">
         <el-code-block>
           <el-proc class="ok multiline">
-            <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>playersTurn</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-kw>out</el-kw> <el-id>ok</el-id> <el-kw>as</el-kw> <el-type>Boolean</el-type></el-txt></el-field>)</el-top>
+            <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method>playersTurn</el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-kw>out</el-kw> <el-id>ok</el-id> <el-kw>as</el-kw> <el-type>Boolean</el-type></el-txt></el-field>)</el-top>
             <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>counter</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-lit>0</el-lit></el-txt></el-field></el-statement>
             <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>correctSoFar</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-id>true</el-id></el-txt></el-field></el-statement>
             <el-statement class="ok multiline">

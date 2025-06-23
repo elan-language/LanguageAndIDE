@@ -1,4 +1,4 @@
-# b1dbeb00c393b1be6983e3eaa6d700974cc5a856971dd21a8b1aec00ad8ef90e Elan 1.2.0 guest default_profile valid
+# 6697f9e078be7f1ff90f7788a4859a3cfb610389c910588efd4b51f1e76e6991 Elan 1.2.3 guest default_profile valid
 
 main
   let t be new Turtle()
@@ -12,8 +12,8 @@ main
     call t.turn(1)
   end for
   variable totalPaces set to 0
-  let numberOfAttempts be 100
-  for i from 1 to numberOfAttempts step 1
+  let numberOfWalks be 100
+  for i from 1 to numberOfWalks step 1
     call t.placeAt(0, 0)
     call t.penColour(randomInt(black, white))
     variable pacesThisAttempt set to 0
@@ -25,6 +25,6 @@ main
     end while
     set totalPaces to totalPaces + pacesThisAttempt
   end for
-  let average be (totalPaces/numberOfAttempts).round(2)
-  print "Over {numberOfAttempts} attempts, the average no. of paces to edge was {average}"
+  let average be (totalPaces/numberOfWalks).round(2)
+  print "Over {numberOfWalks} attempts, the average no. of paces to edge was {average}"
 end main
