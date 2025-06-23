@@ -1,10 +1,10 @@
 import { AbstractFrame } from "../abstract-frame";
 import { ExpressionField } from "../fields/expression-field";
 import { ValueDefField } from "../fields/value-def-field";
-import { CodeSource } from "../interfaces/code-source";
-import { Field } from "../interfaces/field";
-import { Parent } from "../interfaces/parent";
-import { Statement } from "../interfaces/statement";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { Parent } from "../frame-interfaces/parent";
+import { Statement } from "../frame-interfaces/statement";
 
 export abstract class AbstractDefinitionStatement extends AbstractFrame implements Statement {
   isStatement = true;

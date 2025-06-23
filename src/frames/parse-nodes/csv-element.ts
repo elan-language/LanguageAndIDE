@@ -1,4 +1,4 @@
-import { ParseNode } from "../interfaces/parse-node";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { AbstractSequence } from "./abstract-sequence";
 import { CommaNode } from "./comma-node";
 import { OptionalNode } from "./optional-node";

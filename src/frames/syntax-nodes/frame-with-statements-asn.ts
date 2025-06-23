@@ -1,7 +1,7 @@
-import { AstNode } from "../interfaces/ast-node";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Scope } from "../interfaces/scope";
-import { Transforms } from "../interfaces/transforms";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ElanSymbol } from "../frame-interfaces/elan-symbol";
+import { Scope } from "../frame-interfaces/scope";
+import { Transforms } from "../frame-interfaces/transforms";
 import { BreakpointEvent } from "../status-enums";
 import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";

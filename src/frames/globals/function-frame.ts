@@ -2,12 +2,12 @@ import { MethodNameField } from "../fields/method-name-field";
 import { ParamListField } from "../fields/param-list-field";
 import { TypeField } from "../fields/type-field";
 import { isReturnStatement } from "../frame-helpers";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { File } from "../frame-interfaces/file";
+import { Parent } from "../frame-interfaces/parent";
+import { Profile } from "../frame-interfaces/profile";
 import { FrameWithStatements } from "../frame-with-statements";
-import { CodeSource } from "../interfaces/code-source";
-import { Field } from "../interfaces/field";
-import { File } from "../interfaces/file";
-import { Parent } from "../interfaces/parent";
-import { Profile } from "../interfaces/profile";
 import { endKeyword, functionKeyword, returnKeyword, returnsKeyword } from "../keywords";
 import { ReturnStatement } from "../statements/return-statement";
 

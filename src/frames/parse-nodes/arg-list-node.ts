@@ -1,4 +1,4 @@
-import { ParseNode } from "../interfaces/parse-node";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { CSV } from "./csv";
 import { ExprNode } from "./expr-node";
 

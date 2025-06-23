@@ -5,15 +5,15 @@ import {
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
 } from "../frame-helpers";
-import { CodeSource } from "../interfaces/code-source";
-import { editorEvent } from "../interfaces/editor-event";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Field } from "../interfaces/field";
-import { File } from "../interfaces/file";
-import { Frame } from "../interfaces/frame";
-import { ParseNode } from "../interfaces/parse-node";
-import { Selectable } from "../interfaces/selectable";
-import { Transforms } from "../interfaces/transforms";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { editorEvent } from "../frame-interfaces/editor-event";
+import { ElanSymbol } from "../frame-interfaces/elan-symbol";
+import { Field } from "../frame-interfaces/field";
+import { File } from "../frame-interfaces/file";
+import { Frame } from "../frame-interfaces/frame";
+import { ParseNode } from "../frame-interfaces/parse-node";
+import { Selectable } from "../frame-interfaces/selectable";
+import { Transforms } from "../frame-interfaces/transforms";
 import { propertyKeyword } from "../keywords";
 import { Overtyper } from "../overtyper";
 import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";

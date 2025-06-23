@@ -1,8 +1,8 @@
 import { isCollapsible, isFrame } from "../frames/frame-helpers";
-import { editorEvent } from "../frames/interfaces/editor-event";
-import { File } from "../frames/interfaces/file";
-import { Frame } from "../frames/interfaces/frame";
-import { Selectable } from "../frames/interfaces/selectable";
+import { editorEvent } from "../frames/frame-interfaces/editor-event";
+import { File } from "../frames/frame-interfaces/file";
+import { Frame } from "../frames/frame-interfaces/frame";
+import { Selectable } from "../frames/frame-interfaces/selectable";
 
 function getAllSelected(file: File) {
   const v = file.getMap().values();

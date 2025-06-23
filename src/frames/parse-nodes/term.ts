@@ -1,4 +1,4 @@
-import { ParseNode } from "../interfaces/parse-node";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { refKeyword, thisKeyword } from "../keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";

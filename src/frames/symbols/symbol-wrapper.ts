@@ -1,7 +1,7 @@
 import { isGenericClass } from "../frame-helpers";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Scope } from "../interfaces/scope";
-import { Transforms } from "../interfaces/transforms";
+import { ElanSymbol } from "../frame-interfaces/elan-symbol";
+import { Scope } from "../frame-interfaces/scope";
+import { Transforms } from "../frame-interfaces/transforms";
 import { propertyKeyword } from "../keywords";
 import { KeywordCompletion } from "../symbol-completion-helpers";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";

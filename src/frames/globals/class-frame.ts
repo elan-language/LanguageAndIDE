@@ -13,15 +13,15 @@ import { InheritsFromField } from "../fields/inherits-from-field";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
 import { isConstructor } from "../frame-helpers";
-import { CodeSource } from "../interfaces/code-source";
-import { Collapsible } from "../interfaces/collapsible";
-import { Field } from "../interfaces/field";
-import { File } from "../interfaces/file";
-import { Frame } from "../interfaces/frame";
-import { Parent } from "../interfaces/parent";
-import { Profile } from "../interfaces/profile";
-import { StatementFactory } from "../interfaces/statement-factory";
-import { SymbolType } from "../interfaces/symbol-type";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Collapsible } from "../frame-interfaces/collapsible";
+import { Field } from "../frame-interfaces/field";
+import { File } from "../frame-interfaces/file";
+import { Frame } from "../frame-interfaces/frame";
+import { Parent } from "../frame-interfaces/parent";
+import { Profile } from "../frame-interfaces/profile";
+import { StatementFactory } from "../frame-interfaces/statement-factory";
+import { SymbolType } from "../frame-interfaces/symbol-type";
 import { classKeyword } from "../keywords";
 import {
   parentHelper_addChildAfter,

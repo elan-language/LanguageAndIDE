@@ -3,11 +3,11 @@ import {
   processTogglePrivate,
   singleIndent,
 } from "../frame-helpers";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { editorEvent } from "../frame-interfaces/editor-event";
+import { Parent } from "../frame-interfaces/parent";
+import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
 import { ProcedureFrame } from "../globals/procedure-frame";
-import { CodeSource } from "../interfaces/code-source";
-import { editorEvent } from "../interfaces/editor-event";
-import { Parent } from "../interfaces/parent";
-import { PossiblyPrivateMember } from "../interfaces/possibly-private-member";
 import { privateKeyword } from "../keywords";
 
 export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMember {

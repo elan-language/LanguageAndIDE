@@ -1,9 +1,9 @@
 import { AbstractSelector } from "../abstract-selector";
 import { singleIndent } from "../frame-helpers";
+import { Frame } from "../frame-interfaces/frame";
+import { MemberFrame } from "../frame-interfaces/member-frame";
+import { Parent } from "../frame-interfaces/parent";
 import { ClassFrame } from "../globals/class-frame";
-import { Frame } from "../interfaces/frame";
-import { MemberFrame } from "../interfaces/member-frame";
-import { Parent } from "../interfaces/parent";
 import {
   abstractFunctionKeywords,
   abstractKeyword,

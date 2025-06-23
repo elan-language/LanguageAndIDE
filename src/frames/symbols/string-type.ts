@@ -1,5 +1,5 @@
-import { GenericSymbolType } from "../interfaces/generic-symbol-type";
-import { SymbolType } from "../interfaces/symbol-type";
+import { GenericSymbolType } from "../frame-interfaces/generic-symbol-type";
+import { SymbolType } from "../frame-interfaces/symbol-type";
 import { StringName } from "./elan-type-names";
 
 export class StringType implements GenericSymbolType {

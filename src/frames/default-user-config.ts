@@ -1,4 +1,4 @@
-import { UserConfig } from "./interfaces/user-config";
+import { UserConfig } from "./frame-interfaces/user-config";
 
 export class DefaultUserConfig implements UserConfig {
   "students": [];

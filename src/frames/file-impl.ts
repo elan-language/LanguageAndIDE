@@ -14,6 +14,18 @@ import {
   isMain,
   isSelector,
 } from "./frame-helpers";
+import { CodeSource } from "./frame-interfaces/code-source";
+import { editorEvent } from "./frame-interfaces/editor-event";
+import { Field } from "./frame-interfaces/field";
+import { File } from "./frame-interfaces/file";
+import { Frame } from "./frame-interfaces/frame";
+import { Parent } from "./frame-interfaces/parent";
+import { defaultUsername, Profile } from "./frame-interfaces/profile";
+import { CompileMode, RootAstNode } from "./frame-interfaces/root-ast-node";
+import { Selectable } from "./frame-interfaces/selectable";
+import { Semver } from "./frame-interfaces/semver";
+import { StatementFactory } from "./frame-interfaces/statement-factory";
+import { Transforms } from "./frame-interfaces/transforms";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { Constant } from "./globals/constant";
@@ -26,18 +38,6 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
-import { CodeSource } from "./interfaces/code-source";
-import { editorEvent } from "./interfaces/editor-event";
-import { Field } from "./interfaces/field";
-import { File } from "./interfaces/file";
-import { Frame } from "./interfaces/frame";
-import { Parent } from "./interfaces/parent";
-import { defaultUsername, Profile } from "./interfaces/profile";
-import { CompileMode, RootAstNode } from "./interfaces/root-ast-node";
-import { Selectable } from "./interfaces/selectable";
-import { Semver } from "./interfaces/semver";
-import { StatementFactory } from "./interfaces/statement-factory";
-import { Transforms } from "./interfaces/transforms";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,

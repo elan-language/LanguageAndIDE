@@ -1,11 +1,11 @@
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { File } from "../frame-interfaces/file";
+import { Parent } from "../frame-interfaces/parent";
+import { Statement } from "../frame-interfaces/statement";
 import { FrameWithStatements } from "../frame-with-statements";
-import { CodeSource } from "../interfaces/code-source";
-import { Field } from "../interfaces/field";
-import { File } from "../interfaces/file";
-import { Parent } from "../interfaces/parent";
-import { Statement } from "../interfaces/statement";
 import { eachKeyword } from "../keywords";
 
 export class Each extends FrameWithStatements implements Statement {

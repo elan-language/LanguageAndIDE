@@ -1,7 +1,7 @@
-import { Class } from "../interfaces/class";
-import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
-import { SymbolType } from "../interfaces/symbol-type";
-import { immutableTypeOptions } from "../interfaces/type-options";
+import { Class } from "../frame-interfaces/class";
+import { DeconstructedSymbolType } from "../frame-interfaces/deconstructed-symbol-type";
+import { SymbolType } from "../frame-interfaces/symbol-type";
+import { immutableTypeOptions } from "../frame-interfaces/type-options";
 import { UnknownType } from "./unknown-type";
 
 export class DeconstructedRecordType implements DeconstructedSymbolType {

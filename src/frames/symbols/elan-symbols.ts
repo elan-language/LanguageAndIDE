@@ -1,7 +1,7 @@
-import { ClassSymbol } from "../interfaces/class-symbol";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { SymbolType } from "../interfaces/symbol-type";
-import { Transforms } from "../interfaces/transforms";
+import { ClassSymbol } from "../frame-interfaces/class-symbol";
+import { ElanSymbol } from "../frame-interfaces/elan-symbol";
+import { SymbolType } from "../frame-interfaces/symbol-type";
+import { Transforms } from "../frame-interfaces/transforms";
 import { BooleanType } from "./boolean-type";
 import { FuncName, TupleName } from "./elan-type-names";
 import { FloatType } from "./float-type";

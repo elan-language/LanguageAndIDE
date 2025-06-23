@@ -1,5 +1,5 @@
-import { SymbolType } from "../interfaces/symbol-type";
-import { immutableTypeOptions } from "../interfaces/type-options";
+import { SymbolType } from "../frame-interfaces/symbol-type";
+import { immutableTypeOptions } from "../frame-interfaces/type-options";
 
 export class EnumValueType implements SymbolType {
   constructor(

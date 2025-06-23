@@ -5,18 +5,10 @@ import * as jsdom from "jsdom";
 import Worker from 'web-worker';
 import { AbstractFrame } from "../src/frames/abstract-frame";
 import { CodeSourceFromString } from "../src/frames/code-source-from-string";
-import { CompileError } from "../src/frames/compile-error";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { AbstractField } from "../src/frames/fields/abstract-field";
 import { FileImpl } from "../src/frames/file-impl";
-import { FrameWithStatements } from "../src/frames/frame-with-statements";
-import { ClassFrame } from "../src/frames/globals/class-frame";
 import { MainFrame } from "../src/frames/globals/main-frame";
-import { editorEvent } from "../src/frames/interfaces/editor-event";
-import { Field } from "../src/frames/interfaces/field";
-import { File } from "../src/frames/interfaces/file";
-import { Frame } from "../src/frames/interfaces/frame";
-import { ParseNode } from "../src/frames/interfaces/parse-node";
 import { VariableStatement } from "../src/frames/statements/variable-statement";
 import { BreakpointStatus, CompileStatus, ParseStatus, TestStatus } from "../src/frames/status-enums";
 import { TokenType } from "../src/frames/symbol-completion-helpers";
@@ -32,6 +24,9 @@ import { WebWorkerMessage } from "../src/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
+import { editorEvent } from "../src/frames/frame-interfaces/editor-event";
+import { ParseNode } from "../src/frames/frame-interfaces/parse-node";
+import { File } from "../src/frames/frame-interfaces/file";
 
 
 // flag to update test file

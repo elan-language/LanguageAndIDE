@@ -1,4 +1,4 @@
-import { AstNode } from "../interfaces/ast-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
 import { RegExpType } from "../symbols/regexp-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 

@@ -1,14 +1,14 @@
 import {
-  mustNotBeRedefined,
-  mustNotBeOutParameter,
   mustBeUniqueNameInScope,
+  mustNotBeOutParameter,
+  mustNotBeRedefined,
 } from "../../compile-rules";
-import { AstIdNode } from "../../interfaces/ast-id-node";
-import { AstNode } from "../../interfaces/ast-node";
-import { ElanSymbol } from "../../interfaces/elan-symbol";
-import { Scope } from "../../interfaces/scope";
-import { SymbolType } from "../../interfaces/symbol-type";
-import { Transforms } from "../../interfaces/transforms";
+import { AstIdNode } from "../../compiler-interfaces/ast-id-node";
+import { AstNode } from "../../compiler-interfaces/ast-node";
+import { ElanSymbol } from "../../frame-interfaces/elan-symbol";
+import { Scope } from "../../frame-interfaces/scope";
+import { SymbolType } from "../../frame-interfaces/symbol-type";
+import { Transforms } from "../../frame-interfaces/transforms";
 import { DuplicateSymbol } from "../../symbols/duplicate-symbol";
 import { getGlobalScope, isFunction, symbolMatches } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";

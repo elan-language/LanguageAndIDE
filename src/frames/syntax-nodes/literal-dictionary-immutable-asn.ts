@@ -4,10 +4,10 @@ import {
   mustBeValidKeyType,
   mustHaveUniqueKeys,
 } from "../compile-rules";
-import { AstCollectionNode } from "../interfaces/ast-collection-node";
-import { AstNode } from "../interfaces/ast-node";
-import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
-import { Scope } from "../interfaces/scope";
+import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ReifyableSymbolType } from "../frame-interfaces/reifyable-symbol-type";
+import { Scope } from "../frame-interfaces/scope";
 import { DictionaryImmutableName } from "../symbols/elan-type-names";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";

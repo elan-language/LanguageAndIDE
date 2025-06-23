@@ -1,9 +1,9 @@
 import { IdentifierField } from "../fields/identifier-field";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { Parent } from "../frame-interfaces/parent";
+import { Statement } from "../frame-interfaces/statement";
 import { FrameWithStatements } from "../frame-with-statements";
-import { CodeSource } from "../interfaces/code-source";
-import { Field } from "../interfaces/field";
-import { Parent } from "../interfaces/parent";
-import { Statement } from "../interfaces/statement";
 import { catchKeyword, exceptionKeyword, inKeyword } from "../keywords";
 
 export class CatchStatement extends FrameWithStatements implements Statement {

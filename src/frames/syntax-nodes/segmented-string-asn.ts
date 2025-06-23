@@ -1,4 +1,4 @@
-import { AstNode } from "../interfaces/ast-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
 import { StringType } from "../symbols/string-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 

@@ -42,13 +42,13 @@ import {
   UndefinedSymbolCompileError,
   UnknownCompilerDirectiveCompileError,
 } from "./compile-error";
+import { AstNode } from "./compiler-interfaces/ast-node";
 import { isClass, isConstant, isFunction, isLet, isMember, isProcedure } from "./frame-helpers";
-import { AstNode } from "./interfaces/ast-node";
-import { ElanSymbol } from "./interfaces/elan-symbol";
-import { Scope } from "./interfaces/scope";
-import { SymbolType } from "./interfaces/symbol-type";
-import { Transforms } from "./interfaces/transforms";
-import { isRecord } from "./interfaces/type-options";
+import { ElanSymbol } from "./frame-interfaces/elan-symbol";
+import { Scope } from "./frame-interfaces/scope";
+import { SymbolType } from "./frame-interfaces/symbol-type";
+import { Transforms } from "./frame-interfaces/transforms";
+import { isRecord } from "./frame-interfaces/type-options";
 import { allKeywords, reservedWords } from "./keywords";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";

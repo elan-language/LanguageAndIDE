@@ -1,7 +1,7 @@
 import { AbstractSelector } from "./abstract-selector";
 import { isSelector } from "./frame-helpers";
-import { Frame } from "./interfaces/frame";
-import { Parent } from "./interfaces/parent";
+import { Frame } from "./frame-interfaces/frame";
+import { Parent } from "./frame-interfaces/parent";
 import { BreakpointEvent, CompileStatus, ParseStatus } from "./status-enums";
 
 export function worstParseStatus(prev: ParseStatus, cur: ParseStatus) {

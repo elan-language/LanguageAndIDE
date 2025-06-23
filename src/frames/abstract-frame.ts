@@ -9,13 +9,13 @@ import {
   isSelector,
   singleIndent,
 } from "./frame-helpers";
-import { CodeSource } from "./interfaces/code-source";
-import { editorEvent } from "./interfaces/editor-event";
-import { Field } from "./interfaces/field";
-import { File } from "./interfaces/file";
-import { Frame } from "./interfaces/frame";
-import { Parent } from "./interfaces/parent";
-import { Selectable } from "./interfaces/selectable";
+import { CodeSource } from "./frame-interfaces/code-source";
+import { editorEvent } from "./frame-interfaces/editor-event";
+import { Field } from "./frame-interfaces/field";
+import { File } from "./frame-interfaces/file";
+import { Frame } from "./frame-interfaces/frame";
+import { Parent } from "./frame-interfaces/parent";
+import { Selectable } from "./frame-interfaces/selectable";
 import {
   parentHelper_getAllSelectedChildren,
   parentHelper_getChildAfter,

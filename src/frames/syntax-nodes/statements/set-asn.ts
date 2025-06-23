@@ -7,9 +7,9 @@ import {
   mustNotBeParameter,
   mustNotBePropertyOnFunctionMethod,
 } from "../../compile-rules";
+import { AstNode } from "../../compiler-interfaces/ast-node";
 import { mapSymbolType } from "../../frame-helpers";
-import { AstNode } from "../../interfaces/ast-node";
-import { Scope } from "../../interfaces/scope";
+import { Scope } from "../../frame-interfaces/scope";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { getIds, transforms, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";

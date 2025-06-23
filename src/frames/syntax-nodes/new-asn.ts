@@ -4,8 +4,8 @@ import {
   mustBeNewable,
   mustMatchParameters,
 } from "../compile-rules";
-import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../frame-interfaces/scope";
 import { constructorKeyword } from "../keywords";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { ProcedureType } from "../symbols/procedure-type";

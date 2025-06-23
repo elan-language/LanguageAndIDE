@@ -1,9 +1,9 @@
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
 import { singleIndent } from "../../frame-helpers";
-import { Class } from "../../interfaces/class";
-import { ElanSymbol } from "../../interfaces/elan-symbol";
-import { Scope } from "../../interfaces/scope";
-import { Transforms } from "../../interfaces/transforms";
+import { Class } from "../../frame-interfaces/class";
+import { ElanSymbol } from "../../frame-interfaces/elan-symbol";
+import { Scope } from "../../frame-interfaces/scope";
+import { Transforms } from "../../frame-interfaces/transforms";
 import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { transforms } from "../ast-helpers";

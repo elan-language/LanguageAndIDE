@@ -1,5 +1,5 @@
-import { SymbolType } from "../interfaces/symbol-type";
-import { noTypeOptions } from "../interfaces/type-options";
+import { SymbolType } from "../frame-interfaces/symbol-type";
+import { noTypeOptions } from "../frame-interfaces/type-options";
 
 export class GenericParameterType implements SymbolType {
   constructor(

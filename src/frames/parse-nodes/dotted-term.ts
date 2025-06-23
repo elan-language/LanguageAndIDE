@@ -1,4 +1,4 @@
-import { ParseNode } from "../interfaces/parse-node";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { TokenType } from "../symbol-completion-helpers";
 import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";

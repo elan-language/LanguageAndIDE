@@ -1,5 +1,5 @@
-import { AstCollectionNode } from "../interfaces/ast-collection-node";
-import { AstNode } from "../interfaces/ast-node";
+import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 

@@ -1,6 +1,6 @@
 import { getId, mustBeUniqueValueInScope, mustNotBeKeyword } from "../../compile-rules";
-import { AstNode } from "../../interfaces/ast-node";
-import { Scope } from "../../interfaces/scope";
+import { AstNode } from "../../compiler-interfaces/ast-node";
+import { Scope } from "../../frame-interfaces/scope";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { UnknownType } from "../../symbols/unknown-type";
 import { AbstractAstNode } from "../abstract-ast-node";

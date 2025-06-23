@@ -2,11 +2,11 @@ import { AbstractFrame } from "../abstract-frame";
 import { CodeSourceFromString } from "../code-source-from-string";
 import { ExpressionField } from "../fields/expression-field";
 import { IfSelectorField } from "../fields/if-selector-field";
-import { CodeSource } from "../interfaces/code-source";
-import { Field } from "../interfaces/field";
-import { Frame } from "../interfaces/frame";
-import { Parent } from "../interfaces/parent";
-import { Statement } from "../interfaces/statement";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { Frame } from "../frame-interfaces/frame";
+import { Parent } from "../frame-interfaces/parent";
+import { Statement } from "../frame-interfaces/statement";
 import { elseKeyword, thenKeyword } from "../keywords";
 
 export class Else extends AbstractFrame implements Statement {

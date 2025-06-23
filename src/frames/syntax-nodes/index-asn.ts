@@ -4,10 +4,10 @@ import {
   mustBeRangeableType,
   mustNotBeNegativeIndex,
 } from "../compile-rules";
-import { AstNode } from "../interfaces/ast-node";
-import { ChainedAsn } from "../interfaces/chained-asn";
-import { Scope } from "../interfaces/scope";
-import { SymbolType } from "../interfaces/symbol-type";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ChainedAsn } from "../frame-interfaces/chained-asn";
+import { Scope } from "../frame-interfaces/scope";
+import { SymbolType } from "../frame-interfaces/symbol-type";
 import { IntType } from "../symbols/int-type";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";

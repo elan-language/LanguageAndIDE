@@ -1,4 +1,4 @@
-import { AstNode } from "./ast-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
 import { Scope } from "./scope";
 
 export interface ChainedAsn extends AstNode {

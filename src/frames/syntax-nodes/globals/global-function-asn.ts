@@ -3,7 +3,7 @@ import {
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
 } from "../../compile-rules";
-import { Scope } from "../../interfaces/scope";
+import { Scope } from "../../frame-interfaces/scope";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { transforms } from "../ast-helpers";
 import { FunctionAsn } from "./function-asn";

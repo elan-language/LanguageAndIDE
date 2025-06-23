@@ -1,9 +1,9 @@
+import { getId } from "../../compile-rules";
+import { AstIdNode } from "../../compiler-interfaces/ast-id-node";
+import { AstNode } from "../../compiler-interfaces/ast-node";
 import { isAstType } from "../../frame-helpers";
-import { AstIdNode } from "../../interfaces/ast-id-node";
-import { AstNode } from "../../interfaces/ast-node";
 import { AbstractAstNode } from "../abstract-ast-node";
 import { EmptyAsn } from "../empty-asn";
-import { getId } from "../../compile-rules";
 
 export class TypeFieldAsn extends AbstractAstNode implements AstIdNode {
   isParseByNodes = true;

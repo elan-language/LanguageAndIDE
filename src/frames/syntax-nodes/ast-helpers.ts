@@ -6,16 +6,16 @@ import {
   mustBeIndexableType,
   mustMatchParameters,
 } from "../compile-rules";
-import { AstCollectionNode } from "../interfaces/ast-collection-node";
-import { AstIdNode } from "../interfaces/ast-id-node";
-import { AstIndexableNode } from "../interfaces/ast-indexable-node";
-import { AstNode } from "../interfaces/ast-node";
-import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
-import { Member } from "../interfaces/member";
-import { Scope } from "../interfaces/scope";
-import { SymbolType } from "../interfaces/symbol-type";
-import { Transforms } from "../interfaces/transforms";
-import { noTypeOptions } from "../interfaces/type-options";
+import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
+import { AstIdNode } from "../compiler-interfaces/ast-id-node";
+import { AstIndexableNode } from "../compiler-interfaces/ast-indexable-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { AstQualifiedNode } from "../compiler-interfaces/ast-qualified-node";
+import { Member } from "../frame-interfaces/member";
+import { Scope } from "../frame-interfaces/scope";
+import { SymbolType } from "../frame-interfaces/symbol-type";
+import { Transforms } from "../frame-interfaces/transforms";
+import { noTypeOptions } from "../frame-interfaces/type-options";
 import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";

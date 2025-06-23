@@ -1,4 +1,4 @@
-import { AstIdNode } from "../interfaces/ast-id-node";
+import { AstIdNode } from "../compiler-interfaces/ast-id-node";
 import { globalKeyword, libraryKeyword } from "../keywords";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";

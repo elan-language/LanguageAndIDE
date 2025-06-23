@@ -1,9 +1,9 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import { DefaultProfile } from "../frames/default-profile";
 import { DefaultUserConfig } from "../frames/default-user-config";
-import { Profile } from "../frames/interfaces/profile";
-import { Transforms } from "../frames/interfaces/transforms";
-import { UserConfig } from "../frames/interfaces/user-config";
+import { Profile } from "../frames/frame-interfaces/profile";
+import { Transforms } from "../frames/frame-interfaces/transforms";
+import { UserConfig } from "../frames/frame-interfaces/user-config";
 import { transform, transformMany } from "../frames/syntax-nodes/ast-visitor";
 
 export async function hash(toHash: string) {

@@ -1,6 +1,6 @@
 import { mustNotBeKeyword } from "../compile-rules";
-import { AstIdNode } from "../interfaces/ast-id-node";
-import { Scope } from "../interfaces/scope";
+import { AstIdNode } from "../compiler-interfaces/ast-id-node";
+import { Scope } from "../frame-interfaces/scope";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { transforms } from "./ast-helpers";

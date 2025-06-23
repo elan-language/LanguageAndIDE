@@ -7,14 +7,14 @@ import {
   mustBeUniqueNameInScope,
   mustNotBeCircularDependency,
 } from "../../compile-rules";
+import { AstNode } from "../../compiler-interfaces/ast-node";
 import { isMember } from "../../frame-helpers";
-import { AstNode } from "../../interfaces/ast-node";
-import { Class } from "../../interfaces/class";
-import { ElanSymbol } from "../../interfaces/elan-symbol";
-import { Field } from "../../interfaces/field";
-import { Scope } from "../../interfaces/scope";
-import { SymbolType } from "../../interfaces/symbol-type";
-import { Transforms } from "../../interfaces/transforms";
+import { Class } from "../../frame-interfaces/class";
+import { ElanSymbol } from "../../frame-interfaces/elan-symbol";
+import { Field } from "../../frame-interfaces/field";
+import { Scope } from "../../frame-interfaces/scope";
+import { SymbolType } from "../../frame-interfaces/symbol-type";
+import { Transforms } from "../../frame-interfaces/transforms";
 import { thisKeyword } from "../../keywords";
 import { BreakpointEvent } from "../../status-enums";
 import { ClassSubType, ClassType } from "../../symbols/class-type";

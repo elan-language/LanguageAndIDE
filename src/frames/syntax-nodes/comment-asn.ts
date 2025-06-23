@@ -1,6 +1,6 @@
 import { mustBeKnownCompilerDirective } from "../compile-rules";
-import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../frame-interfaces/scope";
 import { StringType } from "../symbols/string-type";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";

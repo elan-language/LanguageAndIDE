@@ -1,5 +1,5 @@
-import { ElanSymbol } from "../../interfaces/elan-symbol";
-import { Scope } from "../../interfaces/scope";
+import { ElanSymbol } from "../../frame-interfaces/elan-symbol";
+import { Scope } from "../../frame-interfaces/scope";
 import { AbstractDefinitionAsn } from "./abstract-definition-asn";
 
 export class LetAsn extends AbstractDefinitionAsn implements ElanSymbol {

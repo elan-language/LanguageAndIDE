@@ -3,9 +3,9 @@ import { IdentifierField } from "../fields/identifier-field";
 import { ParamListField } from "../fields/param-list-field";
 import { TypeField } from "../fields/type-field";
 import { singleIndent } from "../frame-helpers";
-import { CodeSource } from "../interfaces/code-source";
-import { Field } from "../interfaces/field";
-import { Parent } from "../interfaces/parent";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { Parent } from "../frame-interfaces/parent";
 import {
   abstractFunctionKeywords,
   abstractKeyword,

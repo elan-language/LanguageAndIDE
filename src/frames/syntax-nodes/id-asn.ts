@@ -6,10 +6,10 @@ import {
   mustBePublicMember,
   mustNotBeKeyword,
 } from "../compile-rules";
-import { AstIdNode } from "../interfaces/ast-id-node";
-import { AstNode } from "../interfaces/ast-node";
-import { ChainedAsn } from "../interfaces/chained-asn";
-import { Scope } from "../interfaces/scope";
+import { AstIdNode } from "../compiler-interfaces/ast-id-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ChainedAsn } from "../frame-interfaces/chained-asn";
+import { Scope } from "../frame-interfaces/scope";
 import { NullScope } from "../symbols/null-scope";
 import {
   getGlobalScope,

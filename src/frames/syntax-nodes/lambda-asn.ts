@@ -1,4 +1,4 @@
-import { AstNode } from "../interfaces/ast-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
 import { FunctionType } from "../symbols/function-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { LambdaSigAsn } from "./lambda-sig-asn";

@@ -1,10 +1,10 @@
 import { AbstractFrame } from "../abstract-frame";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { Parent } from "../frame-interfaces/parent";
 import { ConcreteClass } from "../globals/concrete-class";
-import { CodeSource } from "../interfaces/code-source";
-import { Field } from "../interfaces/field";
-import { Parent } from "../interfaces/parent";
 import { abstractKeyword, abstractPropertyKeywords, asKeyword, propertyKeyword } from "../keywords";
 
 export class AbstractProperty extends AbstractFrame {

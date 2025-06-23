@@ -2,12 +2,12 @@ import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { Regexes } from "./fields/regexes";
 import { isSelector } from "./frame-helpers";
-import { CodeSource } from "./interfaces/code-source";
-import { Collapsible } from "./interfaces/collapsible";
-import { Frame } from "./interfaces/frame";
-import { Parent } from "./interfaces/parent";
-import { Profile } from "./interfaces/profile";
-import { StatementFactory } from "./interfaces/statement-factory";
+import { CodeSource } from "./frame-interfaces/code-source";
+import { Collapsible } from "./frame-interfaces/collapsible";
+import { Frame } from "./frame-interfaces/frame";
+import { Parent } from "./frame-interfaces/parent";
+import { Profile } from "./frame-interfaces/profile";
+import { StatementFactory } from "./frame-interfaces/statement-factory";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,

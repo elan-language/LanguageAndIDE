@@ -1,11 +1,11 @@
 import { AbstractFrame } from "../abstract-frame";
 import { ConstantValueField } from "../fields/constant-value-field";
 import { IdentifierField } from "../fields/identifier-field";
-import { CodeSource } from "../interfaces/code-source";
-import { Collapsible } from "../interfaces/collapsible";
-import { Field } from "../interfaces/field";
-import { File } from "../interfaces/file";
-import { GlobalFrame } from "../interfaces/global-frame";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Collapsible } from "../frame-interfaces/collapsible";
+import { Field } from "../frame-interfaces/field";
+import { File } from "../frame-interfaces/file";
+import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { constantKeyword } from "../keywords";
 
 export class Constant extends AbstractFrame implements GlobalFrame, Collapsible {

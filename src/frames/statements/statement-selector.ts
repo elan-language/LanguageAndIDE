@@ -1,8 +1,8 @@
 import { AbstractSelector } from "../abstract-selector";
+import { Frame } from "../frame-interfaces/frame";
+import { Parent } from "../frame-interfaces/parent";
+import { StatementFactory } from "../frame-interfaces/statement-factory";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Frame } from "../interfaces/frame";
-import { Parent } from "../interfaces/parent";
-import { StatementFactory } from "../interfaces/statement-factory";
 import {
   assertKeyword,
   callKeyword,

@@ -1,8 +1,8 @@
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { File } from "../frame-interfaces/file";
+import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { FrameWithStatements } from "../frame-with-statements";
-import { CodeSource } from "../interfaces/code-source";
-import { Field } from "../interfaces/field";
-import { File } from "../interfaces/file";
-import { GlobalFrame } from "../interfaces/global-frame";
 import { mainKeyword } from "../keywords";
 
 export class MainFrame extends FrameWithStatements implements GlobalFrame {

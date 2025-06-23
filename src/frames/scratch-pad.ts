@@ -1,4 +1,4 @@
-import { Frame } from "./interfaces/frame";
+import { Frame } from "./frame-interfaces/frame";
 
 export class ScratchPad {
   private frames: Frame[] | undefined;

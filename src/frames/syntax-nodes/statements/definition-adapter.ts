@@ -1,5 +1,5 @@
-import { ElanSymbol } from "../../interfaces/elan-symbol";
-import { SymbolType } from "../../interfaces/symbol-type";
+import { ElanSymbol } from "../../frame-interfaces/elan-symbol";
+import { SymbolType } from "../../frame-interfaces/symbol-type";
 import { getDeconstructionIds, isLet, isVariable } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 

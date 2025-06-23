@@ -1,6 +1,6 @@
 import { mustNotHaveDuplicateMain } from "../../compile-rules";
-import { AstNode } from "../../interfaces/ast-node";
-import { Scope } from "../../interfaces/scope";
+import { AstNode } from "../../compiler-interfaces/ast-node";
+import { Scope } from "../../frame-interfaces/scope";
 import { DuplicateSymbol } from "../../symbols/duplicate-symbol";
 import { allScopedSymbols, getGlobalScope } from "../../symbols/symbol-helpers";
 import { transforms } from "../ast-helpers";

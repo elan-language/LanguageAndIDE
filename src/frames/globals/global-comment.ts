@@ -1,9 +1,9 @@
 import { AbstractFrame } from "../abstract-frame";
 import { CommentField } from "../fields/comment-field";
-import { CodeSource } from "../interfaces/code-source";
-import { Field } from "../interfaces/field";
-import { File } from "../interfaces/file";
-import { GlobalFrame } from "../interfaces/global-frame";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { File } from "../frame-interfaces/file";
+import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { commentMarker } from "../keywords";
 
 export class GlobalComment extends AbstractFrame implements GlobalFrame {

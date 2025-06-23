@@ -5,12 +5,12 @@ import {
   helper_CompileOrParseAsDisplayStatus,
   helper_testStatusAsDisplayStatus,
 } from "../frame-helpers";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { editorEvent } from "../frame-interfaces/editor-event";
+import { Field } from "../frame-interfaces/field";
+import { File } from "../frame-interfaces/file";
+import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { FrameWithStatements } from "../frame-with-statements";
-import { CodeSource } from "../interfaces/code-source";
-import { editorEvent } from "../interfaces/editor-event";
-import { Field } from "../interfaces/field";
-import { File } from "../interfaces/file";
-import { GlobalFrame } from "../interfaces/global-frame";
 import { ignoreKeyword, testKeyword } from "../keywords";
 import { AssertStatement } from "../statements/assert-statement";
 import { BreakpointStatus, DisplayColour, TestStatus } from "../status-enums";

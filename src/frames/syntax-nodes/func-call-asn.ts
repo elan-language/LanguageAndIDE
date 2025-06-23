@@ -8,12 +8,12 @@ import {
   mustCallExtensionViaQualifier,
   mustCallMemberViaQualifier,
 } from "../compile-rules";
-import { AstIdNode } from "../interfaces/ast-id-node";
-import { AstNode } from "../interfaces/ast-node";
-import { ChainedAsn } from "../interfaces/chained-asn";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Scope } from "../interfaces/scope";
-import { SymbolType } from "../interfaces/symbol-type";
+import { AstIdNode } from "../compiler-interfaces/ast-id-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ChainedAsn } from "../frame-interfaces/chained-asn";
+import { ElanSymbol } from "../frame-interfaces/elan-symbol";
+import { Scope } from "../frame-interfaces/scope";
+import { SymbolType } from "../frame-interfaces/symbol-type";
 import { FunctionType } from "../symbols/function-type";
 import { NullScope } from "../symbols/null-scope";
 import {

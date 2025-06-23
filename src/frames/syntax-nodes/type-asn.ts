@@ -5,10 +5,10 @@ import {
   mustBeValidKeyType,
   mustMatchGenericParameters,
 } from "../compile-rules";
-import { AstNode } from "../interfaces/ast-node";
-import { AstTypeNode } from "../interfaces/ast-type-node";
-import { Scope } from "../interfaces/scope";
-import { isAnyDictionary } from "../interfaces/type-options";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { AstTypeNode } from "../compiler-interfaces/ast-type-node";
+import { Scope } from "../frame-interfaces/scope";
+import { isAnyDictionary } from "../frame-interfaces/type-options";
 import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
 import { StringType } from "../symbols/string-type";

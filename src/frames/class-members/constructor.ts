@@ -1,8 +1,8 @@
 import { ParamListField } from "../fields/param-list-field";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
-import { CodeSource } from "../interfaces/code-source";
-import { Field } from "../interfaces/field";
-import { Parent } from "../interfaces/parent";
 import { constructorKeyword } from "../keywords";
 
 export class Constructor extends FrameWithStatements {

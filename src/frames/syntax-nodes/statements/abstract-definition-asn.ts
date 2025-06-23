@@ -5,11 +5,11 @@ import {
   mustNotBeKeyword,
   mustNotBeRedefined,
 } from "../../compile-rules";
+import { AstNode } from "../../compiler-interfaces/ast-node";
 import { mapSymbolType } from "../../frame-helpers";
-import { AstNode } from "../../interfaces/ast-node";
-import { ElanSymbol } from "../../interfaces/elan-symbol";
-import { Scope } from "../../interfaces/scope";
-import { Transforms } from "../../interfaces/transforms";
+import { ElanSymbol } from "../../frame-interfaces/elan-symbol";
+import { Scope } from "../../frame-interfaces/scope";
+import { Transforms } from "../../frame-interfaces/transforms";
 import { getDeconstructionIds, getGlobalScope, symbolMatches } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { getIds, transforms, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";

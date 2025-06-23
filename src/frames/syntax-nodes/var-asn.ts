@@ -3,9 +3,9 @@ import {
   mustBePropertyPrefixedOnMember,
   mustBePublicMember,
 } from "../compile-rules";
-import { AstIndexableNode } from "../interfaces/ast-indexable-node";
-import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
-import { Scope } from "../interfaces/scope";
+import { AstIndexableNode } from "../compiler-interfaces/ast-indexable-node";
+import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
+import { Scope } from "../frame-interfaces/scope";
 import { NullScope } from "../symbols/null-scope";
 import {
   getGlobalScope,

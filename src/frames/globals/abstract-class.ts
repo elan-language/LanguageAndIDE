@@ -1,6 +1,6 @@
 import { Deprecated } from "../../elan-type-interfaces";
-import { Field } from "../interfaces/field";
-import { File } from "../interfaces/file";
+import { Field } from "../frame-interfaces/field";
+import { File } from "../frame-interfaces/file";
 import { abstractClassKeywords, classKeyword, endKeyword } from "../keywords";
 import {
   parentHelper_renderChildrenAsHtml,

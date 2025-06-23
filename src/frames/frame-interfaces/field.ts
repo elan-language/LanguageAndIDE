@@ -1,7 +1,7 @@
-import { File } from "../interfaces/file";
 import { Overtyper } from "../overtyper";
 import { CompileStatus } from "../status-enums";
 import { SymbolWrapper } from "../symbols/symbol-wrapper";
+import { File } from "./file";
 import { Frame } from "./frame";
 import { Selectable } from "./selectable";
 
