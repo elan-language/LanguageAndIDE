@@ -8,8 +8,8 @@ import {
   mustNotBePropertyOnFunctionMethod,
 } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
+import { Scope } from "../../compiler-interfaces/scope";
 import { mapSymbolType } from "../../frame-helpers";
-import { Scope } from "../../frame-interfaces/scope";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { getIds, transforms, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";

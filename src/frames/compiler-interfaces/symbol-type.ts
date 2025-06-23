@@ -1,4 +1,4 @@
-import { TypeOptions } from "./type-options";
+import { TypeOptions } from "../frame-interfaces/type-options";
 
 export interface SymbolType {
   name: string;

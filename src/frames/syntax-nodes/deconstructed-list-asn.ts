@@ -1,7 +1,7 @@
 import { mustBeAssignableType } from "../compile-rules";
 import { AstIdNode } from "../compiler-interfaces/ast-id-node";
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { Scope } from "../frame-interfaces/scope";
+import { Scope } from "../compiler-interfaces/scope";
 import { DeconstructedListType } from "../symbols/deconstructed-list-type";
 import { getGlobalScope, isGenericSymbolType } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";

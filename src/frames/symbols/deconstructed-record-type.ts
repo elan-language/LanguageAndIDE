@@ -1,6 +1,6 @@
-import { Class } from "../frame-interfaces/class";
-import { DeconstructedSymbolType } from "../frame-interfaces/deconstructed-symbol-type";
-import { SymbolType } from "../frame-interfaces/symbol-type";
+import { Class } from "../compiler-interfaces/class";
+import { DeconstructedSymbolType } from "../compiler-interfaces/deconstructed-symbol-type";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { immutableTypeOptions } from "../frame-interfaces/type-options";
 import { UnknownType } from "./unknown-type";
 

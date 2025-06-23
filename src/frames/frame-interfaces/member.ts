@@ -1,4 +1,4 @@
-import { Class } from "./class";
+import { Class } from "../compiler-interfaces/class";
 
 export interface Member {
   isMember: boolean;

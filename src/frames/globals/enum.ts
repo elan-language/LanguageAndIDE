@@ -1,13 +1,13 @@
 import { AbstractFrame } from "../abstract-frame";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { EnumValuesField } from "../fields/enum-values-field";
 import { TypeNameField } from "../fields/type-name-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Collapsible } from "../frame-interfaces/collapsible";
-import { ElanSymbol } from "../frame-interfaces/elan-symbol";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
-import { SymbolType } from "../frame-interfaces/symbol-type";
 import { Transforms } from "../frame-interfaces/transforms";
 import { enumKeyword } from "../keywords";
 import { EnumType } from "../symbols/enum-type";

@@ -1,10 +1,10 @@
 import { CompileError } from "../compile-error";
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { ElanSymbol } from "../frame-interfaces/elan-symbol";
-import { CompileMode, RootAstNode } from "../frame-interfaces/root-ast-node";
-import { Scope } from "../frame-interfaces/scope";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { CompileMode, RootAstNode } from "../compiler-interfaces/root-ast-node";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { Semver } from "../frame-interfaces/semver";
-import { SymbolType } from "../frame-interfaces/symbol-type";
 import { Transforms } from "../frame-interfaces/transforms";
 import { BreakpointEvent } from "../status-enums";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";

@@ -1,6 +1,6 @@
 import { mustBeOfType, mustNotHaveConditionalAfterUnconditionalElse } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
-import { Scope } from "../../frame-interfaces/scope";
+import { Scope } from "../../compiler-interfaces/scope";
 import { BooleanType } from "../../symbols/boolean-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { compileNodes } from "../ast-helpers";

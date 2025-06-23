@@ -1,7 +1,7 @@
 import { Deprecated } from "../../../elan-type-interfaces";
 import { getId, mustBeImmutableType } from "../../compile-rules";
-import { Scope } from "../../frame-interfaces/scope";
-import { SymbolType } from "../../frame-interfaces/symbol-type";
+import { Scope } from "../../compiler-interfaces/scope";
+import { SymbolType } from "../../compiler-interfaces/symbol-type";
 import { Transforms } from "../../frame-interfaces/transforms";
 import { immutableTypeOptions } from "../../frame-interfaces/type-options";
 import { endKeyword, recordKeyword } from "../../keywords";

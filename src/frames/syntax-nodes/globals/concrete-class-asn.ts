@@ -1,8 +1,8 @@
 import { Deprecated } from "../../../elan-type-interfaces";
 import { getId, mustBeDeclaredAbove, mustImplementSuperClasses } from "../../compile-rules";
+import { Scope } from "../../compiler-interfaces/scope";
+import { SymbolType } from "../../compiler-interfaces/symbol-type";
 import { isConstructor } from "../../frame-helpers";
-import { Scope } from "../../frame-interfaces/scope";
-import { SymbolType } from "../../frame-interfaces/symbol-type";
 import { Transforms } from "../../frame-interfaces/transforms";
 import { noTypeOptions } from "../../frame-interfaces/type-options";
 import { classKeyword } from "../../keywords";

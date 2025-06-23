@@ -1,5 +1,5 @@
-import { ElanSymbol } from "../frame-interfaces/elan-symbol";
-import { SymbolType } from "../frame-interfaces/symbol-type";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 
 export class DuplicateSymbol implements ElanSymbol {
   constructor(public readonly duplicates: ElanSymbol[]) {}

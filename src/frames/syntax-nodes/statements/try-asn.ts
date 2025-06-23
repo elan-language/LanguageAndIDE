@@ -1,4 +1,4 @@
-import { Scope } from "../../frame-interfaces/scope";
+import { Scope } from "../../compiler-interfaces/scope";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
 export class TryAsn extends FrameWithStatementsAsn {

@@ -1,7 +1,7 @@
 import { CompileError } from "../compile-error";
 import { AstNode } from "../compiler-interfaces/ast-node";
 import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
-import { Scope } from "../frame-interfaces/scope";
+import { Scope } from "../compiler-interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class QualifierAsn extends AbstractAstNode implements AstQualifierNode {

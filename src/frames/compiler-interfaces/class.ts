@@ -1,9 +1,9 @@
 import { Deprecated } from "../../elan-type-interfaces";
+import { Transforms } from "../frame-interfaces/transforms";
 import { ClassSymbol } from "./class-symbol";
 import { ElanSymbol } from "./elan-symbol";
 import { Scope } from "./scope";
 import { SymbolType } from "./symbol-type";
-import { Transforms } from "./transforms";
 
 export interface Class extends Scope, ClassSymbol {
   getChildren(): ElanSymbol[];

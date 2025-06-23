@@ -5,6 +5,7 @@ import { StdLib } from "../standard-library/std-lib";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSourceFromString } from "./code-source-from-string";
+import { CompileMode, RootAstNode } from "./compiler-interfaces/root-ast-node";
 import { Regexes } from "./fields/regexes";
 import {
   expandCollapseAll,
@@ -21,7 +22,6 @@ import { File } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
 import { defaultUsername, Profile } from "./frame-interfaces/profile";
-import { CompileMode, RootAstNode } from "./frame-interfaces/root-ast-node";
 import { Selectable } from "./frame-interfaces/selectable";
 import { Semver } from "./frame-interfaces/semver";
 import { StatementFactory } from "./frame-interfaces/statement-factory";

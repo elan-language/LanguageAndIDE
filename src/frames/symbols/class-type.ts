@@ -1,9 +1,9 @@
-import { Class } from "../frame-interfaces/class";
-import { ElanSymbol } from "../frame-interfaces/elan-symbol";
-import { GenericSymbolType } from "../frame-interfaces/generic-symbol-type";
-import { ReifyableSymbolType } from "../frame-interfaces/reifyable-symbol-type";
-import { Scope } from "../frame-interfaces/scope";
-import { SymbolType } from "../frame-interfaces/symbol-type";
+import { Class } from "../compiler-interfaces/class";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { GenericSymbolType } from "../compiler-interfaces/generic-symbol-type";
+import { ReifyableSymbolType } from "../compiler-interfaces/reifyable-symbol-type";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { Transforms } from "../frame-interfaces/transforms";
 import { TypeOptions } from "../frame-interfaces/type-options";
 import { FloatType } from "./float-type";

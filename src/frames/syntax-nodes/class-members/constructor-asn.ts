@@ -1,8 +1,8 @@
 import { AstNode } from "../../compiler-interfaces/ast-node";
-import { Class } from "../../frame-interfaces/class";
-import { ElanSymbol } from "../../frame-interfaces/elan-symbol";
+import { Class } from "../../compiler-interfaces/class";
+import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
+import { Scope } from "../../compiler-interfaces/scope";
 import { Member } from "../../frame-interfaces/member";
-import { Scope } from "../../frame-interfaces/scope";
 import { Transforms } from "../../frame-interfaces/transforms";
 import { constructorKeyword } from "../../keywords";
 import { ProcedureType } from "../../symbols/procedure-type";

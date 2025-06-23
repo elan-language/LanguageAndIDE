@@ -1,9 +1,9 @@
 import { Deprecated } from "../../elan-type-interfaces";
+import { Class } from "../compiler-interfaces/class";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { isMember } from "../frame-helpers";
-import { Class } from "../frame-interfaces/class";
-import { ElanSymbol } from "../frame-interfaces/elan-symbol";
-import { Scope } from "../frame-interfaces/scope";
-import { SymbolType } from "../frame-interfaces/symbol-type";
 import { Transforms } from "../frame-interfaces/transforms";
 import { TypeOptions } from "../frame-interfaces/type-options";
 import { thisKeyword } from "../keywords";

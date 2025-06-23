@@ -1,7 +1,7 @@
+import { Scope } from "../compiler-interfaces/scope";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
-import { Scope } from "../frame-interfaces/scope";
 import { Transforms } from "../frame-interfaces/transforms";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { ExprNode } from "../parse-nodes/expr-node";

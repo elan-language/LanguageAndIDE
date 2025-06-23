@@ -1,4 +1,4 @@
-import { Scope } from "../../frame-interfaces/scope";
+import { Scope } from "../../compiler-interfaces/scope";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { ProcedureAsn } from "./procedure-asn";
 

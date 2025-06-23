@@ -1,3 +1,4 @@
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import {
   escapeHtmlChars,
   helper_CompileOrParseAsDisplayStatus,
@@ -7,7 +8,6 @@ import {
 } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
-import { ElanSymbol } from "../frame-interfaces/elan-symbol";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";

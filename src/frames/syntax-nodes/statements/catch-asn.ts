@@ -1,9 +1,9 @@
 import { getId } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
+import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
+import { Scope } from "../../compiler-interfaces/scope";
+import { SymbolType } from "../../compiler-interfaces/symbol-type";
 import { singleIndent } from "../../frame-helpers";
-import { ElanSymbol } from "../../frame-interfaces/elan-symbol";
-import { Scope } from "../../frame-interfaces/scope";
-import { SymbolType } from "../../frame-interfaces/symbol-type";
 import { Transforms } from "../../frame-interfaces/transforms";
 import { catchKeyword, exceptionKeyword, inKeyword } from "../../keywords";
 import { StringType } from "../../symbols/string-type";

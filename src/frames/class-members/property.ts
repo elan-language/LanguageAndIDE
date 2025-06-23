@@ -1,4 +1,5 @@
 import { AbstractFrame } from "../abstract-frame";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
 import { addPrivateToggleToContextMenu, processTogglePrivate } from "../frame-helpers";
@@ -7,7 +8,6 @@ import { editorEvent } from "../frame-interfaces/editor-event";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
-import { SymbolType } from "../frame-interfaces/symbol-type";
 import { ClassFrame } from "../globals/class-frame";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 import { ClassType } from "../symbols/class-type";

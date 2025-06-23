@@ -9,6 +9,7 @@ import { FunctionMethod } from "../class-members/function-method";
 import { MemberSelector } from "../class-members/member-selector";
 import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { InheritsFromField } from "../fields/inherits-from-field";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
@@ -21,7 +22,6 @@ import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
 import { Profile } from "../frame-interfaces/profile";
 import { StatementFactory } from "../frame-interfaces/statement-factory";
-import { SymbolType } from "../frame-interfaces/symbol-type";
 import { classKeyword } from "../keywords";
 import {
   parentHelper_addChildAfter,

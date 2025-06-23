@@ -43,10 +43,10 @@ import {
   UnknownCompilerDirectiveCompileError,
 } from "./compile-error";
 import { AstNode } from "./compiler-interfaces/ast-node";
+import { ElanSymbol } from "./compiler-interfaces/elan-symbol";
+import { Scope } from "./compiler-interfaces/scope";
+import { SymbolType } from "./compiler-interfaces/symbol-type";
 import { isClass, isConstant, isFunction, isLet, isMember, isProcedure } from "./frame-helpers";
-import { ElanSymbol } from "./frame-interfaces/elan-symbol";
-import { Scope } from "./frame-interfaces/scope";
-import { SymbolType } from "./frame-interfaces/symbol-type";
 import { Transforms } from "./frame-interfaces/transforms";
 import { isRecord } from "./frame-interfaces/type-options";
 import { allKeywords, reservedWords } from "./keywords";

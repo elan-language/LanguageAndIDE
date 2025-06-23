@@ -1,4 +1,4 @@
-import { SymbolType } from "../frame-interfaces/symbol-type";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { noTypeOptions } from "../frame-interfaces/type-options";
 
 export class GenericParameterType implements SymbolType {

@@ -12,10 +12,10 @@ import {
   isProcedureDescriptor,
   TypeDescriptor,
 } from "./elan-type-interfaces";
-import { Class } from "./frames/frame-interfaces/class";
-import { ElanSymbol } from "./frames/frame-interfaces/elan-symbol";
-import { Scope } from "./frames/frame-interfaces/scope";
-import { SymbolType } from "./frames/frame-interfaces/symbol-type";
+import { Class } from "./frames/compiler-interfaces/class";
+import { ElanSymbol } from "./frames/compiler-interfaces/elan-symbol";
+import { Scope } from "./frames/compiler-interfaces/scope";
+import { SymbolType } from "./frames/compiler-interfaces/symbol-type";
 import { getTypeOptions, noTypeOptions, TypeOptions } from "./frames/frame-interfaces/type-options";
 import { constructorKeyword } from "./frames/keywords";
 import { BooleanType } from "./frames/symbols/boolean-type";

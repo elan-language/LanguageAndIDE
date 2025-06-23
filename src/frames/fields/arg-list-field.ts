@@ -1,8 +1,8 @@
+import { Scope } from "../compiler-interfaces/scope";
 import { currentParameterIndex } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
-import { Scope } from "../frame-interfaces/scope";
 import { Transforms } from "../frame-interfaces/transforms";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { CallStatement } from "../statements/call-statement";

@@ -1,6 +1,6 @@
 import { mustBeKnownSymbolType, mustNotBeKeyword } from "../compile-rules";
 import { AstIdNode } from "../compiler-interfaces/ast-id-node";
-import { Scope } from "../frame-interfaces/scope";
+import { Scope } from "../compiler-interfaces/scope";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";

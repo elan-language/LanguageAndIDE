@@ -1,12 +1,12 @@
 import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
 import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
 import { FileImpl } from "../file-impl";
 import { CSV } from "../parse-nodes/csv";
 import { Multiple } from "../parse-nodes/multiple";
 import { Sequence } from "../parse-nodes/sequence";
 import { Frame } from "./frame";
 import { ParseNode } from "./parse-node";
-import { Scope } from "./scope";
 
 export interface Transforms {
   transform(

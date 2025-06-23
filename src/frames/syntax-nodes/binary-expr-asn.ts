@@ -6,8 +6,8 @@ import {
   mustBeNumberTypes,
 } from "../compile-rules";
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { Scope } from "../frame-interfaces/scope";
-import { SymbolType } from "../frame-interfaces/symbol-type";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { BooleanType } from "../symbols/boolean-type";
 import { FloatType } from "../symbols/float-type";
 import { IntType } from "../symbols/int-type";

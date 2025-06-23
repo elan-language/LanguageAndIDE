@@ -10,10 +10,10 @@ import {
 } from "../compile-rules";
 import { AstIdNode } from "../compiler-interfaces/ast-id-node";
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { ChainedAsn } from "../frame-interfaces/chained-asn";
-import { ElanSymbol } from "../frame-interfaces/elan-symbol";
-import { Scope } from "../frame-interfaces/scope";
-import { SymbolType } from "../frame-interfaces/symbol-type";
+import { ChainedAsn } from "../compiler-interfaces/chained-asn";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { FunctionType } from "../symbols/function-type";
 import { NullScope } from "../symbols/null-scope";
 import {

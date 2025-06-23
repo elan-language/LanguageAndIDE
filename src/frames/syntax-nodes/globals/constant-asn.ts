@@ -1,8 +1,8 @@
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
-import { ElanSymbol } from "../../frame-interfaces/elan-symbol";
-import { Scope } from "../../frame-interfaces/scope";
-import { SymbolType } from "../../frame-interfaces/symbol-type";
+import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
+import { Scope } from "../../compiler-interfaces/scope";
+import { SymbolType } from "../../compiler-interfaces/symbol-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { transforms } from "../ast-helpers";

@@ -5,9 +5,9 @@ import {
 } from "../../compile-rules";
 import { AstIdNode } from "../../compiler-interfaces/ast-id-node";
 import { AstNode } from "../../compiler-interfaces/ast-node";
-import { ElanSymbol } from "../../frame-interfaces/elan-symbol";
-import { Scope } from "../../frame-interfaces/scope";
-import { SymbolType } from "../../frame-interfaces/symbol-type";
+import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
+import { Scope } from "../../compiler-interfaces/scope";
+import { SymbolType } from "../../compiler-interfaces/symbol-type";
 import { Transforms } from "../../frame-interfaces/transforms";
 import { DuplicateSymbol } from "../../symbols/duplicate-symbol";
 import { getGlobalScope, isFunction, symbolMatches } from "../../symbols/symbol-helpers";

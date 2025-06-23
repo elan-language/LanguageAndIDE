@@ -1,7 +1,7 @@
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { ElanSymbol } from "../frame-interfaces/elan-symbol";
-import { Scope } from "../frame-interfaces/scope";
-import { SymbolType } from "../frame-interfaces/symbol-type";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { Transforms } from "../frame-interfaces/transforms";
 import { isDefinitionStatement } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";

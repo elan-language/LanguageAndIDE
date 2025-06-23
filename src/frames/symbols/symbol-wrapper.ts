@@ -1,6 +1,6 @@
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { Scope } from "../compiler-interfaces/scope";
 import { isGenericClass } from "../frame-helpers";
-import { ElanSymbol } from "../frame-interfaces/elan-symbol";
-import { Scope } from "../frame-interfaces/scope";
 import { Transforms } from "../frame-interfaces/transforms";
 import { propertyKeyword } from "../keywords";
 import { KeywordCompletion } from "../symbol-completion-helpers";

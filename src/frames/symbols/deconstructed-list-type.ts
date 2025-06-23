@@ -1,5 +1,5 @@
-import { DeconstructedSymbolType } from "../frame-interfaces/deconstructed-symbol-type";
-import { SymbolType } from "../frame-interfaces/symbol-type";
+import { DeconstructedSymbolType } from "../compiler-interfaces/deconstructed-symbol-type";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { immutableTypeOptions } from "../frame-interfaces/type-options";
 import { ListImmutableName, ListName } from "./elan-type-names";
 import { isGenericSymbolType } from "./symbol-helpers";

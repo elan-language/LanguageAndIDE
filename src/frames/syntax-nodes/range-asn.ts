@@ -1,6 +1,6 @@
 import { mustNotBeNegativeIndex } from "../compile-rules";
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { Scope } from "../frame-interfaces/scope";
+import { Scope } from "../compiler-interfaces/scope";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";

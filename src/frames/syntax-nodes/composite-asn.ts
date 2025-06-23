@@ -1,8 +1,8 @@
 import { compilerAssert } from "../compile-rules";
 import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { ChainedAsn } from "../frame-interfaces/chained-asn";
-import { Scope } from "../frame-interfaces/scope";
+import { ChainedAsn } from "../compiler-interfaces/chained-asn";
+import { Scope } from "../compiler-interfaces/scope";
 import { updateScopeInChain } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";

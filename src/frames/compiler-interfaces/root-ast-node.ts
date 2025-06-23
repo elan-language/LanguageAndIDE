@@ -1,8 +1,8 @@
 import { CompileError } from "../compile-error";
-import { AstNode } from "../compiler-interfaces/ast-node";
+import { Semver } from "../frame-interfaces/semver";
 import { BreakpointEvent } from "../status-enums";
+import { AstNode } from "./ast-node";
 import { Scope } from "./scope";
-import { Semver } from "./semver";
 
 export enum CompileMode {
   inprocess,

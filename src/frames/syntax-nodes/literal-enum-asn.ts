@@ -1,7 +1,7 @@
 import { mustBeKnownSymbol } from "../compile-rules";
 import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
 import { isScope } from "../frame-helpers";
-import { Scope } from "../frame-interfaces/scope";
 import { EnumType } from "../symbols/enum-type";
 import { NullScope } from "../symbols/null-scope";
 import { getGlobalScope } from "../symbols/symbol-helpers";

@@ -1,5 +1,5 @@
 import { Deprecated } from "../../elan-type-interfaces";
-import { SymbolType } from "../frame-interfaces/symbol-type";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { immutableTypeOptions } from "../frame-interfaces/type-options";
 
 export class ProcedureType implements SymbolType {

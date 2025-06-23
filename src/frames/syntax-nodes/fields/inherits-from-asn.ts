@@ -1,5 +1,5 @@
 import { AstNode } from "../../compiler-interfaces/ast-node";
-import { SymbolType } from "../../frame-interfaces/symbol-type";
+import { SymbolType } from "../../compiler-interfaces/symbol-type";
 import { UnknownType } from "../../symbols/unknown-type";
 import { AbstractAstNode } from "../abstract-ast-node";
 import { isAstCollectionNode } from "../ast-helpers";

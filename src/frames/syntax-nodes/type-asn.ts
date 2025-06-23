@@ -7,7 +7,7 @@ import {
 } from "../compile-rules";
 import { AstNode } from "../compiler-interfaces/ast-node";
 import { AstTypeNode } from "../compiler-interfaces/ast-type-node";
-import { Scope } from "../frame-interfaces/scope";
+import { Scope } from "../compiler-interfaces/scope";
 import { isAnyDictionary } from "../frame-interfaces/type-options";
 import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";

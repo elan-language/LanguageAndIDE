@@ -7,9 +7,9 @@ import {
   isFunctionDescriptor,
   isProcedureDescriptor,
 } from "../elan-type-interfaces";
-import { ElanSymbol } from "../frames/frame-interfaces/elan-symbol";
-import { Scope } from "../frames/frame-interfaces/scope";
-import { SymbolType } from "../frames/frame-interfaces/symbol-type";
+import { ElanSymbol } from "../frames/compiler-interfaces/elan-symbol";
+import { Scope } from "../frames/compiler-interfaces/scope";
+import { SymbolType } from "../frames/compiler-interfaces/symbol-type";
 import { Transforms } from "../frames/frame-interfaces/transforms";
 import { NullScope } from "../frames/symbols/null-scope";
 import { symbolMatches } from "../frames/symbols/symbol-helpers";

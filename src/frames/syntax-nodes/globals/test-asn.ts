@@ -1,6 +1,6 @@
 import { AstNode } from "../../compiler-interfaces/ast-node";
-import { Scope } from "../../frame-interfaces/scope";
-import { SymbolType } from "../../frame-interfaces/symbol-type";
+import { Scope } from "../../compiler-interfaces/scope";
+import { SymbolType } from "../../compiler-interfaces/symbol-type";
 import { compileNodes } from "../ast-helpers";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 

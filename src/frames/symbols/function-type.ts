@@ -1,5 +1,5 @@
 import { Deprecated } from "../../elan-type-interfaces";
-import { SymbolType } from "../frame-interfaces/symbol-type";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { noTypeOptions } from "../frame-interfaces/type-options";
 import { FuncName } from "./elan-type-names";
 

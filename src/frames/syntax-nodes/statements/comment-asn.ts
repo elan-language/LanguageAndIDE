@@ -1,5 +1,5 @@
 import { AstNode } from "../../compiler-interfaces/ast-node";
-import { Scope } from "../../frame-interfaces/scope";
+import { Scope } from "../../compiler-interfaces/scope";
 import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 

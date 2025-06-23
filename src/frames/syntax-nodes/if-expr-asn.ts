@@ -1,6 +1,6 @@
 import { mustBeBooleanCondition, mustBeCompatibleType } from "../compile-rules";
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { Scope } from "../frame-interfaces/scope";
+import { Scope } from "../compiler-interfaces/scope";
 import { ClassType } from "../symbols/class-type";
 import { getGlobalScope, mostPreciseSymbol } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";

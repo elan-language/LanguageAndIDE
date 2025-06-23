@@ -1,8 +1,8 @@
 import { mustBeAssignableType, mustBeClass, mustBePropertyAndPublic } from "../compile-rules";
 import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
 import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
 import { isClass } from "../frame-helpers";
-import { Scope } from "../frame-interfaces/scope";
 import { ClassType } from "../symbols/class-type";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";

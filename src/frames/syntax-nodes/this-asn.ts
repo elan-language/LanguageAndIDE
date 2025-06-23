@@ -1,6 +1,6 @@
 import { mustBeInsideClass } from "../compile-rules";
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { Scope } from "../frame-interfaces/scope";
+import { Scope } from "../compiler-interfaces/scope";
 import { thisKeyword } from "../keywords";
 import { getGlobalScope, isInsideClass } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
