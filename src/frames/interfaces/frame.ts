@@ -40,7 +40,6 @@ export interface Frame extends Selectable {
 
   readCompileStatus(): CompileStatus;
   updateCompileStatus(): void;
-  resetCompileStatusAndErrors(): void;
   insertSelectorAfterLastField(): void;
   insertPeerSelector(before: boolean): void;
   selectNextFrame(): void;

@@ -77,11 +77,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     this.setCompileStatus(newStatus);
   }
 
-  resetCompileStatusAndErrors(): void {
-    this.getChildren().forEach((f) => f.resetCompileStatusAndErrors());
-    super.resetCompileStatusAndErrors();
-  }
-
   getChildren(): Frame[] {
     return this._children;
   }

@@ -11,7 +11,6 @@ import {
 } from "./frame-helpers";
 import { CodeSource } from "./interfaces/code-source";
 import { editorEvent } from "./interfaces/editor-event";
-import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Field } from "./interfaces/field";
 import { File } from "./interfaces/file";
 import { Frame } from "./interfaces/frame";
@@ -30,8 +29,6 @@ import {
   DisplayColour,
   ParseStatus,
 } from "./status-enums";
-import { orderSymbol } from "./symbols/symbol-helpers";
-import { SymbolScope } from "./symbols/symbol-scope";
 
 export abstract class AbstractFrame implements Frame {
   isFrame = true;
@@ -604,10 +601,6 @@ export abstract class AbstractFrame implements Frame {
   protected setCompileStatus(newStatus: CompileStatus) {
     this._compileStatus = newStatus;
   }
-  resetCompileStatusAndErrors(): void {
-    this.getFields().forEach((f) => f.resetCompileStatusAndErrors());
-    this._compileStatus = CompileStatus.default;
-  }
 
   abstract parseFrom(source: CodeSource): void;
 
@@ -719,74 +712,8 @@ export abstract class AbstractFrame implements Frame {
     return "";
   }
 
-  isNotGlobalOrLib(s: ElanSymbol) {
-    const scope = s.symbolScope;
-
-    return !(scope === SymbolScope.program || scope === SymbolScope.stdlib);
-  }
-
   bpAsHtml(): string {
     return this.hasBreakpoint() ? `<el-bp>&#x1f5f2;</el-bp>` : "";
-  }
-
-  bpIndent() {
-    return this.indent() === "" ? "  " : this.indent();
-  }
-
-  resolveVariables(scopedSymbols: () => ElanSymbol[]) {
-    const resolveId: string[] = [];
-    const symbols = scopedSymbols().filter(this.isNotGlobalOrLib).sort(orderSymbol);
-    const indent = this.bpIndent();
-
-    for (const symbol of symbols) {
-      const idPrefix =
-        symbol.symbolScope === SymbolScope.program
-          ? "global."
-          : symbol.symbolScope === SymbolScope.member
-            ? "property."
-            : "";
-
-      const scopePrefix =
-        symbol.symbolScope === SymbolScope.stdlib
-          ? "_stdlib."
-          : symbol.symbolScope === SymbolScope.program
-            ? "global."
-            : symbol.symbolScope === SymbolScope.member
-              ? "this."
-              : "";
-
-      const id = `${idPrefix}${symbol.symbolId}`;
-      const value = `${scopePrefix}${symbol.symbolId}`;
-      resolveId.push(
-        `${indent}_scopedIds${this.htmlId}.push(["${id}", await system.debugSymbol(${value})]);`,
-      );
-    }
-
-    return `${resolveId.join("\r\n")}`;
-  }
-
-  breakPoint(scopedSymbols: () => ElanSymbol[]) {
-    if (
-      this.breakpointStatus === BreakpointStatus.active ||
-      this.breakpointStatus === BreakpointStatus.singlestep
-    ) {
-      let resolve = this.resolveVariables(scopedSymbols);
-      const type = this.breakpointStatus === BreakpointStatus.singlestep ? "true" : "false";
-      const indent = this.bpIndent();
-
-      if (this.breakpointStatus === BreakpointStatus.singlestep) {
-        resolve = `${indent}if (__pause) {
-${resolve}
-${indent}}`;
-      }
-
-      resolve = `${indent}const _scopedIds${this.htmlId} = [];
-${resolve}`;
-
-      return `${resolve}\r\n${indent}__pause = await system.breakPoint(_scopedIds${this.htmlId}, "${this.htmlId}", ${type}, __pause);\r\n`;
-    }
-
-    return "";
   }
 
   protected toolTip(): string {

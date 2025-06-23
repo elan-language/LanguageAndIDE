@@ -269,11 +269,6 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return new MemberSelector(this);
   }
 
-  resetCompileStatusAndErrors(): void {
-    this.getChildren().forEach((f) => f.resetCompileStatusAndErrors());
-    super.resetCompileStatusAndErrors();
-  }
-
   getClassIndex() {
     return this.getParent().getChildren().indexOf(this);
   }

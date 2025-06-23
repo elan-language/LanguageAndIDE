@@ -86,7 +86,7 @@ export const fileErrorPrefix = `Cannot load file:`;
 
 const cannotLoadFile = `${fileErrorPrefix} it has been created or modified outside Elan IDE`;
 
-export class FileImpl implements File, Scope {
+export class FileImpl implements File {
   currentHash: string = "";
   isParent: boolean = true;
   hasFields: boolean = true;
@@ -133,27 +133,8 @@ export class FileImpl implements File, Scope {
     this.scratchPad = new ScratchPad();
   }
 
-  // for testing only
-  setSymbols(testSymbols: StdLibSymbols) {
-    this._stdLibSymbols = testSymbols;
-  }
-
-  getSymbols(): Scope {
-    return this._stdLibSymbols;
-  }
-
   private version = elanVersion;
   private isProduction = isElanProduction;
-
-  symbolMatches(_id: string, _all: boolean): ElanSymbol[] {
-    //const languageMatches = symbolMatches(id, all, elanSymbols);
-    // const libMatches = this.libraryScope.symbolMatches(id, all);
-    // const globalSymbols = this.getChildren().filter((c) => isSymbol(c)) as ElanSymbol[];
-    // const matches = symbolMatches(id, all, globalSymbols);
-
-    // return languageMatches.concat(matches).concat(libMatches);
-    return [];
-  }
 
   getFile(): File {
     return this;
@@ -238,10 +219,6 @@ export class FileImpl implements File, Scope {
     throw new Error(
       "getParent Should not have been called on a file; test for 'hasParent()' before calling.",
     );
-  }
-
-  getParentScope(): Scope {
-    return this.libraryScope;
   }
 
   getById(id: string): Selectable {
@@ -816,21 +793,9 @@ export class FileImpl implements File, Scope {
     }
   }
 
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
-    // unknown because of typescript quirk
-    // const globalSymbols = (this.getChildren().filter((c) => isSymbol(c)) as ElanSymbol[]).concat(
-    //   elanSymbols,
-    // );
-    // const matches = globalSymbols.filter((s) => s.symbolId === id);
-
-    // if (matches.length === 1) {
-    //   return matches[0];
-    // }
-    // if (matches.length > 1) {
-    //   return new DuplicateSymbol(matches);
-    // }
-
-    return this.libraryScope.resolveSymbol(id, transforms, this);
+  // for testing only
+  setSymbols(testSymbols: StdLibSymbols) {
+    this._stdLibSymbols = testSymbols;
   }
 
   get libraryScope() {

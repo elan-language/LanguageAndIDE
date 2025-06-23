@@ -228,7 +228,7 @@ export function transform(
   scope: Scope,
 ): AstNode | undefined {
   if (node instanceof FileImpl) {
-    const astRoot = new FileAsn(node.getSymbols(), node.getVersion());
+    const astRoot = new FileAsn(node.libraryScope, node.getVersion());
 
     astRoot.children = node
       .getChildren()

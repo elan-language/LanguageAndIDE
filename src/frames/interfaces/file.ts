@@ -1,5 +1,4 @@
 import { AssertOutcome } from "../../assert-outcome";
-
 import { editorEvent } from "../interfaces/editor-event";
 import { ScratchPad } from "../scratch-pad";
 import {
