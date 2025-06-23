@@ -28,19 +28,16 @@ import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { CodeSource } from "./interfaces/code-source";
 import { editorEvent } from "./interfaces/editor-event";
-import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Field } from "./interfaces/field";
 import { File } from "./interfaces/file";
 import { Frame } from "./interfaces/frame";
 import { Parent } from "./interfaces/parent";
 import { defaultUsername, Profile } from "./interfaces/profile";
 import { CompileMode, RootAstNode } from "./interfaces/root-ast-node";
-import { Scope } from "./interfaces/scope";
 import { Selectable } from "./interfaces/selectable";
 import { Semver } from "./interfaces/semver";
 import { StatementFactory } from "./interfaces/statement-factory";
 import { Transforms } from "./interfaces/transforms";
-import { propertyKeyword } from "./keywords";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -69,15 +66,6 @@ import {
   RunStatus,
   TestStatus,
 } from "./status-enums";
-import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "./symbol-completion-helpers";
-import { NullScope } from "./symbols/null-scope";
-import {
-  filteredSymbols,
-  getClassScope,
-  isInsideClass,
-  isProperty,
-  orderSymbol,
-} from "./symbols/symbol-helpers";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -804,31 +792,5 @@ export class FileImpl implements File {
 
   updateBreakpoints(event: BreakpointEvent) {
     parentHelper_updateBreakpoints(this, event);
-  }
-
-  allPropertiesInScope(scope: Scope) {
-    const all = scope.symbolMatches("", true, scope);
-    return all.filter((s) => isProperty(s)) as ElanSymbol[];
-  }
-
-  filteredSymbols(spec: SymbolCompletionSpec, htmlId: string) {
-    const ast = this.getAst(false);
-    const scope = ast?.getScopeById(htmlId) ?? NullScope.Instance;
-    let symbols = filteredSymbols(spec, this.transform, scope);
-    if (isInsideClass(scope)) {
-      if (propertyKeyword.startsWith(spec.toMatch)) {
-        const allProperties = this.allPropertiesInScope(getClassScope(scope)).sort(orderSymbol);
-        symbols = symbols.filter((s) => !allProperties.includes(s)).concat(allProperties);
-      } else if (spec.context === propertyKeyword) {
-        const newSpec = new SymbolCompletionSpec(
-          spec.toMatch,
-          new Set<TokenType>([TokenType.id_property]),
-          new Set<KeywordCompletion>(),
-          "",
-        );
-        symbols = filteredSymbols(newSpec, this.transform, scope);
-      }
-    }
-    return symbols;
   }
 }

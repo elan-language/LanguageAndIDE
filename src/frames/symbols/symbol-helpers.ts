@@ -15,8 +15,8 @@ import { RootAstNode } from "../interfaces/root-ast-node";
 import { Scope } from "../interfaces/scope";
 import { SymbolType } from "../interfaces/symbol-type";
 import { Transforms } from "../interfaces/transforms";
-import { globalKeyword, libraryKeyword } from "../keywords";
-import { SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
+import { globalKeyword, libraryKeyword, propertyKeyword } from "../keywords";
+import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import {
   isAstIdNode,
   isAstQualifiedNode,
@@ -693,4 +693,35 @@ export function knownType(symbolType: SymbolType) {
 
 export function isDefinitionStatement(s: Scope): boolean {
   return s instanceof AbstractDefinitionAsn || s instanceof EachAsn || s instanceof ForAsn;
+}
+
+function allPropertiesInScope(scope: Scope) {
+  const all = scope.symbolMatches("", true, scope);
+  return all.filter((s) => isProperty(s)) as ElanSymbol[];
+}
+
+export function getFilteredSymbols(
+  spec: SymbolCompletionSpec,
+  ast: RootAstNode | undefined,
+  transform: Transforms,
+  htmlId: string,
+) {
+  //const ast = this.getAst(false);
+  const scope = ast?.getScopeById(htmlId) ?? NullScope.Instance;
+  let symbols = filteredSymbols(spec, transform, scope);
+  if (isInsideClass(scope)) {
+    if (propertyKeyword.startsWith(spec.toMatch)) {
+      const allProperties = allPropertiesInScope(getClassScope(scope)).sort(orderSymbol);
+      symbols = symbols.filter((s) => !allProperties.includes(s)).concat(allProperties);
+    } else if (spec.context === propertyKeyword) {
+      const newSpec = new SymbolCompletionSpec(
+        spec.toMatch,
+        new Set<TokenType>([TokenType.id_property]),
+        new Set<KeywordCompletion>(),
+        "",
+      );
+      symbols = filteredSymbols(newSpec, transform, scope);
+    }
+  }
+  return symbols;
 }

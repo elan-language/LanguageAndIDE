@@ -8,9 +8,7 @@ import {
   RunStatus,
   TestStatus,
 } from "../status-enums";
-import { SymbolCompletionSpec } from "../symbol-completion-helpers";
 import { CodeSource } from "./code-source";
-import { ElanSymbol } from "./elan-symbol";
 import { Frame } from "./frame";
 import { Parent } from "./parent";
 import { Profile } from "./profile";
@@ -113,7 +111,7 @@ export interface File extends Parent {
   getVersion(): Semver;
   getVersionString(): string;
 
-  filteredSymbols(spec: SymbolCompletionSpec, htmlId: string): ElanSymbol[];
+  //filteredSymbols(spec: SymbolCompletionSpec, htmlId: string): ElanSymbol[];
 
   getAst(invalidate: boolean): RootAstNode | undefined;
 }

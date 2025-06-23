@@ -18,8 +18,9 @@ import { propertyKeyword } from "../keywords";
 import { Overtyper } from "../overtyper";
 import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
 import { KeywordCompletion, SymbolCompletionSpec } from "../symbol-completion-helpers";
-import { removeIfSingleFullMatch } from "../symbols/symbol-helpers";
+import { getFilteredSymbols, removeIfSingleFullMatch } from "../symbols/symbol-helpers";
 import { SymbolWrapper } from "../symbols/symbol-wrapper";
+import { transforms } from "../syntax-nodes/ast-helpers";
 
 export abstract class AbstractField implements Selectable, Field {
   public isField: boolean = true;
@@ -689,7 +690,8 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   matchingSymbolsForId(spec: SymbolCompletionSpec): ElanSymbol[] {
-    const symbols = this.getFile().filteredSymbols(spec, this.getHolder().getHtmlId());
+    const ast = this.getFile().getAst(false);
+    const symbols = getFilteredSymbols(spec, ast, transforms(), this.getHolder().getHtmlId());
     return removeIfSingleFullMatch(symbols, spec.toMatch);
   }
 
