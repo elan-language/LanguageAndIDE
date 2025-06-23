@@ -1,4 +1,4 @@
-# 2ab473d5b242b98af7419c68fbca8acf204eedd3a058e2cc59b5a91b9ebdd8b2 Elan 1.2.3 guest default_profile valid
+# dc3d3e45f6f734d5f3f1ba66eef3df26328c147089e424591aa2aaaacb003ee3 Elan 1.2.4 guest default_profile valid
 
 main
   let allPupils be new List<of String>()

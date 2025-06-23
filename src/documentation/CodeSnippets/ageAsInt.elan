@@ -1,4 +1,4 @@
-# d9713f499aa7ea9a5856580db6c876cde6acd5562d9036edd49798c24c88d01f Elan 1.2.3 guest default_profile valid
+# 01849b555524d4c3cfc007a052d84146a96ae34f2b74e5ad0e503a0e1bddc85e Elan 1.2.4 guest default_profile valid
 
 function a(age as Int) returns Int
   return age
