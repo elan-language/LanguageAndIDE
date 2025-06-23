@@ -1,4 +1,4 @@
-# 770f914fad91d087e4bfa337d6a63dbac90201b1b4fb0959be976c609ec4d502 Elan 1.2.2 guest default_profile valid
+# 5870b6a96edc00c91219feedfc32d715c2793f1256a05050c8c7d20e54e0d437 Elan 1.2.3 guest default_profile valid
 
 main
   variable board set to new Array2D<of Int>(40, 30, 0)

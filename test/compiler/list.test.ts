@@ -1232,6 +1232,35 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "one");
   });
 
+  test("Pass_tail", async () => {
+    const code = `${testHeader}
+
+main
+    variable a set to ["one", "two", "three"]
+    variable b set to [""]
+    set b to a.tail()
+    print b
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list(["one", "two", "three"]);
+  let b = system.list([""]);
+  b = a.tail();
+  await system.printLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[two, three]");
+  });
+
   test("Pass_listOfFunction", async () => {
     const code = `${testHeader}
 

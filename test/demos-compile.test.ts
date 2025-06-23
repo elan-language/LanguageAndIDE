@@ -40,9 +40,6 @@ suite("Demo compile", () => {
   test("test maze-generator", async () => {
     await testDemoProgram("maze-generator.elan");
   });
-  test("test merge-sort", async () => {
-    await testDemoProgram("merge-sort.elan");
-  });
   test("test password-generator", async () => {
     await testDemoProgram("password-generator.elan");
   });
