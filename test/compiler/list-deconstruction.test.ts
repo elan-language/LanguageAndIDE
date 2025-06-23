@@ -953,6 +953,7 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
       "Cannot deconstruct tuple(Int, String) as list.LangRef.html#compile_error",
     ]);
   });
