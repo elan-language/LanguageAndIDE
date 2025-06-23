@@ -8,7 +8,6 @@ import { CallStatement } from "../statements/call-statement";
 import { ParseStatus } from "../status-enums";
 import { parameterNames } from "../symbols/symbol-helpers";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class ArgListField extends AbstractField {
@@ -46,7 +45,7 @@ export class ArgListField extends AbstractField {
   }
 
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return this.symbolCompletionAsHtml();
   }
 
   private completionOverride = "";

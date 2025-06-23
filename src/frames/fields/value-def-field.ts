@@ -3,7 +3,6 @@ import { Frame } from "../frame-interfaces/frame";
 
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { ValueDefNode } from "../parse-nodes/value-def-node";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class ValueDefField extends AbstractField {
@@ -32,6 +31,6 @@ export class ValueDefField extends AbstractField {
   }
 
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return this.symbolCompletionAsHtml();
   }
 }

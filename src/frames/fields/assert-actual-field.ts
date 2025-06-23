@@ -2,7 +2,6 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { AssertActualNode } from "../parse-nodes/assert-actual-node";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class AssertActualField extends AbstractField {
@@ -24,6 +23,6 @@ export class AssertActualField extends AbstractField {
     source.readUntil(/\sis\s/);
 
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return this.symbolCompletionAsHtml();
   }
 }

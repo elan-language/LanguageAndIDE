@@ -14,7 +14,6 @@ import { Scope } from "../../compiler-interfaces/scope";
 import { SymbolType } from "../../compiler-interfaces/symbol-type";
 import { isMember } from "../../frame-helpers";
 import { Field } from "../../frame-interfaces/field";
-import { Transforms } from "../../frame-interfaces/transforms";
 import { thisKeyword } from "../../keywords";
 import { BreakpointEvent } from "../../status-enums";
 import { ClassSubType, ClassType } from "../../symbols/class-type";
@@ -153,11 +152,7 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     return `class ${name} { }\r\n`;
   }
 
-  public lookForCircularDependencies(
-    cf: ClassAsn,
-    seenNames: string[],
-    transforms: Transforms,
-  ): [boolean, string] {
+  public lookForCircularDependencies(cf: ClassAsn, seenNames: string[]): [boolean, string] {
     if (cf.doesInherit()) {
       const superClasses = cf.getInheritanceItems();
 
@@ -172,7 +167,7 @@ export abstract class ClassAsn extends FrameAsn implements Class {
             return [true, s.symbolId];
           }
           const seenNamesThisPath = seenNames.concat([s.symbolId]);
-          const [sd, name] = this.lookForCircularDependencies(s, seenNamesThisPath, transforms);
+          const [sd, name] = this.lookForCircularDependencies(s, seenNamesThisPath);
           if (sd) {
             return [sd, name];
           }
@@ -182,12 +177,7 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     return [false, ""];
   }
 
-  public getAllClasses(
-    cf: ClassAsn,
-    seenNames: string[],
-    filter: (d: ClassAsn) => boolean,
-    transforms: Transforms,
-  ) {
+  public getAllClasses(cf: ClassAsn, seenNames: string[], filter: (d: ClassAsn) => boolean) {
     if (cf.doesInherit()) {
       const superClasses = cf.getInheritanceItems();
 
@@ -203,7 +193,7 @@ export abstract class ClassAsn extends FrameAsn implements Class {
         seenNames.push(cf.symbolId);
 
         for (const s of symbols) {
-          allSymbols = allSymbols.concat(this.getAllClasses(s, seenNames, filter, transforms));
+          allSymbols = allSymbols.concat(this.getAllClasses(s, seenNames, filter));
         }
 
         return allSymbols.filter(filter);
@@ -212,17 +202,12 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     return [];
   }
 
-  public getAllInterfaces(cf: ClassAsn, seenNames: string[], transforms: Transforms) {
-    return this.getAllClasses(cf, seenNames, (s: ClassAsn) => s.isInterface, transforms);
+  public getAllInterfaces(cf: ClassAsn, seenNames: string[]) {
+    return this.getAllClasses(cf, seenNames, (s: ClassAsn) => s.isInterface);
   }
 
-  public getAllAbstractClasses(cf: ClassAsn, seenNames: string[], transforms: Transforms) {
-    return this.getAllClasses(
-      cf,
-      seenNames,
-      (s: ClassAsn) => s.isAbstract && !s.isInterface,
-      transforms,
-    );
+  public getAllAbstractClasses(cf: ClassAsn, seenNames: string[]) {
+    return this.getAllClasses(cf, seenNames, (s: ClassAsn) => s.isAbstract && !s.isInterface);
   }
 
   get symbolId() {

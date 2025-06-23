@@ -3,7 +3,6 @@ import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { CommentNode } from "../parse-nodes/comment-node";
 import { ParseStatus } from "../status-enums";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class CommentField extends AbstractField {
@@ -43,7 +42,7 @@ export class CommentField extends AbstractField {
   }
 
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return this.symbolCompletionAsHtml();
   }
 
   //Overridden to avoid trimming

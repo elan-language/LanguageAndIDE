@@ -1,5 +1,4 @@
 import { Deprecated } from "../../elan-type-interfaces";
-import { Transforms } from "../frame-interfaces/transforms";
 import { ClassSymbol } from "./class-symbol";
 import { ElanSymbol } from "./elan-symbol";
 import { Scope } from "./scope";
@@ -9,7 +8,7 @@ export interface Class extends Scope, ClassSymbol {
   getChildren(): ElanSymbol[];
   resolveOwnSymbol(id: string): ElanSymbol;
   ofTypes: SymbolType[];
-  getDirectSuperClassesTypeAndName(transforms: Transforms): [SymbolType, string][];
+  getDirectSuperClassesTypeAndName(): [SymbolType, string][];
   updateOfTypes(ofTypes: SymbolType[]): Class;
   deprecated: Deprecated | undefined;
   isClass: boolean;

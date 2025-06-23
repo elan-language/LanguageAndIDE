@@ -3,7 +3,6 @@ import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";
 import { TokenType } from "../symbol-completion-helpers";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class TypeField extends AbstractField {
@@ -36,6 +35,6 @@ export class TypeField extends AbstractField {
     source.readToEndOfLine();
 
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return this.symbolCompletionAsHtml();
   }
 }

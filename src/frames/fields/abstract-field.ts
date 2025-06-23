@@ -13,7 +13,6 @@ import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { Selectable } from "../frame-interfaces/selectable";
-import { Transforms } from "../frame-interfaces/transforms";
 import { propertyKeyword } from "../keywords";
 import { Overtyper } from "../overtyper";
 import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
@@ -798,18 +797,16 @@ export abstract class AbstractField implements Selectable, Field {
     return rgx.test(this.text) ? this.text.match(rgx)![1] : "";
   }
 
-  protected symbolCompletionAsHtml(transforms: Transforms): string {
+  protected symbolCompletionAsHtml(): string {
     let popupAsHtml = "";
     const spec = this.getSymbolCompletionSpec();
     if (this.showAutoComplete(spec)) {
       this.symbolToMatch = spec.toMatch;
       const scope = this.getFile().getAst(false)?.getScopeById(this.getHolder().getHtmlId());
       const keywords = Array.from(spec.keywords)
-        .map((k) => new SymbolWrapper(k, transforms, scope!))
+        .map((k) => new SymbolWrapper(k, scope!))
         .sort(this.orderSymbol);
-      const symbols = this.matchingSymbolsForId(spec).map(
-        (s) => new SymbolWrapper(s, transforms, scope!),
-      );
+      const symbols = this.matchingSymbolsForId(spec).map((s) => new SymbolWrapper(s, scope!));
       this.allPossibleSymbolCompletions = keywords.concat(symbols);
       popupAsHtml = this.popupAsHtml();
     }

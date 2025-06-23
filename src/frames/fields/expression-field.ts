@@ -6,7 +6,6 @@ import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { parameterNames } from "../symbols/symbol-helpers";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class ExpressionField extends AbstractField {
@@ -36,7 +35,7 @@ export class ExpressionField extends AbstractField {
     source.readUntil(this.readUntil);
 
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return this.symbolCompletionAsHtml();
   }
 
   private completionOverride = "";

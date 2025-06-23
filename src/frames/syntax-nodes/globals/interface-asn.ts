@@ -2,12 +2,11 @@ import { Deprecated } from "../../../elan-type-interfaces";
 import { getId, mustBeInterfaceClass, mustBeKnownSymbolType } from "../../compile-rules";
 import { Scope } from "../../compiler-interfaces/scope";
 import { SymbolType } from "../../compiler-interfaces/symbol-type";
-import { Transforms } from "../../frame-interfaces/transforms";
 import { noTypeOptions } from "../../frame-interfaces/type-options";
 import { abstractClassKeywords } from "../../keywords";
 import { ClassSubType, ClassType } from "../../symbols/class-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
-import { compileNodes, transforms } from "../ast-helpers";
+import { compileNodes } from "../ast-helpers";
 import { ClassAsn } from "./class-asn";
 
 export class InterfaceAsn extends ClassAsn {
@@ -27,8 +26,8 @@ export class InterfaceAsn extends ClassAsn {
   get symbolId() {
     return getId(this.name);
   }
-  symbolType(transforms?: Transforms) {
-    const [cd] = this.lookForCircularDependencies(this, [getId(this.name)], transforms!);
+  symbolType() {
+    const [cd] = this.lookForCircularDependencies(this, [getId(this.name)]);
 
     return new ClassType(
       this.symbolId,
@@ -44,7 +43,7 @@ export class InterfaceAsn extends ClassAsn {
     this.compileErrors = [];
 
     const name = this.getName();
-    const [cd, cdName] = this.lookForCircularDependencies(this, [name], transforms());
+    const [cd, cdName] = this.lookForCircularDependencies(this, [name]);
     if (cd) {
       return this.circularDependency(cdName);
     }

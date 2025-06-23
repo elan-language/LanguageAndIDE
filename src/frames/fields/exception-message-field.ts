@@ -2,7 +2,6 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { ExceptionMsgNode } from "../parse-nodes/exception-msg-node";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class ExceptionMessageField extends AbstractField {
@@ -26,6 +25,6 @@ export class ExceptionMessageField extends AbstractField {
     source.readToEndOfLine();
 
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return this.symbolCompletionAsHtml();
   }
 }

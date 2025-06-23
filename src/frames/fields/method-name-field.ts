@@ -2,7 +2,6 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { MethodNameNode } from "../parse-nodes/method-name-node";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class MethodNameField extends AbstractField {
@@ -31,6 +30,6 @@ export class MethodNameField extends AbstractField {
   }
 
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return this.symbolCompletionAsHtml();
   }
 }
