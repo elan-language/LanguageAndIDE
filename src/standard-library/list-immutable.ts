@@ -193,6 +193,12 @@ export class ListImmutable<T1> {
     return this.safeIndex(0);
   }
 
+  @elanFunction([], FunctionOptions.pure, ElanClass(ListImmutable))
+  tail(): ListImmutable<T1> {
+    const [_, ...tl] = this.contents;
+    return this.system!.initialise(new ListImmutable(tl));
+  }
+
   async asString() {
     const items: string[] = [];
     for (const i of this.contents) {

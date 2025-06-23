@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en-GB">
-
-<head>
+<html lang="en-GB"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link href="../../../out/website/styles/colourScheme.css" rel="stylesheet" />
 <link href="../../../out/website/styles/elanStyle.css" rel="stylesheet" />
@@ -18,12 +16,12 @@
 
   <div class="step" id="step0">
     <label for="username">Enter your name: </label>
-    <input type="text" class="question" id="username" />
+    <input type="text" class="question" id="username">
     <h3>Preliminaries</h3>
     <ul>
       <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
-      <li>Select <b>File > New</b> to start a new program, 
-        then select <b>File > Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
+      <li>Select <b>File &gt; New</b> to start a new program, 
+        then select <b>File &gt; Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
         Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b>) to undo recent changes.</li>
       <li>Remember that if the code editor has a tinted background it does not have focus and will not respond
           to edits. To give it focus click within the editor. (If a program is running, you will need to stop it first.)
@@ -33,7 +31,7 @@
       <li>Use the <b>Trim</b> button periodically to remove leftover <el-code>new code</el-code> selectors.</li>
     </ul>
     <label class="done" for="done0">Preliminaries completed</label>
-    <input type="checkbox" class="step-complete" id="done0" />
+    <input type="checkbox" class="step-complete" id="done0">
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
 
@@ -63,16 +61,16 @@
         instruction, defining the name <el-id>circle</el-id> to be <el-field><el-code><el-kw>new</el-kw> <el-type>CircleVG</el-type>()</el-code>
         noting that the '<el-type>VG</el-type>'' in <el-type>CircleVG</el-type> is short for 'Vector Graphic' which is
         a way to draw very high resolution graphics,with more flexibility and greater speed than is possible using
-      Turtle graphics, for example.</li>
+      Turtle graphics, for example.</el-field></li>
       <li>Follow this with:
         <el-code-block>
-          <el-statement ><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
         </el-code-block>
 
-        noting that the square brackets used in <el-code>[<el-id>circle</el-id>]</el-code> defines a List,
-        in this case a List with just one member: the circle. The procedure method
-        <el-method>displayVectorGraphics</el-method> requires a List as its argument because in a typical application using Vector Graphics
-        would want to display multiple shapes - lines, circles, rectangles and more - and we could
+        noting the use of square brackets around <el-code>[<el-id>circle</el-id>]</el-code>. The square brackets
+        define a literal List, in this case with just one member. The procedure method
+        <el-method>displayVectorGraphics</el-method> <i>requires</i> a List as its argument because a typical application using Vector Graphics
+        would display multiple shapes - lines, circles, rectangles and more - and we could
         just include them all within the square brackets, separated by commas. 
         We will be making a more significant uses of Lists later on.
       </li>
@@ -97,20 +95,20 @@
     <div class="hint" id="hint1" data-hint="">Hint: The main so far</div>
     <div class="content" id="hint1content">
       <el-code-block>
-        <main class="ok multiline" id="main1">
-          <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg></el-top>
-          <el-statement class="ok" id="let3"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>circle</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-          <el-statement class="ok" id="call6"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-method>displayVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt>[<el-id>circle</el-id>]</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
+        <main class="ok multiline" id="main3">
+          <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit></el-txt></el-field></el-statement>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
           <el-kw>end main</el-kw>
         </main>
       </el-code-block>
     </div>
     <label class="done" for="done1">Step completed</label>
-  <input type="checkbox" class="step-complete" id="done1" />
+  <input type="checkbox" class="step-complete" id="done1">
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
 
-  <div class="step"  id="step2">
+  <div class="step" id="step2">
     <h3>Iteration 2- Draw circle in four different locations and colours</h3>
     <p>Although the game will display only one circle at a time, we want to position it
       in one of four places in a row, with a different colour for each place.
@@ -133,8 +131,7 @@
       noting that:
       <ul>
        <li>the text will revert to a single line while being edited</li>
-       <li>as you are editing the field it will turn
-        red at certain points when the text does not yet form a valid expression
+       <li>as you are editing the field it will change colour at certain points when the text does not yet form a valid expression
         but will turn green again when you are done.
        </li>
       </ul>
@@ -145,39 +142,43 @@
         define the four colour-values as a list. 
         Add the following immediately above the <el-kw>let</el-kw>
         that defines <el-id>circle</el-id>:
-        <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
+        <el-code-block>
+          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
+        </el-code-block>
         Again, this could have been an Array - because we won't be needing to extend it.
         But if we already know the values, it is <i>easier to define a 'literal' List</i> - using
         the square brackets - than it is to define and then populate an Array.</li>
-        <li>Back on the definition of the circle, add the following to the properties being set:<br>
+        <li>Back on the definition of the circle, add the following to the properties being set
+          (the <i>order</i> in which the properties are specified after a <el-kw>with</el-kw> is not important):
           <el-code-block>, <el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-code-block>
-          This is using <el-id>move</el-id> as the index to select a numbered element within the list of colours
+          This is using <el-id>move</el-id> as the index to select a numbered element within the list of colours,
           much as you have already done when using an Array. The reason we had to subtract
           <el-lit>1</el-lit> is that <el-id>move</el-id> will have the values 1,2,3, or 4
-          but the indexes for a list of four elements, as in an Array, are numbered from 0.</li>
+          but the indexes for a list, as for an Array, are always numbered from 0.</li>
         <li>Run the program more than once, varying the value defined for <el-id>move</el-id> from 1 to 4
           to check that each value draws the circle in a different place and colour.
         </li>
       </ul>
       <div class="hint" id="hint2" data-hint="">Hint: The main so far</div>
       <div class="content" id="hint2content">
+        <p>Note that it doesn't matter which value (1 to 4) is specified for <el-id>move</el-id> at this stage.</p>
         <el-code-block>
-          <main class="ok multiline" id="main1">
-            <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg></el-top>
-            <el-statement class="ok" id="let3"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>move</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-lit>3</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-            <el-statement class="ok" id="let6"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>colours</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-            <el-statement class="ok" id="let9"><el-kw>let </el-kw><el-field id="var10" class="ok" tabindex="0"><el-txt><el-id>circle</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-            <el-statement class="ok" id="call12"><el-top><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="0"><el-txt><el-method>displayVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args14" class="optional ok" tabindex="0"><el-txt>[<el-id>circle</el-id>]</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
+          <main class="ok multiline" id="main3">
+            <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field></el-statement>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
+            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
+            <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
             <el-kw>end main</el-kw>
-            </main>
+          </main>
         </el-code-block>
       </div>
-    <label class="done" for="done2">Step completed</label>
-  <input type="checkbox" class="step-complete" id="done2"/>
+  <label class="done" for="done2">Step completed</label>
+  <input type="checkbox" class="step-complete" id="done2">
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
 
-  <div class="step"  id="step3">
+  <div class="step" id="step3">
     <h3>Iteration 3 - Move the display capability into a procedure</h3>
   <p>Whenever you find yourself with multiple instructions that together perform something that you could put a single name on,
     it is often good practice to move them into a named procedure.
@@ -193,13 +194,13 @@
     This specifies that when you call <el-method>displayMove</el-method> you must
     provide a value that is an integer.</li>
     <li>
-      Now cut and paste the <i>last three</i> instructions from <el-kw>main</el-kw> (leaving only
-      the definition of <el-id>move</el-id>)
-      into the new procedure.  You might well need to click <b>Trim</b> beforehand
-      because you can't include a new code selector within a cut and paste.</li>
-    <li>From within <el-kw>main</el-kw> call the procedure,
+      Now cut and paste the <i>last three</i> instructions from <el-kw>main</el-kw> into the new procedure 
+      leaving only the definition of <el-id>move</el-id> in <el-kw>main</el-kw>. 
+      It doesn't matter whether or not you also include any any <el-code>new code</el-code> selectors -
+      they don't count as instructions - but it is neater to periodically <b>Trim</b> them.</li>
+    <li>Add a new instruction at the bottom of <el-kw>main</el-kw> to call the procedure,
       using the defined value <el-id>move</el-id> as the argument.
-      Then run the program and check that it does the same as the previous iteration.
+      Then run the program and check that it does the same as the previous iteration.</li>
 
       <div class="hint" id="hint3a" data-hint="">Hint 1: Abbreviated instructions</div>
         <div class="content" id="hint3acontent">
@@ -208,15 +209,15 @@
         <el-code-block>
           <main class="ok multiline" >
           <el-top><el-kw>main</el-kw></el-top>
-          <el-statement ><el-kw>let </el-kw>...</el-statement>
-          <el-statement ><el-top><el-kw>call </el-kw>...</el-statement>
+          <el-statement ><el-kw>let </el-kw></el-statement>
+          <el-statement ><el-top><el-kw>call </el-kw></el-statement>
           <el-kw>end main</el-kw>
           </main>
           <el-proc class="ok multiline" >
-          <el-top><el-kw>procedure </el-kw><el-method><el-field><el-txt>displayMove</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
-          <el-statement ><el-kw>let </el-kw>...</el-statement>
-          <el-statement ><el-kw>let </el-kw>...</el-statement>
-          <el-statement ><el-top><el-kw>call </el-kw>...</el-statement>
+          <el-top><el-kw>procedure </el-kw></el-top>
+          <el-statement ><el-kw>let </el-kw></el-statement>
+          <el-statement ><el-kw>let </el-kw></el-statement>
+          <el-statement ><el-top><el-kw>call </el-kw></el-statement>
           <el-kw>end procedure</el-kw>
           </el-proc>
         </el-code-block>
@@ -254,35 +255,35 @@
       <li>Edit the first <el-kw>let</el-kw> in <el-kw>main</el-kw>, replacing the name <el-id>move</el-id>
         with <el-id>sequence</el-id> and replacing the single value with this literal list of integers:
         <el-code>[<el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-code>
-        . This change will produce a temporary <i>error</i>
-        because <el-id>move</el-id> is now 'unknown' - but we'll fix that...</li>
+        . This change will produce a temporary <i>compile warning</i>
+        because <el-id>move</el-id> is now <i>unknown</i> - but we'll fix that...</li>
       <li>Immediately <i>below</i> the <el-kw>let</el-kw> just altered, 
-        insert an <el-kw>each</el-kw> instruction that defines the variable name <el-id>move</el-id>
-        and uses <el-id>sequence</el-id> as the source.</li>
+        insert an <el-kw>each</el-kw> instruction that defines the <i>elementName</i> (first field) as <el-id>move</el-id>
+        and uses <el-id>sequence</el-id> as the <i>source</i>.</li>
         <li>Cut and paste the existing call to <el-method>displayMove</el-method> into the new <el-kw>each</el-kw> loop.
         Your code should now parse and compile correctly again.</li>
-        <li>Within the <el-method>displayMove</el-method> procedure add, at the end, an instruction to pause for a full second -
+        <li>Within the <el-method>displayMove</el-method> procedure add, at the end, an instruction to <el-method>pause</el-method> for a full second -
           otherwise things will happen too quickly to see.</li>
-        <li>Run the program (more than once if necessary) and watch carefylly. What do you see?</li>
+        <li>Run the program. What is it doing?</li>
           <textarea class="question" id="input4a"></textarea>
         <div class="hint" id="hint4a" data-hint="">Hint: Show the abbreviated instructions</div>
         <div class="content" id="hint4acontent">
           <el-code-block>
             <main class="ok multiline">
-              <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg></el-top>
-              <el-statement class="ok"><el-kw>let </el-kw></el-statement>
+              <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+              <el-statement><el-kw>let </el-kw></el-statement>
               <el-statement class="ok multiline">
-              <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident50" class="ok"></el-top>
-              <el-statement class="ok"><el-top><el-kw>call </el-kw></el-statement>
+              <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field></el-top>
+              <el-statement><el-top><el-kw>call </el-kw></el-statement>
               <el-kw>end each</el-kw></el-statement>
               <el-kw>end main</el-kw>
             </main>
-            <el-proc class="ok multiline" id="proc22">
+            <el-proc class="ok multiline">
               <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method></el-top>
-              <el-statement class="ok" id="let6"><el-kw>let </el-kw></el-statement>
-              <el-statement class="ok" id="let9"><el-kw>let </el-kw></el-statement>
-              <el-statement class="ok" id="call12"><el-top><el-kw>call </el-kw></el-statement>
-              <el-statement class="ok"><el-top><el-kw>call </el-kw></el-statement>
+              <el-statement><el-kw>let </el-kw></el-statement>
+              <el-statement><el-kw>let </el-kw></el-statement>
+              <el-statement><el-top><el-kw>call </el-kw></el-statement>
+              <el-statement><el-top><el-kw>call </el-kw></el-statement>
               <el-kw>end procedure</el-kw>
             </el-proc>
           </el-code-block>
@@ -290,31 +291,31 @@
         <div class="hint" id="hint4b" data-hint="">Hint: Show the whole code.</div>
         <div class="content" id="hint4bcontent">
           <el-code-block>
-            <main class="ok multiline" id="main1">
-              <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg></el-top>
-              <el-statement class="ok" id="let3"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>[<el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-              <el-statement class="ok multiline" id="each48">
-              <el-top><el-expand>+</el-expand><el-kw>each </el-kw>
-              <el-statement class="ok" id="call32"><el-top><el-kw>call </el-kw><el-field id="ident33" class="ok" tabindex="0"><el-txt><el-method>displayMove</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args34" class="optional ok" tabindex="0"><el-txt><el-id>move</el-id></el-txt><el-place><i>move</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
+            <main class="ok multiline" id="main3">
+              <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+              <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-txt></el-field></el-statement>
+              <el-statement class="ok multiline">
+              <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> in </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field></el-top>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id></el-txt></el-field>)</el-top></el-statement>
               <el-kw>end each</el-kw>
               </el-statement>
               <el-kw>end main</el-kw>
-            </main>
-            <el-proc class="ok multiline" id="proc22">
-              <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident24" class="ok" tabindex="0"><el-txt>displayMove</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field></el-method>(<el-field id="params25" class="optional ok" tabindex="0"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top>
-              <el-statement class="ok" id="let6"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>colours</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-              <el-statement class="ok" id="let9"><el-kw>let </el-kw><el-field id="var10" class="ok" tabindex="0"><el-txt><el-id>circle</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-              <el-statement class="ok" id="call12"><el-top><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="0"><el-txt><el-method>displayVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args14" class="optional ok" tabindex="0"><el-txt>[<el-id>circle</el-id>]</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
-              <el-statement class="ok"></el-statement><el-top><el-kw>call </el-kw><el-field id="ident99" class="ok" tabindex="0"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args100" class="optional ok" tabindex="0"><el-txt><el-lit>1000</el-lit></el-txt><el-place><i>milliseconds</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>10</el-fr></el-top></el-statement>
+              </main>
+            <el-proc class="ok multiline">
+              <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>displayMove</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+                <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
+                <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-top></el-statement>
               <el-kw>end procedure</el-kw>
             </el-proc>
           </el-code-block>
         </div>
         </li>
-        <li>The program is executing the changes too quickly for us to observe. In the real game we want the moves to play at measured intervals.
-          So, define a <el-kw>variable</el-kw> named <el-id>interval</el-id> at the very top of <el-kw>main</el-kw>, initialised to <el-lit>1000</el-lit>.
-          (We are using a variable, here because we may eventually want to reduce the interval dynamically as the game progresses.)
-          Then pass <el-id>interval</el-id> as a second argument into the call to <el-method>displayMove</el-method>, separated from
+        <li>
+          At a future stage we will want to be able to change the duration for which the circles appear, so define a
+           <el-kw>variable</el-kw> named <el-id>interval</el-id> at the very top of <el-kw>main</el-kw>, initialised to <el-lit>1000</el-lit>.
+          Then pass <el-id>interval</el-id> as a second argument into the <el-kw>call</el-kw> to <el-method>displayMove</el-method>, separated from
           <el-id>move</el-id> by a comma. This will initially give you an error because the definition of <el-method>displayMove</el-method>
           currently expects only one parameter. So, within that procedure definition, define a second parameter, separated from the first
           by a comma, giving it the name <el-id>interval</el-id> and the type for an integer. Then use that parameter name <el-id>interval</el-id>
@@ -326,20 +327,21 @@
             <el-code-block>
               <main class="ok multiline" id="main3">
                 <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
-                <el-statement class="ok" id="var88"><el-kw>variable </el-kw></el-statement>
-                <el-statement class="ok" id="let18"><el-kw>let </el-kw></el-statement>
-                <el-statement class="ok multiline" id="each74">
+                <el-statement><el-kw>variable </el-kw></el-statement>
+                <el-statement><el-kw>let </el-kw></el-statement>
+                <el-statement class="ok multiline">
                 <el-top><el-expand>+</el-expand><el-kw>each </el-kw></el-top>
-                <el-statement class="ok" id="call58"><el-top><el-kw>call </el-kw></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw></el-statement>
                 <el-kw>end each</el-kw>
                 </el-statement>
                 <el-kw>end main</el-kw>
               </main>
-              <el-proc class="ok multiline" id="proc47">
+              <el-proc class="ok multiline">
                 <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw></el-top>
-                <el-statement class="ok" id="let37"><el-kw>let </el-kw></el-statement>
-                <el-statement class="ok" id="call8"><el-top><el-kw>call </el-kw></el-statement>
-                <el-statement class="ok" id="call98"><el-top><el-kw>call </el-kw></el-statement>
+                <el-statement><el-kw>let </el-kw></el-statement>
+                <el-statement><el-kw>let </el-kw></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw></el-statement>
                 <el-kw>end procedure</el-kw>
               </el-proc>
             </el-code-block>
@@ -349,22 +351,22 @@
         <div class="content" id="hint4dcontent">
           <el-code-block>
             <main class="ok multiline" id="main3">
-              <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg><el-fr>1</el-fr></el-top>
-              <el-statement class="ok" id="var88"><el-kw>variable </el-kw><el-field id="var89" class="ok" tabindex="0"><el-txt><el-id>interval</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> set to </el-kw><el-field id="expr90" class="ok" tabindex="0"><el-txt><el-lit>1000</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
-              <el-statement class="ok" id="let18"><el-kw>let </el-kw><el-field id="var19" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr20" class="ok" tabindex="0"><el-txt>[<el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>3</el-fr></el-statement>
-              <el-statement class="ok multiline" id="each74">
-              <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident76" class="ok" tabindex="0"><el-txt><el-id>move</el-id></el-txt><el-place><i>elementName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#IdentifierField" target="doc-iframe">?</a></el-help></el-field><el-kw> in </el-kw><el-field id="expr77" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id></el-txt><el-place><i>source</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>4</el-fr></el-top>
-              <el-statement class="ok" id="call58"><el-top><el-kw>call </el-kw><el-field id="ident59" class="ok" tabindex="0"><el-txt><el-method>displayMove</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args60" class="optional ok" tabindex="0"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt><el-place><i>move</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>5</el-fr></el-top></el-statement>
+              <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+              <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>interval</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-lit>1000</el-lit></el-txt></el-field></el-statement>
+              <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-txt></el-field></el-statement>
+              <el-statement class="ok multiline">
+              <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> in </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field></el-top>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
               <el-kw>end each</el-kw>
               </el-statement>
               <el-kw>end main</el-kw>
             </main>
-            <el-proc class="ok multiline" id="proc47">
-              <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident49" class="ok" tabindex="0"><el-txt>displayMove</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#MethodNameField" target="doc-iframe">?</a></el-help></el-field></el-method>(<el-field id="params50" class="optional ok" tabindex="0"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>6</el-fr></el-top>
-              <el-statement class="ok" id="let37"><el-kw>let </el-kw><el-field id="var38" class="ok" tabindex="0"><el-txt><el-id>colours</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr39" class="ok" tabindex="0"><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>7</el-fr></el-statement>
-              <el-statement class="ok" id="let5"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>circle</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>8</el-fr></el-statement>
-              <el-statement class="ok" id="call8"><el-top><el-kw>call </el-kw><el-field id="ident9" class="ok" tabindex="0"><el-txt><el-method>displayVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args10" class="optional ok" tabindex="0"><el-txt>[<el-id>circle</el-id>]</el-txt><el-place><i>listOfVGs</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>9</el-fr></el-top></el-statement>
-              <el-statement class="ok" id="call98"><el-top><el-kw>call </el-kw><el-field id="ident99" class="ok" tabindex="0"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args100" class="optional ok" tabindex="0"><el-txt><el-lit>1000</el-lit></el-txt><el-place><i>milliseconds</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>10</el-fr></el-top></el-statement>
+            <el-proc class="ok multiline">
+              <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>displayMove</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+              <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
+              <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit><el-id>interval</el-id></el-lit></el-txt></el-field>)</el-top></el-statement>
               <el-kw>end procedure</el-kw>
             </el-proc>
           </el-code-block>
@@ -385,12 +387,14 @@
           <div class="hint" id="hint4f" data-hint="">Hint: Show the whole procedure</el-method></div>
         <div class="content" id="hint4fcontent">
             <el-code-block>
-              <el-proc class="ok multiline" id="proc47">
-                <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident49" class="ok" tabindex="0"><el-txt>displayMove</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#MethodNameField" target="doc-iframe">?</a></el-help></el-field></el-method>(<el-field id="params50" class="optional ok" tabindex="0"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>6</el-fr></el-top>
-                <el-statement class="ok" id="let37"><el-kw>let </el-kw><el-field id="var38" class="ok" tabindex="0"><el-txt><el-id>colours</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr39" class="ok" tabindex="0"><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>7</el-fr></el-statement>
-                <el-statement class="ok" id="let5"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>circle</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="doc-iframe">?</a></el-help></el-field><el-msg></el-msg><el-fr>8</el-fr></el-statement>
-                <el-statement class="ok" id="call8"><el-top><el-kw>call </el-kw><el-field id="ident9" class="ok" tabindex="0"><el-txt><el-method>displayVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args10" class="optional ok" tabindex="0"><el-txt>[<el-id>circle</el-id>]</el-txt><el-place><i>listOfVGs</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>9</el-fr></el-top></el-statement>
-                <el-statement class="ok" id="call98"><el-top><el-kw>call </el-kw><el-field id="ident99" class="ok" tabindex="0"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="doc-iframe">?</a></el-help></el-field>(<el-field id="args100" class="optional ok" tabindex="0"><el-txt><el-lit>1000</el-lit></el-txt><el-place><i>milliseconds</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="doc-iframe">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>10</el-fr></el-top></el-statement>
+              <el-proc class="ok multiline">
+                <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>displayMove</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+                <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
+                <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>100</el-lit></el-txt></el-field>)</el-top></el-statement>
                 <el-kw>end procedure</el-kw>
                 </el-proc>
             </el-code-block>
@@ -406,16 +410,18 @@
     <h3>Iteration 5: Add sound</h3>
 
     <ul>
-      <li>Edit the instruction <el-code><el-kw>call </el-kw><el-method>pause</el-method>(<el-id>interval</el-id>)</el-code>
-        to read <br>
-        <el-code><el-kw>call </el-kw><el-method>tone</el-method>(<el-id>interval</el-id>, <el-lit>256</el-lit>, <el-lit>0.1</el-lit>)</el-code></li>
+      <li>Edit <i>both</i> fields of instruction 10 so that it reads
+        <el-code-block>
+          <el-kw>call </el-kw><el-method>tone</el-method>(<el-id>interval</el-id>, <el-lit>256</el-lit>, <el-lit>0.1</el-lit>)
+        </el-code-block>
       which instead of just pausing, plays a tone for the same interval. The second argument defines the frequency of the tone - in
-      this case 256Hz, which musicians may recognise as 'middle C'. The third argument specifies the volume. Run the program.
+      this case 256Hz, which musicians might recognise as 'middle C'. The third argument specifies the volume. Run the program.
       If you do not hear any tones, investigate the sound settings on your computer. Then adjust the value up or down from <el-lit>0.1</el-lit>,
       but <b>please, if you are working in a classroom set the volume to the lowest setting where you can still just hear the tones.</b>
-      <li>The next requirement is that, just as the four moves are represented by different colours, in different locations, they
+      <li>Just as the four moves are represented by different colours, in different locations, they
         should also have different tones. The original Simon game used four musical notes - E, A, C#, and E (one octave higher) -
-        such that they would combine in any order for a pleasing effect. The frequencies, in Hz, for these four notes are: 164.81, 220, 277.18, and 329.63.
+        such that they would combine in any order for a pleasing effect. The frequencies, in Hz, for these four notes are: 164.81, 220, 277.18, and 329.63
+        (<a href="https://en.wikipedia.org/wiki/Piano_key_frequencies" target="_blank">source reference</a>).
         Earlier, you defined a list of colours. Now, just under that definition of colours, create a similar definition named
         <el-id>tones</el-id> (with an 's') and containing the four numeric values just given. Then, just as you earlier used
         <el-code><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-code> to get the colour corresponding to the <el-id>move</el-id>,
@@ -425,15 +431,30 @@
       </li>
     </ul>
 
-    <div class="hint" id="hint5a" data-hint="">Hint 1: abbreviated version of the instructions</div>
+    <div class="hint" id="hint5a" data-hint="">Hint 1: the new and modified instructions</div>
         <div class="content" id="hint5acontent">
       <el-code-block>
-        </el-code-block>
+          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>tones</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-lit><el-lit>164</el-lit>.81</el-lit>, <el-lit>220</el-lit>, <el-lit><el-lit>277</el-lit>.18</el-lit>, <el-lit><el-lit>329</el-lit>.63</el-lit>]</el-txt></el-field></el-statement>
+          <el-statement>...</el-statement>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>tone</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>interval</el-id>, <el-id>tones</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>], <el-lit><el-lit>0</el-lit>.1</el-lit></el-txt></el-field>)</el-top></el-statement>
+        </el-proc>
+      </el-code-block>
     </div>
 
-    <div class="hint" id="hint5b" data-hint="">Hint 2: complete code</div>
+    <div class="hint" id="hint5b" data-hint="">Hint 2: complete procedure</div>
         <div class="content" id="hint5bcontent">
       <el-code-block>
+        <el-proc class="ok multiline">
+          <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>displayMove</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
+          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>tones</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-lit><el-lit>164</el-lit>.81</el-lit>, <el-lit>220</el-lit>, <el-lit><el-lit>277</el-lit>.18</el-lit>, <el-lit><el-lit>329</el-lit>.63</el-lit>]</el-txt></el-field></el-statement>
+          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>tone</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>interval</el-id>, <el-id>tones</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>], <el-lit><el-lit>0</el-lit>.1</el-lit></el-txt></el-field>)</el-top></el-statement>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>100</el-lit></el-txt></el-field>)</el-top></el-statement>
+          <el-kw>end procedure</el-kw>
+        </el-proc>
       </el-code-block>
     </div>
 
@@ -447,20 +468,18 @@
     <ul>
       <li>To append a value to a list we call the <el-method>append</el-method> procedure on the list (as a 'dotted method'). So,
         within <el-kw>main</el-kw>, immediately after the <el-id>sequence</el-id> has been defined, write an instruction to append
-        a new single value (1 to 4 still) to that list. The run the program and check that the new move was added to the sequence
-      <div class="hint" id="hint6a">Hint: the complete new instruction</div>
+        the value 4 to that list. The run the program and check that the new move was added to the sequence
+      <div class="hint" id="hint6a">Hint: the new instruction</div>
       <div class="content" id="hint6acontent">
         <el-code-block>
-          <el-statement class="ok" id="call47"><el-top><el-kw>call </el-kw><el-field id="ident48" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args49" class="optional ok" tabindex="0"><el-txt><el-lit>3</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>4</el-lit></el-txt></el-field>)</el-top></el-statement>
         </el-code-block>
-        You may append a different value than <el-lit>3</el-lit>>.
       </div>
       </li>
-      <li>Now change that new instruction so that instead of appending a specific value, it appends a new random value
-        in the range 1-4.
-        <div class="hint" id="hint6b">Hint 1</div>
+      <li>Now change that new instruction so that instead of appending a specific value, it appends a new random integer
+        in the range 1-4. Run the program a few times to check that the final move is unpredictable.
+        <div class="hint" id="hint6b">Hint 1: expression to generate the random number</div>
         <div class="content" id="hint6bcontent">
-          The code to generate a random value in the range 1-4
           <el-code-block>
             <el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)
           </el-code-block>
@@ -468,31 +487,66 @@
         <div class="hint" id="hint6c">Hint2: the complete changed instruction</div>
         <div class="content" id="hint6ccontent">
           <el-code-block>
-            <el-statement class="ok" id="call47"><el-top><el-kw>call </el-kw><el-field id="ident48" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args49" class="optional ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
+            <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field>)</el-top></el-statement>
           </el-code-block>
         </div>
       </li>
-      <li>Now we will do this repeatedly. Underneath the last instruction written, add a loop that
-        will execute exactly 5 times, and then cut and paste the instruction doing the <el-method>append</el-method>
-        to be <i>inside</i> that loop, and run the program to check that the sequence now has multiple, randomly defined
-        moves on the end.
-        <div class="hint" id="hint6d">Hint 1</div>
+      <li>Now we will do this repeatedly. Underneath the instruction just added (and above the <el-kw>each</el-kw>), add a loop that
+        will execute exactly 5 times, and then cut the instruction doing the <el-method>append</el-method>
+        and paste it <i>inside</i> that loop. Run the program to check that the sequence now has five random moves after the fixed initial sequence.
+        <div class="hint" id="hint6d">Hint 1: the loop</div>
         <div class="content" id="hint6dcontent">
           <ul>
-            <li>Use a <kw>for</kw> loop to execute something a fixed number of times. </li>
-            <li>For the counter use  a short name that hasn't been used elsewhere - for example <el-id>n</el-id></li>
-            <li>To move the instruction, select it, press <b>Ctrl-x</b>, then select the <el-code>new code</el-code>
-            selector within the loop, and press <b>Ctrl-v</b>.</li>
+            <li>Use a <el-kw>for</el-kw> loop to execute something a fixed number of times. </li>
+            <li>For the counter use a short name that hasn't been used elsewhere - for example <el-id>n</el-id></li>
           </ul>
         </div>
-        <div class="hint" id="hint6e">Hint: The complete loop</div>
+        <div class="hint" id="hint6e">Hint 2: The complete revised <el-kw>main</el-kw></div>
         <div class="content" id="hint6econtent">
           <el-code-block>
-            <el-statement class="ok multiline" id="for12">
-              <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident14" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt><el-place><i>counterName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> from </el-kw><el-field id="expr15" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>firstValue</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> to </el-kw><el-field id="expr16" class="ok" tabindex="0"><el-txt><el-lit>5</el-lit></el-txt><el-place><i>lastValue</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> step </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>stepValue</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-top>
-              <el-statement class="ok" id="call9"><el-top><el-kw>call </el-kw><el-field id="ident10" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args11" class="optional ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
+            <main class="ok multiline" id="main3">
+              <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+              <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>interval</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-lit>1000</el-lit></el-txt></el-field></el-statement>
+              <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-txt></el-field></el-statement>
+              <el-statement class="ok multiline">
+              <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> from </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-lit>5</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field>)</el-top></el-statement>
               <el-kw>end for</el-kw>
               </el-statement>
+              <el-statement class="ok multiline">
+              <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> in </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field></el-top>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+              <el-kw>end each</el-kw>
+              </el-statement>
+              <el-kw>end main</el-kw>
+              </main>
+          </el-code-block>
+        </div>
+      </li>
+      <li>Now that we can generate multiple random moves, we should start from an empty list.
+        Find the instruction (within <el-kw>main</el-kw>) that defines the initial list. We can't just
+        reduce the list to empty square brackets <el-code>[]</el-code> - because then Elan doesn't know what type of element
+        the list is intended to hold. So instead change the value to: <el-code><el-kw>empty </el-kw><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-code>
+        Then run the program and test that it generates a sequence of five random moves.</li>
+        <div class="hint" id="hint6f">Hint 1: complete revised <el-kw>main</el-kw></div>
+        <div class="content" id="hint6fcontent">
+          <el-code-block>
+            <main class="ok multiline" id="main1">
+              <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+              <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>interval</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-lit>1000</el-lit></el-txt></el-field></el-statement>
+              <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field></el-statement>
+              <el-statement class="ok multiline">
+              <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> from </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-lit>5</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field>)</el-top></el-statement>
+              <el-kw>end for</el-kw>
+              </el-statement>
+              <el-statement class="ok multiline">
+              <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> in </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field></el-top>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+              <el-kw>end each</el-kw>
+              </el-statement>
+              <el-kw>end main</el-kw>
+              </main>
           </el-code-block>
         </div>
       </li>
@@ -504,84 +558,80 @@
       
   <div class="step" id="step7">
       <h3>Iteration 7: Create the simonsTurn procedure</h3>
-      <p>Now we're ready to finish the computer's role in the game - to repeatedly play a sequence of moves, adding 
+      <p>Now we're ready to complete the role of Simon (played by the computer) in the game, which is to repeatedly play a sequence of moves, adding 
         a new random move each time. (We will later add the Player's role, interleaving between these plays). To keep the growing
-        program easy to read, we will build the computer's role into a new procdure.
+        program easy to read, we will build the Simon's role into a new procedure.
       </p>
       <ul>
-        <li>Underneath the main routine, but before the existing procedure (though actually, the order in
-          which these 'global' instructions are defined doesn't matter) create a new procedure named <el-method>SimonsTurn</el-method>.
-          <div class="hint" id="hint7a">Hint: The new procedure</div>
-          <div class="content" id="hint7acontent">
-            <el-code-block>
-              <el-proc class="ok multiline" id="proc92">
-                <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident94" class="ok" tabindex="0"><el-txt>simonsTurn</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field></el-method>(<el-field id="params95" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>parameter definitions</i></el-place><el-compl><i>parameter definitions</i></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top>
-                <el-statement class="ok empty" id="select249"><el-select><el-txt></el-txt><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
-                <el-kw>end procedure</el-kw>
-                </el-proc>
-            </el-code-block>
-          </div>
-        </li>
-        <li>Move into this the instruction that does the <el-method>append</el-method>. This will create an
-        error because <el-id>sequence</el-id> isn't visible inside the procedure - we need to define
-        it as a parameter. So add to the procedure definition a parameter named <el-id>sequence</el-id> having
-        the type <el-code><el-type>List</el-type>&lt;<el-kw>of </el-kw><el-type>Int</el-type>&gt;</el-code><div class=""></div>
-        <div class="hint" id="hint7b">Hint: The updated procedure</div>
+        <li>Create a new procedure named <el-method>simonsTurn</el-method> we suggest just after <el-kw>main</el-kw>
+          (though, actually, it doesn't matter what order 'global' instructions like <el-kw>main</el-kw> and <el-kw>procedure</el-kw>s are defined)
+          and define parameters for the information it is going to need:
+          <el-code-block>
+            <el-field><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>
+          </el-code-block>
+          noting that whenever a List or Array is passed into a procedure as a parameter, the type of the elements
+        in the list must be specified in the form shown.</li>
+        <li>Cut and paste the instruction that does the <el-method>append</el-method> out of its <el-kw>for</el-kw> loop and into
+          the new procedure, and follow this by cutting and pastint the whole of the <el-kw>each</el-kw> loop to follow the <el-method>append</el-method>.
+
+        <div class="hint" id="hint7b">Hint: Abbreviated instructions in the new procedure</div>
         <div class="content" id="hint7bcontent">
           <el-code-block>
-            <el-proc class="ok multiline" id="proc24">
-              <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident26" class="ok" tabindex="0"><el-txt>simonsTurn</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field></el-method>(<el-field id="params27" class="optional ok" tabindex="0"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top>
-              <el-statement class="ok" id="call28"><el-top><el-kw>call </el-kw><el-field id="ident29" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args30" class="optional ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
+            <el-proc class="ok multiline">
+              <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>simonsTurn</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+              <el-statement><el-top><el-kw>call </el-kw></el-statement>
+              <el-statement class="ok multiline">
+              <el-top><el-expand>+</el-expand><el-kw>each </el-kw></el-top>
+              <el-statement><el-top><el-kw>call </el-kw></el-statement>
+              <el-kw>end each</el-kw>
+              </el-statement>
               <el-kw>end procedure</el-kw>
-            </el-proc>
+              </el-proc>
+          </el-code-block>
+        </div>
+        <div class="hint" id="hint7b">Hint: The complete procedure</div>
+        <div class="content" id="hint7bcontent">
+          <el-code-block>
+            <el-proc class="ok multiline">
+              <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>simonsTurn</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field>)</el-top></el-statement>
+              <el-statement class="ok multiline">
+              <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> in </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field></el-top>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+              <el-kw>end each</el-kw>
+              </el-statement>
+              <el-kw>end procedure</el-kw>
+              </el-proc>
           </el-code-block>
         </div>
       </li>
-      <li>Following the same pattern, now move the <el-kw>each</el-kw> loop from main into <el-method>simonsTurn</el-method>,
-      which will again require the definition of a new parameter in order to compile.
-      <div class="hint" id="hint7c">Hint: The updated procedure</div>
-      <div class="content" id="hint7ccontent">
-        <el-code-block>
-          <el-proc class="ok multiline" id="proc24">
-            <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident26" class="ok" tabindex="0"><el-txt>simonsTurn</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field></el-method>(<el-field id="params27" class="optional ok" tabindex="0"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top>
-            <el-statement class="ok" id="call28"><el-top><el-kw>call </el-kw><el-field id="ident29" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id>.<el-method>append</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args30" class="optional ok" tabindex="0"><el-txt><el-method>randomInt</el-method>(<el-lit>1</el-lit>, <el-lit>4</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
-            <el-statement class="ok multiline" id="each31">
-            <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident33" class="ok" tabindex="0"><el-txt><el-id>move</el-id></el-txt><el-place><i>elementName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> in </el-kw><el-field id="expr34" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id></el-txt><el-place><i>source</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-top>
-            <el-statement class="ok" id="call35"><el-top><el-kw>call </el-kw><el-field id="ident36" class="ok" tabindex="0"><el-txt><el-method>displayMove</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args37" class="optional ok" tabindex="0"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
-            <el-kw>end each</el-kw>
-            </el-statement>
-            <el-kw>end procedure</el-kw>
-            </el-proc>
-        </el-code-block>
-      </div>
-      </li>
-      <li>Go back to the <kw>for</kw> loop within the main, and define three new instructions (in the order listed here):
+        <li>Go back to the (now empty) <kw>for</kw> loop within the main, and define three new instructions (in the order listed here):
         <ul>
           <li>a new instruction to call <el-method>simonsTurn</el-method>, 
             passing in the named values corresponding to the two arguments it will require.</li>
-          <li>an instruction to clear the vector graphics (you have one like this somewhere else).</li>
-          <li>an instruction to pause for a full second.</li>
-        </ul>
-        Then change the definition of <el-id>sequence</el-id> (near the top of main) so that it starts
+          <li>an instruction to clear the vector graphics (you have already done this somewhere else in the code).</li>
+          <li>an instruction to pause for a full second (at the end of the sequence).</li>
+        </ul></li>
+        <li>Change the definition of <el-id>sequence</el-id> (near the top of main) so that it starts
         with an empty list. Because it is empty, we need to specify the type of the elements it will
         accept. The full statement now needs to be:
         <el-code-block>
-          <el-statement class="ok" id="let6"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-        </el-code-block>
-        Run the program the program and test that it plays a growing sequence, one move, then two moves, up to five moves, with
-        a one second pause between.
+          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field></el-statement>
+        </el-code-block></li>
+        <li>Run the program the program and test that it plays a growing sequence, one move, then two moves, up to five moves, with
+        a one second pause between.</li>
         <div class="hint" id="hint7d">Hint: The revised main</div>
         <div class="content" id="hint7dcontent">
           <el-code-block>
             <main class="ok multiline" id="main1">
-              <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg></el-top>
-              <el-statement class="ok" id="var3"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>interval</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-lit>1000</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-              <el-statement class="ok" id="let6"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-              <el-statement class="ok multiline" id="for9">
-              <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident11" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt><el-place><i>counterName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> from </el-kw><el-field id="expr12" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>firstValue</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> to </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-lit>5</el-lit></el-txt><el-place><i>lastValue</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> step </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>stepValue</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-top>
-              <el-statement class="ok" id="call15"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-method>simonsTurn</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args17" class="optional ok" tabindex="0"><el-txt><el-id>sequence</el-id>, <el-id>interval</el-id></el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
-              <el-statement class="ok" id="call94"><el-top><el-kw>call </el-kw><el-field id="ident95" class="ok" tabindex="0"><el-txt><el-method>clearVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args96" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i></i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
-              <el-statement class="ok" id="call105"><el-top><el-kw>call </el-kw><el-field id="ident106" class="ok" tabindex="0"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args107" class="optional ok" tabindex="0"><el-txt><el-lit>1000</el-lit></el-txt><el-place><i>milliseconds</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
+              <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+              <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>interval</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-lit>1000</el-lit></el-txt></el-field></el-statement>
+              <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field></el-statement>
+              <el-statement class="ok multiline">
+              <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> from </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-lit>5</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>simonsTurn</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
+              <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-top></el-statement>
               <el-kw>end for</el-kw>
               </el-statement>
               <el-kw>end main</el-kw>
@@ -599,78 +649,84 @@
   <div class="step" id="step8">
     <h3>Iteration 8: Start work on Player's turn</h3>
     <ul>
-    <li>We're now ready to make a start on managing the player's turn. Start by creating a new procedure
-      named <el-method>playersTurn</el-method> (located underneath <el-method>simonsTurn</el-method> ), and initially defining
-      two parameters, exactly the same as already done for <el-method>simonsTurn</el-method>.
-      <el-method>playersTurn</el-method>.
-      <div class="hint" id="hint8a">Hint: The new procedure</div>
-      <div class="content" id="hint8acontent">
-        <el-code-block>
-          <el-proc class="ok multiline" id="proc136">
-            <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident138" class="ok" tabindex="0"><el-txt>playersTurn</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field></el-method>(<el-field id="params139" class="optional ok" tabindex="0"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top>
-            <el-statement class="ok empty" id="select137"><el-select><el-txt></el-txt><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
-            <el-kw>end procedure</el-kw>
-          </el-proc>
-        </el-code-block>
-      </div>
-    </li>
-    <li>Now we need a way for the running program to detect a single key stroke. You might or might not have already
+    <li>We're now ready to make a start on the player's turn. Create a new procedure
+      named <el-method>playersTurn</el-method> (located underneath <el-method>simonsTurn</el-method> ), and initially defining exactly
+    the same parameters as for <el-method>simonsTurn</el-method>.</li>
+    <li>Now we need a way to detect a single key stroke, while the programming is running. You might or might not have already
       used an <el-method>input</el-method> method, but that would also require <b>Enter</b> to be pressed after each key
       which would be cumbersome in the game Simon. So instead add these two instructions within <el-method>playersTurn</el-method>:
       <el-code-block>
-        <el-statement class="ok" id="let176"><el-kw>let </el-kw><el-field id="var177" class="ok" tabindex="0"><el-txt><el-id>k</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr178" class="ok" tabindex="0"><el-txt><el-method>waitForKey</el-method>()</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-        <el-statement class="ok" id="let188"><el-kw>let </el-kw><el-field id="var189" class="ok" tabindex="0"><el-txt><el-id>valid</el-id>, <el-id>move</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr190" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>(<el-id>k</el-id>)</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
+        <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
+        <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>valid</el-id>, <el-id>move</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>parseAsInt</el-method>(<el-id>k</el-id>)</el-txt></el-field></el-statement>
       </el-code-block>
-      The first instruction should be fairly clear, but what is the second one for? Why couldn't we just write, say:
+      The intent of the first instruction should be fairly clear, but what is the second one for? Why couldn't we just write, say:
       <el-code-block>
-        <el-statement class="ok" id="let176"><el-kw>let </el-kw><el-field id="var177" class="ok" tabindex="0"><el-txt><el-id>move</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr178" class="ok" tabindex="0"><el-txt><el-method>waitForKey</el-method>()</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
+        <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
       </el-code-block>
       The problem is that if you press, say, the 1 key, the <el-method>waitForKey</el-method> method returns a single-character
-      <i>string</i> - equivalent to having written <el-code-block>
-        <el-statement class="ok" id="let176"><el-kw>let </el-kw><el-field id="var177" class="ok" tabindex="0"><el-txt><el-id>k</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr178" class="ok" tabindex="0"><el-txt>"<el-lit>1</el-lit>"</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
+      <i>string</i> - equivalent to this instruction, say:<el-code-block>
+        <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>"<el-lit>1</el-lit>"</el-txt></el-field></el-statement>
       </el-code-block>
-      <el-method>parseAsInt</el-method> takes a string argument and attempts to turn it into an <i>integer</i> value: from <el-code>"<el-lit>1</el-lit>"</el-code> to <el-lit>1</el-lit>
-      (it's not <i>actually</i> stripping off quote marks, but that's the easiest way to describe it for now). The problem then is
-      what would happen if you had inadvertently pressed the <el-lit>q</el-lit> key underneath the <el-lit>1</el-lit>? That
-      can't be be converted into an integer. So the <el-method>parseAsInt</el-method> actually returns two values: the first
-      is a Boolean value that tells us whether or not the given string was successfully parsed into an integer. <i>If</i> it was
-      (i.e. the first returned value is <el-id>true</el-id>) then the second value will hold the integer. If the first returned
-      value is <el-id>true</el-id> then the second value should be ignored. Our instruction names these two returned values
-      <el-id>valid</el-id> and  <el-id>move</el-id> respectively.
-      <div class="hint" id="hint8b">Hint: The completed <el-kw>if</el-kw> instruction.</div>
-      <div class="content" id="hint8bcontent">
-        <el-code-block>
-          <el-statement class="ok multiline" id="if234">
-            <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr236" class="ok" tabindex="0"><el-txt><el-id>valid</el-id></el-txt><el-place><i>condition</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> then</el-kw></el-top><el-msg></el-msg>
-            <el-statement class="ok" id="call246"><el-top><el-kw>call </el-kw><el-field id="ident247" class="ok" tabindex="0"><el-txt><el-method>displayMove</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args248" class="optional ok" tabindex="0"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt><el-place><i>move, interval</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
-            <el-kw>end if</el-kw>
-          </el-statement>
-        </el-code-block>
-      </div>
-    </li>
-    <li>Add, as the third instruction within <el-method>playersTurn</el-method>, an <el-kw>if</el-kw> instruction 
+      but we really need it <i>as an integer value</i> so that we can compare it to the integer values stored in <el-id>sequence</el-id>.
+      <el-method>parseAsInt</el-method> takes a string argument and attempts to turn it into an <i>integer</i> value. 
+      The problem then is: what would happen if you had inadvertently pressed the <el-lit>q</el-lit> key underneath
+       the <el-lit>1</el-lit>? That can't be be converted into an integer - which would cause the whole program to fail
+        with a 'run time error'. 
+      To handle this scenario the <el-method>parseAsInt</el-method> actually returns two values: the first
+      is a Boolean value (<el-id>true</el-id>/<el-id>false</el-id>)  that tells us whether or not the given string was successfully parsed into an integer.
+       If it <i>was</i> (i.e. the first returned value is <el-id>true</el-id>) then the second value will hold the integer. 
+       If the first returned value is <el-id>false</el-id> then the second value should be ignored - as it will be meaningless. 
+       Our instruction names these two returned values <el-id>valid</el-id> and <el-id>move</el-id> respectively.</li>
+    <li>So, to use this information add a third instruction within <el-method>playersTurn</el-method>, an <el-kw>if</el-kw> instruction 
     that uses <el-id>valid</el-id> as its condition. (You <i>could</i> make the condition <el-id>valid</el-id><el-kw> is </el-kw><el-id>true</el-id>
-    and it would work, but that is redundant code because <el-id>valid</el-id> is itself always either <el-id>true</el-id> or <el-id>false</el-id>.)
+    and that would work, but it would be 'redundant code' because <el-id>valid</el-id> is itself always either <el-id>true</el-id> or <el-id>false</el-id>.)
     <i>Within</i> the <el-kw>if</el-kw> call <el-method>displayMove</el-method> exactly the same as you did within <el-method>simonsTurn</el-method>.
   
+    <div class="hint" id="hint8a">Hint: The full <el-kw>if</el-kw> instruction.</div>
+    <div class="content" id="hint8acontent">
+      <el-code-block>
+        <el-statement class="ok multiline">
+          <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field><el-txt><el-id>valid</el-id></el-txt></el-field><el-kw> then</el-kw></el-top>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+          <el-kw>end if</el-kw>
+        </el-statement>
+      </el-code-block>
+    </div>
+    <div class="hint" id="hint8b">Hint: The full <el-method>playersTurn</el-method> procedure so far.</div>
+    <div class="content" id="hint8bcontent">
+      <el-code-block>
+        <el-proc class="ok multiline">
+          <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>playersTurn</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
+          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>valid</el-id>, <el-id>move</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>parseAsInt</el-method>(<el-id>k</el-id>)</el-txt></el-field></el-statement>
+          <el-statement class="ok multiline">
+          <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field><el-txt><el-id>valid</el-id></el-txt></el-field><el-kw> then</el-kw></el-top>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+          <el-kw>end if</el-kw>
+          </el-statement>
+          <el-kw>end procedure</el-kw>
+          </el-proc>
+      </el-code-block>
+    </div>
   </li>
-    <li><el-method>playersTurn</el-method> is far from complete - but to test that it works at all, go back to the <kw>for</kw>
-    loop in <el-kw>main</el-kw>, and add a the last instruction to call <el-method>playersTurn</el-method> passing the same arguments as to
+
+  </li>
+    <li><el-method>playersTurn</el-method> is far from complete - but to test that it works at all, go back to the <el-kw>for</el-kw>
+    loop in <el-kw>main</el-kw>, and add a last instruction to call <el-method>playersTurn</el-method> passing the same arguments as to
     <el-method>simonsTurn</el-method> above it. 
     <div class="hint" id="hint8c">Hint: The modified <el-kw>main</el-kw>.</div>
     <div class="content" id="hint8ccontent">
       <el-code-block>
         <main class="ok multiline" id="main1">
-          <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg></el-top>
-          <el-statement class="ok" id="let201"><el-kw>let </el-kw><el-field id="var202" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr203" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-          <el-statement class="ok" id="var3"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>interval</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-lit>1000</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-          <el-statement class="ok" id="let6"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sequence</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-          <el-statement class="ok multiline" id="for9">
-          <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident11" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt><el-place><i>counterName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> from </el-kw><el-field id="expr12" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>firstValue</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> to </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-lit>5</el-lit></el-txt><el-place><i>lastValue</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> step </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>stepValue</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-top>
-          <el-statement class="ok" id="call15"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-method>simonsTurn</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args17" class="optional ok" tabindex="0"><el-txt><el-id>sequence</el-id>, <el-id>interval</el-id></el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
-          <el-statement class="ok" id="call94"><el-top><el-kw>call </el-kw><el-field id="ident95" class="ok" tabindex="0"><el-txt><el-method>clearVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args96" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i></i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
-          <el-statement class="ok" id="call105"><el-top><el-kw>call </el-kw><el-field id="ident106" class="ok" tabindex="0"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args107" class="optional ok" tabindex="0"><el-txt><el-lit>1000</el-lit></el-txt><el-place><i>milliseconds</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
-          <el-statement class="ok" id="call290"><el-top><el-kw>call </el-kw><el-field id="ident291" class="ok" tabindex="0"><el-txt><el-method>playersTurn</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args292" class="optional ok" tabindex="0"><el-txt><el-id>sequence</el-id>, <el-id>interval</el-id></el-txt><el-place><i>sequence, interval</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
+          <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+          <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>interval</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-lit>1000</el-lit></el-txt></el-field></el-statement>
+          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field></el-statement>
+          <el-statement class="ok multiline">
+          <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> from </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-lit>5</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>simonsTurn</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-top></el-statement>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>playersTurn</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
           <el-kw>end for</el-kw>
           </el-statement>
           <el-kw>end main</el-kw>
@@ -679,7 +735,9 @@
     </div>
     </li>
     <li>Run the program. Simon should play a sequence (initially just one move) and then do nothing until
-      you press one of the keys <b>1 - 4</b> - which should then immediately initiate Simon's turn.
+      you press one of the keys <b>1 - 4</b> - which should then immediately initiate Simon's turn. <i>Stop the
+        program at that point.</i>
+      </i>
     </li>
     </ul>
     <label class="done" for="done8">Step completed</label>
@@ -690,42 +748,42 @@
   <div class="step" id="step9">
     <h3>Iteration 9: Require the player to reproduce the whole sequence</h3>
     <p>We now need a loop that requires the player to reproduce each move in the sequence. 
-      We can determined the length of the sequence using 
-      <el-code><el-id>sequence</el-id>.<el-method>length</el-method></el-code>, which might
-      suggest using a <el-kw>for</el-kw> loop, or even an <el-kw>each</el-kw>. The problem
+      We can determine the length of the sequence using 
+      <el-code><el-id>sequence</el-id>.<el-method>length</el-method>()</el-code>, which might
+      suggest using a <el-kw>for</el-kw>, or an <el-kw>each</el-kw> loop. The problem
       is that if the user makes a mistake (enters the wrong move, or a key that isn't a valid move)
-      that's game over - we don't want to continue with the loop. So when the number of iterations
-      through the loop is not <i>fixed</i> up front we must use a 'conditional
+      that's game over: we don't want to continue with the loop. So when the number of iterations
+      through the loop is <i>not</i> fixed up front we must use a 'conditional
       loop'. The condition for the loop continuing is that the user has hit the correct keys <i>so far</i>
       and that they haven't yet got to the end of the sequence.
     </p>
-    </p>
     <ul>
-      <li>Within <el-method>playersTurn</el-method> insert at the end, a <kw>while</kw> loop. 
-      Define the condition as follows <i>even though it won't initially compile</i> (because it uses undefined names): 
+      <li>At the start of <el-method>playersTurn</el-method>, define two <i>variables</i>: <el-id>counter</el-id> initialised to zero, and
+        <el-id>correctSoFar</el-id> (meaning that the player's sequence is correct <i>so far</i>) initialised to <el-id>true</el-id> -
+        as the player hasn't had any chance to make a mistake yet!</li>
+      <li>Follow these with a <el-kw>while</el-kw> loop, defining its <el-code><i>condition</i></el-code> field as follows:
       <el-code-block>
-        <el-txt>(<el-id>moveNumber</el-id> &lt; <el-id>sequence</el-id>.<el-method>length</el-method>())<el-kw> and </el-kw><el-id>correctSoFar</el-id></el-txt>
+        <el-txt>(<el-id>counter</el-id> &lt; <el-id>sequence</el-id>.<el-method>length</el-method>())<el-kw> and </el-kw><el-id>correctSoFar</el-id></el-txt>
       </el-code-block>
-      and cut and paste all the other instructions within <el-method>playersTurn</el-method> into the loop.
-      Above the loop define two <i>variables</i>: <elid>moveNumber</elid>, initialised to <el-lit>0</el-lit>, 
-      and <el-id>goodSoFar</el-id>, initialised to <el-id>true</el-id>. Then, as the last instruction within
-      the loop, add one to the existing value of moveNumber.
+      and then cut and paste all the instructions remaining below it (within <el-method>playersTurn</el-method>) into the <el-kw>while</el-kw> loop.</li>
+      <li>Then, as the <i>last</i> instruction within the loop, add one to the existing value of <el-id>counter</el-id>.</li>
       <div class="hint" id="hint9a">Hint: Complete revised <el-method>playersTurn</el-method> procedure</div>
       <div class="content" id="hint9acontent">
         <el-code-block>
-          <el-proc class="warning multiline" id="proc136">
-            <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident138" class="ok" tabindex="0"><el-txt>playersTurn</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field></el-method>(<el-field id="params139" class="optional ok" tabindex="0"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>) <el-msg class="warning"></el-msg></el-top>
-            <el-statement class="ok" id="var434"><el-kw>variable </el-kw><el-field id="var435" class="ok" tabindex="0"><el-txt><el-id>moveNumber</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr436" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-            <el-statement class="warning" id="var473"><el-kw>variable </el-kw><el-field id="var474" class="ok" tabindex="0"><el-txt><el-id>correctSoFar</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr475" class="warning" tabindex="0"><el-txt><el-id>trues</el-id></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl> <el-msg class="warning">'trues' is not defined.<el-help title="Click to open Help for this error"><a href="" target="doc-iframe">?</a></el-help></el-msg></el-field> <el-msg class="warning"></el-msg></el-statement>
-            <el-statement class="ok multiline" id="while387">
-              <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr389" class="ok" tabindex="0"><el-txt>(<el-id>moveNumber</el-id> &lt; <el-id>sequence</el-id>.<el-method>length</el-method>())<el-kw> and </el-kw><el-id>correctSoFar</el-id></el-txt><el-place><i>condition</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-top>
-              <el-statement class="ok" id="let176"><el-kw>let </el-kw><el-field id="var177" class="ok" tabindex="0"><el-txt><el-id>k</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr178" class="ok" tabindex="0"><el-txt><el-method>waitForKey</el-method>()</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-              <el-statement class="ok" id="let188"><el-kw>let </el-kw><el-field id="var189" class="ok" tabindex="0"><el-txt><el-id>valid</el-id>, <el-id>move</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr190" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>(<el-id>k</el-id>)</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-              <el-statement class="ok multiline" id="if234">
-              <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr236" class="ok" tabindex="0"><el-txt><el-id>valid</el-id></el-txt><el-place><i>condition</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> then</el-kw></el-top><el-msg></el-msg>
-                <el-statement class="ok" id="call246"><el-top><el-kw>call </el-kw><el-field id="ident247" class="ok" tabindex="0"><el-txt><el-method>displayMove</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args248" class="optional ok" tabindex="0"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt><el-place><i>move, interval</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
-              <el-kw>end if</el-kw>
-              </el-statement>
+          <el-proc class="ok multiline">
+            <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>playersTurn</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+            <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>counter</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-lit>0</el-lit></el-txt></el-field></el-statement>
+            <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>correctSoFar</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-id>true</el-id></el-txt></el-field></el-statement>
+            <el-statement class="ok multiline">
+            <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field><el-txt>(<el-id>counter</el-id> &lt; <el-id>sequence</el-id>.<el-method>length</el-method>())<el-kw> and </el-kw><el-id>correctSoFar</el-id></el-txt></el-field></el-top>
+            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
+            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>valid</el-id>, <el-id>move</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>parseAsInt</el-method>(<el-id>k</el-id>)</el-txt></el-field></el-statement>
+            <el-statement class="ok multiline">
+            <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field><el-txt><el-id>valid</el-id></el-txt></el-field><el-kw> then</el-kw></el-top>
+            <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+            <el-kw>end if</el-kw>
+            </el-statement>
+            <el-statement><el-kw>set </el-kw><el-field><el-txt><el-id>counter</el-id></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-id>counter</el-id> + <el-lit>1</el-lit></el-txt></el-field></el-statement>
             <el-kw>end while</el-kw>
             </el-statement>
             <el-kw>end procedure</el-kw>
@@ -733,52 +791,48 @@
         </el-code-block>
       </div>
     </li>
-    <li>Run the program and play just up to a sequence of three moves, say - then <b>Stop</b> the program. 
-      Note that the code is not <i>yet</i> checking that the moves you enter are correct. 
-      But it will require that you enter the right number of moves before Simon adds one more.
-    </li>
-    <li>So now we'll check the correctness of the player's sequence. Change the condition for the <el-kw>if</el-kw>
-    instruction from just <el-id>valid</el-id> to 
+    <li>Run the program. Simon will make a move then pause for you to enter the same sequence (1 move).
+      Note that it isn't <i>yet</i> checking whether you pressed the <i>correct</i> key!
+      Pressing any key (1 -4) will pass for now. Then simon will make two moves, and you must enter two moves, and so on...
+      Play just up to a sequence of three moves, say - then <b>Stop</b> the program.</li>
+    <li>Now we'll check the correctness of the player's sequence. Find the <el-kw>if</el-kw> 
+    instruction, and change the condition from just <el-id>valid</el-id> to 
     <el-code-block>
-      <el-txt><el-id>valid</el-id><el-kw> and </el-kw>(<el-id>sequence</el-id>[<el-id>moveNumber</el-id>]<el-kw> is </el-kw><el-id>move</el-id>)</el-txt>
+      <el-txt><el-id>valid</el-id><el-kw> and </el-kw>(<el-id>sequence</el-id>[<el-id>counter</el-id>]<el-kw> is </el-kw><el-id>move</el-id>)</el-txt>
     </el-code-block>
     </li> 
-    <li>Within the <el-kw>if</el-kw>, add an <el-kw>else</el-kw> clause as the last instruction, after the call to <el-method>displayMove</el-method>
-    and within this <el-kw>else</el-kw>, set the value of <el-id>correctSoFar</el-id> to false. After the <el-kw>end while</el-kw>
-    add new code such that if <el-id>correctSoFar</el-id> has been set to false that - just as a temporary fix - it prints <el-lit>Wrong!</el-lit>
+    <li>Within the <el-kw>if</el-kw>, add an <el-kw>else</el-kw> clause <i>after</i> the call to <el-method>displayMove</el-method>
+    and underneath the <el-kw>else</el-kw>, set the value of <el-id>correctSoFar</el-id> to <el-id>false</el-id> followed by an
+    instruction to print the message 'Wrong!' (this is a temporary action - to be refined later).
     <div class="hint" id="hint9b">Hint: Complete revised <el-method>playersTurn</el-method> procedure</div>
     <div class="content" id="hint9bcontent">
       <el-code-block>
-        <el-proc class="ok multiline" id="proc136">
-          <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident138" class="ok" tabindex="0"><el-txt>playersTurn</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field></el-method>(<el-field id="params139" class="optional ok" tabindex="0"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top>
-          <el-statement class="ok" id="var434"><el-kw>variable </el-kw><el-field id="var435" class="ok" tabindex="0"><el-txt><el-id>moveNumber</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr436" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-          <el-statement class="ok" id="var473"><el-kw>variable </el-kw><el-field id="var474" class="ok" tabindex="0"><el-txt><el-id>correctSoFar</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr475" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-          <el-statement class="ok multiline" id="while387">
-          <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr389" class="ok" tabindex="0"><el-txt>(<el-id>moveNumber</el-id> &lt; <el-id>sequence</el-id>.<el-method>length</el-method>())<el-kw> and </el-kw><el-id>correctSoFar</el-id></el-txt><el-place><i>condition</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-top>
-          <el-statement class="ok" id="let176"><el-kw>let </el-kw><el-field id="var177" class="ok" tabindex="0"><el-txt><el-id>k</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr178" class="ok" tabindex="0"><el-txt><el-method>waitForKey</el-method>()</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-          <el-statement class="ok" id="let188"><el-kw>let </el-kw><el-field id="var189" class="ok" tabindex="0"><el-txt><el-id>valid</el-id>, <el-id>move</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr190" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>(<el-id>k</el-id>)</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-          <el-statement class="ok multiline" id="if234">
-          <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr236" class="ok" tabindex="0"><el-txt><el-id>valid</el-id><el-kw> and </el-kw>(<el-id>sequence</el-id>[<el-id>moveNumber</el-id>]<el-kw> is </el-kw><el-id>move</el-id>)</el-txt><el-place><i>condition</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> then</el-kw></el-top><el-msg></el-msg>
-          <el-statement class="ok" id="call246"><el-top><el-kw>call </el-kw><el-field id="ident247" class="ok" tabindex="0"><el-txt><el-method>displayMove</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args248" class="optional ok" tabindex="0"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt><el-place><i>move, interval</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
-          <el-statement class="ok outdent" id="else740"><el-top>
-              <el-kw>else </el-kw><el-field id="elif742" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>if</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field></el-top><el-msg></el-msg></el-statement>
-          <el-statement class="ok" id="set754"><el-kw>set </el-kw><el-field id="ident755" class="ok" tabindex="0"><el-txt><el-id>correctSoFar</el-id></el-txt><el-place><i>variableName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> to </el-kw><el-field id="expr756" class="ok" tabindex="0"><el-txt><el-id>false</el-id></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
+        <el-proc class="ok multiline">
+          <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>playersTurn</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
+          <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>counter</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-lit>0</el-lit></el-txt></el-field></el-statement>
+          <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>correctSoFar</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-id>true</el-id></el-txt></el-field></el-statement>
+          <el-statement class="ok multiline">
+          <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field><el-txt>(<el-id>counter</el-id> &lt; <el-id>sequence</el-id>.<el-method>length</el-method>())<el-kw> and </el-kw><el-id>correctSoFar</el-id></el-txt></el-field></el-top>
+          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
+          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>valid</el-id>, <el-id>move</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>parseAsInt</el-method>(<el-id>k</el-id>)</el-txt></el-field></el-statement>
+          <el-statement class="ok multiline">
+          <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field><el-txt><el-id>valid</el-id><el-kw> and </el-kw>(<el-id>sequence</el-id>[<el-id>counter</el-id>]<el-kw> is </el-kw><el-id>move</el-id>)</el-txt></el-field><el-kw> then</el-kw></el-top>
+          <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+          <el-statement class="ok outdent"><el-top>
+              <el-kw>else </el-kw><el-field class="empty optional ok"><el-txt></el-txt></el-field></el-top></el-statement>
+          <el-statement><el-kw>set </el-kw><el-field><el-txt><el-id>correctSoFar</el-id></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-id>false</el-id></el-txt></el-field></el-statement>
+          <el-statement><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>Wrong!</el-lit>"</el-txt></el-field></el-statement>
           <el-kw>end if</el-kw>
           </el-statement>
-          <el-statement class="ok" id="set554"><el-kw>set </el-kw><el-field id="ident555" class="ok" tabindex="0"><el-txt><el-id>moveNumber</el-id></el-txt><el-place><i>variableName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> to </el-kw><el-field id="expr556" class="ok" tabindex="0"><el-txt><el-id>moveNumber</el-id> + <el-lit>1</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
+          <el-statement><el-kw>set </el-kw><el-field><el-txt><el-id>counter</el-id></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-id>counter</el-id> + <el-lit>1</el-lit></el-txt></el-field></el-statement>
           <el-kw>end while</el-kw>
           </el-statement>
-          <el-statement class="ok multiline" id="if646">
-          <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr648" class="ok" tabindex="0"><el-txt><el-id>correctSoFar</el-id><el-kw> is </el-kw><el-id>false</el-id></el-txt><el-place><i>condition</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> then</el-kw></el-top><el-msg></el-msg>
-          <el-statement class="ok" id="print671"><el-kw>print </el-kw><el-field id="expr672" class="optional ok" tabindex="0"><el-txt>"<el-lit>Wrong!</el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-          <el-kw>end if</el-kw>
-          </el-statement>
           <el-kw>end procedure</el-kw>
-        </el-proc>
+          </el-proc>
       </el-code-block>
     </div>
-    <li>Run the program. You will have to be honest, and stop the program if you see the 'Wrong!' message, and the game 
-      isn't quite polished yet, but the essence of the game should be working.
+    <li>Run the program. You will have to be honest, and stop the program if you see the 'Wrong!' message. Also the game 
+      isn't at all polished yet, but the essence of the game should be working.
     </li>
     </ul>
     <label class="done" for="done9">Step completed</label>
@@ -801,16 +855,58 @@
         <div class="hint" id="hint10a">Hint: the two new instructions</div>
         <div class="content" id="hint10acontent">
           <el-code-block>
-            <el-statement class="ok" id="call780"><el-top><el-kw>call </el-kw><el-field id="ident781" class="ok" tabindex="0"><el-txt><el-method>clearVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args782" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i></i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
-            <el-statement class="ok" id="call795"><el-top><el-kw>call </el-kw><el-field id="ident796" class="ok" tabindex="0"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args797" class="optional ok" tabindex="0"><el-txt><el-lit>2000</el-lit></el-txt><el-place><i>milliseconds</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
+            <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
+            <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>2000</el-lit></el-txt></el-field>)</el-top></el-statement>
           </el-code-block>
         </div>
       </li>
-        <li>At the start of main, define a variable named <el-id>ok</el-id> initially set to <el-id>true</el-id>.
-          Replace the <el-kw>for</el-kw> loop in <el-kw>main</el-kw> with a <el-kw>while</el-kw> loop with a condition of <el-id>ok</el-id>,
-          (you'll need to create the <el-kw>while</el-kw> loop first, cut and paste the contents from the old loop into the new, then delete the former.  
+        <li>At the start of main, define a variable named <el-id>ok</el-id> initially set to <el-id>true</el-id>.</li>
+        <li>Replace the <el-kw>for</el-kw> loop in <el-kw>main</el-kw> with a <el-kw>while</el-kw> loop with a condition of <el-id>ok</el-id>,
+          (you'll need to create the <el-kw>while</el-kw> loop first, then cut and paste the contents from the old loop into the new, then delete the former.)  
+          <div class="hint" id="hint10a1">Hint: Abbreviated instructions in <el-kw>main</el-kw></div>
+          <div class="content" id="hint10a1content">
+            <el-code-block>
+              <main class="ok multiline" id="main1">
+                <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+                <el-statement><el-kw>variable </el-kw></el-statement>
+                <el-statement><el-kw>variable </el-kw></el-statement>
+                <el-statement><el-kw>let </el-kw></el-statement>
+                <el-statement class="ok multiline">
+                <el-top><el-expand>+</el-expand><el-kw>while </el-kw></el-top>
+                <el-statement><el-kw>call </el-kw></el-statement>
+                <el-statement><el-kw>call </el-kw></el-statement>
+                <el-statement><el-kw>call </el-kw></el-statement>
+                <el-statement><el-kw>call </el-kw></el-statement>
+                <el-kw>end while</el-kw>
+                </el-statement>
+                <el-kw>end main</el-kw>
+              </main>
+            </el-code-block>
+          </div>
+          <div class="hint" id="hint10a2">Hint: The complete modified <el-kw>main</el-kw></div>
+          <div class="content" id="hint10a2content">
+            <el-code-block>
+              <main class="ok multiline" id="main1">
+                <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+                <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>ok</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-id>true</el-id></el-txt></el-field></el-statement>
+                <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>interval</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-lit>1000</el-lit></el-txt></el-field></el-statement>
+                <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>sequence</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt></el-field></el-statement>
+                <el-statement class="ok multiline">
+                <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field><el-txt><el-id>ok</el-id></el-txt></el-field></el-top>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>simonsTurn</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-top></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>playersTurn</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
+                <el-statement><el-kw>set </el-kw><el-field><el-txt><el-id>ok</el-id></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-id>false</el-id></el-txt></el-field></el-statement>
+                <el-kw>end while</el-kw>
+                </el-statement>
+                <el-kw>end main</el-kw>
+              </main>
+            </el-code-block>
+          </div>
         </li>
-        <li>Go to the definition of the <el-method>playersTurn</el-method> procedure, and add a third paramter definition
+        <li>Go to the definition of the <el-method>playersTurn</el-method> procedure, and add a third parameter definition
         like this:
         <el-code-block>
           <el-kw>out </el-kw><el-id>ok</el-id><el-kw> as </el-kw><el-type>Boolean</el-type>
@@ -820,54 +916,56 @@
         to the code that <i>calls</i> the procedure. This will become clearer, shortly. This change will
         give you a compile error in the call to <el-method>playersTurn</el-method> within <el-kw>main</el-kw>. So, in that call,
         add <el-id>ok</el-id> (the local variable you defined there) as the third argument.
-        <div class="hint" id="hint10b">Hint: the revised procedure</div>
+        <div class="hint" id="hint10b">Hint: the revised procedure first line</div>
         <div class="content" id="hint10bcontent">
           <el-code-block>
-            <el-proc class="ok multiline" id="proc136">
-              <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident138" class="ok" tabindex="0"><el-txt>playersTurn</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field></el-method>(<el-field id="params139" class="optional ok" tabindex="0"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-kw>out</el-kw> <el-id>ok</el-id> <el-kw>as</el-kw> <el-type>Boolean</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top>
-              <el-statement class="ok" id="var434"><el-kw>variable </el-kw><el-field id="var435" class="ok" tabindex="0"><el-txt><el-id>moveNumber</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr436" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-              <el-statement class="ok" id="var473"><el-kw>variable </el-kw><el-field id="var474" class="ok" tabindex="0"><el-txt><el-id>correctSoFar</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr475" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-              <el-statement class="ok multiline" id="while387">
-              <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr389" class="ok" tabindex="0"><el-txt>(<el-id>moveNumber</el-id> &lt; <el-id>sequence</el-id>.<el-method>length</el-method>())<el-kw> and </el-kw><el-id>correctSoFar</el-id></el-txt><el-place><i>condition</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-top>
-              <el-statement class="ok" id="let176"><el-kw>let </el-kw><el-field id="var177" class="ok" tabindex="0"><el-txt><el-id>k</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr178" class="ok" tabindex="0"><el-txt><el-method>waitForKey</el-method>()</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-              <el-statement class="ok" id="let188"><el-kw>let </el-kw><el-field id="var189" class="ok" tabindex="0"><el-txt><el-id>valid</el-id>, <el-id>move</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr190" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>(<el-id>k</el-id>)</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-              <el-statement class="ok multiline" id="if234">
-              <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr236" class="ok" tabindex="0"><el-txt><el-id>valid</el-id><el-kw> and </el-kw>(<el-id>sequence</el-id>[<el-id>moveNumber</el-id>]<el-kw> is </el-kw><el-id>move</el-id>)</el-txt><el-place><i>condition</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> then</el-kw></el-top><el-msg></el-msg>
-              <el-statement class="ok" id="call246"><el-top><el-kw>call </el-kw><el-field id="ident247" class="ok" tabindex="0"><el-txt><el-method>displayMove</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args248" class="optional ok" tabindex="0"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt><el-place><i>move, interval</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>)<el-msg></el-msg></el-top></el-statement>
-              <el-statement class="ok outdent" id="else740"><el-top>
-                  <el-kw>else </el-kw><el-field id="elif742" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>if</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field></el-top><el-msg></el-msg></el-statement>
-              <el-statement class="ok" id="set754"><el-kw>set </el-kw><el-field id="ident755" class="ok" tabindex="0"><el-txt><el-id>correctSoFar</el-id></el-txt><el-place><i>variableName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> to </el-kw><el-field id="expr756" class="ok" tabindex="0"><el-txt><el-id>false</el-id></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-              <el-kw>end if</el-kw>
-              </el-statement>
-              <el-statement class="ok" id="set554"><el-kw>set </el-kw><el-field id="ident555" class="ok" tabindex="0"><el-txt><el-id>moveNumber</el-id></el-txt><el-place><i>variableName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> to </el-kw><el-field id="expr556" class="ok" tabindex="0"><el-txt><el-id>moveNumber</el-id> + <el-lit>1</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-              <el-kw>end while</el-kw>
-              </el-statement>
-              <el-statement class="ok multiline" id="if646">
-              <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr648" class="ok" tabindex="0"><el-txt><el-id>correctSoFar</el-id><el-kw> is </el-kw><el-id>false</el-id></el-txt><el-place><i>condition</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> then</el-kw></el-top><el-msg></el-msg>
-              <el-statement class="ok" id="set1096"><el-kw>set </el-kw><el-field id="ident1097" class="ok" tabindex="0"><el-txt><el-id>ok</el-id></el-txt><el-place><i>variableName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> to </el-kw><el-field id="expr1098" class="ok" tabindex="0"><el-txt><el-id>false</el-id></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
-              <el-kw>end if</el-kw>
-              </el-statement>
-              <el-kw>end procedure</el-kw>
-              </el-proc>
+            <el-proc class="ok multiline">
+              <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>playersTurn</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-kw>out</el-kw> <el-id>ok</el-id> <el-kw>as</el-kw> <el-type>Boolean</el-type></el-txt></el-field>)</el-top>
           </el-code-block>
         </div>
         </li>
-        <li>Delete the instruction <el-code><el-kw>print</el-kw> "<el-lit>Wrong!</el-lit>"</el-code> and
+        <li>Within the <el-method>playersTurn</el-method> procedure, delete the instruction <el-code><el-kw>print</el-kw> "<el-lit>Wrong!</el-lit>"</el-code> and
         replace it with one that sets the value of <el-id>ok</el-id> to false.
+        <div class="hint" id="hint10b2">Hint: the whole revised procedure</div>
+        <div class="content" id="hint10b2content">
+        <el-code-block>
+          <el-proc class="ok multiline">
+            <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field><el-txt>playersTurn</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>interval</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-kw>out</el-kw> <el-id>ok</el-id> <el-kw>as</el-kw> <el-type>Boolean</el-type></el-txt></el-field>)</el-top>
+            <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>counter</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-lit>0</el-lit></el-txt></el-field></el-statement>
+            <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>correctSoFar</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-id>true</el-id></el-txt></el-field></el-statement>
+            <el-statement class="ok multiline">
+            <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field><el-txt>(<el-id>counter</el-id> &lt; <el-id>sequence</el-id>.<el-method>length</el-method>())<el-kw> and </el-kw><el-id>correctSoFar</el-id></el-txt></el-field></el-top>
+            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
+            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>valid</el-id>, <el-id>move</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>parseAsInt</el-method>(<el-id>k</el-id>)</el-txt></el-field></el-statement>
+            <el-statement class="ok multiline">
+            <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field><el-txt><el-id>valid</el-id><el-kw> and </el-kw>(<el-id>sequence</el-id>[<el-id>counter</el-id>]<el-kw> is </el-kw><el-id>move</el-id>)</el-txt></el-field><el-kw> then</el-kw></el-top>
+            <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
+            <el-statement class="ok outdent"><el-top>
+                <el-kw>else </el-kw><el-field class="empty optional ok"><el-txt></el-txt></el-field></el-top></el-statement>
+            <el-statement><el-kw>set </el-kw><el-field><el-txt><el-id>correctSoFar</el-id></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-id>false</el-id></el-txt></el-field></el-statement>
+            <el-statement><el-kw>set </el-kw><el-field><el-txt><el-id>ok</el-id></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-id>false</el-id></el-txt></el-field></el-statement>
+            <el-kw>end if</el-kw>
+            </el-statement>
+            <el-statement><el-kw>set </el-kw><el-field><el-txt><el-id>counter</el-id></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-id>counter</el-id> + <el-lit>1</el-lit></el-txt></el-field></el-statement>
+            <el-kw>end while</el-kw>
+            </el-statement>
+            <el-kw>end procedure</el-kw>
+            </el-proc>
+          </el-code-block>
+        </div>
         </li>
         <li>Within <el-kw>main</el-kw> add a new instruction <i>after</i> <el-kw>end while</el-kw> to print a message that
-        says, for example <b>Game over! You scored: 10</b>
-        <div class="hint" id="hint10c">Hint1: How to calculate the score</div>
-        <div class="content" id="hint10bcontent">
-          It is the length of the <el-id>sequence</el-id> minus one (because the player has just failed the current sequence length).
-        </div>
-        <div class="hint" id="hint10d">Hint2: The complete <el-kw>print</el-kw> instruction</div>
+        says, for example <b>Game over! You scored: 10</b> but instead of literally 10 make it print the length
+        of the sequence minus 1. Why 'minus 1'?
+        <input type="text" id="input10">
+        <div class="hint" id="hint10d">Hint: The complete <el-kw>print</el-kw> instruction</div>
         <div class="content" id="hint10bcontent">
           <el-code-block>
-            <el-statement class="ok" id="print1139"><el-kw>print </el-kw><el-field id="expr1140" class="optional ok" tabindex="0"><el-txt>"<el-lit>Game over! You scored: </el-lit>{<el-id>sequence</el-id>.<el-method>length</el-method>() - <el-lit>1</el-lit>}<el-lit></el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-msg></el-msg></el-statement>
+            <el-statement><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>Game over! You scored: </el-lit>{<el-id>sequence</el-id>.<el-method>length</el-method>() - <el-lit>1</el-lit>}<el-lit></el-lit>"</el-txt></el-field></el-statement>
           </el-code-block>
         </div>
       </li>
+      <li>Run the program and test that it now seems <i>a little</i> more polished.</li>
       </ul>
   
       <label class="done" for="done10">Step completed</label>
@@ -876,13 +974,16 @@
 </div>
       
   <div class="step" id="step11">
-    Worksheet completed!
+    You have completed the worksheet. Well done!
 
-    If you have time try to make the following refinements, or think of some of your own:
+    If you have time try to make the following refinement, or think of some of your own:
 
     <ul>
-      <li>With each round of the game (i.e. each extension of the sequence) <i>slightly</i>
-      reduce the size of the <el-id>interval</el-id> (e.g. by 25 milliseconds).</li>
+      <li>Trim the time delays and starting <el-id>interval</el-id> so that the game flows nicely.</li>
+      <li>With each turn of the game (i.e. each extension of the sequence) <i>slightly</i>
+      reduce the size of the <el-id>interval</el-id> (e.g. by 25 milliseconds) so that the playing
+      of the sequence gradually speeds up.
+    </li>
     </ul>
 
     <div class="license">

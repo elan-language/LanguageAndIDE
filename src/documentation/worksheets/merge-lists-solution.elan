@@ -1,0 +1,15 @@
+# 127d5f6e73b4559c1a5791a3c3d70bf6ab1542d427c291b70e2c7ff2d27b3c2c Elan 1.2.2 guest default_profile valid
+
+function merge(a as List<of String>, b as List<of String>) returns List<of String>
+  variable result set to empty List<of String>
+  if a.length() is 0 then
+    set result to b
+  else if b.length() is 0 then
+    set result to a
+  else if a[0].isBefore(b[0]) then
+    set result to [a[0]].withAppendList(merge(a[1..], b))
+  else
+    set result to [b[0]].withAppendList(merge(a, b[1..]))
+  end if
+  return result
+end function

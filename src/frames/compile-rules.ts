@@ -48,9 +48,11 @@ import { ElanSymbol } from "./interfaces/elan-symbol";
 import { Scope } from "./interfaces/scope";
 import { SymbolType } from "./interfaces/symbol-type";
 import { Transforms } from "./interfaces/transforms";
+import { isRecord } from "./interfaces/type-options";
 import { allKeywords, reservedWords } from "./keywords";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
+import { DeconstructedListType } from "./symbols/deconstructed-list-type";
 import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
 import { FloatType } from "./symbols/float-type";
@@ -775,17 +777,14 @@ export function mustBeAssignableType(
   }
 }
 
-function mustBeCompatibleDeconstruction(
-  lhs: AstNode,
-  rhs: AstNode,
+function mustBeCompatibleRecordDeconstruction(
+  ids: string[],
+  lst: TupleType,
+  rst: ClassType,
   scope: Scope,
   compileErrors: CompileError[],
   location: string,
 ) {
-  const ids = getIds(lhs);
-  const lst = lhs.symbolType() as TupleType;
-  const rst = rhs.symbolType() as ClassType;
-
   const classDef = scope.resolveSymbol(rst.name, transforms(), scope);
 
   if (isClassTypeDef(classDef)) {
@@ -809,6 +808,43 @@ function mustBeCompatibleDeconstruction(
   }
 }
 
+function mustBeCompatibleDeconstruction(
+  ids: string[],
+  lst: SymbolType,
+  rst: SymbolType,
+  scope: Scope,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (lst instanceof DeconstructedTupleType) {
+    if (rst instanceof ClassType) {
+      if (isRecord(rst.typeOptions)) {
+        mustBeCompatibleRecordDeconstruction(ids, lst, rst, scope, compileErrors, location);
+      } else {
+        compileErrors.push(
+          new SyntaxCompileError(`Cannot deconstruct ${rst.name} as tuple.`, location),
+        );
+      }
+      return true;
+    }
+    if (rst instanceof TupleType && lst.ofTypes.length !== rst.ofTypes.length) {
+      compileErrors.push(
+        new SyntaxCompileError(`Wrong number of deconstructed variables.`, location),
+      );
+      return true;
+    }
+  }
+  if (lst instanceof DeconstructedListType) {
+    if (rst instanceof TupleType) {
+      compileErrors.push(
+        new SyntaxCompileError(`Cannot deconstruct ${rst.name} as list.`, location),
+      );
+      return true;
+    }
+  }
+  return false;
+}
+
 export function mustBeCompatibleDefinitionNode(
   lhs: AstNode,
   rhs: AstNode,
@@ -816,19 +852,11 @@ export function mustBeCompatibleDefinitionNode(
   compileErrors: CompileError[],
   location: string,
 ) {
+  const ids = getIds(lhs);
   const lst = lhs.symbolType();
   const rst = rhs.symbolType();
 
-  if (lst instanceof DeconstructedTupleType) {
-    if (rst instanceof ClassType && rst.typeOptions.isImmutable) {
-      mustBeCompatibleDeconstruction(lhs, rhs, scope, compileErrors, location);
-    }
-    if (rst instanceof TupleType && lst.ofTypes.length !== rst.ofTypes.length) {
-      compileErrors.push(
-        new SyntaxCompileError(`Wrong number of deconstructed variables.`, location),
-      );
-    }
-  }
+  mustBeCompatibleDeconstruction(ids, lst, rst, scope, compileErrors, location);
 }
 
 export function mustBeCompatibleNode(
@@ -838,17 +866,13 @@ export function mustBeCompatibleNode(
   compileErrors: CompileError[],
   location: string,
 ) {
+  const ids = getIds(lhs);
   const lst = lhs.symbolType();
   const rst = rhs.symbolType();
 
-  if (lst instanceof DeconstructedTupleType && rst instanceof ClassType) {
-    if (rst.typeOptions.isImmutable) {
-      mustBeCompatibleDeconstruction(lhs, rhs, scope, compileErrors, location);
-      return;
-    }
+  if (!mustBeCompatibleDeconstruction(ids, lst, rst, scope, compileErrors, location)) {
+    mustBeAssignableType(lst, rst, compileErrors, location);
   }
-
-  mustBeAssignableType(lst, rst, compileErrors, location);
 }
 
 export function getId(astNode: AstNode) {

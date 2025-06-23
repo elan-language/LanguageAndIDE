@@ -33,14 +33,14 @@ test('load and run demo', async ({ page }) => {
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
   await page.getByRole('button', { name: 'Demo' }).hover();
-  await page.getByText('Binary Search').click();
+  await page.getByText('Collatz').click();
 
   await page.getByRole('button', { name: 'Run the program' }).click();
-  await expect(page.locator('#printed-text')).toContainText("What type of fruit do you want ('x' to exit)? ");
+  await expect(page.locator('#printed-text')).toContainText("Enter a starting number (0 to quit)");
 
-  await page.locator('#inp').fill('fig');
+  await page.locator('#inp').fill('3');
   await page.locator('#inp').press('Enter');
-  await expect(page.locator('#printed-text')).toContainText("What type of fruit do you want ('x' to exit)? fig We can supply a fig What type of fruit do you want ('x' to exit)? ");
+  await expect(page.locator('#printed-text')).toContainText("Enter a starting number (0 to quit)");
 });
 
 test('input validation', async ({ page }) => {
