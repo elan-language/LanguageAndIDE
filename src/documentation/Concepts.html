@@ -16,8 +16,43 @@
 <h1 id="Introduction">Introduction</h1>
 <p>There are some concepts in the design of the Elan language and Integrated Development Environment which don't belong with any particular keyword or language construct described in the <a href="LangRef.html">Language Reference</a> or any particular data type or functionality in the <a href="LibRef.html">Library Reference</a>.</p>
 <p>This Concepts document is the place for those descriptions and explanations.</p>
+<h2></h2>
 
 <h1 id="LanguageFeatures">Language Features</h1>
+
+<h2 id="NamedValues">Named values and variables</h2>
+
+<p>In conventional programming, the term <b>variable</b> describes an entity in a program that contains a value, and has a name by which you can read and write its value, i.e. its value can be varied. In Elan, we call this a <b>mutable named value</b> (or just <i>mutable</i>), because the language has other named values that are <b>immutable</b> (<i>immutables</i>).</p>
+
+<p>Names are given to all <a href="LibRef.html#ValueTypes"><el-type>Types</el-type></a> of such entities, whether simple data items (e.g. integer, Boolean) or data structures (e.g. array, class), and whether mutable or immutable.</p>
+
+<h3 class="no-TOC">Mutables</h3>
+<p>You use <a href="LangRef.html#variable"><el-kw>variable</el-kw></a> statements to define the names and initial values of conventional variables (mutables), their values being specified either with literals or by evaluating expressions.
+
+<p>You can then use <a href="LangRef.html#set"><el-kw>set</el-kw></a> statements to replace the values in mutables with new values,
+ and there are methods to update standard <a href="LibRef.html#StandardDataStructures">mutable data structures</a>.</p>
+
+<h3 class="no-TOC">Immutables</h3>
+<p>You use <a href="LangRef.html#let"><el-kw>let</el-kw></a> statements to define the names and fixed values of new immutables (their values also specified either with literals or by evaluating expressions).</p>
+
+<p>Immutables are useful because they can:
+<ul>
+ <li>hold intermediate values for use in subsequent code, thus avoiding duplication</li>
+ <li>help modularise a complex sequence of code</li>
+</ul>
+
+<h3 class="no-TOC">Constants</h3>
+<p>For immutable values that are of use throughout your program, you can use <a href="LangRef.html#constant"><el-kw>constant</el-kw></a> statements (outside your procedures and functions) to <el-kw>set</el-kw> names and initialise fixed values that are accessible by all executable code in your program, i.e. they have global scope. Constants are defined either with literals or by reference to predefined class properties.</p>
+
+<h3 class="no-TOC">Values at compilation and runtime</h3>
+<p><el-kw>let</el-kw>, <el-kw>variable</el-kw> and <el-kw>set</el-kw> statements are used within your procedures and functions to take their values at execution time and so can be defined by literals or expressions. <el-kw>constant</el-kw> statements, by contrast, fix their values at compilation time.</p>
+
+<h3 class="no-TOC">Scope</h3>
+The scope or area of influence of named values is restricted to the procedures or functions within which they are defined.
+
+<h3 class="no-TOC">Values and programming style</h3>
+<p>It is good practice to make as many of your named values as possible immutable, either by defining them as <el-kw>constants</el-kw> or with <el-kw>let</el-kw> statements, or by making use of Elan's <a href="LibRef.html#ImmutableDataStructures">immutable data structures</a>.</p>
+
 <h2>Type Names</h2>
 <p>The Elan language has been carefully designed so that it supports static typing without the need for beginners to include the names of types in their programs.
 For example you can write a program that counts to 10 without using the type name "Int".</p>
@@ -70,7 +105,7 @@ to a new, or the same, named value.</p>
 For example, you cannot put instances of classes into a ListImmutable or DictionaryImmutable,
 or use them as keys in a Dictionary.
 This applies even if the class has no procedure members, so is effectively immutable in practice (but then you may as well use a record).</p>
-<p><a href="LibRef.html#Tuple">tuple</a>s cannot be directly changed once they have been made, for eample you can't change just one element of a tuple.  But tuples are allowed to contain mutable types, eg a List&lt;of Int&gt;, so they are actually treated as mutable.</p>
+<p><a href="LibRef.html#Tuple">tuple</a>s cannot be directly changed once they have been made, for example you can't change just one element of a tuple.  But tuples are allowed to contain mutable types, eg a List&lt;of Int&gt;, so they are actually treated as mutable.</p>
 <p>The reason why mutability is of interest to computer scientists is that you can prove the correctness of programs more easily if they work with immutable data objects.  It also can reduce the number of bugs in your code, and can allow more optimisations when running a program.  It is widely used when writing code according to the functional programming paradigm.</p>
 
 <h2>Static typing</h2>
@@ -107,7 +142,7 @@ At this point you can type some more if you wish: for example "set n to n" is va
 <p>Once the Parse status is valid, the compilation stage starts.  The result is one of:</p>
 <ul>
   <li>"ok" on a green background</li>
-  <li>"unknown" on an orange backgound</li>
+  <li>"unknown" on an orange background</li>
   <li>"error" on a red background</li>
 </ul>
 <p>In either of the error states, you can click on the coloured status and it will scroll the code window to (one of) the error(s). Clicking on the erroneous line should give further information as to what the problem is. If the message is unhelpful, please let us know how it can be improved.</p>
