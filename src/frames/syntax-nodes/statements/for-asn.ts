@@ -2,12 +2,10 @@ import { getId, mustBeOfSymbolType } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
-import { Transforms } from "../../frame-interfaces/transforms";
 import { IntType } from "../../symbols/int-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
-import { transforms } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 import { OperationSymbol } from "../operation-symbol";
@@ -32,7 +30,7 @@ export class ForAsn extends FrameWithStatementsAsn {
     const t = this.to.compile();
     let s = this.step.compile();
 
-    const id = this.getParentScope().resolveSymbol(v, transforms(), this);
+    const id = this.getParentScope().resolveSymbol(v, this);
     let declare = "";
 
     if (id instanceof UnknownSymbol) {
@@ -61,7 +59,7 @@ ${this.compileChildren()}\r
 ${this.indent()}}`;
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
     const v = getId(this.variable);
 
     if (id === v) {
@@ -73,7 +71,7 @@ ${this.indent()}}`;
       };
     }
 
-    return super.resolveSymbol(id, transforms, initialScope);
+    return super.resolveSymbol(id, initialScope);
   }
 
   symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {

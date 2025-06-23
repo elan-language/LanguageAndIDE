@@ -4,7 +4,6 @@ import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
 import { SymbolType } from "../../compiler-interfaces/symbol-type";
 import { singleIndent } from "../../frame-helpers";
-import { Transforms } from "../../frame-interfaces/transforms";
 import { catchKeyword, exceptionKeyword, inKeyword } from "../../keywords";
 import { StringType } from "../../symbols/string-type";
 import { SymbolScope } from "../../symbols/symbol-scope";
@@ -59,12 +58,12 @@ ${this.compileChildren()}\r`;
     return this.scope;
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
     if (getId(this.variable) === id) {
       return this;
     }
 
-    return super.resolveSymbol(id, transforms, initialScope);
+    return super.resolveSymbol(id, initialScope);
   }
 
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {

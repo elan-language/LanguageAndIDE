@@ -7,7 +7,6 @@ import { Member } from "../../frame-interfaces/member";
 import { ClassType } from "../../symbols/class-type";
 import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
-import { transforms } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 
@@ -33,13 +32,7 @@ export class AbstractPropertyAsn extends FrameAsn implements Member, ElanSymbol 
     this.compileErrors = [];
     const pName = this.name.compile();
 
-    mustBeUniqueNameInScope(
-      pName,
-      getClassScope(this),
-      transforms(),
-      this.compileErrors,
-      this.fieldId,
-    );
+    mustBeUniqueNameInScope(pName, getClassScope(this), this.compileErrors, this.fieldId);
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

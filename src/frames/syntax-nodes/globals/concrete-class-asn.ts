@@ -44,13 +44,13 @@ export class ConcreteClassAsn extends ClassAsn {
   public compile(): string {
     this.compileErrors = [];
 
-    const name = this.getName(transforms());
+    const name = this.getName();
     const [cd, cdName] = this.lookForCircularDependencies(this, [name], transforms());
     if (cd) {
       return this.circularDependency(cdName);
     }
 
-    const extendsClause = this.getExtends(transforms());
+    const extendsClause = this.getExtends();
     const abstractClasses = this.getAllAbstractClasses(this, [], transforms());
     const interfaces = this.getAllInterfaces(this, [], transforms());
 
@@ -64,7 +64,6 @@ export class ConcreteClassAsn extends ClassAsn {
     }
 
     mustImplementSuperClasses(
-      transforms(),
       this.symbolType(),
       interfaces.concat(abstractClasses).map((tn) => tn.symbolType()) as ClassType[],
       this.compileErrors,

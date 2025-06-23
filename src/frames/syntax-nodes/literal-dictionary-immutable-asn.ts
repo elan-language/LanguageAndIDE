@@ -12,7 +12,6 @@ import { DictionaryImmutableName } from "../symbols/elan-type-names";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 import { KvpAsn } from "./kvp-asn";
 
 export class LiteralDictionaryImmutableAsn extends AbstractAstNode implements AstNode {
@@ -52,7 +51,7 @@ export class LiteralDictionaryImmutableAsn extends AbstractAstNode implements As
 
   symbolType() {
     const globalScope = getGlobalScope(this.scope);
-    const symbol = globalScope.resolveSymbol(DictionaryImmutableName, transforms(), this.scope);
+    const symbol = globalScope.resolveSymbol(DictionaryImmutableName, this.scope);
     const st = symbol.symbolType() as ReifyableSymbolType;
 
     const first = this.list.items[0] as KvpAsn | undefined;

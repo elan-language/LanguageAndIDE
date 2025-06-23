@@ -1,16 +1,15 @@
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
-import { Transforms } from "../frame-interfaces/transforms";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
 import { UnknownType } from "./unknown-type";
 
 export class NullScope implements Scope {
-  resolveSymbol(_id: string, _transforms: Transforms, _scope: Scope): ElanSymbol {
+  resolveSymbol(_id: string, _scope: Scope): ElanSymbol {
     return new UnknownSymbol();
   }
 
-  resolveOwnSymbol(_id: string, _transforms: Transforms): ElanSymbol {
+  resolveOwnSymbol(_id: string): ElanSymbol {
     return new UnknownSymbol();
   }
 

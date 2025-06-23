@@ -5,7 +5,6 @@ import {
 } from "../../compile-rules";
 import { Scope } from "../../compiler-interfaces/scope";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
-import { transforms } from "../ast-helpers";
 import { FunctionAsn } from "./function-asn";
 
 export class GlobalFunctionAsn extends FunctionAsn {
@@ -22,13 +21,7 @@ export class GlobalFunctionAsn extends FunctionAsn {
   public compile(): string {
     this.compileErrors = [];
     const name = this.name.compile();
-    mustBeUniqueNameInScope(
-      name,
-      getGlobalScope(this),
-      transforms(),
-      this.compileErrors,
-      this.fieldId,
-    );
+    mustBeUniqueNameInScope(name, getGlobalScope(this), this.compileErrors, this.fieldId);
 
     this.returnType.compile();
 

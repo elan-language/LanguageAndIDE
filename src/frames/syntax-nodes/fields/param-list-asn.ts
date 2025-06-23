@@ -8,13 +8,12 @@ import { AstNode } from "../../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
 import { SymbolType } from "../../compiler-interfaces/symbol-type";
-import { Transforms } from "../../frame-interfaces/transforms";
 import { DuplicateSymbol } from "../../symbols/duplicate-symbol";
 import { getGlobalScope, isFunction, symbolMatches } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { AbstractAstNode } from "../abstract-ast-node";
-import { isAstCollectionNode, isAstIdNode, isConstructor, transforms } from "../ast-helpers";
+import { isAstCollectionNode, isAstIdNode, isConstructor } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 
 export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
@@ -62,7 +61,7 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
     return [names, types];
   }
 
-  resolveSymbol(id: string, _transforms: Transforms, _initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, _initialScope: Scope): ElanSymbol {
     const allSymbols = this.getParamsAsSymbols();
     const matches = allSymbols.filter((n) => n.symbolId === id);
 
@@ -77,18 +76,18 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
     return new UnknownSymbol(id);
   }
 
-  private mustNotBeRedefined(id: string, transforms: Transforms) {
+  private mustNotBeRedefined(id: string) {
     // up two or we just get the parameter again
-    const symbol = this.getParentScope().getParentScope().resolveSymbol(id, transforms, this);
+    const symbol = this.getParentScope().getParentScope().resolveSymbol(id, this);
     mustNotBeRedefined(symbol, this.compileErrors, this.fieldId);
   }
 
-  private mustNotBeOutOnFunctionOrConstructor(id: string, transforms: Transforms) {
+  private mustNotBeOutOnFunctionOrConstructor(id: string) {
     // up two or we just get the parameter again
     const parentScope = this.getParentScope();
 
     if (isFunction(parentScope as unknown as ElanSymbol) || isConstructor(parentScope)) {
-      const symbol = parentScope.resolveSymbol(id, transforms, this);
+      const symbol = parentScope.resolveSymbol(id, this);
       if (symbol.symbolScope === SymbolScope.outParameter) {
         mustNotBeOutParameter(this.compileErrors, this.fieldId);
       }
@@ -111,13 +110,13 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
     const idNodes = this.getIdNodes(parms);
 
     for (const idNode of idNodes) {
-      this.mustNotBeOutOnFunctionOrConstructor(idNode.id, transforms());
+      this.mustNotBeOutOnFunctionOrConstructor(idNode.id);
 
       if (idNodes.length > 1) {
-        mustBeUniqueNameInScope(idNode.id, this, transforms(), this.compileErrors, this.fieldId);
+        mustBeUniqueNameInScope(idNode.id, this, this.compileErrors, this.fieldId);
       }
 
-      this.mustNotBeRedefined(idNode.id, transforms());
+      this.mustNotBeRedefined(idNode.id);
 
       getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

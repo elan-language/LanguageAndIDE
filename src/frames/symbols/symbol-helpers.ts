@@ -14,15 +14,9 @@ import { isClass, isConstant, isMember, isScope } from "../frame-helpers";
 import { Frame } from "../frame-interfaces/frame";
 import { Member } from "../frame-interfaces/member";
 import { Parent } from "../frame-interfaces/parent";
-import { Transforms } from "../frame-interfaces/transforms";
 import { globalKeyword, libraryKeyword, propertyKeyword } from "../keywords";
 import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
-import {
-  isAstIdNode,
-  isAstQualifiedNode,
-  isEmptyNode,
-  transforms,
-} from "../syntax-nodes/ast-helpers";
+import { isAstIdNode, isAstQualifiedNode, isEmptyNode } from "../syntax-nodes/ast-helpers";
 import { PropertyAsn } from "../syntax-nodes/class-members/property-asn";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { EnumAsn } from "../syntax-nodes/globals/enum-asn";
@@ -31,7 +25,6 @@ import { CallAsn } from "../syntax-nodes/statements/call-asn";
 import { DefinitionAdapter } from "../syntax-nodes/statements/definition-adapter";
 import { EachAsn } from "../syntax-nodes/statements/each-asn";
 import { ForAsn } from "../syntax-nodes/statements/for-asn";
-
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
 import { ListImmutableName, ListName } from "./elan-type-names";
@@ -131,9 +124,9 @@ export function isEnumDef(s?: ElanSymbol): s is EnumAsn {
   return !!s && s instanceof EnumAsn;
 }
 
-export function isMemberOnFieldsClass(s: ElanSymbol, transforms: Transforms, scope: Scope) {
+export function isMemberOnFieldsClass(s: ElanSymbol, scope: Scope) {
   const currentClass = getClassScope(scope);
-  const matchingMember = currentClass.resolveSymbol(s.symbolId, transforms, scope);
+  const matchingMember = currentClass.resolveSymbol(s.symbolId, scope);
   return isMember(s) && isMember(matchingMember) && s.getClass() === matchingMember.getClass();
 }
 
@@ -173,16 +166,11 @@ export function scopePrefix(
 function internalUpdateScopeAndQualifier(
   qualifierScope: SymbolType,
   currentScope: Scope,
-  transforms: Transforms,
   value: AstNode,
   qualifier: AstNode,
 ): [AstNode, Scope] {
   if (qualifierScope instanceof ClassType) {
-    const classSymbol = currentScope.resolveSymbol(
-      qualifierScope.className,
-      transforms,
-      currentScope,
-    );
+    const classSymbol = currentScope.resolveSymbol(qualifierScope.className, currentScope);
     // replace scope with class scope
     currentScope = isScope(classSymbol) ? classSymbol : currentScope;
 
@@ -204,35 +192,20 @@ function internalUpdateScopeAndQualifier(
   return [qualifier, currentScope];
 }
 
-export function updateScopeAndQualifier(
-  rootNode: AstNode,
-  transforms: Transforms,
-  currentScope: Scope,
-): [AstNode, Scope] {
+export function updateScopeAndQualifier(rootNode: AstNode, currentScope: Scope): [AstNode, Scope] {
   const qualifier = isAstQualifiedNode(rootNode) ? rootNode.qualifier : EmptyAsn.Instance;
   const qualifierScope = qualifier.symbolType();
   const value = qualifier.value;
 
-  return internalUpdateScopeAndQualifier(
-    qualifierScope,
-    currentScope,
-    transforms,
-    value,
-    qualifier,
-  );
+  return internalUpdateScopeAndQualifier(qualifierScope, currentScope, value, qualifier);
 }
 
-export function updateScopeInChain(
-  qualifier: AstNode,
-  transforms: Transforms,
-  currentScope: Scope,
-): Scope {
+export function updateScopeInChain(qualifier: AstNode, currentScope: Scope): Scope {
   const qualifierScope = qualifier?.symbolType();
 
   const [, newScope] = internalUpdateScopeAndQualifier(
     qualifierScope,
     currentScope,
-    transforms,
     qualifier,
     qualifier,
   );
@@ -361,13 +334,8 @@ export function isNotInheritableTypeName(s?: ElanSymbol) {
   return isTypeName(s) && isAbstractClass(s) && isNotInheritableClass(s);
 }
 
-function matchingSymbolsWithQualifier(
-  propId: string,
-  qualId: string,
-  transforms: Transforms,
-  scope: Scope,
-): ElanSymbol[] {
-  const qual = scope.resolveSymbol(qualId, transforms, scope);
+function matchingSymbolsWithQualifier(propId: string, qualId: string, scope: Scope): ElanSymbol[] {
+  const qual = scope.resolveSymbol(qualId, scope);
 
   if (qual instanceof UnknownSymbol) {
     return [];
@@ -383,7 +351,7 @@ function matchingSymbolsWithQualifier(
   let qualifiedSymbols: ElanSymbol[] = [];
 
   if (qualSt instanceof ClassType) {
-    const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, transforms, scope);
+    const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, scope);
 
     if (isClassTypeDef(cls)) {
       qualifiedSymbols = cls
@@ -393,7 +361,7 @@ function matchingSymbolsWithQualifier(
   }
 
   if (qualSt instanceof EnumType) {
-    const en = getGlobalScope(scope).resolveSymbol(qualSt.name, transforms, scope);
+    const en = getGlobalScope(scope).resolveSymbol(qualSt.name, scope);
 
     if (isEnumDef(en)) {
       qualifiedSymbols = en.symbolMatches(propId, !propId, NullScope.Instance);
@@ -414,13 +382,9 @@ function matchingSymbolsWithQualifier(
   return qualifiedSymbols.concat(allExtensions);
 }
 
-export function matchingSymbols(
-  spec: SymbolCompletionSpec,
-  transforms: Transforms,
-  scope: Scope,
-): ElanSymbol[] {
+export function matchingSymbols(spec: SymbolCompletionSpec, scope: Scope): ElanSymbol[] {
   if (spec.context) {
-    return matchingSymbolsWithQualifier(spec.toMatch, spec.context, transforms, scope);
+    return matchingSymbolsWithQualifier(spec.toMatch, spec.context, scope);
   }
 
   const allNotExtensions = scope.symbolMatches(spec.toMatch, !spec.toMatch, scope).filter((s) => {
@@ -465,12 +429,8 @@ function ensureUnique(symbols: ElanSymbol[]) {
   return uniqueNames.map((n) => symbols.find((s) => s.symbolId === n)) as ElanSymbol[];
 }
 
-export function filteredSymbols(
-  spec: SymbolCompletionSpec,
-  transforms: Transforms,
-  scope: Scope,
-): ElanSymbol[] {
-  const matches = matchingSymbols(spec, transforms, scope);
+export function filteredSymbols(spec: SymbolCompletionSpec, scope: Scope): ElanSymbol[] {
+  const matches = matchingSymbols(spec, scope);
   const filters = filtersForTokenType(spec.tokenTypes);
   const filtered = ensureUnique(filterSymbols(matches, filters));
 
@@ -485,11 +445,7 @@ export function updateScope(qualifier: AstQualifierNode | EmptyAsn, originalScop
   let currentScope = originalScope;
   const classScope = qualifier.symbolType();
   if (classScope instanceof ClassType) {
-    const classSymbol = originalScope.resolveSymbol(
-      classScope.className,
-      transforms(),
-      originalScope,
-    );
+    const classSymbol = originalScope.resolveSymbol(classScope.className, originalScope);
     // replace scope with class scope
     currentScope = isScope(classSymbol) ? classSymbol : originalScope;
   } else {
@@ -703,12 +659,10 @@ function allPropertiesInScope(scope: Scope) {
 export function getFilteredSymbols(
   spec: SymbolCompletionSpec,
   ast: RootAstNode | undefined,
-  transform: Transforms,
   htmlId: string,
 ) {
-  //const ast = this.getAst(false);
   const scope = ast?.getScopeById(htmlId) ?? NullScope.Instance;
-  let symbols = filteredSymbols(spec, transform, scope);
+  let symbols = filteredSymbols(spec, scope);
   if (isInsideClass(scope)) {
     if (propertyKeyword.startsWith(spec.toMatch)) {
       const allProperties = allPropertiesInScope(getClassScope(scope)).sort(orderSymbol);
@@ -720,7 +674,7 @@ export function getFilteredSymbols(
         new Set<KeywordCompletion>(),
         "",
       );
-      symbols = filteredSymbols(newSpec, transform, scope);
+      symbols = filteredSymbols(newSpec, scope);
     }
   }
   return symbols;

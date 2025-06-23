@@ -8,7 +8,6 @@ import { Member } from "../../frame-interfaces/member";
 import { ProcedureType } from "../../symbols/procedure-type";
 import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
-import { transforms } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
 import { FrameAsn } from "../frame-asn";
@@ -39,13 +38,7 @@ export class AbstractProcedureAsn extends FrameAsn implements Member, ElanSymbol
     this.compileErrors = [];
 
     const name = this.name.compile();
-    mustBeUniqueNameInScope(
-      name,
-      getClassScope(this),
-      transforms(),
-      this.compileErrors,
-      this.fieldId,
-    );
+    mustBeUniqueNameInScope(name, getClassScope(this), this.compileErrors, this.fieldId);
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

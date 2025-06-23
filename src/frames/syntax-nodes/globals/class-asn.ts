@@ -23,7 +23,7 @@ import { NullScope } from "../../symbols/null-scope";
 import { getGlobalScope, isSymbol, symbolMatches } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
-import { isAstCollectionNode, isAstIdNode, transforms } from "../ast-helpers";
+import { isAstCollectionNode, isAstIdNode } from "../ast-helpers";
 import { AbstractPropertyAsn } from "../class-members/abstract-property-asn";
 import { PropertyAsn } from "../class-members/property-asn";
 import { EmptyAsn } from "../empty-asn";
@@ -125,14 +125,14 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     return [];
   }
 
-  public getDirectSuperClassesTypeAndName(transforms: Transforms) {
+  public getDirectSuperClassesTypeAndName() {
     if (this.doesInherit()) {
       const superClasses = this.getInheritanceItems();
 
       if (superClasses.length > 0) {
         const nodes = superClasses.filter((i) => isAstIdNode(i));
         const typeAndName: [SymbolType, string][] = nodes
-          .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
+          .map((n) => getGlobalScope(this).resolveSymbol(n.id, this))
           .map((c) => this.mapSymbol(c));
 
         return typeAndName;
@@ -164,7 +164,7 @@ export abstract class ClassAsn extends FrameAsn implements Class {
       if (superClasses.length > 0) {
         const nodes = superClasses.filter((i) => isAstIdNode(i));
         const symbols = nodes
-          .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
+          .map((n) => getGlobalScope(this).resolveSymbol(n.id, this))
           .filter((n) => n instanceof ClassAsn);
 
         for (const s of symbols) {
@@ -195,7 +195,7 @@ export abstract class ClassAsn extends FrameAsn implements Class {
       if (superClasses.length > 0) {
         const nodes = superClasses.filter((i) => isAstIdNode(i));
         const symbols = nodes
-          .map((n) => getGlobalScope(this).resolveSymbol(n.id, transforms, this))
+          .map((n) => getGlobalScope(this).resolveSymbol(n.id, this))
           .filter(
             (n) => n instanceof ClassAsn && !this.seenTwice(n.symbolId, seenNames),
           ) as ClassAsn[];
@@ -234,7 +234,7 @@ export abstract class ClassAsn extends FrameAsn implements Class {
 
     const symbols = this.getChildren().filter((f) => isSymbol(f)) as ElanSymbol[];
 
-    const types = this.getDirectSuperClassesTypeAndName(transforms())
+    const types = this.getDirectSuperClassesTypeAndName()
       .map((tn) => tn[0])
       .filter((t) => t instanceof ClassType);
 
@@ -250,17 +250,17 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     return matches.concat(inheritedMatches).concat(otherMatches);
   }
 
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
-    const symbol = this.resolveOwnSymbol(id, transforms);
+  resolveSymbol(id: string, _initialScope: Scope): ElanSymbol {
+    const symbol = this.resolveOwnSymbol(id);
 
     if (symbol instanceof UnknownSymbol) {
-      return this.getParentScope().resolveSymbol(id, transforms, this);
+      return this.getParentScope().resolveSymbol(id, this);
     }
 
     return symbol;
   }
 
-  resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol {
+  resolveOwnSymbol(id: string): ElanSymbol {
     if (id === thisKeyword) {
       return this;
     }
@@ -269,12 +269,12 @@ export abstract class ClassAsn extends FrameAsn implements Class {
       (f) => isSymbol(f) && f.symbolId === id,
     ) as ElanSymbol[];
 
-    const types = this.getDirectSuperClassesTypeAndName(transforms)
+    const types = this.getDirectSuperClassesTypeAndName()
       .map((tn) => tn[0])
       .filter((t) => t instanceof ClassType);
 
     for (const ct of types) {
-      const s = ct.scope!.resolveOwnSymbol(id, transforms);
+      const s = ct.scope!.resolveOwnSymbol(id);
       if (isMember(s)) {
         matches.push(s);
       }
@@ -303,20 +303,14 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     return new UnknownSymbol(id);
   }
 
-  getName(transforms: Transforms) {
+  getName() {
     const name = getId(this.name);
-    mustBeUniqueNameInScope(
-      name,
-      getGlobalScope(this),
-      transforms,
-      this.compileErrors,
-      this.fieldId,
-    );
+    mustBeUniqueNameInScope(name, getGlobalScope(this), this.compileErrors, this.fieldId);
     return name;
   }
 
-  getExtends(transforms: Transforms) {
-    const typeAndName = this.getDirectSuperClassesTypeAndName(transforms);
+  getExtends() {
+    const typeAndName = this.getDirectSuperClassesTypeAndName();
     let implement = "";
 
     for (const [st, name] of typeAndName) {

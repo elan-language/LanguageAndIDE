@@ -1,7 +1,6 @@
 import { AstNode } from "../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
-import { Transforms } from "../frame-interfaces/transforms";
 import { BreakpointEvent } from "../status-enums";
 import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -32,7 +31,7 @@ export class FrameWithStatementsAsn extends FrameAsn implements AstNode, Scope {
     return fst < lst ? this.children.slice(fst, lst + 1) : this.children.slice(lst, fst + 1);
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
     const fst = this.getFirstChild();
     let range = this.getChildRange(fst, initialScope);
     if (range.length > 1) {
@@ -48,7 +47,7 @@ export class FrameWithStatementsAsn extends FrameAsn implements AstNode, Scope {
       }
     }
 
-    return this.getParentScope().resolveSymbol(id, transforms, this.getCurrentScope());
+    return this.getParentScope().resolveSymbol(id, this.getCurrentScope());
   }
 
   isNotGlobalOrLib(s: ElanSymbol) {

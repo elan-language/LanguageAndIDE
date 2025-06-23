@@ -5,7 +5,6 @@ import { Scope } from "../../compiler-interfaces/scope";
 import { SymbolType } from "../../compiler-interfaces/symbol-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
-import { transforms } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 
@@ -34,13 +33,7 @@ export class ConstantAsn extends FrameAsn implements AstNode, ElanSymbol {
   compile(): string {
     this.compileErrors = [];
     const name = this.name.compile();
-    mustBeUniqueNameInScope(
-      name,
-      getGlobalScope(this.scope),
-      transforms(),
-      this.compileErrors,
-      this.fieldId,
-    );
+    mustBeUniqueNameInScope(name, getGlobalScope(this.scope), this.compileErrors, this.fieldId);
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

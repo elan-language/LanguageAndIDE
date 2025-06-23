@@ -4,12 +4,10 @@ import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
 import { SymbolType } from "../../compiler-interfaces/symbol-type";
 import { singleIndent } from "../../frame-helpers";
-import { Transforms } from "../../frame-interfaces/transforms";
 import { EnumType } from "../../symbols/enum-type";
 import { EnumValueType } from "../../symbols/enum-value-type";
 import { getGlobalScope, symbolMatches } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
-import { transforms } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { EnumValuesAsn } from "../fields/enum-values-asn";
 import { FrameAsn } from "../frame-asn";
@@ -34,13 +32,7 @@ export class EnumAsn extends FrameAsn implements ElanSymbol {
     this.compileErrors = [];
 
     const name = this.name.compile();
-    mustBeUniqueNameInScope(
-      name,
-      getGlobalScope(this.scope),
-      transforms(),
-      this.compileErrors,
-      this.fieldId,
-    );
+    mustBeUniqueNameInScope(name, getGlobalScope(this.scope), this.compileErrors, this.fieldId);
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
@@ -65,14 +57,14 @@ ${singleIndent()}${this.values.compile()}\r
     return [];
   }
 
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, _initialScope: Scope): ElanSymbol {
     for (const n of this.enumValueSymbols()) {
       if (n.symbolId === id) {
         return n;
       }
     }
 
-    return this.getParentScope().resolveSymbol(id, transforms, this);
+    return this.getParentScope().resolveSymbol(id, this);
   }
 
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {

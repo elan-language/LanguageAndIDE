@@ -50,7 +50,7 @@ export class AbstractClassAsn extends ClassAsn {
   public compile(): string {
     this.compileErrors = [];
 
-    const name = this.getName(transforms());
+    const name = this.getName();
     const [cd, cdName] = this.lookForCircularDependencies(this, [name], transforms());
     if (cd) {
       return this.circularDependency(cdName);
@@ -67,7 +67,7 @@ export class AbstractClassAsn extends ClassAsn {
       }
     }
 
-    const extendsClause = this.getExtends(transforms());
+    const extendsClause = this.getExtends();
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

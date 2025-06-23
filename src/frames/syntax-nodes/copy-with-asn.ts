@@ -6,7 +6,6 @@ import { isClass } from "../frame-helpers";
 import { ClassType } from "../symbols/class-type";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 import { ToAsn } from "./to-asn";
 
 export class CopyWithAsn extends AbstractAstNode implements AstNode {
@@ -27,9 +26,7 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
     let withClauseStr = "";
 
     if (fromType instanceof ClassType) {
-      const classSymbol = this.scope
-        .getParentScope()
-        .resolveSymbol(fromType.className, transforms(), this.scope);
+      const classSymbol = this.scope.getParentScope().resolveSymbol(fromType.className, this.scope);
 
       mustBeClass(classSymbol, this.compileErrors, this.fieldId);
 
@@ -38,7 +35,7 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
           const propertyId = ast.id;
           const type = ast.symbolType();
 
-          const pSymbol = classSymbol.resolveSymbol(propertyId, transforms(), this.scope);
+          const pSymbol = classSymbol.resolveSymbol(propertyId, this.scope);
           mustBePropertyAndPublic(pSymbol, this.compileErrors, this.fieldId);
           mustBeAssignableType(pSymbol.symbolType(), type, this.compileErrors, this.fieldId);
 

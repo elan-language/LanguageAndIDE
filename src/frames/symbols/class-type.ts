@@ -4,7 +4,6 @@ import { GenericSymbolType } from "../compiler-interfaces/generic-symbol-type";
 import { ReifyableSymbolType } from "../compiler-interfaces/reifyable-symbol-type";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
-import { Transforms } from "../frame-interfaces/transforms";
 import { TypeOptions } from "../frame-interfaces/type-options";
 import { FloatType } from "./float-type";
 import { IntType } from "./int-type";
@@ -99,8 +98,8 @@ export class ClassType implements ReifyableSymbolType, Scope, GenericSymbolType 
     return this.scope!.getChildren().filter((c) => isSymbol(c));
   }
 
-  resolveSymbol(id: string, transforms: Transforms, scope: Scope): ElanSymbol {
-    return this.scope.resolveSymbol(id, transforms, scope);
+  resolveSymbol(id: string, scope: Scope): ElanSymbol {
+    return this.scope.resolveSymbol(id, scope);
   }
 
   get name() {

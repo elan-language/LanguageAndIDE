@@ -21,7 +21,6 @@ import {
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 import { ClassAsn } from "./globals/class-asn";
 
 function isClass(s: Scope): s is ClassAsn {
@@ -53,14 +52,14 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   getSymbol() {
     let searchScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
     if (isClass(searchScope)) {
-      return searchScope.resolveOwnSymbol(this.id, transforms());
+      return searchScope.resolveOwnSymbol(this.id);
     }
 
     if (isDefinitionStatement(this.scope)) {
       searchScope = this.scope.getParentScope();
     }
 
-    return searchScope.resolveSymbol(this.id, transforms(), this.scope);
+    return searchScope.resolveSymbol(this.id, this.scope);
   }
 
   get symbolScope() {
@@ -81,7 +80,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
       this.fieldId,
     );
 
-    if (!isMemberOnFieldsClass(symbol, transforms(), this.scope)) {
+    if (!isMemberOnFieldsClass(symbol, this.scope)) {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
     }
 

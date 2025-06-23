@@ -10,7 +10,6 @@ import {
 import { AstNode } from "../../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
-import { Transforms } from "../../frame-interfaces/transforms";
 import { ProcedureType } from "../../symbols/procedure-type";
 import {
   getGlobalScope,
@@ -24,7 +23,6 @@ import {
   isAstIdNode,
   isEmptyNode,
   matchParametersAndTypes,
-  transforms,
 } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
@@ -48,7 +46,6 @@ export class CallAsn extends FrameAsn {
   wrapParameters(
     procSymbol: ElanSymbol,
     callParameters: AstNode[],
-    transforms: Transforms,
   ): [string[], string[], string[]] {
     const postFix = getGlobalScope(this.scope).getNextId();
     const wrappedInParameters: string[] = [];
@@ -70,7 +67,7 @@ export class CallAsn extends FrameAsn {
         i < parameterDefScopes.length ? parameterDefScopes[i] : SymbolScope.parameter;
       if (parameterDefScope === SymbolScope.outParameter) {
         if (isAstIdNode(p)) {
-          const callParamSymbol = this.getParentScope().resolveSymbol(p.id, transforms, this);
+          const callParamSymbol = this.getParentScope().resolveSymbol(p.id, this);
           if (
             callParamSymbol instanceof VariableAsn ||
             callParamSymbol.symbolScope === SymbolScope.parameter ||
@@ -100,11 +97,11 @@ export class CallAsn extends FrameAsn {
     const astNode = this.proc;
     const id = isAstIdNode(astNode) ? astNode.id : "";
 
-    const [updatedQualifier, currentScope] = updateScopeAndQualifier(astNode, transforms(), this);
+    const [updatedQualifier, currentScope] = updateScopeAndQualifier(astNode, this);
 
     let qualifier = updatedQualifier;
 
-    const procSymbol = currentScope.resolveSymbol(id, transforms(), this);
+    const procSymbol = currentScope.resolveSymbol(id, this);
 
     mustBeKnownSymbol(
       procSymbol,
@@ -121,7 +118,7 @@ export class CallAsn extends FrameAsn {
       this.fieldId,
     );
 
-    if (!isMemberOnFieldsClass(procSymbol, transforms(), this)) {
+    if (!isMemberOnFieldsClass(procSymbol, this)) {
       mustBePublicMember(procSymbol, this.compileErrors, this.fieldId);
     }
 
@@ -163,7 +160,6 @@ export class CallAsn extends FrameAsn {
       const [wrappedInParameters, wrappedOutParameters, passedParameters] = this.wrapParameters(
         procSymbol,
         callParameters,
-        transforms(),
       );
 
       const parms = passedParameters.join(", ");

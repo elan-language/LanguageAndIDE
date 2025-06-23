@@ -2,7 +2,6 @@ import { getId } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
-import { Transforms } from "../../frame-interfaces/transforms";
 import { functionKeyword } from "../../keywords";
 import { FunctionType } from "../../symbols/function-type";
 import { SymbolScope } from "../../symbols/symbol-scope";
@@ -45,16 +44,16 @@ export abstract class FunctionAsn extends FrameWithStatementsAsn implements Elan
     return this.children.filter((s) => s instanceof ReturnAsn)[0];
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
     if (getId(this.name) === id) {
       return this;
     }
     const s =
       this.params instanceof ParamListAsn
-        ? this.params.resolveSymbol(id, transforms, this)
+        ? this.params.resolveSymbol(id, this)
         : new UnknownSymbol(id);
 
-    return s instanceof UnknownSymbol ? super.resolveSymbol(id, transforms, initialScope) : s;
+    return s instanceof UnknownSymbol ? super.resolveSymbol(id, initialScope) : s;
   }
 
   public compile(): string {

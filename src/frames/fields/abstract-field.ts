@@ -20,7 +20,6 @@ import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
 import { KeywordCompletion, SymbolCompletionSpec } from "../symbol-completion-helpers";
 import { getFilteredSymbols, removeIfSingleFullMatch } from "../symbols/symbol-helpers";
 import { SymbolWrapper } from "../symbols/symbol-wrapper";
-import { transforms } from "../syntax-nodes/ast-helpers";
 
 export abstract class AbstractField implements Selectable, Field {
   public isField: boolean = true;
@@ -691,7 +690,7 @@ export abstract class AbstractField implements Selectable, Field {
 
   matchingSymbolsForId(spec: SymbolCompletionSpec): ElanSymbol[] {
     const ast = this.getFile().getAst(false);
-    const symbols = getFilteredSymbols(spec, ast, transforms(), this.getHolder().getHtmlId());
+    const symbols = getFilteredSymbols(spec, ast, this.getHolder().getHtmlId());
     return removeIfSingleFullMatch(symbols, spec.toMatch);
   }
 

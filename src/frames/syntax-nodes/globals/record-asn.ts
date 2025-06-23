@@ -2,13 +2,12 @@ import { Deprecated } from "../../../elan-type-interfaces";
 import { getId, mustBeImmutableType } from "../../compile-rules";
 import { Scope } from "../../compiler-interfaces/scope";
 import { SymbolType } from "../../compiler-interfaces/symbol-type";
-import { Transforms } from "../../frame-interfaces/transforms";
 import { immutableTypeOptions } from "../../frame-interfaces/type-options";
 import { endKeyword, recordKeyword } from "../../keywords";
 import { ClassSubType, ClassType } from "../../symbols/class-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
-import { compileNodes, transforms } from "../ast-helpers";
+import { compileNodes } from "../ast-helpers";
 import { ClassAsn } from "./class-asn";
 
 export class RecordAsn extends ClassAsn {
@@ -45,14 +44,14 @@ export class RecordAsn extends ClassAsn {
     return SymbolScope.program;
   }
 
-  public getDirectSuperClassesTypeAndName(_transforms: Transforms) {
+  public getDirectSuperClassesTypeAndName() {
     return [];
   }
 
   public compile(): string {
     this.compileErrors = [];
 
-    const name = this.getName(transforms());
+    const name = this.getName();
     const body = compileNodes(this.children);
 
     for (const p of this.properties()) {

@@ -7,7 +7,6 @@ import { NullScope } from "../symbols/null-scope";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 
 export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
   constructor(
@@ -22,7 +21,7 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
   compile(): string {
     this.compileErrors = [];
 
-    const symbol = this.scope.resolveSymbol(this.type.name, transforms(), this.scope);
+    const symbol = this.scope.resolveSymbol(this.type.name, this.scope);
 
     mustBeKnownSymbol(
       symbol,
@@ -33,7 +32,7 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
     );
 
     if (isScope(symbol)) {
-      const value = symbol.resolveSymbol(this.value, transforms(), symbol);
+      const value = symbol.resolveSymbol(this.value, symbol);
       mustBeKnownSymbol(
         value,
         NullScope.Instance,

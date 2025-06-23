@@ -4,7 +4,6 @@ import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { isMember } from "../frame-helpers";
-import { Transforms } from "../frame-interfaces/transforms";
 import { TypeOptions } from "../frame-interfaces/type-options";
 import { thisKeyword } from "../keywords";
 import { generateType } from "../syntax-nodes/ast-helpers";
@@ -86,7 +85,7 @@ export class StdLibClass implements Class {
     return this.children;
   }
 
-  resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol {
+  resolveOwnSymbol(id: string): ElanSymbol {
     if (id === thisKeyword) {
       return this;
     }
@@ -105,7 +104,7 @@ export class StdLibClass implements Class {
     const types = this.inheritTypes.filter((t) => t instanceof ClassType);
 
     for (const ct of types) {
-      const s = ct.scope!.resolveOwnSymbol(id, transforms);
+      const s = ct.scope!.resolveOwnSymbol(id);
       if (isMember(s)) {
         matches.push(s);
       }
@@ -121,11 +120,11 @@ export class StdLibClass implements Class {
     return new UnknownSymbol(id);
   }
 
-  resolveSymbol(id: string, transforms: Transforms, _scope: Scope): ElanSymbol {
-    const symbol = this.resolveOwnSymbol(id, transforms);
+  resolveSymbol(id: string, _scope: Scope): ElanSymbol {
+    const symbol = this.resolveOwnSymbol(id);
 
     if (symbol instanceof UnknownSymbol) {
-      return this.getParentScope().resolveSymbol(id, transforms, this);
+      return this.getParentScope().resolveSymbol(id, this);
     }
 
     if (!isProperty(symbol)) {

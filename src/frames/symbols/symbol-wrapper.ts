@@ -43,7 +43,7 @@ export class SymbolWrapper {
 
     const symbol = this.wrapped as ElanSymbol;
 
-    if (isProperty(symbol) && isMemberOnFieldsClass(symbol, this.transforms, this.scope)) {
+    if (isProperty(symbol) && isMemberOnFieldsClass(symbol, this.scope)) {
       return `${propertyKeyword}.${symbol.symbolId}`;
     }
 
@@ -104,7 +104,7 @@ export class SymbolWrapper {
       return `${this.name}`;
     }
 
-    if (isMemberOnFieldsClass(symbol, this.transforms, this.scope)) {
+    if (isMemberOnFieldsClass(symbol, this.scope)) {
       return `${propertyKeyword}.${symbol.symbolId}`;
     }
 

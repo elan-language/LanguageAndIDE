@@ -7,7 +7,7 @@ import { SymbolType } from "./symbol-type";
 
 export interface Class extends Scope, ClassSymbol {
   getChildren(): ElanSymbol[];
-  resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol;
+  resolveOwnSymbol(id: string): ElanSymbol;
   ofTypes: SymbolType[];
   getDirectSuperClassesTypeAndName(transforms: Transforms): [SymbolType, string][];
   updateOfTypes(ofTypes: SymbolType[]): Class;

@@ -47,7 +47,6 @@ import { ElanSymbol } from "./compiler-interfaces/elan-symbol";
 import { Scope } from "./compiler-interfaces/scope";
 import { SymbolType } from "./compiler-interfaces/symbol-type";
 import { isClass, isConstant, isFunction, isLet, isMember, isProcedure } from "./frame-helpers";
-import { Transforms } from "./frame-interfaces/transforms";
 import { isRecord } from "./frame-interfaces/type-options";
 import { allKeywords, reservedWords } from "./keywords";
 import { BooleanType } from "./symbols/boolean-type";
@@ -85,7 +84,6 @@ import {
   isEmptyNode,
   isInsideFunction,
   isInsideFunctionOrConstructor,
-  transforms,
 } from "./syntax-nodes/ast-helpers";
 import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
@@ -424,7 +422,6 @@ export function mustBePropertyAndPublic(
 }
 
 export function mustImplementSuperClasses(
-  transforms: Transforms,
   classType: ClassType,
   superClassTypes: ClassType[],
   compileErrors: CompileError[],
@@ -434,7 +431,7 @@ export function mustImplementSuperClasses(
     const superSymbols = superClassType.childSymbols();
 
     for (const superSymbol of superSymbols.filter((ss) => isMember(ss) && ss.isAbstract)) {
-      const subSymbol = classType.resolveSymbol(superSymbol.symbolId, transforms, classType);
+      const subSymbol = classType.resolveSymbol(superSymbol.symbolId, classType);
 
       if (
         subSymbol instanceof UnknownSymbol ||
@@ -518,7 +515,7 @@ export function mustCallMemberViaQualifier(
   location: string,
 ) {
   if (!ft.isExtension && isClass(scope)) {
-    const t = scope.resolveOwnSymbol(id, transforms());
+    const t = scope.resolveOwnSymbol(id);
     if (t instanceof UnknownSymbol) {
       compileErrors.push(new UndefinedSymbolCompileError(id, scope.symbolId, location));
     }
@@ -785,7 +782,7 @@ function mustBeCompatibleRecordDeconstruction(
   compileErrors: CompileError[],
   location: string,
 ) {
-  const classDef = scope.resolveSymbol(rst.name, transforms(), scope);
+  const classDef = scope.resolveSymbol(rst.name, scope);
 
   if (isClassTypeDef(classDef)) {
     const childSymbols = classDef.getChildren().filter((s) => isProperty(s));
@@ -973,11 +970,10 @@ export function cannotPassAsOutParameter(
 export function mustBeUniqueNameInScope(
   name: string,
   scope: Scope,
-  transforms: Transforms,
   compileErrors: CompileError[],
   location: string,
 ) {
-  const symbol = scope.resolveSymbol(name, transforms, scope);
+  const symbol = scope.resolveSymbol(name, scope);
 
   if (symbol instanceof DuplicateSymbol) {
     let postFix = "";

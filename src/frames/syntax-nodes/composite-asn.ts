@@ -6,7 +6,6 @@ import { Scope } from "../compiler-interfaces/scope";
 import { updateScopeInChain } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 import { CsvAsn } from "./csv-asn";
 
 export class CompositeAsn extends AbstractAstNode implements AstNode {
@@ -28,7 +27,7 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
 
     if (!this.finalNode) {
       let previousNode = this.expr1;
-      let previousScope = updateScopeInChain(previousNode, transforms(), this.scope);
+      let previousScope = updateScopeInChain(previousNode, this.scope);
 
       for (let i = 0; i < leafNodes.length; i++) {
         const currentNode = leafNodes[i];
@@ -42,7 +41,7 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
           this.scope,
         );
 
-        previousScope = updateScopeInChain(currentNode, transforms(), this.scope);
+        previousScope = updateScopeInChain(currentNode, this.scope);
 
         // last node in chain
         if (i === leafNodes.length - 1) {

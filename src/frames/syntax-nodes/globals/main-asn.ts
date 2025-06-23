@@ -3,7 +3,6 @@ import { AstNode } from "../../compiler-interfaces/ast-node";
 import { Scope } from "../../compiler-interfaces/scope";
 import { DuplicateSymbol } from "../../symbols/duplicate-symbol";
 import { allScopedSymbols, getGlobalScope } from "../../symbols/symbol-helpers";
-import { transforms } from "../ast-helpers";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
 export class MainAsn extends FrameWithStatementsAsn implements AstNode {
@@ -29,7 +28,7 @@ export class MainAsn extends FrameWithStatementsAsn implements AstNode {
   compile(): string {
     this.compileErrors = [];
 
-    const existingMain = this.resolveSymbol("__main", transforms(), this);
+    const existingMain = this.resolveSymbol("__main", this);
 
     if (existingMain instanceof DuplicateSymbol) {
       mustNotHaveDuplicateMain(this.compileErrors, this.fieldId);

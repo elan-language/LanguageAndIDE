@@ -11,7 +11,7 @@ export class DeconstructedRecordType implements DeconstructedSymbolType {
   ) {
     for (const id of ids) {
       // fix !
-      this.typeMap[id] = record.resolveOwnSymbol(id, undefined!).symbolType();
+      this.typeMap[id] = record.resolveOwnSymbol(id).symbolType();
     }
   }
 

@@ -2,7 +2,6 @@ import { Scope } from "../compiler-interfaces/scope";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
-import { Transforms } from "../frame-interfaces/transforms";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { parameterNames } from "../symbols/symbol-helpers";
@@ -42,12 +41,12 @@ export class ExpressionField extends AbstractField {
 
   private completionOverride = "";
 
-  private argumentDescriptions(scope: Scope | undefined, transforms: Transforms) {
+  private argumentDescriptions(scope: Scope | undefined) {
     let descriptions = "";
     const an = this.rootNode?.getActiveNode();
     if (an instanceof ArgListNode) {
       const context = an.context();
-      const ps = scope?.resolveSymbol(context, transforms, scope);
+      const ps = scope?.resolveSymbol(context, scope);
       descriptions = "<i>arguments</i>";
       if (ps && !(ps instanceof UnknownSymbol)) {
         const names = parameterNames(ps.symbolType());
@@ -61,7 +60,6 @@ export class ExpressionField extends AbstractField {
     const holder = this.getHolder();
     const descriptions = this.argumentDescriptions(
       this.getFile().getAst(false)?.getScopeById(holder.getHtmlId()),
-      transforms(),
     );
     this.completionOverride = descriptions ? `<i>${descriptions}</i>)` : "";
     return super.textAsHtml();

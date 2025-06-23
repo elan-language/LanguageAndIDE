@@ -9,10 +9,9 @@ import { AstNode } from "../../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
 import { mapSymbolType } from "../../frame-helpers";
-import { Transforms } from "../../frame-interfaces/transforms";
 import { getDeconstructionIds, getGlobalScope, symbolMatches } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
-import { getIds, transforms, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
+import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 import { DefinitionAdapter } from "./definition-adapter";
@@ -43,7 +42,7 @@ export abstract class AbstractDefinitionAsn extends FrameAsn implements ElanSymb
 
     for (const i of ids) {
       mustNotBeKeyword(i, this.compileErrors, this.fieldId);
-      const symbol = this.scope.resolveSymbol(i!, transforms(), this);
+      const symbol = this.scope.resolveSymbol(i!, this);
       mustNotBeRedefined(symbol, this.compileErrors, this.fieldId);
     }
 
@@ -75,12 +74,12 @@ export abstract class AbstractDefinitionAsn extends FrameAsn implements ElanSymb
     return SymbolScope.local;
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
     if (id === this.symbolId) {
       return this;
     }
 
-    return super.resolveSymbol(id, transforms, initialScope);
+    return super.resolveSymbol(id, initialScope);
   }
 
   symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {

@@ -4,7 +4,6 @@ import { Scope } from "../compiler-interfaces/scope";
 import { thisKeyword } from "../keywords";
 import { getGlobalScope, isInsideClass } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 
 export class ThisAsn extends AbstractAstNode implements AstNode {
   constructor(
@@ -28,7 +27,7 @@ export class ThisAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    return this.scope.resolveSymbol(thisKeyword, transforms(), this.scope)?.symbolType();
+    return this.scope.resolveSymbol(thisKeyword, this.scope)?.symbolType();
   }
 
   toString() {

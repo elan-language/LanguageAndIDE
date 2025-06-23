@@ -16,7 +16,6 @@ import { getGlobalScope, isClassTypeDef, isReifyableSymbolType } from "../symbol
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
@@ -106,7 +105,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   rootSymbol() {
     const globalScope = getGlobalScope(this.scope);
-    return globalScope.resolveSymbol(this.id, transforms(), this.scope);
+    return globalScope.resolveSymbol(this.id, this.scope);
   }
 
   symbolType() {

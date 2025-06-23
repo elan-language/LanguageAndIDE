@@ -2,12 +2,10 @@ import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
-import { Transforms } from "../../frame-interfaces/transforms";
 import { ProcedureType } from "../../symbols/procedure-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
-import { transforms } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
@@ -34,27 +32,21 @@ export abstract class ProcedureAsn extends FrameWithStatementsAsn implements Ela
     return new ProcedureType(pn, pt, false, true);
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
     if (getId(this.name) === id) {
       return this;
     }
     const s =
       this.params instanceof ParamListAsn
-        ? this.params.resolveSymbol(id, transforms, this)
+        ? this.params.resolveSymbol(id, this)
         : new UnknownSymbol(id);
 
-    return s instanceof UnknownSymbol ? super.resolveSymbol(id, transforms, initialScope) : s;
+    return s instanceof UnknownSymbol ? super.resolveSymbol(id, initialScope) : s;
   }
 
   public compile(): string {
     const name = this.name.compile();
-    mustBeUniqueNameInScope(
-      name,
-      getGlobalScope(this),
-      transforms(),
-      this.compileErrors,
-      this.fieldId,
-    );
+    mustBeUniqueNameInScope(name, getGlobalScope(this), this.compileErrors, this.fieldId);
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

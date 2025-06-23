@@ -29,7 +29,6 @@ import {
   isEmptyNode,
   matchGenericTypes,
   matchParametersAndTypes,
-  transforms,
 } from "./ast-helpers";
 import { EmptyAsn } from "./empty-asn";
 
@@ -65,7 +64,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     if (isDefinitionStatement(currentScope)) {
       currentScope = currentScope.getParentScope();
     }
-    const funcSymbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
+    const funcSymbol = currentScope.resolveSymbol(this.id, this.scope);
     const funcSymbolType = funcSymbol.symbolType();
     return [funcSymbol, funcSymbolType];
   }
@@ -84,7 +83,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       this.fieldId,
     );
 
-    if (!isMemberOnFieldsClass(funcSymbol, transforms(), this.scope)) {
+    if (!isMemberOnFieldsClass(funcSymbol, this.scope)) {
       mustBePublicMember(funcSymbol, this.compileErrors, this.fieldId);
     }
 

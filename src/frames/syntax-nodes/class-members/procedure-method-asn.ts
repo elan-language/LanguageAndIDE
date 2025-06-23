@@ -3,10 +3,8 @@ import { Class } from "../../compiler-interfaces/class";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
 import { singleIndent } from "../../frame-helpers";
-import { Transforms } from "../../frame-interfaces/transforms";
 import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
-import { transforms } from "../ast-helpers";
 import { ProcedureAsn } from "../globals/procedure-asn";
 
 export class ProcedureMethodAsn extends ProcedureAsn {
@@ -33,13 +31,7 @@ export class ProcedureMethodAsn extends ProcedureAsn {
     this.compileErrors = [];
 
     const name = this.name.compile();
-    mustBeUniqueNameInScope(
-      name,
-      getClassScope(this),
-      transforms(),
-      this.compileErrors,
-      this.fieldId,
-    );
+    mustBeUniqueNameInScope(name, getClassScope(this), this.compileErrors, this.fieldId);
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
@@ -48,12 +40,12 @@ ${this.indent()}}\r
 `;
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
     if (getId(this.name) === id) {
       return this;
     }
 
-    return super.resolveSymbol(id, transforms, initialScope);
+    return super.resolveSymbol(id, initialScope);
   }
 
   get symbolId() {

@@ -3,7 +3,6 @@ import { AstNode } from "../../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
 import { singleIndent } from "../../frame-helpers";
-import { Transforms } from "../../frame-interfaces/transforms";
 import { BooleanType } from "../../symbols/boolean-type";
 import {
   getGlobalScope,
@@ -80,7 +79,7 @@ ${compileNodes(this.compileChildren)}`;
       : this.compileChildren.slice(li, fi + 1);
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
     if (this.compileChildren.length > 0) {
       let range = this.getChildRange(initialScope as unknown as AstNode);
 
@@ -98,7 +97,7 @@ ${compileNodes(this.compileChildren)}`;
       }
     }
 
-    return this.getOuterScope().resolveSymbol(id, transforms, this.getCurrentScope());
+    return this.getOuterScope().resolveSymbol(id, this.getCurrentScope());
   }
 
   symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {

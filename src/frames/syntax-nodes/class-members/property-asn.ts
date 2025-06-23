@@ -7,7 +7,6 @@ import { SymbolType } from "../../compiler-interfaces/symbol-type";
 import { ClassType } from "../../symbols/class-type";
 import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
-import { transforms } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 
@@ -40,13 +39,7 @@ export class PropertyAsn extends FrameAsn implements ElanSymbol {
     const pName = this.name.compile();
     const st = this.type.symbolType();
 
-    mustBeUniqueNameInScope(
-      pName,
-      getClassScope(this),
-      transforms(),
-      this.compileErrors,
-      this.fieldId,
-    );
+    mustBeUniqueNameInScope(pName, getClassScope(this), this.compileErrors, this.fieldId);
 
     mustBeKnownSymbolType(st, getId(this.type), this.compileErrors, this.fieldId);
 

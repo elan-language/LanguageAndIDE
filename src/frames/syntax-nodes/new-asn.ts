@@ -12,7 +12,6 @@ import { ProcedureType } from "../symbols/procedure-type";
 import { getGlobalScope, parameterNamesWithTypes } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 import { TypeAsn } from "./type-asn";
 
 export class NewAsn extends AbstractAstNode implements AstNode {
@@ -41,13 +40,12 @@ export class NewAsn extends AbstractAstNode implements AstNode {
       mustBeConcreteClass(type, this.compileErrors, this.fieldId);
 
       if (type.subType === ClassSubType.concrete) {
-        const tf = transforms();
-        const classSymbol = this.scope.resolveSymbol(type.className, tf, this.scope);
+        const classSymbol = this.scope.resolveSymbol(type.className, this.scope);
 
         libScope = classSymbol.symbolScope === SymbolScope.stdlib;
 
         const constructorType = type
-          .resolveSymbol(`__${constructorKeyword}`, tf, this.scope)
+          .resolveSymbol(`__${constructorKeyword}`, this.scope)
           .symbolType();
 
         const parameterTypes =

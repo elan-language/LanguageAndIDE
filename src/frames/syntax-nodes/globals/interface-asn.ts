@@ -43,13 +43,13 @@ export class InterfaceAsn extends ClassAsn {
   public compile(): string {
     this.compileErrors = [];
 
-    const name = this.getName(transforms());
+    const name = this.getName();
     const [cd, cdName] = this.lookForCircularDependencies(this, [name], transforms());
     if (cd) {
       return this.circularDependency(cdName);
     }
 
-    const typeAndName = this.getDirectSuperClassesTypeAndName(transforms());
+    const typeAndName = this.getDirectSuperClassesTypeAndName();
 
     for (const [st, name] of typeAndName) {
       mustBeKnownSymbolType(st, name, this.compileErrors, this.fieldId);

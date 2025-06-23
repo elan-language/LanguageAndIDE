@@ -3,7 +3,6 @@ import { currentParameterIndex } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
-import { Transforms } from "../frame-interfaces/transforms";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { CallStatement } from "../statements/call-statement";
 import { ParseStatus } from "../status-enums";
@@ -52,9 +51,9 @@ export class ArgListField extends AbstractField {
 
   private completionOverride = "";
 
-  private argumentDescriptions(holder: Frame, scope: Scope | undefined, transforms: Transforms) {
+  private argumentDescriptions(holder: Frame, scope: Scope | undefined) {
     const proc = (holder as CallStatement).proc.text;
-    const ps = scope?.resolveSymbol(proc, transforms, scope);
+    const ps = scope?.resolveSymbol(proc, scope);
     let descriptions = ["<i>arguments</i>"];
     if (ps && !(ps instanceof UnknownSymbol)) {
       descriptions = parameterNames(ps.symbolType());
@@ -67,7 +66,6 @@ export class ArgListField extends AbstractField {
     const descriptions = this.argumentDescriptions(
       holder,
       this.getFile().getAst(false)?.getScopeById(holder.getHtmlId()),
-      transforms(),
     );
 
     if (this.text) {

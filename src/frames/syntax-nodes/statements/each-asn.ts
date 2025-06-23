@@ -2,11 +2,9 @@ import { getId, mustBeIterable, mustNotBeRedefined } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
-import { Transforms } from "../../frame-interfaces/transforms";
 import { getGlobalScope, isGenericSymbolType } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownType } from "../../symbols/unknown-type";
-import { transforms } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
@@ -24,7 +22,7 @@ export class EachAsn extends FrameWithStatementsAsn {
     this.compileErrors = [];
 
     const id = this.variable.compile();
-    const symbol = this.scope.resolveSymbol(id, transforms(), this);
+    const symbol = this.scope.resolveSymbol(id, this);
 
     mustNotBeRedefined(symbol, this.compileErrors, this.fieldId);
 
@@ -38,7 +36,7 @@ ${this.compileChildren()}\r
 ${this.indent()}}`;
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
     const v = getId(this.variable);
 
     if (id === v) {
@@ -55,7 +53,7 @@ ${this.indent()}}`;
 
     if (id === iter) {
       // intercept iter resolve in order to make counter so it's immutable
-      const symbol = super.resolveSymbol(id, transforms, this);
+      const symbol = super.resolveSymbol(id, this);
       return {
         symbolId: id,
         symbolType: () => symbol.symbolType(),
@@ -63,7 +61,7 @@ ${this.indent()}}`;
       };
     }
 
-    return super.resolveSymbol(id, transforms, initialScope);
+    return super.resolveSymbol(id, initialScope);
   }
 
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {

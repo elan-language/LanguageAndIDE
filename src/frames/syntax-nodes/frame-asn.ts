@@ -3,7 +3,6 @@ import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { singleIndent } from "../frame-helpers";
-import { Transforms } from "../frame-interfaces/transforms";
 import { BreakpointEvent, BreakpointStatus } from "../status-enums";
 import { allScopedSymbols, getGlobalScope, orderSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -142,8 +141,8 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
     return "";
   }
 
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
-    return this.getParentScope().resolveSymbol(id, transforms, this);
+  resolveSymbol(id: string, _initialScope: Scope): ElanSymbol {
+    return this.getParentScope().resolveSymbol(id, this);
   }
 
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {

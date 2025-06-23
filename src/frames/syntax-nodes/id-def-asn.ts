@@ -3,7 +3,6 @@ import { AstIdNode } from "../compiler-interfaces/ast-id-node";
 import { Scope } from "../compiler-interfaces/scope";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 
 export class IdDefAsn extends AbstractAstNode implements AstIdNode {
   constructor(
@@ -24,7 +23,7 @@ export class IdDefAsn extends AbstractAstNode implements AstIdNode {
   }
 
   symbolType() {
-    return this.scope.resolveSymbol(this.id, transforms(), this.scope).symbolType();
+    return this.scope.resolveSymbol(this.id, this.scope).symbolType();
   }
 
   toString() {

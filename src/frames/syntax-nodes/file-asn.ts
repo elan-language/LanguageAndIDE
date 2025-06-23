@@ -5,7 +5,6 @@ import { CompileMode, RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { Semver } from "../frame-interfaces/semver";
-import { Transforms } from "../frame-interfaces/transforms";
 import { BreakpointEvent } from "../status-enums";
 import { DuplicateSymbol } from "../symbols/duplicate-symbol";
 import { elanSymbols } from "../symbols/elan-symbols";
@@ -224,7 +223,7 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
     return "";
   }
 
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, _initialScope: Scope): ElanSymbol {
     //unknown because of typescript quirk
     const globalSymbols = (this.children.filter((c) => isSymbol(c)) as ElanSymbol[]).concat(
       elanSymbols,
@@ -238,6 +237,6 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
       return new DuplicateSymbol(matches);
     }
 
-    return this.scope.resolveSymbol(id, transforms, this);
+    return this.scope.resolveSymbol(id, this);
   }
 }

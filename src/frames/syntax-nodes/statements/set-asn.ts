@@ -11,7 +11,7 @@ import { AstNode } from "../../compiler-interfaces/ast-node";
 import { Scope } from "../../compiler-interfaces/scope";
 import { mapSymbolType } from "../../frame-helpers";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
-import { getIds, transforms, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
+import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 
@@ -63,7 +63,7 @@ export class SetAsn extends FrameAsn {
     mustNotBeCounter(assignableAstNode, this.compileErrors, this.fieldId);
 
     for (const id of ids) {
-      const symbol = this.getParentScope().resolveSymbol(id, transforms(), this);
+      const symbol = this.getParentScope().resolveSymbol(id, this);
       mustNotBeLet(symbol, this.compileErrors, this.fieldId);
     }
 

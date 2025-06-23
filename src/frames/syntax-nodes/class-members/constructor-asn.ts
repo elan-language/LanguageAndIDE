@@ -3,7 +3,6 @@ import { Class } from "../../compiler-interfaces/class";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
 import { Member } from "../../frame-interfaces/member";
-import { Transforms } from "../../frame-interfaces/transforms";
 import { constructorKeyword } from "../../keywords";
 import { ProcedureType } from "../../symbols/procedure-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
@@ -41,12 +40,12 @@ ${this.indent()}}\r
 `;
   }
 
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
+  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
     const s =
       this.params instanceof ParamListAsn
-        ? this.params.resolveSymbol(id, transforms, this)
+        ? this.params.resolveSymbol(id, this)
         : new UnknownSymbol(id);
-    return s instanceof UnknownSymbol ? super.resolveSymbol(id, transforms, initialScope) : s;
+    return s instanceof UnknownSymbol ? super.resolveSymbol(id, initialScope) : s;
   }
 
   public override symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
