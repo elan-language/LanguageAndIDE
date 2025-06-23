@@ -14,6 +14,7 @@
 <div id="docTOC">
 <div id="generated-toc" class="generate_from_h1 generate_for_page"></div></div>
 
+<div id="Methods"></div>
 <h1 id="GlobalInstructions">Global Instructions</h1>
 <p>
  <a href="#main">main</a>,
@@ -224,7 +225,7 @@ Procedures and functions may be called or referenced recursively. For example, a
 <el-const class="ok multiline" id="const75" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident76" class="ok" tabindex="0"><el-txt><el-id>colours</el-id></el-txt><el-place><i>name</i></el-place></el-field></el-top><el-kw> set to </el-kw><el-field id="text77" class="ok" tabindex="0"><el-txt>{<el-type>Suit</el-type>.<el-id>spades</el-id>:<el-id>black</el-id>, <el-type>Suit</el-type>.<el-id>hearts</el-id>:<el-id>red</el-id>, <el-type>Suit</el-type>.<el-id>diamonds</el-id>:<el-id>red</el-id>, <el-type>Suit</el-type>.<el-id>clubs</el-id>:<el-id>black</el-id>}</el-txt><el-place><i>literal value or data structure</i></el-place></el-field></el-const>
 <el-const class="ok multiline" id="const65" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident66" class="ok" tabindex="0"><el-txt><el-id>scrabbleValues</el-id></el-txt><el-place><i>name</i></el-place></el-field></el-top><el-kw> set to </el-kw><el-field id="text67" class="ok" tabindex="0"><el-txt>{"<el-lit>A</el-lit>":<el-lit>1</el-lit>, "<el-lit>B</el-lit>":<el-lit>3</el-lit>, "<el-lit>C</el-lit>":<el-lit>3</el-lit>, "<el-lit>D</el-lit>":<el-lit>2</el-lit>, "<el-lit>E</el-lit>":<el-lit>1</el-lit>, "<el-lit>F</el-lit>":<el-lit>4</el-lit>, "<el-lit>G</el-lit>":<el-lit>2</el-lit>, "<el-lit>H</el-lit>":<el-lit>4</el-lit>, "<el-lit>I</el-lit>":<el-lit>1</el-lit>, "<el-lit>J</el-lit>":<el-lit>8</el-lit>, "<el-lit>K</el-lit>":<el-lit>5</el-lit>, "<el-lit>L</el-lit>":<el-lit>1</el-lit>, "<el-lit>M</el-lit>":<el-lit>3</el-lit>, "<el-lit>N</el-lit>":<el-lit>1</el-lit>, "<el-lit>O</el-lit>":<el-lit>1</el-lit>, "<el-lit>P</el-lit>":<el-lit>3</el-lit>, "<el-lit>Q</el-lit>":<el-lit>10</el-lit>, "<el-lit>R</el-lit>":<el-lit>1</el-lit>, "<el-lit>S</el-lit>":<el-lit>1</el-lit>, "<el-lit>T</el-lit>":<el-lit>1</el-lit>, "<el-lit>U</el-lit>":<el-lit>1</el-lit>, "<el-lit>V</el-lit>":<el-lit>4</el-lit>, "<el-lit>W</el-lit>":<el-lit>4</el-lit>, "<el-lit>X</el-lit>":<el-lit>8</el-lit>, "<el-lit>Y</el-lit>":<el-lit>4</el-lit>, "<el-lit>Z</el-lit>":<el-lit>10</el-lit>}</el-txt><el-place><i>literal value or data structure</i></el-place></el-field></el-const>
 </el-code-block>
-<p>In the <el-id>colours</el-id> example, <el-code>Suit</el-code> is an <a href="#Enum_1">Enum</a>.</p>
+<p>In the <el-id>colours</el-id> example, <el-code>Suit</el-code> is an <a href="#enum">Enum</a>.</p>
 
 <h2 id="enum">Enum</h2>
 <p>An <el-code>enum</el-code> &ndash; short for &lsquo;enumeration&rsquo; &ndash; is the simplest form of &lsquo;user-defined Type&rsquo;.
@@ -431,6 +432,7 @@ If you wish to have several subclasses of an <el-code>abstract class</el-code> t
 <p>An <el-code>interface</el-code> may inherit only from other <el-code>interface</el-code>s.</p>
 <p>Important: An <el-code>interface</el-code> must not re-declare abstract interfaces that are defined in any <el-code>interface</el-code> it inherits from, directly or indirectly.</p>
 
+<div id="Member"></div>
 <h1 id="MemberInstructions">Member instructions</h1>
 <p>
  <a href="#constructor">constructor</a>,
@@ -506,6 +508,7 @@ If the <el-kw>property</el-kw> is not initialised within the constructor then it
 <li>A procedure method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then pressing Ctrl-p. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 </ul>
 
+<div id="FunctionMethod"></div>
 <h2 id="function_method">Function Method</h2>
 <p>A function method follows the same syntax and rules as a global <a href="#function">function</a>. The differences are:</p>
 <ul>
@@ -525,6 +528,7 @@ If the <el-kw>property</el-kw> is not initialised within the constructor then it
 <h2 id="abstractFunctionMethod">Abstract Function Method</h2>
 <p>An abstract function method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
 
+<div id="statement"></div>
 <h1 id="StatementInstructions">Statement instructions</h1>
 <p>
  <a href="#assert">assert</a>,
@@ -557,6 +561,8 @@ by <a href="#throw">throwing an exception</a> like this:</p>
 </el-statement>
 <p>which will stop the program and print the message in the Debug window (unless caught by a <a href="#try"><el-kw>try</el-kw></a> statement).</p>
 
+<div id="Parameter_passing_1"></div>
+<div id="parameter"></div>
 <h2 id="call">Procedure call</h2>
 <p>A <el-kw>call</el-kw> statement is used when you want to run a <a href="#procedure">procedure</a>.</p>
 <p>The procedure may be:</p>
@@ -756,6 +762,7 @@ and the initial value is given by a following expression. For example:</p>
 </ul>
 <p>which this chapter describes.</p>
 
+<div id="literal_value"></div>
 <h2 id="LiteralValue">Literal value</h2>
 <p>A literal value is where a value is written &lsquo;literally&rsquo; in the code, such as <el-code>3.142</el-code> &ndash; in contrast to a value that is referred to by a name.</p>
 <p>Here is a table showing some example literal values.  Follow the links for more information about each type.</p>
@@ -776,9 +783,10 @@ For more about ListImmutable and DictionaryImmutable literals see the <a href="L
 
 <h2 id="named_value">Named value</h2>
 <p>A named value is a value that is associated with a name rather than being defined literally in code. There are various kinds of named value:</p>
-<p><a href="#constant">Constants</a>, <span class="Hyperlink"><a href="#Let_statement_1">let</a></span> statement, <span class="Hyperlink"><a href="#Variables">variable</a></span> statement, <a href="#Parameter_passing_1">Parameter passing</a>, <span class="Hyperlink"><a href="#Enum_1">enum</a></span> statement.
+<p><a href="#constant">Constants</a>, <span class="Hyperlink"><a href="#let">let</a></span> statement, <span class="Hyperlink"><a href="#variable">variable</a></span> statement, <a href="#Parameter_passing_1">Parameter passing</a>, <span class="Hyperlink"><a href="#enum">enum</a></span> statement.
   Once a named value has been defined, it can be referred to by the name.</p>
 
+<div id="parse_name"></div>
 <div id="identifier"></div><!-- Make both of these spellings work for the moment -->
 <h2 id="Identifier">Identifier</h2>
 <p>For all kinds of named values, the name must follow the rules for an &lsquo;identifier&rsquo;.
@@ -793,6 +801,7 @@ For more about ListImmutable and DictionaryImmutable literals see the <a href="L
 <p>Elan allows local named values to be defined with the same name as a constant, function, or procedure defined at global level or defined in the standard library. In such cases, when the name is used within the same method, then it will refer to the local definition. If you have done this, but then need to access the <el-code>constant</el-code>, <el-code>function</el-code>, or <el-code>procedure</el-code> with the same name, then you can simply prefix the use of the name with a &lsquo;qualifier&rsquo; of either <el-code>global.</el-code> or <el-code>library.</el-code> as appropriate.</p>
 
 <div id="range"></div>
+<div id="IndexedValue"></div>
 <h2 id="IndexedValues">Indexed values</h2>
 If a variable is of an indexable Type, then an index or index range may be applied to the variable within an expression. For example:
 <pre>
@@ -821,6 +830,7 @@ Writing a value to a specific index location is done through a method such as in
     <el-code>withPut</el-code>  on a    <el-code>DictionaryImmutable</el-code>
 </pre>
 
+<div id="operator"></div>
 <h2 id="Operators">Operators</h2>
 
 <h4 class="no-TOC" id="ArithmeticOperators">Arithmetic operators</h4>
@@ -992,6 +1002,7 @@ be followed by a 'with clause` in order to specify any property values. Example 
 
 <div id="copy"></div>
 <div id="with"></div>
+<div id="copyWith"></div>
 <h2 id="copy_with">Copy with</h2>
 <p>A 'copy with' expression is used to make a copy of an existing instance, but with a different value for one or more of the properties
   &ndash; either to assign to a named value, or as part of a more complex expression..
@@ -1046,7 +1057,7 @@ Rather, a comment contains information <em>about</em> the program, intended to b
 a comment may contain any text, except that it must not start with the open square bracket symbol '<el-code>[</el-code>'.</p>
 <p>Comments may be inserted at any level: in the <a href="#GlobalInstructions">Global</a>,
 <a href="#MemberInstructions">Member</a>, or <a href="#StatementInstructions">Statement</a> instruction levels,
-as well a from the <el-code>new code</el-code> selector, i.e. every <a href="IDEguide.html#Selector">selector</a> provides a <el-code>#</el-code> for entering a comment.</p>
+as well a from the <el-code>new code</el-code> selector, i.e. every <a href="IDEGuide.html#Selector">selector</a> provides a <el-code>#</el-code> for entering a comment.</p>
 <p> Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user.
   This comment is known as the 'file header' and shows the version of Elan being run.</p>
 
@@ -1143,6 +1154,8 @@ as well a from the <el-code>new code</el-code> selector, i.e. every <a href="IDE
  reassigned within the procedure. Therefore you must pass in a variable that can be re-assigned. You cannot pass in: a
  constant, a literal value, or a named value that is defined by a <el-kw>let</el-kw> instruction.</p>
 
+<div id="ExtensionFunction"></div>
+<div id="ExtensionProcedure"></div>
 <h3 id="ExtensionCompileError" class="no-TOC">Cannot call extension method directly</h3>
  <p>A method that is defined within the Library as an 'extension method', such as <el-method>asString</el-method> may only be called using 'dot syntax' on a named
  value or an expression.</p>
@@ -1346,6 +1359,7 @@ as well a from the <el-code>new code</el-code> selector, i.e. every <a href="IDE
 <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;<br>
 <el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Int</el-type>&gt;
 
+<div id="parse_type"></div>
 <h3 id="TypeNameField" class="no-TOC">'Name' field in a class or enum definition</h3>
  <p>Type names always begin with a capital letter,  optionally followed by letters of either case, numeric digits,
  or underscore symbols. Nothing else.</p>
