@@ -871,4 +871,88 @@ end main
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["'y' is not defined.LangRef.html#compile_error"]);
   });
+
+  test("Fail_TupleDeconstructList", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [1,2]
+  let x, y be a
+  print x
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot deconstruct List<of Int> as tuple.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_TupleSetDeconstructList", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [1,2]
+  variable x set to 0
+  variable y set to 0
+  set x, y to a
+  print x
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot deconstruct List<of Int> as tuple.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_ListDeconstructTuple", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to tuple(1,"apple")
+  variable x:y set to a
+  print x
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot deconstruct tuple(Int, String) as list.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_ListSetDeconstructTuple", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to tuple(1,"apple")
+  variable x set to 0
+  variable y set to ""
+  set x:y to a
+  print x
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot deconstruct tuple(Int, String) as list.LangRef.html#compile_error",
+    ]);
+  });
 });

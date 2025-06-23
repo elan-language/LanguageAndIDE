@@ -350,6 +350,10 @@ Instead, you use the constants <el-code><el-id>quotes</el-id></el-code>, <el-cod
 <p><el-code>print "Here are the curly braces: {unicode(123)} and {unicode(125)}"</el-code></p>
 <p><el-code>print "This is an ASCII double quotation mark: " + unicode(0x22)</el-code></p>
 
+<h3 class="no-TOC" id="CharacterSets">Character Sets</h3>
+<p>Any character except quote and control characters can be used in a String.
+<a href="LangRef.html#Identifier">Identifiers</a> can only contain letters (without accents), numbers and underscore.</p>
+
 <h2 id="Tuple">Tuple</h2>
 A <el-code>tuple</el-code> is a way of holding a small number of values of different Types together as a single reference. It may be considered a lightweight alternative to defining a specific class for some purposes. Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold. Common uses include:
 <ul>
@@ -1636,8 +1640,6 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td></td>
  </tr>
 </table>
-</body>
-</html>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
@@ -1807,6 +1809,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
 </ul>
 
+<div id="DisplayHtml"></div>
 <div id="displayHtml"></div>
 <h2 id="Html">Displaying Html</h2>
 <p>If you attempt to embed Html in a string and then attempt to print it, you will see the string displayed literally - the Html tags
@@ -2005,6 +2008,34 @@ So for example the top left corner of the display is at (-100,75).</p>
   <td>turns the turtle to face in the direction specified in degrees<br>where 0 is upward and increasing values go clockwise from there</td>
  </tr>
 </table>
+<h3 class="no-TOC" id="Turtle_properties">Properties of a Turtle</h3>
+<table class="tableMethod">
+ <tr>
+  <th colspan="2">Property</th>
+  <th colspan="2"></th>
+ </tr><tr>
+  <th>name</th>
+  <th>Type</th>
+  <th>description</th>
+  <th>default</th>
+ </tr><tr id="heading">
+  <td><el-method>heading</el-method></td>
+  <td><el-type>Float</el-type></td>
+  <td>the direction in which the turtle is pointing<br>in degrees clockwise from North</td>
+  <td>0.0 degrees,<br>i.e. upward in the Display</td>
+ </tr><tr id="x_Turtle">
+  <td><el-method>x</el-method></td>
+  <td><el-type>Float</el-type></td>
+  <td>the x-coordinate of the turtle's current position</td>
+  <td>0.0</td>
+ </tr><tr id="y_Turtle">
+  <td><el-method>y</el-method></td>
+  <td><el-type>Float</el-type></td>
+  <td>the y-coordinate of the turtle's current position</td>
+  <td>0.0</td>
+ </tr>
+</table>
+
 <p>Example:</p>
 <el-code-block source="turtle_graphics.elan">
 <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Turtle</el-type>()</el-txt></el-field></el-statement>
@@ -2026,7 +2057,7 @@ So for example the top left corner of the display is at (-100,75).</p>
  <li>If the turtle is placed or moved outside the 200 &times; 150 area boundary, it will not cause an error,
   but the location of the turtle and any lines outside the boundary will not be visible.</li>
  <li>You can move and turn the turtle, causing lines to be drawn, whether or not the turtle is shown.</li>
- <li id="heading">The current location and heading of the turtle may be read using the properties
+ <li>The current location and heading of the turtle may be read using the properties
   <el-code><el-id>x</el-id></el-code>, <el-code><el-id>y</el-id></el-code>, and <el-code><el-id>heading</el-id></el-code>.</li>
 <li>The turtle starts facing upwards (<el-id>heading</el-id> 0), so that <el-method>move</el-method> moves in the y-direction.</li>
 </ul>
@@ -2076,13 +2107,13 @@ So for example the top left corner of the display is at (-100,75).</p>
  <li id="CircleVG"> <el-code>CircleVG</el-code> for &lt;<el-code>circle../&gt;</el-code></li>
  <li id="LineVG"><el-code>LineVG</el-code> for <el-code>&lt;line../&gt;</el-code></li>
  <li id="RectangleVG"><el-code>RectangleVG</el-code> for <el-code>&lt;rect../&gt;</el-code></li>
- <li id="ImageVG"><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
+ <li id="ImageVG"><span id="imageVG"></span><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
 </ul>
 <p>The properties of the Elan shapes reflect the names of the attributes used in the SVG tags but some differ. For example, SVG's <el-code>stroke-width</el-code>
  is set with property  <el-code>strokeWidth</el-code>, to make it a valid Elan <a href="LangRef.html#identifier">Identifier</a>.
 Also <el-code>stroke</el-code> and <el-code>fill</el-code> are set by the properties <el-code>strokeColour</el-code> and <el-code>fillColour</el-code>.</p>
-<p>Vector graphics are output to the Display pane in the user interface.
-<p>The area is 100 units wide by 75 units high, and both integer and floating point values of the units can be used.<p>
+<p>Vector graphics are output to the Display pane in the user interface.</p>
+<p>The area is 100 units wide by 75 units high, and both integer and floating point values of the units can be used.</p>
 <p>The origin for SVG units (0,0) is a the top left corner of the display: positive x rightwards, positive y downwards.
 So for exxample the centre of the display is at (50, 37.5).</p>
 <p>As with using SVG from Html, the shapes are drawn in the order in which they are added to the <el-type>VectorGraphic</el-type> instance:
@@ -2091,7 +2122,7 @@ later shapes are positioned over earlier ones.</p>
  and the assembled list is then displayed by a call to procedure<el-method> displayVectorGraphics</el-method> with the List as its argument. Examples
 are shown below the table of properties.</p>
 
-<h3 class="no-TOC" id="Properties_VG">Vector graphics properties</h3>
+<h3 class="no-TOC" id="Properties_VG">Properties of Vector graphic shapes</h3>
 <table class="tableMethod">
  <tr>
   <th colspan="2">Property</th>
@@ -2273,7 +2304,7 @@ are shown below the table of properties.</p>
    allowing you to make multiple changes before updating the display. Similarly, the method to add a shape returns a new instance of the <el-code>VectorGraphics</el-code> which must be assigned either to an existing variable, or to a new <el-kw>let</el-kw>.</li>
  <li>The <el-code><el-id>fillColour</el-id></el-code> and <el-code><el-id>strokeColour</el-id></el-code> properties may be specified as described under <a href="#Colours">Colours</a>.
   The <el-code><el-id>fillColour</el-id></el-code> only may also be specified as <el-code><el-id>transparent</el-id></el-code> (which has the value <el-code>-1</el-code>).</li>
- <li><el-type>VectorGraphic</el-type> is the abstract superclass of all <el-code>...VG</el-code> shapes. You use it if you want to define a <el-type>List</el-type> holding different types of shape.</li>
+ <li id="VectorGraphic"><el-type>VectorGraphic</el-type> is the abstract superclass of all <el-code>...VG</el-code> shapes. You use it if you want to define a <el-type>List</el-type> holding different types of shape.</li>
  <li>To make it easier for simple programs, the VectorGraphic shapes all have default values for their properties, and you only have to specify the ones that you want to differ.
 So the constructors do not take any properties, and instead you add a <el-kw>with</el-kw> clause listing those properties which you want to have different values.  See <a href="LangRef.html#new">New instance</a> for more about <el-kw>with</el-kw> clauses.</li>
  <li>Individual properties of any of the VG Types may be modified by calling the corresponding <el-method>set...</el-method> procedure method
@@ -2407,6 +2438,7 @@ just as you would specify the Type of every parameter and the return Type for th
     using the same 'RGB' format as used in Html style, for example <el-code>0xff0000</el-code> for red.</li>
 </ul>
 
+<div id="LibraryProcedures"></div>
 <h1 id="StandaloneFunctions">Standalone functions</h1>
     <p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <el-kw>variable</el-kw> declaration or a <el-kw>set</el-kw> assignment, either on their own or within a more complex expression. All standalone library functions require at least one argument to be passed in brackets, corresponding to the parameters defined for that function.</p>
 
@@ -2839,7 +2871,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 
 <h2 id="ref">Passing a function as a reference</h2>
 <p>To use a higher-order function (HoF), you have to pass in a reference to a function.
-This can be either a <a href="#lambda"><el-kw>lambda</el-kw></a> or the keyword <el-kw>ref</el-kw> followed by the name of a function.</p>
+This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or the keyword <el-kw>ref</el-kw> followed by the name of a function.</p>
 <p>It is also possible to use references to functions not in the context of HoFs.</p>
 <p>On most occasions when you write the name of an existing function elsewhere in code your intent is to <i>evaluate</i> the function and, to do so, you write the name of the function followed by brackets containing such arguments as are required by the function. For this reason if you forget to add the brackets, you will get an error, for example:</p>
 <p><el-code>To evaluate function 'myfunction' add brackets. Or to create a reference to 'myfunction', precede it by 'ref'.</el-code></p>
