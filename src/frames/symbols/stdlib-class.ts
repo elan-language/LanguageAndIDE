@@ -68,7 +68,7 @@ export class StdLibClass implements Class {
 
   symbolId: string;
 
-  symbolType(_transforms?: Transforms): SymbolType {
+  symbolType(): SymbolType {
     // temp hack TODO fix
     return new ClassType(
       this.name,

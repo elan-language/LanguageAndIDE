@@ -1,7 +1,6 @@
 import { ClassSymbol } from "../compiler-interfaces/class-symbol";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
-import { Transforms } from "../frame-interfaces/transforms";
 import { BooleanType } from "./boolean-type";
 import { FuncName, TupleName } from "./elan-type-names";
 import { FloatType } from "./float-type";
@@ -15,7 +14,7 @@ import { TupleType } from "./tuple-type";
 
 const intSymbol: ElanSymbol = {
   symbolId: IntType.Instance.name,
-  symbolType: function (_transforms?: Transforms): SymbolType {
+  symbolType: function (): SymbolType {
     return IntType.Instance;
   },
   symbolScope: SymbolScope.program,
@@ -23,7 +22,7 @@ const intSymbol: ElanSymbol = {
 
 const floatSymbol: ElanSymbol = {
   symbolId: FloatType.Instance.name,
-  symbolType: function (_transforms?: Transforms): SymbolType {
+  symbolType: function (): SymbolType {
     return FloatType.Instance;
   },
   symbolScope: SymbolScope.program,
@@ -31,7 +30,7 @@ const floatSymbol: ElanSymbol = {
 
 const stringSymbol: ElanSymbol = {
   symbolId: StringType.Instance.name,
-  symbolType: function (_transforms?: Transforms): SymbolType {
+  symbolType: function (): SymbolType {
     return StringType.Instance;
   },
   symbolScope: SymbolScope.program,
@@ -39,7 +38,7 @@ const stringSymbol: ElanSymbol = {
 
 const booleanSymbol: ElanSymbol = {
   symbolId: BooleanType.Instance.name,
-  symbolType: function (_transforms?: Transforms): SymbolType {
+  symbolType: function (): SymbolType {
     return BooleanType.Instance;
   },
   symbolScope: SymbolScope.program,
@@ -47,7 +46,7 @@ const booleanSymbol: ElanSymbol = {
 
 const regExpSymbol: ElanSymbol = {
   symbolId: RegExpType.Instance.name,
-  symbolType: function (_transforms?: Transforms): SymbolType {
+  symbolType: function (): SymbolType {
     return RegExpType.Instance;
   },
   symbolScope: SymbolScope.program,
@@ -55,7 +54,7 @@ const regExpSymbol: ElanSymbol = {
 
 const tupleSymbol: ClassSymbol = {
   symbolId: TupleName,
-  symbolType: function (_transforms?: Transforms): SymbolType {
+  symbolType: function (): SymbolType {
     return new TupleType([new GenericParameterType("T1"), new GenericParameterType("T2")]);
   },
   symbolScope: SymbolScope.program,
@@ -67,7 +66,7 @@ const tupleSymbol: ClassSymbol = {
 
 const funcSymbol: ClassSymbol = {
   symbolId: FuncName,
-  symbolType: function (_transforms?: Transforms): SymbolType {
+  symbolType: function (): SymbolType {
     return new FunctionType(
       ["T"],
       [new GenericParameterType("T")],

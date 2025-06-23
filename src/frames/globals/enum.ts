@@ -8,7 +8,6 @@ import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
-import { Transforms } from "../frame-interfaces/transforms";
 import { enumKeyword } from "../keywords";
 import { EnumType } from "../symbols/enum-type";
 import { EnumValueType } from "../symbols/enum-value-type";
@@ -37,7 +36,7 @@ export class Enum extends AbstractFrame implements ElanSymbol, GlobalFrame, Coll
     return this.name.text;
   }
 
-  symbolType(_transforms?: Transforms): SymbolType {
+  symbolType(): SymbolType {
     return new EnumType(this.symbolId);
   }
   get symbolScope() {

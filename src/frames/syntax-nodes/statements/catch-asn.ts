@@ -25,7 +25,7 @@ export class CatchAsn extends FrameWithStatementsAsn implements ElanSymbol {
     return getId(this.variable);
   }
 
-  symbolType(_transforms?: Transforms): SymbolType {
+  symbolType(): SymbolType {
     return StringType.Instance;
   }
 

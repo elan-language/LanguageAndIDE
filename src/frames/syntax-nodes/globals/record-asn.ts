@@ -31,7 +31,7 @@ export class RecordAsn extends ClassAsn {
   get symbolId() {
     return getId(this.name);
   }
-  symbolType(_transforms?: Transforms) {
+  symbolType() {
     return new ClassType(
       this.symbolId,
       ClassSubType.concrete,

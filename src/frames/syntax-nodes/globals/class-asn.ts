@@ -80,71 +80,15 @@ export abstract class ClassAsn extends FrameAsn implements Class {
     return [];
   }
 
-  // getProfile(): Profile {
-  //   return this.getFile().getProfile();
-  // }
-
-  // updateCompileStatus(): void {
-  //   this.getChildren().forEach((c) => c.updateCompileStatus());
-  //   const worstOfChildren = parentHelper_readWorstCompileStatusOfChildren(this);
-  //   super.updateCompileStatus(); //will update it based on fields and its own direct compile errors
-  //   const newStatus = Math.min(this.readCompileStatus(), worstOfChildren);
-  //   this.setCompileStatus(newStatus);
-  // }
-
   getChildren(): ElanSymbol[] {
     return this.children as unknown as ElanSymbol[];
   }
-
-  // getFirstChild(): Frame {
-  //   return parentHelper_getFirstChild(this);
-  // }
-  // getLastChild(): Frame {
-  //   return parentHelper_getLastChild(this);
-  // }
-  // getChildAfter(child: Frame): Frame {
-  //   return parentHelper_getChildAfter(this, child);
-  // }
-  // getChildBefore(child: Frame): Frame {
-  //   return parentHelper_getChildBefore(this, child);
-  // }
-  // getChildRange(first: Frame, last: Frame): Frame[] {
-  //   return parentHelper_getChildRange(this, first, last);
-  // }
-  // getFirstSelectorAsDirectChild(): AbstractSelector {
-  //   return parentHelper_getFirstSelectorAsDirectChild(this);
-  // }
-  // addChildBefore(child: Frame, before: Frame): void {
-  //   parentHelper_addChildBefore(this, child, before);
-  // }
-  // addChildAfter(child: Frame, before: Frame): void {
-  //   parentHelper_addChildAfter(this, child, before);
-  // }
-  // removeChild(child: Frame): void {
-  //   parentHelper_removeChild(this, child);
-  // }
-  // insertOrGotoChildSelector(after: boolean, child: Frame) {
-  //   parentHelper_insertOrGotoChildSelector(this, after, child);
-  // }
-  // deleteSelectedChildren(): void {
-  //   parentHelper_deleteSelectedChildren(this);
-  // }
-  // moveSelectedChildrenUpOne(): void {
-  //   parentHelper_moveSelectedChildrenUpOne(this);
-  // }
-  // moveSelectedChildrenDownOne(): void {
-  //   parentHelper_moveSelectedChildrenDownOne(this);
-  // }
 
   fieldUpdated(_field: Field): void {}
 
   minimumNumberOfChildrenExceeded(): boolean {
     return this.getChildren().length > 1;
   }
-
-  // selectNextFrame(): void {
-  //   this._children[0]?.select(true, false);
-  // }
 
   doesInherit(): boolean {
     return this.getInheritanceItems().length > 0;
@@ -280,15 +224,6 @@ export abstract class ClassAsn extends FrameAsn implements Class {
       transforms,
     );
   }
-
-  // public getConstructor(): Constructor {
-  //   return this.getChildren().filter((m) => isConstructor(m))[0] as Constructor;
-  // }
-
-  // resetCompileStatusAndErrors(): void {
-  //   this.getChildren().forEach((f) => f.resetCompileStatusAndErrors());
-  //   super.resetCompileStatusAndErrors();
-  // }
 
   get symbolId() {
     return getId(this.name);
