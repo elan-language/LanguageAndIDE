@@ -6,14 +6,6 @@ export class UrlNode extends AbstractParseNode {
     super();
   }
 
-  validate(toMatch: string[], text: string) {
-    if (toMatch.includes(text)) {
-      this.set(ParseStatus.incomplete, text, "");
-    } else {
-      this.set(ParseStatus.invalid, text, "");
-    }
-  }
-
   validateUrl(text: string) {
     try {
       let url = text;
@@ -40,14 +32,8 @@ export class UrlNode extends AbstractParseNode {
         } else {
           this.set(ParseStatus.invalid, text, "");
         }
-      } else if (text.length === 8) {
-        if (text.startsWith("https://")) {
-          this.set(ParseStatus.incomplete, text, "");
-        } else if (text.startsWith("http://")) {
-          this.validateUrl(text);
-        } else {
-          this.set(ParseStatus.invalid, text, "");
-        }
+      } else if (text.length === 8 && text.startsWith("https://")) {
+        this.set(ParseStatus.incomplete, text, "");
       } else {
         if (text.startsWith("https://") || text.startsWith("http://")) {
           this.validateUrl(text);
@@ -57,8 +43,4 @@ export class UrlNode extends AbstractParseNode {
       }
     }
   }
-
-  // renderAsSource(): string {
-  //   return this.matchedText; // Overridden to avoid trimming
-  // }
 }
