@@ -78,7 +78,6 @@ export class FileImpl implements File {
   currentHash: string = "";
   isParent: boolean = true;
   hasFields: boolean = true;
-  hasTests: boolean = false;
   isFile: boolean = true;
   parseError?: string;
   readonly defaultFileName = "code.elan";
@@ -151,6 +150,10 @@ export class FileImpl implements File {
 
   getChildren(): Frame[] {
     return this._children;
+  }
+
+  get hasTests() {
+    return this._children.some((g) => g instanceof TestFrame);
   }
 
   private moveDownOne(child: Frame): boolean {
