@@ -30,7 +30,7 @@ import { File } from "../src/frames/frame-interfaces/file";
 
 
 // flag to update test file
-const updateTestFiles = false;
+const updateTestFiles = true;
 
 export async function assertEffectOfActionNew(
   sourceFile: string,

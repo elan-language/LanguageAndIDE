@@ -1,4 +1,4 @@
-# cc0615cfa130f5bf20e1b8d56354641b06d927b11d893247aa026ea301b4bd88 Elan 1.2.3 guest default_profile valid
+# 93e4c1cc39d82acfe27da14e53f570306427f886da33369780357a0523fc1f74 Elan 1.2.4 guest default_profile valid
 
 main
   let file be createFileForWriting("myFile.txt")

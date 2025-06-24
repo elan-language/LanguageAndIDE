@@ -1,4 +1,4 @@
-# 1a8c5ccea948a0be5e80b5d87294caa533ffb27e768a9f3325e625ab6bc770dd Elan 1.2.3 guest default_profile valid
+# d20549229ff89c9a9e99d811fe16ddd60e85c5fca2adf0cb2a4ee9181a80c4b3 Elan 1.2.4 guest default_profile valid
 
 function liveNeighbours(cells as List<of Boolean>, c as Int) returns Int
   let neighbours be neighbourCells(c)
