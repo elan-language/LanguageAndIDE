@@ -1,6 +1,6 @@
-# 6652b3a4e945e54792ccf8880b8ba7a7a9c5865651da9d82d841400ea57d433a Elan 1.2.4 guest default_profile valid
+# d50cf38473f24a50eb8cfebfdad45c64e70b5e2db5fa52047304d36c19235b7a Elan 1.2.3 guest default_profile valid
 
-# Use the W,A,S,D keys to change Snake direction
+# Use the w,a,s,d keys to change snake's direction
 main
   let blocks be new Array2D<of Int>(40, 30, white)
   variable head set to [20, 15]
@@ -11,19 +11,9 @@ main
   variable apple set to [0, 0]
   call setAppleToRandomPosition(apple, body)
   while gameOn
-    call blocks.put(head[0], head[1], green)
-    variable paintTail set to white
-    if body[0] is tail then
-      set paintTail to green
-    end if
-    call blocks.put(tail[0], tail[1], paintTail)
-    call blocks.put(apple[0], apple[1], red)
-    call displayBlocks(blocks)
-    set currentDir to directionByKey(currentDir, getKey())
-    set tail to body[0]
-    call body.append(head)
-    set head to getAdjacentSquare(head, currentDir)
-    set gameOn to not hasHitEdge(head[0], head[1]) and not overlaps(body, head)
+    call updateDisplay(blocks, head, tail, body, apple)
+    call updateSnake(currentDir, tail, head, body)
+    set gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
     if head is apple then
       call setAppleToRandomPosition(apple, body)
     else
@@ -34,11 +24,34 @@ main
   print "Game Over! Score: {body.length() - 1}"
 end main
 
+procedure updateSnake(out currentDir as String, out tail as List<of Int>, out head as List<of Int>, body as List<of List<of Int>>)
+  set currentDir to directionByKey(currentDir, getKey())
+  set tail to body[0]
+  call body.append(head)
+  set head to getAdjacentSquare(head, currentDir)
+end procedure
+
+procedure updateDisplay(blocks as Array2D<of Int>, head as List<of Int>, tail as List<of Int>, body as List<of List<of Int>>, apple as List<of Int>)
+  call blocks.put(head[0], head[1], green)
+  let tailColour be getTailColour(tail, body)
+  call blocks.put(tail[0], tail[1], tailColour)
+  call blocks.put(apple[0], apple[1], red)
+  call displayBlocks(blocks)
+end procedure
+
 procedure setAppleToRandomPosition(out apple as List<of Int>, body as List<of List<of Int>>)
   repeat
     set apple to [randomInt(0, 39), randomInt(0, 29)]
-  end repeat when not overlaps(body, apple)
+  end repeat when not body.contains(apple)
 end procedure
+
+function getTailColour(tail as List<of Int>, body as List<of List<of Int>>) returns Int
+  variable colour set to white
+  if body[0] is tail then
+    set colour to green
+  end if
+  return colour
+end function
 
 function hasHitEdge(headX as Int, headY as Int) returns Boolean
   return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
@@ -59,29 +72,19 @@ function getAdjacentSquare(sq as List<of Int>, dir as String) returns List<of In
   return [newX, newY]
 end function
 
-function overlaps(body as List<of List<of Int>>, sq as List<of Int>) returns Boolean
-  variable result set to false
-  each seg in body
-    if (seg is sq) then
-      set result to true
-    end if
-  end each
-  return result
-end function
-
 function directionByKey(current as String, key as String) returns String
   variable dir set to current
-  if key is "w" then
-    set dir to "up"
-  else if key is "s" then
-    set dir to "down"
-  else if key is "a" then
-    set dir to "left"
-  else if key is "d" then
-    set dir to "right"
+  let dict be ["w":"up", "s":"down", "a":"left", "d":"right"]
+  if dict.keys().contains(key) then
+    set dir to dict[key]
   end if
   return dir
 end function
+
+test getTailColour
+  assert getTailColour([3, 4], [[3, 4], [3, 5]]) is green
+  assert getTailColour([3, 4], [[3, 5], [3, 6]]) is white
+end test
 
 test hasHitEdge
   assert hasHitEdge(0, 0) is false
@@ -114,13 +117,3 @@ test directionByKey
   assert directionByKey(current, "d") is "right"
   assert directionByKey(current, "D") is "up"
 end test
-
-test overlaps
-  let body be [[1, 2], [3, 4]]
-  assert overlaps(body, [1, 2]) is true
-  assert overlaps(body, [3, 4]) is true
-  assert overlaps(body, [1, 1]) is false
-  assert overlaps(body, [2, 1]) is false
-end test
-
-# Test coverage: 48% (29/61 instructions)

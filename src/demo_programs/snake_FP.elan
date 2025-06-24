@@ -1,4 +1,4 @@
-# 59d345df90dd4a1fb69fc6b5601dbcb570da76f0e57e0dadced99e08071a2c01 Elan 1.2.4 guest default_profile valid
+# e9269e62da566c6d945908a69c6606ea40172b3b0bd6afda61b6cad00bddac0f Elan 1.2.3 guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -36,7 +36,7 @@ function newApple(g as Game) returns Game
   let y, rnd3 be rnd2.nextInt(0, 29)
   let apple2 be newSquare(x, y)
   let g2 be copy g with apple set to apple2, rnd set to rnd3
-  return if bodyOverlaps(g2, apple2) then newApple(g2) else g2
+  return if g2.body.contains(apple2) then newApple(g2) else g2
 end function
 
 function score(g as Game) returns Int
@@ -62,16 +62,12 @@ function headOverApple(g as Game) returns Boolean
 end function
 
 function gameOver(g as Game) returns Boolean
-  return bodyOverlaps(g, g.head) or hasHitEdge(g)
+  return g.body.contains(g.head) or hasHitEdge(g)
 end function
 
 function hasHitEdge(g as Game) returns Boolean
   let x, y be g.head
   return (x is -1) or (y is -1) or (x is 40) or (y is 30)
-end function
-
-function bodyOverlaps(g as Game, target as Square) returns Boolean
-  return g.body.filter(lambda s as Square => s is target).length() > 0
 end function
 
 function newGame(rnd as Random) returns Game
@@ -229,16 +225,6 @@ test headIsAtEdge
   assert hasHitEdge(g5) is true
 end test
 
-test bodyOverlaps
-  let g1 be newGame(new Random())
-  let g2 be copy g1 with body set to {newSquare(3, 4), newSquare(4, 4), newSquare(5, 4)}
-  assert bodyOverlaps(g2, newSquare(3, 4)) is true
-  assert bodyOverlaps(g2, newSquare(4, 4)) is true
-  assert bodyOverlaps(g2, newSquare(5, 4)) is true
-  assert bodyOverlaps(g2, newSquare(2, 4)) is false
-  assert bodyOverlaps(g2, newSquare(6, 2)) is false
-end test
-
 test newSquare
   let sq be newSquare(3, 4)
   assert sq.x is 3
@@ -258,5 +244,3 @@ test newGame
   assert game.key is "d"
   assert game.isOn is true
 end test
-
-# Test coverage: 82% (53/65 instructions)
