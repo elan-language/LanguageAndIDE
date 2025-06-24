@@ -1,4 +1,3 @@
-import { Deprecated } from "../../elan-type-interfaces";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { classKeyword, endKeyword } from "../keywords";
@@ -13,8 +12,6 @@ export class ConcreteClass extends ClassFrame {
     super(parent);
     this.isConcrete = true;
   }
-
-  deprecated: Deprecated | undefined = undefined;
 
   initialKeywords(): string {
     return classKeyword;

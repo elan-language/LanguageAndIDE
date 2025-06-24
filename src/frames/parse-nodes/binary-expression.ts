@@ -25,15 +25,10 @@ export class BinaryExpression extends AbstractSequence {
     return super.parseText(text);
   }
 
-  compile(): string {
-    const codeArray = this.getElements().map((e) => e.compile());
-    const code = codeArray.join("");
-    return code;
-  }
-
   renderAsHtml(): string {
     return `${this.lhs?.renderAsHtml()}${this.op!.renderAsHtml()}${this.rhs?.renderAsHtml()}`;
   }
+
   renderAsSource(): string {
     return `${this.lhs?.renderAsSource()}${this.op!.renderAsSource()}${this.rhs?.renderAsSource()}`;
   }

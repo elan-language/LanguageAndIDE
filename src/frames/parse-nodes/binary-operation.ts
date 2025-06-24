@@ -133,26 +133,6 @@ export class BinaryOperation extends AbstractParseNode {
     return source;
   }
 
-  override compile(): string {
-    const matched = this.matchedText.trim();
-    switch (matched) {
-      case isKeyword:
-        return "===";
-      case isntKeyword:
-        return "!==";
-      case andKeyword:
-        return "&&";
-      case orKeyword:
-        return "||";
-      case modKeyword:
-        return "%";
-      case POWER:
-        return "**";
-      default:
-        return matched;
-    }
-  }
-
   getSyntaxCompletionAsHtml(): string {
     let completion = this.completion;
     if (this.matchedText === "" || this.matchedText === " ") {

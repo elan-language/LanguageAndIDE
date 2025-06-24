@@ -1,4 +1,3 @@
-import { Deprecated } from "../../elan-type-interfaces";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { endKeyword, recordKeyword } from "../keywords";
@@ -14,8 +13,6 @@ export class RecordFrame extends ClassFrame {
     this.isNotInheritable = true;
     this.isRecord = true;
   }
-
-  deprecated: Deprecated | undefined = undefined;
 
   initialKeywords(): string {
     return recordKeyword;

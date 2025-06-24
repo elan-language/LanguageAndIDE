@@ -1,4 +1,3 @@
-import { Deprecated } from "../../elan-type-interfaces";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { abstractClassKeywords, endKeyword, interfaceKeyword } from "../keywords";
@@ -14,8 +13,6 @@ export class InterfaceFrame extends ClassFrame {
     this.isAbstract = true;
     this.isInterface = true;
   }
-
-  deprecated: Deprecated | undefined = undefined;
 
   initialKeywords(): string {
     return abstractClassKeywords;

@@ -55,12 +55,11 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   renderAsHtml(): string {
     return this.bestMatch ? this.bestMatch.renderAsHtml() : "";
   }
+
   renderAsSource(): string {
     return this.bestMatch ? this.bestMatch.renderAsSource() : "";
   }
-  compile(): string {
-    return this.bestMatch ? this.bestMatch.compile() : "";
-  }
+
   getSyntaxCompletionAsHtml(): string {
     const c = this.bestMatch
       ? this.bestMatch.getSyntaxCompletionAsHtml()

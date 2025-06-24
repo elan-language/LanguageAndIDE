@@ -32,10 +32,6 @@ export abstract class AbstractParseNode implements ParseNode {
 
   abstract parseText(text: string): void;
 
-  compile(): string {
-    return this.matchedText.trim();
-  } //TODO make abstract
-
   protected set(status: ParseStatus, matched: string, remaining: string) {
     this.status = status;
     this.matchedText = matched;
