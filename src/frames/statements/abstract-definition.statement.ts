@@ -22,8 +22,6 @@ export abstract class AbstractDefinitionStatement extends AbstractFrame implemen
 
   abstract getIdPrefix(): string;
 
-  abstract getJsKeyword(): string;
-
   abstract renderAsHtml(): string;
 
   abstract renderAsSource(): string;

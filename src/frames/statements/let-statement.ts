@@ -16,10 +16,6 @@ export class LetStatement extends AbstractDefinitionStatement implements Stateme
     return letKeyword;
   }
 
-  getJsKeyword(): string {
-    return "const";
-  }
-
   parseFrom(source: CodeSource): void {
     source.removeIndent();
     source.remove(`${letKeyword} `);

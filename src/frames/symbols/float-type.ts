@@ -1,5 +1,5 @@
 import { SymbolType } from "../compiler-interfaces/symbol-type";
-import { immutableTypeOptions } from "../frame-interfaces/type-options";
+import { immutableTypeOptions } from "../compiler-interfaces/type-options";
 import { FloatName } from "./elan-type-names";
 import { IntType } from "./int-type";
 

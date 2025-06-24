@@ -4,7 +4,6 @@ import { ExpressionField } from "../fields/expression-field";
 import { IfSelectorField } from "../fields/if-selector-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
-import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 import { elseKeyword, thenKeyword } from "../keywords";
@@ -73,21 +72,5 @@ export class Else extends AbstractFrame implements Statement {
       this.condition.parseFrom(new CodeSourceFromString(condition));
       source.remove(" then");
     }
-  }
-
-  compileChildren: Frame[] = [];
-
-  addChild(f: Frame) {
-    this.compileChildren.push(f);
-  }
-
-  getChildRange(initialScope: Frame) {
-    const fst = this.compileChildren[0];
-    const fi = this.compileChildren.indexOf(fst);
-    const li = this.compileChildren.indexOf(initialScope);
-
-    return fi < li
-      ? this.compileChildren.slice(fi, li + 1)
-      : this.compileChildren.slice(li, fi + 1);
   }
 }

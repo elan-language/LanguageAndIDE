@@ -3,7 +3,7 @@ import { Class } from "../compiler-interfaces/class";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
-import { TypeOptions } from "../frame-interfaces/type-options";
+import { TypeOptions } from "../compiler-interfaces/type-options";
 import { thisKeyword } from "../keywords";
 import { generateType } from "../syntax-nodes/ast-helpers";
 import { ClassSubType, ClassType } from "./class-type";

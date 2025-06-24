@@ -1,6 +1,6 @@
 import { Deprecated } from "../../elan-type-interfaces";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
-import { noTypeOptions } from "../frame-interfaces/type-options";
+import { noTypeOptions } from "../compiler-interfaces/type-options";
 import { FuncName } from "./elan-type-names";
 
 export class FunctionType implements SymbolType {

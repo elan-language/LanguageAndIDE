@@ -4,7 +4,7 @@ import { GenericSymbolType } from "../compiler-interfaces/generic-symbol-type";
 import { ReifyableSymbolType } from "../compiler-interfaces/reifyable-symbol-type";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
-import { TypeOptions } from "../frame-interfaces/type-options";
+import { TypeOptions } from "../compiler-interfaces/type-options";
 import { FloatType } from "./float-type";
 import { IntType } from "./int-type";
 import { NullScope } from "./null-scope";

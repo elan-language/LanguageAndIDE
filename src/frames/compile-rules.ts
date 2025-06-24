@@ -46,8 +46,7 @@ import { AstNode } from "./compiler-interfaces/ast-node";
 import { ElanSymbol } from "./compiler-interfaces/elan-symbol";
 import { Scope } from "./compiler-interfaces/scope";
 import { SymbolType } from "./compiler-interfaces/symbol-type";
-import { isFunction, isLet, isMember, isProcedure } from "./frame-helpers";
-import { isRecord } from "./frame-interfaces/type-options";
+import { isRecord } from "./compiler-interfaces/type-options";
 import { allKeywords, reservedWords } from "./keywords";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
@@ -65,11 +64,15 @@ import {
   isConstant,
   isDeconstructedType,
   isDoubleIndexableType,
+  isFunction,
   isIndexableType,
   isIterableType,
+  isLet,
   isListImmutableType,
   isListType,
+  isMember,
   isNumber,
+  isProcedure,
   isProperty,
   knownType,
   symbolScopeToFriendlyName,
