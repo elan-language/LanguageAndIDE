@@ -1,4 +1,4 @@
-# 6730c8c908eddd7817d93d4757043450e2867e024faf4ac76eac165b726047e5 Elan 1.2.4 guest default_profile valid
+# 0cd784aa15cec9cf21d24bebeae846b66b862579a980e93e8a0a7268f6b73165 Elan 1.2.4 guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -145,8 +145,7 @@ test snake
 end test
 
 test apple
-  # constructor has no user code to test
-  # newRandomPosition is a procedure
+  # no tests
 end test
 
 test square
@@ -168,5 +167,3 @@ test square
   assert (new Square(40, 3)).hasHitEdge() is true
   assert (new Square(3, 30)).hasHitEdge() is true
 end test
-
-# Testcoverage: 45% (40/88 instructions)

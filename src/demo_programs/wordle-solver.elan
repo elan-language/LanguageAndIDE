@@ -1,6 +1,7 @@
-# ba3aeba8eb0fffea21f284fd2ddcc393ea982776e1eb868ad4766022eaff897a Elan 1.2.4 guest default_profile valid
+# 6b9de9b8aab9a3caad45c5f647673fe6c849bfbfdd1a1325cced3db2fdd9001e Elan 1.2.4 guest default_profile valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
+# Works only for the 2,309 words that may be set by the official online Wordle
 # Mark each letter of program's attempt word with:
 # * for in-place match (Green)
 # + for out-of-place match (Yellow)
