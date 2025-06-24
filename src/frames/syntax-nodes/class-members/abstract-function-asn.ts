@@ -3,7 +3,6 @@ import { AstNode } from "../../compiler-interfaces/ast-node";
 import { Class } from "../../compiler-interfaces/class";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
-import { singleIndent } from "../../frame-helpers";
 import { Member } from "../../compiler-interfaces/member";
 import { FunctionType } from "../../symbols/function-type";
 import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
@@ -11,6 +10,7 @@ import { SymbolScope } from "../../symbols/symbol-scope";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
 import { FrameAsn } from "../frame-asn";
+import { singleIndent } from "../ast-helpers";
 
 export class AbstractFunctionAsn extends FrameAsn implements Member, ElanSymbol {
   isAbstract = true;

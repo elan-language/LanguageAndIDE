@@ -2,9 +2,9 @@ import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
 import { Class } from "../../compiler-interfaces/class";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
-import { singleIndent } from "../../frame-helpers";
 import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
+import { singleIndent } from "../ast-helpers";
 import { ProcedureAsn } from "../globals/procedure-asn";
 
 export class ProcedureMethodAsn extends ProcedureAsn {

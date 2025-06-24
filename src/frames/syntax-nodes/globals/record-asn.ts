@@ -11,8 +11,6 @@ import { compileNodes } from "../ast-helpers";
 import { ClassAsn } from "./class-asn";
 
 export class RecordAsn extends ClassAsn {
-  hrefForFrameHelp: string = "LangRef.html#record";
-
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
     this.isNotInheritable = true;
@@ -22,10 +20,6 @@ export class RecordAsn extends ClassAsn {
   ofTypes: SymbolType[] = [];
 
   deprecated: Deprecated | undefined = undefined;
-
-  initialKeywords(): string {
-    return recordKeyword;
-  }
 
   get symbolId() {
     return getId(this.name);

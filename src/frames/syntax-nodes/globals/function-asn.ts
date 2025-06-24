@@ -2,7 +2,6 @@ import { getId } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
-import { functionKeyword } from "../../keywords";
 import { FunctionType } from "../../symbols/function-type";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
@@ -22,9 +21,6 @@ export abstract class FunctionAsn extends FrameWithStatementsAsn implements Elan
   params: AstNode = EmptyAsn.Instance;
   returnType: AstNode = EmptyAsn.Instance;
 
-  initialKeywords(): string {
-    return functionKeyword;
-  }
   get symbolId() {
     return getId(this.name);
   }

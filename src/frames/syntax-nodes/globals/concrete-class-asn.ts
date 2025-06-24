@@ -4,7 +4,6 @@ import { Scope } from "../../compiler-interfaces/scope";
 import { SymbolType } from "../../compiler-interfaces/symbol-type";
 import { noTypeOptions } from "../../compiler-interfaces/type-options";
 import { isConstructor } from "../../frame-helpers";
-import { classKeyword } from "../../keywords";
 import { ClassSubType, ClassType } from "../../symbols/class-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { compileNodes } from "../ast-helpers";
@@ -20,9 +19,6 @@ export class ConcreteClassAsn extends ClassAsn {
 
   deprecated: Deprecated | undefined = undefined;
 
-  initialKeywords(): string {
-    return classKeyword;
-  }
   get symbolId() {
     return getId(this.name);
   }

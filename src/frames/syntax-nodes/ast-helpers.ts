@@ -463,3 +463,7 @@ export function isInsideFunctionOrConstructor(scope: Scope): boolean {
 export function isAstType(f?: AstNode): f is AstTypeNode {
   return !!f && "compileToEmptyObjectCode" in f;
 }
+
+export function singleIndent() {
+  return "  ";
+}

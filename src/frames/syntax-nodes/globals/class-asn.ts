@@ -12,14 +12,12 @@ import { Class } from "../../compiler-interfaces/class";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
 import { SymbolType } from "../../compiler-interfaces/symbol-type";
-import { isMember } from "../../frame-helpers";
-import { Field } from "../../frame-interfaces/field";
 import { thisKeyword } from "../../keywords";
 import { BreakpointEvent } from "../../status-enums";
 import { ClassSubType, ClassType } from "../../symbols/class-type";
 import { DuplicateSymbol } from "../../symbols/duplicate-symbol";
 import { NullScope } from "../../symbols/null-scope";
-import { getGlobalScope, isSymbol, symbolMatches } from "../../symbols/symbol-helpers";
+import { getGlobalScope, isMember, isSymbol, symbolMatches } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { isAstCollectionNode, isAstIdNode } from "../ast-helpers";
@@ -30,7 +28,6 @@ import { InheritsFromAsn } from "../fields/inherits-from-asn";
 import { FrameAsn } from "../frame-asn";
 
 export abstract class ClassAsn extends FrameAsn implements Class {
-  isCollapsible: boolean = true;
   isParent: boolean = true;
   isClass: boolean = true;
   isAbstract: boolean = false;
@@ -39,8 +36,6 @@ export abstract class ClassAsn extends FrameAsn implements Class {
   isInterface: boolean = false;
 
   public isNotInheritable = false;
-
-  hrefForFrameHelp: string = "LangRef.html#class";
 
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
@@ -81,12 +76,6 @@ export abstract class ClassAsn extends FrameAsn implements Class {
 
   getChildren(): ElanSymbol[] {
     return this.children as unknown as ElanSymbol[];
-  }
-
-  fieldUpdated(_field: Field): void {}
-
-  minimumNumberOfChildrenExceeded(): boolean {
-    return this.getChildren().length > 1;
   }
 
   doesInherit(): boolean {

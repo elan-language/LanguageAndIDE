@@ -7,9 +7,9 @@ import {
 import { Class } from "../../compiler-interfaces/class";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
-import { singleIndent } from "../../frame-helpers";
 import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
+import { singleIndent } from "../ast-helpers";
 import { FunctionAsn } from "../globals/function-asn";
 
 export class FunctionMethodAsn extends FunctionAsn {

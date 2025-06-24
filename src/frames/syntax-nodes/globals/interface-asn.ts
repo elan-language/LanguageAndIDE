@@ -3,7 +3,6 @@ import { getId, mustBeInterfaceClass, mustBeKnownSymbolType } from "../../compil
 import { Scope } from "../../compiler-interfaces/scope";
 import { SymbolType } from "../../compiler-interfaces/symbol-type";
 import { noTypeOptions } from "../../compiler-interfaces/type-options";
-import { abstractClassKeywords } from "../../keywords";
 import { ClassSubType, ClassType } from "../../symbols/class-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { compileNodes } from "../ast-helpers";
@@ -20,9 +19,6 @@ export class InterfaceAsn extends ClassAsn {
 
   deprecated: Deprecated | undefined = undefined;
 
-  initialKeywords(): string {
-    return abstractClassKeywords;
-  }
   get symbolId() {
     return getId(this.name);
   }

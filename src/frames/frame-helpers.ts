@@ -1,6 +1,5 @@
 import { AbstractSelector } from "./abstract-selector";
 import { CompileError, Severity } from "./compile-error";
-import { ElanSymbol } from "./compiler-interfaces/elan-symbol";
 import { Collapsible } from "./frame-interfaces/collapsible";
 import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
@@ -40,7 +39,7 @@ export function isParent(f?: Selectable | Parent): f is Parent {
   return !!f && "isParent" in f;
 }
 
-export function isMember(f?: MemberFrame | ElanSymbol): f is MemberFrame {
+export function isMember(f?: MemberFrame): f is MemberFrame {
   return !!f && "isMember" in f;
 }
 
@@ -48,11 +47,11 @@ export function isFunction(f?: MemberFrame | Parent): f is MemberFrame {
   return !!f && "isFunction" in f;
 }
 
-export function isProcedure(f?: MemberFrame | ElanSymbol): f is MemberFrame {
+export function isProcedure(f?: MemberFrame): f is MemberFrame {
   return !!f && "isProcedure" in f;
 }
 
-export function isLet(f?: ElanSymbol | Statement): f is Statement {
+export function isLet(f?: Statement): f is Statement {
   return !!f && "isLet" in f;
 }
 

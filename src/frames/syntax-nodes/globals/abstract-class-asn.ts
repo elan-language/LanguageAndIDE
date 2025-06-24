@@ -3,15 +3,12 @@ import { getId, mustBeDeclaredAbove } from "../../compile-rules";
 import { Scope } from "../../compiler-interfaces/scope";
 import { SymbolType } from "../../compiler-interfaces/symbol-type";
 import { noTypeOptions } from "../../compiler-interfaces/type-options";
-import { abstractClassKeywords } from "../../keywords";
 import { ClassSubType, ClassType } from "../../symbols/class-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { compileNodes } from "../ast-helpers";
 import { ClassAsn } from "./class-asn";
 
 export class AbstractClassAsn extends ClassAsn {
-  hrefForFrameHelp: string = "LangRef.html#Abstract_class";
-
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
     this.isAbstract = true;
@@ -20,10 +17,6 @@ export class AbstractClassAsn extends ClassAsn {
   ofTypes: SymbolType[] = [];
 
   deprecated: Deprecated | undefined = undefined;
-
-  initialKeywords(): string {
-    return abstractClassKeywords;
-  }
 
   get symbolId() {
     return getId(this.name);
@@ -40,10 +33,6 @@ export class AbstractClassAsn extends ClassAsn {
       this.inheritedSymbols(cd),
       this,
     );
-  }
-
-  getIdPrefix(): string {
-    return "class";
   }
 
   public compile(): string {
