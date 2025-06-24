@@ -3,10 +3,10 @@ import { AstNode } from "../../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
 import { SymbolType } from "../../compiler-interfaces/symbol-type";
-import { singleIndent } from "../../frame-helpers";
 import { catchKeyword, exceptionKeyword, inKeyword } from "../../keywords";
 import { StringType } from "../../symbols/string-type";
 import { SymbolScope } from "../../symbols/symbol-scope";
+import { singleIndent } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 

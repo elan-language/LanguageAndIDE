@@ -17,8 +17,6 @@ export class AbstractFunctionAsn extends FrameAsn implements Member, ElanSymbol 
   isMember: boolean = true;
   private = false;
 
-  hrefForFrameHelp: string = "LangRef.html#Abstract_function";
-
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }

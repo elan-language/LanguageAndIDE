@@ -11,7 +11,6 @@ export class ProcedureMethodAsn extends ProcedureAsn {
   isMember: boolean = true;
 
   isAbstract = false;
-  hrefForFrameHelp: string = "LangRef.html#procedure_method";
 
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);

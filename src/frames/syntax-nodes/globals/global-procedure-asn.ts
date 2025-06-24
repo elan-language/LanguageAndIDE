@@ -4,7 +4,6 @@ import { ProcedureAsn } from "./procedure-asn";
 
 export class GlobalProcedureAsn extends ProcedureAsn {
   isGlobal = true;
-  hrefForFrameHelp: string = "LangRef.html#procedure";
 
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);

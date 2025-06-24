@@ -16,7 +16,6 @@ export class FunctionMethodAsn extends FunctionAsn {
   isMember: boolean = true;
 
   isAbstract = false;
-  hrefForFrameHelp: string = "LangRef.html#function_method";
 
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);

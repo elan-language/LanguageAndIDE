@@ -8,6 +8,7 @@ export class TestAsn extends FrameWithStatementsAsn implements AstNode {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
   symbolType(): SymbolType {
     throw new Error("Method not implemented.");
   }

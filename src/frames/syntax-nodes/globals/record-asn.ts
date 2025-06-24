@@ -3,7 +3,6 @@ import { getId, mustBeImmutableType } from "../../compile-rules";
 import { Scope } from "../../compiler-interfaces/scope";
 import { SymbolType } from "../../compiler-interfaces/symbol-type";
 import { immutableTypeOptions } from "../../compiler-interfaces/type-options";
-import { endKeyword, recordKeyword } from "../../keywords";
 import { ClassSubType, ClassType } from "../../symbols/class-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
@@ -24,6 +23,7 @@ export class RecordAsn extends ClassAsn {
   get symbolId() {
     return getId(this.name);
   }
+
   symbolType() {
     return new ClassType(
       this.symbolId,
@@ -34,6 +34,7 @@ export class RecordAsn extends ClassAsn {
       this,
     );
   }
+
   get symbolScope() {
     return SymbolScope.program;
   }
@@ -59,13 +60,5 @@ export class RecordAsn extends ClassAsn {
   async _initialise() { return this; }\r
 ${body}\r
 }\r\n`;
-  }
-
-  topKeywords(): string {
-    return `${recordKeyword} `;
-  }
-
-  bottomKeywords(): string {
-    return `${endKeyword} ${recordKeyword}`;
   }
 }

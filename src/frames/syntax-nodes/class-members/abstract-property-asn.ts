@@ -15,7 +15,6 @@ export class AbstractPropertyAsn extends FrameAsn implements Member, ElanSymbol 
   isMember = true;
 
   public private: boolean = false;
-  hrefForFrameHelp: string = "LangRef.html#Abstract_property";
 
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);

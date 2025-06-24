@@ -2,7 +2,6 @@ import { mustBeOfType } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
-import { singleIndent } from "../../frame-helpers";
 import { BooleanType } from "../../symbols/boolean-type";
 import {
   getGlobalScope,
@@ -11,7 +10,7 @@ import {
   isSymbol,
   symbolMatches,
 } from "../../symbols/symbol-helpers";
-import { compileNodes } from "../ast-helpers";
+import { compileNodes, singleIndent } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";
 

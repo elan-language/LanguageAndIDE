@@ -9,8 +9,6 @@ import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 export class RepeatAsn extends FrameWithStatementsAsn {
   isStatement: boolean = true;
 
-  hrefForFrameHelp: string = "LangRef.html#repeat";
-
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
