@@ -8,8 +8,12 @@ import {
 import { AstNode } from "../../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
-import { mapSymbolType } from "../../frame-helpers";
-import { getDeconstructionIds, getGlobalScope, symbolMatches } from "../../symbols/symbol-helpers";
+import {
+  getDeconstructionIds,
+  getGlobalScope,
+  mapSymbolType,
+  symbolMatches,
+} from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";

@@ -9,8 +9,7 @@ import {
 } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
 import { Scope } from "../../compiler-interfaces/scope";
-import { mapSymbolType } from "../../frame-helpers";
-import { getGlobalScope } from "../../symbols/symbol-helpers";
+import { getGlobalScope, mapSymbolType } from "../../symbols/symbol-helpers";
 import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 import { FrameAsn } from "../frame-asn";

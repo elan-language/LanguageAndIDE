@@ -38,6 +38,11 @@ import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
 import { UnknownType } from "./unknown-type";
+import { isRecord } from "../compiler-interfaces/type-options";
+import { DeconstructedListType } from "./deconstructed-list-type";
+import { DeconstructedRecordType } from "./deconstructed-record-type";
+import { DeconstructedTupleType } from "./deconstructed-tuple-type";
+import { TupleType } from "./tuple-type";
 
 export function isClass(f?: ElanSymbol | Scope): f is Class {
   return !!f && "isClass" in f;
@@ -695,4 +700,19 @@ export function getFilteredSymbols(
     }
   }
   return symbols;
+}
+export function mapSymbolType(ids: string[], st: SymbolType) {
+  if (ids.length > 1 && st instanceof TupleType) {
+    return new DeconstructedTupleType(ids, st.ofTypes);
+  }
+
+  if (ids.length > 1 && st instanceof ClassType && isRecord(st.typeOptions)) {
+    return new DeconstructedRecordType(ids, st.scope as Class);
+  }
+
+  if (ids.length === 2 && st instanceof ClassType && st.typeOptions.isIterable) {
+    return new DeconstructedListType(ids[0], ids[1], st.ofTypes[0], st);
+  }
+
+  return st;
 }

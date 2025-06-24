@@ -11,6 +11,7 @@ import { AstIdNode } from "../compiler-interfaces/ast-id-node";
 import { AstIndexableNode } from "../compiler-interfaces/ast-indexable-node";
 import { AstNode } from "../compiler-interfaces/ast-node";
 import { AstQualifiedNode } from "../compiler-interfaces/ast-qualified-node";
+import { AstTypeNode } from "../compiler-interfaces/ast-type-node";
 import { Member } from "../compiler-interfaces/member";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
@@ -457,4 +458,8 @@ export function isInsideFunctionOrConstructor(scope: Scope): boolean {
     return false;
   }
   return isInsideFunctionOrConstructor(scope.getParentScope());
+}
+
+export function isAstType(f?: AstNode): f is AstTypeNode {
+  return !!f && "compileToEmptyObjectCode" in f;
 }

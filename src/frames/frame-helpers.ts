@@ -1,11 +1,6 @@
 import { AbstractSelector } from "./abstract-selector";
 import { CompileError, Severity } from "./compile-error";
-import { AstNode } from "./compiler-interfaces/ast-node";
-import { AstTypeNode } from "./compiler-interfaces/ast-type-node";
-import { Class } from "./compiler-interfaces/class";
 import { ElanSymbol } from "./compiler-interfaces/elan-symbol";
-import { SymbolType } from "./compiler-interfaces/symbol-type";
-import { isRecord } from "./compiler-interfaces/type-options";
 import { Collapsible } from "./frame-interfaces/collapsible";
 import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
@@ -20,11 +15,6 @@ import { Statement } from "./frame-interfaces/statement";
 import { MainFrame } from "./globals/main-frame";
 import { ReturnStatement } from "./statements/return-statement";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus, TestStatus } from "./status-enums";
-import { ClassType } from "./symbols/class-type";
-import { DeconstructedListType } from "./symbols/deconstructed-list-type";
-import { DeconstructedRecordType } from "./symbols/deconstructed-record-type";
-import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
-import { TupleType } from "./symbols/tuple-type";
 
 export function isCollapsible(f?: Selectable): f is Collapsible {
   return !!f && "isCollapsible" in f;
@@ -80,10 +70,6 @@ export function isGlobal(f?: Selectable | GlobalFrame): f is GlobalFrame {
 
 export function isReturnStatement(f?: Frame): f is ReturnStatement {
   return !!f && "isReturnStatement" in f;
-}
-
-export function isAstType(f?: AstNode): f is AstTypeNode {
-  return !!f && "compileToEmptyObjectCode" in f;
 }
 
 export function singleIndent() {
@@ -255,22 +241,6 @@ export function isInsideFunction(parent: Parent): boolean {
     return false;
   }
   return isInsideFunction(parent.getParent());
-}
-
-export function mapSymbolType(ids: string[], st: SymbolType) {
-  if (ids.length > 1 && st instanceof TupleType) {
-    return new DeconstructedTupleType(ids, st.ofTypes);
-  }
-
-  if (ids.length > 1 && st instanceof ClassType && isRecord(st.typeOptions)) {
-    return new DeconstructedRecordType(ids, st.scope as Class);
-  }
-
-  if (ids.length === 2 && st instanceof ClassType && st.typeOptions.isIterable) {
-    return new DeconstructedListType(ids[0], ids[1], st.ofTypes[0], st);
-  }
-
-  return st;
 }
 
 export function mapIds(ids: string[]) {
