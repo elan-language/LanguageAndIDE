@@ -3,7 +3,7 @@ import { AstNode } from "../../compiler-interfaces/ast-node";
 import { Class } from "../../compiler-interfaces/class";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
-import { Member } from "../../frame-interfaces/member";
+import { Member } from "../../compiler-interfaces/member";
 import { ClassType } from "../../symbols/class-type";
 import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";

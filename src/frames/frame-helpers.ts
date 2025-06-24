@@ -4,7 +4,6 @@ import { AstNode } from "./compiler-interfaces/ast-node";
 import { AstTypeNode } from "./compiler-interfaces/ast-type-node";
 import { Class } from "./compiler-interfaces/class";
 import { ElanSymbol } from "./compiler-interfaces/elan-symbol";
-import { Scope } from "./compiler-interfaces/scope";
 import { SymbolType } from "./compiler-interfaces/symbol-type";
 import { Collapsible } from "./frame-interfaces/collapsible";
 import { editorEvent } from "./frame-interfaces/editor-event";
@@ -12,7 +11,6 @@ import { Field } from "./frame-interfaces/field";
 import { File } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
 import { GlobalFrame } from "./frame-interfaces/global-frame";
-import { Member } from "./frame-interfaces/member";
 import { MemberFrame } from "./frame-interfaces/member-frame";
 import { Parent } from "./frame-interfaces/parent";
 import { PossiblyPrivateMember } from "./frame-interfaces/possibly-private-member";
@@ -40,14 +38,6 @@ export function isMain(f?: Frame): f is MainFrame {
   return !!f && "isMain" in f;
 }
 
-export function isClass(f?: ElanSymbol | Scope): f is Class {
-  return !!f && "isClass" in f;
-}
-
-export function isGenericClass(f?: ElanSymbol | Scope): f is Class {
-  return isClass(f) && f.ofTypes?.length > 0;
-}
-
 export function isFrame(f?: Selectable | Parent): f is Frame {
   return !!f && "isFrame" in f;
 }
@@ -60,19 +50,15 @@ export function isParent(f?: Selectable | Parent): f is Parent {
   return !!f && "isParent" in f;
 }
 
-export function isMember(f?: Scope | Member | ElanSymbol): f is Member {
+export function isMember(f?: MemberFrame | ElanSymbol): f is MemberFrame {
   return !!f && "isMember" in f;
 }
 
-export function isConstant(f?: Scope | ElanSymbol): f is ElanSymbol {
-  return !!f && "isConstant" in f;
-}
-
-export function isFunction(f?: Scope | Member | Parent): f is Member {
+export function isFunction(f?: MemberFrame | Parent): f is MemberFrame {
   return !!f && "isFunction" in f;
 }
 
-export function isProcedure(f?: Scope | Member | ElanSymbol): f is Member {
+export function isProcedure(f?: MemberFrame | ElanSymbol): f is MemberFrame {
   return !!f && "isProcedure" in f;
 }
 
@@ -94,10 +80,6 @@ export function isGlobal(f?: Selectable | GlobalFrame): f is GlobalFrame {
 
 export function isReturnStatement(f?: Frame): f is ReturnStatement {
   return !!f && "isReturnStatement" in f;
-}
-
-export function isScope(f?: ElanSymbol | Scope): f is Scope {
-  return !!f && "resolveSymbol" in f && "getParentScope" in f;
 }
 
 export function isAstType(f?: AstNode): f is AstTypeNode {

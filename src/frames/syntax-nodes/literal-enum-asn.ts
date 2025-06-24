@@ -1,10 +1,9 @@
 import { mustBeKnownSymbol } from "../compile-rules";
 import { AstNode } from "../compiler-interfaces/ast-node";
 import { Scope } from "../compiler-interfaces/scope";
-import { isScope } from "../frame-helpers";
 import { EnumType } from "../symbols/enum-type";
 import { NullScope } from "../symbols/null-scope";
-import { getGlobalScope } from "../symbols/symbol-helpers";
+import { getGlobalScope, isScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 

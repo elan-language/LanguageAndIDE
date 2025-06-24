@@ -10,9 +10,8 @@ import { ReifyableSymbolType } from "../compiler-interfaces/reifyable-symbol-typ
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
-import { isClass, isConstant, isMember, isScope } from "../frame-helpers";
 import { Frame } from "../frame-interfaces/frame";
-import { Member } from "../frame-interfaces/member";
+import { Member } from "../compiler-interfaces/member";
 import { Parent } from "../frame-interfaces/parent";
 import { globalKeyword, libraryKeyword, propertyKeyword } from "../keywords";
 import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
@@ -41,6 +40,22 @@ import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
 import { UnknownType } from "./unknown-type";
+
+export function isClass(f?: ElanSymbol | Scope): f is Class {
+  return !!f && "isClass" in f;
+}
+
+export function isGenericClass(f?: ElanSymbol | Scope): f is Class {
+  return isClass(f) && f.ofTypes?.length > 0;
+}
+
+export function isConstant(f?: ElanSymbol | Scope): f is ElanSymbol {
+  return !!f && "isConstant" in f;
+}
+
+export function isScope(f?: ElanSymbol | Scope): f is Scope {
+  return !!f && "resolveSymbol" in f && "getParentScope" in f;
+}
 
 export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolType {
   return !!s && "symbolTypeFor" in s;
@@ -122,6 +137,10 @@ export function isEnum(s?: ElanSymbol): boolean {
 
 export function isEnumDef(s?: ElanSymbol): s is EnumAsn {
   return !!s && s instanceof EnumAsn;
+}
+
+export function isMember(f?: Member | ElanSymbol): f is Member {
+  return !!f && "isMember" in f;
 }
 
 export function isMemberOnFieldsClass(s: ElanSymbol, scope: Scope) {

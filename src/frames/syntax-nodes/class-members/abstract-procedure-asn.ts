@@ -4,7 +4,7 @@ import { Class } from "../../compiler-interfaces/class";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
 import { singleIndent } from "../../frame-helpers";
-import { Member } from "../../frame-interfaces/member";
+import { Member } from "../../compiler-interfaces/member";
 import { ProcedureType } from "../../symbols/procedure-type";
 import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";

@@ -46,7 +46,7 @@ import { AstNode } from "./compiler-interfaces/ast-node";
 import { ElanSymbol } from "./compiler-interfaces/elan-symbol";
 import { Scope } from "./compiler-interfaces/scope";
 import { SymbolType } from "./compiler-interfaces/symbol-type";
-import { isClass, isConstant, isFunction, isLet, isMember, isProcedure } from "./frame-helpers";
+import { isFunction, isLet, isMember, isProcedure } from "./frame-helpers";
 import { isRecord } from "./frame-interfaces/type-options";
 import { allKeywords, reservedWords } from "./keywords";
 import { BooleanType } from "./symbols/boolean-type";
@@ -60,7 +60,9 @@ import { IntType } from "./symbols/int-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import {
   getGlobalScope,
+  isClass,
   isClassTypeDef,
+  isConstant,
   isDeconstructedType,
   isDoubleIndexableType,
   isIndexableType,

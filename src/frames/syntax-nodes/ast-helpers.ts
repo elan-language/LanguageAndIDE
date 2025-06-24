@@ -13,7 +13,7 @@ import { AstNode } from "../compiler-interfaces/ast-node";
 import { AstQualifiedNode } from "../compiler-interfaces/ast-qualified-node";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
-import { Member } from "../frame-interfaces/member";
+import { Member } from "../compiler-interfaces/member";
 import { Transforms } from "../frame-interfaces/transforms";
 import { noTypeOptions } from "../frame-interfaces/type-options";
 import { ClassType } from "../symbols/class-type";

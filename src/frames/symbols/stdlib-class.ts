@@ -3,13 +3,12 @@ import { Class } from "../compiler-interfaces/class";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
-import { isMember } from "../frame-helpers";
 import { TypeOptions } from "../frame-interfaces/type-options";
 import { thisKeyword } from "../keywords";
 import { generateType } from "../syntax-nodes/ast-helpers";
 import { ClassSubType, ClassType } from "./class-type";
 import { DuplicateSymbol } from "./duplicate-symbol";
-import { isProperty, isSymbol, symbolMatches } from "./symbol-helpers";
+import { isMember, isProperty, isSymbol, symbolMatches } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
 

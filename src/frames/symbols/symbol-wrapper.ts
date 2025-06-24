@@ -1,6 +1,5 @@
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
-import { isGenericClass } from "../frame-helpers";
 import { propertyKeyword } from "../keywords";
 import { KeywordCompletion } from "../symbol-completion-helpers";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
@@ -9,6 +8,7 @@ import {
   isCallStatement,
   isConcreteTypeName,
   isFunction,
+  isGenericClass,
   isId,
   isMemberOnFieldsClass,
   isNotInheritableClass,
