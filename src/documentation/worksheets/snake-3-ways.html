@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <link href="https://elan-lang.org//styles/colourScheme.css" rel="stylesheet">
+    <link href="https://elan-lang.org//styles/elanStyle.css" rel="stylesheet">
+    <link href="https://elan-lang.org//styles/documentation.css" rel="stylesheet">
+    <link href="https://elan-lang.org/styles/worksheet.css" rel="stylesheet">
+    </head>
+
+<body>
+<div id="worksheet">
+  <div class="docTitle">Snake 3 ways: procedural, object-oriented, functional</div>
+
+  <button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future - at which point you will be asked to auto-save it again).</span>
+
+  <div class="step" id="step0">
+    <label for="username">Enter your name: </label>
+    <input type="text" id="username" class="question"/>
+    <h3>Preliminaries</h3>
+    <ul>
+      <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
+      <li>Remember that if the code editor has a tinted background it does not have focus and will not respond
+          to edits. To give it focus click within the editor. (If a program is running, you will need to stop it first.)
+      </li>
+    </ul>
+    <label class="done" for="done0">Preliminaries completed</label>
+    <input type="checkbox" class="step-complete" id="done0" />
+  </div>
+
+  <div class="step" id="step1">
+    <h3>Snake - procedural</h3>
+    <ol>
+      <li>From the <b>Demo</b> menu, access the <b>Snake - procedural</b> program, and run it (<i>briefly!</i>) to see how it works.</li>
+      <li>Explore the code to answer the following questions. You <i>might</i> find it helpful to switch the code to 'outline'
+        view (the <b>+/-</b> button) to answer some of them.</li>
+      <li>How many instructions does the program have, not counting the tests (which are all at the end of the program)?
+        <input class="question" type="text" id="1a">    
+      </li>
+      <li>What is the longest method (<el-kw>main</el-kw>,<el-kw>procedure</el-kw>, or <el-kw>function</el-kw>) - measured by number of instructions (including the method signature)?
+        <input class="question" type="text" id="1b">    
+      </li>
+      <li>What is the deepest level of indentation within any method - where the <i>first</i> instruction within the method is deemed to be 'level 0'?
+        <input class="question" type="text" id="1c">    
+      </li>
+      <li>What is the largest number of parameters passed into any one <el-kw>procedure</el-kw> or <el-kw>function</el-kw>)?
+        <input class="question" type="text" id="1d">    
+      </li>
+      <li>What percentage of the instructions (not counting code in tests) is <i>covered</i> by tests? You can assume that:
+        <ul>
+          <li>The <i>only</i> code being covered by tests is in functions</li>
+          <li>Where a test tests a specific function, assume that all paths through that function are tested</li>
+        </ul>
+        So this question is really just asking: what proportion of the <i>program's</i> instructions is represented by the functions
+        that have a corresponding test?
+        <input class="question" type="text" id="1e">    
+      </li>
+      <li>What, if anything, stands out for you about this code - positively and/or negatively?
+        <textarea class="question" id="1f"></textarea>
+      </li>
+    </ol>
+    <label class="done" for="done1">Step completed</label>
+    <input type="checkbox" class="step-complete" id="done1"/>
+  </div>
+
+  <div class="step" id="step2">
+    <h3>Snake - object-oriented</h3>
+    <ol>
+      <li>From the <b>Demo</b> menu, access the <b>Snake - object-oriented</b> program. 
+        Verify - if you wish to - that from the player's perspective it works identically to the previous implementation.</li>
+      <li>Explore the code to answer the following questions. You <i>might</i> find it helpful to switch the code to 'outline'
+        view (the <b>+/-</b> button) to answer some of them.</li>
+      <li>How many instructions does the program have in total, not counting the tests (which are all at the end of the program)?
+          <input class="question" type="text" id="2a"></li>
+      <li>List the names of all the user-defined <i>classes</i>:
+        <textarea class="question" id="2b"></textarea></li>
+      <li>Not counting any code within tests, what <i>percentage</i> of the total <i>program</i> instructions is defined in classes (include
+        the <el-kw>class</el-kw> instructions)?
+        <input class="question" type="text" id="2c"></li>
+        <li>Which of the user-defined <i>classes</i> are define any <el-kw>private</el-kw> members?
+           <textarea class="question" id="2d"></textarea></li>
+      <li>Which of the user-defined <i>classes</i> are 'singletons' - meaning that they are only ever instantiated once during
+        <i>a program run</i> (ignore instantiation in tests)? <textarea class="question" id="2e"></textarea></li>
+      <li>What is the longest method (<el-kw>main</el-kw>,<el-kw>procedure</el-kw>, or <el-kw>function</el-kw>) 
+        - measured by number of instructions (including the method signature)?
+        <input class="question" type="text" id="2f"></li>
+      <li>What is the deepest level of indentation within any method - where the first instruction <i>within</i> the method is deemed to be 'level 0'?
+        <input class="question" type="text" id="2g"></li>
+      <li>What is the largest number of parameters passed into any one <el-kw>procedure</el-kw> or <el-kw>function</el-kw>)?
+        <input class="question" type="text" id="2h"></li>
+      <li>Which <el-kw>function</el-kw> methods, on which classes, are not tested (see comments in the tests)
+        <textarea class="question" id="2i"></textarea></li>
+      <li>Why, in general terms, are there not tests for some function methods? (Look for comments)
+        <textarea class="question" id="2j"></textarea></li>
+      <li>What, if anything, stands out for you about this code - positively and/or negatively?
+        <textarea class="question" id="2k"></textarea>
+      </li>
+    </ol>
+    <label class="done" for="done2">Step completed</label>
+    <input type="checkbox" class="step-complete" id="done2"/>
+  </div>
+
+  <div class="step" id="step3">
+    <h3>Snake - functional</h3>
+    <ol>
+      <li>From the <b>Demo</b> menu, access the <b>Snake - functional</b> program. 
+        Verify - if you wish to - that from the player's perspective it works identically to the other two implementations.</li>
+      <li>Explore the code to answer the following questions. You <i>might</i> find it helpful to switch the code to 'outline'
+        view (the <b>+/-</b> button) to answer some of them.
+      </li>
+      <li>How many instructions does the program have, not counting the tests (which are all at the end of the program)?
+        <input class="question" type="text" id="3a">    
+      </li>
+      <li>What percentage of the program instructions (per above) are within <i>functions</i> (including the <el/kw>function</el>
+        instructions)?
+        <input class="question" type="text" id="3b">    
+      </li>
+      <li>Are any 'higher order functions' used in this program?
+        <input class="question" type="text" id="3c">    
+      </li>
+      <li>List the names of the user-defined records within the program. Note that only one is <i>similar</i> to
+      a <el-kw>class</el-kw> in the object-oriented version.
+      <textarea class="question" id="3d"></textarea></li>
+      <li>Records in Elan do not have 'constructors' - but there is code that performs an equivalent role? Where is it?
+        <textarea class="question" id="3e"></textarea>
+      </li>
+      <li>What is the longest method (<el-kw>main</el-kw>, or <el-kw>function</el-kw>) - measured by number of instructions (including the method signature)?
+        <input class="question" type="text" id="3f">    
+      </li>
+      <li>What is the deepest level of indentation within any method - where the <i>first</i> instruction within the method is deemed to be 'level 0'?
+        <input class="question" type="text" id="3g">    
+      </li>
+      <li>What is the largest number of parameters passed into any one <el-kw>function</el-kw>)?
+        <input class="question" type="text" id="3h">    
+      </li>
+      <li>What percentage of the instructions (not counting code in tests) is <i>covered</i> by tests? You can assume that:
+        <ul>
+          <li>The <i>only</i> code being tested is in the functions</li>
+          <li>Where a test tests a function, assume that all paths through that function are tested</li>
+        </ul>
+        So this question is really just asking: what proportion of the <i>program's</i> instructions is represented by the functions
+        that have a corresponding test?
+        <input class="question" type="text" id="3i">    
+      </li>
+      <li>What, if anything, stands out for you about this code - positively and/or negatively?
+        <textarea class="question" id="3j"></textarea>
+      </li>
+    </ol>
+
+    <div class="step" id="step4">
+      <h3>Conclusions</h3>
+      <p>What have you learned from exploring these three different implementations of the same application?</p>
+      <textarea class="question" id="4a"></textarea>
+      <p>What unasnwered questions has it left you with?</p>
+      <textarea class="question" id="4b"></textarea>
+      This is the end of the worksheet - check the box below to finish.
+    <label class="done" for="done4">Step completed</label>
+    <input type="checkbox" class="step-complete" id="done4"/>
+  </div>
+
+
+  <div hidden="" id="hash"></div>
+  <div hidden="" id="changes"></div>
+</div>
+<script src="https://elan-lang.org/worksheet-scripts.js"></script>
+</body>
+</html>
