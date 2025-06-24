@@ -1,6 +1,5 @@
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
-
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { ValueDefNode } from "../parse-nodes/value-def-node";
 import { AbstractField } from "./abstract-field";

@@ -10,9 +10,7 @@ import { ReifyableSymbolType } from "../compiler-interfaces/reifyable-symbol-typ
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
-import { Frame } from "../frame-interfaces/frame";
 import { Member } from "../compiler-interfaces/member";
-import { Parent } from "../frame-interfaces/parent";
 import { globalKeyword, libraryKeyword, propertyKeyword } from "../keywords";
 import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import { isAstIdNode, isAstQualifiedNode, isEmptyNode } from "../syntax-nodes/ast-helpers";
@@ -81,7 +79,7 @@ export function isIterableType(s?: SymbolType): boolean {
   return !!s?.typeOptions.isIterable;
 }
 
-export function isSymbol(s?: Parent | Frame | ElanSymbol | AstNode): s is ElanSymbol {
+export function isSymbol(s?: ElanSymbol | AstNode): s is ElanSymbol {
   return !!s && "symbolId" in s && "symbolType" in s;
 }
 

@@ -1,6 +1,7 @@
 import { AssertOutcome } from "../../assert-outcome";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { Scope } from "../compiler-interfaces/scope";
+import { Semver } from "../compiler-interfaces/semver";
 import { ScratchPad } from "../scratch-pad";
 import {
   BreakpointEvent,
@@ -15,7 +16,6 @@ import { Frame } from "./frame";
 import { Parent } from "./parent";
 import { Profile } from "./profile";
 import { Selectable } from "./selectable";
-import { Semver } from "./semver";
 import { StatementFactory } from "./statement-factory";
 
 export interface File extends Parent {
