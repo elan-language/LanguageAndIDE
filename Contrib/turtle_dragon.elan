@@ -1,0 +1,62 @@
+# 52706f552f0a50c749075a8f29fceb895814ba3e74ecbe4be9e3b4141afd03d8 Elan 1.2.4 guest default_profile valid
+
+main
+  let order be inputIntBetween("Enter order of dragon [1..12]: ", 1, 12)
+  call clearPrintedText()
+  print "Dragon of order {order.asString()}"
+  # turn : turtle's change of heading: 1=left, -1=right
+  variable turn set to 1
+  variable turnsList set to new List<of Int>()
+  set turnsList to [turn]
+  for i from 1 to order step 1
+    set turnsList to turns(turnsList)
+  end for
+  let side be 75.0/(sqrt(2)^order)
+  let corner be side/12.0/cos(45)
+  variable t set to new Turtle()
+  call setupTurtle(t, order)
+  call drawDragon(t, order, turnsList, side, corner)
+end main
+
+procedure drawDragon(t as Turtle, order as Int, turnsList as List<of Int>, side as Float, corner as Float)
+  let p be 200 div order
+  each turn in turnsList
+    call t.turn(-45*turn)
+    call t.move(corner)
+    call t.turn(-45*turn)
+    call t.move(side)
+    call pause(p)
+  end each
+  call t.penUp()
+  call t.hide()
+end procedure
+
+procedure setupTurtle(t as Turtle, order as Int)
+  call t.turnToHeading(180 + order*45)
+  call t.placeAt(-40, 20)
+  call t.penColour(red)
+  call t.penWidth(10.0/order)
+  call t.penDown()
+  call t.show()
+end procedure
+
+function turns(turnsList as List<of Int>) returns List<of Int>
+  variable turnsListR set to new List<of Int>()
+  set turnsListR to turnsList.withAppend(1)
+  set turnsListR to turnsListR.withAppendList(reflect(turnsList))
+  return turnsListR.withRemoveAt(turnsListR.length() - 1)
+end function
+
+function reflect(turns as List<of Int>) returns List<of Int>
+  variable turnsR set to new List<of Int>()
+  for i from 0 to turns.length() - 1 step 1
+    set turnsR to turnsR.withPrepend(-turns[i])
+  end for
+  return turnsR
+end function
+
+test 
+  assert turns([1]) is [1, 1]
+  assert turns([1, 1, -1]) is [1, 1, -1, 1, 1, -1]
+  assert turns([1, 1, -1, 1, 1, -1, -1]) is [1, 1, -1, 1, 1, -1, -1, 1, 1, 1, -1, -1, 1, -1]
+end test

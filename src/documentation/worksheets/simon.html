@@ -20,7 +20,7 @@
     <h3>Preliminaries</h3>
     <ul>
       <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
-      <li>Select <b>File &gt; New</b> to start a new program, 
+      <li>Select <b>File &gt; New</b> to start a new program,
         then select <b>File &gt; Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
         Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b>) to undo recent changes.</li>
       <li>Remember that if the code editor has a tinted background it does not have focus and will not respond
@@ -28,7 +28,7 @@
       </li>
       <li>Use the auto-completion options as much as possible, because this reduces errors.</li>
       <li>Use the <i>Hints</i> only when you <i>need</i> them - as all use of hints is recorded. Use of <b>Help</b> is encouraged and not recorded.</li>
-      <li>Use the <b>Trim</b> button periodically to remove leftover <el-code>new code</el-code> selectors.</li>
+      <li>Use the <b>Trim</b> button periodically to remove leftover <el-code>new code</el-code> prompts.</li>
     </ul>
     <label class="done" for="done0">Preliminaries completed</label>
     <input type="checkbox" class="step-complete" id="done0">
@@ -40,19 +40,19 @@
     the device played a sequence of 'moves' and the players task was to remember and reproduce
     the sequence. Each of the four possible moves had a different colour (red, yellow, blue, green)
     associated with a different physical position and with a different audible tone. If the player
-    reproduced the sequence correctly, the device played the sequence again with one more move added, 
-    and as the sequence lengthened, each move was shown for a shorter duration. 
-    If the player made a single incorrect move the game was over and the score 
-    reflected the longest length of sequence that the player reproduced correctly. 
+    reproduced the sequence correctly, the device played the sequence again with one more move added,
+    and as the sequence lengthened, each move was shown for a shorter duration.
+    If the player made a single incorrect move the game was over and the score
+    reflected the longest length of sequence that the player reproduced correctly.
     The game was surprisingly engaging, and proved very popular.</p>
     <p>We are going to build a simulation of the Simon game, with the four moves shown
-      as large coloured circles in a row accompanied by audible tones. 
+      as large coloured circles in a row accompanied by audible tones.
       The player will use the four numeric keys <b>1 2 3 4</b> to input their memory
        of the sequence - the numbers corresponding to the four positions in the row.</p>
 
     <p>We will make more than one use of a 'List' data structure in this program.
       A List is similar to an Array, but may be extended indefinitely
-      (within in the limits of a computer's memory). 
+      (within in the limits of a computer's memory).
       A list may even start off empty and grow from there.</p>
 
     <h3>Iteration 1 - Draw a solid circle</h3>
@@ -71,16 +71,16 @@
         define a literal List, in this case with just one member. The procedure method
         <el-method>displayVectorGraphics</el-method> <i>requires</i> a List as its argument because a typical application using Vector Graphics
         would display multiple shapes - lines, circles, rectangles and more - and we could
-        just include them all within the square brackets, separated by commas. 
+        just include them all within the square brackets, separated by commas.
         We will be making a more significant uses of Lists later on.
       </li>
       <li>Run the application and note that it displays a circle in the centre of the <b>Display</b>. But
       why is it yellow, and what determined the size and position? It uses some default values - just so
       that you see something. Now we will specify those properties.</li>
-      <li>Select the second field in the <el-kw>let</el-kw> statement, and at the right hand end 
+      <li>Select the second field in the <el-kw>let</el-kw> statement, and at the right hand end
         enter <el-kw>with</el-kw> (followed by a space). You will now be presented with a
         a list of the properties that can be specified with for a <el-type>CircleVG</el-type>.
-         Select the first option, <el-id>centreX</el-id>, then <b>Tab</b> to add the prompted words 
+         Select the first option, <el-id>centreX</el-id>, then <b>Tab</b> to add the prompted words
          15,<el-kw>set to</el-kw> and then enter the value <el-lit>15</el-lit> followed by a comma.
         Repeat this sequence to set the <el-id>centreY</el-id> to <el-lit>15</el-lit>, the <el-id>radius</el-id> to <el-lit>10</el-lit>,
         and the <el-id>strokeWidth</el-id> to <el-lit>0</el-lit> - the last one being to get rid of the black line around the circle.
@@ -139,7 +139,7 @@
       Run the program and check that the circle is now near the right-hand edge of the <b>Display</b>.</li>
       <li>Now we want to be able to specify the colour according to the position
         (i.e. according to the value of <el-id>move</el-id>). So let's first
-        define the four colour-values as a list. 
+        define the four colour-values as a list.
         Add the following immediately above the <el-kw>let</el-kw>
         that defines <el-id>circle</el-id>:
         <el-code-block>
@@ -186,7 +186,7 @@
     It is even more useful if you subsequently find yourself wanting to perform that same thing elsewhere in the code.
   </p>
   <ul>
-    <li>Select the <el-code>new code</el-code> selector that follows <el-kw>end main</el-kw>
+    <li>Select the <el-code>new code</el-code> prompt that follows <el-kw>end main</el-kw>
     (or if there isn't one, select <el-kw>main</el-kw> and hit <b>Enter</b>).
     Add a <el-kw>procedure</el-kw> and specify
     its name as <el-method>displayMove</el-method>. Then in the field between
@@ -194,9 +194,9 @@
     This specifies that when you call <el-method>displayMove</el-method> you must
     provide a value that is an integer.</li>
     <li>
-      Now cut and paste the <i>last three</i> instructions from <el-kw>main</el-kw> into the new procedure 
-      leaving only the definition of <el-id>move</el-id> in <el-kw>main</el-kw>. 
-      It doesn't matter whether or not you also include any any <el-code>new code</el-code> selectors -
+      Now cut and paste the <i>last three</i> instructions from <el-kw>main</el-kw> into the new procedure
+      leaving only the definition of <el-id>move</el-id> in <el-kw>main</el-kw>.
+      It doesn't matter whether or not you also include any <el-code>new code</el-code> prompts -
       they don't count as instructions - but it is neater to periodically <b>Trim</b> them.</li>
     <li>Add a new instruction at the bottom of <el-kw>main</el-kw> to call the procedure,
       using the defined value <el-id>move</el-id> as the argument.
@@ -204,7 +204,7 @@
 
       <div class="hint" id="hint3a" data-hint="">Hint 1: Abbreviated instructions</div>
         <div class="content" id="hint3acontent">
-    
+
         The <i>structure</i> of your code should look like this:
         <el-code-block>
           <main class="ok multiline" >
@@ -257,7 +257,7 @@
         <el-code>[<el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>1</el-lit>, <el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-code>
         . This change will produce a temporary <i>compile warning</i>
         because <el-id>move</el-id> is now <i>unknown</i> - but we'll fix that...</li>
-      <li>Immediately <i>below</i> the <el-kw>let</el-kw> just altered, 
+      <li>Immediately <i>below</i> the <el-kw>let</el-kw> just altered,
         insert an <el-kw>each</el-kw> instruction that defines the <i>elementName</i> (first field) as <el-id>move</el-id>
         and uses <el-id>sequence</el-id> as the <i>source</i>.</li>
         <li>Cut and paste the existing call to <el-method>displayMove</el-method> into the new <el-kw>each</el-kw> loop.
@@ -555,10 +555,10 @@
   <input type="checkbox" class="step-complete" id="done6" />
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
-      
+
   <div class="step" id="step7">
       <h3>Iteration 7: Create the simonsTurn procedure</h3>
-      <p>Now we're ready to complete the role of Simon (played by the computer) in the game, which is to repeatedly play a sequence of moves, adding 
+      <p>Now we're ready to complete the role of Simon (played by the computer) in the game, which is to repeatedly play a sequence of moves, adding
         a new random move each time. (We will later add the Player's role, interleaving between these plays). To keep the growing
         program easy to read, we will build the Simon's role into a new procedure.
       </p>
@@ -607,7 +607,7 @@
       </li>
         <li>Go back to the (now empty) <el-kw>for</el-kw> loop within the main, and define three new instructions (in the order listed here):
         <ul>
-          <li>a new instruction to call <el-method>simonsTurn</el-method>, 
+          <li>a new instruction to call <el-method>simonsTurn</el-method>,
             passing in the named values corresponding to the two arguments it will require.</li>
           <li>an instruction to clear the vector graphics (you have already done this somewhere else in the code).</li>
           <li>an instruction to pause for a full second (at the end of the sequence).</li>
@@ -634,12 +634,12 @@
         </div>
     </li>
       </ul>
-  
+
     <label class="done" for="done7">Step completed</label>
   <input type="checkbox" class="step-complete" id="done7"/>
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
-    
+
   <div class="step" id="step8">
     <h3>Iteration 8: Start work on Player's turn</h3>
     <ul>
@@ -662,20 +662,20 @@
         <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>"<el-lit>1</el-lit>"</el-txt></el-field></el-statement>
       </el-code-block>
       but we really need it <i>as an integer value</i> so that we can compare it to the integer values stored in <el-id>sequence</el-id>.
-      <el-method>parseAsInt</el-method> takes a string argument and attempts to turn it into an <i>integer</i> value. 
+      <el-method>parseAsInt</el-method> takes a string argument and attempts to turn it into an <i>integer</i> value.
       The problem then is: what would happen if you had inadvertently pressed the <b>q</b> key underneath
        the <b>1</b>? That can't be be converted into an integer - which would cause the whole program to fail
-        with a 'run time error'. 
+        with a 'run time error'.
       To handle this scenario the <el-method>parseAsInt</el-method> actually returns two values: the first
       is a Boolean value (<el-id>true</el-id>/<el-id>false</el-id>)  that tells us whether or not the given string successfully parsed into an integer.
-       If it <i>did</i> (i.e. the first returned value is <el-id>true</el-id>) then the second value will hold the integer. 
-       If the first returned value is <el-id>false</el-id> then the second value should be ignored - as it will be meaningless. 
+       If it <i>did</i> (i.e. the first returned value is <el-id>true</el-id>) then the second value will hold the integer.
+       If the first returned value is <el-id>false</el-id> then the second value should be ignored - as it will be meaningless.
        Our instruction names these two returned values <el-id>valid</el-id> and <el-id>move</el-id> respectively.</li>
-    <li>So, to use this information add a third instruction within <el-method>playersTurn</el-method>, an <el-kw>if</el-kw> instruction 
+    <li>So, to use this information add a third instruction within <el-method>playersTurn</el-method>, an <el-kw>if</el-kw> instruction
     that uses <el-id>valid</el-id> as its condition. (You <i>could</i> make the condition <el-id>valid</el-id><el-kw> is </el-kw><el-id>true</el-id>
     and that would work, but it would be 'redundant code' because <el-id>valid</el-id> is itself always either <el-id>true</el-id> or <el-id>false</el-id>.)
     <i>Within</i> the <el-kw>if</el-kw> call <el-method>displayMove</el-method> exactly the same as you did within <el-method>simonsTurn</el-method>.
-  
+
     <div class="hint" id="hint8a">Hint: The full <el-kw>if</el-kw> instruction.</div>
     <div class="content" id="hint8acontent">
       <el-code-block>
@@ -707,7 +707,7 @@
   </li>
     <li><el-method>playersTurn</el-method> is far from complete - but to test that it works at all, go back to the <el-kw>for</el-kw>
     loop in <el-kw>main</el-kw>, and add a last instruction to call <el-method>playersTurn</el-method> passing the same arguments as to
-    <el-method>simonsTurn</el-method> above it. 
+    <el-method>simonsTurn</el-method> above it.
     <div class="hint" id="hint8c">Hint: The modified <el-kw>main</el-kw>.</div>
     <div class="content" id="hint8ccontent">
       <el-code-block>
@@ -738,11 +738,11 @@
   <input type="checkbox" class="step-complete" id="done8"/>
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
-    
+
   <div class="step" id="step9">
     <h3>Iteration 9: Require the player to reproduce the whole sequence</h3>
-    <p>We now need a loop that requires the player to reproduce each move in the sequence. 
-      We can determine the length of the sequence using 
+    <p>We now need a loop that requires the player to reproduce each move in the sequence.
+      We can determine the length of the sequence using
       <el-code><el-id>sequence</el-id>.<el-method>length</el-method>()</el-code>, which might
       suggest using a <el-kw>for</el-kw>, or an <el-kw>each</el-kw> loop. The problem
       is that if the user makes a mistake (enters the wrong move, or a key that isn't a valid move)
@@ -760,7 +760,7 @@
         <el-txt>(<el-id>counter</el-id> &lt; <el-id>sequence</el-id>.<el-method>length</el-method>())<el-kw> and </el-kw><el-id>correctSoFar</el-id></el-txt>
       </el-code-block>
       noting the use of brackets to specify operator priority. This is almost always necessary
-    when you combined <i>logical</i> operators (<el-kw>and</el-kw>, <el-kw>or</el-kw>, <el-kw>not</el-kw> with 
+    when you combined <i>logical</i> operators (<el-kw>and</el-kw>, <el-kw>or</el-kw>, <el-kw>not</el-kw> with
     <i>comparison</i> operators (<el-kw>is</el-kw>, <el-kw>isnt</el-kw>, <el-code>&gt</el-code>, etc).</li>
       <li>Cut and paste all the instructions remaining below it (within <el-method>playersTurn</el-method>) into the <el-kw>while</el-kw> loop.</li>
       <li>Add a new <i>last</i> instruction within the loop, add one to the existing value of <el-id>counter</el-id>.</li>
@@ -792,13 +792,13 @@
       Note that it isn't <i>yet</i> checking whether you pressed the <i>correct</i> key!
       Pressing any key (1 -4) will pass for now. Then simon will make two moves, and you must enter two moves, and so on...
       Play just up to a sequence of three moves, say - then <b>Stop</b> the program.</li>
-    <li>Now we'll check the correctness of the player's sequence. Find the <el-kw>if</el-kw> 
-    instruction, and change the condition from just <el-id>valid</el-id> to 
+    <li>Now we'll check the correctness of the player's sequence. Find the <el-kw>if</el-kw>
+    instruction, and change the condition from just <el-id>valid</el-id> to
     <el-code-block>
       <el-txt><el-id>valid</el-id><el-kw> and </el-kw>(<el-id>sequence</el-id>[<el-id>counter</el-id>]<el-kw> is </el-kw><el-id>move</el-id>)</el-txt>
     </el-code-block>
     again noting the use of brackets to specify operator priority.
-    </li> 
+    </li>
     <li>Within the <el-kw>if</el-kw>, add an <el-kw>else</el-kw> clause <i>after</i> the call to <el-method>displayMove</el-method>
     and underneath the <el-kw>else</el-kw>, set the value of <el-id>correctSoFar</el-id> to <el-id>false</el-id> followed by an
     instruction to print the message 'Wrong!' (this is a temporary action - to be refined later).
@@ -856,7 +856,7 @@
           </el-proc>
       </el-code-block>
     </div>
-    <li>Run the program. You will have to be honest, and stop the program if you see the 'Wrong!' message. Also the game 
+    <li>Run the program. You will have to be honest, and stop the program if you see the 'Wrong!' message. Also the game
       isn't at all polished yet, but the essence of the game should be working.
     </li>
     </ul>
@@ -864,7 +864,7 @@
   <input type="checkbox" class="step-complete" id="done9"/>
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
-    
+
   <div class="step" id="step10">
     <h3>Iteration 10: Polishing the game</h3>
     <p>Three bits of polishing are urgent - but write down anything else you can think of:
@@ -887,7 +887,7 @@
       </li>
         <li>At the start of main, define a variable named <el-id>ok</el-id> initially set to <el-id>true</el-id>.</li>
         <li>Replace the <el-kw>for</el-kw> loop in <el-kw>main</el-kw> with a <el-kw>while</el-kw> loop with a condition of <el-id>ok</el-id>,
-          (you'll need to create the <el-kw>while</el-kw> loop first, then cut and paste the contents from the old loop into the new, then delete the former.)  
+          (you'll need to create the <el-kw>while</el-kw> loop first, then cut and paste the contents from the old loop into the new, then delete the former.)
           <div class="hint" id="hint10a1">Hint: Abbreviated instructions in <el-kw>main</el-kw></div>
           <div class="content" id="hint10a1content">
             <el-code-block>
@@ -926,7 +926,7 @@
                 <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>playersTurn</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>sequence</el-id>, <el-id>interval</el-id></el-txt></el-field>)</el-top></el-statement>
                 <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
                 <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>clearVectorGraphics</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
-                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>2000</el-lit></el-txt></el-field>)</el-top></el-statement>    
+                <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-lit>2000</el-lit></el-txt></el-field>)</el-top></el-statement>
                 <el-kw>end while</el-kw>
                 </el-statement>
                 <el-kw>end main</el-kw>
@@ -995,12 +995,12 @@
       </li>
       <li>Run the program and test that it now seems <i>a little</i> more polished.</li>
       </ul>
-  
+
       <label class="done" for="done10">Step completed</label>
     <input type="checkbox" class="step-complete" id="done10"/>
 <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>
-      
+
   <div class="step" id="step11">
     You have completed the worksheet. Well done!
 
@@ -1021,7 +1021,7 @@
         If you copy and <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
         Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
     </div>
-  
+
     <div hidden=""></div>
     <div hidden=""></div>
   </div>
