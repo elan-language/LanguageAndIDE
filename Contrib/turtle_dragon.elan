@@ -1,10 +1,10 @@
-# 52706f552f0a50c749075a8f29fceb895814ba3e74ecbe4be9e3b4141afd03d8 Elan 1.2.4 guest default_profile valid
+# eb06dbcf60e7aecb19f1b3fc80e485b4b9998fd2d2a20a6ad3a74023339e6045 Elan 1.2.4 guest default_profile valid
 
 main
   let order be inputIntBetween("Enter order of dragon [1..12]: ", 1, 12)
   call clearPrintedText()
   print "Dragon of order {order.asString()}"
-  # turn : turtle's change of heading: 1=left, -1=right
+  # turn: turtle's change of heading: 1=left, -1=right
   variable turn set to 1
   variable turnsList set to new List<of Int>()
   set turnsList to [turn]
