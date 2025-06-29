@@ -1,0 +1,8 @@
+# f312fdeb53f6632b52b8cbe850e718a5950ff1ffbd30090f4918a00e672332cd Elan 1.2.4 guest default_profile valid
+
+main
+  let a be {33, 4, 0, 92, 89, 55}
+  print a.maxBy(lambda x as Int => x mod 10)
+  let fruit be {"apple", "orange", "pear"}
+  print fruit.minBy(lambda x as String => x.length())
+end main

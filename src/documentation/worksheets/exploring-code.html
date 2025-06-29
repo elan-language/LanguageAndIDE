@@ -199,9 +199,9 @@
 <p>We are now going to insert a new instruction to make an audible noise when a bubble bursts.</p>
 <ul>
     <li>Select instruction number 17, and then hit <b>Enter</b>.
-        This will insert a 'selector', where new code can be entered, <i>below</i> the current instruction
+        This will insert a prompt line, where new code can be entered, <i>below</i> the current instruction
         and the focus will have moved there.
-        The selector shows the initial keyword for each kind of instruction
+        The prompt shows the initial keyword for each kind of instruction
         that may legitimately be inserted <i>at this location</i>.
         You select the instruction by starting to type it.
         in <i>most</i> cases just the first letter is needed; in a few cases more characters are needed to
@@ -236,11 +236,11 @@
         another compound instruction. So instead we will cut and paste it.</li>
      <li>Select the new instruction (number 18) then press <b>Ctrl-x</b> to
     cut it &ndash; into the (invisible) clipboard. Now select instruction number 13 and hit <b>Shift-Enter</b> to
-        create a new code selector <i>above</i> that instruction. (Yes, in this case you
+        create a <el-code>new code</el-code> prompt <i>above</i> that instruction. (Yes, in this case you
         could have selected instruction 12 and pressed <b>Enter</b> to insert the code
         <i>below</i> that &ndash; but you won't always have both options so it is useful
         to remember both). <i>But remember that you may only ever paste instructions
-        onto a new code selector, in focus</i>. Then press <b>Ctrl-v</b> to paste.
+        onto a <el-code>new code</el-code> prompt, in focus</i>. Then press <b>Ctrl-v</b> to paste.
         Assuming that any instruction(s) you are trying paste are valid for the target location (as it will be in this case)
         the cut code will reappear &ndash; and instructions renumbered accordingly.
         (We said 'instruction(s)' because it is possible to select <i>multiple</i>
@@ -252,7 +252,7 @@
         again by increasing the length of the pause in the (now) instruction number 18.
     </li>
     <li>Lastly you may already have noticed that underneath instruction 18 you have been left with another
-        selector for new code (it just shows as <el-code>new code</el-code> when it does not have focus).
+        prompt for new code (it just shows as <el-code>new code</el-code> when it does not have focus).
         When entering or editing a longer program it is not uncommon to end up with several of these
         surplus-to-requirements. They can selected and deleted individually, but the <b>Trim</b>
         button above the editor will remove all that can be removed &ndash; and this leaves
