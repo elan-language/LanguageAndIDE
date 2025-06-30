@@ -29,7 +29,7 @@
           </li>
           <li>Use the auto-completion options as much as possible, because this reduces errors.</li>
           <li>Use the <i>Hints</i> only when you <i>need</i> them - as all use of hints is recorded. Use of <b>Help</b> is encouraged and not recorded.</li>
-          <li>Use the <b>Trim</b> button periodically to remove leftover <el-code>new code</el-code> selectors.</li>
+          <li>Use the <b>Trim</b> button periodically to remove leftover <el-code>new code</el-code> prompts.</li>
         </ul>
         <label class="done" for="done0">Preliminaries completed</label>
         <input type="checkbox" class="step-complete" id="done0" />
@@ -151,7 +151,7 @@
             <ul>
                 <li>Select the instruction(s) to move</li>
                 <li>Press <b>Ctrl-x</b> to cut the instruction(s) to the clipboard</li>
-                <li>Select the 'new code' selector where you want to locate the cut instructions</li>
+                <li>Select the <el-code>new code</el-code> prompt where you want to locate the cut instructions</li>
                 <li>Press <b>Ctrl-v</b> to paste the instructions</li>
             </ul>
             You should now have two <kw>call</kw> instructions inside the <el-kw>for</el-kw> loop, which will execute the pair of them 8 times.
@@ -393,7 +393,7 @@
         And <i>inside</i> the <el-kw>for</el-kw> loop, at the very end (after the <el-kw>end while</el-kw>) add:
 
         <el-code-block>
-            <el-statement class="ok" id="set951"><el-kw>set </el-kw><el-field id="ident952" class="ok"><el-txt><el-id>totalPlaces</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr953" class="ok"><el-txt><el-id>totalPlaces</el-id> + <el-id>pacesThisWalk</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+            <el-statement class="ok" id="set951"><el-kw>set </el-kw><el-field id="ident952" class="ok"><el-txt><el-id>totalPaces</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr953" class="ok"><el-txt><el-id>totalPaces</el-id> + <el-id>pacesThisWalk</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
         </el-code-block>
     </li>
 

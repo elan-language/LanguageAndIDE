@@ -55,7 +55,7 @@ The <b>File</b> button has a drop-down menu with the following actions:
 </el-code-block>
 
 <p>The first line shows a standard Elan 'header' comment, which is required on every code file, and which you are not able to move, edit, or delete.
- The second line shows the <a href="#GlobalSelector">Global selector</a>.</p>
+ The second line shows the <a href="#GlobalPrompt">Global prompt</a>.</p>
 
 <h3 class="no-TOC" id="MenuLoad">Load</h3>
 <p><b>Load</b> presents you with a file selector dialog from which you can navigate to and then load an <el-code>.elan</el-code> file:
@@ -113,8 +113,8 @@ then be saved even if it does not compile or pass any tests.</p>
 </ul>
 
 <h2 id="ButtonTrim">Trim</h2>
-<p>The <b>Trim</b> command is used to neaten up your code: it removes any 'new code' selectors from your code <i>that can be removed</i> which is typically most of them.
-Where a 'new code' selector is not removed by <b>Trim</b> this indicates that code is still expected in that location.</p>
+<p>The <b>Trim</b> command is used to neaten up your code: it removes any <el-code>new code</el-code> prompts from your code <i>that can be removed</i> which is typically most of them.
+Where a <el-code>new code</el-code> prompt is not removed by <b>Trim</b> this indicates that code is still expected in that location.</p>
 
 <p>The keyboard shortcut for <b>Trim</b> is <b>Alt-t</b>. (This is because browsers use <b>Ctrl-t</b> to open a new tab).</p>
 
@@ -234,9 +234,9 @@ The following example shows a <i>single instruction</i> that has been formatted 
 
 <p>If the background to a field is grey, it means that that field is <i>optional</i> &ndash; you may enter valid text or move on to the next field, or the next instruction.</p>
 
-<h2 id="Selector">Adding Instructions into a program</h2>
+<h2 id="Prompt">Adding Instructions into a program</h2>
 
- <p>At various places in the code you may see a 'new code' selector, for example:</p>
+ <p>At various places in the code you may see a <el-code>new code</el-code> prompt, for example:</p>
 
  <el-code-block>
     <main class="ok multiline" id="main14" tabindex="0">
@@ -247,7 +247,7 @@ The following example shows a <i>single instruction</i> that has been formatted 
         <el-statement class="ok empty" id="select15" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-statement>
  </el-code-block>
 
- <p>which indicates that new instruction(s) may be created there. When the line containing 'new code' is given focus it
+ <p>which indicates that new instruction(s) may be created there. When the line containing a <el-code>new code</el-code> prompt is given focus it
     changes form to show the list of instructions that you may insert, for example, within <el-code>main</el-code>:</p>
 
 <el-code-block source="selectors.elan">
@@ -260,9 +260,9 @@ or, outside <el-code>main</el-code>:
 <el-statement class="selected focused ok empty" id="select4" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> procedure function test constant enum #</el-help></el-select></el-statement>
 </el-code-block>
 
-<h3 class="no-TOC">Using a selector to insert a new instruction</h3>
+<h3 class="no-TOC">Using a prompt to insert a new instruction</h3>
 
-    <p>When a new code selector has focus (for example as shown above)
+    <p>When a <el-code>new code</el-code> prompt has focus (for example as shown above)
         in most cases you can type just the first character of the instruction to be inserted. And you will then see
         the template for that instruction including any mandatory and/or optional <a href="#Field">fields</a>.
         For example, given the initial list shown above, typing <el-code>f</el-code> will result in this being inserted:</p>
@@ -277,8 +277,8 @@ or, outside <el-code>main</el-code>:
         <el-global class="ok empty" id="select0" tabindex="0"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-global>
 </el-code-block>
 
-<p>Note that when an instruction is inserted is is followed by a 'new code' selector, and if, as in the example above, the inserted instruction
-    template is for a <a href="#ContainerInstruction">container instruction</a> then the template will contain its own 'new code' selector for inserting further instructions within it.</p>
+<p>Note that when an instruction is inserted is is followed by a <el-code>new code</el-code> prompt, and if, as in the example above, the inserted instruction
+    template is for a <a href="#ContainerInstruction">container instruction</a> then the template will contain its own <el-code>new code</el-code> prompt for inserting further instructions within it.</p>
 
 <p>Where two or more instruction start with the same letter(s) typing the initial letter will filter the options.
         For example, if the initial list were:</p>
@@ -291,24 +291,24 @@ or, outside <el-code>main</el-code>:
 <el-code><el-statement class="selected focused warning" id="select4" tabindex="0"><el-select><el-txt>t</el-txt><el-place>new code</el-place><el-help class="selector"> throw try</el-help></el-select></el-statement></el-code>
 
 <p>and the desired instruction can be selected by then typing the second character (<el-code>h</el-code> or <el-code>r</el-code>).
-In the following example, starting from this <a href="#MemberSelector">member selector</a>:</p>
-<p>Note that some of the keywords in this particular selector are presented only when the Advanced level coding option has been selected from menu File &rarr; Preferences.</p>
+In the following example, starting from this <a href="#MemberPrompt">Member prompt</a>:</p>
+<p>Note that some of the keywords in this particular prompt are presented only when the Advanced level coding option has been selected from menu File &rarr; Preferences.</p>
 
 <h3 class="no-TOC">Why do the options I can see differ from those shown here?</h3>
 
     <p>The specific list offered may depends upon various factors including:</p>
 
     <ul>
-        <li>The specific context where the 'new code' is located</li>
+        <li>The specific context where the <el-code>new code</el-code> prompt is located</li>
         <li>What other instructions already exist in that context</li>
     </ul>
 
     <p>which means that you won't necessarily see all the instructions shown in this explanation. However, in general there are three
-        distinct forms of 'new code selector': the global selector, the statement selector, and the member selector.</p>
+        distinct forms of <el-code>new code</el-code> prompt: the global prompt, the statement prompt, and the member prompt.</p>
 
-<h3 class="no-TOC" id="GlobalSelector">Global selector</h3>
+<h3 class="no-TOC" id="GlobalPrompt">Global prompt</h3>
 
-<p>The global selector appears only at 'global' level &ndash; in other words when the 'new code' is located <i>directly</i> within the file,
+<p>The global prompt appears only at 'global' level &ndash; in other words when the <el-code>new code</el-code> prompt is located <i>directly</i> within the file,
 rather than within <a href="#ContainerInstruction">container instruction</a>. When given focus, it will list the <a href="LangRef.html#GlobalInstructions">global instructions</a> that
 you may insert. This is the full list:</p>
 
@@ -318,21 +318,21 @@ you may insert. This is the full list:</p>
 
 Note that <el-code>main</el-code> will not be shown if the program already contains a <el-code>main</el-code> routine.
 
-<h3 class="no-TOC" id="StatementSelector">Statement selector</h3>
+<h3 class="no-TOC" id="StatementPrompt">Statement prompt</h3>
 
-<h3 class="no-TOC" id="MemberSelector">Member selector</h3>
+<h3 class="no-TOC" id="MemberPrompt">Member prompt</h3>
 
-<h3 class="no-TOC" >What if there is no 'new code' selector shown where you want to insert an instruction?</h3>
- <p> If you want to insert new instructions in a place where there is no 'new code' indicator, then <i>either</i>:</p>
+<h3 class="no-TOC" >What if there is no <el-code>new code</el-code> prompt shown where you want to insert an instruction?</h3>
+ <p> If you want to insert new instructions in a place where there is no <el-code>new code</el-code> prompt, then <i>either</i>:</p>
     <ul>
     <li>select the instruction immediately <i>before</i> where you want the new instruction and press <b>Enter</b> <i>or</i></li>
     <li>select the instruction immediately <i>after</i> where you want the new instruction and press <b>Shift-Enter</b></li>
 </ul>
 
-<h3 class="no-TOC" >How to remove unneeded new code selectors</h3>
+<h3 class="no-TOC" >How to remove unneeded <el-code>new code</el-code> prompts</h3>
 
 <h3 class="no-TOC"># Comments</h3>
-<p>All selectors, include new code, include a # to insert a <a href="LangRef.html#Comment">comment</a>.</p>
+<p>All prompts, include <el-code>new code</el-code>, include a # to insert a <a href="LangRef.html#Comment">comment</a>.</p>
 
 <!-- TODO  Delete and Trim-->
 
@@ -359,18 +359,18 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 <h2 id="EditingCode">Editing code</h2>
  <table>
  <tr><th style="width:8%">Keystroke</th><th style="width:46%">On a selected Frame</th> <th style="width:46%">On a selected Field</th> </tr>
- <tr><td>Alt-t</td> <td align="center" colspan="2">Remove all &#8216;new code&#8217; selections that can be removed.<br> This is equivalent to clicking on the Trim button. <br> (This cannot be Ctrl-t as that is defined and executed by the browser). </td> </tr>
- <tr><td>Backspace</td> <td>On any &#8216;new code&#8217; selector: delete the selector. (Note that all &#8216;new code&#8217; selectors can be removed with the +/- button above the code pane).<br> <br> On a new, unmodified, frame, or from any unedited field within that new frame: delete the whole frame and go back to the selector. This capability is to facilitate deleting a frame created unintentionally. As soon as any field has been edited, or any child frame added &#8211; the frame can only be deleted using Ctrl-Delete (see below). </td> <td>Delete character to the left of the cursor.</td> </tr>
+ <tr><td>Alt-t</td> <td align="center" colspan="2">Remove all <el-code>new code</el-code> prompts that can be removed.<br> This is equivalent to clicking on the Trim button. <br> (This cannot be Ctrl-t as that is defined and executed by the browser). </td> </tr>
+ <tr><td>Backspace</td> <td>On any <el-code>new code</el-code> prompt: delete the prompt. (Note that all <el-code>new code</el-code> prompts can be removed with the +/- button above the code pane).<br> <br> On a new, unmodified, frame, or from any unedited field within that new frame: delete the whole frame and go back to the prompt. This capability is to facilitate deleting a frame created unintentionally. As soon as any field has been edited, or any child frame added &#8211; the frame can only be deleted using Ctrl-Delete (see below). </td> <td>Delete character to the left of the cursor.</td> </tr>
  <tr><td>Delete</td> <td></td> <td>Delete the character to the right of the cursor.</td> </tr>
  <tr><td>Ctrl-Delete or<br> Ctrl-d </td> <td>Delete the selected frame, including any frames within it.</td> <td></td> </tr>
- <tr><td>Enter</td> <td>Insert a selector-frame (&#8216;new code&#8217;) below selected, at peer level &#8211; if permissible.</td> <td>If auto-complete options are offered (as a drop-down list), enter the selected option into the field.<br> <br> Otherwise, move to the next field (in the same frame) &#8211; like Tab. <br> <br> For last field in frame only: insert &#8216;new code&#8217; after this field. </td> </tr>
- <tr><td>Shift-Enter</td> <td>Insert a selector-frame (&#8216;new code&#8217;) above selected, at peer level &#8211; if permissible</td> <td>-</td> </tr>
+ <tr><td>Enter</td> <td>Insert a <el-code>new code</el-code> prompt frame below the selected one, at peer level &#8211; if permissible.</td> <td>If auto-complete options are offered (as a drop-down list), enter the selected option into the field.<br> <br> Otherwise, move to the next field (in the same frame) &#8211; like Tab. <br> <br> For last field in frame only: insert 'new code' after this field. </td> </tr>
+ <tr><td>Shift-Enter</td> <td>Insert a <el-code>new code</el-code> prompt frame above the selected one, at peer level &#8211; if permissible</td> <td>-</td> </tr>
  <tr><td>Ctrl- &uarr;</td> <td>Move selected frame(s) up, within peer level.</td> <td>-</td> </tr>
  <tr><td>Ctrl- &darr;</td> <td>Move selected frame(s) down, within peer level.</td> <td>-</td> </tr>
- <tr><td>Ctrl- &larr;</td> <td></td> <td>Move the cursor to the end of the next &#8216;word&#8217; or other transition</td> </tr>
- <tr><td>Ctrl- &rarr;</td> <td></td> <td>Move the cursor to the end of the next &#8216;word&#8217; or other transition</td> </tr>
+ <tr><td>Ctrl- &larr;</td> <td></td> <td>Move the cursor to the end of the next 'word' or other transition</td> </tr>
+ <tr><td>Ctrl- &rarr;</td> <td></td> <td>Move the cursor to the end of the next 'word' or other transition</td> </tr>
  <tr><td>Ctrl-x</td> <td>Cut selected frame(s) into the scratchpad</td> <td>Cut any selected text from the field</td> </tr>
- <tr><td>Ctrl-v</td> <td>Paste text from the clipboard into the field, at the cursor.</td> <td>On a selected &#8216;new code&#8217; field: Paste the frame(s) added to the scratchpad in place of the &#8216;new code&#8217; field. If any of the frames to be added is not compatible with the content of the &#8216;new code&#8217; field then no action will take place. </td></tr>
+ <tr><td>Ctrl-v</td> <td>Paste text from the clipboard into the field, at the cursor.</td> <td>On a selected <el-code>new code</el-code> prompt: Paste the frame(s) added to the scratchpad in place of the 'new code' field. If any of the frames to be added is not compatible with the content of the 'new code' field then no action will take place. </td></tr>
  <tr><td>Ctrl-b</td> <td>Insert or remove a breakpoint on the frame</td> <td></td> </tr>
  <tr><td>Ctrl-i</td> <td>Toggle the <el-code>ignore</el-code> setting of a <el-code>test</el-code></td> <td></td> </tr>
  <tr><td>Ctrl-m</td> <td>Open menu of help options</td> <td></td> </tr>
@@ -392,10 +392,10 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 <h2 id="Mouse">Mouse operation &#8211; quick reference</h2>
  <ul>
  <li>To select a frame, click on the keyword at the start the frame. (You can successfully click in several other places within the frame, but the simplest rule to remember is click on the starting keyword).</li>
- <li>To select an additional frame (&#8216;multi-select&#8217;), hold down the Shift key on the keyboard and click on the frame to add to the current selection. Note that all the multi-selected frames must be at peer-level (the same level of indentation) and, unless global frames, must be within the same &#8216;parent&#8217; frame.</li>
+ <li>To select an additional frame ('multi-select'), hold down the Shift key on the keyboard and click on the frame to add to the current selection. Note that all the multi-selected frames must be at peer-level (the same level of indentation) and, unless global frames, must be within the same 'parent' frame.</li>
  <li>To select a field, click on the text (or, if empty, the prompt) shown for that field. Having selected the field, you may then click again at a particular place within the text to position the text cursor. (By default, when a field is selected the text cursor will be at the right-hand end of any existing text).</li>
  <li>To collapse a multi-line frame, double-click on the keyword at the start of the frame</li>
- <li>To expand a collapsed frame, double-click on the keyword at the start of the frame (or the &#8216;+&#8217; symbol in front of it).</li>
+ <li>To expand a collapsed frame, double-click on the keyword at the start of the frame (or the '+' symbol in front of it).</li>
 </ul>
 
 <h2 id="ContextMenu">Context menu</h2>
