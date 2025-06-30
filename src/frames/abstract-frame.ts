@@ -836,6 +836,6 @@ ${resolve}`;
   }
 
   protected toolTip(): string {
-    return `title="Right-mouse-click or Ctrl-m to show context menu"`;
+    return ``; // Currently not used
   }
 }
