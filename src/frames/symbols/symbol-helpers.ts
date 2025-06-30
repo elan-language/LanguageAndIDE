@@ -716,3 +716,11 @@ export function mapSymbolType(ids: string[], st: SymbolType) {
 
   return st;
 }
+
+export function displayName(symbol: ElanSymbol, id: string) {
+  const type = symbol.symbolType();
+  if (isDeconstructedType(type)) {
+    return id;
+  }
+  return symbol.symbolId;
+}

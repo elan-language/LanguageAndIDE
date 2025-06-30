@@ -89,9 +89,9 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     }
 
     if (!this.isFuncRef) {
-      mustBeFunctionRefIfFunction(symbol, this.compileErrors, this.fieldId);
+      mustBeFunctionRefIfFunction(symbol, this.id, this.compileErrors, this.fieldId);
     } else {
-      mustBeGlobalFunctionIfRef(symbol, this.compileErrors, this.fieldId);
+      mustBeGlobalFunctionIfRef(symbol, this.id, this.compileErrors, this.fieldId);
     }
 
     const prefix =

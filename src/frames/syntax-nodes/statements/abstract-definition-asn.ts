@@ -47,7 +47,7 @@ export abstract class AbstractDefinitionAsn extends FrameAsn implements ElanSymb
     for (const i of ids) {
       mustNotBeKeyword(i, this.compileErrors, this.fieldId);
       const symbol = this.scope.resolveSymbol(i!, this);
-      mustNotBeRedefined(symbol, this.compileErrors, this.fieldId);
+      mustNotBeRedefined(symbol, i, this.compileErrors, this.fieldId);
     }
 
     const lhs = this.name;

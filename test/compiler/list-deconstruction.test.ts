@@ -957,4 +957,42 @@ end main
       "Cannot deconstruct tuple(Int, String) as list.LangRef.html#compile_error",
     ]);
   });
+
+  test("Fail_Id1", async () => {
+    const code = `${testHeader}
+
+main
+  variable a:b set to [1,2,3]
+  call a()
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot invoke identifier 'a' as a method.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_Id2", async () => {
+    const code = `${testHeader}
+
+main
+  variable a:b set to [1,2,3]
+  call b()
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot invoke identifier 'b' as a method.LangRef.html#compile_error",
+    ]);
+  });
 });

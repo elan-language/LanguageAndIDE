@@ -58,6 +58,7 @@ import { FunctionType } from "./symbols/function-type";
 import { IntType } from "./symbols/int-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import {
+  displayName,
   getGlobalScope,
   isClass,
   isClassTypeDef,
@@ -1001,9 +1002,16 @@ export function mustBeUniqueValueInScope(
   compileErrors.push(new NotUniqueNameCompileError(name, "", location));
 }
 
-export function mustNotBeLet(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
+export function mustNotBeLet(
+  symbol: ElanSymbol,
+  id: string,
+  compileErrors: CompileError[],
+  location: string,
+) {
   if (symbol instanceof LetAsn) {
-    compileErrors.push(new MutateCompileError(symbol.symbolId, mapToPurpose(symbol), location));
+    compileErrors.push(
+      new MutateCompileError(displayName(symbol, id), mapToPurpose(symbol), location),
+    );
   }
 }
 
@@ -1033,6 +1041,7 @@ function mapToPurpose(symbol: ElanSymbol) {
 
 export function mustNotBeRedefined(
   variable: ElanSymbol,
+  id: string,
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -1046,7 +1055,7 @@ export function mustNotBeRedefined(
     return;
   }
   compileErrors.push(
-    new RedefinedCompileError(variable.symbolId, mapToPurpose(variable), location),
+    new RedefinedCompileError(displayName(variable, id), mapToPurpose(variable), location),
   );
 }
 
@@ -1089,13 +1098,14 @@ export function mustBeNewable(type: string, compileErrors: CompileError[], locat
 
 export function mustBeFunctionRefIfFunction(
   symbol: ElanSymbol,
+  id: string,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (symbol.symbolType() instanceof FunctionType) {
     compileErrors.push(
       new FunctionRefCompileError(
-        symbol.symbolId,
+        displayName(symbol, id),
         !(symbol.symbolScope === SymbolScope.stdlib || symbol.symbolScope === SymbolScope.member),
         location,
       ),
@@ -1105,6 +1115,7 @@ export function mustBeFunctionRefIfFunction(
 
 export function mustBeGlobalFunctionIfRef(
   symbol: ElanSymbol,
+  id: string,
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -1112,7 +1123,7 @@ export function mustBeGlobalFunctionIfRef(
     symbol.symbolType() instanceof FunctionType &&
     (symbol.symbolScope === SymbolScope.stdlib || symbol.symbolScope === SymbolScope.member)
   ) {
-    compileErrors.push(new NotGlobalFunctionRefCompileError(symbol.symbolId, location));
+    compileErrors.push(new NotGlobalFunctionRefCompileError(displayName(symbol, id), location));
   }
 }
 

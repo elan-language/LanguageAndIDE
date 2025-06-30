@@ -63,7 +63,7 @@ export class SetAsn extends FrameAsn {
 
     for (const id of ids) {
       const symbol = this.getParentScope().resolveSymbol(id, this);
-      mustNotBeLet(symbol, this.compileErrors, this.fieldId);
+      mustNotBeLet(symbol, id, this.compileErrors, this.fieldId);
     }
 
     const lhs = wrapDeconstructionLhs(assignableAstNode, exprAstNode, true);

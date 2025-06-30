@@ -79,7 +79,7 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
   private mustNotBeRedefined(id: string) {
     // up two or we just get the parameter again
     const symbol = this.getParentScope().getParentScope().resolveSymbol(id, this);
-    mustNotBeRedefined(symbol, this.compileErrors, this.fieldId);
+    mustNotBeRedefined(symbol, id, this.compileErrors, this.fieldId);
   }
 
   private mustNotBeOutOnFunctionOrConstructor(id: string) {

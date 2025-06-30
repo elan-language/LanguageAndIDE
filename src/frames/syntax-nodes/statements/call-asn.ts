@@ -12,6 +12,7 @@ import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
 import { ProcedureType } from "../../symbols/procedure-type";
 import {
+  displayName,
   getGlobalScope,
   isMemberOnFieldsClass,
   scopePrefix,
@@ -111,7 +112,7 @@ export class CallAsn extends FrameAsn {
       this.fieldId,
     );
     mustBeProcedure(
-      procSymbol.symbolId,
+      displayName(procSymbol, id),
       procSymbol.symbolType(),
       procSymbol.symbolScope,
       this.compileErrors,
