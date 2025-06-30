@@ -419,7 +419,7 @@ suite("Editing Frames", () => {
     assert.equal(scratchpad.readFrames()?.length, 1);
     const class1 = file.getById("class1");
     class1.processKey(enter());
-    const sel18 = file.getById("select18") as GlobalSelector;
+    const sel18 = file.getById("select16") as GlobalSelector;
     sel18.select(true, false);
 
     sel18.processKey(ctrl_v());

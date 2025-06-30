@@ -1,8 +1,7 @@
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
-import { CodeSource } from "../interfaces/code-source";
-import { Field } from "../interfaces/field";
-import { Parent } from "../interfaces/parent";
-import { Transforms } from "../interfaces/transforms";
 import { endKeyword, tryKeyword } from "../keywords";
 import { CatchStatement } from "./catch-statement";
 
@@ -52,13 +51,5 @@ ${this.indent()}${endKeyword} ${tryKeyword}`;
       this.catch.parseFrom(source);
     }
     return result;
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}try {\r
-${this.compileChildren(transforms)}\r
-${this.indent()}}`;
   }
 }

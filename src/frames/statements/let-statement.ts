@@ -1,11 +1,10 @@
-import { CodeSource } from "../interfaces/code-source";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Parent } from "../interfaces/parent";
-import { Statement } from "../interfaces/statement";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Parent } from "../frame-interfaces/parent";
+import { Statement } from "../frame-interfaces/statement";
 import { beKeyword, letKeyword } from "../keywords";
 import { AbstractDefinitionStatement } from "./abstract-definition.statement";
 
-export class LetStatement extends AbstractDefinitionStatement implements Statement, ElanSymbol {
+export class LetStatement extends AbstractDefinitionStatement implements Statement {
   isStatement = true;
   constructor(parent: Parent) {
     super(parent);
@@ -15,10 +14,6 @@ export class LetStatement extends AbstractDefinitionStatement implements Stateme
 
   initialKeywords(): string {
     return letKeyword;
-  }
-
-  getJsKeyword(): string {
-    return "const";
   }
 
   parseFrom(source: CodeSource): void {

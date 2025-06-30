@@ -1,36 +1,24 @@
-import { CompileError } from "../compile-error";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import {
   escapeHtmlChars,
   helper_CompileOrParseAsDisplayStatus,
-  helper_compileMsgAsHtml,
+  helper_compileMsgAsHtmlNew,
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
 } from "../frame-helpers";
-import { AstNode } from "../interfaces/ast-node";
-import { CodeSource } from "../interfaces/code-source";
-import { editorEvent } from "../interfaces/editor-event";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Field } from "../interfaces/field";
-import { File } from "../interfaces/file";
-import { Frame } from "../interfaces/frame";
-import { ParseNode } from "../interfaces/parse-node";
-import { Selectable } from "../interfaces/selectable";
-import { Transforms } from "../interfaces/transforms";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { editorEvent } from "../frame-interfaces/editor-event";
+import { Field } from "../frame-interfaces/field";
+import { File } from "../frame-interfaces/file";
+import { Frame } from "../frame-interfaces/frame";
+import { ParseNode } from "../frame-interfaces/parse-node";
+import { Selectable } from "../frame-interfaces/selectable";
 import { propertyKeyword } from "../keywords";
 import { Overtyper } from "../overtyper";
-import { CSV } from "../parse-nodes/csv";
 import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
-import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
-import {
-  filteredSymbols,
-  isInsideClass,
-  isProperty,
-  orderSymbol,
-  removeIfSingleFullMatch,
-} from "../symbols/symbol-helpers";
+import { KeywordCompletion, SymbolCompletionSpec } from "../symbol-completion-helpers";
+import { getFilteredSymbols, removeIfSingleFullMatch } from "../symbols/symbol-helpers";
 import { SymbolWrapper } from "../symbols/symbol-wrapper";
-import { UnknownType } from "../symbols/unknown-type";
-import { EmptyAsn } from "../syntax-nodes/empty-asn";
 
 export abstract class AbstractField implements Selectable, Field {
   public isField: boolean = true;
@@ -50,7 +38,6 @@ export abstract class AbstractField implements Selectable, Field {
   cursorPos: number = 0; //Relative to LH end of text
   selectionEnd: number = 0; //Relative to LH end of text
   protected rootNode?: ParseNode;
-  protected astNode?: AstNode;
   protected completion: string = "";
   overtyper = new Overtyper();
   codeHasChanged: boolean = false;
@@ -66,6 +53,10 @@ export abstract class AbstractField implements Selectable, Field {
     map.set(this.htmlId, this);
     this.map = map;
     this._parseStatus = ParseStatus.incomplete; // (see setOptional)
+  }
+
+  getRootNode(): ParseNode | undefined {
+    return this.rootNode;
   }
 
   getFile(): File {
@@ -565,16 +556,15 @@ export abstract class AbstractField implements Selectable, Field {
     return this._parseStatus!;
   }
   resetCompileStatusAndErrors(): void {
-    this.astNode = undefined;
     this._compileStatus = CompileStatus.default;
-    this.compileErrors = [];
   }
   readCompileStatus(): CompileStatus {
     return this._compileStatus;
   }
   updateCompileStatus(): void {
-    this.compileErrors = this.aggregateCompileErrors(); //Needed in this case because the compile errors will be on the ASTNodes
-    this._compileStatus = helper_deriveCompileStatusFromErrors(this.compileErrors);
+    this._compileStatus = helper_deriveCompileStatusFromErrors(
+      this.getFile().getAst(false)?.getCompileErrorsFor(this.htmlId) ?? [],
+    );
   }
   select(_withFocus?: boolean, _multiSelect?: boolean, selection?: [number, number]): void {
     this.deselectAll();
@@ -671,7 +661,7 @@ export abstract class AbstractField implements Selectable, Field {
     const cls = DisplayColour[DisplayColour.error];
     return this._parseStatus === ParseStatus.invalid
       ? `<el-msg class="${cls}"> Invalid.${this.helpAsHtml()}</el-msg>`
-      : helper_compileMsgAsHtml(this);
+      : helper_compileMsgAsHtmlNew(this.getFile(), this);
   }
 
   helpAsHtml(): string {
@@ -697,64 +687,9 @@ export abstract class AbstractField implements Selectable, Field {
     this._parseStatus = ParseStatus.valid;
   }
 
-  getOrTransformAstNode(transforms?: Transforms) {
-    if (transforms && (!this.astNode || this.codeHasChanged)) {
-      if (this.rootNode instanceof CSV && this.rootNode.status === ParseStatus.valid) {
-        const scope = this.getHolder();
-        this.astNode = transforms.transformMany(this.rootNode, this.htmlId, scope);
-      } else if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
-        this.astNode = transforms.transform(this.rootNode, this.htmlId, this.getHolder());
-      }
-      this.codeHasChanged = false;
-    }
-    return this.astNode ?? EmptyAsn.Instance;
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    if (this.rootNode && this.rootNode.status === ParseStatus.valid) {
-      return this.getOrTransformAstNode(transforms).compile();
-    }
-
-    return "";
-  }
-
-  compileErrors: CompileError[] = [];
-  aggregateCompileErrors(): CompileError[] {
-    const cc = this.astNode ? this.astNode.aggregateCompileErrors() : [];
-    return this.compileErrors.concat(cc);
-  }
-
-  symbolType(transforms?: Transforms) {
-    const astNode = this.getOrTransformAstNode(transforms);
-    if (astNode) {
-      return astNode.symbolType();
-    }
-    return UnknownType.Instance;
-  }
-
-  allPropertiesInScope() {
-    const all = this.getHolder().symbolMatches("", true, this.getHolder());
-    return all.filter((s) => isProperty(s)) as ElanSymbol[];
-  }
-
-  matchingSymbolsForId(spec: SymbolCompletionSpec, transforms: Transforms): ElanSymbol[] {
-    const scope = this.getHolder();
-    let symbols = filteredSymbols(spec, transforms, this.getHolder());
-    if (isInsideClass(scope)) {
-      if (propertyKeyword.startsWith(spec.toMatch)) {
-        const allProperties = this.allPropertiesInScope().sort(orderSymbol);
-        symbols = symbols.filter((s) => !allProperties.includes(s)).concat(allProperties);
-      } else if (spec.context === propertyKeyword) {
-        const newSpec = new SymbolCompletionSpec(
-          spec.toMatch,
-          new Set<TokenType>([TokenType.id_property]),
-          new Set<KeywordCompletion>(),
-          "",
-        );
-        symbols = filteredSymbols(newSpec, transforms, scope);
-      }
-    }
+  matchingSymbolsForId(spec: SymbolCompletionSpec): ElanSymbol[] {
+    const ast = this.getFile().getAst(false);
+    const symbols = getFilteredSymbols(spec, ast, this.getHolder().getHtmlId());
     return removeIfSingleFullMatch(symbols, spec.toMatch);
   }
 
@@ -862,18 +797,16 @@ export abstract class AbstractField implements Selectable, Field {
     return rgx.test(this.text) ? this.text.match(rgx)![1] : "";
   }
 
-  protected symbolCompletionAsHtml(transforms: Transforms): string {
+  protected symbolCompletionAsHtml(): string {
     let popupAsHtml = "";
     const spec = this.getSymbolCompletionSpec();
     if (this.showAutoComplete(spec)) {
       this.symbolToMatch = spec.toMatch;
-      const scope = this.getHolder();
+      const scope = this.getFile().getAst(false)?.getScopeById(this.getHolder().getHtmlId());
       const keywords = Array.from(spec.keywords)
-        .map((k) => new SymbolWrapper(k, transforms, scope))
+        .map((k) => new SymbolWrapper(k, scope!))
         .sort(this.orderSymbol);
-      const symbols = this.matchingSymbolsForId(spec, transforms).map(
-        (s) => new SymbolWrapper(s, transforms, scope),
-      );
+      const symbols = this.matchingSymbolsForId(spec).map((s) => new SymbolWrapper(s, scope!));
       this.allPossibleSymbolCompletions = keywords.concat(symbols);
       popupAsHtml = this.popupAsHtml();
     }

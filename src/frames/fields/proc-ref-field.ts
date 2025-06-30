@@ -1,12 +1,11 @@
-import { CodeSource } from "../interfaces/code-source";
-import { Frame } from "../interfaces/frame";
-import { ParseNode } from "../interfaces/parse-node";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Frame } from "../frame-interfaces/frame";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { Alternatives } from "../parse-nodes/alternatives";
 import { IdentifierNode } from "../parse-nodes/identifier-node";
 import { InstanceProcRef } from "../parse-nodes/instanceProcRef";
 import { ProcRefNode } from "../parse-nodes/proc-ref-node";
 import { ParseStatus } from "../status-enums";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class ProcRefField extends AbstractField {
@@ -53,6 +52,6 @@ export class ProcRefField extends AbstractField {
   }
 
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return this.symbolCompletionAsHtml();
   }
 }

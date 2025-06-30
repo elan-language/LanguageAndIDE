@@ -1,13 +1,11 @@
-import { CodeSource } from "../interfaces/code-source";
-import { Frame } from "../interfaces/frame";
-import { ParseNode } from "../interfaces/parse-node";
-import { Scope } from "../interfaces/scope";
-import { Transforms } from "../interfaces/transforms";
+import { Scope } from "../compiler-interfaces/scope";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Frame } from "../frame-interfaces/frame";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { ExprNode } from "../parse-nodes/expr-node";
 import { parameterNames } from "../symbols/symbol-helpers";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class ExpressionField extends AbstractField {
@@ -29,7 +27,6 @@ export class ExpressionField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new ExprNode();
     return this.rootNode;
   }
@@ -38,20 +35,20 @@ export class ExpressionField extends AbstractField {
     source.readUntil(this.readUntil);
 
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return this.symbolCompletionAsHtml();
   }
 
   private completionOverride = "";
 
-  private argumentDescriptions(holder: Scope, transforms: Transforms) {
+  private argumentDescriptions(scope: Scope | undefined) {
     let descriptions = "";
     const an = this.rootNode?.getActiveNode();
     if (an instanceof ArgListNode) {
       const context = an.context();
-      const ps = holder.resolveSymbol(context, transforms, holder);
+      const ps = scope?.resolveSymbol(context, scope);
       descriptions = "<i>arguments</i>";
-      if (!(ps instanceof UnknownSymbol)) {
-        const names = parameterNames(ps.symbolType(transforms));
+      if (ps && !(ps instanceof UnknownSymbol)) {
+        const names = parameterNames(ps.symbolType());
         descriptions = names.length > 0 ? names.join(", ") : "";
       }
     }
@@ -59,7 +56,10 @@ export class ExpressionField extends AbstractField {
   }
 
   public textAsHtml(): string {
-    const descriptions = this.argumentDescriptions(this.getHolder(), transforms());
+    const holder = this.getHolder();
+    const descriptions = this.argumentDescriptions(
+      this.getFile().getAst(false)?.getScopeById(holder.getHtmlId()),
+    );
     this.completionOverride = descriptions ? `<i>${descriptions}</i>)` : "";
     return super.textAsHtml();
   }

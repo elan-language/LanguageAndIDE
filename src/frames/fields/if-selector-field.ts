@@ -1,6 +1,6 @@
-import { CodeSource } from "../interfaces/code-source";
-import { editorEvent } from "../interfaces/editor-event";
-import { ParseNode } from "../interfaces/parse-node";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { editorEvent } from "../frame-interfaces/editor-event";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { ifKeyword } from "../keywords";
 import { KeywordNode } from "../parse-nodes/keyword-node";
 import { OptionalNode } from "../parse-nodes/optional-node";
@@ -26,7 +26,6 @@ export class IfSelectorField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new OptionalNode(new KeywordNode(ifKeyword));
     return this.rootNode;
   }

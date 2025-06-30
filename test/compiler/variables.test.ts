@@ -2,7 +2,6 @@ import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
   assertDoesNotCompile,
-  assertDoesNotCompileWithId,
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -327,7 +326,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "set6", [
+    assertDoesNotCompile(fileImpl, [
       "Incompatible types. Expected: String, Provided: Float.LangRef.html#TypesCompileError",
     ]);
   });
@@ -383,7 +382,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "var3", [
+    assertDoesNotCompile(fileImpl, [
       "'if' is a keyword, and may not be used as an identifier.LangRef.html#compile_error",
     ]);
   });
@@ -399,7 +398,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "var3", [
+    assertDoesNotCompile(fileImpl, [
       "'break' is a reserved word, and may not be used as an identifier.LangRef.html#compile_error",
     ]);
   });
@@ -425,16 +424,11 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "set22", [
+    assertDoesNotCompile(fileImpl, [
       "Incompatible types. Expected: Boolean, Provided: Float.LangRef.html#TypesCompileError",
-    ]);
-    assertDoesNotCompileWithId(fileImpl, "set25", [
+
       "Incompatible types. Expected: Int, Provided: Boolean.LangRef.html#TypesCompileError",
-    ]);
-    assertDoesNotCompileWithId(fileImpl, "set28", [
       "Incompatible types. Expected: String, Provided: ListImmutable<of Float>.LangRef.html#TypesCompileError",
-    ]);
-    assertDoesNotCompileWithId(fileImpl, "set31", [
       "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
     ]);
   });
@@ -455,15 +449,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "set12", [
+    assertDoesNotCompile(fileImpl, [
       "Incompatible types. Expected: List<of String>, Provided: ListImmutable<of Float>.LangRef.html#TypesCompileError",
-    ]);
-
-    assertDoesNotCompileWithId(fileImpl, "set15", [
       "Incompatible types. Expected: ListImmutable<of Float> try converting with '.asListImmutable()', Provided: List<of String>.LangRef.html#TypesCompileError",
-    ]);
-
-    assertDoesNotCompileWithId(fileImpl, "set18", [
       "Incompatible types. Expected: Dictionary<of String, Float>, Provided: ListImmutable<of Float>.LangRef.html#TypesCompileError",
     ]);
   });
@@ -479,9 +467,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr5", [
-      "'x' is not defined.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'x' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_referenceToExtensionFunction", async () => {
@@ -514,7 +500,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr11", [
+    assertDoesNotCompile(fileImpl, [
+      "'asList' is not defined.LangRef.html#compile_error",
       "'x' is not defined for type 'Int'.LangRef.html#compile_error",
     ]);
   });

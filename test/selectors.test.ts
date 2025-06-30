@@ -11,7 +11,6 @@ import { GlobalSelector } from "../src/frames/globals/global-selector";
 import { InterfaceFrame } from "../src/frames/globals/interface-frame";
 import { MainFrame } from "../src/frames/globals/main-frame";
 import { TestFrame } from "../src/frames/globals/test-frame";
-import { Profile } from "../src/frames/interfaces/profile";
 import { assertKeyword, functionKeyword, letKeyword, testKeyword } from "../src/frames/keywords";
 import { IfStatement } from "../src/frames/statements/if-statement";
 import { StatementSelector } from "../src/frames/statements/statement-selector";
@@ -20,6 +19,7 @@ import { hash } from "../src/util";
 import { transforms } from "./compiler/compiler-test-helpers";
 import { classWithConstructor, emptyMainOnly, T00_emptyFile } from "./model-generating-functions";
 import { key } from "./testHelpers";
+import { Profile } from "../src/frames/frame-interfaces/profile";
 
 export class TestProfileSPJ implements Profile {
   name: string = "SPJ";

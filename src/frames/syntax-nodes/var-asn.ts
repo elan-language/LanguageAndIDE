@@ -1,14 +1,14 @@
-import { CompileError } from "../compile-error";
 import {
   mustBeKnownSymbol,
   mustBePropertyPrefixedOnMember,
   mustBePublicMember,
 } from "../compile-rules";
-import { AstIndexableNode } from "../interfaces/ast-indexable-node";
-import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
-import { Scope } from "../interfaces/scope";
+import { AstIndexableNode } from "../compiler-interfaces/ast-indexable-node";
+import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
+import { Scope } from "../compiler-interfaces/scope";
 import { NullScope } from "../symbols/null-scope";
 import {
+  getGlobalScope,
   isDeconstructedType,
   isMemberOnFieldsClass,
   scopePrefix,
@@ -17,7 +17,7 @@ import {
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { compileSimpleSubscript, getIndexAndOfType, isEmptyNode, transforms } from "./ast-helpers";
+import { compileSimpleSubscript, getIndexAndOfType, isEmptyNode } from "./ast-helpers";
 import { EmptyAsn } from "./empty-asn";
 import { IndexAsn } from "./index-asn";
 
@@ -33,20 +33,13 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     super();
   }
 
-  aggregateCompileErrors(): CompileError[] {
-    const q = this.qualifier.aggregateCompileErrors();
-    const i = this.index.aggregateCompileErrors();
-
-    return this.compileErrors.concat(q).concat(i);
-  }
-
   isSimpleSubscript() {
     return this.index instanceof IndexAsn && this.index.isSimpleSubscript();
   }
 
   getSymbol() {
     const currentScope = updateScope(this.qualifier, this.scope);
-    return currentScope.resolveSymbol(this.id, transforms(), this.scope);
+    return currentScope.resolveSymbol(this.id, this.scope);
   }
 
   compileSimpleSubscript(id: string, prefix: string, postfix: string) {
@@ -67,7 +60,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
 
     const symbol = this.getSymbol();
 
-    if (!isMemberOnFieldsClass(symbol, transforms(), this.scope)) {
+    if (!isMemberOnFieldsClass(symbol, this.scope)) {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
     }
 
@@ -91,13 +84,17 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
         : "";
 
     // handles indexing within call statement
-    return this.isSimpleSubscript()
+    const code = this.isSimpleSubscript()
       ? this.compileSimpleSubscript(symbol.symbolId, prefix, postfix)
       : `${prefix}${this.id}${postfix}`;
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
+    return code;
   }
 
   rootSymbolType() {
-    return this.getSymbol().symbolType(transforms());
+    return this.getSymbol().symbolType();
   }
 
   symbolType() {

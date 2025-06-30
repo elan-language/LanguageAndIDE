@@ -1,7 +1,6 @@
 import { AbstractSequence } from "./abstract-sequence";
 import { ExprNode } from "./expr-node";
 import { PunctuationNode } from "./punctuation-node";
-
 import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { Space } from "./parse-node-helpers";
 import { SpaceNode } from "./space-node";

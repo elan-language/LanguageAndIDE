@@ -1,6 +1,6 @@
-import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
-import { SymbolType } from "../interfaces/symbol-type";
-import { immutableTypeOptions } from "../interfaces/type-options";
+import { DeconstructedSymbolType } from "../compiler-interfaces/deconstructed-symbol-type";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
+import { immutableTypeOptions } from "../compiler-interfaces/type-options";
 import { ListImmutableName, ListName } from "./elan-type-names";
 import { isGenericSymbolType } from "./symbol-helpers";
 import { UnknownType } from "./unknown-type";

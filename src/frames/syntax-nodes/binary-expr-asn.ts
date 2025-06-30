@@ -1,18 +1,18 @@
 import { ElanCompilerError } from "../../elan-compiler-error";
-import { CompileError } from "../compile-error";
 import {
   mustBeBooleanTypes,
   mustBeCoercibleType,
   mustBeIntegerType,
   mustBeNumberTypes,
 } from "../compile-rules";
-import { AstNode } from "../interfaces/ast-node";
-import { SymbolType } from "../interfaces/symbol-type";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { BooleanType } from "../symbols/boolean-type";
 import { FloatType } from "../symbols/float-type";
 import { IntType } from "../symbols/int-type";
 import { StringType } from "../symbols/string-type";
-import { isValueType, mostPreciseSymbol } from "../symbols/symbol-helpers";
+import { getGlobalScope, isValueType, mostPreciseSymbol } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { mapOperationSymbol } from "./ast-helpers";
 import { OperationSymbol } from "./operation-symbol";
@@ -23,14 +23,9 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     private readonly lhs: AstNode,
     private readonly rhs: AstNode,
     public readonly fieldId: string,
+    private readonly scope: Scope,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors
-      .concat(this.lhs.aggregateCompileErrors())
-      .concat(this.rhs.aggregateCompileErrors());
   }
 
   private isEqualityOp() {
@@ -151,6 +146,8 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     if (this.isLogicalOp()) {
       mustBeBooleanTypes(lst, rst, this.compileErrors, this.fieldId);
     }
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     if (this.op === OperationSymbol.Equals && (isValueType(lst) || isValueType(rst))) {
       return `${lhsCode} ${this.opToJs()} ${rhsCode}`;

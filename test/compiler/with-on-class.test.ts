@@ -864,7 +864,6 @@ end class`;
 main
   variable b set to new Foo()
   variable c set to copy b with b set to 0
-  print c.d
 end main
 
 class Foo

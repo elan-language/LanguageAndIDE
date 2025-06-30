@@ -1,11 +1,10 @@
-import { Class } from "../interfaces/class";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { GenericSymbolType } from "../interfaces/generic-symbol-type";
-import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
-import { Scope } from "../interfaces/scope";
-import { SymbolType } from "../interfaces/symbol-type";
-import { Transforms } from "../interfaces/transforms";
-import { TypeOptions } from "../interfaces/type-options";
+import { Class } from "../compiler-interfaces/class";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { GenericSymbolType } from "../compiler-interfaces/generic-symbol-type";
+import { ReifyableSymbolType } from "../compiler-interfaces/reifyable-symbol-type";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
+import { TypeOptions } from "../compiler-interfaces/type-options";
 import { FloatType } from "./float-type";
 import { IntType } from "./int-type";
 import { NullScope } from "./null-scope";
@@ -99,8 +98,8 @@ export class ClassType implements ReifyableSymbolType, Scope, GenericSymbolType 
     return this.scope!.getChildren().filter((c) => isSymbol(c));
   }
 
-  resolveSymbol(id: string, transforms: Transforms, scope: Scope): ElanSymbol {
-    return this.scope.resolveSymbol(id, transforms, scope);
+  resolveSymbol(id: string, scope: Scope): ElanSymbol {
+    return this.scope.resolveSymbol(id, scope);
   }
 
   get name() {

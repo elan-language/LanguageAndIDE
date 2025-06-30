@@ -5,8 +5,10 @@ import {
   mustBeNumberType,
   mustNotBeTwoUnaryExpressions as mustNotBeSequentialUnaryExpressions,
 } from "../compile-rules";
-import { AstNode } from "../interfaces/ast-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
 import { BooleanType } from "../symbols/boolean-type";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { mapOperationSymbol } from "./ast-helpers";
 import { OperationSymbol } from "./operation-symbol";
@@ -14,17 +16,14 @@ import { OperationSymbol } from "./operation-symbol";
 export class UnaryExprAsn extends AbstractAstNode implements AstNode {
   constructor(
     public readonly op: OperationSymbol,
-    private readonly operand: AstNode,
+    public readonly operand: AstNode,
     public readonly fieldId: string,
+    private readonly scope: Scope,
   ) {
     super();
   }
 
   compileErrors: CompileError[] = [];
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors.concat(this.operand.aggregateCompileErrors());
-  }
 
   private opToJs() {
     switch (this.op) {
@@ -49,12 +48,15 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
 
     if (this.op === OperationSymbol.Minus) {
       mustBeNumberType(opSt, this.compileErrors, this.fieldId);
+      getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
       // to avoid js compile errors with exponents
       return `(${code})`;
     }
 
     // not
     mustBeBooleanType(opSt, this.compileErrors, this.fieldId);
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return code;
   }
 

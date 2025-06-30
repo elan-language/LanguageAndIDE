@@ -1,4 +1,4 @@
-import { Profile } from "./interfaces/profile";
+import { Profile } from "./frame-interfaces/profile";
 import {
   abstractFunctionKeywords,
   abstractKeyword,

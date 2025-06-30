@@ -1,5 +1,4 @@
-import { CompileError } from "../compile-error";
-import { AstNode } from "../interfaces/ast-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
 import { StringType } from "../symbols/string-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
@@ -9,14 +8,6 @@ export class SegmentedStringAsn extends AbstractAstNode implements AstNode {
     public readonly fieldId: string,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    let cc: CompileError[] = [];
-    for (const i of this.segments) {
-      cc = cc.concat(i.aggregateCompileErrors());
-    }
-    return this.compileErrors.concat(cc);
   }
 
   sanitise(s: string) {

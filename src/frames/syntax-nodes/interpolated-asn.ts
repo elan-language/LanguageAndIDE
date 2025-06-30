@@ -1,5 +1,4 @@
-import { CompileError } from "../compile-error";
-import { AstNode } from "../interfaces/ast-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class InterpolatedAsn extends AbstractAstNode implements AstNode {
@@ -8,10 +7,6 @@ export class InterpolatedAsn extends AbstractAstNode implements AstNode {
     public readonly fieldId: string,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors.concat(this.body.aggregateCompileErrors());
   }
 
   compile(): string {

@@ -1,6 +1,5 @@
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { SymbolType } from "../interfaces/symbol-type";
-import { Transforms } from "../interfaces/transforms";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 
 export class DuplicateSymbol implements ElanSymbol {
   constructor(public readonly duplicates: ElanSymbol[]) {}
@@ -8,8 +7,8 @@ export class DuplicateSymbol implements ElanSymbol {
     return this.duplicates[0].symbolId;
   }
 
-  symbolType(transforms?: Transforms): SymbolType {
-    return this.duplicates[0].symbolType(transforms);
+  symbolType(): SymbolType {
+    return this.duplicates[0].symbolType();
   }
 
   get symbolScope() {

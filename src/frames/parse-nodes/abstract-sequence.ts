@@ -1,4 +1,4 @@
-import { ParseNode } from "../interfaces/parse-node";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 
@@ -86,12 +86,11 @@ export abstract class AbstractSequence extends AbstractParseNode {
   renderAsHtml(): string {
     return this.elements.reduce((result, current) => result + current.renderAsHtml(), "");
   }
+
   renderAsSource(): string {
     return this.elements.reduce((result, current) => result + current.renderAsSource(), "");
   }
-  compile(): string {
-    return this.elements.reduce((result, current) => result + current.compile(), "");
-  }
+
   getSyntaxCompletionAsHtml(): string {
     const c =
       this.elements.length > 0

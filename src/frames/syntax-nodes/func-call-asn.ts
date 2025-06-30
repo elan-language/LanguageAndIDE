@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import {
   checkForDeprecation,
   mustBeCallable,
@@ -9,15 +8,17 @@ import {
   mustCallExtensionViaQualifier,
   mustCallMemberViaQualifier,
 } from "../compile-rules";
-import { AstIdNode } from "../interfaces/ast-id-node";
-import { AstNode } from "../interfaces/ast-node";
-import { ChainedAsn } from "../interfaces/chained-asn";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Scope } from "../interfaces/scope";
-import { SymbolType } from "../interfaces/symbol-type";
+import { AstIdNode } from "../compiler-interfaces/ast-id-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ChainedAsn } from "../compiler-interfaces/chained-asn";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { FunctionType } from "../symbols/function-type";
 import { NullScope } from "../symbols/null-scope";
 import {
+  displayName,
+  getGlobalScope,
   isDefinitionStatement,
   isMemberOnFieldsClass,
   scopePrefix,
@@ -29,7 +30,6 @@ import {
   isEmptyNode,
   matchGenericTypes,
   matchParametersAndTypes,
-  transforms,
 } from "./ast-helpers";
 import { EmptyAsn } from "./empty-asn";
 
@@ -59,25 +59,14 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
 
   private isExtensionMethod: boolean = false;
 
-  aggregateCompileErrors(): CompileError[] {
-    const cc = this.precedingNode.aggregateCompileErrors();
-    let pc: CompileError[] = [];
-
-    for (const i of this.parameters) {
-      pc = pc.concat(i.aggregateCompileErrors());
-    }
-
-    return cc.concat(this.compileErrors).concat(pc);
-  }
-
   getSymbolAndType(): [ElanSymbol, SymbolType] {
     let currentScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
 
     if (isDefinitionStatement(currentScope)) {
       currentScope = currentScope.getParentScope();
     }
-    const funcSymbol = currentScope.resolveSymbol(this.id, transforms(), this.scope);
-    const funcSymbolType = funcSymbol.symbolType(transforms());
+    const funcSymbol = currentScope.resolveSymbol(this.id, this.scope);
+    const funcSymbolType = funcSymbol.symbolType();
     return [funcSymbol, funcSymbolType];
   }
 
@@ -95,7 +84,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       this.fieldId,
     );
 
-    if (!isMemberOnFieldsClass(funcSymbol, transforms(), this.scope)) {
+    if (!isMemberOnFieldsClass(funcSymbol, this.scope)) {
       mustBePublicMember(funcSymbol, this.compileErrors, this.fieldId);
     }
 
@@ -112,7 +101,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       );
 
       mustCallMemberViaQualifier(
-        funcSymbol.symbolId,
+        displayName(funcSymbol, this.id),
         funcSymbolType,
         this.updatedScope,
         this.compileErrors,
@@ -125,7 +114,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       }
 
       matchParametersAndTypes(
-        funcSymbol.symbolId,
+        displayName(funcSymbol, this.id),
         funcSymbolType,
         parameters,
         this.compileErrors,
@@ -138,7 +127,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       this.isAsync = funcSymbolType.isAsync;
     } else {
       mustBeCallable(
-        funcSymbol.symbolId,
+        displayName(funcSymbol, this.id),
         funcSymbolType,
         funcSymbol.symbolScope,
         this.compileErrors,
@@ -158,6 +147,8 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     const prefix = showPreviousNode
       ? ""
       : scopePrefix(funcSymbol, this.compileErrors, this.scope, this.fieldId);
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `${asyncStart}${prefix}${this.id}(${parms})${asyncEnd}`;
   }

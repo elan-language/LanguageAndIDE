@@ -1,16 +1,12 @@
 import { AbstractFrame } from "../abstract-frame";
-
 import { CommentField } from "../fields/comment-field";
-import { ConcreteClass } from "../globals/concrete-class";
-import { CodeSource } from "../interfaces/code-source";
-import { Field } from "../interfaces/field";
-import { Member } from "../interfaces/member";
-import { Parent } from "../interfaces/parent";
-import { Statement } from "../interfaces/statement";
-import { Transforms } from "../interfaces/transforms";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { Parent } from "../frame-interfaces/parent";
+import { Statement } from "../frame-interfaces/statement";
 import { commentMarker } from "../keywords";
 
-export class CommentStatement extends AbstractFrame implements Statement, Member {
+export class CommentStatement extends AbstractFrame implements Statement {
   isStatement = true;
   isMember = true;
   isAbstract = false;
@@ -19,10 +15,6 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
   constructor(parent: Parent) {
     super(parent);
     this.text = new CommentField(this);
-  }
-
-  getClass(): ConcreteClass {
-    return this.getParent() as ConcreteClass;
   }
 
   initialKeywords(): string {
@@ -50,13 +42,5 @@ export class CommentStatement extends AbstractFrame implements Statement, Member
 
   renderAsSource(): string {
     return `${this.indent()}# ${this.text.renderAsSource()}`;
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-
-    const astNode = this.text.getOrTransformAstNode(transforms);
-    astNode.compile();
-    return "";
   }
 }

@@ -357,7 +357,7 @@ end main
 main
   variable a set to {1, 2, 3, 4, 5}
   each x in a
-    set a to a + x
+    set a to a.withAppend(x)
   end each
 end main
 `;

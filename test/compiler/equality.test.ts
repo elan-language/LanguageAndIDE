@@ -223,14 +223,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetruefalse");
   });
 
-  test("Pass_CompareLambdas", async () => {
+  test("Fail_CompareLambdas", async () => {
     const code = `${testHeader}
 
 main
   variable x set to new Foo()
   print x.p1 is x.p1
-  print x.p1 is x.p2
-  print x.p1 is x.p3
 end main
 
 class Foo
@@ -238,8 +236,6 @@ class Foo
   end constructor
 
   property p1 as Func<of Int => Int>
-  property p2 as Func<of Int => Int>
-  property p3 as Func<of Int => Int>
 end class`;
 
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
@@ -247,6 +243,8 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "To evaluate function 'p1' add brackets.LangRef.html#compile_error",
+      "To evaluate function 'p1' add brackets.LangRef.html#compile_error",
       "Cannot do equality operations on Procedures or Functions.LangRef.html#CannotCompareProcFunc",
     ]);
   });

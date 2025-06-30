@@ -1,53 +1,33 @@
 import { AbstractSelector } from "./abstract-selector";
 import { CompileError, Severity } from "./compile-error";
+import { Collapsible } from "./frame-interfaces/collapsible";
+import { editorEvent } from "./frame-interfaces/editor-event";
+import { Field } from "./frame-interfaces/field";
+import { File } from "./frame-interfaces/file";
+import { Frame } from "./frame-interfaces/frame";
+import { GlobalFrame } from "./frame-interfaces/global-frame";
+import { MemberFrame } from "./frame-interfaces/member-frame";
+import { Parent } from "./frame-interfaces/parent";
+import { PossiblyPrivateMember } from "./frame-interfaces/possibly-private-member";
+import { Selectable } from "./frame-interfaces/selectable";
+import { Statement } from "./frame-interfaces/statement";
 import { MainFrame } from "./globals/main-frame";
-import { AstNode } from "./interfaces/ast-node";
-import { AstTypeNode } from "./interfaces/ast-type-node";
-import { Class } from "./interfaces/class";
-import { Collapsible } from "./interfaces/collapsible";
-import { editorEvent } from "./interfaces/editor-event";
-import { ElanSymbol } from "./interfaces/elan-symbol";
-import { Field } from "./interfaces/field";
-import { File } from "./interfaces/file";
-import { Frame } from "./interfaces/frame";
-import { GlobalFrame } from "./interfaces/global-frame";
-import { Member } from "./interfaces/member";
-import { Parent } from "./interfaces/parent";
-import { PossiblyPrivateMember } from "./interfaces/possibly-private-member";
-import { Scope } from "./interfaces/scope";
-import { Selectable } from "./interfaces/selectable";
-import { Statement } from "./interfaces/statement";
-import { SymbolType } from "./interfaces/symbol-type";
-import { isRecord } from "./interfaces/type-options";
 import { ReturnStatement } from "./statements/return-statement";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus, TestStatus } from "./status-enums";
-import { ClassType } from "./symbols/class-type";
-import { DeconstructedListType } from "./symbols/deconstructed-list-type";
-import { DeconstructedRecordType } from "./symbols/deconstructed-record-type";
-import { DeconstructedTupleType } from "./symbols/deconstructed-tuple-type";
-import { TupleType } from "./symbols/tuple-type";
 
 export function isCollapsible(f?: Selectable): f is Collapsible {
   return !!f && "isCollapsible" in f;
 }
 
-export function isFile(f?: Scope): f is File {
+export function isFile(f?: Parent | File): f is File {
   return !!f && "isFile" in f;
 }
 
-export function isMain(f?: Scope): f is MainFrame {
+export function isMain(f?: Frame): f is MainFrame {
   return !!f && "isMain" in f;
 }
 
-export function isClass(f?: ElanSymbol | Scope): f is Class {
-  return !!f && "isClass" in f;
-}
-
-export function isGenericClass(f?: ElanSymbol | Scope): f is Class {
-  return isClass(f) && f.ofTypes?.length > 0;
-}
-
-export function isFrame(f?: Selectable | Scope): f is Frame {
+export function isFrame(f?: Selectable | Parent): f is Frame {
   return !!f && "isFrame" in f;
 }
 
@@ -59,27 +39,23 @@ export function isParent(f?: Selectable | Parent): f is Parent {
   return !!f && "isParent" in f;
 }
 
-export function isMember(f?: Scope | Member | ElanSymbol): f is Member {
+export function isMember(f?: MemberFrame): f is MemberFrame {
   return !!f && "isMember" in f;
 }
 
-export function isConstant(f?: Scope | ElanSymbol): f is ElanSymbol {
-  return !!f && "isConstant" in f;
-}
-
-export function isFunction(f?: Scope | Member | ElanSymbol): f is Member {
+export function isFunction(f?: MemberFrame | Parent): f is MemberFrame {
   return !!f && "isFunction" in f;
 }
 
-export function isProcedure(f?: Scope | Member | ElanSymbol): f is Member {
+export function isProcedure(f?: MemberFrame): f is MemberFrame {
   return !!f && "isProcedure" in f;
 }
 
-export function isLet(f?: ElanSymbol | Statement): f is Statement {
+export function isLet(f?: Statement): f is Statement {
   return !!f && "isLet" in f;
 }
 
-export function isConstructor(f?: Scope | Member): f is Member {
+export function isConstructor(f?: Frame | MemberFrame | Parent): f is MemberFrame {
   return !!f && "isConstructor" in f;
 }
 
@@ -91,16 +67,8 @@ export function isGlobal(f?: Selectable | GlobalFrame): f is GlobalFrame {
   return !!f && "isGlobal" in f;
 }
 
-export function isReturnStatement(f?: Scope): f is ReturnStatement {
+export function isReturnStatement(f?: Frame): f is ReturnStatement {
   return !!f && "isReturnStatement" in f;
-}
-
-export function isScope(f?: ElanSymbol | Scope): f is Scope {
-  return !!f && "resolveSymbol" in f && "getParentScope" in f;
-}
-
-export function isAstType(f?: AstNode): f is AstTypeNode {
-  return !!f && "compileToEmptyObjectCode" in f;
 }
 
 export function singleIndent() {
@@ -147,14 +115,15 @@ export function helper_pastePopUp(loc: Frame | Field): string {
   return popup;
 }
 
-export function helper_compileMsgAsHtml(loc: Frame | Field): string {
+export function helper_compileMsgAsHtmlNew(file: File, loc: Frame | Field): string {
   let msg = "";
   let link = "";
   let help = "";
-  const first = loc.compileErrors[0];
-  const n = loc.compileErrors.length;
+  const compileErrors = file.getAst(false)?.getCompileErrorsFor(loc.getHtmlId()) ?? [];
+  const n = compileErrors.length;
   if (n > 0) {
-    const highest = loc.compileErrors.reduce(
+    const first = compileErrors[0];
+    const highest = compileErrors.reduce(
       (prev, curr) => (curr.priority < prev.priority ? curr : prev),
       first,
     );
@@ -273,22 +242,6 @@ export function isInsideFunction(parent: Parent): boolean {
   return isInsideFunction(parent.getParent());
 }
 
-export function mapSymbolType(ids: string[], st: SymbolType) {
-  if (ids.length > 1 && st instanceof TupleType) {
-    return new DeconstructedTupleType(ids, st.ofTypes);
-  }
-
-  if (ids.length > 1 && st instanceof ClassType && isRecord(st.typeOptions)) {
-    return new DeconstructedRecordType(ids, st.scope as Class);
-  }
-
-  if (ids.length === 2 && st instanceof ClassType && st.typeOptions.isIterable) {
-    return new DeconstructedListType(ids[0], ids[1], st.ofTypes[0], st);
-  }
-
-  return st;
-}
-
 export function mapIds(ids: string[]) {
   return ids.length > 1 ? `[${ids.join(", ")}]` : ids[0];
 }
@@ -308,7 +261,7 @@ export function currentParameterIndex(text: string) {
   return 0;
 }
 
-export function processTogglePrivate(member: Member, e: editorEvent): boolean {
+export function processTogglePrivate(member: MemberFrame, e: editorEvent): boolean {
   let result = false;
   if (e.key === "p" && e.modKey.control) {
     member.private = !member.private;

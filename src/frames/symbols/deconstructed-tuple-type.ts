@@ -1,6 +1,6 @@
-import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
-import { SymbolType } from "../interfaces/symbol-type";
-import { immutableTypeOptions } from "../interfaces/type-options";
+import { DeconstructedSymbolType } from "../compiler-interfaces/deconstructed-symbol-type";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
+import { immutableTypeOptions } from "../compiler-interfaces/type-options";
 import { TupleType } from "./tuple-type";
 import { UnknownType } from "./unknown-type";
 

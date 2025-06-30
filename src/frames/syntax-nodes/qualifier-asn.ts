@@ -1,7 +1,7 @@
 import { CompileError } from "../compile-error";
-import { AstNode } from "../interfaces/ast-node";
-import { AstQualifierNode } from "../interfaces/ast-qualifier-node";
-import { Scope } from "../interfaces/scope";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
+import { Scope } from "../compiler-interfaces/scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class QualifierAsn extends AbstractAstNode implements AstQualifierNode {
@@ -14,11 +14,6 @@ export class QualifierAsn extends AbstractAstNode implements AstQualifierNode {
   }
 
   compileErrors: CompileError[] = [];
-
-  aggregateCompileErrors(): CompileError[] {
-    const q = this.value.aggregateCompileErrors();
-    return this.compileErrors.concat(q);
-  }
 
   compile(): string {
     const s = this.compileAsParameter();

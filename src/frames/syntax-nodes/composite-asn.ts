@@ -1,13 +1,11 @@
-import { CompileError } from "../compile-error";
 import { compilerAssert } from "../compile-rules";
-import { AstCollectionNode } from "../interfaces/ast-collection-node";
-import { AstNode } from "../interfaces/ast-node";
-import { ChainedAsn } from "../interfaces/chained-asn";
-import { Scope } from "../interfaces/scope";
+import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ChainedAsn } from "../compiler-interfaces/chained-asn";
+import { Scope } from "../compiler-interfaces/scope";
 import { updateScopeInChain } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 import { CsvAsn } from "./csv-asn";
 
 export class CompositeAsn extends AbstractAstNode implements AstNode {
@@ -22,12 +20,6 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
 
   private finalNode?: ChainedAsn;
 
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors
-      .concat(this.expr1.aggregateCompileErrors())
-      .concat(this.expr2.aggregateCompileErrors());
-  }
-
   setupNodes() {
     const leafNodes = this.expr2.items as ChainedAsn[];
 
@@ -35,7 +27,7 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
 
     if (!this.finalNode) {
       let previousNode = this.expr1;
-      let previousScope = updateScopeInChain(previousNode, transforms(), this.scope);
+      let previousScope = updateScopeInChain(previousNode, this.scope);
 
       for (let i = 0; i < leafNodes.length; i++) {
         const currentNode = leafNodes[i];
@@ -49,7 +41,7 @@ export class CompositeAsn extends AbstractAstNode implements AstNode {
           this.scope,
         );
 
-        previousScope = updateScopeInChain(currentNode, transforms(), this.scope);
+        previousScope = updateScopeInChain(currentNode, this.scope);
 
         // last node in chain
         if (i === leafNodes.length - 1) {

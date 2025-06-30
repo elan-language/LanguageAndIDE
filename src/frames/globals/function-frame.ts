@@ -2,22 +2,16 @@ import { MethodNameField } from "../fields/method-name-field";
 import { ParamListField } from "../fields/param-list-field";
 import { TypeField } from "../fields/type-field";
 import { isReturnStatement } from "../frame-helpers";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { File } from "../frame-interfaces/file";
+import { Parent } from "../frame-interfaces/parent";
+import { Profile } from "../frame-interfaces/profile";
 import { FrameWithStatements } from "../frame-with-statements";
-import { CodeSource } from "../interfaces/code-source";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Field } from "../interfaces/field";
-import { File } from "../interfaces/file";
-import { Parent } from "../interfaces/parent";
-import { Profile } from "../interfaces/profile";
-import { Scope } from "../interfaces/scope";
-import { Transforms } from "../interfaces/transforms";
 import { endKeyword, functionKeyword, returnKeyword, returnsKeyword } from "../keywords";
 import { ReturnStatement } from "../statements/return-statement";
-import { FunctionType } from "../symbols/function-type";
-import { SymbolScope } from "../symbols/symbol-scope";
-import { UnknownSymbol } from "../symbols/unknown-symbol";
 
-export abstract class FunctionFrame extends FrameWithStatements implements Parent, ElanSymbol {
+export abstract class FunctionFrame extends FrameWithStatements implements Parent {
   public name: MethodNameField;
   public params: ParamListField;
   public returnType: TypeField;
@@ -34,19 +28,6 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   }
   initialKeywords(): string {
     return functionKeyword;
-  }
-  get symbolId() {
-    return this.name.text;
-  }
-
-  symbolType(transforms?: Transforms) {
-    const [pn, pt] = this.params.symbolNamesAndTypes(transforms);
-    const rt = this.returnType.symbolType(transforms);
-    return new FunctionType(pn, pt, rt, false, true, true);
-  }
-
-  get symbolScope() {
-    return SymbolScope.program;
   }
 
   getProfile(): Profile {
@@ -94,26 +75,5 @@ ${this.renderChildrenAsHtml()}
   }
   protected getReturnStatement(): ReturnStatement {
     return this.getChildren().filter((s) => isReturnStatement(s))[0];
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
-    if (this.name.text === id) {
-      return this;
-    }
-
-    const s = this.params.resolveSymbol(id, transforms, initialScope);
-
-    return s instanceof UnknownSymbol ? super.resolveSymbol(id, transforms, initialScope) : s;
-  }
-
-  public compile(transforms: Transforms): string {
-    return `${this.name.compile(transforms)}(${this.params.compile(transforms)}) {\r
-${this.breakPoint(this.debugSymbols())}${this.compileChildren(transforms)}\r`;
-  }
-
-  public override symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
-    const matches = super.symbolMatches(id, all, initialScope);
-    const localMatches = this.params.symbolMatches(id, all, initialScope);
-    return localMatches.concat(matches);
   }
 }

@@ -1,5 +1,4 @@
-import { CompileError } from "../compile-error";
-import { AstNode } from "../interfaces/ast-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { TypeAsn } from "./type-asn";
 
@@ -9,10 +8,6 @@ export class EmptyTypeAsn extends AbstractAstNode implements AstNode {
     public readonly fieldId: string,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors.concat(this.type.aggregateCompileErrors());
   }
 
   compile(): string {

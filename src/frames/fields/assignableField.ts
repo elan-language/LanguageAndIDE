@@ -1,8 +1,7 @@
-import { CodeSource } from "../interfaces/code-source";
-import { Frame } from "../interfaces/frame";
-import { ParseNode } from "../interfaces/parse-node";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Frame } from "../frame-interfaces/frame";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { AssignableNode } from "../parse-nodes/assignable-node";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class AssignableField extends AbstractField {
@@ -19,7 +18,6 @@ export class AssignableField extends AbstractField {
     return "ident";
   }
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new AssignableNode();
     return this.rootNode;
   }
@@ -27,6 +25,6 @@ export class AssignableField extends AbstractField {
     source.readUntil(/(\s+to\s+)|\r|\n/);
 
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return this.symbolCompletionAsHtml();
   }
 }

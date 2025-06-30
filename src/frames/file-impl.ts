@@ -5,6 +5,8 @@ import { StdLib } from "../standard-library/std-lib";
 import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSourceFromString } from "./code-source-from-string";
+import { CompileMode, RootAstNode } from "./compiler-interfaces/root-ast-node";
+import { Semver } from "./compiler-interfaces/semver";
 import { Regexes } from "./fields/regexes";
 import {
   expandCollapseAll,
@@ -14,6 +16,16 @@ import {
   isMain,
   isSelector,
 } from "./frame-helpers";
+import { CodeSource } from "./frame-interfaces/code-source";
+import { editorEvent } from "./frame-interfaces/editor-event";
+import { Field } from "./frame-interfaces/field";
+import { File } from "./frame-interfaces/file";
+import { Frame } from "./frame-interfaces/frame";
+import { Parent } from "./frame-interfaces/parent";
+import { defaultUsername, Profile } from "./frame-interfaces/profile";
+import { Selectable } from "./frame-interfaces/selectable";
+import { StatementFactory } from "./frame-interfaces/statement-factory";
+import { Transforms } from "./frame-interfaces/transforms";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { Constant } from "./globals/constant";
@@ -26,19 +38,6 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
-import { CodeSource } from "./interfaces/code-source";
-import { editorEvent } from "./interfaces/editor-event";
-import { ElanSymbol } from "./interfaces/elan-symbol";
-import { Field } from "./interfaces/field";
-import { File } from "./interfaces/file";
-import { Frame } from "./interfaces/frame";
-import { Parent } from "./interfaces/parent";
-import { defaultUsername, Profile } from "./interfaces/profile";
-import { Scope } from "./interfaces/scope";
-import { Selectable } from "./interfaces/selectable";
-import { Semver } from "./interfaces/semver";
-import { StatementFactory } from "./interfaces/statement-factory";
-import { Transforms } from "./interfaces/transforms";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -67,9 +66,6 @@ import {
   RunStatus,
   TestStatus,
 } from "./status-enums";
-import { DuplicateSymbol } from "./symbols/duplicate-symbol";
-import { elanSymbols } from "./symbols/elan-symbols";
-import { isSymbol, symbolMatches } from "./symbols/symbol-helpers";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -78,11 +74,10 @@ export const fileErrorPrefix = `Cannot load file:`;
 
 const cannotLoadFile = `${fileErrorPrefix} it has been created or modified outside Elan IDE`;
 
-export class FileImpl implements File, Scope {
+export class FileImpl implements File {
   currentHash: string = "";
   isParent: boolean = true;
   hasFields: boolean = true;
-  hasTests: boolean = false;
   isFile: boolean = true;
   parseError?: string;
   readonly defaultFileName = "code.elan";
@@ -104,6 +99,7 @@ export class FileImpl implements File, Scope {
   private _testError?: Error;
   private _frNo: number = 0;
   private _showFrameNos: boolean = true;
+  ast: RootAstNode | undefined;
 
   constructor(
     private readonly hash: (toHash: string) => Promise<string>,
@@ -124,22 +120,8 @@ export class FileImpl implements File, Scope {
     this.scratchPad = new ScratchPad();
   }
 
-  // for testing only
-  setSymbols(testSymbols: StdLibSymbols) {
-    this._stdLibSymbols = testSymbols;
-  }
-
   private version = elanVersion;
   private isProduction = isElanProduction;
-
-  symbolMatches(id: string, all: boolean): ElanSymbol[] {
-    const languageMatches = symbolMatches(id, all, elanSymbols);
-    const libMatches = this.libraryScope.symbolMatches(id, all);
-    const globalSymbols = this.getChildren().filter((c) => isSymbol(c)) as ElanSymbol[];
-    const matches = symbolMatches(id, all, globalSymbols);
-
-    return languageMatches.concat(matches).concat(libMatches);
-  }
 
   getFile(): File {
     return this;
@@ -168,6 +150,10 @@ export class FileImpl implements File, Scope {
 
   getChildren(): Frame[] {
     return this._children;
+  }
+
+  get hasTests() {
+    return this._children.some((g) => g instanceof TestFrame);
   }
 
   private moveDownOne(child: Frame): boolean {
@@ -224,10 +210,6 @@ export class FileImpl implements File, Scope {
     throw new Error(
       "getParent Should not have been called on a file; test for 'hasParent()' before calling.",
     );
-  }
-
-  getParentScope(): Scope {
-    return this.libraryScope;
   }
 
   getById(id: string): Selectable {
@@ -311,95 +293,40 @@ export class FileImpl implements File, Scope {
     return `<el-profile class="${cls}">${profileName}</el-profile>`;
   }
 
-  compileGlobals(): string {
-    let result = "";
-    if (this._children.length > 0) {
-      const ss: Array<string> = [];
-      for (const frame of this._children.filter((g) => g instanceof Enum)) {
-        ss.push(frame.compile(this.transform));
-      }
-
-      const constants = this._children.filter((g) => g instanceof Constant);
-
-      if (constants.length > 0) {
-        ss.push("const global = new class {");
-        for (const frame of constants) {
-          ss.push(`  ${frame.compile(this.transform)}`);
-        }
-        ss.push("};");
-      } else {
-        ss.push("const global = new class {};");
-      }
-
-      for (const frame of this._children.filter(
-        (g) => !(isSelector(g) || g instanceof Enum || g instanceof Constant),
-      )) {
-        ss.push(frame.compile(this.transform));
-      }
-
-      if (!this._children.some((g) => g instanceof MainFrame)) {
-        const emptyMain = new MainFrame(this);
-        ss.push(emptyMain.compile(this.transform));
-      }
-
-      result = ss.join("\r\n");
-
-      this.hasTests = this._children.some((g) => g instanceof TestFrame);
-    }
-    return result;
-  }
-
   async renderAsSource(): Promise<string> {
     const content = this.renderHashableContent();
     this.currentHash = await this.getHash(content);
     return `# ${this.currentHash} ${content}`;
   }
 
+  getAst(invalidate: boolean): RootAstNode | undefined {
+    if (!this.ast || invalidate) {
+      this.ast = this.transform.transform(this, "", undefined) as RootAstNode | undefined;
+    }
+    return this.ast;
+  }
+
   compile(): string {
-    const stdlib = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {`;
-    return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}`;
+    return this.getAst(true)?.compile() ?? "";
   }
 
   compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string {
-    this.updateBreakpoints(debugMode ? BreakpointEvent.activate : BreakpointEvent.disable);
-    const onmsg = `addEventListener("message", async (e) => {
-  if (e.data.type === "start") {
-    try {
-      const [main, tests] = await program();
-      await main();
-      postMessage({type : "status", status : "finished"});
-    }
-    catch (e) {
-      postMessage({type : "status", status : "error", error : e});
-    }
-  }
-  if (e.data.type === "pause") {
-    __pause = true;
-  }
-  });`;
+    const ast = this.getAst(true);
+    const mode = debugMode
+      ? CompileMode.debugWorker
+      : standalone
+        ? CompileMode.standaloneWorker
+        : CompileMode.worker;
+    ast?.setCompileOptions(mode, base);
 
-    const imp = standalone ? "" : `import { StdLib } from "${base}/elan-api.js"; `;
-    const stdlib = `${imp}let system; let _stdlib; let _tests = []; let __pause = false; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
-    return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
+    return ast?.compile() ?? "";
   }
 
   compileAsTestWorker(base: string): string {
-    this.updateBreakpoints(BreakpointEvent.disable);
-    const onmsg = `onmessage = async (e) => {
-  if (e.data.type === "start") {
-    try {
-      const [main, tests] = await program();
-      const outcomes = await system.runTests(tests);
-      postMessage({type : "test", value : outcomes});
-    }
-    catch (e) {
-      postMessage({type : "status", status : "error", error : e});
-    }
-  }
-};`;
+    const ast = this.getAst(true);
+    ast?.setCompileOptions(CompileMode.testWorker, base);
 
-    const stdlib = `import { StdLib } from "${base}/elan-api.js"; let system; let _stdlib; let _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
-    return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
+    return ast?.compile() ?? "";
   }
 
   renderHashableContent(): string {
@@ -562,8 +489,9 @@ export class FileImpl implements File, Scope {
     this.getChildren().forEach((c) => c.updateCompileStatus());
     this._compileStatus = parentHelper_readWorstCompileStatusOfChildren(this);
   }
+
   resetAllCompileStatusAndErrors(): void {
-    this.getChildren().forEach((c) => c.resetCompileStatusAndErrors());
+    this.ast = undefined;
     this._compileStatus = CompileStatus.default;
     this._testError = undefined;
   }
@@ -856,21 +784,9 @@ export class FileImpl implements File, Scope {
     }
   }
 
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
-    // unknown because of typescript quirk
-    const globalSymbols = (this.getChildren().filter((c) => isSymbol(c)) as ElanSymbol[]).concat(
-      elanSymbols,
-    );
-    const matches = globalSymbols.filter((s) => s.symbolId === id);
-
-    if (matches.length === 1) {
-      return matches[0];
-    }
-    if (matches.length > 1) {
-      return new DuplicateSymbol(matches);
-    }
-
-    return this.libraryScope.resolveSymbol(id, transforms, this);
+  // for testing only
+  setSymbols(testSymbols: StdLibSymbols) {
+    this._stdLibSymbols = testSymbols;
   }
 
   get libraryScope() {

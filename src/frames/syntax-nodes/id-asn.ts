@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import {
   mustBeFunctionRefIfFunction,
   mustBeGlobalFunctionIfRef,
@@ -7,14 +6,13 @@ import {
   mustBePublicMember,
   mustNotBeKeyword,
 } from "../compile-rules";
-import { isClass } from "../frame-helpers";
-import { AstIdNode } from "../interfaces/ast-id-node";
-import { AstNode } from "../interfaces/ast-node";
-import { ChainedAsn } from "../interfaces/chained-asn";
-import { Frame } from "../interfaces/frame";
-import { Scope } from "../interfaces/scope";
+import { AstIdNode } from "../compiler-interfaces/ast-id-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ChainedAsn } from "../compiler-interfaces/chained-asn";
+import { Scope } from "../compiler-interfaces/scope";
 import { NullScope } from "../symbols/null-scope";
 import {
+  getGlobalScope,
   isDeconstructedType,
   isDefinitionStatement,
   isMemberOnFieldsClass,
@@ -23,7 +21,11 @@ import {
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
+import { ClassAsn } from "./globals/class-asn";
+
+function isClass(s: Scope): s is ClassAsn {
+  return s instanceof ClassAsn;
+}
 
 export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(
@@ -47,20 +49,17 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
 
   isAsync: boolean = false;
 
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors;
-  }
-
   getSymbol() {
     let searchScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
     if (isClass(searchScope)) {
-      return searchScope.resolveOwnSymbol(this.id, transforms());
-    }
-    if (isDefinitionStatement(this.scope)) {
-      searchScope = (this.scope as Frame).getParent();
+      return searchScope.resolveOwnSymbol(this.id);
     }
 
-    return searchScope.resolveSymbol(this.id, transforms(), this.scope);
+    if (isDefinitionStatement(this.scope)) {
+      searchScope = this.scope.getParentScope();
+    }
+
+    return searchScope.resolveSymbol(this.id, this.scope);
   }
 
   get symbolScope() {
@@ -81,7 +80,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
       this.fieldId,
     );
 
-    if (!isMemberOnFieldsClass(symbol, transforms(), this.scope)) {
+    if (!isMemberOnFieldsClass(symbol, this.scope)) {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
     }
 
@@ -90,9 +89,9 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     }
 
     if (!this.isFuncRef) {
-      mustBeFunctionRefIfFunction(symbol, this.compileErrors, this.fieldId);
+      mustBeFunctionRefIfFunction(symbol, this.id, this.compileErrors, this.fieldId);
     } else {
-      mustBeGlobalFunctionIfRef(symbol, this.compileErrors, this.fieldId);
+      mustBeGlobalFunctionIfRef(symbol, this.id, this.compileErrors, this.fieldId);
     }
 
     const prefix =
@@ -102,11 +101,13 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
 
     const postfix = symbol.symbolScope === SymbolScope.outParameter ? "[0]" : "";
 
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
     return `${prefix}${this.id}${postfix}`;
   }
 
   symbolType() {
-    const st = this.getSymbol().symbolType(transforms());
+    const st = this.getSymbol().symbolType();
 
     if (isDeconstructedType(st)) {
       return st.symbolTypeFor(this.id);

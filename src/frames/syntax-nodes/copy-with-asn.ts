@@ -1,12 +1,10 @@
-import { CompileError } from "../compile-error";
 import { mustBeAssignableType, mustBeClass, mustBePropertyAndPublic } from "../compile-rules";
-import { isClass } from "../frame-helpers";
-import { AstCollectionNode } from "../interfaces/ast-collection-node";
-import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
+import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
 import { ClassType } from "../symbols/class-type";
+import { getGlobalScope, isClass } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 import { ToAsn } from "./to-asn";
 
 export class CopyWithAsn extends AbstractAstNode implements AstNode {
@@ -19,12 +17,6 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
     super();
   }
 
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors
-      .concat(this.obj.aggregateCompileErrors())
-      .concat(this.withClause.aggregateCompileErrors());
-  }
-
   compile(): string {
     const from = this.obj.compile();
     const tempTo = `_a`; // only scoped to lambda so safe
@@ -33,9 +25,7 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
     let withClauseStr = "";
 
     if (fromType instanceof ClassType) {
-      const classSymbol = this.scope
-        .getParentScope()
-        .resolveSymbol(fromType.className, transforms(), this.scope);
+      const classSymbol = this.scope.getParentScope().resolveSymbol(fromType.className, this.scope);
 
       mustBeClass(classSymbol, this.compileErrors, this.fieldId);
 
@@ -44,14 +34,9 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
           const propertyId = ast.id;
           const type = ast.symbolType();
 
-          const pSymbol = classSymbol.resolveSymbol(propertyId, transforms(), this.scope);
+          const pSymbol = classSymbol.resolveSymbol(propertyId, this.scope);
           mustBePropertyAndPublic(pSymbol, this.compileErrors, this.fieldId);
-          mustBeAssignableType(
-            pSymbol.symbolType(transforms()),
-            type,
-            this.compileErrors,
-            this.fieldId,
-          );
+          mustBeAssignableType(pSymbol.symbolType(), type, this.compileErrors, this.fieldId);
 
           withClause.push(`${tempTo}.${ast.compile()}`);
         }
@@ -61,6 +46,8 @@ export class CopyWithAsn extends AbstractAstNode implements AstNode {
     if (withClause.length > 0) {
       withClauseStr = ` ${withClause.join("; ")};`;
     }
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `await (async () => {const ${tempTo} = {...${from}}; Object.setPrototypeOf(${tempTo}, Object.getPrototypeOf(${from}));${withClauseStr} return ${tempTo};})()`;
   }

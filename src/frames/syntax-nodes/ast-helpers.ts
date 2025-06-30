@@ -6,16 +6,17 @@ import {
   mustBeIndexableType,
   mustMatchParameters,
 } from "../compile-rules";
-import { isFile, isFrame, isFunction } from "../frame-helpers";
-import { AstCollectionNode } from "../interfaces/ast-collection-node";
-import { AstIdNode } from "../interfaces/ast-id-node";
-import { AstIndexableNode } from "../interfaces/ast-indexable-node";
-import { AstNode } from "../interfaces/ast-node";
-import { AstQualifiedNode } from "../interfaces/ast-qualified-node";
-import { Scope } from "../interfaces/scope";
-import { SymbolType } from "../interfaces/symbol-type";
-import { Transforms } from "../interfaces/transforms";
-import { noTypeOptions } from "../interfaces/type-options";
+import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
+import { AstIdNode } from "../compiler-interfaces/ast-id-node";
+import { AstIndexableNode } from "../compiler-interfaces/ast-indexable-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { AstQualifiedNode } from "../compiler-interfaces/ast-qualified-node";
+import { AstTypeNode } from "../compiler-interfaces/ast-type-node";
+import { Member } from "../compiler-interfaces/member";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
+import { noTypeOptions } from "../compiler-interfaces/type-options";
+import { Transforms } from "../frame-interfaces/transforms";
 import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
 import { GenericParameterType } from "../symbols/generic-parameter-type";
@@ -32,9 +33,12 @@ import {
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { transform, transformMany } from "./ast-visitor";
+import { ConstructorAsn } from "./class-members/constructor-asn";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { EmptyAsn } from "./empty-asn";
+import { FileAsn } from "./file-asn";
+import { FunctionAsn } from "./globals/function-asn";
 import { IndexAsn } from "./index-asn";
 import { IndexDoubleAsn } from "./index-double-asn";
 import { OperationSymbol } from "./operation-symbol";
@@ -55,8 +59,20 @@ export function isAstIdNode(n: AstNode | undefined): n is AstIdNode {
   return !!n && "id" in n;
 }
 
+export function isConstructor(f?: AstNode | Scope): f is ConstructorAsn {
+  return !!f && "isConstructor" in f;
+}
+
 export function isEmptyNode(n: AstNode): n is EmptyAsn {
   return !!n && "isEmpty" in n;
+}
+
+export function isFunction(f?: Scope | Member): f is Member {
+  return !!f && "isFunction" in f;
+}
+
+export function isFile(f?: Scope): f is FileAsn {
+  return !!f && "isFile" in f;
 }
 
 export function InFunctionScope(start: Scope): boolean {
@@ -68,11 +84,7 @@ export function InFunctionScope(start: Scope): boolean {
     return false;
   }
 
-  if (isFrame(start)) {
-    return InFunctionScope(start.getParent());
-  }
-
-  return false;
+  return InFunctionScope(start.getParentScope());
 }
 
 export function transforms(): Transforms {
@@ -411,4 +423,47 @@ export function compileSimpleSubscript(
   mustBeAssignableType(indexType, index.index.symbolType(), compileErrors, fieldId);
 
   return wrapSimpleSubscript(`${prefix}${code}, ${postfix}`);
+}
+
+export function compileNodes(nodes: AstNode[]): string {
+  let result = "";
+  if (nodes.length > 0) {
+    const ss: Array<string> = [];
+    for (const node of nodes) {
+      ss.push(node.compile());
+    }
+    result = ss.join("\r\n");
+  }
+  return result;
+}
+
+export function isInsideFunction(scope: Scope): boolean {
+  if (scope instanceof FunctionAsn) {
+    return true;
+  }
+  if (scope instanceof FileAsn) {
+    return false;
+  }
+  return isInsideFunction(scope.getParentScope());
+}
+
+export function isInsideFunctionOrConstructor(scope: Scope): boolean {
+  if (scope instanceof FunctionAsn) {
+    return true;
+  }
+  if (scope instanceof ConstructorAsn) {
+    return true;
+  }
+  if (scope instanceof FileAsn) {
+    return false;
+  }
+  return isInsideFunctionOrConstructor(scope.getParentScope());
+}
+
+export function isAstType(f?: AstNode): f is AstTypeNode {
+  return !!f && "compileToEmptyObjectCode" in f;
+}
+
+export function singleIndent() {
+  return "  ";
 }

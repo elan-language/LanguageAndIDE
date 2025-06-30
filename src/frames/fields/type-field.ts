@@ -1,11 +1,8 @@
-import { isAstType } from "../frame-helpers";
-import { CodeSource } from "../interfaces/code-source";
-import { Frame } from "../interfaces/frame";
-import { ParseNode } from "../interfaces/parse-node";
-import { Transforms } from "../interfaces/transforms";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Frame } from "../frame-interfaces/frame";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { TypeNode } from "../parse-nodes/type-node";
 import { TokenType } from "../symbol-completion-helpers";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class TypeField extends AbstractField {
@@ -25,7 +22,6 @@ export class TypeField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new TypeNode(
       new Set<TokenType>([
         TokenType.type_concrete,
@@ -38,20 +34,7 @@ export class TypeField extends AbstractField {
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToEndOfLine();
 
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    const astNode = this.getOrTransformAstNode(transforms);
-    if (isAstType(astNode)) {
-      return astNode.compileToEmptyObjectCode();
-    }
-    return super.compile(transforms);
-  }
-
-  symbolType(transforms?: Transforms) {
-    return this.getOrTransformAstNode(transforms).symbolType();
-  }
-
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return this.symbolCompletionAsHtml();
   }
 }

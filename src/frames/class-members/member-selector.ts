@@ -1,9 +1,9 @@
 import { AbstractSelector } from "../abstract-selector";
 import { singleIndent } from "../frame-helpers";
+import { Frame } from "../frame-interfaces/frame";
+import { MemberFrame } from "../frame-interfaces/member-frame";
+import { Parent } from "../frame-interfaces/parent";
 import { ClassFrame } from "../globals/class-frame";
-import { Frame } from "../interfaces/frame";
-import { Member } from "../interfaces/member";
-import { Parent } from "../interfaces/parent";
 import {
   abstractFunctionKeywords,
   abstractKeyword,
@@ -19,7 +19,7 @@ import {
   propertyKeyword,
 } from "../keywords";
 
-export class MemberSelector extends AbstractSelector implements Member {
+export class MemberSelector extends AbstractSelector implements MemberFrame {
   isMember: boolean = true;
   isAbstract = false;
   private = false;
@@ -33,8 +33,8 @@ export class MemberSelector extends AbstractSelector implements Member {
     return "MemberInstructions";
   }
 
-  getClass(): ClassFrame {
-    return this.getParent() as ClassFrame;
+  getClass() {
+    return this.getParent() as unknown as ClassFrame;
   }
 
   defaultOptions(): [string, (parent: Parent) => Frame][] {

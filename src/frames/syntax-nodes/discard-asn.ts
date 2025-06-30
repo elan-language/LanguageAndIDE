@@ -1,5 +1,4 @@
-import { CompileError } from "../compile-error";
-import { AstIdNode } from "../interfaces/ast-id-node";
+import { AstIdNode } from "../compiler-interfaces/ast-id-node";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
@@ -9,10 +8,6 @@ export class DiscardAsn extends AbstractAstNode implements AstIdNode {
     public readonly fieldId: string,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors;
   }
 
   compile(): string {

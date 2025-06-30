@@ -1,8 +1,7 @@
 import { ElanSymbol } from "./elan-symbol";
-import { Transforms } from "./transforms";
 
 export interface Scope {
-  resolveSymbol(id: string, transforms: Transforms, scope: Scope): ElanSymbol;
+  resolveSymbol(id: string, scope: Scope): ElanSymbol;
 
   getParentScope(): Scope;
 

@@ -2,7 +2,6 @@ import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
   assertDoesNotCompile,
-  assertDoesNotCompileWithId,
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -349,15 +348,9 @@ end class
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr5", [
+    assertDoesNotCompile(fileImpl, [
       "Incompatible types. Expected: Float or Int, Provided: Boolean.LangRef.html#TypesCompileError",
-    ]);
-
-    assertDoesNotCompileWithId(fileImpl, "expr8", [
       "Incompatible types. Expected: Float or Int, Provided: Boolean.LangRef.html#TypesCompileError",
-    ]);
-
-    assertDoesNotCompileWithId(fileImpl, "expr11", [
       "Incompatible types. Expected: Float or Int, Provided: Foo.LangRef.html#TypesCompileError",
     ]);
   });

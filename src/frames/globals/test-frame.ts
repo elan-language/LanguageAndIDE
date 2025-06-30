@@ -1,20 +1,16 @@
 import { AssertOutcome } from "../../assert-outcome";
-
-import { CompileError } from "../compile-error";
 import { CommentField } from "../fields/comment-field";
 import {
   helper_CompileOrParseAsDisplayStatus,
   helper_testStatusAsDisplayStatus,
 } from "../frame-helpers";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { editorEvent } from "../frame-interfaces/editor-event";
+import { Field } from "../frame-interfaces/field";
+import { File } from "../frame-interfaces/file";
+import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { FrameWithStatements } from "../frame-with-statements";
-import { CodeSource } from "../interfaces/code-source";
-import { editorEvent } from "../interfaces/editor-event";
-import { Field } from "../interfaces/field";
-import { File } from "../interfaces/file";
-import { GlobalFrame } from "../interfaces/global-frame";
-import { Transforms } from "../interfaces/transforms";
 import { ignoreKeyword, testKeyword } from "../keywords";
-import { parentHelper_compileFrames } from "../parent-helpers";
 import { AssertStatement } from "../statements/assert-statement";
 import { BreakpointStatus, DisplayColour, TestStatus } from "../status-enums";
 
@@ -101,31 +97,6 @@ end test\r
   }
   parseBottom(source: CodeSource): boolean {
     return this.parseStandardEnding(source, "end test");
-  }
-
-  private aggregateCompileErrors(): CompileError[] {
-    const cc = this.getFields()
-      .map((s) => s.aggregateCompileErrors())
-      .reduce((prev, cur) => prev.concat(cur), []);
-    return this.compileErrors.concat(cc);
-  }
-
-  private compileTestBody(transforms: Transforms) {
-    const body = this.compileChildren(transforms);
-
-    if (!this.ignored || this.aggregateCompileErrors().length > 0) {
-      return body;
-    }
-
-    // just return the asserts
-    return parentHelper_compileFrames(this.getAsserts(), transforms);
-  }
-
-  public compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    return `_tests.push(["${this.htmlId}", async (_outcomes) => {\r
-${this.compileTestBody(transforms)}\r
-}]);\r\n`;
   }
 
   setAssertOutcomes(outcomes: AssertOutcome[]) {

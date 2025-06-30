@@ -1,15 +1,13 @@
+import { Scope } from "../compiler-interfaces/scope";
 import { currentParameterIndex } from "../frame-helpers";
-import { CodeSource } from "../interfaces/code-source";
-import { Frame } from "../interfaces/frame";
-import { ParseNode } from "../interfaces/parse-node";
-import { Scope } from "../interfaces/scope";
-import { Transforms } from "../interfaces/transforms";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Frame } from "../frame-interfaces/frame";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { CallStatement } from "../statements/call-statement";
 import { ParseStatus } from "../status-enums";
 import { parameterNames } from "../symbols/symbol-helpers";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class ArgListField extends AbstractField {
@@ -36,7 +34,6 @@ export class ArgListField extends AbstractField {
     }
   }
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new ArgListNode(() => "");
     return this.rootNode;
   }
@@ -48,23 +45,27 @@ export class ArgListField extends AbstractField {
   }
 
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return this.symbolCompletionAsHtml();
   }
 
   private completionOverride = "";
 
-  private argumentDescriptions(holder: Scope, transforms: Transforms) {
+  private argumentDescriptions(holder: Frame, scope: Scope | undefined) {
     const proc = (holder as CallStatement).proc.text;
-    const ps = holder.resolveSymbol(proc, transforms, holder);
+    const ps = scope?.resolveSymbol(proc, scope);
     let descriptions = ["<i>arguments</i>"];
-    if (!(ps instanceof UnknownSymbol)) {
-      descriptions = parameterNames(ps.symbolType(transforms));
+    if (ps && !(ps instanceof UnknownSymbol)) {
+      descriptions = parameterNames(ps.symbolType());
     }
     return descriptions;
   }
 
   public textAsHtml(): string {
-    const descriptions = this.argumentDescriptions(this.getHolder(), transforms());
+    const holder = this.getHolder();
+    const descriptions = this.argumentDescriptions(
+      holder,
+      this.getFile().getAst(false)?.getScopeById(holder.getHtmlId()),
+    );
 
     if (this.text) {
       const count = currentParameterIndex(this.text);

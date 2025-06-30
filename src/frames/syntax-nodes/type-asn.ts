@@ -1,4 +1,3 @@
-import { CompileError } from "../compile-error";
 import {
   checkForDeprecation,
   mustBeImmutableGenericType,
@@ -6,10 +5,10 @@ import {
   mustBeValidKeyType,
   mustMatchGenericParameters,
 } from "../compile-rules";
-import { AstNode } from "../interfaces/ast-node";
-import { AstTypeNode } from "../interfaces/ast-type-node";
-import { Scope } from "../interfaces/scope";
-import { isAnyDictionary } from "../interfaces/type-options";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { AstTypeNode } from "../compiler-interfaces/ast-type-node";
+import { Scope } from "../compiler-interfaces/scope";
+import { isAnyDictionary } from "../compiler-interfaces/type-options";
 import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
 import { StringType } from "../symbols/string-type";
@@ -17,7 +16,6 @@ import { getGlobalScope, isClassTypeDef, isReifyableSymbolType } from "../symbol
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
@@ -27,14 +25,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     private readonly scope: Scope,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    let cc: CompileError[] = [];
-    for (const i of this.genericParameters) {
-      cc = cc.concat(i.aggregateCompileErrors());
-    }
-    return this.compileErrors.concat(cc);
   }
 
   expectedMinimumGenericParameters() {
@@ -61,7 +51,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   commonCompile() {
     this.compileErrors = [];
-    const rootSt = this.rootSymbol().symbolType(transforms());
+    const rootSt = this.rootSymbol().symbolType();
 
     mustBeKnownSymbolType(rootSt, this.id, this.compileErrors, this.fieldId);
 
@@ -99,11 +89,13 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   compile(): string {
     this.commonCompile();
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return this.id;
   }
 
   compileToEmptyObjectCode(): string {
     this.commonCompile();
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return this.symbolType().initialValue;
   }
 
@@ -113,12 +105,12 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
   rootSymbol() {
     const globalScope = getGlobalScope(this.scope);
-    return globalScope.resolveSymbol(this.id, transforms(), this.scope);
+    return globalScope.resolveSymbol(this.id, this.scope);
   }
 
   symbolType() {
     const symbol = this.rootSymbol();
-    const st = symbol.symbolType(transforms());
+    const st = symbol.symbolType();
 
     if (isReifyableSymbolType(st)) {
       return st.reify(this.getGenericParameterSymbolTypes());

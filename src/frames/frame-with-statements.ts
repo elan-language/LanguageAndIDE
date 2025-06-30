@@ -2,20 +2,15 @@ import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { Regexes } from "./fields/regexes";
 import { isSelector } from "./frame-helpers";
-import { CodeSource } from "./interfaces/code-source";
-import { Collapsible } from "./interfaces/collapsible";
-import { ElanSymbol } from "./interfaces/elan-symbol";
-import { Frame } from "./interfaces/frame";
-import { Parent } from "./interfaces/parent";
-import { Profile } from "./interfaces/profile";
-import { Scope } from "./interfaces/scope";
-import { StatementFactory } from "./interfaces/statement-factory";
-import { Transforms } from "./interfaces/transforms";
+import { CodeSource } from "./frame-interfaces/code-source";
+import { Collapsible } from "./frame-interfaces/collapsible";
+import { Frame } from "./frame-interfaces/frame";
+import { Parent } from "./frame-interfaces/parent";
+import { Profile } from "./frame-interfaces/profile";
+import { StatementFactory } from "./frame-interfaces/statement-factory";
 import {
-  compileStatements,
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
-  parentHelper_compileChildren,
   parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
@@ -37,7 +32,6 @@ import {
 import { AssertStatement } from "./statements/assert-statement";
 import { StatementSelector } from "./statements/statement-selector";
 import { BreakpointEvent } from "./status-enums";
-import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "./symbols/symbol-helpers";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible {
   isFrameWithStatements = true;
@@ -81,11 +75,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     super.updateCompileStatus(); //will update it based on fields and its own direct compile errors
     const newStatus = Math.min(this.readCompileStatus(), worstOfFieldsOrChildren);
     this.setCompileStatus(newStatus);
-  }
-
-  resetCompileStatusAndErrors(): void {
-    this.getChildren().forEach((f) => f.resetCompileStatusAndErrors());
-    super.resetCompileStatusAndErrors();
   }
 
   getChildren(): Frame[] {
@@ -163,9 +152,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   protected renderChildrenAsSource(): string {
     return parentHelper_renderChildrenAsSource(this);
   }
-  protected compileChildren(transforms: Transforms): string {
-    return parentHelper_compileChildren(this, transforms);
-  }
 
   selectFirstField(): boolean {
     let result = super.selectFirstField();
@@ -220,46 +206,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return result;
   }
 
-  protected compileChildStatements(transforms: Transforms): string {
-    return compileStatements(transforms, this._children);
-  }
-
   multipleIds(sid: string) {
     return sid.includes(",") || sid.includes(":");
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
-    const fst = this.getFirstChild();
-    let range = this.getChildRange(fst, initialScope as Frame);
-    if (range.length > 1) {
-      range = range.slice(0, range.length - 1);
-
-      for (const f of range) {
-        if (isSymbol(f) && id) {
-          const sids = getIds(f.symbolId);
-          if (sids.includes(id)) {
-            return f;
-          }
-        }
-      }
-    }
-
-    return this.getParentScope().resolveSymbol(id, transforms, this.getCurrentScope());
-  }
-
-  symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
-    const matches = this.getParentScope().symbolMatches(id, all, this.getCurrentScope());
-    let localMatches: ElanSymbol[] = [];
-
-    const fst = this.getFirstChild();
-    let range = this.getChildRange(fst, initialScope as Frame);
-    if (range.length > 1) {
-      range = range.slice(0, range.length - 1);
-      const symbols = handleDeconstruction(range.filter((r) => isSymbol(r)));
-      localMatches = symbolMatches(id, all, symbols);
-    }
-
-    return localMatches.concat(matches);
   }
 
   getAsserts() {

@@ -1,11 +1,10 @@
 import { AbstractSelector } from "../abstract-selector";
 import { Field } from "./field";
+import { File } from "./file";
 import { Frame } from "./frame";
 import { StatementFactory } from "./statement-factory";
-import { File } from "./file";
-import { Scope } from "./scope";
 
-export interface Parent extends Scope {
+export interface Parent {
   //External use
   isParent: boolean;
 

@@ -1,8 +1,7 @@
-import { CodeSource } from "../interfaces/code-source";
-import { Frame } from "../interfaces/frame";
-import { ParseNode } from "../interfaces/parse-node";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Frame } from "../frame-interfaces/frame";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { ConstantValueNode } from "../parse-nodes/constant-value-node";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class ConstantValueField extends AbstractField {
@@ -18,7 +17,6 @@ export class ConstantValueField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new ConstantValueNode();
     return this.rootNode;
   }
@@ -26,6 +24,6 @@ export class ConstantValueField extends AbstractField {
     source.readToEndOfLine();
 
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return this.symbolCompletionAsHtml();
   }
 }

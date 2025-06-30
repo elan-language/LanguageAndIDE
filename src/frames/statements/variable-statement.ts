@@ -1,14 +1,10 @@
-import { CodeSource } from "../interfaces/code-source";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Parent } from "../interfaces/parent";
-import { Statement } from "../interfaces/statement";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Parent } from "../frame-interfaces/parent";
+import { Statement } from "../frame-interfaces/statement";
 import { setKeyword, toKeyword, variableKeyword } from "../keywords";
 import { AbstractDefinitionStatement } from "./abstract-definition.statement";
 
-export class VariableStatement
-  extends AbstractDefinitionStatement
-  implements Statement, ElanSymbol
-{
+export class VariableStatement extends AbstractDefinitionStatement implements Statement {
   isVariableStatement = true;
   constructor(parent: Parent) {
     super(parent);
@@ -29,10 +25,6 @@ export class VariableStatement
 
   getIdPrefix(): string {
     return "var";
-  }
-
-  getJsKeyword() {
-    return "let";
   }
 
   renderAsHtml(): string {

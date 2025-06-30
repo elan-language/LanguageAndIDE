@@ -1,8 +1,8 @@
-import { CompileError } from "../compile-error";
 import { mustBeBooleanCondition, mustBeCompatibleType } from "../compile-rules";
-import { AstNode } from "../interfaces/ast-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
 import { ClassType } from "../symbols/class-type";
-import { mostPreciseSymbol } from "../symbols/symbol-helpers";
+import { getGlobalScope, mostPreciseSymbol } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class IfExprAsn extends AbstractAstNode implements AstNode {
@@ -11,15 +11,9 @@ export class IfExprAsn extends AbstractAstNode implements AstNode {
     private readonly expr1: AstNode,
     private readonly expr2: AstNode,
     public readonly fieldId: string,
+    private readonly scope: Scope,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors
-      .concat(this.condition.aggregateCompileErrors())
-      .concat(this.expr1.aggregateCompileErrors())
-      .concat(this.expr2.aggregateCompileErrors());
   }
 
   compile(): string {
@@ -36,6 +30,8 @@ export class IfExprAsn extends AbstractAstNode implements AstNode {
       this.compileErrors,
       this.fieldId,
     );
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `${conditionCode} ? ${expr1Code} : ${expr2Code}`;
   }

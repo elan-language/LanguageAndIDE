@@ -1,5 +1,5 @@
-import { Scope } from "./frames/interfaces/scope";
-import { SymbolType } from "./frames/interfaces/symbol-type";
+import { Scope } from "./frames/compiler-interfaces/scope";
+import { SymbolType } from "./frames/compiler-interfaces/symbol-type";
 
 export const elanMetadataKey = Symbol("elan-metadata");
 

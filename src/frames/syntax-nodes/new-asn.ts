@@ -1,19 +1,17 @@
-import { CompileError } from "../compile-error";
 import {
   mustBeConcreteClass,
   mustBeKnownSymbolType,
   mustBeNewable,
   mustMatchParameters,
 } from "../compile-rules";
-import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
 import { constructorKeyword } from "../keywords";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { ProcedureType } from "../symbols/procedure-type";
-import { parameterNamesWithTypes } from "../symbols/symbol-helpers";
+import { getGlobalScope, parameterNamesWithTypes } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 import { TypeAsn } from "./type-asn";
 
 export class NewAsn extends AbstractAstNode implements AstNode {
@@ -26,14 +24,6 @@ export class NewAsn extends AbstractAstNode implements AstNode {
     super();
   }
 
-  aggregateCompileErrors(): CompileError[] {
-    let cc: CompileError[] = [];
-    for (const i of this.parameters) {
-      cc = cc.concat(i.aggregateCompileErrors());
-    }
-    return this.compileErrors.concat(this.typeNode.aggregateCompileErrors()).concat(cc);
-  }
-
   compile(): string {
     this.compileErrors = [];
 
@@ -44,18 +34,19 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
     mustBeKnownSymbolType(type, typeAsString, this.compileErrors, this.fieldId);
 
+    let code: string;
+
     if (type instanceof ClassType) {
       mustBeConcreteClass(type, this.compileErrors, this.fieldId);
 
       if (type.subType === ClassSubType.concrete) {
-        const tf = transforms();
-        const classSymbol = this.scope.resolveSymbol(type.className, tf, this.scope);
+        const classSymbol = this.scope.resolveSymbol(type.className, this.scope);
 
         libScope = classSymbol.symbolScope === SymbolScope.stdlib;
 
         const constructorType = type
-          .resolveSymbol(`__${constructorKeyword}`, tf, this.scope)
-          .symbolType(tf);
+          .resolveSymbol(`__${constructorKeyword}`, this.scope)
+          .symbolType();
 
         const parameterTypes =
           constructorType instanceof ProcedureType ? constructorType.parameterTypes : [];
@@ -73,11 +64,14 @@ export class NewAsn extends AbstractAstNode implements AstNode {
 
       const scope = libScope ? "_stdlib." : "";
 
-      return `system.initialise(await new ${scope}${type.className}()._initialise(${parametersAsString}))`;
+      code = `system.initialise(await new ${scope}${type.className}()._initialise(${parametersAsString}))`;
+    } else {
+      mustBeNewable(typeAsString, this.compileErrors, this.fieldId);
+      code = "";
     }
 
-    mustBeNewable(typeAsString, this.compileErrors, this.fieldId);
-    return "";
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+    return code;
   }
 
   symbolType() {

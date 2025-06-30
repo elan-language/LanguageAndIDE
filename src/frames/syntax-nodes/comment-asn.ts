@@ -1,19 +1,17 @@
-import { CompileError } from "../compile-error";
 import { mustBeKnownCompilerDirective } from "../compile-rules";
-import { AstNode } from "../interfaces/ast-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
 import { StringType } from "../symbols/string-type";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class CommentAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly value: string,
     public readonly fieldId: string,
+    private readonly scope: Scope,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors;
   }
 
   compile(): string {
@@ -22,6 +20,8 @@ export class CommentAsn extends AbstractAstNode implements AstNode {
     if (this.value.startsWith("[")) {
       mustBeKnownCompilerDirective("", this.compileErrors, this.fieldId);
     }
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return "";
   }

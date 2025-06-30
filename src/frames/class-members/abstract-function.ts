@@ -1,27 +1,19 @@
 import { AbstractFrame } from "../abstract-frame";
-import { mustBeUniqueNameInScope } from "../compile-rules";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamListField } from "../fields/param-list-field";
 import { TypeField } from "../fields/type-field";
 import { singleIndent } from "../frame-helpers";
-import { ConcreteClass } from "../globals/concrete-class";
-import { CodeSource } from "../interfaces/code-source";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Field } from "../interfaces/field";
-import { Member } from "../interfaces/member";
-import { Parent } from "../interfaces/parent";
-import { Transforms } from "../interfaces/transforms";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { Parent } from "../frame-interfaces/parent";
 import {
   abstractFunctionKeywords,
   abstractKeyword,
   functionKeyword,
   returnsKeyword,
 } from "../keywords";
-import { FunctionType } from "../symbols/function-type";
-import { getClassScope } from "../symbols/symbol-helpers";
-import { SymbolScope } from "../symbols/symbol-scope";
 
-export class AbstractFunction extends AbstractFrame implements Member, ElanSymbol {
+export class AbstractFunction extends AbstractFrame {
   isAbstract = true;
   isMember: boolean = true;
   private = false;
@@ -35,10 +27,6 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
     this.name = new IdentifierField(this);
     this.params = new ParamListField(this);
     this.returnType = new TypeField(this);
-  }
-
-  getClass(): ConcreteClass {
-    return this.getParent() as ConcreteClass;
   }
 
   initialKeywords(): string {
@@ -67,23 +55,6 @@ export class AbstractFunction extends AbstractFrame implements Member, ElanSymbo
 `;
   }
 
-  public override compile(transforms: Transforms): string {
-    this.compileErrors = [];
-
-    const name = this.name.compile(transforms);
-    mustBeUniqueNameInScope(name, getClassScope(this), transforms, this.compileErrors, this.htmlId);
-
-    this.returnType.compile(transforms);
-
-    if (name !== "asString") {
-      return `${this.indent()}async ${name}(${this.params.compile(transforms)}) {\r
-${this.indent()}${this.indent()}return ${this.returnType.compile(transforms)};\r
-${this.indent()}}\r
-`;
-    }
-    return "";
-  }
-
   parseFrom(source: CodeSource): void {
     source.remove(`${abstractKeyword} ${functionKeyword} `);
     this.name.parseFrom(source);
@@ -91,19 +62,5 @@ ${this.indent()}}\r
     this.params.parseFrom(source);
     source.remove(`) ${returnsKeyword} `);
     this.returnType.parseFrom(source);
-  }
-
-  get symbolId() {
-    return this.name.text;
-  }
-
-  symbolType(transforms?: Transforms) {
-    const [pn, pt] = this.params.symbolNamesAndTypes(transforms);
-    const rt = this.returnType.symbolType(transforms);
-    return new FunctionType(pn, pt, rt, false, true, true);
-  }
-
-  get symbolScope() {
-    return SymbolScope.member;
   }
 }

@@ -1,16 +1,14 @@
 import { Deprecated } from "../../elan-type-interfaces";
-import { isMember } from "../frame-helpers";
-import { Class } from "../interfaces/class";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Scope } from "../interfaces/scope";
-import { SymbolType } from "../interfaces/symbol-type";
-import { Transforms } from "../interfaces/transforms";
-import { TypeOptions } from "../interfaces/type-options";
+import { Class } from "../compiler-interfaces/class";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
+import { TypeOptions } from "../compiler-interfaces/type-options";
 import { thisKeyword } from "../keywords";
 import { generateType } from "../syntax-nodes/ast-helpers";
 import { ClassSubType, ClassType } from "./class-type";
 import { DuplicateSymbol } from "./duplicate-symbol";
-import { isProperty, isSymbol, symbolMatches } from "./symbol-helpers";
+import { isMember, isProperty, isSymbol, symbolMatches } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
 import { UnknownSymbol } from "./unknown-symbol";
 
@@ -68,7 +66,7 @@ export class StdLibClass implements Class {
 
   symbolId: string;
 
-  symbolType(_transforms?: Transforms): SymbolType {
+  symbolType(): SymbolType {
     // temp hack TODO fix
     return new ClassType(
       this.name,
@@ -86,7 +84,7 @@ export class StdLibClass implements Class {
     return this.children;
   }
 
-  resolveOwnSymbol(id: string, transforms: Transforms): ElanSymbol {
+  resolveOwnSymbol(id: string): ElanSymbol {
     if (id === thisKeyword) {
       return this;
     }
@@ -105,7 +103,7 @@ export class StdLibClass implements Class {
     const types = this.inheritTypes.filter((t) => t instanceof ClassType);
 
     for (const ct of types) {
-      const s = ct.scope!.resolveOwnSymbol(id, transforms);
+      const s = ct.scope!.resolveOwnSymbol(id);
       if (isMember(s)) {
         matches.push(s);
       }
@@ -121,11 +119,11 @@ export class StdLibClass implements Class {
     return new UnknownSymbol(id);
   }
 
-  resolveSymbol(id: string, transforms: Transforms, _scope: Scope): ElanSymbol {
-    const symbol = this.resolveOwnSymbol(id, transforms);
+  resolveSymbol(id: string, _scope: Scope): ElanSymbol {
+    const symbol = this.resolveOwnSymbol(id);
 
     if (symbol instanceof UnknownSymbol) {
-      return this.getParentScope().resolveSymbol(id, transforms, this);
+      return this.getParentScope().resolveSymbol(id, this);
     }
 
     if (!isProperty(symbol)) {

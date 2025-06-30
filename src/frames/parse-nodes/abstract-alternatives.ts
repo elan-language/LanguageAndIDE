@@ -1,4 +1,4 @@
-import { ParseNode } from "../interfaces/parse-node";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
@@ -55,12 +55,11 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   renderAsHtml(): string {
     return this.bestMatch ? this.bestMatch.renderAsHtml() : "";
   }
+
   renderAsSource(): string {
     return this.bestMatch ? this.bestMatch.renderAsSource() : "";
   }
-  compile(): string {
-    return this.bestMatch ? this.bestMatch.compile() : "";
-  }
+
   getSyntaxCompletionAsHtml(): string {
     const c = this.bestMatch
       ? this.bestMatch.getSyntaxCompletionAsHtml()

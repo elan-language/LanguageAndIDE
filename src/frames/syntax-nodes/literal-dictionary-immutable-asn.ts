@@ -1,19 +1,17 @@
-import { CompileError } from "../compile-error";
 import {
   mustBeAssignableType,
   mustBeImmutableGenericType,
   mustBeValidKeyType,
   mustHaveUniqueKeys,
 } from "../compile-rules";
-import { AstCollectionNode } from "../interfaces/ast-collection-node";
-import { AstNode } from "../interfaces/ast-node";
-import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
-import { Scope } from "../interfaces/scope";
+import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ReifyableSymbolType } from "../compiler-interfaces/reifyable-symbol-type";
+import { Scope } from "../compiler-interfaces/scope";
 import { DictionaryImmutableName } from "../symbols/elan-type-names";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 import { KvpAsn } from "./kvp-asn";
 
 export class LiteralDictionaryImmutableAsn extends AbstractAstNode implements AstNode {
@@ -23,10 +21,6 @@ export class LiteralDictionaryImmutableAsn extends AbstractAstNode implements As
     private readonly scope: Scope,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors.concat(this.list.aggregateCompileErrors());
   }
 
   compile(): string {
@@ -51,12 +45,13 @@ export class LiteralDictionaryImmutableAsn extends AbstractAstNode implements As
     mustBeImmutableGenericType(st, ofValueType, this.compileErrors, this.fieldId);
 
     const itemList = this.list.items.map((p) => p.compile()).join(", ");
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return `system.dictionaryImmutable([${itemList}])`;
   }
 
   symbolType() {
     const globalScope = getGlobalScope(this.scope);
-    const symbol = globalScope.resolveSymbol(DictionaryImmutableName, transforms(), this.scope);
+    const symbol = globalScope.resolveSymbol(DictionaryImmutableName, this.scope);
     const st = symbol.symbolType() as ReifyableSymbolType;
 
     const first = this.list.items[0] as KvpAsn | undefined;
