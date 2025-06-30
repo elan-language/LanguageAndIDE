@@ -1,4 +1,4 @@
-# ec3bc50550bfeb1eddac8eae3250f79e607425fe6744bb13e0ad353df5c709d0 Elan 1.2.5 guest default_profile valid
+# b86c3f7da564b219b0abf18a73d8346235aece433ec3c5ac468a9d0b1d37638d Elan 1.2.6 guest default_profile valid
 
 main
   variable names set to ["Tom", "Dick", "Harriet"]
