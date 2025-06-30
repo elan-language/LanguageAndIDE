@@ -352,7 +352,7 @@ Instead, you use the constants <el-code><el-id>quotes</el-id></el-code>, <el-cod
 <h2 id="Tuple">Tuple</h2>
 A <el-code>tuple</el-code> is a way of holding a small number of values of different Types together as a single reference. It may be considered a lightweight alternative to defining a specific class for some purposes. Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold. Common uses include:
 <ul>
- <li>Holding a pair of x and y coordinates (each of Type <el-type>Float</el-type>) as a single unit.</li>
+ <li>Holding a pair of x,y coordinates (each of Type <el-type>Float</el-type>) as a single unit.</li>
  <li>Allowing a function to pass back a result comprised of both a message in a <el-type>String</el-type> and a <el-type>Boolean</el-type> indicating whether the operation was successful.</li>
  <li>Returning both an updated copy of an immutable data structure and the value of an element from it, e.g. from method <el-method>pop</el-method> on a Stack.</li>
 </ul>
@@ -825,7 +825,7 @@ Note
   <td><el-type>List</el-type></td>
   <td>item of <el-type>List element's Type</el-type></td>
   <td><el-type>List</el-type></td>
-  <td>a new List lengthened with the item added after to end</td>
+  <td>a new List lengthened with the item added after the end</td>
  </tr><tr id="withAppendList">
   <td><el-method>withAppendList</el-method></td>
   <td><el-type>List</el-type></td>
@@ -867,7 +867,7 @@ Note
   <td><el-type>List</el-type></td>
   <td><el-type>Int</el-type></td>
   <td><el-type>List</el-type></td>
-  <td>a new List with item at the given index removed</td>
+  <td>a new List with the item at the given index removed</td>
  </tr><tr id="withRemoveFirst">
   <td><el-method>withRemoveFirst</el-method></td>
   <td><el-type>List</el-type></td>
@@ -2855,7 +2855,7 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 
 <h4 class="no-TOC">Note</h4><ul>
  <li>Methods <el-method>random</el-method> and <el-method>randomInt</el-method> cannot be used in a function because
- of their dependence on external factors, i.e. they are subject to side effects.<br>
+ of their dependence on external factors, i.e. they are subject to side effects.
  To obtain random numbers within a function, use Type <a href="#Random"><el-type>Random</el-type></a>.</li></ul>
 
 <h1 id="HoFs">Higher-order Functions (HoFs)</h1>
@@ -2895,26 +2895,27 @@ This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or 
 </el-code-block>
 
 <h3 class="no-TOC" id="map">map</h3>
-    <p>Usage:</p>
-    <el-code>let next be cellRange.map(lambda n as Int =&gt; nextCellValue(cells, n))</el-code>
+<p>Example of use from demo program Maze generator:</p>
+<el-code-block source="maze-generator.elan">
+<el-statement id="let156" tabindex="0"><el-kw>let </el-kw><el-field id="var157" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr158" class="ok" tabindex="0"><el-txt><el-id>p</el-id>.<el-method>neighbouringPoints</el-method>().<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type> =&gt; <el-method>getValue</el-method>(<el-id>p</el-id>, <el-id>g</el-id>))</el-txt></el-field></el-statement>
+</el-code-block>
 
 <h3 class="no-TOC" id="reduce">reduce</h3>
-    <p>Usage:</p>
-    <el-code-block>
-    let d2 be possibleAnswers.reduce(d, <br>
-    &nbsp;&nbsp;lambda dd as Dictionary&lt;of String, Int&gt;, possAnswer as String =&gt;<br>
-    &nbsp;&nbsp;incrementCount(dd, possAnswer, attempt))
-    </el-code-block>
+<p>Example of use from demo program Wordle:</p>
+<el-code-block source source="Wordle.elan">
+<el-statement class="ok" id="let350" tabindex="0"><el-kw>let </el-kw><el-field id="var351" class="ok" tabindex="0"><el-txt><el-id>d2</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr352" class="ok" tabindex="0"><el-txt><el-id>possAnswers</el-id>.<el-method>reduce</el-method>(<el-id>d</el-id>, <el-kw>lambda</el-kw> <el-id>dd</el-id> <el-kw>as</el-kw> <el-type>DictionaryImmutable</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Int</el-type>&gt;, <el-id>answer</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-method>incrementCount</el-method>(<el-id>dd</el-id>, <el-id>answer</el-id>, <el-id>attempt</el-id>))</el-txt></el-field></el-statement>
+</el-code-block>
 
 <div id="maxBy"></div>
 <div id="minBy"></div>
 <h3 class="no-TOC">maxBy and minBy</h3>
-    <p><el-code>maxBy</el-code> and <el-code>minBy</el-code> are dot functions of <el-code>List</el-code> and <el-code>ListImmutable</el-code>.  They take a function as an argument, and return the list element corresponding to  maximum or minimum of the values returned by the function.  This prints "89" and "orange":</p>
-    <p><el-code>variable a set to {33, 4, 0, 92, 89, 55}</el-code><br>
-    <el-code>print a.maxBy(lambda x as Int =&gt; x mod 10)</el-code><br>
-    <el-code>variable fruit set to {"apple", "orange", "pear"}</el-code><br>
-    <el-code>print fruit.maxBy(lambda x as String =&gt; x.length())</el-code></p>
-
+    <p><el-code>maxBy</el-code> and <el-code>minBy</el-code> are dot functions of <el-code>List</el-code> and <el-code>ListImmutable</el-code>.  They take a function as an argument, and return the list element corresponding to the maximum or minimum of the values returned by the function.  This prints "89" and "orange":</p>
+<el-code-block>
+<el-statement class="ok" id="let11" tabindex="0"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt>{<el-lit>33</el-lit>, <el-lit>4</el-lit>, <el-lit>0</el-lit>, <el-lit>92</el-lit>, <el-lit>89</el-lit>, <el-lit>55</el-lit>}</el-txt></el-field></el-statement>
+<el-statement class="ok" id="print8" tabindex="0"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-id>a</el-id>.<el-method>maxBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>x</el-id><el-kw> mod </el-kw><el-lit>10</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let14" tabindex="0"><el-kw>let </el-kw><el-field id="var15" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr16" class="ok" tabindex="0"><el-txt>{"<el-lit>apple</el-lit>", "<el-lit>orange</el-lit>", "<el-lit>pear</el-lit>"}</el-txt></el-field></el-statement>
+<el-statement class="ok" id="print17" tabindex="0"><el-kw>print </el-kw><el-field id="expr18" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id>.<el-method>minBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>x</el-id>.<el-method>length</el-method>())</el-txt></el-field></el-statement>
+</el-code-block>
     <p>For simply finding the maximum or minimum value in a List, you can use
 <el-method>maxFloat</el-method>,
 <el-method>minFloat</el-method>,
