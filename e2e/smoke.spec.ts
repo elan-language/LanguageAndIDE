@@ -139,7 +139,7 @@ test('compile error', async ({ page }) => {
   await page.keyboard.type('foo');
   await page.keyboard.press('Tab');
   
-  await expect(page.locator('#call5')).toContainText('\'foo\' is not defined.');
+  await expect(page.locator('#call3')).toContainText('\'foo\' is not defined.');
   await expect(page.locator('#compile')).toContainText('unknown symbol');
 });
 
@@ -156,7 +156,7 @@ test('parse error', async ({ page }) => {
   await page.keyboard.type('c'); // call
   await page.keyboard.type('4');
   
-  await expect(page.locator('#call5')).toContainText('Invalid.');
+  await expect(page.locator('#call3')).toContainText('Invalid.');
   await expect(page.locator('#parse')).toContainText('invalid');
 });
 
@@ -187,7 +187,7 @@ test('symbol completion', async ({ page }) => {
   await page.keyboard.type('c');
   await page.keyboard.type('c');
 
-  await expect(page.locator('#ident6')).toContainText('clearBlocksclearHtmlclearKeyBufferclearPrintedTextclearVectorGraphicsdisplayBlocksdisplayVectorGraphics');
+  await expect(page.locator('#ident4')).toContainText('clearBlocksclearHtmlclearKeyBufferclearPrintedTextclearVectorGraphicsdisplayBlocksdisplayVectorGraphics');
 });
 
 test('undo redo', async ({ page }) => {
