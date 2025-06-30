@@ -37,7 +37,7 @@ const stopButton = document.getElementById("stop") as HTMLButtonElement;
 const pauseButton = document.getElementById("pause") as HTMLButtonElement;
 const stepButton = document.getElementById("step") as HTMLButtonElement;
 const clearDisplayButton = document.getElementById("clear-display") as HTMLButtonElement;
-const loadDocumentationButton = document.getElementById("load-documentation") as HTMLButtonElement;
+const loadExternalWorksheetButton = document.getElementById("load-worksheet") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
 const newButton = document.getElementById("new") as HTMLButtonElement;
 const demosButton = document.getElementById("demos") as HTMLButtonElement;
@@ -279,7 +279,7 @@ clearDisplayButton?.addEventListener("click", async () => {
   await elanInputOutput.clearDisplay();
 });
 
-loadDocumentationButton?.addEventListener("click", async () => {
+loadExternalWorksheetButton?.addEventListener("click", async () => {
   try {
     const [fileHandle] = await window.showOpenFilePicker({
       startIn: "documents",
@@ -287,12 +287,8 @@ loadDocumentationButton?.addEventListener("click", async () => {
       id: lastDirId,
     });
     const codeFile = await fileHandle.getFile();
-    const code = await codeFile.text();
 
-    const BOM = new Uint8Array([0xef, 0xbb, 0xbf]);
-    const b = new Blob([BOM, code], { type: "text/html" });
-
-    const url = URL.createObjectURL(b);
+    const url = URL.createObjectURL(codeFile);
     window.open(url, "worksheet-iframe")?.focus();
   } catch (_e) {
     // user cancelled
