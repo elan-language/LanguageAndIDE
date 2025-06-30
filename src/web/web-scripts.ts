@@ -380,6 +380,7 @@ function showDisplayTab() {
   documentationTab.classList.add("hide");
   worksheetTab.classList.add("hide");
   debugTab.classList.add("hide");
+  displayButton.focus();
 }
 
 function showDocumentationTab() {
@@ -388,6 +389,8 @@ function showDocumentationTab() {
   worksheetTab.classList.add("hide");
   debugTab.classList.add("hide");
   documentationIFrame.focus();
+  documentationButton.focus();
+  documentationIFrame.contentWindow?.addEventListener("keydown", globalHandler);
 }
 
 function showWorksheetTab() {
@@ -395,8 +398,10 @@ function showWorksheetTab() {
   documentationTab.classList.add("hide");
   worksheetTab.classList.remove("hide");
   debugTab.classList.add("hide");
+  worksheetButton.focus();
   worksheetIFrame.focus();
   worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
+  worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
 }
 
 function showDebugTab() {
@@ -404,6 +409,7 @@ function showDebugTab() {
   documentationTab.classList.add("hide");
   worksheetTab.classList.add("hide");
   debugTab.classList.remove("hide");
+  debugButton.focus();
 }
 
 function filterKeypress(button: HTMLButtonElement) {
@@ -1985,3 +1991,45 @@ if (!isElanProduction) {
 
   document.querySelector("#worksheet-tab .dropdown-content")?.append(testWs);
 }
+
+function globalHandler(kp: KeyboardEvent) {
+  if (kp.ctrlKey) {
+    if (kp.key === "b") {
+      if (isRunningState()) {
+        stopButton.focus();
+      } else {
+        demosButton.focus();
+      }
+    }
+    if (kp.key === "e") {
+      codeContainer.click();
+      kp.preventDefault();
+    }
+    if (kp.key === "g") {
+      debugButton.click();
+      kp.preventDefault();
+    }
+    if (kp.key === "h") {
+      documentationButton.click();
+      kp.preventDefault();
+    }
+    if (kp.key === "k") {
+      worksheetButton.click();
+      kp.preventDefault();
+    }
+    if (kp.key === "p") {
+      displayButton.click();
+      kp.preventDefault();
+    }
+    if (kp.key === "r") {
+      runButton.click();
+      kp.preventDefault();
+    }
+    if (kp.key === "s") {
+      stopButton.click();
+      kp.preventDefault();
+    }
+  }
+}
+
+window.addEventListener("keydown", globalHandler);
