@@ -1613,6 +1613,7 @@ function handleRunWorkerFinished() {
   file.setRunStatus(RunStatus.default);
   clearPaused();
   updateDisplayValues();
+  codeContainer.focus();
 }
 
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
@@ -2008,7 +2009,7 @@ if (!isElanProduction) {
   document.querySelector("#worksheet-tab .dropdown-content")?.append(testWs);
 }
 
-const globalKeys = ["b", "e", "g", "h", "k", "p", "r", "s"];
+const globalKeys = ["b", "e", "g", "h", "k", "p", "r", "s", "+", "-", "="];
 
 function isGlobalKeyboardEvent(kp: Event) {
   return kp instanceof KeyboardEvent && kp.ctrlKey && globalKeys.includes(kp.key);
@@ -2019,7 +2020,7 @@ function globalHandler(kp: KeyboardEvent) {
     switch (kp.key) {
       case "b":
         if (isRunningState()) {
-          stopButton.focus();
+          clearDisplayButton.focus();
         } else {
           demosButton.focus();
         }
