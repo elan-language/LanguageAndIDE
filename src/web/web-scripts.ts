@@ -2019,7 +2019,11 @@ function globalHandler(kp: KeyboardEvent) {
   if (kp.ctrlKey) {
     switch (kp.key) {
       case "b":
-        demosButton.focus();
+        if (isRunningState()) {
+          stopButton.focus();
+        } else {
+          demosButton.focus();
+        }
         kp.preventDefault();
         break;
       case "e":

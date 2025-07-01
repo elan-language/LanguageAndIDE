@@ -185,9 +185,16 @@ export abstract class AbstractFrame implements Frame {
     return result;
   }
 
+  private controlKeys = ["o", "O", "ArrowUp", "ArrowDown", "Delete", "d", "x", "m"];
+
   processKey(e: editorEvent): boolean {
     let codeHasChanged = false;
     const key = e.key;
+
+    if (e.modKey.control && !this.controlKeys.includes(key ?? "")) {
+      return false;
+    }
+
     switch (key) {
       case "Home": {
         this.getFirstPeerFrame().select(true, false);
@@ -282,13 +289,6 @@ export abstract class AbstractFrame implements Frame {
       case "x": {
         if (e.modKey.control) {
           this.cut();
-          codeHasChanged = true;
-        }
-        break;
-      }
-      case "b": {
-        if (e.modKey.control) {
-          this.toggleBreakPoint();
           codeHasChanged = true;
         }
         break;
@@ -684,10 +684,10 @@ export abstract class AbstractFrame implements Frame {
     const map = new Map<string, [string, (() => void) | undefined]>();
     // Must be arrow functions for this binding
     if (this.hasBreakpoint()) {
-      map.set("clearBP", ["clear breakpoint (Ctrl-b)", this.clearBreakPoint]);
+      map.set("clearBP", ["clear breakpoint", this.clearBreakPoint]);
       map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints]);
     } else {
-      map.set("setBP", ["set breakpoint (Ctrl-b)", this.setBreakPoint]);
+      map.set("setBP", ["set breakpoint", this.setBreakPoint]);
     }
     map.set("cut", ["cut (Ctrl-x)", this.cut]);
     map.set("delete", ["delete (Ctrl-Delete or Ctrl-d)", this.deleteSelected]);

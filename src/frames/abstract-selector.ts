@@ -136,9 +136,17 @@ export abstract class AbstractSelector extends AbstractFrame {
   renderAsSource(): string {
     return `${this.indent()}`;
   }
+
+  private selectorControlKeys = ["d", "O", "v"];
+
   processKey(e: editorEvent): boolean {
     let codeHasChanged = false;
     let key = e.key;
+
+    if (e.modKey.control && !this.selectorControlKeys.includes(key ?? "")) {
+      return super.processKey(e);
+    }
+
     switch (key) {
       case "Backspace": {
         this.text = this.text.substring(0, this.text.length - 1);

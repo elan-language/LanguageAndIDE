@@ -171,9 +171,16 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
+  private controlKeys = ["o", "O", "ArrowLeft", "ArrowRight", "a"];
+
   processKey(e: editorEvent): boolean {
     this.codeHasChanged = false;
     const key = e.key;
+
+    if (e.modKey.control && !this.controlKeys.includes(key ?? "")) {
+      return false;
+    }
+
     const textLen = this.text.length;
     this.processAutocompleteText(e.optionalData);
     switch (key) {

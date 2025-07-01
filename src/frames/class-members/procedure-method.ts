@@ -1,10 +1,5 @@
-import {
-  addPrivateToggleToContextMenu,
-  processTogglePrivate,
-  singleIndent,
-} from "../frame-helpers";
+import { addPrivateToggleToContextMenu, singleIndent } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
-import { editorEvent } from "../frame-interfaces/editor-event";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
 import { ProcedureFrame } from "../globals/procedure-frame";
@@ -62,16 +57,6 @@ ${this.renderChildrenAsHtml()}
 
   parseBottom(source: CodeSource): boolean {
     return super.parseBottom(source);
-  }
-
-  processKey(e: editorEvent): boolean {
-    let result = false;
-    if (processTogglePrivate(this, e)) {
-      result = true;
-    } else {
-      result = super.processKey(e);
-    }
-    return result;
   }
 
   makePublic = () => {

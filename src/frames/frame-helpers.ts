@@ -1,7 +1,6 @@
 import { AbstractSelector } from "./abstract-selector";
 import { CompileError, Severity } from "./compile-error";
 import { Collapsible } from "./frame-interfaces/collapsible";
-import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
 import { File } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
@@ -259,15 +258,6 @@ export function currentParameterIndex(text: string) {
   }
 
   return 0;
-}
-
-export function processTogglePrivate(member: MemberFrame, e: editorEvent): boolean {
-  let result = false;
-  if (e.key === "p" && e.modKey.control) {
-    member.private = !member.private;
-    result = true;
-  }
-  return result;
 }
 
 export function addPrivateToggleToContextMenu(

@@ -2,13 +2,11 @@ import { AbstractFrame } from "../abstract-frame";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
-import { addPrivateToggleToContextMenu, processTogglePrivate } from "../frame-helpers";
+import { addPrivateToggleToContextMenu } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
-import { editorEvent } from "../frame-interfaces/editor-event";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
-import { ClassFrame } from "../globals/class-frame";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 import { ClassType } from "../symbols/class-type";
 
@@ -68,21 +66,6 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember {
     this.name.parseFrom(source);
     source.remove(` ${asKeyword} `);
     this.type.parseFrom(source);
-  }
-
-  processKey(e: editorEvent): boolean {
-    let result = false;
-    if (this.canBePrivate() && processTogglePrivate(this, e)) {
-      result = true;
-    } else {
-      result = super.processKey(e);
-    }
-    return result;
-  }
-
-  private canBePrivate(): boolean {
-    const parent = this.getParent() as unknown as ClassFrame;
-    return !parent.isRecord;
   }
 
   makePublic = () => {
