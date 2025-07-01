@@ -1,10 +1,13 @@
 import { CompileError } from "../compile-error";
-import { AstNode } from "../interfaces/ast-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 
 export class EmptyAsn implements AstNode {
   private constructor(public readonly fieldId: string) {}
+  indent(): string {
+    return "";
+  }
 
   items: AstNode[] = [];
 
@@ -13,10 +16,6 @@ export class EmptyAsn implements AstNode {
   symbolScope = SymbolScope.unknown;
 
   compileErrors: CompileError[] = [];
-
-  aggregateCompileErrors(): CompileError[] {
-    return [];
-  }
 
   compile(): string {
     return ``;

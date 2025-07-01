@@ -1,7 +1,7 @@
-import { Class } from "../interfaces/class";
-import { DeconstructedSymbolType } from "../interfaces/deconstructed-symbol-type";
-import { SymbolType } from "../interfaces/symbol-type";
-import { immutableTypeOptions } from "../interfaces/type-options";
+import { Class } from "../compiler-interfaces/class";
+import { DeconstructedSymbolType } from "../compiler-interfaces/deconstructed-symbol-type";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
+import { immutableTypeOptions } from "../compiler-interfaces/type-options";
 import { UnknownType } from "./unknown-type";
 
 export class DeconstructedRecordType implements DeconstructedSymbolType {
@@ -11,7 +11,7 @@ export class DeconstructedRecordType implements DeconstructedSymbolType {
   ) {
     for (const id of ids) {
       // fix !
-      this.typeMap[id] = record.resolveOwnSymbol(id, undefined!).symbolType();
+      this.typeMap[id] = record.resolveOwnSymbol(id).symbolType();
     }
   }
 

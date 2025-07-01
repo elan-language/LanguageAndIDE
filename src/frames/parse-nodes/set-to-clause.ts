@@ -35,11 +35,6 @@ export class SetToClause extends AbstractSequence {
     this.addElement(this.expr);
     return super.parseText(text);
   }
-  compile(): string {
-    const codeArray = this.getElements().map((e) => e.compile());
-    const code = codeArray.join(" ");
-    return code;
-  }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {
     if (this.getElements().length === 0) {

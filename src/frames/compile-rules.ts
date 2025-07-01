@@ -1,6 +1,5 @@
 import { ElanCompilerError } from "../elan-compiler-error";
 import { Deprecation } from "../elan-type-interfaces";
-import { Property } from "./class-members/property";
 import {
   CannotCallAFunction,
   CannotCallAsAMethod,
@@ -43,25 +42,12 @@ import {
   UndefinedSymbolCompileError,
   UnknownCompilerDirectiveCompileError,
 } from "./compile-error";
-import {
-  isClass,
-  isConstant,
-  isFunction,
-  isInsideFunction,
-  isInsideFunctionOrConstructor,
-  isLet,
-  isMember,
-  isProcedure,
-} from "./frame-helpers";
-import { AstNode } from "./interfaces/ast-node";
-import { ElanSymbol } from "./interfaces/elan-symbol";
-import { Parent } from "./interfaces/parent";
-import { Scope } from "./interfaces/scope";
-import { SymbolType } from "./interfaces/symbol-type";
-import { Transforms } from "./interfaces/transforms";
-import { isRecord } from "./interfaces/type-options";
+import { AstNode } from "./compiler-interfaces/ast-node";
+import { ElanSymbol } from "./compiler-interfaces/elan-symbol";
+import { Scope } from "./compiler-interfaces/scope";
+import { SymbolType } from "./compiler-interfaces/symbol-type";
+import { isRecord } from "./compiler-interfaces/type-options";
 import { allKeywords, reservedWords } from "./keywords";
-import { LetStatement } from "./statements/let-statement";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
 import { DeconstructedListType } from "./symbols/deconstructed-list-type";
@@ -72,15 +58,22 @@ import { FunctionType } from "./symbols/function-type";
 import { IntType } from "./symbols/int-type";
 import { ProcedureType } from "./symbols/procedure-type";
 import {
+  displayName,
   getGlobalScope,
+  isClass,
   isClassTypeDef,
+  isConstant,
   isDeconstructedType,
   isDoubleIndexableType,
+  isFunction,
   isIndexableType,
   isIterableType,
+  isLet,
   isListImmutableType,
   isListType,
+  isMember,
   isNumber,
+  isProcedure,
   isProperty,
   knownType,
   symbolScopeToFriendlyName,
@@ -95,8 +88,12 @@ import {
   isAstIdNode,
   isAstIndexableNode,
   isEmptyNode,
-  transforms,
+  isInsideFunction,
+  isInsideFunctionOrConstructor,
 } from "./syntax-nodes/ast-helpers";
+import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
+import { ElseAsn } from "./syntax-nodes/statements/else-asn";
+import { LetAsn } from "./syntax-nodes/statements/let-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
 
 export function mustBeOfSymbolType(
@@ -149,7 +146,7 @@ export function mustBeBooleanCondition(
 }
 
 export function mustNotHaveConditionalAfterUnconditionalElse(
-  elses: { hasIf: boolean }[],
+  elses: ElseAsn[],
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -422,8 +419,8 @@ export function mustBePropertyAndPublic(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (symbol instanceof Property && symbol.private === true) {
-    compileErrors.push(new PrivateMemberCompileError(symbol.name.text, location));
+  if (symbol instanceof PropertyAsn && symbol.private === true) {
+    compileErrors.push(new PrivateMemberCompileError(getId(symbol.name), location));
   }
   if (symbol.symbolScope !== SymbolScope.member) {
     compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, "", location));
@@ -431,7 +428,6 @@ export function mustBePropertyAndPublic(
 }
 
 export function mustImplementSuperClasses(
-  transforms: Transforms,
   classType: ClassType,
   superClassTypes: ClassType[],
   compileErrors: CompileError[],
@@ -441,7 +437,7 @@ export function mustImplementSuperClasses(
     const superSymbols = superClassType.childSymbols();
 
     for (const superSymbol of superSymbols.filter((ss) => isMember(ss) && ss.isAbstract)) {
-      const subSymbol = classType.resolveSymbol(superSymbol.symbolId, transforms, classType);
+      const subSymbol = classType.resolveSymbol(superSymbol.symbolId, classType);
 
       if (
         subSymbol instanceof UnknownSymbol ||
@@ -459,8 +455,8 @@ export function mustImplementSuperClasses(
       } else {
         mustBeMemberOfSymbolType(
           superSymbol.symbolId,
-          subSymbol.symbolType(transforms),
-          superSymbol.symbolType(transforms),
+          subSymbol.symbolType(),
+          superSymbol.symbolType(),
           compileErrors,
           location,
         );
@@ -525,7 +521,7 @@ export function mustCallMemberViaQualifier(
   location: string,
 ) {
   if (!ft.isExtension && isClass(scope)) {
-    const t = scope.resolveOwnSymbol(id, transforms());
+    const t = scope.resolveOwnSymbol(id);
     if (t instanceof UnknownSymbol) {
       compileErrors.push(new UndefinedSymbolCompileError(id, scope.symbolId, location));
     }
@@ -792,7 +788,7 @@ function mustBeCompatibleRecordDeconstruction(
   compileErrors: CompileError[],
   location: string,
 ) {
-  const classDef = scope.resolveSymbol(rst.name, transforms(), scope);
+  const classDef = scope.resolveSymbol(rst.name, scope);
 
   if (isClassTypeDef(classDef)) {
     const childSymbols = classDef.getChildren().filter((s) => isProperty(s));
@@ -802,7 +798,7 @@ function mustBeCompatibleRecordDeconstruction(
       const childSymbol = childSymbols.find((s) => s.symbolId === id);
       if (childSymbol) {
         const llst = lst.ofTypes[i];
-        const rrst = childSymbol.symbolType(transforms());
+        const rrst = childSymbol.symbolType();
 
         mustBeAssignableType(llst, rrst, compileErrors, location);
       } else {
@@ -891,11 +887,11 @@ export function getId(astNode: AstNode) {
 
 export function mustNotBePropertyOnFunctionMethod(
   assignable: AstNode,
-  parent: Parent,
+  scope: Scope,
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (isInsideFunction(parent)) {
+  if (isInsideFunction(scope)) {
     const s = assignable.symbolScope;
 
     if (s === SymbolScope.member) {
@@ -921,7 +917,7 @@ function isIndexed(assignable: AstNode) {
 
 export function mustNotBeParameter(
   assignable: AstNode,
-  parent: Parent,
+  parent: Scope,
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -980,11 +976,10 @@ export function cannotPassAsOutParameter(
 export function mustBeUniqueNameInScope(
   name: string,
   scope: Scope,
-  transforms: Transforms,
   compileErrors: CompileError[],
   location: string,
 ) {
-  const symbol = scope.resolveSymbol(name, transforms, scope);
+  const symbol = scope.resolveSymbol(name, scope);
 
   if (symbol instanceof DuplicateSymbol) {
     let postFix = "";
@@ -1007,9 +1002,16 @@ export function mustBeUniqueValueInScope(
   compileErrors.push(new NotUniqueNameCompileError(name, "", location));
 }
 
-export function mustNotBeLet(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
-  if (symbol instanceof LetStatement) {
-    compileErrors.push(new MutateCompileError(symbol.symbolId, mapToPurpose(symbol), location));
+export function mustNotBeLet(
+  symbol: ElanSymbol,
+  id: string,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (symbol instanceof LetAsn) {
+    compileErrors.push(
+      new MutateCompileError(displayName(symbol, id), mapToPurpose(symbol), location),
+    );
   }
 }
 
@@ -1039,6 +1041,7 @@ function mapToPurpose(symbol: ElanSymbol) {
 
 export function mustNotBeRedefined(
   variable: ElanSymbol,
+  id: string,
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -1052,7 +1055,7 @@ export function mustNotBeRedefined(
     return;
   }
   compileErrors.push(
-    new RedefinedCompileError(variable.symbolId, mapToPurpose(variable), location),
+    new RedefinedCompileError(displayName(variable, id), mapToPurpose(variable), location),
   );
 }
 
@@ -1095,13 +1098,14 @@ export function mustBeNewable(type: string, compileErrors: CompileError[], locat
 
 export function mustBeFunctionRefIfFunction(
   symbol: ElanSymbol,
+  id: string,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (symbol.symbolType() instanceof FunctionType) {
     compileErrors.push(
       new FunctionRefCompileError(
-        symbol.symbolId,
+        displayName(symbol, id),
         !(symbol.symbolScope === SymbolScope.stdlib || symbol.symbolScope === SymbolScope.member),
         location,
       ),
@@ -1111,6 +1115,7 @@ export function mustBeFunctionRefIfFunction(
 
 export function mustBeGlobalFunctionIfRef(
   symbol: ElanSymbol,
+  id: string,
   compileErrors: CompileError[],
   location: string,
 ) {
@@ -1118,7 +1123,7 @@ export function mustBeGlobalFunctionIfRef(
     symbol.symbolType() instanceof FunctionType &&
     (symbol.symbolScope === SymbolScope.stdlib || symbol.symbolScope === SymbolScope.member)
   ) {
-    compileErrors.push(new NotGlobalFunctionRefCompileError(symbol.symbolId, location));
+    compileErrors.push(new NotGlobalFunctionRefCompileError(displayName(symbol, id), location));
   }
 }
 

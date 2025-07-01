@@ -1,12 +1,9 @@
-import { mustBeOfType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
-import { CodeSource } from "../interfaces/code-source";
-import { Field } from "../interfaces/field";
-import { Parent } from "../interfaces/parent";
-import { Transforms } from "../interfaces/transforms";
 import { endKeyword, whileKeyword } from "../keywords";
-import { BooleanType } from "../symbols/boolean-type";
 
 export class While extends FrameWithStatements {
   isStatement = true;
@@ -37,20 +34,6 @@ ${this.renderChildrenAsHtml()}
     return `${this.indent()}while ${this.condition.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end while`;
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    mustBeOfType(
-      this.condition.getOrTransformAstNode(transforms),
-      BooleanType.Instance,
-      this.compileErrors,
-      this.htmlId,
-    );
-
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}while (${this.condition.compile(transforms)}) {\r
-${this.compileChildren(transforms)}\r
-${this.indent()}}`;
   }
 
   parseTop(source: CodeSource): void {

@@ -1,5 +1,5 @@
 import { Regexes } from "./fields/regexes";
-import { CodeSource } from "./interfaces/code-source";
+import { CodeSource } from "./frame-interfaces/code-source";
 
 export class CodeSourceFromString implements CodeSource {
   private remainingCode: string;

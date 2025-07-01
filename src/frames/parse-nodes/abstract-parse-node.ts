@@ -1,4 +1,4 @@
-import { ParseNode } from "../interfaces/parse-node";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 
@@ -31,10 +31,6 @@ export abstract class AbstractParseNode implements ParseNode {
   }
 
   abstract parseText(text: string): void;
-
-  compile(): string {
-    return this.matchedText.trim();
-  } //TODO make abstract
 
   protected set(status: ParseStatus, matched: string, remaining: string) {
     this.status = status;

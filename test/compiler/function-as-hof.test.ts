@@ -493,8 +493,8 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: Func<of Int => Int>.LangRef.html#TypesCompileError",
       "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'ref'.LangRef.html#compile_error",
+      "Incompatible types. Expected: Float or Int, Provided: Func<of Int => Int>.LangRef.html#TypesCompileError",
     ]);
   });
 

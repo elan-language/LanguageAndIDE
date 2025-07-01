@@ -1,5 +1,5 @@
-import { SymbolType } from "../interfaces/symbol-type";
-import { immutableTypeOptions } from "../interfaces/type-options";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
+import { immutableTypeOptions } from "../compiler-interfaces/type-options";
 import { IntName } from "./elan-type-names";
 
 export class IntType implements SymbolType {

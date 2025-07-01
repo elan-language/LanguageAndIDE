@@ -1,9 +1,8 @@
-import { CodeSource } from "../interfaces/code-source";
-import { Frame } from "../interfaces/frame";
-import { ParseNode } from "../interfaces/parse-node";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Frame } from "../frame-interfaces/frame";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { CommentNode } from "../parse-nodes/comment-node";
 import { ParseStatus } from "../status-enums";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class CommentField extends AbstractField {
@@ -19,7 +18,6 @@ export class CommentField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new CommentNode();
     return this.rootNode;
   }
@@ -44,7 +42,7 @@ export class CommentField extends AbstractField {
   }
 
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return this.symbolCompletionAsHtml();
   }
 
   //Overridden to avoid trimming

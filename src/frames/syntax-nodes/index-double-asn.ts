@@ -1,6 +1,7 @@
-import { CompileError } from "../compile-error";
 import { mustNotBeNegativeIndex } from "../compile-rules";
-import { AstNode } from "../interfaces/ast-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { OperationSymbol } from "./operation-symbol";
@@ -11,15 +12,9 @@ export class IndexDoubleAsn extends AbstractAstNode implements AstNode {
     private readonly index1: AstNode,
     private readonly index2: AstNode,
     public readonly fieldId: string,
+    private readonly scope: Scope,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    const fr = this.index1.aggregateCompileErrors();
-    const to = this.index2.aggregateCompileErrors();
-
-    return this.compileErrors.concat(fr).concat(to);
   }
 
   checkForNegativeIndex(index: AstNode) {
@@ -35,6 +30,8 @@ export class IndexDoubleAsn extends AbstractAstNode implements AstNode {
 
     this.checkForNegativeIndex(this.index1);
     this.checkForNegativeIndex(this.index2);
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `${this.index1.compile()}, ${this.index2.compile()}`;
   }

@@ -1,25 +1,14 @@
 import {
-  mustBeAssignableType,
-  mustBeKnownSymbolType,
-  mustBeUniqueNameInScope,
-} from "../compile-rules";
-import {
   addPrivateToggleToContextMenu,
   processTogglePrivate,
   singleIndent,
 } from "../frame-helpers";
-import { ConcreteClass } from "../globals/concrete-class";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { editorEvent } from "../frame-interfaces/editor-event";
+import { Parent } from "../frame-interfaces/parent";
+import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
 import { FunctionFrame } from "../globals/function-frame";
-import { CodeSource } from "../interfaces/code-source";
-import { editorEvent } from "../interfaces/editor-event";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Parent } from "../interfaces/parent";
-import { PossiblyPrivateMember } from "../interfaces/possibly-private-member";
-import { Scope } from "../interfaces/scope";
-import { Transforms } from "../interfaces/transforms";
 import { endKeyword, functionKeyword, privateKeyword, returnsKeyword } from "../keywords";
-import { getClassScope } from "../symbols/symbol-helpers";
-import { SymbolScope } from "../symbols/symbol-scope";
 
 export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMember {
   isMember: boolean = true;
@@ -32,10 +21,6 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
 
   helpId(): string {
     return "function_method";
-  }
-
-  getClass(): ConcreteClass {
-    return this.getParent() as ConcreteClass;
   }
 
   private modifierAsHtml(): string {
@@ -63,26 +48,7 @@ ${this.renderChildrenAsHtml()}
 <el-kw>${endKeyword} ${functionKeyword}</el-kw>
 </el-func>`;
   }
-  public override compile(transforms: Transforms): string {
-    this.compileErrors = [];
 
-    const name = this.name.compile(transforms);
-    mustBeUniqueNameInScope(name, getClassScope(this), transforms, this.compileErrors, this.htmlId);
-
-    this.returnType.compile(transforms);
-
-    const rt = this.symbolType(transforms).returnType;
-
-    mustBeKnownSymbolType(rt, this.returnType.renderAsSource(), this.compileErrors, this.htmlId);
-
-    const returnStatement = this.getReturnStatement().expr.getOrTransformAstNode(transforms);
-    const rst = returnStatement.symbolType();
-
-    mustBeAssignableType(rt, rst, this.compileErrors, returnStatement!.fieldId);
-    return `${this.indent()}async ${super.compile(transforms)}\r
-${this.indent()}}\r
-`;
-  }
   parseTop(source: CodeSource): void {
     source.removeIndent();
     const priv = `${privateKeyword} `;
@@ -94,18 +60,6 @@ ${this.indent()}}\r
   }
   parseBottom(source: CodeSource): boolean {
     return super.parseBottom(source);
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
-    if (this.name.text === id) {
-      return this;
-    }
-
-    return super.resolveSymbol(id, transforms, initialScope);
-  }
-
-  get symbolScope() {
-    return SymbolScope.member;
   }
 
   processKey(e: editorEvent): boolean {

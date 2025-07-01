@@ -1,11 +1,9 @@
-import { CompileError } from "../compile-error";
 import { mustBeInsideClass } from "../compile-rules";
-import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
 import { thisKeyword } from "../keywords";
-import { isInsideClass } from "../symbols/symbol-helpers";
+import { getGlobalScope, isInsideClass } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 
 export class ThisAsn extends AbstractAstNode implements AstNode {
   constructor(
@@ -16,10 +14,6 @@ export class ThisAsn extends AbstractAstNode implements AstNode {
     super();
   }
 
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors;
-  }
-
   compile(): string {
     this.compileErrors = [];
 
@@ -27,13 +21,13 @@ export class ThisAsn extends AbstractAstNode implements AstNode {
       mustBeInsideClass(this.compileErrors, this.fieldId);
     }
 
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
     return thisKeyword;
   }
 
   symbolType() {
-    return this.scope
-      .resolveSymbol(thisKeyword, transforms(), this.scope)
-      ?.symbolType(transforms());
+    return this.scope.resolveSymbol(thisKeyword, this.scope)?.symbolType();
   }
 
   toString() {

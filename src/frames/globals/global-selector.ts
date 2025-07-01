@@ -1,9 +1,9 @@
 import { AbstractSelector } from "../abstract-selector";
 import { isGlobal } from "../frame-helpers";
-import { File } from "../interfaces/file";
-import { Frame } from "../interfaces/frame";
-import { GlobalFrame } from "../interfaces/global-frame";
-import { Parent } from "../interfaces/parent";
+import { File } from "../frame-interfaces/file";
+import { Frame } from "../frame-interfaces/frame";
+import { GlobalFrame } from "../frame-interfaces/global-frame";
+import { Parent } from "../frame-interfaces/parent";
 import {
   abstractKeyword,
   classKeyword,

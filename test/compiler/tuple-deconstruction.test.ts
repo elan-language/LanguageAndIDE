@@ -785,8 +785,8 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Unknown, Provided: tuple(Int, String).LangRef.html#TypesCompileError",
       "'y' is not defined.LangRef.html#compile_error",
+      "Incompatible types. Expected: String, Unknown, Provided: tuple(Int, String).LangRef.html#TypesCompileError",
     ]);
   });
 
@@ -911,5 +911,43 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["'y' is not defined.LangRef.html#compile_error"]);
+  });
+
+  test("Fail_Id1", async () => {
+    const code = `${testHeader}
+
+main
+  variable a, b set to tuple(1, 2)
+  call a()
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot invoke identifier 'a' as a method.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_Id2", async () => {
+    const code = `${testHeader}
+
+main
+  variable a, b set to tuple(1, 2)
+  call b()
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot invoke identifier 'b' as a method.LangRef.html#compile_error",
+    ]);
   });
 });

@@ -1,7 +1,7 @@
-import { SymbolType } from "../interfaces/symbol-type";
-import { immutableTypeOptions } from "../interfaces/type-options";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
+import { immutableTypeOptions } from "../compiler-interfaces/type-options";
 import { FloatName } from "./elan-type-names";
-import { isNumber } from "./symbol-helpers";
+import { IntType } from "./int-type";
 
 export class FloatType implements SymbolType {
   private constructor() {}
@@ -16,7 +16,11 @@ export class FloatType implements SymbolType {
     return this.name;
   }
 
+  isNumber(st: SymbolType) {
+    return st instanceof IntType || st instanceof FloatType;
+  }
+
   isAssignableFrom(otherType: SymbolType): boolean {
-    return isNumber(otherType);
+    return this.isNumber(otherType);
   }
 }

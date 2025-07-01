@@ -1,20 +1,12 @@
-import { mustBeIterable, mustNotBeRedefined } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { File } from "../frame-interfaces/file";
+import { Parent } from "../frame-interfaces/parent";
+import { Statement } from "../frame-interfaces/statement";
 import { FrameWithStatements } from "../frame-with-statements";
-import { CodeSource } from "../interfaces/code-source";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Field } from "../interfaces/field";
-import { File } from "../interfaces/file";
-import { Parent } from "../interfaces/parent";
-import { Scope } from "../interfaces/scope";
-import { Statement } from "../interfaces/statement";
-import { Transforms } from "../interfaces/transforms";
 import { eachKeyword } from "../keywords";
-import { isGenericSymbolType } from "../symbols/symbol-helpers";
-import { SymbolScope } from "../symbols/symbol-scope";
-import { UnknownType } from "../symbols/unknown-type";
-import { transforms } from "../syntax-nodes/ast-helpers";
 
 export class Each extends FrameWithStatements implements Statement {
   isStatement = true;
@@ -52,22 +44,6 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}end each`;
   }
 
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-
-    const id = this.variable.getOrTransformAstNode(transforms).compile();
-    const symbol = this.getParent().resolveSymbol(id, transforms, this);
-
-    mustNotBeRedefined(symbol, this.compileErrors, this.htmlId);
-
-    const iterType = this.iter.getOrTransformAstNode(transforms).symbolType();
-    mustBeIterable(iterType!, this.compileErrors, this.htmlId);
-
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}for (const ${this.variable.compile(transforms)} of ${this.iter.compile(transforms)}) {\r
-${this.compileChildren(transforms)}\r
-${this.indent()}}`;
-  }
-
   parseTop(source: CodeSource): void {
     source.remove("each ");
     this.variable.parseFrom(source);
@@ -76,53 +52,5 @@ ${this.indent()}}`;
   }
   parseBottom(source: CodeSource): boolean {
     return this.parseStandardEnding(source, "end each");
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
-    const v = this.variable.text;
-
-    if (id === v) {
-      const iterSt = this.iter.symbolType(transforms);
-      const st = isGenericSymbolType(iterSt) ? iterSt.ofTypes[0] : UnknownType.Instance;
-      return {
-        symbolId: id,
-        symbolType: () => st,
-        symbolScope: SymbolScope.counter,
-      };
-    }
-
-    const iter = this.iter.text;
-
-    if (id === iter) {
-      // intercept iter resolve in order to make counter so it's immutable
-      const symbol = super.resolveSymbol(id, transforms, this);
-      return {
-        symbolId: id,
-        symbolType: (t) => symbol.symbolType(t),
-        symbolScope: SymbolScope.counter,
-      };
-    }
-
-    return super.resolveSymbol(id, transforms, initialScope);
-  }
-
-  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
-    const matches = super.symbolMatches(id, all, this);
-    const localMatches: ElanSymbol[] = [];
-
-    const v = this.variable.text;
-
-    if (id === v || all) {
-      const iterSt = this.iter.symbolType(transforms());
-      const st = isGenericSymbolType(iterSt) ? iterSt.ofTypes[0] : UnknownType.Instance;
-      const counter = {
-        symbolId: v,
-        symbolType: () => st,
-        symbolScope: SymbolScope.counter,
-      };
-      localMatches.push(counter);
-    }
-
-    return localMatches.concat(matches);
   }
 }

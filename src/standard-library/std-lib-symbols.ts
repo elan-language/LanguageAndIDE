@@ -7,10 +7,9 @@ import {
   isFunctionDescriptor,
   isProcedureDescriptor,
 } from "../elan-type-interfaces";
-import { ElanSymbol } from "../frames/interfaces/elan-symbol";
-import { Scope } from "../frames/interfaces/scope";
-import { SymbolType } from "../frames/interfaces/symbol-type";
-import { Transforms } from "../frames/interfaces/transforms";
+import { ElanSymbol } from "../frames/compiler-interfaces/elan-symbol";
+import { Scope } from "../frames/compiler-interfaces/scope";
+import { SymbolType } from "../frames/compiler-interfaces/symbol-type";
 import { NullScope } from "../frames/symbols/null-scope";
 import { symbolMatches } from "../frames/symbols/symbol-helpers";
 import { SymbolScope } from "../frames/symbols/symbol-scope";
@@ -76,7 +75,7 @@ export class StdLibSymbols implements Scope {
     return NullScope.Instance;
   }
 
-  resolveSymbol(id: string, _transforms: Transforms, _scope: Scope): ElanSymbol {
+  resolveSymbol(id: string, _scope: Scope): ElanSymbol {
     return id ? (this.symbols.get(id) ?? new UnknownSymbol(id)) : new UnknownSymbol();
   }
 }

@@ -226,9 +226,9 @@ end procedure`;
 const global = new class {};
 async function main() {
   let a = _stdlib.createList(11, 0);
-  let _a24 = [a];
-  await foo(_a24);
-  a = _a24[0];
+  let _a0 = [a];
+  await foo(_a0);
+  a = _a0[0];
 }
 
 async function foo(arr) {

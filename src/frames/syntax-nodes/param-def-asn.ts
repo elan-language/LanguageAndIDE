@@ -1,6 +1,7 @@
-import { CompileError } from "../compile-error";
 import { mustBeKnownSymbolType, mustNotBeKeyword } from "../compile-rules";
-import { AstIdNode } from "../interfaces/ast-id-node";
+import { AstIdNode } from "../compiler-interfaces/ast-id-node";
+import { Scope } from "../compiler-interfaces/scope";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 
@@ -10,12 +11,9 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
     private readonly type: AstIdNode,
     private readonly out: boolean,
     public readonly fieldId: string,
+    private readonly scope: Scope,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors.concat(this.type.aggregateCompileErrors());
   }
 
   compile(): string {
@@ -26,7 +24,7 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
 
     mustNotBeKeyword(this.id, this.compileErrors, this.fieldId);
     mustBeKnownSymbolType(this.symbolType(), this.type.id, this.compileErrors, this.fieldId);
-
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return `${this.id}`;
   }
 

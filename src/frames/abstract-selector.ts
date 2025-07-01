@@ -1,11 +1,11 @@
 import { AbstractFrame } from "./abstract-frame";
 import { helper_pastePopUp, isFrameWithStatements } from "./frame-helpers";
-import { CodeSource } from "./interfaces/code-source";
-import { editorEvent } from "./interfaces/editor-event";
-import { Field } from "./interfaces/field";
-import { Frame } from "./interfaces/frame";
-import { Parent } from "./interfaces/parent";
-import { Profile } from "./interfaces/profile";
+import { CodeSource } from "./frame-interfaces/code-source";
+import { editorEvent } from "./frame-interfaces/editor-event";
+import { Field } from "./frame-interfaces/field";
+import { Frame } from "./frame-interfaces/frame";
+import { Parent } from "./frame-interfaces/parent";
+import { Profile } from "./frame-interfaces/profile";
 import { Overtyper } from "./overtyper";
 import { ParseStatus } from "./status-enums";
 

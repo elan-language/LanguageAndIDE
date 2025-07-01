@@ -1,19 +1,11 @@
 import { ParamListField } from "../fields/param-list-field";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
-import { ConcreteClass } from "../globals/concrete-class";
-import { CodeSource } from "../interfaces/code-source";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Field } from "../interfaces/field";
-import { Member } from "../interfaces/member";
-import { Parent } from "../interfaces/parent";
-import { Scope } from "../interfaces/scope";
-import { Transforms } from "../interfaces/transforms";
 import { constructorKeyword } from "../keywords";
-import { ProcedureType } from "../symbols/procedure-type";
-import { SymbolScope } from "../symbols/symbol-scope";
-import { UnknownSymbol } from "../symbols/unknown-symbol";
 
-export class Constructor extends FrameWithStatements implements ElanSymbol, Member {
+export class Constructor extends FrameWithStatements {
   isConstructor = true;
   isMember = true;
   isAbstract = false;
@@ -22,10 +14,6 @@ export class Constructor extends FrameWithStatements implements ElanSymbol, Memb
   constructor(parent: Parent) {
     super(parent);
     this.params = new ParamListField(this);
-  }
-
-  getClass(): ConcreteClass {
-    return this.getParent() as ConcreteClass;
   }
 
   initialKeywords(): string {
@@ -55,16 +43,6 @@ ${this.indent()}end constructor\r
 `;
   }
 
-  public compile(transforms: Transforms): string {
-    this.compileErrors = [];
-
-    return `${this.indent()}async _initialise(${this.params.compile(transforms)}) {\r
-${this.breakPoint(this.debugSymbols())}${this.compileChildren(transforms)}\r
-${this.indent()}${this.indent()}return this;\r
-${this.indent()}}\r
-`;
-  }
-
   parseTop(source: CodeSource): void {
     source.removeIndent();
     source.remove("constructor(");
@@ -73,29 +51,5 @@ ${this.indent()}}\r
   }
   parseBottom(source: CodeSource): boolean {
     return this.parseStandardEnding(source, "end constructor");
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, initialScope: Scope): ElanSymbol {
-    const s = this.params.resolveSymbol(id, transforms, this);
-    return s instanceof UnknownSymbol ? super.resolveSymbol(id, transforms, initialScope) : s;
-  }
-
-  public override symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
-    const matches = super.symbolMatches(id, all, initialScope);
-    const localMatches = this.params.symbolMatches(id, all, initialScope);
-    return localMatches.concat(matches);
-  }
-
-  get symbolId() {
-    return `__${constructorKeyword}`;
-  }
-
-  symbolType(transforms?: Transforms) {
-    const [pn, pt] = this.params.symbolNamesAndTypes(transforms);
-    return new ProcedureType(pn, pt, false, false);
-  }
-
-  get symbolScope() {
-    return SymbolScope.member;
   }
 }

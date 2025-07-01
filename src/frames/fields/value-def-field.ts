@@ -1,9 +1,7 @@
-import { CodeSource } from "../interfaces/code-source";
-import { Frame } from "../interfaces/frame";
-
-import { ParseNode } from "../interfaces/parse-node";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Frame } from "../frame-interfaces/frame";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { ValueDefNode } from "../parse-nodes/value-def-node";
-import { transforms } from "../syntax-nodes/ast-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class ValueDefField extends AbstractField {
@@ -21,7 +19,6 @@ export class ValueDefField extends AbstractField {
     return "var";
   }
   initialiseRoot(): ParseNode {
-    this.astNode = undefined;
     this.rootNode = new ValueDefNode();
     return this.rootNode;
   }
@@ -33,6 +30,6 @@ export class ValueDefField extends AbstractField {
   }
 
   symbolCompletion(): string {
-    return this.symbolCompletionAsHtml(transforms());
+    return this.symbolCompletionAsHtml();
   }
 }

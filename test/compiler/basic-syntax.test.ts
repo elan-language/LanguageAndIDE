@@ -2,7 +2,6 @@ import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
   assertDoesNotCompile,
-  assertDoesNotCompileWithId,
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -370,7 +369,7 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "print3", [
+    assertDoesNotCompile(fileImpl, [
       "To evaluate function 'foo' add brackets. Or to create a reference to 'foo', precede it by 'ref'.LangRef.html#compile_error",
     ]);
   });
@@ -392,7 +391,7 @@ end function
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "print3", [
+    assertDoesNotCompile(fileImpl, [
       "To evaluate function 'foo' add brackets. Or to create a reference to 'foo', precede it by 'ref'.LangRef.html#compile_error",
     ]);
   });
@@ -414,7 +413,7 @@ end main`;
     ]);
   });
 
-  test("Fail_compilerDirective1", async () => {
+  test("Fail_compilerDirective2", async () => {
     const code = `${testHeader}
 
 class Foo

@@ -1,13 +1,11 @@
-import { CompileError } from "../compile-error";
 import { mustBeKnownSymbol } from "../compile-rules";
-import { isScope } from "../frame-helpers";
-import { AstNode } from "../interfaces/ast-node";
-import { Scope } from "../interfaces/scope";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
 import { EnumType } from "../symbols/enum-type";
 import { NullScope } from "../symbols/null-scope";
+import { getGlobalScope, isScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 
 export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
   constructor(
@@ -19,14 +17,10 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
     super();
   }
 
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors;
-  }
-
   compile(): string {
     this.compileErrors = [];
 
-    const symbol = this.scope.resolveSymbol(this.type.name, transforms(), this.scope);
+    const symbol = this.scope.resolveSymbol(this.type.name, this.scope);
 
     mustBeKnownSymbol(
       symbol,
@@ -37,7 +31,7 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
     );
 
     if (isScope(symbol)) {
-      const value = symbol.resolveSymbol(this.value, transforms(), this.scope);
+      const value = symbol.resolveSymbol(this.value, symbol);
       mustBeKnownSymbol(
         value,
         NullScope.Instance,
@@ -46,7 +40,7 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
         this.fieldId,
       );
     }
-
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return `${this.type.name}.${this.value}`;
   }
 

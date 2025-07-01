@@ -1,7 +1,7 @@
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
 import {
-  assertDoesNotCompileWithId,
+  assertDoesNotCompile,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -193,7 +193,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "let15", [
+    assertDoesNotCompile(fileImpl, [
       "The identifier 'x' is already used for a 'let' and cannot be re-defined here.LangRef.html#compile_error",
     ]);
   });
@@ -216,9 +216,7 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "set15", [
-      "May not re-assign the 'let' 'x'.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the 'let' 'x'.LangRef.html#compile_error"]);
   });
 
   test("Fail_RecursiveDefinition", async () => {
@@ -238,13 +236,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr17", [
-      "'x' is not defined.LangRef.html#compile_error",
-    ]);
-
-    assertDoesNotCompileWithId(fileImpl, "func8", [
-      "'x' is not defined.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'x' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Fail_RecursiveDefinition1", async () => {
@@ -264,12 +256,7 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompileWithId(fileImpl, "expr17", [
-      "'y' is not defined.LangRef.html#compile_error",
-    ]);
-    assertDoesNotCompileWithId(fileImpl, "func5", [
-      "'y' is not defined.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["'y' is not defined.LangRef.html#compile_error"]);
   });
 
   test("Pass_Redefine", async () => {

@@ -941,21 +941,81 @@ end function`;
     ]);
   });
 
-  test("Fail_OperatorsAndProceduresWithFunctionKeyword", async () => {
+  test("Fail_OperatorsAndProceduresWithFunctionKeyword1", async () => {
     const code = `${testHeader}
 
 main
   variable a set to ref p1 is ref p2
-  variable b set to ref p1 + ref p2
-  variable c set to - ref p1
-  variable d set to ref p1
-  set d to ref p3
 end main
 
 function p1() returns Int
   return 0
 end function
 function p2() returns Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot do equality operations on Procedures or Functions.LangRef.html#CannotCompareProcFunc",
+    ]);
+  });
+
+  test("Fail_OperatorsAndProceduresWithFunctionKeyword2", async () => {
+    const code = `${testHeader}
+
+main
+  variable b set to ref p1 + ref p2
+end main
+
+function p1() returns Int
+  return 0
+end function
+function p2() returns Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
+    ]);
+  });
+
+  test("Fail_OperatorsAndProceduresWithFunctionKeyword3", async () => {
+    const code = `${testHeader}
+
+main
+  variable c set to - ref p1
+end main
+
+function p1() returns Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
+    ]);
+  });
+
+  test("Fail_OperatorsAndProceduresWithFunctionKeyword4", async () => {
+    const code = `${testHeader}
+
+main
+  variable d set to ref p1
+  set d to ref p3
+end main
+
+function p1() returns Int
   return 0
 end function
 function p3(a as Int) returns Float
@@ -967,21 +1027,16 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot do equality operations on Procedures or Functions.LangRef.html#CannotCompareProcFunc",
-      "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
+      "To evaluate function 'd' add brackets. Or to create a reference to 'd', precede it by 'ref'.LangRef.html#compile_error",
       "Incompatible types. Expected: Func<of  => Int>, Provided: Func<of Int => Float>.LangRef.html#TypesCompileError",
     ]);
   });
 
-  test("Fail_OperatorsAndProcedures", async () => {
+  test("Fail_OperatorsAndProcedures1", async () => {
     const code = `${testHeader}
 
 main
   variable a set to p1 is p2
-  variable b set to p1 + p2
-  variable c set to -p1
 end main
 
 function p1() returns Int
@@ -996,15 +1051,55 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'.LangRef.html#compile_error",
+      "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'.LangRef.html#compile_error",
       "Cannot do equality operations on Procedures or Functions.LangRef.html#CannotCompareProcFunc",
+    ]);
+  });
+
+  test("Fail_OperatorsAndProcedures2", async () => {
+    const code = `${testHeader}
+
+main
+  variable b set to p1 + p2
+end main
+
+function p1() returns Int
+  return 0
+end function
+function p2() returns Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
       "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'.LangRef.html#compile_error",
       "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'.LangRef.html#compile_error",
       "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
+    ]);
+  });
+
+  test("Fail_OperatorsAndProcedures3", async () => {
+    const code = `${testHeader}
+
+main
+  variable c set to -p1
+end main
+
+function p1() returns Int
+  return 0
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
       "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'.LangRef.html#compile_error",
-      "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'.LangRef.html#compile_error",
       "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
-      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'.LangRef.html#compile_error",
     ]);
   });
 

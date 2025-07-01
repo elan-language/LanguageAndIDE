@@ -1,15 +1,15 @@
-import { CompileError } from "../compile-error";
 import {
   getId,
   mustBeAssignableType,
   mustBeRangeableType,
   mustNotBeNegativeIndex,
 } from "../compile-rules";
-import { AstNode } from "../interfaces/ast-node";
-import { ChainedAsn } from "../interfaces/chained-asn";
-import { Scope } from "../interfaces/scope";
-import { SymbolType } from "../interfaces/symbol-type";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ChainedAsn } from "../compiler-interfaces/chained-asn";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { IntType } from "../symbols/int-type";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { compileSimpleSubscript, getIndexAndOfType } from "./ast-helpers";
@@ -21,6 +21,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   constructor(
     public readonly index: AstNode,
     public readonly fieldId: string,
+    private readonly scope: Scope,
   ) {
     super();
   }
@@ -36,11 +37,6 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   }
 
   isAsync: boolean = false;
-
-  aggregateCompileErrors(): CompileError[] {
-    const cc = this.precedingNode?.aggregateCompileErrors() ?? [];
-    return cc.concat(this.compileErrors).concat(this.index.aggregateCompileErrors());
-  }
 
   isSimpleSubscript() {
     return !(this.index instanceof RangeAsn);
@@ -91,9 +87,13 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     const indexed = this.precedingNode!.compile();
     const indexedType = this.precedingNode!.symbolType();
 
-    return this.isSimpleSubscript()
+    const code = this.isSimpleSubscript()
       ? this.compileSimpleSubscript(getId(this.precedingNode), indexedType, indexed, subscript)
       : this.compileRange(indexedType, indexed, subscript);
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
+    return code;
   }
 
   symbolType() {

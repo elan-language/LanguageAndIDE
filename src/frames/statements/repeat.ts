@@ -1,13 +1,10 @@
-import { mustBeOfType } from "../compile-rules";
 import { ExpressionField } from "../fields/expression-field";
+import { CodeSource } from "../frame-interfaces/code-source";
+import { Field } from "../frame-interfaces/field";
+import { Parent } from "../frame-interfaces/parent";
+import { Statement } from "../frame-interfaces/statement";
 import { FrameWithStatements } from "../frame-with-statements";
-import { CodeSource } from "../interfaces/code-source";
-import { Field } from "../interfaces/field";
-import { Parent } from "../interfaces/parent";
-import { Statement } from "../interfaces/statement";
-import { Transforms } from "../interfaces/transforms";
 import { repeatKeyword } from "../keywords";
-import { BooleanType } from "../symbols/boolean-type";
 
 export class Repeat extends FrameWithStatements implements Statement {
   isStatement: boolean = true;
@@ -39,20 +36,6 @@ ${this.compileMsgAsHtml()}</el-statement>`;
     return `${this.indent()}repeat\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end repeat when ${this.condition.renderAsSource()}`;
-  }
-
-  compile(transforms: Transforms): string {
-    this.compileErrors = [];
-    mustBeOfType(
-      this.condition.getOrTransformAstNode(transforms),
-      BooleanType.Instance,
-      this.compileErrors,
-      this.htmlId,
-    );
-
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}do {\r
-${this.compileChildren(transforms)}\r
-${this.indent()}} while (!(${this.condition.compile(transforms)}));`;
   }
 
   parseTop(source: CodeSource): void {

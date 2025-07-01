@@ -1,5 +1,4 @@
-import { CompileError } from "../compile-error";
-import { AstNode } from "../interfaces/ast-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
 import { RegExpType } from "../symbols/regexp-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
@@ -15,10 +14,6 @@ export class LiteralRegExAsn extends AbstractAstNode implements AstNode {
   }
 
   value: RegExp;
-
-  aggregateCompileErrors(): CompileError[] {
-    return this.compileErrors;
-  }
 
   compile(): string {
     return `${this.value}`;

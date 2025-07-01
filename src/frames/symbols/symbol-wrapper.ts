@@ -1,14 +1,14 @@
-import { isGenericClass } from "../frame-helpers";
-import { ElanSymbol } from "../interfaces/elan-symbol";
-import { Scope } from "../interfaces/scope";
-import { Transforms } from "../interfaces/transforms";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { Scope } from "../compiler-interfaces/scope";
 import { propertyKeyword } from "../keywords";
 import { KeywordCompletion } from "../symbol-completion-helpers";
+import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import {
   isAbstractTypeName,
   isCallStatement,
   isConcreteTypeName,
   isFunction,
+  isGenericClass,
   isId,
   isMemberOnFieldsClass,
   isNotInheritableClass,
@@ -19,7 +19,6 @@ import {
 export class SymbolWrapper {
   constructor(
     private readonly wrapped: ElanSymbol | KeywordCompletion,
-    private readonly transforms: Transforms,
     private readonly scope: Scope,
   ) {
     if (wrapped instanceof KeywordCompletion) {
@@ -42,7 +41,7 @@ export class SymbolWrapper {
 
     const symbol = this.wrapped as ElanSymbol;
 
-    if (isProperty(symbol) && isMemberOnFieldsClass(symbol, this.transforms, this.scope)) {
+    if (isProperty(symbol) && isMemberOnFieldsClass(symbol, this.scope)) {
       return `${propertyKeyword}.${symbol.symbolId}`;
     }
 
@@ -62,7 +61,7 @@ export class SymbolWrapper {
       return " type";
     }
 
-    if (isFunction(symbol, this.transforms) || isProcedure(symbol, this.transforms)) {
+    if (isFunction(symbol) || isProcedure(symbol)) {
       return " method";
     }
 
@@ -91,11 +90,11 @@ export class SymbolWrapper {
       return `${this.name}<of `;
     }
 
-    if (isFunction(symbol, this.transforms)) {
+    if (isFunction(symbol)) {
       return `${this.name}(`;
     }
 
-    if (isProcedure(symbol, this.transforms)) {
+    if (isProcedure(symbol)) {
       return `${this.name}`;
     }
 
@@ -103,11 +102,11 @@ export class SymbolWrapper {
       return `${this.name}`;
     }
 
-    if (isMemberOnFieldsClass(symbol, this.transforms, this.scope)) {
+    if (isMemberOnFieldsClass(symbol, this.scope)) {
       return `${propertyKeyword}.${symbol.symbolId}`;
     }
 
-    if (isCallStatement(this.scope) && this.scope.args.cursorPos === 0) {
+    if (isCallStatement(this.scope) && this.scope.args instanceof EmptyAsn) {
       return `${this.name}.`;
     }
 

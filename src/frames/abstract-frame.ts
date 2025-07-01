@@ -1,7 +1,6 @@
-import { CompileError } from "./compile-error";
 import {
   expandCollapseAll,
-  helper_compileMsgAsHtml,
+  helper_compileMsgAsHtmlNew,
   helper_CompileOrParseAsDisplayStatus,
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
@@ -10,16 +9,13 @@ import {
   isSelector,
   singleIndent,
 } from "./frame-helpers";
-import { CodeSource } from "./interfaces/code-source";
-import { editorEvent } from "./interfaces/editor-event";
-import { ElanSymbol } from "./interfaces/elan-symbol";
-import { Field } from "./interfaces/field";
-import { File } from "./interfaces/file";
-import { Frame } from "./interfaces/frame";
-import { Parent } from "./interfaces/parent";
-import { Scope } from "./interfaces/scope";
-import { Selectable } from "./interfaces/selectable";
-import { Transforms } from "./interfaces/transforms";
+import { CodeSource } from "./frame-interfaces/code-source";
+import { editorEvent } from "./frame-interfaces/editor-event";
+import { Field } from "./frame-interfaces/field";
+import { File } from "./frame-interfaces/file";
+import { Frame } from "./frame-interfaces/frame";
+import { Parent } from "./frame-interfaces/parent";
+import { Selectable } from "./frame-interfaces/selectable";
 import {
   parentHelper_getAllSelectedChildren,
   parentHelper_getChildAfter,
@@ -33,9 +29,6 @@ import {
   DisplayColour,
   ParseStatus,
 } from "./status-enums";
-import { allScopedSymbols, orderSymbol } from "./symbols/symbol-helpers";
-import { SymbolScope } from "./symbols/symbol-scope";
-import { UnknownType } from "./symbols/unknown-type";
 
 export abstract class AbstractFrame implements Frame {
   isFrame = true;
@@ -76,34 +69,8 @@ export abstract class AbstractFrame implements Frame {
       : ``;
   }
 
-  compileScope: Scope | undefined;
-
-  setCompileScope(s: Scope): void {
-    this.compileScope = s;
-  }
-
-  getCurrentScope(): Scope {
-    return this;
-  }
-
-  getParentScope(): Scope {
-    return this.compileScope ?? this.getParent();
-  }
-
   hasBeenAddedTo(): void {
     this.isNew = false;
-  }
-
-  get symbolId() {
-    return "__";
-  }
-
-  symbolType(_transforms?: Transforms) {
-    return UnknownType.Instance;
-  }
-
-  get symbolScope() {
-    return SymbolScope.unknown;
   }
 
   isMovable(): boolean {
@@ -126,18 +93,6 @@ export abstract class AbstractFrame implements Frame {
 
   getFrNo(): string {
     return this.getFile().getFrNo();
-  }
-
-  resolveSymbol(id: string, transforms: Transforms, _initialScope: Scope): ElanSymbol {
-    return this.getParentScope().resolveSymbol(id, transforms, this);
-  }
-
-  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
-    return this.getParentScope().symbolMatches(id, all, this);
-  }
-
-  compile(_transforms: Transforms): string {
-    throw new Error("Method not implemented.");
   }
 
   fieldUpdated(_field: Field): void {
@@ -629,12 +584,15 @@ export abstract class AbstractFrame implements Frame {
       .map((g) => g.readCompileStatus())
       .reduce((prev, cur) => (cur < prev ? cur : prev), CompileStatus.default);
   }
+
   readCompileStatus(): CompileStatus {
     return this._compileStatus;
   }
 
   updateCompileStatus(): void {
-    const own = helper_deriveCompileStatusFromErrors(this.compileErrors);
+    const own = helper_deriveCompileStatusFromErrors(
+      this.getFile().getAst(false)?.getCompileErrorsFor(this.htmlId) ?? [],
+    );
     this.getFields().forEach((f) => f.updateCompileStatus());
     const worstField = this.worstCompileStatusOfFields();
     this._compileStatus = Math.min(own, worstField);
@@ -643,18 +601,11 @@ export abstract class AbstractFrame implements Frame {
   protected setCompileStatus(newStatus: CompileStatus) {
     this._compileStatus = newStatus;
   }
-  resetCompileStatusAndErrors(): void {
-    this.compileErrors = [];
-    this.getFields().forEach((f) => f.resetCompileStatusAndErrors());
-    this._compileStatus = CompileStatus.default;
-  }
 
   abstract parseFrom(source: CodeSource): void;
 
-  compileErrors: CompileError[] = [];
-
   compileMsgAsHtml() {
-    return helper_compileMsgAsHtml(this);
+    return helper_compileMsgAsHtmlNew(this.getFile(), this);
   }
 
   getNextState(currentState: BreakpointStatus, event: BreakpointEvent) {
@@ -761,78 +712,8 @@ export abstract class AbstractFrame implements Frame {
     return "";
   }
 
-  debugSymbols() {
-    return () => allScopedSymbols(this.getParentScope(), this);
-  }
-
-  isNotGlobalOrLib(s: ElanSymbol) {
-    const scope = s.symbolScope;
-
-    return !(scope === SymbolScope.program || scope === SymbolScope.stdlib);
-  }
-
   bpAsHtml(): string {
     return this.hasBreakpoint() ? `<el-bp>&#x1f5f2;</el-bp>` : "";
-  }
-
-  bpIndent() {
-    return this.indent() === "" ? "  " : this.indent();
-  }
-
-  resolveVariables(scopedSymbols: () => ElanSymbol[]) {
-    const resolveId: string[] = [];
-    const symbols = scopedSymbols().filter(this.isNotGlobalOrLib).sort(orderSymbol);
-    const indent = this.bpIndent();
-
-    for (const symbol of symbols) {
-      const idPrefix =
-        symbol.symbolScope === SymbolScope.program
-          ? "global."
-          : symbol.symbolScope === SymbolScope.member
-            ? "property."
-            : "";
-
-      const scopePrefix =
-        symbol.symbolScope === SymbolScope.stdlib
-          ? "_stdlib."
-          : symbol.symbolScope === SymbolScope.program
-            ? "global."
-            : symbol.symbolScope === SymbolScope.member
-              ? "this."
-              : "";
-
-      const id = `${idPrefix}${symbol.symbolId}`;
-      const value = `${scopePrefix}${symbol.symbolId}`;
-      resolveId.push(
-        `${indent}_scopedIds${this.htmlId}.push(["${id}", await system.debugSymbol(${value})]);`,
-      );
-    }
-
-    return `${resolveId.join("\r\n")}`;
-  }
-
-  breakPoint(scopedSymbols: () => ElanSymbol[]) {
-    if (
-      this.breakpointStatus === BreakpointStatus.active ||
-      this.breakpointStatus === BreakpointStatus.singlestep
-    ) {
-      let resolve = this.resolveVariables(scopedSymbols);
-      const type = this.breakpointStatus === BreakpointStatus.singlestep ? "true" : "false";
-      const indent = this.bpIndent();
-
-      if (this.breakpointStatus === BreakpointStatus.singlestep) {
-        resolve = `${indent}if (__pause) {
-${resolve}
-${indent}}`;
-      }
-
-      resolve = `${indent}const _scopedIds${this.htmlId} = [];
-${resolve}`;
-
-      return `${resolve}\r\n${indent}__pause = await system.breakPoint(_scopedIds${this.htmlId}, "${this.htmlId}", ${type}, __pause);\r\n`;
-    }
-
-    return "";
   }
 
   protected toolTip(): string {

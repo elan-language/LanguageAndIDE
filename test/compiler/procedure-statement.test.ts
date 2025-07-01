@@ -175,9 +175,9 @@ end procedure`;
 const global = new class {};
 async function main() {
   let a = system.list([2, 3]);
-  let _a18 = [a];
-  await changeFirst(_a18);
-  a = _a18[0];
+  let _a0 = [a];
+  await changeFirst(_a0);
+  a = _a0[0];
   await system.printLine(a);
 }
 
@@ -477,9 +477,9 @@ const global = new class {};
 async function main() {
   let a = 2;
   let b = "hello";
-  let _a26 = [a]; let _b26 = [b];
-  await foo(_a26, _b26);
-  a = _a26[0]; b = _b26[0];
+  let _a0 = [a]; let _b0 = [b];
+  await foo(_a0, _b0);
+  a = _a0[0]; b = _b0[0];
   await system.printLine(a);
   await system.printLine(b);
 }
@@ -522,9 +522,9 @@ const global = new class {};
 async function main() {
   let a = 2;
   let b = 3;
-  let _a29 = [a]; let _b29 = [b];
-  await foo(_a29, _b29);
-  a = _a29[0]; b = _b29[0];
+  let _a0 = [a]; let _b0 = [b];
+  await foo(_a0, _b0);
+  a = _a0[0]; b = _b0[0];
   await system.printLine(a);
   await system.printLine(b);
 }
@@ -572,17 +572,17 @@ const global = new class {};
 async function main() {
   let a = 2;
   let b = 3;
-  let _a36 = [a]; let _b36 = [b];
-  await foo(_a36, _b36);
-  a = _a36[0]; b = _b36[0];
+  let _a0 = [a]; let _b0 = [b];
+  await foo(_a0, _b0);
+  a = _a0[0]; b = _b0[0];
   await system.printLine(a);
   await system.printLine(b);
 }
 
 async function foo(a, b) {
-  let _a37 = [a[0]]; let _b37 = [b[0]];
-  await bar(_a37, _b37);
-  a[0] = _a37[0]; b[0] = _b37[0];
+  let _a1 = [a[0]]; let _b1 = [b[0]];
+  await bar(_a1, _b1);
+  a[0] = _a1[0]; b[0] = _b1[0];
 }
 global["foo"] = foo;
 
@@ -631,16 +631,16 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let b = 0;
-  let _a35 = [a]; let _b35 = [b];
-  await foo(_a35, _b35);
-  a = _a35[0]; b = _b35[0];
+  let _a0 = [a]; let _b0 = [b];
+  await foo(_a0, _b0);
+  a = _a0[0]; b = _b0[0];
   await system.printLine(b);
 }
 
 async function foo(f, y) {
-  let _y36 = [y[0]];
-  await f[0].bar(_y36);
-  y[0] = _y36[0];
+  let _y1 = [y[0]];
+  await f[0].bar(_y1);
+  y[0] = _y1[0];
 }
 global["foo"] = foo;
 
@@ -695,9 +695,9 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let b = 100;
-  let _a34 = [a]; let _b34 = [b];
-  await foo(_a34, _b34);
-  a = _a34[0]; b = _b34[0];
+  let _a0 = [a]; let _b0 = [b];
+  await foo(_a0, _b0);
+  a = _a0[0]; b = _b0[0];
   await system.printLine(b);
 }
 
@@ -747,13 +747,13 @@ end procedure`;
 const global = new class {};
 async function main() {
   let x = 1;
-  let _x23 = [x];
-  await addOne(_x23);
-  x = _x23[0];
+  let _x0 = [x];
+  await addOne(_x0);
+  x = _x0[0];
   await system.printLine(x);
-  let _x24 = [x];
-  await addOne(_x24);
-  x = _x24[0];
+  let _x1 = [x];
+  await addOne(_x1);
+  x = _x1[0];
   await system.printLine(x);
 }
 
@@ -788,9 +788,9 @@ end procedure`;
 const global = new class {};
 async function main() {
   let x = 1;
-  let _x15 = [x];
-  await printParameter(_x15);
-  x = _x15[0];
+  let _x0 = [x];
+  await printParameter(_x0);
+  x = _x0[0];
 }
 
 async function printParameter(n) {
@@ -1265,8 +1265,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of Int>, Provided: Procedure (Int).LangRef.html#TypesCompileError",
       "Cannot call procedure 'append' within an expression.LangRef.html#compile_error",
+      "Incompatible types. Expected: List<of Int>, Provided: Procedure (Int).LangRef.html#TypesCompileError",
     ]);
   });
 

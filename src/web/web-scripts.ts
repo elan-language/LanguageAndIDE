@@ -2,10 +2,10 @@
 import { ElanRuntimeError } from "../elan-runtime-error";
 import { isElanProduction } from "../environment";
 import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";
-import { editorEvent, toDebugString } from "../frames/interfaces/editor-event";
-import { File } from "../frames/interfaces/file";
-import { Profile } from "../frames/interfaces/profile";
-import { Group, Individual } from "../frames/interfaces/user-config";
+import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
+import { File } from "../frames/frame-interfaces/file";
+import { Profile } from "../frames/frame-interfaces/profile";
+import { Group, Individual } from "../frames/frame-interfaces/user-config";
 import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../frames/status-enums";
 import { StdLib } from "../standard-library/std-lib";
 import { handleClick, handleDblClick, handleKey } from "./editorHandlers";

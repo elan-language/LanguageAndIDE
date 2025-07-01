@@ -6,4 +6,8 @@ export class AbstractAstNode {
   get symbolScope() {
     return SymbolScope.unknown;
   }
+
+  indent() {
+    return "";
+  }
 }

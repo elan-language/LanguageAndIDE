@@ -1,14 +1,12 @@
-import { CompileError } from "../compile-error";
 import { mustBeAssignableType, mustBeImmutableGenericType } from "../compile-rules";
-import { AstCollectionNode } from "../interfaces/ast-collection-node";
-import { AstNode } from "../interfaces/ast-node";
-import { ReifyableSymbolType } from "../interfaces/reifyable-symbol-type";
-import { Scope } from "../interfaces/scope";
+import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ReifyableSymbolType } from "../compiler-interfaces/reifyable-symbol-type";
+import { Scope } from "../compiler-interfaces/scope";
 import { ListImmutableName } from "../symbols/elan-type-names";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { transforms } from "./ast-helpers";
 
 export class LiteralListImmutableAsn extends AbstractAstNode implements AstCollectionNode {
   constructor(
@@ -17,14 +15,6 @@ export class LiteralListImmutableAsn extends AbstractAstNode implements AstColle
     private readonly scope: Scope,
   ) {
     super();
-  }
-
-  aggregateCompileErrors(): CompileError[] {
-    let cc: CompileError[] = [];
-    for (const i of this.items) {
-      cc = cc.concat(i.aggregateCompileErrors());
-    }
-    return this.compileErrors.concat(cc);
   }
 
   compile(): string {
@@ -38,12 +28,14 @@ export class LiteralListImmutableAsn extends AbstractAstNode implements AstColle
     mustBeImmutableGenericType(this.symbolType(), ofType, this.compileErrors, this.fieldId);
 
     const it = this.items.map((p) => p.compile()).join(", ");
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return `system.listImmutable([${it}])`;
   }
 
   symbolType() {
     const globalScope = getGlobalScope(this.scope);
-    const symbol = globalScope.resolveSymbol(ListImmutableName, transforms(), this.scope);
+    const symbol = globalScope.resolveSymbol(ListImmutableName, this.scope);
     const st = symbol.symbolType() as ReifyableSymbolType;
 
     return st.reify([this.items[0]?.symbolType() ?? UnknownType.Instance]);
