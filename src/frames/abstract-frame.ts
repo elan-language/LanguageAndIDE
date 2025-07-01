@@ -65,7 +65,7 @@ export abstract class AbstractFrame implements Frame {
 
   helpAsHtml(): string {
     return this.selected
-      ? `<el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe">?</a></el-help>`
+      ? `<el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe" tabindex="-1">?</a></el-help>`
       : ``;
   }
 

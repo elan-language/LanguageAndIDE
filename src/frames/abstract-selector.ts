@@ -29,7 +29,7 @@ export abstract class AbstractSelector extends AbstractFrame {
 
   helpAsHtml(): string {
     return this.isSelected()
-      ? `<el-help title="Click to open Help for any of these instructions"> <a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe">?</a></el-help>`
+      ? `<el-help title="Click to open Help for any of these instructions"> <a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe" tabindex="-1">?</a></el-help>`
       : ``;
   }
 

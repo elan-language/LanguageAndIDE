@@ -43,7 +43,7 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember {
   }
 
   renderAsHtml(): string {
-    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>${this.modifierAsHtml()}<el-kw>${propertyKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${asKeyword} </el-kw>${this.type.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
+    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.modifierAsHtml()}<el-kw>${propertyKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${asKeyword} </el-kw>${this.type.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
   }
 
   renderAsSource(): string {
