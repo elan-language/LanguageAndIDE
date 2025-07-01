@@ -380,7 +380,7 @@ function showDisplayTab() {
   documentationTab.classList.add("hide");
   worksheetTab.classList.add("hide");
   debugTab.classList.add("hide");
-  displayButton.focus();
+  displayButtonLabel.focus();
 }
 
 function showDocumentationTab() {
@@ -389,7 +389,6 @@ function showDocumentationTab() {
   worksheetTab.classList.add("hide");
   debugTab.classList.add("hide");
   documentationIFrame.focus();
-  documentationButton.focus();
   documentationIFrame.contentWindow?.addEventListener("keydown", globalHandler);
 }
 
@@ -398,10 +397,13 @@ function showWorksheetTab() {
   documentationTab.classList.add("hide");
   worksheetTab.classList.remove("hide");
   debugTab.classList.add("hide");
-  worksheetButton.focus();
-  worksheetIFrame.focus();
-  worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
-  worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
+  if (worksheetLoaded) {
+    worksheetIFrame.focus();
+    worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
+    worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
+  } else {
+    worksheetButtonLabel.focus();
+  }
 }
 
 function showDebugTab() {
@@ -409,7 +411,7 @@ function showDebugTab() {
   documentationTab.classList.add("hide");
   worksheetTab.classList.add("hide");
   debugTab.classList.remove("hide");
-  debugButton.focus();
+  debugButtonLabel.focus();
 }
 
 function filterKeypress(button: HTMLButtonElement) {
@@ -444,7 +446,18 @@ debugButtonLabel.addEventListener("keydown", filterKeypress(debugButton));
 
 worksheetButton.addEventListener("click", showWorksheetTab);
 worksheetButtonLabel.addEventListener("keydown", filterKeypress(worksheetButton));
-worksheetIFrame.addEventListener("load", () => worksheetButton.click());
+
+let worksheetLoaded = false;
+
+worksheetIFrame.addEventListener("load", () => {
+  worksheetLoaded = true;
+  worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
+  worksheetButton.click();
+});
+
+documentationIFrame.addEventListener("load", () =>
+  documentationIFrame.contentWindow?.addEventListener("keydown", globalHandler),
+);
 
 function warningOrError(tgt: HTMLDivElement): [boolean, string] {
   if (tgt.classList.contains("warning")) {
