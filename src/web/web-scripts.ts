@@ -1124,6 +1124,10 @@ async function handleEditorEvent(
     return;
   }
 
+  if (isGlobalKeyboardEvent(event)) {
+    return;
+  }
+
   // save last dom event for debug
   lastDOMEvent = event;
 
@@ -2005,42 +2009,47 @@ if (!isElanProduction) {
   document.querySelector("#worksheet-tab .dropdown-content")?.append(testWs);
 }
 
+const globalKeys = ["b", "e", "g", "h", "k", "p", "r", "s"];
+
+function isGlobalKeyboardEvent(kp: Event) {
+  return kp instanceof KeyboardEvent && kp.ctrlKey && globalKeys.includes(kp.key);
+}
+
 function globalHandler(kp: KeyboardEvent) {
   if (kp.ctrlKey) {
-    if (kp.key === "b") {
-      if (isRunningState()) {
-        stopButton.focus();
-      } else {
+    switch (kp.key) {
+      case "b":
         demosButton.focus();
-      }
-    }
-    if (kp.key === "e") {
-      codeContainer.click();
-      kp.preventDefault();
-    }
-    if (kp.key === "g") {
-      debugButton.click();
-      kp.preventDefault();
-    }
-    if (kp.key === "h") {
-      documentationButton.click();
-      kp.preventDefault();
-    }
-    if (kp.key === "k") {
-      worksheetButton.click();
-      kp.preventDefault();
-    }
-    if (kp.key === "p") {
-      displayButton.click();
-      kp.preventDefault();
-    }
-    if (kp.key === "r") {
-      runButton.click();
-      kp.preventDefault();
-    }
-    if (kp.key === "s") {
-      stopButton.click();
-      kp.preventDefault();
+        kp.preventDefault();
+        break;
+      case "e":
+        codeContainer.click();
+        kp.preventDefault();
+        break;
+      case "g":
+        debugButton.click();
+        kp.preventDefault();
+        break;
+      case "h":
+        documentationButton.click();
+        kp.preventDefault();
+        break;
+      case "k":
+        worksheetButton.click();
+        kp.preventDefault();
+        break;
+      case "p":
+        displayButton.click();
+        kp.preventDefault();
+        break;
+      case "r":
+        runButton.click();
+        kp.preventDefault();
+        break;
+      case "s":
+        stopButton.click();
+        kp.preventDefault();
+        break;
     }
   }
 }
