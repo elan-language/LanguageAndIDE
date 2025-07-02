@@ -362,12 +362,11 @@ for (const elem of demoFiles) {
 
 preferencesButton.addEventListener("click", () => {
   const dialog = document.getElementById("preferences-dialog") as HTMLDialogElement;
-  const closeButton = dialog.querySelector("button");
+  const closeButton = document.getElementById("confirmBtn");
 
   const cvd = document.getElementById("use-cvd") as HTMLInputElement;
 
-  closeButton?.addEventListener("click", async (e) => {
-    e.preventDefault();
+  closeButton?.addEventListener("click", () => {
     if (cvd.checked) {
       changeCss("cvd-colourScheme");
     } else {
@@ -377,7 +376,8 @@ preferencesButton.addEventListener("click", () => {
     dialog.close();
   });
 
-  dialog.showModal();
+  // otherwise it can pick up click and close immediately
+  setTimeout(() => dialog.showModal(), 1);
 });
 
 function showDisplayTab() {
