@@ -76,7 +76,7 @@ table
   float: left;
   padding-right: 20px;
 }
-/* to hide button 'Skip table of contents' */
+/* to hide the 'Skip table of contents' button */
 .hidden { visibility: hidden; }
 
 /* Paragraph style  'ListImmutable Paragraph 2'  What was this for? Currently commented out */
@@ -93,6 +93,12 @@ el-code-block img {
   margin: 0;
 }
 
+/* special tables */
+.tableAccordion {
+ tr:nth-child(even) td { background-color: rgb(255, 255, 255); }
+ tr:nth-child(odd)  td { background-color: rgb(226, 226, 226); }
+}
+
 /* Links in index */
 a:link {text-decoration: none}
 a:visited {text-decoration: none}
@@ -102,4 +108,33 @@ a:active {text-decoration: none}
 /* This avoids the need to have <el-code> around small snippets*/
  el-kw, el-type, el-id, el-method, el-lit {
   font-family: consolas, monospace;
+}
+
+/* Animated accordion and panel  */
+.accordion {
+  text-align: left;
+  padding: 10px 0px;
+  width: 100%;
+}
+
+.accordion::before {
+  content: '\002B';
+  color: blue;
+  font-weight: bold;
+  float: left;
+}
+
+.active, .accordion:hover {
+  cursor: pointer;
+}
+
+.active::before {
+  content: "\2212";
+}
+
+.panel {
+  max-height: 0;
+  width: 100%;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
 }
