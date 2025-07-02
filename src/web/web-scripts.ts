@@ -936,11 +936,11 @@ function updateDisplayValues() {
     }
 
     if (autoSaveFileHandle) {
-      autoSaveButton.innerText = "Cancel Auto Save";
+      autoSaveButton.innerText = "cancel auto save";
       enable(autoSaveButton, "Click to turn auto-save off and resume manual saving.");
     } else {
       if (useChromeFileAPI()) {
-        autoSaveButton.innerText = "Auto Save";
+        autoSaveButton.innerText = "auto save";
         if (isParsing) {
           enable(
             autoSaveButton,
