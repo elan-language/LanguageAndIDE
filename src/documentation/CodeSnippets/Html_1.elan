@@ -1,4 +1,4 @@
-# 793a8b379d21299757b14432b09f67253e728ebd63e22245d9c4845ccbe7363e Elan 1.2.5 guest default_profile valid
+# dc7103be28648eae04dd8f1c788187b9583c1fce94dfcaa9cd0a2b41b786a6ec Elan 1.2.6 guest default_profile valid
 
 main
   call displayHtml("<h1 style='color: blue;'>A heading</h1><p>some text</p>")

@@ -1,4 +1,4 @@
-# 876553b76ef2036fd5f917561dbb6754a2851db4d6d5d6d9d0708e659b00e028 Elan 1.2.5 guest default_profile valid
+# 3462d7ecbd066f3bc5520e41f32c19cbee121258823fa7a4a1bab97f6063c719 Elan 1.2.6 guest default_profile valid
 
 main
   call printTab(0, "Number")
