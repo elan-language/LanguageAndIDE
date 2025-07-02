@@ -32,18 +32,12 @@ import {
 // static html elements
 const codeContainer = document.querySelector(".elan-code") as HTMLDivElement;
 const runButton = document.getElementById("run-button") as HTMLButtonElement;
-const runDebugButton = document.getElementById("run-debug-button") as HTMLButtonElement;
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
-const pauseButton = document.getElementById("pause") as HTMLButtonElement;
-const stepButton = document.getElementById("step") as HTMLButtonElement;
 const clearDisplayButton = document.getElementById("clear-display") as HTMLButtonElement;
-const loadExternalWorksheetButton = document.getElementById("load-worksheet") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
 const newButton = document.getElementById("new") as HTMLButtonElement;
 const demosButton = document.getElementById("demos") as HTMLButtonElement;
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
-const systemInfoDiv = document.getElementById("system-info") as HTMLDivElement;
-const displayDiv = document.getElementById("display") as HTMLDivElement;
 const loadButton = document.getElementById("load") as HTMLButtonElement;
 const appendButton = document.getElementById("append") as HTMLButtonElement;
 const saveButton = document.getElementById("save") as HTMLButtonElement;
@@ -55,17 +49,6 @@ const logoutButton = document.getElementById("logout") as HTMLButtonElement;
 const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLButtonElement;
 const preferencesButton = document.getElementById("preferences") as HTMLButtonElement;
 
-const displayButton = document.getElementById("display-button") as HTMLButtonElement;
-const documentationButton = document.getElementById("documentation-button") as HTMLButtonElement;
-const worksheetButton = document.getElementById("worksheet-button") as HTMLButtonElement;
-const debugButton = document.getElementById("debug-button") as HTMLButtonElement;
-
-const documentationButtonLabel = document.getElementById(
-  "documentation-button-label",
-) as HTMLLabelElement;
-const displayButtonLabel = document.getElementById("display-button-label") as HTMLLabelElement;
-const debugButtonLabel = document.getElementById("debug-button-label") as HTMLLabelElement;
-const worksheetButtonLabel = document.getElementById("worksheet-button-label") as HTMLLabelElement;
 
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
@@ -75,17 +58,42 @@ const runStatus = document.getElementById("run-status") as HTMLDivElement;
 const codeControls = document.getElementById("code-controls") as HTMLDivElement;
 const demoFiles = document.getElementsByClassName("demo-file");
 
+// Display
+const displayButton = document.getElementById("display-button") as HTMLButtonElement;
+const displayButtonLabel = document.getElementById("display-button-label") as HTMLLabelElement;
 const displayTab = document.getElementById("display-tab") as HTMLDivElement;
-const documentationTab = document.getElementById("documentation-tab") as HTMLDivElement;
-const worksheetTab = document.getElementById("worksheet-tab") as HTMLDivElement;
-const debugTab = document.getElementById("debug-tab") as HTMLDivElement;
+const displayDiv = document.getElementById("display") as HTMLDivElement;
 
+// Debug
+const debugButton = document.getElementById("debug-button") as HTMLButtonElement;
+const debugButtonLabel = document.getElementById("debug-button-label") as HTMLLabelElement;
+const debugTab = document.getElementById("debug-tab") as HTMLDivElement;
+const runDebugButton = document.getElementById("run-debug-button") as HTMLButtonElement;
+const pauseButton = document.getElementById("pause") as HTMLButtonElement;
+const stepButton = document.getElementById("step") as HTMLButtonElement;
+const systemInfoDiv = document.getElementById("system-info") as HTMLDivElement;
+
+// Help (documentation)
+const documentationButton = document.getElementById("documentation-button") as HTMLButtonElement;
+const documentationButtonLabel = document.getElementById("documentation-button-label") as HTMLLabelElement;
+const documentationTab = document.getElementById("documentation-tab") as HTMLDivElement;
 const documentationHome = document.getElementById("doc-home") as HTMLButtonElement;
 const documentationBack = document.getElementById("doc-back") as HTMLButtonElement;
 const documentationForward = document.getElementById("doc-forward") as HTMLButtonElement;
-
 const documentationIFrame = document.getElementById("doc-iframe") as HTMLIFrameElement;
+
+// Worksheet
+const worksheetButton = document.getElementById("worksheet-button") as HTMLButtonElement;
+const worksheetButtonLabel = document.getElementById("worksheet-button-label") as HTMLLabelElement;
+//const standardWorksheetButton = document.getElementById("standard-worksheet") as HTMLButtonElement;
+const loadExternalWorksheetButton = document.getElementById("load-worksheet") as HTMLButtonElement;
+const worksheetTab = document.getElementById("worksheet-tab") as HTMLDivElement;
 const worksheetIFrame = document.getElementById("worksheet-iframe") as HTMLIFrameElement;
+
+
+
+
+
 
 const inactivityTimeout = 2000;
 const stdlib = new StdLib();

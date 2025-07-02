@@ -217,6 +217,40 @@ button {
   font-family: var(--ideTitleFont);
   border: none;
 }
+
+/* Plain buttons */
+button.plain {
+  background-color: var(--defaultButtonBackground);
+  border: none;
+  outline: none;
+  height: 22px;
+  font-family: var(--ideTitleFont);
+  font-size: var(--ideTitleSize);
+  padding-top: 0px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  text-decoration: none;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: black;
+}
+
+button.plain:hover:enabled,
+button.plain:active,
+button.plain:focus {
+  background-color: white;
+}
+
+button.plain:disabled, menu-item.button.plain:disabled {
+  color: var(--disabledText);
+}
+
+/* Icon buttons */
+button.icon img {
+  height: 40px;
+  opacity: 50%;
+}
+
 button.icon,
 button.icon img {
   padding: 0px;
@@ -226,8 +260,13 @@ button.icon img {
   background-color: var(--ideBackground);
 }
 
-button.icon img {
-  height: 40px;
+
+button.icon:enabled img:hover,
+button.icon:enabled:focus img,
+button.icon:active img
+{
+  border-color: white;
+  opacity: 100%;
 }
 
 #preferences-dialog button {
@@ -244,48 +283,8 @@ button.icon img {
   margin-top: 5px;
 }
 
-button.icon:enabled img:hover,
-button.icon:enabled:focus img,
-button.icon:active img
-{
-  border-color: white;
-  opacity: 100%;
-}
 
-button.icon:disabled img {
-  opacity: 50%;
-}
 
-button.plain,
-button.plain:hover,
-button.plain:active,
-button.plain:focus
-{
-  background-color: var(--panelBackground);
-  border: none;
-  outline: none;
-  height: 22px;
-  font-family: var(--ideTitleFont);
-  font-size: var(--ideTitleSize);
-  padding-top: 0px;
-  margin-top: 0px;
-  margin-bottom: 5px;
-  text-decoration: none;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: black;
-  /* To prevent the help a-link being coloured mauve when visited*/
-}
-
-button.plain:hover:enabled,
-button.plain:active,
-button.plain:focus {
-  text-decoration: underline;
-}
-
-button.plain:disabled, menu-item.button.plain:disabled {
-  color: grey;
-}
 
 .dropdown-content button.plain,
 .dropdown-content button.plain:hover,
@@ -376,7 +375,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
   padding-right: 5px;
 }
 
-
+/* menu items */
 
 .menu-item:hover, button.menu-item:hover
 .menu-item:active, button.menu-item:active
@@ -388,7 +387,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
   text-decoration: none;
 }
 
-.menu-item, #help{
+.menu-item{
   font-family: var(--ideTitleFont);
 }
 
@@ -469,14 +468,21 @@ div.spacer{
   opacity: 100%;
 }
 
-#display-tab {
-  display: block;
-}
-
-#documentation-tab, #worksheet-tab {
+.main-tab {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+}
+
+.main-tab.hide {
+  display: none;
+} 
+
+.tab-controls {
+  margin-top: 5px;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: row;
 }
 
 iframe#doc-iframe, iframe#worksheet-iframe {
@@ -490,24 +496,8 @@ iframe#doc-iframe, iframe#worksheet-iframe {
   flex-grow: 1;
 }
 
-#doc-buttons, #worksheet-buttons {
-  margin-top: 5px;
-  margin-bottom: 0;
-}
 
-#debug-tab {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  overflow-y: auto;
-}
 
-#display-tab.hide, #documentation-tab.hide, #worksheet-tab.hide, #debug-tab.hide {
-  display: none;
-} 
 
-#debug-controls {
-  display: flex;
-  flex-direction: row;
-}
+
 

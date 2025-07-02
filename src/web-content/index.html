@@ -36,13 +36,13 @@
                 <div class="dropdown">
                     <button id="file" class="plain" tabindex="0">file</button>
                     <div class="dropdown-content">
-                        <button class="plain menu-item" id="new" tabindex="0">New</button>
-                        <button class="plain menu-item" id="load"  tabindex="0">Load</button>
-                        <button class="plain menu-item" id="append"  tabindex="0">Append</button>
-                        <button class="plain menu-item" id="auto-save"  tabindex="0">Auto Save</button>
-                        <button class="plain menu-item" id="save" tabindex="0">Manual Save</button>
-                        <button class="plain menu-item" id="save-as-standalone" tabindex="0">Save as Standalone</button>
-                        <button class="plain menu-item" id="preferences" tabindex="0">Preferences</button>
+                        <div class="plain menu-item" id="new" tabindex="0">New</div>
+                        <div class="plain menu-item" id="load"  tabindex="0">Load</div>
+                        <div class="plain menu-item" id="append"  tabindex="0">Append</div>
+                        <div class="plain menu-item" id="auto-save"  tabindex="0">Auto Save</div>
+                        <div class="plain menu-item" id="save" tabindex="0">Manual Save</div>
+                        <div class="plain menu-item" id="save-as-standalone" tabindex="0">Save as Standalone</div>
+                        <div class="plain menu-item" id="preferences" tabindex="0">Preferences</div>
                     </div>
                 </div>
 
@@ -100,35 +100,37 @@
                     </div>
                 </div>
             </div>
-            <div id="display-tab" class="hide">
+            <div id="display-tab" class="main-tab hide">
+                <div class="tab-controls">
+                    <button id="clear-display" class="plain" tabindex="0">clear display</button>
+                </div>
                 <div id="display">
                     <div id="print"><span id="printed-text"></span></div>
                     <div id="display-html"></div>
                     <div id="block-graphics"></div>
                     <div id="vector-graphics"></div>
                 </div>
-                <button id="clear-display" class="plain" tabindex="0">clear display</button>
             </div>
-            <div id="debug-tab" class="hide">
-                <div id="debug-controls">
-                <button id="run-debug-button" class="icon"  tabindex="0"><img src="images/Debug.png"></button>
-                <button id="pause" class="icon" disabled title="Pause" tabindex="0"><img src="images/Pause.png"></button>
-                <button id="step" class="icon" disabled title="Single Step" tabindex="0"><img src="images/Step.png"></button>
+            <div id="debug-tab" class="main-tab hide">
+                <div class="tab-control">
+                    <button id="run-debug-button" class="icon"  tabindex="0"><img src="images/Debug.png"></button>
+                    <button id="pause" class="icon" disabled title="Pause" tabindex="0"><img src="images/Pause.png"></button>
+                    <button id="step" class="icon" disabled title="Single Step" tabindex="0"><img src="images/Step.png"></button>
                 </div>
                 <div id="system-info" tabindex="0"></div>
             </div>
-            <div id="documentation-tab" class=""> <!-- now 'Help` tab-->
-                  <div id="doc-buttons">
+            <div id="documentation-tab" class="main-tab"> <!-- now 'Help` tab-->
+                <div class="tab-controls">
                     <button id="doc-home" class="plain" tabindex="0">home</button>
                     <button id="doc-back" class="plain" tabindex="0">back</button>
                     <button id="doc-forward" class="plain" tabindex="0">forward</button>
                 </div>
                 <iframe name="doc-iframe" id="doc-iframe" src="documentation/Home.html"></iframe>
             </div>              
-            <div id="worksheet-tab" class="hide">
-                <div id="worksheet-buttons">
+            <div id="worksheet-tab" class="main-tab hide">
+                <div class="tab-controls">
                     <div class="dropdown">
-                        <button id="help" class="plain" tabindex="0">standard worksheets</button>
+                        <button id="standard-worksheets" class="plain" tabindex="0">standard worksheets</button>
                         <div class="dropdown-content">
                           <div class="menu-item help-file"><a href="documentation/worksheets/guide.html" target="worksheet-iframe"  tabindex="0">Guide to the worksheets</a></div>
                           <div class="menu-item help-file"><a href="documentation/worksheets/exploring-code.html" target="worksheet-iframe"  tabindex="0">Exploring code</a></div>

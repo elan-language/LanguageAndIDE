@@ -2,8 +2,8 @@
     /* IDE */
     --ideBackground: rgb(68, 114, 196);
     --panelBackground: white;
-    --disabledText: rgb(208,200,240);
-    --disabledBackground: rgb(162, 185,226);
+    --disabledText: rgb(201, 220, 255);
+    --defaultButtonBackground: rgb(162, 185,226);
 
     /* Text colours - to work on white or the --selection background */
     --defaultText: black;
