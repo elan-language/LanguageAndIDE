@@ -12,14 +12,14 @@ test('load and run worksheet', async ({ page }) => {
 
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
 
-  await page.getByText('Worksheet', { exact: true }).click();
-  await expect(page.getByRole('button', { name: 'Standard worksheets' })).toBeVisible();
+  await page.getByText('worksheet', { exact: true }).click();
+  await expect(page.getByRole('button', { name: 'standard worksheets' })).toBeVisible();
   
-  await page.getByRole('button', { name: 'Standard worksheets' }).hover();
+  await page.getByRole('button', { name: 'standard worksheets' }).hover();
   await page.getByText('Test Worksheet').click();
 
   // to move off dropdown
-  await page.getByRole('button', { name: 'Load external worksheet' }).hover();
+  await page.getByRole('button', { name: 'load external worksheet' }).hover();
 
   await expect(workSheetFrame().getByRole('button', { name: 'Auto-save to file' })).toBeVisible();
 

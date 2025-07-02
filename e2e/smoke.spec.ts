@@ -117,8 +117,8 @@ test('debug program', async ({ page }) => {
   await page.getByText('print', { exact: true }).click({
     button: 'right'
   });
-  await page.getByText('set breakpoint (Ctrl-b)').click();
-  await page.getByText('Debug', { exact: true }).click();
+  await page.getByText('set breakpoint').click();
+  await page.getByText('debug', { exact: true }).click();
   await page.getByRole('button', { name: 'Debug the program' }).click();
   await expect(page.locator('#system-info')).toContainText('a : 100');
   await expect(page.locator('#run-status')).toContainText('paused');
@@ -197,13 +197,13 @@ test('undo redo', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#code-title')).toContainText('File: code.elan');
+  await expect(page.locator('#code-title')).toContainText('file: code.elan');
   await page.getByText('main procedure function test').click();
   await page.keyboard.type('m');
-  await expect(page.locator('#code-title')).toContainText('File: code.elan UNSAVED');
-  await page.getByRole('button', { name: 'Undo' }).click();
+  await expect(page.locator('#code-title')).toContainText('file: code.elan UNSAVED');
+  await page.getByRole('button', { name: 'undo' }).click();
   await expect(page.locator('el-help')).toContainText(' ?');
-  await page.getByRole('button', { name: 'Redo' }).click();
+  await page.getByRole('button', { name: 'redo' }).click();
   await expect(page.locator('el-top')).toContainText('main');
 }); 
 
@@ -214,25 +214,25 @@ test('help focus', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#code-title')).toContainText('File: code.elan');
+  await expect(page.locator('#code-title')).toContainText('file: code.elan');
   await page.getByText('main procedure function test').click();
   await page.keyboard.type('m');
  
   // click worksheet button and expect tab to be visible
-  await page.getByText('Worksheet', { exact: true }).click();
-  await expect(page.getByRole('button', { name: 'Standard worksheets' })).toBeVisible();
+  await page.getByText('worksheet', { exact: true }).click();
+  await expect(page.getByRole('button', { name: 'standard worksheets' })).toBeVisible();
 
   // click help and expect help to be visible
   await page.getByRole('link', { name: '?' }).click();
-  await expect(page.getByRole('button', { name: 'Home' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'home' })).toBeVisible();
 
   // click worksheet button and expect tab to be visible
-  await page.getByText('Worksheet', { exact: true }).click();
-  await expect(page.getByRole('button', { name: 'Standard worksheets' })).toBeVisible();
+  await page.getByText('worksheet', { exact: true }).click();
+  await expect(page.getByRole('button', { name: 'standard worksheets' })).toBeVisible();
 
   // click help and expect help to again be visible
   await page.getByRole('link', { name: '?' }).click();
-  await expect(page.getByRole('button', { name: 'Home' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'home' })).toBeVisible();
   
 }); 
 
