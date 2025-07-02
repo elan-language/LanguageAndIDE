@@ -191,7 +191,6 @@ export const reservedWords = [
   "system",
   "synchronized",
   "throws",
-  "todo",
   "transient",
   "typeof",
   "void",
