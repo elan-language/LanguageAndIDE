@@ -1,0 +1,215 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../styles/colourScheme.css" rel="stylesheet" />
+<link href="../styles/documentation.css" rel="stylesheet" />
+<link href="../styles/elanStyle.css" rel="stylesheet" />
+<!--<link href="../styles/accordion.css" rel="stylesheet" />-->
+<title>Elan code editor</title>
+<!--this script has to be included after references to it-->
+<!--<script type="text/javascript" src="accordion.js"></script>-->
+</head>
+<body>
+<div class="docTitle">Elan code editor</div>
+<!---->
+<button class="accordion"><h3 class="no-TOC">Start the Elan code editor<h3></button>
+<div class="panel">
+<p>To open the Elan code editor in a new browser tab, click <a href="https://elan-lang.org" target="_blank">https://elan-lang.org</a></p>
+</div>
+<!---->
+<button class="accordion"><h3 class="no-TOC">Start coding</button></h3>
+<div class="panel">
+<p>Click on the  <el-id>File</el-id> menu and choose <el-id>New</el-id>.</p>
+<p>You will see the Elan version and the prompt showing all the Global keywords:</p>
+<el-code-block source="prompts.elan">
+<el-header># <el-hash>3dc077f604fb3b9338c8e0104060503ae108013df97a7fc82066915f81a30804</el-hash> <el-version>Elan 1.2.6</el-version> <el-user class="hide">guest</el-user> <el-profile class="hide">default_profile</el-profile></el-header>
+<el-global class="selected focused ok empty" id="select0" tabindex="0"><el-select><el-place>new code</el-place><div class="options"> main procedure function test constant enum record class abstract interface #</div></el-select></el-global>
+</el-code-block>
+</div>
+<!---->
+<button class="accordion"><h3 class="no-TOC">The <el-method>main</el-method> routine</button></h3>
+<div class="panel">
+<p>Press <b>m</b> on your keyboard, and the <el-method>main</el-method> routine will be entered into your code,
+displaying both a prompt for all the keywords you can use within <el-method>main</el-method>, plus
+a <el-code>new code</el-code> prompt at the global level.</p>
+<el-code-block source="prompts.elan">
+<main class="ok multiline" id="main3" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+<el-statement class="selected focused ok empty" id="select4" tabindex="0"><el-select><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
+<el-kw>end main</el-kw>
+</main>
+<el-global class="ok empty" id="select0" tabindex="0"><el-select><el-place>new code</el-place></el-select></el-global>
+</el-code-block>
+</div>
+<!---->
+<button class="accordion"><h3 class="no-TOC">A first instruction</button></h3>
+<div class="panel">
+<p>The prompt within <el-method>main</el-method> is already selected, so you can type, say, <b>p</b> and a <el-kw>print</el-kw> instruction will be entered
+with a field soliciting an expression, into which you can type a quoted string.
+The field will then have a green background indicating that the instruction is valid.</p>
+<el-code-block source="prompts.elan">
+<main class="ok multiline" id="main1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+<el-statement class="ok" id="print3" tabindex="-1"><el-kw>print </el-kw><el-field id="expr4" class="selected focused optional ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="10" data-cursorend="10" size="9" style="width: 10ch" value="&quot;Good day&quot;" tabindex="-1"></el-txt></el-field></el-statement>
+<el-statement class="ok empty" id="select2" tabindex="-1"><el-select><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
+<el-kw>end main</el-kw>
+</main>
+</el-code-block>
+</div>
+<!---->
+<button class="accordion"><h3 class="no-TOC">Types of code</button></h3>
+<div class="panel">
+<p>The code shown in the editor has three types:</p>
+<ul>
+ <li><b>Instructions</b><br>All instructions begin with a dark blue keyword::
+<el-code-block source="prompts.elan">
+<el-statement id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>name</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>"<el-lit>Alice</el-lit>"</el-txt></el-field></el-statement>
+</ed-code-block>
+ <li><b>Comments</b><br>Comments start with a hash # which is optionally followed by text:
+<el-code-block source="prompts.elan">
+<el-global><el-comment class="ok" id="com1" tabindex="0"><el-top># <el-field id="comment2" class="optional ok" tabindex="0"><el-txt>A program to investigate the Collatz Conjecture</el-txt></el-field></el-top></el-comment></el-global>
+</el-code-block>
+  The first comment in a file (which shows the Elan version: see 'Start coding' above) is automatically created
+  and cannot be edited, deleted, or moved.</li>
+ <li><b><el-code>new code</el-code> prompts</b>
+ <ul>
+  <li>A <el-code>new code</el-code> prompt that has not been clicked on looks like this:
+<el-code-block source="prompts.elan">
+<el-global class="ok empty" id="select0" tabindex="0"><el-select><el-place>new code</el-place></el-select></el-global>
+</ed-code-block>
+  </li>
+ <li>When selected, a <el-code>new code</el-code> prompt displays the keywords that are valid in the context, like this:
+<el-code-block source="prompts.elan">
+<el-statement class="selected focused ok empty" id="select12" tabindex="0"><el-select><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
+</ed-code-block>
+  </li>
+</ul>
+<p>Comments and <el-code>new code</el-code> prompts are <i>not</i> instructions, but they are treated <i>like</i> instructions by the editor.</p>
+</div>
+<!---->
+<button class="accordion"><h3 class="no-TOC">Instruction fields</button></h3>
+<div class="panel">
+<p>An instruction consists of keywords that cannot be edited or deleted, and fields that you may fill with values.
+See an example in 'A first instruction' above.</p>
+<p>A selected field has thin black border and a background colour that indicates its status:</p>
+<ul>
+ <li>
+<el-field id="comment24" class="selected focused empty optional ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="0" data-cursorend="0" size="1" style="width: 7ch" value="" tabindex="-1"></el-txt></el-field></el-top>
+Grey: optional &ndash; the field may be left empty</li>
+ <li>
+<el-field id="expr4" class="selected focused optional ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="2" data-cursorend="2" size="1" style="width: 7ch" value="" tabindex="-1"></el-txt></el-field>
+Green: valid &ndash; the current contents are accepted in the field</li>
+ <li>
+<el-field id="expr29" class="selected focused optional warning" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="1" data-cursorend="1" size="1" style="width: 7ch" tabindex="-1"></el-txt><el-compl></el-compl></el-field>
+Amber: incomplete &ndash; more text is needed to be valid</li>
+ <li>
+<el-field id="expr29" class="selected focused optional error" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="4" data-cursorend="4" size="6" style="width: 7ch" value="       " tabindex="-1"></el-txt></el-field>
+ Red: invalid &ndash; the current contents are unusable: if you are entering new code and the field turns red, it is best to press <b>Backspace</b> until it turns green or amber again</li>
+</ul>
+<p>To cycle through the fields within an instruction (and back to the instruction keyword) use <b>Tab</b> (forwards) or<b> Shift-Tab</b> (backwards).</p>
+<p>A field open for editing has the text cursor initially at the right hand end: you move around it using left and right cursor keys in the usual way.</p>
+</div>
+<!---->
+<button class="accordion"><h3 class="no-TOC">Selecting an instruction...</button></h3>
+<div class="panel">
+
+ <button class="accordion"><h4 class="no-TOC">...with the mouse</button></h4>
+ <div class="panel">
+ Click on:
+ <ul>
+  <li><i>either</i> the first keyword of the instruction</li>
+  <li><i>or</i> the corresponding instruction number to the right of it</li>
+ </ul>
+ </div>
+
+ <button class="accordion"><h4 class="no-TOC">...with the keyboard</button></h4>
+ <div class="panel">
+ <p>To select an instruction (single or compound) click on its keyword.</p>
+ <p>If the current selection is a <i>field</i> press <b>Tab</b> until the whole instruction is selected.</p>
+ <p>If an instruction is already selected, then you can use:</p>
+ <ul>
+  <li><b>&darr;</b> (Down arrow) to select the next instruction</li>
+  <li><b>&uarr;</b> (Up arrow) to select the previous <i>peer-level</i> instruction</li>
+  <li><b>Home</b> to select the first <i>peer-level</i> instruction</li>
+  <li><b>End</b> to select the last <i>peer-level</i> instruction</li>
+ </ul>
+ <p>where peer-level means at the same level of indentation and so within the same frame.</p>
+ </div>
+ <hr>
+ <ul>
+  <li> A single selected instruction looks like this:
+<el-code-block source="prompts.elan">
+<l-statement class="selected focused ok" id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>name</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>"<el-lit>Alice</el-lit>"</el-txt></el-field></el-statement>
+<ed-code-block></li>
+   <li> A selected compound instruction looks like this:
+<el-code-block source="prompts.elan">
+<el-statement class="ok" id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>["<el-lit>Alice</el-lit>", "<el-lit>Bob</el-lit>"]</el-txt></el-field></el-statement>
+<el-statement class="selected focused ok multiline" id="each18" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident20" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> in </el-kw><el-field id="expr21" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt></el-field></el-top>
+<el-statement class="ok" id="print15" tabindex="0"><el-kw>print </el-kw><el-field id="expr16" class="optional ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt></el-field></el-statement>
+<el-kw>end each</el-kw>
+</el-statement>
+</el-code-block>
+<p>where the blue highlight shows the selected compound instruction's frame with its content indented.
+The final line of a compound instruction starts with <el-kw>end</el-kw>.</p></li>
+ </ul>
+ <p>To move to selecting a different frame, use:</p>
+ <ul>
+  <li><b>&larr;</b> (Left arrow) to move up to the frame that contains the selected instruction (i.e. one level above peer) <i>if any</i>.<br>
+ Global instructions start at the left hand edge of the editor and are not themselves contained in any higher instruction.</li>
+  <li><b>&rarr;</b> (Right arrow) to moves down into the <i>first</i> instruction contained in the selected keyword (i.e. one level below peer) <i>if any</i>.</li>
+ </ul>
+</div>
+<!---->
+<button class="accordion"><h3 class="no-TOC">Selecting multiple instructions</button></h3>
+<div class="panel">
+To select multiple <i>consecutive</i> instructions,
+<ul>
+ <li><i>either</i> press <b>Shift</b> while clicking on their keywords to highlight them</li>
+ <li><i>or</i> press:
+ <ul>
+   <li><b>Shift-&darr;</b> (Down arrow) to add the next instruction to the selection</li>
+  <li><b>Shift-&uarr;</b> (Up arrow) to add the previous <i>peer-level</i> instruction to the selection</li>
+ </ul>
+ </li>
+</ul>
+<el-code-block source="prompts.elan">
+<el-statement class="selected focused ok multiline" id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>name</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>"<el-lit>Alice</el-lit>"</el-txt></el-field></el-statement>
+<el-statement class="selected focused ok multiline" id="print15" tabindex="0"><el-kw>print </el-kw><el-field id="expr16" class="optional ok" tabindex="0"><el-txt><el-id>name</el-id></el-txt></el-field></el-statement>
+</ed-code-block>
+</div>
+<!---->
+<button class="accordion"><h3 class="no-TOC">Inserting an instruction</button></h3>
+<div class="panel">
+<ul>
+ <li>To insert code at a <el-code>new code</el-code> prompt, select it and type the initial letter of a keyword.</li>
+ <li>To insert new code next to a selected instruction::
+ <ul>
+  <li><i>either</i> press <b>Enter</b> to insert code below it</li>
+  <li><i>or</i> press <b>Shift-Enter</b> to insert code above it</li>
+ </ul>
+</ul>
+</div>
+<!---->
+<button class="accordion"><h3 class="no-TOC">Deleting instructions</button></h3>
+<div class="panel">
+ <p>To delete one or more instructions (all at the same level), select either one instruction or a group of <i>consecutive</i> instructions,<br>
+ then press <b>Ctrl-d</b> or <b>Ctrl-Delete</b>, or cut them to the clipboard with <b>Ctrl-x</b>.</p>
+</div>
+<!---->
+<button class="accordion"><h3 class="no-TOC">The <el-code>new code</el-code> prompt</button></h3>
+<div class="panel">
+ <p>Click the <el-code>new code</el-code> prompt to change it to the prompt of valid keywords in the context.</p>
+ <p>If none is visible, select an instruction (or frame) and press <b>Enter</b> to insert <el-code>new code</el-code> below it.</p>
+ <p>If you wish to remove all <el-code>new code</el-code> prompts, press <b>Alt-t</b> or use the menu item <el-id>trim</el-id>.</p>
+</div>
+<hr>
+<p>Go to the <a href="#top">top</a></p>
+<!--this script has to be included after references to it-->
+<script type="text/javascript" src="accordion.js"></script>
+</body>
+</html>
+
