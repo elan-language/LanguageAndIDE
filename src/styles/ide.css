@@ -360,10 +360,6 @@ button.plain:disabled, menu-item.button.plain:disabled {
   display: inline-block;
 }
 
-/* .dropdown:hover .dropdown-content {
-  display: block;
-} */
-
 .dropdown-content {
   position: absolute;
   z-index: 1;
@@ -376,7 +372,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
 }
 
 
-.menu-item div:focus,
+.menu-item:focus,
 .menu-item:hover, button.menu-item:hover
 .menu-item:active, button.menu-item:active
 .menu-item:hover a,  button.menu-item:hover a
@@ -511,14 +507,14 @@ iframe#doc-iframe, iframe#worksheet-iframe {
   flex-direction: row;
 }
 
-#demos[aria-expanded="true"]::after {
+button[aria-expanded="true"]::after {
   content: "▲"; /* Arrow up to indicate expanded */
 }
 
-#demos[aria-expanded="false"]::after {
+button[aria-expanded="false"]::after {
   content: "▼"; /* Arrow down to indicate collapsed */
 }
 
-#demos-menu[hidden] {
+.dropdown-content[hidden] {
   display: none;
 }

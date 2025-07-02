@@ -41,7 +41,9 @@ const loadExternalWorksheetButton = document.getElementById("load-worksheet") as
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
 const newButton = document.getElementById("new") as HTMLButtonElement;
 const demosButton = document.getElementById("demos") as HTMLButtonElement;
-const demosMenu = document.getElementById("demos-menu") as HTMLUListElement;
+const demosMenu = document.getElementById("demos-menu") as HTMLDivElement;
+const fileMenu = document.getElementById("file-menu") as HTMLDivElement;
+const worksheetMenu = document.getElementById("worksheet-menu") as HTMLDivElement;
 
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const systemInfoDiv = document.getElementById("system-info") as HTMLDivElement;
@@ -88,6 +90,7 @@ const documentationForward = document.getElementById("doc-forward") as HTMLButto
 
 const documentationIFrame = document.getElementById("doc-iframe") as HTMLIFrameElement;
 const worksheetIFrame = document.getElementById("worksheet-iframe") as HTMLIFrameElement;
+const worksheetsButton = document.getElementById("worksheets") as HTMLButtonElement;
 
 const inactivityTimeout = 2000;
 const stdlib = new StdLib();
@@ -354,8 +357,6 @@ for (const elem of demoFiles) {
       clearUndoRedoAndAutoSave();
       await readAndParse(rawCode, fileName, true);
     }
-    demosMenu.hidden = true;
-    demosButton.setAttribute("aria-expanded", "false");
   });
 }
 
@@ -2064,51 +2065,90 @@ function globalHandler(kp: KeyboardEvent) {
 
 window.addEventListener("keydown", globalHandler);
 
-demosButton.addEventListener("click", function () {
-  const isExpanded = demosButton.getAttribute("aria-expanded") === "true";
-  demosButton.setAttribute("aria-expanded", `${!isExpanded}`);
-  demosMenu.hidden = isExpanded;
-  for (const mi of demosMenu!.querySelectorAll(".menu-item")) {
-    mi.classList.remove("selected");
+function collapseMenu(button: HTMLElement, andFocus: boolean) {
+  if (andFocus) {
+    button.focus();
   }
-});
+  const menuId = button.getAttribute("aria-controls")!;
+  document.getElementById(menuId)!.hidden = true;
+  button.setAttribute("aria-expanded", "false");
+}
 
-demosButton.addEventListener("keydown", function (event) {
+function handleClickDropDownButton(event: Event) {
+  const button = event.target as HTMLButtonElement;
+  const isExpanded = button.getAttribute("aria-expanded") === "true";
+  const menuId = button.getAttribute("aria-controls")!;
+  button.setAttribute("aria-expanded", `${!isExpanded}`);
+  document.getElementById(menuId)!.hidden = isExpanded;
+
+  const allDropDowns = document.querySelectorAll(
+    "button[aria-haspopup='true']",
+  ) as NodeListOf<HTMLElement>;
+
+  for (const e of allDropDowns) {
+    if (e.id !== button.id) {
+      collapseMenu(e, false);
+    }
+  }
+}
+
+demosButton.addEventListener("click", handleClickDropDownButton);
+fileButton.addEventListener("click", handleClickDropDownButton);
+worksheetsButton.addEventListener("click", handleClickDropDownButton);
+
+function handleKeyDropDownButton(event: KeyboardEvent) {
+  const button = event.target as HTMLButtonElement;
+  const menuId = button.getAttribute("aria-controls")!;
+  const menu = document.getElementById(menuId)!;
   if (event.key === "ArrowDown") {
-    const firstitem = demosMenu!.querySelector(".menu-item div") as HTMLSpanElement;
+    const firstitem = menu.querySelector(".menu-item") as HTMLElement;
     firstitem.focus();
   } else if (event.key === "Escape") {
-    demosButton.focus();
-    demosMenu.hidden = true;
-    demosButton.setAttribute("aria-expanded", "false");
+    collapseMenu(button, true);
   }
-});
+}
 
-demosMenu.addEventListener("keydown", function (event) {
+demosButton.addEventListener("keydown", handleKeyDropDownButton);
+fileButton.addEventListener("keydown", handleKeyDropDownButton);
+worksheetsButton.addEventListener("keydown", handleKeyDropDownButton);
+
+function handleMenuKey(event: KeyboardEvent) {
+  const menuItem = event.target as HTMLElement;
+  const menu = menuItem.parentElement as HTMLDivElement;
+  const button = menu.previousElementSibling as HTMLButtonElement;
   if (event.key === "ArrowUp") {
-    const focusedItem = document.activeElement?.parentElement;
+    const focusedItem = document.activeElement;
 
-    const previousItem = focusedItem?.previousElementSibling;
+    const previousItem = focusedItem?.previousElementSibling as HTMLElement;
 
     if (previousItem) {
-      previousItem.querySelector("div")!.focus();
+      previousItem.focus();
     }
     event.preventDefault();
     event.stopPropagation();
   } else if (event.key === "ArrowDown") {
-    const focusedItem = document.activeElement?.parentElement;
+    const focusedItem = document.activeElement;
 
-    const nextItem = focusedItem?.nextElementSibling;
+    const nextItem = focusedItem?.nextElementSibling as HTMLElement;
 
     if (nextItem) {
-      nextItem.querySelector("div")?.focus();
+      nextItem.focus();
     }
   } else if (event.key === "Escape") {
-    demosButton.focus();
-    demosMenu.hidden = true;
-    demosButton.setAttribute("aria-expanded", "false");
+    collapseMenu(button, true);
   } else if (event.key === "Enter" || event.key === "Space") {
-    const focusedItem = document.activeElement?.parentElement;
+    const focusedItem = document.activeElement as HTMLElement;
     focusedItem?.click();
+    setTimeout(() => {
+      collapseMenu(button, false);
+    }, 1);
   }
-});
+}
+
+demosMenu.addEventListener("keydown", handleMenuKey);
+fileMenu.addEventListener("keydown", handleMenuKey);
+worksheetMenu.addEventListener("keydown", handleMenuKey);
+
+demosMenu.addEventListener("click", () => collapseMenu(demosButton, false));
+fileMenu.addEventListener("click", () => collapseMenu(fileButton, false));
+worksheetMenu.addEventListener("click", () => collapseMenu(worksheetButton, false));
