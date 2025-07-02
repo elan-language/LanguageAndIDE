@@ -2114,23 +2114,27 @@ function handleMenuKey(event: KeyboardEvent) {
   const menu = menuItem.parentElement as HTMLDivElement;
   const button = menu.previousElementSibling as HTMLButtonElement;
   if (event.key === "ArrowUp") {
-    const focusedItem = document.activeElement;
+    const focusedItem = document.activeElement as HTMLElement;
 
-    const previousItem = focusedItem?.previousElementSibling as HTMLElement;
+    let previousItem = focusedItem;
 
-    if (previousItem) {
-      previousItem.focus();
-    }
-    event.preventDefault();
-    event.stopPropagation();
+    do {
+      previousItem = previousItem?.previousElementSibling as HTMLElement;
+      if (previousItem) {
+        previousItem.focus();
+      }
+    } while (previousItem && (previousItem as any).disabled);
   } else if (event.key === "ArrowDown") {
-    const focusedItem = document.activeElement;
+    const focusedItem = document.activeElement as HTMLElement;
 
-    const nextItem = focusedItem?.nextElementSibling as HTMLElement;
+    let nextItem: HTMLElement = focusedItem;
 
-    if (nextItem) {
-      nextItem.focus();
-    }
+    do {
+      nextItem = nextItem?.nextElementSibling as HTMLElement;
+      if (nextItem) {
+        nextItem.focus();
+      }
+    } while (nextItem && (nextItem as any).disabled);
   } else if (event.key === "Escape") {
     collapseMenu(button, true);
   } else if (event.key === "Enter" || event.key === "Space") {
