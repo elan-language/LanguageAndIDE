@@ -77,7 +77,7 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
   }
 
   renderAsHtml(): string {
-    return `<el-member class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>${this.textToDisplayAsHtml()}</el-member>`;
+    return `<el-member class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.textToDisplayAsHtml()}</el-member>`;
   }
 
   indent(): string {

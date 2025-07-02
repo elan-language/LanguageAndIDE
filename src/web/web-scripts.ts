@@ -380,6 +380,7 @@ function showDisplayTab() {
   documentationTab.classList.add("hide");
   worksheetTab.classList.add("hide");
   debugTab.classList.add("hide");
+  displayButtonLabel.focus();
 }
 
 function showDocumentationTab() {
@@ -388,6 +389,7 @@ function showDocumentationTab() {
   worksheetTab.classList.add("hide");
   debugTab.classList.add("hide");
   documentationIFrame.focus();
+  documentationIFrame.contentWindow?.addEventListener("keydown", globalHandler);
 }
 
 function showWorksheetTab() {
@@ -395,8 +397,13 @@ function showWorksheetTab() {
   documentationTab.classList.add("hide");
   worksheetTab.classList.remove("hide");
   debugTab.classList.add("hide");
-  worksheetIFrame.focus();
-  worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
+  if (worksheetLoaded) {
+    worksheetIFrame.focus();
+    worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
+    worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
+  } else {
+    worksheetButtonLabel.focus();
+  }
 }
 
 function showDebugTab() {
@@ -404,6 +411,7 @@ function showDebugTab() {
   documentationTab.classList.add("hide");
   worksheetTab.classList.add("hide");
   debugTab.classList.remove("hide");
+  debugButtonLabel.focus();
 }
 
 function filterKeypress(button: HTMLButtonElement) {
@@ -438,7 +446,18 @@ debugButtonLabel.addEventListener("keydown", filterKeypress(debugButton));
 
 worksheetButton.addEventListener("click", showWorksheetTab);
 worksheetButtonLabel.addEventListener("keydown", filterKeypress(worksheetButton));
-worksheetIFrame.addEventListener("load", () => worksheetButton.click());
+
+let worksheetLoaded = false;
+
+worksheetIFrame.addEventListener("load", () => {
+  worksheetLoaded = true;
+  worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
+  worksheetButton.click();
+});
+
+documentationIFrame.addEventListener("load", () =>
+  documentationIFrame.contentWindow?.addEventListener("keydown", globalHandler),
+);
 
 function warningOrError(tgt: HTMLDivElement): [boolean, string] {
   if (tgt.classList.contains("warning")) {
@@ -1105,6 +1124,10 @@ async function handleEditorEvent(
     return;
   }
 
+  if (isGlobalKeyboardEvent(event)) {
+    return;
+  }
+
   // save last dom event for debug
   lastDOMEvent = event;
 
@@ -1590,6 +1613,7 @@ function handleRunWorkerFinished() {
   file.setRunStatus(RunStatus.default);
   clearPaused();
   updateDisplayValues();
+  codeContainer.focus();
 }
 
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
@@ -1973,15 +1997,65 @@ async function runTestsInner() {
 }
 
 if (!isElanProduction) {
-  // <div class="menu-item help-file"><a href="documentation/worksheets/whack-a-mole.html" target="worksheet-iframe"  tabindex="3">Whack-a-mole</a></div>
   const testWs = document.createElement("div");
   testWs.classList.add("menu-item", "help-file");
   const testLink = document.createElement("a");
   testLink.href = "documentation/worksheets/worksheet-test-only.html";
   testLink.target = "worksheet-iframe";
-  testLink.tabIndex = 3;
+  testLink.tabIndex = 0;
   testLink.innerText = "Test Worksheet";
   testWs.append(testLink);
 
   document.querySelector("#worksheet-tab .dropdown-content")?.append(testWs);
 }
+
+const globalKeys = ["b", "e", "g", "h", "k", "p", "r", "s", "+", "-", "="];
+
+function isGlobalKeyboardEvent(kp: Event) {
+  return kp instanceof KeyboardEvent && kp.ctrlKey && globalKeys.includes(kp.key);
+}
+
+function globalHandler(kp: KeyboardEvent) {
+  if (kp.ctrlKey) {
+    switch (kp.key) {
+      case "b":
+        if (isRunningState()) {
+          clearDisplayButton.focus();
+        } else {
+          demosButton.focus();
+        }
+        kp.preventDefault();
+        break;
+      case "e":
+        codeContainer.click();
+        kp.preventDefault();
+        break;
+      case "g":
+        debugButton.click();
+        kp.preventDefault();
+        break;
+      case "h":
+        documentationButton.click();
+        kp.preventDefault();
+        break;
+      case "k":
+        worksheetButton.click();
+        kp.preventDefault();
+        break;
+      case "p":
+        displayButton.click();
+        kp.preventDefault();
+        break;
+      case "r":
+        runButton.click();
+        kp.preventDefault();
+        break;
+      case "s":
+        stopButton.click();
+        kp.preventDefault();
+        break;
+    }
+  }
+}
+
+window.addEventListener("keydown", globalHandler);

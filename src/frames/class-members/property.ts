@@ -2,13 +2,11 @@ import { AbstractFrame } from "../abstract-frame";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
-import { addPrivateToggleToContextMenu, processTogglePrivate } from "../frame-helpers";
+import { addPrivateToggleToContextMenu } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
-import { editorEvent } from "../frame-interfaces/editor-event";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
-import { ClassFrame } from "../globals/class-frame";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 import { ClassType } from "../symbols/class-type";
 
@@ -45,7 +43,7 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember {
   }
 
   renderAsHtml(): string {
-    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>${this.modifierAsHtml()}<el-kw>${propertyKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${asKeyword} </el-kw>${this.type.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
+    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.modifierAsHtml()}<el-kw>${propertyKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${asKeyword} </el-kw>${this.type.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
   }
 
   renderAsSource(): string {
@@ -68,21 +66,6 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember {
     this.name.parseFrom(source);
     source.remove(` ${asKeyword} `);
     this.type.parseFrom(source);
-  }
-
-  processKey(e: editorEvent): boolean {
-    let result = false;
-    if (this.canBePrivate() && processTogglePrivate(this, e)) {
-      result = true;
-    } else {
-      result = super.processKey(e);
-    }
-    return result;
-  }
-
-  private canBePrivate(): boolean {
-    const parent = this.getParent() as unknown as ClassFrame;
-    return !parent.isRecord;
   }
 
   makePublic = () => {

@@ -13,7 +13,7 @@
         <div id="lhs">
             <div id="code-controls">
                 <div class="dropdown">
-                    <button id="demos" class="plain" tabindex="1">Demo</button>
+                    <button id="demos" class="plain" tabindex="0">Demo</button>
                     <div class="dropdown-content">
                         <div class="demo-file menu-item" id="demo/bubbles.elan">Bubbles</div>
                         <div class="demo-file menu-item" id="demo/burrow.elan">Burrow</div>
@@ -35,56 +35,55 @@
                         </div>
                 </div>
                 <div class="dropdown">
-                    <button id="file" class="plain" tabindex="1">File</button>
+                    <button id="file" class="plain" tabindex="0">File</button>
                     <div class="dropdown-content">
-                        <button class="plain menu-item" id="new" tabindex="1">New</button>
-                        <button class="plain menu-item" id="load"  tabindex="1">Load</button>
-                        <button class="plain menu-item" id="append"  tabindex="1">Append</button>
-                        <button class="plain menu-item" id="auto-save"  tabindex="1">Auto Save</button>
-                        <button class="plain menu-item" id="save" tabindex="1">Manual Save</button>
-                        <button class="plain menu-item" id="save-as-standalone" tabindex="1">Save as Standalone</button>
-                        <button class="plain menu-item" id="preferences" tabindex="1">Preferences</button>
+                        <button class="plain menu-item" id="new" tabindex="0">New</button>
+                        <button class="plain menu-item" id="load"  tabindex="0">Load</button>
+                        <button class="plain menu-item" id="append"  tabindex="0">Append</button>
+                        <button class="plain menu-item" id="auto-save"  tabindex="0">Auto Save</button>
+                        <button class="plain menu-item" id="save" tabindex="0">Manual Save</button>
+                        <button class="plain menu-item" id="save-as-standalone" tabindex="0">Save as Standalone</button>
+                        <button class="plain menu-item" id="preferences" tabindex="0">Preferences</button>
                     </div>
                 </div>
 
-                <button id="trim" class="plain" tabindex="1">Trim</button>
-                <button id="expand-collapse" class="plain" tabindex="1">+/-</button>
-                <button id="undo" class="plain" tabindex="1">Undo</button>
-                <button id="redo" class="plain" tabindex="1">Redo</button>
+                <button id="trim" class="plain" tabindex="0">Trim</button>
+                <button id="expand-collapse" class="plain" tabindex="0">+/-</button>
+                <button id="undo" class="plain" tabindex="0">Undo</button>
+                <button id="redo" class="plain" tabindex="0">Redo</button>
 
                 <dialog id="preferences-dialog">
                     <form>
-
-                    <div>
-                        <label for="use-cvd">CVD colour scheme:</label>
-                        <input type="checkbox" id="use-cvd" name="cvd" value="use-cvd">
-                    </div>
                         <div>
-                          <button id="confirmBtn" value="default">Confirm</button>
+                            <label for="use-cvd">CVD colour scheme:</label>
+                            <input type="checkbox" id="use-cvd" name="cvd" value="use-cvd">
                         </div>
-                      </form>
-                  </dialog>
-                <button id="logout" class="plain" tabindex="1" hidden="hidden">Logout</button>
+                        <div>
+                            <button id="confirmBtn" value="default">Confirm</button>
+                        </div>
+                    </form>
+                </dialog>
+                <button id="logout" class="plain" tabindex="0" hidden="hidden">Logout</button>
                 <div id="code-title"></div>
             </div>
-            <div class="elan-code" data-code=""></div>
+            <div class="elan-code" data-code="" tabindex="-1"></div>
         </div>
         <div id="rhs">
             <div id="rh-header">
                 <div id="rh-header-l">
                     <div id="run-controls">
-                        <button id="run-button" class="icon"  tabindex="1"><img src="images/Run.png"></button>
-                        <button id="stop" class="icon" disabled  tabindex="1"><img src="images/Stop.png"></button>
+                        <button id="run-button" class="icon"  tabindex="-1"><img src="images/Run.png"></button>
+                        <button id="stop" class="icon" disabled  tabindex="-1"><img src="images/Stop.png"></button>
                     </div>
                     <div id="tab-buttons">
                         <input type="radio" id="display-button" name="mytabs">
-                        <label for="display-button"id="display-button-label" tabindex="2">Display</label>
+                        <label for="display-button"id="display-button-label" tabindex="-1">dis<b>p</b>lay</label>
                         <input type="radio" id="debug-button" name="mytabs">
-                        <label for="debug-button" id="debug-button-label" tabindex="2">Debug</label>
+                        <label for="debug-button" id="debug-button-label" tabindex="-1">debu<b>g</b></label>
                         <input type="radio" id="documentation-button" name="mytabs" checked="checked">
-                        <label for="documentation-button" id="documentation-button-label" tabindex="2">Help</label>
+                        <label for="documentation-button" id="documentation-button-label" tabindex="-1"><b>h</b>elp</label>
                         <input type="radio" id="worksheet-button" name="mytabs">
-                        <label for="worksheet-button" id="worksheet-button-label" tabindex="2">Worksheet</label>
+                        <label for="worksheet-button" id="worksheet-button-label" tabindex="-1">wor<b>k</b>sheet</label>
                     </div>
                 </div>
                 <div id="status">
@@ -103,45 +102,45 @@
                 </div>
             </div>
             <div id="display-tab" class="hide">
-                <div id="display" tabindex="2">
+                <div id="display">
                     <div id="print"><span id="printed-text"></span></div>
                     <div id="display-html"></div>
                     <div id="block-graphics"></div>
                     <div id="vector-graphics"></div>
                 </div>
-                <button id="clear-display" class="plain" tabindex="2">Clear display</button>
+                <button id="clear-display" class="plain" tabindex="0">Clear display</button>
             </div>
             <div id="debug-tab" class="hide">
                 <div id="debug-controls">
-                <button id="run-debug-button" class="icon"  tabindex="2"><img src="images/Debug.png"></button>
-                <button id="pause" class="icon" disabled title="Pause" tabindex="2"><img src="images/Pause.png"></button>
-                <button id="step" class="icon" disabled title="Single Step" tabindex="2"><img src="images/Step.png"></button>
+                <button id="run-debug-button" class="icon"  tabindex="0"><img src="images/Debug.png"></button>
+                <button id="pause" class="icon" disabled title="Pause" tabindex="0"><img src="images/Pause.png"></button>
+                <button id="step" class="icon" disabled title="Single Step" tabindex="0"><img src="images/Step.png"></button>
                 </div>
-                <div id="system-info" tabindex="2"></div>
+                <div id="system-info" tabindex="0"></div>
             </div>
             <div id="documentation-tab" class=""> <!-- now 'Help` tab-->
                   <div id="doc-buttons">
-                    <button id="doc-home" class="plain" tabindex="2">Home</button>
-                    <button id="doc-back" class="plain" tabindex="2">Back</button>
-                    <button id="doc-forward" class="plain" tabindex="2">Forward</button>
+                    <button id="doc-home" class="plain" tabindex="0">Home</button>
+                    <button id="doc-back" class="plain" tabindex="0">Back</button>
+                    <button id="doc-forward" class="plain" tabindex="0">Forward</button>
                 </div>
                 <iframe name="doc-iframe" id="doc-iframe" src="documentation/Home.html"></iframe>
             </div>              
             <div id="worksheet-tab" class="hide">
                 <div id="worksheet-buttons">
                     <div class="dropdown">
-                        <button id="help" class="plain" tabindex="1">Standard worksheets</button>
+                        <button id="help" class="plain" tabindex="0">Standard worksheets</button>
                         <div class="dropdown-content">
-                          <div class="menu-item help-file"><a href="documentation/worksheets/guide.html" target="worksheet-iframe"  tabindex="3">Guide to the worksheets</a></div>
-                          <div class="menu-item help-file"><a href="documentation/worksheets/exploring-code.html" target="worksheet-iframe"  tabindex="3">Exploring code</a></div>
-                          <div class="menu-item help-file"><a href="documentation/worksheets/random-walk.html" target="worksheet-iframe"  tabindex="3">Random Walk</a></div>
-                          <div class="menu-item help-file"><a href="documentation/worksheets/whack-a-mole.html" target="worksheet-iframe"  tabindex="3">Whack-a-mole</a></div>
-                          <div class="menu-item help-file"><a href="documentation/worksheets/simon.html" target="worksheet-iframe"  tabindex="3">Simon game</a></div>
-                          <div class="menu-item help-file"><a href="documentation/worksheets/merge-sort.html" target="worksheet-iframe"  tabindex="3">Merge sort</a></div>
-                          <div class="menu-item help-file"><a href="documentation/worksheets/snake-3-ways.html" target="worksheet-iframe"  tabindex="3">Snake 3 ways</a></div>
+                          <div class="menu-item help-file"><a href="documentation/worksheets/guide.html" target="worksheet-iframe"  tabindex="0">Guide to the worksheets</a></div>
+                          <div class="menu-item help-file"><a href="documentation/worksheets/exploring-code.html" target="worksheet-iframe"  tabindex="0">Exploring code</a></div>
+                          <div class="menu-item help-file"><a href="documentation/worksheets/random-walk.html" target="worksheet-iframe"  tabindex="0">Random Walk</a></div>
+                          <div class="menu-item help-file"><a href="documentation/worksheets/whack-a-mole.html" target="worksheet-iframe"  tabindex="0">Whack-a-mole</a></div>
+                          <div class="menu-item help-file"><a href="documentation/worksheets/simon.html" target="worksheet-iframe"  tabindex="0">Simon game</a></div>
+                          <div class="menu-item help-file"><a href="documentation/worksheets/merge-sort.html" target="worksheet-iframe"  tabindex="0">Merge sort</a></div>
+                          <div class="menu-item help-file"><a href="documentation/worksheets/snake-3-ways.html" target="worksheet-iframe"  tabindex="0">Snake 3 ways</a></div>
                         </div>
                     </div>
-                    <button id="load-worksheet" class="plain" tabindex="2">Load external worksheet</button>
+                    <button id="load-worksheet" class="plain" tabindex="0">Load external worksheet</button>
                 </div>
                 <iframe name="worksheet-iframe" id="worksheet-iframe"></iframe>
             </div>

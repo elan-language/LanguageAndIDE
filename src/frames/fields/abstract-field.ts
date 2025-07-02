@@ -171,9 +171,16 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
+  private controlKeys = ["o", "O", "ArrowLeft", "ArrowRight", "a"];
+
   processKey(e: editorEvent): boolean {
     this.codeHasChanged = false;
     const key = e.key;
+
+    if (e.modKey.control && !this.controlKeys.includes(key ?? "")) {
+      return false;
+    }
+
     const textLen = this.text.length;
     this.processAutocompleteText(e.optionalData);
     switch (key) {
@@ -614,7 +621,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   protected fieldAsInput(): string {
-    return `<input spellcheck="false" data-cursorstart="${this.cursorPos}" data-cursorend="${this.selectionEnd}" size="${this.charCount()}" style="width: ${this.fieldWidth()}" value="${this.escapeDoubleQuotesAndEscapes(this.text)}">`;
+    return `<input spellcheck="false" data-cursorstart="${this.cursorPos}" data-cursorend="${this.selectionEnd}" size="${this.charCount()}" style="width: ${this.fieldWidth()}" value="${this.escapeDoubleQuotesAndEscapes(this.text)}" tabindex="-1">`;
   }
 
   public charCount(): number {
@@ -665,11 +672,11 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   helpAsHtml(): string {
-    return `<el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe">?</a></el-help>`;
+    return `<el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe" tabindex="-1">?</a></el-help>`;
   }
 
   renderAsHtml(): string {
-    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex=0><el-txt>${this.textAsHtml()}</el-txt><el-place>${this.placeholder}</el-place><el-compl>${this.getCompletion()}</el-compl>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
+    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${this.textAsHtml()}</el-txt><el-place>${this.placeholder}</el-place><el-compl>${this.getCompletion()}</el-compl>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
   }
 
   indent(): string {

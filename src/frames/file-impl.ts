@@ -724,7 +724,13 @@ export class FileImpl implements File {
     return [];
   }
 
+  private controlKeys = ["O"];
+
   processKey(e: editorEvent): boolean {
+    if (e.modKey.control && !this.controlKeys.includes(e.key ?? "")) {
+      return false;
+    }
+
     const codeHasChanged = this._fieldBeingEdited;
     switch (e.key) {
       case "Home": {
