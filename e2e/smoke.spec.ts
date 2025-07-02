@@ -32,7 +32,7 @@ test('load and run demo', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await page.getByRole('button', { name: 'Demo' }).hover();
+  await page.getByRole('button', { name: 'demo' }).click();
   await page.getByText('Collatz').click();
 
   await page.getByRole('button', { name: 'Run the program' }).click();
@@ -50,7 +50,7 @@ test('input validation', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await page.getByRole('button', { name: 'Demo' }).hover();
+  await page.getByRole('button', { name: 'demo' }).click();
   await page.getByText('Pathfinder').click();
 
   await page.getByRole('button', { name: 'Run the program' }).click();
@@ -77,7 +77,7 @@ test('demo with tests', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await page.getByRole('button', { name: 'Demo' }).hover();
+  await page.getByRole('button', { name: 'Demo' }).click();
   await page.getByText('Life').click();
 
   await expect(page.locator('#parse')).toContainText('valid');
@@ -167,10 +167,10 @@ test('load and run demo with graphics', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await page.getByRole('button', { name: 'Demo' }).hover();
+  await page.getByRole('button', { name: 'demo' }).click();
   await page.getByText('Burrow').click();
 
-  await page.getByRole('button', { name: 'Run the program' }).click();
+  await page.getByRole('button', { name: 'run the program' }).click();
   await expect(page.locator('[style="background-color:#ff0000;"]')).toContainText("");
 });
 
