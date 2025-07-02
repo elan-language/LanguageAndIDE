@@ -386,6 +386,7 @@ preferencesButton.addEventListener("click", () => {
 
 function showDisplayTab() {
   displayTab.classList.remove("hide");
+  displayTab.classList.add("foremost");
   documentationTab.classList.add("hide");
   worksheetTab.classList.add("hide");
   debugTab.classList.add("hide");
@@ -393,16 +394,19 @@ function showDisplayTab() {
 }
 
 function showDebugTab() {
+  debugTab.classList.remove("hide");
+  debugTab.classList.add("foremost");
   displayTab.classList.add("hide");
   documentationTab.classList.add("hide");
   worksheetTab.classList.add("hide");
-  debugTab.classList.remove("hide");
+
   systemInfoDiv.focus();
 }
 
 function showDocumentationTab() {
-  displayTab.classList.add("hide");
   documentationTab.classList.remove("hide");
+  documentationTab.classList.add("foremost");
+  displayTab.classList.add("hide");
   worksheetTab.classList.add("hide");
   debugTab.classList.add("hide");
   documentationIFrame.focus();
