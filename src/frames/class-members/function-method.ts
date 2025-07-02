@@ -1,10 +1,5 @@
-import {
-  addPrivateToggleToContextMenu,
-  processTogglePrivate,
-  singleIndent,
-} from "../frame-helpers";
+import { addPrivateToggleToContextMenu, singleIndent } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
-import { editorEvent } from "../frame-interfaces/editor-event";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
 import { FunctionFrame } from "../globals/function-frame";
@@ -42,7 +37,7 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
   }
   public renderAsHtml(): string {
-    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="0" ${this.toolTip()}>
+    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
 <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.modifierAsHtml()}<el-kw>${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>${endKeyword} ${functionKeyword}</el-kw>
@@ -60,16 +55,6 @@ ${this.renderChildrenAsHtml()}
   }
   parseBottom(source: CodeSource): boolean {
     return super.parseBottom(source);
-  }
-
-  processKey(e: editorEvent): boolean {
-    let result = false;
-    if (processTogglePrivate(this, e)) {
-      result = true;
-    } else {
-      result = super.processKey(e);
-    }
-    return result;
   }
 
   makePublic = () => {

@@ -53,7 +53,7 @@ export class IfSelectorField extends AbstractField {
   processKey(keyEvent: editorEvent): boolean {
     this.codeHasChanged = false;
     const char = keyEvent.key;
-    if (char?.length === 1) {
+    if (!keyEvent.modKey.control && char?.length === 1) {
       if (char === "i" && this.text === "") {
         this.else.setIfExtension(true);
         this.else.condition.select();
