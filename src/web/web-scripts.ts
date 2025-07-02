@@ -770,7 +770,7 @@ function hasUnsavedChanges() {
 
 function updateNameAndSavedStatus() {
   const unsaved = hasUnsavedChanges() ? " UNSAVED" : "";
-  codeTitle.innerText = `File: ${file.fileName}${unsaved}`;
+  codeTitle.innerText = `file: ${file.fileName}${unsaved}`;
 }
 
 function canUndo() {
