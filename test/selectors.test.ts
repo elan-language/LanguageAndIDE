@@ -3,6 +3,7 @@ import { FunctionMethod } from "../src/frames/class-members/function-method";
 import { MemberSelector } from "../src/frames/class-members/member-selector";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { FileImpl } from "../src/frames/file-impl";
+import { Profile } from "../src/frames/frame-interfaces/profile";
 import { AbstractClass } from "../src/frames/globals/abstract-class";
 import { ConcreteClass } from "../src/frames/globals/concrete-class";
 import { GlobalFunction } from "../src/frames/globals/global-function";
@@ -19,7 +20,6 @@ import { hash } from "../src/util";
 import { transforms } from "./compiler/compiler-test-helpers";
 import { classWithConstructor, emptyMainOnly, T00_emptyFile } from "./model-generating-functions";
 import { key } from "./testHelpers";
-import { Profile } from "../src/frames/frame-interfaces/profile";
 
 export class TestProfileSPJ implements Profile {
   name: string = "SPJ";
@@ -85,7 +85,7 @@ suite("Selector tests", () => {
     assert.equal(help, " constant class");
     assert.equal(
       g.renderAsHtml(),
-      `<el-global class="none" id='select1' tabindex="0" ><el-select><el-txt>c</el-txt><el-place>new code</el-place><div class="options"> constant class</div></el-select></el-global>`,
+      `<el-global class="none" id='select1' tabindex="-1" ><el-select><el-txt>c</el-txt><el-place>new code</el-place><div class="options"> constant class</div></el-select></el-global>`,
     );
   });
 
@@ -113,7 +113,7 @@ suite("Selector tests", () => {
     assert.equal(help, " property procedure");
     assert.equal(
       s.renderAsHtml(),
-      `<el-member class="ok" id='select5' tabindex="0" ><el-select><el-txt>private pro</el-txt><el-place>new code</el-place><div class="options"> property procedure</div></el-select></el-member>`,
+      `<el-member class="ok" id='select5' tabindex="-1" ><el-select><el-txt>private pro</el-txt><el-place>new code</el-place><div class="options"> property procedure</div></el-select></el-member>`,
     );
   });
 
@@ -135,7 +135,7 @@ suite("Selector tests", () => {
     assert.equal(s.getCompletion(), " property procedure");
     assert.equal(
       s.renderAsHtml(),
-      `<el-member class="ok" id='select5' tabindex="0" ><el-select><el-txt>abstract pro</el-txt><el-place>new code</el-place><div class="options"> property procedure</div></el-select></el-member>`,
+      `<el-member class="ok" id='select5' tabindex="-1" ><el-select><el-txt>abstract pro</el-txt><el-place>new code</el-place><div class="options"> property procedure</div></el-select></el-member>`,
     );
   });
 
@@ -160,7 +160,7 @@ suite("Selector tests", () => {
     assert.equal(help, " throw try");
     assert.equal(
       s.renderAsHtml(),
-      `<el-statement class="ok" id='select3' tabindex="0" ><el-select><el-txt>t</el-txt><el-place>new code</el-place><div class="options"> throw try</div></el-select></el-statement>`,
+      `<el-statement class="ok" id='select3' tabindex="-1" ><el-select><el-txt>t</el-txt><el-place>new code</el-place><div class="options"> throw try</div></el-select></el-statement>`,
     );
   });
 
