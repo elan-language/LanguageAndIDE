@@ -49,7 +49,6 @@ const logoutButton = document.getElementById("logout") as HTMLButtonElement;
 const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLButtonElement;
 const preferencesButton = document.getElementById("preferences") as HTMLButtonElement;
 
-
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
 const compileStatus = document.getElementById("compile") as HTMLDivElement;
@@ -75,7 +74,9 @@ const systemInfoDiv = document.getElementById("system-info") as HTMLDivElement;
 
 // Help (documentation)
 const documentationButton = document.getElementById("documentation-button") as HTMLButtonElement;
-const documentationButtonLabel = document.getElementById("documentation-button-label") as HTMLLabelElement;
+const documentationButtonLabel = document.getElementById(
+  "documentation-button-label",
+) as HTMLLabelElement;
 const documentationTab = document.getElementById("documentation-tab") as HTMLDivElement;
 const documentationHome = document.getElementById("doc-home") as HTMLButtonElement;
 const documentationBack = document.getElementById("doc-back") as HTMLButtonElement;
@@ -85,15 +86,10 @@ const documentationIFrame = document.getElementById("doc-iframe") as HTMLIFrameE
 // Worksheet
 const worksheetButton = document.getElementById("worksheet-button") as HTMLButtonElement;
 const worksheetButtonLabel = document.getElementById("worksheet-button-label") as HTMLLabelElement;
-//const standardWorksheetButton = document.getElementById("standard-worksheet") as HTMLButtonElement;
+const standardWorksheetButton = document.getElementById("standard-worksheet") as HTMLButtonElement;
 const loadExternalWorksheetButton = document.getElementById("load-worksheet") as HTMLButtonElement;
 const worksheetTab = document.getElementById("worksheet-tab") as HTMLDivElement;
 const worksheetIFrame = document.getElementById("worksheet-iframe") as HTMLIFrameElement;
-
-
-
-
-
 
 const inactivityTimeout = 2000;
 const stdlib = new StdLib();
@@ -388,7 +384,15 @@ function showDisplayTab() {
   documentationTab.classList.add("hide");
   worksheetTab.classList.add("hide");
   debugTab.classList.add("hide");
-  displayButtonLabel.focus();
+  displayDiv.focus();
+}
+
+function showDebugTab() {
+  displayTab.classList.add("hide");
+  documentationTab.classList.add("hide");
+  worksheetTab.classList.add("hide");
+  debugTab.classList.remove("hide");
+  systemInfoDiv.focus();
 }
 
 function showDocumentationTab() {
@@ -410,16 +414,8 @@ function showWorksheetTab() {
     worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
     worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
   } else {
-    worksheetButtonLabel.focus();
+    standardWorksheetButton.focus();
   }
-}
-
-function showDebugTab() {
-  displayTab.classList.add("hide");
-  documentationTab.classList.add("hide");
-  worksheetTab.classList.add("hide");
-  debugTab.classList.remove("hide");
-  debugButtonLabel.focus();
 }
 
 function filterKeypress(button: HTMLButtonElement) {

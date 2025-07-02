@@ -397,11 +397,6 @@ button.icon:active img
 }
 
 
-.elan-code:not( :focus-within),
-#display:not( :focus-within),
-#system-info:not( :focus-within) {
-  opacity: 0.75;
-}
 
 #print {
   padding: 2px;
@@ -454,18 +449,14 @@ div.spacer{
   font-family: var(--ideTitleFont);
   color: var(--defaultText);
   background-color: white;
-  opacity: 50%;
   margin: 20px 10px 10px 0;
+  background-color: var(--defaultButtonBackground);
 }
 
 #tab-buttons label:hover,
 #tab-buttons label:active,
 #tab-buttons label:focus {
-  text-decoration: underline;
-}
-
-#tab-buttons input[type="radio"]:checked + label {
-  opacity: 100%;
+  background-color: white;
 }
 
 .main-tab {
@@ -496,7 +487,14 @@ iframe#doc-iframe, iframe#worksheet-iframe {
   flex-grow: 1;
 }
 
-
+.elan-code:not( :focus-within),
+#display:not( :focus-within),
+#system-info:not( :focus-within),
+#doc-iframe:not( :focus-within),
+#worksheet-iframe:not( :focus-within)
+{
+  opacity: 0.75;
+}
 
 
 
