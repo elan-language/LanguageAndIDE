@@ -41,6 +41,8 @@ const loadExternalWorksheetButton = document.getElementById("load-worksheet") as
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
 const newButton = document.getElementById("new") as HTMLButtonElement;
 const demosButton = document.getElementById("demos") as HTMLButtonElement;
+const demosMenu = document.getElementById("demos-menu") as HTMLUListElement;
+
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const systemInfoDiv = document.getElementById("system-info") as HTMLDivElement;
 const displayDiv = document.getElementById("display") as HTMLDivElement;
@@ -352,6 +354,8 @@ for (const elem of demoFiles) {
       clearUndoRedoAndAutoSave();
       await readAndParse(rawCode, fileName, true);
     }
+    demosMenu.hidden = true;
+    demosButton.setAttribute("aria-expanded", "false");
   });
 }
 
@@ -2059,3 +2063,52 @@ function globalHandler(kp: KeyboardEvent) {
 }
 
 window.addEventListener("keydown", globalHandler);
+
+demosButton.addEventListener("click", function () {
+  const isExpanded = demosButton.getAttribute("aria-expanded") === "true";
+  demosButton.setAttribute("aria-expanded", `${!isExpanded}`);
+  demosMenu.hidden = isExpanded;
+  for (const mi of demosMenu!.querySelectorAll(".menu-item")) {
+    mi.classList.remove("selected");
+  }
+});
+
+demosButton.addEventListener("keydown", function (event) {
+  if (event.key === "ArrowDown") {
+    const firstitem = demosMenu!.querySelector(".menu-item div") as HTMLSpanElement;
+    firstitem.focus();
+  } else if (event.key === "Escape") {
+    demosButton.focus();
+    demosMenu.hidden = true;
+    demosButton.setAttribute("aria-expanded", "false");
+  }
+});
+
+demosMenu.addEventListener("keydown", function (event) {
+  if (event.key === "ArrowUp") {
+    const focusedItem = document.activeElement?.parentElement;
+
+    const previousItem = focusedItem?.previousElementSibling;
+
+    if (previousItem) {
+      previousItem.querySelector("div")!.focus();
+    }
+    event.preventDefault();
+    event.stopPropagation();
+  } else if (event.key === "ArrowDown") {
+    const focusedItem = document.activeElement?.parentElement;
+
+    const nextItem = focusedItem?.nextElementSibling;
+
+    if (nextItem) {
+      nextItem.querySelector("div")?.focus();
+    }
+  } else if (event.key === "Escape") {
+    demosButton.focus();
+    demosMenu.hidden = true;
+    demosButton.setAttribute("aria-expanded", "false");
+  } else if (event.key === "Enter" || event.key === "Space") {
+    const focusedItem = document.activeElement?.parentElement;
+    focusedItem?.click();
+  }
+});
