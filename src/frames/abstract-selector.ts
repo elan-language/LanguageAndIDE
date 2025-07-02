@@ -137,7 +137,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     return `${this.indent()}`;
   }
 
-  private selectorControlKeys = ["d", "O", "v"];
+  private selectorControlKeys = ["d", "O", "v", "?"];
 
   processKey(e: editorEvent): boolean {
     let codeHasChanged = false;
@@ -186,6 +186,12 @@ export abstract class AbstractSelector extends AbstractFrame {
           this.getFile().removeAllSelectorsThatCanBe();
           break;
         }
+      }
+      case "?": {
+        if (e.modKey.control) {
+          this.showHelp();
+        }
+        break;
       }
       default: {
         if (!key || key.length === 1) {

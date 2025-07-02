@@ -50,6 +50,8 @@ export abstract class AbstractFrame implements Frame {
 
   pasteError: string = "";
 
+  helpActive: boolean = false;
+
   constructor(parent: Parent) {
     this._parent = parent;
     const file = this.getFile();
@@ -64,9 +66,16 @@ export abstract class AbstractFrame implements Frame {
   }
 
   helpAsHtml(): string {
+    const active = this.helpActive ? ` class="active"` : "";
+    this.helpActive = false;
+
     return this.selected
-      ? `<el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe" tabindex="-1">?</a></el-help>`
+      ? `<el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe" tabindex="-1"${active}>?</a></el-help>`
       : ``;
+  }
+
+  showHelp() {
+    this.helpActive = true;
   }
 
   hasBeenAddedTo(): void {
@@ -185,7 +194,7 @@ export abstract class AbstractFrame implements Frame {
     return result;
   }
 
-  private controlKeys = ["o", "O", "ArrowUp", "ArrowDown", "Delete", "d", "x", "m"];
+  private controlKeys = ["o", "O", "ArrowUp", "ArrowDown", "Delete", "d", "x", "m", "?"];
 
   processKey(e: editorEvent): boolean {
     let codeHasChanged = false;
@@ -290,6 +299,12 @@ export abstract class AbstractFrame implements Frame {
         if (e.modKey.control) {
           this.cut();
           codeHasChanged = true;
+        }
+        break;
+      }
+      case "?": {
+        if (e.modKey.control) {
+          this.showHelp();
         }
         break;
       }
