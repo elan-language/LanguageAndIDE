@@ -15,7 +15,7 @@ test('load and run worksheet', async ({ page }) => {
   await page.getByText('worksheet', { exact: true }).click();
   await expect(page.getByRole('button', { name: 'standard worksheets' })).toBeVisible();
   
-  await page.getByRole('button', { name: 'standard worksheets' }).hover();
+  await page.getByRole('button', { name: 'standard worksheets' }).click();
   await page.getByText('Test Worksheet').click();
 
   // to move off dropdown
