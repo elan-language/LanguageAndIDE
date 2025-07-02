@@ -41,6 +41,10 @@ const loadExternalWorksheetButton = document.getElementById("load-worksheet") as
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
 const newButton = document.getElementById("new") as HTMLButtonElement;
 const demosButton = document.getElementById("demos") as HTMLButtonElement;
+const demosMenu = document.getElementById("demos-menu") as HTMLDivElement;
+const fileMenu = document.getElementById("file-menu") as HTMLDivElement;
+const worksheetMenu = document.getElementById("worksheet-menu") as HTMLDivElement;
+
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const systemInfoDiv = document.getElementById("system-info") as HTMLDivElement;
 const displayDiv = document.getElementById("display") as HTMLDivElement;
@@ -86,6 +90,7 @@ const documentationForward = document.getElementById("doc-forward") as HTMLButto
 
 const documentationIFrame = document.getElementById("doc-iframe") as HTMLIFrameElement;
 const worksheetIFrame = document.getElementById("worksheet-iframe") as HTMLIFrameElement;
+const worksheetsButton = document.getElementById("worksheets") as HTMLButtonElement;
 
 const inactivityTimeout = 2000;
 const stdlib = new StdLib();
@@ -357,12 +362,11 @@ for (const elem of demoFiles) {
 
 preferencesButton.addEventListener("click", () => {
   const dialog = document.getElementById("preferences-dialog") as HTMLDialogElement;
-  const closeButton = dialog.querySelector("button");
+  const closeButton = document.getElementById("confirmBtn");
 
   const cvd = document.getElementById("use-cvd") as HTMLInputElement;
 
-  closeButton?.addEventListener("click", async (e) => {
-    e.preventDefault();
+  closeButton?.addEventListener("click", () => {
     if (cvd.checked) {
       changeCss("cvd-colourScheme");
     } else {
@@ -372,7 +376,8 @@ preferencesButton.addEventListener("click", () => {
     dialog.close();
   });
 
-  dialog.showModal();
+  // otherwise it can pick up click and close immediately
+  setTimeout(() => dialog.showModal(), 1);
 });
 
 function showDisplayTab() {
@@ -931,11 +936,11 @@ function updateDisplayValues() {
     }
 
     if (autoSaveFileHandle) {
-      autoSaveButton.innerText = "Cancel Auto Save";
+      autoSaveButton.innerText = "cancel auto save";
       enable(autoSaveButton, "Click to turn auto-save off and resume manual saving.");
     } else {
       if (useChromeFileAPI()) {
-        autoSaveButton.innerText = "Auto Save";
+        autoSaveButton.innerText = "auto save";
         if (isParsing) {
           enable(
             autoSaveButton,
@@ -1997,16 +2002,13 @@ async function runTestsInner() {
 }
 
 if (!isElanProduction) {
-  const testWs = document.createElement("div");
-  testWs.classList.add("menu-item", "help-file");
   const testLink = document.createElement("a");
+  testLink.classList.add("menu-item", "help-file");
   testLink.href = "documentation/worksheets/worksheet-test-only.html";
   testLink.target = "worksheet-iframe";
-  testLink.tabIndex = 0;
   testLink.innerText = "Test Worksheet";
-  testWs.append(testLink);
 
-  document.querySelector("#worksheet-tab .dropdown-content")?.append(testWs);
+  document.querySelector("#worksheet-tab .dropdown-content")?.append(testLink);
 }
 
 const globalKeys = ["b", "e", "g", "h", "k", "p", "r", "s", "+", "-", "="];
@@ -2059,3 +2061,95 @@ function globalHandler(kp: KeyboardEvent) {
 }
 
 window.addEventListener("keydown", globalHandler);
+
+function collapseMenu(button: HTMLElement, andFocus: boolean) {
+  if (andFocus) {
+    button.focus();
+  }
+  const menuId = button.getAttribute("aria-controls")!;
+  document.getElementById(menuId)!.hidden = true;
+  button.setAttribute("aria-expanded", "false");
+}
+
+function handleClickDropDownButton(event: Event) {
+  const button = event.target as HTMLButtonElement;
+  const isExpanded = button.getAttribute("aria-expanded") === "true";
+  const menuId = button.getAttribute("aria-controls")!;
+  button.setAttribute("aria-expanded", `${!isExpanded}`);
+  document.getElementById(menuId)!.hidden = isExpanded;
+
+  const allDropDowns = document.querySelectorAll(
+    "button[aria-haspopup='true']",
+  ) as NodeListOf<HTMLElement>;
+
+  for (const e of allDropDowns) {
+    if (e.id !== button.id) {
+      collapseMenu(e, false);
+    }
+  }
+}
+
+demosButton.addEventListener("click", handleClickDropDownButton);
+fileButton.addEventListener("click", handleClickDropDownButton);
+worksheetsButton.addEventListener("click", handleClickDropDownButton);
+
+function handleKeyDropDownButton(event: KeyboardEvent) {
+  const button = event.target as HTMLButtonElement;
+  const menuId = button.getAttribute("aria-controls")!;
+  const menu = document.getElementById(menuId)!;
+  if (event.key === "ArrowDown") {
+    const firstitem = menu.querySelector(".menu-item") as HTMLElement;
+    firstitem.focus();
+  } else if (event.key === "Escape") {
+    collapseMenu(button, true);
+  }
+}
+
+demosButton.addEventListener("keydown", handleKeyDropDownButton);
+fileButton.addEventListener("keydown", handleKeyDropDownButton);
+worksheetsButton.addEventListener("keydown", handleKeyDropDownButton);
+
+function handleMenuKey(event: KeyboardEvent) {
+  const menuItem = event.target as HTMLElement;
+  const menu = menuItem.parentElement as HTMLDivElement;
+  const button = menu.previousElementSibling as HTMLButtonElement;
+  if (event.key === "ArrowUp") {
+    const focusedItem = document.activeElement as HTMLElement;
+
+    let previousItem = focusedItem;
+
+    do {
+      previousItem = previousItem?.previousElementSibling as HTMLElement;
+      if (previousItem) {
+        previousItem.focus();
+      }
+    } while (previousItem && (previousItem as any).disabled);
+  } else if (event.key === "ArrowDown") {
+    const focusedItem = document.activeElement as HTMLElement;
+
+    let nextItem: HTMLElement = focusedItem;
+
+    do {
+      nextItem = nextItem?.nextElementSibling as HTMLElement;
+      if (nextItem) {
+        nextItem.focus();
+      }
+    } while (nextItem && (nextItem as any).disabled);
+  } else if (event.key === "Escape") {
+    collapseMenu(button, true);
+  } else if (event.key === "Enter" || event.key === "Space") {
+    const focusedItem = document.activeElement as HTMLElement;
+    focusedItem?.click();
+    setTimeout(() => {
+      collapseMenu(button, false);
+    }, 1);
+  }
+}
+
+demosMenu.addEventListener("keydown", handleMenuKey);
+fileMenu.addEventListener("keydown", handleMenuKey);
+worksheetMenu.addEventListener("keydown", handleMenuKey);
+
+demosMenu.addEventListener("click", () => collapseMenu(demosButton, false));
+fileMenu.addEventListener("click", () => collapseMenu(fileButton, false));
+worksheetMenu.addEventListener("click", () => collapseMenu(worksheetsButton, false));
