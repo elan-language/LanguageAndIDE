@@ -2002,16 +2002,13 @@ async function runTestsInner() {
 }
 
 if (!isElanProduction) {
-  const testWs = document.createElement("div");
-  testWs.classList.add("menu-item", "help-file");
   const testLink = document.createElement("a");
+  testLink.classList.add("menu-item", "help-file");
   testLink.href = "documentation/worksheets/worksheet-test-only.html";
   testLink.target = "worksheet-iframe";
-  testLink.tabIndex = 0;
   testLink.innerText = "Test Worksheet";
-  testWs.append(testLink);
 
-  document.querySelector("#worksheet-tab .dropdown-content")?.append(testWs);
+  document.querySelector("#worksheet-tab .dropdown-content")?.append(testLink);
 }
 
 const globalKeys = ["b", "e", "g", "h", "k", "p", "r", "s", "+", "-", "="];
@@ -2151,4 +2148,4 @@ worksheetMenu.addEventListener("keydown", handleMenuKey);
 
 demosMenu.addEventListener("click", () => collapseMenu(demosButton, false));
 fileMenu.addEventListener("click", () => collapseMenu(fileButton, false));
-worksheetMenu.addEventListener("click", () => collapseMenu(worksheetButton, false));
+worksheetMenu.addEventListener("click", () => collapseMenu(worksheetsButton, false));

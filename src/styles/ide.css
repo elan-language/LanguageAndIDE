@@ -518,3 +518,7 @@ button[aria-expanded="false"]::after {
 .dropdown-content[hidden] {
   display: none;
 }
+
+.dropdown-content a {
+  display: block;
+}
