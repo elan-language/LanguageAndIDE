@@ -359,12 +359,7 @@ button.icon:active img
   display: inline-block;
 }
 
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
 .dropdown-content {
-  display: none;
   position: absolute;
   z-index: 1;
   background-color: white;
@@ -375,8 +370,7 @@ button.icon:active img
   padding-right: 5px;
 }
 
-/* menu items */
-
+.menu-item:focus,
 .menu-item:hover, button.menu-item:hover
 .menu-item:active, button.menu-item:active
 .menu-item:hover a,  button.menu-item:hover a
@@ -389,6 +383,7 @@ button.icon:active img
 
 .menu-item{
   font-family: var(--ideTitleFont);
+  list-style-type: none;
 }
 
 #preferences-dialog {
@@ -499,3 +494,18 @@ iframe#doc-iframe, iframe#worksheet-iframe {
 
 
 
+button[aria-expanded="true"]::after {
+  content: "▲"; /* Arrow up to indicate expanded */
+}
+
+button[aria-expanded="false"]::after {
+  content: "▼"; /* Arrow down to indicate collapsed */
+}
+
+.dropdown-content[hidden] {
+  display: none;
+}
+
+.dropdown-content a {
+  display: block;
+}
