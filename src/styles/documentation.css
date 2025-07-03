@@ -118,7 +118,7 @@ a:active {text-decoration: none}
 }
 
 .accordion::before {
-  content: '\002B';
+  content: '\2b9f';
   color: blue;
   font-weight: bold;
   float: left;
@@ -129,7 +129,7 @@ a:active {text-decoration: none}
 }
 
 .active::before {
-  content: "\2212";
+  content: "\2b9d";
 }
 
 .panel {
