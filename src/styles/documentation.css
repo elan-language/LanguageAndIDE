@@ -113,11 +113,11 @@ a:active {text-decoration: none}
 /* Animated accordion and panel  */
 .accordion {
   text-align: left;
-  padding: 10px 0px;
+  padding: 0px 0px; 0px; 0px;
   width: 100%;
 }
 
-.accordion::before {
+.accordion::after {
   content: '\2b9f';
   color: blue;
   font-weight: bold;
@@ -128,7 +128,7 @@ a:active {text-decoration: none}
   cursor: pointer;
 }
 
-.active::before {
+.active::after {
   content: "\2b9d";
 }
 
