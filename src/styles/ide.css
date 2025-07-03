@@ -220,7 +220,7 @@ button {
 
 /* Plain buttons */
 button.plain {
-  background-color: var(--defaultButtonBackground);
+  background-color: var(--defaultButton);
   border: none;
   outline: none;
   height: 22px;
@@ -233,6 +233,7 @@ button.plain {
   padding-left: 5px;
   padding-right: 5px;
   color: black;
+  border: 1px solid var(--defaultButton);
 }
 
 button.plain:hover:enabled,
@@ -242,30 +243,31 @@ button.plain:focus {
 }
 
 button.plain:disabled, menu-item.button.plain:disabled {
-  color: var(--disabledText);
+  color: var(--defaultButton);
+  background-color: var(--disabledButton);
+  border-color: var(--disabledButton);
 }
 
 /* Icon buttons */
 button.icon img {
   height: 40px;
-  opacity: 50%;
+  opacity: 55%;
 }
 
 button.icon,
 button.icon img {
   padding: 0px;
-  border: 2px;
-  border-style: solid;
-  border-color: var(--ideBackground);
   background-color: var(--ideBackground);
 }
 
+button.icon:disabled {
+  opacity: 20%;
+}
 
 button.icon:enabled img:hover,
 button.icon:enabled:focus img,
 button.icon:active img
 {
-  border-color: white;
   opacity: 100%;
 }
 
@@ -309,7 +311,7 @@ button.icon:active img
 .dropdown-content button.plain:disabled:focus
  {
   background-color: white;
-  color: grey;
+  color: var(--defaultButton);
   text-decoration: none;
 }
 
@@ -446,7 +448,7 @@ div.spacer{
   color: var(--defaultText);
   background-color: white;
   margin: 0;
-  background-color: var(--defaultButtonBackground);
+  background-color: var(--defaultButton);
   border-right: 5px solid;
   border-color: var(--ideBackground);
 }
@@ -462,6 +464,9 @@ div.spacer{
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+}
+#debug-tab {
+  overflow-y: auto;
 }
 
 .main-tab.hide {
