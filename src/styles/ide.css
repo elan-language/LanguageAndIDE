@@ -519,6 +519,10 @@ iframe#doc-iframe, iframe#worksheet-iframe {
   flex-grow: 1;
 }
 
+iframe a:focus {
+  text-decoration: underline;
+}
+
 .elan-code:not( :focus-within)
 {
   opacity: 0.75;
@@ -550,10 +554,6 @@ a.menu-item:hover,
 a.menu-item:hover:visited
 {
   color: var(--reverseText); 
-}
-
-a.menu-item:visited {
-  color: var(--defaultText); 
 }
 
 #logo {
