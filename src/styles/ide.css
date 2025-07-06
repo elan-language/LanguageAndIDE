@@ -99,7 +99,7 @@ body {
   margin-left: 10px;
 }
 
-#run-controls img {
+#run-controls button img {
   height: 55px;
 }
 
@@ -554,4 +554,10 @@ a.menu-item:hover:visited
 
 a.menu-item:visited {
   color: var(--defaultText); 
+}
+
+#logo {
+  margin-top: 5px;
+  margin-left: auto;
+  height: 50px;
 }
