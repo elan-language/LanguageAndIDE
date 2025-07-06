@@ -87,7 +87,7 @@ const documentationIFrame = document.getElementById("doc-iframe") as HTMLIFrameE
 // Worksheet
 const worksheetButton = document.getElementById("worksheet-button") as HTMLButtonElement;
 const worksheetButtonLabel = document.getElementById("worksheet-button-label") as HTMLLabelElement;
-const standardWorksheetButton = document.getElementById("standard-worksheet") as HTMLButtonElement;
+const standardWorksheetButton = document.getElementById("standard-worksheets") as HTMLButtonElement;
 const loadExternalWorksheetButton = document.getElementById("load-worksheet") as HTMLButtonElement;
 const worksheetIFrame = document.getElementById("worksheet-iframe") as HTMLIFrameElement;
 const worksheetsButton = document.getElementById("worksheets") as HTMLButtonElement;

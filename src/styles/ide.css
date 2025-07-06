@@ -37,6 +37,7 @@ body {
 #lhs {
   width: 55%;
   flex-grow: 0;
+  margin-top: 10px;
   margin-left: 10px;
   margin-right: 5px;
 }
@@ -52,7 +53,6 @@ body {
 #rhs {
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
   margin-bottom: 10px;
 }
 
@@ -80,18 +80,27 @@ body {
   justify-content: space-between;
 }
 
-#rh-header-l {
+#rh-header-r {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex-grow: 1;
 }
-
 
 #run-controls, #code-controls {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   background-color: var(--ideBackground);
+}
+
+#run-controls {
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+#run-controls img {
+  height: 55px;
 }
 
 #display-title, #system-info-title {
@@ -105,6 +114,7 @@ body {
 }
 
 #status {
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
 }
@@ -432,12 +442,10 @@ div.spacer{
 #tab-buttons {
   display: flex;
   flex-direction: row;
+  justify-content: right;
 }
 #tab-buttons input[type="radio"] {
   display: none;
-}
-#tab-buttons input[type="radio"]:checked + label {
-  background-color: white;
 }
 
 #tab-buttons label {
@@ -446,10 +454,8 @@ div.spacer{
   padding-right: 10px;
   font-family: var(--ideTitleFont);
   color: var(--defaultText);
-  background-color: white;
   margin: 0;
-  background-color: var(--defaultButton);
-  border-right: 5px solid;
+  border-left: 5px solid;
   border-color: var(--ideBackground);
 }
 
@@ -480,7 +486,7 @@ div.spacer{
 
 .tab-label.selected, 
 .tab-controls.selected,
-.tab-content.focussed
+.tab-content.selected
 {
   background-color: var(--paleTint);
 }
@@ -504,7 +510,6 @@ div.spacer{
 }
 
 iframe#doc-iframe, iframe#worksheet-iframe {
-  background-color: var(--panelBackground);
   border-image: none;
   border-color: initial;
   border-style: hidden;

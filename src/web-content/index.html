@@ -69,22 +69,6 @@
         </div>
         <div id="rhs">
             <div id="rh-header">
-                <div id="rh-header-l">
-                    <div id="run-controls">
-                        <button id="run-button" class="icon"  tabindex="-1"><img src="images/Run.png"></button>
-                        <button id="stop" class="icon" disabled  tabindex="-1"><img src="images/Stop.png"></button>
-                    </div>
-                    <div id="tab-buttons">
-                        <input type="radio" id="display-button" name="mytabs">
-                        <label for="display-button"id="display-button-label" class="tab-label tab-element display-tab" tabindex="-1">dis<b>p</b>lay</label>
-                        <input type="radio" id="debug-button" name="mytabs">
-                        <label for="debug-button" id="debug-button-label" class="tab-label tab-element debug-tab" tabindex="-1">debu<b>g</b></label>
-                        <input type="radio" id="documentation-button" name="mytabs" checked="checked">
-                        <label for="documentation-button" id="documentation-button-label" class="tab-label tab-element documentation-tab selected focussed"  tabindex="-1"><b>h</b>elp</label>
-                        <input type="radio" id="worksheet-button" name="mytabs">
-                        <label for="worksheet-button" id="worksheet-button-label" class="tab-label tab-element worksheet-tab"  tabindex="-1">wor<b>k</b>sheet</label>
-                    </div>
-                </div>
                 <div id="status">
                     <div id="status-names">
                         <div>parse</div>
@@ -99,10 +83,26 @@
                         <div id="run-status" class=""></div>
                     </div>
                 </div>
+                <div id="rh-header-r">
+                    <div id="run-controls">
+                        <button id="run-button" class="icon"  tabindex="-1"><img src="images/Run.png"></button>
+                        <button id="stop" class="icon" disabled  tabindex="-1"><img src="images/Stop.png"></button>
+                    </div>
+                    <div id="tab-buttons">
+                        <input type="radio" id="display-button" name="mytabs">
+                        <label for="display-button"id="display-button-label" class="tab-label tab-element display-tab" tabindex="-1">dis<b>p</b>lay</label>
+                        <input type="radio" id="debug-button" name="mytabs">
+                        <label for="debug-button" id="debug-button-label" class="tab-label tab-element debug-tab" tabindex="-1">debu<b>g</b></label>
+                        <input type="radio" id="documentation-button" name="mytabs" checked="checked">
+                        <label for="documentation-button" id="documentation-button-label" class="tab-label tab-element documentation-tab selected"  tabindex="-1"><b>h</b>elp</label>
+                        <input type="radio" id="worksheet-button" name="mytabs">
+                        <label for="worksheet-button" id="worksheet-button-label" class="tab-label tab-element worksheet-tab"  tabindex="-1">wor<b>k</b>sheet</label>
+                    </div>
+                </div>
             </div>
             <div id="display-tab" class="main-tab  tab-element display-tab">
                 <div class="tab-controls  tab-element display-tab">
-                    <button id="clear-display" class="plain" tabindex="0">clear display</button>
+                    <button id="clear-display" class="plain" tabindex="0">clear</button>
                 </div>
                 <div id="display" class="tab-content element display-tab">
                     <div id="print"><span id="printed-text"></span></div>
@@ -119,18 +119,18 @@
                 </div>
                 <div id="system-info" class="tab-content tab-element debug-tab"tabindex="0"></div>
             </div>
-            <div id="documentation-tab" class="main-tab tab-element documentation-tab selected focussed"> <!-- now 'Help` tab-->
-                <div class="tab-controls tab-element documentation-tab selected focussed">
+            <div id="documentation-tab" class="main-tab tab-element documentation-tab selected"> <!-- now 'Help` tab-->
+                <div class="tab-controls tab-element documentation-tab selected">
                     <button id="doc-home" class="icon" tabindex="0"><img src="images/Home.png"></button>
                     <button id="doc-back" class="icon" tabindex="0"><img src="images/Back.png"></button>
                     <button id="doc-forward" class="icon" tabindex="0"><img src="images/Forward.png"></button>
                 </div>
-                <iframe name="doc-iframe" id="doc-iframe" class="tab-content tab-element documentation-tab selected focussed" src="documentation/Home.html"></iframe>
+                <iframe name="doc-iframe" id="doc-iframe" class="tab-content tab-element documentation-tab selected" src="documentation/Home.html"></iframe>
             </div>              
             <div id="worksheet-tab" class="main-tab tab-element worksheet-tab">
                 <div class="tab-controls tab-element worksheet-tab">
                     <div class="dropdown">
-                        <button id="worksheets" class="plain" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-controls="worksheet-menu">standard worksheets</button>
+                        <button id="standard-worksheets" class="plain" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-controls="worksheet-menu">standard worksheets</button>
                         <div id="worksheet-menu" class="dropdown-content" hidden>
                           <a class="menu-item help-file" tabindex="-1" href="documentation/worksheets/guide.html" target="worksheet-iframe">Guide to the worksheets</a>
                           <a class="menu-item help-file" tabindex="-1" href="documentation/worksheets/exploring-code.html" target="worksheet-iframe">Exploring code</a>
