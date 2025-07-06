@@ -64,13 +64,11 @@ const demoFiles = document.getElementsByClassName("demo-file");
 // Display
 const displayButton = document.getElementById("display-button") as HTMLButtonElement;
 const displayButtonLabel = document.getElementById("display-button-label") as HTMLLabelElement;
-const displayTab = document.getElementById("display-tab") as HTMLDivElement;
 const displayDiv = document.getElementById("display") as HTMLDivElement;
 
 // Debug
 const debugButton = document.getElementById("debug-button") as HTMLButtonElement;
 const debugButtonLabel = document.getElementById("debug-button-label") as HTMLLabelElement;
-const debugTab = document.getElementById("debug-tab") as HTMLDivElement;
 const runDebugButton = document.getElementById("run-debug-button") as HTMLButtonElement;
 const pauseButton = document.getElementById("pause") as HTMLButtonElement;
 const stepButton = document.getElementById("step") as HTMLButtonElement;
@@ -81,7 +79,6 @@ const documentationButton = document.getElementById("documentation-button") as H
 const documentationButtonLabel = document.getElementById(
   "documentation-button-label",
 ) as HTMLLabelElement;
-const documentationTab = document.getElementById("documentation-tab") as HTMLDivElement;
 const documentationHome = document.getElementById("doc-home") as HTMLButtonElement;
 const documentationBack = document.getElementById("doc-back") as HTMLButtonElement;
 const documentationForward = document.getElementById("doc-forward") as HTMLButtonElement;
@@ -92,7 +89,6 @@ const worksheetButton = document.getElementById("worksheet-button") as HTMLButto
 const worksheetButtonLabel = document.getElementById("worksheet-button-label") as HTMLLabelElement;
 const standardWorksheetButton = document.getElementById("standard-worksheet") as HTMLButtonElement;
 const loadExternalWorksheetButton = document.getElementById("load-worksheet") as HTMLButtonElement;
-const worksheetTab = document.getElementById("worksheet-tab") as HTMLDivElement;
 const worksheetIFrame = document.getElementById("worksheet-iframe") as HTMLIFrameElement;
 const worksheetsButton = document.getElementById("worksheets") as HTMLButtonElement;
 
@@ -385,45 +381,56 @@ preferencesButton.addEventListener("click", () => {
 });
 
 function showDisplayTab() {
-  displayTab.classList.remove("hide");
-  displayTab.classList.add("foremost");
-  documentationTab.classList.add("hide");
-  worksheetTab.classList.add("hide");
-  debugTab.classList.add("hide");
+  const tabName = "display-tab";
+  setTabToFocussedAndSelected(tabName);
   displayDiv.focus();
 }
 
 function showDebugTab() {
-  debugTab.classList.remove("hide");
-  debugTab.classList.add("foremost");
-  displayTab.classList.add("hide");
-  documentationTab.classList.add("hide");
-  worksheetTab.classList.add("hide");
-
+  const tabName = "debug-tab";
+  setTabToFocussedAndSelected(tabName);
   systemInfoDiv.focus();
 }
 
 function showDocumentationTab() {
-  documentationTab.classList.remove("hide");
-  documentationTab.classList.add("foremost");
-  displayTab.classList.add("hide");
-  worksheetTab.classList.add("hide");
-  debugTab.classList.add("hide");
+  const tabName = "documentation-tab";
+  setTabToFocussedAndSelected(tabName);
   documentationIFrame.focus();
   documentationIFrame.contentWindow?.addEventListener("keydown", globalHandler);
 }
 
 function showWorksheetTab() {
-  displayTab.classList.add("hide");
-  documentationTab.classList.add("hide");
-  worksheetTab.classList.remove("hide");
-  debugTab.classList.add("hide");
+  const tabName = "worksheet-tab";
+  setTabToFocussedAndSelected(tabName);
   if (worksheetLoaded) {
     worksheetIFrame.focus();
     worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
     worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
   } else {
+    removeFocussedClassFromAllTabs();
     standardWorksheetButton.focus();
+  }
+}
+
+function setTabToFocussedAndSelected(tabName: string) {
+  // Remove selected and focussed from other three tabs
+  const allTabElements = document.getElementsByClassName("tab-element");
+  for (const e of allTabElements) {
+    e.classList.remove("selected");
+    e.classList.remove("focussed");
+  }
+  // Add selected and focussed to the specified tab
+  const newTabElements = document.getElementsByClassName(tabName);
+  for (const e of newTabElements) {
+    e.classList.add("selected");
+    e.classList.add("focussed");
+  }
+}
+
+function removeFocussedClassFromAllTabs() {
+  const allTabElements = document.getElementsByClassName("tab-element");
+  for (const e of allTabElements) {
+    e.classList.remove("focussed");
   }
 }
 
@@ -2029,6 +2036,7 @@ function globalHandler(kp: KeyboardEvent) {
   if (kp.ctrlKey) {
     switch (kp.key) {
       case "b":
+        removeFocussedClassFromAllTabs();
         if (isRunningState()) {
           clearDisplayButton.focus();
         } else {
@@ -2037,6 +2045,7 @@ function globalHandler(kp: KeyboardEvent) {
         kp.preventDefault();
         break;
       case "e":
+        removeFocussedClassFromAllTabs();
         codeContainer.click();
         kp.preventDefault();
         break;

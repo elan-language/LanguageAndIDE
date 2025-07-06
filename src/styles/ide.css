@@ -465,20 +465,37 @@ div.spacer{
   flex-direction: column;
   flex-grow: 1;
 }
+
+.main-tab:not(.selected) {
+  display: none;
+}
+
 #debug-tab {
   overflow-y: auto;
 }
 
-.main-tab.hide {
-  display: none;
-} 
+.tab-label {
+  background-color: var(--defaultButton); 
+}
+
+.tab-label.selected, 
+.tab-controls.selected,
+.tab-content.focussed
+{
+  background-color: var(--paleTint);
+}
+.tab-label.focussed, 
+.tab-controls.focussed,
+.tab-content.focussed
+{
+  background-color: white;
+}
 
 .tab-controls {
   margin: 0;
   display: flex;
   flex-direction: row;
   padding: 10px;
-  background-color: white;
 }
 
 .tab-controls button {
@@ -497,11 +514,7 @@ iframe#doc-iframe, iframe#worksheet-iframe {
   flex-grow: 1;
 }
 
-.elan-code:not( :focus-within),
-#display:not( :focus-within),
-#system-info:not( :focus-within),
-#doc-iframe:not( :focus-within),
-#worksheet-iframe:not( :focus-within)
+.elan-code:not( :focus-within)
 {
   opacity: 0.75;
 }
