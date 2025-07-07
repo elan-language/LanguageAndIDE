@@ -164,7 +164,6 @@ function resumeProgram() {
 
 async function runProgram() {
   try {
-    displayTabLabel.click();
     if (file.readRunStatus() === RunStatus.paused && runWorker && debugMode) {
       resumeProgram();
       return;
@@ -234,11 +233,15 @@ async function runProgram() {
 }
 
 runButton?.addEventListener("click", async () => {
+  runButton.focus();
+  showDisplayTab();
   debugMode = singleStepping = processingSingleStep = false;
   await runProgram();
 });
 
 runDebugButton?.addEventListener("click", async () => {
+  runDebugButton.focus();
+  setTimeout(showDisplayTab);
   debugMode = true;
   singleStepping = processingSingleStep = false;
   await runProgram();
@@ -1251,15 +1254,7 @@ async function updateContent(text: string, editingField: boolean) {
       return;
     }
 
-    collapseAllMenus();
-    removeFocussedClassFromAllTabs();
-    const focused = getFocused();
-    if (focused) {
-      focused.focus();
-    } else {
-      file.getFirstChild().select();
-      getFocused()?.focus();
-    }
+    showCode();
   });
 
   codeContainer.addEventListener("mousedown", (event) => {
@@ -1498,6 +1493,8 @@ async function handleKeyAndRender(e: editorEvent) {
 
   try {
     let isBeingEdited = false;
+    collapseAllMenus();
+    removeFocussedClassFromAllTabs();
     switch (e.type) {
       case "click":
         isBeingEdited = file.getFieldBeingEdited(); //peek at value as may be changed
@@ -1616,6 +1613,18 @@ function clearPaused() {
   }
 }
 
+function showCode() {
+  collapseAllMenus();
+  removeFocussedClassFromAllTabs();
+  const focused = getFocused();
+  if (focused) {
+    focused.focus();
+  } else {
+    file.getFirstChild().select();
+    getFocused()?.focus();
+  }
+}
+
 function handleRunWorkerFinished() {
   runWorker?.terminate();
   runWorker = undefined;
@@ -1624,7 +1633,7 @@ function handleRunWorkerFinished() {
   file.setRunStatus(RunStatus.default);
   clearPaused();
   updateDisplayValues();
-  codeContainer.focus();
+  showCode();
 }
 
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
