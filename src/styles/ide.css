@@ -437,16 +437,13 @@ div.spacer{
 }
 
 /* Tabs */
-#tab-buttons {
+#tab-labels {
   display: flex;
   flex-direction: row;
   justify-content: right;
 }
-#tab-buttons input[type="radio"] {
-  display: none;
-}
 
-#tab-buttons div.tab-label {
+#tab-labels div.tab-label {
   height: 22px;
   padding-left: 10px;
   padding-right: 10px;
@@ -458,9 +455,9 @@ div.spacer{
 }
 
 
-#tab-buttons div.tab-label:hover,
-#tab-buttons div.tab-label:active,
-#tab-buttons div.tab-label:focus {
+#tab-labels div.tab-label:hover,
+#tab-labels div.tab-label:active,
+#tab-labels div.tab-label:focus {
   background-color: white;
 }
 
