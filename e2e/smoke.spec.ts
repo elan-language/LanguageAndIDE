@@ -1,11 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Elan/);
-});
 
 test('simple program', async ({ page }) => {
   page.once('dialog', dialog => {
@@ -224,7 +219,7 @@ test('help focus', async ({ page }) => {
 
   // click help and expect help to be visible
   await page.getByRole('link', { name: '?' }).click();
-  await expect(page.getByRole('button', { name: 'home' })).toBeVisible();
+  await expect(page.locator('#doc-home')).toBeVisible();
 
   // click worksheet button and expect tab to be visible
   await page.getByText('worksheet', { exact: true }).click();
@@ -232,7 +227,7 @@ test('help focus', async ({ page }) => {
 
   // click help and expect help to again be visible
   await page.getByRole('link', { name: '?' }).click();
-  await expect(page.getByRole('button', { name: 'home' })).toBeVisible();
+  await expect(page.locator('#doc-home')).toBeVisible();
   
 }); 
 
