@@ -446,7 +446,7 @@ div.spacer{
   display: none;
 }
 
-#tab-buttons label {
+#tab-buttons div.tab-label {
   height: 22px;
   padding-left: 10px;
   padding-right: 10px;
@@ -458,9 +458,9 @@ div.spacer{
 }
 
 
-#tab-buttons label:hover,
-#tab-buttons label:active,
-#tab-buttons label:focus {
+#tab-buttons div.tab-label:hover,
+#tab-buttons div.tab-label:active,
+#tab-buttons div.tab-label:focus {
   background-color: white;
 }
 

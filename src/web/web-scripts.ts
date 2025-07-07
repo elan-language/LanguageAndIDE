@@ -63,12 +63,10 @@ const demoFiles = document.getElementsByClassName("demo-file");
 
 // Display
 const displayButton = document.getElementById("display-button") as HTMLButtonElement;
-const displayButtonLabel = document.getElementById("display-button-label") as HTMLLabelElement;
 const displayDiv = document.getElementById("display") as HTMLDivElement;
 
 // Debug
 const debugButton = document.getElementById("debug-button") as HTMLButtonElement;
-const debugButtonLabel = document.getElementById("debug-button-label") as HTMLLabelElement;
 const runDebugButton = document.getElementById("run-debug-button") as HTMLButtonElement;
 const pauseButton = document.getElementById("pause") as HTMLButtonElement;
 const stepButton = document.getElementById("step") as HTMLButtonElement;
@@ -76,9 +74,6 @@ const systemInfoDiv = document.getElementById("system-info") as HTMLDivElement;
 
 // Help (documentation)
 const documentationButton = document.getElementById("documentation-button") as HTMLButtonElement;
-const documentationButtonLabel = document.getElementById(
-  "documentation-button-label",
-) as HTMLLabelElement;
 const documentationHome = document.getElementById("doc-home") as HTMLButtonElement;
 const documentationBack = document.getElementById("doc-back") as HTMLButtonElement;
 const documentationForward = document.getElementById("doc-forward") as HTMLButtonElement;
@@ -86,7 +81,6 @@ const documentationIFrame = document.getElementById("doc-iframe") as HTMLIFrameE
 
 // Worksheet
 const worksheetButton = document.getElementById("worksheet-button") as HTMLButtonElement;
-const worksheetButtonLabel = document.getElementById("worksheet-button-label") as HTMLLabelElement;
 const standardWorksheetButton = document.getElementById("standard-worksheets") as HTMLButtonElement;
 const loadExternalWorksheetButton = document.getElementById("load-worksheet") as HTMLButtonElement;
 const worksheetIFrame = document.getElementById("worksheet-iframe") as HTMLIFrameElement;
@@ -451,7 +445,7 @@ function filterKeypress(button: HTMLButtonElement) {
 }
 
 documentationButton.addEventListener("click", showDocumentationTab);
-documentationButtonLabel.addEventListener("keydown", filterKeypress(documentationButton));
+documentationButton.addEventListener("keydown", filterKeypress(documentationButton));
 
 documentationHome.addEventListener("click", () => {
   window.open("documentation/Home.html", "doc-iframe")?.focus();
@@ -466,13 +460,13 @@ documentationForward.addEventListener("click", () => {
 });
 
 displayButton.addEventListener("click", showDisplayTab);
-displayButtonLabel.addEventListener("keydown", filterKeypress(displayButton));
+displayButton.addEventListener("keydown", filterKeypress(displayButton));
 
 debugButton.addEventListener("click", showDebugTab);
-debugButtonLabel.addEventListener("keydown", filterKeypress(debugButton));
+debugButton.addEventListener("keydown", filterKeypress(debugButton));
 
 worksheetButton.addEventListener("click", showWorksheetTab);
-worksheetButtonLabel.addEventListener("keydown", filterKeypress(worksheetButton));
+worksheetButton.addEventListener("keydown", filterKeypress(worksheetButton));
 
 let worksheetLoaded = false;
 
