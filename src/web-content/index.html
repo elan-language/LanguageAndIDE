@@ -89,7 +89,7 @@
                         <button id="stop" class="icon" disabled  tabindex="0"><img src="images/Stop.png"></button>
                         <img id="logo" src="images/reverse-logo.png">
                     </div>
-                    <div id="tab-buttons">
+                    <div id="tab-labels">
                         <div id="display-tab-label" class="tab-label tab-element display-tab" tabindex="-1">dis<b>p</b>lay</div>
                         <div id="debug-tab-label" class="tab-label tab-element debug-tab" tabindex="-1">debu<b>g</b></div>
                         <div id="doc-tab-label" class="tab-label tab-element documentation-tab selected"  tabindex="-1"><b>h</b>elp</div>
@@ -97,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            <div id="display-tab" class="main-tab  tab-element display-tab">
+            <div id="display-tab" class="main-tab tab-element display-tab" tabindex="-1">
                 <div class="tab-controls  tab-element display-tab">
                     <button id="clear-display" class="plain" tabindex="0">clear</button>
                 </div>
@@ -108,7 +108,7 @@
                     <div id="vector-graphics"></div>
                 </div>
             </div>
-            <div id="debug-tab" class="main-tab  tab-element debug-tab">
+            <div id="debug-tab" class="main-tab tab-element debug-tab" tabindex="-1">
                 <div class="tab-controls tab-element debug-tab">
                     <button id="run-debug-button" class="icon"  tabindex="0"><img src="images/Debug.png"></button>
                     <button id="pause" class="icon" disabled title="Pause" tabindex="0"><img src="images/Pause.png"></button>
@@ -116,7 +116,7 @@
                 </div>
                 <div id="system-info" class="tab-content tab-element debug-tab"tabindex="0"></div>
             </div>
-            <div id="documentation-tab" class="main-tab tab-element documentation-tab selected"> <!-- now 'Help` tab-->
+            <div id="documentation-tab" class="main-tab tab-element documentation-tab selected" tabindex="-1"> <!-- now 'Help` tab-->
                 <div class="tab-controls tab-element documentation-tab selected">
                     <button id="doc-home" class="icon" tabindex="0"><img src="images/Home.png"></button>
                     <button id="doc-back" class="icon" tabindex="0"><img src="images/Back.png"></button>
@@ -124,7 +124,7 @@
                 </div>
                 <iframe name="doc-iframe" id="doc-iframe" class="tab-content tab-element documentation-tab selected" src="documentation/Home.html"></iframe>
             </div>              
-            <div id="worksheet-tab" class="main-tab tab-element worksheet-tab">
+            <div id="worksheet-tab" class="main-tab tab-element worksheet-tab" tabindex="-1">
                 <div class="tab-controls tab-element worksheet-tab">
                     <div class="dropdown">
                         <button id="standard-worksheets" class="plain" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-controls="worksheet-menu">standard worksheets</button>

@@ -388,7 +388,6 @@ preferencesButton.addEventListener("click", () => {
 function showDisplayTab() {
   const tabName = "display-tab";
   setTabToFocussedAndSelected(tabName);
-  displayDiv.focus();
 }
 
 function showDebugTab() {
@@ -420,6 +419,8 @@ function showWorksheetTab() {
     worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
     worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
     worksheetIFrame.contentWindow?.addEventListener("click", () => showWorksheetTab());
+  } else {
+    standardWorksheetButton.focus();
   }
 }
 
@@ -433,9 +434,10 @@ function setTabToFocussedAndSelected(tabName: string) {
   }
   // Add selected and focussed to the specified tab
   const newTabElements = document.getElementsByClassName(tabName);
-  for (const e of newTabElements) {
+  for (const e of newTabElements as HTMLCollectionOf<HTMLElement>) {
     e.classList.add("selected");
     e.classList.add("focussed");
+    e.focus();
   }
 }
 
