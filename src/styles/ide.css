@@ -127,12 +127,6 @@ body {
 #status-values {
   margin-left: 10px;
 }
-#status-values div{
-  width: 100px;
-  color: var(--defaultText);
-}
-
-
 
 #status span {
   margin-right:10px;
@@ -142,14 +136,19 @@ body {
   background-color: var(--ideBackground);
   color: var(--reverseText);
   font-family: var(--ideTitleFont);
+  height: 20px;
+  padding-bottom: 1px;
   margin-bottom: 5px;
 }
 
 #status-values div {
+  width: 100px;
+  color: var(--defaultText);
   font-family: var(--ideTitleFont);
   text-align: center;
   background-color: var(--ideBackground);
   height: 20px;
+  padding-bottom: 1px;
   margin-bottom: 5px;
 }
 
@@ -178,6 +177,7 @@ body {
 }
 
 #display {
+  background-color: white;
   overflow: hidden;
   margin-bottom: 10px;
   aspect-ratio: 4/3;

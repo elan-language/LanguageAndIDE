@@ -254,6 +254,8 @@ stepButton?.addEventListener("click", async () => {
     const next = pendingBreakpoints[0];
     pendingBreakpoints = pendingBreakpoints.slice(1);
     await handleRunWorkerPaused(next);
+    systemInfoDiv.focus();
+    systemInfoDiv.classList.add("focussed");
     return;
   }
 
@@ -267,6 +269,8 @@ stepButton?.addEventListener("click", async () => {
 pauseButton?.addEventListener("click", () => {
   singleStepping = true;
   runWorker!.postMessage({ type: "pause" } as WebWorkerMessage);
+  systemInfoDiv.focus();
+  systemInfoDiv.classList.add("focussed");
 });
 
 stopButton?.addEventListener("click", () => {
@@ -389,6 +393,15 @@ function showDisplayTab() {
 function showDebugTab() {
   const tabName = "debug-tab";
   setTabToFocussedAndSelected(tabName);
+  systemInfoDiv.classList.remove("focussed");
+  if (!runDebugButton.disabled) {
+    runDebugButton.focus();
+  } else if (!pauseButton.disabled) {
+    pauseButton.focus();
+  } else {
+    systemInfoDiv.focus();
+    systemInfoDiv.classList.add("focussed");
+  }
 }
 
 function showDocumentationTab() {
