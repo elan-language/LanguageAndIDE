@@ -415,6 +415,7 @@ function showWorksheetTab() {
 }
 
 function setTabToFocussedAndSelected(tabName: string) {
+  collapseAllMenus();
   // Remove selected and focussed from other three tabs
   const allTabElements = document.getElementsByClassName("tab-element");
   for (const e of allTabElements) {
@@ -1207,6 +1208,7 @@ function getFocused() {
  */
 async function updateContent(text: string, editingField: boolean) {
   file.setRunStatus(RunStatus.default);
+  collapseAllMenus();
 
   codeContainer!.innerHTML = text;
 
@@ -1270,6 +1272,7 @@ async function updateContent(text: string, editingField: boolean) {
       return;
     }
 
+    collapseAllMenus();
     removeFocussedClassFromAllTabs();
     const focused = getFocused();
     if (focused) {
@@ -2096,6 +2099,16 @@ function collapseMenu(button: HTMLElement, andFocus: boolean) {
   button.setAttribute("aria-expanded", "false");
 }
 
+function collapseAllMenus() {
+  const allDropDowns = document.querySelectorAll(
+    "button[aria-haspopup='true']",
+  ) as NodeListOf<HTMLElement>;
+
+  for (const e of allDropDowns) {
+    collapseMenu(e, false);
+  }
+}
+
 function handleClickDropDownButton(event: Event) {
   removeFocussedClassFromAllTabs();
   const button = event.target as HTMLButtonElement;
@@ -2113,6 +2126,7 @@ function handleClickDropDownButton(event: Event) {
       collapseMenu(e, false);
     }
   }
+  event.stopPropagation();
 }
 
 demosButton.addEventListener("click", handleClickDropDownButton);
