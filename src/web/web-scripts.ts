@@ -90,7 +90,6 @@ const worksheetButtonLabel = document.getElementById("worksheet-button-label") a
 const standardWorksheetButton = document.getElementById("standard-worksheets") as HTMLButtonElement;
 const loadExternalWorksheetButton = document.getElementById("load-worksheet") as HTMLButtonElement;
 const worksheetIFrame = document.getElementById("worksheet-iframe") as HTMLIFrameElement;
-const worksheetsButton = document.getElementById("worksheets") as HTMLButtonElement;
 
 const inactivityTimeout = 2000;
 const stdlib = new StdLib();
@@ -2108,7 +2107,7 @@ function handleClickDropDownButton(event: Event) {
 
 demosButton.addEventListener("click", handleClickDropDownButton);
 fileButton.addEventListener("click", handleClickDropDownButton);
-worksheetsButton.addEventListener("click", handleClickDropDownButton);
+standardWorksheetButton.addEventListener("click", handleClickDropDownButton);
 
 function handleKeyDropDownButton(event: KeyboardEvent) {
   const button = event.target as HTMLButtonElement;
@@ -2124,7 +2123,7 @@ function handleKeyDropDownButton(event: KeyboardEvent) {
 
 demosButton.addEventListener("keydown", handleKeyDropDownButton);
 fileButton.addEventListener("keydown", handleKeyDropDownButton);
-worksheetsButton.addEventListener("keydown", handleKeyDropDownButton);
+standardWorksheetButton.addEventListener("keydown", handleKeyDropDownButton);
 
 function handleMenuKey(event: KeyboardEvent) {
   const menuItem = event.target as HTMLElement;
@@ -2169,4 +2168,4 @@ worksheetMenu.addEventListener("keydown", handleMenuKey);
 
 demosMenu.addEventListener("click", () => collapseMenu(demosButton, false));
 fileMenu.addEventListener("click", () => collapseMenu(fileButton, false));
-worksheetMenu.addEventListener("click", () => collapseMenu(worksheetsButton, false));
+worksheetMenu.addEventListener("click", () => collapseMenu(standardWorksheetButton, false));
