@@ -11,8 +11,8 @@
   font-style: normal;
   font-family: consolas, monospace;
   font-size: 11pt;
-  background-color: white;
 }
+
 #code-title,
 #system-info-title,
 #display-title,
@@ -170,7 +170,6 @@ body {
 
 #system-info {
   flex-grow: 1;
-  background-color: var(--panelBackground);
   white-space: pre-wrap;
   overflow-wrap:anywhere;
   padding: 5px;
@@ -179,7 +178,6 @@ body {
 }
 
 #display {
-  background-color: var(--panelBackground);
   overflow: hidden;
   margin-bottom: 10px;
   aspect-ratio: 4/3;
@@ -490,6 +488,7 @@ div.spacer{
 {
   background-color: var(--paleTint);
 }
+
 .tab-label.focussed, 
 .tab-controls.focussed,
 .tab-content.focussed

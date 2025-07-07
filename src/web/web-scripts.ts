@@ -91,6 +91,11 @@ const standardWorksheetButton = document.getElementById("standard-worksheets") a
 const loadExternalWorksheetButton = document.getElementById("load-worksheet") as HTMLButtonElement;
 const worksheetIFrame = document.getElementById("worksheet-iframe") as HTMLIFrameElement;
 
+const debugTab = document.getElementById("debug-tab");
+const displayTab = document.getElementById("display-tab");
+const documentationTab = document.getElementById("documentation-tab");
+const worksheetTab = document.getElementById("worksheet-tab");
+
 const inactivityTimeout = 2000;
 const stdlib = new StdLib();
 const system = stdlib.system;
@@ -405,9 +410,7 @@ function showWorksheetTab() {
     worksheetIFrame.focus();
     worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
     worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
-  } else {
-    removeFocussedClassFromAllTabs();
-    standardWorksheetButton.focus();
+    worksheetIFrame.contentWindow?.addEventListener("click", () => showWorksheetTab());
   }
 }
 
@@ -429,6 +432,10 @@ function setTabToFocussedAndSelected(tabName: string) {
 function removeFocussedClassFromAllTabs() {
   const allTabElements = document.getElementsByClassName("tab-element");
   for (const e of allTabElements) {
+    e.classList.remove("focussed");
+  }
+  const allTabContent = document.getElementsByClassName("tab-content");
+  for (const e of allTabContent) {
     e.classList.remove("focussed");
   }
 }
@@ -471,12 +478,14 @@ let worksheetLoaded = false;
 worksheetIFrame.addEventListener("load", () => {
   worksheetLoaded = true;
   worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
+  worksheetIFrame.contentWindow?.addEventListener("click", () => showWorksheetTab());
   worksheetButton.click();
 });
 
-documentationIFrame.addEventListener("load", () =>
-  documentationIFrame.contentWindow?.addEventListener("keydown", globalHandler),
-);
+documentationIFrame.addEventListener("load", () => {
+  documentationIFrame.contentWindow?.addEventListener("keydown", globalHandler);
+  documentationIFrame.contentWindow?.addEventListener("click", () => showDocumentationTab());
+});
 
 function warningOrError(tgt: HTMLDivElement): [boolean, string] {
   if (tgt.classList.contains("warning")) {
@@ -1261,6 +1270,7 @@ async function updateContent(text: string, editingField: boolean) {
       return;
     }
 
+    removeFocussedClassFromAllTabs();
     const focused = getFocused();
     if (focused) {
       focused.focus();
@@ -2044,7 +2054,6 @@ function globalHandler(kp: KeyboardEvent) {
         kp.preventDefault();
         break;
       case "e":
-        removeFocussedClassFromAllTabs();
         codeContainer.click();
         kp.preventDefault();
         break;
@@ -2088,6 +2097,7 @@ function collapseMenu(button: HTMLElement, andFocus: boolean) {
 }
 
 function handleClickDropDownButton(event: Event) {
+  removeFocussedClassFromAllTabs();
   const button = event.target as HTMLButtonElement;
   const isExpanded = button.getAttribute("aria-expanded") === "true";
   const menuId = button.getAttribute("aria-controls")!;
@@ -2110,6 +2120,7 @@ fileButton.addEventListener("click", handleClickDropDownButton);
 standardWorksheetButton.addEventListener("click", handleClickDropDownButton);
 
 function handleKeyDropDownButton(event: KeyboardEvent) {
+  removeFocussedClassFromAllTabs();
   const button = event.target as HTMLButtonElement;
   const menuId = button.getAttribute("aria-controls")!;
   const menu = document.getElementById(menuId)!;
@@ -2126,6 +2137,7 @@ fileButton.addEventListener("keydown", handleKeyDropDownButton);
 standardWorksheetButton.addEventListener("keydown", handleKeyDropDownButton);
 
 function handleMenuKey(event: KeyboardEvent) {
+  removeFocussedClassFromAllTabs();
   const menuItem = event.target as HTMLElement;
   const menu = menuItem.parentElement as HTMLDivElement;
   const button = menu.previousElementSibling as HTMLButtonElement;
@@ -2169,3 +2181,10 @@ worksheetMenu.addEventListener("keydown", handleMenuKey);
 demosMenu.addEventListener("click", () => collapseMenu(demosButton, false));
 fileMenu.addEventListener("click", () => collapseMenu(fileButton, false));
 worksheetMenu.addEventListener("click", () => collapseMenu(standardWorksheetButton, false));
+
+displayTab?.addEventListener("click", () => showDisplayTab());
+debugTab?.addEventListener("click", () => showDebugTab());
+documentationTab?.addEventListener("click", () => showDocumentationTab());
+worksheetTab?.addEventListener("click", () => showWorksheetTab());
+worksheetIFrame?.contentWindow?.addEventListener("click", () => showWorksheetTab());
+documentationIFrame?.contentWindow?.addEventListener("click", () => showDocumentationTab());
