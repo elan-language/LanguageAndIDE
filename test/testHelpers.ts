@@ -8,6 +8,9 @@ import { CodeSourceFromString } from "../src/frames/code-source-from-string";
 import { DefaultProfile } from "../src/frames/default-profile";
 import { AbstractField } from "../src/frames/fields/abstract-field";
 import { FileImpl } from "../src/frames/file-impl";
+import { editorEvent } from "../src/frames/frame-interfaces/editor-event";
+import { File } from "../src/frames/frame-interfaces/file";
+import { ParseNode } from "../src/frames/frame-interfaces/parse-node";
 import { MainFrame } from "../src/frames/globals/main-frame";
 import { VariableStatement } from "../src/frames/statements/variable-statement";
 import { BreakpointStatus, CompileStatus, ParseStatus, TestStatus } from "../src/frames/status-enums";
@@ -24,9 +27,6 @@ import { WebWorkerMessage } from "../src/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
-import { editorEvent } from "../src/frames/frame-interfaces/editor-event";
-import { ParseNode } from "../src/frames/frame-interfaces/parse-node";
-import { File } from "../src/frames/frame-interfaces/file";
 
 
 // flag to update test file
