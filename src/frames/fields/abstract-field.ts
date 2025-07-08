@@ -45,6 +45,7 @@ export abstract class AbstractField implements Selectable, Field {
   protected symbolToMatch: string = "";
   protected selectedSymbolCompletion?: SymbolWrapper;
   protected showingSymbolCompletion: boolean = false;
+  helpActive: boolean = false;
 
   constructor(holder: Frame) {
     this.holder = holder;
@@ -70,6 +71,10 @@ export abstract class AbstractField implements Selectable, Field {
   }
   abstract initialiseRoot(): ParseNode;
   abstract readToDelimiter: (source: CodeSource) => string;
+
+  showHelp() {
+    this.helpActive = true;
+  }
 
   alertHolderToUpdate(): void {
     this.getHolder().fieldUpdated(this);
@@ -171,7 +176,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  private controlKeys = ["o", "O", "ArrowLeft", "ArrowRight", "a"];
+  private controlKeys = ["o", "O", "ArrowLeft", "ArrowRight", "a", "?"];
 
   processKey(e: editorEvent): boolean {
     this.codeHasChanged = false;
@@ -269,6 +274,12 @@ export abstract class AbstractField implements Selectable, Field {
       case "a": {
         if (e.modKey.control) {
           this.setSelection(0, this.text.length);
+          break;
+        }
+      }
+      case "?": {
+        if (e.modKey.control) {
+          this.showHelp();
           break;
         }
       }
@@ -672,7 +683,10 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   helpAsHtml(): string {
-    return `<el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe" tabindex="-1">?</a></el-help>`;
+    const active = this.helpActive ? ` class="active"` : "";
+    this.helpActive = false;
+
+    return `<el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe" tabindex="-1"${active}>?</a></el-help>`;
   }
 
   renderAsHtml(): string {

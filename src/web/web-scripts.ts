@@ -1378,6 +1378,12 @@ async function updateContent(text: string, editingField: boolean) {
     }
   }
 
+  const activeHelp = document.querySelector("a.active") as HTMLLinkElement | undefined;
+
+  if (activeHelp) {
+    activeHelp.click();
+  }
+
   await localAndAutoSave(focused, editingField);
   updateDisplayValues();
 

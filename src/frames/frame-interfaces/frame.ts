@@ -52,4 +52,6 @@ export interface Frame extends Selectable {
   updateBreakpoints(event: BreakpointEvent): void;
 
   pasteError: string;
+
+  helpActive: boolean;
 }

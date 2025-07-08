@@ -14,4 +14,5 @@ export interface Field extends Selectable {
   overtyper: Overtyper;
   updateCompileStatus(): void;
   allPossibleSymbolCompletions: SymbolWrapper[];
+  helpActive: boolean;
 }

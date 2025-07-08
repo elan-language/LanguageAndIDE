@@ -118,6 +118,7 @@ export function helper_compileMsgAsHtmlNew(file: File, loc: Frame | Field): stri
   let msg = "";
   let link = "";
   let help = "";
+
   const compileErrors = file.getAst(false)?.getCompileErrorsFor(loc.getHtmlId()) ?? [];
   const n = compileErrors.length;
   if (n > 0) {
@@ -135,12 +136,15 @@ export function helper_compileMsgAsHtmlNew(file: File, loc: Frame | Field): stri
     cls = DisplayColour[compile];
   }
   if (link) {
-    help = `<el-help title="Click to open Help for this error"><a href="documentation/${link}" target ="doc-iframe">?</a></el-help>`;
+    const active = loc.helpActive ? ` class="active"` : "";
+    loc.helpActive = false;
+    help = `<el-help title="Click to open Help for this error"><a href="documentation/${link}" target ="doc-iframe"${active}>?</a></el-help>`;
   }
 
   const popUp = helper_pastePopUp(loc);
 
   const toDisplay = escapeHtmlChars(msg);
+
   return cls === ""
     ? `<el-msg></el-msg>${popUp}`
     : ` <el-msg class="${cls}">${toDisplay}${help}</el-msg>${popUp}`;
