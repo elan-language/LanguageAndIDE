@@ -101,7 +101,7 @@ test('demos', async ({ page }) => {
 
   await expect(page.getByText('Life')).not.toBeVisible();
 
-   await expect(page.getByText('create 20 small bubbles')).toBeVisible();
+  await expect(page.getByText('create 20 small bubbles')).toBeVisible();
 });
 
 test('files', async ({ page }) => {
@@ -115,7 +115,7 @@ test('files', async ({ page }) => {
 
   await page.keyboard.press('Control+b');
 
-   await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
 
   await expect(page.getByRole('button', {name : 'file'})).toBeFocused();
   await page.keyboard.press('Enter');
@@ -130,7 +130,7 @@ test('files', async ({ page }) => {
 
   await expect(page.getByTitle('Clear the current code')).not.toBeVisible();
 
-   await expect(page.getByText('main procedure')).toBeVisible();
+  await expect(page.getByText('main procedure')).toBeVisible();
 });
 
 test('worksheets', async ({ page }) => {
@@ -155,5 +155,253 @@ test('worksheets', async ({ page }) => {
 
   await page.keyboard.press('Enter');
 
-   await expect(page.frameLocator('#worksheet-iframe').getByText(/The standard worksheets listed below/)).toBeVisible();
+  await expect(page.frameLocator('#worksheet-iframe').getByText(/The standard worksheets listed below/)).toBeVisible();
+
+  await expect(page.getByText('Guide to the worksheets')).not.toBeVisible();
+});
+
+test('close menus by open menus', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.press('Control+k');
+
+  await page.keyboard.press('Control+b');
+
+  await expect(page.getByRole('button', {name : 'demo'})).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('Life')).toBeVisible();
+
+  await page.keyboard.press('Tab');
+
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('preferences')).toBeVisible();
+
+  await expect(page.getByText('Life')).not.toBeVisible();
+
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
+
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('Guide to the worksheets')).toBeVisible();
+
+  await expect(page.getByText('preferences')).not.toBeVisible();
+ 
+});
+
+test('close demo menu by other button', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.press('Control+b');
+
+  await expect(page.getByRole('button', {name : 'demo'})).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('Life')).toBeVisible();
+
+  await page.keyboard.press('Tab');
+
+  await page.keyboard.press('Tab');
+
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('Life')).not.toBeVisible();
+ 
+});
+
+test('close demo menu by keyboard', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.press('Control+b');
+
+  await expect(page.getByRole('button', {name : 'demo'})).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('Life')).toBeVisible();
+
+  await page.keyboard.press('Control+k');
+
+  await expect(page.getByText('Life')).not.toBeVisible();
+});
+
+test('close demo menu by click', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.press('Control+b');
+
+  await expect(page.getByRole('button', {name : 'demo'})).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('Life')).toBeVisible();
+
+  await page.getByText("main procedure function").click();
+
+  await expect(page.getByText('Life')).not.toBeVisible();
+});
+
+test('close file menu by other button', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.press('Control+b');
+
+  await page.keyboard.press('Tab');
+
+  await expect(page.getByRole('button', {name : 'file'})).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('preferences')).toBeVisible();
+
+  await page.keyboard.press('Tab');
+
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('preferences')).not.toBeVisible();
+ 
+});
+
+test('close file menu by keyboard', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.press('Control+b');
+
+  await page.keyboard.press('Tab');
+
+  await expect(page.getByRole('button', {name : 'file'})).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('preferences')).toBeVisible();
+
+  await page.keyboard.press('Control+k');
+
+  await expect(page.getByText('preferences')).not.toBeVisible();
+});
+
+test('close file menu by click', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.press('Control+b');
+
+  await page.keyboard.press('Tab');
+
+  await expect(page.getByRole('button', {name : 'file'})).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('preferences')).toBeVisible();
+
+  await page.getByText("display").click();
+
+  await expect(page.getByText('preferences')).not.toBeVisible();
+});
+
+test('close worksheet menu by other button', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.press('Control+k');
+
+  await expect(page.getByRole('button', {name : 'standard worksheets'})).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('Guide to the worksheets')).toBeVisible();
+
+  await page.keyboard.press('Shift+Tab');
+  await page.keyboard.press('Shift+Tab');
+  await page.keyboard.press('Shift+Tab');
+
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('Guide to the worksheets')).not.toBeVisible();
+ 
+});
+
+test('close worksheet menu by keyboard', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.press('Control+k');
+
+  await expect(page.getByRole('button', {name : 'standard worksheets'})).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('Guide to the worksheets')).toBeVisible();
+
+  await page.keyboard.press('Control+p');
+
+  await expect(page.getByText('Guide to the worksheets')).not.toBeVisible();
+});
+
+test('close worksheet menu by click', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.press('Control+k');
+
+  await expect(page.getByRole('button', {name : 'standard worksheets'})).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('Guide to the worksheets')).toBeVisible();
+
+  await page.getByText("display").click();
+
+  await expect(page.getByText('Guide to the worksheets')).not.toBeVisible();
 });
