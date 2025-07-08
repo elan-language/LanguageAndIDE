@@ -2046,7 +2046,27 @@ if (!isElanProduction) {
   document.querySelector("#worksheet-tab .dropdown-content")?.append(testLink);
 }
 
-const globalKeys = ["b", "e", "g", "h", "k", "p", "r", "s", "+", "-", "="];
+const globalKeys = [
+  "b",
+  "B",
+  "e",
+  "E",
+  "g",
+  "G",
+  "h",
+  "H",
+  "k",
+  "K",
+  "p",
+  "P",
+  "r",
+  "R",
+  "s",
+  "S",
+  "+",
+  "-",
+  "=",
+];
 
 function isGlobalKeyboardEvent(kp: Event) {
   return kp instanceof KeyboardEvent && kp.ctrlKey && globalKeys.includes(kp.key);
@@ -2056,6 +2076,7 @@ function globalHandler(kp: KeyboardEvent) {
   if (kp.ctrlKey) {
     switch (kp.key) {
       case "b":
+      case "B":
         removeFocussedClassFromAllTabs();
         if (isRunningState()) {
           clearDisplayButton.focus();
@@ -2065,30 +2086,37 @@ function globalHandler(kp: KeyboardEvent) {
         kp.preventDefault();
         break;
       case "e":
+      case "E":
         codeContainer.click();
         kp.preventDefault();
         break;
       case "g":
+      case "G":
         debugTabLabel.click();
         kp.preventDefault();
         break;
       case "h":
+      case "H":
         docTabLabel.click();
         kp.preventDefault();
         break;
       case "k":
+      case "K":
         worksheetTabLabel.click();
         kp.preventDefault();
         break;
       case "p":
+      case "P":
         displayTabLabel.click();
         kp.preventDefault();
         break;
       case "r":
+      case "R":
         runButton.click();
         kp.preventDefault();
         break;
       case "s":
+      case "S":
         stopButton.click();
         kp.preventDefault();
         break;
