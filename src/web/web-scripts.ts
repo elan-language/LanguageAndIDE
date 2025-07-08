@@ -2238,3 +2238,5 @@ documentationTab?.addEventListener("click", () => showDocumentationTab());
 worksheetTab?.addEventListener("click", () => showWorksheetTab());
 worksheetIFrame?.contentWindow?.addEventListener("click", () => showWorksheetTab());
 documentationIFrame?.contentWindow?.addEventListener("click", () => showDocumentationTab());
+
+window.addEventListener("click", () => collapseAllMenus());
