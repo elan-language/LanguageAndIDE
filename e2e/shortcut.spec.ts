@@ -622,3 +622,67 @@ test('shortcut help', async ({ page }) => {
 
   await expect(page.frameLocator('#doc-iframe').getByText("This field expects an expression.")).toBeVisible();
 });
+
+test('tabs parse', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.type("m");
+
+  await page.keyboard.type("l");
+
+  await expect(page.getByText("incomplete")).toBeVisible();
+
+  await page.keyboard.press('Control+b');
+
+  await page.keyboard.press('Tab');  
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
+
+ await expect(page.getByText("incomplete")).toBeFocused();
+ await page.keyboard.press('Enter');
+
+ await expect(page.locator("el-txt input")).toBeFocused();
+});
+
+test('tabs compile', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.type("m");
+
+  await page.keyboard.type("l");
+
+  await page.keyboard.type("a");
+
+  await page.keyboard.press("Tab");
+
+  await page.keyboard.type("a");
+
+  await expect(page.getByText("unknown")).toBeVisible();
+
+  await page.keyboard.press('Control+b');
+
+  await page.keyboard.press('Tab');  
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
+
+ await expect(page.getByText("unknown")).toBeFocused();
+ await page.keyboard.press('Enter');
+
+ await expect(page.locator("el-txt input")).toBeFocused();
+});
