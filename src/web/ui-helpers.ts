@@ -23,18 +23,19 @@ export function checkIsChrome() {
       ? (winNav as any).userAgentData.brands.some((b: any) => b.brand === "Google Chrome")
       : vendorName === "Google Inc.";
 
-  if (isIOSChrome) {
-    // is Google Chrome on IOS
-    return true;
-  } else if (
+  const isChrome =
     isChromium !== null &&
     typeof isChromium !== "undefined" &&
     vendorName === "Google Inc." &&
     isOpera === false &&
     isIEedge === false &&
-    isGoogleChrome
-  ) {
-    // is Google Chrome
+    isGoogleChrome;
+
+  if (isIOSChrome) {
+    // is Google Chrome on IOS
+    return true;
+  } else if (isChrome || isIEedge) {
+    // is Google Chrome or edge
     return true;
   } else {
     // not Google Chrome
@@ -43,10 +44,9 @@ export function checkIsChrome() {
 }
 
 export function confirmContinueOnNonChromeBrowser() {
-  return confirm(`We recommend that you access Elan via Chrome,
-which runs on all platforms.
-If you click OK you may continue to use Elan but, currently,
-it is not guaranteed to run correctly on this browser.`);
+  return confirm(
+    `Elan is compatible with the Chrome or Edge browser. It does not work correctly in Firefox or Safari.`,
+  );
 }
 
 export function readMsg(value: string | [string, string]) {
