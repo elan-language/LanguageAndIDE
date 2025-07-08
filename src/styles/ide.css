@@ -11,8 +11,8 @@
   font-style: normal;
   font-family: consolas, monospace;
   font-size: 11pt;
-  background-color: white;
 }
+
 #code-title,
 #system-info-title,
 #display-title,
@@ -37,6 +37,7 @@ body {
 #lhs {
   width: 55%;
   flex-grow: 0;
+  margin-top: 10px;
   margin-left: 10px;
   margin-right: 5px;
 }
@@ -52,7 +53,6 @@ body {
 #rhs {
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
   margin-bottom: 10px;
 }
 
@@ -80,18 +80,27 @@ body {
   justify-content: space-between;
 }
 
-#rh-header-l {
+#rh-header-r {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex-grow: 1;
 }
-
 
 #run-controls, #code-controls {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   background-color: var(--ideBackground);
+}
+
+#run-controls {
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+#run-controls button img {
+  height: 55px;
 }
 
 #display-title, #system-info-title {
@@ -105,6 +114,7 @@ body {
 }
 
 #status {
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
 }
@@ -117,12 +127,6 @@ body {
 #status-values {
   margin-left: 10px;
 }
-#status-values div{
-  width: 100px;
-  color: var(--defaultText);
-}
-
-
 
 #status span {
   margin-right:10px;
@@ -132,14 +136,19 @@ body {
   background-color: var(--ideBackground);
   color: var(--reverseText);
   font-family: var(--ideTitleFont);
+  height: 20px;
+  padding-bottom: 1px;
   margin-bottom: 5px;
 }
 
 #status-values div {
+  width: 100px;
+  color: var(--defaultText);
   font-family: var(--ideTitleFont);
   text-align: center;
   background-color: var(--ideBackground);
   height: 20px;
+  padding-bottom: 1px;
   margin-bottom: 5px;
 }
 
@@ -160,7 +169,6 @@ body {
 
 #system-info {
   flex-grow: 1;
-  background-color: var(--panelBackground);
   white-space: pre-wrap;
   overflow-wrap:anywhere;
   padding: 5px;
@@ -169,7 +177,7 @@ body {
 }
 
 #display {
-  background-color: var(--panelBackground);
+  background-color: white;
   overflow: hidden;
   margin-bottom: 10px;
   aspect-ratio: 4/3;
@@ -217,17 +225,58 @@ button {
   font-family: var(--ideTitleFont);
   border: none;
 }
+
+/* Plain buttons */
+button.plain {
+  background-color: var(--defaultButton);
+  border: none;
+  outline: none;
+  height: 22px;
+  font-family: var(--ideTitleFont);
+  font-size: var(--ideTitleSize);
+  padding-top: 0px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  text-decoration: none;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: black;
+  border: 1px solid var(--defaultButton);
+}
+
+button.plain:hover:enabled,
+button.plain:active,
+button.plain:focus {
+  background-color: white;
+}
+
+button.plain:disabled, menu-item.button.plain:disabled {
+  color: var(--defaultButton);
+  background-color: var(--disabledButton);
+  border-color: var(--disabledButton);
+}
+
+/* Icon buttons */
+button.icon img {
+  height: 40px;
+  opacity: 55%;
+}
+
 button.icon,
 button.icon img {
   padding: 0px;
-  border: 2px;
-  border-style: solid;
-  border-color: var(--ideBackground);
   background-color: var(--ideBackground);
 }
 
-button.icon img {
-  height: 40px;
+button.icon:disabled {
+  opacity: 20%;
+}
+
+button.icon:enabled img:hover,
+button.icon:enabled:focus img,
+button.icon:active img
+{
+  opacity: 100%;
 }
 
 #preferences-dialog button {
@@ -244,48 +293,8 @@ button.icon img {
   margin-top: 5px;
 }
 
-button.icon:enabled img:hover,
-button.icon:enabled:focus img,
-button.icon:active img
-{
-  border-color: white;
-  opacity: 100%;
-}
 
-button.icon:disabled img {
-  opacity: 50%;
-}
 
-button.plain,
-button.plain:hover,
-button.plain:active,
-button.plain:focus
-{
-  background-color: var(--panelBackground);
-  border: none;
-  outline: none;
-  height: 22px;
-  font-family: var(--ideTitleFont);
-  font-size: var(--ideTitleSize);
-  padding-top: 0px;
-  margin-top: 0px;
-  margin-bottom: 5px;
-  text-decoration: none;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: black;
-  /* To prevent the help a-link being coloured mauve when visited*/
-}
-
-button.plain:hover:enabled,
-button.plain:active,
-button.plain:focus {
-  text-decoration: underline;
-}
-
-button.plain:disabled, menu-item.button.plain:disabled {
-  color: grey;
-}
 
 .dropdown-content button.plain,
 .dropdown-content button.plain:hover,
@@ -310,7 +319,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
 .dropdown-content button.plain:disabled:focus
  {
   background-color: white;
-  color: grey;
+  color: var(--defaultButton);
   text-decoration: none;
 }
 
@@ -371,7 +380,6 @@ button.plain:disabled, menu-item.button.plain:disabled {
   padding-right: 5px;
 }
 
-
 .menu-item:focus,
 .menu-item:hover, button.menu-item:hover
 .menu-item:active, button.menu-item:active
@@ -383,7 +391,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
   text-decoration: none;
 }
 
-.menu-item, #help{
+.menu-item{
   font-family: var(--ideTitleFont);
   list-style-type: none;
 }
@@ -391,13 +399,6 @@ button.plain:disabled, menu-item.button.plain:disabled {
 #preferences-dialog {
   font-family: var(--ideTitleFont);
   border: none;
-}
-
-
-.elan-code:not( :focus-within),
-#display:not( :focus-within),
-#system-info:not( :focus-within) {
-  opacity: 0.75;
 }
 
 #print {
@@ -436,47 +437,75 @@ div.spacer{
 }
 
 /* Tabs */
-#tab-buttons {
+#tab-labels {
   display: flex;
   flex-direction: row;
-}
-#tab-buttons input[type="radio"] {
-  display: none;
+  justify-content: right;
 }
 
-#tab-buttons label {
+#tab-labels div.tab-label {
   height: 22px;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
   font-family: var(--ideTitleFont);
   color: var(--defaultText);
+  margin: 0;
+  border-left: 5px solid;
+  border-color: var(--ideBackground);
+}
+
+
+#tab-labels div.tab-label:hover,
+#tab-labels div.tab-label:active,
+#tab-labels div.tab-label:focus {
   background-color: white;
-  opacity: 50%;
-  margin: 20px 10px 10px 0;
 }
 
-#tab-buttons label:hover,
-#tab-buttons label:active,
-#tab-buttons label:focus {
-  text-decoration: underline;
-}
-
-#tab-buttons input[type="radio"]:checked + label {
-  opacity: 100%;
-}
-
-#display-tab {
-  display: block;
-}
-
-#documentation-tab, #worksheet-tab {
+.main-tab {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
+.main-tab:not(.selected) {
+  display: none;
+}
+
+#debug-tab {
+  overflow-y: auto;
+}
+
+.tab-label {
+  background-color: var(--defaultButton); 
+}
+
+.tab-label.selected, 
+.tab-controls.selected,
+.tab-content.selected
+{
+  background-color: var(--paleTint);
+}
+
+.tab-label.focussed, 
+.tab-controls.focussed,
+.tab-content.focussed
+{
+  background-color: white;
+}
+
+.tab-controls {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.tab-controls button {
+  margin-bottom: 0px;
+  margin-right: 10px;
+}
+
 iframe#doc-iframe, iframe#worksheet-iframe {
-  background-color: var(--panelBackground);
   border-image: none;
   border-color: initial;
   border-style: hidden;
@@ -486,39 +515,45 @@ iframe#doc-iframe, iframe#worksheet-iframe {
   flex-grow: 1;
 }
 
-#doc-buttons, #worksheet-buttons {
-  margin-top: 5px;
-  margin-bottom: 0;
+iframe a:focus {
+  text-decoration: underline;
 }
 
-#debug-tab {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  overflow-y: auto;
-}
-
-#display-tab.hide, #documentation-tab.hide, #worksheet-tab.hide, #debug-tab.hide {
-  display: none;
-} 
-
-#debug-controls {
-  display: flex;
-  flex-direction: row;
+.elan-code:not( :focus-within)
+{
+  opacity: 0.75;
 }
 
 button[aria-expanded="true"]::after {
   content: "▲"; /* Arrow up to indicate expanded */
+  font-size: 9pt;
+  padding-left: 2px;
 }
 
 button[aria-expanded="false"]::after {
   content: "▼"; /* Arrow down to indicate collapsed */
+  font-size: 9pt;
+  padding-left: 2px;
 }
 
 .dropdown-content[hidden] {
   display: none;
 }
 
-.dropdown-content a {
+a.menu-item {
   display: block;
+  text-decoration: none;
+  color: var(--defaultText);
+}
+
+a.menu-item:hover,
+a.menu-item:hover:visited
+{
+  color: var(--reverseText); 
+}
+
+#logo {
+  margin-top: 5px;
+  margin-left: auto;
+  height: 50px;
 }

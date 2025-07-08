@@ -100,10 +100,8 @@ el-code-block img {
 }
 
 /* Links in index */
-a:link {text-decoration: none}
-a:visited {text-decoration: none}
-a:hover {text-decoration: underline}
-a:active {text-decoration: none}
+a:visited, a:link, a:active {text-decoration: none}
+a:hover, a:focus {text-decoration: underline}
 
 /* This avoids the need to have <el-code> around small snippets*/
  el-kw, el-type, el-id, el-method, el-lit {
@@ -113,7 +111,7 @@ a:active {text-decoration: none}
 /* Animated accordion and panel  */
 .accordion {
   text-align: left;
-  padding: 0px 0px; 0px; 0px;
+  padding: 0px 0px 0px 0px;
   width: 100%;
 }
 

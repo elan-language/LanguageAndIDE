@@ -22,6 +22,7 @@ import {
   FunctionOptions,
   ProcedureOptions,
 } from "../elan-type-annotations";
+import { Deprecation } from "../elan-type-interfaces";
 import { Regexes } from "../frames/fields/regexes";
 import { StubInputOutput } from "../stub-input-output";
 import { System } from "../system";
@@ -43,7 +44,6 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphic } from "./vector-graphic";
-import { Deprecation } from "../elan-type-interfaces";
 
 export class StdLib {
   constructor() {
@@ -211,8 +211,40 @@ export class StdLib {
   @elanFunction(["start", "end"], FunctionOptions.pure, ElanClass(List, [ElanInt]))
   sequence(@elanIntType() start: number, @elanIntType() end: number): List<number> {
     const seq = [];
+    if (end < start) {
+      throw new ElanRuntimeError("Loop will not terminate when end < start");
+    }
     for (let i = start; i <= end; i++) {
       seq.push(i);
+    }
+    return this.system.initialise(new List(seq));
+  }
+
+  @elanFunction(["start", "end", "step"], FunctionOptions.pure, ElanClass(List, [ElanInt]))
+  sequenceWithStep(
+    @elanIntType() start: number,
+    @elanIntType() end: number,
+    @elanIntType() step: number,
+  ): List<number> {
+    const seq = [];
+    if (step === 0) {
+      throw new ElanRuntimeError("value for step cannot be zero");
+    } else if (step > 0) {
+      if (end < start) {
+        throw new ElanRuntimeError("Loop will not terminate when end < start with positive step");
+      }
+      for (let i = start; i <= end; i = i + step) {
+        seq.push(i);
+      }
+    } else if (step < 0) {
+      if (start < end) {
+        throw new ElanRuntimeError(
+          "Loop will not terminate when start < end start with negative step",
+        );
+      }
+      for (let i = start; i >= end; i = i + step) {
+        seq.push(i);
+      }
     }
     return this.system.initialise(new List(seq));
   }

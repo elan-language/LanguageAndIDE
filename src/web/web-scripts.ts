@@ -32,12 +32,8 @@ import {
 // static html elements
 const codeContainer = document.querySelector(".elan-code") as HTMLDivElement;
 const runButton = document.getElementById("run-button") as HTMLButtonElement;
-const runDebugButton = document.getElementById("run-debug-button") as HTMLButtonElement;
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
-const pauseButton = document.getElementById("pause") as HTMLButtonElement;
-const stepButton = document.getElementById("step") as HTMLButtonElement;
 const clearDisplayButton = document.getElementById("clear-display") as HTMLButtonElement;
-const loadExternalWorksheetButton = document.getElementById("load-worksheet") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
 const newButton = document.getElementById("new") as HTMLButtonElement;
 const demosButton = document.getElementById("demos") as HTMLButtonElement;
@@ -46,8 +42,6 @@ const fileMenu = document.getElementById("file-menu") as HTMLDivElement;
 const worksheetMenu = document.getElementById("worksheet-menu") as HTMLDivElement;
 
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
-const systemInfoDiv = document.getElementById("system-info") as HTMLDivElement;
-const displayDiv = document.getElementById("display") as HTMLDivElement;
 const loadButton = document.getElementById("load") as HTMLButtonElement;
 const appendButton = document.getElementById("append") as HTMLButtonElement;
 const saveButton = document.getElementById("save") as HTMLButtonElement;
@@ -59,18 +53,6 @@ const logoutButton = document.getElementById("logout") as HTMLButtonElement;
 const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLButtonElement;
 const preferencesButton = document.getElementById("preferences") as HTMLButtonElement;
 
-const displayButton = document.getElementById("display-button") as HTMLButtonElement;
-const documentationButton = document.getElementById("documentation-button") as HTMLButtonElement;
-const worksheetButton = document.getElementById("worksheet-button") as HTMLButtonElement;
-const debugButton = document.getElementById("debug-button") as HTMLButtonElement;
-
-const documentationButtonLabel = document.getElementById(
-  "documentation-button-label",
-) as HTMLLabelElement;
-const displayButtonLabel = document.getElementById("display-button-label") as HTMLLabelElement;
-const debugButtonLabel = document.getElementById("debug-button-label") as HTMLLabelElement;
-const worksheetButtonLabel = document.getElementById("worksheet-button-label") as HTMLLabelElement;
-
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
 const compileStatus = document.getElementById("compile") as HTMLDivElement;
@@ -79,18 +61,34 @@ const runStatus = document.getElementById("run-status") as HTMLDivElement;
 const codeControls = document.getElementById("code-controls") as HTMLDivElement;
 const demoFiles = document.getElementsByClassName("demo-file");
 
-const displayTab = document.getElementById("display-tab") as HTMLDivElement;
-const documentationTab = document.getElementById("documentation-tab") as HTMLDivElement;
-const worksheetTab = document.getElementById("worksheet-tab") as HTMLDivElement;
-const debugTab = document.getElementById("debug-tab") as HTMLDivElement;
+// Display
+const displayTabLabel = document.getElementById("display-tab-label") as HTMLDivElement;
+const displayDiv = document.getElementById("display") as HTMLDivElement;
 
+// Debug
+const debugTabLabel = document.getElementById("debug-tab-label") as HTMLDivElement;
+const runDebugButton = document.getElementById("run-debug-button") as HTMLButtonElement;
+const pauseButton = document.getElementById("pause") as HTMLButtonElement;
+const stepButton = document.getElementById("step") as HTMLButtonElement;
+const systemInfoDiv = document.getElementById("system-info") as HTMLDivElement;
+
+// Help (documentation)
+const docTabLabel = document.getElementById("doc-tab-label") as HTMLDivElement;
 const documentationHome = document.getElementById("doc-home") as HTMLButtonElement;
 const documentationBack = document.getElementById("doc-back") as HTMLButtonElement;
 const documentationForward = document.getElementById("doc-forward") as HTMLButtonElement;
-
 const documentationIFrame = document.getElementById("doc-iframe") as HTMLIFrameElement;
+
+// Worksheet
+const worksheetTabLabel = document.getElementById("worksheet-tab-label") as HTMLDivElement;
+const standardWorksheetButton = document.getElementById("standard-worksheets") as HTMLButtonElement;
+const loadExternalWorksheetButton = document.getElementById("load-worksheet") as HTMLButtonElement;
 const worksheetIFrame = document.getElementById("worksheet-iframe") as HTMLIFrameElement;
-const worksheetsButton = document.getElementById("worksheets") as HTMLButtonElement;
+
+const debugTab = document.getElementById("debug-tab");
+const displayTab = document.getElementById("display-tab");
+const documentationTab = document.getElementById("documentation-tab");
+const worksheetTab = document.getElementById("worksheet-tab");
 
 const inactivityTimeout = 2000;
 const stdlib = new StdLib();
@@ -166,7 +164,6 @@ function resumeProgram() {
 
 async function runProgram() {
   try {
-    displayButton.click();
     if (file.readRunStatus() === RunStatus.paused && runWorker && debugMode) {
       resumeProgram();
       return;
@@ -236,11 +233,15 @@ async function runProgram() {
 }
 
 runButton?.addEventListener("click", async () => {
+  runButton.focus();
+  showDisplayTab();
   debugMode = singleStepping = processingSingleStep = false;
   await runProgram();
 });
 
 runDebugButton?.addEventListener("click", async () => {
+  runDebugButton.focus();
+  setTimeout(showDisplayTab);
   debugMode = true;
   singleStepping = processingSingleStep = false;
   await runProgram();
@@ -253,6 +254,8 @@ stepButton?.addEventListener("click", async () => {
     const next = pendingBreakpoints[0];
     pendingBreakpoints = pendingBreakpoints.slice(1);
     await handleRunWorkerPaused(next);
+    systemInfoDiv.focus();
+    systemInfoDiv.classList.add("focussed");
     return;
   }
 
@@ -266,6 +269,8 @@ stepButton?.addEventListener("click", async () => {
 pauseButton?.addEventListener("click", () => {
   singleStepping = true;
   runWorker!.postMessage({ type: "pause" } as WebWorkerMessage);
+  systemInfoDiv.focus();
+  systemInfoDiv.classList.add("focussed");
 });
 
 stopButton?.addEventListener("click", () => {
@@ -381,55 +386,73 @@ preferencesButton.addEventListener("click", () => {
 });
 
 function showDisplayTab() {
-  displayTab.classList.remove("hide");
-  documentationTab.classList.add("hide");
-  worksheetTab.classList.add("hide");
-  debugTab.classList.add("hide");
-  displayButtonLabel.focus();
+  const tabName = "display-tab";
+  setTabToFocussedAndSelected(tabName);
+}
+
+function showDebugTab() {
+  const tabName = "debug-tab";
+  setTabToFocussedAndSelected(tabName);
+  systemInfoDiv.classList.remove("focussed");
+  if (!runDebugButton.disabled) {
+    runDebugButton.focus();
+  } else if (!pauseButton.disabled) {
+    pauseButton.focus();
+  } else {
+    systemInfoDiv.focus();
+    systemInfoDiv.classList.add("focussed");
+  }
 }
 
 function showDocumentationTab() {
-  displayTab.classList.add("hide");
-  documentationTab.classList.remove("hide");
-  worksheetTab.classList.add("hide");
-  debugTab.classList.add("hide");
+  const tabName = "documentation-tab";
+  setTabToFocussedAndSelected(tabName);
   documentationIFrame.focus();
   documentationIFrame.contentWindow?.addEventListener("keydown", globalHandler);
 }
 
 function showWorksheetTab() {
-  displayTab.classList.add("hide");
-  documentationTab.classList.add("hide");
-  worksheetTab.classList.remove("hide");
-  debugTab.classList.add("hide");
+  const tabName = "worksheet-tab";
+  setTabToFocussedAndSelected(tabName);
   if (worksheetLoaded) {
     worksheetIFrame.focus();
     worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
     worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
+    worksheetIFrame.contentWindow?.addEventListener("click", () => showWorksheetTab());
   } else {
-    worksheetButtonLabel.focus();
+    standardWorksheetButton.focus();
   }
 }
 
-function showDebugTab() {
-  displayTab.classList.add("hide");
-  documentationTab.classList.add("hide");
-  worksheetTab.classList.add("hide");
-  debugTab.classList.remove("hide");
-  debugButtonLabel.focus();
+function setTabToFocussedAndSelected(tabName: string) {
+  collapseAllMenus();
+  // Remove selected and focussed from other three tabs
+  const allTabElements = document.getElementsByClassName("tab-element");
+  for (const e of allTabElements) {
+    e.classList.remove("selected");
+    e.classList.remove("focussed");
+  }
+  // Add selected and focussed to the specified tab
+  const newTabElements = document.getElementsByClassName(tabName);
+  for (const e of newTabElements as HTMLCollectionOf<HTMLElement>) {
+    e.classList.add("selected");
+    e.classList.add("focussed");
+    e.focus();
+  }
 }
 
-function filterKeypress(button: HTMLButtonElement) {
-  return (kp: KeyboardEvent) => {
-    if (kp.key === "Enter" || kp.code === "Space") {
-      button.click();
-      kp.preventDefault();
-    }
-  };
+function removeFocussedClassFromAllTabs() {
+  const allTabElements = document.getElementsByClassName("tab-element");
+  for (const e of allTabElements) {
+    e.classList.remove("focussed");
+  }
+  const allTabContent = document.getElementsByClassName("tab-content");
+  for (const e of allTabContent) {
+    e.classList.remove("focussed");
+  }
 }
 
-documentationButton.addEventListener("click", showDocumentationTab);
-documentationButtonLabel.addEventListener("keydown", filterKeypress(documentationButton));
+docTabLabel.addEventListener("click", showDocumentationTab);
 
 documentationHome.addEventListener("click", () => {
   window.open("documentation/Home.html", "doc-iframe")?.focus();
@@ -443,26 +466,23 @@ documentationForward.addEventListener("click", () => {
   documentationIFrame.contentWindow?.history.forward();
 });
 
-displayButton.addEventListener("click", showDisplayTab);
-displayButtonLabel.addEventListener("keydown", filterKeypress(displayButton));
-
-debugButton.addEventListener("click", showDebugTab);
-debugButtonLabel.addEventListener("keydown", filterKeypress(debugButton));
-
-worksheetButton.addEventListener("click", showWorksheetTab);
-worksheetButtonLabel.addEventListener("keydown", filterKeypress(worksheetButton));
+displayTabLabel.addEventListener("click", showDisplayTab);
+debugTabLabel.addEventListener("click", showDebugTab);
+worksheetTabLabel.addEventListener("click", showWorksheetTab);
 
 let worksheetLoaded = false;
 
 worksheetIFrame.addEventListener("load", () => {
   worksheetLoaded = true;
   worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
-  worksheetButton.click();
+  worksheetIFrame.contentWindow?.addEventListener("click", () => showWorksheetTab());
+  worksheetTabLabel.click();
 });
 
-documentationIFrame.addEventListener("load", () =>
-  documentationIFrame.contentWindow?.addEventListener("keydown", globalHandler),
-);
+documentationIFrame.addEventListener("load", () => {
+  documentationIFrame.contentWindow?.addEventListener("keydown", globalHandler);
+  documentationIFrame.contentWindow?.addEventListener("click", () => showDocumentationTab());
+});
 
 function warningOrError(tgt: HTMLDivElement): [boolean, string] {
   if (tgt.classList.contains("warning")) {
@@ -1184,6 +1204,7 @@ function getFocused() {
  */
 async function updateContent(text: string, editingField: boolean) {
   file.setRunStatus(RunStatus.default);
+  collapseAllMenus();
 
   codeContainer!.innerHTML = text;
 
@@ -1247,13 +1268,7 @@ async function updateContent(text: string, editingField: boolean) {
       return;
     }
 
-    const focused = getFocused();
-    if (focused) {
-      focused.focus();
-    } else {
-      file.getFirstChild().select();
-      getFocused()?.focus();
-    }
+    showCode();
   });
 
   codeContainer.addEventListener("mousedown", (event) => {
@@ -1295,7 +1310,7 @@ async function updateContent(text: string, editingField: boolean) {
       if ((event.target as any).target === "doc-iframe") {
         // can't use the load event as if the page is already loaded with url it doesn#t fore agaon so
         // no focus
-        documentationButton.click();
+        docTabLabel.click();
       }
 
       event.stopPropagation();
@@ -1498,6 +1513,8 @@ async function handleKeyAndRender(e: editorEvent) {
 
   try {
     let isBeingEdited = false;
+    collapseAllMenus();
+    removeFocussedClassFromAllTabs();
     switch (e.type) {
       case "click":
         isBeingEdited = file.getFieldBeingEdited(); //peek at value as may be changed
@@ -1616,6 +1633,18 @@ function clearPaused() {
   }
 }
 
+function showCode() {
+  collapseAllMenus();
+  removeFocussedClassFromAllTabs();
+  const focused = getFocused();
+  if (focused) {
+    focused.focus();
+  } else {
+    file.getFirstChild().select();
+    getFocused()?.focus();
+  }
+}
+
 function handleRunWorkerFinished() {
   runWorker?.terminate();
   runWorker = undefined;
@@ -1624,13 +1653,13 @@ function handleRunWorkerFinished() {
   file.setRunStatus(RunStatus.default);
   clearPaused();
   updateDisplayValues();
-  codeContainer.focus();
+  showCode();
 }
 
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
 
 async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<void> {
-  debugButton.click();
+  debugTabLabel.click();
   file.setRunStatus(RunStatus.paused);
   console.info("elan program paused");
   const variables = data.value;
@@ -1654,7 +1683,7 @@ async function handleRunWorkerSingleStep(data: WebWorkerBreakpointMessage): Prom
 }
 
 async function handleRunWorkerError(data: WebWorkerStatusMessage) {
-  debugButton.click();
+  debugTabLabel.click();
   runWorker?.terminate();
   runWorker = undefined;
   elanInputOutput.finished();
@@ -2027,6 +2056,7 @@ function globalHandler(kp: KeyboardEvent) {
   if (kp.ctrlKey) {
     switch (kp.key) {
       case "b":
+        removeFocussedClassFromAllTabs();
         if (isRunningState()) {
           clearDisplayButton.focus();
         } else {
@@ -2039,19 +2069,19 @@ function globalHandler(kp: KeyboardEvent) {
         kp.preventDefault();
         break;
       case "g":
-        debugButton.click();
+        debugTabLabel.click();
         kp.preventDefault();
         break;
       case "h":
-        documentationButton.click();
+        docTabLabel.click();
         kp.preventDefault();
         break;
       case "k":
-        worksheetButton.click();
+        worksheetTabLabel.click();
         kp.preventDefault();
         break;
       case "p":
-        displayButton.click();
+        displayTabLabel.click();
         kp.preventDefault();
         break;
       case "r":
@@ -2077,7 +2107,18 @@ function collapseMenu(button: HTMLElement, andFocus: boolean) {
   button.setAttribute("aria-expanded", "false");
 }
 
+function collapseAllMenus() {
+  const allDropDowns = document.querySelectorAll(
+    "button[aria-haspopup='true']",
+  ) as NodeListOf<HTMLElement>;
+
+  for (const e of allDropDowns) {
+    collapseMenu(e, false);
+  }
+}
+
 function handleClickDropDownButton(event: Event) {
+  removeFocussedClassFromAllTabs();
   const button = event.target as HTMLButtonElement;
   const isExpanded = button.getAttribute("aria-expanded") === "true";
   const menuId = button.getAttribute("aria-controls")!;
@@ -2093,13 +2134,15 @@ function handleClickDropDownButton(event: Event) {
       collapseMenu(e, false);
     }
   }
+  event.stopPropagation();
 }
 
 demosButton.addEventListener("click", handleClickDropDownButton);
 fileButton.addEventListener("click", handleClickDropDownButton);
-worksheetsButton.addEventListener("click", handleClickDropDownButton);
+standardWorksheetButton.addEventListener("click", handleClickDropDownButton);
 
 function handleKeyDropDownButton(event: KeyboardEvent) {
+  removeFocussedClassFromAllTabs();
   const button = event.target as HTMLButtonElement;
   const menuId = button.getAttribute("aria-controls")!;
   const menu = document.getElementById(menuId)!;
@@ -2113,9 +2156,10 @@ function handleKeyDropDownButton(event: KeyboardEvent) {
 
 demosButton.addEventListener("keydown", handleKeyDropDownButton);
 fileButton.addEventListener("keydown", handleKeyDropDownButton);
-worksheetsButton.addEventListener("keydown", handleKeyDropDownButton);
+standardWorksheetButton.addEventListener("keydown", handleKeyDropDownButton);
 
 function handleMenuKey(event: KeyboardEvent) {
+  removeFocussedClassFromAllTabs();
   const menuItem = event.target as HTMLElement;
   const menu = menuItem.parentElement as HTMLDivElement;
   const button = menu.previousElementSibling as HTMLButtonElement;
@@ -2158,4 +2202,11 @@ worksheetMenu.addEventListener("keydown", handleMenuKey);
 
 demosMenu.addEventListener("click", () => collapseMenu(demosButton, false));
 fileMenu.addEventListener("click", () => collapseMenu(fileButton, false));
-worksheetMenu.addEventListener("click", () => collapseMenu(worksheetsButton, false));
+worksheetMenu.addEventListener("click", () => collapseMenu(standardWorksheetButton, false));
+
+displayTab?.addEventListener("click", () => showDisplayTab());
+debugTab?.addEventListener("click", () => showDebugTab());
+documentationTab?.addEventListener("click", () => showDocumentationTab());
+worksheetTab?.addEventListener("click", () => showWorksheetTab());
+worksheetIFrame?.contentWindow?.addEventListener("click", () => showWorksheetTab());
+documentationIFrame?.contentWindow?.addEventListener("click", () => showDocumentationTab());
