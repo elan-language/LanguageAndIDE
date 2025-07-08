@@ -267,8 +267,6 @@ stepButton?.addEventListener("click", async () => {
 pauseButton?.addEventListener("click", () => {
   singleStepping = true;
   runWorker!.postMessage({ type: "pause" } as WebWorkerMessage);
-  systemInfoDiv.focus();
-  systemInfoDiv.classList.add("focussed");
 });
 
 stopButton?.addEventListener("click", () => {
@@ -1678,7 +1676,9 @@ function handleRunWorkerFinished() {
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
 
 async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<void> {
-  debugTabLabel.click();
+  showDebugTab();
+  systemInfoDiv.focus();
+  systemInfoDiv.classList.add("focussed");
   file.setRunStatus(RunStatus.paused);
   console.info("elan program paused");
   const variables = data.value;
@@ -1691,7 +1691,6 @@ async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<
   const pausedAt = document.getElementById(data.pausedAt);
   pausedAt?.classList.add("paused-at");
   pausedAt?.scrollIntoView();
-  systemInfoDiv.focus();
   updateDisplayValues();
 }
 
