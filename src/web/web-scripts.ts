@@ -2066,16 +2066,13 @@ const globalKeys = [
   "=",
 ];
 
-function ctrlOrMetaKey(kp: Event) {
-  return kp instanceof KeyboardEvent && (kp.ctrlKey || kp.metaKey);
-}
-
 function isGlobalKeyboardEvent(kp: Event) {
-  return kp instanceof KeyboardEvent && ctrlOrMetaKey(kp) && globalKeys.includes(kp.key);
+  return kp instanceof KeyboardEvent && (kp.ctrlKey || kp.metaKey) && globalKeys.includes(kp.key);
 }
 
 function globalHandler(kp: KeyboardEvent) {
-  if (ctrlOrMetaKey(kp)) {
+  // don't check kp instanceof keyboardEvent here or control keys on the help iframe are not picked up
+  if (kp.ctrlKey || kp.metaKey) {
     switch (kp.key) {
       case "b":
       case "B":
