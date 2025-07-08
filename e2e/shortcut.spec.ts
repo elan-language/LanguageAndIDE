@@ -405,3 +405,51 @@ test('close worksheet menu by click', async ({ page }) => {
 
   await expect(page.getByText('Guide to the worksheets')).not.toBeVisible();
 });
+
+test('run and stop program', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.press('Control+b');
+
+  await expect(page.locator('#run-button')).toBeDisabled();
+
+  await expect(page.getByRole('button', {name : 'demo'})).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('Life')).toBeVisible();
+
+  await page.keyboard.press('ArrowDown');
+
+  await expect(page.getByText('Bubbles')).toBeFocused();
+
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('Life')).not.toBeVisible();
+
+  await expect(page.getByText('create 20 small bubbles')).toBeVisible();
+
+  await expect(page.locator('#run-button')).toBeEnabled();
+  await expect(page.locator('#stop')).toBeDisabled();
+
+  await page.keyboard.press('Control+r');
+
+  await expect(page.locator('#run-button')).toBeDisabled();
+  await expect(page.locator('#stop')).toBeEnabled();
+
+  await expect(page.getByRole('button', {name : 'clear'})).toBeVisible();
+
+  await expect(page.getByText('running')).toBeVisible();
+
+  await page.keyboard.press('Control+s');
+
+  await expect(page.getByText('running')).not.toBeVisible();
+
+  await expect(page.locator('#run-button')).toBeEnabled();
+  await expect(page.locator('#stop')).toBeDisabled();
+});
