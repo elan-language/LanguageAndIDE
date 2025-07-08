@@ -138,7 +138,7 @@ export function helper_compileMsgAsHtmlNew(file: File, loc: Frame | Field): stri
   if (link) {
     const active = loc.helpActive ? ` class="active"` : "";
     loc.helpActive = false;
-    help = `<el-help title="Click to open Help for this error"><a href="documentation/${link}" target ="doc-iframe"${active}>?</a></el-help>`;
+    help = `<el-help title="Click to open Help for this error"><a href="documentation/${link}" target="doc-iframe" tabindex="-1"${active}>?</a></el-help>`;
   }
 
   const popUp = helper_pastePopUp(loc);
