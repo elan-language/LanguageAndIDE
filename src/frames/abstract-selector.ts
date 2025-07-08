@@ -28,8 +28,11 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   helpAsHtml(): string {
+    const active = this.helpActive ? ` class="active"` : "";
+    this.helpActive = false;
+
     return this.isSelected()
-      ? `<el-help title="Click to open Help for any of these instructions"> <a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe" tabindex="-1">?</a></el-help>`
+      ? `<el-help title="Click to open Help for any of these instructions"> <a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe" tabindex="-1"${active}>?</a></el-help>`
       : ``;
   }
 
@@ -190,8 +193,8 @@ export abstract class AbstractSelector extends AbstractFrame {
       case "?": {
         if (e.modKey.control) {
           this.showHelp();
+          break;
         }
-        break;
       }
       default: {
         if (!key || key.length === 1) {

@@ -280,8 +280,8 @@ export abstract class AbstractField implements Selectable, Field {
       case "?": {
         if (e.modKey.control) {
           this.showHelp();
+          break;
         }
-        break;
       }
       default: {
         if (key === "o" && e.modKey.control && isCollapsible(this.holder)) {
