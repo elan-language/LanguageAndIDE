@@ -786,7 +786,7 @@ async function displayFile() {
 }
 
 function getModKey(e: KeyboardEvent | MouseEvent) {
-  return { control: e.ctrlKey, shift: e.shiftKey, alt: e.altKey };
+  return { control: e.ctrlKey || e.metaKey, shift: e.shiftKey, alt: e.altKey };
 }
 
 function hasUnsavedChanges() {
@@ -2068,12 +2068,16 @@ const globalKeys = [
   "=",
 ];
 
+function ctrlOrMetaKey(kp: Event) {
+  return kp instanceof KeyboardEvent && (kp.ctrlKey || kp.metaKey);
+}
+
 function isGlobalKeyboardEvent(kp: Event) {
-  return kp instanceof KeyboardEvent && kp.ctrlKey && globalKeys.includes(kp.key);
+  return kp instanceof KeyboardEvent && ctrlOrMetaKey(kp) && globalKeys.includes(kp.key);
 }
 
 function globalHandler(kp: KeyboardEvent) {
-  if (kp.ctrlKey) {
+  if (ctrlOrMetaKey(kp)) {
     switch (kp.key) {
       case "b":
       case "B":
