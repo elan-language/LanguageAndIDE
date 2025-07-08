@@ -539,12 +539,30 @@ parseStatus.addEventListener("click", async (event) => {
   await handleStatusClick(event, "el-field", false);
 });
 
+parseStatus.addEventListener("keydown", async (event) => {
+  if (event.key === "Enter" || event.code === "Space") {
+    await handleStatusClick(event, "el-field", false);
+  }
+});
+
 compileStatus.addEventListener("click", async (event) => {
   await handleStatusClick(event, "el-msg", true);
 });
 
+compileStatus.addEventListener("keydown", async (event) => {
+  if (event.key === "Enter" || event.code === "Space") {
+    await handleStatusClick(event, "el-msg", true);
+  }
+});
+
 testStatus.addEventListener("click", async (event) => {
   await handleStatusClick(event, "el-msg", true);
+});
+
+testStatus.addEventListener("keydown", async (event) => {
+  if (event.key === "Enter" || event.code === "Space") {
+    await handleStatusClick(event, "el-msg", true);
+  }
 });
 
 const isChrome = checkIsChrome();
@@ -803,11 +821,14 @@ function canUndo() {
 
 function setStatus(html: HTMLDivElement, colour: string, label: string, showTooltip = true): void {
   html.setAttribute("class", colour);
-  const tooltip =
-    showTooltip && (colour === "error" || colour === "warning")
-      ? "Click to navigate to first issue in (expanded) code"
-      : "";
-  html.setAttribute("title", tooltip);
+  if (showTooltip && (colour === "error" || colour === "warning")) {
+    html.tabIndex = 0;
+    html.setAttribute("title", "Click to navigate to first issue in (expanded) code");
+  } else {
+    html.tabIndex = -1;
+    html.setAttribute("title", "");
+  }
+
   html.innerText = label;
 }
 
