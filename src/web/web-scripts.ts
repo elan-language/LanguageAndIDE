@@ -144,9 +144,7 @@ logoutButton.addEventListener("click", async () => {
 });
 
 addEventListener("beforeunload", (event) => {
-  if (hasUnsavedChanges()) {
-    event.preventDefault();
-  }
+  event.preventDefault();
 });
 
 function resumeProgram() {
