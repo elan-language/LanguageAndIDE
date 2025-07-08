@@ -26,6 +26,32 @@ test('shortcuts', async ({ page }) => {
   await expect(page.getByRole('button', {name : 'standard worksheets'})).toBeVisible();
 });
 
+test('shortcuts uppercase', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.press('Control+Shift+p');
+
+  await expect(page.getByRole('button', {name : 'clear'})).toBeVisible();
+
+  await page.keyboard.press('Control+Shift+g');
+
+  await expect(page.locator('#run-debug-button')).toBeVisible();
+
+  await page.keyboard.press('Control+Shift+h');
+
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.press('Control+Shift+k');
+
+  await expect(page.getByRole('button', {name : 'standard worksheets'})).toBeVisible();
+});
+
 test('tabs', async ({ page }) => {
   page.once('dialog', dialog => {
     //console.log(`Dialog message: ${dialog.message()}`);
@@ -69,6 +95,57 @@ test('tabs', async ({ page }) => {
  await expect(page.getByRole('button', {name : 'clear'})).toBeFocused();
 
  await page.keyboard.press('Control+k');
+
+ await expect(page.getByRole('button', {name : 'standard worksheets'})).toBeFocused();
+
+ await page.keyboard.press('Tab');
+
+ await expect(page.getByRole('button', {name : 'load external worksheet'})).toBeFocused();
+});
+
+test('tabs uppercase', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.press('Control+Shift+b');
+
+  await expect(page.getByRole('button', {name : 'demo'})).toBeFocused();
+
+ await page.keyboard.press('Tab');
+
+ await expect(page.getByRole('button', {name : 'file'})).toBeFocused();
+ await page.keyboard.press('Tab');
+
+ await expect(page.getByRole('button', {name : 'trim'})).toBeFocused();
+
+ await page.keyboard.press('Tab');
+
+ await expect(page.getByRole('button', {name : 'outline'})).toBeFocused();
+
+ await page.keyboard.press('Tab');
+
+ await expect(page.locator('#doc-home')).toBeFocused();
+
+ await page.keyboard.press('Tab');
+
+ await expect(page.locator('#doc-back')).toBeFocused();
+
+ await page.keyboard.press('Tab');
+
+ await expect(page.locator('#doc-forward')).toBeFocused();
+
+ await page.keyboard.press('Control+Shift+p');
+
+ await page.keyboard.press('Tab');
+
+ await expect(page.getByRole('button', {name : 'clear'})).toBeFocused();
+
+ await page.keyboard.press('Control+Shift+k');
 
  await expect(page.getByRole('button', {name : 'standard worksheets'})).toBeFocused();
 
@@ -447,6 +524,54 @@ test('run and stop program', async ({ page }) => {
   await expect(page.getByText('running')).toBeVisible();
 
   await page.keyboard.press('Control+s');
+
+  await expect(page.getByText('running')).not.toBeVisible();
+
+  await expect(page.locator('#run-button')).toBeEnabled();
+  await expect(page.locator('#stop')).toBeDisabled();
+});
+
+test('run and stop program uppercase', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.press('Control+Shift+b');
+
+  await expect(page.locator('#run-button')).toBeDisabled();
+
+  await expect(page.getByRole('button', {name : 'demo'})).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('Life')).toBeVisible();
+
+  await page.keyboard.press('ArrowDown');
+
+  await expect(page.getByText('Bubbles')).toBeFocused();
+
+  await page.keyboard.press('Enter');
+
+  await expect(page.getByText('Life')).not.toBeVisible();
+
+  await expect(page.getByText('create 20 small bubbles')).toBeVisible();
+
+  await expect(page.locator('#run-button')).toBeEnabled();
+  await expect(page.locator('#stop')).toBeDisabled();
+
+  await page.keyboard.press('Control+Shift+r');
+
+  await expect(page.locator('#run-button')).toBeDisabled();
+  await expect(page.locator('#stop')).toBeEnabled();
+
+  await expect(page.getByRole('button', {name : 'clear'})).toBeVisible();
+
+  await expect(page.getByText('running')).toBeVisible();
+
+  await page.keyboard.press('Control+Shift+s');
 
   await expect(page.getByText('running')).not.toBeVisible();
 
