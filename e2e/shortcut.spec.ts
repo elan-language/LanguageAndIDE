@@ -453,3 +453,47 @@ test('run and stop program', async ({ page }) => {
   await expect(page.locator('#run-button')).toBeEnabled();
   await expect(page.locator('#stop')).toBeDisabled();
 });
+
+test('shortcut help', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await expect(page.locator('#doc-home')).toBeVisible();
+
+  await page.keyboard.press('Control+Shift+?');
+
+  await expect(page.frameLocator('#doc-iframe').getByText("Global instructions (also referred to simply as")).toBeVisible();
+
+  await page.keyboard.press('Control+e');
+
+  await page.keyboard.type('m');
+
+  await page.keyboard.type('l');
+
+  await page.keyboard.press('Control+Shift+?');
+
+  await expect(page.frameLocator('#doc-iframe').getByText("Valid forms for a procedure call are")).toBeVisible();
+
+  await page.keyboard.press('Control+e');
+
+  await page.keyboard.type('a');
+
+  await page.keyboard.type('Tab');
+
+  await page.keyboard.type('a');
+
+  await page.keyboard.press('Control+Shift+?');
+
+  await expect(page.frameLocator('#doc-iframe').getByText("What is the difference between a compile error and a warning")).toBeVisible();
+
+  await page.keyboard.press('Control+e');
+
+  await page.keyboard.type(' a ');
+
+  await page.keyboard.press('Control+Shift+?');
+
+  await expect(page.frameLocator('#doc-iframe').getByText("This field expects an expression.")).toBeVisible();
+});
