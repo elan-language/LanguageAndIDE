@@ -219,7 +219,7 @@ test('help focus', async ({ page }) => {
 
   // click help and expect help to be visible
   await page.getByRole('link', { name: '?' }).click();
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   // click worksheet button and expect tab to be visible
   await page.getByText('worksheet', { exact: true }).click();
@@ -227,7 +227,7 @@ test('help focus', async ({ page }) => {
 
   // click help and expect help to again be visible
   await page.getByRole('link', { name: '?' }).click();
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
   
 }); 
 

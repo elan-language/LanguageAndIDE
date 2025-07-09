@@ -66,18 +66,18 @@ const displayTabLabel = document.getElementById("display-tab-label") as HTMLDivE
 const displayDiv = document.getElementById("display") as HTMLDivElement;
 
 // Debug
-const debugTabLabel = document.getElementById("debug-tab-label") as HTMLDivElement;
+const debugTabLabel = document.getElementById("info-tab-label") as HTMLDivElement;
 const runDebugButton = document.getElementById("run-debug-button") as HTMLButtonElement;
 const pauseButton = document.getElementById("pause") as HTMLButtonElement;
 const stepButton = document.getElementById("step") as HTMLButtonElement;
 const systemInfoDiv = document.getElementById("system-info") as HTMLDivElement;
 
 // Help (documentation)
-const docTabLabel = document.getElementById("doc-tab-label") as HTMLDivElement;
-const documentationHome = document.getElementById("doc-home") as HTMLButtonElement;
-const documentationBack = document.getElementById("doc-back") as HTMLButtonElement;
-const documentationForward = document.getElementById("doc-forward") as HTMLButtonElement;
-const documentationIFrame = document.getElementById("doc-iframe") as HTMLIFrameElement;
+const docTabLabel = document.getElementById("help-tab-label") as HTMLDivElement;
+const documentationHome = document.getElementById("help-home") as HTMLButtonElement;
+const documentationBack = document.getElementById("help-back") as HTMLButtonElement;
+const documentationForward = document.getElementById("help-forward") as HTMLButtonElement;
+const documentationIFrame = document.getElementById("help-iframe") as HTMLIFrameElement;
 
 // Worksheet
 const worksheetTabLabel = document.getElementById("worksheet-tab-label") as HTMLDivElement;
@@ -85,9 +85,9 @@ const standardWorksheetButton = document.getElementById("standard-worksheets") a
 const loadExternalWorksheetButton = document.getElementById("load-worksheet") as HTMLButtonElement;
 const worksheetIFrame = document.getElementById("worksheet-iframe") as HTMLIFrameElement;
 
-const debugTab = document.getElementById("debug-tab");
+const debugTab = document.getElementById("info-tab");
 const displayTab = document.getElementById("display-tab");
-const documentationTab = document.getElementById("documentation-tab");
+const documentationTab = document.getElementById("help-tab");
 const worksheetTab = document.getElementById("worksheet-tab");
 
 const inactivityTimeout = 2000;
@@ -387,7 +387,7 @@ function showDisplayTab() {
 }
 
 function showDebugTab() {
-  const tabName = "debug-tab";
+  const tabName = "info-tab";
   setTabToFocussedAndSelected(tabName);
   systemInfoDiv.classList.remove("focussed");
   if (!runDebugButton.disabled) {
@@ -401,7 +401,7 @@ function showDebugTab() {
 }
 
 function showDocumentationTab() {
-  const tabName = "documentation-tab";
+  const tabName = "help-tab";
   setTabToFocussedAndSelected(tabName);
   documentationIFrame.focus();
   documentationIFrame.contentWindow?.addEventListener("keydown", globalHandler);
@@ -451,7 +451,7 @@ function removeFocussedClassFromAllTabs() {
 docTabLabel.addEventListener("click", showDocumentationTab);
 
 documentationHome.addEventListener("click", () => {
-  window.open("documentation/Home.html", "doc-iframe")?.focus();
+  window.open("documentation/Home.html", "help-iframe")?.focus();
 });
 
 documentationBack.addEventListener("click", () => {
@@ -1324,7 +1324,7 @@ async function updateContent(text: string, editingField: boolean) {
 
   for (const item of helpLinks) {
     item.addEventListener("click", (event) => {
-      if ((event.target as any).target === "doc-iframe") {
+      if ((event.target as any).target === "help-iframe") {
         // can't use the load event as if the page is already loaded with url it doesn#t fore agaon so
         // no focus
         docTabLabel.click();

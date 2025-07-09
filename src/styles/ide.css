@@ -471,7 +471,7 @@ div.spacer{
   display: none;
 }
 
-#debug-tab {
+#info-tab {
   overflow-y: auto;
 }
 
@@ -505,7 +505,7 @@ div.spacer{
   margin-right: 10px;
 }
 
-iframe#doc-iframe, iframe#worksheet-iframe {
+iframe#help-iframe, iframe#worksheet-iframe {
   border-image: none;
   border-color: initial;
   border-style: hidden;

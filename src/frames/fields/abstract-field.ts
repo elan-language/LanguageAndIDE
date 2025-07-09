@@ -686,7 +686,7 @@ export abstract class AbstractField implements Selectable, Field {
     const active = this.helpActive ? ` class="active"` : "";
     this.helpActive = false;
 
-    return `<el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe" tabindex="-1"${active}>?</a></el-help>`;
+    return `<el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#${this.helpId()}" target="help-iframe" tabindex="-1"${active}>?</a></el-help>`;
   }
 
   renderAsHtml(): string {
