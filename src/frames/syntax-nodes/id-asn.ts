@@ -22,9 +22,14 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { ClassAsn } from "./globals/class-asn";
+import { TupleAsn } from "./globals/tuple-asn";
 
 function isClass(s: Scope): s is ClassAsn {
   return s instanceof ClassAsn;
+}
+
+function isTuple(s: Scope): s is TupleAsn {
+  return s instanceof TupleAsn;
 }
 
 export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
@@ -55,6 +60,10 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
       return searchScope.resolveOwnSymbol(this.id);
     }
 
+    if (isTuple(searchScope)) {
+      return searchScope.resolveOwnSymbol(this.id);
+    }
+
     if (isDefinitionStatement(this.scope)) {
       searchScope = this.scope.getParentScope();
     }
@@ -64,6 +73,17 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
 
   get symbolScope() {
     return this.getSymbol().symbolScope;
+  }
+
+  getBody() {
+    if (this.updatedScope instanceof TupleAsn) {
+      const [ok, index] = this.updatedScope.parseId(this.id);
+      if (ok) {
+        return `[${index}]`;
+      }
+    }
+
+    return this.id;
   }
 
   compile(): string {
@@ -103,7 +123,9 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return `${prefix}${this.id}${postfix}`;
+    const body = this.getBody();
+
+    return `${prefix}${body}${postfix}`;
   }
 
   symbolType() {

@@ -44,6 +44,39 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "tuple(3, Apple)3Apple");
   });
 
+  test("Pass_CreatingTuplesAndReadingContentsByItem", async () => {
+    const code = `${testHeader}
+
+main
+    variable x set to tuple(3, "Apple")
+    print x
+    let f be x.item0
+    let s be x.item1
+    print f
+    print s
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.tuple([3, "Apple"]);
+  await system.printLine(x);
+  const f = x[0];
+  const s = x[1];
+  await system.printLine(f);
+  await system.printLine(s);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "tuple(3, Apple)3Apple");
+  });
+
   test("Pass_FunctionReturnsTuple", async () => {
     const code = `${testHeader}
 
