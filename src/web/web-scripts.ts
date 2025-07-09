@@ -2073,6 +2073,8 @@ const globalKeys = [
   "G",
   "h",
   "H",
+  "i",
+  "I",
   "k",
   "K",
   "p",
@@ -2081,6 +2083,10 @@ const globalKeys = [
   "R",
   "s",
   "S",
+  "t",
+  "T",
+  "u",
+  "U",
   "+",
   "-",
   "=",
@@ -2111,12 +2117,17 @@ function globalHandler(kp: KeyboardEvent) {
         break;
       case "g":
       case "G":
-        debugTabLabel.click();
+        runDebugButton.click();
         kp.preventDefault();
         break;
       case "h":
       case "H":
         docTabLabel.click();
+        kp.preventDefault();
+        break;
+      case "i":
+      case "I":
+        debugTabLabel.click();
         kp.preventDefault();
         break;
       case "k":
@@ -2137,6 +2148,16 @@ function globalHandler(kp: KeyboardEvent) {
       case "s":
       case "S":
         stopButton.click();
+        kp.preventDefault();
+        break;
+      case "t":
+      case "T":
+        stepButton.click();
+        kp.preventDefault();
+        break;
+      case "u":
+      case "U":
+        pauseButton.click();
         kp.preventDefault();
         break;
     }
