@@ -1,5 +1,7 @@
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
+import { SymbolType } from "../../compiler-interfaces/symbol-type";
+import { symbolMatches } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { TupleType } from "../../symbols/tuple-type";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
@@ -22,28 +24,41 @@ export class TupleAsn implements Scope {
     return [false, 0];
   }
 
+  typeToSymbol(id: string, t: SymbolType) {
+    return {
+      symbolId: id,
+      symbolType: () => t,
+      symbolScope: SymbolScope.member,
+      isProperty: true,
+    };
+  }
+
   resolveOwnSymbol(id: string): ElanSymbol {
     const [ok, index] = this.parseId(id);
 
     if (ok) {
-      return {
-        symbolId: id,
-        symbolType: () => this.type.ofTypes[index],
-        symbolScope: SymbolScope.member,
-      };
+      return this.typeToSymbol(id, this.type.ofTypes[index]);
     }
     return new UnknownSymbol(id);
   }
 
-  resolveSymbol(_id: string, _scope: Scope): ElanSymbol {
-    throw new Error("Method not implemented.");
+  resolveSymbol(id: string, _scope: Scope): ElanSymbol {
+    const symbol = this.resolveOwnSymbol(id);
+
+    if (symbol instanceof UnknownSymbol) {
+      return this.getParentScope().resolveSymbol(id, this);
+    }
+
+    return symbol;
   }
 
   getParentScope(): Scope {
     return this.scope;
   }
 
-  symbolMatches(_id: string, _all: boolean, _initialScope: Scope): ElanSymbol[] {
-    throw new Error("Method not implemented.");
+  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
+    const symbols = this.type.ofTypes.map((t, i) => this.typeToSymbol(`item${i}`, t));
+    const matches = symbolMatches(id, all, symbols);
+    return matches;
   }
 }

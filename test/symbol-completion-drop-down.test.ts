@@ -2280,4 +2280,23 @@ end main`;
 
     await assertSymbolCompletionWithString(fileImpl, "expr20", "totalPaces + pac", expected);
   });
+
+  test("Pass_tuple", async () => {
+    const code = `${testHeader}
+
+main
+  let t be tuple(1, "fred")
+  let a be t.item0
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["item0", "item0", "item0"],
+      ["item1", "item1", "item1"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr8", "t.it", expected);
+  });
 });

@@ -393,6 +393,14 @@ function matchingSymbolsWithQualifier(propId: string, qualId: string, scope: Sco
     }
   }
 
+  if (qualSt instanceof TupleType) {
+    qualifiedSymbols = new TupleAsn(qualSt, scope).symbolMatches(
+      propId,
+      !propId,
+      NullScope.Instance,
+    );
+  }
+
   const allExtensions = getGlobalScope(scope)
     .libraryScope.symbolMatches(propId, !propId, NullScope.Instance)
     .filter((s) => {
