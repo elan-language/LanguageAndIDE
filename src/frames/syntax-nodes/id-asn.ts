@@ -43,13 +43,15 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   }
 
   private updatedScope: Scope = NullScope.Instance;
+  private precedingNode?: AstNode = undefined;
 
-  updateScopeAndChain(s: Scope, _ast: AstNode) {
+  updateScopeAndChain(s: Scope, ast: AstNode) {
     this.updatedScope = s;
+    this.precedingNode = ast;
   }
 
   get showPreviousNode() {
-    return true;
+    return !isTuple(this.updatedScope);
   }
 
   isAsync: boolean = false;
@@ -79,7 +81,8 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     if (this.updatedScope instanceof TupleAsn) {
       const [ok, index] = this.updatedScope.parseId(this.id);
       if (ok) {
-        return `[${index}]`;
+        const tuple = this.precedingNode?.compile();
+        return `${tuple}[${index}]`;
       }
     }
 
