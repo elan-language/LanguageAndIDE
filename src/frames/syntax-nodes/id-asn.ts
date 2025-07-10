@@ -22,9 +22,14 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { ClassAsn } from "./globals/class-asn";
+import { TupleAsn } from "./globals/tuple-asn";
 
 function isClass(s: Scope): s is ClassAsn {
   return s instanceof ClassAsn;
+}
+
+function isTuple(s: Scope): s is TupleAsn {
+  return s instanceof TupleAsn;
 }
 
 export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
@@ -38,13 +43,15 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   }
 
   private updatedScope: Scope = NullScope.Instance;
+  private precedingNode?: AstNode = undefined;
 
-  updateScopeAndChain(s: Scope, _ast: AstNode) {
+  updateScopeAndChain(s: Scope, ast: AstNode) {
     this.updatedScope = s;
+    this.precedingNode = ast;
   }
 
   get showPreviousNode() {
-    return true;
+    return !isTuple(this.updatedScope);
   }
 
   isAsync: boolean = false;
@@ -52,6 +59,10 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   getSymbol() {
     let searchScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
     if (isClass(searchScope)) {
+      return searchScope.resolveOwnSymbol(this.id);
+    }
+
+    if (isTuple(searchScope)) {
       return searchScope.resolveOwnSymbol(this.id);
     }
 
@@ -64,6 +75,18 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
 
   get symbolScope() {
     return this.getSymbol().symbolScope;
+  }
+
+  getBody() {
+    if (this.updatedScope instanceof TupleAsn) {
+      const [ok, index] = this.updatedScope.parseId(this.id);
+      if (ok) {
+        const tuple = this.precedingNode?.compile();
+        return `${tuple}[${index}]`;
+      }
+    }
+
+    return this.id;
   }
 
   compile(): string {
@@ -103,7 +126,9 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return `${prefix}${this.id}${postfix}`;
+    const body = this.getBody();
+
+    return `${prefix}${body}${postfix}`;
   }
 
   symbolType() {

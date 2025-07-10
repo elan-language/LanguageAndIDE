@@ -2280,4 +2280,72 @@ end main`;
 
     await assertSymbolCompletionWithString(fileImpl, "expr20", "totalPaces + pac", expected);
   });
+
+  test("Pass_tuple", async () => {
+    const code = `${testHeader}
+
+main
+  let t be tuple(1, "fred")
+  let a be t.item0
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["item0", "item0", "item0"],
+      ["item1", "item1", "item1"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr8", "t.it", expected);
+  });
+
+  test("Pass_tuple1", async () => {
+    const code = `${testHeader}
+
+main
+  let a be foo().item0
+end main
+
+function foo() returns (Int, String)
+  return tuple(1, "fred")
+end function`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["item0", "item0", "item0"],
+      ["item1", "item1", "item1"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "expr5", "foo().it", expected);
+  });
+
+  ignore_test("Pass_tuple2", async () => {
+    const code = `${testHeader}
+
+main
+  call printModified(tuple(4, 5), lambda t as (Int, Int) => t.item0)
+end main
+  
+procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
+  print f(i)
+end procedure`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["item0", "item0", "item0"],
+      ["item1", "item1", "item1"],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(
+      fileImpl,
+      "args5",
+      "tuple(4, 5), lambda t as (Int, Int) => t.it",
+      expected,
+    );
+  });
 });
