@@ -117,6 +117,48 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "tuple(1, 2)12");
   });
 
+  test("Pass_FunctionReturnsTupleItem", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to f()
+  print x
+  let fst be x.item0
+  let snd be x.item1
+  print fst
+  print snd
+end main
+
+function f() returns (String, String)
+   return tuple("1", "2")
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = (await global.f());
+  await system.printLine(x);
+  const fst = x[0];
+  const snd = x[1];
+  await system.printLine(fst);
+  await system.printLine(snd);
+}
+
+async function f() {
+  return system.tuple(["1", "2"]);
+}
+global["f"] = f;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "tuple(1, 2)12");
+  });
+
   test("Pass_IndexFunctionReturnsTuple", async () => {
     const code = `${testHeader}
 
@@ -135,6 +177,42 @@ const global = new class {};
 async function main() {
   let t = (await global.f());
   const [fst, ] = t;
+  await system.printLine(fst);
+}
+
+async function f() {
+  return system.tuple(["1", "2"]);
+}
+global["f"] = f;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  test("Pass_IndexFunctionReturnsTuple1", async () => {
+    const code = `${testHeader}
+
+main
+  variable t set to f()
+  let fst be t.item0
+  print fst
+end main
+
+function f() returns (String, String)
+   return tuple("1", "2")
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let t = (await global.f());
+  const fst = t[0];
   await system.printLine(fst);
 }
 
@@ -184,6 +262,37 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
+  test("Pass_IndexGenericFunctionReturnsTuple1", async () => {
+    const code = `${testHeader}
+
+main
+  variable t set to a.reduce(tuple(1, 1), lambda i as (Int, Int), j as (Int, Int) => j)
+  let fst be t.item0
+  print fst
+end main
+constant a set to {tuple(1,2)}`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  a = system.listImmutable([system.tuple([1, 2])]);
+
+};
+async function main() {
+  let t = (await global.a.reduce(system.tuple([1, 1]), async (i, j) => j));
+  const fst = t[0];
+  await system.printLine(fst);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
   test("Pass_FunctionTupleParameter", async () => {
     const code = `${testHeader}
 
@@ -208,6 +317,44 @@ async function main() {
 
 async function f(t) {
   const [first, ] = t;
+  return first;
+}
+global["f"] = f;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "one");
+  });
+
+  test("Pass_FunctionTupleParameter1", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to "one"
+  variable y set to "two"
+  print f(tuple(x,y))
+end main
+
+function f(t as (String, String)) returns String
+   let first be t.item0
+   return first
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = "one";
+  let y = "two";
+  await system.printLine((await global.f(system.tuple([x, y]))));
+}
+
+async function f(t) {
+  const first = t[0];
   return first;
 }
 global["f"] = f;
@@ -291,12 +438,33 @@ end main
     ]);
   });
 
+  test("Fail_AssignItemToWrongType1", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to tuple(3,"Apple")
+  variable y set to 4
+  set y to x.item1
+  print y
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
+    ]);
+  });
+
   test("Fail_ImmutableSoCannotAssignAnItem", async () => {
     const code = `${testHeader}
 
 main
   variable x set to (3, "Apple")
-  set x.first() to 4
+  set x.item0 to 4
 end main
 `;
 
@@ -361,5 +529,22 @@ end main
     assertDoesNotCompile(fileImpl, [
       "Incompatible types. Expected: tuple(Int, String), Provided: tuple(Int, String, Int).LangRef.html#TypesCompileError",
     ]);
+  });
+
+  test("Fail_itemOutOfRange", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to tuple(3, "Apple")
+  let y be x.item2
+end main
+`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'item2' is not defined.LangRef.html#compile_error"]);
   });
 });
