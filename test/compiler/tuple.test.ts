@@ -397,6 +397,48 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "tuple(4, Pear)");
   });
 
+  test("Pass_item in expression", async () => {
+    const code = `${testHeader}
+
+main
+  variable p set to [1, 2, 3, 4, 5]
+  variable x set to tuple(3, 4)
+  let y be x.item0 + x.item1
+  let z be p[x.item0]
+  let q be abs(x.item1)
+  let s be abs(p[x.item1])
+  print y
+  print z
+  print q
+  print s
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let p = system.list([1, 2, 3, 4, 5]);
+  let x = system.tuple([3, 4]);
+  const y = x[0] + x[1];
+  const z = system.safeIndex(p, x[0]);
+  const q = _stdlib.abs(x[1]);
+  const s = _stdlib.abs(system.safeIndex(p, x[1]));
+  await system.printLine(y);
+  await system.printLine(z);
+  await system.printLine(q);
+  await system.printLine(s);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "7445");
+  });
+
   test("Fail_OutOfRangeError", async () => {
     const code = `${testHeader}
 
