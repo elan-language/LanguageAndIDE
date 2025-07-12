@@ -961,7 +961,7 @@ function updateDisplayValues() {
     }
 
     if (canUndo()) {
-      enable(undoButton, "Undo last change (Ctrl + z)");
+      enable(undoButton, "Undo last change (Ctrl-z)");
     } else {
       disable([undoButton], "Nothing to undo");
     }
@@ -969,7 +969,7 @@ function updateDisplayValues() {
     if (nextFileIndex === -1) {
       disable([redoButton], "Nothing to redo");
     } else {
-      enable(redoButton, "Redo last change (Ctrl + y");
+      enable(redoButton, "Redo last change (Ctrl-y)");
     }
 
     if (autoSaveFileHandle) {
@@ -2067,6 +2067,8 @@ if (!isElanProduction) {
 const globalKeys = [
   "b",
   "B",
+  "d",
+  "D",
   "e",
   "E",
   "g",
@@ -2083,8 +2085,6 @@ const globalKeys = [
   "R",
   "s",
   "S",
-  "t",
-  "T",
   "u",
   "U",
   "+",
@@ -2108,6 +2108,11 @@ function globalHandler(kp: KeyboardEvent) {
         } else {
           demosButton.focus();
         }
+        kp.preventDefault();
+        break;
+      case "d":
+      case "D":
+        displayTabLabel.click();
         kp.preventDefault();
         break;
       case "e":
@@ -2137,7 +2142,7 @@ function globalHandler(kp: KeyboardEvent) {
         break;
       case "p":
       case "P":
-        displayTabLabel.click();
+        stepButton.click();
         kp.preventDefault();
         break;
       case "r":
@@ -2148,11 +2153,6 @@ function globalHandler(kp: KeyboardEvent) {
       case "s":
       case "S":
         stopButton.click();
-        kp.preventDefault();
-        break;
-      case "t":
-      case "T":
-        stepButton.click();
         kp.preventDefault();
         break;
       case "u":

@@ -3,6 +3,14 @@
   --ideTitleSize: 12pt;
 }
 
+#display-tab.selected * {
+  opacity: 75%;
+}
+
+#display-tab.focussed * {
+  opacity: 100%;
+}
+
 #display-html,
 #system-info,
 #printed-text,
@@ -99,9 +107,26 @@ body {
   margin-left: 10px;
 }
 
+#run-controls button {
+  display: flex;
+  flex-direction: column;
+
+}
+
+#run-controls label {
+  margin-top: -5px;
+  padding-left: 10px;
+  color: white;
+  font-family: var(--ideTitleFont);
+  font-size: var(--ideTitleSize);
+  text-align: left;
+}
+
 #run-controls button img {
   height: 55px;
 }
+
+
 
 #display-title, #system-info-title {
   align-self: bottom;
@@ -142,7 +167,7 @@ body {
 }
 
 #status-values div {
-  width: 100px;
+  width: 90px;
   color: var(--defaultText);
   font-family: var(--ideTitleFont);
   text-align: center;
@@ -150,6 +175,12 @@ body {
   height: 20px;
   padding-bottom: 1px;
   margin-bottom: 5px;
+}
+
+#status-values div:focus,
+#status-values div:active,
+#status-values div:hover {
+  color: white;
 }
 
 #status-values .ok,
@@ -257,7 +288,7 @@ button.plain:disabled, menu-item.button.plain:disabled {
 }
 
 /* Icon buttons */
-button.icon img {
+button.icon img, button.icon + label {
   height: 40px;
   opacity: 55%;
 }
@@ -268,13 +299,17 @@ button.icon img {
   background-color: var(--ideBackground);
 }
 
-button.icon:disabled {
+button.icon:disabled, 
+button.icon:disabled + label {
   opacity: 20%;
 }
 
 button.icon:enabled img:hover,
+button.icon:enabled img:hover + label,
 button.icon:enabled:focus img,
+button.icon:enabled:focus img + label,
 button.icon:active img
+button.icon:active img + label
 {
   opacity: 100%;
 }
