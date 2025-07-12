@@ -11,6 +11,10 @@
   opacity: 100%;
 }
 
+#display-tab.selected tab-controls {
+  background-color: white;
+}
+
 #display-html,
 #system-info,
 #printed-text,
