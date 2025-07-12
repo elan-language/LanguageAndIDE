@@ -11,10 +11,6 @@
   opacity: 100%;
 }
 
-#display-tab.selected tab-controls {
-  background-color: white;
-}
-
 #display-html,
 #system-info,
 #printed-text,
@@ -531,6 +527,11 @@ div.spacer{
 {
   background-color: white;
 }
+
+#display-tab .tab-controls.selected {
+  background-color: white;
+}
+
 
 .tab-controls {
   margin: 0;
