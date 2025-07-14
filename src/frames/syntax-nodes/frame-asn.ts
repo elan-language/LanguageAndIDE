@@ -110,8 +110,9 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
       const id = `${idPrefix}${symbol.symbolId}`;
       const value = `${scopePrefix}${symbol.symbolId}`;
       const type = symbol.symbolType();
+      const fullType = type.name;
       resolveId.push(
-        `${indent}_scopedIds${this.fieldId}.push(await system.debugSymbol("${type}", "${id}", ${value}));`,
+        `${indent}_scopedIds${this.fieldId}.push(await system.debugSymbol("${fullType}", "${id}", ${value}));`,
       );
     }
 

@@ -1688,7 +1688,7 @@ function printDebugSymbolString(s: DebugSymbol) {
 
 function printDebugSymbolList(s: DebugSymbol) {
   const id = s.name;
-  const type = s.elanType;
+  const type = s.elanType.replaceAll(">", "&gt;").replaceAll("<", "&lt;");
   const list = s.value as [];
   const len = list.length;
 
@@ -1744,12 +1744,13 @@ function printDebugSymbol(s: DebugSymbol) {
     case "String":
       printDebugSymbolString(s);
       break;
-    case "List":
-      printDebugSymbolList(s);
-      break;
-    case "Dictionary":
-      printDebugSymbolDictionary(s);
-      break;
+
+    default:
+      if (s.elanType.startsWith("List")) {
+        printDebugSymbolList(s);
+      } else if (s.elanType.startsWith("Dictionary")) {
+        printDebugSymbolDictionary(s);
+      }
   }
 }
 

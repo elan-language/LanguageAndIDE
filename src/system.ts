@@ -299,11 +299,11 @@ export class System {
     return await this._stdlib.asString(v);
   }
 
-  async debugSymbol(type: string, name: string, symbol: unknown) {
+  async debugSymbol(type: string, id: string, symbol: unknown) {
     try {
       return {
         elanType: type,
-        name: name,
+        name: id,
         value: await this.asCloneableObject(symbol),
       };
     } catch (_e) {
