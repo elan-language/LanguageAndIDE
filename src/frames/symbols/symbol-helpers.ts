@@ -6,17 +6,19 @@ import { Class } from "../compiler-interfaces/class";
 import { DeconstructedSymbolType } from "../compiler-interfaces/deconstructed-symbol-type";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { GenericSymbolType } from "../compiler-interfaces/generic-symbol-type";
+import { Member } from "../compiler-interfaces/member";
 import { ReifyableSymbolType } from "../compiler-interfaces/reifyable-symbol-type";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
-import { Member } from "../compiler-interfaces/member";
+import { isRecord } from "../compiler-interfaces/type-options";
 import { globalKeyword, libraryKeyword, propertyKeyword } from "../keywords";
 import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
 import { isAstIdNode, isAstQualifiedNode, isEmptyNode } from "../syntax-nodes/ast-helpers";
 import { PropertyAsn } from "../syntax-nodes/class-members/property-asn";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { EnumAsn } from "../syntax-nodes/globals/enum-asn";
+import { TupleAsn } from "../syntax-nodes/globals/tuple-asn";
 import { AbstractDefinitionAsn } from "../syntax-nodes/statements/abstract-definition-asn";
 import { CallAsn } from "../syntax-nodes/statements/call-asn";
 import { DefinitionAdapter } from "../syntax-nodes/statements/definition-adapter";
@@ -24,6 +26,9 @@ import { EachAsn } from "../syntax-nodes/statements/each-asn";
 import { ForAsn } from "../syntax-nodes/statements/for-asn";
 import { BooleanType } from "./boolean-type";
 import { ClassType } from "./class-type";
+import { DeconstructedListType } from "./deconstructed-list-type";
+import { DeconstructedRecordType } from "./deconstructed-record-type";
+import { DeconstructedTupleType } from "./deconstructed-tuple-type";
 import { ListImmutableName, ListName } from "./elan-type-names";
 import { EnumType } from "./enum-type";
 import { EnumValueType } from "./enum-value-type";
@@ -36,13 +41,9 @@ import { ProcedureType } from "./procedure-type";
 import { RegExpType } from "./regexp-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
+import { TupleType } from "./tuple-type";
 import { UnknownSymbol } from "./unknown-symbol";
 import { UnknownType } from "./unknown-type";
-import { isRecord } from "../compiler-interfaces/type-options";
-import { DeconstructedListType } from "./deconstructed-list-type";
-import { DeconstructedRecordType } from "./deconstructed-record-type";
-import { DeconstructedTupleType } from "./deconstructed-tuple-type";
-import { TupleType } from "./tuple-type";
 
 export function isClass(f?: ElanSymbol | Scope): f is Class {
   return !!f && "isClass" in f;
@@ -201,6 +202,8 @@ function internalUpdateScopeAndQualifier(
         currentScope = currentScope.updateOfTypes(qualifierScope.scope.ofTypes);
       }
     }
+  } else if (qualifierScope instanceof TupleType) {
+    currentScope = new TupleAsn(qualifierScope, currentScope);
   } else if (isAstIdNode(value) && value.id === libraryKeyword) {
     currentScope = getGlobalScope(currentScope).libraryScope;
     qualifier = EmptyAsn.Instance;
@@ -388,6 +391,14 @@ function matchingSymbolsWithQualifier(propId: string, qualId: string, scope: Sco
     if (isEnumDef(en)) {
       qualifiedSymbols = en.symbolMatches(propId, !propId, NullScope.Instance);
     }
+  }
+
+  if (qualSt instanceof TupleType) {
+    qualifiedSymbols = new TupleAsn(qualSt, scope).symbolMatches(
+      propId,
+      !propId,
+      NullScope.Instance,
+    );
   }
 
   const allExtensions = getGlobalScope(scope)
