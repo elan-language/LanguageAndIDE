@@ -1672,6 +1672,10 @@ function handleRunWorkerFinished() {
 
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
 
+function getDebugHtml(content1: string, content2: string) {
+  return `<div class="showhide collapsed">+<div class=""> ${content1}</div><div class="hidden"> ${content2}</div></div>`;
+}
+
 function getDebugSymbolString(s: DebugSymbol) {
   const id = s.name;
   const type = s.elanType;
@@ -1681,9 +1685,9 @@ function getDebugSymbolString(s: DebugSymbol) {
   const shortString =
     len > 10 ? `"${fullString.slice(0, 10)}"... ${len} chars` : `"${fullString}" ${len} chars`;
 
-  const html = `<div class="showhide collapsed">+<div class=""> ${id} ${type}: ${shortString}</div><div class="hidden"> ${id} ${type}: ${fullString}</div></div>`;
+  const prefix = `${id} ${type}:`;
 
-  return html;
+  return getDebugHtml(`${prefix} ${shortString}`, `${prefix} ${fullString}`);
 }
 
 function getDebugSymbolList(s: DebugSymbol) {
@@ -1695,15 +1699,15 @@ function getDebugSymbolList(s: DebugSymbol) {
   const items = [];
   let index = 0;
 
-  const summary = `<div class=""> ${id} ${type}: ${len} items</div>`;
+  const prefix = `${id} ${type}: ${len} items`;
+
+  const summary = `<div class=""> ${prefix}</div>`;
 
   for (const i of list) {
     items.push(`<div>[${index++}]: ${i}</div>`);
   }
 
-  const html = `<div class="showhide collapsed">+${summary}<div class="hidden">${summary}${items.join("")}</div></div>`;
-
-  return html;
+  return getDebugHtml(`${prefix}`, `${summary}${items.join("")}`);
 }
 
 function getDebugSymbolDictionary(s: DebugSymbol) {
@@ -1715,15 +1719,15 @@ function getDebugSymbolDictionary(s: DebugSymbol) {
 
   const items = [];
 
-  const summary = `<div class=""> ${id} ${type}: ${len} items</div>`;
+  const prefix = `${id} ${type}: ${len} items`;
+
+  const summary = `<div class=""> ${prefix}</div>`;
 
   for (const i of keys) {
     items.push(`<div>[${i}]: ${list[i]}</div>`);
   }
 
-  const html = `<div class="showhide collapsed">+${summary}<div class="hidden">${summary}${items.join("")}</div></div>`;
-
-  return html;
+  return getDebugHtml(`${prefix}`, `${summary}${items.join("")}`);
 }
 
 function getDebugSymbolFloat(s: DebugSymbol) {
