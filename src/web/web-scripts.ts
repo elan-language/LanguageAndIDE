@@ -21,6 +21,7 @@ import {
 } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 import {
+  DebugSymbol,
   WebWorkerBreakpointMessage,
   WebWorkerMessage,
   WebWorkerReadMessage,
@@ -1675,6 +1676,10 @@ function handleRunWorkerFinished() {
 
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
 
+function printDebugSymbol(s: DebugSymbol) {
+  systemInfoPrintSafe(`${s.name}: ${s.value}`);
+}
+
 async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<void> {
   showInfoTab();
   systemInfoDiv.focus();
@@ -1685,7 +1690,7 @@ async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<
   systemInfoDiv.innerHTML = "";
 
   for (const v of variables) {
-    systemInfoPrintSafe(`${v[0]} : ${v[1]}`);
+    printDebugSymbol(v);
   }
 
   const pausedAt = document.getElementById(data.pausedAt);

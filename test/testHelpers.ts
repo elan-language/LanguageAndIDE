@@ -23,7 +23,7 @@ import { UnknownType } from "../src/frames/symbols/unknown-type";
 import { StdLib } from "../src/standard-library/std-lib";
 import { hash } from "../src/util";
 import { encodeCode } from "../src/web/web-helpers";
-import { WebWorkerMessage } from "../src/web/web-worker-messages";
+import { DebugSymbol, WebWorkerMessage } from "../src/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
@@ -224,11 +224,11 @@ export async function assertAutocompletes(
   await doAsserts(f, fld, expected);
 }
 
-function dump(v: [string, string][]) {
-  return v.map(t => `${t[0]}:${t[1]}`).join(", ")
+function dump(v: DebugSymbol[]) {
+  return v.map(t => `${t.elanType}:${t.name}:${t.value}`).join(", ")
 }
 
-function assertData(variables: [string, string][], expected: [string, string][]) {
+function assertData(variables: DebugSymbol[], expected: DebugSymbol[]) {
 
   assert.strictEqual(variables.length, expected.length, `Provided: ${dump(variables)} expected: ${dump(expected)}`)
 
@@ -236,13 +236,14 @@ function assertData(variables: [string, string][], expected: [string, string][])
     const v = variables[i];
     const e = expected[i];
 
-    assert.strictEqual(v[0], e[0]);
-    assert.strictEqual(v[1], e[1]);
+    assert.strictEqual(v.elanType, e.elanType);
+    assert.strictEqual(v.name, e.name);
+    assert.strictEqual(v.value, e.value);
   }
 }
 
 function handleBreakPoint(runWorker: Worker) {
-  return new Promise<[string, string][]>((rs, rj) => {
+  return new Promise<DebugSymbol[]>((rs, rj) => {
     runWorker.addEventListener("message", (e: MessageEvent<WebWorkerMessage>) => {
       const data = e.data;
 
@@ -272,7 +273,7 @@ function handleBreakPoint(runWorker: Worker) {
 export async function assertDebugBreakPoint(
   f: FileImpl,
   id: string,
-  expected: [string, string][],
+  expected: DebugSymbol[],
 ): Promise<void> {
   assertParses(f);
 
@@ -524,6 +525,14 @@ export async function testDemoProgram(program: string) {
   if (ts !== TestStatus.default) {
     assert.equal(ts, TestStatus.pass);
   }
+}
+
+export function asDebugSymbol(t: string, n: string, v: string) {
+  return {
+    elanType: t,
+    name: n,
+    value: v
+  } as DebugSymbol
 }
 
 

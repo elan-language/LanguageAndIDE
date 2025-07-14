@@ -1,7 +1,8 @@
 import { DefaultProfile } from "../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../src/frames/file-impl";
+import { DebugSymbol } from "../src/web/web-worker-messages";
 import { testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
-import { assertDebugBreakPoint } from "./testHelpers";
+import { asDebugSymbol, assertDebugBreakPoint } from "./testHelpers";
 
 suite("DebugBreakpoint", () => {
   test("Pass_Main", async () => {
@@ -16,7 +17,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [] as [string, string][];
+    const expected = [] as DebugSymbol[];
 
     await assertDebugBreakPoint(fileImpl, "main4", expected);
   });
@@ -36,11 +37,11 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["a", "1"],
-      ["b", "[1, 2]"],
-      ["c", "fred"],
-      ["d", "{1:2}"],
-    ] as [string, string][];
+      asDebugSymbol("Int", "a", "1"),
+      asDebugSymbol("List", "b", "[1, 2]"),
+      asDebugSymbol("String", "c", "fred"),
+      asDebugSymbol("DictionaryImmutable", "d", "{1:2}"),
+    ];
 
     await assertDebugBreakPoint(fileImpl, "set15", expected);
   });
@@ -64,12 +65,12 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["a", "1"],
-      ["b", "[1, 2]"],
-      ["c", "fred"],
-      ["d", "{1:2}"],
-      ["e", "3"],
-    ] as [string, string][];
+      asDebugSymbol("Int", "a", "1"),
+      asDebugSymbol("List", "b", "[1, 2]"),
+      asDebugSymbol("String", "c", "fred"),
+      asDebugSymbol("DictionaryImmutable", "d", "{1:2}"),
+      asDebugSymbol("Int", "e", "3"),
+    ];
 
     await assertDebugBreakPoint(fileImpl, "set22", expected);
   });
@@ -94,12 +95,12 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["a", "1"],
-      ["b", "[1, 2]"],
-      ["c", "fred"],
-      ["d", "{1:2}"],
-      ["e", "3"],
-    ] as [string, string][];
+      asDebugSymbol("Int", "a", "1"),
+      asDebugSymbol("List", "b", "[1, 2]"),
+      asDebugSymbol("String", "c", "fred"),
+      asDebugSymbol("DictionaryImmutable", "d", "{1:2}"),
+      asDebugSymbol("Int", "e", "3"),
+    ];
 
     await assertDebugBreakPoint(fileImpl, "set25", expected);
   });
@@ -129,13 +130,13 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["a", "1"],
-      ["b", "[1, 2]"],
-      ["c", "fred"],
-      ["d", "{1:2}"],
-      ["e", "3"],
-      ["property.f", "0"],
-    ] as [string, string][];
+      asDebugSymbol("Int", "a", "1"),
+      asDebugSymbol("List", "b", "[1, 2]"),
+      asDebugSymbol("String", "c", "fred"),
+      asDebugSymbol("DictionaryImmutable", "d", "{1:2}"),
+      asDebugSymbol("Int", "e", "3"),
+      asDebugSymbol("Int", "property.f", "0"),
+    ];
 
     await assertDebugBreakPoint(fileImpl, "set32", expected);
   });
@@ -166,13 +167,13 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["a", "1"],
-      ["b", "[1, 2]"],
-      ["c", "fred"],
-      ["d", "{1:2}"],
-      ["e", "3"],
-      ["property.f", "0"],
-    ] as [string, string][];
+      asDebugSymbol("Int", "a", "1"),
+      asDebugSymbol("List", "b", "[1, 2]"),
+      asDebugSymbol("String", "c", "fred"),
+      asDebugSymbol("DictionaryImmutable", "d", "{1:2}"),
+      asDebugSymbol("Int", "e", "3"),
+      asDebugSymbol("Int", "property.f", "0"),
+    ];
 
     await assertDebugBreakPoint(fileImpl, "set35", expected);
   });
@@ -202,13 +203,13 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["a", "1"],
-      ["b", "[1, 2]"],
-      ["c", "fred"],
-      ["d", "{1:2}"],
-      ["e", "3"],
-      ["property.f", "0"],
-    ] as [string, string][];
+      asDebugSymbol("Int", "a", "1"),
+      asDebugSymbol("List", "b", "[1, 2]"),
+      asDebugSymbol("String", "c", "fred"),
+      asDebugSymbol("DictionaryImmutable", "d", "{1:2}"),
+      asDebugSymbol("Int", "e", "3"),
+      asDebugSymbol("Int", "property.f", "0"),
+    ];
 
     await assertDebugBreakPoint(fileImpl, "set25", expected);
   });
@@ -227,10 +228,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["i", "1"],
-      ["tot", "0"],
-    ] as [string, string][];
+    const expected = [asDebugSymbol("Int", "i", "1"), asDebugSymbol("Int", "tot", "0")];
 
     await assertDebugBreakPoint(fileImpl, "set12", expected);
   });
@@ -251,10 +249,10 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["a", "{7, 8, 9}"],
-      ["n", "0"],
-      ["x", "7"],
-    ] as [string, string][];
+      asDebugSymbol("ListImmutable", "a", "{7, 8, 9}"),
+      asDebugSymbol("Int", "n", "0"),
+      asDebugSymbol("Int", "x", "7"),
+    ];
 
     await assertDebugBreakPoint(fileImpl, "set13", expected);
   });
@@ -280,10 +278,10 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["t", "0"],
-      ["x", "0"],
-      ["y", "1"],
-    ] as [string, string][];
+      asDebugSymbol("Int", "t", "0"),
+      asDebugSymbol("Int", "x", "0"),
+      asDebugSymbol("Int", "y", "1"),
+    ];
 
     await assertDebugBreakPoint(fileImpl, "set21", expected);
   });
@@ -302,7 +300,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["x", "0"]] as [string, string][];
+    const expected = [asDebugSymbol("Int", "x", "0")];
 
     await assertDebugBreakPoint(fileImpl, "set9", expected);
   });
@@ -324,7 +322,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["a", "1"]] as [string, string][];
+    const expected = [asDebugSymbol("Int", "a", "1")];
 
     await assertDebugBreakPoint(fileImpl, "set11", expected);
   });
@@ -346,10 +344,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["b", "error"],
-      ["e", "error"],
-    ] as [string, string][];
+    const expected = [asDebugSymbol("String", "b", "error"), asDebugSymbol("String", "e", "error")];
 
     await assertDebugBreakPoint(fileImpl, "print19", expected);
   });
@@ -371,10 +366,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["a", "true"],
-      ["b", "1"],
-    ] as [string, string][];
+    const expected = [asDebugSymbol("Boolean", "a", "true"), asDebugSymbol("Int", "b", "1")];
 
     await assertDebugBreakPoint(fileImpl, "set12", expected);
   });
@@ -396,10 +388,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["a", "false"],
-      ["c", "1"],
-    ] as [string, string][];
+    const expected = [asDebugSymbol("Boolean", "a", "false"), asDebugSymbol("Int", "c", "1")];
 
     await assertDebugBreakPoint(fileImpl, "set21", expected);
   });
@@ -421,10 +410,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["a", "false"],
-      ["c", "1"],
-    ] as [string, string][];
+    const expected = [asDebugSymbol("Boolean", "a", "false"), asDebugSymbol("Int", "c", "1")];
 
     await assertDebugBreakPoint(fileImpl, "set21", expected);
   });
@@ -445,7 +431,7 @@ end function
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["a", "1"]] as [string, string][];
+    const expected = [asDebugSymbol("Int", "a", "1")];
 
     await assertDebugBreakPoint(fileImpl, "return13", expected);
   });
@@ -465,7 +451,7 @@ end procedure`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["n", "1"]] as [string, string][];
+    const expected = [asDebugSymbol("Int", "n", "1")];
 
     await assertDebugBreakPoint(fileImpl, "print13", expected);
   });

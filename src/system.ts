@@ -9,7 +9,7 @@ import { ElanArray } from "./standard-library/elan-array";
 import { ElanSet } from "./standard-library/elan-set";
 import { List } from "./standard-library/list";
 import { ListImmutable } from "./standard-library/list-immutable";
-import { WebWorkerBreakpointMessage } from "./web/web-worker-messages";
+import { DebugSymbol, WebWorkerBreakpointMessage } from "./web/web-worker-messages";
 
 export class System {
   constructor(public readonly elanInputOutput: ElanInputOutput) {}
@@ -279,9 +279,15 @@ export class System {
     return allOutcomes;
   }
 
-  async debugSymbol(symbol: any) {
+  async debugSymbol(type: string, name: string, symbol: any) {
     try {
-      return await this._stdlib.asString(symbol);
+      //return await this._stdlib.asString(symbol);
+
+      return {
+        elanType: type,
+        name: name,
+        value: await this._stdlib.asString(symbol),
+      };
     } catch (_e) {
       return "error resolving";
     }
@@ -315,7 +321,7 @@ export class System {
   }
 
   async breakPoint(
-    allScopedSymbols: [string, string][],
+    allScopedSymbols: DebugSymbol[],
     id: string,
     singlestep: boolean,
     pause: boolean,
