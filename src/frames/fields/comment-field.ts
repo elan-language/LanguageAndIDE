@@ -1,3 +1,4 @@
+import { escapeHtmlChars } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
@@ -30,7 +31,7 @@ export class CommentField extends AbstractField {
   renderAsHtml(): string {
     const txt = this.isSelected()
       ? this.textAsHtml()
-      : this.handleLeadingAndMultipleSpaces(this.textAsHtml());
+      : this.handleLeadingAndMultipleSpaces(escapeHtmlChars(this.textAsHtml()));
     return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${txt}</el-txt><el-place>${this.placeholder}</el-place><el-compl>${this.getCompletion()}</el-compl>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
   }
 

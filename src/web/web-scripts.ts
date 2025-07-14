@@ -34,7 +34,6 @@ import {
 const codeContainer = document.querySelector(".elan-code") as HTMLDivElement;
 const runButton = document.getElementById("run-button") as HTMLButtonElement;
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
-const clearDisplayButton = document.getElementById("clear-display") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
 const newButton = document.getElementById("new") as HTMLButtonElement;
 const demosButton = document.getElementById("demos") as HTMLButtonElement;
@@ -63,10 +62,12 @@ const codeControls = document.getElementById("code-controls") as HTMLDivElement;
 const demoFiles = document.getElementsByClassName("demo-file");
 
 // Display
+const clearDisplayButton = document.getElementById("clear-display") as HTMLButtonElement;
 const displayTabLabel = document.getElementById("display-tab-label") as HTMLDivElement;
 const displayDiv = document.getElementById("display") as HTMLDivElement;
 
-// Debug
+// Info
+const clearInfoButton = document.getElementById("clear-info") as HTMLButtonElement;
 const infoTabLabel = document.getElementById("info-tab-label") as HTMLDivElement;
 const runDebugButton = document.getElementById("run-debug-button") as HTMLButtonElement;
 const pauseButton = document.getElementById("pause") as HTMLButtonElement;
@@ -286,6 +287,10 @@ clearDisplayButton?.addEventListener("click", async () => {
   await elanInputOutput.clearDisplay();
 });
 
+clearInfoButton?.addEventListener("click", async () => {
+  await elanInputOutput.clearSystemInfo();
+});
+
 loadExternalWorksheetButton?.addEventListener("click", async () => {
   try {
     const [fileHandle] = await window.showOpenFilePicker({
@@ -390,15 +395,6 @@ function showDisplayTab() {
 function showInfoTab() {
   const tabName = "info-tab";
   setTabToFocussedAndSelected(tabName);
-  systemInfoDiv.classList.remove("focussed");
-  if (!runDebugButton.disabled) {
-    runDebugButton.focus();
-  } else if (!pauseButton.disabled) {
-    pauseButton.focus();
-  } else {
-    systemInfoDiv.focus();
-    systemInfoDiv.classList.add("focussed");
-  }
 }
 
 function showHelpTab() {
