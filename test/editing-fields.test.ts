@@ -191,7 +191,28 @@ suite("Editing Fields Tests", () => {
     field.processKey(tab());
     assert.equal(
       field.renderAsHtml(),
-      `<el-field id="comment2" class="optional ok" tabindex="-1"><el-txt><p></el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
+      `<el-field id="comment2" class="optional ok" tabindex="-1"><el-txt>&lt;p&gt;</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
+    );
+  });
+
+  test("Ensure - leading spaces in a comment OK", () => {
+    const comment = new GlobalComment(new FileImpl(hash, new DefaultProfile(), "", transforms()));
+    const field = comment.text;
+    field.select();
+    field.processKey(key(" "));
+    field.processKey(key("f"));
+    field.processKey(key(" "));
+    field.processKey(key(" "));
+    field.processKey(key("b"));
+    assert.equal(field.text, " f  b");
+    assert.equal(
+      field.renderAsHtml(),
+      `<el-field id="comment2" class="selected focused optional ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="5" data-cursorend="5" size="4" style="width: 5ch" value=" f  b" tabindex="-1"></el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
+    );
+    field.processKey(tab());
+    assert.equal(
+      field.renderAsHtml(),
+      `<el-field id="comment2" class="optional ok" tabindex="-1"><el-txt>&nbsp;f &nbsp;b</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
     );
   });
 
