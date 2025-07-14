@@ -11,11 +11,13 @@ test('shortcuts', async ({ page }) => {
 
   await page.keyboard.press('Control+d');
 
-  await expect(page.getByRole('button', {name : 'clear'})).toBeVisible();
+  await expect(page.getByAltText('clear display')).toBeVisible();
 
   await page.keyboard.press('Control+i');
 
-  await expect(page.getByRole('button', {name : 'clear'})).not.toBeVisible()
+  await expect(page.getByAltText('clear info')).toBeVisible();
+
+  await expect(page.getByAltText('clear display')).not.toBeVisible();
 
   await page.keyboard.press('Control+h');
 
@@ -37,11 +39,13 @@ test('shortcuts uppercase', async ({ page }) => {
 
   await page.keyboard.press('Control+Shift+d');
 
-  await expect(page.getByRole('button', {name : 'clear'})).toBeVisible();
+  await expect(page.getByAltText('clear display')).toBeVisible();
 
   await page.keyboard.press('Control+Shift+i');
 
-  await expect(page.getByRole('button', {name : 'clear'})).not.toBeVisible()
+  await expect(page.getByAltText('clear info')).toBeVisible();
+
+  await expect(page.getByAltText('clear display')).not.toBeVisible();
 
   await page.keyboard.press('Control+Shift+h');
 
