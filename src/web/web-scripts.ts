@@ -66,18 +66,18 @@ const displayTabLabel = document.getElementById("display-tab-label") as HTMLDivE
 const displayDiv = document.getElementById("display") as HTMLDivElement;
 
 // Debug
-const debugTabLabel = document.getElementById("debug-tab-label") as HTMLDivElement;
+const infoTabLabel = document.getElementById("info-tab-label") as HTMLDivElement;
 const runDebugButton = document.getElementById("run-debug-button") as HTMLButtonElement;
 const pauseButton = document.getElementById("pause") as HTMLButtonElement;
 const stepButton = document.getElementById("step") as HTMLButtonElement;
 const systemInfoDiv = document.getElementById("system-info") as HTMLDivElement;
 
 // Help (documentation)
-const docTabLabel = document.getElementById("doc-tab-label") as HTMLDivElement;
-const documentationHome = document.getElementById("doc-home") as HTMLButtonElement;
-const documentationBack = document.getElementById("doc-back") as HTMLButtonElement;
-const documentationForward = document.getElementById("doc-forward") as HTMLButtonElement;
-const documentationIFrame = document.getElementById("doc-iframe") as HTMLIFrameElement;
+const helpTabLabel = document.getElementById("help-tab-label") as HTMLDivElement;
+const helpHomeButton = document.getElementById("help-home") as HTMLButtonElement;
+const helpBackButton = document.getElementById("help-back") as HTMLButtonElement;
+const helpForwardButton = document.getElementById("help-forward") as HTMLButtonElement;
+const helpIFrame = document.getElementById("help-iframe") as HTMLIFrameElement;
 
 // Worksheet
 const worksheetTabLabel = document.getElementById("worksheet-tab-label") as HTMLDivElement;
@@ -85,9 +85,9 @@ const standardWorksheetButton = document.getElementById("standard-worksheets") a
 const loadExternalWorksheetButton = document.getElementById("load-worksheet") as HTMLButtonElement;
 const worksheetIFrame = document.getElementById("worksheet-iframe") as HTMLIFrameElement;
 
-const debugTab = document.getElementById("debug-tab");
+const infoTab = document.getElementById("info-tab");
 const displayTab = document.getElementById("display-tab");
-const documentationTab = document.getElementById("documentation-tab");
+const helpTab = document.getElementById("help-tab");
 const worksheetTab = document.getElementById("worksheet-tab");
 
 const inactivityTimeout = 2000;
@@ -386,8 +386,8 @@ function showDisplayTab() {
   setTabToFocussedAndSelected(tabName);
 }
 
-function showDebugTab() {
-  const tabName = "debug-tab";
+function showInfoTab() {
+  const tabName = "info-tab";
   setTabToFocussedAndSelected(tabName);
   systemInfoDiv.classList.remove("focussed");
   if (!runDebugButton.disabled) {
@@ -400,11 +400,11 @@ function showDebugTab() {
   }
 }
 
-function showDocumentationTab() {
-  const tabName = "documentation-tab";
+function showHelpTab() {
+  const tabName = "help-tab";
   setTabToFocussedAndSelected(tabName);
-  documentationIFrame.focus();
-  documentationIFrame.contentWindow?.addEventListener("keydown", globalHandler);
+  helpIFrame.focus();
+  helpIFrame.contentWindow?.addEventListener("keydown", globalHandler);
 }
 
 function showWorksheetTab() {
@@ -448,22 +448,22 @@ function removeFocussedClassFromAllTabs() {
   }
 }
 
-docTabLabel.addEventListener("click", showDocumentationTab);
+helpTabLabel.addEventListener("click", showHelpTab);
 
-documentationHome.addEventListener("click", () => {
-  window.open("documentation/Home.html", "doc-iframe")?.focus();
+helpHomeButton.addEventListener("click", () => {
+  window.open("documentation/Home.html", "help-iframe")?.focus();
 });
 
-documentationBack.addEventListener("click", () => {
-  documentationIFrame.contentWindow?.history.back();
+helpBackButton.addEventListener("click", () => {
+  helpIFrame.contentWindow?.history.back();
 });
 
-documentationForward.addEventListener("click", () => {
-  documentationIFrame.contentWindow?.history.forward();
+helpForwardButton.addEventListener("click", () => {
+  helpIFrame.contentWindow?.history.forward();
 });
 
 displayTabLabel.addEventListener("click", showDisplayTab);
-debugTabLabel.addEventListener("click", showDebugTab);
+infoTabLabel.addEventListener("click", showInfoTab);
 worksheetTabLabel.addEventListener("click", showWorksheetTab);
 
 let worksheetLoaded = false;
@@ -475,9 +475,9 @@ worksheetIFrame.addEventListener("load", () => {
   worksheetTabLabel.click();
 });
 
-documentationIFrame.addEventListener("load", () => {
-  documentationIFrame.contentWindow?.addEventListener("keydown", globalHandler);
-  documentationIFrame.contentWindow?.addEventListener("click", () => showDocumentationTab());
+helpIFrame.addEventListener("load", () => {
+  helpIFrame.contentWindow?.addEventListener("keydown", globalHandler);
+  helpIFrame.contentWindow?.addEventListener("click", () => showHelpTab());
 });
 
 function warningOrError(tgt: HTMLDivElement): [boolean, string] {
@@ -601,7 +601,7 @@ if (okToContinue) {
     await setup(profile);
   });
 } else {
-  const msg = "Require Chrome";
+  const msg = "Require Chrome or Edge";
   disable(
     [
       runButton,
@@ -961,7 +961,7 @@ function updateDisplayValues() {
     }
 
     if (canUndo()) {
-      enable(undoButton, "Undo last change (Ctrl + z)");
+      enable(undoButton, "Undo last change (Ctrl-z)");
     } else {
       disable([undoButton], "Nothing to undo");
     }
@@ -969,7 +969,7 @@ function updateDisplayValues() {
     if (nextFileIndex === -1) {
       disable([redoButton], "Nothing to redo");
     } else {
-      enable(redoButton, "Redo last change (Ctrl + y");
+      enable(redoButton, "Redo last change (Ctrl-y)");
     }
 
     if (autoSaveFileHandle) {
@@ -1324,10 +1324,10 @@ async function updateContent(text: string, editingField: boolean) {
 
   for (const item of helpLinks) {
     item.addEventListener("click", (event) => {
-      if ((event.target as any).target === "doc-iframe") {
+      if ((event.target as any).target === "help-iframe") {
         // can't use the load event as if the page is already loaded with url it doesn#t fore agaon so
         // no focus
-        docTabLabel.click();
+        helpTabLabel.click();
       }
 
       event.stopPropagation();
@@ -1676,7 +1676,7 @@ function handleRunWorkerFinished() {
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
 
 async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<void> {
-  showDebugTab();
+  showInfoTab();
   systemInfoDiv.focus();
   systemInfoDiv.classList.add("focussed");
   file.setRunStatus(RunStatus.paused);
@@ -1701,7 +1701,7 @@ async function handleRunWorkerSingleStep(data: WebWorkerBreakpointMessage): Prom
 }
 
 async function handleRunWorkerError(data: WebWorkerStatusMessage) {
-  debugTabLabel.click();
+  infoTabLabel.click();
   runWorker?.terminate();
   runWorker = undefined;
   elanInputOutput.finished();
@@ -2067,12 +2067,16 @@ if (!isElanProduction) {
 const globalKeys = [
   "b",
   "B",
+  "d",
+  "D",
   "e",
   "E",
   "g",
   "G",
   "h",
   "H",
+  "i",
+  "I",
   "k",
   "K",
   "p",
@@ -2081,6 +2085,8 @@ const globalKeys = [
   "R",
   "s",
   "S",
+  "u",
+  "U",
   "+",
   "-",
   "=",
@@ -2104,6 +2110,11 @@ function globalHandler(kp: KeyboardEvent) {
         }
         kp.preventDefault();
         break;
+      case "d":
+      case "D":
+        displayTabLabel.click();
+        kp.preventDefault();
+        break;
       case "e":
       case "E":
         codeContainer.click();
@@ -2111,12 +2122,17 @@ function globalHandler(kp: KeyboardEvent) {
         break;
       case "g":
       case "G":
-        debugTabLabel.click();
+        runDebugButton.click();
         kp.preventDefault();
         break;
       case "h":
       case "H":
-        docTabLabel.click();
+        helpTabLabel.click();
+        kp.preventDefault();
+        break;
+      case "i":
+      case "I":
+        infoTabLabel.click();
         kp.preventDefault();
         break;
       case "k":
@@ -2126,7 +2142,7 @@ function globalHandler(kp: KeyboardEvent) {
         break;
       case "p":
       case "P":
-        displayTabLabel.click();
+        stepButton.click();
         kp.preventDefault();
         break;
       case "r":
@@ -2137,6 +2153,11 @@ function globalHandler(kp: KeyboardEvent) {
       case "s":
       case "S":
         stopButton.click();
+        kp.preventDefault();
+        break;
+      case "u":
+      case "U":
+        pauseButton.click();
         kp.preventDefault();
         break;
     }
@@ -2252,10 +2273,10 @@ fileMenu.addEventListener("click", () => collapseMenu(fileButton, false));
 worksheetMenu.addEventListener("click", () => collapseMenu(standardWorksheetButton, false));
 
 displayTab?.addEventListener("click", () => showDisplayTab());
-debugTab?.addEventListener("click", () => showDebugTab());
-documentationTab?.addEventListener("click", () => showDocumentationTab());
+infoTab?.addEventListener("click", () => showInfoTab());
+helpTab?.addEventListener("click", () => showHelpTab());
 worksheetTab?.addEventListener("click", () => showWorksheetTab());
 worksheetIFrame?.contentWindow?.addEventListener("click", () => showWorksheetTab());
-documentationIFrame?.contentWindow?.addEventListener("click", () => showDocumentationTab());
+helpIFrame?.contentWindow?.addEventListener("click", () => showHelpTab());
 
 window.addEventListener("click", () => collapseAllMenus());

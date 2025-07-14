@@ -27,7 +27,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(text.readParseStatus(), ParseStatus.valid);
     assert.equal(
       text.renderAsHtml(),
-      `<el-field id="comment4" class="optional ok" tabindex="-1"><el-txt>Hello</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="doc-iframe" tabindex="-1">?</a></el-help></el-field>`,
+      `<el-field id="comment4" class="optional ok" tabindex="-1"><el-txt>Hello</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
     );
   });
   test("parse CommentFieldWithSpaces", () => {
@@ -41,7 +41,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(text.readParseStatus(), ParseStatus.valid);
     assert.equal(
       text.renderAsHtml(),
-      `<el-field id="comment4" class="optional ok" tabindex="-1"><el-txt>&nbsp;&nbsp;Hello &nbsp;&nbsp;World &nbsp;</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="doc-iframe" tabindex="-1">?</a></el-help></el-field>`,
+      `<el-field id="comment4" class="optional ok" tabindex="-1"><el-txt>&nbsp;&nbsp;Hello &nbsp;&nbsp;World &nbsp;</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
     );
   });
   test("parse varDefField", () => {
@@ -55,7 +55,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(id.readParseStatus(), ParseStatus.valid);
     assert.equal(
       id.renderAsHtml(),
-      `<el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>ab_1</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe" tabindex="-1">?</a></el-help></el-field>`,
+      `<el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>ab_1</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
     );
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
@@ -76,7 +76,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(id.readParseStatus(), ParseStatus.valid);
     assert.equal(
       id.renderAsHtml(),
-      `<el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>ab_1</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="doc-iframe" tabindex="-1">?</a></el-help></el-field>`,
+      `<el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>ab_1</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
     );
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();

@@ -70,7 +70,7 @@ export abstract class AbstractFrame implements Frame {
     this.helpActive = false;
 
     return this.selected
-      ? `<el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe" tabindex="-1"${active}>?</a></el-help>`
+      ? `<el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#${this.helpId()}" target="help-iframe" tabindex="-1"${active}>?</a></el-help>`
       : ``;
   }
 
@@ -194,7 +194,7 @@ export abstract class AbstractFrame implements Frame {
     return result;
   }
 
-  private controlKeys = ["o", "O", "ArrowUp", "ArrowDown", "Delete", "d", "x", "m", "?"];
+  private controlKeys = ["o", "O", "ArrowUp", "ArrowDown", "Backspace", "Delete", "x", "m", "?"];
 
   processKey(e: editorEvent): boolean {
     let codeHasChanged = false;
@@ -281,15 +281,11 @@ export abstract class AbstractFrame implements Frame {
         }
         break;
       }
-      case "d": {
+      case "Backspace": {
         if (e.modKey.control) {
           this.deleteSelected();
           codeHasChanged = true;
-        }
-        break;
-      }
-      case "Backspace": {
-        if (this.isNew) {
+        } else if (this.isNew) {
           this.deleteIfPermissible();
           codeHasChanged = true;
         }

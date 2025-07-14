@@ -32,7 +32,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     this.helpActive = false;
 
     return this.isSelected()
-      ? `<el-help title="Click to open Help for any of these instructions"> <a href="documentation/LangRef.html#${this.helpId()}" target="doc-iframe" tabindex="-1"${active}>?</a></el-help>`
+      ? `<el-help title="Click to open Help for any of these instructions"> <a href="documentation/LangRef.html#${this.helpId()}" target="help-iframe" tabindex="-1"${active}>?</a></el-help>`
       : ``;
   }
 

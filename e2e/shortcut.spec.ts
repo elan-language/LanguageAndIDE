@@ -7,7 +7,7 @@ test('shortcuts', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+p');
 
@@ -19,7 +19,7 @@ test('shortcuts', async ({ page }) => {
 
   await page.keyboard.press('Control+h');
 
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+k');
 
@@ -33,7 +33,7 @@ test('shortcuts uppercase', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+Shift+p');
 
@@ -45,7 +45,7 @@ test('shortcuts uppercase', async ({ page }) => {
 
   await page.keyboard.press('Control+Shift+h');
 
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+Shift+k');
 
@@ -59,7 +59,7 @@ test('tabs', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+b');
 
@@ -78,15 +78,15 @@ test('tabs', async ({ page }) => {
 
  await page.keyboard.press('Tab');
 
- await expect(page.locator('#doc-home')).toBeFocused();
+ await expect(page.locator('#help-home')).toBeFocused();
 
  await page.keyboard.press('Tab');
 
- await expect(page.locator('#doc-back')).toBeFocused();
+ await expect(page.locator('#help-back')).toBeFocused();
 
  await page.keyboard.press('Tab');
 
- await expect(page.locator('#doc-forward')).toBeFocused();
+ await expect(page.locator('#help-forward')).toBeFocused();
 
  await page.keyboard.press('Control+p');
 
@@ -110,7 +110,7 @@ test('tabs uppercase', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+Shift+b');
 
@@ -129,15 +129,15 @@ test('tabs uppercase', async ({ page }) => {
 
  await page.keyboard.press('Tab');
 
- await expect(page.locator('#doc-home')).toBeFocused();
+ await expect(page.locator('#help-home')).toBeFocused();
 
  await page.keyboard.press('Tab');
 
- await expect(page.locator('#doc-back')).toBeFocused();
+ await expect(page.locator('#help-back')).toBeFocused();
 
  await page.keyboard.press('Tab');
 
- await expect(page.locator('#doc-forward')).toBeFocused();
+ await expect(page.locator('#help-forward')).toBeFocused();
 
  await page.keyboard.press('Control+Shift+p');
 
@@ -161,7 +161,7 @@ test('demos', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+b');
 
@@ -188,7 +188,7 @@ test('files', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+b');
 
@@ -217,7 +217,7 @@ test('worksheets', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+k');
 
@@ -244,7 +244,7 @@ test('close menus by open menus', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+k');
 
@@ -282,7 +282,7 @@ test('close demo menu by other button', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+b');
 
@@ -308,7 +308,7 @@ test('close demo menu by keyboard', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+b');
 
@@ -329,7 +329,7 @@ test('close demo menu by click', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+b');
 
@@ -350,7 +350,7 @@ test('close file menu by other button', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+b');
 
@@ -376,7 +376,7 @@ test('close file menu by keyboard', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+b');
 
@@ -399,7 +399,7 @@ test('close file menu by click', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+b');
 
@@ -422,7 +422,7 @@ test('close worksheet menu by other button', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+k');
 
@@ -448,7 +448,7 @@ test('close worksheet menu by keyboard', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+k');
 
@@ -469,7 +469,7 @@ test('close worksheet menu by click', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+k');
 
@@ -490,7 +490,7 @@ test('run and stop program', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+b');
 
@@ -538,7 +538,7 @@ test('run and stop program uppercase', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+Shift+b');
 
@@ -586,11 +586,11 @@ test('shortcut help', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.press('Control+Shift+?');
 
-  await expect(page.frameLocator('#doc-iframe').getByText("Global instructions (also referred to simply as")).toBeVisible();
+  await expect(page.frameLocator('#help-iframe').getByText("Global instructions (also referred to simply as")).toBeVisible();
 
   await page.keyboard.press('Control+e');
 
@@ -600,7 +600,7 @@ test('shortcut help', async ({ page }) => {
 
   await page.keyboard.press('Control+Shift+?');
 
-  await expect(page.frameLocator('#doc-iframe').getByText("Valid forms for a procedure call are")).toBeVisible();
+  await expect(page.frameLocator('#help-iframe').getByText("Valid forms for a procedure call are")).toBeVisible();
 
   await page.keyboard.press('Control+e');
 
@@ -612,7 +612,7 @@ test('shortcut help', async ({ page }) => {
 
   await page.keyboard.press('Control+Shift+?');
 
-  await expect(page.frameLocator('#doc-iframe').getByText("What is the difference between a compile error and a warning")).toBeVisible();
+  await expect(page.frameLocator('#help-iframe').getByText("What is the difference between a compile error and a warning")).toBeVisible();
 
   await page.keyboard.press('Control+e');
 
@@ -620,7 +620,7 @@ test('shortcut help', async ({ page }) => {
 
   await page.keyboard.press('Control+Shift+?');
 
-  await expect(page.frameLocator('#doc-iframe').getByText("This field expects an expression.")).toBeVisible();
+  await expect(page.frameLocator('#help-iframe').getByText("This field expects an expression.")).toBeVisible();
 });
 
 test('tabs parse', async ({ page }) => {
@@ -630,7 +630,7 @@ test('tabs parse', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.type("m");
 
@@ -659,7 +659,7 @@ test('tabs compile', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await expect(page.locator('#doc-home')).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   await page.keyboard.type("m");
 

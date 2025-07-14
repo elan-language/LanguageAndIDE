@@ -85,15 +85,32 @@
                 </div>
                 <div id="rh-header-r">
                     <div id="run-controls">
-                        <button id="run-button" class="icon"  tabindex="0"><img src="images/Run.png"></button>
-                        <button id="stop" class="icon" disabled  tabindex="0"><img src="images/Stop.png"></button>
-                        <img id="logo" src="images/reverse-logo.png">
+                        <button id="run-button" class="icon"  tabindex="0">
+                            <img src="images/Run.png">
+                            <label for="run-button"><b><u>r</u></b>un</label>
+                        </button>
+                        <button id="stop" class="icon" disabled  tabindex="0">
+                            <img src="images/Stop.png">
+                            <label for="stop"><b><u>s</u></b>top</label>
+                        </button>
+                        <button id="run-debug-button" class="icon"  tabindex="0">
+                            <img src="images/Debug.png">
+                            <label for="run-debug-button">debu<b><u>g</u></b></label>
+                        </button>
+                        <button id="pause" class="icon" disabled title="Pause" tabindex="0">
+                            <img src="images/Pause.png">
+                            <label for="pause">pa<b><u>u</u></b>se</label>
+                        </button>
+                        <button id="step" class="icon" disabled title="Single Step" tabindex="0">
+                            <img src="images/Step.png">
+                            <label for="step">ste<b><u>p</u></b></label>
+                        </button>
                     </div>
                     <div id="tab-labels">
-                        <div id="display-tab-label" class="tab-label tab-element display-tab" tabindex="-1">dis<b>p</b>lay</div>
-                        <div id="debug-tab-label" class="tab-label tab-element debug-tab" tabindex="-1">debu<b>g</b></div>
-                        <div id="doc-tab-label" class="tab-label tab-element documentation-tab selected"  tabindex="-1"><b>h</b>elp</div>
-                        <div id="worksheet-tab-label" class="tab-label tab-element worksheet-tab"  tabindex="-1">wor<b>k</b>sheet</div>
+                        <div id="display-tab-label" class="tab-label tab-element display-tab" tabindex="-1"><b><u>d</u></b>isplay</div>
+                        <div id="info-tab-label" class="tab-label tab-element info-tab" tabindex="-1"><b><u>i</u></b>nfo</div>
+                        <div id="help-tab-label" class="tab-label tab-element help-tab selected"  tabindex="-1"><b><u>h</u></b>elp</div>
+                        <div id="worksheet-tab-label" class="tab-label tab-element worksheet-tab"  tabindex="-1">wor<b><u>k</u></b>sheet</div>
                     </div>
                 </div>
             </div>
@@ -108,21 +125,16 @@
                     <div id="vector-graphics"></div>
                 </div>
             </div>
-            <div id="debug-tab" class="main-tab tab-element debug-tab" tabindex="-1">
-                <div class="tab-controls tab-element debug-tab">
-                    <button id="run-debug-button" class="icon"  tabindex="0"><img src="images/Debug.png"></button>
-                    <button id="pause" class="icon" disabled title="Pause" tabindex="0"><img src="images/Pause.png"></button>
-                    <button id="step" class="icon" disabled title="Single Step" tabindex="0"><img src="images/Step.png"></button>
-                </div>
-                <div id="system-info" class="tab-content tab-element debug-tab"tabindex="0"></div>
+            <div id="info-tab" class="main-tab tab-element info-tab" tabindex="-1">
+                <div id="system-info" class="tab-content tab-element info-tab"tabindex="0"></div>
             </div>
-            <div id="documentation-tab" class="main-tab tab-element documentation-tab selected" tabindex="-1"> <!-- now 'Help` tab-->
-                <div class="tab-controls tab-element documentation-tab selected">
-                    <button id="doc-home" class="icon" tabindex="0"><img src="images/Home.png"></button>
-                    <button id="doc-back" class="icon" tabindex="0"><img src="images/Back.png"></button>
-                    <button id="doc-forward" class="icon" tabindex="0"><img src="images/Forward.png"></button>
+            <div id="help-tab" class="main-tab tab-element help-tab selected" tabindex="-1"> <!-- now 'Help` tab-->
+                <div class="tab-controls tab-element help-tab selected">
+                    <button id="help-home" class="icon" tabindex="0"><img src="images/Home.png"></button>
+                    <button id="help-back" class="icon" tabindex="0"><img src="images/Back.png"></button>
+                    <button id="help-forward" class="icon" tabindex="0"><img src="images/Forward.png"></button>
                 </div>
-                <iframe name="doc-iframe" id="doc-iframe" class="tab-content tab-element documentation-tab selected" src="documentation/Home.html"></iframe>
+                <iframe name="help-iframe" id="help-iframe" class="tab-content tab-element help-tab selected" src="documentation/Home.html"></iframe>
             </div>              
             <div id="worksheet-tab" class="main-tab tab-element worksheet-tab" tabindex="-1">
                 <div class="tab-controls tab-element worksheet-tab">
