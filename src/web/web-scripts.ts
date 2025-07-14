@@ -1675,16 +1675,61 @@ let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
 function printDebugSymbolString(s: DebugSymbol) {
   const id = s.name;
   const type = s.elanType;
-  const fullString = s.value;
+  const fullString = s.value as string;
   const len = fullString.length;
 
   const shortString =
     len > 10 ? `"${fullString.slice(0, 10)}"... ${len} chars` : `"${fullString}" ${len} chars`;
 
-  const html = `<div class="showhide collapsed">+<div class=""> ${id} ${type}: ${shortString}</div>
-<div class="hidden"> ${id} ${type}: ${fullString}</div></div>`;
+  const html = `<div class="showhide collapsed">+<div class=""> ${id} ${type}: ${shortString}</div><div class="hidden"> ${id} ${type}: ${fullString}</div></div>`;
 
   systemInfoPrintUnsafe(html);
+}
+
+function printDebugSymbolList(s: DebugSymbol) {
+  const id = s.name;
+  const type = s.elanType;
+  const list = s.value as [];
+  const len = list.length;
+
+  const items = [];
+  let index = 0;
+
+  const summary = `<div class=""> ${id} ${type}: ${len} items</div>`;
+
+  for (const i of list) {
+    items.push(`<div>[${index++}]: ${i}</div>`);
+  }
+
+  const html = `<div class="showhide collapsed">+${summary}<div class="hidden">${summary}${items.join("")}</div></div>`;
+
+  systemInfoPrintUnsafe(html);
+}
+
+function printDebugSymbolDictionary(s: DebugSymbol) {
+  const id = s.name;
+  const type = s.elanType;
+  const list = s.value as { [index: string]: any };
+  const keys = Object.keys(list);
+  const len = keys.length;
+
+  const items = [];
+
+  const summary = `<div class=""> ${id} ${type}: ${len} items</div>`;
+
+  for (const i of keys) {
+    items.push(`<div>[${i}]: ${list[i]}</div>`);
+  }
+
+  const html = `<div class="showhide collapsed">+${summary}<div class="hidden">${summary}${items.join("")}</div></div>`;
+
+  systemInfoPrintUnsafe(html);
+}
+
+function printDebugSymbolFloat(s: DebugSymbol) {
+  let v = `${s.value}`;
+  v = v.includes(".") ? v : `${v}.0`;
+  systemInfoPrintSafe(`${s.name}: ${v}`);
 }
 
 function printDebugSymbol(s: DebugSymbol) {
@@ -1693,8 +1738,17 @@ function printDebugSymbol(s: DebugSymbol) {
     case "Boolean":
       systemInfoPrintSafe(`${s.name}: ${s.value}`);
       break;
+    case "Float":
+      printDebugSymbolFloat(s);
+      break;
     case "String":
       printDebugSymbolString(s);
+      break;
+    case "List":
+      printDebugSymbolList(s);
+      break;
+    case "Dictionary":
+      printDebugSymbolDictionary(s);
       break;
   }
 }

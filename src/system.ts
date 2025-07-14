@@ -279,14 +279,32 @@ export class System {
     return allOutcomes;
   }
 
-  async debugSymbol(type: string, name: string, symbol: any) {
-    try {
-      //return await this._stdlib.asString(symbol);
+  async asCloneableObject(v: any): Promise<unknown> {
+    if (typeof v === "boolean" || typeof v === "string" || typeof v === "number") {
+      return v;
+    }
 
+    if ("asCloneableObject" in v) {
+      return await v.asCloneableObject();
+    }
+
+    if (typeof v[Symbol.iterator] === "function") {
+      const arr = [];
+      for (const o of v) {
+        arr.push(await this.asCloneableObject(o));
+      }
+      return arr;
+    }
+
+    return await this._stdlib.asString(v);
+  }
+
+  async debugSymbol(type: string, name: string, symbol: unknown) {
+    try {
       return {
         elanType: type,
         name: name,
-        value: await this._stdlib.asString(symbol),
+        value: await this.asCloneableObject(symbol),
       };
     } catch (_e) {
       return "error resolving";

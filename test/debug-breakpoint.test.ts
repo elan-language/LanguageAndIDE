@@ -37,8 +37,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      asDebugSymbol("Int", "a", "1"),
-      asDebugSymbol("List", "b", "[1, 2]"),
+      asDebugSymbol("Int", "a", 1),
+      asDebugSymbol("List", "b", [1, 2]),
       asDebugSymbol("String", "c", "fred"),
       asDebugSymbol("DictionaryImmutable", "d", "{1:2}"),
     ];

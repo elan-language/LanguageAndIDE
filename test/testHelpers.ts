@@ -238,7 +238,7 @@ function assertData(variables: DebugSymbol[], expected: DebugSymbol[]) {
 
     assert.strictEqual(v.elanType, e.elanType);
     assert.strictEqual(v.name, e.name);
-    assert.strictEqual(v.value, e.value);
+    assert.equal(v.value, e.value);
   }
 }
 
@@ -527,7 +527,7 @@ export async function testDemoProgram(program: string) {
   }
 }
 
-export function asDebugSymbol(t: string, n: string, v: string) {
+export function asDebugSymbol(t: string, n: string, v: any) {
   return {
     elanType: t,
     name: n,

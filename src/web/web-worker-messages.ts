@@ -50,5 +50,5 @@ export type WebWorkerMessage = {
 export interface DebugSymbol {
   elanType: string;
   name: string;
-  value: string;
+  value: unknown;
 }
