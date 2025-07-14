@@ -9,13 +9,13 @@ test('shortcuts', async ({ page }) => {
  
   await expect(page.locator('#help-home')).toBeVisible();
 
-  await page.keyboard.press('Control+p');
+  await page.keyboard.press('Control+d');
 
   await expect(page.getByRole('button', {name : 'clear'})).toBeVisible();
 
-  await page.keyboard.press('Control+g');
+  await page.keyboard.press('Control+i');
 
-  await expect(page.locator('#run-debug-button')).toBeVisible();
+  await expect(page.getByRole('button', {name : 'clear'})).not.toBeVisible()
 
   await page.keyboard.press('Control+h');
 
@@ -35,13 +35,13 @@ test('shortcuts uppercase', async ({ page }) => {
  
   await expect(page.locator('#help-home')).toBeVisible();
 
-  await page.keyboard.press('Control+Shift+p');
+  await page.keyboard.press('Control+Shift+d');
 
   await expect(page.getByRole('button', {name : 'clear'})).toBeVisible();
 
-  await page.keyboard.press('Control+Shift+g');
+  await page.keyboard.press('Control+Shift+i');
 
-  await expect(page.locator('#run-debug-button')).toBeVisible();
+  await expect(page.getByRole('button', {name : 'clear'})).not.toBeVisible()
 
   await page.keyboard.press('Control+Shift+h');
 
@@ -88,7 +88,7 @@ test('tabs', async ({ page }) => {
 
  await expect(page.locator('#help-forward')).toBeFocused();
 
- await page.keyboard.press('Control+p');
+ await page.keyboard.press('Control+d');
 
  await page.keyboard.press('Tab');
 
@@ -139,7 +139,7 @@ test('tabs uppercase', async ({ page }) => {
 
  await expect(page.locator('#help-forward')).toBeFocused();
 
- await page.keyboard.press('Control+Shift+p');
+ await page.keyboard.press('Control+Shift+D');
 
  await page.keyboard.press('Tab');
 
@@ -457,7 +457,7 @@ test('close worksheet menu by keyboard', async ({ page }) => {
 
   await expect(page.getByText('Guide to the worksheets')).toBeVisible();
 
-  await page.keyboard.press('Control+p');
+  await page.keyboard.press('Control+d');
 
   await expect(page.getByText('Guide to the worksheets')).not.toBeVisible();
 });
