@@ -16,6 +16,6 @@ test('display html', async ({ page }) => {
   await page.keyboard.type(`"<p id='test-value'>fred</p>"`);
   await page.keyboard.press('Enter');
 
-  await page.getByRole('button', { name: 'Run the program' }).click();
+  await page.getByRole('button', { name: 'run' }).click();
   await expect(page.frameLocator('#display-html-sandbox').locator('#test-value')).toContainText('fred');
 });

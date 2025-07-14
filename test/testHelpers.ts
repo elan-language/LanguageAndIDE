@@ -412,8 +412,8 @@ export function del() {
 export function ctrl_del() {
   return key("Delete", false, true);
 }
-export function ctrl_d() {
-  return key("d", false, true);
+export function ctrl_backspace() {
+  return key("Backspace", false, true);
 }
 export function shift_ins() {
   return key("Insert", true);

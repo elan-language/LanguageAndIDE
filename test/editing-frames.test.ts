@@ -27,7 +27,7 @@ import {
 } from "./model-generating-functions";
 import {
   createTestRunner,
-  ctrl_d,
+  ctrl_backspace,
   ctrl_del,
   ctrl_down,
   ctrl_up,
@@ -254,7 +254,7 @@ suite("Editing Frames", () => {
     const sel = file.getById("select0") as GlobalFunction;
     assert.equal(file.getFirstChild(), func);
     func.select(true, false);
-    func.processKey(ctrl_d());
+    func.processKey(ctrl_backspace());
     assert.equal(file.getChildren().length, 1);
     assert.equal(file.getFirstChild(), sel);
   });
