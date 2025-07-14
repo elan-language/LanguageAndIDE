@@ -1672,8 +1672,55 @@ function handleRunWorkerFinished() {
 
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
 
+function printDebugSymbolString(s: DebugSymbol) {
+  const id = s.name;
+  const type = s.elanType;
+  const fullString = s.value;
+  const len = fullString.length;
+
+  const shortString =
+    len > 10 ? `"${fullString.slice(0, 10)}"... ${len} chars` : `"${fullString}" ${len} chars`;
+
+  const html = `<div class="showhide collapsed">+<div class=""> ${id} ${type}: ${shortString}</div>
+<div class="hidden"> ${id} ${type}: ${fullString}</div></div>`;
+
+  systemInfoPrintUnsafe(html);
+}
+
 function printDebugSymbol(s: DebugSymbol) {
-  systemInfoPrintSafe(`${s.name}: ${s.value}`);
+  switch (s.elanType) {
+    case "Int":
+    case "Boolean":
+      systemInfoPrintSafe(`${s.name}: ${s.value}`);
+      break;
+    case "String":
+      printDebugSymbolString(s);
+      break;
+  }
+}
+
+function addDebugListeners() {
+  const showhide = systemInfoDiv.querySelectorAll(".showhide") as NodeListOf<HTMLDivElement>;
+
+  for (const d of showhide) {
+    d.addEventListener("click", (_e) => {
+      const txt = d.firstChild!;
+      const content1 = d.firstElementChild as HTMLDivElement;
+      const content2 = d.lastElementChild as HTMLDivElement;
+
+      if (d.classList.contains("collapsed")) {
+        txt.nodeValue = "-";
+        d.classList.remove("collapsed");
+        content1.classList.add("hidden");
+        content2.classList.remove("hidden");
+      } else {
+        txt.nodeValue = "+";
+        d.classList.add("collapsed");
+        content1.classList.remove("hidden");
+        content2.classList.add("hidden");
+      }
+    });
+  }
 }
 
 async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<void> {
@@ -1688,6 +1735,8 @@ async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<
   for (const v of variables) {
     printDebugSymbol(v);
   }
+
+  addDebugListeners();
 
   const pausedAt = document.getElementById(data.pausedAt);
   pausedAt?.classList.add("paused-at");

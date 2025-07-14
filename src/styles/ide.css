@@ -597,3 +597,7 @@ a.menu-item:hover:visited
   margin-left: auto;
   height: 50px;
 }
+
+#system-info .hidden {
+  display: none;
+}
