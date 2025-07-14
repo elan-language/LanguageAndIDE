@@ -1672,7 +1672,7 @@ function handleRunWorkerFinished() {
 
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
 
-function printDebugSymbolString(s: DebugSymbol) {
+function getDebugSymbolString(s: DebugSymbol) {
   const id = s.name;
   const type = s.elanType;
   const fullString = s.value as string;
@@ -1683,10 +1683,10 @@ function printDebugSymbolString(s: DebugSymbol) {
 
   const html = `<div class="showhide collapsed">+<div class=""> ${id} ${type}: ${shortString}</div><div class="hidden"> ${id} ${type}: ${fullString}</div></div>`;
 
-  systemInfoPrintUnsafe(html);
+  return html;
 }
 
-function printDebugSymbolList(s: DebugSymbol) {
+function getDebugSymbolList(s: DebugSymbol) {
   const id = s.name;
   const type = s.elanType.replaceAll(">", "&gt;").replaceAll("<", "&lt;");
   const list = s.value as [];
@@ -1703,12 +1703,12 @@ function printDebugSymbolList(s: DebugSymbol) {
 
   const html = `<div class="showhide collapsed">+${summary}<div class="hidden">${summary}${items.join("")}</div></div>`;
 
-  systemInfoPrintUnsafe(html);
+  return html;
 }
 
-function printDebugSymbolDictionary(s: DebugSymbol) {
+function getDebugSymbolDictionary(s: DebugSymbol) {
   const id = s.name;
-  const type = s.elanType;
+  const type = s.elanType.replaceAll(">", "&gt;").replaceAll("<", "&lt;");
   const list = s.value as { [index: string]: any };
   const keys = Object.keys(list);
   const len = keys.length;
@@ -1723,35 +1723,38 @@ function printDebugSymbolDictionary(s: DebugSymbol) {
 
   const html = `<div class="showhide collapsed">+${summary}<div class="hidden">${summary}${items.join("")}</div></div>`;
 
-  systemInfoPrintUnsafe(html);
+  return html;
 }
 
-function printDebugSymbolFloat(s: DebugSymbol) {
+function getDebugSymbolFloat(s: DebugSymbol) {
   let v = `${s.value}`;
   v = v.includes(".") ? v : `${v}.0`;
-  systemInfoPrintSafe(`${s.name}: ${v}`);
+  return `${s.name}: ${v}`;
 }
 
-function printDebugSymbol(s: DebugSymbol) {
+function getDebugSymbol(s: DebugSymbol) {
   switch (s.elanType) {
     case "Int":
     case "Boolean":
-      systemInfoPrintSafe(`${s.name}: ${s.value}`);
-      break;
+      return `${s.name}: ${s.value}`;
     case "Float":
-      printDebugSymbolFloat(s);
-      break;
+      return getDebugSymbolFloat(s);
     case "String":
-      printDebugSymbolString(s);
-      break;
-
+      return getDebugSymbolString(s);
     default:
       if (s.elanType.startsWith("List")) {
-        printDebugSymbolList(s);
+        return getDebugSymbolList(s);
       } else if (s.elanType.startsWith("Dictionary")) {
-        printDebugSymbolDictionary(s);
+        return getDebugSymbolDictionary(s);
       }
   }
+
+  return "";
+}
+
+function printDebugSymbol(s: DebugSymbol) {
+  const display = getDebugSymbol(s);
+  systemInfoPrintUnsafe(display);
 }
 
 function addDebugListeners() {

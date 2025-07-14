@@ -92,6 +92,17 @@ export class DictionaryImmutable<T1, T2> {
     return `{${items.join(", ")}}`;
   }
 
+  async asCloneableObject() {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const dict = {} as any;
+    for (const k of this.contents.keys()) {
+      const kStr = await this.system!.asString(k);
+      const v = await this.system?.asCloneableObject(this.contents.get(k));
+      dict[kStr] = v;
+    }
+    return dict;
+  }
+
   safeIndex(key: T1) {
     const rk = this.findRealKey(key);
     if (!this.contents.has(rk)) {
