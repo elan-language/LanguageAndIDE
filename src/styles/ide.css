@@ -532,7 +532,6 @@ div.spacer{
   background-color: white;
 }
 
-
 .tab-controls {
   margin: 0;
   display: flex;
@@ -610,7 +609,16 @@ a.menu-item:hover:visited
   display: none;
 }
 
-.expandable.expanded  > .detail {
+#system-info .expandable .summary::before {
+  content: "+";
+}
+#system-info .expandable.expanded .summary:before {
+  content: "-";
+}
+#system-info .expandable .detail {
+  display: none;
+}
+#system-info .expandable.expanded  > .detail {
   margin-left: 1em;
   display: block;
 }
