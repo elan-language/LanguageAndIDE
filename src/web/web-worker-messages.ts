@@ -51,4 +51,5 @@ export interface DebugSymbol {
   elanType: string;
   name: string;
   value: unknown;
+  asString: string;
 }

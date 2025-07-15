@@ -296,7 +296,15 @@ export class System {
       return arr;
     }
 
-    return await this._stdlib.asString(v);
+    const clone = {} as { [index: string]: any };
+
+    const keys = Object.keys(v).map((k) => (k.startsWith("_") ? k.slice(1) : k));
+
+    for (const k of keys) {
+      clone[k] = await this.asCloneableObject(v[k]);
+    }
+
+    return clone;
   }
 
   async debugSymbol(type: string, id: string, symbol: unknown) {
@@ -304,6 +312,7 @@ export class System {
       return {
         elanType: type,
         name: id,
+        asString: await this._stdlib.asString(symbol),
         value: await this.asCloneableObject(symbol),
       };
     } catch (_e) {

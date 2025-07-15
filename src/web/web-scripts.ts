@@ -1689,22 +1689,33 @@ function subType(type: string) {
 }
 
 function length(l: number) {
-  return ` - length ${l}`;
+  return `- length ${l}`;
 }
 
-function getSummary(type: string, len: number, id: string): string {
-  return `${id}: ${htmlEscape(type)}${length(len)}`;
+function getSummary(type: string, lenOrAsString: number | string, id: string): string {
+  const suffix = typeof lenOrAsString === "number" ? length(lenOrAsString) : lenOrAsString;
+  return `${id}: ${htmlEscape(type)} ${suffix}`;
 }
 
-function getDebugItemHtml(type: string, index: number | string, value: any): string {
-  if (type.includes("of ")) {
-    const list = value as [];
-    const summary = getSummary(type, list.length, `[${index}]:`);
-    const items = list.map((item, subindex) => getDebugItemHtml(subType(type), subindex, item));
+function getDebugItemHtml(
+  type: string,
+  index: number | string,
+  value: any,
+  noBrackets?: boolean,
+): string {
+  const name = !!noBrackets ? `${index}` : `[${index}]`;
+
+  if (type.includes("of ") || `${value}` === "[object Object]") {
+    const isArray = Array.isArray(value);
+    const list = isArray ? value : Object.keys(value);
+    const summary = getSummary(type, list.length, `${name}`);
+    const items = list.map((item, subindex) =>
+      getDebugItemHtml(subType(type), isArray ? subindex : item, isArray ? item : value[item]),
+    );
     return getDebugHtml(`${summary}`, `${items.join("")}`);
   }
 
-  return `<div>[${index}]: ${value}</div>`;
+  return `<div>${name}: ${value}</div>`;
 }
 
 function getDebugItemHtml2D(index: number, value: []): string {
@@ -1733,6 +1744,14 @@ function getDebugSymbolDictionary(s: DebugSymbol) {
   const keys = Object.keys(list);
   const summary = getSummary(s.elanType, keys.length, s.name);
   const items = keys.map((k) => getDebugItemHtml(subType(s.elanType), k, list[k]));
+  return getDebugHtml(`${summary}`, `${items.join("")}`);
+}
+
+function getDebugSymbolClass(s: DebugSymbol) {
+  const list = s.value as { [index: string]: any };
+  const keys = Object.keys(list);
+  const summary = getSummary(s.elanType, s.asString, s.name);
+  const items = keys.map((k) => getDebugItemHtml(subType(s.elanType), k, list[k], true));
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
@@ -1777,6 +1796,7 @@ function getDebugSymbol(s: DebugSymbol) {
       } else if (s.elanType.startsWith("Dictionary")) {
         return getDebugSymbolDictionary(s);
       }
+      return getDebugSymbolClass(s);
   }
 
   return "";
