@@ -1707,10 +1707,24 @@ function getDebugItemHtml(type: string, index: number | string, value: any): str
   return `<div>[${index}]: ${value}</div>`;
 }
 
+function getDebugItemHtml2D(index: number, value: []): string {
+  const list = value;
+  const summary = getSummary("", list.length, `[${index}, _]:`);
+  const items = list.map((item, subindex) => getDebugItemHtml("", `${index}, ${subindex}`, item));
+  return getDebugHtml(`${summary}`, `${items.join("")}`);
+}
+
 function getDebugSymbolList(s: DebugSymbol) {
   const list = s.value as [];
   const summary = getSummary(s.elanType, list.length, s.name);
   const items = list.map((item, index) => getDebugItemHtml(subType(s.elanType), index, item));
+  return getDebugHtml(`${summary}`, `${items.join("")}`);
+}
+
+function getDebugSymbolArray2D(s: DebugSymbol) {
+  const list = s.value as [[]];
+  const summary = getSummary(s.elanType, list.length, s.name);
+  const items = list.map((item, index) => getDebugItemHtml2D(index, item));
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
@@ -1756,7 +1770,9 @@ function getDebugSymbol(s: DebugSymbol) {
     case "String":
       return getDebugSymbolString(s);
     default:
-      if (s.elanType.startsWith("List")) {
+      if (s.elanType.startsWith("Array2D")) {
+        return getDebugSymbolArray2D(s);
+      } else if (s.elanType.startsWith("List") || s.elanType.startsWith("Array")) {
         return getDebugSymbolList(s);
       } else if (s.elanType.startsWith("Dictionary")) {
         return getDebugSymbolDictionary(s);

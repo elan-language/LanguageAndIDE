@@ -125,6 +125,10 @@ export class ElanArray2D<T1> {
     return `[${columns.join(", ")}]`;
   }
 
+  async asCloneableObject() {
+    return this.contents;
+  }
+
   safeIndex(index1: number, index2?: number) {
     if (index2 === undefined) {
       this.system!.throwRangeError(this.contents, index2);
