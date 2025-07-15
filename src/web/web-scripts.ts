@@ -1693,7 +1693,7 @@ function length(l: number) {
 }
 
 function getSummary(type: string, len: number, id: string): string {
-  return `${id} ${htmlEscape(type)}:${length(len)}`;
+  return `${id}: ${htmlEscape(type)}${length(len)}`;
 }
 
 function getDebugItemHtml(type: string, index: number | string, value: any): string {
@@ -1740,10 +1740,10 @@ function getDebugSymbolString(s: DebugSymbol) {
   const fullString = s.value as string;
   const len = fullString.length;
   const suffix = length(len);
-  const prefix = `${s.name} ${s.elanType}: `;
+  const prefix = `${s.name}: `;
 
   if (len <= 10) {
-    return getSummaryHtml(`${prefix}"${fullString}"${suffix}`);
+    return getSummaryHtml(`${prefix}"${fullString}"`);
   }
 
   const shortString = `"${fullString.slice(0, 10)}"...`;
