@@ -598,6 +598,19 @@ a.menu-item:hover:visited
   height: 50px;
 }
 
-#system-info .hidden {
+.expandable .summary::before {
+  content: "+";
+}
+
+.expandable.expanded .summary:before {
+  content: "-";
+}
+
+.expandable .detail {
   display: none;
+}
+
+.expandable.expanded  > .detail {
+  margin-left: 1em;
+  display: block;
 }

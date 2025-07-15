@@ -1673,7 +1673,10 @@ function handleRunWorkerFinished() {
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
 
 function getDebugHtml(content1: string, content2: string) {
-  return `<div class="showhide collapsed">+<div class=""> ${content1}</div><div class="hidden"> ${content2}</div></div>`;
+  return `<div class="expandable">
+  <div class="summary">${content1}</div>
+  <div class="detail">${content2}</div>
+</div>`;
 }
 
 function htmlEscape(s: string) {
@@ -1684,19 +1687,18 @@ function subType(type: string) {
   return type.slice(type.indexOf("<of") + 4, -1);
 }
 
-function getHeaderInfo(type: string, len: number, id?: string): [string, string] {
+function getSummary(type: string, len: number, id?: string): string {
   const optId = id ? `${id} ` : "";
   const prefix = `${optId}${htmlEscape(type)}: ${len} items`;
-  const summary = `<div class=""> ${prefix}</div>`;
-  return [prefix, summary];
+  return prefix;
 }
 
 function getDebugItemHtml(type: string, index: number | string, value: any): string {
   if (type.includes("of ")) {
     const list = value as [];
-    const [prefix, summary] = getHeaderInfo(type, list.length);
+    const summary = getSummary(type, list.length, `[${index}]:`);
     const items = list.map((item, subindex) => getDebugItemHtml(subType(type), subindex, item));
-    return getDebugHtml(`[${index}]: ${prefix}`, `${summary}${items.join("")}`);
+    return getDebugHtml(`${summary}`, `${items.join("")}`);
   }
 
   return `<div>[${index}]: ${value}</div>`;
@@ -1704,17 +1706,17 @@ function getDebugItemHtml(type: string, index: number | string, value: any): str
 
 function getDebugSymbolList(s: DebugSymbol) {
   const list = s.value as [];
-  const [prefix, summary] = getHeaderInfo(s.elanType, list.length, s.name);
+  const summary = getSummary(s.elanType, list.length, s.name);
   const items = list.map((item, index) => getDebugItemHtml(subType(s.elanType), index, item));
-  return getDebugHtml(`${prefix}`, `${summary}${items.join("")}`);
+  return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
 function getDebugSymbolDictionary(s: DebugSymbol) {
   const list = s.value as { [index: string]: any };
   const keys = Object.keys(list);
-  const [prefix, summary] = getHeaderInfo(s.elanType, keys.length, s.name);
+  const summary = getSummary(s.elanType, keys.length, s.name);
   const items = keys.map((k) => getDebugItemHtml(subType(s.elanType), k, list[k]));
-  return getDebugHtml(`${prefix}`, `${summary}${items.join("")}`);
+  return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
 function getDebugSymbolString(s: DebugSymbol) {
@@ -1761,24 +1763,14 @@ function printDebugSymbol(s: DebugSymbol) {
 }
 
 function addDebugListeners() {
-  const showhide = systemInfoDiv.querySelectorAll(".showhide") as NodeListOf<HTMLDivElement>;
+  const expandable = systemInfoDiv.querySelectorAll(".expandable") as NodeListOf<HTMLDivElement>;
 
-  for (const d of showhide) {
+  for (const d of expandable) {
     d.addEventListener("click", (e) => {
-      const txt = d.firstChild!;
-      const content1 = d.firstElementChild as HTMLDivElement;
-      const content2 = d.lastElementChild as HTMLDivElement;
-
-      if (d.classList.contains("collapsed")) {
-        txt.nodeValue = "-";
-        d.classList.remove("collapsed");
-        content1.classList.add("hidden");
-        content2.classList.remove("hidden");
+      if (d.classList.contains("expanded")) {
+        d.classList.remove("expanded");
       } else {
-        txt.nodeValue = "+";
-        d.classList.add("collapsed");
-        content1.classList.remove("hidden");
-        content2.classList.add("hidden");
+        d.classList.add("expanded");
       }
 
       e.preventDefault();
