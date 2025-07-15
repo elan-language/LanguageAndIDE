@@ -1672,11 +1672,12 @@ function handleRunWorkerFinished() {
 
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
 
+function getSummaryHtml(content: string) {
+  return `<div class="summary">${content}</div>`;
+}
+
 function getDebugHtml(content1: string, content2: string) {
-  return `<div class="expandable">
-  <div class="summary">${content1}</div>
-  <div class="detail">${content2}</div>
-</div>`;
+  return `<div class="expandable">${getSummaryHtml(content1)}<div class="detail">${content2}</div></div>`;
 }
 
 function htmlEscape(s: string) {
@@ -1687,10 +1688,12 @@ function subType(type: string) {
   return type.slice(type.indexOf("<of") + 4, -1);
 }
 
-function getSummary(type: string, len: number, id?: string): string {
-  const optId = id ? `${id} ` : "";
-  const prefix = `${optId}${htmlEscape(type)}: ${len} items`;
-  return prefix;
+function length(l: number) {
+  return ` - length ${l}`;
+}
+
+function getSummary(type: string, len: number, id: string): string {
+  return `${id} ${htmlEscape(type)}:${length(len)}`;
 }
 
 function getDebugItemHtml(type: string, index: number | string, value: any): string {
@@ -1722,26 +1725,32 @@ function getDebugSymbolDictionary(s: DebugSymbol) {
 function getDebugSymbolString(s: DebugSymbol) {
   const fullString = s.value as string;
   const len = fullString.length;
+  const suffix = length(len);
+  const prefix = `${s.name} ${s.elanType}: `;
 
-  const shortString =
-    len > 10 ? `"${fullString.slice(0, 10)}"... ${len} chars` : `"${fullString}" ${len} chars`;
+  if (len <= 10) {
+    return getSummaryHtml(`${prefix}"${fullString}"${suffix}`);
+  }
 
-  const prefix = `${s.name} ${s.elanType}:`;
-
-  return getDebugHtml(`${prefix} ${shortString}`, `${prefix} ${fullString}`);
+  const shortString = `"${fullString.slice(0, 10)}"...`;
+  return getDebugHtml(`${prefix}${shortString}${suffix}`, `"${fullString}"`);
 }
 
 function getDebugSymbolFloat(s: DebugSymbol) {
   let v = `${s.value}`;
   v = v.includes(".") ? v : `${v}.0`;
-  return `${s.name}: ${v}`;
+  return getSummaryHtml(`${s.name}: ${v}`);
+}
+
+function getDebugSymbolSimple(s: DebugSymbol) {
+  return getSummaryHtml(`${s.name}: ${s.value}`);
 }
 
 function getDebugSymbol(s: DebugSymbol) {
   switch (s.elanType) {
     case "Int":
     case "Boolean":
-      return `${s.name}: ${s.value}`;
+      return getDebugSymbolSimple(s);
     case "Float":
       return getDebugSymbolFloat(s);
     case "String":

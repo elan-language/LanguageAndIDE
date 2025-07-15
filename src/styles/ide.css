@@ -597,18 +597,6 @@ a.menu-item:hover:visited
   height: 50px;
 }
 
-.expandable .summary::before {
-  content: "+";
-}
-
-.expandable.expanded .summary:before {
-  content: "-";
-}
-
-.expandable .detail {
-  display: none;
-}
-
 #system-info .expandable .summary::before {
   content: "+";
 }
