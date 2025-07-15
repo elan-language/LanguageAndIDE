@@ -122,12 +122,12 @@ a:hover, a:focus {text-decoration: underline}
   float: left;
 }
 
-.active, .accordion:hover {
-  cursor: pointer;
+.accordion:active::after {
+  content: "\2b9d";
 }
 
-.active::after {
-  content: "\2b9d";
+.accordion:active, .accordion:hover {
+  cursor: pointer;
 }
 
 .panel {

@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../styles/colourScheme.css" rel="stylesheet" />
+<link href="../styles/documentation.css" rel="stylesheet" />
+<link href="../styles/elanStyle.css" rel="stylesheet" />
+<title>Elan IDE Reference</title>
+<script type="text/javascript" src="generated_toc.js"></script>
+</head>
+<body>
+<div class="docTitle">IDE controls & keyboard shortcuts</div>
+
+<b>Note for Apple Mac users:</b> where a keyboard shortcut is shown as e.g <b>Ctrl-b</b>,
+on an Apple Mac you should use the 'command' key i.e. <b>cmd-b</b>.
+
+<h1>Switching focus between different parts of the IDE</h1>
+If an element has a tinted blue background, it does not have browser 'focus' and will not respond to keyboard input.
+Use keyboard shortcuts or mouse/touch gestures to change the focus (indicated by a white background):
+<table>
+    <tr><th>To focus on...</th><th>Keyboard shortcut</th><th>Mouse gesture</th><th>Notes</th></tr>
+    <tr><td>code editor</td><td><b>Ctrl-e</b></td><td>Click on background within editor</td><td>TODO - see</td></tr>
+    <tr><td>display</td><td><b>Ctrl-d</b></td><td>Click on the '<b><u>d</u></b>isplay' tab</td><td></td></tr>
+    <tr><td>info</td><td><b>Ctrl-i</b></td><td>Click on the '<b><u>i</u></b>nfo' tab</td><td></td></tr>
+    <tr><td>help</td><td><b>Ctrl-h</b></td><td>Click on the '<b><u>h</u></b>elp</b>'' tab</td><td></td></tr>
+    <tr><td>worksheet</td><td><b>Ctrl-k</b></td><td>Click on the 'wor<b><u>k</u></b>sheet' tab</td><td>(<b>Ctrl-w</b> is interpreted by the browser as 'leave website'.</td></tr>
+    <tr><td>a button</td><td><b>Ctrl-b</b></td><td>Click on the button</td><td><b>Ctrl-b</b> puts focus on the first <i>active</i> button. Use <b>Tab</b> and/or <b>Shift-Tab</b>
+        to navigate to another active button.</tr>
+</table>
+
+<h1>Loading and saving programs</h1>
+
+<h1>Running programs</h1>
+
+TODO - image
+
+<table>
+    <tr><th>To...</th><th>Keyboard shortcut</th><th>Mouse gesture</th><th>Notes</th></tr>
+    <tr><td><b><u>r</u></b>un a program</td><td><b>Ctrl-r</b></td><td>Click on '<b><u>r</u></b>un' button</td><td></td>Will be disabled if there are any <b>parse</b> or <b>compile</b> issues.</b></tr>
+    <tr><td><b><u>s</u></b>top a program that is running</td><td><b>Ctrl-s</b></td><td>Click on '<b><u>s</u></b>top' button</td><td></td></tr>
+    <tr><td>debu<b><u>g</u></b> a program, or resume debugging a paused program</td><td><b>Ctrl-g</b></td><td>Click on 'debu<b><u>g</u></b>' button</td><td></td></tr>
+    <tr><td>pa<b><u>u</u></b>se a program that is being debugged</td><td><b>Ctrl-u</b></td><td>Click on 'pa<b><u>u</u>se</b>' button</td><td></td></tr>
+    tr><td>ste<b><u>p</u></b> to the next instruction in a paused program</td><td><b>Ctrl-p</b></td><td>Click on 'ste<b><u>p</u></b>' button</td><td></td></tr>
+</table>
+
+
+<h1>Navigating, entering and editing code</h1>
+
+<p>The code shown in the editor has three types:</p>
+<ul>
+ <li><b>Instructions</b><br>All instructions begin with a dark blue keyword (e.g. <el-kw>let</el-kw>):
+<el-code-block source="prompts.elan">
+<el-statement id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>name</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>"<el-lit>Alice</el-lit>"</el-txt></el-field></el-statement>
+</ed-code-block>
+ <li><b>Comments</b><br>Comments start with a hash # which is optionally followed by text:
+<el-code-block source="prompts.elan">
+<el-global><el-comment class="ok" id="com1" tabindex="0"><el-top># <el-field id="comment2" class="optional ok" tabindex="0"><el-txt>A program to investigate the Collatz Conjecture</el-txt></el-field></el-top></el-comment></el-global>
+</el-code-block>
+  The first comment in a file (which shows the Elan version: see 'Start coding' above) is automatically created
+  and cannot be edited, deleted, or moved.</li>
+ <li><b><el-code>new code</el-code> prompts</b>
+ <ul>
+  <li>A <el-code>new code</el-code> prompt that has not been clicked on looks like this:
+<el-code-block source="prompts.elan">
+<el-global class="ok empty" id="select0" tabindex="0"><el-select><el-place>new code</el-place></el-select></el-global>
+</ed-code-block>
+  </li>
+ <li>When selected, a <el-code>new code</el-code> prompt displays the keywords that are valid in the context, like this:
+<el-code-block source="prompts.elan">
+<el-statement class="selected focused ok empty" id="select12" tabindex="0"><el-select><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
+</el-code-block>
+Pressing the initial letter (in some cases two) of any of the keywords shown will enter it.</li>
+ </ul>
+  <li>Comments and <el-code>new code</el-code> prompts are <i>not</i> instructions &ndash; they do not alter the program's behaviour &ndash; but they are treated by the editor <i>like</i> instructions .</li>
+</ul>
+</div>
+
+<h2>To select instruction(s)</h2>
+
+<h3>Using the mouse</h3>
+<table>
+<tr><th>To...</th><th>Mouse gesture</th></tr>
+<tr><td>select any instruction</td><td><b>click</b> on the <i>initial</i> keyword of the instruction or on the instruction number</td></tr>
+<tr><td>add <i>adjacent</i> instruction(s) to the existing selection</td><td>Hold down <b>Shift</b>, and <b>click</b> on the <i>initial</i> keyword of the instruction or on the instruction number</td></tr>
+</table>
+
+<h3>Using the keyboard</h3>
+<table>
+    <tr><th>To...</th><th>Keyboard shortcut</th><th>Notes</th></tr>
+    <tr><td>select the <i>next</i> instruction</td><td><b>&darr;</b></td><td>limited to the current block of instructions</td></tr>
+    <tr><td>select the <i>previous</i> instruction</td><td><b>&uarr;</b></td><td>limited to the current block of instructions</td></tr>
+    <tr><td>select the <i>first</i> instruction at the current level of indentation</td><td><b>Home</b></td><td></td></tr>
+    <tr><td>select the <i>last</i> instruction at the current level of indentation</td><td><b>End</b></td><td></td></tr>
+    <tr><td>select the <i>outer</i> instruction containing the current one</td><td><b>&larr;</b></td><td></td></tr>
+    <tr><td>select the <i>first inner</i> instruction contained by the current one</td><td><b>&rarr;</b></td><td></td></tr>  
+    <tr><td>add the <i>next</i> instruction to the current selection</td><td><b>Shift-&darr;</b></td><td>limited to the current block of instructions</td></tr>
+    <tr><td>add the <i>previous</i> instruction to the current selection</td><td><b>Shift-&uarr;</b></td><td>limited to the current block of instructions</td></tr>
+  </table>
+ 
+<h2>To select and edit fields</h2>
+<h3>Using the mouse</h3>
+
+<table>
+<tr><th>To...</th><th>Mouse gesture</th><th>Notes</th></tr>
+<tr><td>select a <i>field</i> within an instruction</td><td><b>click</b> anywhere on the text, or placeholder, for that field.</td><td>Text cursor will be placed at the end of the field</td></tr>
+<tr><td>move the text cursor within a selected field</td><td><b>click</b> anywhere within the selected field</td><td></td></tr>
+<tr><td>select specific <i>text within</i> a selected field</td><td><b>click</b> and <b>drag</b> across the desired characters</td><td></td></tr>
+</table>
+
+<h3>Using the keyboard</h3>
+ <table>
+  <tr><th>To...</th><th>Keyboard shortcut</th><th>Notes</th></tr>
+    <tr><td>select the <i>first field</i> in a <i>selected</i> instruction</td><td><b>Tab</b></td><td></td></tr>
+    <tr><td>select the <i>next field</i> in the same instruction</td><td><b>Tab</b></td><td>will cycle through the fields and back to the whole instruction.</td></tr>
+    <tr><td>select the <i>previous field</i> in the same instruction</td><td><b>Shift-Tab</b></td><td>will cycle through the fields and back to the whole instruction.</td></tr>  
+    <tr><td>select specific <i>text within</i> a field </td><td><b>Shift-&larr; or &rarr;</b></td><td></td></tr>
+    <tr><td>select <i>all text</i> within a field</td><td><b>Ctrl-a</b></td><td></td></tr>
+    <tr><td>position text-cursor at the start of a selected field</td><td><b>Home</b></td><td></td></tr>
+    <tr><td>position text-cursor at the end of a selected field</td><td><b>End</b></td><td></td></tr>
+    <tr><td>go from the last field to the next instruction</td><td><b>Enter</b></td><td></td></tr>
+</table>
+
+<h2>To insert a new instruction...</h2>
+
+ If there is already a <code>new code</code> prompt where you want to insert an instruction then
+
+ <ul>
+  <li>select the new code prompt (as you would select an instruction)</li>
+  <li>type the first letter of the desired instruction, or more than one instruction begins the same way, type additional
+    letters until an instruction template is inserted, with the focus placed on the first field.</li>
+ </ul>
+
+ Otherwise, select an instruction <i>adjacent</i> to where you want to add the new one and <i>either</i>:
+
+ <ul>
+  <li>press <b>Enter</b> to insert a 'new code' prompt <i>below</i> it</li>
+  <li>press <b>Shift-Enter</b> to insert a 'new code' prompt <i>above</i> it</li>
+ </ul>
+
+<h2>To delete ...</h2>
+
+<table>
+  <tr><th>To delete</th><th>Keyboard shortcut</th><th>Notes</th></tr>
+  <tr><td>one or more (adjacent) instructions</td><td>select the instruction(s) then <b>Ctrl-Delete</b> or <b>Ctrl-Backspace</b></td><td>Deleting a compound instruction will delete all its contained instructions with it</td></tr>
+  <tr><td>a 'new code' prompt that is not needed</td><td>delete the same way as an instruction</td><td>Deleting a compound instruction will delete all its contained instructions with it</td></tr>
+  <tr><td>all 'new code' prompts</td><td>Use the <b>Trim</b> button</td><td>will remove all 'new code' prompts <i>except</i> in places where further instructions are required (for example so as not to leave an empty loop)</td></tr>
+</table>
+
+<h2>To undo or redo a recent change</h2>
+
+Elan retains previous versions of code in a stack. However, it should be noted that a code version is saved to the stack
+(and to file, if auto-save is selected) <i>only when it parses</i>.
+
+<table>
+  <tr>Action</th><th>Using the keyboard</th><th>Using the mouse</th><th>Notes</th></tr>
+  <tr><td>Undo previous change(s)</td><b>Ctrl-z</b><td><b>click on <b>undo</b> button</td></tr>
+  <tr><td>Redo previous undo(s)</td><td><b>Ctrl-z</b</td><td><b>click on <b>redo</b> button</td></tr>
+</table>
+
+<h2>To move</h2>
+  To move one or more instructions up or down, select the instructions, then press <b>Ctrl-&darr;</b> or <b>Ctrl-&uarr;</b>.
+  Movement is limited to up or down <i>within the current code block</i>. To move instructions to a different code block
+  use cut & paste.
+  (It is not currently possible to <i>move</i> instructions using the mouse alone.)
+
+<h2>To cut and paste ...</h2>
+  One or more successive instructions to a new location within the program
+  Text between two fields or externally
+  Code from an external source into the IDE
+  Code from the IDE to an external destination
+
+  <h2>To show or hide the outline view of code</h2>
+  Toggle between normal and outline view of whole program
+  Expand or collapse a specific compound instruction
+
+
+<p><b>Elan IDE Guide</b> go to the <a href="#top">top</a></p>
+</body>
+</html>
