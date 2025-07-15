@@ -700,8 +700,6 @@ export abstract class AbstractFrame implements Frame {
     } else {
       map.set("setBP", ["set breakpoint", this.setBreakPoint]);
     }
-    map.set("cut", ["cut (Ctrl-x)", this.cut]);
-    map.set("delete", ["delete (Ctrl-Delete or Ctrl-d)", this.deleteSelected]);
     return map;
   }
 

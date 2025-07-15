@@ -545,7 +545,7 @@ div.spacer{
   margin-right: 10px;
 }
 
-iframe#help-iframe, iframe#worksheet-iframe {
+#help-iframe, #worksheet-iframe {
   border-image: none;
   border-color: initial;
   border-style: hidden;
@@ -553,6 +553,14 @@ iframe#help-iframe, iframe#worksheet-iframe {
   overflow: auto;
   width: 100%;
   flex-grow: 1;
+}
+
+#worksheet-iframe.selected input {
+  opacity: 10%;
+}
+
+#worksheet-iframe.focussed input {
+  opacity: 100%;
 }
 
 iframe a:focus {

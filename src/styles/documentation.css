@@ -109,30 +109,20 @@ a:hover, a:focus {text-decoration: underline}
 }
 
 /* Animated accordion and panel  */
-.accordion {
-  text-align: left;
-  padding: 0px 0px 0px 0px;
-  width: 100%;
+.acc-body {
+  display: none;
+}
+.accordion.active > .acc-body {
+  display: block;
 }
 
-.accordion::after {
-  content: '\2b9f';
-  color: blue;
-  font-weight: bold;
-  float: left;
+.accordion > .acc-title::before {
+  content: "+";
+  padding-right: 0.5em;
 }
 
-.active, .accordion:hover {
-  cursor: pointer;
+.accordion.active > .acc-title::before {
+  content: "-";
+  padding-right: 0.5em;
 }
 
-.active::after {
-  content: "\2b9d";
-}
-
-.panel {
-  max-height: 0;
-  width: 100%;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-}
