@@ -597,11 +597,13 @@ a.menu-item:hover:visited
   height: 50px;
 }
 
-#system-info .expandable .summary::before {
+#system-info .expandable > .summary::before {
   content: "+";
+  padding-right: 0.5em;
 }
-#system-info .expandable.expanded .summary:before {
+#system-info .expandable.expanded > .summary:before {
   content: "-";
+  padding-right: 0.5em;
 }
 #system-info .expandable .detail {
   display: none;
