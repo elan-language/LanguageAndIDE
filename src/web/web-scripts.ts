@@ -1676,6 +1676,30 @@ function getDebugHtml(content1: string, content2: string) {
   return `<div class="showhide collapsed">+<div class=""> ${content1}</div><div class="hidden"> ${content2}</div></div>`;
 }
 
+function getDebugItemHtml(type: string, index: number | string, value: any): string {
+  if (type.includes("of ")) {
+    const list = value as [];
+    const len = list.length;
+
+    const items = [];
+    let index = 0;
+
+    const prefix = `${htmlEscape(type)}: ${len} items`;
+
+    const summary = `<div class=""> ${prefix}</div>`;
+
+    const subtype = type.slice(type.indexOf("<of") + 4, -1);
+
+    for (const i of list) {
+      items.push(getDebugItemHtml(subtype, index++, i));
+    }
+
+    return getDebugHtml(`[${index}]: ${value}`, `${summary}${items.join("")}`);
+  }
+
+  return `<div>[${index}]: ${value}</div>`;
+}
+
 function getDebugSymbolString(s: DebugSymbol) {
   const id = s.name;
   const type = s.elanType;
@@ -1690,21 +1714,27 @@ function getDebugSymbolString(s: DebugSymbol) {
   return getDebugHtml(`${prefix} ${shortString}`, `${prefix} ${fullString}`);
 }
 
+function htmlEscape(s: string) {
+  return s.replaceAll(">", "&gt;").replaceAll("<", "&lt;");
+}
+
 function getDebugSymbolList(s: DebugSymbol) {
   const id = s.name;
-  const type = s.elanType.replaceAll(">", "&gt;").replaceAll("<", "&lt;");
+  const type = s.elanType;
   const list = s.value as [];
   const len = list.length;
 
   const items = [];
   let index = 0;
 
-  const prefix = `${id} ${type}: ${len} items`;
+  const prefix = `${id} ${htmlEscape(type)}: ${len} items`;
 
   const summary = `<div class=""> ${prefix}</div>`;
 
+  const subtype = s.elanType.slice(s.elanType.indexOf("<of") + 4, -1);
+
   for (const i of list) {
-    items.push(`<div>[${index++}]: ${i}</div>`);
+    items.push(getDebugItemHtml(subtype, index++, i));
   }
 
   return getDebugHtml(`${prefix}`, `${summary}${items.join("")}`);
@@ -1724,7 +1754,7 @@ function getDebugSymbolDictionary(s: DebugSymbol) {
   const summary = `<div class=""> ${prefix}</div>`;
 
   for (const i of keys) {
-    items.push(`<div>[${i}]: ${list[i]}</div>`);
+    items.push(getDebugItemHtml("", i, list[i]));
   }
 
   return getDebugHtml(`${prefix}`, `${summary}${items.join("")}`);
