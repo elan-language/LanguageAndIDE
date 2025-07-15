@@ -1783,6 +1783,7 @@ function getDebugSymbol(s: DebugSymbol) {
   switch (s.elanType) {
     case "Int":
     case "Boolean":
+    case "RegExp":
       return getDebugSymbolSimple(s);
     case "Float":
       return getDebugSymbolFloat(s);

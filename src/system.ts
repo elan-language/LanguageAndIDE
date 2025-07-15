@@ -284,6 +284,10 @@ export class System {
       return v;
     }
 
+    if (v instanceof RegExp) {
+      return `/${v.source}/`;
+    }
+
     if ("asCloneableObject" in v) {
       return await v.asCloneableObject();
     }
