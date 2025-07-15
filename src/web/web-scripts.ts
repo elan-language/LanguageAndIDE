@@ -1682,7 +1682,7 @@ function getDebugItemHtml(type: string, index: number | string, value: any): str
     const len = list.length;
 
     const items = [];
-    let index = 0;
+    let subindex = 0;
 
     const prefix = `${htmlEscape(type)}: ${len} items`;
 
@@ -1691,10 +1691,11 @@ function getDebugItemHtml(type: string, index: number | string, value: any): str
     const subtype = type.slice(type.indexOf("<of") + 4, -1);
 
     for (const i of list) {
-      items.push(getDebugItemHtml(subtype, index++, i));
+      items.push(getDebugItemHtml(subtype, subindex, i));
+      subindex++;
     }
 
-    return getDebugHtml(`[${index}]: ${value}`, `${summary}${items.join("")}`);
+    return getDebugHtml(`[${index}]: ${prefix}`, `${summary}${items.join("")}`);
   }
 
   return `<div>[${index}]: ${value}</div>`;
@@ -1734,7 +1735,8 @@ function getDebugSymbolList(s: DebugSymbol) {
   const subtype = s.elanType.slice(s.elanType.indexOf("<of") + 4, -1);
 
   for (const i of list) {
-    items.push(getDebugItemHtml(subtype, index++, i));
+    items.push(getDebugItemHtml(subtype, index, i));
+    index++;
   }
 
   return getDebugHtml(`${prefix}`, `${summary}${items.join("")}`);
@@ -1795,7 +1797,7 @@ function addDebugListeners() {
   const showhide = systemInfoDiv.querySelectorAll(".showhide") as NodeListOf<HTMLDivElement>;
 
   for (const d of showhide) {
-    d.addEventListener("click", (_e) => {
+    d.addEventListener("click", (e) => {
       const txt = d.firstChild!;
       const content1 = d.firstElementChild as HTMLDivElement;
       const content2 = d.lastElementChild as HTMLDivElement;
@@ -1811,6 +1813,9 @@ function addDebugListeners() {
         content1.classList.remove("hidden");
         content2.classList.add("hidden");
       }
+
+      e.preventDefault();
+      e.stopPropagation();
     });
   }
 }

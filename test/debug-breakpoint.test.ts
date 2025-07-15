@@ -38,9 +38,9 @@ end main`;
 
     const expected = [
       asDebugSymbol("Int", "a", 1),
-      asDebugSymbol("List", "b", [1, 2]),
+      asDebugSymbol("List<of Int>", "b", [1, 2]),
       asDebugSymbol("String", "c", "fred"),
-      asDebugSymbol("DictionaryImmutable", "d", "{1:2}"),
+      asDebugSymbol("DictionaryImmutable<of Int, Int>", "d", "{1:2}"),
     ];
 
     await assertDebugBreakPoint(fileImpl, "set15", expected);
@@ -66,9 +66,9 @@ end procedure`;
 
     const expected = [
       asDebugSymbol("Int", "a", "1"),
-      asDebugSymbol("List", "b", "[1, 2]"),
+      asDebugSymbol("List<of Int>", "b", "[1, 2]"),
       asDebugSymbol("String", "c", "fred"),
-      asDebugSymbol("DictionaryImmutable", "d", "{1:2}"),
+      asDebugSymbol("DictionaryImmutable<of Int, Int>", "d", "{1:2}"),
       asDebugSymbol("Int", "e", "3"),
     ];
 
@@ -96,9 +96,9 @@ end function`;
 
     const expected = [
       asDebugSymbol("Int", "a", "1"),
-      asDebugSymbol("List", "b", "[1, 2]"),
+      asDebugSymbol("List<of Int>", "b", "[1, 2]"),
       asDebugSymbol("String", "c", "fred"),
-      asDebugSymbol("DictionaryImmutable", "d", "{1:2}"),
+      asDebugSymbol("DictionaryImmutable<of Int, Int>", "d", "{1:2}"),
       asDebugSymbol("Int", "e", "3"),
     ];
 
@@ -131,9 +131,9 @@ end class`;
 
     const expected = [
       asDebugSymbol("Int", "a", "1"),
-      asDebugSymbol("List", "b", "[1, 2]"),
+      asDebugSymbol("List<of Int>", "b", "[1, 2]"),
       asDebugSymbol("String", "c", "fred"),
-      asDebugSymbol("DictionaryImmutable", "d", "{1:2}"),
+      asDebugSymbol("DictionaryImmutable<of Int, Int>", "d", "{1:2}"),
       asDebugSymbol("Int", "e", "3"),
       asDebugSymbol("Int", "property.f", "0"),
     ];
@@ -168,9 +168,9 @@ end class`;
 
     const expected = [
       asDebugSymbol("Int", "a", "1"),
-      asDebugSymbol("List", "b", "[1, 2]"),
+      asDebugSymbol("List<of Int>", "b", "[1, 2]"),
       asDebugSymbol("String", "c", "fred"),
-      asDebugSymbol("DictionaryImmutable", "d", "{1:2}"),
+      asDebugSymbol("DictionaryImmutable<of Int, Int>", "d", "{1:2}"),
       asDebugSymbol("Int", "e", "3"),
       asDebugSymbol("Int", "property.f", "0"),
     ];
@@ -204,9 +204,9 @@ end class`;
 
     const expected = [
       asDebugSymbol("Int", "a", "1"),
-      asDebugSymbol("List", "b", "[1, 2]"),
+      asDebugSymbol("List<of Int>", "b", "[1, 2]"),
       asDebugSymbol("String", "c", "fred"),
-      asDebugSymbol("DictionaryImmutable", "d", "{1:2}"),
+      asDebugSymbol("DictionaryImmutable<of Int, Int>", "d", "{1:2}"),
       asDebugSymbol("Int", "e", "3"),
       asDebugSymbol("Int", "property.f", "0"),
     ];
@@ -249,7 +249,7 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      asDebugSymbol("ListImmutable", "a", "{7, 8, 9}"),
+      asDebugSymbol("ListImmutable<of Int>", "a", "{7, 8, 9}"),
       asDebugSymbol("Int", "n", "0"),
       asDebugSymbol("Int", "x", "7"),
     ];
