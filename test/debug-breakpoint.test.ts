@@ -455,4 +455,36 @@ end procedure`;
 
     await assertDebugBreakPoint(fileImpl, "print13", expected);
   });
+
+  test("Pass_ClassTypeInfo", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Foo()
+  print x
+end main
+  
+class Bar
+  property barA as String
+end class
+
+class Foo
+  constructor()
+    set property.a to 1
+    set property.b to new Bar()
+    set property.c to [1,2]
+  end constructor
+
+  property a as Int
+  property b as Bar
+  property c as List<of Int>
+end class`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [asDebugSymbol("Int", "n", "1")];
+
+    await assertDebugBreakPoint(fileImpl, "print6", expected);
+  });
 });

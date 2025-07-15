@@ -52,4 +52,5 @@ export interface DebugSymbol {
   name: string;
   value: unknown;
   asString: string;
+  typeMap: string;
 }

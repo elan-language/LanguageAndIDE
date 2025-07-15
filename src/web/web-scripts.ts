@@ -1799,8 +1799,6 @@ function getDebugSymbol(s: DebugSymbol) {
       }
       return getDebugSymbolClass(s);
   }
-
-  return "";
 }
 
 function printDebugSymbol(s: DebugSymbol) {

@@ -311,13 +311,19 @@ export class System {
     return clone;
   }
 
-  async debugSymbol(type: string, id: string, symbol: unknown) {
+  async debugSymbol(
+    type: string,
+    id: string,
+    symbol: unknown,
+    typeMap: string,
+  ): Promise<DebugSymbol | string> {
     try {
       return {
         elanType: type,
         name: id,
         asString: await this._stdlib.asString(symbol),
         value: await this.asCloneableObject(symbol),
+        typeMap: typeMap,
       };
     } catch (_e) {
       return "error resolving";

@@ -1,13 +1,16 @@
+import { getId } from "../compile-rules";
 import { AstNode } from "../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { singleIndent } from "../frame-helpers";
 import { BreakpointEvent, BreakpointStatus } from "../status-enums";
+import { ClassType } from "../symbols/class-type";
 import { allScopedSymbols, getGlobalScope, orderSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { PropertyAsn } from "./class-members/property-asn";
 
 export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
   constructor(
@@ -85,6 +88,23 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
     return this.indent() === "" ? "  " : this.indent();
   }
 
+  getClassTypeMap(type: SymbolType) {
+    if (type instanceof ClassType && !type.typeOptions.isIndexable) {
+      const childSymbols = type.childSymbols().filter((s) => s instanceof PropertyAsn);
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const typeDict: any = { Type: type.name };
+
+      for (const s of childSymbols) {
+        typeDict[getId(s.name)] = this.getClassTypeMap(s.symbolType());
+      }
+
+      return typeDict;
+    } else {
+      return type.name;
+    }
+  }
+
   resolveVariables(scopedSymbols: () => ElanSymbol[]) {
     const resolveId: string[] = [];
     const symbols = scopedSymbols().filter(this.isNotGlobalOrLib).sort(orderSymbol);
@@ -111,8 +131,10 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
       const value = `${scopePrefix}${symbol.symbolId}`;
       const type = symbol.symbolType();
       const fullType = type.name;
+      const typeMap = JSON.stringify(this.getClassTypeMap(type));
+
       resolveId.push(
-        `${indent}_scopedIds${this.fieldId}.push(await system.debugSymbol("${fullType}", "${id}", ${value}));`,
+        `${indent}_scopedIds${this.fieldId}.push(await system.debugSymbol("${fullType}", "${id}", ${value}, '${typeMap}'));`,
       );
     }
 
