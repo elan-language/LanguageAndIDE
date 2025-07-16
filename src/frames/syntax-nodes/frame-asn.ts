@@ -89,7 +89,18 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
   }
 
   getClassTypeMap(type: SymbolType) {
-    if (type instanceof ClassType && !type.typeOptions.isIndexable) {
+    if (type instanceof ClassType && type.typeOptions.isIndexable) {
+      const ofTypes = type.ofTypes;
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const typeDict: { [index: string]: any } = { Type: type.name };
+
+      for (const s of ofTypes) {
+        typeDict["OfTypes"] = this.getClassTypeMap(s);
+      }
+
+      return typeDict;
+    } else if (type instanceof ClassType && !type.typeOptions.isIndexable) {
       const childSymbols = type.childSymbols().filter((s) => s instanceof PropertyAsn);
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -102,7 +113,7 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
 
       return typeDict;
     } else {
-      return type.name;
+      return { Type: type.name };
     }
   }
 

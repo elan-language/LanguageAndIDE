@@ -321,8 +321,18 @@ export class System {
         if (typeof tm["Properties"][p] !== "string") {
           const aStr = await this._stdlib.asString((symbol as any)[p]);
           tm["Properties"][p]["asString"] = aStr;
-          this.updateTypeMap(tm["Properties"][p], (symbol as any)[p]);
+          await this.updateTypeMap(tm["Properties"][p], (symbol as any)[p]);
         }
+      }
+    }
+    if (keys.includes("OfTypes")) {
+      try {
+        const first = this.safeIndex(symbol, 0);
+        const aStr = await this._stdlib.asString(first);
+        tm["OfTypes"]["asString"] = aStr;
+        await this.updateTypeMap(tm["OfTypes"], first);
+      } catch {
+        // ignore
       }
     }
 
@@ -335,6 +345,7 @@ export class System {
     symbol: unknown,
     typeMap: string,
   ): Promise<DebugSymbol | string> {
+    const asCloneable = await this.asCloneableObject(symbol);
     const tm = await this.updateTypeMap(JSON.parse(typeMap), symbol);
 
     typeMap = JSON.stringify(tm);
@@ -344,7 +355,7 @@ export class System {
         elanType: type,
         name: id,
         asString: await this._stdlib.asString(symbol),
-        value: await this.asCloneableObject(symbol),
+        value: asCloneable,
         typeMap: typeMap,
       };
     } catch (_e) {
