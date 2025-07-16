@@ -1689,12 +1689,12 @@ function subType(type: string) {
 }
 
 function length(l: number) {
-  return `length ${l}`;
+  return ` - length ${l}`;
 }
 
 function getSummary(type: string, lenOrAsString: number | string, id: string): string {
   const suffix = typeof lenOrAsString === "number" ? length(lenOrAsString) : lenOrAsString;
-  return `${id}: ${htmlEscape(type)} - ${suffix}`;
+  return `${id}: ${htmlEscape(type)}${suffix}`;
 }
 
 function getDebugItemHtml(
@@ -1755,30 +1755,22 @@ function getDebugSymbolDictionary(elanType: string, name: string, value: any, ty
 function getProperty(name: string, type: string | { [index: string]: string }, value: any): string {
   let elanType = "";
   let typeMap = "";
-  let asString = "";
 
   if (typeof type === "string") {
     elanType = type;
   } else {
     elanType = type["Type"];
-    asString = type["asString"];
     typeMap = JSON.stringify(type);
   }
 
-  return getDebugSymbolHtml(elanType, name, value, typeMap, asString);
+  return getDebugSymbolHtml(elanType, name, value, typeMap);
 }
 
-function getDebugSymbolClass(
-  elanType: string,
-  name: string,
-  value: any,
-  typeMapS: string,
-  asString: string,
-) {
+function getDebugSymbolClass(elanType: string, name: string, value: any, typeMapS: string) {
   const typeMap = JSON.parse(typeMapS);
   const list = value as { [index: string]: any };
-  const keys = Object.keys(typeMap["Properties"]);
-  const summary = getSummary(elanType, asString, name);
+  const keys = typeMap["Properties"] ? Object.keys(typeMap["Properties"]) : [];
+  const summary = getSummary(elanType, "", name);
   const items = keys.map((k) => getProperty(k, typeMap["Properties"][k], list[k]));
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
@@ -1807,13 +1799,7 @@ function getDebugSymbolSimple(name: string, value: any) {
   return getSummaryHtml(`${name}: ${value}`);
 }
 
-function getDebugSymbolHtml(
-  elanType: string,
-  name: string,
-  value: any,
-  typeMap: string,
-  asString: string,
-) {
+function getDebugSymbolHtml(elanType: string, name: string, value: any, typeMap: string) {
   switch (elanType) {
     case "Int":
     case "Boolean":
@@ -1831,12 +1817,12 @@ function getDebugSymbolHtml(
       } else if (elanType.startsWith("Dictionary")) {
         return getDebugSymbolDictionary(elanType, name, value, typeMap);
       }
-      return getDebugSymbolClass(elanType, name, value, typeMap, asString);
+      return getDebugSymbolClass(elanType, name, value, typeMap);
   }
 }
 
 function getDebugSymbol(s: DebugSymbol) {
-  return getDebugSymbolHtml(s.elanType, s.name, s.value, s.typeMap, s.asString);
+  return getDebugSymbolHtml(s.elanType, s.name, s.value, s.typeMap);
 }
 
 function printDebugSymbol(s: DebugSymbol) {

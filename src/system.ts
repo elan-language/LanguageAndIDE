@@ -311,37 +311,6 @@ export class System {
     return clone;
   }
 
-  async updateTypeMap(tm: any, symbol: any) {
-    const keys = Object.keys(tm);
-
-    if (keys.includes("Properties")) {
-      const pp = Object.keys(tm["Properties"]);
-
-      for (const p of pp) {
-        if (typeof tm["Properties"][p] !== "string") {
-          const aStr = await this._stdlib.asString((symbol as any)[p]);
-          tm["Properties"][p]["asString"] = aStr;
-          await this.updateTypeMap(tm["Properties"][p], (symbol as any)[p]);
-        }
-      }
-    }
-    if (keys.includes("OfTypes")) {
-      try {
-        if ("values" in symbol) {
-          symbol = symbol.values();
-        }
-        const first = this.safeIndex(symbol, 0);
-        const aStr = await this._stdlib.asString(first);
-        tm["OfTypes"]["asString"] = aStr;
-        await this.updateTypeMap(tm["OfTypes"], first);
-      } catch {
-        // ignore
-      }
-    }
-
-    return tm;
-  }
-
   async debugSymbol(
     type: string,
     id: string,
@@ -349,15 +318,11 @@ export class System {
     typeMap: string,
   ): Promise<DebugSymbol | string> {
     const asCloneable = await this.asCloneableObject(symbol);
-    const tm = await this.updateTypeMap(JSON.parse(typeMap), symbol);
-
-    typeMap = JSON.stringify(tm);
 
     try {
       return {
         elanType: type,
         name: id,
-        asString: await this._stdlib.asString(symbol),
         value: asCloneable,
         typeMap: typeMap,
       };
