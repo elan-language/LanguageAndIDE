@@ -1,13 +1,7 @@
-var acc = document.getElementsByClassName("accordion");
+var acc = document.getElementsByClassName("acc-title");
 var i;
-for (i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var panel = this.nextElementSibling;
-    if (panel.style.maxHeight) {
-      panel.style.maxHeight = null;
-    } else {
-      panel.style.maxHeight = panel.scrollHeight + "px";
-    }
+for (const item of acc) {
+  item.addEventListener("click", function() { 
+    item.parentElement.classList.toggle("active");
   });
 }
