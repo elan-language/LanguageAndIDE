@@ -1729,9 +1729,7 @@ function getDebugSymbolList(elanType: string, name: string, value: any, typeMapS
   const typeMap = JSON.parse(typeMapS);
   const list = value as [];
   const summary = getSummary(elanType, list.length, name);
-
   const items = list.map((item, i) => getProperty(`[${i}]`, typeMap["OfTypes"], item));
-  //const items = list.map((item, index) => getDebugItemHtml(subType(elanType), index, item));
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
@@ -1742,12 +1740,15 @@ function getDebugSymbolArray2D(elanType: string, name: string, value: any) {
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
-function getDebugSymbolDictionary(elanType: string, name: string, value: any, typeMap: string) {
-  const _typeMap = JSON.parse(typeMap);
+function getDebugSymbolDictionary(elanType: string, name: string, value: any, typeMapS: string) {
+  const typeMap = JSON.parse(typeMapS);
   const list = value as { [index: string]: any };
   const keys = Object.keys(list);
   const summary = getSummary(elanType, keys.length, name);
-  const items = keys.map((k) => getDebugItemHtml(subType(elanType), k, list[k]));
+  //const items = keys.map((k) => getDebugItemHtml(subType(elanType), k, list[k]));
+
+  const items = keys.map((k) => getProperty(`[${k}]`, typeMap["OfTypes"], list[k]));
+
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
@@ -1778,7 +1779,6 @@ function getDebugSymbolClass(
   const list = value as { [index: string]: any };
   const keys = Object.keys(typeMap["Properties"]);
   const summary = getSummary(elanType, asString, name);
-
   const items = keys.map((k) => getProperty(k, typeMap["Properties"][k], list[k]));
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }

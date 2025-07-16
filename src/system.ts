@@ -327,6 +327,9 @@ export class System {
     }
     if (keys.includes("OfTypes")) {
       try {
+        if ("values" in symbol) {
+          symbol = symbol.values();
+        }
         const first = this.safeIndex(symbol, 0);
         const aStr = await this._stdlib.asString(first);
         tm["OfTypes"]["asString"] = aStr;
