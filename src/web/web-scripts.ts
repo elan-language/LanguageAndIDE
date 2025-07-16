@@ -1689,12 +1689,12 @@ function subType(type: string) {
 }
 
 function length(l: number) {
-  return `- length ${l}`;
+  return `length ${l}`;
 }
 
 function getSummary(type: string, lenOrAsString: number | string, id: string): string {
   const suffix = typeof lenOrAsString === "number" ? length(lenOrAsString) : lenOrAsString;
-  return `${id}: ${htmlEscape(type)} ${suffix}`;
+  return `${id}: ${htmlEscape(type)} - ${suffix}`;
 }
 
 function getDebugItemHtml(

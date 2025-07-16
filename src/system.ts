@@ -321,6 +321,7 @@ export class System {
         if (typeof tm["Properties"][p] !== "string") {
           const aStr = await this._stdlib.asString((symbol as any)[p]);
           tm["Properties"][p]["asString"] = aStr;
+          this.updateTypeMap(tm["Properties"][p], (symbol as any)[p]);
         }
       }
     }
