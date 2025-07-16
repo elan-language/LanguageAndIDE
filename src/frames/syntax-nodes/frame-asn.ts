@@ -93,10 +93,11 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
       const childSymbols = type.childSymbols().filter((s) => s instanceof PropertyAsn);
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const typeDict: any = { Type: type.name };
+      const typeDict: { [index: string]: any } = { Type: type.name };
+      typeDict["Properties"] = {};
 
       for (const s of childSymbols) {
-        typeDict[getId(s.name)] = this.getClassTypeMap(s.symbolType());
+        typeDict["Properties"][getId(s.name)] = this.getClassTypeMap(s.symbolType());
       }
 
       return typeDict;

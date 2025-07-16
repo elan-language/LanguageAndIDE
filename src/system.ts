@@ -311,12 +311,33 @@ export class System {
     return clone;
   }
 
+  async updateTypeMap(tm: any, symbol: any) {
+    const keys = Object.keys(tm);
+
+    if (keys.includes("Properties")) {
+      const pp = Object.keys(tm["Properties"]);
+
+      for (const p of pp) {
+        if (typeof tm["Properties"][p] !== "string") {
+          const aStr = await this._stdlib.asString((symbol as any)[p]);
+          tm["Properties"][p]["asString"] = aStr;
+        }
+      }
+    }
+
+    return tm;
+  }
+
   async debugSymbol(
     type: string,
     id: string,
     symbol: unknown,
     typeMap: string,
   ): Promise<DebugSymbol | string> {
+    const tm = await this.updateTypeMap(JSON.parse(typeMap), symbol);
+
+    typeMap = JSON.stringify(tm);
+
     try {
       return {
         elanType: type,

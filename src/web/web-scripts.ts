@@ -1747,11 +1747,36 @@ function getDebugSymbolDictionary(s: DebugSymbol) {
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
+function getProperty(name: string, type: string | { [index: string]: string }, value: any): string {
+  let elanType = "";
+  let typeMap = "";
+  let asString = "";
+
+  if (typeof type === "string") {
+    elanType = type;
+  } else {
+    elanType = type["Type"];
+    asString = type["asString"];
+    typeMap = JSON.stringify(type);
+  }
+
+  const propertySymbol = {
+    elanType,
+    name,
+    value,
+    asString,
+    typeMap,
+  };
+  return getDebugSymbol(propertySymbol);
+}
+
 function getDebugSymbolClass(s: DebugSymbol) {
+  const typeMap = JSON.parse(s.typeMap);
   const list = s.value as { [index: string]: any };
-  const keys = Object.keys(list);
+  const keys = Object.keys(typeMap["Properties"]);
   const summary = getSummary(s.elanType, s.asString, s.name);
-  const items = keys.map((k) => getDebugItemHtml(subType(s.elanType), k, list[k], true));
+
+  const items = keys.map((k) => getProperty(k, typeMap["Properties"][k], list[k]));
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
