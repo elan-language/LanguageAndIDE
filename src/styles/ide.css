@@ -607,11 +607,15 @@ a.menu-item:hover:visited
 
 #system-info .expandable > .summary::before {
   content: "+";
-  padding-right: 0.5em;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+  background-color: var(--optional);
+  color: white;
+  font-weight: bold;
+  margin-right: 0.2em;
 }
 #system-info .expandable.expanded > .summary:before {
   content: "-";
-  padding-right: 0.5em;
 }
 #system-info .expandable .detail {
   display: none;

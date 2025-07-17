@@ -1694,7 +1694,7 @@ function length(l: number) {
 
 function getSummary(type: string, lenOrAsString: number | string, id: string): string {
   const suffix = typeof lenOrAsString === "number" ? length(lenOrAsString) : lenOrAsString;
-  return `${id}: ${htmlEscape(type)}${suffix}`;
+  return `<el-id>${id}</el-id>: <el-type>${htmlEscape(type)}</el-type>${suffix}`;
 }
 
 function getDebugItemHtml(
@@ -1779,32 +1779,42 @@ function getDebugSymbolString(name: string, value: any) {
   const fullString = value as string;
   const len = fullString.length;
   const suffix = length(len);
-  const prefix = `${name}: `;
+  const prefix = `<el-id>${name}</el-id>: `;
 
   if (len <= 10) {
-    return getSummaryHtml(`${prefix}"${fullString}"`);
+    return getSummaryHtml(`<el-id>${prefix}</el-id>"<el-lit>${fullString}</el-lit>"`);
   }
 
-  const shortString = `"${fullString.slice(0, 10)}"...`;
-  return getDebugHtml(`${prefix}${shortString}${suffix}`, `"${fullString}"`);
+  const shortString = `"<el-lit>${fullString.slice(0, 10)}</el-lit>"...`;
+  return getDebugHtml(`${prefix}${shortString}${suffix}`, `"<el-lit>${fullString}</el-lit>"`);
+}
+
+function getDebugSymbolInt(name: string, value: number) {
+  return getSummaryHtml(`<el-id>${name}<el-id>: <el-lit>${value}</el-lit>`);
 }
 
 function getDebugSymbolFloat(name: string, value: any) {
   let v = `${value}`;
   v = v.includes(".") ? v : `${v}.0`;
-  return getSummaryHtml(`${name}: ${v}`);
+  return getSummaryHtml(`<el-id>${name}<el-id>: <el-lit>${v}</el-lit>`);
 }
 
-function getDebugSymbolSimple(name: string, value: any) {
-  return getSummaryHtml(`${name}: ${value}`);
+function getDebugSymbolBoolean(name: string, value: boolean) {
+  return getSummaryHtml(`<el-id>${name}<el-id>: <el-id>${value}</el-id>`);
+}
+
+function getDebugSymbolRegExp(name: string, value: string) {
+  return getSummaryHtml(`<el-id>${name}</el-id>: /<el-lit>${value}<el-lit>/`);
 }
 
 function getDebugSymbolHtml(elanType: string, name: string, value: any, typeMap: string) {
   switch (elanType) {
-    case "Int":
     case "Boolean":
+      return getDebugSymbolBoolean(name, value);
     case "RegExp":
-      return getDebugSymbolSimple(name, value);
+      return getDebugSymbolRegExp(name, value);
+    case "Int":
+      return getDebugSymbolInt(name, value);
     case "Float":
       return getDebugSymbolFloat(name, value);
     case "String":
