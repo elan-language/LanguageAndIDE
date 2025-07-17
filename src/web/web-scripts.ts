@@ -1680,10 +1680,6 @@ function getDebugHtml(content1: string, content2: string) {
   return `<div class="expandable">${getSummaryHtml(content1)}<div class="detail">${content2}</div></div>`;
 }
 
-function htmlEscape(s: string) {
-  return s.replaceAll(">", "&gt;").replaceAll("<", "&lt;");
-}
-
 function subType(type: string) {
   return type.slice(type.indexOf("<of") + 4, -1);
 }
@@ -1692,9 +1688,22 @@ function length(l: number) {
   return ` - length ${l}`;
 }
 
-function getSummary(type: string, lenOrAsString: number | string, id: string): string {
+function getSummary(type: string, lenOrAsString: number | string, formattedId: string): string {
   const suffix = typeof lenOrAsString === "number" ? length(lenOrAsString) : lenOrAsString;
-  return `<el-id>${id}</el-id>: <el-type>${htmlEscape(type)}</el-type>${suffix}`;
+  return `${formattedId}${formatType(type)}${suffix}`;
+}
+
+function simpleId(id: string): string {
+  return `<el-id>${id}</el-id>: `;
+}
+
+function formatType(type: string) {
+  type = type
+    .replaceAll(">", "&gt;")
+    .replaceAll("<", "&lt;")
+    .replaceAll("&lt;of ", "&lt;<el-kw>of</el-kw> ")
+    .replaceAll(/([A-Za-z0-9_]{3,})/g, `<el-type>$1</el-type>`);
+  return type;
 }
 
 function getDebugItemHtml(
@@ -1703,7 +1712,7 @@ function getDebugItemHtml(
   value: any,
   noBrackets?: boolean,
 ): string {
-  const name = !!noBrackets ? `${index}` : `[${index}]`;
+  const name = !!noBrackets ? `${index}` : `[<el-lit>${index}</el-lit>]`;
 
   if (type.includes("of ") || `${value}` === "[object Object]") {
     const isArray = Array.isArray(value);
@@ -1720,22 +1729,26 @@ function getDebugItemHtml(
 
 function getDebugItemHtml2D(index: number, value: []): string {
   const list = value;
-  const summary = getSummary("", list.length, `[${index}, _]:`);
-  const items = list.map((item, subindex) => getDebugItemHtml("", `${index}, ${subindex}`, item));
+  const summary = getSummary("", list.length, `[<el-lit>${index}</el-lit>, _]:`);
+  const items = list.map((item, subindex) =>
+    getDebugItemHtml("", `<el-lit>${index}</el-lit>, <el-lit>${subindex}</el-lit>`, item),
+  );
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
 function getDebugSymbolList(elanType: string, name: string, value: any, typeMapS: string) {
   const typeMap = JSON.parse(typeMapS);
   const list = value as [];
-  const summary = getSummary(elanType, list.length, name);
-  const items = list.map((item, i) => getProperty(`[${i}]`, typeMap["OfTypes"], item));
+  const summary = getSummary(elanType, list.length, simpleId(name));
+  const items = list.map((item, i) =>
+    getProperty(`[<el-lit>${i}</el-lit>]`, typeMap["OfTypes"], item),
+  );
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
 function getDebugSymbolArray2D(elanType: string, name: string, value: any) {
   const list = value as [[]];
-  const summary = getSummary(elanType, list.length, name);
+  const summary = getSummary(elanType, list.length, simpleId(name));
   const items = list.map((item, index) => getDebugItemHtml2D(index, item));
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
@@ -1744,7 +1757,7 @@ function getDebugSymbolDictionary(elanType: string, name: string, value: any, ty
   const typeMap = JSON.parse(typeMapS);
   const list = value as { [index: string]: any };
   const keys = Object.keys(list);
-  const summary = getSummary(elanType, keys.length, name);
+  const summary = getSummary(elanType, keys.length, simpleId(name));
   //const items = keys.map((k) => getDebugItemHtml(subType(elanType), k, list[k]));
 
   const items = keys.map((k) => getProperty(`[${k}]`, typeMap["OfTypes"], list[k]));
@@ -1770,7 +1783,7 @@ function getDebugSymbolClass(elanType: string, name: string, value: any, typeMap
   const typeMap = JSON.parse(typeMapS);
   const list = value as { [index: string]: any };
   const keys = typeMap["Properties"] ? Object.keys(typeMap["Properties"]) : [];
-  const summary = getSummary(elanType, "", name);
+  const summary = getSummary(elanType, "", simpleId(name));
   const items = keys.map((k) => getProperty(k, typeMap["Properties"][k], list[k]));
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
@@ -1779,10 +1792,10 @@ function getDebugSymbolString(name: string, value: any) {
   const fullString = value as string;
   const len = fullString.length;
   const suffix = length(len);
-  const prefix = `<el-id>${name}</el-id>: `;
+  const prefix = simpleId(name);
 
   if (len <= 10) {
-    return getSummaryHtml(`<el-id>${prefix}</el-id>"<el-lit>${fullString}</el-lit>"`);
+    return getSummaryHtml(`${prefix}"<el-lit>${fullString}</el-lit>"`);
   }
 
   const shortString = `"<el-lit>${fullString.slice(0, 10)}</el-lit>"...`;
@@ -1790,21 +1803,21 @@ function getDebugSymbolString(name: string, value: any) {
 }
 
 function getDebugSymbolInt(name: string, value: number) {
-  return getSummaryHtml(`<el-id>${name}<el-id>: <el-lit>${value}</el-lit>`);
+  return getSummaryHtml(`${simpleId(name)}<el-lit>${value}</el-lit>`);
 }
 
 function getDebugSymbolFloat(name: string, value: any) {
   let v = `${value}`;
   v = v.includes(".") ? v : `${v}.0`;
-  return getSummaryHtml(`<el-id>${name}<el-id>: <el-lit>${v}</el-lit>`);
+  return getSummaryHtml(`${simpleId(name)}<el-lit>${v}</el-lit>`);
 }
 
 function getDebugSymbolBoolean(name: string, value: boolean) {
-  return getSummaryHtml(`<el-id>${name}<el-id>: <el-id>${value}</el-id>`);
+  return getSummaryHtml(`${simpleId(name)}<el-id>${value}</el-id>`);
 }
 
 function getDebugSymbolRegExp(name: string, value: string) {
-  return getSummaryHtml(`<el-id>${name}</el-id>: /<el-lit>${value}<el-lit>/`);
+  return getSummaryHtml(`${simpleId(name)}/<el-lit>${value}<el-lit>/`);
 }
 
 function getDebugSymbolHtml(elanType: string, name: string, value: any, typeMap: string) {
