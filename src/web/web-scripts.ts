@@ -1685,7 +1685,7 @@ function subType(type: string) {
 }
 
 function length(l: number) {
-  return ` - length ${l}`;
+  return ` <el-comment># length ${l}</el-comment>`;
 }
 
 function getSummary(type: string, lenOrAsString: number | string, formattedId: string): string {
@@ -1694,7 +1694,7 @@ function getSummary(type: string, lenOrAsString: number | string, formattedId: s
 }
 
 function simpleId(id: string): string {
-  return `<el-id>${id}</el-id>: `;
+  return `${id} `;
 }
 
 function formatType(type: string) {
@@ -1729,7 +1729,7 @@ function getDebugItemHtml(
 
 function getDebugItemHtml2D(index: number, value: []): string {
   const list = value;
-  const summary = getSummary("", list.length, `[<el-lit>${index}</el-lit>, _]:`);
+  const summary = getSummary("", list.length, `[<el-lit>${index}</el-lit>, _]`);
   const items = list.map((item, subindex) =>
     getDebugItemHtml("", `<el-lit>${index}</el-lit>, <el-lit>${subindex}</el-lit>`, item),
   );
@@ -1760,7 +1760,9 @@ function getDebugSymbolDictionary(elanType: string, name: string, value: any, ty
   const summary = getSummary(elanType, keys.length, simpleId(name));
   //const items = keys.map((k) => getDebugItemHtml(subType(elanType), k, list[k]));
 
-  const items = keys.map((k) => getProperty(`[${k}]`, typeMap["OfTypes"], list[k]));
+  const items = keys.map((k) =>
+    getProperty(`[<el-lit>${k}</el-lit>]`, typeMap["OfTypes"], list[k]),
+  );
 
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
@@ -1784,7 +1786,9 @@ function getDebugSymbolClass(elanType: string, name: string, value: any, typeMap
   const list = value as { [index: string]: any };
   const keys = typeMap["Properties"] ? Object.keys(typeMap["Properties"]) : [];
   const summary = getSummary(elanType, "", simpleId(name));
-  const items = keys.map((k) => getProperty(k, typeMap["Properties"][k], list[k]));
+  const items = keys.map((k) =>
+    getProperty(`<el-id>${k}<el-id>`, typeMap["Properties"][k], list[k]),
+  );
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
@@ -1845,7 +1849,7 @@ function getDebugSymbolHtml(elanType: string, name: string, value: any, typeMap:
 }
 
 function getDebugSymbol(s: DebugSymbol) {
-  return getDebugSymbolHtml(s.elanType, s.name, s.value, s.typeMap);
+  return getDebugSymbolHtml(s.elanType, `<el-id>${s.name}</el-id>`, s.value, s.typeMap);
 }
 
 function printDebugSymbol(s: DebugSymbol) {

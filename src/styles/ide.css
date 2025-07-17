@@ -621,6 +621,6 @@ a.menu-item:hover:visited
   display: none;
 }
 #system-info .expandable.expanded  > .detail {
-  margin-left: 1.1em;
+  margin-left: 1.12em;
   display: block;
 }
