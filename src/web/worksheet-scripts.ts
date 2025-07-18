@@ -16,6 +16,11 @@ for (const item of accordions) {
   item.addEventListener("click", function () {
     item.parentElement!.classList.toggle("active");
   });
+  (item as HTMLElement).addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      item.parentElement!.classList.toggle("active");
+    }
+  });
 }
 
 let fh: FileSystemFileHandle | undefined;

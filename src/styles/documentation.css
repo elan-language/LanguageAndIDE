@@ -126,3 +126,6 @@ a:hover, a:focus {text-decoration: underline}
   padding-right: 0.5em;
 }
 
+.acc-title:focus {
+  background-color: var(--selection);
+}
