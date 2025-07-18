@@ -1820,7 +1820,7 @@ function getDebugSymbolFloat(name: string, value: any) {
 }
 
 function getDebugSymbolBoolean(name: string, value: boolean) {
-  return getSummaryHtml(`${simpleId(name)}<el-id>${value}</el-id>`);
+  return getSummaryHtml(`${simpleId(name)}<el-lit>${value}</el-lit>`);
 }
 
 function getDebugSymbolRegExp(name: string, value: string) {
