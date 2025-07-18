@@ -617,6 +617,9 @@ a.menu-item:hover:visited
 #system-info .expandable.expanded > .summary:before {
   content: "-";
 }
+#system-info .summary:focus {
+  background-color: var(--selection);
+}
 #system-info .expandable .detail {
   display: none;
 }

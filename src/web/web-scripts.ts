@@ -1673,7 +1673,7 @@ function handleRunWorkerFinished() {
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
 
 function getSummaryHtml(content: string) {
-  return `<div class="summary">${content}</div>`;
+  return `<div class="summary" tabindex="0">${content}</div>`;
 }
 
 function getDebugHtml(content1: string, content2: string) {
@@ -1724,7 +1724,7 @@ function getDebugItemHtml(
     return getDebugHtml(`${summary}`, `${items.join("")}`);
   }
 
-  return `<div>${name}: ${value}</div>`;
+  return `<div class=>${name}: ${value}</div>`;
 }
 
 function getDebugItemHtml2D(index: number, value: []): string {
@@ -1870,9 +1870,17 @@ function addDebugListeners() {
       } else {
         d.classList.add("expanded");
       }
-
       e.preventDefault();
       e.stopPropagation();
+    });
+  }
+
+  const summaries = systemInfoDiv.querySelectorAll(".summary") as NodeListOf<HTMLDivElement>;
+  for (const s of summaries) {
+    s.addEventListener("keydown", (event) => {
+      if (s.parentElement && event.key === "Enter") {
+        s.parentElement!.classList.toggle("expanded");
+      }
     });
   }
 }
