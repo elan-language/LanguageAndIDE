@@ -1729,7 +1729,7 @@ function getDebugItemHtml(
 
 function getDebugItemHtml2D(index: number, value: []): string {
   const list = value;
-  const summary = getSummary("", list.length, `[<el-lit>${index}</el-lit>, _]`);
+  const summary = getSummary("", "", `[<el-lit>${index}</el-lit>, _]`);
   const items = list.map((item, subindex) =>
     getDebugItemHtml("", `<el-lit>${index}</el-lit>, <el-lit>${subindex}</el-lit>`, item),
   );
@@ -1748,7 +1748,10 @@ function getDebugSymbolList(elanType: string, name: string, value: any, typeMapS
 
 function getDebugSymbolArray2D(elanType: string, name: string, value: any) {
   const list = value as [[]];
-  const summary = getSummary(elanType, list.length, simpleId(name));
+  const cols = list.length;
+  const rows = list[0].length;
+  const size = ` <el-comment># size ${cols} x ${rows}</el-comment>`;
+  const summary = getSummary(elanType, size, simpleId(name));
   const items = list.map((item, index) => getDebugItemHtml2D(index, item));
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
