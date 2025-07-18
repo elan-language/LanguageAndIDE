@@ -13,13 +13,17 @@
 <div class="docTitle">IDE controls & keyboard shortcuts</div>
 
 <div class="accordion">
-<h2 class="acc-title">Switching focus between different parts of the IDE</h2>
+<h2 class="acc-title">Navigate around the IDE</h2>
 <div class="acc-body">
-If an element has a tinted blue background, it does not have browser 'focus' and will not respond to keyboard input.
-Use keyboard shortcuts or mouse/touch gestures to change the focus (indicated by a white background):
+  <p>Watch the video: <a href="videos/navigate-ide.html">Navigate around the IDE</a></p>
+
+  <p><i>Always use Elan with the browser in 'full screen mode' - it makes more space available and is safer.</i></p>
+  <p>To change the text size, hold down the <b>Ctrl</b> key and use the mouse scroll wheel. (Or change the magnification via the browser's menu.)</p>
+  <p>If an element has a tinted blue background, it does not have browser 'focus' and will not respond to keyboard input.
+Use keyboard shortcuts or mouse/touch gestures to change the focus (indicated by a white background):</p>
 <table>
     <tr><th>To focus on...</th><th>Keyboard shortcut</th><th>Mouse gesture</th><th>Notes</th></tr>
-    <tr><td>code editor</td><td><b>Ctrl-e</b></td><td>Click on background within editor</td><td>TODO - see</td></tr>
+    <tr><td>code editor</td><td><b>Ctrl-e</b></td><td>Click on background within editor</td><td>See also <a href="#browsing-entering-editing-code">Browsing, entering, and editing code</a></td></tr>
     <tr><td>display</td><td><b>Ctrl-d</b></td><td>Click on the '<b><u>d</u></b>isplay' tab</td><td></td></tr>
     <tr><td>info</td><td><b>Ctrl-i</b></td><td>Click on the '<b><u>i</u></b>nfo' tab</td><td></td></tr>
     <tr><td>help</td><td><b>Ctrl-h</b></td><td>Click on the '<b><u>h</u></b>elp</b>'' tab</td><td></td></tr>
@@ -30,12 +34,12 @@ Use keyboard shortcuts or mouse/touch gestures to change the focus (indicated by
 </div></div>
 
 <div class="accordion">
-<h2 class="acc-title">Creating, loading, saving, and running programs</h2>
+<h2 class="acc-title">Load, run, and save programs</h2>
 <div class="acc-body">
-
+  <p>Watch the video: <a href="videos/load-run-save.html">Load, run, and save programs</a></p>
 
 <div class="accordion">
-  <h3 class="acc-title">Creating, loading, and saving</h3>
+  <h3 class="acc-title">Loading, and saving</h3>
    <div class="acc-body">
 To access the <b>demo</b> or <b>file</b> menus via the keyboard:
 <ul>
@@ -49,8 +53,7 @@ To access the <b>demo</b> or <b>file</b> menus via the keyboard:
 <table>
   <tr><th>Intention</th><th>Menu action</th><th>Notes</th></tr>
   <tr><td>use a <i>demo</i> program</td><td><b>demo</b> then select desired program</td><td></td></tr>
-  <tr><td>create a new program</td><td><b>file > new</b></td><td>if the editor contains unsaved code, the user will be warned</td></tr>
-  <tr><td>load a program file</td><td><b>file > load</b></td><td>if the editor contains unsaved code, the user will be warned</td></tr>
+    <tr><td>load a program file</td><td><b>file > load</b></td><td>if the editor contains unsaved code, the user will be warned</td></tr>
   <tr><td>append a file to the current code in the editor</td><td><b>file > append</b></td><td>external code is always appended <i>to the end</i> of the current code, but may then be <a href="#move_instructions">moved</a></td></tr>
   <tr><td>save a program file</td><td><b>file > auto save</b></td><td>any subsequent edits will be saved to the file (whenever the code parses)</td></tr>
   <tr><td>cancel auto-saving</td><td><b>file > cancel auto save</b></td><td>this action appears only after setting-up <b>auto save</b></td></tr>
@@ -97,13 +100,12 @@ will automatically pause on any breakpoint. Breakpoint-related actions require o
   </table>
 </div></div>
 </div></div>
-<div class="accordion">
-<h2 class="acc-title">Navigating, entering and editing code</h1>
-<div class="acc-body">
-
+ 
   <div class="accordion">
-    <h3 class="acc-title">Instructions, comments, and 'new code' prompts</h3>
+    <h2 class="acc-title">Browse code</h2>
     <div class="acc-body">
+      <p>Watch the video: <a href="videos/browse-code.html">Browse code</a></p>
+
 <p>The code shown in the editor has three types:</p>
 <ul>
  <li><b>Instructions</b> begin with a dark blue keyword e.g: 
@@ -120,13 +122,10 @@ or like this when selected (though the specific keywords offered will depend upo
 <el-statement class="selected focused ok empty" id="select12" tabindex="0"><el-select><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
 </el-code> 
 </ul>
-Comments and <el-code>new code</el-code> prompts are <i>not</i> instructions &ndash; they do not alter the program's behaviour &ndash; but they are treated by the editor <i>like</i> instructions .</li>
-</div>
-</div>
+<p>Comments and <el-code>new code</el-code> prompts are <i>not</i> instructions &ndash; they do not alter the program's behaviour &ndash; but they are treated by the editor <i>like</i> instructions .</li></p>
 
-<div class="accordion">
-  <h3 class="acc-title" id="select_instructions">To select instruction(s)</h3>
-  <div class="acc-body">
+
+<h3 id="select_instructions">To select instruction(s)</h3>
 
 <table>
     <tr><th>To...</th><th>Keyboard shortcut</th><th>Mouse gesture</th><th>Notes</th></tr>
@@ -139,111 +138,112 @@ Comments and <el-code>new code</el-code> prompts are <i>not</i> instructions &nd
     <tr><td>select the <i>first inner</i> instruction contained by the current one</td><td><b>&rarr;</b></td><td></td><td></td></tr>  
     <tr><td>add the <i>next</i> instruction to the current selection</td><td><b>Shift-&darr;</b></td><td><b>Shift</b>, and <b>click</b> on the <i>initial</i> keyword of the instruction or its number</td><td>limited to the current block of instructions</td></tr>
     <tr><td>add the <i>previous</i> instruction to the current selection</td><td><b>Shift-&uarr;</b></td><td><b>Shift</b>, and <b>click</b> on the <i>initial</i> keyword of the instruction or its number</td><td>limited to the current block of instructions</td></tr>
+    <tr><td>toggle outlining on an individual instruction</td><td><a href="#select_instructions">select the instruction</a> then <b>Ctrl-o</b></td><td><b>double-click</b> on the inital keyword or instruction number</td><td></td></tr>
+    <tr><td>toggle outlining for whole program</td><td><b>Ctrl-O</b> (same as <b>Ctrl-Shift-o</b>)</td><td><b>click</b> the <b>outline</b> button</td><td></td></tr>
   </table>
  </div></div>
-
- <div class="accordion">
-  <h3 class="acc-title">To select and edit fields</h3>
- <table class="acc-body">
-  <tr><th>To...</th><th>Keyboard shortcut</th><th>Mouse gesture</th><th>Notes</th></tr>
-   <tr><td>select <i>any field</i> within an instruction</td><td></td><td><b>click</b> anywhere on the text, or placeholder, for that field.</td><td>Text cursor will be placed at the end of the field</td></tr>
-    <tr><td>select the <i>first field</i> in a <i>selected</i> instruction</td><td><b>Tab</b></td><td></td><td></td></tr>
-    <tr><td>select the <i>next field</i> in the same instruction</td><td><b>Tab</b></td><td></td><td>will cycle through the fields and back to the whole instruction.</td></tr>
-    <tr><td>select the <i>previous field</i> in the same instruction</td><td><b>Shift-Tab</b></td><td></td><td>will cycle through the fields and back to the whole instruction.</td></tr>  
-    <tr><td>select specific <i>text within</i> a field </td><td><b>Shift-&larr; or &rarr;</b></td><td><b>click</b> and <b>drag</b> across the desired characters</td><td></td></tr>
-    <tr><td>select <i>all text</i> within a field</td><td><b>Ctrl-a</b></td><td></td></tr>
-    <tr><td>position text-cursor at the start of a selected field</td><td><b>Home</b><td><b>click</b> anywhere within the selected field</td></td><td></td></tr>
-    <tr><td>position text-cursor at the end of a selected field</td><td><b>End</b><td><b>click</b> anywhere within the selected field</td></td><td></td></tr>
-    <tr><td>go from the last field to the next instruction</td><td><b>Enter</b></td><td></td></tr>
-</table>
-</div>
-
+ 
 <div class="accordion">
-  <h3 class="acc-title" id="insert_instruction">To insert a new instruction...</h3>
-
+  <h2 class="acc-title" id="create_instruction">Create New Instructions</h2>
   <div class="acc-body">
- If there is already a <code>new code</code> prompt where you want to insert an instruction then
-
- <ul>
-  <li>select the new code prompt (as you would select an instruction)</li>
-  <li>type the first letter of the desired instruction, or more than one instruction begins the same way, type additional
-    letters until an instruction template is inserted, with the focus placed on the first field.</li>
- </ul>
-
- Otherwise, <a href="#select_instructions">select an instruction</a> <i>adjacent</i> to where you want to add the new one and <i>either</i>:
-
- <ul>
-  <li>press <b>Enter</b> to insert a 'new code' prompt <i>below</i> it</li>
-  <li>press <b>Shift-Enter</b> to insert a 'new code' prompt <i>above</i> it</li>
- </ul>
- </div>
- </div>
-
- <div class="accordion">
- <h3 class="acc-title">To delete ...</h3>
-
-<table class="acc-body">
-  <tr><th>To delete</th><th>Keyboard shortcut</th><th>Notes</th></tr>
-  <tr><td>one or more (adjacent) instructions</td><td><a href="#select_instructions">select the instruction(s)</a> then <b>Ctrl-Delete</b> or <b>Ctrl-Backspace</b></td><td>Deleting a compound instruction will delete all its contained instructions with it</td></tr>
-  <tr><td>a 'new code' prompt that is not needed</td><td>delete the same way as an instruction</td><td>Deleting a compound instruction will delete all its contained instructions with it</td></tr>
-  <tr><td>all 'new code' prompts</td><td>Use the <b>Trim</b> button</td><td>will remove all 'new code' prompts <i>except</i> in places where further instructions are required (for example so as not to leave an empty loop)</td></tr>
-</table>
+    <p>Watch the video: <a href="videos/create-new-instructions.html">Create New Instructions</a></p>
+  </div>
 </div>
 
 <div class="accordion">
-  <h3 class="acc-title"  id="undo_redo">To undo or redo a recent change</h3>
+  <h2 class="acc-title" id="">Edit Instructions</h2>
   <div class="acc-body">
-Elan retains previous versions of code in a stack. However, it should be noted that a code version is saved to the stack
-(and to file, if auto-save is selected) <i>only when it parses</i>.
+  <div class="accordion">
+    <h3 class="acc-title">Select and edit a field</h3>
+    <table class="acc-body">
+      <tr><th>To...</th><th>Keyboard shortcut</th><th>Mouse gesture</th><th>Notes</th></tr>
+      <tr><td>select <i>any field</i> within an instruction</td><td></td><td><b>click</b> anywhere on the text, or placeholder, for that field.</td><td>Text cursor will be placed at the end of the field</td></tr>
+        <tr><td>select the <i>first field</i> in a <i>selected</i> instruction</td><td><b>Tab</b></td><td></td><td></td></tr>
+        <tr><td>select the <i>next field</i> in the same instruction</td><td><b>Tab</b></td><td></td><td>will cycle through the fields and back to the whole instruction.</td></tr>
+        <tr><td>select the <i>previous field</i> in the same instruction</td><td><b>Shift-Tab</b></td><td></td><td>will cycle through the fields and back to the whole instruction.</td></tr>  
+        <tr><td>select specific <i>text within</i> a field </td><td><b>Shift-&larr; or &rarr;</b></td><td><b>click</b> and <b>drag</b> across the desired characters</td><td></td></tr>
+        <tr><td>select <i>all text</i> within a field</td><td><b>Ctrl-a</b></td><td></td></tr>
+        <tr><td>position text-cursor at the start of a selected field</td><td><b>Home</b><td><b>click</b> anywhere within the selected field</td></td><td></td></tr>
+        <tr><td>position text-cursor at the end of a selected field</td><td><b>End</b><td><b>click</b> anywhere within the selected field</td></td><td></td></tr>
+        <tr><td>go from the last field to the next instruction</td><td><b>Enter</b></td><td></td></tr>
+    </table>
+  </div>
+  <div class="accordion">
+    <h3 class="acc-title" id="insert_instruction">Insert a new instruction...</h3>
+    <div class="acc-body">
+  If there is already a <code>new code</code> prompt where you want to insert an instruction then
 
-<table>
-  <tr><th>Action</th><th>Using the keyboard</th><th>Using the mouse</th></tr>
-  <tr><td>Undo previous change(s)</td><td><b>Ctrl-z</b></td><td><b>click</b> on <b>undo</b> button</td></tr>
-  <tr><td>Redo previous undo(s)</td><td><b>Ctrl-y</b</td><td><b>click</b> on <b>redo</b> button</td></tr>
-</table>
-</div>
-</div>
+  <ul>
+    <li>select the new code prompt (as you would select an instruction)</li>
+    <li>type the first letter of the desired instruction, or more than one instruction begins the same way, type additional
+      letters until an instruction template is inserted, with the focus placed on the first field.</li>
+  </ul>
 
-<div class="accordion">
-  <h3 class="acc-title" id="move_instructions">To move instruction(s) up or down within the same block</h3>
-  <div class="acc-body">
-<a href="#select_instructions">Select the instructions</a>, then press <b>Ctrl-&darr;</b> or <b>Ctrl-&uarr;</b>.<br>
-  Movement is limited to up or down <i>within the current code block</i>. <br>
-  To move instructions to a different code block
-  use cut & paste.<br>
-  (It is not currently possible to <i>move</i> instructions using the mouse alone.)
-</div>
-</div>
+  Otherwise, <a href="#select_instructions">select an instruction</a> <i>adjacent</i> to where you want to add the new one and <i>either</i>:
 
-<div class="accordion">
-  <h3 class="acc-title">To cut and paste instruction(s)</h3>
-  <div class="acc-body">
-<ul>
-  <li><a href="#select_instructions">Select the instructions</a> to be cut, then press <b>Ctrl-x</b>.</li>
-  <li><a href="#insert_instruction">Now create, or select, a 'new code' prompt</a> where you want to paste the cut instructions.</li>
-  <li>Press <b>Ctrl-v</b> to paste. </li>
-</ul>
-  Note that the pasted instructions must be compatible with the
-  new context (i.e. all of the instructions <i>could</i> have been created there in the first place).
-  If they are incompable, no paste will take place and you will see a pop-up advisory message.
-  (To restore the cut instructions to their original context, use <a href="#undo_redo"></a>undo.)
-  One or more successive instructions to a new location within the program
-  Text between two fields or externally
-  Code from an external source into the IDE
-  Code from the IDE to an external destination
-</div>
-</div>
+  <ul>
+    <li>press <b>Enter</b> to insert a 'new code' prompt <i>below</i> it</li>
+    <li>press <b>Shift-Enter</b> to insert a 'new code' prompt <i>above</i> it</li>
+  </ul>
+  </div>
+  </div>
 
-<div class="accordion">
-  <h3 class="acc-title">To show or hide the outline view of code</h3>
+  <div class="accordion">
+  <h3 class="acc-title">Delete ...</h3>
+
   <table class="acc-body">
-    <tr><th>Action</th><th>Keyboard shortcut</th><th>Mouse gesture</th></tr>
-    <tr><td>toggle outlining on an individual instruction</td><td><a href="#select_instructions">select the instruction</a> then <b>Ctrl-o</b></td><td><b>double-click</b> on the inital keyword or instruction number</td></tr>
-    <tr><td>toggle outlining for whole program</td><td><b>Ctrl-O</b> (same as <b>Ctrl-Shift-o</b>)</td><td><b>click</b> the <b>outline</b> button</td></tr>
+    <tr><th>To delete</th><th>Keyboard shortcut</th><th>Notes</th></tr>
+    <tr><td>one or more (adjacent) instructions</td><td><a href="#select_instructions">select the instruction(s)</a> then <b>Ctrl-Delete</b> or <b>Ctrl-Backspace</b></td><td>Deleting a compound instruction will delete all its contained instructions with it</td></tr>
+    <tr><td>a 'new code' prompt that is not needed</td><td>delete the same way as an instruction</td><td>Deleting a compound instruction will delete all its contained instructions with it</td></tr>
+    <tr><td>all 'new code' prompts</td><td>Use the <b>Trim</b> button</td><td>will remove all 'new code' prompts <i>except</i> in places where further instructions are required (for example so as not to leave an empty loop)</td></tr>
   </table>
-</div>
-</div>
+  </div>
 
+  <div class="accordion">
+    <h3 class="acc-title"  id="undo_redo">Undo or redo a recent change</h3>
+    <div class="acc-body">
+  Elan retains previous versions of code in a stack. However, it should be noted that a code version is saved to the stack
+  (and to file, if auto-save is selected) <i>only when it parses</i>.
+
+  <table>
+    <tr><th>Action</th><th>Using the keyboard</th><th>Using the mouse</th></tr>
+    <tr><td>Undo previous change(s)</td><td><b>Ctrl-z</b></td><td><b>click</b> on <b>undo</b> button</td></tr>
+    <tr><td>Redo previous undo(s)</td><td><b>Ctrl-y</b</td><td><b>click</b> on <b>redo</b> button</td></tr>
+  </table>
+  </div>
+  </div>
+
+  <div class="accordion">
+    <h3 class="acc-title" id="move_instructions">Move instruction(s) up or down within the same block</h3>
+    <div class="acc-body">
+  <a href="#select_instructions">Select the instructions</a>, then press <b>Ctrl-&darr;</b> or <b>Ctrl-&uarr;</b>.<br>
+    Movement is limited to up or down <i>within the current code block</i>. <br>
+    To move instructions to a different code block
+    use cut & paste.<br>
+    (It is not currently possible to <i>move</i> instructions using the mouse alone.)
+  </div>
+  </div>
+
+  <div class="accordion">
+    <h3 class="acc-title">Cut and paste instruction(s)</h3>
+    <div class="acc-body">
+  <ul>
+    <li><a href="#select_instructions">Select the instructions</a> to be cut, then press <b>Ctrl-x</b>.</li>
+    <li><a href="#insert_instruction">Now create, or select, a 'new code' prompt</a> where you want to paste the cut instructions.</li>
+    <li>Press <b>Ctrl-v</b> to paste. </li>
+  </ul>
+    Note that the pasted instructions must be compatible with the
+    new context (i.e. all of the instructions <i>could</i> have been created there in the first place).
+    If they are incompable, no paste will take place and you will see a pop-up advisory message.
+    (To restore the cut instructions to their original context, use <a href="#undo_redo"></a>undo.)
+    One or more successive instructions to a new location within the program
+    Text between two fields or externally
+    Code from an external source into the IDE
+    Code from the IDE to an external destination
+  </div>
+  </div>
+</div>
+</div>
 
 <div class="accordion">
   <h2 class="acc-title">Apple Mac specific</h2>
