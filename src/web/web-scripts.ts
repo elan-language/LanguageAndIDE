@@ -1694,15 +1694,14 @@ function simpleId(id: string): string {
 }
 
 function simpleValue(value: any, type: string): string {
-  let v = value;
+  let formatted = `<el-lit>${value}</el-lit>`;
   if (type === "String") {
-    v = `"${value}"`;
+    formatted = `"${formatted}"`;
+  } else if (type === "Float") {
+    const fl = value.includes(".") ? value : `${value}.0`;
+    formatted = `<el-lit>${fl}</el-lit>`;
   }
-  if (type === "Float") {
-    v = v.includes(".") ? v : `${v}.0`;
-  }
-
-  return `<el-lit>${v}</el-lit>`;
+  return formatted;
 }
 
 function formatType(type: string) {
@@ -1725,7 +1724,7 @@ function getDebugSymbolList(name: string, value: [], typeMap: { [index: string]:
 
 function getDebugSymbolTuple(name: string, value: [], typeMap: { [index: string]: any }) {
   const type = typeMap["Type"];
-  const summary = getSummary(type, value.length, simpleId(name));
+  const summary = getSummary(type, "", simpleId(name));
   const items = value.map((item, i) => {
     const itemId = `item${i}`;
     return getDebugSymbolHtml(`${simpleId(itemId)}`, item, typeMap["OfTypes"][i]);
