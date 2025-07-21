@@ -1694,7 +1694,19 @@ function getSummary(type: string, lenOrAsString: number | string, formattedId: s
 }
 
 function simpleId(id: string): string {
-  return `${id} `;
+  return `<el-id>${id}</el-id> `;
+}
+
+function simpleValue(value: any, type: string): string {
+  let v = value;
+  if (type === "String") {
+    v = `"${value}"`;
+  }
+  if (type === "Float") {
+    v = v.includes(".") ? v : `${v}.0`;
+  }
+
+  return `<el-lit>${v}</el-lit>`;
 }
 
 function formatType(type: string) {
@@ -1736,59 +1748,61 @@ function getDebugItemHtml2D(index: number, value: []): string {
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
-function getDebugSymbolList(elanType: string, name: string, value: any, typeMapS: string) {
-  const typeMap = JSON.parse(typeMapS);
-  const list = value as [];
-  const summary = getSummary(elanType, list.length, simpleId(name));
-  const items = list.map((item, i) =>
-    getProperty(`[<el-lit>${i}</el-lit>]`, typeMap["OfTypes"], item),
+function getDebugSymbolList(name: string, value: [], typeMap: { [index: string]: any }) {
+  const type = typeMap["Type"];
+  const summary = getSummary(type, value.length, simpleId(name));
+  const items = value.map((item, i) =>
+    getProperty(`[${simpleValue(i, "Int")}]`, typeMap["OfTypes"], item),
   );
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
-function getDebugSymbolArray2D(elanType: string, name: string, value: any) {
+function getDebugSymbolArray2D(name: string, value: any, typeMap: { [index: string]: any }) {
+  const type = typeMap["Type"];
   const list = value as [[]];
   const cols = list.length;
   const rows = list[0].length;
   const size = ` <el-comment># size ${cols} x ${rows}</el-comment>`;
-  const summary = getSummary(elanType, size, simpleId(name));
+  const summary = getSummary(type, size, simpleId(name));
   const items = list.map((item, index) => getDebugItemHtml2D(index, item));
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
-function getDebugSymbolDictionary(elanType: string, name: string, value: any, typeMapS: string) {
-  const typeMap = JSON.parse(typeMapS);
-  const list = value as { [index: string]: any };
-  const keys = Object.keys(list);
-  const summary = getSummary(elanType, keys.length, simpleId(name));
-  //const items = keys.map((k) => getDebugItemHtml(subType(elanType), k, list[k]));
+function getDebugSymbolDictionary(
+  name: string,
+  value: { [index: string]: any },
+  typeMap: { [index: string]: any },
+) {
+  const type = typeMap["Type"];
+  const keyType = typeMap["KeyType"]["Type"];
+  const valueType = typeMap["ValueType"];
+  const keys = Object.keys(value);
+  const summary = getSummary(type, keys.length, simpleId(name));
 
-  const items = keys.map((k) =>
-    getProperty(`[<el-lit>${k}</el-lit>]`, typeMap["OfTypes"], list[k]),
-  );
+  const items = keys.map((k) => getProperty(`[${simpleValue(k, keyType)}]`, valueType, value[k]));
 
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
 function getProperty(name: string, type: string | { [index: string]: string }, value: any): string {
-  let elanType = "";
-  let typeMap = "";
+  // let elanType = "";
+  // //let typeMap = "";
 
-  if (typeof type === "string") {
-    elanType = type;
-  } else {
-    elanType = type["Type"];
-    typeMap = JSON.stringify(type);
-  }
+  // if (typeof type === "string") {
+  //   elanType = type;
+  // } else {
+  //   elanType = type["Type"];
+  //   //typeMap = JSON.stringify(type);
+  // }
 
-  return getDebugSymbolHtml(elanType, name, value, typeMap);
+  return getDebugSymbolHtml(name, value, type as any);
 }
 
-function getDebugSymbolClass(elanType: string, name: string, value: any, typeMapS: string) {
-  const typeMap = JSON.parse(typeMapS);
+function getDebugSymbolClass(name: string, value: any, typeMap: { [index: string]: any }) {
+  const type = "";
   const list = value as { [index: string]: any };
   const keys = typeMap["Properties"] ? Object.keys(typeMap["Properties"]) : [];
-  const summary = getSummary(elanType, "", simpleId(name));
+  const summary = getSummary(type, "", simpleId(name));
   const items = keys.map((k) =>
     getProperty(`<el-id>${k}<el-id>`, typeMap["Properties"][k], list[k]),
   );
@@ -1796,63 +1810,50 @@ function getDebugSymbolClass(elanType: string, name: string, value: any, typeMap
 }
 
 function getDebugSymbolString(name: string, value: any) {
+  const toTruncate = 10;
   const fullString = value as string;
   const len = fullString.length;
   const suffix = length(len);
   const prefix = simpleId(name);
 
-  if (len <= 10) {
-    return getSummaryHtml(`${prefix}"<el-lit>${fullString}</el-lit>"`);
+  if (len <= toTruncate) {
+    return getSummaryHtml(`${prefix}${simpleValue(fullString, "String")}`);
   }
 
-  const shortString = `"<el-lit>${fullString.slice(0, 10)}</el-lit>"...`;
-  return getDebugHtml(`${prefix}${shortString}${suffix}`, `"<el-lit>${fullString}</el-lit>"`);
+  const shortString = `${simpleValue(fullString.slice(0, toTruncate), "String")}...`;
+  return getDebugHtml(`${prefix}${shortString}${suffix}`, `${simpleValue(fullString, "String")}`);
 }
 
-function getDebugSymbolInt(name: string, value: number) {
-  return getSummaryHtml(`${simpleId(name)}<el-lit>${value}</el-lit>`);
+function getDebugSymbolSimple(name: string, value: string, type: string) {
+  return getSummaryHtml(`${simpleId(name)}${simpleValue(value, type)}`);
 }
 
-function getDebugSymbolFloat(name: string, value: any) {
-  let v = `${value}`;
-  v = v.includes(".") ? v : `${v}.0`;
-  return getSummaryHtml(`${simpleId(name)}<el-lit>${v}</el-lit>`);
-}
+function getDebugSymbolHtml(name: string, value: any, typeMap: { [index: string]: any }) {
+  const rootType = typeMap["Type"];
 
-function getDebugSymbolBoolean(name: string, value: boolean) {
-  return getSummaryHtml(`${simpleId(name)}<el-lit>${value}</el-lit>`);
-}
-
-function getDebugSymbolRegExp(name: string, value: string) {
-  return getSummaryHtml(`${simpleId(name)}/<el-lit>${value}<el-lit>/`);
-}
-
-function getDebugSymbolHtml(elanType: string, name: string, value: any, typeMap: string) {
-  switch (elanType) {
+  switch (rootType) {
     case "Boolean":
-      return getDebugSymbolBoolean(name, value);
     case "RegExp":
-      return getDebugSymbolRegExp(name, value);
     case "Int":
-      return getDebugSymbolInt(name, value);
     case "Float":
-      return getDebugSymbolFloat(name, value);
+      return getDebugSymbolSimple(name, value, rootType);
     case "String":
       return getDebugSymbolString(name, value);
     default:
-      if (elanType.startsWith("Array2D")) {
-        return getDebugSymbolArray2D(elanType, name, value);
-      } else if (elanType.startsWith("List") || elanType.startsWith("Array")) {
-        return getDebugSymbolList(elanType, name, value, typeMap);
-      } else if (elanType.startsWith("Dictionary")) {
-        return getDebugSymbolDictionary(elanType, name, value, typeMap);
+      if (rootType.startsWith("Array2D")) {
+        return getDebugSymbolArray2D(name, value, typeMap);
+      } else if (rootType.startsWith("List") || rootType.startsWith("Array")) {
+        return getDebugSymbolList(name, value, typeMap);
+      } else if (rootType.startsWith("Dictionary")) {
+        return getDebugSymbolDictionary(name, value, typeMap);
       }
-      return getDebugSymbolClass(elanType, name, value, typeMap);
+      return getDebugSymbolClass(name, value, typeMap);
   }
 }
 
 function getDebugSymbol(s: DebugSymbol) {
-  return getDebugSymbolHtml(s.elanType, `<el-id>${s.name}</el-id>`, s.value, s.typeMap);
+  const typeMap = JSON.parse(s.typeMap);
+  return getDebugSymbolHtml(s.name, s.value, typeMap);
 }
 
 function printDebugSymbol(s: DebugSymbol) {

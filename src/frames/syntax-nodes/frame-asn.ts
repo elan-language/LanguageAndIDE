@@ -95,8 +95,13 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const typeDict: { [index: string]: any } = { Type: type.name };
 
-      for (const s of ofTypes) {
-        typeDict["OfTypes"] = this.getClassTypeMap(s);
+      if (ofTypes.length === 1) {
+        typeDict["OfTypes"] = this.getClassTypeMap(ofTypes[0]);
+      }
+
+      if (ofTypes.length === 2) {
+        typeDict["KeyType"] = this.getClassTypeMap(ofTypes[0]);
+        typeDict["ValueType"] = this.getClassTypeMap(ofTypes[1]);
       }
 
       return typeDict;
