@@ -1788,7 +1788,7 @@ function getDebugSymbolClass(
     const keys = Object.keys(properties);
     items = keys.map((k) => getDebugSymbolHtml(k, value[k], properties[k]));
   } else {
-    items = [getSummaryHtml("circular dependency")];
+    items = [getSummaryHtml("<el-comment># details of this instance are not available</el-comment>")];
   }
 
   return getDebugHtml(`${summary}`, `${items.join("")}`);
