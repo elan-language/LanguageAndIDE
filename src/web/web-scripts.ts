@@ -1835,6 +1835,8 @@ function getDebugSymbolHtml(name: string, value: any, typeMap: { [index: string]
       return getDebugSymbolArray2D(name, value, typeMap);
     case "tuple":
       return getDebugSymbolTuple(name, value, typeMap);
+    case "DeconstructedTuple":
+      return getDebugSymbolHtml(name, value, typeMap["Ids"][name]);
     default:
       return getDebugSymbolClass(name, value, typeMap);
   }
