@@ -8,6 +8,7 @@ import { BreakpointEvent, BreakpointStatus } from "../status-enums";
 import { ClassType } from "../symbols/class-type";
 import { allScopedSymbols, getGlobalScope, orderSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { PropertyAsn } from "./class-members/property-asn";
@@ -117,6 +118,19 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
 
       for (const s of childSymbols) {
         typeDict["Properties"][getId(s.name)] = this.getClassTypeMap(s.symbolType());
+      }
+
+      return typeDict;
+    } else if (type instanceof TupleType) {
+      const ofTypes = type.ofTypes;
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const typeDict: { [index: string]: any } = { Type: type.name };
+
+      typeDict["OfTypes"] = [];
+
+      for (const s of ofTypes) {
+        typeDict["OfTypes"].push(this.getClassTypeMap(s));
       }
 
       return typeDict;

@@ -1723,6 +1723,16 @@ function getDebugSymbolList(name: string, value: [], typeMap: { [index: string]:
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
+function getDebugSymbolTuple(name: string, value: [], typeMap: { [index: string]: any }) {
+  const type = typeMap["Type"];
+  const summary = getSummary(type, value.length, simpleId(name));
+  const items = value.map((item, i) => {
+    const itemId = `item${i}`;
+    return getDebugSymbolHtml(`${simpleId(itemId)}`, item, typeMap["OfTypes"][i]);
+  });
+  return getDebugHtml(`${summary}`, `${items.join("")}`);
+}
+
 function getDebugItemHtml2D(index: number, value: [], typeMap: { [index: string]: any }): string {
   const list = value;
   const summary = getSummary("", "", `[${simpleValue(index, "Int")}, _]`);
@@ -1799,6 +1809,10 @@ function getDebugSymbolHtml(name: string, value: any, typeMap: { [index: string]
   if (indexOfLt > 0) {
     rootType = rootType.slice(0, indexOfLt);
   }
+  const indexOfBracket = rootType.indexOf("(");
+  if (indexOfBracket > 0) {
+    rootType = rootType.slice(0, indexOfBracket);
+  }
 
   switch (rootType) {
     case "Boolean":
@@ -1817,6 +1831,8 @@ function getDebugSymbolHtml(name: string, value: any, typeMap: { [index: string]
       return getDebugSymbolDictionary(name, value, typeMap);
     case "Array2D":
       return getDebugSymbolArray2D(name, value, typeMap);
+    case "tuple":
+      return getDebugSymbolTuple(name, value, typeMap);
     default:
       return getDebugSymbolClass(name, value, typeMap);
   }
