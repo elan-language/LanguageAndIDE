@@ -1680,10 +1680,6 @@ function getDebugHtml(content1: string, content2: string) {
   return `<div class="expandable">${getSummaryHtml(content1)}<div class="detail">${content2}</div></div>`;
 }
 
-function subType(type: string) {
-  return type.slice(type.indexOf("<of") + 4, -1);
-}
-
 function length(l: number) {
   return ` <el-comment># length ${l}</el-comment>`;
 }
@@ -1718,32 +1714,15 @@ function formatType(type: string) {
   return type;
 }
 
-function getDebugItemHtml(
-  type: string,
-  index: number | string,
-  value: any,
-  noBrackets?: boolean,
-): string {
-  const name = !!noBrackets ? `${index}` : `[<el-lit>${index}</el-lit>]`;
-
-  if (type.includes("of ") || `${value}` === "[object Object]") {
-    const isArray = Array.isArray(value);
-    const list = isArray ? value : Object.keys(value);
-    const summary = getSummary(type, list.length, `${name}`);
-    const items = list.map((item, subindex) =>
-      getDebugItemHtml(subType(type), isArray ? subindex : item, isArray ? item : value[item]),
-    );
-    return getDebugHtml(`${summary}`, `${items.join("")}`);
-  }
-
-  return `<div class=>${name}: ${value}</div>`;
-}
-
-function getDebugItemHtml2D(index: number, value: []): string {
+function getDebugItemHtml2D(index: number, value: [], typeMap: { [index: string]: any }): string {
   const list = value;
-  const summary = getSummary("", "", `[<el-lit>${index}</el-lit>, _]`);
+  const summary = getSummary("", "", `[${simpleValue(index, "Int")}, _]`);
   const items = list.map((item, subindex) =>
-    getDebugItemHtml("", `<el-lit>${index}</el-lit>, <el-lit>${subindex}</el-lit>`, item),
+    getProperty(
+      `[${simpleValue(index, "Int")}, ${simpleValue(subindex, "Int")}]`,
+      typeMap["OfTypes"],
+      item,
+    ),
   );
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
@@ -1757,14 +1736,13 @@ function getDebugSymbolList(name: string, value: [], typeMap: { [index: string]:
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
-function getDebugSymbolArray2D(name: string, value: any, typeMap: { [index: string]: any }) {
+function getDebugSymbolArray2D(name: string, value: [[]], typeMap: { [index: string]: any }) {
   const type = typeMap["Type"];
-  const list = value as [[]];
-  const cols = list.length;
-  const rows = list[0].length;
+  const cols = value.length;
+  const rows = value[0].length;
   const size = ` <el-comment># size ${cols} x ${rows}</el-comment>`;
   const summary = getSummary(type, size, simpleId(name));
-  const items = list.map((item, index) => getDebugItemHtml2D(index, item));
+  const items = value.map((item, index) => getDebugItemHtml2D(index, item, typeMap));
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 

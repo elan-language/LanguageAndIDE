@@ -89,7 +89,10 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
   }
 
   getClassTypeMap(type: SymbolType) {
-    if (type instanceof ClassType && type.typeOptions.isIndexable) {
+    if (
+      type instanceof ClassType &&
+      (type.typeOptions.isIndexable || type.typeOptions.isDoubleIndexable)
+    ) {
       const ofTypes = type.ofTypes;
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
