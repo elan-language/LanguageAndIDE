@@ -1820,6 +1820,8 @@ function getDebugSymbolHtml(name: string, value: any, typeMap: { [index: string]
     case "Int":
     case "Float":
       return getDebugSymbolSimple(name, value, rootType);
+    case "Enum":
+      return getDebugSymbolSimple(name, `${typeMap["OfTypes"]["Type"]}.${value}`, rootType);
     case "String":
       return getDebugSymbolString(name, value);
     case "List":
