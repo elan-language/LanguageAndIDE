@@ -1680,12 +1680,12 @@ function getDebugHtml(content1: string, content2: string) {
   return `<div class="expandable">${getSummaryHtml(content1)}<div class="detail">${content2}</div></div>`;
 }
 
-function length(l: number) {
+function lengthHtml(l: number) {
   return ` <el-comment># length ${l}</el-comment>`;
 }
 
 function getSummary(type: string, lenOrAsString: number | string, formattedId: string): string {
-  const suffix = typeof lenOrAsString === "number" ? length(lenOrAsString) : lenOrAsString;
+  const suffix = typeof lenOrAsString === "number" ? lengthHtml(lenOrAsString) : lenOrAsString;
   return `${formattedId}${formatType(type)}${suffix}`;
 }
 
@@ -1775,20 +1775,18 @@ function getDebugSymbolDictionary(
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
-function getDebugSymbolClass(name: string, value: any, typeMap: { [index: string]: any }) {
+function getDebugSymbolClass(name: string, value:  { [index: string]: any }, typeMap: { [index: string]: any }) {
   const type = typeMap["Type"];
-  const list = value as { [index: string]: any };
   const keys = typeMap["Properties"] ? Object.keys(typeMap["Properties"]) : [];
   const summary = getSummary(type, "", simpleId(name));
-  const items = keys.map((k) => getDebugSymbolHtml(k, list[k], typeMap["Properties"][k]));
+  const items = keys.map((k) => getDebugSymbolHtml(k, value[k], typeMap["Properties"][k]));
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
-function getDebugSymbolString(name: string, value: any) {
+function getDebugSymbolString(name: string, fullString: string) {
   const toTruncate = 10;
-  const fullString = value as string;
   const len = fullString.length;
-  const suffix = length(len);
+  const suffix = lengthHtml(len);
   const prefix = simpleId(name);
 
   if (len <= toTruncate) {
