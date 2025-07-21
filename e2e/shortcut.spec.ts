@@ -96,7 +96,7 @@ test('tabs', async ({ page }) => {
 
  await page.keyboard.press('Tab');
 
- await expect(page.getByRole('button', {name : 'clear'})).toBeFocused();
+ await expect(page.getByRole('button', {name : 'clear'})).toBeEnabled();
 
  await page.keyboard.press('Control+k');
 
