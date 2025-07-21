@@ -48,7 +48,6 @@ export type WebWorkerMessage = {
 );
 
 export interface DebugSymbol {
-  elanType: string;
   name: string;
   value: unknown;
   typeMap: string;

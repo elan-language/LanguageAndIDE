@@ -311,17 +311,11 @@ export class System {
     return clone;
   }
 
-  async debugSymbol(
-    type: string,
-    id: string,
-    symbol: unknown,
-    typeMap: string,
-  ): Promise<DebugSymbol | string> {
+  async debugSymbol(id: string, symbol: unknown, typeMap: string): Promise<DebugSymbol | string> {
     const asCloneable = await this.asCloneableObject(symbol);
 
     try {
       return {
-        elanType: type,
         name: id,
         value: asCloneable,
         typeMap: typeMap,

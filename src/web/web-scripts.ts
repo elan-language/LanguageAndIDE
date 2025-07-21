@@ -1714,24 +1714,25 @@ function formatType(type: string) {
   return type;
 }
 
-function getDebugItemHtml2D(index: number, value: [], typeMap: { [index: string]: any }): string {
-  const list = value;
-  const summary = getSummary("", "", `[${simpleValue(index, "Int")}, _]`);
-  const items = list.map((item, subindex) =>
-    getProperty(
-      `[${simpleValue(index, "Int")}, ${simpleValue(subindex, "Int")}]`,
-      typeMap["OfTypes"],
-      item,
-    ),
-  );
-  return getDebugHtml(`${summary}`, `${items.join("")}`);
-}
-
 function getDebugSymbolList(name: string, value: [], typeMap: { [index: string]: any }) {
   const type = typeMap["Type"];
   const summary = getSummary(type, value.length, simpleId(name));
   const items = value.map((item, i) =>
-    getProperty(`[${simpleValue(i, "Int")}]`, typeMap["OfTypes"], item),
+    getDebugSymbolHtml(`[${simpleValue(i, "Int")}]`, item, typeMap["OfTypes"]),
+  );
+  return getDebugHtml(`${summary}`, `${items.join("")}`);
+}
+
+function getDebugItemHtml2D(index: number, value: [], typeMap: { [index: string]: any }): string {
+  const list = value;
+  const summary = getSummary("", "", `[${simpleValue(index, "Int")}, _]`);
+  const items = list.map((item, subindex) =>
+    getDebugSymbolHtml(
+      `[${simpleValue(index, "Int")}, ${simpleValue(subindex, "Int")}]`,
+
+      item,
+      typeMap["OfTypes"],
+    ),
   );
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
@@ -1757,33 +1758,19 @@ function getDebugSymbolDictionary(
   const keys = Object.keys(value);
   const summary = getSummary(type, keys.length, simpleId(name));
 
-  const items = keys.map((k) => getProperty(`[${simpleValue(k, keyType)}]`, valueType, value[k]));
+  const items = keys.map((k) =>
+    getDebugSymbolHtml(`[${simpleValue(k, keyType)}]`, value[k], valueType),
+  );
 
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
-function getProperty(name: string, type: string | { [index: string]: string }, value: any): string {
-  // let elanType = "";
-  // //let typeMap = "";
-
-  // if (typeof type === "string") {
-  //   elanType = type;
-  // } else {
-  //   elanType = type["Type"];
-  //   //typeMap = JSON.stringify(type);
-  // }
-
-  return getDebugSymbolHtml(name, value, type as any);
-}
-
 function getDebugSymbolClass(name: string, value: any, typeMap: { [index: string]: any }) {
-  const type = "";
+  const type = typeMap["Type"];
   const list = value as { [index: string]: any };
   const keys = typeMap["Properties"] ? Object.keys(typeMap["Properties"]) : [];
   const summary = getSummary(type, "", simpleId(name));
-  const items = keys.map((k) =>
-    getProperty(`<el-id>${k}<el-id>`, typeMap["Properties"][k], list[k]),
-  );
+  const items = keys.map((k) => getDebugSymbolHtml(k, list[k], typeMap["Properties"][k]));
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
@@ -1806,8 +1793,12 @@ function getDebugSymbolSimple(name: string, value: string, type: string) {
   return getSummaryHtml(`${simpleId(name)}${simpleValue(value, type)}`);
 }
 
-function getDebugSymbolHtml(name: string, value: any, typeMap: { [index: string]: any }) {
-  const rootType = typeMap["Type"];
+function getDebugSymbolHtml(name: string, value: any, typeMap: { [index: string]: any }): string {
+  let rootType = typeMap["Type"] as string;
+  const indexOfLt = rootType.indexOf("<");
+  if (indexOfLt > 0) {
+    rootType = rootType.slice(0, indexOfLt);
+  }
 
   switch (rootType) {
     case "Boolean":
@@ -1817,14 +1808,16 @@ function getDebugSymbolHtml(name: string, value: any, typeMap: { [index: string]
       return getDebugSymbolSimple(name, value, rootType);
     case "String":
       return getDebugSymbolString(name, value);
+    case "List":
+    case "ListImmutable":
+    case "Array":
+      return getDebugSymbolList(name, value, typeMap);
+    case "Dictionary":
+    case "DictionaryImmutable":
+      return getDebugSymbolDictionary(name, value, typeMap);
+    case "Array2D":
+      return getDebugSymbolArray2D(name, value, typeMap);
     default:
-      if (rootType.startsWith("Array2D")) {
-        return getDebugSymbolArray2D(name, value, typeMap);
-      } else if (rootType.startsWith("List") || rootType.startsWith("Array")) {
-        return getDebugSymbolList(name, value, typeMap);
-      } else if (rootType.startsWith("Dictionary")) {
-        return getDebugSymbolDictionary(name, value, typeMap);
-      }
       return getDebugSymbolClass(name, value, typeMap);
   }
 }
