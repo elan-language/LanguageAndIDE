@@ -1774,11 +1774,23 @@ function getDebugSymbolDictionary(
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
-function getDebugSymbolClass(name: string, value:  { [index: string]: any }, typeMap: { [index: string]: any }) {
+function getDebugSymbolClass(
+  name: string,
+  value: { [index: string]: any },
+  typeMap: { [index: string]: any },
+) {
   const type = typeMap["Type"];
-  const keys = typeMap["Properties"] ? Object.keys(typeMap["Properties"]) : [];
+  const properties = typeMap["Properties"];
   const summary = getSummary(type, "", simpleId(name));
-  const items = keys.map((k) => getDebugSymbolHtml(k, value[k], typeMap["Properties"][k]));
+  let items: string[];
+
+  if (properties) {
+    const keys = Object.keys(properties);
+    items = keys.map((k) => getDebugSymbolHtml(k, value[k], properties[k]));
+  } else {
+    items = [getSummaryHtml("circular dependency")];
+  }
+
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
