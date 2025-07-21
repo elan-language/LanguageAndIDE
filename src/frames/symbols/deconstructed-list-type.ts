@@ -16,6 +16,10 @@ export class DeconstructedListType implements DeconstructedSymbolType {
     this.typeMap[tailId] = tailType;
   }
 
+  get ids() {
+    return [this.headdId, this.tailId];
+  }
+
   initialValue = "";
 
   symbolTypeFor(id: string) {

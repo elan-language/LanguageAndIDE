@@ -6,6 +6,9 @@ import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { singleIndent } from "../frame-helpers";
 import { BreakpointEvent, BreakpointStatus } from "../status-enums";
 import { ClassType } from "../symbols/class-type";
+import { DeconstructedListType } from "../symbols/deconstructed-list-type";
+import { DeconstructedRecordType } from "../symbols/deconstructed-record-type";
+import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
 import { EnumType } from "../symbols/enum-type";
 import { allScopedSymbols, getGlobalScope, orderSymbol } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
@@ -132,6 +135,21 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
 
       for (const s of ofTypes) {
         typeDict["OfTypes"].push(this.getClassTypeMap(s));
+      }
+
+      return typeDict;
+    } else if (
+      type instanceof DeconstructedTupleType ||
+      type instanceof DeconstructedRecordType ||
+      type instanceof DeconstructedListType
+    ) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const typeDict: { [index: string]: any } = { Type: "Deconstructed" };
+
+      typeDict["Ids"] = {};
+
+      for (const id of type.ids) {
+        typeDict["Ids"][id] = this.getClassTypeMap(type.symbolTypeFor(id));
       }
 
       return typeDict;
