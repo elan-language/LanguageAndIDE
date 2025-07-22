@@ -1686,19 +1686,26 @@ function lengthHtml(l: number) {
 
 function getSummary(type: string, lenOrAsString: number | string, formattedId: string): string {
   const suffix = typeof lenOrAsString === "number" ? lengthHtml(lenOrAsString) : lenOrAsString;
-  return `${formattedId}${formatType(type)}${suffix}`;
+  return `${formattedId} ${formatType(type)}${suffix}`;
 }
 
-function simpleId(id: string): string {
-  return `<el-id>${id}</el-id> `;
+function formatFloat(value: number | string) {
+  const asString = `${value}`;
+  return asString.includes(".") ? asString : `${value}.0`;
 }
 
-function simpleValue(value: any, type: string): string {
+function simpleId(id: string, asIndex: boolean, type: string): string {
+  const quot = asIndex && type === "String" ? `"` : "";
+  id = asIndex && type === "Float" ? formatFloat(id) : id;
+  return asIndex ? `[${quot}<el-lit>${id}</el-lit>${quot}]` : `<el-id>${id}</el-id>`;
+}
+
+function simpleValue(value: number | string, type: string): string {
   let formatted = `<el-lit>${value}</el-lit>`;
   if (type === "String") {
     formatted = `"${formatted}"`;
   } else if (type === "Float") {
-    const fl = value.includes(".") ? value : `${value}.0`;
+    const fl = formatFloat(value);
     formatted = `<el-lit>${fl}</el-lit>`;
   }
   return formatted;
@@ -1713,21 +1720,33 @@ function formatType(type: string) {
   return type;
 }
 
-function getDebugSymbolList(name: string, value: [], typeMap: { [index: string]: any }) {
+function getDebugSymbolList(
+  name: string,
+  nameType: string,
+  value: [],
+  typeMap: { [index: string]: any },
+  asIndex: boolean = false,
+) {
   const type = typeMap["Type"];
-  const summary = getSummary(type, value.length, simpleId(name));
+  const summary = getSummary(type, value.length, simpleId(name, asIndex, nameType));
   const items = value.map((item, i) =>
-    getDebugSymbolHtml(`[${simpleValue(i, "Int")}]`, item, typeMap["OfTypes"]),
+    getDebugSymbolHtml(`${i}`, "Int", item, typeMap["OfTypes"], true),
   );
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
-function getDebugSymbolTuple(name: string, value: [], typeMap: { [index: string]: any }) {
+function getDebugSymbolTuple(
+  name: string,
+  nameType: string,
+  value: [],
+  typeMap: { [index: string]: any },
+  asIndex: boolean = false,
+) {
   const type = typeMap["Type"];
-  const summary = getSummary(type, "", simpleId(name));
+  const summary = getSummary(type, "", simpleId(name, asIndex, nameType));
   const items = value.map((item, i) => {
     const itemId = `item${i}`;
-    return getDebugSymbolHtml(`${simpleId(itemId)}`, item, typeMap["OfTypes"][i]);
+    return getDebugSymbolHtml(itemId, "", item, typeMap["OfTypes"][i], false);
   });
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
@@ -1738,7 +1757,7 @@ function getDebugItemHtml2D(index: number, value: [], typeMap: { [index: string]
   const items = list.map((item, subindex) =>
     getDebugSymbolHtml(
       `[${simpleValue(index, "Int")}, ${simpleValue(subindex, "Int")}]`,
-
+      "",
       item,
       typeMap["OfTypes"],
     ),
@@ -1746,73 +1765,100 @@ function getDebugItemHtml2D(index: number, value: [], typeMap: { [index: string]
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
-function getDebugSymbolArray2D(name: string, value: [[]], typeMap: { [index: string]: any }) {
+function getDebugSymbolArray2D(
+  name: string,
+  nameType: string,
+  value: [[]],
+  typeMap: { [index: string]: any },
+  asIndex: boolean = false,
+) {
   const type = typeMap["Type"];
   const cols = value.length;
   const rows = value[0].length;
   const size = ` <el-comment># size ${cols} x ${rows}</el-comment>`;
-  const summary = getSummary(type, size, simpleId(name));
+  const summary = getSummary(type, size, simpleId(name, asIndex, nameType));
   const items = value.map((item, index) => getDebugItemHtml2D(index, item, typeMap));
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
 function getDebugSymbolDictionary(
   name: string,
+  nameType: string,
   value: { [index: string]: any },
   typeMap: { [index: string]: any },
+  asIndex: boolean = false,
 ) {
   const type = typeMap["Type"];
   const keyType = typeMap["KeyType"]["Type"];
   const valueType = typeMap["ValueType"];
   const keys = Object.keys(value);
-  const summary = getSummary(type, keys.length, simpleId(name));
+  const summary = getSummary(type, keys.length, simpleId(name, asIndex, nameType));
 
-  const items = keys.map((k) =>
-    getDebugSymbolHtml(`[${simpleValue(k, keyType)}]`, value[k], valueType),
-  );
+  const items = keys.map((k) => getDebugSymbolHtml(k, keyType, value[k], valueType, true));
 
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
 function getDebugSymbolClass(
   name: string,
+  nameType: string,
   value: { [index: string]: any },
   typeMap: { [index: string]: any },
+  asIndex: boolean = false,
 ) {
   const type = typeMap["Type"];
   const properties = typeMap["Properties"];
-  const summary = getSummary(type, "", simpleId(name));
+  const summary = getSummary(type, "", simpleId(name, asIndex, nameType));
   let items: string[];
 
   if (properties) {
     const keys = Object.keys(properties);
-    items = keys.map((k) => getDebugSymbolHtml(k, value[k], properties[k]));
+    items = keys.map((k) => getDebugSymbolHtml(k, "", value[k], properties[k], false));
   } else {
-    items = [getSummaryHtml("<el-comment># details of this instance are not available</el-comment>")];
+    items = [
+      getSummaryHtml("<el-comment># details of this instance are not available</el-comment>"),
+    ];
   }
 
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
-function getDebugSymbolString(name: string, fullString: string) {
+function getDebugSymbolString(
+  name: string,
+  nameType: string,
+  fullString: string,
+  asIndex: boolean = false,
+) {
   const toTruncate = 10;
   const len = fullString.length;
   const suffix = lengthHtml(len);
-  const prefix = simpleId(name);
+  const prefix = simpleId(name, asIndex, nameType);
 
   if (len <= toTruncate) {
-    return getSummaryHtml(`${prefix}${simpleValue(fullString, "String")}`);
+    return getSummaryHtml(`${prefix} ${simpleValue(fullString, "String")}`);
   }
 
   const shortString = `${simpleValue(fullString.slice(0, toTruncate), "String")}...`;
-  return getDebugHtml(`${prefix}${shortString}${suffix}`, `${simpleValue(fullString, "String")}`);
+  return getDebugHtml(`${prefix} ${shortString}${suffix}`, `${simpleValue(fullString, "String")}`);
 }
 
-function getDebugSymbolSimple(name: string, value: string, type: string) {
-  return getSummaryHtml(`${simpleId(name)}${simpleValue(value, type)}`);
+function getDebugSymbolSimple(
+  name: string,
+  nameType: string,
+  value: string,
+  type: string,
+  asIndex: boolean = false,
+) {
+  return getSummaryHtml(`${simpleId(name, asIndex, nameType)} ${simpleValue(value, type)}`);
 }
 
-function getDebugSymbolHtml(name: string, value: any, typeMap: { [index: string]: any }): string {
+function getDebugSymbolHtml(
+  name: string,
+  nameType: string,
+  value: any,
+  typeMap: { [index: string]: any },
+  asIndex: boolean = false,
+): string {
   let rootType = typeMap["Type"] as string;
   const indexOfLt = rootType.indexOf("<");
   if (indexOfLt > 0) {
@@ -1828,32 +1874,38 @@ function getDebugSymbolHtml(name: string, value: any, typeMap: { [index: string]
     case "RegExp":
     case "Int":
     case "Float":
-      return getDebugSymbolSimple(name, value, rootType);
+      return getDebugSymbolSimple(name, nameType, value, rootType, asIndex);
     case "Enum":
-      return getDebugSymbolSimple(name, `${typeMap["OfTypes"]["Type"]}.${value}`, rootType);
+      return getDebugSymbolSimple(
+        name,
+        nameType,
+        `${typeMap["OfTypes"]["Type"]}.${value}`,
+        rootType,
+        asIndex,
+      );
     case "String":
-      return getDebugSymbolString(name, value);
+      return getDebugSymbolString(name, nameType, value, asIndex);
     case "List":
     case "ListImmutable":
     case "Array":
-      return getDebugSymbolList(name, value, typeMap);
+      return getDebugSymbolList(name, nameType, value, typeMap, asIndex);
     case "Dictionary":
     case "DictionaryImmutable":
-      return getDebugSymbolDictionary(name, value, typeMap);
+      return getDebugSymbolDictionary(name, nameType, value, typeMap, asIndex);
     case "Array2D":
-      return getDebugSymbolArray2D(name, value, typeMap);
+      return getDebugSymbolArray2D(name, nameType, value, typeMap, asIndex);
     case "tuple":
-      return getDebugSymbolTuple(name, value, typeMap);
+      return getDebugSymbolTuple(name, nameType, value, typeMap, asIndex);
     case "Deconstructed":
-      return getDebugSymbolHtml(name, value, typeMap["Ids"][name]);
+      return getDebugSymbolHtml(name, nameType, value, typeMap["Ids"][name], asIndex);
     default:
-      return getDebugSymbolClass(name, value, typeMap);
+      return getDebugSymbolClass(name, nameType, value, typeMap, asIndex);
   }
 }
 
 function getDebugSymbol(s: DebugSymbol) {
   const typeMap = JSON.parse(s.typeMap);
-  return getDebugSymbolHtml(s.name, s.value, typeMap);
+  return getDebugSymbolHtml(s.name, "", s.value, typeMap);
 }
 
 function printDebugSymbol(s: DebugSymbol) {
