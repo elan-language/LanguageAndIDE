@@ -279,6 +279,10 @@ export class System {
     return allOutcomes;
   }
 
+  injectedProperty(s: string) {
+    return s === "system" || s === "stdlib";
+  }
+
   async asCloneableObject(v: any): Promise<unknown> {
     if (typeof v === "boolean" || typeof v === "string" || typeof v === "number") {
       return v;
@@ -302,7 +306,9 @@ export class System {
 
     const clone = {} as { [index: string]: any };
 
-    const keys = Object.keys(v).map((k) => (k.startsWith("_") ? k.slice(1) : k));
+    const keys = Object.keys(v)
+      .map((k) => (k.startsWith("_") ? k.slice(1) : k))
+      .filter((k) => !this.injectedProperty(k));
 
     for (const k of keys) {
       clone[k] = await this.asCloneableObject(v[k]);
