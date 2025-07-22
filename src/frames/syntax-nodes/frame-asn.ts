@@ -106,12 +106,12 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
       const typeDict: { [index: string]: any } = { Type: type.name };
 
       if (ofTypes.length === 1) {
-        typeDict["OfTypes"] = this.getClassTypeMap(ofTypes[0], seenClasses);
+        typeDict["OfTypes"] = this.getClassTypeMap(ofTypes[0], [...seenClasses]);
       }
 
       if (ofTypes.length === 2) {
-        typeDict["KeyType"] = this.getClassTypeMap(ofTypes[0], seenClasses);
-        typeDict["ValueType"] = this.getClassTypeMap(ofTypes[1], seenClasses);
+        typeDict["KeyType"] = this.getClassTypeMap(ofTypes[0], [...seenClasses]);
+        typeDict["ValueType"] = this.getClassTypeMap(ofTypes[1], [...seenClasses]);
       }
 
       return typeDict;
@@ -131,7 +131,9 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
       seenClasses.push(className);
 
       for (const s of childSymbols) {
-        typeDict["Properties"][getId(s.name)] = this.getClassTypeMap(s.symbolType(), seenClasses);
+        typeDict["Properties"][getId(s.name)] = this.getClassTypeMap(s.symbolType(), [
+          ...seenClasses,
+        ]);
       }
 
       return typeDict;
@@ -144,7 +146,7 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
       typeDict["OfTypes"] = [];
 
       for (const s of ofTypes) {
-        typeDict["OfTypes"].push(this.getClassTypeMap(s), seenClasses);
+        typeDict["OfTypes"].push(this.getClassTypeMap(s, [...seenClasses]));
       }
 
       return typeDict;
@@ -159,7 +161,7 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
       typeDict["Ids"] = {};
 
       for (const id of type.ids) {
-        typeDict["Ids"][id] = this.getClassTypeMap(type.symbolTypeFor(id), seenClasses);
+        typeDict["Ids"][id] = this.getClassTypeMap(type.symbolTypeFor(id), [...seenClasses]);
       }
 
       return typeDict;

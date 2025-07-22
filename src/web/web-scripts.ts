@@ -1795,9 +1795,18 @@ function getDebugSymbolDictionary(
   const keys = Object.keys(value);
   const summary = getSummary(type, keys.length, simpleId(name, asIndex, nameType));
 
-  const items = keys.map((k) => getDebugSymbolHtml(k, keyType, value[k], valueType, true));
+  const items = keys.map((k) =>
+    getDebugSymbolHtml(k, keyType, safeIndex(k, value), valueType, true),
+  );
 
   return getDebugHtml(`${summary}`, `${items.join("")}`);
+}
+
+function safeIndex(key: string, toIndex: { [index: string]: any }) {
+  if (Object.keys(toIndex).includes(key)) {
+    return toIndex[key];
+  }
+  return "";
 }
 
 function getDebugSymbolClass(
@@ -1814,7 +1823,13 @@ function getDebugSymbolClass(
 
   if (properties) {
     const keys = Object.keys(properties);
-    items = keys.map((k) => getDebugSymbolHtml(k, "", value[k], properties[k], false));
+
+    items =
+      keys.length > 0
+        ? keys.map((k) =>
+            getDebugSymbolHtml(k, "", safeIndex(k, value), safeIndex(k, properties), false),
+          )
+        : [getSummaryHtml("<el-comment># no public properties</el-comment>")];
   } else {
     items = [
       getSummaryHtml("<el-comment># details of this instance are not available</el-comment>"),

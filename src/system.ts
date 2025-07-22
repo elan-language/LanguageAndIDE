@@ -279,8 +279,8 @@ export class System {
     return allOutcomes;
   }
 
-  injectedProperty(s: string) {
-    return s === "system" || s === "stdlib";
+  ignoredProperty(s: string) {
+    return s === "system" || s === "stdlib" || s.startsWith("_");
   }
 
   async asCloneableObject(v: any): Promise<unknown> {
@@ -304,13 +304,28 @@ export class System {
       return arr;
     }
 
+    const getters: string[] = [];
+
+    const proto = Object.getPrototypeOf(v);
+    const descriptors = Object.getOwnPropertyDescriptors(proto);
+    const dKeys = Object.keys(descriptors);
+
+    for (const d of dKeys) {
+      const dd = descriptors[d];
+      const isGet = dd.get;
+
+      if (isGet) {
+        getters.push(d);
+      }
+    }
+
     const clone = {} as { [index: string]: any };
 
-    const keys = Object.keys(v)
-      .map((k) => (k.startsWith("_") ? k.slice(1) : k))
-      .filter((k) => !this.injectedProperty(k));
+    const keys = Object.keys(v).filter((k) => !this.ignoredProperty(k));
 
-    for (const k of keys) {
+    const keySet = new Set<string>(keys.concat(getters));
+
+    for (const k of keySet) {
       clone[k] = await this.asCloneableObject(v[k]);
     }
 
