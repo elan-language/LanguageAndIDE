@@ -225,10 +225,34 @@ export async function assertAutocompletes(
 }
 
 function dump(v: DebugSymbol[]) {
-  return v.map(t => `${t.elanType}:${t.name}:${t.value}`).join(", ")
+  return v.map(t => `${t.name}:${t.value}`).join(", ")
 }
 
-function assertData(variables: DebugSymbol[], expected: DebugSymbol[]) {
+function assertEqual(actual: any, expected: any) {
+  if (Array.isArray(actual)) {
+    assert.strictEqual(actual.length, expected.length);
+
+    for (let i = 0; i < actual.length; i++) {
+      assertEqual(actual[i], expected[i]);
+    }
+  } else if (typeof actual === "object") {
+      const actualKeys = Object.keys(actual);
+      const expectedKeys = Object.keys(expected);
+
+      assert.strictEqual(actualKeys.length, expectedKeys.length);
+
+      for (let i = 0; i < actualKeys.length; i++) {
+        assertEqual(actualKeys[i], expectedKeys[i]);
+
+        assertEqual(actual[actualKeys[i]], expected[expectedKeys[i]]);
+      }
+    } else {
+      assert.strictEqual(actual, expected);
+    }
+}
+
+
+async function assertData(variables: DebugSymbol[], expected: DebugSymbol[]) {
 
   assert.strictEqual(variables.length, expected.length, `Provided: ${dump(variables)} expected: ${dump(expected)}`)
 
@@ -236,9 +260,9 @@ function assertData(variables: DebugSymbol[], expected: DebugSymbol[]) {
     const v = variables[i];
     const e = expected[i];
 
-    assert.strictEqual(v.elanType, e.elanType);
     assert.strictEqual(v.name, e.name);
-    //assert.equal(v.value, e.value);
+    assertEqual(v.value, e.value);
+    assert.strictEqual(v.typeMap, e.typeMap);
   }
 }
 
@@ -290,9 +314,7 @@ export async function assertDebugBreakPoint(
   const data = await handleBreakPoint(runWorker);
   runWorker.terminate();
 
-  assertData(data, expected);
-
-
+  await assertData(data, expected);
 }
 
 export async function assertSymbolCompletionWithString(
@@ -527,11 +549,11 @@ export async function testDemoProgram(program: string) {
   }
 }
 
-export function asDebugSymbol(t: string, n: string, v: any) {
+export function asDebugSymbol(name: string, value: any, typeMap : string) {
   return {
-    elanType: t,
-    name: n,
-    value: v
+    name,
+    value,
+    typeMap,
   } as DebugSymbol
 }
 

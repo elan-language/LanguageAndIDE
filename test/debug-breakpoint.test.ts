@@ -37,10 +37,14 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      asDebugSymbol("Int", "a", 1),
-      asDebugSymbol("List<of Int>", "b", [1, 2]),
-      asDebugSymbol("String", "c", "fred"),
-      asDebugSymbol("DictionaryImmutable<of Int, Int>", "d", "{1:2}"),
+      asDebugSymbol("a", 1, '{"Type":"Int"}'),
+      asDebugSymbol("b", [1, 2], '{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}'),
+      asDebugSymbol("c", "fred", '{"Type":"String"}'),
+      asDebugSymbol(
+        "d",
+        { 1: 2 },
+        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+      ),
     ];
 
     await assertDebugBreakPoint(fileImpl, "set15", expected);
@@ -65,11 +69,15 @@ end procedure`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      asDebugSymbol("Int", "a", "1"),
-      asDebugSymbol("List<of Int>", "b", "[1, 2]"),
-      asDebugSymbol("String", "c", "fred"),
-      asDebugSymbol("DictionaryImmutable<of Int, Int>", "d", "{1:2}"),
-      asDebugSymbol("Int", "e", "3"),
+      asDebugSymbol("a", 1, '{"Type":"Int"}'),
+      asDebugSymbol("b", [1, 2], '{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}'),
+      asDebugSymbol("c", "fred", '{"Type":"String"}'),
+      asDebugSymbol(
+        "d",
+        { 1: 2 },
+        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+      ),
+      asDebugSymbol("e", 3, '{"Type":"Int"}'),
     ];
 
     await assertDebugBreakPoint(fileImpl, "set22", expected);
@@ -95,11 +103,15 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      asDebugSymbol("Int", "a", "1"),
-      asDebugSymbol("List<of Int>", "b", "[1, 2]"),
-      asDebugSymbol("String", "c", "fred"),
-      asDebugSymbol("DictionaryImmutable<of Int, Int>", "d", "{1:2}"),
-      asDebugSymbol("Int", "e", "3"),
+      asDebugSymbol("a", 1, '{"Type":"Int"}'),
+      asDebugSymbol("b", [1, 2], '{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}'),
+      asDebugSymbol("c", "fred", '{"Type":"String"}'),
+      asDebugSymbol(
+        "d",
+        { 1: 2 },
+        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+      ),
+      asDebugSymbol("e", 3, '{"Type":"Int"}'),
     ];
 
     await assertDebugBreakPoint(fileImpl, "set25", expected);
@@ -130,12 +142,16 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      asDebugSymbol("Int", "a", "1"),
-      asDebugSymbol("List<of Int>", "b", "[1, 2]"),
-      asDebugSymbol("String", "c", "fred"),
-      asDebugSymbol("DictionaryImmutable<of Int, Int>", "d", "{1:2}"),
-      asDebugSymbol("Int", "e", "3"),
-      asDebugSymbol("Int", "property.f", "0"),
+      asDebugSymbol("a", 1, '{"Type":"Int"}'),
+      asDebugSymbol("b", [1, 2], '{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}'),
+      asDebugSymbol("c", "fred", '{"Type":"String"}'),
+      asDebugSymbol(
+        "d",
+        { 1: 2 },
+        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+      ),
+      asDebugSymbol("e", 3, '{"Type":"Int"}'),
+      asDebugSymbol("property.f", 0, '{"Type":"Int"}'),
     ];
 
     await assertDebugBreakPoint(fileImpl, "set32", expected);
@@ -167,12 +183,16 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      asDebugSymbol("Int", "a", "1"),
-      asDebugSymbol("List<of Int>", "b", "[1, 2]"),
-      asDebugSymbol("String", "c", "fred"),
-      asDebugSymbol("DictionaryImmutable<of Int, Int>", "d", "{1:2}"),
-      asDebugSymbol("Int", "e", "3"),
-      asDebugSymbol("Int", "property.f", "0"),
+      asDebugSymbol("a", 1, '{"Type":"Int"}'),
+      asDebugSymbol("b", [1, 2], '{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}'),
+      asDebugSymbol("c", "fred", '{"Type":"String"}'),
+      asDebugSymbol(
+        "d",
+        { 1: 2 },
+        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+      ),
+      asDebugSymbol("e", 3, '{"Type":"Int"}'),
+      asDebugSymbol("property.f", 0, '{"Type":"Int"}'),
     ];
 
     await assertDebugBreakPoint(fileImpl, "set35", expected);
@@ -203,12 +223,16 @@ end class`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      asDebugSymbol("Int", "a", "1"),
-      asDebugSymbol("List<of Int>", "b", "[1, 2]"),
-      asDebugSymbol("String", "c", "fred"),
-      asDebugSymbol("DictionaryImmutable<of Int, Int>", "d", "{1:2}"),
-      asDebugSymbol("Int", "e", "3"),
-      asDebugSymbol("Int", "property.f", "0"),
+      asDebugSymbol("a", 1, '{"Type":"Int"}'),
+      asDebugSymbol("b", [1, 2], '{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}'),
+      asDebugSymbol("c", "fred", '{"Type":"String"}'),
+      asDebugSymbol(
+        "d",
+        { 1: 2 },
+        '{"Type":"DictionaryImmutable<of Int, Int>","KeyType":{"Type":"Int"},"ValueType":{"Type":"Int"}}',
+      ),
+      asDebugSymbol("e", 3, '{"Type":"Int"}'),
+      asDebugSymbol("property.f", 0, '{"Type":"Int"}'),
     ];
 
     await assertDebugBreakPoint(fileImpl, "set25", expected);
@@ -228,7 +252,10 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [asDebugSymbol("Int", "i", "1"), asDebugSymbol("Int", "tot", "0")];
+    const expected = [
+      asDebugSymbol("i", 1, '{"Type":"Int"}'),
+      asDebugSymbol("tot", 0, '{"Type":"Int"}'),
+    ];
 
     await assertDebugBreakPoint(fileImpl, "set12", expected);
   });
@@ -249,9 +276,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      asDebugSymbol("ListImmutable<of Int>", "a", "{7, 8, 9}"),
-      asDebugSymbol("Int", "n", "0"),
-      asDebugSymbol("Int", "x", "7"),
+      asDebugSymbol("a", [7, 8, 9], '{"Type":"ListImmutable<of Int>","OfTypes":{"Type":"Int"}}'),
+      asDebugSymbol("n", 0, '{"Type":"Int"}'),
+      asDebugSymbol("x", 7, '{"Type":"Int"}'),
     ];
 
     await assertDebugBreakPoint(fileImpl, "set13", expected);
@@ -278,9 +305,9 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      asDebugSymbol("Int", "t", "0"),
-      asDebugSymbol("Int", "x", "0"),
-      asDebugSymbol("Int", "y", "1"),
+      asDebugSymbol("t", 0, '{"Type":"Int"}'),
+      asDebugSymbol("x", 0, '{"Type":"Int"}'),
+      asDebugSymbol("y", 1, '{"Type":"Int"}'),
     ];
 
     await assertDebugBreakPoint(fileImpl, "set21", expected);
@@ -300,7 +327,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [asDebugSymbol("Int", "x", "0")];
+    const expected = [asDebugSymbol("x", 0, '{"Type":"Int"}')];
 
     await assertDebugBreakPoint(fileImpl, "set9", expected);
   });
@@ -322,7 +349,7 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [asDebugSymbol("Int", "a", "1")];
+    const expected = [asDebugSymbol("a", 1, '{"Type":"Int"}')];
 
     await assertDebugBreakPoint(fileImpl, "set11", expected);
   });
@@ -344,7 +371,10 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [asDebugSymbol("String", "b", "error"), asDebugSymbol("String", "e", "error")];
+    const expected = [
+      asDebugSymbol("b", "error", '{"Type":"String"}'),
+      asDebugSymbol("e", "error", '{"Type":"String"}'),
+    ];
 
     await assertDebugBreakPoint(fileImpl, "print19", expected);
   });
@@ -366,7 +396,10 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [asDebugSymbol("Boolean", "a", "true"), asDebugSymbol("Int", "b", "1")];
+    const expected = [
+      asDebugSymbol("a", true, '{"Type":"Boolean"}'),
+      asDebugSymbol("b", 1, '{"Type":"Int"}'),
+    ];
 
     await assertDebugBreakPoint(fileImpl, "set12", expected);
   });
@@ -388,7 +421,10 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [asDebugSymbol("Boolean", "a", "false"), asDebugSymbol("Int", "c", "1")];
+    const expected = [
+      asDebugSymbol("a", false, '{"Type":"Boolean"}'),
+      asDebugSymbol("c", 1, '{"Type":"Int"}'),
+    ];
 
     await assertDebugBreakPoint(fileImpl, "set21", expected);
   });
@@ -410,7 +446,10 @@ end main`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [asDebugSymbol("Boolean", "a", "false"), asDebugSymbol("Int", "c", "1")];
+    const expected = [
+      asDebugSymbol("a", false, '{"Type":"Boolean"}'),
+      asDebugSymbol("c", 1, '{"Type":"Int"}'),
+    ];
 
     await assertDebugBreakPoint(fileImpl, "set21", expected);
   });
@@ -431,7 +470,7 @@ end function
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [asDebugSymbol("Int", "a", "1")];
+    const expected = [asDebugSymbol("a", 1, '{"Type":"Int"}')];
 
     await assertDebugBreakPoint(fileImpl, "return13", expected);
   });
@@ -451,7 +490,7 @@ end procedure`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [asDebugSymbol("Int", "n", "1")];
+    const expected = [asDebugSymbol("n", [1], '{"Type":"Int"}')];
 
     await assertDebugBreakPoint(fileImpl, "print13", expected);
   });
@@ -483,7 +522,13 @@ end class`;
     const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [asDebugSymbol("Int", "n", "1")];
+    const expected = [
+      asDebugSymbol(
+        "x",
+        { a: 1, c: [1, 2], b: { barA: "" } },
+        '{"Type":"Foo","Properties":{"a":{"Type":"Int"},"b":{"Type":"Bar","Properties":{"barA":{"Type":"String"}}},"c":{"Type":"List<of Int>","OfTypes":{"Type":"Int"}}}}',
+      ),
+    ];
 
     await assertDebugBreakPoint(fileImpl, "print6", expected);
   });
