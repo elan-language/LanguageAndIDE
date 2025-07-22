@@ -185,6 +185,7 @@ export const reservedWords = [
   "public",
   "short",
   "static",
+  "stdlib", // Used for injected property
   "string",
   "super",
   "switch",
