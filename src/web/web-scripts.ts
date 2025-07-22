@@ -1868,6 +1868,12 @@ function getDebugSymbolSimple(
   return getSummaryHtml(`${simpleId(name, asIndex, nameType)} ${simpleValue(value, type)}`);
 }
 
+function getDebugSymbolEnum(name: string | string[], type: string, value: string) {
+  return getSummaryHtml(
+    `${simpleId(name, false, "")} <el-type>${type}</el-type>.<el-id>${value}</el-id>`,
+  );
+}
+
 function getDebugSymbolHtml(
   name: string | string[],
   nameType: string,
@@ -1892,13 +1898,7 @@ function getDebugSymbolHtml(
     case "Float":
       return getDebugSymbolSimple(name, nameType, value, rootType, asIndex);
     case "Enum":
-      return getDebugSymbolSimple(
-        name,
-        nameType,
-        `${typeMap["OfTypes"]["Type"]}.${value}`,
-        rootType,
-        asIndex,
-      );
+      return getDebugSymbolEnum(name, typeMap["OfTypes"]["Type"], value);
     case "String":
       return getDebugSymbolString(name, nameType, value, asIndex);
     case "List":
