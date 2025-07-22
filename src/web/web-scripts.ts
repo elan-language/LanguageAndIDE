@@ -1694,7 +1694,13 @@ function formatFloat(value: number | string) {
   return asString.includes(".") ? asString : `${value}.0`;
 }
 
-function simpleId(id: string, asIndex: boolean, type: string): string {
+function simpleId(id: string | string[], asIndex: boolean, type: string): string {
+  if (Array.isArray(id)) {
+    // 2d array int index
+    const secondIndex = id[1] === "_" ? id[1] : `<el-lit>${id[1]}</el-lit>`;
+
+    return `[<el-lit>${id[0]}</el-lit>, ${secondIndex}]`;
+  }
   const quot = asIndex && type === "String" ? `"` : "";
   id = asIndex && type === "Float" ? formatFloat(id) : id;
   return asIndex ? `[${quot}<el-lit>${id}</el-lit>${quot}]` : `<el-id>${id}</el-id>`;
@@ -1721,7 +1727,7 @@ function formatType(type: string) {
 }
 
 function getDebugSymbolList(
-  name: string,
+  name: string | string[],
   nameType: string,
   value: [],
   typeMap: { [index: string]: any },
@@ -1736,7 +1742,7 @@ function getDebugSymbolList(
 }
 
 function getDebugSymbolTuple(
-  name: string,
+  name: string | string[],
   nameType: string,
   value: [],
   typeMap: { [index: string]: any },
@@ -1753,20 +1759,15 @@ function getDebugSymbolTuple(
 
 function getDebugItemHtml2D(index: number, value: [], typeMap: { [index: string]: any }): string {
   const list = value;
-  const summary = getSummary("", "", `[${simpleValue(index, "Int")}, _]`);
+  const summary = getSummary("", "", simpleId([`${index}`, "_"], true, "Int"));
   const items = list.map((item, subindex) =>
-    getDebugSymbolHtml(
-      `[${simpleValue(index, "Int")}, ${simpleValue(subindex, "Int")}]`,
-      "",
-      item,
-      typeMap["OfTypes"],
-    ),
+    getDebugSymbolHtml([`${index}`, `${subindex}`], "Int", item, typeMap["OfTypes"]),
   );
   return getDebugHtml(`${summary}`, `${items.join("")}`);
 }
 
 function getDebugSymbolArray2D(
-  name: string,
+  name: string | string[],
   nameType: string,
   value: [[]],
   typeMap: { [index: string]: any },
@@ -1782,7 +1783,7 @@ function getDebugSymbolArray2D(
 }
 
 function getDebugSymbolDictionary(
-  name: string,
+  name: string | string[],
   nameType: string,
   value: { [index: string]: any },
   typeMap: { [index: string]: any },
@@ -1800,7 +1801,7 @@ function getDebugSymbolDictionary(
 }
 
 function getDebugSymbolClass(
-  name: string,
+  name: string | string[],
   nameType: string,
   value: { [index: string]: any },
   typeMap: { [index: string]: any },
@@ -1824,7 +1825,7 @@ function getDebugSymbolClass(
 }
 
 function getDebugSymbolString(
-  name: string,
+  name: string | string[],
   nameType: string,
   fullString: string,
   asIndex: boolean = false,
@@ -1843,7 +1844,7 @@ function getDebugSymbolString(
 }
 
 function getDebugSymbolSimple(
-  name: string,
+  name: string | string[],
   nameType: string,
   value: string,
   type: string,
@@ -1853,7 +1854,7 @@ function getDebugSymbolSimple(
 }
 
 function getDebugSymbolHtml(
-  name: string,
+  name: string | string[],
   nameType: string,
   value: any,
   typeMap: { [index: string]: any },
@@ -1897,7 +1898,7 @@ function getDebugSymbolHtml(
     case "tuple":
       return getDebugSymbolTuple(name, nameType, value, typeMap, asIndex);
     case "Deconstructed":
-      return getDebugSymbolHtml(name, nameType, value, typeMap["Ids"][name], asIndex);
+      return getDebugSymbolHtml(name, nameType, value, typeMap["Ids"][name as string], asIndex);
     default:
       return getDebugSymbolClass(name, nameType, value, typeMap, asIndex);
   }
