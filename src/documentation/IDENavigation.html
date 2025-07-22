@@ -223,16 +223,27 @@ or like this when selected (though the specific keywords offered will depend upo
   <h2 class="acc-title" tabindex="0" id="debugging">Debugging programs</h2>
   <div class="acc-body">
 
-    <p>Watch the video: <a href="videos/debug.html">Debugging programs</a></p><table>
+    <p>Watch the video: <a href="videos/debug.html">Debugging programs</a></p>
+
+    <h3>Run in 'debug' mode, pause, and step</h3>
+
+<table>
     <tr><th>To...</th><th>Keyboard shortcut</th><th>Mouse gesture</th><th>Notes</th></tr>
     <tr><td>debu<b><u>g</u></b> a program, or resume debugging a paused program</td><td><b>Ctrl-g</b></td><td>Click on 'debu<b><u>g</u></b>' button</td><td>disabled if there are any <b>parse</b> or <b>compile</b> issues.</td></tr>
     <tr><td>pa<b><u>u</u></b>se a program that is being debugged</td><td><b>Ctrl-u</b></td><td>Click on 'pa<b><u>u</u>se</b>' button</td><td>enabled only when program is being debugged</td></tr>
     <tr><td>ste<b><u>p</u></b> to the next instruction in a paused program</td><td><b>Ctrl-p</b></td><td>Click on 'ste<b><u>p</u></b>' button</td><td>enabled only then program is paused</td></tr>
-  </table>
+ </table>
 
-<p>Whenever the program is paused, the state of all named values (variables, parameters, and 'let's) is automatically shown
-  in the <b>info</b> tab. Data structures and long strings will be shown in abbreviated form, but clicking the '+' symbol at
-  the start of any row will expand the view and show the detail. Clicking the '-' symbol will collapse it again.</p>
+  <h3>Browsing symbol values</h3>
+
+  <p>Whenever the program is paused, the state of all named values (variables, parameters, and 'let's) is automatically shown
+    in the <b>info</b> tab. These may be browsed as follows:</p>
+
+    <table>
+      <tr><th>To...</th><th>Keyboard shortcut</th><th>Mouse gesture</th></tr>
+      <tr><td>navigate to a specific line in the 'symbol dump' when paused</td><td><b>Tab</b> / <b>Shift-Tab</b></td><td>Click on the line</td></tr>
+      <tr><td>expand/collapse a specific symbol within the symbol dump</td><td><b>Enter</b></td><td>Click on the <b>+</b> or <b>-</b> at the start of the line</td></tr>  
+    </table>
 
 <h3>Using breakpoints</h3>
 <p><i>Before</i> pressing <b>debug</b>, a breakpoint may be set on one or more instructions. When run using <b>debug</b> the program
@@ -241,8 +252,8 @@ will automatically pause on any breakpoint. Breakpoint-related actions require o
   <a href="#select_instructions">selecting the instruction</a> and then press <b>Ctrl-m</b>.</p>
   <table>
     <tr><th>To...</th><th>Keyboard shortcut</th><th>Mouse gesture</th></tr>
-    <tr><td>set a breakpoint on a <i>selected</i> instruction</td><td colspan="2">From context menu select <b>set breakpoint</b></td></tr>
-    <tr><td>clear existing breakpoint(s)</td><td colspan="2">From context menu select <b>clear breakpoint</b> or <b>clear all breakpoints</b></td></tr>
+    <tr><td>set a breakpoint on a <i>selected</i> instruction</td><td><b>Ctrl-m</b> for context menu, then select <b>set breakpoint</b></td><td><b>right-click</b> for context menu, then select <b>set breakpoint</b></td></tr>
+    <tr><td>clear existing breakpoint(s)</td><td><b>Ctrl-m</b> for context menu, then select <b>clear breakpoint</b> or <b>clear all breakpoints</b></td><td><b>right-click</b> for context menu, then select <b>clear breakpoint</b> or <b>clear all breakpoints</b></td></tr>
   </table>
 </div></div>
 
