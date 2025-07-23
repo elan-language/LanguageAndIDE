@@ -608,3 +608,68 @@ test('debug deconstruct record', async ({ page }) => {
   await expect(page.locator('#run-status')).toContainText('paused');
  
 });
+
+
+test('debug complex structure', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('r'); 
+  await page.keyboard.type('Foo');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('p');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('ListImmutable<of Int>');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('p');
+  await page.keyboard.type('b');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('String');
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('ArrowLeft');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('m'); // main
+  await page.keyboard.type('l'); 
+  await page.keyboard.type('dict');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('{"key":new Foo() with a set to {1, 2}, b set to "bill"}');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('p'); 
+  await page.keyboard.type('dict');
+  await page.keyboard.press('Enter');
+
+  await page.getByText('print', { exact: true }).click({
+    button: 'right'
+  });
+
+  await page.getByText('set breakpoint').click();
+  await page.getByRole('button', { name: 'debug' }).click();
+  const summary = 'dict DictionaryImmutable<of String, Foo> # length 1'
+  await expect(page.locator('#system-info')).toContainText(summary);
+
+  await page.getByText(summary).click();
+
+  await expect(page.getByText('["key"] Foo')).toBeVisible();
+
+  await page.getByText('["key"] Foo').click();
+
+  await expect(page.getByText('a ListImmutable<of Int> # length 2')).toBeVisible();
+  await expect(page.getByText('b "bill"')).toBeVisible();
+
+  await page.getByText('a ListImmutable<of Int> # length 2').click();
+
+  await expect(page.getByText('[0] 1')).toBeVisible();
+  await expect(page.getByText('[1] 2')).toBeVisible();
+
+
+  await expect(page.locator('#run-status')).toContainText('paused');
+ 
+});
