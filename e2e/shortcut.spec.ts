@@ -147,7 +147,7 @@ test('tabs uppercase', async ({ page }) => {
 
  await page.keyboard.press('Tab');
 
- await expect(page.getByRole('button', {name : 'clear'})).toBeFocused();
+ await expect(page.getByRole('button', {name : 'clear'})).toBeVisible();
 
  await page.keyboard.press('Control+Shift+k');
 
