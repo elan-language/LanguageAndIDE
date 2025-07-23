@@ -114,7 +114,7 @@ test('debug program', async ({ page }) => {
   });
   await page.getByText('set breakpoint').click();
   await page.getByRole('button', { name: 'debug' }).click();
-  await expect(page.locator('#system-info')).toContainText('a : 100');
+  await expect(page.locator('#system-info')).toContainText('a 100');
   await expect(page.locator('#run-status')).toContainText('paused');
  
 });
