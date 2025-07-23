@@ -1293,12 +1293,16 @@ async function updateContent(text: string, editingField: boolean) {
     }
   });
 
+  let firstContextItem: HTMLDivElement | undefined;
+
   if (document.querySelector(".context-menu")) {
-    const items = document.querySelectorAll(".context-menu-item");
+    const items = document.querySelectorAll(".context-menu-item") as NodeListOf<HTMLDivElement>;
+
+    firstContextItem = items[0];
 
     for (const item of items) {
       item.addEventListener("click", (event) => {
-        const ke = event as PointerEvent;
+        const ke = event as PointerEvent | KeyboardEvent;
         const tgt = ke.target as HTMLDivElement;
         const id = tgt.dataset.id;
         const func = tgt.dataset.func;
@@ -1313,6 +1317,23 @@ async function updateContent(text: string, editingField: boolean) {
           undefined,
           func,
         );
+      });
+
+      item.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowUp") {
+          handleMenuArrowUp();
+          event.preventDefault();
+          event.stopPropagation();
+        } else if (event.key === "ArrowDown") {
+          handleMenuArrowDown();
+          event.preventDefault();
+          event.stopPropagation();
+        } else if (event.key === "Enter" || event.key === "Space") {
+          const focusedItem = document.activeElement as HTMLElement;
+          focusedItem?.click();
+          event.preventDefault();
+          event.stopPropagation();
+        }
       });
     }
   }
@@ -1331,7 +1352,9 @@ async function updateContent(text: string, editingField: boolean) {
     });
   }
 
-  if (input) {
+  if (firstContextItem) {
+    firstContextItem.focus();
+  } else if (input) {
     const cursorStart = input.dataset.cursorstart as string;
     const cursorEnd = input.dataset.cursorend as string;
     const startIndex = parseInt(cursorStart) as number;
@@ -2522,33 +2545,41 @@ demosButton.addEventListener("keydown", handleKeyDropDownButton);
 fileButton.addEventListener("keydown", handleKeyDropDownButton);
 standardWorksheetButton.addEventListener("keydown", handleKeyDropDownButton);
 
+function handleMenuArrowUp() {
+  const focusedItem = document.activeElement as HTMLElement;
+
+  let previousItem = focusedItem;
+
+  do {
+    previousItem = previousItem?.previousElementSibling as HTMLElement;
+    if (previousItem) {
+      previousItem.focus();
+    }
+  } while (previousItem && (previousItem as any).disabled);
+}
+
+function handleMenuArrowDown() {
+  const focusedItem = document.activeElement as HTMLElement;
+
+  let nextItem: HTMLElement = focusedItem;
+
+  do {
+    nextItem = nextItem?.nextElementSibling as HTMLElement;
+    if (nextItem) {
+      nextItem.focus();
+    }
+  } while (nextItem && (nextItem as any).disabled);
+}
+
 function handleMenuKey(event: KeyboardEvent) {
   removeFocussedClassFromAllTabs();
   const menuItem = event.target as HTMLElement;
   const menu = menuItem.parentElement as HTMLDivElement;
   const button = menu.previousElementSibling as HTMLButtonElement;
   if (event.key === "ArrowUp") {
-    const focusedItem = document.activeElement as HTMLElement;
-
-    let previousItem = focusedItem;
-
-    do {
-      previousItem = previousItem?.previousElementSibling as HTMLElement;
-      if (previousItem) {
-        previousItem.focus();
-      }
-    } while (previousItem && (previousItem as any).disabled);
+    handleMenuArrowUp();
   } else if (event.key === "ArrowDown") {
-    const focusedItem = document.activeElement as HTMLElement;
-
-    let nextItem: HTMLElement = focusedItem;
-
-    do {
-      nextItem = nextItem?.nextElementSibling as HTMLElement;
-      if (nextItem) {
-        nextItem.focus();
-      }
-    } while (nextItem && (nextItem as any).disabled);
+    handleMenuArrowDown();
   } else if (event.key === "Escape") {
     collapseMenu(button, true);
   } else if (event.key === "Enter" || event.key === "Space") {
