@@ -410,8 +410,6 @@ function showWorksheetTab() {
   if (worksheetLoaded) {
     worksheetIFrame.focus();
     worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
-    worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
-    worksheetIFrame.contentWindow?.addEventListener("click", () => showWorksheetTab());
   } else {
     standardWorksheetButton.focus();
   }
@@ -468,7 +466,13 @@ let worksheetLoaded = false;
 worksheetIFrame.addEventListener("load", () => {
   worksheetLoaded = true;
   worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
-  worksheetIFrame.contentWindow?.addEventListener("click", () => showWorksheetTab());
+  worksheetIFrame.contentWindow?.addEventListener("click", () => {
+    const newTabElements = document.getElementsByClassName("worksheet-tab");
+    for (const e of newTabElements as HTMLCollectionOf<HTMLElement>) {
+      e.classList.add("selected");
+      e.classList.add("focussed");
+    }
+  });
   worksheetTabLabel.click();
 });
 
