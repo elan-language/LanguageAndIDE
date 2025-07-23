@@ -1973,11 +1973,16 @@ async function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): Promise<
   const variables = data.value;
   systemInfoDiv.innerHTML = "";
 
-  for (const v of variables) {
-    printDebugSymbol(v);
+  if (variables.length > 0) {
+    for (const v of variables) {
+      printDebugSymbol(v);
+    }
+    addDebugListeners();
+  } else {
+    systemInfoPrintUnsafe(
+      getSummaryHtml(`No values defined at this point - proceed to the next instruction`),
+    );
   }
-
-  addDebugListeners();
 
   const pausedAt = document.getElementById(data.pausedAt);
   pausedAt?.classList.add("paused-at");
