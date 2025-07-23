@@ -61,3 +61,129 @@ test('debug simple types', async ({ page }) => {
   await expect(page.locator('#run-status')).toContainText('paused');
  
 });
+
+test('debug list', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('m'); // main
+  await page.keyboard.type('l'); 
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('[1, 2, 3]');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('p'); 
+  await page.keyboard.type('a');
+  await page.keyboard.press('Enter');
+
+  await page.getByText('print', { exact: true }).click({
+    button: 'right'
+  });
+
+  await page.getByText('set breakpoint').click();
+  await page.getByRole('button', { name: 'debug' }).click();
+  const summary = 'a List<of Int> # length 3'
+  await expect(page.locator('#system-info')).toContainText(summary);
+  await page.getByText(summary).click();
+
+  await expect(page.getByText('[0] 1')).toBeVisible();
+  await expect(page.getByText('[1] 2')).toBeVisible();
+  await expect(page.getByText('[2] 3')).toBeVisible();
+
+  await page.getByText(summary).click();
+
+  await expect(page.getByText('[0] 1')).toBeHidden();
+
+  await expect(page.locator('#run-status')).toContainText('paused');
+ 
+});
+
+test('debug list immutable', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('m'); // main
+  await page.keyboard.type('l'); 
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('{1, 2, 3}');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('p'); 
+  await page.keyboard.type('a');
+  await page.keyboard.press('Enter');
+
+  await page.getByText('print', { exact: true }).click({
+    button: 'right'
+  });
+
+  await page.getByText('set breakpoint').click();
+  await page.getByRole('button', { name: 'debug' }).click();
+    const summary = 'a ListImmutable<of Int> # length 3'
+  await expect(page.locator('#system-info')).toContainText(summary);
+  await page.getByText(summary).click();
+
+  await expect(page.getByText('[0] 1')).toBeVisible();
+  await expect(page.getByText('[1] 2')).toBeVisible();
+  await expect(page.getByText('[2] 3')).toBeVisible();
+
+  await page.getByText(summary).click();
+
+  await expect(page.getByText('[0] 1')).toBeHidden();
+
+  await expect(page.locator('#run-status')).toContainText('paused');
+ 
+});
+
+test('debug array', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('m'); // main
+  await page.keyboard.type('l'); 
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('new Array<of Int>(3, 1)');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('p'); 
+  await page.keyboard.type('a');
+  await page.keyboard.press('Enter');
+
+  await page.getByText('print', { exact: true }).click({
+    button: 'right'
+  });
+
+  await page.getByText('set breakpoint').click();
+  await page.getByRole('button', { name: 'debug' }).click();
+  const summary = 'a Array<of Int> # length 3'
+  await expect(page.locator('#system-info')).toContainText(summary);
+  await page.getByText(summary).click();
+
+  await expect(page.getByText('[0] 1')).toBeVisible();
+  await expect(page.getByText('[1] 1')).toBeVisible();
+  await expect(page.getByText('[2] 1')).toBeVisible();
+
+  await page.getByText(summary).click();
+
+  await expect(page.getByText('[0] 1')).toBeHidden();
+
+  await expect(page.locator('#run-status')).toContainText('paused');
+ 
+});
