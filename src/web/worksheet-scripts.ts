@@ -10,19 +10,6 @@ const hintsTaken = document.querySelectorAll("span.hints-taken");
 
 const autoSaveButton = document.getElementById("auto-save");
 
-const accordions = document.getElementsByClassName("acc-title");
-
-for (const item of accordions) {
-  item.addEventListener("click", function () {
-    item.parentElement!.classList.toggle("active");
-  });
-  (item as HTMLElement).addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      item.parentElement!.classList.toggle("active");
-    }
-  });
-}
-
 let fh: FileSystemFileHandle | undefined;
 
 if (fh) {
