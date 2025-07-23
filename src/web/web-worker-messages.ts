@@ -24,7 +24,7 @@ export type WebWorkerTestMessage = {
 
 export type WebWorkerBreakpointMessage = {
   type: "breakpoint" | "singlestep";
-  value: [string, string][];
+  value: DebugSymbol[];
   pausedAt: string;
 };
 
@@ -46,3 +46,9 @@ export type WebWorkerMessage = {
   | WebWorkerTestMessage
   | WebWorkerBreakpointMessage
 );
+
+export interface DebugSymbol {
+  name: string;
+  value: unknown;
+  typeMap: string;
+}
