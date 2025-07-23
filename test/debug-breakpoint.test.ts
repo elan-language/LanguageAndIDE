@@ -532,4 +532,134 @@ end class`;
 
     await assertDebugBreakPoint(fileImpl, "print6", expected);
   });
+
+  test("Pass_Enum", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to Fruit.apple
+  print x
+end main
+  
+enum Fruit apple, pear`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [asDebugSymbol("x", "apple", '{"Type":"Enum","OfTypes":{"Type":"Fruit"}}')];
+
+    await assertDebugBreakPoint(fileImpl, "print6", expected);
+  });
+
+  test("Pass_Tuple", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to tuple(1, "fred")
+  print x
+end main`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      asDebugSymbol(
+        "x",
+        [1, "fred"],
+        '{"Type":"tuple(Int, String)","OfTypes":[{"Type":"Int"},{"Type":"String"}]}',
+      ),
+    ];
+
+    await assertDebugBreakPoint(fileImpl, "print6", expected);
+  });
+
+  test("Pass_TupleDeconstruction", async () => {
+    const code = `${testHeader}
+
+main
+  let x, y be a
+  print x
+end main
+
+constant a set to tuple(1, "fred")`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      asDebugSymbol(
+        "x",
+        1,
+        '{"Type":"Deconstructed","Ids":{"x":{"Type":"Int"},"y":{"Type":"String"}}}',
+      ),
+      asDebugSymbol(
+        "y",
+        "fred",
+        '{"Type":"Deconstructed","Ids":{"x":{"Type":"Int"},"y":{"Type":"String"}}}',
+      ),
+    ];
+
+    await assertDebugBreakPoint(fileImpl, "print6", expected);
+  });
+
+  test("Pass_ListDeconstruction", async () => {
+    const code = `${testHeader}
+
+main
+  let x:y be a
+  print x
+end main
+
+constant a set to {1, 2, 3}`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      asDebugSymbol(
+        "x",
+        1,
+        '{"Type":"Deconstructed","Ids":{"x":{"Type":"Int"},"y":{"Type":"ListImmutable<of Int>","OfTypes":{"Type":"Int"}}}}',
+      ),
+      asDebugSymbol(
+        "y",
+        [2, 3],
+        '{"Type":"Deconstructed","Ids":{"x":{"Type":"Int"},"y":{"Type":"ListImmutable<of Int>","OfTypes":{"Type":"Int"}}}}',
+      ),
+    ];
+
+    await assertDebugBreakPoint(fileImpl, "print6", expected);
+  });
+
+  test("Pass_RecordDeconstruction", async () => {
+    const code = `${testHeader}
+
+main
+  let x, y be new Foo() with x set to 1, y set to "fred"
+  print x
+end main
+
+record Foo
+  property x as Int
+  property y as String
+end record`;
+
+    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      asDebugSymbol(
+        "x",
+        1,
+        '{"Type":"Deconstructed","Ids":{"x":{"Type":"Int"},"y":{"Type":"String"}}}',
+      ),
+      asDebugSymbol(
+        "y",
+        "fred",
+        '{"Type":"Deconstructed","Ids":{"x":{"Type":"Int"},"y":{"Type":"String"}}}',
+      ),
+    ];
+
+    await assertDebugBreakPoint(fileImpl, "print6", expected);
+  });
 });
