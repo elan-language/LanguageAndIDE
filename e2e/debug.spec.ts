@@ -559,3 +559,52 @@ test('debug deconstruct tuple', async ({ page }) => {
   await expect(page.locator('#run-status')).toContainText('paused');
  
 });
+
+test('debug deconstruct record', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('r'); 
+  await page.keyboard.type('Foo');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('p');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('Int');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('p');
+  await page.keyboard.type('b');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('String');
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('ArrowLeft');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('m'); // main
+  await page.keyboard.type('l'); 
+  await page.keyboard.type('a,b');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('new Foo() with a set to 1, b set to "bill"');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('p'); 
+  await page.keyboard.type('a');
+  await page.keyboard.press('Enter');
+
+  await page.getByText('print', { exact: true }).click({
+    button: 'right'
+  });
+
+  await page.getByText('set breakpoint').click();
+  await page.getByRole('button', { name: 'debug' }).click();
+  await expect(page.locator('#system-info')).toContainText("a 1");
+  await expect(page.locator('#system-info')).toContainText('b "bill"');
+
+  await expect(page.locator('#run-status')).toContainText('paused');
+ 
+});
