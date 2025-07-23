@@ -394,7 +394,8 @@ button.icon:active img + label
 .autocomplete-popup>div.selected,
 .autocomplete-popup>div:hover,
 .context-menu>div.selected,
-.context-menu>div:hover {
+.context-menu>div:hover,
+.context-menu>div:focus {
   color: white;
   background-color: var(--ideBackground);
 }

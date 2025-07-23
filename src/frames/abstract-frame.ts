@@ -712,7 +712,7 @@ export abstract class AbstractFrame implements Frame {
       for (const k of map.keys()) {
         const val = map.get(k)!;
         items.push(
-          `<div class='context-menu-item' data-id='${this.htmlId}' data-func='${k}' title="">${val[0]}</div>`,
+          `<div class='context-menu-item' data-id='${this.htmlId}' data-func='${k}' title="" tabindex="-1">${val[0]}</div>`,
         );
       }
 
