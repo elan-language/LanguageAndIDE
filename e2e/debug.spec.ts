@@ -478,3 +478,84 @@ test('debug class', async ({ page }) => {
   await expect(page.locator('#run-status')).toContainText('paused');
  
 });
+
+test('debug deconstruct list', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('co'); 
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('{1, 2, 3}');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('m'); // main
+  await page.keyboard.type('l'); 
+  await page.keyboard.type('x:y');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('p'); 
+  await page.keyboard.type('a');
+  await page.keyboard.press('Enter');
+
+  await page.getByText('print', { exact: true }).click({
+    button: 'right'
+  });
+
+  await page.getByText('set breakpoint').click();
+  await page.getByRole('button', { name: 'debug' }).click();
+  const summary = 'y ListImmutable<of Int> # length 2'
+  await expect(page.locator('#system-info')).toContainText(summary);
+  await expect(page.locator('#system-info')).toContainText("x 1");
+
+  await expect(page.locator('#run-status')).toContainText('paused');
+ 
+});
+
+test('debug deconstruct tuple', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('co'); 
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('tuple(1, "bill", {1, 2})');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('m'); // main
+  await page.keyboard.type('l'); 
+  await page.keyboard.type('x,z,y');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('p'); 
+  await page.keyboard.type('a');
+  await page.keyboard.press('Enter');
+
+  await page.getByText('print', { exact: true }).click({
+    button: 'right'
+  });
+
+  await page.getByText('set breakpoint').click();
+  await page.getByRole('button', { name: 'debug' }).click();
+  const summary = 'y ListImmutable<of Int> # length 2'
+  await expect(page.locator('#system-info')).toContainText(summary);
+  await expect(page.locator('#system-info')).toContainText("x 1");
+  await expect(page.locator('#system-info')).toContainText('z "bill"');
+
+  await expect(page.locator('#run-status')).toContainText('paused');
+ 
+});
