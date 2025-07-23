@@ -366,3 +366,115 @@ test('debug tuple', async ({ page }) => {
   await expect(page.locator('#run-status')).toContainText('paused');
  
 });
+
+test('debug enum', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('e'); // main
+  await page.keyboard.type('Fruit'); 
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('apple, pear');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('m'); // main
+  await page.keyboard.type('l'); 
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('Fruit.pear');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('p'); 
+  await page.keyboard.type('a');
+  await page.keyboard.press('Enter');
+
+  await page.getByText('print', { exact: true }).click({
+    button: 'right'
+  });
+
+  await page.getByText('set breakpoint').click();
+  await page.getByRole('button', { name: 'debug' }).click();
+  const summary = 'a Fruit.pear'
+  await expect(page.locator('#system-info')).toContainText(summary);
+ 
+  await expect(page.locator('#run-status')).toContainText('paused');
+});
+
+test('debug class', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('cl'); // class
+  await page.keyboard.type('Foo'); 
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('c');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('s');
+  await page.keyboard.type('property.a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('100');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('s');
+  await page.keyboard.type('property.b');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('"bill"');
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('ArrowLeft');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('prop');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('Int');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('prop');
+  await page.keyboard.type('b');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('String');
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('ArrowLeft');
+  await page.keyboard.press('Enter');
+
+
+  await page.keyboard.type('m'); // main
+  await page.keyboard.type('l'); 
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('new Foo()');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('p'); 
+  await page.keyboard.type('a');
+  await page.keyboard.press('Enter');
+
+  await page.getByText('print', { exact: true }).click({
+    button: 'right'
+  });
+
+  await page.getByText('set breakpoint').click();
+  await page.getByRole('button', { name: 'debug' }).click();
+  const summary = 'a Foo'
+  await expect(page.locator('#system-info')).toContainText(summary);
+  await page.getByText(summary).click();
+
+  await expect(page.getByText('a 100')).toBeVisible();
+  await expect(page.getByText('b "bill"')).toBeVisible();
+
+  await page.getByText(summary).click();
+
+  await expect(page.getByText('a 100')).toBeHidden();
+
+  await expect(page.locator('#run-status')).toContainText('paused');
+ 
+});
