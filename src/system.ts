@@ -9,7 +9,7 @@ import { ElanArray } from "./standard-library/elan-array";
 import { ElanSet } from "./standard-library/elan-set";
 import { List } from "./standard-library/list";
 import { ListImmutable } from "./standard-library/list-immutable";
-import { WebWorkerBreakpointMessage } from "./web/web-worker-messages";
+import { DebugSymbol, WebWorkerBreakpointMessage } from "./web/web-worker-messages";
 
 export class System {
   constructor(public readonly elanInputOutput: ElanInputOutput) {}
@@ -279,9 +279,68 @@ export class System {
     return allOutcomes;
   }
 
-  async debugSymbol(symbol: any) {
+  ignoredProperty(s: string) {
+    return s === "system" || s === "stdlib" || s.startsWith("_");
+  }
+
+  async asCloneableObject(v: any): Promise<unknown> {
+    if (typeof v === "boolean" || typeof v === "string" || typeof v === "number") {
+      return v;
+    }
+
+    if (v instanceof RegExp) {
+      return `/${v.source}/`;
+    }
+
+    if ("asCloneableObject" in v) {
+      return await v.asCloneableObject();
+    }
+
+    if (typeof v[Symbol.iterator] === "function") {
+      const arr = [];
+      for (const o of v) {
+        arr.push(await this.asCloneableObject(o));
+      }
+      return arr;
+    }
+
+    const getters: string[] = [];
+
+    const proto = Object.getPrototypeOf(v);
+    const descriptors = Object.getOwnPropertyDescriptors(proto);
+    const dKeys = Object.keys(descriptors);
+
+    for (const d of dKeys) {
+      const dd = descriptors[d];
+      const isGet = dd.get;
+
+      if (isGet) {
+        getters.push(d);
+      }
+    }
+
+    const clone = {} as { [index: string]: any };
+
+    const keys = Object.keys(v).filter((k) => !this.ignoredProperty(k));
+
+    const keySet = new Set<string>(keys.concat(getters));
+
+    for (const k of keySet) {
+      clone[k] = await this.asCloneableObject(v[k]);
+    }
+
+    return clone;
+  }
+
+  async debugSymbol(id: string, symbol: unknown, typeMap: string): Promise<DebugSymbol | string> {
+    const asCloneable = await this.asCloneableObject(symbol);
+
     try {
-      return await this._stdlib.asString(symbol);
+      return {
+        name: id,
+        value: asCloneable,
+        typeMap: typeMap,
+      };
     } catch (_e) {
       return "error resolving";
     }
@@ -315,7 +374,7 @@ export class System {
   }
 
   async breakPoint(
-    allScopedSymbols: [string, string][],
+    allScopedSymbols: DebugSymbol[],
     id: string,
     singlestep: boolean,
     pause: boolean,
