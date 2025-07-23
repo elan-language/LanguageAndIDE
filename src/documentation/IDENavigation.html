@@ -267,6 +267,18 @@ will automatically pause on any breakpoint. Breakpoint-related actions require o
   <p class="acc-body"><b>File > Preferences</b> offers a slightly modified colour scheme for users with CVD. Note that switching colour schemes
   automatically re-loads the web page - so you will receive a warning if you have unsaved code.</p>
 </div>
-<script src="../../../out/website/worksheet-scripts.js"></script>
+<script>
+  var accordions = document.getElementsByClassName("acc-title");
+  for (const item of accordions) {
+    item.addEventListener("click", function() {
+      item.parentElement.classList.toggle("active");
+    });
+    item.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        item.parentElement.classList.toggle("active");
+      }
+    });
+  }
+</script>
 </body>
 </html>
