@@ -1940,13 +1940,17 @@ function addDebugListeners() {
 
   for (const d of expandable) {
     d.addEventListener("click", (e) => {
-      if (d.classList.contains("expanded")) {
-        d.classList.remove("expanded");
-      } else {
-        d.classList.add("expanded");
-      }
+      d.classList.toggle("expanded");
       e.preventDefault();
       e.stopPropagation();
+    });
+
+    d.addEventListener("keydown", (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && (e.key === "o" || e.key === "O")) {
+        d.classList.toggle("expanded");
+        e.preventDefault();
+        e.stopPropagation();
+      }
     });
   }
 
