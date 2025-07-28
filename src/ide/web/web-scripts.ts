@@ -1,14 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
 import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
 import { StdLib } from "../../compiler/standard-library/std-lib";
+import { TestStatus } from "../../compiler/test-status";
 import { isElanProduction } from "../environment";
 import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { File } from "../frames/frame-interfaces/file";
 import { Profile } from "../frames/frame-interfaces/profile";
 import { Group, Individual } from "../frames/frame-interfaces/user-config";
-import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../frames/status-enums";
+import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
+import { StubInputOutput } from "../stub-input-output";
 import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
 import { checkIsChrome, confirmContinueOnNonChromeBrowser } from "./ui-helpers";
 import {
@@ -22,7 +25,6 @@ import {
 } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 import {
-  DebugSymbol,
   WebWorkerBreakpointMessage,
   WebWorkerMessage,
   WebWorkerReadMessage,
@@ -94,7 +96,7 @@ const helpTab = document.getElementById("help-tab");
 const worksheetTab = document.getElementById("worksheet-tab");
 
 const inactivityTimeout = 2000;
-const stdlib = new StdLib();
+const stdlib = new StdLib(new StubInputOutput());
 const system = stdlib.system;
 system.stdlib = stdlib; // to allow injection
 
@@ -318,7 +320,7 @@ newButton?.addEventListener("click", async () => {
   if (checkForUnsavedChanges(cancelMsg)) {
     await clearDisplays();
     clearUndoRedoAndAutoSave();
-    file = new FileImpl(hash, profile, userName, transforms());
+    file = new FileImpl(hash, profile, userName, transforms(), stdlib);
     await initialDisplay(false);
   }
 });
@@ -360,7 +362,7 @@ for (const elem of demoFiles) {
       const fileName = `${elem.id}`;
       const f = await fetch(fileName, { mode: "same-origin" });
       const rawCode = await f.text();
-      file = new FileImpl(hash, profile, userName, transforms());
+      file = new FileImpl(hash, profile, userName, transforms(), stdlib);
       file.fileName = fileName;
       clearUndoRedoAndAutoSave();
       await readAndParse(rawCode, fileName, true);
@@ -642,7 +644,7 @@ async function setup(p: Profile) {
   clearUndoRedoAndAutoSave();
   profile = p;
 
-  file = new FileImpl(hash, profile, userName, transforms());
+  file = new FileImpl(hash, profile, userName, transforms(), stdlib);
   await displayFile();
 }
 
@@ -675,7 +677,7 @@ function clearUndoRedoAndAutoSave() {
 }
 
 async function resetFile() {
-  file = new FileImpl(hash, profile, userName, transforms());
+  file = new FileImpl(hash, profile, userName, transforms(), stdlib);
   await renderAsHtml(false);
 }
 
@@ -1507,7 +1509,7 @@ async function replaceCode(indexToUse: number, msg: string) {
     cursorWait();
     undoRedoing = true;
     const fn = file.fileName;
-    file = new FileImpl(hash, profile, userName, transforms());
+    file = new FileImpl(hash, profile, userName, transforms(), stdlib);
     await displayCode(code, fn);
   }
 }
@@ -2100,7 +2102,7 @@ async function handleChromeUploadOrAppend(upload: boolean) {
     const fileName = upload ? codeFile.name : file.fileName;
     const rawCode = await codeFile.text();
     if (upload) {
-      file = new FileImpl(hash, profile, userName, transforms());
+      file = new FileImpl(hash, profile, userName, transforms(), stdlib);
       clearUndoRedoAndAutoSave();
     }
     await readAndParse(rawCode, fileName, upload, !upload);
@@ -2137,7 +2139,7 @@ async function handleUploadOrAppend(event: Event, upload: boolean) {
     reader.addEventListener("load", async (event: any) => {
       const rawCode = event.target.result;
       if (upload) {
-        file = new FileImpl(hash, profile, userName, transforms());
+        file = new FileImpl(hash, profile, userName, transforms(), stdlib);
         clearUndoRedoAndAutoSave();
       }
       await readAndParse(rawCode, fileName, upload, !upload);

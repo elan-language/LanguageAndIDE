@@ -1,5 +1,7 @@
+import { AssertOutcome } from "../../../compiler/assert-outcome";
+import { BreakpointStatus } from "../../../compiler/debugging/breakpoint-status";
 import { ignoreKeyword, testKeyword } from "../../../compiler/keywords";
-import { AssertOutcome } from "../../assert-outcome";
+import { TestStatus } from "../../../compiler/test-status";
 import { CommentField } from "../fields/comment-field";
 import {
   helper_CompileOrParseAsDisplayStatus,
@@ -12,7 +14,7 @@ import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { FrameWithStatements } from "../frame-with-statements";
 import { AssertStatement } from "../statements/assert-statement";
-import { BreakpointStatus, DisplayColour, TestStatus } from "../status-enums";
+import { DisplayColour } from "../status-enums";
 
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
   isTest = true;

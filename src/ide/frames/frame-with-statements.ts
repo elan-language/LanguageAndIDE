@@ -1,3 +1,4 @@
+import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { Regexes } from "./fields/regexes";
@@ -31,7 +32,6 @@ import {
 } from "./parent-helpers";
 import { AssertStatement } from "./statements/assert-statement";
 import { StatementSelector } from "./statements/statement-selector";
-import { BreakpointEvent } from "./status-enums";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible {
   isFrameWithStatements = true;

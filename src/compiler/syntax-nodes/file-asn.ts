@@ -9,8 +9,8 @@ import { elanSymbols } from "../../compiler/symbols/elan-symbols";
 import { NullScope } from "../../compiler/symbols/null-scope";
 import { isSymbol, symbolMatches } from "../../compiler/symbols/symbol-helpers";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
-import { BreakpointEvent } from "../../ide/frames/status-enums";
 import { CompileError } from "../compile-error";
+import { BreakpointEvent } from "../debugging/breakpoint-event";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { FrameAsn } from "./frame-asn";
 import { ConstantAsn } from "./globals/constant-asn";
@@ -175,7 +175,7 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
     }
   };`;
 
-    const stdlib = `import { StdLib } from "${base}/elan-api.js"; let system; let _stdlib; let _tests = []; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
+    const stdlib = `import { StdLib, StubInputOutput } from "${base}/elan-api.js"; let system; let _stdlib; let _tests = []; async function program() { _stdlib = new StdLib(new StubInputOutput()); system = _stdlib.system; system.stdlib = _stdlib  `;
     return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
   }
 
@@ -197,8 +197,8 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   }
   });`;
 
-    const imp = standalone ? "" : `import { StdLib } from "${base}/elan-api.js"; `;
-    const stdlib = `${imp}let system; let _stdlib; let _tests = []; let __pause = false; async function program() { _stdlib = new StdLib(); system = _stdlib.system; system.stdlib = _stdlib  `;
+    const imp = standalone ? "" : `import { StdLib, StubInputOutput } from "${base}/elan-api.js"; `;
+    const stdlib = `${imp}let system; let _stdlib; let _tests = []; let __pause = false; async function program() { _stdlib = new StdLib(new StubInputOutput()); system = _stdlib.system; system.stdlib = _stdlib  `;
     return `${stdlib}\n${this.compileGlobals()}return [main, _tests];}\n${onmsg}`;
   }
 

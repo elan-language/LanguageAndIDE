@@ -1,18 +1,19 @@
 import assert from "assert";
 import { Done } from "mocha";
-import { encodeCode } from "../../src/ide/web/web-helpers";
-import { runTests } from "../runner";
-import { TestInputOutput } from "./test-input-output";
-import { getTestSystem } from "./test-system";
-import { transform, transformMany } from "../../src/compiler/syntax-nodes/ast-visitor";
+import { AssertOutcome } from "../../src/compiler/assert-outcome";
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { elanVersion } from "../../src/environment";
-import { AssertOutcome } from "../../src/ide/assert-outcome";
+import { transform, transformMany } from "../../src/ide/compile/ast-visitor";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Field } from "../../src/ide/frames/frame-interfaces/field";
 import { Frame } from "../../src/ide/frames/frame-interfaces/frame";
 import { Transforms } from "../../src/ide/frames/frame-interfaces/transforms";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
+import { encodeCode } from "../../src/ide/web/web-helpers";
+import { runTests } from "../runner";
+import { TestInputOutput } from "./test-input-output";
+import { getTestSystem } from "./test-system";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);
@@ -91,7 +92,7 @@ function executeCode(file: FileImpl, input?: string) {
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
 
   const system = getTestSystem(input ?? "");
-  const stdlib = new StdLib();
+  const stdlib = new StdLib(new StubInputOutput());
   stdlib.system = system;
   system.stdlib = stdlib;
 
@@ -112,7 +113,7 @@ export async function executeTestCode(file: FileImpl, input?: string) {
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
 
   const system = getTestSystem(input ?? "");
-  const stdlib = new StdLib();
+  const stdlib = new StdLib(new StubInputOutput());
   stdlib.system = system;
   system.stdlib = stdlib;
 

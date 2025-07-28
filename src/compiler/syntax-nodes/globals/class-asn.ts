@@ -14,7 +14,6 @@ import {
 } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
-import { BreakpointEvent } from "../../../ide/frames/status-enums";
 import {
   getId,
   mustBeInheritableClassOrInterface,
@@ -24,6 +23,7 @@ import {
   mustNotBeCircularDependency,
 } from "../../compile-rules";
 import { Deprecated } from "../../compiler-interfaces/elan-type-interfaces";
+import { BreakpointEvent } from "../../debugging/breakpoint-event";
 import { thisKeyword } from "../../keywords";
 import { isAstCollectionNode, isAstIdNode } from "../ast-helpers";
 import { AbstractPropertyAsn } from "../class-members/abstract-property-asn";

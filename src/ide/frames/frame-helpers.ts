@@ -1,4 +1,5 @@
 import { CompileError, Severity } from "../../compiler/compile-error";
+import { TestStatus } from "../../compiler/test-status";
 import { AbstractSelector } from "./abstract-selector";
 import { Collapsible } from "./frame-interfaces/collapsible";
 import { Field } from "./frame-interfaces/field";
@@ -12,7 +13,7 @@ import { Selectable } from "./frame-interfaces/selectable";
 import { Statement } from "./frame-interfaces/statement";
 import { MainFrame } from "./globals/main-frame";
 import { ReturnStatement } from "./statements/return-statement";
-import { CompileStatus, DisplayColour, ParseStatus, RunStatus, TestStatus } from "./status-enums";
+import { CompileStatus, DisplayColour, ParseStatus, RunStatus } from "./status-enums";
 
 export function isCollapsible(f?: Selectable): f is Collapsible {
   return !!f && "isCollapsible" in f;

@@ -1,8 +1,9 @@
+import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { AbstractSelector } from "./abstract-selector";
 import { isSelector } from "./frame-helpers";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
-import { BreakpointEvent, CompileStatus, ParseStatus } from "./status-enums";
+import { CompileStatus, ParseStatus } from "./status-enums";
 
 export function worstParseStatus(prev: ParseStatus, cur: ParseStatus) {
   return cur < prev ? cur : prev;

@@ -1,8 +1,10 @@
-import { RootAstNode, CompileMode } from "../../compiler/compiler-interfaces/root-ast-node";
+import { AssertOutcome } from "../../compiler/assert-outcome";
+import { CompileMode, RootAstNode } from "../../compiler/compiler-interfaces/root-ast-node";
 import { Semver } from "../../compiler/compiler-interfaces/semver";
+import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { StdLib } from "../../compiler/standard-library/std-lib";
 import { StdLibSymbols } from "../../compiler/standard-library/std-lib-symbols";
-import { AssertOutcome } from "../assert-outcome";
+import { TestStatus } from "../../compiler/test-status";
 import { ElanFileError } from "../elan-file-error";
 import { elanVersion, isElanProduction } from "../environment";
 import { AbstractSelector } from "./abstract-selector";
@@ -58,14 +60,7 @@ import {
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
 import { StatementFactoryImpl } from "./statement-factory-impl";
-import {
-  BreakpointEvent,
-  CompileStatus,
-  DisplayColour,
-  ParseStatus,
-  RunStatus,
-  TestStatus,
-} from "./status-enums";
+import { CompileStatus, DisplayColour, ParseStatus, RunStatus } from "./status-enums";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -106,9 +101,10 @@ export class FileImpl implements File {
     private readonly profile: Profile,
     private userName: string | undefined,
     private readonly transform: Transforms,
+    stdLib: StdLib,
     allowAnyHeader?: boolean,
   ) {
-    this._stdLibSymbols = new StdLibSymbols(new StdLib());
+    this._stdLibSymbols = new StdLibSymbols(stdLib);
     this._map = new Map<string, Selectable>();
     this._factory = new StatementFactoryImpl();
     const selector = new GlobalSelector(this);

@@ -1,3 +1,5 @@
+import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
+import { BreakpointStatus } from "../../compiler/debugging/breakpoint-status";
 import {
   expandCollapseAll,
   helper_compileMsgAsHtmlNew,
@@ -22,13 +24,7 @@ import {
   parentHelper_removeAllSelectedChildren,
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
-import {
-  BreakpointEvent,
-  BreakpointStatus,
-  CompileStatus,
-  DisplayColour,
-  ParseStatus,
-} from "./status-enums";
+import { CompileStatus, DisplayColour, ParseStatus } from "./status-enums";
 
 export abstract class AbstractFrame implements Frame {
   isFrame = true;

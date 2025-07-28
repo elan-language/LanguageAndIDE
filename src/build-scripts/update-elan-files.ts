@@ -5,6 +5,8 @@ import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
 import { DefaultProfile } from "../ide/frames/default-profile";
 import { FileImpl } from "../ide/frames/file-impl";
 import { hash } from "../ide/util";
+import { StdLib } from "../compiler/standard-library/std-lib";
+import { StubInputOutput } from "../ide/stub-input-output";
 
 const rootdir = `${__dirname}/../../..`;
 
@@ -27,7 +29,14 @@ function getElanFiles(sourceDir: string): string[] {
 async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
   const source = loadFileAsSourceNew(sourceFile);
   const codeSource = new CodeSourceFromString(source);
-  const fl = new FileImpl(hash, new DefaultProfile(), "guest", transforms(), true);
+  const fl = new FileImpl(
+    hash,
+    new DefaultProfile(),
+    "guest",
+    transforms(),
+    new StdLib(new StubInputOutput()),
+    true,
+  );
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(`${sourceFile}: ${fl.parseError}`);

@@ -1,5 +1,5 @@
-import { System } from "../../ide/system";
 import { elanProcedure, ProcedureOptions } from "../elan-type-annotations";
+import { System } from "../system";
 import { ElanRuntimeError } from "./elan-runtime-error";
 
 export class TextFileWriter {

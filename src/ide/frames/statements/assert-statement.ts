@@ -1,5 +1,6 @@
+import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { assertKeyword } from "../../../compiler/keywords";
-import { AssertOutcome } from "../../assert-outcome";
+import { TestStatus } from "../../../compiler/test-status";
 import { AbstractFrame } from "../abstract-frame";
 import { AssertActualField } from "../fields/assert-actual-field";
 import { ExpressionField } from "../fields/expression-field";
@@ -8,7 +9,7 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
-import { CompileStatus, DisplayColour, TestStatus } from "../status-enums";
+import { CompileStatus, DisplayColour } from "../status-enums";
 
 export class AssertStatement extends AbstractFrame implements Statement {
   isStatement = true;
