@@ -27,16 +27,3 @@ export enum DisplayColour {
   ok,
   none,
 }
-
-export enum BreakpointStatus {
-  none,
-  disabled,
-  active,
-  singlestep,
-}
-
-export enum BreakpointEvent {
-  clear,
-  activate,
-  disable,
-}

@@ -1,6 +1,7 @@
 import { AssertOutcome } from "../../compiler/assert-outcome";
 import { CompileMode, RootAstNode } from "../../compiler/compiler-interfaces/root-ast-node";
 import { Semver } from "../../compiler/compiler-interfaces/semver";
+import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { StdLib } from "../../compiler/standard-library/std-lib";
 import { StdLibSymbols } from "../../compiler/standard-library/std-lib-symbols";
 import { TestStatus } from "../../compiler/test-status";
@@ -59,13 +60,7 @@ import {
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
 import { StatementFactoryImpl } from "./statement-factory-impl";
-import {
-  BreakpointEvent,
-  CompileStatus,
-  DisplayColour,
-  ParseStatus,
-  RunStatus,
-} from "./status-enums";
+import { CompileStatus, DisplayColour, ParseStatus, RunStatus } from "./status-enums";
 
 // for web editor bundle
 export { CodeSourceFromString };

@@ -1,4 +1,5 @@
-import { BreakpointEvent, CompileStatus, ParseStatus } from "../status-enums";
+import { BreakpointEvent } from "../../../compiler/debugging/breakpoint-event";
+import { CompileStatus, ParseStatus } from "../status-enums";
 import { Field } from "./field";
 import { File } from "./file";
 import { Parent } from "./parent";

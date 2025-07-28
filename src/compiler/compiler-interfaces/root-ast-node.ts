@@ -1,5 +1,5 @@
-import { BreakpointEvent } from "../../ide/frames/status-enums";
 import { CompileError } from "../compile-error";
+import { BreakpointEvent } from "../debugging/breakpoint-event";
 import { AstNode } from "./ast-node";
 import { Scope } from "./scope";
 import { Semver } from "./semver";

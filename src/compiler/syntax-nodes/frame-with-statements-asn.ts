@@ -8,7 +8,7 @@ import {
   symbolMatches,
 } from "../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../compiler/symbols/symbol-scope";
-import { BreakpointEvent } from "../../ide/frames/status-enums";
+import { BreakpointEvent } from "../debugging/breakpoint-event";
 import { compileNodes } from "./ast-helpers";
 import { FrameAsn } from "./frame-asn";
 import { AssertAsn } from "./statements/assert-asn";

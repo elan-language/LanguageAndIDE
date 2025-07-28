@@ -1,4 +1,5 @@
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
+import { BreakpointEvent } from "../../../compiler/debugging/breakpoint-event";
 import { classKeyword } from "../../../compiler/keywords";
 import { ClassSubType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
@@ -42,7 +43,6 @@ import {
   parentHelper_updateBreakpoints,
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
-import { BreakpointEvent } from "../status-enums";
 
 export abstract class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsible {
   isCollapsible: boolean = true;
