@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
 import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
 import { StdLib } from "../../compiler/standard-library/std-lib";
+import { TestStatus } from "../../compiler/test-status";
 import { isElanProduction } from "../environment";
 import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { File } from "../frames/frame-interfaces/file";
 import { Profile } from "../frames/frame-interfaces/profile";
 import { Group, Individual } from "../frames/frame-interfaces/user-config";
-import { CompileStatus, ParseStatus, RunStatus, TestStatus } from "../frames/status-enums";
+import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
 import { checkIsChrome, confirmContinueOnNonChromeBrowser } from "./ui-helpers";
 import {
@@ -22,7 +24,6 @@ import {
 } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 import {
-  DebugSymbol,
   WebWorkerBreakpointMessage,
   WebWorkerMessage,
   WebWorkerReadMessage,

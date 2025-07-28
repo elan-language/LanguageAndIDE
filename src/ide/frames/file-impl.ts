@@ -1,8 +1,9 @@
-import { RootAstNode, CompileMode } from "../../compiler/compiler-interfaces/root-ast-node";
+import { AssertOutcome } from "../../compiler/assert-outcome";
+import { CompileMode, RootAstNode } from "../../compiler/compiler-interfaces/root-ast-node";
 import { Semver } from "../../compiler/compiler-interfaces/semver";
 import { StdLib } from "../../compiler/standard-library/std-lib";
 import { StdLibSymbols } from "../../compiler/standard-library/std-lib-symbols";
-import { AssertOutcome } from "../assert-outcome";
+import { TestStatus } from "../../compiler/test-status";
 import { ElanFileError } from "../elan-file-error";
 import { elanVersion, isElanProduction } from "../environment";
 import { AbstractSelector } from "./abstract-selector";
@@ -64,7 +65,6 @@ import {
   DisplayColour,
   ParseStatus,
   RunStatus,
-  TestStatus,
 } from "./status-enums";
 
 // for web editor bundle

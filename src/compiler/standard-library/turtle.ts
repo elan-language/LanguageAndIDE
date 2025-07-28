@@ -1,16 +1,16 @@
-import { System } from "../../ide/system";
 import {
-  elanClass,
   ClassOption,
+  elanClass,
   ElanClass,
-  elanProperty,
-  elanProcedure,
-  ProcedureOptions,
-  elanIntType,
   elanFloatType,
   elanFunction,
+  elanIntType,
+  elanProcedure,
+  elanProperty,
   FunctionOptions,
+  ProcedureOptions,
 } from "../elan-type-annotations";
+import { System } from "../system";
 import { CircleVG } from "./circle-vg";
 import { GraphicsBase } from "./graphics-base";
 import { LineVG } from "./line-vg";

@@ -1,4 +1,4 @@
-import { TestStatus } from "./frames/status-enums";
+import { TestStatus } from "./test-status";
 
 export class AssertOutcome {
   constructor(

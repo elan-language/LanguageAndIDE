@@ -1,7 +1,7 @@
+import { DebugSymbol } from "../src/compiler/compiler-interfaces/debug-symbol";
 import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
 import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
-import { DebugSymbol } from "../src/ide/web/web-worker-messages";
 import { testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
 import { asDebugSymbol, assertDebugBreakPoint } from "./testHelpers";
 

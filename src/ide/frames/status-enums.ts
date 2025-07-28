@@ -13,15 +13,6 @@ export enum CompileStatus {
   default,
 }
 
-export enum TestStatus {
-  error,
-  fail,
-  ignored,
-  running,
-  pass,
-  default,
-}
-
 export enum RunStatus {
   error,
   paused,

@@ -7,12 +7,12 @@ import { getTestSystem } from "./test-system";
 import { transform, transformMany } from "../../src/compiler/syntax-nodes/ast-visitor";
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { elanVersion } from "../../src/environment";
-import { AssertOutcome } from "../../src/ide/assert-outcome";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Field } from "../../src/ide/frames/frame-interfaces/field";
 import { Frame } from "../../src/ide/frames/frame-interfaces/frame";
 import { Transforms } from "../../src/ide/frames/frame-interfaces/transforms";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
+import { AssertOutcome } from "../../src/compiler/assert-outcome";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);

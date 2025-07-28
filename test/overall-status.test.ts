@@ -1,10 +1,10 @@
 import assert from "assert";
-
 import { testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
 import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
 import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
-import { ParseStatus, CompileStatus, TestStatus, RunStatus } from "../src/ide/frames/status-enums";
+import { ParseStatus, CompileStatus, RunStatus } from "../src/ide/frames/status-enums";
+import { TestStatus } from "../src/compiler/test-status";
 
 suite("Overall Status Tests", () => {
   test("Pattern for starting from literal program", async () => {

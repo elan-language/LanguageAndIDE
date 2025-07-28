@@ -12,7 +12,7 @@ import { UnknownType } from "../src/compiler/symbols/unknown-type";
 import { File } from "../src/ide/frames/frame-interfaces/file";
 import { hash } from "../src/ide/util";
 import { encodeCode } from "../src/ide/web/web-helpers";
-import { DebugSymbol, WebWorkerMessage } from "../src/ide/web/web-worker-messages";
+import { WebWorkerMessage } from "../src/ide/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
@@ -25,8 +25,10 @@ import { editorEvent } from "../src/ide/frames/frame-interfaces/editor-event";
 import { ParseNode } from "../src/ide/frames/frame-interfaces/parse-node";
 import { MainFrame } from "../src/ide/frames/globals/main-frame";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
-import { BreakpointStatus, ParseStatus, CompileStatus, TestStatus } from "../src/ide/frames/status-enums";
+import { BreakpointStatus, ParseStatus, CompileStatus} from "../src/ide/frames/status-enums";
 import { TokenType } from "../src/ide/frames/symbol-completion-helpers";
+import { DebugSymbol } from "../src/compiler/compiler-interfaces/debug-symbol";
+import { TestStatus } from "../src/compiler/test-status";
 
 
 // flag to update test file

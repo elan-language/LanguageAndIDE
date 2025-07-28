@@ -1,14 +1,14 @@
-import { System } from "../../ide/system";
 import {
-  elanClass,
   ClassOption,
-  ElanString,
+  elanClass,
   ElanClass,
-  elanProperty,
-  elanProcedure,
   elanFunction,
+  elanProcedure,
+  elanProperty,
+  ElanString,
   FunctionOptions,
 } from "../elan-type-annotations";
+import { System } from "../system";
 import { VectorGraphic } from "./vector-graphic";
 
 @elanClass(ClassOption.concrete, [], [], [ElanString], [ElanClass(VectorGraphic)])

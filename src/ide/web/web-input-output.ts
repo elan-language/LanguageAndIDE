@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ElanInputOutput } from "../elan-input-output";
+import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
+import { ElanInputOutput } from "../../compiler/compiler-interfaces/elan-input-output";
 import { checkForUnclosedHtmlTag, sanitiseHtml } from "./web-helpers";
 
 export class WebInputOutput implements ElanInputOutput {
@@ -18,6 +19,13 @@ export class WebInputOutput implements ElanInputOutput {
     });
 
     this.display.focus();
+  }
+  breakPoint(
+    _allScopedSymbols: DebugSymbol[],
+    _id: string,
+    _singlestep: boolean,
+  ): Promise<boolean> {
+    throw new Error("Method not implemented.");
   }
 
   useChromeFileAPI() {

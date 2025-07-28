@@ -1,8 +1,8 @@
 
+import { AssertOutcome } from "../src/compiler/assert-outcome";
 import { StdLib } from "../src/compiler/standard-library/std-lib";
-import { AssertOutcome } from "../src/ide/assert-outcome";
-import { TestStatus } from "../src/ide/frames/status-enums";
-import { System } from "../src/ide/system";
+import { System } from "../src/compiler/system";
+import { TestStatus } from "../src/compiler/test-status";
 import { encodeCode } from "../src/ide/web/web-helpers";
 
 export async function runTests(tests: [string, (_outcomes: AssertOutcome[]) => Promise<void>][]) {

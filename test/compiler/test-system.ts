@@ -1,5 +1,5 @@
 
-import { System } from "../../src/ide/system";
+import { System } from "../../src/compiler/system";
 import { TestInputOutput } from "./test-input-output";
 
 export function getTestSystem(input: string) {

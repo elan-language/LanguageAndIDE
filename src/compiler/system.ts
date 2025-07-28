@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Dictionary } from "../compiler/standard-library/dictionary";
-import { DictionaryImmutable } from "../compiler/standard-library/dictionary-immutable";
-import { ElanArray } from "../compiler/standard-library/elan-array";
-import { ElanRuntimeError } from "../compiler/standard-library/elan-runtime-error";
-import { ElanSet } from "../compiler/standard-library/elan-set";
-import { List } from "../compiler/standard-library/list";
-import { ListImmutable } from "../compiler/standard-library/list-immutable";
 import { AssertOutcome } from "./assert-outcome";
-import { ElanInputOutput } from "./elan-input-output";
-import { TestStatus } from "./frames/status-enums";
-import { DebugSymbol, WebWorkerBreakpointMessage } from "./web/web-worker-messages";
+import { DebugSymbol } from "./compiler-interfaces/debug-symbol";
+import { ElanInputOutput } from "./compiler-interfaces/elan-input-output";
+import { Dictionary } from "./standard-library/dictionary";
+import { DictionaryImmutable } from "./standard-library/dictionary-immutable";
+import { ElanArray } from "./standard-library/elan-array";
+import { ElanRuntimeError } from "./standard-library/elan-runtime-error";
+import { ElanSet } from "./standard-library/elan-set";
+import { List } from "./standard-library/list";
+import { ListImmutable } from "./standard-library/list-immutable";
+import { TestStatus } from "./test-status";
 
 export class System {
   constructor(public readonly elanInputOutput: ElanInputOutput) {}
@@ -383,32 +383,7 @@ export class System {
       return false;
     }
 
-    let paused = true;
-    let nextPause = false;
-
-    addEventListener("message", async (e) => {
-      if (e.data.type === "resume") {
-        paused = false;
-      }
-      if (e.data.type === "pause") {
-        nextPause = true;
-      }
-    });
-
-    return new Promise<boolean>((rs) => {
-      postMessage({
-        type: singlestep ? "singlestep" : "breakpoint",
-        value: allScopedSymbols,
-        pausedAt: id,
-      } as WebWorkerBreakpointMessage);
-
-      const timeOut = setInterval(async () => {
-        if (!paused) {
-          clearInterval(timeOut);
-          rs(nextPause);
-        }
-      }, 1);
-    });
+    return await this.elanInputOutput.breakPoint(allScopedSymbols, id, singlestep);
   }
 
   async getPivot<T1>(x: T1, y: T1, z: T1, compare: (a: T1, b: T1) => Promise<number>) {

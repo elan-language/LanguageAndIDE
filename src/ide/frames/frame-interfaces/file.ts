@@ -1,15 +1,10 @@
+import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { RootAstNode } from "../../../compiler/compiler-interfaces/root-ast-node";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { Semver } from "../../../compiler/compiler-interfaces/semver";
-import { AssertOutcome } from "../../assert-outcome";
+import { TestStatus } from "../../../compiler/test-status";
 import { ScratchPad } from "../scratch-pad";
-import {
-  BreakpointEvent,
-  CompileStatus,
-  ParseStatus,
-  RunStatus,
-  TestStatus,
-} from "../status-enums";
+import { BreakpointEvent, CompileStatus, ParseStatus, RunStatus } from "../status-enums";
 import { CodeSource } from "./code-source";
 import { editorEvent } from "./editor-event";
 import { Frame } from "./frame";

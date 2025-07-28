@@ -1,5 +1,10 @@
-import { ElanInputOutput } from "./elan-input-output";
-import { WebWorkerMessage, WebWorkerWriteMessage } from "./web/web-worker-messages";
+import { DebugSymbol } from "../compiler/compiler-interfaces/debug-symbol";
+import { ElanInputOutput } from "../compiler/compiler-interfaces/elan-input-output";
+import {
+  WebWorkerBreakpointMessage,
+  WebWorkerMessage,
+  WebWorkerWriteMessage,
+} from "./web/web-worker-messages";
 
 export class StubInputOutput implements ElanInputOutput {
   constructor() {}
@@ -343,6 +348,35 @@ export class StubInputOutput implements ElanInputOutput {
         }
       };
       postMessage(this.writeMsg("tone", [duration, frequency, volume]));
+    });
+  }
+
+  breakPoint(allScopedSymbols: DebugSymbol[], id: string, singlestep: boolean): Promise<boolean> {
+    let paused = true;
+    let nextPause = false;
+
+    addEventListener("message", async (e) => {
+      if (e.data.type === "resume") {
+        paused = false;
+      }
+      if (e.data.type === "pause") {
+        nextPause = true;
+      }
+    });
+
+    return new Promise<boolean>((rs) => {
+      postMessage({
+        type: singlestep ? "singlestep" : "breakpoint",
+        value: allScopedSymbols,
+        pausedAt: id,
+      } as WebWorkerBreakpointMessage);
+
+      const timeOut = setInterval(async () => {
+        if (!paused) {
+          clearInterval(timeOut);
+          rs(nextPause);
+        }
+      }, 1);
     });
   }
 }

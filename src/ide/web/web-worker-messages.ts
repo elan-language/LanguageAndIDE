@@ -1,4 +1,5 @@
-import { AssertOutcome } from "../assert-outcome";
+import { AssertOutcome } from "../../compiler/assert-outcome";
+import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
 
 export type WebWorkerStatusMessage = {
   type: "status";
@@ -46,9 +47,3 @@ export type WebWorkerMessage = {
   | WebWorkerTestMessage
   | WebWorkerBreakpointMessage
 );
-
-export interface DebugSymbol {
-  name: string;
-  value: unknown;
-  typeMap: string;
-}

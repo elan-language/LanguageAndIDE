@@ -1,4 +1,3 @@
-import { System } from "../../ide/system";
 import {
   ClassOption,
   ElanClass,
@@ -12,6 +11,7 @@ import {
   ElanT1,
   FunctionOptions,
 } from "../elan-type-annotations";
+import { System } from "../system";
 import { withPutHelper } from "./data-structure-helpers";
 import { ElanRuntimeError } from "./elan-runtime-error";
 

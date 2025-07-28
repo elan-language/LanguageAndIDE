@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { Regexes } from "../../ide/frames/fields/regexes";
 import { StubInputOutput } from "../../ide/stub-input-output";
-import { System } from "../../ide/system";
 import { Deprecation } from "../compiler-interfaces/elan-type-interfaces";
 import { ElanCompilerError } from "../elan-compiler-error";
 import {
@@ -25,6 +24,7 @@ import {
   elanProcedure,
   elanStringType,
 } from "../elan-type-annotations";
+import { System } from "../system";
 import { CircleVG } from "./circle-vg";
 import { Dictionary } from "./dictionary";
 import { DictionaryImmutable } from "./dictionary-immutable";

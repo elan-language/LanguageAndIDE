@@ -1,3 +1,5 @@
+import { DebugSymbol } from "./debug-symbol";
+
 export interface ElanInputOutput {
   print(text: string): Promise<void>;
 
@@ -37,4 +39,6 @@ export interface ElanInputOutput {
   clearHtml(): Promise<void>;
 
   tone(duration: number, frequency: number, volume: number): Promise<void>;
+
+  breakPoint(allScopedSymbols: DebugSymbol[], id: string, singlestep: boolean): Promise<boolean>;
 }

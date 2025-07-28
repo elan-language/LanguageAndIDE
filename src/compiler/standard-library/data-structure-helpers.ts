@@ -1,4 +1,4 @@
-import { System } from "../../ide/system";
+import { System } from "../system";
 import { ElanRuntimeError } from "./elan-runtime-error";
 
 function checkIndex<T>(contents: T[], index: number) {
