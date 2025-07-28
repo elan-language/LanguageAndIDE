@@ -1,25 +1,26 @@
 import assert from "assert";
-import { FunctionMethod } from "../src/frames/class-members/function-method";
-import { MemberSelector } from "../src/frames/class-members/member-selector";
-import { DefaultProfile } from "../src/frames/default-profile";
-import { FileImpl } from "../src/frames/file-impl";
-import { Profile } from "../src/frames/frame-interfaces/profile";
-import { AbstractClass } from "../src/frames/globals/abstract-class";
-import { ConcreteClass } from "../src/frames/globals/concrete-class";
-import { GlobalFunction } from "../src/frames/globals/global-function";
-import { GlobalProcedure } from "../src/frames/globals/global-procedure";
-import { GlobalSelector } from "../src/frames/globals/global-selector";
-import { InterfaceFrame } from "../src/frames/globals/interface-frame";
-import { MainFrame } from "../src/frames/globals/main-frame";
-import { TestFrame } from "../src/frames/globals/test-frame";
-import { assertKeyword, functionKeyword, letKeyword, testKeyword } from "../src/frames/keywords";
-import { IfStatement } from "../src/frames/statements/if-statement";
-import { StatementSelector } from "../src/frames/statements/statement-selector";
-import { While } from "../src/frames/statements/while";
-import { hash } from "../src/util";
+
+import { hash } from "../src/ide/util";
 import { transforms } from "./compiler/compiler-test-helpers";
 import { classWithConstructor, emptyMainOnly, T00_emptyFile } from "./model-generating-functions";
 import { key } from "./testHelpers";
+import { FunctionMethod } from "../src/ide/frames/class-members/function-method";
+import { MemberSelector } from "../src/ide/frames/class-members/member-selector";
+import { DefaultProfile } from "../src/ide/frames/default-profile";
+import { FileImpl } from "../src/ide/frames/file-impl";
+import { Profile } from "../src/ide/frames/frame-interfaces/profile";
+import { AbstractClass } from "../src/ide/frames/globals/abstract-class";
+import { ConcreteClass } from "../src/ide/frames/globals/concrete-class";
+import { GlobalFunction } from "../src/ide/frames/globals/global-function";
+import { GlobalProcedure } from "../src/ide/frames/globals/global-procedure";
+import { GlobalSelector } from "../src/ide/frames/globals/global-selector";
+import { InterfaceFrame } from "../src/ide/frames/globals/interface-frame";
+import { MainFrame } from "../src/ide/frames/globals/main-frame";
+import { TestFrame } from "../src/ide/frames/globals/test-frame";
+import { IfStatement } from "../src/ide/frames/statements/if-statement";
+import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
+import { While } from "../src/ide/frames/statements/while";
+import { assertKeyword, functionKeyword, letKeyword, testKeyword } from "../src/compiler/keywords";
 
 export class TestProfileSPJ implements Profile {
   name: string = "SPJ";

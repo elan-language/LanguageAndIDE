@@ -1,5 +1,6 @@
-import { DefaultProfile } from "../src/frames/default-profile";
-import { CodeSourceFromString, FileImpl } from "../src/frames/file-impl";
+import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
+import { DefaultProfile } from "../src/ide/frames/default-profile";
+import { FileImpl } from "../src/ide/frames/file-impl";
 import { ignore_test, testHash, testHeader, transforms } from "./compiler/compiler-test-helpers";
 import { assertAutocompletes, assertSymbolCompletionWithString } from "./testHelpers";
 

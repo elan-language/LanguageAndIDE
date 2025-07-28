@@ -1,9 +1,9 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { elanVersion } from "../environment";
-import { DefaultProfile } from "../frames/default-profile";
-import { FileImpl } from "../frames/file-impl";
-import { transforms } from "../frames/syntax-nodes/ast-helpers";
-import { hash } from "../util";
+import { transforms } from "../compiler/syntax-nodes/ast-helpers";
+import { DefaultProfile } from "../ide/frames/default-profile";
+import { FileImpl } from "../ide/frames/file-impl";
+import { hash } from "../ide/util";
 
 function updateVersion() {
   const rootdir = `${__dirname}/../../..`;
@@ -23,7 +23,7 @@ function updateVersion() {
 
   const tableEntry = `<tr><td>v${semver}</td><td>${date}</td><td><a href="/versions/${zipFileName}">Download zip</a></td></tr>`;
 
-  const versionFilePath = `${rootdir}/src/web-content/version-history.html`;
+  const versionFilePath = `${rootdir}/src/ide/web-content/version-history.html`;
 
   const versionFileContent = readFileSync(versionFilePath, "utf-8");
 
@@ -36,7 +36,7 @@ function updateVersion() {
     writeFileSync(versionFilePath, newContent);
   }
 
-  const buildFilePath = `${rootdir}/src/build-version.txt`;
+  const buildFilePath = `${rootdir}/src/ide/build-version.txt`;
   writeFileSync(buildFilePath, semver);
 }
 

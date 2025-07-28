@@ -1,18 +1,19 @@
 import assert from "assert";
-import { CodeSourceFromString } from "../src/frames/code-source-from-string";
-import { DefaultProfile } from "../src/frames/default-profile";
-import { FileImpl } from "../src/frames/file-impl";
-import { MainFrame } from "../src/frames/globals/main-frame";
-import { TestFrame } from "../src/frames/globals/test-frame";
-import { AssertStatement } from "../src/frames/statements/assert-statement";
-import { CallStatement } from "../src/frames/statements/call-statement";
-import { LetStatement } from "../src/frames/statements/let-statement";
-import { Print } from "../src/frames/statements/print";
-import { SetStatement } from "../src/frames/statements/set-statement";
-import { StatementSelector } from "../src/frames/statements/statement-selector";
-import { Throw } from "../src/frames/statements/throw";
-import { VariableStatement } from "../src/frames/statements/variable-statement";
+
 import { testHeader, transforms } from "./compiler/compiler-test-helpers";
+import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
+import { DefaultProfile } from "../src/ide/frames/default-profile";
+import { FileImpl } from "../src/ide/frames/file-impl";
+import { MainFrame } from "../src/ide/frames/globals/main-frame";
+import { TestFrame } from "../src/ide/frames/globals/test-frame";
+import { AssertStatement } from "../src/ide/frames/statements/assert-statement";
+import { CallStatement } from "../src/ide/frames/statements/call-statement";
+import { LetStatement } from "../src/ide/frames/statements/let-statement";
+import { Print } from "../src/ide/frames/statements/print";
+import { SetStatement } from "../src/ide/frames/statements/set-statement";
+import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
+import { Throw } from "../src/ide/frames/statements/throw";
+import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 
 function hash() {
   return Promise.resolve("FFFF");

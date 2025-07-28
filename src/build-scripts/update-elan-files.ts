@@ -1,10 +1,10 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { transforms } from "../compiler/syntax-nodes/ast-helpers";
 import { elanVersion } from "../environment";
-import { CodeSourceFromString } from "../frames/code-source-from-string";
-import { DefaultProfile } from "../frames/default-profile";
-import { FileImpl } from "../frames/file-impl";
-import { transforms } from "../frames/syntax-nodes/ast-helpers";
-import { hash } from "../util";
+import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
+import { DefaultProfile } from "../ide/frames/default-profile";
+import { FileImpl } from "../ide/frames/file-impl";
+import { hash } from "../ide/util";
 
 const rootdir = `${__dirname}/../../..`;
 

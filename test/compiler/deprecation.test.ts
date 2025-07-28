@@ -1,3 +1,4 @@
+import { Deprecation } from "../../src/compiler/compiler-interfaces/elan-type-interfaces";
 import {
   ClassOption,
   elanClass,
@@ -5,12 +6,11 @@ import {
   elanDeprecated,
   elanFunction,
   elanProcedure,
-} from "../../src/elan-type-annotations";
-import { Deprecation } from "../../src/elan-type-interfaces";
-import { DefaultProfile } from "../../src/frames/default-profile";
-import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
-import { List } from "../../src/standard-library/list";
-import { StdLibSymbols } from "../../src/standard-library/std-lib-symbols";
+} from "../../src/compiler/elan-type-annotations";
+import { List } from "../../src/compiler/standard-library/list";
+import { StdLibSymbols } from "../../src/compiler/standard-library/std-lib-symbols";
+import { DefaultProfile } from "../../src/ide/frames/default-profile";
+import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import {
   assertCompiles,
   assertDoesNotCompile,
