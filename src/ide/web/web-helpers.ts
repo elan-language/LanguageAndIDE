@@ -1,4 +1,4 @@
-import { transform, transformMany } from "../compiler/syntax-nodes/ast-visitor";
+import { transform, transformMany } from "../../compiler/syntax-nodes/ast-visitor";
 import { ElanRuntimeError } from "../elan-runtime-error";
 import { DefaultProfile } from "../frames/default-profile";
 import { DefaultUserConfig } from "../frames/default-user-config";

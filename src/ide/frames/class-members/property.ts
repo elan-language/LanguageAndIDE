@@ -1,5 +1,5 @@
-import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
-import { ClassType } from "../../compiler/symbols/class-type";
+import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
+import { ClassType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";

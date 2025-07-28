@@ -1,4 +1,4 @@
-import { ClassOption, elanClass } from "../../elan-type-annotations";
+import { elanClass, ClassOption } from "../elan-type-annotations";
 
 @elanClass(ClassOption.abstract)
 export class GraphicsBase {

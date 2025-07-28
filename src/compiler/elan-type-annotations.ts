@@ -1,36 +1,4 @@
-import { Class } from "./compiler/compiler-interfaces/class";
-import { ElanSymbol } from "./compiler/compiler-interfaces/elan-symbol";
-import { Scope } from "./compiler/compiler-interfaces/scope";
-import { SymbolType } from "./compiler/compiler-interfaces/symbol-type";
-import {
-  getTypeOptions,
-  noTypeOptions,
-  TypeOptions,
-} from "./compiler/compiler-interfaces/type-options";
-import { BooleanType } from "./compiler/symbols/boolean-type";
-import { ClassType, ClassSubType } from "./compiler/symbols/class-type";
-import {
-  FloatName,
-  StringName,
-  IntName,
-  BooleanName,
-  RegExpName,
-  FuncName,
-  TupleName,
-  ClassName,
-} from "./compiler/symbols/elan-type-names";
-import { FloatType } from "./compiler/symbols/float-type";
-import { FunctionType } from "./compiler/symbols/function-type";
-import { GenericParameterType } from "./compiler/symbols/generic-parameter-type";
-import { IntType } from "./compiler/symbols/int-type";
-import { ProcedureType } from "./compiler/symbols/procedure-type";
-import { RegExpType } from "./compiler/symbols/regexp-type";
-import { StdLibClass } from "./compiler/symbols/stdlib-class";
-import { StringType } from "./compiler/symbols/string-type";
-import { SymbolScope } from "./compiler/symbols/symbol-scope";
-import { TupleType } from "./compiler/symbols/tuple-type";
-import { UnknownType } from "./compiler/symbols/unknown-type";
-import { ElanCompilerError } from "./elan-compiler-error";
+import { ElanCompilerError } from "../ide/elan-compiler-error";
 import {
   Deprecated,
   Deprecation,
@@ -44,7 +12,35 @@ import {
   isProcedureDescriptor,
   TypeDescriptor,
 } from "./elan-type-interfaces";
-import { constructorKeyword } from "./frames/keywords";
+import { constructorKeyword } from "../ide/frames/keywords";
+import { Class } from "./compiler-interfaces/class";
+import { ElanSymbol } from "./compiler-interfaces/elan-symbol";
+import { Scope } from "./compiler-interfaces/scope";
+import { SymbolType } from "./compiler-interfaces/symbol-type";
+import { TypeOptions, noTypeOptions, getTypeOptions } from "./compiler-interfaces/type-options";
+import { BooleanType } from "./symbols/boolean-type";
+import { ClassType, ClassSubType } from "./symbols/class-type";
+import {
+  FloatName,
+  StringName,
+  IntName,
+  BooleanName,
+  RegExpName,
+  FuncName,
+  TupleName,
+  ClassName,
+} from "./symbols/elan-type-names";
+import { FloatType } from "./symbols/float-type";
+import { FunctionType } from "./symbols/function-type";
+import { GenericParameterType } from "./symbols/generic-parameter-type";
+import { IntType } from "./symbols/int-type";
+import { ProcedureType } from "./symbols/procedure-type";
+import { RegExpType } from "./symbols/regexp-type";
+import { StdLibClass } from "./symbols/stdlib-class";
+import { StringType } from "./symbols/string-type";
+import { SymbolScope } from "./symbols/symbol-scope";
+import { TupleType } from "./symbols/tuple-type";
+import { UnknownType } from "./symbols/unknown-type";
 
 export const nameToTypeMap = new Map<
   string,

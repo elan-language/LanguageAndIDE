@@ -1,10 +1,10 @@
-import { ElanCompilerError } from "../../elan-compiler-error";
-import { libraryKeyword, globalKeyword, propertyKeyword } from "../../frames/keywords";
+import { ElanCompilerError } from "../../ide/elan-compiler-error";
+import { libraryKeyword, globalKeyword, propertyKeyword } from "../../ide/frames/keywords";
 import {
   SymbolCompletionSpec,
   TokenType,
   KeywordCompletion,
-} from "../../frames/symbol-completion-helpers";
+} from "../../ide/frames/symbol-completion-helpers";
 import { CompileError } from "../compile-error";
 import { AstNode } from "../compiler-interfaces/ast-node";
 import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";

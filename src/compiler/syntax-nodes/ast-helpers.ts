@@ -23,8 +23,8 @@ import {
 } from "../../compiler/symbols/symbol-helpers";
 import { TupleType } from "../../compiler/symbols/tuple-type";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
-import { ElanCompilerError } from "../../elan-compiler-error";
-import { Transforms } from "../../frames/frame-interfaces/transforms";
+import { ElanCompilerError } from "../../ide/elan-compiler-error";
+import { Transforms } from "../../ide/frames/frame-interfaces/transforms";
 import { CompileError } from "../compile-error";
 import {
   mustBeAssignableType,

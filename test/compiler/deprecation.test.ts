@@ -1,16 +1,16 @@
-import { List } from "../../src/compiler/standard-library/list";
-import { StdLibSymbols } from "../../src/compiler/standard-library/std-lib-symbols";
 import {
-  ClassOption,
   elanClass,
-  elanClassExport,
+  ClassOption,
   elanDeprecated,
   elanFunction,
   elanProcedure,
-} from "../../src/elan-type-annotations";
-import { Deprecation } from "../../src/elan-type-interfaces";
-import { DefaultProfile } from "../../src/frames/default-profile";
-import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
+  elanClassExport,
+} from "../../src/compiler/elan-type-annotations";
+import { Deprecation } from "../../src/compiler/elan-type-interfaces";
+import { List } from "../../src/compiler/standard-library/list";
+import { StdLibSymbols } from "../../src/compiler/standard-library/std-lib-symbols";
+import { DefaultProfile } from "../../src/ide/frames/default-profile";
+import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import {
   assertCompiles,
   assertDoesNotCompile,

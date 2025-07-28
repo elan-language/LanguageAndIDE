@@ -1,16 +1,16 @@
+import { System } from "../../ide/system";
 import {
-  ClassOption,
   elanClass,
-  ElanClass,
-  ElanFloat,
+  ClassOption,
   elanFunction,
+  FunctionOptions,
+  ElanTuple,
+  ElanFloat,
+  ElanClass,
   ElanInt,
   elanIntType,
   elanProcedure,
-  ElanTuple,
-  FunctionOptions,
-} from "../../elan-type-annotations";
-import { System } from "../../system";
+} from "../elan-type-annotations";
 
 // Credit for source of algorithm: https://www.codeproject.com/Articles/25172/Simple-Random-Number-Generation
 @elanClass(ClassOption.record)

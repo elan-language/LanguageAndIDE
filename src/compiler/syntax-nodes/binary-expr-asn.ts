@@ -10,7 +10,7 @@ import {
   isValueType,
   mostPreciseSymbol,
 } from "../../compiler/symbols/symbol-helpers";
-import { ElanCompilerError } from "../../elan-compiler-error";
+import { ElanCompilerError } from "../../ide/elan-compiler-error";
 import {
   mustBeBooleanTypes,
   mustBeCoercibleType,

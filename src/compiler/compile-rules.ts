@@ -3,9 +3,9 @@ import { ElanSymbol } from "../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../compiler/compiler-interfaces/symbol-type";
 import { isRecord } from "../compiler/compiler-interfaces/type-options";
-import { ElanCompilerError } from "../elan-compiler-error";
-import { Deprecation } from "../elan-type-interfaces";
-import { allKeywords, reservedWords } from "../frames/keywords";
+import { ElanCompilerError } from "../ide/elan-compiler-error";
+import { allKeywords, reservedWords } from "../ide/frames/keywords";
+
 import {
   CannotCallAFunction,
   CannotCallAsAMethod,
@@ -48,6 +48,7 @@ import {
   UndefinedSymbolCompileError,
   UnknownCompilerDirectiveCompileError,
 } from "./compile-error";
+import { Deprecation } from "./elan-type-interfaces";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
 import { DeconstructedListType } from "./symbols/deconstructed-list-type";

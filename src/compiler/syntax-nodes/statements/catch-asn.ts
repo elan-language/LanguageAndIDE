@@ -4,7 +4,7 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { StringType } from "../../../compiler/symbols/string-type";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
-import { catchKeyword, exceptionKeyword, inKeyword } from "../../../frames/keywords";
+import { catchKeyword, exceptionKeyword, inKeyword } from "../../../ide/frames/keywords";
 import { getId } from "../../compile-rules";
 import { singleIndent } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";

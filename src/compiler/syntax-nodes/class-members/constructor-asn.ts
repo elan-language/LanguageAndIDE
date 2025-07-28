@@ -7,7 +7,7 @@ import { ProcedureType } from "../../../compiler/symbols/procedure-type";
 import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
-import { constructorKeyword } from "../../../frames/keywords";
+import { constructorKeyword } from "../../../ide/frames/keywords";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
 import { FrameWithStatementsAsn } from "../frame-with-statements-asn";

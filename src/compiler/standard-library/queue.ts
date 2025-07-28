@@ -1,16 +1,16 @@
-import { ElanRuntimeError } from "../../elan-runtime-error";
+import { ElanRuntimeError } from "../../ide/elan-runtime-error";
+import { System } from "../../ide/system";
 import {
-  ClassOption,
-  ElanClass,
   elanClass,
-  elanFunction,
-  elanGenericParamT1Type,
-  ElanInt,
+  ClassOption,
   ElanT1,
-  ElanTuple,
+  elanFunction,
   FunctionOptions,
-} from "../../elan-type-annotations";
-import { System } from "../../system";
+  ElanInt,
+  ElanClass,
+  elanGenericParamT1Type,
+  ElanTuple,
+} from "../elan-type-annotations";
 
 @elanClass(ClassOption.record, [ElanT1])
 export class Queue<T1> {

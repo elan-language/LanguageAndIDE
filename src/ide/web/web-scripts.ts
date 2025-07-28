@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { StdLib } from "../compiler/standard-library/std-lib";
+
+import { StdLib } from "../../compiler/standard-library/std-lib";
 import { ElanRuntimeError } from "../elan-runtime-error";
 import { isElanProduction } from "../environment";
 import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";

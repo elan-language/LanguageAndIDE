@@ -1,17 +1,17 @@
 import assert from "assert";
-import { DefaultProfile } from "../src/frames/default-profile";
-import { FileImpl } from "../src/frames/file-impl";
-import { Constant } from "../src/frames/globals/constant";
-import { GlobalComment } from "../src/frames/globals/global-comment";
-import { GlobalFunction } from "../src/frames/globals/global-function";
-import { MainFrame } from "../src/frames/globals/main-frame";
-import { CallStatement } from "../src/frames/statements/call-statement";
-import { IfStatement } from "../src/frames/statements/if-statement";
-import { SetStatement } from "../src/frames/statements/set-statement";
-import { VariableStatement } from "../src/frames/statements/variable-statement";
-import { hash } from "../src/util";
+import { hash } from "../src/ide/util";
 import { transforms } from "./compiler/compiler-test-helpers";
 import { key, tab } from "./testHelpers";
+import { DefaultProfile } from "../src/ide/frames/default-profile";
+import { FileImpl } from "../src/ide/frames/file-impl";
+import { Constant } from "../src/ide/frames/globals/constant";
+import { GlobalComment } from "../src/ide/frames/globals/global-comment";
+import { GlobalFunction } from "../src/ide/frames/globals/global-function";
+import { MainFrame } from "../src/ide/frames/globals/main-frame";
+import { CallStatement } from "../src/ide/frames/statements/call-statement";
+import { IfStatement } from "../src/ide/frames/statements/if-statement";
+import { SetStatement } from "../src/ide/frames/statements/set-statement";
+import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 
 suite("Editing Fields Tests", () => {
   test("Entry of text with formatting", () => {

@@ -1,17 +1,17 @@
+import { System } from "../../ide/system";
 import {
-  ClassOption,
-  ElanBoolean,
-  ElanClass,
   elanClass,
-  elanClassType,
-  elanFunction,
-  elanGenericParamT1Type,
-  ElanInt,
-  ElanString,
+  ClassOption,
   ElanT1,
+  elanFunction,
   FunctionOptions,
-} from "../../elan-type-annotations";
-import { System } from "../../system";
+  ElanInt,
+  ElanBoolean,
+  elanGenericParamT1Type,
+  ElanClass,
+  elanClassType,
+  ElanString,
+} from "../elan-type-annotations";
 import { List } from "./list";
 import { ListImmutable } from "./list-immutable";
 

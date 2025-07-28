@@ -15,7 +15,7 @@ import {
 import { SymbolScope } from "../../compiler/symbols/symbol-scope";
 import { TupleType } from "../../compiler/symbols/tuple-type";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
-import { BreakpointEvent, BreakpointStatus } from "../../frames/status-enums";
+import { BreakpointStatus, BreakpointEvent } from "../../ide/frames/status-enums";
 import { getId } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { singleIndent } from "./ast-helpers";

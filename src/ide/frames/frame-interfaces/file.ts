@@ -1,7 +1,7 @@
+import { RootAstNode } from "../../../compiler/compiler-interfaces/root-ast-node";
+import { Scope } from "../../../compiler/compiler-interfaces/scope";
+import { Semver } from "../../../compiler/compiler-interfaces/semver";
 import { AssertOutcome } from "../../assert-outcome";
-import { RootAstNode } from "../../compiler/compiler-interfaces/root-ast-node";
-import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { Semver } from "../../compiler/compiler-interfaces/semver";
 import { ScratchPad } from "../scratch-pad";
 import {
   BreakpointEvent,

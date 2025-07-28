@@ -4,7 +4,7 @@ import { ClassSubType, ClassType } from "../../compiler/symbols/class-type";
 import { ProcedureType } from "../../compiler/symbols/procedure-type";
 import { getGlobalScope, parameterNamesWithTypes } from "../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../compiler/symbols/symbol-scope";
-import { constructorKeyword } from "../../frames/keywords";
+import { constructorKeyword } from "../../ide/frames/keywords";
 import {
   mustBeConcreteClass,
   mustBeKnownSymbolType,

@@ -2,7 +2,7 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { BooleanType } from "../../compiler/symbols/boolean-type";
 import { getGlobalScope } from "../../compiler/symbols/symbol-helpers";
-import { ElanCompilerError } from "../../elan-compiler-error";
+import { ElanCompilerError } from "../../ide/elan-compiler-error";
 import { CompileError } from "../compile-error";
 import {
   mustBeBooleanType,

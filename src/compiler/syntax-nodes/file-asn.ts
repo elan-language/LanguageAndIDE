@@ -9,7 +9,7 @@ import { elanSymbols } from "../../compiler/symbols/elan-symbols";
 import { NullScope } from "../../compiler/symbols/null-scope";
 import { isSymbol, symbolMatches } from "../../compiler/symbols/symbol-helpers";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
-import { BreakpointEvent } from "../../frames/status-enums";
+import { BreakpointEvent } from "../../ide/frames/status-enums";
 import { CompileError } from "../compile-error";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { FrameAsn } from "./frame-asn";

@@ -1,4 +1,4 @@
-import { SymbolWrapper } from "../../compiler/symbols/symbol-wrapper";
+import { SymbolWrapper } from "../../../compiler/symbols/symbol-wrapper";
 import { Overtyper } from "../overtyper";
 import { CompileStatus } from "../status-enums";
 import { File } from "./file";

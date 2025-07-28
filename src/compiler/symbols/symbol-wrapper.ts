@@ -1,5 +1,5 @@
-import { propertyKeyword } from "../../frames/keywords";
-import { KeywordCompletion } from "../../frames/symbol-completion-helpers";
+import { propertyKeyword } from "../../ide/frames/keywords";
+import { KeywordCompletion } from "../../ide/frames/symbol-completion-helpers";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";

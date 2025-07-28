@@ -1,6 +1,9 @@
-import { ElanSymbol } from "../../compiler/compiler-interfaces/elan-symbol";
-import { getFilteredSymbols, removeIfSingleFullMatch } from "../../compiler/symbols/symbol-helpers";
-import { SymbolWrapper } from "../../compiler/symbols/symbol-wrapper";
+import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
+import {
+  getFilteredSymbols,
+  removeIfSingleFullMatch,
+} from "../../../compiler/symbols/symbol-helpers";
+import { SymbolWrapper } from "../../../compiler/symbols/symbol-wrapper";
 import {
   escapeHtmlChars,
   helper_CompileOrParseAsDisplayStatus,

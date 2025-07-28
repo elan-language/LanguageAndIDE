@@ -1,8 +1,8 @@
+import { RootAstNode, CompileMode } from "../../compiler/compiler-interfaces/root-ast-node";
+import { Semver } from "../../compiler/compiler-interfaces/semver";
+import { StdLib } from "../../compiler/standard-library/std-lib";
+import { StdLibSymbols } from "../../compiler/standard-library/std-lib-symbols";
 import { AssertOutcome } from "../assert-outcome";
-import { CompileMode, RootAstNode } from "../compiler/compiler-interfaces/root-ast-node";
-import { Semver } from "../compiler/compiler-interfaces/semver";
-import { StdLib } from "../compiler/standard-library/std-lib";
-import { StdLibSymbols } from "../compiler/standard-library/std-lib-symbols";
 import { ElanFileError } from "../elan-file-error";
 import { elanVersion, isElanProduction } from "../environment";
 import { AbstractSelector } from "./abstract-selector";

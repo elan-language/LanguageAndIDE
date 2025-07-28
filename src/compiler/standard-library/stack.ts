@@ -1,16 +1,16 @@
-import { ElanRuntimeError } from "../../elan-runtime-error";
+import { ElanRuntimeError } from "../../ide/elan-runtime-error";
+import { System } from "../../ide/system";
 import {
   ClassOption,
-  ElanClass,
   elanClass,
+  ElanClass,
   elanFunction,
   elanGenericParamT1Type,
   ElanInt,
   ElanT1,
   ElanTuple,
   FunctionOptions,
-} from "../../elan-type-annotations";
-import { System } from "../../system";
+} from "../elan-type-annotations";
 
 @elanClass(ClassOption.record, [ElanT1])
 export class Stack<T1> {

@@ -1,18 +1,18 @@
+import { System } from "../../ide/system";
 import {
+  elanClass,
   ClassOption,
-  ElanBoolean,
-  ElanClass,
-  ElanClassName,
   ElanT1,
   ElanT2,
-  FunctionOptions,
-  elanClass,
-  elanFunction,
+  elanProcedure,
   elanGenericParamT1Type,
   elanGenericParamT2Type,
-  elanProcedure,
-} from "../../elan-type-annotations";
-import { System } from "../../system";
+  elanFunction,
+  FunctionOptions,
+  ElanClass,
+  ElanBoolean,
+  ElanClassName,
+} from "../elan-type-annotations";
 import { List } from "./list";
 
 @elanClass(ClassOption.dictionary, [ElanT1, ElanT2])

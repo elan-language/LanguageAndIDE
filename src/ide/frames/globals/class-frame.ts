@@ -1,5 +1,5 @@
-import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
-import { ClassSubType } from "../../compiler/symbols/class-type";
+import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
+import { ClassSubType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { AbstractFunction } from "../class-members/abstract-function";

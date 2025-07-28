@@ -1,28 +1,29 @@
 import assert from "assert";
-import { Alternatives } from "../src/frames/parse-nodes/alternatives";
-import { ArgListNode } from "../src/frames/parse-nodes/arg-list-node";
-import { AssertActualNode } from "../src/frames/parse-nodes/assert-actual-node";
-import { AssignableNode } from "../src/frames/parse-nodes/assignable-node";
-import { BinaryExpression } from "../src/frames/parse-nodes/binary-expression";
-import { BinaryOperation } from "../src/frames/parse-nodes/binary-operation";
-import { CSV } from "../src/frames/parse-nodes/csv";
-import { ExprNode } from "../src/frames/parse-nodes/expr-node";
-import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
-import { InstanceProcRef } from "../src/frames/parse-nodes/instanceProcRef";
-import { MethodCallNode } from "../src/frames/parse-nodes/method-call-node";
-import { MethodNameNode } from "../src/frames/parse-nodes/method-name-node";
-import { OptionalNode } from "../src/frames/parse-nodes/optional-node";
-import { allIds } from "../src/frames/parse-nodes/parse-node-helpers";
-import { ProcRefNode } from "../src/frames/parse-nodes/proc-ref-node";
-import { ReferenceNode } from "../src/frames/parse-nodes/reference-node";
-import { TermSimple } from "../src/frames/parse-nodes/term-simple";
-import { TypeNameNode } from "../src/frames/parse-nodes/type-name-node";
-import { TypeNode } from "../src/frames/parse-nodes/type-node";
-import { TypeSimpleOrGeneric } from "../src/frames/parse-nodes/type-simple-or-generic";
-import { ValueDefNode } from "../src/frames/parse-nodes/value-def-node";
-import { ParseStatus } from "../src/frames/status-enums";
-import { TokenType } from "../src/frames/symbol-completion-helpers";
+
 import { testSymbolCompletionSpec } from "./testHelpers";
+import { Alternatives } from "../src/ide/frames/parse-nodes/alternatives";
+import { ArgListNode } from "../src/ide/frames/parse-nodes/arg-list-node";
+import { AssertActualNode } from "../src/ide/frames/parse-nodes/assert-actual-node";
+import { AssignableNode } from "../src/ide/frames/parse-nodes/assignable-node";
+import { BinaryExpression } from "../src/ide/frames/parse-nodes/binary-expression";
+import { BinaryOperation } from "../src/ide/frames/parse-nodes/binary-operation";
+import { CSV } from "../src/ide/frames/parse-nodes/csv";
+import { ExprNode } from "../src/ide/frames/parse-nodes/expr-node";
+import { IdentifierNode } from "../src/ide/frames/parse-nodes/identifier-node";
+import { InstanceProcRef } from "../src/ide/frames/parse-nodes/instanceProcRef";
+import { MethodCallNode } from "../src/ide/frames/parse-nodes/method-call-node";
+import { MethodNameNode } from "../src/ide/frames/parse-nodes/method-name-node";
+import { OptionalNode } from "../src/ide/frames/parse-nodes/optional-node";
+import { allIds } from "../src/ide/frames/parse-nodes/parse-node-helpers";
+import { ProcRefNode } from "../src/ide/frames/parse-nodes/proc-ref-node";
+import { ReferenceNode } from "../src/ide/frames/parse-nodes/reference-node";
+import { TermSimple } from "../src/ide/frames/parse-nodes/term-simple";
+import { TypeNameNode } from "../src/ide/frames/parse-nodes/type-name-node";
+import { TypeNode } from "../src/ide/frames/parse-nodes/type-node";
+import { TypeSimpleOrGeneric } from "../src/ide/frames/parse-nodes/type-simple-or-generic";
+import { ValueDefNode } from "../src/ide/frames/parse-nodes/value-def-node";
+import { ParseStatus } from "../src/ide/frames/status-enums";
+import { TokenType } from "../src/ide/frames/symbol-completion-helpers";
 
 suite("Symbol Completion Spec", () => {
   test("MethodCallNode", () => {

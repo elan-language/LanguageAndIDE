@@ -1,5 +1,6 @@
-import { ElanInputOutput } from "../../src/elan-input-output";
-import { checkForUnclosedHtmlTag } from "../../src/web/web-helpers";
+import { ElanInputOutput } from "../../src/ide/elan-input-output";
+import { checkForUnclosedHtmlTag } from "../../src/ide/web/web-helpers";
+
 
 export class TestInputOutput implements ElanInputOutput {
 

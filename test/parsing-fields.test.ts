@@ -1,19 +1,19 @@
 import assert from "assert";
-import { DefaultProfile } from "../src/frames/default-profile";
-import { FileImpl } from "../src/frames/file-impl";
-import { Constant } from "../src/frames/globals/constant";
-import { GlobalFunction } from "../src/frames/globals/global-function";
-import { MainFrame } from "../src/frames/globals/main-frame";
-import { TestFrame } from "../src/frames/globals/test-frame";
-import { AssertStatement } from "../src/frames/statements/assert-statement";
-import { CallStatement } from "../src/frames/statements/call-statement";
-import { CommentStatement } from "../src/frames/statements/comment-statement";
-import { LetStatement } from "../src/frames/statements/let-statement";
-import { VariableStatement } from "../src/frames/statements/variable-statement";
-import { ParseStatus } from "../src/frames/status-enums";
-import { hash } from "../src/util";
+import { hash } from "../src/ide/util";
 import { transforms } from "./compiler/compiler-test-helpers";
 import { testExtractContextForExpression } from "./testHelpers";
+import { DefaultProfile } from "../src/ide/frames/default-profile";
+import { FileImpl } from "../src/ide/frames/file-impl";
+import { Constant } from "../src/ide/frames/globals/constant";
+import { GlobalFunction } from "../src/ide/frames/globals/global-function";
+import { MainFrame } from "../src/ide/frames/globals/main-frame";
+import { TestFrame } from "../src/ide/frames/globals/test-frame";
+import { AssertStatement } from "../src/ide/frames/statements/assert-statement";
+import { CallStatement } from "../src/ide/frames/statements/call-statement";
+import { CommentStatement } from "../src/ide/frames/statements/comment-statement";
+import { LetStatement } from "../src/ide/frames/statements/let-statement";
+import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
+import { ParseStatus } from "../src/ide/frames/status-enums";
 
 suite("Field Parsing Tests", () => {
   test("parse CommentField", () => {

@@ -1,31 +1,4 @@
 import "reflect-metadata";
-import { ElanCompilerError } from "../../elan-compiler-error";
-import { ElanRuntimeError } from "../../elan-runtime-error";
-import {
-  ElanBoolean,
-  ElanClass,
-  elanClassExport,
-  elanClassType,
-  elanConstant,
-  elanDeprecated,
-  ElanFloat,
-  elanFloatType,
-  elanFunction,
-  elanGenericParamT1Type,
-  ElanInt,
-  elanIntType,
-  elanProcedure,
-  ElanString,
-  elanStringType,
-  ElanT1Constrained,
-  ElanTuple,
-  FunctionOptions,
-  ProcedureOptions,
-} from "../../elan-type-annotations";
-import { Deprecation } from "../../elan-type-interfaces";
-import { Regexes } from "../../frames/fields/regexes";
-import { StubInputOutput } from "../../stub-input-output";
-import { System } from "../../system";
 import { CircleVG } from "./circle-vg";
 import { Dictionary } from "./dictionary";
 import { DictionaryImmutable } from "./dictionary-immutable";
@@ -44,6 +17,33 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphic } from "./vector-graphic";
+import { ElanCompilerError } from "../../ide/elan-compiler-error";
+import { ElanRuntimeError } from "../../ide/elan-runtime-error";
+import { Regexes } from "../../ide/frames/fields/regexes";
+import { StubInputOutput } from "../../ide/stub-input-output";
+import { System } from "../../ide/system";
+import {
+  elanClassExport,
+  elanConstant,
+  ElanInt,
+  ElanBoolean,
+  ElanString,
+  elanFunction,
+  FunctionOptions,
+  elanGenericParamT1Type,
+  elanIntType,
+  elanStringType,
+  ElanClass,
+  ElanFloat,
+  elanClassType,
+  elanProcedure,
+  ProcedureOptions,
+  ElanTuple,
+  elanDeprecated,
+  ElanT1Constrained,
+  elanFloatType,
+} from "../elan-type-annotations";
+import { Deprecation } from "../elan-type-interfaces";
 
 export class StdLib {
   constructor() {

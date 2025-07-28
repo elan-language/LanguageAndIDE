@@ -1,6 +1,6 @@
-import { DefaultProfile } from "../../src/frames/default-profile";
-import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
-import { hash } from "../../src/util";
+import { DefaultProfile } from "../../src/ide/frames/default-profile";
+import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
+import { hash } from "../../src/ide/util";
 import {
   assertDoesNotParseWithMessage,
   assertObjectCodeExecutes,

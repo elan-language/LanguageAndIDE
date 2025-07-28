@@ -1,6 +1,6 @@
-import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { parameterNames } from "../../compiler/symbols/symbol-helpers";
-import { UnknownSymbol } from "../../compiler/symbols/unknown-symbol";
+import { Scope } from "../../../compiler/compiler-interfaces/scope";
+import { parameterNames } from "../../../compiler/symbols/symbol-helpers";
+import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { currentParameterIndex } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";

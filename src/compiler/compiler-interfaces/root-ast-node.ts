@@ -1,4 +1,4 @@
-import { BreakpointEvent } from "../../frames/status-enums";
+import { BreakpointEvent } from "../../ide/frames/status-enums";
 import { CompileError } from "../compile-error";
 import { AstNode } from "./ast-node";
 import { Scope } from "./scope";

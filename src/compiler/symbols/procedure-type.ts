@@ -1,6 +1,6 @@
-import { Deprecated } from "../../elan-type-interfaces";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { immutableTypeOptions } from "../compiler-interfaces/type-options";
+import { Deprecated } from "../elan-type-interfaces";
 
 export class ProcedureType implements SymbolType {
   constructor(
