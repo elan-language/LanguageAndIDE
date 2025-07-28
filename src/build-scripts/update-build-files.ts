@@ -23,7 +23,7 @@ function updateVersion() {
 
   const tableEntry = `<tr><td>v${semver}</td><td>${date}</td><td><a href="/versions/${zipFileName}">Download zip</a></td></tr>`;
 
-  const versionFilePath = `${rootdir}/src/web-content/version-history.html`;
+  const versionFilePath = `${rootdir}/src/ide/web-content/version-history.html`;
 
   const versionFileContent = readFileSync(versionFilePath, "utf-8");
 
@@ -36,7 +36,7 @@ function updateVersion() {
     writeFileSync(versionFilePath, newContent);
   }
 
-  const buildFilePath = `${rootdir}/src/build-version.txt`;
+  const buildFilePath = `${rootdir}/src/ide/build-version.txt`;
   writeFileSync(buildFilePath, semver);
 }
 
