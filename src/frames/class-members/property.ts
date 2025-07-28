@@ -1,5 +1,6 @@
+import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
+import { ClassType } from "../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
-import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
 import { addPrivateToggleToContextMenu } from "../frame-helpers";
@@ -8,7 +9,6 @@ import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
 import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
-import { ClassType } from "../symbols/class-type";
 
 export class Property extends AbstractFrame implements PossiblyPrivateMember {
   isMember = true;

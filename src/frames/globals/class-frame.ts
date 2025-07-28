@@ -1,3 +1,5 @@
+import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
+import { ClassSubType } from "../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { AbstractFunction } from "../class-members/abstract-function";
@@ -8,7 +10,6 @@ import { FunctionMethod } from "../class-members/function-method";
 import { MemberSelector } from "../class-members/member-selector";
 import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
-import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { InheritsFromField } from "../fields/inherits-from-field";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
@@ -42,7 +43,6 @@ import {
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
 import { BreakpointEvent } from "../status-enums";
-import { ClassSubType } from "../symbols/class-type";
 
 export abstract class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsible {
   isCollapsible: boolean = true;

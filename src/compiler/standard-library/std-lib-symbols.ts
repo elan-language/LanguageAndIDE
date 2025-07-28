@@ -7,13 +7,13 @@ import {
   isFunctionDescriptor,
   isProcedureDescriptor,
 } from "../../elan-type-interfaces";
-import { ElanSymbol } from "../../frames/compiler-interfaces/elan-symbol";
-import { Scope } from "../../frames/compiler-interfaces/scope";
-import { SymbolType } from "../../frames/compiler-interfaces/symbol-type";
-import { NullScope } from "../../frames/symbols/null-scope";
-import { symbolMatches } from "../../frames/symbols/symbol-helpers";
-import { SymbolScope } from "../../frames/symbols/symbol-scope";
-import { UnknownSymbol } from "../../frames/symbols/unknown-symbol";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
+import { NullScope } from "../symbols/null-scope";
+import { symbolMatches } from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { UnknownSymbol } from "../symbols/unknown-symbol";
 
 export class StdLibSymbols implements Scope {
   constructor(stdlib: object) {

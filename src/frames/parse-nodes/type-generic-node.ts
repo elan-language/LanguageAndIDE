@@ -1,6 +1,6 @@
 import { ofKeyword } from "../keywords";
 import { TokenType } from "../symbol-completion-helpers";
-import { GT, LT } from "../symbols";
+import { LT, GT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CommaNode } from "./comma-node";
 import { KeywordNode } from "./keyword-node";

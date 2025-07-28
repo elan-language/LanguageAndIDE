@@ -1,4 +1,6 @@
-import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { ElanSymbol } from "../../compiler/compiler-interfaces/elan-symbol";
+import { getFilteredSymbols, removeIfSingleFullMatch } from "../../compiler/symbols/symbol-helpers";
+import { SymbolWrapper } from "../../compiler/symbols/symbol-wrapper";
 import {
   escapeHtmlChars,
   helper_CompileOrParseAsDisplayStatus,
@@ -17,8 +19,6 @@ import { propertyKeyword } from "../keywords";
 import { Overtyper } from "../overtyper";
 import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
 import { KeywordCompletion, SymbolCompletionSpec } from "../symbol-completion-helpers";
-import { getFilteredSymbols, removeIfSingleFullMatch } from "../symbols/symbol-helpers";
-import { SymbolWrapper } from "../symbols/symbol-wrapper";
 
 export abstract class AbstractField implements Selectable, Field {
   public isField: boolean = true;

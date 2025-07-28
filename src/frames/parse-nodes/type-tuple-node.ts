@@ -1,5 +1,5 @@
 import { TokenType } from "../symbol-completion-helpers";
-import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
+import { OPEN_BRACKET, CLOSE_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { PunctuationNode } from "./punctuation-node";

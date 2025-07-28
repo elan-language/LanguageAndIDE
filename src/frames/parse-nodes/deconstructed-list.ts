@@ -1,6 +1,6 @@
+import { COLON, UNDERSCORE } from "../symbols";
 import { propertyKeyword } from "../keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
-import { COLON, UNDERSCORE } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { IdentifierNode } from "./identifier-node";

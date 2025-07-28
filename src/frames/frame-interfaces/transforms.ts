@@ -1,6 +1,6 @@
-import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
-import { AstNode } from "../compiler-interfaces/ast-node";
-import { Scope } from "../compiler-interfaces/scope";
+import { AstCollectionNode } from "../../compiler/compiler-interfaces/ast-collection-node";
+import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
+import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { FileImpl } from "../file-impl";
 import { CSV } from "../parse-nodes/csv";
 import { Multiple } from "../parse-nodes/multiple";

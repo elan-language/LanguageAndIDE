@@ -1,5 +1,5 @@
+import { CompileError, Severity } from "../compiler/compile-error";
 import { AbstractSelector } from "./abstract-selector";
-import { CompileError, Severity } from "./compile-error";
 import { Collapsible } from "./frame-interfaces/collapsible";
 import { Field } from "./frame-interfaces/field";
 import { File } from "./frame-interfaces/file";

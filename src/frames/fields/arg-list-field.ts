@@ -1,4 +1,6 @@
-import { Scope } from "../compiler-interfaces/scope";
+import { Scope } from "../../compiler/compiler-interfaces/scope";
+import { parameterNames } from "../../compiler/symbols/symbol-helpers";
+import { UnknownSymbol } from "../../compiler/symbols/unknown-symbol";
 import { currentParameterIndex } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
@@ -6,8 +8,6 @@ import { ParseNode } from "../frame-interfaces/parse-node";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
 import { CallStatement } from "../statements/call-statement";
 import { ParseStatus } from "../status-enums";
-import { parameterNames } from "../symbols/symbol-helpers";
-import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { AbstractField } from "./abstract-field";
 
 export class ArgListField extends AbstractField {

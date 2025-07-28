@@ -1,4 +1,4 @@
-import { CLOSE_SQ_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
+import { OPEN_SQ_BRACKET, CLOSE_SQ_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { IndexValue } from "./index-value";
 import { PunctuationNode } from "./punctuation-node";

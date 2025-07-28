@@ -1,4 +1,4 @@
-import { CLOSE_BRACE, OPEN_BRACE } from "../symbols";
+import { OPEN_BRACE, CLOSE_BRACE } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { ExprNode } from "./expr-node";
 import { PunctuationNode } from "./punctuation-node";

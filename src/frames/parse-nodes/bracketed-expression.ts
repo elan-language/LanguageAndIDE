@@ -1,8 +1,8 @@
+import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { ExprNode } from "./expr-node";
-import { PunctuationNode } from "./punctuation-node";
-import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { Space } from "./parse-node-helpers";
+import { PunctuationNode } from "./punctuation-node";
 import { SpaceNode } from "./space-node";
 
 export class BracketedExpression extends AbstractSequence {

@@ -1,10 +1,10 @@
+import { transform, transformMany } from "../compiler/syntax-nodes/ast-visitor";
 import { ElanRuntimeError } from "../elan-runtime-error";
 import { DefaultProfile } from "../frames/default-profile";
 import { DefaultUserConfig } from "../frames/default-user-config";
 import { Profile } from "../frames/frame-interfaces/profile";
 import { Transforms } from "../frames/frame-interfaces/transforms";
 import { UserConfig } from "../frames/frame-interfaces/user-config";
-import { transform, transformMany } from "../frames/syntax-nodes/ast-visitor";
 
 export async function hash(toHash: string) {
   const msgUint8 = new TextEncoder().encode(toHash); // encode as (utf-8) Uint8Array

@@ -1,5 +1,5 @@
 import { ParseNode } from "../frame-interfaces/parse-node";
-import { CLOSE_SQ_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
+import { OPEN_SQ_BRACKET, CLOSE_SQ_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { KVPnode } from "./kvp-node";

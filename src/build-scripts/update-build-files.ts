@@ -2,8 +2,8 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { elanVersion } from "../environment";
 import { DefaultProfile } from "../frames/default-profile";
 import { FileImpl } from "../frames/file-impl";
-import { transforms } from "../frames/syntax-nodes/ast-helpers";
 import { hash } from "../util";
+import { transforms } from "../compiler/syntax-nodes/ast-helpers";
 
 function updateVersion() {
   const rootdir = `${__dirname}/../../..`;

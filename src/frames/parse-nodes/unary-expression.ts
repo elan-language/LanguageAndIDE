@@ -4,11 +4,10 @@ import { Alternatives } from "./alternatives";
 import { KeywordNode } from "./keyword-node";
 import { PunctuationNode } from "./punctuation-node";
 import { Term } from "./term";
-
-import { MINUS } from "../symbols";
 import { Space } from "./parse-node-helpers";
 import { Sequence } from "./sequence";
 import { SpaceNode } from "./space-node";
+import { MINUS } from "../symbols";
 
 export class UnaryExpression extends AbstractSequence {
   unaryOp: Alternatives | undefined;
