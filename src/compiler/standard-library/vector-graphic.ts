@@ -1,5 +1,5 @@
-import { ElanRuntimeError } from "../elan-runtime-error";
-import { ClassOption, elanClass } from "../elan-type-annotations";
+import { ElanRuntimeError } from "../../elan-runtime-error";
+import { ClassOption, elanClass } from "../../elan-type-annotations";
 
 @elanClass(ClassOption.abstract)
 export class VectorGraphic {

@@ -1,6 +1,6 @@
 import { AssertOutcome } from "../src/assert-outcome";
+import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { TestStatus } from "../src/frames/status-enums";
-import { StdLib } from "../src/standard-library/std-lib";
 import { System } from "../src/system";
 import { encodeCode } from "../src/web/web-helpers";
 

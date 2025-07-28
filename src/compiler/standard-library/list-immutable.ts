@@ -16,8 +16,8 @@ import {
   ElanT1,
   ElanT2,
   FunctionOptions,
-} from "../elan-type-annotations";
-import { System } from "../system";
+} from "../../elan-type-annotations";
+import { System } from "../../system";
 import {
   filterHelper,
   mapHelper,

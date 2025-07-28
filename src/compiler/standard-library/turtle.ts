@@ -9,8 +9,8 @@ import {
   elanProperty,
   FunctionOptions,
   ProcedureOptions,
-} from "../elan-type-annotations";
-import { System } from "../system";
+} from "../../elan-type-annotations";
+import { System } from "../../system";
 import { CircleVG } from "./circle-vg";
 import { GraphicsBase } from "./graphics-base";
 import { LineVG } from "./line-vg";

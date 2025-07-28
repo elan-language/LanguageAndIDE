@@ -1,6 +1,6 @@
-import { ElanRuntimeError } from "../elan-runtime-error";
-import { elanProcedure, ProcedureOptions } from "../elan-type-annotations";
-import { System } from "../system";
+import { ElanRuntimeError } from "../../elan-runtime-error";
+import { elanProcedure, ProcedureOptions } from "../../elan-type-annotations";
+import { System } from "../../system";
 
 export class TextFileWriter {
   // this must be implemented by hand on all stdlib classes

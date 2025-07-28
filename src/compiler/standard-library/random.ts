@@ -9,8 +9,8 @@ import {
   elanProcedure,
   ElanTuple,
   FunctionOptions,
-} from "../elan-type-annotations";
-import { System } from "../system";
+} from "../../elan-type-annotations";
+import { System } from "../../system";
 
 // Credit for source of algorithm: https://www.codeproject.com/Articles/25172/Simple-Random-Number-Generation
 @elanClass(ClassOption.record)

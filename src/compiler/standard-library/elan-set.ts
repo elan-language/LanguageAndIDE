@@ -10,8 +10,8 @@ import {
   ElanString,
   ElanT1,
   FunctionOptions,
-} from "../elan-type-annotations";
-import { System } from "../system";
+} from "../../elan-type-annotations";
+import { System } from "../../system";
 import { List } from "./list";
 import { ListImmutable } from "./list-immutable";
 

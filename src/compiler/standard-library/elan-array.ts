@@ -1,4 +1,4 @@
-import { ElanRuntimeError } from "../elan-runtime-error";
+import { ElanRuntimeError } from "../../elan-runtime-error";
 import {
   ClassOption,
   ElanClass,
@@ -11,8 +11,8 @@ import {
   elanProcedure,
   ElanT1,
   FunctionOptions,
-} from "../elan-type-annotations";
-import { System } from "../system";
+} from "../../elan-type-annotations";
+import { System } from "../../system";
 import { withPutHelper } from "./data-structure-helpers";
 
 @elanClass(ClassOption.array, [ElanT1], ["size", "initialValue"], [ElanInt, ElanT1], [], "Array")

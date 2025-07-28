@@ -1,8 +1,8 @@
 import { AssertOutcome } from "../assert-outcome";
+import { StdLib } from "../compiler/standard-library/std-lib";
+import { StdLibSymbols } from "../compiler/standard-library/std-lib-symbols";
 import { ElanFileError } from "../elan-file-error";
 import { elanVersion, isElanProduction } from "../environment";
-import { StdLib } from "../standard-library/std-lib";
-import { StdLibSymbols } from "../standard-library/std-lib-symbols";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSourceFromString } from "./code-source-from-string";
 import { CompileMode, RootAstNode } from "./compiler-interfaces/root-ast-node";

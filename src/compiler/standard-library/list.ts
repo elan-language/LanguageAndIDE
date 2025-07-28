@@ -18,8 +18,8 @@ import {
   ElanT2,
   ElanT2Constrained,
   FunctionOptions,
-} from "../elan-type-annotations";
-import { System } from "../system";
+} from "../../elan-type-annotations";
+import { System } from "../../system";
 import {
   filterHelper,
   mapHelper,

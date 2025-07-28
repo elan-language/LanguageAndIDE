@@ -1,4 +1,4 @@
-import { ElanRuntimeError } from "../elan-runtime-error";
+import { ElanRuntimeError } from "../../elan-runtime-error";
 import {
   ClassOption,
   ElanClass,
@@ -9,14 +9,14 @@ import {
   ElanT1,
   ElanTuple,
   FunctionOptions,
-} from "../elan-type-annotations";
-import { System } from "../system";
+} from "../../elan-type-annotations";
+import { System } from "../../system";
 
 @elanClass(ClassOption.record, [ElanT1])
-export class Stack<T1> {
+export class Queue<T1> {
   // this must be implemented by hand on all stdlib classes
   static emptyInstance() {
-    return new Stack();
+    return new Queue();
   }
 
   async _initialise() {
@@ -34,7 +34,7 @@ export class Stack<T1> {
   @elanFunction([], FunctionOptions.pure, ElanT1)
   peek(): T1 {
     if (this.contents.length === 0) {
-      throw new ElanRuntimeError(`Cannot peek an empty Stack - check using length()`);
+      throw new ElanRuntimeError(`Cannot peek an empty Queue - check using length()`);
     }
     return this.contents[0];
   }
@@ -44,22 +44,22 @@ export class Stack<T1> {
     return this.contents.length;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanClass(Stack))
-  push(@elanGenericParamT1Type() item: T1) {
+  @elanFunction([], FunctionOptions.pure, ElanClass(Queue))
+  enqueue(@elanGenericParamT1Type() item: T1) {
     const newContents = [...this.contents];
-    newContents.unshift(item);
-    return this.system!.initialise(new Stack(newContents));
+    newContents.push(item);
+    return this.system!.initialise(new Queue(newContents));
   }
 
-  @elanFunction([], FunctionOptions.impure, ElanTuple([ElanT1, ElanClass(Stack)]))
-  pop(): [typeof ElanT1, typeof Stack] {
+  @elanFunction([], FunctionOptions.impure, ElanTuple([ElanT1, ElanClass(Queue)]))
+  dequeue(): [typeof ElanT1, typeof Queue] {
     if (this.contents.length === 0) {
-      throw new ElanRuntimeError(`Cannot pop an empty Stack - check using length()`);
+      throw new ElanRuntimeError(`Cannot dequeue an empty Queue - check using length()`);
     }
     const newContents = [...this.contents];
     const item = newContents.shift();
-    const newStack = this.system!.initialise(new Stack(newContents));
-    return this.system!.tuple([item, newStack]) as [typeof ElanT1, typeof Stack];
+    const newQueue = this.system!.initialise(new Queue(newContents));
+    return this.system!.tuple([item, newQueue]) as [typeof ElanT1, typeof Queue];
   }
 
   async asString() {

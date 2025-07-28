@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AssertOutcome } from "./assert-outcome";
+import { Dictionary } from "./compiler/standard-library/dictionary";
+import { DictionaryImmutable } from "./compiler/standard-library/dictionary-immutable";
+import { ElanArray } from "./compiler/standard-library/elan-array";
+import { ElanSet } from "./compiler/standard-library/elan-set";
+import { List } from "./compiler/standard-library/list";
+import { ListImmutable } from "./compiler/standard-library/list-immutable";
 import { ElanInputOutput } from "./elan-input-output";
 import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
-import { Dictionary } from "./standard-library/dictionary";
-import { DictionaryImmutable } from "./standard-library/dictionary-immutable";
-import { ElanArray } from "./standard-library/elan-array";
-import { ElanSet } from "./standard-library/elan-set";
-import { List } from "./standard-library/list";
-import { ListImmutable } from "./standard-library/list-immutable";
 import { DebugSymbol, WebWorkerBreakpointMessage } from "./web/web-worker-messages";
 
 export class System {

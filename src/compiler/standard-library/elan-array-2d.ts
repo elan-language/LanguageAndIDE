@@ -1,4 +1,4 @@
-import { ElanRuntimeError } from "../elan-runtime-error";
+import { ElanRuntimeError } from "../../elan-runtime-error";
 import {
   ClassOption,
   ElanClass,
@@ -11,8 +11,8 @@ import {
   ElanT1,
   ElanTuple,
   FunctionOptions,
-} from "../elan-type-annotations";
-import { System } from "../system";
+} from "../../elan-type-annotations";
+import { System } from "../../system";
 
 @elanClass(
   ClassOption.array2D,

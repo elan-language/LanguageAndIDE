@@ -1,3 +1,5 @@
+import { List } from "../../src/compiler/standard-library/list";
+import { StdLibSymbols } from "../../src/compiler/standard-library/std-lib-symbols";
 import {
   ClassOption,
   elanClass,
@@ -9,8 +11,6 @@ import {
 import { Deprecation } from "../../src/elan-type-interfaces";
 import { DefaultProfile } from "../../src/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
-import { List } from "../../src/standard-library/list";
-import { StdLibSymbols } from "../../src/standard-library/std-lib-symbols";
 import {
   assertCompiles,
   assertDoesNotCompile,

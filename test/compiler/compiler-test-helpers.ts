@@ -1,18 +1,18 @@
 import assert from "assert";
 import { Done } from "mocha";
 import { AssertOutcome } from "../../src/assert-outcome";
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { elanVersion } from "../../src/environment";
 import { FileImpl } from "../../src/frames/file-impl";
+import { Field } from "../../src/frames/frame-interfaces/field";
+import { Frame } from "../../src/frames/frame-interfaces/frame";
+import { Transforms } from "../../src/frames/frame-interfaces/transforms";
 import { ParseStatus } from "../../src/frames/status-enums";
 import { transform, transformMany } from "../../src/frames/syntax-nodes/ast-visitor";
-import { StdLib } from "../../src/standard-library/std-lib";
 import { encodeCode } from "../../src/web/web-helpers";
 import { runTests } from "../runner";
 import { TestInputOutput } from "./test-input-output";
 import { getTestSystem } from "./test-system";
-import { Frame } from "../../src/frames/frame-interfaces/frame";
-import { Field } from "../../src/frames/frame-interfaces/field";
-import { Transforms } from "../../src/frames/frame-interfaces/transforms";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);

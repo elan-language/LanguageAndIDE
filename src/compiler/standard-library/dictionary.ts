@@ -11,8 +11,8 @@ import {
   elanGenericParamT1Type,
   elanGenericParamT2Type,
   elanProcedure,
-} from "../elan-type-annotations";
-import { System } from "../system";
+} from "../../elan-type-annotations";
+import { System } from "../../system";
 import { List } from "./list";
 
 @elanClass(ClassOption.dictionary, [ElanT1, ElanT2])

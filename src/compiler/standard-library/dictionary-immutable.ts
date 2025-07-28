@@ -10,8 +10,8 @@ import {
   ElanT1,
   ElanT2,
   FunctionOptions,
-} from "../elan-type-annotations";
-import { System } from "../system";
+} from "../../elan-type-annotations";
+import { System } from "../../system";
 import { ListImmutable } from "./list-immutable";
 
 @elanClass(ClassOption.dictionaryImmutable, [ElanT1, ElanT2])

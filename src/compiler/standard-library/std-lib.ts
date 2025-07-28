@@ -1,6 +1,6 @@
 import "reflect-metadata";
-import { ElanCompilerError } from "../elan-compiler-error";
-import { ElanRuntimeError } from "../elan-runtime-error";
+import { ElanCompilerError } from "../../elan-compiler-error";
+import { ElanRuntimeError } from "../../elan-runtime-error";
 import {
   ElanBoolean,
   ElanClass,
@@ -21,11 +21,11 @@ import {
   ElanTuple,
   FunctionOptions,
   ProcedureOptions,
-} from "../elan-type-annotations";
-import { Deprecation } from "../elan-type-interfaces";
-import { Regexes } from "../frames/fields/regexes";
-import { StubInputOutput } from "../stub-input-output";
-import { System } from "../system";
+} from "../../elan-type-annotations";
+import { Deprecation } from "../../elan-type-interfaces";
+import { Regexes } from "../../frames/fields/regexes";
+import { StubInputOutput } from "../../stub-input-output";
+import { System } from "../../system";
 import { CircleVG } from "./circle-vg";
 import { Dictionary } from "./dictionary";
 import { DictionaryImmutable } from "./dictionary-immutable";

@@ -7,8 +7,8 @@ import {
   elanProcedure,
   elanProperty,
   FunctionOptions,
-} from "../elan-type-annotations";
-import { System } from "../system";
+} from "../../elan-type-annotations";
+import { System } from "../../system";
 import { VectorGraphic } from "./vector-graphic";
 
 @elanClass(ClassOption.concrete, [], [], [], [ElanClass(VectorGraphic)])
