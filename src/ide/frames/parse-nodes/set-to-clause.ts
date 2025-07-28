@@ -1,4 +1,4 @@
-import { setKeyword, toKeyword } from "../keywords";
+import { setKeyword, toKeyword } from "../../../compiler/keywords";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { ExprNode } from "./expr-node";

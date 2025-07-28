@@ -1,9 +1,3 @@
-import { AbstractSelector } from "../abstract-selector";
-import { singleIndent } from "../frame-helpers";
-import { Frame } from "../frame-interfaces/frame";
-import { MemberFrame } from "../frame-interfaces/member-frame";
-import { Parent } from "../frame-interfaces/parent";
-import { ClassFrame } from "../globals/class-frame";
 import {
   abstractFunctionKeywords,
   abstractKeyword,
@@ -17,7 +11,13 @@ import {
   privatePropertyKeywords,
   procedureKeyword,
   propertyKeyword,
-} from "../keywords";
+} from "../../../compiler/keywords";
+import { AbstractSelector } from "../abstract-selector";
+import { singleIndent } from "../frame-helpers";
+import { Frame } from "../frame-interfaces/frame";
+import { MemberFrame } from "../frame-interfaces/member-frame";
+import { Parent } from "../frame-interfaces/parent";
+import { ClassFrame } from "../globals/class-frame";
 
 export class MemberSelector extends AbstractSelector implements MemberFrame {
   isMember: boolean = true;

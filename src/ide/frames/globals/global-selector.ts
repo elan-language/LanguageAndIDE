@@ -1,9 +1,3 @@
-import { AbstractSelector } from "../abstract-selector";
-import { isGlobal } from "../frame-helpers";
-import { File } from "../frame-interfaces/file";
-import { Frame } from "../frame-interfaces/frame";
-import { GlobalFrame } from "../frame-interfaces/global-frame";
-import { Parent } from "../frame-interfaces/parent";
 import {
   abstractKeyword,
   classKeyword,
@@ -17,7 +11,13 @@ import {
   procedureKeyword,
   recordKeyword,
   testKeyword,
-} from "../keywords";
+} from "../../../compiler/keywords";
+import { AbstractSelector } from "../abstract-selector";
+import { isGlobal } from "../frame-helpers";
+import { File } from "../frame-interfaces/file";
+import { Frame } from "../frame-interfaces/frame";
+import { GlobalFrame } from "../frame-interfaces/global-frame";
+import { Parent } from "../frame-interfaces/parent";
 import { ParseStatus } from "../status-enums";
 
 export class GlobalSelector extends AbstractSelector implements GlobalFrame {

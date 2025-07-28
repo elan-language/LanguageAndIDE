@@ -14,7 +14,6 @@ import {
 } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
-import { thisKeyword } from "../../../ide/frames/keywords";
 import { BreakpointEvent } from "../../../ide/frames/status-enums";
 import {
   getId,
@@ -25,6 +24,7 @@ import {
   mustNotBeCircularDependency,
 } from "../../compile-rules";
 import { Deprecated } from "../../compiler-interfaces/elan-type-interfaces";
+import { thisKeyword } from "../../keywords";
 import { isAstCollectionNode, isAstIdNode } from "../ast-helpers";
 import { AbstractPropertyAsn } from "../class-members/abstract-property-asn";
 import { PropertyAsn } from "../class-members/property-asn";

@@ -1,4 +1,5 @@
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
+import { asKeyword, privateKeyword, propertyKeyword } from "../../../compiler/keywords";
 import { ClassType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { IdentifierField } from "../fields/identifier-field";
@@ -8,7 +9,6 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
-import { asKeyword, privateKeyword, propertyKeyword } from "../keywords";
 
 export class Property extends AbstractFrame implements PossiblyPrivateMember {
   isMember = true;

@@ -1,18 +1,18 @@
-import { ElanRuntimeError } from "../../ide/elan-runtime-error";
 import { System } from "../../ide/system";
 import {
-  elanClass,
   ClassOption,
-  ElanT1,
-  ElanInt,
-  elanProcedure,
-  elanIntType,
-  elanGenericParamT1Type,
-  elanFunction,
-  FunctionOptions,
+  elanClass,
   ElanClass,
+  elanFunction,
+  elanGenericParamT1Type,
+  ElanInt,
+  elanIntType,
+  elanProcedure,
+  ElanT1,
   ElanTuple,
+  FunctionOptions,
 } from "../elan-type-annotations";
+import { ElanRuntimeError } from "./elan-runtime-error";
 
 @elanClass(
   ClassOption.array2D,

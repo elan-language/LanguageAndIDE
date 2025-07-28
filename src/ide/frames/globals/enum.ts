@@ -1,3 +1,4 @@
+import { enumKeyword } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { EnumValuesField } from "../fields/enum-values-field";
 import { TypeNameField } from "../fields/type-name-field";
@@ -6,7 +7,6 @@ import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
-import { enumKeyword } from "../keywords";
 
 export class Enum extends AbstractFrame implements GlobalFrame, Collapsible {
   isCollapsible: boolean = true;

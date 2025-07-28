@@ -1,8 +1,8 @@
+import { endKeyword, tryKeyword } from "../../../compiler/keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
-import { endKeyword, tryKeyword } from "../keywords";
 import { CatchStatement } from "./catch-statement";
 
 export class TryStatement extends FrameWithStatements {

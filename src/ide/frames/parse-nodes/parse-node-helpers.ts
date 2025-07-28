@@ -1,5 +1,11 @@
+import {
+  copyKeyword,
+  emptyKeyword,
+  ifKeyword,
+  lambdaKeyword,
+  newKeyword,
+} from "../../../compiler/keywords";
 import { ParseNode } from "../frame-interfaces/parse-node";
-import { copyKeyword, emptyKeyword, ifKeyword, lambdaKeyword, newKeyword } from "../keywords";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { FixedTextNode } from "./fixed-text-node";

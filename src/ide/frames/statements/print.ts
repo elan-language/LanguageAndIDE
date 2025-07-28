@@ -1,11 +1,11 @@
 import { AbstractFrame } from "../abstract-frame";
 
+import { printKeyword } from "../../../compiler/keywords";
 import { ExpressionField } from "../fields/expression-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
-import { printKeyword } from "../keywords";
 
 export class Print extends AbstractFrame implements Statement {
   isStatement = true;

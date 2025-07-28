@@ -1,9 +1,9 @@
+import { mainKeyword } from "../../../compiler/keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { FrameWithStatements } from "../frame-with-statements";
-import { mainKeyword } from "../keywords";
 
 export class MainFrame extends FrameWithStatements implements GlobalFrame {
   isMain = true;

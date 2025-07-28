@@ -17,15 +17,10 @@ import { GlobalSelector } from "../src/ide/frames/globals/global-selector";
 import { InterfaceFrame } from "../src/ide/frames/globals/interface-frame";
 import { MainFrame } from "../src/ide/frames/globals/main-frame";
 import { TestFrame } from "../src/ide/frames/globals/test-frame";
-import {
-  functionKeyword,
-  testKeyword,
-  assertKeyword,
-  letKeyword,
-} from "../src/ide/frames/keywords";
 import { IfStatement } from "../src/ide/frames/statements/if-statement";
 import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
 import { While } from "../src/ide/frames/statements/while";
+import { assertKeyword, functionKeyword, letKeyword, testKeyword } from "../src/compiler/keywords";
 
 export class TestProfileSPJ implements Profile {
   name: string = "SPJ";

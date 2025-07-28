@@ -10,13 +10,13 @@ import {
   isValueType,
   mostPreciseSymbol,
 } from "../../compiler/symbols/symbol-helpers";
-import { ElanCompilerError } from "../../ide/elan-compiler-error";
 import {
   mustBeBooleanTypes,
   mustBeCoercibleType,
   mustBeIntegerType,
   mustBeNumberTypes,
 } from "../compile-rules";
+import { ElanCompilerError } from "../elan-compiler-error";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { mapOperationSymbol } from "./ast-helpers";
 import { OperationSymbol } from "./operation-symbol";

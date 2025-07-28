@@ -1,3 +1,4 @@
+import { abstractProcedureKeywords } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamListField } from "../fields/param-list-field";
@@ -5,7 +6,6 @@ import { singleIndent } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
-import { abstractProcedureKeywords } from "../keywords";
 
 export class AbstractProcedure extends AbstractFrame {
   isAbstract = true;

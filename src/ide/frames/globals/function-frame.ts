@@ -1,3 +1,9 @@
+import {
+  endKeyword,
+  functionKeyword,
+  returnKeyword,
+  returnsKeyword,
+} from "../../../compiler/keywords";
 import { MethodNameField } from "../fields/method-name-field";
 import { ParamListField } from "../fields/param-list-field";
 import { TypeField } from "../fields/type-field";
@@ -8,7 +14,6 @@ import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
 import { Profile } from "../frame-interfaces/profile";
 import { FrameWithStatements } from "../frame-with-statements";
-import { endKeyword, functionKeyword, returnKeyword, returnsKeyword } from "../keywords";
 import { ReturnStatement } from "../statements/return-statement";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent {

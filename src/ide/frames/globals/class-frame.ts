@@ -1,4 +1,5 @@
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
+import { classKeyword } from "../../../compiler/keywords";
 import { ClassSubType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
@@ -22,7 +23,6 @@ import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
 import { Profile } from "../frame-interfaces/profile";
 import { StatementFactory } from "../frame-interfaces/statement-factory";
-import { classKeyword } from "../keywords";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,

@@ -1,9 +1,14 @@
+import {
+  endKeyword,
+  functionKeyword,
+  privateKeyword,
+  returnsKeyword,
+} from "../../../compiler/keywords";
 import { addPrivateToggleToContextMenu, singleIndent } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
 import { FunctionFrame } from "../globals/function-frame";
-import { endKeyword, functionKeyword, privateKeyword, returnsKeyword } from "../keywords";
 
 export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMember {
   isMember: boolean = true;

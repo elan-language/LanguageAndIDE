@@ -1,4 +1,3 @@
-import { Profile } from "./frame-interfaces/profile";
 import {
   abstractFunctionKeywords,
   abstractKeyword,
@@ -34,7 +33,8 @@ import {
   tryKeyword,
   variableKeyword,
   whileKeyword,
-} from "./keywords";
+} from "../../compiler/keywords";
+import { Profile } from "./frame-interfaces/profile";
 
 export class DefaultProfile implements Profile {
   name: string = "default_profile";

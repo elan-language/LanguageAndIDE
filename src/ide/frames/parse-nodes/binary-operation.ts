@@ -1,4 +1,11 @@
-import { andKeyword, divKeyword, isKeyword, isntKeyword, modKeyword, orKeyword } from "../keywords";
+import {
+  andKeyword,
+  divKeyword,
+  isKeyword,
+  isntKeyword,
+  modKeyword,
+  orKeyword,
+} from "../../../compiler/keywords";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion } from "../symbol-completion-helpers";
 import { DIVIDE, GT, LT, MINUS, MULT, PLUS, POWER } from "../symbols";

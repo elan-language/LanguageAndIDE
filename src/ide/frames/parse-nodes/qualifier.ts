@@ -1,4 +1,4 @@
-import { globalKeyword, libraryKeyword, propertyKeyword } from "../keywords";
+import { globalKeyword, libraryKeyword, propertyKeyword } from "../../../compiler/keywords";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { KeywordNode } from "./keyword-node";
 

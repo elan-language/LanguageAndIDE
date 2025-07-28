@@ -1,4 +1,4 @@
-import { asKeyword, outKeyword } from "../keywords";
+import { asKeyword, outKeyword } from "../../../compiler/keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierNode } from "./identifier-node";

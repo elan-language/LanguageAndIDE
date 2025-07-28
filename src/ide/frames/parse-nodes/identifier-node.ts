@@ -1,5 +1,5 @@
+import { allKeywords } from "../../../compiler/keywords";
 import { Regexes } from "../fields/regexes";
-import { allKeywords } from "../keywords";
 import { ParseStatus } from "../status-enums";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";

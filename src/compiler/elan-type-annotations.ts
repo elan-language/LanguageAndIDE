@@ -1,5 +1,3 @@
-import { ElanCompilerError } from "../ide/elan-compiler-error";
-import { constructorKeyword } from "../ide/frames/keywords";
 import { Class } from "./compiler-interfaces/class";
 import { ElanSymbol } from "./compiler-interfaces/elan-symbol";
 import {
@@ -18,6 +16,8 @@ import {
 import { Scope } from "./compiler-interfaces/scope";
 import { SymbolType } from "./compiler-interfaces/symbol-type";
 import { getTypeOptions, noTypeOptions, TypeOptions } from "./compiler-interfaces/type-options";
+import { ElanCompilerError } from "./elan-compiler-error";
+import { constructorKeyword } from "./keywords";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
 import {

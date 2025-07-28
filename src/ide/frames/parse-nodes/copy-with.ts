@@ -1,4 +1,4 @@
-import { copyKeyword } from "../keywords";
+import { copyKeyword } from "../../../compiler/keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierOrThis } from "./identiferOrThis";

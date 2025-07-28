@@ -1,8 +1,3 @@
-import { AbstractSelector } from "../abstract-selector";
-import { Frame } from "../frame-interfaces/frame";
-import { Parent } from "../frame-interfaces/parent";
-import { StatementFactory } from "../frame-interfaces/statement-factory";
-import { FrameWithStatements } from "../frame-with-statements";
 import {
   assertKeyword,
   callKeyword,
@@ -19,7 +14,12 @@ import {
   tryKeyword,
   variableKeyword,
   whileKeyword,
-} from "../keywords";
+} from "../../../compiler/keywords";
+import { AbstractSelector } from "../abstract-selector";
+import { Frame } from "../frame-interfaces/frame";
+import { Parent } from "../frame-interfaces/parent";
+import { StatementFactory } from "../frame-interfaces/statement-factory";
+import { FrameWithStatements } from "../frame-with-statements";
 
 export class StatementSelector extends AbstractSelector {
   isStatement = true;

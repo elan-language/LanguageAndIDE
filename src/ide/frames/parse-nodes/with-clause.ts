@@ -1,4 +1,4 @@
-import { withKeyword } from "../keywords";
+import { withKeyword } from "../../../compiler/keywords";
 import { KeywordCompletion } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";

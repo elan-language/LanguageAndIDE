@@ -1,4 +1,3 @@
-import { ElanRuntimeError } from "../../ide/elan-runtime-error";
 import { System } from "../../ide/system";
 import {
   ClassOption,
@@ -11,6 +10,7 @@ import {
   ElanTuple,
   FunctionOptions,
 } from "../elan-type-annotations";
+import { ElanRuntimeError } from "./elan-runtime-error";
 
 @elanClass(ClassOption.record, [ElanT1])
 export class Stack<T1> {

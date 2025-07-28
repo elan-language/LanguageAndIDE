@@ -1,5 +1,5 @@
+import { refKeyword, thisKeyword } from "../../../compiler/keywords";
 import { ParseNode } from "../frame-interfaces/parse-node";
-import { refKeyword, thisKeyword } from "../keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { allIdsAndMethods } from "./parse-node-helpers";

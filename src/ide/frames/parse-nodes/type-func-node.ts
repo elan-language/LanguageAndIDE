@@ -1,4 +1,4 @@
-import { ofKeyword } from "../keywords";
+import { ofKeyword } from "../../../compiler/keywords";
 import { TokenType } from "../symbol-completion-helpers";
 import { ARROW, GT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";

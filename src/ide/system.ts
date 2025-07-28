@@ -2,12 +2,12 @@
 import { Dictionary } from "../compiler/standard-library/dictionary";
 import { DictionaryImmutable } from "../compiler/standard-library/dictionary-immutable";
 import { ElanArray } from "../compiler/standard-library/elan-array";
+import { ElanRuntimeError } from "../compiler/standard-library/elan-runtime-error";
 import { ElanSet } from "../compiler/standard-library/elan-set";
 import { List } from "../compiler/standard-library/list";
 import { ListImmutable } from "../compiler/standard-library/list-immutable";
 import { AssertOutcome } from "./assert-outcome";
 import { ElanInputOutput } from "./elan-input-output";
-import { ElanRuntimeError } from "./elan-runtime-error";
 import { TestStatus } from "./frames/status-enums";
 import { DebugSymbol, WebWorkerBreakpointMessage } from "./web/web-worker-messages";
 

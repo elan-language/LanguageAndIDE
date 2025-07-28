@@ -1,3 +1,4 @@
+import { callKeyword } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcRefField } from "../fields/proc-ref-field";
@@ -5,7 +6,6 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
-import { callKeyword } from "../keywords";
 
 export class CallStatement extends AbstractFrame implements Statement {
   isStatement = true;

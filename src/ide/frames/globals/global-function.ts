@@ -1,6 +1,6 @@
+import { endKeyword, functionKeyword, returnsKeyword } from "../../../compiler/keywords";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { Parent } from "../frame-interfaces/parent";
-import { endKeyword, functionKeyword, returnsKeyword } from "../keywords";
 import { FunctionFrame } from "./function-frame";
 
 export class GlobalFunction extends FunctionFrame implements GlobalFrame {

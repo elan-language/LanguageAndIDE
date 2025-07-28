@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
 import { StdLib } from "../../compiler/standard-library/std-lib";
-import { ElanRuntimeError } from "../elan-runtime-error";
 import { isElanProduction } from "../environment";
 import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";

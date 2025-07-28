@@ -1,9 +1,9 @@
+import { privateKeyword } from "../../../compiler/keywords";
 import { addPrivateToggleToContextMenu, singleIndent } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
 import { ProcedureFrame } from "../globals/procedure-frame";
-import { privateKeyword } from "../keywords";
 
 export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMember {
   isMember: boolean = true;

@@ -1,4 +1,4 @@
-import { thisKeyword } from "../keywords";
+import { thisKeyword } from "../../../compiler/keywords";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { IdentifierNode } from "./identifier-node";
 import { KeywordNode } from "./keyword-node";

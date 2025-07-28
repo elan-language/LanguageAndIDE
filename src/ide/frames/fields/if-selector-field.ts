@@ -1,7 +1,7 @@
+import { ifKeyword } from "../../../compiler/keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
 import { ParseNode } from "../frame-interfaces/parse-node";
-import { ifKeyword } from "../keywords";
 import { KeywordNode } from "../parse-nodes/keyword-node";
 import { OptionalNode } from "../parse-nodes/optional-node";
 import { Else } from "../statements/else";

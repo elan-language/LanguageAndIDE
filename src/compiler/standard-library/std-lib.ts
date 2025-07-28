@@ -1,10 +1,9 @@
 import "reflect-metadata";
-import { ElanCompilerError } from "../../ide/elan-compiler-error";
-import { ElanRuntimeError } from "../../ide/elan-runtime-error";
 import { Regexes } from "../../ide/frames/fields/regexes";
 import { StubInputOutput } from "../../ide/stub-input-output";
 import { System } from "../../ide/system";
 import { Deprecation } from "../compiler-interfaces/elan-type-interfaces";
+import { ElanCompilerError } from "../elan-compiler-error";
 import {
   ElanBoolean,
   ElanClass,
@@ -31,6 +30,7 @@ import { Dictionary } from "./dictionary";
 import { DictionaryImmutable } from "./dictionary-immutable";
 import { ElanArray } from "./elan-array";
 import { ElanArray2D } from "./elan-array-2d";
+import { ElanRuntimeError } from "./elan-runtime-error";
 import { ElanSet } from "./elan-set";
 import { ImageVG } from "./image-vg";
 import { LineVG } from "./line-vg";

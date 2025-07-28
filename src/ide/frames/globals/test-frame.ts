@@ -1,3 +1,4 @@
+import { ignoreKeyword, testKeyword } from "../../../compiler/keywords";
 import { AssertOutcome } from "../../assert-outcome";
 import { CommentField } from "../fields/comment-field";
 import {
@@ -10,7 +11,6 @@ import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { FrameWithStatements } from "../frame-with-statements";
-import { ignoreKeyword, testKeyword } from "../keywords";
 import { AssertStatement } from "../statements/assert-statement";
 import { BreakpointStatus, DisplayColour, TestStatus } from "../status-enums";
 

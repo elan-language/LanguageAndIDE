@@ -1,4 +1,4 @@
-import { propertyKeyword } from "../keywords";
+import { propertyKeyword } from "../../../compiler/keywords";
 import { TokenType } from "../symbol-completion-helpers";
 import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";

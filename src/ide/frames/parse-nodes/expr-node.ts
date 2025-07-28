@@ -1,4 +1,3 @@
-import { ParseNode } from "../frame-interfaces/parse-node";
 import {
   copyKeyword,
   emptyKeyword,
@@ -10,7 +9,8 @@ import {
   refKeyword,
   thisKeyword,
   tupleKeyword,
-} from "../keywords";
+} from "../../../compiler/keywords";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BinaryExpression } from "./binary-expression";

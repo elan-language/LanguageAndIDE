@@ -1,4 +1,4 @@
-import { inheritsKeyword } from "../keywords";
+import { inheritsKeyword } from "../../../compiler/keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";

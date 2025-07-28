@@ -1,10 +1,10 @@
+import { catchKeyword, exceptionKeyword, inKeyword } from "../../../compiler/keywords";
 import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 import { FrameWithStatements } from "../frame-with-statements";
-import { catchKeyword, exceptionKeyword, inKeyword } from "../keywords";
 
 export class CatchStatement extends FrameWithStatements implements Statement {
   isStatement = true;

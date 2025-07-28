@@ -1,3 +1,4 @@
+import { eachKeyword } from "../../../compiler/keywords";
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -6,7 +7,6 @@ import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 import { FrameWithStatements } from "../frame-with-statements";
-import { eachKeyword } from "../keywords";
 
 export class Each extends FrameWithStatements implements Statement {
   isStatement = true;

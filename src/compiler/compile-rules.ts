@@ -3,8 +3,8 @@ import { ElanSymbol } from "../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../compiler/compiler-interfaces/symbol-type";
 import { isRecord } from "../compiler/compiler-interfaces/type-options";
-import { ElanCompilerError } from "../ide/elan-compiler-error";
-import { allKeywords, reservedWords } from "../ide/frames/keywords";
+import { ElanCompilerError } from "./elan-compiler-error";
+import { allKeywords, reservedWords } from "./keywords";
 
 import {
   CannotCallAFunction,

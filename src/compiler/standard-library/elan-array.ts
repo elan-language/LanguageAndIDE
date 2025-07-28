@@ -1,4 +1,3 @@
-import { ElanRuntimeError } from "../../ide/elan-runtime-error";
 import { System } from "../../ide/system";
 import {
   ClassOption,
@@ -14,6 +13,7 @@ import {
   FunctionOptions,
 } from "../elan-type-annotations";
 import { withPutHelper } from "./data-structure-helpers";
+import { ElanRuntimeError } from "./elan-runtime-error";
 
 @elanClass(ClassOption.array, [ElanT1], ["size", "initialValue"], [ElanInt, ElanT1], [], "Array")
 export class ElanArray<T1> {

@@ -1,3 +1,4 @@
+import { setKeyword, toKeyword } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";
@@ -5,7 +6,6 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
-import { setKeyword, toKeyword } from "../keywords";
 
 export class SetStatement extends AbstractFrame implements Statement {
   isStatement = true;

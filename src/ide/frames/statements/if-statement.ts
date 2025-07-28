@@ -1,3 +1,4 @@
+import { endKeyword, ifKeyword, thenKeyword } from "../../../compiler/keywords";
 import { CodeSourceFromString } from "../code-source-from-string";
 import { ExpressionField } from "../fields/expression-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -5,7 +6,6 @@ import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 import { FrameWithStatements } from "../frame-with-statements";
-import { endKeyword, ifKeyword, thenKeyword } from "../keywords";
 
 export class IfStatement extends FrameWithStatements implements Statement {
   isStatement = true;

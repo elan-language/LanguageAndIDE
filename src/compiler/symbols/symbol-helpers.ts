@@ -1,9 +1,7 @@
-import { ElanCompilerError } from "../../ide/elan-compiler-error";
-import { libraryKeyword, globalKeyword, propertyKeyword } from "../../ide/frames/keywords";
 import {
+  KeywordCompletion,
   SymbolCompletionSpec,
   TokenType,
-  KeywordCompletion,
 } from "../../ide/frames/symbol-completion-helpers";
 import { CompileError } from "../compile-error";
 import { AstNode } from "../compiler-interfaces/ast-node";
@@ -18,6 +16,8 @@ import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { isRecord } from "../compiler-interfaces/type-options";
+import { ElanCompilerError } from "../elan-compiler-error";
+import { globalKeyword, libraryKeyword, propertyKeyword } from "../keywords";
 import { isAstIdNode, isAstQualifiedNode, isEmptyNode } from "../syntax-nodes/ast-helpers";
 import { PropertyAsn } from "../syntax-nodes/class-members/property-asn";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";

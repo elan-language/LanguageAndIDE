@@ -1,4 +1,4 @@
-import { andKeyword, isKeyword, notKeyword, orKeyword } from "../keywords";
+import { andKeyword, isKeyword, notKeyword, orKeyword } from "../../../compiler/keywords";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion } from "../symbol-completion-helpers";
 import { FixedTextNode } from "./fixed-text-node";

@@ -1,4 +1,4 @@
-import { imageKeyword } from "../keywords";
+import { imageKeyword } from "../../../compiler/keywords";
 import { AbstractSequence } from "./abstract-sequence";
 import { KeywordNode } from "./keyword-node";
 import { OptionalNode } from "./optional-node";

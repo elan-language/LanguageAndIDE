@@ -1,13 +1,13 @@
-import { notKeyword } from "../keywords";
+import { notKeyword } from "../../../compiler/keywords";
+import { MINUS } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { KeywordNode } from "./keyword-node";
-import { PunctuationNode } from "./punctuation-node";
-import { Term } from "./term";
 import { Space } from "./parse-node-helpers";
+import { PunctuationNode } from "./punctuation-node";
 import { Sequence } from "./sequence";
 import { SpaceNode } from "./space-node";
-import { MINUS } from "../symbols";
+import { Term } from "./term";
 
 export class UnaryExpression extends AbstractSequence {
   unaryOp: Alternatives | undefined;

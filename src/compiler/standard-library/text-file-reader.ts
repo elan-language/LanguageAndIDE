@@ -1,12 +1,12 @@
-import { ElanRuntimeError } from "../../ide/elan-runtime-error";
 import { System } from "../../ide/system";
 import {
-  elanFunction,
-  FunctionOptions,
-  ElanString,
-  elanProcedure,
   ElanBoolean,
+  elanFunction,
+  elanProcedure,
+  ElanString,
+  FunctionOptions,
 } from "../elan-type-annotations";
+import { ElanRuntimeError } from "./elan-runtime-error";
 
 export class TextFileReader {
   // this must be implemented by hand on all stdlib classes

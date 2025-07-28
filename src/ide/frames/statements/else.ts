@@ -1,3 +1,4 @@
+import { elseKeyword, thenKeyword } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { CodeSourceFromString } from "../code-source-from-string";
 import { ExpressionField } from "../fields/expression-field";
@@ -6,7 +7,6 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
-import { elseKeyword, thenKeyword } from "../keywords";
 
 export class Else extends AbstractFrame implements Statement {
   isStatement: boolean = true;

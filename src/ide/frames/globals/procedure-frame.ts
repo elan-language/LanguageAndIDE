@@ -1,3 +1,4 @@
+import { procedureKeyword } from "../../../compiler/keywords";
 import { MethodNameField } from "../fields/method-name-field";
 import { ParamListField } from "../fields/param-list-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -5,7 +6,6 @@ import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
-import { procedureKeyword } from "../keywords";
 
 export abstract class ProcedureFrame extends FrameWithStatements {
   public name: MethodNameField;

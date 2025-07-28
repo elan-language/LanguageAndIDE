@@ -1,5 +1,6 @@
+import { abstractKeyword } from "../src/compiler/keywords";
 import { Regexes } from "../src/ide/frames/fields/regexes";
-import { abstractKeyword } from "../src/ide/frames/keywords";
+
 import { AbstractSequence } from "../src/ide/frames/parse-nodes/abstract-sequence";
 import { Alternatives } from "../src/ide/frames/parse-nodes/alternatives";
 import { BinaryExpression } from "../src/ide/frames/parse-nodes/binary-expression";

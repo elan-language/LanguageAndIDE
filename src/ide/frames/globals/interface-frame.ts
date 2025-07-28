@@ -1,6 +1,6 @@
+import { abstractClassKeywords, endKeyword, interfaceKeyword } from "../../../compiler/keywords";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
-import { abstractClassKeywords, endKeyword, interfaceKeyword } from "../keywords";
 import {
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,

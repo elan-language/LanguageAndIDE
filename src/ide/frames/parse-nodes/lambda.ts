@@ -1,4 +1,4 @@
-import { lambdaKeyword } from "../keywords";
+import { lambdaKeyword } from "../../../compiler/keywords";
 import { KeywordCompletion } from "../symbol-completion-helpers";
 import { ARROW } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";

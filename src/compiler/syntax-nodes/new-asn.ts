@@ -4,13 +4,13 @@ import { ClassSubType, ClassType } from "../../compiler/symbols/class-type";
 import { ProcedureType } from "../../compiler/symbols/procedure-type";
 import { getGlobalScope, parameterNamesWithTypes } from "../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../compiler/symbols/symbol-scope";
-import { constructorKeyword } from "../../ide/frames/keywords";
 import {
   mustBeConcreteClass,
   mustBeKnownSymbolType,
   mustBeNewable,
   mustMatchParameters,
 } from "../compile-rules";
+import { constructorKeyword } from "../keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { TypeAsn } from "./type-asn";
 

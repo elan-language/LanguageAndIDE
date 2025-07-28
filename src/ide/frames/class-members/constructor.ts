@@ -1,9 +1,9 @@
+import { constructorKeyword } from "../../../compiler/keywords";
 import { ParamListField } from "../fields/param-list-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
-import { constructorKeyword } from "../keywords";
 
 export class Constructor extends FrameWithStatements {
   isConstructor = true;

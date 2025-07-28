@@ -1,4 +1,4 @@
-import { elseKeyword, ifKeyword, thenKeyword } from "../keywords";
+import { elseKeyword, ifKeyword, thenKeyword } from "../../../compiler/keywords";
 import { KeywordCompletion } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { ExprNode } from "./expr-node";

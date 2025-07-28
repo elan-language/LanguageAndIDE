@@ -1,10 +1,10 @@
+import { commentMarker } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { CommentField } from "../fields/comment-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
-import { commentMarker } from "../keywords";
 
 export class CommentStatement extends AbstractFrame implements Statement {
   isStatement = true;

@@ -1,3 +1,4 @@
+import { assertKeyword } from "../../../compiler/keywords";
 import { AssertOutcome } from "../../assert-outcome";
 import { AbstractFrame } from "../abstract-frame";
 import { AssertActualField } from "../fields/assert-actual-field";
@@ -7,7 +8,6 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
-import { assertKeyword } from "../keywords";
 import { CompileStatus, DisplayColour, TestStatus } from "../status-enums";
 
 export class AssertStatement extends AbstractFrame implements Statement {

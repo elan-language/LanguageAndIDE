@@ -1,6 +1,6 @@
+import { endKeyword, recordKeyword } from "../../../compiler/keywords";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
-import { endKeyword, recordKeyword } from "../keywords";
 import {
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,

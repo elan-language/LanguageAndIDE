@@ -1,4 +1,5 @@
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
+import { propertyKeyword } from "../../../compiler/keywords";
 import {
   getFilteredSymbols,
   removeIfSingleFullMatch,
@@ -18,7 +19,6 @@ import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { Selectable } from "../frame-interfaces/selectable";
-import { propertyKeyword } from "../keywords";
 import { Overtyper } from "../overtyper";
 import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
 import { KeywordCompletion, SymbolCompletionSpec } from "../symbol-completion-helpers";

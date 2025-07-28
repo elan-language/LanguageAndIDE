@@ -5,7 +5,6 @@ import { AstQualifierNode } from "../../compiler/compiler-interfaces/ast-qualifi
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { FuncName, ImageName, TupleName } from "../../compiler/symbols/elan-type-names";
 import { EnumType } from "../../compiler/symbols/enum-type";
-import { ElanCompilerError } from "../../ide/elan-compiler-error";
 import { AbstractFunction } from "../../ide/frames/class-members/abstract-function";
 import { AbstractProcedure } from "../../ide/frames/class-members/abstract-procedure";
 import { AbstractProperty } from "../../ide/frames/class-members/abstract-property";
@@ -32,12 +31,6 @@ import { InterfaceFrame } from "../../ide/frames/globals/interface-frame";
 import { MainFrame } from "../../ide/frames/globals/main-frame";
 import { RecordFrame } from "../../ide/frames/globals/record-frame";
 import { TestFrame } from "../../ide/frames/globals/test-frame";
-import {
-  libraryKeyword,
-  globalKeyword,
-  propertyKeyword,
-  thisKeyword,
-} from "../../ide/frames/keywords";
 import { Index } from "../../ide/frames/parse-nodes";
 import { AbstractAlternatives } from "../../ide/frames/parse-nodes/abstract-alternatives";
 import { ArgListNode } from "../../ide/frames/parse-nodes/arg-list-node";
@@ -116,6 +109,8 @@ import { TryStatement } from "../../ide/frames/statements/try";
 import { VariableStatement } from "../../ide/frames/statements/variable-statement";
 import { While } from "../../ide/frames/statements/while";
 import { ParseStatus } from "../../ide/frames/status-enums";
+import { ElanCompilerError } from "../elan-compiler-error";
+import { globalKeyword, libraryKeyword, propertyKeyword, thisKeyword } from "../keywords";
 import { isAstIdNode, mapOperation } from "./ast-helpers";
 import { BinaryExprAsn } from "./binary-expr-asn";
 import { BracketedAsn } from "./bracketed-asn";

@@ -1,5 +1,5 @@
-import { ElanRuntimeError } from "../../ide/elan-runtime-error";
 import { System } from "../../ide/system";
+import { ElanRuntimeError } from "./elan-runtime-error";
 
 function checkIndex<T>(contents: T[], index: number) {
   const size = contents.length;
