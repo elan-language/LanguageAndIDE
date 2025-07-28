@@ -21,6 +21,8 @@ import { IfStatement } from "../src/ide/frames/statements/if-statement";
 import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
 import { While } from "../src/ide/frames/statements/while";
 import { assertKeyword, functionKeyword, letKeyword, testKeyword } from "../src/compiler/keywords";
+import { StdLib } from "../src/compiler/standard-library/std-lib";
+import { StubInputOutput } from "../src/ide/stub-input-output";
 
 export class TestProfileSPJ implements Profile {
   name: string = "SPJ";
@@ -74,7 +76,13 @@ suite("Selector tests", () => {
   });
 
   test("Selection Filtering - globals", () => {
-    const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    const f = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+    );
     const g = new GlobalSelector(f);
     let help = g.getCompletion();
     assert.equal(
@@ -91,7 +99,13 @@ suite("Selector tests", () => {
   });
 
   test("Selection Filtering - members", () => {
-    const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    const f = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+    );
     const c = new ConcreteClass(f);
     const s = new MemberSelector(c);
     let help = s.getCompletion();
@@ -119,7 +133,13 @@ suite("Selector tests", () => {
   });
 
   test("Selection Filtering - abstract class", () => {
-    const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    const f = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+    );
     const c = new AbstractClass(f);
     const s = new MemberSelector(c);
     assert.equal(s.getCompletion(), " property procedure function abstract...   private...   #");
@@ -141,7 +161,13 @@ suite("Selector tests", () => {
   });
 
   test("Selection Filtering - interface", () => {
-    const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    const f = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+    );
     const c = new InterfaceFrame(f);
     const s = new MemberSelector(c);
     assert.equal(s.getCompletion(), " abstract...   #");
@@ -151,7 +177,13 @@ suite("Selector tests", () => {
   });
 
   test("Selection Filtering - statements", () => {
-    const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    const f = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+    );
     const m = new MainFrame(f);
     const s = new StatementSelector(m);
     let help = s.getCompletion();
@@ -166,7 +198,13 @@ suite("Selector tests", () => {
   });
 
   test("Selection Context - in a Function", () => {
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+    );
     const func = new GlobalFunction(fl);
     const s = new StatementSelector(func);
     const help = s.getCompletion();
@@ -174,7 +212,13 @@ suite("Selector tests", () => {
   });
 
   test("Selection Context - in a Procedure", () => {
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+    );
     const proc = new GlobalProcedure(fl);
     const s = new StatementSelector(proc);
     const help = s.getCompletion();
@@ -182,7 +226,13 @@ suite("Selector tests", () => {
   });
 
   test("Selection Context - in a Test", () => {
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+    );
     const test = new TestFrame(fl);
     const s = new StatementSelector(test);
     const help = s.getCompletion();
@@ -190,7 +240,13 @@ suite("Selector tests", () => {
   });
 
   test("Selection Context - deeper nesting 1", () => {
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+    );
     const func = new GlobalFunction(fl);
     const if1 = new IfStatement(func);
     const wh = new While(if1);
@@ -200,7 +256,13 @@ suite("Selector tests", () => {
   });
 
   test("Selection Context - deeper nesting 2", () => {
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+    );
     const c = new ConcreteClass(fl);
     const fm = new FunctionMethod(c);
     const if1 = new IfStatement(fm);
@@ -209,7 +271,13 @@ suite("Selector tests", () => {
     assert.equal(help, " each else for if let repeat set throw try variable while #"); //else, but no print, call
   });
   test("Selection Context - in an IfThen", () => {
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+    );
     const m = new MainFrame(fl);
     const ifThen = new IfStatement(m);
     const s = new StatementSelector(ifThen);
@@ -217,7 +285,13 @@ suite("Selector tests", () => {
     assert.equal(help, " call each else for if let print repeat set throw try variable while #");
   });
   test("Selection Context - selector prevents more than one main", () => {
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+    );
     let gs = new GlobalSelector(fl);
     let help = gs.getCompletion();
     assert.equal(
@@ -232,7 +306,13 @@ suite("Selector tests", () => {
   });
 
   test("#377 - Global select filtered by profile", () => {
-    const f = new FileImpl(hash, new TestProfileSPJ(), "", transforms());
+    const f = new FileImpl(
+      hash,
+      new TestProfileSPJ(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+    );
     const gs = f.getFirstSelectorAsDirectChild();
     const help = gs.getCompletion();
     assert.equal(help, " function test");
@@ -240,7 +320,13 @@ suite("Selector tests", () => {
     assert.equal(filtered.length, 1);
   });
   test("#535 - Selector should not respond to Enter", () => {
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms());
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+    );
     const gs = new GlobalSelector(fl);
     gs.select(true, false);
     assert.equal(fl.getChildren().length, 1);

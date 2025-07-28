@@ -1,6 +1,5 @@
 import assert from "assert";
 
-import { testHeader, transforms } from "./compiler/compiler-test-helpers";
 import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
 import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
@@ -14,6 +13,9 @@ import { SetStatement } from "../src/ide/frames/statements/set-statement";
 import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
 import { Throw } from "../src/ide/frames/statements/throw";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
+import { testHeader, transforms } from "./compiler/compiler-test-helpers";
+import { StdLib } from "../src/compiler/standard-library/std-lib";
+import { StubInputOutput } from "../src/ide/stub-input-output";
 
 function hash() {
   return Promise.resolve("FFFF");
@@ -23,7 +25,14 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - set statement", () => {
     const code = "  set fooBar to 3.141";
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     const m = new MainFrame(fl);
     const setTo = new SetStatement(m);
     setTo.parseFrom(source);
@@ -34,7 +43,14 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - set statement 2", () => {
     const code = "  set tot to tot";
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     const m = new MainFrame(fl);
     const setTo = new SetStatement(m);
     setTo.parseFrom(source);
@@ -44,7 +60,14 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - set statement 3", () => {
     const code = "  set result to 3 + 4";
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     const m = new MainFrame(fl);
     const setTo = new SetStatement(m);
     setTo.parseFrom(source);
@@ -55,7 +78,14 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - let statement 1", () => {
     const code = "  let result be 3 + 4";
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     const m = new MainFrame(fl);
     const setTo = new LetStatement(m);
     setTo.parseFrom(source);
@@ -66,7 +96,14 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - let statement 2", () => {
     const code = "  let attemptAfterGreens, targetAfterGreens be evaluateGreens(attempt, target)";
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     const m = new MainFrame(fl);
     const setTo = new LetStatement(m);
     setTo.parseFrom(source);
@@ -77,7 +114,14 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - assert statement 3", () => {
     const code = "  assert foo is 7";
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     const t = new TestFrame(fl);
     const ass = new AssertStatement(t);
     ass.parseFrom(source);
@@ -88,7 +132,14 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - variable", () => {
     const code = "  variable fooBar set to 3.141";
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     const m = new MainFrame(fl);
     const v = new VariableStatement(m);
     v.parseFrom(source);
@@ -99,7 +150,14 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - print", () => {
     const code = `  print "Hello World!"`;
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     const m = new MainFrame(fl);
     const p = new Print(m);
     p.parseFrom(source);
@@ -109,7 +167,14 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - throw", () => {
     const code = `  throw exception "Failure"`;
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     const m = new MainFrame(fl);
     const setTo = new Throw(m);
     setTo.parseFrom(source);
@@ -119,7 +184,14 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - throw with variable", () => {
     const code = `  throw exception message1`;
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     const m = new MainFrame(fl);
     const setTo = new Throw(m);
     setTo.parseFrom(source);
@@ -129,7 +201,14 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - call", () => {
     const code = `  call foo()`;
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     const m = new MainFrame(fl);
     const setTo = new CallStatement(m);
     setTo.parseFrom(source);
@@ -139,7 +218,14 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - call with args", () => {
     const code = `  call foo(3, a, "hello")`;
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     const m = new MainFrame(fl);
     const setTo = new CallStatement(m);
     setTo.parseFrom(source);
@@ -149,7 +235,14 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - StatementSelector", () => {
     const code = "set fooBar to 3.141";
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     const m = new MainFrame(fl);
     const ss = new StatementSelector(m);
     ss.parseFrom(source);
@@ -161,7 +254,14 @@ suite("Parsing Frame Tests", async () => {
 
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -173,7 +273,14 @@ suite("Parsing Frame Tests", async () => {
 constant pi set to 3.142
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -187,7 +294,14 @@ constant pi set to 3.142
 constant e set to 2.718
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -201,7 +315,14 @@ main
 end main
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -217,7 +338,14 @@ main
 end main
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     if (fl.parseError) {
       throw new Error(fl.parseError);
@@ -238,7 +366,14 @@ main
 end main
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -264,7 +399,14 @@ end function
 enum Fruit apple, orange, pear
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -291,7 +433,14 @@ class Player inherits Foo, Bar
 end class
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -306,7 +455,14 @@ record Foo
 end record
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -327,7 +483,14 @@ abstract class Foo
 end class
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -344,7 +507,14 @@ main
 end main
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -359,7 +529,14 @@ abstract class Card
 end class
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     assert.equal(source.getRemainingCode(), "");
   });
@@ -375,7 +552,14 @@ abstract class Card
 end class
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     assert.equal(source.getRemainingCode(), "");
   });
@@ -390,7 +574,14 @@ record Card
 end record
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     assert.equal(source.getRemainingCode(), "");
   });
@@ -408,7 +599,14 @@ record Card
 end record
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     assert.equal(source.getRemainingCode(), "");
   });
@@ -424,7 +622,14 @@ record Card
 end record
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     assert.equal(fl.parseError!.includes(`0 matches found at procedure foo()`), true);
   });
@@ -440,7 +645,14 @@ abstract class Card
  end class
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     assert.equal(fl.parseError!.includes(`0 matches found at constructor()`), true);
   });
@@ -452,7 +664,14 @@ ignore test bar
 end test
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -469,7 +688,14 @@ test bar
 end test
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -486,7 +712,14 @@ ignore test bar
 end test
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -504,7 +737,14 @@ class Foo
 end class
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));

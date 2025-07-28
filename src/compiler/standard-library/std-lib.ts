@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { Regexes } from "../../ide/frames/fields/regexes";
-import { StubInputOutput } from "../../ide/stub-input-output";
+import { ElanInputOutput } from "../compiler-interfaces/elan-input-output";
 import { Deprecation } from "../compiler-interfaces/elan-type-interfaces";
 import { ElanCompilerError } from "../elan-compiler-error";
 import {
@@ -46,8 +46,8 @@ import { Turtle } from "./turtle";
 import { VectorGraphic } from "./vector-graphic";
 
 export class StdLib {
-  constructor() {
-    this.system = new System(new StubInputOutput());
+  constructor(io: ElanInputOutput) {
+    this.system = new System(io);
   }
 
   system: System;

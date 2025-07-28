@@ -30,6 +30,7 @@ import { TokenType } from "../src/ide/frames/symbol-completion-helpers";
 import { DebugSymbol } from "../src/compiler/compiler-interfaces/debug-symbol";
 import { TestStatus } from "../src/compiler/test-status";
 import { BreakpointStatus } from "../src/compiler/debugging/breakpoint-status";
+import { StubInputOutput } from "../src/ide/stub-input-output";
 
 
 // flag to update test file
@@ -131,7 +132,7 @@ export function getElanFiles(sourceDir: string): string[] {
 export async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
   const source = loadFileAsSourceNew(sourceFile);
   const codeSource = new CodeSourceFromString(source);
-  const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+  const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()), true);
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
@@ -475,7 +476,7 @@ export function testNodeParse(
 }
 
 export function testExtractContextForExpression(text: string, context: string) {
-  const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
+  const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())));
   const v = new VariableStatement(main);
   const expr = v.expr;
   expr.setFieldToKnownValidText(text);
@@ -532,7 +533,7 @@ export const unknownType = UnknownType.Instance;
 
 export async function createTestRunner() {
   const system = getTestSystem("");
-  const stdlib = new StdLib();
+  const stdlib = new StdLib(new StubInputOutput());
   stdlib.system = system;
   system.stdlib = stdlib;
   return await getTestRunner(system, stdlib);

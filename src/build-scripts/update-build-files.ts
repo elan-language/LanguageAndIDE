@@ -4,11 +4,20 @@ import { transforms } from "../compiler/syntax-nodes/ast-helpers";
 import { DefaultProfile } from "../ide/frames/default-profile";
 import { FileImpl } from "../ide/frames/file-impl";
 import { hash } from "../ide/util";
+import { StdLib } from "../compiler/standard-library/std-lib";
+import { StubInputOutput } from "../ide/stub-input-output";
 
 function updateVersion() {
   const rootdir = `${__dirname}/../../..`;
 
-  const file = new FileImpl(hash, new DefaultProfile(), "guest", transforms(), true);
+  const file = new FileImpl(
+    hash,
+    new DefaultProfile(),
+    "guest",
+    transforms(),
+    new StdLib(new StubInputOutput()),
+    true,
+  );
   file.setVersion(elanVersion.major, elanVersion.minor, elanVersion.patch, elanVersion.preRelease);
 
   const semver = file.getSemverString();

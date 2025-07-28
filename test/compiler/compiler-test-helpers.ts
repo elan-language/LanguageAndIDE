@@ -13,6 +13,7 @@ import { encodeCode } from "../../src/ide/web/web-helpers";
 import { runTests } from "../runner";
 import { TestInputOutput } from "./test-input-output";
 import { getTestSystem } from "./test-system";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);
@@ -91,7 +92,7 @@ function executeCode(file: FileImpl, input?: string) {
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
 
   const system = getTestSystem(input ?? "");
-  const stdlib = new StdLib();
+  const stdlib = new StdLib(new StubInputOutput());
   stdlib.system = system;
   system.stdlib = stdlib;
 
@@ -112,7 +113,7 @@ export async function executeTestCode(file: FileImpl, input?: string) {
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
 
   const system = getTestSystem(input ?? "");
-  const stdlib = new StdLib();
+  const stdlib = new StdLib(new StubInputOutput());
   stdlib.system = system;
   system.stdlib = stdlib;
 

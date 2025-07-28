@@ -101,9 +101,10 @@ export class FileImpl implements File {
     private readonly profile: Profile,
     private userName: string | undefined,
     private readonly transform: Transforms,
+    stdLib: StdLib,
     allowAnyHeader?: boolean,
   ) {
-    this._stdLibSymbols = new StdLibSymbols(new StdLib());
+    this._stdLibSymbols = new StdLibSymbols(stdLib);
     this._map = new Map<string, Selectable>();
     this._factory = new StatementFactoryImpl();
     const selector = new GlobalSelector(this);
