@@ -1,10 +1,10 @@
 import { thisKeyword } from "../../ide/frames/keywords";
 import { Class } from "../compiler-interfaces/class";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { Deprecated } from "../compiler-interfaces/elan-type-interfaces";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { TypeOptions } from "../compiler-interfaces/type-options";
-import { Deprecated } from "../elan-type-interfaces";
 import { generateType } from "../syntax-nodes/ast-helpers";
 import { ClassSubType, ClassType } from "./class-type";
 import { DuplicateSymbol } from "./duplicate-symbol";

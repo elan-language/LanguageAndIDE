@@ -1,4 +1,4 @@
-import { Deprecation } from "./elan-type-interfaces";
+import { Deprecation } from "./compiler-interfaces/elan-type-interfaces";
 
 export enum DisplayPriority {
   first,

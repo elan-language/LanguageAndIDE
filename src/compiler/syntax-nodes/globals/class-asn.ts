@@ -24,7 +24,7 @@ import {
   mustBeUniqueNameInScope,
   mustNotBeCircularDependency,
 } from "../../compile-rules";
-import { Deprecated } from "../../elan-type-interfaces";
+import { Deprecated } from "../../compiler-interfaces/elan-type-interfaces";
 import { isAstCollectionNode, isAstIdNode } from "../ast-helpers";
 import { AbstractPropertyAsn } from "../class-members/abstract-property-asn";
 import { PropertyAsn } from "../class-members/property-asn";

@@ -1,15 +1,15 @@
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
-import { Scope } from "../compiler-interfaces/scope";
-import { SymbolType } from "../compiler-interfaces/symbol-type";
-import { getSymbol, getConstantSymbol } from "../elan-type-annotations";
 import {
-  elanMetadataKey,
   ElanDescriptor,
+  elanMetadataKey,
+  isClassDescriptor,
+  isConstantDescriptor,
   isFunctionDescriptor,
   isProcedureDescriptor,
-  isConstantDescriptor,
-  isClassDescriptor,
-} from "../elan-type-interfaces";
+} from "../compiler-interfaces/elan-type-interfaces";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
+import { getConstantSymbol, getSymbol } from "../elan-type-annotations";
 import { NullScope } from "../symbols/null-scope";
 import { symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";

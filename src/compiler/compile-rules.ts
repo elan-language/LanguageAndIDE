@@ -48,7 +48,7 @@ import {
   UndefinedSymbolCompileError,
   UnknownCompilerDirectiveCompileError,
 } from "./compile-error";
-import { Deprecation } from "./elan-type-interfaces";
+import { Deprecation } from "./compiler-interfaces/elan-type-interfaces";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
 import { DeconstructedListType } from "./symbols/deconstructed-list-type";

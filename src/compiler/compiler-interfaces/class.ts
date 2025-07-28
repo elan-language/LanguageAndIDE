@@ -1,6 +1,6 @@
-import { Deprecated } from "../elan-type-interfaces";
 import { ClassSymbol } from "./class-symbol";
 import { ElanSymbol } from "./elan-symbol";
+import { Deprecated } from "./elan-type-interfaces";
 import { Scope } from "./scope";
 import { SymbolType } from "./symbol-type";
 

@@ -1,4 +1,7 @@
 import { ElanCompilerError } from "../ide/elan-compiler-error";
+import { constructorKeyword } from "../ide/frames/keywords";
+import { Class } from "./compiler-interfaces/class";
+import { ElanSymbol } from "./compiler-interfaces/elan-symbol";
 import {
   Deprecated,
   Deprecation,
@@ -11,24 +14,21 @@ import {
   isFunctionDescriptor,
   isProcedureDescriptor,
   TypeDescriptor,
-} from "./elan-type-interfaces";
-import { constructorKeyword } from "../ide/frames/keywords";
-import { Class } from "./compiler-interfaces/class";
-import { ElanSymbol } from "./compiler-interfaces/elan-symbol";
+} from "./compiler-interfaces/elan-type-interfaces";
 import { Scope } from "./compiler-interfaces/scope";
 import { SymbolType } from "./compiler-interfaces/symbol-type";
-import { TypeOptions, noTypeOptions, getTypeOptions } from "./compiler-interfaces/type-options";
+import { getTypeOptions, noTypeOptions, TypeOptions } from "./compiler-interfaces/type-options";
 import { BooleanType } from "./symbols/boolean-type";
-import { ClassType, ClassSubType } from "./symbols/class-type";
+import { ClassSubType, ClassType } from "./symbols/class-type";
 import {
-  FloatName,
-  StringName,
-  IntName,
   BooleanName,
-  RegExpName,
-  FuncName,
-  TupleName,
   ClassName,
+  FloatName,
+  FuncName,
+  IntName,
+  RegExpName,
+  StringName,
+  TupleName,
 } from "./symbols/elan-type-names";
 import { FloatType } from "./symbols/float-type";
 import { FunctionType } from "./symbols/function-type";

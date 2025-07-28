@@ -1,12 +1,12 @@
+import { Deprecation } from "../../src/compiler/compiler-interfaces/elan-type-interfaces";
 import {
-  elanClass,
   ClassOption,
+  elanClass,
+  elanClassExport,
   elanDeprecated,
   elanFunction,
   elanProcedure,
-  elanClassExport,
 } from "../../src/compiler/elan-type-annotations";
-import { Deprecation } from "../../src/compiler/elan-type-interfaces";
 import { List } from "../../src/compiler/standard-library/list";
 import { StdLibSymbols } from "../../src/compiler/standard-library/std-lib-symbols";
 import { DefaultProfile } from "../../src/ide/frames/default-profile";

@@ -4,7 +4,7 @@ import { noTypeOptions } from "../../../compiler/compiler-interfaces/type-option
 import { ClassSubType, ClassType } from "../../../compiler/symbols/class-type";
 import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { getId, mustBeInterfaceClass, mustBeKnownSymbolType } from "../../compile-rules";
-import { Deprecated } from "../../elan-type-interfaces";
+import { Deprecated } from "../../compiler-interfaces/elan-type-interfaces";
 import { compileNodes } from "../ast-helpers";
 import { ClassAsn } from "./class-asn";
 
