@@ -66,8 +66,7 @@ export class ConcreteClassAsn extends ClassAsn {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const emptyInitialise = this.getChildren().some((m) => isConstructor(m as any))
+    const emptyInitialise = this.getChildren().some((m) => isConstructor(m))
       ? ""
       : `  ${this.indent()}async _initialise() { return this; }`;
 

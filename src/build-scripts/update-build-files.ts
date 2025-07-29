@@ -1,11 +1,19 @@
 import { readFileSync, writeFileSync } from "node:fs";
+import { StdLib } from "../compiler/standard-library/std-lib";
 import { elanVersion } from "../environment";
-import { transforms } from "../compiler/syntax-nodes/ast-helpers";
+import { transform, transformMany } from "../ide/compile/ast-visitor";
+import { Transforms } from "../ide/compile/transforms";
 import { DefaultProfile } from "../ide/frames/default-profile";
 import { FileImpl } from "../ide/frames/file-impl";
-import { hash } from "../ide/util";
-import { StdLib } from "../compiler/standard-library/std-lib";
 import { StubInputOutput } from "../ide/stub-input-output";
+import { hash } from "../ide/util";
+
+function transforms(): Transforms {
+  return {
+    transform: transform,
+    transformMany: transformMany,
+  };
+}
 
 function updateVersion() {
   const rootdir = `${__dirname}/../../..`;
