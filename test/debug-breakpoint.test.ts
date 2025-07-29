@@ -619,7 +619,7 @@ end procedure`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [asDebugSymbol("n", [1], '{"Type":"Int"}')];
+    const expected = [asDebugSymbol("n", 1, '{"Type":"Int"}')];
 
     await assertDebugBreakPoint(fileImpl, "print13", expected);
   });
