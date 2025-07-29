@@ -120,26 +120,26 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
     let result = "";
 
     const ss: Array<string> = [];
-    for (const frame of this.children.filter((g) => g instanceof EnumAsn)) {
-      ss.push(frame.compile());
+    for (const child of this.children.filter((g) => g instanceof EnumAsn)) {
+      ss.push(child.compile());
     }
 
     const constants = this.children.filter((g) => g instanceof ConstantAsn);
 
     if (constants.length > 0) {
       ss.push("const global = new class {");
-      for (const frame of constants) {
-        ss.push(`  ${frame.compile()}`);
+      for (const constant of constants) {
+        ss.push(`  ${constant.compile()}`);
       }
       ss.push("};");
     } else {
       ss.push("const global = new class {};");
     }
 
-    for (const frame of this.children.filter(
+    for (const child of this.children.filter(
       (g) => !(g instanceof EnumAsn || g instanceof ConstantAsn),
     )) {
-      ss.push(frame.compile());
+      ss.push(child.compile());
     }
 
     if (!this.children.some((g) => g instanceof MainAsn)) {
@@ -155,8 +155,8 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   }
 
   updateBreakpoints(event: BreakpointEvent) {
-    for (const frame of this.children.filter((f) => f instanceof CompoundAsn)) {
-      frame.updateBreakpoints(event);
+    for (const child of this.children.filter((f) => f instanceof CompoundAsn)) {
+      child.updateBreakpoints(event);
     }
   }
 

@@ -2,12 +2,7 @@ import { AstNode } from "../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
 import { BreakpointEvent } from "../debugging/breakpoint-event";
-import {
-  getIds,
-  handleDeconstruction,
-  isSymbol,
-  symbolMatches,
-} from "../symbols/symbol-helpers";
+import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { compileNodes } from "./ast-helpers";
 import { CompoundAsn } from "./compound-asn";
@@ -82,8 +77,8 @@ export class CompoundWithStatementsAsn extends CompoundAsn implements AstNode, S
 
   updateBreakpoints(event: BreakpointEvent): void {
     super.updateBreakpoints(event);
-    for (const frame of this.children.filter((f) => f instanceof CompoundAsn)) {
-      frame.updateBreakpoints(event);
+    for (const child of this.children.filter((f) => f instanceof CompoundAsn)) {
+      child.updateBreakpoints(event);
     }
   }
 
