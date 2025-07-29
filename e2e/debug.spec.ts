@@ -673,3 +673,64 @@ test('debug complex structure', async ({ page }) => {
   await expect(page.locator('#run-status')).toContainText('paused');
  
 });
+
+test('debug out parameter', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('cl'); 
+  await page.keyboard.type('Foo');
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('prop');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('Int');
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('ArrowLeft');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('p'); // proc
+  await page.keyboard.type('bar'); 
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('out a as Foo');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('p');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('ArrowLeft');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('m'); // main
+  await page.keyboard.type('v'); 
+  await page.keyboard.type('x');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('new Foo()');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('c'); 
+  await page.keyboard.type('bar');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('x');
+
+  await page.getByText('print', { exact: true }).click({
+    button: 'right'
+  });
+
+  await page.getByText('set breakpoint').click();
+  await page.getByRole('button', { name: 'debug' }).click();
+  const summary = 'a Foo'
+  await expect(page.locator('#system-info')).toContainText(summary);
+
+  await page.getByText(summary).click();
+
+  await expect(page.getByText('a 0')).toBeVisible();
+
+  await expect(page.locator('#run-status')).toContainText('paused');
+ 
+});
