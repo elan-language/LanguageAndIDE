@@ -58,16 +58,6 @@ export abstract class ClassAsn extends CompoundAsn implements Class {
     return this;
   }
 
-  get subType(): ClassSubType {
-    if (this.isInterface) {
-      return ClassSubType.interface;
-    }
-    if (this.isAbstract) {
-      return ClassSubType.abstract;
-    }
-    return ClassSubType.concrete;
-  }
-
   get symbolScope() {
     return SymbolScope.program;
   }
