@@ -30,6 +30,7 @@ import {
   mustBeIndexableType,
   mustMatchParameters,
 } from "../compile-rules";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { ElanCompilerError } from "../elan-compiler-error";
 import { ConstructorAsn } from "./class-members/constructor-asn";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
@@ -57,7 +58,7 @@ export function isAstIdNode(n: AstNode | undefined): n is AstIdNode {
   return !!n && "id" in n;
 }
 
-export function isConstructor(f?: AstNode | Scope): f is ConstructorAsn {
+export function isConstructor(f?: AstNode | Scope | ElanSymbol): f is ConstructorAsn {
   return !!f && "isConstructor" in f;
 }
 
