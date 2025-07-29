@@ -1,8 +1,6 @@
-import { KeywordCompletion } from "../../ide/frames/symbol-completion-helpers";
-import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
-import { Scope } from "../compiler-interfaces/scope";
-import { propertyKeyword } from "../keywords";
-import { EmptyAsn } from "../syntax-nodes/empty-asn";
+import { ElanSymbol } from "../../compiler/compiler-interfaces/elan-symbol";
+import { Scope } from "../../compiler/compiler-interfaces/scope";
+import { propertyKeyword } from "../../compiler/keywords";
 import {
   isAbstractTypeName,
   isCallStatement,
@@ -14,7 +12,9 @@ import {
   isNotInheritableClass,
   isProcedure,
   isProperty,
-} from "./symbol-helpers";
+} from "../../compiler/symbols/symbol-helpers";
+import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
+import { KeywordCompletion } from "./symbol-completion-helpers";
 
 export class SymbolWrapper {
   constructor(
