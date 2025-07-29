@@ -17,6 +17,7 @@ export enum RunStatus {
   error,
   paused,
   running,
+  input,
   default,
 }
 

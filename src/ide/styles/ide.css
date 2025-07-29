@@ -189,7 +189,8 @@ body {
 }
 
 #status-values .warning,
-#status-values .paused {
+#status-values .paused,
+#status-values .input {
   background-color: var(--warning);
 }
 
@@ -443,7 +444,6 @@ button.icon:active img + label
 }
 
 #printed-text input:focus {
-  background-color: var(--selection);
   width: 100%;
 }
 

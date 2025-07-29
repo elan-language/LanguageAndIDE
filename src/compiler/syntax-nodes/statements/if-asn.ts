@@ -4,12 +4,12 @@ import { BooleanType } from "../../../compiler/symbols/boolean-type";
 import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { mustBeOfType, mustNotHaveConditionalAfterUnconditionalElse } from "../../compile-rules";
 import { compileNodes } from "../ast-helpers";
+import { BreakpointAsn } from "../breakpoint-asn";
+import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
-import { FrameAsn } from "../frame-asn";
-import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 import { ElseAsn } from "./else-asn";
 
-export class IfAsn extends FrameWithStatementsAsn {
+export class IfAsn extends CompoundAsn {
   isStatement = true;
 
   constructor(fieldId: string, scope: Scope) {
@@ -28,7 +28,7 @@ export class IfAsn extends FrameWithStatementsAsn {
         currentElse.setCompileScope(this);
         ifChildren.push(c);
       } else if (currentElse) {
-        (c as FrameAsn).setCompileScope(currentElse);
+        (c as BreakpointAsn).setCompileScope(currentElse);
         currentElse.addChild(c);
       } else {
         ifChildren.push(c);

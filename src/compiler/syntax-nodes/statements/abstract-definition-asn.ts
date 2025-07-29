@@ -16,11 +16,11 @@ import {
   mustNotBeRedefined,
 } from "../../compile-rules";
 import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
+import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
-import { FrameAsn } from "../frame-asn";
 import { DefinitionAdapter } from "./definition-adapter";
 
-export abstract class AbstractDefinitionAsn extends FrameAsn implements ElanSymbol {
+export abstract class AbstractDefinitionAsn extends BreakpointAsn implements ElanSymbol {
   isStatement = true;
 
   constructor(fieldId: string, scope: Scope) {

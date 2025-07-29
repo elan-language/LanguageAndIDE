@@ -393,6 +393,7 @@ preferencesButton.addEventListener("click", () => {
 function showDisplayTab() {
   const tabName = "display-tab";
   setTabToFocussedAndSelected(tabName);
+  (document.querySelector("#printed-text input") as HTMLInputElement | undefined)?.focus();
 }
 
 function showInfoTab() {
@@ -835,7 +836,11 @@ function setStatus(html: HTMLDivElement, colour: string, label: string, showTool
 }
 
 function isRunningState() {
-  return file.readRunStatus() === RunStatus.running || file.readRunStatus() === RunStatus.paused;
+  return (
+    file.readRunStatus() === RunStatus.running ||
+    file.readRunStatus() === RunStatus.paused ||
+    file.readRunStatus() === RunStatus.input
+  );
 }
 
 function isTestRunningState() {
@@ -1618,11 +1623,22 @@ function errorMsg(value: unknown) {
   return { type: "status", status: "error", error: value } as WebWorkerStatusMessage;
 }
 
+function togggleInputStatus(rs: RunStatus) {
+  file.setRunStatus(rs);
+  setStatus(runStatus, file.getRunStatusColour(), file.getRunStatusLabel(), false);
+}
+
 async function handleWorkerIO(data: WebWorkerWriteMessage) {
   switch (data.function) {
     case "readLine":
       setPauseButtonState(true);
+      togggleInputStatus(RunStatus.input);
       const line = await elanInputOutput.readLine();
+      // program may have been stopped so check state
+      const rs = file.readRunStatus();
+      if (rs === RunStatus.input) {
+        togggleInputStatus(RunStatus.running);
+      }
       setPauseButtonState(false);
       runWorker?.postMessage(readMsg(line));
       break;

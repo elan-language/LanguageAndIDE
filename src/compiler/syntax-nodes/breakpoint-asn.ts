@@ -1,29 +1,25 @@
-import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { ElanSymbol } from "../../compiler/compiler-interfaces/elan-symbol";
-import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
-import { ClassType } from "../../compiler/symbols/class-type";
-import { DeconstructedListType } from "../../compiler/symbols/deconstructed-list-type";
-import { DeconstructedRecordType } from "../../compiler/symbols/deconstructed-record-type";
-import { DeconstructedTupleType } from "../../compiler/symbols/deconstructed-tuple-type";
-import { EnumType } from "../../compiler/symbols/enum-type";
-import {
-  allScopedSymbols,
-  getGlobalScope,
-  orderSymbol,
-} from "../../compiler/symbols/symbol-helpers";
-import { SymbolScope } from "../../compiler/symbols/symbol-scope";
-import { TupleType } from "../../compiler/symbols/tuple-type";
-import { UnknownType } from "../../compiler/symbols/unknown-type";
 import { getId } from "../compile-rules";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { BreakpointEvent } from "../debugging/breakpoint-event";
 import { BreakpointStatus } from "../debugging/breakpoint-status";
 import { TypeDict } from "../debugging/type-dict";
+import { ClassType } from "../symbols/class-type";
+import { DeconstructedListType } from "../symbols/deconstructed-list-type";
+import { DeconstructedRecordType } from "../symbols/deconstructed-record-type";
+import { DeconstructedTupleType } from "../symbols/deconstructed-tuple-type";
+import { EnumType } from "../symbols/enum-type";
+import { allScopedSymbols, getGlobalScope, orderSymbol } from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { TupleType } from "../symbols/tuple-type";
+import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { singleIndent } from "./ast-helpers";
 import { PropertyAsn } from "./class-members/property-asn";
 
-export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
+export class BreakpointAsn extends AbstractAstNode implements AstNode, Scope {
   constructor(
     public readonly fieldId: string,
     protected readonly scope: Scope,
@@ -200,8 +196,10 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
               ? "this."
               : "";
 
+      const scopePostfix = symbol.symbolScope === SymbolScope.outParameter ? "[0]" : "";
+
       const id = `${idPrefix}${symbol.symbolId}`;
-      const value = `${scopePrefix}${symbol.symbolId}`;
+      const value = `${scopePrefix}${symbol.symbolId}${scopePostfix}`;
       const type = symbol.symbolType();
       const typeMap = JSON.stringify(this.getClassTypeMap(type));
 

@@ -1,19 +1,14 @@
-import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { ElanSymbol } from "../../compiler/compiler-interfaces/elan-symbol";
-import { Scope } from "../../compiler/compiler-interfaces/scope";
-import {
-  getIds,
-  handleDeconstruction,
-  isSymbol,
-  symbolMatches,
-} from "../../compiler/symbols/symbol-helpers";
-import { SymbolScope } from "../../compiler/symbols/symbol-scope";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { Scope } from "../compiler-interfaces/scope";
 import { BreakpointEvent } from "../debugging/breakpoint-event";
+import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
 import { compileNodes } from "./ast-helpers";
-import { FrameAsn } from "./frame-asn";
+import { BreakpointAsn } from "./breakpoint-asn";
 import { AssertAsn } from "./statements/assert-asn";
 
-export class FrameWithStatementsAsn extends FrameAsn implements AstNode, Scope {
+export class CompoundAsn extends BreakpointAsn implements AstNode, Scope {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
@@ -73,7 +68,7 @@ export class FrameWithStatementsAsn extends FrameAsn implements AstNode, Scope {
     const children = this.children;
     let asserts = this.children.filter((c) => c instanceof AssertAsn) as AssertAsn[];
 
-    for (const f of children.filter((c) => c instanceof FrameWithStatementsAsn)) {
+    for (const f of children.filter((c) => c instanceof CompoundAsn)) {
       asserts = asserts.concat(f.getAsserts());
     }
 
@@ -82,8 +77,8 @@ export class FrameWithStatementsAsn extends FrameAsn implements AstNode, Scope {
 
   updateBreakpoints(event: BreakpointEvent): void {
     super.updateBreakpoints(event);
-    for (const frame of this.children.filter((f) => f instanceof FrameAsn)) {
-      frame.updateBreakpoints(event);
+    for (const child of this.children.filter((f) => f instanceof BreakpointAsn)) {
+      child.updateBreakpoints(event);
     }
   }
 
