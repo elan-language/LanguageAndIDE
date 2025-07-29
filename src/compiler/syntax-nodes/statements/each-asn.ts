@@ -5,10 +5,10 @@ import { getGlobalScope, isGenericSymbolType } from "../../../compiler/symbols/s
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { UnknownType } from "../../../compiler/symbols/unknown-type";
 import { getId, mustBeIterable, mustNotBeRedefined } from "../../compile-rules";
-import { CompoundWithStatementsAsn } from "../compound-with-statements-asn";
+import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 
-export class EachAsn extends CompoundWithStatementsAsn {
+export class EachAsn extends CompoundAsn {
   isStatement = true;
 
   constructor(fieldId: string, scope: Scope) {

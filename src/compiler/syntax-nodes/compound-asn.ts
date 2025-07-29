@@ -8,7 +8,7 @@ import { compileNodes } from "./ast-helpers";
 import { BreakpointAsn } from "./breakpoint-asn";
 import { AssertAsn } from "./statements/assert-asn";
 
-export class CompoundWithStatementsAsn extends BreakpointAsn implements AstNode, Scope {
+export class CompoundAsn extends BreakpointAsn implements AstNode, Scope {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
@@ -68,7 +68,7 @@ export class CompoundWithStatementsAsn extends BreakpointAsn implements AstNode,
     const children = this.children;
     let asserts = this.children.filter((c) => c instanceof AssertAsn) as AssertAsn[];
 
-    for (const f of children.filter((c) => c instanceof CompoundWithStatementsAsn)) {
+    for (const f of children.filter((c) => c instanceof CompoundAsn)) {
       asserts = asserts.concat(f.getAsserts());
     }
 

@@ -5,11 +5,11 @@ import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { mustBeOfType, mustNotHaveConditionalAfterUnconditionalElse } from "../../compile-rules";
 import { compileNodes } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
-import { CompoundWithStatementsAsn } from "../compound-with-statements-asn";
+import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 import { ElseAsn } from "./else-asn";
 
-export class IfAsn extends CompoundWithStatementsAsn {
+export class IfAsn extends CompoundAsn {
   isStatement = true;
 
   constructor(fieldId: string, scope: Scope) {

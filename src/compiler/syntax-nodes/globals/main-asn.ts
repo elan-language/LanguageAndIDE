@@ -3,9 +3,9 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { DuplicateSymbol } from "../../../compiler/symbols/duplicate-symbol";
 import { allScopedSymbols, getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { mustNotHaveDuplicateMain } from "../../compile-rules";
-import { CompoundWithStatementsAsn } from "../compound-with-statements-asn";
+import { CompoundAsn } from "../compound-asn";
 
-export class MainAsn extends CompoundWithStatementsAsn implements AstNode {
+export class MainAsn extends CompoundAsn implements AstNode {
   constructor(
     public readonly fieldId: string,
     scope: Scope,

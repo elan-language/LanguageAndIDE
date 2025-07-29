@@ -3,10 +3,10 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { BooleanType } from "../../../compiler/symbols/boolean-type";
 import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { mustBeOfType } from "../../compile-rules";
-import { CompoundWithStatementsAsn } from "../compound-with-statements-asn";
+import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 
-export class RepeatAsn extends CompoundWithStatementsAsn {
+export class RepeatAsn extends CompoundAsn {
   isStatement: boolean = true;
 
   constructor(fieldId: string, scope: Scope) {

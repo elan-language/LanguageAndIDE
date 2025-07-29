@@ -7,10 +7,10 @@ import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { getId } from "../../compile-rules";
 import { catchKeyword, exceptionKeyword, inKeyword } from "../../keywords";
 import { singleIndent } from "../ast-helpers";
-import { CompoundWithStatementsAsn } from "../compound-with-statements-asn";
+import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 
-export class CatchAsn extends CompoundWithStatementsAsn implements ElanSymbol {
+export class CatchAsn extends CompoundAsn implements ElanSymbol {
   isStatement = true;
   isCatch = true;
 
