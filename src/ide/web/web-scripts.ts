@@ -1634,7 +1634,11 @@ async function handleWorkerIO(data: WebWorkerWriteMessage) {
       setPauseButtonState(true);
       togggleInputStatus(RunStatus.input);
       const line = await elanInputOutput.readLine();
-      togggleInputStatus(RunStatus.running);
+      // program may have been stopped so check state
+      const rs = file.readRunStatus();
+      if (rs === RunStatus.input) {
+        togggleInputStatus(RunStatus.running);
+      }
       setPauseButtonState(false);
       runWorker?.postMessage(readMsg(line));
       break;
