@@ -5,10 +5,10 @@ import { BreakpointEvent } from "../debugging/breakpoint-event";
 import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { compileNodes } from "./ast-helpers";
-import { CompoundAsn } from "./compound-asn";
+import { BreakpointAsn } from "./breakpoint-asn";
 import { AssertAsn } from "./statements/assert-asn";
 
-export class CompoundWithStatementsAsn extends CompoundAsn implements AstNode, Scope {
+export class CompoundWithStatementsAsn extends BreakpointAsn implements AstNode, Scope {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
@@ -77,7 +77,7 @@ export class CompoundWithStatementsAsn extends CompoundAsn implements AstNode, S
 
   updateBreakpoints(event: BreakpointEvent): void {
     super.updateBreakpoints(event);
-    for (const child of this.children.filter((f) => f instanceof CompoundAsn)) {
+    for (const child of this.children.filter((f) => f instanceof BreakpointAsn)) {
       child.updateBreakpoints(event);
     }
   }

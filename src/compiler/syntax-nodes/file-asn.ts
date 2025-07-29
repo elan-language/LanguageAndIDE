@@ -12,7 +12,7 @@ import { UnknownType } from "../../compiler/symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { BreakpointEvent } from "../debugging/breakpoint-event";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { CompoundAsn } from "./compound-asn";
+import { BreakpointAsn } from "./breakpoint-asn";
 import { ConstantAsn } from "./globals/constant-asn";
 import { EnumAsn } from "./globals/enum-asn";
 import { MainAsn } from "./globals/main-asn";
@@ -155,7 +155,7 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   }
 
   updateBreakpoints(event: BreakpointEvent) {
-    for (const child of this.children.filter((f) => f instanceof CompoundAsn)) {
+    for (const child of this.children.filter((f) => f instanceof BreakpointAsn)) {
       child.updateBreakpoints(event);
     }
   }

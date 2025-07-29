@@ -7,10 +7,10 @@ import { ClassType } from "../../../compiler/symbols/class-type";
 import { getClassScope, getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
-import { CompoundAsn } from "../compound-asn";
+import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 
-export class AbstractPropertyAsn extends CompoundAsn implements Member, ElanSymbol {
+export class AbstractPropertyAsn extends BreakpointAsn implements Member, ElanSymbol {
   isAbstract = true;
   isMember = true;
 

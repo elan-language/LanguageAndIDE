@@ -25,7 +25,7 @@ import {
   isEmptyNode,
   matchParametersAndTypes,
 } from "../ast-helpers";
-import { CompoundAsn } from "../compound-asn";
+import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
 import { ProcedureAsn } from "../globals/procedure-asn";
@@ -33,7 +33,7 @@ import { QualifierAsn } from "../qualifier-asn";
 import { LetAsn } from "./let-asn";
 import { VariableAsn } from "./variable-asn";
 
-export class CallAsn extends CompoundAsn {
+export class CallAsn extends BreakpointAsn {
   isStatement = true;
   isCall = true;
 

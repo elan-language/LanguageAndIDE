@@ -8,11 +8,11 @@ import { getGlobalScope, symbolMatches } from "../../../compiler/symbols/symbol-
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
 import { singleIndent } from "../ast-helpers";
-import { CompoundAsn } from "../compound-asn";
+import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 import { EnumValuesAsn } from "../fields/enum-values-asn";
 
-export class EnumAsn extends CompoundAsn implements ElanSymbol {
+export class EnumAsn extends BreakpointAsn implements ElanSymbol {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }

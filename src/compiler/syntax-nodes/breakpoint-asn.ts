@@ -19,7 +19,7 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { singleIndent } from "./ast-helpers";
 import { PropertyAsn } from "./class-members/property-asn";
 
-export class CompoundAsn extends AbstractAstNode implements AstNode, Scope {
+export class BreakpointAsn extends AbstractAstNode implements AstNode, Scope {
   constructor(
     public readonly fieldId: string,
     protected readonly scope: Scope,

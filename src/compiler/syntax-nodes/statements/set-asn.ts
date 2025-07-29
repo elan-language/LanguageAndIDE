@@ -11,10 +11,10 @@ import {
   mustNotBePropertyOnFunctionMethod,
 } from "../../compile-rules";
 import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
-import { CompoundAsn } from "../compound-asn";
+import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 
-export class SetAsn extends CompoundAsn {
+export class SetAsn extends BreakpointAsn {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }

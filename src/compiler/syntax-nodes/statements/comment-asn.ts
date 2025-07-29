@@ -1,9 +1,9 @@
 import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { CompoundAsn } from "../compound-asn";
+import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 
-export class CommentStatementAsn extends CompoundAsn {
+export class CommentStatementAsn extends BreakpointAsn {
   isStatement = true;
   isMember = true;
   isAbstract = false;

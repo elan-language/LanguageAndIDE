@@ -26,13 +26,13 @@ import { Deprecated } from "../../compiler-interfaces/elan-type-interfaces";
 import { BreakpointEvent } from "../../debugging/breakpoint-event";
 import { thisKeyword } from "../../keywords";
 import { isAstCollectionNode, isAstIdNode } from "../ast-helpers";
+import { BreakpointAsn } from "../breakpoint-asn";
 import { AbstractPropertyAsn } from "../class-members/abstract-property-asn";
 import { PropertyAsn } from "../class-members/property-asn";
-import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 import { InheritsFromAsn } from "../fields/inherits-from-asn";
 
-export abstract class ClassAsn extends CompoundAsn implements Class {
+export abstract class ClassAsn extends BreakpointAsn implements Class {
   isParent: boolean = true;
   isClass: boolean = true;
   isAbstract: boolean = false;
@@ -302,7 +302,7 @@ export abstract class ClassAsn extends CompoundAsn implements Class {
 
   updateBreakpoints(event: BreakpointEvent): void {
     super.updateBreakpoints(event);
-    for (const n of this.children as CompoundAsn[]) {
+    for (const n of this.children as BreakpointAsn[]) {
       n.updateBreakpoints(event);
     }
   }
