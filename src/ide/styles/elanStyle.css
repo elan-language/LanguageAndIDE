@@ -73,6 +73,11 @@ el-comment, el-comment *, el-comment el-field el-txt, el-test el-top el-field el
 el-comment input {
     color: black;
 }
+/* Consecutive global comments to have no extra v. space */
+el-global:has(el-comment) {
+  padding-bottom: 0;
+}
+
 #fileStatus {
     display: none;
 }
