@@ -18,6 +18,7 @@ import { UnknownType } from "../../compiler/symbols/unknown-type";
 import { getId } from "../compile-rules";
 import { BreakpointEvent } from "../debugging/breakpoint-event";
 import { BreakpointStatus } from "../debugging/breakpoint-status";
+import { TypeDict } from "../debugging/type-dict";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { singleIndent } from "./ast-helpers";
 import { PropertyAsn } from "./class-members/property-asn";
@@ -98,7 +99,7 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
     return this.indent() === "" ? "  " : this.indent();
   }
 
-  getClassTypeMap(type: SymbolType, seenClasses?: string[]) {
+  getClassTypeMap(type: SymbolType, seenClasses?: string[]): TypeDict {
     seenClasses = seenClasses ?? [];
 
     if (
@@ -107,8 +108,7 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
     ) {
       const ofTypes = type.ofTypes;
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const typeDict: { [index: string]: any } = { Type: type.name };
+      const typeDict: TypeDict = { Type: type.name };
 
       if (ofTypes.length === 1) {
         typeDict["OfTypes"] = this.getClassTypeMap(ofTypes[0], [...seenClasses]);
@@ -124,14 +124,13 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
       const childSymbols = type.childSymbols().filter((s) => s instanceof PropertyAsn);
       const className = type.name;
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const typeDict: { [index: string]: any } = { Type: className };
+      const typeDict: TypeDict = { Type: className };
 
       if (seenClasses.includes(className)) {
         return typeDict;
       }
 
-      typeDict["Properties"] = {};
+      typeDict["Properties"] = {} as TypeDict;
 
       seenClasses.push(className);
 
@@ -145,8 +144,7 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
     } else if (type instanceof TupleType) {
       const ofTypes = type.ofTypes;
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const typeDict: { [index: string]: any } = { Type: type.name };
+      const typeDict: TypeDict = { Type: type.name };
 
       typeDict["OfTypes"] = [];
 
@@ -160,10 +158,9 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
       type instanceof DeconstructedRecordType ||
       type instanceof DeconstructedListType
     ) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const typeDict: { [index: string]: any } = { Type: "Deconstructed" };
+      const typeDict: TypeDict = { Type: "Deconstructed" };
 
-      typeDict["Ids"] = {};
+      typeDict["Ids"] = {} as TypeDict;
 
       for (const id of type.ids) {
         typeDict["Ids"][id] = this.getClassTypeMap(type.symbolTypeFor(id), [...seenClasses]);
@@ -171,8 +168,7 @@ export class FrameAsn extends AbstractAstNode implements AstNode, Scope {
 
       return typeDict;
     } else if (type instanceof EnumType) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const typeDict: { [index: string]: any } = { Type: "Enum" };
+      const typeDict: TypeDict = { Type: "Enum" };
 
       typeDict["OfTypes"] = { Type: type.name };
 

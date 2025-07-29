@@ -23,8 +23,6 @@ import {
 } from "../../compiler/symbols/symbol-helpers";
 import { TupleType } from "../../compiler/symbols/tuple-type";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
-import { transform, transformMany } from "../../ide/compile/ast-visitor";
-import { Transforms } from "../../ide/frames/frame-interfaces/transforms";
 import { CompileError } from "../compile-error";
 import {
   mustBeAssignableType,
@@ -32,6 +30,7 @@ import {
   mustBeIndexableType,
   mustMatchParameters,
 } from "../compile-rules";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { ElanCompilerError } from "../elan-compiler-error";
 import { ConstructorAsn } from "./class-members/constructor-asn";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
@@ -59,7 +58,7 @@ export function isAstIdNode(n: AstNode | undefined): n is AstIdNode {
   return !!n && "id" in n;
 }
 
-export function isConstructor(f?: AstNode | Scope): f is ConstructorAsn {
+export function isConstructor(f?: AstNode | Scope | ElanSymbol): f is ConstructorAsn {
   return !!f && "isConstructor" in f;
 }
 
@@ -85,13 +84,6 @@ export function InFunctionScope(start: Scope): boolean {
   }
 
   return InFunctionScope(start.getParentScope());
-}
-
-export function transforms(): Transforms {
-  return {
-    transform: transform,
-    transformMany: transformMany,
-  };
 }
 
 class TypeHolder implements SymbolType {

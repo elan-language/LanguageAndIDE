@@ -1,14 +1,9 @@
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { propertyKeyword } from "../../../compiler/keywords";
 import {
-  getFilteredSymbols,
-  removeIfSingleFullMatch,
-} from "../../../compiler/symbols/symbol-helpers";
-import { SymbolWrapper } from "../../../compiler/symbols/symbol-wrapper";
-import {
   escapeHtmlChars,
-  helper_CompileOrParseAsDisplayStatus,
   helper_compileMsgAsHtmlNew,
+  helper_CompileOrParseAsDisplayStatus,
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
 } from "../frame-helpers";
@@ -21,7 +16,13 @@ import { ParseNode } from "../frame-interfaces/parse-node";
 import { Selectable } from "../frame-interfaces/selectable";
 import { Overtyper } from "../overtyper";
 import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
-import { KeywordCompletion, SymbolCompletionSpec } from "../symbol-completion-helpers";
+import {
+  getFilteredSymbols,
+  KeywordCompletion,
+  removeIfSingleFullMatch,
+  SymbolCompletionSpec,
+} from "../symbol-completion-helpers";
+import { SymbolWrapper } from "../symbol-wrapper";
 
 export abstract class AbstractField implements Selectable, Field {
   public isField: boolean = true;

@@ -1,5 +1,4 @@
 import "reflect-metadata";
-import { Regexes } from "../../ide/frames/fields/regexes";
 import { ElanInputOutput } from "../compiler-interfaces/elan-input-output";
 import { Deprecation } from "../compiler-interfaces/elan-type-interfaces";
 import { ElanCompilerError } from "../elan-compiler-error";
@@ -49,6 +48,9 @@ export class StdLib {
   constructor(io: ElanInputOutput) {
     this.system = new System(io);
   }
+
+  static readonly negatableLitIntOnly = /^\s*-?((0b[0-1]+)|(0x[0-9a-fA-F]+)|([0-9]+))$/;
+  static readonly negatableLitFloatOnly = /^\s*-?[0-9]+(\.[0-9]+)?((e|E)[+-]?[0-9]+)?$/;
 
   system: System;
 
@@ -375,7 +377,7 @@ export class StdLib {
 
   @elanFunction(["string"], FunctionOptions.pure, ElanTuple([ElanBoolean, ElanFloat]))
   parseAsFloat(s: string): [boolean, number] {
-    if (Regexes.negatableLitFloatOnly.test(s)) {
+    if (StdLib.negatableLitFloatOnly.test(s)) {
       const f = parseFloat(s);
       if (Number.isFinite(f)) {
         return this.system.tuple([true, f]) as [boolean, number];
@@ -386,7 +388,7 @@ export class StdLib {
 
   @elanFunction(["string"], FunctionOptions.pure, ElanTuple([ElanBoolean, ElanInt]))
   parseAsInt(s: string): [boolean, number] {
-    if (Regexes.negatableLitIntOnly.test(s)) {
+    if (StdLib.negatableLitIntOnly.test(s)) {
       const i = parseInt(s);
       if (isFinite(i)) {
         return this.system.tuple([true, i]) as [boolean, number];
