@@ -3,10 +3,10 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { BooleanType } from "../../../compiler/symbols/boolean-type";
 import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { mustBeOfType } from "../../compile-rules";
+import { CompoundWithStatementsAsn } from "../compound-with-statements-asn";
 import { EmptyAsn } from "../empty-asn";
-import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
-export class WhileAsn extends FrameWithStatementsAsn {
+export class WhileAsn extends CompoundWithStatementsAsn {
   isStatement = true;
 
   constructor(fieldId: string, scope: Scope) {

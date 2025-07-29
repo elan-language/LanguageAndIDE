@@ -5,12 +5,12 @@ import { FunctionType } from "../../../compiler/symbols/function-type";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { getId } from "../../compile-rules";
+import { CompoundWithStatementsAsn } from "../compound-with-statements-asn";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
-import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 import { ReturnAsn } from "../statements/return-asn";
 
-export abstract class FunctionAsn extends FrameWithStatementsAsn implements ElanSymbol {
+export abstract class FunctionAsn extends CompoundWithStatementsAsn implements ElanSymbol {
   isFunction = true;
 
   constructor(fieldId: string, scope: Scope) {

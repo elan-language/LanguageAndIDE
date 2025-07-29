@@ -1,19 +1,19 @@
-import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { ElanSymbol } from "../../compiler/compiler-interfaces/elan-symbol";
-import { Scope } from "../../compiler/compiler-interfaces/scope";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { Scope } from "../compiler-interfaces/scope";
+import { BreakpointEvent } from "../debugging/breakpoint-event";
 import {
   getIds,
   handleDeconstruction,
   isSymbol,
   symbolMatches,
-} from "../../compiler/symbols/symbol-helpers";
-import { SymbolScope } from "../../compiler/symbols/symbol-scope";
-import { BreakpointEvent } from "../debugging/breakpoint-event";
+} from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
 import { compileNodes } from "./ast-helpers";
 import { CompoundAsn } from "./compound-asn";
 import { AssertAsn } from "./statements/assert-asn";
 
-export class FrameWithStatementsAsn extends CompoundAsn implements AstNode, Scope {
+export class CompoundWithStatementsAsn extends CompoundAsn implements AstNode, Scope {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
@@ -73,7 +73,7 @@ export class FrameWithStatementsAsn extends CompoundAsn implements AstNode, Scop
     const children = this.children;
     let asserts = this.children.filter((c) => c instanceof AssertAsn) as AssertAsn[];
 
-    for (const f of children.filter((c) => c instanceof FrameWithStatementsAsn)) {
+    for (const f of children.filter((c) => c instanceof CompoundWithStatementsAsn)) {
       asserts = asserts.concat(f.getAsserts());
     }
 

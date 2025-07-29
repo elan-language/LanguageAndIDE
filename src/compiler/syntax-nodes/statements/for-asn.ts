@@ -6,12 +6,12 @@ import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { getId, mustBeOfSymbolType } from "../../compile-rules";
+import { CompoundWithStatementsAsn } from "../compound-with-statements-asn";
 import { EmptyAsn } from "../empty-asn";
-import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 import { OperationSymbol } from "../operation-symbol";
 import { UnaryExprAsn } from "../unary-expr-asn";
 
-export class ForAsn extends FrameWithStatementsAsn {
+export class ForAsn extends CompoundWithStatementsAsn {
   isStatement: boolean = true;
 
   constructor(fieldID: string, scope: Scope) {
