@@ -5,10 +5,10 @@ import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
+import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
-import { FrameAsn } from "../frame-asn";
 
-export class ConstantAsn extends FrameAsn implements AstNode, ElanSymbol {
+export class ConstantAsn extends CompoundAsn implements AstNode, ElanSymbol {
   isConstant = true;
 
   constructor(fieldId: string, scope: Scope) {

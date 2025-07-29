@@ -10,10 +10,10 @@ import {
 import { SymbolScope } from "../../compiler/symbols/symbol-scope";
 import { BreakpointEvent } from "../debugging/breakpoint-event";
 import { compileNodes } from "./ast-helpers";
-import { FrameAsn } from "./frame-asn";
+import { CompoundAsn } from "./compound-asn";
 import { AssertAsn } from "./statements/assert-asn";
 
-export class FrameWithStatementsAsn extends FrameAsn implements AstNode, Scope {
+export class FrameWithStatementsAsn extends CompoundAsn implements AstNode, Scope {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
@@ -82,7 +82,7 @@ export class FrameWithStatementsAsn extends FrameAsn implements AstNode, Scope {
 
   updateBreakpoints(event: BreakpointEvent): void {
     super.updateBreakpoints(event);
-    for (const frame of this.children.filter((f) => f instanceof FrameAsn)) {
+    for (const frame of this.children.filter((f) => f instanceof CompoundAsn)) {
       frame.updateBreakpoints(event);
     }
   }

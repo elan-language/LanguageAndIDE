@@ -28,11 +28,11 @@ import { thisKeyword } from "../../keywords";
 import { isAstCollectionNode, isAstIdNode } from "../ast-helpers";
 import { AbstractPropertyAsn } from "../class-members/abstract-property-asn";
 import { PropertyAsn } from "../class-members/property-asn";
+import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 import { InheritsFromAsn } from "../fields/inherits-from-asn";
-import { FrameAsn } from "../frame-asn";
 
-export abstract class ClassAsn extends FrameAsn implements Class {
+export abstract class ClassAsn extends CompoundAsn implements Class {
   isParent: boolean = true;
   isClass: boolean = true;
   isAbstract: boolean = false;
@@ -312,7 +312,7 @@ export abstract class ClassAsn extends FrameAsn implements Class {
 
   updateBreakpoints(event: BreakpointEvent): void {
     super.updateBreakpoints(event);
-    for (const n of this.children as FrameAsn[]) {
+    for (const n of this.children as CompoundAsn[]) {
       n.updateBreakpoints(event);
     }
   }

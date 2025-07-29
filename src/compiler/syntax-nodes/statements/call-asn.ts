@@ -25,15 +25,15 @@ import {
   isEmptyNode,
   matchParametersAndTypes,
 } from "../ast-helpers";
+import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
-import { FrameAsn } from "../frame-asn";
 import { ProcedureAsn } from "../globals/procedure-asn";
 import { QualifierAsn } from "../qualifier-asn";
 import { LetAsn } from "./let-asn";
 import { VariableAsn } from "./variable-asn";
 
-export class CallAsn extends FrameAsn {
+export class CallAsn extends CompoundAsn {
   isStatement = true;
   isCall = true;
 

@@ -1,9 +1,9 @@
 import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
+import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
-import { FrameAsn } from "../frame-asn";
 
-export class ThrowAsn extends FrameAsn {
+export class ThrowAsn extends CompoundAsn {
   isStatement = true;
 
   constructor(fieldId: string, scope: Scope) {

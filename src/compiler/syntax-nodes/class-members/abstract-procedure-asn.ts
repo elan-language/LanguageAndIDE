@@ -8,11 +8,11 @@ import { getClassScope, getGlobalScope } from "../../../compiler/symbols/symbol-
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
 import { singleIndent } from "../ast-helpers";
+import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
-import { FrameAsn } from "../frame-asn";
 
-export class AbstractProcedureAsn extends FrameAsn implements Member, ElanSymbol {
+export class AbstractProcedureAsn extends CompoundAsn implements Member, ElanSymbol {
   isAbstract = true;
   isMember: boolean = true;
   private = false;
