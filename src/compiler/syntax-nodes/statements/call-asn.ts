@@ -25,15 +25,15 @@ import {
   isEmptyNode,
   matchParametersAndTypes,
 } from "../ast-helpers";
+import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
-import { FrameAsn } from "../frame-asn";
 import { ProcedureAsn } from "../globals/procedure-asn";
 import { QualifierAsn } from "../qualifier-asn";
 import { LetAsn } from "./let-asn";
 import { VariableAsn } from "./variable-asn";
 
-export class CallAsn extends FrameAsn {
+export class CallAsn extends BreakpointAsn {
   isStatement = true;
   isCall = true;
 

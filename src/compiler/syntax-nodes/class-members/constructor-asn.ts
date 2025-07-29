@@ -8,11 +8,11 @@ import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { constructorKeyword } from "../../keywords";
+import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
-import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
-export class ConstructorAsn extends FrameWithStatementsAsn implements ElanSymbol, Member {
+export class ConstructorAsn extends CompoundAsn implements ElanSymbol, Member {
   isConstructor = true;
   isMember = true;
   isAbstract = false;

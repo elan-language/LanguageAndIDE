@@ -6,11 +6,11 @@ import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
+import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
-import { FrameWithStatementsAsn } from "../frame-with-statements-asn";
 
-export abstract class ProcedureAsn extends FrameWithStatementsAsn implements ElanSymbol, Scope {
+export abstract class ProcedureAsn extends CompoundAsn implements ElanSymbol, Scope {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }

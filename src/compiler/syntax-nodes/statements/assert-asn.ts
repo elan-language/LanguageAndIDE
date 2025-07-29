@@ -2,11 +2,11 @@ import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { UnknownType } from "../../../compiler/symbols/unknown-type";
+import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
-import { FrameAsn } from "../frame-asn";
 import { TestAsn } from "../globals/test-asn";
 
-export class AssertAsn extends FrameAsn implements AstNode {
+export class AssertAsn extends BreakpointAsn implements AstNode {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }

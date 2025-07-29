@@ -11,10 +11,10 @@ import {
 } from "../../../compiler/symbols/symbol-helpers";
 import { mustBeOfType } from "../../compile-rules";
 import { compileNodes, singleIndent } from "../ast-helpers";
+import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
-import { FrameAsn } from "../frame-asn";
 
-export class ElseAsn extends FrameAsn {
+export class ElseAsn extends BreakpointAsn {
   isStatement: boolean = true;
 
   hasIf: boolean = false;

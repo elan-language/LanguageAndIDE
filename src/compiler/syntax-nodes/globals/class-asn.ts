@@ -26,13 +26,13 @@ import { Deprecated } from "../../compiler-interfaces/elan-type-interfaces";
 import { BreakpointEvent } from "../../debugging/breakpoint-event";
 import { thisKeyword } from "../../keywords";
 import { isAstCollectionNode, isAstIdNode } from "../ast-helpers";
+import { BreakpointAsn } from "../breakpoint-asn";
 import { AbstractPropertyAsn } from "../class-members/abstract-property-asn";
 import { PropertyAsn } from "../class-members/property-asn";
 import { EmptyAsn } from "../empty-asn";
 import { InheritsFromAsn } from "../fields/inherits-from-asn";
-import { FrameAsn } from "../frame-asn";
 
-export abstract class ClassAsn extends FrameAsn implements Class {
+export abstract class ClassAsn extends BreakpointAsn implements Class {
   isParent: boolean = true;
   isClass: boolean = true;
   isAbstract: boolean = false;
@@ -56,16 +56,6 @@ export abstract class ClassAsn extends FrameAsn implements Class {
 
   updateOfTypes(_ofTypes: SymbolType[]) {
     return this;
-  }
-
-  get subType(): ClassSubType {
-    if (this.isInterface) {
-      return ClassSubType.interface;
-    }
-    if (this.isAbstract) {
-      return ClassSubType.abstract;
-    }
-    return ClassSubType.concrete;
   }
 
   get symbolScope() {
@@ -312,7 +302,7 @@ export abstract class ClassAsn extends FrameAsn implements Class {
 
   updateBreakpoints(event: BreakpointEvent): void {
     super.updateBreakpoints(event);
-    for (const n of this.children as FrameAsn[]) {
+    for (const n of this.children as BreakpointAsn[]) {
       n.updateBreakpoints(event);
     }
   }
