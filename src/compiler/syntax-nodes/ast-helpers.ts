@@ -23,8 +23,6 @@ import {
 } from "../../compiler/symbols/symbol-helpers";
 import { TupleType } from "../../compiler/symbols/tuple-type";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
-import { transform, transformMany } from "../../ide/compile/ast-visitor";
-import { Transforms } from "../../ide/frames/frame-interfaces/transforms";
 import { CompileError } from "../compile-error";
 import {
   mustBeAssignableType,
@@ -85,13 +83,6 @@ export function InFunctionScope(start: Scope): boolean {
   }
 
   return InFunctionScope(start.getParentScope());
-}
-
-export function transforms(): Transforms {
-  return {
-    transform: transform,
-    transformMany: transformMany,
-  };
 }
 
 class TypeHolder implements SymbolType {
