@@ -105,16 +105,26 @@ el-statement, el-constructor, el-prop, el-class > el-func, el-class > el-proc, e
 }
 
 el-statement:not(.multiline), el-const{
+    display: block;
     padding-left: 1ch; /* Indent 2nd and subsequent lines if el-txt wraps */
     text-indent: -1ch;
 }
 
-el-header, el-const, main, el-proc, el-func, el-enum, el-class, el-constructor, el-prop, el-member, el-global, el-test {
+/* Globals and members, generally, to have v. space after */
+el-header, main, el-proc, el-func, el-class, el-constructor, el-member, el-global, el-test {
     display: block;
     padding-bottom: 1ch;
 }
 
-el-global:has(el-comment) {
+/* Only the last of consecutive properties, constants, enums, should have exta v. space */
+el-prop:has(+ :not(el-prop)), el-const:has(+ :not(el-const)), el-enum:has(+ :not(el-enum))  {
+    display: block;
+    padding-bottom: 1ch;
+}
+/* Last member in a class/record - no added v. space (no other circumstance where they would be immediately followed by a keyword) */
+el-proc:has(+ el-kw), el-func:has(+ el-kw), el-prop:has(+ el-kw) 
+el-proc:has(+ el-kw), el-func:has(+ el-kw), el-prop:has(+ el-kw) 
+{
     padding-bottom: 0;
 }
 
