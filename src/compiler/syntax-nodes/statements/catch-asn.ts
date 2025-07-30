@@ -10,8 +10,6 @@ import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 
 export class CatchAsn extends CompoundAsn implements ElanSymbol {
-  isCatch = true;
-
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }

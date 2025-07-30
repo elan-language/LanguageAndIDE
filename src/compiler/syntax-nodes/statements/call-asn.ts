@@ -34,8 +34,6 @@ import { LetAsn } from "./let-asn";
 import { VariableAsn } from "./variable-asn";
 
 export class CallAsn extends BreakpointAsn {
-  isCall = true;
-
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
