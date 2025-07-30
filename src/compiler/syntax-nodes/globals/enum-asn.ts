@@ -7,7 +7,6 @@ import { EnumValueType } from "../../../compiler/symbols/enum-value-type";
 import { getGlobalScope, symbolMatches } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
-import { singleIndent } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 import { EnumValuesAsn } from "../fields/enum-values-asn";
@@ -37,7 +36,7 @@ export class EnumAsn extends BreakpointAsn implements ElanSymbol {
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `const ${name} = {\r
-${singleIndent()}${this.values.compile()}\r
+${this.singleIndent()}${this.values.compile()}\r
 };\r
 `;
   }

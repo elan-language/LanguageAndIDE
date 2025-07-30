@@ -10,4 +10,8 @@ export class AbstractAstNode {
   indent() {
     return "";
   }
+
+  singleIndent() {
+    return "  ";
+  }
 }

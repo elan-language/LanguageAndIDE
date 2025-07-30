@@ -6,7 +6,6 @@ import { StringType } from "../../../compiler/symbols/string-type";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { getId } from "../../compile-rules";
 import { catchKeyword, exceptionKeyword, inKeyword } from "../../keywords";
-import { singleIndent } from "../ast-helpers";
 import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 
@@ -45,7 +44,7 @@ export class CatchAsn extends CompoundAsn implements ElanSymbol {
     this.compileErrors = [];
     const vid = this.variable.compile();
     return `${this.parentIndent()}} catch (_${vid}) {\r
-${this.indent()}${singleIndent()}let ${vid} = _${vid}.message;
+${this.indent()}${this.singleIndent()}let ${vid} = _${vid}.message;
 ${this.compileChildren()}\r`;
   }
 

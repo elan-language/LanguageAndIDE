@@ -10,7 +10,7 @@ import {
   symbolMatches,
 } from "../../../compiler/symbols/symbol-helpers";
 import { mustBeOfType } from "../../compile-rules";
-import { compileNodes, singleIndent } from "../ast-helpers";
+import { compileNodes } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 
@@ -36,7 +36,7 @@ export class ElseAsn extends BreakpointAsn {
   }
 
   indent() {
-    return singleIndent(); //overrides the additional indent added for most child statements
+    return this.singleIndent(); //overrides the additional indent added for most child statements
   }
 
   compile(): string {

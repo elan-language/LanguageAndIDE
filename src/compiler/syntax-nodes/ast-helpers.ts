@@ -42,6 +42,8 @@ import { IndexAsn } from "./index-asn";
 import { IndexDoubleAsn } from "./index-double-asn";
 import { OperationSymbol } from "./operation-symbol";
 
+// interfaces
+
 export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
   return !!n && "qualifier" in n;
 }
@@ -58,6 +60,16 @@ export function isAstIdNode(n: AstNode | undefined): n is AstIdNode {
   return !!n && "id" in n;
 }
 
+export function isRoot(f?: Scope | AstNode): f is RootAstNode {
+  return !!f && "isRoot" in f;
+}
+
+export function isAstType(f?: AstNode): f is AstTypeNode {
+  return !!f && "compileToEmptyObjectCode" in f;
+}
+
+// types
+
 export function isConstructor(f?: AstNode | Scope | ElanSymbol): f is ConstructorAsn {
   return f instanceof ConstructorAsn;
 }
@@ -72,10 +84,6 @@ export function isFunctionAsn(f?: Scope): f is FunctionAsn {
 
 export function isFile(f?: Scope): f is FileAsn {
   return f instanceof FileAsn;
-}
-
-export function isRoot(f?: Scope | AstNode): f is RootAstNode {
-  return !!f && "isRoot" in f;
 }
 
 export function InFunctionScope(start: Scope): boolean {
@@ -454,12 +462,4 @@ export function isInsideFunctionOrConstructor(scope: Scope): boolean {
     return false;
   }
   return isInsideFunctionOrConstructor(scope.getParentScope());
-}
-
-export function isAstType(f?: AstNode): f is AstTypeNode {
-  return !!f && "compileToEmptyObjectCode" in f;
-}
-
-export function singleIndent() {
-  return "  ";
 }
