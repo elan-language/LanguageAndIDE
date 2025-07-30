@@ -59,7 +59,7 @@ export function isAstIdNode(n: AstNode | undefined): n is AstIdNode {
 }
 
 export function isConstructor(f?: AstNode | Scope | ElanSymbol): f is ConstructorAsn {
-  return !!f && "isConstructor" in f;
+  return f instanceof ConstructorAsn;
 }
 
 export function isEmptyNode(n: AstNode): n is EmptyAsn {

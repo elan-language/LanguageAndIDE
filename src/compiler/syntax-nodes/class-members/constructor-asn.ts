@@ -13,14 +13,13 @@ import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
 
 export class ConstructorAsn extends CompoundAsn implements ElanSymbol, Member {
-  isConstructor = true;
-  isMember = true;
-  isAbstract = false;
-  private = false;
-
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
+  isMember = true;
+  isAbstract = false;
+  private = false;
 
   params: AstNode = EmptyAsn.Instance;
 
