@@ -1,3 +1,4 @@
+import { Deprecation } from "../../src/compiler/compiler-interfaces/elan-type-interfaces";
 import {
   ClassOption,
   elanClass,
@@ -5,12 +6,13 @@ import {
   elanDeprecated,
   elanFunction,
   elanProcedure,
-} from "../../src/elan-type-annotations";
-import { Deprecation } from "../../src/elan-type-interfaces";
-import { DefaultProfile } from "../../src/frames/default-profile";
-import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
-import { List } from "../../src/standard-library/list";
-import { StdLibSymbols } from "../../src/standard-library/std-lib-symbols";
+} from "../../src/compiler/elan-type-annotations";
+import { List } from "../../src/compiler/standard-library/list";
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { StdLibSymbols } from "../../src/compiler/standard-library/std-lib-symbols";
+import { DefaultProfile } from "../../src/ide/frames/default-profile";
+import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertCompiles,
   assertDoesNotCompile,
@@ -110,7 +112,14 @@ main
   variable x set to notYetDeprecated1()
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -127,7 +136,14 @@ main
   variable x set to notYetDeprecated2()
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -144,7 +160,14 @@ main
   call hiddenDeprecatedProcedure()
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -161,7 +184,14 @@ main
   variable x set to deprecatedFunctionWithParameters1()
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -178,7 +208,14 @@ main
   variable x set to deprecatedFunctionWithParameters2("fred")
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -195,7 +232,14 @@ main
   call deprecatedProcedureWithParameters1()
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -212,7 +256,14 @@ main
   call deprecatedProcedureWithParameters2("fred")
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -229,7 +280,14 @@ main
   variable x set to new DeprecatedClass1()
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -246,7 +304,14 @@ main
   variable x set to deprecatedFunction()
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -265,7 +330,14 @@ main
   call deprecatedProcedure()
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -284,7 +356,14 @@ main
   let a be new DeprecatedClass()
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -303,7 +382,14 @@ main
   let a be empty DeprecatedClass
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -322,7 +408,14 @@ main
   let a be new List<of DeprecatedClass>()
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -341,7 +434,14 @@ main
   variable x set to deprecatedFunctionWithParameters1("fred")
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -361,7 +461,14 @@ main
   variable x set to deprecatedFunctionWithParameters2()
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -381,7 +488,14 @@ main
   call deprecatedProcedureWithParameters1("fred")
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -401,7 +515,14 @@ main
   call deprecatedProcedureWithParameters2()
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));
@@ -421,7 +542,14 @@ main
   variable x set to new DeprecatedClass1<of Int>()
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
 
     await fileImpl.parseFrom(new CodeSourceFromString(code));

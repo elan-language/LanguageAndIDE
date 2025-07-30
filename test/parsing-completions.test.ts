@@ -1,14 +1,14 @@
-import { BinaryExpression } from "../src/frames/parse-nodes/binary-expression";
-import { CSV } from "../src/frames/parse-nodes/csv";
-import { ExprNode } from "../src/frames/parse-nodes/expr-node";
-import { IdentifierNode } from "../src/frames/parse-nodes/identifier-node";
-import { Lambda } from "../src/frames/parse-nodes/lambda";
-import { NewInstance } from "../src/frames/parse-nodes/new-instance";
-import { ParamDefNode } from "../src/frames/parse-nodes/param-def-node";
-import { Space } from "../src/frames/parse-nodes/parse-node-helpers";
-import { SpaceNode } from "../src/frames/parse-nodes/space-node";
-import { TypeNode } from "../src/frames/parse-nodes/type-node";
-import { ParseStatus } from "../src/frames/status-enums";
+import { BinaryExpression } from "../src/ide/frames/parse-nodes/binary-expression";
+import { CSV } from "../src/ide/frames/parse-nodes/csv";
+import { ExprNode } from "../src/ide/frames/parse-nodes/expr-node";
+import { IdentifierNode } from "../src/ide/frames/parse-nodes/identifier-node";
+import { Lambda } from "../src/ide/frames/parse-nodes/lambda";
+import { NewInstance } from "../src/ide/frames/parse-nodes/new-instance";
+import { ParamDefNode } from "../src/ide/frames/parse-nodes/param-def-node";
+import { Space } from "../src/ide/frames/parse-nodes/parse-node-helpers";
+import { SpaceNode } from "../src/ide/frames/parse-nodes/space-node";
+import { TypeNode } from "../src/ide/frames/parse-nodes/type-node";
+import { ParseStatus } from "../src/ide/frames/status-enums";
 import { testCompletion } from "./testHelpers";
 
 suite("Parsing - Completions", () => {

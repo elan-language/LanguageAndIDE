@@ -173,14 +173,14 @@
         <el-func class="ok multiline" >
           <el-top><el-kw>function </el-kw><el-method><el-field><el-txt>sort</el-txt></el-field></el-method>(<el-field  class="optional ok"><el-txt><el-id>li</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt></el-field>)<el-kw> returns </el-kw><el-field><el-txt><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt></el-field></el-top>
           <el-statement ><el-kw>variable </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-id>li</el-id></el-txt></el-field></el-statement>
-          <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>len</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-id>li</el-id>. ...
-          <el-top><el-kw>if </el-kw><el-field><el-txt><el-id>len</el-id> &gt; <el-lit>1</el-lit></el-txt></el-field><el-kw> then</el-kw></el-top>
-          <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>mid</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-id>len</el-id><el-kw> ...</el-txt></el-field></el-statement>
-          <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>frontHalf</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>sort</el-method>...</el-txt></el-field></el-statement>
-          <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>backHalf</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>sort</el-method>...</el-txt></el-field></el-statement>
-          <el-statement ><el-kw>set </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-method>merge</el-method>...</el-txt></el-field></el-statement>
-          <el-kw>end if</el-kw>
-          </el-statement>
+          <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>len</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>...</el-txt></el-statement>
+          
+          <el-statement><el-top><el-kw>if </el-kw><el-field><el-txt><el-id>len</el-id> &gt; <el-lit>1</el-lit></el-txt></el-field><el-kw> then</el-kw></el-top>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>mid</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-id>len</el-id> ...</el-txt></el-field></el-statement>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>frontHalf</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>sort</el-method>...</el-txt></el-field></el-statement>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>backHalf</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>sort</el-method>...</el-txt></el-field></el-statement>
+            <el-statement ><el-kw>set </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-method>merge</el-method>...</el-txt></el-field></el-statement>
+          <el-kw>end if</el-kw></el-statement>
           <el-statement ><el-kw>return </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field></el-statement>
           <el-kw>end function</el-kw>
         </el-func>

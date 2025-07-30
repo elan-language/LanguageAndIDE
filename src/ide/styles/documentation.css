@@ -1,0 +1,131 @@
+* {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+p { margin-top:0; margin-bottom:0; line-height:inherit; }
+
+h1,h2,h3,h4
+   { color: rgb(15,71,97); margin-top:0; margin-bottom:0; line-height:inherit; font-size:inherit; font-weight:inherit; }
+h1 { font-size:20pt; font-weight:bold; text-indent:0pt; margin-top:20pt; margin-bottom:4pt; }
+h2 { font-size:16pt; font-weight:bold; text-indent:0pt; margin-top:16pt; margin-bottom:4pt;  border-style:solid none none none; }
+h3 { font-size:14pt; font-weight:bold; text-indent:0pt; margin-top:14pt; margin-bottom:4pt; }
+h4 { font-size:12pt; font-weight:bold; text-indent:0pt; margin-top:12pt; margin-bottom:4pt; }
+
+body { font-size:10pt; margin-left:5px; text-decoration:none; font-weight:normal; font-style:normal; text-transform:none; color:rgb(0,0,0); text-align:left; line-height:1.33; }
+.bold {
+  font-weight: bold;
+}
+p,img,pre,blockquote,address,td,th,li,ul
+  { font-size:10pt; text-indent:0pt; margin-top:4pt; margin-bottom:4pt; line-height:1.3; }
+
+
+/* show sort direction icons in the sortable column headings */
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {content: " \25B4\25BE"}
+
+.tableColours td { font-family:monospace; text-align:right; }
+.tableType th, td { padding-left:5px; padding-right:5px; }
+.tableMethod th, td { padding-left:5px; padding-right:5px;  }
+.tableStructure th, td { padding-left:5px; padding-right:5px;  }
+
+table
+ th, th * {color: white; background-color: rgb(15,71,97)}
+ th { text-align:center; margin-top:4pt; margin-bottom:4pt }
+ tr { text-align:left; margin-top:4pt; margin-bottom:4pt; }
+ tr:nth-child(even) td { background-color: rgb(226, 226, 226); }
+ tr:nth-child(odd)  td { background-color: rgb(196, 196, 196); }
+ td {padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ /* tr.x temporary class for ElanIndex during development */
+ tr.x td:nth-child(3) * { color: red; }
+ /* tr.subhead for ElanIndex head letters */
+ tr.subhead td, tr.subhead td * { background-color: rgb(15,71,97); color: white; font-weight: bold; }
+
+/* document title */
+.docTitle { color:rgb(15,71,97); font-size:24pt; font-weight:bold;  text-indent:0pt;}
+
+/* document table of contents : display as table of h1 and h2*/
+#generated-toc {
+ display: table;
+}
+#generated-toc > ul {
+  > li:nth-child(even) { background-color: rgb(226, 226, 226); }
+  > li:nth-child(odd)  { background-color: rgb(196, 196, 196); }
+}
+#generated-toc > ul {
+  padding-left: 0px;
+}
+#generated-toc > ul > li {
+  display: table-row;
+  border: 2px;
+}
+#generated-toc > ul > li > a, #generated-toc > ul > li > ul {
+  display: table-cell;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 10px;
+  border-color: white;
+  border-style:solid;
+  vertical-align: top;
+}
+#generated-toc > ul > li > a {
+  white-space: nowrap;
+  overflow: hidden;
+  font-weight: bold;
+  padding-top: 5px;
+}
+#generated-toc > ul > li > ul > li {
+  display: block;
+  float: left;
+  padding-right: 20px;
+}
+/* to hide the 'Skip table of contents' button */
+.hidden { visibility: hidden; }
+
+/* Paragraph style  'ListImmutable Paragraph 2'  What was this for? Currently commented out */
+/* p.List_Paragraph_2,li.List_Paragraph_2,td.List_Paragraph_2,th.List_Paragraph_2,h1.List_Paragraph_2,h2.List_Paragraph_2,h3.List_Paragraph_2,h4.List_Paragraph_2,h5.List_Paragraph_2,h6.List_Paragraph_2
+  { text-indent:-17pt; margin-left:74.5pt; line-height:1.33; } */
+
+/* code */
+el-code, el-code *, el-code-block, el-code-block * {font-family: Consolas, Courier, monospace;}
+el-code, el-code-block {color: black} /* This is default - used only when the code is plain text. Overridden when code is marked up with tags*/
+el-code-block {display:block; margin-top:12pt; margin-bottom:12pt;}
+
+el-code-block img {
+  height: 0.9em;
+  margin: 0;
+}
+
+/* special tables */
+.tableAccordion {
+ tr:nth-child(even) td { background-color: rgb(255, 255, 255); }
+ tr:nth-child(odd)  td { background-color: rgb(226, 226, 226); }
+}
+
+/* Links in index */
+a:visited, a:link, a:active {text-decoration: none}
+a:hover, a:focus {text-decoration: underline}
+
+/* This avoids the need to have <el-code> around small snippets*/
+ el-kw, el-type, el-id, el-method, el-lit {
+  font-family: consolas, monospace;
+}
+
+/* Animated accordion and panel  */
+.acc-body {
+  display: none;
+}
+.accordion.active > .acc-body {
+  display: block;
+}
+
+.accordion > .acc-title::before {
+  content: "+";
+  padding-right: 0.5em;
+}
+
+.accordion.active > .acc-title::before {
+  content: "-";
+  padding-right: 0.5em;
+}
+
+.acc-title:focus {
+  background-color: var(--selection);
+}

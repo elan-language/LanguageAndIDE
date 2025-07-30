@@ -1,9 +1,11 @@
 import assert from "assert";
-import { CodeSourceFromString } from "../src/frames/code-source-from-string";
-import { DefaultProfile } from "../src/frames/default-profile";
-import { Regexes } from "../src/frames/fields/regexes";
-import { FileImpl } from "../src/frames/file-impl";
 import { testHeader, transforms } from "./compiler/compiler-test-helpers";
+import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
+import { DefaultProfile } from "../src/ide/frames/default-profile";
+import { Regexes } from "../src/ide/frames/fields/regexes";
+import { FileImpl } from "../src/ide/frames/file-impl";
+import { StdLib } from "../src/compiler/standard-library/std-lib";
+import { StubInputOutput } from "../src/ide/stub-input-output";
 
 suite("Misc Tests", () => {
   //RegExp
@@ -41,6 +43,7 @@ suite("Misc Tests", () => {
       new DefaultProfile(),
       "",
       transforms(),
+      new StdLib(new StubInputOutput()),
       true,
     );
     await fl.parseFrom(source);

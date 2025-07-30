@@ -1,5 +1,7 @@
-import { DefaultProfile } from "../../src/frames/default-profile";
-import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { DefaultProfile } from "../../src/ide/frames/default-profile";
+import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
   assertObjectCodeExecutes,
@@ -44,7 +46,14 @@ async function twice(x) {
 global["twice"] = twice;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -85,7 +94,14 @@ async function twice() {
 global["twice"] = twice;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -126,7 +142,14 @@ async function find(x, y) {
 global["find"] = find;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -169,7 +192,14 @@ async function twice(x) {
 global["twice"] = twice;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -203,7 +233,14 @@ async function twice(x) {
 global["twice"] = twice;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -258,7 +295,14 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -290,7 +334,14 @@ async function ff(a) {
 global["ff"] = ff;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -311,7 +362,14 @@ function twice(x as Float) returns Float
   return x * 2
 end function`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -336,7 +394,14 @@ function power(x as Int, y as Int) returns Int
   return 0
 end function`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -360,7 +425,14 @@ function power(x as Int) returns String
   return "one"
 end function`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -385,7 +457,14 @@ function twice(x as Int) returns Int
   return x * 2
 end function`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -409,7 +488,14 @@ function twice(x as Float) returns Float
   return x * 2
 end function`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -435,7 +521,14 @@ function twice(x as Float) returns Float
   return x * 2
 end function`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -466,7 +559,14 @@ class Foo
 
 end class`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -487,7 +587,14 @@ function ff(a as Int) returns Int
   return a
 end function`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -509,7 +616,14 @@ function ff(a as Int) returns Int
   return a
 end function`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);

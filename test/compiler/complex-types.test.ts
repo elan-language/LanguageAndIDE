@@ -1,5 +1,7 @@
-import { DefaultProfile } from "../../src/frames/default-profile";
-import { CodeSourceFromString, FileImpl } from "../../src/frames/file-impl";
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { DefaultProfile } from "../../src/ide/frames/default-profile";
+import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
@@ -31,7 +33,14 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -58,7 +67,14 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -75,7 +91,14 @@ main
   call a.put("b", ["b":2])
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -93,7 +116,14 @@ main
   call a[0].put(0, 2)
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -111,7 +141,14 @@ main
   call a.put(0, [2,2])
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -129,7 +166,14 @@ main
   call a["b"].put("b", 2)
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -146,7 +190,14 @@ main
   let a be new List<of Foo>()
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -161,7 +212,14 @@ main
   let a be new List<of List<of Foo>>()
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -177,7 +235,14 @@ main
   let a be new List<of t>()
 end main`;
 
-    const fileImpl = new FileImpl(testHash, new DefaultProfile(), "", transforms(), true);
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);

@@ -349,16 +349,37 @@ Instead, you use the constants <el-code><el-id>quotes</el-id></el-code>, <el-cod
 <a href="LangRef.html#Identifier">Identifiers</a> can only contain letters (without accents), numbers and underscore.</p>
 
 <h2 id="Tuple">Tuple</h2>
-A <el-code>tuple</el-code> is a way of holding a small number of values of different Types together as a single reference. It may be considered a lightweight alternative to defining a specific class for some purposes. Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold. Common uses include:
+A tuple< is a way of holding a small number of values as a single reference. It differs from a List in that:
+
+- A tuple may hold elements of <i>different</i> types
+- A tuple is <i>immutable</i> - you may read, but not modify, the values that they contain.
+
+A tuple may be considered a lightweight alternative to defining a specific class for some purposes. 
+Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold. Common uses include:
 <ul>
  <li>Holding a pair of x,y coordinates (each of Type <el-type>Float</el-type>) as a single unit.</li>
  <li>Allowing a function to pass back a result comprised of both a message in a <el-type>String</el-type> and a <el-type>Boolean</el-type> indicating whether the operation was successful.</li>
  <li>Returning both an updated copy of an immutable data structure and the value of an element from it, e.g. from method <el-method>pop</el-method> on a Stack.</li>
 </ul>
 
-<h3 class="no-TOC">Using a tuple</h3>
-<p>You may pass a tuple into a function, or return one from a function, for example:</p>
-<el-code>variable d set to distanceBetween(point1, tuple(12.34, 20.0))</el-code>
+<h3 class="no-TOC">Defining a tuple</h3>
+<p>A new tuple is defined using this syntax:</p>
+
+<elan-code-block>
+  <el-statement class="selected focused ok" id="let10" tabindex="-1"><el-kw>let </el-kw><el-field id="var11" class="ok" tabindex="-1"><el-txt><el-id>t1</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-kw>tuple</el-kw>(<el-lit>3</el-lit>, "<el-lit>apple</el-lit>", <el-id>true</el-id>)</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#let" target="help-iframe" tabindex="-1">?</a></el-help><el-msg></el-msg><el-fr>2</el-fr></el-statement>
+</elan-code-block>
+
+Note that the elements may be literal or named values. An element within a tuple may even be another tuple.
+
+<h3 class="no-TOC">Passing a tuple to/from a function</h3>
+<p>You may pass a tuple into a function, or return one from a function. The type of a tuple is specified
+  in round brackets, contain the <comma-separated></comma-separated> types for each element in order, for example:
+
+<el-code-block>
+  <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident19" class="ok" tabindex="-1"><el-txt>distanceBetween</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#MethodNameField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-method>(<el-field id="params20" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-kw> returns </el-kw><el-field id="type21" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt><el-place><i>Type</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#TypeField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#function" target="help-iframe" tabindex="-1">?</a></el-help><el-msg></el-msg></el-top>
+</el-code-block>
+
+<h3 class="no-TOC">Deconstructing a tuple</h3>
 <p>An existing <el-code>tuple</el-code> (for example <el-code>point1 </el-code>below) may be deconstructed into new variables or named values (where the number of variables or names must match the number of elements in the <el-code>tuple</el-code>): </p>
 <el-code>let x, y set to point1</el-code><br>
 <el-code>variable x, y set to point1</el-code>
@@ -370,6 +391,18 @@ or into existing variables of the correct Type:</p>
 <p>The 'discard' symbol <el-code>_</el-code> (underscore) may also be used when deconstructing a tuple when there is no need to capture specific elements:</p>
 <el-code>variable x, _ set to point1</el-code><br>
 <el-code>variable _, y set to point1</el-code>
+
+Where it is not convenient to use tuple deconstruction, or not possible (for example within a lambda) then individual elements
+may be accessed using the 'dotted' properties <el-id>item0</el-id>, <el-id>item1</el-id>, <el-id>item2</el-id> etc - which will be listed as
+options in the auto-completion drop down for a tuple, for example:
+
+<el-code-block>
+  <el-func class="ok multiline" id="func17" tabindex="-1">
+    <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident19" class="ok" tabindex="-1"><el-txt>distanceBetween</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#MethodNameField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-method>(<el-field id="params20" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-kw> returns </el-kw><el-field id="type21" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt><el-place><i>Type</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#TypeField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-msg></el-msg><el-fr>1</el-fr></el-top>
+    <el-statement class="ok" id="return22" tabindex="-1"><el-kw>return </el-kw><el-field id="expr23" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>((<el-id>p2</el-id>.<el-id>item0</el-id> - <el-id>p1</el-id>.<el-id>item0</el-id>)^<el-lit>2</el-lit> - (<el-id>p2</el-id>.<el-id>item1</el-id> - <el-id>p1</el-id>.<el-id>item1</el-id>)^<el-lit>2</el-lit>)</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
+    <el-kw>end function</el-kw>
+  </el-func>
+</el-code-block>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
@@ -1897,6 +1930,16 @@ the URL as a <el-type>String</el-type>, either as a literal (by surrounding it w
 </el-code-block>
 <p>The properties are listed in <a href="#Properties_VG">Vector Graphics Properties</a>.</p>
 
+<h2>Sound</h2>
+
+The <el-method>tone</el-method> procedure allows the generation of a simple tone. It requires three arguments to be provided:
+
+- the duration of the generated tone specified in milliseconds (integer value)
+- the frequency of the generated tone in Hertz (integer value)
+- The volume of the tone (floating point value)
+
+(Note that the volume paramater is really 'relative volume' - since the actual volume at which every tone is played will
+be modified by the various sound settings on the device, and may even be muted.)</body>
 <h1>Graphics</h1>
 
 <h2 id="BlockGraphics">Block graphics</h2>
@@ -2645,7 +2688,7 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 </el-code-block>
 <p>The result of <el-method>bitNot</el-method>(<el-id>a</el-id>) being <el-code>-14</el-code> , when <el-code><el-id>a</el-id></el-code> is <el-code>13</el-code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as <el-code>00000000000000000000000000001101</el-code>, and applying <el-method>bitNot</el-method> gives <el-code>11111111111111111111111111110010 </el-code>which is the value <el-code>-14 </el-code>in signed two&#8217;s complement format, the left-most bit being the sign (<el-code>0</el-code> positive, <el-code>1</el-code> negative).</p>
 
-<h2 id="sequence">Sequence</h2>
+<h2 id="sequence">Sequence and SequenceWithStep</h2>
 
 <p>The <el-method>sequence</el-method> function is used to create a <el-type>List</el-type> containing a sequence
 of integer values as defined by the two (integer) parameters: <el-code><el-id>start</el-id></el-code> and <el-code><el-id>end</el-id></el-code>
@@ -2654,6 +2697,9 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <el-code-block source="sequence.elan">
 <el-statement class="ok" id="print8"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-method>sequence</el-method>(<el-lit>2</el-lit>, <el-lit>30</el-lit>).<el-method>filter</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-method>sequence</el-method>(<el-lit>2</el-lit>, <el-method>sqrt</el-method>(<el-id>n</el-id>).<el-method>floor</el-method>()).<el-method>reduce</el-method>(<el-id>true</el-id>, <el-kw>lambda</el-kw> <el-id>c</el-id> <el-kw>as</el-kw> <el-type>Boolean</el-type>, <el-id>m</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>c</el-id><el-kw> and </el-kw>((<el-id>n</el-id><el-kw> mod </el-kw><el-id>m</el-id>)<el-kw> isnt </el-kw><el-lit>0</el-lit>)))</el-txt></el-field></el-statement>
 </el-code-block>
+
+<p>The <el-method>sequenceWithStep</el-method> function is similar to <el-method>sequence</el-method> but takes a third parameter
+  specifying the step size, which may be positive or negative.</p>
 
 <h1 id="StandaloneProcedures">Standalone procedures</h1>
 

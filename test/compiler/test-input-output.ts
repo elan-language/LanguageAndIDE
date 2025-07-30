@@ -1,7 +1,12 @@
-import { ElanInputOutput } from "../../src/elan-input-output";
-import { checkForUnclosedHtmlTag } from "../../src/web/web-helpers";
+import { DebugSymbol } from "../../src/compiler/compiler-interfaces/debug-symbol";
+import { ElanInputOutput } from "../../src/compiler/compiler-interfaces/elan-input-output";
+import { checkForUnclosedHtmlTag } from "../../src/ide/web/web-helpers";
+
 
 export class TestInputOutput implements ElanInputOutput {
+  breakPoint(_allScopedSymbols: DebugSymbol[], _id: string, _singlestep: boolean): Promise<boolean> {
+    throw new Error("Method not implemented.");
+  }
 
 
   drawHtml(html: string): Promise<void> {

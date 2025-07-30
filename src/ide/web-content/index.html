@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="styles/colourScheme.css" rel="stylesheet" />
+        <link href="styles/elanStyle.css" rel="stylesheet" />
+        <link href="styles/ide.css" rel="stylesheet" />
+        <link href="favicon.ico" rel="icon" />
+        <title>Elan</title>
+    </head>
+    <body>
+        <div id="lhs">
+            <div id="code-controls">
+                <div class="dropdown">
+                    <button id="demos" class="plain" tabindex="0"  aria-haspopup="true" aria-expanded="false" aria-controls="demos-menu" >demo</button>
+                    <div id="demos-menu" class="dropdown-content" hidden>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/bubbles.elan">Bubbles</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/burrow.elan">Burrow</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/collatz.elan">Collatz</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/fern.elan">Fern</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/julia-set.elan">Julia set</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/life.elan">Life</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/maze-generator.elan">Maze generator</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="documentation/worksheets/merge-sort.elan">Merge sort</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/pathfinder.elan">Pathfinder</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/roman-numerals-turing-machine.elan">Roman Numerals Turing Machine</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/snake_PP.elan">Snake - procedural</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/snake_OOP.elan">Snake - object-oriented</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/snake_FP.elan">Snake - functional</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/turtle-spiral.elan">Turtle Spiral</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/turtle-snowflake.elan">Turtle Snowflake</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/wordle-solver.elan">Wordle Solver</div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                     <button id="file" class="plain" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-controls="file-menu">file</button>
+                    <div id="file-menu" class="dropdown-content" hidden>
+                        <div class="plain menu-item" tabindex="-1" id="new">new</div>
+                        <div class="plain menu-item" tabindex="-1" id="load">load</div>
+                        <div class="plain menu-item" tabindex="-1" id="append">append</div>
+                        <div class="plain menu-item" tabindex="-1" id="auto-save">auto save</div>
+                        <div class="plain menu-item" tabindex="-1" id="save">manual save</div>
+                        <div class="plain menu-item" tabindex="-1" id="save-as-standalone">save as standalone</div>
+                        <div class="plain menu-item" tabindex="-1" id="preferences">preferences</div>
+                    </div>
+                </div>
+
+                <button id="trim" class="plain" tabindex="0">trim</button>
+                <button id="expand-collapse" class="plain" tabindex="0">outline</button>
+                <button id="undo" class="plain" tabindex="0">undo</button>
+                <button id="redo" class="plain" tabindex="0">redo</button>
+
+                <dialog id="preferences-dialog">
+                    <form>
+                        <div>
+                            <label for="use-cvd">CVD colour scheme:</label>
+                            <input type="checkbox" id="use-cvd" name="cvd" value="use-cvd">
+                        </div>
+                        <div>
+                            <button id="confirmBtn">confirm</button>
+                        </div>
+                    </form>
+                </dialog>
+                <button id="logout" class="plain" tabindex="0" hidden="hidden">logout</button>
+                <div id="code-title"></div>
+            </div>
+            <div class="elan-code" data-code="" tabindex="-1"></div>
+        </div>
+        <div id="rhs">
+            <div id="rh-header">
+                <div id="status">
+                    <div id="status-names">
+                        <div>parse</div>
+                        <div>compile</div>
+                        <div>test</div>
+                        <div>run</div>
+                    </div>
+                    <div id="status-values">
+                        <div id="parse" class=""></div>
+                        <div id="compile" class=""></div>
+                        <div id="test" class=""></div>
+                        <div id="run-status"></div>
+                    </div>
+                </div>
+                <div id="rh-header-r">
+                    <div id="run-controls">
+                        <button id="run-button" class="icon"  tabindex="0">
+                            <img src="images/Run.png">
+                            <label for="run-button"><b><u>r</u></b>un</label>
+                        </button>
+                        <button id="stop" class="icon" disabled  tabindex="0">
+                            <img src="images/Stop.png">
+                            <label for="stop"><b><u>s</u></b>top</label>
+                        </button>
+                        <button id="run-debug-button" class="icon"  tabindex="0">
+                            <img src="images/Debug.png">
+                            <label for="run-debug-button">debu<b><u>g</u></b></label>
+                        </button>
+                        <button id="pause" class="icon" disabled title="Pause" tabindex="0">
+                            <img src="images/Pause.png">
+                            <label for="pause">pa<b><u>u</u></b>se</label>
+                        </button>
+                        <button id="step" class="icon" disabled title="Single Step" tabindex="0">
+                            <img src="images/Step.png">
+                            <label for="step">ste<b><u>p</u></b></label>
+                        </button>
+                    </div>
+                    <div id="tab-labels">
+                        <div id="display-tab-label" class="tab-label tab-element display-tab" tabindex="-1"><b><u>d</u></b>isplay</div>
+                        <div id="info-tab-label" class="tab-label tab-element info-tab" tabindex="-1"><b><u>i</u></b>nfo</div>
+                        <div id="help-tab-label" class="tab-label tab-element help-tab selected"  tabindex="-1"><b><u>h</u></b>elp</div>
+                        <div id="worksheet-tab-label" class="tab-label tab-element worksheet-tab"  tabindex="-1">wor<b><u>k</u></b>sheet</div>
+                    </div>
+                </div>
+            </div>
+            <div id="display-tab" class="main-tab tab-element display-tab" tabindex="-1">
+                <div class="tab-controls  tab-element display-tab">
+                    <button id="clear-display" class="plain" tabindex="0" alt="clear display">clear</button>
+                </div>
+                <div id="display" class="tab-content element display-tab" tabindex="-1">
+                    <div id="print"><span id="printed-text"></span></div>
+                    <div id="display-html"></div>
+                    <div id="block-graphics"></div>
+                    <div id="vector-graphics"></div>
+                </div>
+            </div>
+            <div id="info-tab" class="main-tab tab-element info-tab" tabindex="-1">
+                <div class="tab-controls  tab-element info-tab">
+                    <button id="clear-info" class="plain" tabindex="0" alt="clear info">clear</button>
+                </div>
+                <div id="system-info" class="tab-content tab-element info-tab"tabindex="0"></div>
+            </div>
+            <div id="help-tab" class="main-tab tab-element help-tab selected" tabindex="-1"> <!-- now 'Help` tab-->
+                <div class="tab-controls tab-element help-tab selected">
+                    <button id="help-home" class="icon" tabindex="0"><img src="images/Home.png"></button>
+                    <button id="help-back" class="icon" tabindex="0"><img src="images/Back.png"></button>
+                    <button id="help-forward" class="icon" tabindex="0"><img src="images/Forward.png"></button>
+                </div>
+                <iframe name="help-iframe" id="help-iframe" class="tab-content tab-element help-tab selected" src="documentation/Home.html"></iframe>
+            </div>              
+            <div id="worksheet-tab" class="main-tab tab-element worksheet-tab" tabindex="-1">
+                <div class="tab-controls tab-element worksheet-tab">
+                    <div class="dropdown">
+                        <button id="standard-worksheets" class="plain" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-controls="worksheet-menu">standard worksheets</button>
+                        <div id="worksheet-menu" class="dropdown-content" hidden>
+                          <a class="menu-item help-file" tabindex="-1" href="documentation/worksheets/guide.html" target="worksheet-iframe">Guide to the worksheets</a>
+                          <a class="menu-item help-file" tabindex="-1" href="documentation/worksheets/random-walk.html" target="worksheet-iframe">Random Walk</a>
+                          <a class="menu-item help-file" tabindex="-1" href="documentation/worksheets/whack-a-mole.html" target="worksheet-iframe">Whack-a-mole</a>
+                          <a class="menu-item help-file" tabindex="-1" href="documentation/worksheets/simon.html" target="worksheet-iframe">Simon game</a>
+                          <a class="menu-item help-file" tabindex="-1" href="documentation/worksheets/merge-sort.html" target="worksheet-iframe">Merge sort</a>
+                          <a class="menu-item help-file" tabindex="-1" href="documentation/worksheets/snake-3-ways.html" target="worksheet-iframe">Snake 3 ways</a>
+                        </div>
+                    </div>
+                    <button id="load-worksheet" class="plain" tabindex="0">load external worksheet</button>
+                </div>
+                <iframe name="worksheet-iframe" id="worksheet-iframe" class="tab-content tab-element worksheet-tab"></iframe>
+            </div>
+        </div>
+        <script src="elan-api.js" type="module"></script>
+        <script src="web-scripts.js"></script>
+    </body>
+</html>

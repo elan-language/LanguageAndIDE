@@ -1,14 +1,31 @@
 import { readFileSync, writeFileSync } from "node:fs";
+import { StdLib } from "../compiler/standard-library/std-lib";
 import { elanVersion } from "../environment";
-import { DefaultProfile } from "../frames/default-profile";
-import { FileImpl } from "../frames/file-impl";
-import { transforms } from "../frames/syntax-nodes/ast-helpers";
-import { hash } from "../util";
+import { transform, transformMany } from "../ide/compile/ast-visitor";
+import { Transforms } from "../ide/compile/transforms";
+import { DefaultProfile } from "../ide/frames/default-profile";
+import { FileImpl } from "../ide/frames/file-impl";
+import { StubInputOutput } from "../ide/stub-input-output";
+import { hash } from "../ide/util";
+
+function transforms(): Transforms {
+  return {
+    transform: transform,
+    transformMany: transformMany,
+  };
+}
 
 function updateVersion() {
   const rootdir = `${__dirname}/../../..`;
 
-  const file = new FileImpl(hash, new DefaultProfile(), "guest", transforms(), true);
+  const file = new FileImpl(
+    hash,
+    new DefaultProfile(),
+    "guest",
+    transforms(),
+    new StdLib(new StubInputOutput()),
+    true,
+  );
   file.setVersion(elanVersion.major, elanVersion.minor, elanVersion.patch, elanVersion.preRelease);
 
   const semver = file.getSemverString();
@@ -23,7 +40,7 @@ function updateVersion() {
 
   const tableEntry = `<tr><td>v${semver}</td><td>${date}</td><td><a href="/versions/${zipFileName}">Download zip</a></td></tr>`;
 
-  const versionFilePath = `${rootdir}/src/web-content/version-history.html`;
+  const versionFilePath = `${rootdir}/src/ide/web-content/version-history.html`;
 
   const versionFileContent = readFileSync(versionFilePath, "utf-8");
 
@@ -36,7 +53,7 @@ function updateVersion() {
     writeFileSync(versionFilePath, newContent);
   }
 
-  const buildFilePath = `${rootdir}/src/build-version.txt`;
+  const buildFilePath = `${rootdir}/src/ide/build-version.txt`;
   writeFileSync(buildFilePath, semver);
 }
 

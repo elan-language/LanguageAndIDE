@@ -1,41 +1,43 @@
-import { Constructor } from "../src/frames/class-members/constructor";
-import { FunctionMethod } from "../src/frames/class-members/function-method";
-import { MemberSelector } from "../src/frames/class-members/member-selector";
-import { Property } from "../src/frames/class-members/property";
-import { DefaultProfile } from "../src/frames/default-profile";
-import { FileImpl } from "../src/frames/file-impl";
-import { ConcreteClass } from "../src/frames/globals/concrete-class";
-import { Constant } from "../src/frames/globals/constant";
-import { Enum } from "../src/frames/globals/enum";
-import { GlobalComment } from "../src/frames/globals/global-comment";
-import { GlobalFunction } from "../src/frames/globals/global-function";
-import { GlobalProcedure } from "../src/frames/globals/global-procedure";
-import { MainFrame } from "../src/frames/globals/main-frame";
-import { TestFrame } from "../src/frames/globals/test-frame";
-import { CallStatement } from "../src/frames/statements/call-statement";
-import { CommentStatement } from "../src/frames/statements/comment-statement";
-import { Each } from "../src/frames/statements/each";
-import { Else } from "../src/frames/statements/else";
-import { For } from "../src/frames/statements/for";
-import { IfStatement } from "../src/frames/statements/if-statement";
-import { Print } from "../src/frames/statements/print";
-import { Repeat } from "../src/frames/statements/repeat";
-import { SetStatement } from "../src/frames/statements/set-statement";
-import { StatementSelector } from "../src/frames/statements/statement-selector";
-import { Throw } from "../src/frames/statements/throw";
-import { TryStatement } from "../src/frames/statements/try";
-import { VariableStatement } from "../src/frames/statements/variable-statement";
-import { While } from "../src/frames/statements/while";
-import { hash } from "../src/util";
+import { StdLib } from "../src/compiler/standard-library/std-lib";
+import { Constructor } from "../src/ide/frames/class-members/constructor";
+import { FunctionMethod } from "../src/ide/frames/class-members/function-method";
+import { MemberSelector } from "../src/ide/frames/class-members/member-selector";
+import { Property } from "../src/ide/frames/class-members/property";
+import { DefaultProfile } from "../src/ide/frames/default-profile";
+import { FileImpl } from "../src/ide/frames/file-impl";
+import { ConcreteClass } from "../src/ide/frames/globals/concrete-class";
+import { Constant } from "../src/ide/frames/globals/constant";
+import { Enum } from "../src/ide/frames/globals/enum";
+import { GlobalComment } from "../src/ide/frames/globals/global-comment";
+import { GlobalFunction } from "../src/ide/frames/globals/global-function";
+import { GlobalProcedure } from "../src/ide/frames/globals/global-procedure";
+import { MainFrame } from "../src/ide/frames/globals/main-frame";
+import { TestFrame } from "../src/ide/frames/globals/test-frame";
+import { CallStatement } from "../src/ide/frames/statements/call-statement";
+import { CommentStatement } from "../src/ide/frames/statements/comment-statement";
+import { Each } from "../src/ide/frames/statements/each";
+import { Else } from "../src/ide/frames/statements/else";
+import { For } from "../src/ide/frames/statements/for";
+import { IfStatement } from "../src/ide/frames/statements/if-statement";
+import { Print } from "../src/ide/frames/statements/print";
+import { Repeat } from "../src/ide/frames/statements/repeat";
+import { SetStatement } from "../src/ide/frames/statements/set-statement";
+import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
+import { Throw } from "../src/ide/frames/statements/throw";
+import { TryStatement } from "../src/ide/frames/statements/try";
+import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
+import { While } from "../src/ide/frames/statements/while";
+import { StubInputOutput } from "../src/ide/stub-input-output";
+import { hash } from "../src/ide/util";
 import { transforms } from "./compiler/compiler-test-helpers";
 
 export function T00_emptyFile() {
-  const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
+  const f = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()));
   return f;
 }
 
 export function T01_helloWorld() {
-  const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
+  const f = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()));
   const gs = f.getFirstSelectorAsDirectChild();
   const m = new MainFrame(f);
   f.addChildBefore(m, gs);
@@ -51,7 +53,7 @@ export function T01_helloWorld() {
 }
 
 export function T02_comments() {
-  const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
+  const f = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()));
   const gs = f.getFirstSelectorAsDirectChild();
   const gc = new GlobalComment(f);
   gc.text.setFieldToKnownValidText("Comment 1");
@@ -67,7 +69,7 @@ export function T02_comments() {
 }
 
 export function T03_mainWithAllStatements(): FileImpl {
-  const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
+  const f = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()));
   const gs = f.getFirstSelectorAsDirectChild();
   const m = new MainFrame(f);
   f.addChildBefore(m, gs);
@@ -145,7 +147,7 @@ export function CollapseAll(f: FileImpl) {
 }
 
 export function T04_allGlobalsExceptClass(): FileImpl {
-  const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
+  const f = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()));
   const gs = f.getFirstSelectorAsDirectChild();
   const con = new Constant(f);
   con.name.setFieldToKnownValidText("phi");
@@ -173,7 +175,7 @@ export function T04_allGlobalsExceptClass(): FileImpl {
 }
 
 export function T05_classes() {
-  const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
+  const f = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()));
   const gs = f.getFirstSelectorAsDirectChild();
   const cl1 = new ConcreteClass(f);
   const ms = cl1.getFirstSelectorAsDirectChild();
@@ -204,7 +206,7 @@ export function T05_classes() {
 }
 
 export function T09_emptyMainAndClassWithGlobalSelector() {
-  const f = new FileImpl(hash, new DefaultProfile(), "", transforms());
+  const f = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()));
   const gs = f.getFirstSelectorAsDirectChild();
   f.addChildBefore(new MainFrame(f), gs);
   f.addChildBefore(new ConcreteClass(f), gs);
@@ -216,12 +218,12 @@ export function getTestFrame(fn: string): FileImpl {
   try {
     return eval(`${fn}()`);
   } catch (e) {
-    return new FileImpl(hash, new DefaultProfile(), "", transforms());
+    return new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()));
   }
 }
 
 export function oneConstant(): FileImpl {
-  const file = new FileImpl(hash, new DefaultProfile(), "", transforms());
+  const file = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()));
   const globSel = file.getFirstChild();
   const con = new Constant(file);
   file.addChildBefore(con, globSel);
@@ -232,7 +234,7 @@ export function oneConstant(): FileImpl {
 }
 
 export function emptyMainOnly(): FileImpl {
-  const file = new FileImpl(hash, new DefaultProfile(), "", transforms());
+  const file = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()));
   const globSel = file.getFirstChild();
   const main = new MainFrame(file);
   file.addChildBefore(main, globSel);
@@ -241,7 +243,7 @@ export function emptyMainOnly(): FileImpl {
 }
 
 export function emptyFunctionOnly(): FileImpl {
-  const file = new FileImpl(hash, new DefaultProfile(), "", transforms());
+  const file = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()));
   const globSel = file.getFirstChild();
   const fun = new GlobalFunction(file);
   file.addChildBefore(fun, globSel);
@@ -250,7 +252,7 @@ export function emptyFunctionOnly(): FileImpl {
 }
 
 export function twoConstants(): FileImpl {
-  const file = new FileImpl(hash, new DefaultProfile(), "", transforms());
+  const file = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()));
   const globSel = file.getFirstChild();
   const con1 = new Constant(file);
   file.addChildBefore(con1, globSel);
@@ -265,7 +267,7 @@ export function twoConstants(): FileImpl {
 }
 
 export function classWithConstructor(): FileImpl {
-  const file = new FileImpl(hash, new DefaultProfile(), "", transforms());
+  const file = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()));
   const globSel = file.getFirstChild();
   const cls = new ConcreteClass(file);
   file.addChildBefore(cls, globSel);

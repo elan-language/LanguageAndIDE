@@ -1,11 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Elan/);
-});
 
 test('simple program', async ({ page }) => {
   page.once('dialog', dialog => {
@@ -21,7 +16,7 @@ test('simple program', async ({ page }) => {
   await page.keyboard.type('100');
   await page.keyboard.press('Tab');
 
-  await page.getByRole('button', { name: 'Run the program' }).click();
+  await page.getByRole('button', { name: 'run' }).click();
   await expect(page.locator('#printed-text')).toContainText('100');
 });
 
@@ -35,7 +30,7 @@ test('load and run demo', async ({ page }) => {
   await page.getByRole('button', { name: 'demo' }).click();
   await page.getByText('Collatz').click();
 
-  await page.getByRole('button', { name: 'Run the program' }).click();
+  await page.getByRole('button', { name: 'run' }).click();
   await expect(page.locator('#printed-text')).toContainText("Enter a starting number (0 to quit)");
 
   await page.locator('#inp').fill('3');
@@ -53,7 +48,7 @@ test('input validation', async ({ page }) => {
   await page.getByRole('button', { name: 'demo' }).click();
   await page.getByText('Pathfinder').click();
 
-  await page.getByRole('button', { name: 'Run the program' }).click();
+  await page.getByRole('button', { name: 'run' }).click();
   await expect(page.locator('#printed-text')).toContainText("Enter % rocks (0-100):");
 
   await page.locator('#inp').fill('101');
@@ -118,9 +113,8 @@ test('debug program', async ({ page }) => {
     button: 'right'
   });
   await page.getByText('set breakpoint').click();
-  await page.getByText('debug', { exact: true }).click();
-  await page.getByRole('button', { name: 'Debug the program' }).click();
-  await expect(page.locator('#system-info')).toContainText('a : 100');
+  await page.getByRole('button', { name: 'debug' }).click();
+  await expect(page.locator('#system-info')).toContainText('a 100');
   await expect(page.locator('#run-status')).toContainText('paused');
  
 });
@@ -170,7 +164,7 @@ test('load and run demo with graphics', async ({ page }) => {
   await page.getByRole('button', { name: 'demo' }).click();
   await page.getByText('Burrow').click();
 
-  await page.getByRole('button', { name: 'run the program' }).click();
+  await page.getByRole('button', { name: 'run' }).click();
   await expect(page.locator('[style="background-color:#ff0000;"]')).toContainText("");
 });
 
@@ -224,7 +218,7 @@ test('help focus', async ({ page }) => {
 
   // click help and expect help to be visible
   await page.getByRole('link', { name: '?' }).click();
-  await expect(page.getByRole('button', { name: 'home' })).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
 
   // click worksheet button and expect tab to be visible
   await page.getByText('worksheet', { exact: true }).click();
@@ -232,7 +226,7 @@ test('help focus', async ({ page }) => {
 
   // click help and expect help to again be visible
   await page.getByRole('link', { name: '?' }).click();
-  await expect(page.getByRole('button', { name: 'home' })).toBeVisible();
+  await expect(page.locator('#help-home')).toBeVisible();
   
 }); 
 
@@ -254,6 +248,6 @@ test('display image', async ({ page }) => {
   await page.keyboard.type('c');
   await page.keyboard.type('displayHtml(a.asString())');
 
-  await page.getByRole('button', { name: 'Run the program' }).click();
+  await page.getByRole('button', { name: 'run' }).click();
   await expect(page.locator('img[src="https://elan-lang.org/documentation/images/logo.png"]')).toBeVisible();;
 });

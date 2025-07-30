@@ -1,10 +1,10 @@
 import assert from "assert";
-import { ExpressionField } from "../src/frames/fields/expression-field";
-import { IdentifierField } from "../src/frames/fields/identifier-field";
-import { VariableStatement } from "../src/frames/statements/variable-statement";
+import { ExpressionField } from "../src/ide/frames/fields/expression-field";
+import { IdentifierField } from "../src/ide/frames/fields/identifier-field";
+import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 import { assertClasses, end, home, right, shift_tab, tab, up } from "./testHelpers";
 import { T03_mainWithAllStatements, T04_allGlobalsExceptClass } from "./model-generating-functions";
-import { isParent } from "../src/frames/frame-helpers";
+import { isParent } from "../src/ide/frames/frame-helpers";
 
 suite("Navigation", () => {
   test("Selectable Select", async () => {

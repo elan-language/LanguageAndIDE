@@ -3,30 +3,34 @@ import assert from "assert";
 import { readdirSync, readFileSync, writeFileSync } from "fs";
 import * as jsdom from "jsdom";
 import Worker from 'web-worker';
-import { AbstractFrame } from "../src/frames/abstract-frame";
-import { CodeSourceFromString } from "../src/frames/code-source-from-string";
-import { DefaultProfile } from "../src/frames/default-profile";
-import { AbstractField } from "../src/frames/fields/abstract-field";
-import { FileImpl } from "../src/frames/file-impl";
-import { MainFrame } from "../src/frames/globals/main-frame";
-import { VariableStatement } from "../src/frames/statements/variable-statement";
-import { BreakpointStatus, CompileStatus, ParseStatus, TestStatus } from "../src/frames/status-enums";
-import { TokenType } from "../src/frames/symbol-completion-helpers";
-import { BooleanType } from "../src/frames/symbols/boolean-type";
-import { FloatType } from "../src/frames/symbols/float-type";
-import { IntType } from "../src/frames/symbols/int-type";
-import { StringType } from "../src/frames/symbols/string-type";
-import { UnknownType } from "../src/frames/symbols/unknown-type";
-import { StdLib } from "../src/standard-library/std-lib";
-import { hash } from "../src/util";
-import { encodeCode } from "../src/web/web-helpers";
-import { WebWorkerMessage } from "../src/web/web-worker-messages";
+import { StdLib } from "../src/compiler/standard-library/std-lib";
+import { BooleanType } from "../src/compiler/symbols/boolean-type";
+import { FloatType } from "../src/compiler/symbols/float-type";
+import { IntType } from "../src/compiler/symbols/int-type";
+import { StringType } from "../src/compiler/symbols/string-type";
+import { UnknownType } from "../src/compiler/symbols/unknown-type";
+import { File } from "../src/ide/frames/frame-interfaces/file";
+import { hash } from "../src/ide/util";
+import { encodeCode } from "../src/ide/web/web-helpers";
+import { WebWorkerMessage } from "../src/ide/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
-import { editorEvent } from "../src/frames/frame-interfaces/editor-event";
-import { ParseNode } from "../src/frames/frame-interfaces/parse-node";
-import { File } from "../src/frames/frame-interfaces/file";
+import { AbstractFrame } from "../src/ide/frames/abstract-frame";
+import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
+import { DefaultProfile } from "../src/ide/frames/default-profile";
+import { AbstractField } from "../src/ide/frames/fields/abstract-field";
+import { FileImpl } from "../src/ide/frames/file-impl";
+import { editorEvent } from "../src/ide/frames/frame-interfaces/editor-event";
+import { ParseNode } from "../src/ide/frames/frame-interfaces/parse-node";
+import { MainFrame } from "../src/ide/frames/globals/main-frame";
+import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
+import { ParseStatus, CompileStatus} from "../src/ide/frames/status-enums";
+import { TokenType } from "../src/ide/frames/symbol-completion-helpers";
+import { DebugSymbol } from "../src/compiler/compiler-interfaces/debug-symbol";
+import { TestStatus } from "../src/compiler/test-status";
+import { BreakpointStatus } from "../src/compiler/debugging/breakpoint-status";
+import { StubInputOutput } from "../src/ide/stub-input-output";
 
 
 // flag to update test file
@@ -128,7 +132,7 @@ export function getElanFiles(sourceDir: string): string[] {
 export async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
   const source = loadFileAsSourceNew(sourceFile);
   const codeSource = new CodeSourceFromString(source);
-  const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), true);
+  const fl = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()), true);
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
@@ -224,11 +228,35 @@ export async function assertAutocompletes(
   await doAsserts(f, fld, expected);
 }
 
-function dump(v: [string, string][]) {
-  return v.map(t => `${t[0]}:${t[1]}`).join(", ")
+function dump(v: DebugSymbol[]) {
+  return v.map(t => `${t.name}:${t.value}`).join(", ")
 }
 
-function assertData(variables: [string, string][], expected: [string, string][]) {
+function assertEqual(actual: any, expected: any) {
+  if (Array.isArray(actual)) {
+    assert.strictEqual(actual.length, expected.length);
+
+    for (let i = 0; i < actual.length; i++) {
+      assertEqual(actual[i], expected[i]);
+    }
+  } else if (typeof actual === "object") {
+      const actualKeys = Object.keys(actual);
+      const expectedKeys = Object.keys(expected);
+
+      assert.strictEqual(actualKeys.length, expectedKeys.length);
+
+      for (let i = 0; i < actualKeys.length; i++) {
+        assertEqual(actualKeys[i], expectedKeys[i]);
+
+        assertEqual(actual[actualKeys[i]], expected[expectedKeys[i]]);
+      }
+    } else {
+      assert.strictEqual(actual, expected);
+    }
+}
+
+
+async function assertData(variables: DebugSymbol[], expected: DebugSymbol[]) {
 
   assert.strictEqual(variables.length, expected.length, `Provided: ${dump(variables)} expected: ${dump(expected)}`)
 
@@ -236,13 +264,14 @@ function assertData(variables: [string, string][], expected: [string, string][])
     const v = variables[i];
     const e = expected[i];
 
-    assert.strictEqual(v[0], e[0]);
-    assert.strictEqual(v[1], e[1]);
+    assert.strictEqual(v.name, e.name);
+    assertEqual(v.value, e.value);
+    assert.strictEqual(v.typeMap, e.typeMap);
   }
 }
 
 function handleBreakPoint(runWorker: Worker) {
-  return new Promise<[string, string][]>((rs, rj) => {
+  return new Promise<DebugSymbol[]>((rs, rj) => {
     runWorker.addEventListener("message", (e: MessageEvent<WebWorkerMessage>) => {
       const data = e.data;
 
@@ -272,7 +301,7 @@ function handleBreakPoint(runWorker: Worker) {
 export async function assertDebugBreakPoint(
   f: FileImpl,
   id: string,
-  expected: [string, string][],
+  expected: DebugSymbol[],
 ): Promise<void> {
   assertParses(f);
 
@@ -289,9 +318,7 @@ export async function assertDebugBreakPoint(
   const data = await handleBreakPoint(runWorker);
   runWorker.terminate();
 
-  assertData(data, expected);
-
-
+  await assertData(data, expected);
 }
 
 export async function assertSymbolCompletionWithString(
@@ -412,8 +439,8 @@ export function del() {
 export function ctrl_del() {
   return key("Delete", false, true);
 }
-export function ctrl_d() {
-  return key("d", false, true);
+export function ctrl_backspace() {
+  return key("Backspace", false, true);
 }
 export function shift_ins() {
   return key("Insert", true);
@@ -449,7 +476,7 @@ export function testNodeParse(
 }
 
 export function testExtractContextForExpression(text: string, context: string) {
-  const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms()));
+  const main = new MainFrame(new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())));
   const v = new VariableStatement(main);
   const expr = v.expr;
   expr.setFieldToKnownValidText(text);
@@ -506,7 +533,7 @@ export const unknownType = UnknownType.Instance;
 
 export async function createTestRunner() {
   const system = getTestSystem("");
-  const stdlib = new StdLib();
+  const stdlib = new StdLib(new StubInputOutput());
   stdlib.system = system;
   system.stdlib = stdlib;
   return await getTestRunner(system, stdlib);
@@ -524,6 +551,14 @@ export async function testDemoProgram(program: string) {
   if (ts !== TestStatus.default) {
     assert.equal(ts, TestStatus.pass);
   }
+}
+
+export function asDebugSymbol(name: string, value: any, typeMap : string) {
+  return {
+    name,
+    value,
+    typeMap,
+  } as DebugSymbol
 }
 
 

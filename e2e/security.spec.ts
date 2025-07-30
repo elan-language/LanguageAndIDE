@@ -41,7 +41,7 @@ test('img click xss', async ({ page }) => {
   await page.keyboard.type(`"<img src='images/Debug.png' onclick=console.error('exploit') />"`);
   await page.keyboard.press('Tab');
 
-  await page.getByRole('button', { name: 'Run the program' }).click();
+  await page.getByRole('button', { name: 'run' }).click();
   await expect(page.locator('#printed-text')).toContainText("<img src='images/Debug.png' onclick=console.error('exploit') />");
 });
 
@@ -60,7 +60,7 @@ test('iframe xss', async ({ page }) => {
     await page.keyboard.type(`"<iframe src=javascript:console.error('exploit') ></iframe>"`);
     await page.keyboard.press('Tab');
   
-    await page.getByRole('button', { name: 'Run the program' }).click();
+    await page.getByRole('button', { name: 'run' }).click();
     await expect(page.locator('#printed-text')).toContainText("<iframe src=javascript:console.error('exploit') ></iframe>");
   });
 
@@ -87,7 +87,7 @@ test('iframe xss', async ({ page }) => {
   //   await page.keyboard.type(`"<img src='images/Debug.png' onclick=console.error('exploit')/>"`);
   //   await page.keyboard.press('Tab');
   
-  //   await page.getByRole('button', { name: 'Run the program' }).click();
+  //   await page.getByRole('button', { name: 'run' }).click();
   //   await page.frameLocator('iframe').locator('#display-html').click();
   // });
   
@@ -114,7 +114,7 @@ test('iframe xss', async ({ page }) => {
       await page.keyboard.type(`"<iframe src=javascript:console.error('exploit') ></iframe>"`);
       await page.keyboard.press('Tab');
     
-      await page.getByRole('button', { name: 'Run the program' }).click();
+      await page.getByRole('button', { name: 'run' }).click();
     });
 
   test('string eval xss', async ({ page }) => {
@@ -146,7 +146,7 @@ test('iframe xss', async ({ page }) => {
     await page.keyboard.type(`"{a}\` + eval('console.error(\`exploit\`)') + \`"`);
     await page.keyboard.press('Enter');
   
-    await page.getByRole('button', { name: 'Run the program' }).click();
+    await page.getByRole('button', { name: 'run' }).click();
   });
 
   test('string js xss', async ({ page }) => {
@@ -178,7 +178,7 @@ test('iframe xss', async ({ page }) => {
     await page.keyboard.type(`"{a}\` + console.error('exploit') + \`"`);
     await page.keyboard.press('Enter');
   
-    await page.getByRole('button', { name: 'Run the program' }).click();
+    await page.getByRole('button', { name: 'run' }).click();
   });
 
   test('system error xss', async ({ page }) => {
@@ -204,6 +204,6 @@ test('iframe xss', async ({ page }) => {
     await page.keyboard.type(`"<iframe src=javascript:console.warn('exploit') ></iframe>"`);
     await page.keyboard.press('Enter');
   
-    await page.getByRole('button', { name: 'Run the program' }).click();
+    await page.getByRole('button', { name: 'run' }).click();
     await expect(page.locator('#system-info')).toContainText("<iframe src=javascript:console.warn('exploit') ></iframe>");
   });

@@ -1,0 +1,27 @@
+:root {  
+    /* IDE */
+    --ideBackground: rgb(68, 114, 196);
+    --panelBackground: white;
+    --paleTint: rgb(208, 220, 240);
+    --defaultButton: rgb(171,191, 228);
+    --disabledButton:rgb(102, 139, 205);
+
+    /* Text colours - to work on white or the --selection background */
+    --defaultText: black;
+    --reverseText: white;
+
+    /* Code colours */
+    --keyword: rgb(56,0,255);
+    --method: rgb(152, 118, 49);
+    --type:  rgb(38,127,153);
+    --string:  rgb(165, 2, 2);
+    --comment: rgb(1, 106, 1);
+    --namedValue: rgb(144, 4, 225);
+
+    /* Code Highlights */
+    --selection:rgb(173, 214, 255); /* All text colours */
+    --ok: rgb(169, 247, 169); /* Black text */
+    --warning: rgb(246, 193, 94); /* Both black and white text*/
+    --error:  rgb(255, 90, 90); /* Black text */
+    --optional:  lightgrey; /* White text */
+}

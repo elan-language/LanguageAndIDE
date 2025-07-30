@@ -1,4 +1,4 @@
-# f2709d75c44abd30e525115c58c6eb315ef3582ae2bb27bd4d719b366be804eb Elan 1.2.6 guest default_profile valid
+# 53d3da900377227879104a0c1331987882fc5ee9cb563ab98d1aec3d26ae1813 Elan 1.3.1 guest default_profile valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -39,9 +39,10 @@ procedure updateDisplay(blocks as Array2D<of Int>, head as List<of Int>, tail as
   call displayBlocks(blocks)
 end procedure
 
-procedure setAppleToRandomPosition(out apple as List<of Int>, body as List<of List<of Int>>)
+procedure setAppleToRandomPosition(apple as List<of Int>, body as List<of List<of Int>>)
   repeat
-    set apple to [randomInt(0, 39), randomInt(0, 29)]
+    call apple.put(0, randomInt(0, 39))
+    call apple.put(1, randomInt(0, 29))
   end repeat when not body.contains(apple)
 end procedure
 
