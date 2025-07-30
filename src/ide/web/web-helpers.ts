@@ -1,6 +1,6 @@
 import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
-import { transform, transformMany } from "../compile/ast-visitor";
-import { Transforms } from "../compile/transforms";
+import { transform, transformMany } from "../compile-api/ast-visitor";
+import { Transforms } from "../compile-api/transforms";
 import { DefaultProfile } from "../frames/default-profile";
 import { DefaultUserConfig } from "../frames/default-user-config";
 import { Profile } from "../frames/frame-interfaces/profile";

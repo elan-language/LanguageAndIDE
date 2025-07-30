@@ -6,7 +6,7 @@ import { StdLib } from "../../compiler/standard-library/std-lib";
 import { StdLibSymbols } from "../../compiler/standard-library/std-lib-symbols";
 import { TestStatus } from "../../compiler/test-status";
 import { elanVersion, isElanProduction } from "../../environment";
-import { Transforms } from "../compile/transforms";
+import { Transforms } from "../compile-api/transforms";
 import { ElanFileError } from "../elan-file-error";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSourceFromString } from "./code-source-from-string";

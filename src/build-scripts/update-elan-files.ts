@@ -1,8 +1,8 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { StdLib } from "../compiler/standard-library/std-lib";
 import { elanVersion } from "../environment";
-import { transform, transformMany } from "../ide/compile/ast-visitor";
-import { Transforms } from "../ide/compile/transforms";
+import { transform, transformMany } from "../ide/compile-api/ast-visitor";
+import { Transforms } from "../ide/compile-api/transforms";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
 import { DefaultProfile } from "../ide/frames/default-profile";
 import { FileImpl } from "../ide/frames/file-impl";

@@ -3,7 +3,6 @@ import { Done } from "mocha";
 import { AssertOutcome } from "../../src/compiler/assert-outcome";
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { elanVersion } from "../../src/environment";
-import { transform, transformMany } from "../../src/ide/compile/ast-visitor";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Field } from "../../src/ide/frames/frame-interfaces/field";
 import { Frame } from "../../src/ide/frames/frame-interfaces/frame";
@@ -13,7 +12,8 @@ import { runTests } from "../runner";
 import { TestInputOutput } from "./test-input-output";
 import { getTestSystem } from "./test-system";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { Transforms } from "../../src/ide/compile/transforms";
+import { transform, transformMany } from "../../src/ide/compile-api/ast-visitor";
+import { Transforms } from "../../src/ide/compile-api/transforms";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);
