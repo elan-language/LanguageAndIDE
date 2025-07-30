@@ -11,16 +11,14 @@ export class DefinitionAdapter implements ElanSymbol {
     const ids = getDeconstructionIds(adapted.symbolId);
     this.symbolId = ids[index];
     this.symbolScope = adapted.symbolScope;
+  }
 
-    if (isVariable(adapted)) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (this as any)["isVariable"] = true;
-    }
+  isLet() {
+    return isLet(this.adapted);
+  }
 
-    if (isLet(adapted)) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (this as any)["isLet"] = true;
-    }
+  isVariable() {
+    return isVariable(this.adapted);
   }
 
   symbolId: string;

@@ -103,11 +103,11 @@ export function isReifyableSymbolType(
 }
 
 export function isVariable(s?: ElanSymbol): boolean {
-  return !!s && "isVariable" in s;
+  return (s instanceof AbstractDefinitionAsn || s instanceof DefinitionAdapter) && s.isVariable();
 }
 
 export function isLet(s?: ElanSymbol): boolean {
-  return !!s && "isLet" in s;
+  return (s instanceof AbstractDefinitionAsn || s instanceof DefinitionAdapter) && s.isLet();
 }
 
 export function isCall(s?: ElanSymbol | Scope): s is CallAsn {

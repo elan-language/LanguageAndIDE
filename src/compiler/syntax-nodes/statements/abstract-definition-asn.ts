@@ -30,6 +30,9 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Ela
 
   abstract getJsKeyword(): string;
 
+  abstract isLet(): boolean;
+  abstract isVariable(): boolean;
+
   ids() {
     return getIds(this.name);
   }
