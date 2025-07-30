@@ -62,7 +62,6 @@ import {
   displayName,
   getGlobalScope,
   isClass,
-  isClassTypeDef,
   isConstant,
   isDeconstructedType,
   isDoubleIndexableType,
@@ -85,7 +84,7 @@ import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
 import {
   getIds,
-  InFunctionScope,
+  inFunctionScope,
   isAstIdNode,
   isAstIndexableNode,
   isEmptyNode,
@@ -259,7 +258,7 @@ export function mustBePureFunctionSymbol(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (InFunctionScope(scope)) {
+  if (inFunctionScope(scope)) {
     if (isKnownType(symbolType) && !symbolType.isPure) {
       compileErrors.push(new CannotUseSystemMethodInAFunction(location));
     }
@@ -791,7 +790,7 @@ function mustBeCompatibleRecordDeconstruction(
 ) {
   const classDef = scope.resolveSymbol(rst.name, scope);
 
-  if (isClassTypeDef(classDef)) {
+  if (isClass(classDef)) {
     const childSymbols = classDef.getChildren().filter((s) => isProperty(s));
 
     for (let i = 0; i < ids.length; i++) {

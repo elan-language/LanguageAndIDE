@@ -14,8 +14,8 @@ import { IntType } from "../../compiler/symbols/int-type";
 import { ProcedureType } from "../../compiler/symbols/procedure-type";
 import { StringType } from "../../compiler/symbols/string-type";
 import {
+  isClass,
   isClassType,
-  isClassTypeDef,
   isGenericSymbolType,
   isReifyableSymbolType,
   parameterNamesWithTypes,
@@ -42,7 +42,7 @@ import { IndexAsn } from "./index-asn";
 import { IndexDoubleAsn } from "./index-double-asn";
 import { OperationSymbol } from "./operation-symbol";
 
-// interfaces
+// interface type guards
 
 export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
   return !!n && "qualifier" in n;
@@ -68,7 +68,7 @@ export function isAstType(f?: AstNode): f is AstTypeNode {
   return !!f && "compileToEmptyObjectCode" in f;
 }
 
-// types
+// type type-guards
 
 export function isConstructor(f?: AstNode | Scope | ElanSymbol): f is ConstructorAsn {
   return f instanceof ConstructorAsn;
@@ -86,7 +86,7 @@ export function isFile(f?: Scope): f is FileAsn {
   return f instanceof FileAsn;
 }
 
-export function InFunctionScope(start: Scope): boolean {
+export function inFunctionScope(start: Scope): boolean {
   if (isFunctionAsn(start)) {
     return true;
   }
@@ -95,7 +95,7 @@ export function InFunctionScope(start: Scope): boolean {
     return false;
   }
 
-  return InFunctionScope(start.getParentScope());
+  return inFunctionScope(start.getParentScope());
 }
 
 class TypeHolder implements SymbolType {
@@ -158,7 +158,7 @@ export function containsGenericType(type: SymbolType): boolean {
     return type.ofTypes.some((t) => containsGenericType(t));
   }
   if (type instanceof ClassType) {
-    if (isClassTypeDef(type.scope)) {
+    if (isClass(type.scope)) {
       return type.scope.ofTypes.some((t) => containsGenericType(t));
     }
   }
@@ -387,7 +387,7 @@ export function getIds(ast: AstNode) {
 }
 
 export function getIndexAndOfType(rootType: SymbolType): [SymbolType, SymbolType] {
-  if (isClassType(rootType) && isClassTypeDef(rootType.scope)) {
+  if (isClassType(rootType) && isClass(rootType.scope)) {
     if (rootType.scope.ofTypes.length === 1) {
       return [IntType.Instance, rootType.scope.ofTypes[0]];
     }

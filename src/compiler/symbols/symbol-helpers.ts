@@ -56,10 +56,6 @@ export function isGenericClass(f?: ElanSymbol | Scope): f is Class {
   return isClass(f) && f.ofTypes?.length > 0;
 }
 
-export function isClassTypeDef(s?: ElanSymbol | Scope): s is Class {
-  return !!s && "updateOfTypes" in s;
-}
-
 export function isScope(f?: ElanSymbol | Scope): f is Scope {
   return !!f && "resolveSymbol" in f && "getParentScope" in f;
 }
@@ -100,7 +96,7 @@ export function isMember(f?: Member | ElanSymbol): f is Member {
 
 // class type-guards
 
-export function isEnumDef(s?: ElanSymbol): s is EnumAsn {
+export function isEnum(s?: ElanSymbol): s is EnumAsn {
   return !!s && s instanceof EnumAsn;
 }
 
@@ -140,10 +136,6 @@ export function isPublicMember(s: ElanSymbol | Member): boolean {
 
 export function isEnumValue(s?: ElanSymbol): boolean {
   return s?.symbolType() instanceof EnumValueType;
-}
-
-export function isEnum(s?: ElanSymbol): boolean {
-  return s instanceof EnumAsn;
 }
 
 export function isOutParameter(s?: ElanSymbol): boolean {
@@ -316,7 +308,7 @@ function internalUpdateScopeAndQualifier(
     // replace scope with class scope
     currentScope = isScope(classSymbol) ? classSymbol : currentScope;
 
-    if (isClassTypeDef(currentScope)) {
+    if (isClass(currentScope)) {
       if (isClass(qualifierScope.scope)) {
         currentScope = currentScope.updateOfTypes(qualifierScope.scope.ofTypes);
       }
@@ -374,7 +366,7 @@ export function getClassScope(start: Scope): Class | NullScope {
     return start;
   }
 
-  if (isClassTypeDef(start)) {
+  if (isClass(start)) {
     return start;
   }
 
@@ -425,7 +417,7 @@ export function matchingSymbolsWithQualifier(
   if (qualSt instanceof ClassType) {
     const cls = getGlobalScope(scope).resolveSymbol(qualSt.className, scope);
 
-    if (isClassTypeDef(cls)) {
+    if (isClass(cls)) {
       qualifiedSymbols = cls
         .symbolMatches(propId, !propId, NullScope.Instance)
         .filter((s) => isPublicMember(s));
@@ -435,7 +427,7 @@ export function matchingSymbolsWithQualifier(
   if (qualSt instanceof EnumType) {
     const en = getGlobalScope(scope).resolveSymbol(qualSt.name, scope);
 
-    if (isEnumDef(en)) {
+    if (isEnum(en)) {
       qualifiedSymbols = en.symbolMatches(propId, !propId, NullScope.Instance);
     }
   }
