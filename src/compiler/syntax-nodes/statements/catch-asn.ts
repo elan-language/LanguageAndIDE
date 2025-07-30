@@ -29,11 +29,7 @@ export class CatchAsn extends CompoundAsn implements ElanSymbol {
   }
 
   indent() {
-    return (this.scope as unknown as AstNode).indent(); //overrides the additional indent added for most child statements
-  }
-
-  parentIndent(): string {
-    return (this.scope as unknown as AstNode).indent();
+    return this.parentIndent(); //overrides the additional indent added for most child statements
   }
 
   keywords = `${catchKeyword} ${exceptionKeyword} ${inKeyword} `;

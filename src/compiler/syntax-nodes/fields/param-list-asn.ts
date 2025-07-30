@@ -100,7 +100,7 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
 
   private getIdNodes(parms: AstNode): AstIdNode[] {
     if (isAstCollectionNode(parms)) {
-      return parms.items.filter((n) => isAstIdNode(n)) as AstIdNode[];
+      return parms.items.filter((n) => isAstIdNode(n));
     }
 
     return [];

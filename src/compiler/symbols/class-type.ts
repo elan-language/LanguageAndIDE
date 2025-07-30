@@ -62,7 +62,7 @@ export class ClassType implements ReifyableSymbolType, Scope, GenericSymbolType 
   }
 
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
-    const symbols = this.scope!.getChildren().filter((f) => isSymbol(f)) as ElanSymbol[];
+    const symbols = this.scope!.getChildren().filter((f) => isSymbol(f));
 
     return symbolMatches(id, all, symbols);
   }

@@ -84,7 +84,7 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
   properties(): (AbstractPropertyAsn | PropertyAsn)[] {
     return this.getChildren().filter(
       (c) => c instanceof PropertyAsn || c instanceof AbstractPropertyAsn,
-    ) as (AbstractPropertyAsn | PropertyAsn)[];
+    );
   }
 
   protected propertiesToInit() {
@@ -201,7 +201,7 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
     const otherMatches = this.getParentScope().symbolMatches(id, all, this);
 
-    const symbols = this.getChildren().filter((f) => isSymbol(f)) as ElanSymbol[];
+    const symbols = this.getChildren().filter((f) => isSymbol(f));
 
     const types = this.getDirectSuperClassesTypeAndName()
       .map((tn) => tn[0])

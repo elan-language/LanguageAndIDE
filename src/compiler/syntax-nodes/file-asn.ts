@@ -101,7 +101,7 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
     const languageMatches = symbolMatches(id, all, elanSymbols);
     const libMatches = this.scope.symbolMatches(id, all, this);
-    const globalSymbols = this.children.filter((c) => isSymbol(c)) as ElanSymbol[];
+    const globalSymbols = this.children.filter((c) => isSymbol(c));
     const matches = symbolMatches(id, all, globalSymbols);
 
     return languageMatches.concat(matches).concat(libMatches);

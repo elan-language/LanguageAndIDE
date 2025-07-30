@@ -597,9 +597,9 @@ export function mostPreciseSymbol(lhs: SymbolType, rhs: SymbolType): SymbolType 
   return lhs;
 }
 
-export function allPropertiesInScope(scope: Scope) {
+export function allPropertiesInScope(scope: Scope): ElanSymbol[] {
   const all = scope.symbolMatches("", true, scope);
-  return all.filter((s) => isProperty(s)) as ElanSymbol[];
+  return all.filter((s) => isProperty(s));
 }
 
 export function mapSymbolType(ids: string[], st: SymbolType) {
