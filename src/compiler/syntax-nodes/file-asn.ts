@@ -19,20 +19,21 @@ import { MainAsn } from "./globals/main-asn";
 import { TestAsn } from "./globals/test-asn";
 
 export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
-  isFile = true;
-  private _nextId: number = 0;
-  private mode: CompileMode = CompileMode.inprocess;
-  private base: string | undefined;
-
-  compileErrorMap = new Map<string, CompileError[]>();
-  scopeMap = new Map<string, Scope>();
-
   constructor(
     private scope: Scope,
     private version: Semver,
   ) {
     super();
   }
+
+  isRoot: boolean = true;
+
+  private _nextId: number = 0;
+  private mode: CompileMode = CompileMode.inprocess;
+  private base: string | undefined;
+
+  compileErrorMap = new Map<string, CompileError[]>();
+  scopeMap = new Map<string, Scope>();
 
   getScopeById(id: string): Scope {
     if (this.scopeMap.has(id)) {

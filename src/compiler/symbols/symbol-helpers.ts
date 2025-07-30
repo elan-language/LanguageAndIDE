@@ -13,7 +13,7 @@ import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { isRecord } from "../compiler-interfaces/type-options";
 import { ElanCompilerError } from "../elan-compiler-error";
 import { globalKeyword, libraryKeyword } from "../keywords";
-import { isAstIdNode, isAstQualifiedNode, isEmptyNode } from "../syntax-nodes/ast-helpers";
+import { isAstIdNode, isAstQualifiedNode, isEmptyNode, isRoot } from "../syntax-nodes/ast-helpers";
 import { PropertyAsn } from "../syntax-nodes/class-members/property-asn";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { EnumAsn } from "../syntax-nodes/globals/enum-asn";
@@ -235,10 +235,6 @@ export function updateScopeInChain(qualifier: AstNode, currentScope: Scope): Sco
   );
 
   return newScope;
-}
-
-export function isRoot(f?: Scope | AstNode): f is RootAstNode {
-  return !!f && "isFile" in f;
 }
 
 export function getGlobalScope(start: Scope): RootAstNode {

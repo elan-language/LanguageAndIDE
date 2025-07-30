@@ -31,6 +31,7 @@ import {
   mustMatchParameters,
 } from "../compile-rules";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { ElanCompilerError } from "../elan-compiler-error";
 import { ConstructorAsn } from "./class-members/constructor-asn";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
@@ -63,7 +64,7 @@ export function isConstructor(f?: AstNode | Scope | ElanSymbol): f is Constructo
 }
 
 export function isEmptyNode(n: AstNode): n is EmptyAsn {
-  return !!n && "isEmpty" in n;
+  return n instanceof EmptyAsn;
 }
 
 export function isFunction(f?: Scope | Member): f is Member {
@@ -71,7 +72,11 @@ export function isFunction(f?: Scope | Member): f is Member {
 }
 
 export function isFile(f?: Scope): f is FileAsn {
-  return !!f && "isFile" in f;
+  return f instanceof FileAsn;
+}
+
+export function isRoot(f?: Scope | AstNode): f is RootAstNode {
+  return !!f && "isRoot" in f;
 }
 
 export function InFunctionScope(start: Scope): boolean {
