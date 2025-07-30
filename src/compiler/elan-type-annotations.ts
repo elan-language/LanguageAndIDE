@@ -1,4 +1,5 @@
 import { Class } from "./compiler-interfaces/class";
+import { Constant } from "./compiler-interfaces/constant";
 import { ElanSymbol } from "./compiler-interfaces/elan-symbol";
 import {
   Deprecated,
@@ -793,15 +794,13 @@ export function getSymbol(
   return symbol;
 }
 
-export function getConstantSymbol(id: string, st: SymbolType, ss: SymbolScope): ElanSymbol {
+export function getConstantSymbol(id: string, st: SymbolType, ss: SymbolScope): Constant {
   const symbol = {
     symbolId: id,
     symbolType: () => st,
     symbolScope: ss,
-  } as ElanSymbol;
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (symbol as any)["isConstant"] = true;
+    isConstant: true,
+  } as Constant;
 
   return symbol;
 }

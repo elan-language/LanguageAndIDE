@@ -2,6 +2,7 @@ import { CompileError } from "../compile-error";
 import { AstNode } from "../compiler-interfaces/ast-node";
 import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { Class } from "../compiler-interfaces/class";
+import { Constant } from "../compiler-interfaces/constant";
 import { DeconstructedSymbolType } from "../compiler-interfaces/deconstructed-symbol-type";
 import { Definition } from "../compiler-interfaces/definition";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
@@ -45,16 +46,14 @@ import { TupleType } from "./tuple-type";
 import { UnknownSymbol } from "./unknown-symbol";
 import { UnknownType } from "./unknown-type";
 
+// interfaces
+
 export function isClass(f?: ElanSymbol | Scope): f is Class {
   return !!f && "isClass" in f;
 }
 
 export function isGenericClass(f?: ElanSymbol | Scope): f is Class {
   return isClass(f) && f.ofTypes?.length > 0;
-}
-
-export function isConstant(f?: ElanSymbol | Scope): f is ElanSymbol {
-  return !!f && "isConstant" in f;
 }
 
 export function isScope(f?: ElanSymbol | Scope): f is Scope {
@@ -105,6 +104,10 @@ export function isReifyableSymbolType(
 
 export function isDefinition(s?: ElanSymbol): s is Definition {
   return !!s && "isLet" in s && "isVariable" in s;
+}
+
+export function isConstant(s?: ElanSymbol | Scope): s is Constant {
+  return !!s && "isConstant" in s;
 }
 
 export function isVariable(s?: ElanSymbol): boolean {
