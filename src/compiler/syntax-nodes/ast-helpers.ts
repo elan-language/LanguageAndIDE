@@ -4,7 +4,6 @@ import { AstIndexableNode } from "../../compiler/compiler-interfaces/ast-indexab
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { AstQualifiedNode } from "../../compiler/compiler-interfaces/ast-qualified-node";
 import { AstTypeNode } from "../../compiler/compiler-interfaces/ast-type-node";
-import { Member } from "../../compiler/compiler-interfaces/member";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
 import { noTypeOptions } from "../../compiler/compiler-interfaces/type-options";
@@ -67,8 +66,8 @@ export function isEmptyNode(n: AstNode): n is EmptyAsn {
   return n instanceof EmptyAsn;
 }
 
-export function isFunction(f?: Scope | Member): f is Member {
-  return !!f && "isFunction" in f;
+export function isFunctionAsn(f?: Scope): f is FunctionAsn {
+  return f instanceof FunctionAsn;
 }
 
 export function isFile(f?: Scope): f is FileAsn {
@@ -80,7 +79,7 @@ export function isRoot(f?: Scope | AstNode): f is RootAstNode {
 }
 
 export function InFunctionScope(start: Scope): boolean {
-  if (isFunction(start)) {
+  if (isFunctionAsn(start)) {
     return true;
   }
 

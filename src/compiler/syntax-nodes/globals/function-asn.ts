@@ -11,8 +11,6 @@ import { ParamListAsn } from "../fields/param-list-asn";
 import { ReturnAsn } from "../statements/return-asn";
 
 export abstract class FunctionAsn extends CompoundAsn implements ElanSymbol {
-  isFunction = true;
-
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
