@@ -15,14 +15,13 @@ import {
   mustNotBeKeyword,
   mustNotBeRedefined,
 } from "../../compile-rules";
+import { Definition } from "../../compiler-interfaces/definition";
 import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 import { DefinitionAdapter } from "./definition-adapter";
 
-export abstract class AbstractDefinitionAsn extends BreakpointAsn implements ElanSymbol {
-  isStatement = true;
-
+export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Definition {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
@@ -31,6 +30,9 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Ela
   expr: AstNode = EmptyAsn.Instance;
 
   abstract getJsKeyword(): string;
+
+  abstract isLet(): boolean;
+  abstract isVariable(): boolean;
 
   ids() {
     return getIds(this.name);

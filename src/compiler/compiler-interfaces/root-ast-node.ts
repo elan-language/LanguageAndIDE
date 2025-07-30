@@ -14,7 +14,7 @@ export enum CompileMode {
 
 export interface RootAstNode extends AstNode, Scope {
   addCompileErrors(errors: CompileError[]): void;
-  isFile: boolean; // todo rename to isRoot
+  isRoot: boolean;
   libraryScope: Scope;
   getAllCompileErrors(): CompileError[];
   getCompileErrorsFor(fieldId: string): CompileError[];

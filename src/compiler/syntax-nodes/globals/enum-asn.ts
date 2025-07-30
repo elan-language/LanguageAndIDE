@@ -3,14 +3,11 @@ import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { EnumType } from "../../../compiler/symbols/enum-type";
-import { EnumValueType } from "../../../compiler/symbols/enum-value-type";
 import { getGlobalScope, symbolMatches } from "../../../compiler/symbols/symbol-helpers";
-import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
-import { singleIndent } from "../ast-helpers";
+import { isEnumValuesAsn } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
-import { EnumValuesAsn } from "../fields/enum-values-asn";
 
 export class EnumAsn extends BreakpointAsn implements ElanSymbol {
   constructor(fieldId: string, scope: Scope) {
@@ -37,24 +34,13 @@ export class EnumAsn extends BreakpointAsn implements ElanSymbol {
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `const ${name} = {\r
-${singleIndent()}${this.values.compile()}\r
+${this.singleIndent()}${this.values.compile()}\r
 };\r
 `;
   }
 
-  // TODO move this onto EnumValuesAsn
   enumValueSymbols() {
-    if (this.values instanceof EnumValuesAsn) {
-      const names = this.values.names;
-
-      return names.map((n) => ({
-        symbolId: n,
-        symbolType: () => new EnumValueType(getId(this.name), n),
-        symbolScope: SymbolScope.program,
-      }));
-    }
-
-    return [];
+    return isEnumValuesAsn(this.values) ? this.values.getSymbols(getId(this.name)) : [];
   }
 
   resolveSymbol(id: string, _initialScope: Scope): ElanSymbol {

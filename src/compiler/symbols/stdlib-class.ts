@@ -89,9 +89,7 @@ export class StdLibClass implements Class {
       return this;
     }
 
-    const matches = this.getChildren().filter(
-      (f) => isSymbol(f) && f.symbolId === id,
-    ) as ElanSymbol[];
+    const matches = this.getChildren().filter((f) => isSymbol(f) && f.symbolId === id);
 
     if (matches.length === 1) {
       return matches[0];
@@ -174,7 +172,7 @@ export class StdLibClass implements Class {
       }
     }
 
-    const symbols = this.getChildren().filter((f) => isSymbol(f)) as ElanSymbol[];
+    const symbols = this.getChildren().filter((f) => isSymbol(f));
 
     const matches = symbolMatches(id, all, symbols);
 

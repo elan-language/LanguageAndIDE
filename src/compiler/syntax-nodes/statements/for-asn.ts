@@ -12,8 +12,6 @@ import { OperationSymbol } from "../operation-symbol";
 import { UnaryExprAsn } from "../unary-expr-asn";
 
 export class ForAsn extends CompoundAsn {
-  isStatement: boolean = true;
-
   constructor(fieldID: string, scope: Scope) {
     super(fieldID, scope);
   }

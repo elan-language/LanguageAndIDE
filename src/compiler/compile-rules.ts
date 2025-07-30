@@ -62,13 +62,13 @@ import {
   displayName,
   getGlobalScope,
   isClass,
-  isClassTypeDef,
   isConstant,
   isDeconstructedType,
   isDoubleIndexableType,
   isFunction,
   isIndexableType,
   isIterableType,
+  isKnownType,
   isLet,
   isListImmutableType,
   isListType,
@@ -76,7 +76,6 @@ import {
   isNumber,
   isProcedure,
   isProperty,
-  knownType,
   symbolScopeToFriendlyName,
 } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
@@ -85,7 +84,7 @@ import { UnknownSymbol } from "./symbols/unknown-symbol";
 import { UnknownType } from "./symbols/unknown-type";
 import {
   getIds,
-  InFunctionScope,
+  inFunctionScope,
   isAstIdNode,
   isAstIndexableNode,
   isEmptyNode,
@@ -103,7 +102,7 @@ export function mustBeOfSymbolType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (knownType(exprType) && exprType.name !== ofType.name) {
+  if (isKnownType(exprType) && exprType.name !== ofType.name) {
     compileErrors.push(new TypeCompileError(ofType.name, location));
   }
 }
@@ -115,7 +114,7 @@ export function mustBeMemberOfSymbolType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (knownType(exprType) && exprType.name !== ofType.name) {
+  if (isKnownType(exprType) && exprType.name !== ofType.name) {
     compileErrors.push(new MemberTypeCompileError(name, ofType.name, location));
   }
 }
@@ -136,7 +135,7 @@ export function mustBeBooleanCondition(
 ) {
   const st = expr.symbolType();
 
-  if (knownType(st) && st !== BooleanType.Instance) {
+  if (isKnownType(st) && st !== BooleanType.Instance) {
     compileErrors.push(
       new SyntaxCompileError(
         "Condition of 'if' expression does not evaluate to a Boolean.",
@@ -220,7 +219,7 @@ export function mustBeProcedure(
 ) {
   if (symbolType instanceof FunctionType) {
     compileErrors.push(new CannotCallAFunction(location));
-  } else if (knownType(symbolType) && !(symbolType instanceof ProcedureType)) {
+  } else if (isKnownType(symbolType) && !(symbolType instanceof ProcedureType)) {
     compileErrors.push(
       new CannotCallAsAMethod(symbolId, symbolScopeToFriendlyName(symbolScope), location),
     );
@@ -236,7 +235,7 @@ export function mustBeCallable(
 ) {
   if (symbolType instanceof ProcedureType) {
     compileErrors.push(new CannotUseLikeAFunction(symbolId, location));
-  } else if (knownType(symbolType)) {
+  } else if (isKnownType(symbolType)) {
     compileErrors.push(
       new CannotCallAsAMethod(symbolId, symbolScopeToFriendlyName(symbolScope), location),
     );
@@ -248,7 +247,7 @@ export function mustBeDeconstructableType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (knownType(symbolType) && !isDeconstructedType(symbolType)) {
+  if (isKnownType(symbolType) && !isDeconstructedType(symbolType)) {
     compileErrors.push(new TypeCompileError("able to be deconstructed", location));
   }
 }
@@ -259,8 +258,8 @@ export function mustBePureFunctionSymbol(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (InFunctionScope(scope)) {
-    if (knownType(symbolType) && !symbolType.isPure) {
+  if (inFunctionScope(scope)) {
+    if (isKnownType(symbolType) && !symbolType.isPure) {
       compileErrors.push(new CannotUseSystemMethodInAFunction(location));
     }
   }
@@ -340,7 +339,7 @@ export function mustBeRangeableType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (knownType(symbolType) && !(read && isIterableType(symbolType))) {
+  if (isKnownType(symbolType) && !(read && isIterableType(symbolType))) {
     compileErrors.push(new NotRangeableCompileError(symbolType.name, location));
   }
 }
@@ -352,7 +351,7 @@ export function mustBeInheritableClassOrInterface(
   location: string,
 ) {
   if (
-    knownType(symbolType) &&
+    isKnownType(symbolType) &&
     (!(symbolType instanceof ClassType) ||
       symbolType.subType === ClassSubType.concrete ||
       symbolType.isNotInheritable)
@@ -368,7 +367,7 @@ export function mustBeInterfaceClass(
   location: string,
 ) {
   if (
-    knownType(symbolType) &&
+    isKnownType(symbolType) &&
     (!(symbolType instanceof ClassType) ||
       symbolType.subType !== ClassSubType.interface ||
       symbolType.isNotInheritable)
@@ -479,7 +478,7 @@ export function mustBeConcreteClass(
 export function mustBeClass(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
   if (!isClass(symbol)) {
     const st = symbol.symbolType();
-    if (knownType(st)) {
+    if (isKnownType(st)) {
       compileErrors.push(new TypeCompileError("Class", location));
     }
   }
@@ -598,14 +597,12 @@ function FailNotAssignable(
   compileErrors: CompileError[],
   location: string,
 ) {
-  let addInfo = "";
-  // special case
-  // todo fix
-  if (isListImmutableType(lhs) && isListType(rhs)) {
-    addInfo = " try converting with '.asListImmutable()'";
-  }
-
-  if (knownType(lhs) && knownType(rhs)) {
+  if (isKnownType(lhs) && isKnownType(rhs)) {
+    // special case
+    const addInfo =
+      isListImmutableType(lhs) && isListType(rhs)
+        ? " try converting with '.asListImmutable()'"
+        : "";
     compileErrors.push(new TypesCompileError(rhs.name, lhs.name, addInfo, location));
   }
 }
@@ -616,13 +613,13 @@ function FailNoCommonType(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (knownType(lhs) && knownType(rhs)) {
+  if (isKnownType(lhs) && isKnownType(rhs)) {
     compileErrors.push(new TernaryCompileError(rhs.name, lhs.name, location));
   }
 }
 
 function FailNotNumber(lhs: SymbolType, compileErrors: CompileError[], location: string) {
-  if (knownType(lhs)) {
+  if (isKnownType(lhs)) {
     compileErrors.push(new TypesCompileError(lhs.name, "Float or Int", "", location));
   }
 }
@@ -791,7 +788,7 @@ function mustBeCompatibleRecordDeconstruction(
 ) {
   const classDef = scope.resolveSymbol(rst.name, scope);
 
-  if (isClassTypeDef(classDef)) {
+  if (isClass(classDef)) {
     const childSymbols = classDef.getChildren().filter((s) => isProperty(s));
 
     for (let i = 0; i < ids.length; i++) {
@@ -968,7 +965,7 @@ export function cannotPassAsOutParameter(
   if (typeof parameter === "string") {
     compileErrors.push(new OutParameterCompileError(parameter, location));
   } else {
-    if (knownType(parameter.symbolType())) {
+    if (isKnownType(parameter.symbolType())) {
       compileErrors.push(new OutParameterCompileError(parameter.toString(), location));
     }
   }
@@ -1077,7 +1074,7 @@ export function mustBeIterable(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (knownType(symbolType) && !isIterableType(symbolType)) {
+  if (isKnownType(symbolType) && !isIterableType(symbolType)) {
     compileErrors.push(new InvalidSourceForEachCompileError(location));
   }
 }

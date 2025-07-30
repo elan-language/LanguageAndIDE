@@ -4,7 +4,6 @@ import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 
 export class CommentStatementAsn extends BreakpointAsn {
-  isStatement = true;
   isMember = true;
   isAbstract = false;
   private = false;

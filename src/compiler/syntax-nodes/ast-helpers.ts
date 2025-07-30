@@ -4,7 +4,6 @@ import { AstIndexableNode } from "../../compiler/compiler-interfaces/ast-indexab
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { AstQualifiedNode } from "../../compiler/compiler-interfaces/ast-qualified-node";
 import { AstTypeNode } from "../../compiler/compiler-interfaces/ast-type-node";
-import { Member } from "../../compiler/compiler-interfaces/member";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
 import { noTypeOptions } from "../../compiler/compiler-interfaces/type-options";
@@ -15,8 +14,8 @@ import { IntType } from "../../compiler/symbols/int-type";
 import { ProcedureType } from "../../compiler/symbols/procedure-type";
 import { StringType } from "../../compiler/symbols/string-type";
 import {
+  isClass,
   isClassType,
-  isClassTypeDef,
   isGenericSymbolType,
   isReifyableSymbolType,
   parameterNamesWithTypes,
@@ -31,16 +30,24 @@ import {
   mustMatchParameters,
 } from "../compile-rules";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { ElanCompilerError } from "../elan-compiler-error";
 import { ConstructorAsn } from "./class-members/constructor-asn";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { EmptyAsn } from "./empty-asn";
+import { EnumValuesAsn } from "./fields/enum-values-asn";
 import { FileAsn } from "./file-asn";
 import { FunctionAsn } from "./globals/function-asn";
 import { IndexAsn } from "./index-asn";
 import { IndexDoubleAsn } from "./index-double-asn";
 import { OperationSymbol } from "./operation-symbol";
+
+// interface type guards
+
+export function isAstNode(n: AstNode | Scope): n is AstNode {
+  return !!n && "compile" in n && "fieldId" in n && "indent" in n;
+}
 
 export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
   return !!n && "qualifier" in n;
@@ -58,32 +65,46 @@ export function isAstIdNode(n: AstNode | undefined): n is AstIdNode {
   return !!n && "id" in n;
 }
 
-export function isConstructor(f?: AstNode | Scope | ElanSymbol): f is ConstructorAsn {
-  return !!f && "isConstructor" in f;
+export function isRootNode(n?: Scope | AstNode): n is RootAstNode {
+  return !!n && "isRoot" in n;
+}
+
+export function isAstTypeNode(n?: AstNode): n is AstTypeNode {
+  return !!n && "compileToEmptyObjectCode" in n;
+}
+
+// type type-guards
+
+export function isConstructor(n?: AstNode | Scope | ElanSymbol): n is ConstructorAsn {
+  return n instanceof ConstructorAsn;
 }
 
 export function isEmptyNode(n: AstNode): n is EmptyAsn {
-  return !!n && "isEmpty" in n;
+  return n instanceof EmptyAsn;
 }
 
-export function isFunction(f?: Scope | Member): f is Member {
-  return !!f && "isFunction" in f;
+export function isFunctionScope(scope?: Scope): scope is FunctionAsn {
+  return scope instanceof FunctionAsn;
 }
 
-export function isFile(f?: Scope): f is FileAsn {
-  return !!f && "isFile" in f;
+export function isFileScope(scope?: Scope): scope is FileAsn {
+  return scope instanceof FileAsn;
 }
 
-export function InFunctionScope(start: Scope): boolean {
-  if (isFunction(start)) {
+export function isEnumValuesAsn(n: AstNode): n is EnumValuesAsn {
+  return n instanceof EnumValuesAsn;
+}
+
+export function inFunctionScope(start: Scope): boolean {
+  if (isFunctionScope(start)) {
     return true;
   }
 
-  if (isFile(start)) {
+  if (isFileScope(start)) {
     return false;
   }
 
-  return InFunctionScope(start.getParentScope());
+  return inFunctionScope(start.getParentScope());
 }
 
 class TypeHolder implements SymbolType {
@@ -146,7 +167,7 @@ export function containsGenericType(type: SymbolType): boolean {
     return type.ofTypes.some((t) => containsGenericType(t));
   }
   if (type instanceof ClassType) {
-    if (isClassTypeDef(type.scope)) {
+    if (isClass(type.scope)) {
       return type.scope.ofTypes.some((t) => containsGenericType(t));
     }
   }
@@ -375,7 +396,7 @@ export function getIds(ast: AstNode) {
 }
 
 export function getIndexAndOfType(rootType: SymbolType): [SymbolType, SymbolType] {
-  if (isClassType(rootType) && isClassTypeDef(rootType.scope)) {
+  if (isClassType(rootType) && isClass(rootType.scope)) {
     if (rootType.scope.ofTypes.length === 1) {
       return [IntType.Instance, rootType.scope.ofTypes[0]];
     }
@@ -450,12 +471,4 @@ export function isInsideFunctionOrConstructor(scope: Scope): boolean {
     return false;
   }
   return isInsideFunctionOrConstructor(scope.getParentScope());
-}
-
-export function isAstType(f?: AstNode): f is AstTypeNode {
-  return !!f && "compileToEmptyObjectCode" in f;
-}
-
-export function singleIndent() {
-  return "  ";
 }

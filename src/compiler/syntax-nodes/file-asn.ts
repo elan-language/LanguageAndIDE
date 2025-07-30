@@ -19,20 +19,21 @@ import { MainAsn } from "./globals/main-asn";
 import { TestAsn } from "./globals/test-asn";
 
 export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
-  isFile = true;
-  private _nextId: number = 0;
-  private mode: CompileMode = CompileMode.inprocess;
-  private base: string | undefined;
-
-  compileErrorMap = new Map<string, CompileError[]>();
-  scopeMap = new Map<string, Scope>();
-
   constructor(
     private scope: Scope,
     private version: Semver,
   ) {
     super();
   }
+
+  isRoot: boolean = true;
+
+  private _nextId: number = 0;
+  private mode: CompileMode = CompileMode.inprocess;
+  private base: string | undefined;
+
+  compileErrorMap = new Map<string, CompileError[]>();
+  scopeMap = new Map<string, Scope>();
 
   getScopeById(id: string): Scope {
     if (this.scopeMap.has(id)) {
@@ -100,7 +101,7 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
     const languageMatches = symbolMatches(id, all, elanSymbols);
     const libMatches = this.scope.symbolMatches(id, all, this);
-    const globalSymbols = this.children.filter((c) => isSymbol(c)) as ElanSymbol[];
+    const globalSymbols = this.children.filter((c) => isSymbol(c));
     const matches = symbolMatches(id, all, globalSymbols);
 
     return languageMatches.concat(matches).concat(libMatches);

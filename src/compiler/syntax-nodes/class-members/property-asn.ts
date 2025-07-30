@@ -1,25 +1,26 @@
 import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
 import { Class } from "../../../compiler/compiler-interfaces/class";
-import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { ClassType } from "../../../compiler/symbols/class-type";
 import { getClassScope, getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { getId, mustBeKnownSymbolType, mustBeUniqueNameInScope } from "../../compile-rules";
+import { Member } from "../../compiler-interfaces/member";
+import { Property } from "../../compiler-interfaces/property";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 
-export class PropertyAsn extends BreakpointAsn implements ElanSymbol {
-  isMember = true;
-  isProperty = true;
-  isAbstract = false;
-
-  public private: boolean = false;
-
+export class PropertyAsn extends BreakpointAsn implements Property, Member {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
+
+  isProperty = true;
+
+  isMember = true;
+  isAbstract = false;
+  private = false;
 
   name: AstNode = EmptyAsn.Instance;
   type: AstNode = EmptyAsn.Instance;

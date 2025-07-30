@@ -3,7 +3,7 @@ import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { propertyKeyword } from "../../compiler/keywords";
 import {
   isAbstractTypeName,
-  isCallStatement,
+  isCall,
   isConcreteTypeName,
   isFunction,
   isGenericClass,
@@ -106,7 +106,7 @@ export class SymbolWrapper {
       return `${propertyKeyword}.${symbol.symbolId}`;
     }
 
-    if (isCallStatement(this.scope) && this.scope.args instanceof EmptyAsn) {
+    if (isCall(this.scope) && this.scope.args instanceof EmptyAsn) {
       return `${this.name}.`;
     }
 

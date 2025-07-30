@@ -8,7 +8,7 @@ import { TypeOptions } from "../compiler-interfaces/type-options";
 import { FloatType } from "./float-type";
 import { IntType } from "./int-type";
 import { NullScope } from "./null-scope";
-import { isClassTypeDef, isSymbol, symbolMatches } from "./symbol-helpers";
+import { isClass, isSymbol, symbolMatches } from "./symbol-helpers";
 import { SymbolScope } from "./symbol-scope";
 
 export enum ClassSubType {
@@ -28,15 +28,15 @@ export class ClassType implements ReifyableSymbolType, Scope, GenericSymbolType 
   ) {}
 
   get ofTypes() {
-    return isClassTypeDef(this.scope) ? this.scope.ofTypes : [];
+    return isClass(this.scope) ? this.scope.ofTypes : [];
   }
 
   get deprecated() {
-    return isClassTypeDef(this.scope) ? this.scope.deprecated : undefined;
+    return isClass(this.scope) ? this.scope.deprecated : undefined;
   }
 
   reify(gts: SymbolType[]): ReifyableSymbolType {
-    if (isClassTypeDef(this.scope)) {
+    if (isClass(this.scope)) {
       const cls = this.scope.updateOfTypes(gts);
 
       return new ClassType(
@@ -62,7 +62,7 @@ export class ClassType implements ReifyableSymbolType, Scope, GenericSymbolType 
   }
 
   symbolMatches(id: string, all: boolean): ElanSymbol[] {
-    const symbols = this.scope!.getChildren().filter((f) => isSymbol(f)) as ElanSymbol[];
+    const symbols = this.scope!.getChildren().filter((f) => isSymbol(f));
 
     return symbolMatches(id, all, symbols);
   }

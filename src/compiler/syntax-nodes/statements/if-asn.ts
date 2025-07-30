@@ -10,8 +10,6 @@ import { EmptyAsn } from "../empty-asn";
 import { ElseAsn } from "./else-asn";
 
 export class IfAsn extends CompoundAsn {
-  isStatement = true;
-
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
@@ -42,7 +40,7 @@ export class IfAsn extends CompoundAsn {
     this.compileErrors = [];
 
     mustBeOfType(this.condition, BooleanType.Instance, this.compileErrors, this.fieldId);
-    const elses = this.children.filter((c) => c instanceof ElseAsn) as ElseAsn[];
+    const elses = this.children.filter((c) => c instanceof ElseAsn);
     let toCompile = this.children;
 
     if (elses.length > 0) {

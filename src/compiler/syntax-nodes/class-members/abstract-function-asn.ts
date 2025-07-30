@@ -7,7 +7,6 @@ import { FunctionType } from "../../../compiler/symbols/function-type";
 import { getClassScope, getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
-import { singleIndent } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
@@ -30,7 +29,7 @@ export class AbstractFunctionAsn extends BreakpointAsn implements Member, ElanSy
   }
 
   public override indent(): string {
-    return singleIndent();
+    return this.singleIndent();
   }
 
   public override compile(): string {

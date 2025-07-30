@@ -11,5 +11,10 @@ export class LetAsn extends AbstractDefinitionAsn implements ElanSymbol {
     return "const";
   }
 
-  isLet = true;
+  isLet() {
+    return true;
+  }
+  isVariable() {
+    return false;
+  }
 }

@@ -33,7 +33,5 @@ export class EmptyAsn implements AstNode {
     return "";
   }
 
-  isEmpty = true;
-
   static Instance: EmptyAsn = new EmptyAsn("");
 }

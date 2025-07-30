@@ -9,7 +9,6 @@ import {
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
 } from "../../compile-rules";
-import { singleIndent } from "../ast-helpers";
 import { FunctionAsn } from "../globals/function-asn";
 
 export class FunctionMethodAsn extends FunctionAsn {
@@ -28,7 +27,7 @@ export class FunctionMethodAsn extends FunctionAsn {
   }
 
   public override indent(): string {
-    return singleIndent();
+    return this.singleIndent();
   }
 
   public override compile(): string {

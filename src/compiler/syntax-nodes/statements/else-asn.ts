@@ -10,13 +10,11 @@ import {
   symbolMatches,
 } from "../../../compiler/symbols/symbol-helpers";
 import { mustBeOfType } from "../../compile-rules";
-import { compileNodes, singleIndent } from "../ast-helpers";
+import { compileNodes, isAstNode } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 
 export class ElseAsn extends BreakpointAsn {
-  isStatement: boolean = true;
-
   hasIf: boolean = false;
 
   constructor(fieldId: string, scope: Scope) {
@@ -38,7 +36,7 @@ export class ElseAsn extends BreakpointAsn {
   }
 
   indent() {
-    return singleIndent(); //overrides the additional indent added for most child statements
+    return this.singleIndent(); //overrides the additional indent added for most child statements
   }
 
   compile(): string {
@@ -68,10 +66,10 @@ ${compileNodes(this.compileChildren)}`;
     return this.getCurrentScope().getParentScope();
   }
 
-  getChildRange(initialScope: AstNode) {
+  getChildRange(initialScope: Scope) {
     const fst = this.compileChildren[0];
     const fi = this.compileChildren.indexOf(fst);
-    const li = this.compileChildren.indexOf(initialScope);
+    const li = isAstNode(initialScope) ? this.compileChildren.indexOf(initialScope) : -1;
 
     return fi < li
       ? this.compileChildren.slice(fi, li + 1)
@@ -80,7 +78,7 @@ ${compileNodes(this.compileChildren)}`;
 
   resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
     if (this.compileChildren.length > 0) {
-      let range = this.getChildRange(initialScope as unknown as AstNode);
+      let range = this.getChildRange(initialScope);
 
       if (range.length > 1) {
         range = range.slice(0, range.length - 1);
@@ -105,7 +103,7 @@ ${compileNodes(this.compileChildren)}`;
     let localMatches: ElanSymbol[] = [];
 
     if (this.compileChildren.length > 0) {
-      let range = this.getChildRange(initialScope as unknown as AstNode);
+      let range = this.getChildRange(initialScope);
 
       if (range.length > 1) {
         range = range.slice(0, range.length - 1);

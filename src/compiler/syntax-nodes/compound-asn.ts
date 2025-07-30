@@ -4,7 +4,7 @@ import { Scope } from "../compiler-interfaces/scope";
 import { BreakpointEvent } from "../debugging/breakpoint-event";
 import { getIds, handleDeconstruction, isSymbol, symbolMatches } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
-import { compileNodes } from "./ast-helpers";
+import { compileNodes, isAstNode } from "./ast-helpers";
 import { BreakpointAsn } from "./breakpoint-asn";
 import { AssertAsn } from "./statements/assert-asn";
 
@@ -27,7 +27,7 @@ export class CompoundAsn extends BreakpointAsn implements AstNode, Scope {
 
   getChildRange(first: AstNode, last: Scope): AstNode[] {
     const fst = this.children.indexOf(first);
-    const lst = this.children.indexOf(last as unknown as AstNode);
+    const lst = isAstNode(last) ? this.children.indexOf(last) : -1;
     return fst < lst ? this.children.slice(fst, lst + 1) : this.children.slice(lst, fst + 1);
   }
 
@@ -66,7 +66,7 @@ export class CompoundAsn extends BreakpointAsn implements AstNode, Scope {
 
   getAsserts() {
     const children = this.children;
-    let asserts = this.children.filter((c) => c instanceof AssertAsn) as AssertAsn[];
+    let asserts = this.children.filter((c) => c instanceof AssertAsn);
 
     for (const f of children.filter((c) => c instanceof CompoundAsn)) {
       asserts = asserts.concat(f.getAsserts());

@@ -20,7 +20,7 @@ export class AssertAsn extends BreakpointAsn implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
-    const test = this.scope as unknown as TestAsn;
+    const test = this.scope as TestAsn;
     const ignored = test.ignored;
     const expected = this.expected.compile();
     const actual = this.actual.compile();

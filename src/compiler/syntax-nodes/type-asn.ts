@@ -7,7 +7,7 @@ import { FunctionType } from "../../compiler/symbols/function-type";
 import { StringType } from "../../compiler/symbols/string-type";
 import {
   getGlobalScope,
-  isClassTypeDef,
+  isClass,
   isReifyableSymbolType,
 } from "../../compiler/symbols/symbol-helpers";
 import { TupleType } from "../../compiler/symbols/tuple-type";
@@ -42,7 +42,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
       return st.ofTypes.length;
     }
 
-    if (st instanceof ClassType && isClassTypeDef(st.scope)) {
+    if (st instanceof ClassType && isClass(st.scope)) {
       return st.scope.ofTypes.length;
     }
 

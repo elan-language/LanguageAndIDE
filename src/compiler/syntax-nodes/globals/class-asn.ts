@@ -70,11 +70,7 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
   }
 
   getChildren(): ElanSymbol[] {
-    return this.children as unknown as ElanSymbol[];
-  }
-
-  doesInherit(): boolean {
-    return this.getInheritanceItems().length > 0;
+    return this.children.filter((c) => isSymbol(c));
   }
 
   indent(): string {
@@ -84,7 +80,7 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
   properties(): (AbstractPropertyAsn | PropertyAsn)[] {
     return this.getChildren().filter(
       (c) => c instanceof PropertyAsn || c instanceof AbstractPropertyAsn,
-    ) as (AbstractPropertyAsn | PropertyAsn)[];
+    );
   }
 
   protected propertiesToInit() {
@@ -109,19 +105,13 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
   }
 
   public getDirectSuperClassesTypeAndName() {
-    if (this.doesInherit()) {
-      const superClasses = this.getInheritanceItems();
+    const superClasses = this.getSuperClasses(this);
 
-      if (superClasses.length > 0) {
-        const nodes = superClasses.filter((i) => isAstIdNode(i));
-        const typeAndName: [SymbolType, string][] = nodes
-          .map((n) => getGlobalScope(this).resolveSymbol(n.id, this))
-          .map((c) => this.mapSymbol(c));
+    const typeAndName = this.getSuperClassSymbols(superClasses, (_) => true).map((c) =>
+      this.mapSymbol(c),
+    );
 
-        return typeAndName;
-      }
-    }
-    return [];
+    return typeAndName;
   }
 
   protected seenTwice(name: string, seenNames: string[]) {
@@ -136,54 +126,52 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
     return `class ${name} { }\r\n`;
   }
 
+  private getSuperClassSymbols(
+    superClasses: AstNode[],
+    filter: (s: ElanSymbol) => boolean,
+  ): ClassAsn[] {
+    const nodes = superClasses.filter((i) => isAstIdNode(i));
+    const symbols = nodes.map((n) => getGlobalScope(this).resolveSymbol(n.id, this)).filter(filter);
+    return symbols as ClassAsn[];
+  }
+
+  private getSuperClasses(cf: ClassAsn) {
+    return cf.getInheritanceItems();
+  }
+
   public lookForCircularDependencies(cf: ClassAsn, seenNames: string[]): [boolean, string] {
-    if (cf.doesInherit()) {
-      const superClasses = cf.getInheritanceItems();
+    const superClasses = this.getSuperClasses(cf);
+    const symbols = this.getSuperClassSymbols(superClasses, (n) => n instanceof ClassAsn);
 
-      if (superClasses.length > 0) {
-        const nodes = superClasses.filter((i) => isAstIdNode(i));
-        const symbols = nodes
-          .map((n) => getGlobalScope(this).resolveSymbol(n.id, this))
-          .filter((n) => n instanceof ClassAsn);
-
-        for (const s of symbols) {
-          if (seenNames.includes(s.symbolId)) {
-            return [true, s.symbolId];
-          }
-          const seenNamesThisPath = seenNames.concat([s.symbolId]);
-          const [sd, name] = this.lookForCircularDependencies(s, seenNamesThisPath);
-          if (sd) {
-            return [sd, name];
-          }
-        }
+    for (const s of symbols) {
+      if (seenNames.includes(s.symbolId)) {
+        return [true, s.symbolId];
+      }
+      const seenNamesThisPath = seenNames.concat([s.symbolId]);
+      const [sd, name] = this.lookForCircularDependencies(s, seenNamesThisPath);
+      if (sd) {
+        return [sd, name];
       }
     }
+
     return [false, ""];
   }
 
   public getAllClasses(cf: ClassAsn, seenNames: string[], filter: (d: ClassAsn) => boolean) {
-    if (cf.doesInherit()) {
-      const superClasses = cf.getInheritanceItems();
+    const superClasses = this.getSuperClasses(cf);
 
-      // TODO move this (and similar elsewhere) to InheritsFromAsn ?
-      if (superClasses.length > 0) {
-        const nodes = superClasses.filter((i) => isAstIdNode(i));
-        const symbols = nodes
-          .map((n) => getGlobalScope(this).resolveSymbol(n.id, this))
-          .filter(
-            (n) => n instanceof ClassAsn && !this.seenTwice(n.symbolId, seenNames),
-          ) as ClassAsn[];
-        let allSymbols = symbols;
-        seenNames.push(cf.symbolId);
+    const symbols = this.getSuperClassSymbols(
+      superClasses,
+      (n) => n instanceof ClassAsn && !this.seenTwice(n.symbolId, seenNames),
+    );
+    let allSymbols = symbols;
+    seenNames.push(cf.symbolId);
 
-        for (const s of symbols) {
-          allSymbols = allSymbols.concat(this.getAllClasses(s, seenNames, filter));
-        }
-
-        return allSymbols.filter(filter);
-      }
+    for (const s of symbols) {
+      allSymbols = allSymbols.concat(this.getAllClasses(s, seenNames, filter));
     }
-    return [];
+
+    return allSymbols.filter(filter);
   }
 
   public getAllInterfaces(cf: ClassAsn, seenNames: string[]) {
@@ -201,7 +189,7 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
     const otherMatches = this.getParentScope().symbolMatches(id, all, this);
 
-    const symbols = this.getChildren().filter((f) => isSymbol(f)) as ElanSymbol[];
+    const symbols = this.getChildren().filter((f) => isSymbol(f));
 
     const types = this.getDirectSuperClassesTypeAndName()
       .map((tn) => tn[0])
