@@ -4,7 +4,7 @@ import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
 import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
 import { StdLib } from "../../compiler/standard-library/std-lib";
 import { TestStatus } from "../../compiler/test-status";
-import { isElanProduction } from "../environment";
+import { isElanProduction } from "../../environment";
 import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { File } from "../frames/frame-interfaces/file";
