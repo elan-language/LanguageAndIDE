@@ -6,6 +6,7 @@ import { DeconstructedSymbolType } from "../compiler-interfaces/deconstructed-sy
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { GenericSymbolType } from "../compiler-interfaces/generic-symbol-type";
 import { Member } from "../compiler-interfaces/member";
+import { Property } from "../compiler-interfaces/property";
 import { ReifyableSymbolType } from "../compiler-interfaces/reifyable-symbol-type";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { Scope } from "../compiler-interfaces/scope";
@@ -14,7 +15,6 @@ import { isRecord } from "../compiler-interfaces/type-options";
 import { ElanCompilerError } from "../elan-compiler-error";
 import { globalKeyword, libraryKeyword } from "../keywords";
 import { isAstIdNode, isAstQualifiedNode, isEmptyNode, isRoot } from "../syntax-nodes/ast-helpers";
-import { PropertyAsn } from "../syntax-nodes/class-members/property-asn";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { EnumAsn } from "../syntax-nodes/globals/enum-asn";
 import { TupleAsn } from "../syntax-nodes/globals/tuple-asn";
@@ -114,7 +114,7 @@ export function isCall(s?: ElanSymbol | Scope): s is CallAsn {
   return s instanceof CallAsn;
 }
 
-export function isProperty(s?: ElanSymbol): s is PropertyAsn {
+export function isProperty(s?: ElanSymbol): s is Property {
   return !!s && "isProperty" in s;
 }
 

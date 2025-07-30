@@ -5,6 +5,7 @@ import { symbolMatches } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { TupleType } from "../../../compiler/symbols/tuple-type";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
+import { Property } from "../../compiler-interfaces/property";
 
 export class TupleAsn implements Scope {
   constructor(
@@ -24,7 +25,7 @@ export class TupleAsn implements Scope {
     return [false, 0];
   }
 
-  typeToSymbol(id: string, t: SymbolType) {
+  typeToSymbol(id: string, t: SymbolType): Property {
     return {
       symbolId: id,
       symbolType: () => t,
