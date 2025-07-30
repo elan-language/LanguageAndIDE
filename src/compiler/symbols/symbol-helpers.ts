@@ -46,7 +46,7 @@ import { TupleType } from "./tuple-type";
 import { UnknownSymbol } from "./unknown-symbol";
 import { UnknownType } from "./unknown-type";
 
-// interfaces
+// interface type-guards
 
 export function isClass(f?: ElanSymbol | Scope): f is Class {
   return !!f && "isClass" in f;
@@ -54,6 +54,10 @@ export function isClass(f?: ElanSymbol | Scope): f is Class {
 
 export function isGenericClass(f?: ElanSymbol | Scope): f is Class {
   return isClass(f) && f.ofTypes?.length > 0;
+}
+
+export function isClassTypeDef(s?: ElanSymbol | Scope): s is Class {
+  return !!s && "updateOfTypes" in s;
 }
 
 export function isScope(f?: ElanSymbol | Scope): f is Scope {
@@ -64,36 +68,12 @@ export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolTyp
   return !!s && "symbolTypeFor" in s;
 }
 
-export function isListImmutableType(s?: SymbolType): s is ClassType {
-  return !!s && s instanceof ClassType && s.className === ListImmutableName;
-}
-
-export function isListType(s?: SymbolType): s is ClassType {
-  return !!s && s instanceof ClassType && s.className === ListName;
-}
-
-export function isIndexableType(s?: SymbolType): boolean {
-  return !!s?.typeOptions.isIndexable;
-}
-
-export function isDoubleIndexableType(s?: SymbolType): boolean {
-  return !!s?.typeOptions.isDoubleIndexable;
-}
-
-export function isIterableType(s?: SymbolType): boolean {
-  return !!s?.typeOptions.isIterable;
-}
-
 export function isSymbol(s?: ElanSymbol | AstNode): s is ElanSymbol {
   return !!s && "symbolId" in s && "symbolType" in s;
 }
 
 export function isGenericSymbolType(s?: SymbolType | GenericSymbolType): s is GenericSymbolType {
   return !!s && "ofTypes" in s;
-}
-
-export function isClassType(s?: SymbolType): s is ClassType {
-  return !!s && "inheritsFrom" in s;
 }
 
 export function isReifyableSymbolType(
@@ -110,6 +90,70 @@ export function isConstant(s?: ElanSymbol | Scope): s is Constant {
   return !!s && "isConstant" in s;
 }
 
+export function isProperty(s?: ElanSymbol): s is Property {
+  return !!s && "isProperty" in s;
+}
+
+export function isMember(f?: Member | ElanSymbol): f is Member {
+  return !!f && "isMember" in f;
+}
+
+// class type-guards
+
+export function isEnumDef(s?: ElanSymbol): s is EnumAsn {
+  return !!s && s instanceof EnumAsn;
+}
+
+export function isCall(s?: ElanSymbol | Scope): s is CallAsn {
+  return s instanceof CallAsn;
+}
+
+export function isListImmutableType(s?: SymbolType): s is ClassType {
+  return !!s && s instanceof ClassType && s.className === ListImmutableName;
+}
+
+export function isListType(s?: SymbolType): s is ClassType {
+  return !!s && s instanceof ClassType && s.className === ListName;
+}
+
+export function isClassType(s?: SymbolType): s is ClassType {
+  return !!s && "inheritsFrom" in s;
+}
+
+export function isNumber(s: SymbolType): s is IntType | FloatType {
+  return s instanceof IntType || s instanceof FloatType;
+}
+
+export function isFunctionType(s: SymbolType): s is FunctionType {
+  return s instanceof FunctionType;
+}
+
+// boolean checks
+
+export function isInsideClass(scope: Scope): boolean {
+  return getClassScope(scope) !== NullScope.Instance;
+}
+
+export function isPublicMember(s: ElanSymbol | Member): boolean {
+  return isMember(s) && !s.private;
+}
+
+export function isEnumValue(s?: ElanSymbol): boolean {
+  return s?.symbolType() instanceof EnumValueType;
+}
+
+export function isEnum(s?: ElanSymbol): boolean {
+  return s instanceof EnumAsn;
+}
+
+export function isOutParameter(s?: ElanSymbol): boolean {
+  return s?.symbolScope === SymbolScope.outParameter;
+}
+
+export function isParameter(s?: ElanSymbol): boolean {
+  return s?.symbolScope === SymbolScope.parameter;
+}
+
 export function isVariable(s?: ElanSymbol): boolean {
   return isDefinition(s) && s.isVariable();
 }
@@ -118,54 +162,122 @@ export function isLet(s?: ElanSymbol): boolean {
   return isDefinition(s) && s.isLet();
 }
 
-export function isCall(s?: ElanSymbol | Scope): s is CallAsn {
-  return s instanceof CallAsn;
+export function isIndexableType(s?: SymbolType): boolean {
+  return !!s?.typeOptions.isIndexable;
 }
 
-export function isProperty(s?: ElanSymbol): s is Property {
-  return !!s && "isProperty" in s;
+export function isDoubleIndexableType(s?: SymbolType): boolean {
+  return !!s?.typeOptions.isDoubleIndexable;
 }
 
-export function isOutParameter(s?: ElanSymbol): boolean {
-  return !!s && s.symbolScope === SymbolScope.outParameter;
+export function isIterableType(s?: SymbolType): boolean {
+  return !!s?.typeOptions.isIterable;
 }
 
-export function isParameter(s?: ElanSymbol): boolean {
-  return !!s && s.symbolScope === SymbolScope.parameter;
+export function isKnownType(symbolType: SymbolType): boolean {
+  return !(symbolType instanceof UnknownType);
 }
 
-export function isClassTypeDef(s?: ElanSymbol | Scope): s is Class {
-  return !!s && "updateOfTypes" in s;
+export function isDefinitionStatement(s: Scope): boolean {
+  return s instanceof AbstractDefinitionAsn || s instanceof EachAsn || s instanceof ForAsn;
 }
 
-export function isEnumValue(s?: ElanSymbol): boolean {
-  return !!s && s.symbolType() instanceof EnumValueType;
+export function isValueType(type: SymbolType): boolean {
+  return (
+    type instanceof IntType ||
+    type instanceof FloatType ||
+    type instanceof BooleanType ||
+    type instanceof StringType ||
+    type instanceof EnumType ||
+    type instanceof RegExpType
+  );
 }
 
-export function isEnum(s?: ElanSymbol): boolean {
-  return !!s && s instanceof EnumAsn;
+export function isProcedure(s: ElanSymbol): boolean {
+  return s.symbolType() instanceof ProcedureType;
 }
 
-export function isEnumDef(s?: ElanSymbol): s is EnumAsn {
-  return !!s && s instanceof EnumAsn;
+export function isFunction(s: ElanSymbol): boolean {
+  return s.symbolType() instanceof FunctionType;
 }
 
-export function isMember(f?: Member | ElanSymbol): f is Member {
-  return !!f && "isMember" in f;
+export function isPureFunction(s: ElanSymbol): boolean {
+  if (isFunction(s)) {
+    const ft = s.symbolType();
+    return ft instanceof FunctionType && ft.isPure;
+  }
+  return false;
 }
 
-export function isMemberOnFieldsClass(s: ElanSymbol, scope: Scope) {
+export function isSystemFunction(s: ElanSymbol): boolean {
+  if (isFunction(s)) {
+    const ft = s.symbolType();
+    return ft instanceof FunctionType && !ft.isPure;
+  }
+  return false;
+}
+
+export function isTypeName(s?: ElanSymbol): boolean {
+  return firstCharIsUpper(s?.symbolId ?? "");
+}
+
+export function isAbstractClass(s?: ElanSymbol): boolean {
+  return isClass(s) && s.isAbstract;
+}
+
+export function isNotInheritableClass(s?: ElanSymbol): boolean {
+  return isClass(s) && s.isNotInheritable;
+}
+
+export function isConcreteTypeName(s?: ElanSymbol): boolean {
+  return isTypeName(s) && !isAbstractClass(s);
+}
+
+export function isAbstractTypeName(s?: ElanSymbol): boolean {
+  return isTypeName(s) && isAbstractClass(s) && !isNotInheritableClass(s);
+}
+
+export function isNotInheritableTypeName(s?: ElanSymbol): boolean {
+  return isTypeName(s) && isAbstractClass(s) && isNotInheritableClass(s);
+}
+
+export function isId(f: ElanSymbol): boolean {
+  return (
+    isConstant(f) ||
+    isLet(f) ||
+    isVariable(f) ||
+    isParameter(f) ||
+    isOutParameter(f) ||
+    isProperty(f) ||
+    isEnumValue(f)
+  );
+}
+
+function isNotFuncOrProcOrType(s: ElanSymbol): boolean {
+  const st = s.symbolType();
+  return !(
+    st instanceof FunctionType ||
+    st instanceof ProcedureType ||
+    firstCharIsUpper(s.symbolId)
+  );
+}
+
+export function isPossibleExtensionForType(
+  actualType: SymbolType,
+  procType: ProcedureType,
+): boolean {
+  if (procType.parameterTypes.length > 0) {
+    const firstParmType = procType.parameterTypes[0];
+    return matchType(actualType, firstParmType);
+  }
+
+  return false;
+}
+
+export function isMemberOnFieldsClass(s: ElanSymbol, scope: Scope): boolean {
   const currentClass = getClassScope(scope);
   const matchingMember = currentClass.resolveSymbol(s.symbolId, scope);
   return isMember(s) && isMember(matchingMember) && s.getClass() === matchingMember.getClass();
-}
-
-export function isInsideClass(scope: Scope) {
-  return getClassScope(scope) !== NullScope.Instance;
-}
-
-export function isPublicMember(s: ElanSymbol | Member): boolean {
-  return isMember(s) && !s.private;
 }
 
 export function scopePrefix(
@@ -269,17 +381,6 @@ export function getClassScope(start: Scope): Class | NullScope {
   return getClassScope(start.getParentScope());
 }
 
-export function isValueType(type: SymbolType) {
-  return (
-    type instanceof IntType ||
-    type instanceof FloatType ||
-    type instanceof BooleanType ||
-    type instanceof StringType ||
-    type instanceof EnumType ||
-    type instanceof RegExpType
-  );
-}
-
 export function matchType(actualType: SymbolType, paramType: SymbolType): boolean {
   if (paramType.name === actualType.name) {
     return true;
@@ -296,70 +397,9 @@ export function matchType(actualType: SymbolType, paramType: SymbolType): boolea
   return false;
 }
 
-export function isPossibleExtensionForType(actualType: SymbolType, procType: ProcedureType) {
-  if (procType.parameterTypes.length > 0) {
-    const firstParmType = procType.parameterTypes[0];
-    return matchType(actualType, firstParmType);
-  }
-
-  return false;
-}
-
-export function isProcedure(s: ElanSymbol) {
-  return s.symbolType() instanceof ProcedureType;
-}
-
-export function isFunction(s: ElanSymbol) {
-  return s.symbolType() instanceof FunctionType;
-}
-
-export function isPureFunction(s: ElanSymbol) {
-  if (isFunction(s)) {
-    const ft = s.symbolType();
-    return ft instanceof FunctionType && ft.isPure;
-  }
-  return false;
-}
-
-export function isSystemFunction(s: ElanSymbol) {
-  if (isFunction(s)) {
-    const ft = s.symbolType();
-    return ft instanceof FunctionType && !ft.isPure;
-  }
-  return false;
-}
-
-export function isFunctionType(s: SymbolType): s is FunctionType {
-  return !!s && s instanceof FunctionType;
-}
-
 export function firstCharIsUpper(s: string) {
   const firstChar = s[0] ?? "";
   return firstChar.toUpperCase() === firstChar;
-}
-
-export function isTypeName(s?: ElanSymbol) {
-  return firstCharIsUpper(s?.symbolId ?? "");
-}
-
-export function isAbstractClass(s?: ElanSymbol) {
-  return isClass(s) && s.isAbstract;
-}
-
-export function isNotInheritableClass(s?: ElanSymbol) {
-  return isClass(s) && s.isNotInheritable;
-}
-
-export function isConcreteTypeName(s?: ElanSymbol) {
-  return isTypeName(s) && !isAbstractClass(s);
-}
-
-export function isAbstractTypeName(s?: ElanSymbol) {
-  return isTypeName(s) && isAbstractClass(s) && !isNotInheritableClass(s);
-}
-
-export function isNotInheritableTypeName(s?: ElanSymbol) {
-  return isTypeName(s) && isAbstractClass(s) && isNotInheritableClass(s);
 }
 
 export function matchingSymbolsWithQualifier(
@@ -488,18 +528,6 @@ export function symbolMatches(id: string, all: boolean, symbols: ElanSymbol[]) {
   return sw.concat(inc);
 }
 
-export function isId(f: ElanSymbol): f is ElanSymbol {
-  return (
-    isConstant(f) ||
-    isLet(f) ||
-    isVariable(f) ||
-    isParameter(f) ||
-    isOutParameter(f) ||
-    isProperty(f) ||
-    isEnumValue(f)
-  );
-}
-
 export function symbolScopeToFriendlyName(ss: SymbolScope) {
   switch (ss) {
     case SymbolScope.member:
@@ -530,15 +558,6 @@ export function parameterNames(st: SymbolType) {
     return descriptions;
   }
   return [];
-}
-
-function isNotFuncOrProcOrType(s: ElanSymbol) {
-  const st = s.symbolType();
-  return !(
-    st instanceof FunctionType ||
-    st instanceof ProcedureType ||
-    firstCharIsUpper(s.symbolId)
-  );
 }
 
 export function allScopedSymbols(scope: Scope, initialScope: Scope) {
@@ -579,18 +598,6 @@ export function mostPreciseSymbol(lhs: SymbolType, rhs: SymbolType): SymbolType 
   }
 
   return lhs;
-}
-
-export function isNumber(st: SymbolType) {
-  return st instanceof IntType || st instanceof FloatType;
-}
-
-export function knownType(symbolType: SymbolType) {
-  return !(symbolType instanceof UnknownType);
-}
-
-export function isDefinitionStatement(s: Scope): boolean {
-  return s instanceof AbstractDefinitionAsn || s instanceof EachAsn || s instanceof ForAsn;
 }
 
 export function allPropertiesInScope(scope: Scope) {
