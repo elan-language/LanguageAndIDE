@@ -21,8 +21,6 @@ import { EmptyAsn } from "../empty-asn";
 import { DefinitionAdapter } from "./definition-adapter";
 
 export abstract class AbstractDefinitionAsn extends BreakpointAsn implements ElanSymbol {
-  isStatement = true;
-
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }

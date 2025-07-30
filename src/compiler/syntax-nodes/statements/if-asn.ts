@@ -10,8 +10,6 @@ import { EmptyAsn } from "../empty-asn";
 import { ElseAsn } from "./else-asn";
 
 export class IfAsn extends CompoundAsn {
-  isStatement = true;
-
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
