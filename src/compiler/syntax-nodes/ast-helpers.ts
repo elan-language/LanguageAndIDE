@@ -60,38 +60,38 @@ export function isAstIdNode(n: AstNode | undefined): n is AstIdNode {
   return !!n && "id" in n;
 }
 
-export function isRoot(f?: Scope | AstNode): f is RootAstNode {
-  return !!f && "isRoot" in f;
+export function isRootNode(n?: Scope | AstNode): n is RootAstNode {
+  return !!n && "isRoot" in n;
 }
 
-export function isAstType(f?: AstNode): f is AstTypeNode {
-  return !!f && "compileToEmptyObjectCode" in f;
+export function isAstTypeNode(n?: AstNode): n is AstTypeNode {
+  return !!n && "compileToEmptyObjectCode" in n;
 }
 
 // type type-guards
 
-export function isConstructor(f?: AstNode | Scope | ElanSymbol): f is ConstructorAsn {
-  return f instanceof ConstructorAsn;
+export function isConstructor(n?: AstNode | Scope | ElanSymbol): n is ConstructorAsn {
+  return n instanceof ConstructorAsn;
 }
 
 export function isEmptyNode(n: AstNode): n is EmptyAsn {
   return n instanceof EmptyAsn;
 }
 
-export function isFunctionAsn(f?: Scope): f is FunctionAsn {
-  return f instanceof FunctionAsn;
+export function isFunctionScope(scope?: Scope): scope is FunctionAsn {
+  return scope instanceof FunctionAsn;
 }
 
-export function isFile(f?: Scope): f is FileAsn {
-  return f instanceof FileAsn;
+export function isFileScope(scope?: Scope): scope is FileAsn {
+  return scope instanceof FileAsn;
 }
 
 export function inFunctionScope(start: Scope): boolean {
-  if (isFunctionAsn(start)) {
+  if (isFunctionScope(start)) {
     return true;
   }
 
-  if (isFile(start)) {
+  if (isFileScope(start)) {
     return false;
   }
 

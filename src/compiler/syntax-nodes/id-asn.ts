@@ -6,7 +6,7 @@ import { NullScope } from "../../compiler/symbols/null-scope";
 import {
   getGlobalScope,
   isDeconstructedType,
-  isDefinitionStatement,
+  isDefinitionScope,
   isMemberOnFieldsClass,
   scopePrefix,
 } from "../../compiler/symbols/symbol-helpers";
@@ -66,7 +66,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
       return searchScope.resolveOwnSymbol(this.id);
     }
 
-    if (isDefinitionStatement(this.scope)) {
+    if (isDefinitionScope(this.scope)) {
       searchScope = this.scope.getParentScope();
     }
 

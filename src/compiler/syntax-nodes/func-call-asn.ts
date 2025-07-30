@@ -9,7 +9,7 @@ import { NullScope } from "../../compiler/symbols/null-scope";
 import {
   displayName,
   getGlobalScope,
-  isDefinitionStatement,
+  isDefinitionScope,
   isMemberOnFieldsClass,
   scopePrefix,
 } from "../../compiler/symbols/symbol-helpers";
@@ -62,7 +62,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
   getSymbolAndType(): [ElanSymbol, SymbolType] {
     let currentScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
 
-    if (isDefinitionStatement(currentScope)) {
+    if (isDefinitionScope(currentScope)) {
       currentScope = currentScope.getParentScope();
     }
     const funcSymbol = currentScope.resolveSymbol(this.id, this.scope);

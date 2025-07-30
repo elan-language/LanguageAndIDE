@@ -16,7 +16,12 @@ import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { isRecord } from "../compiler-interfaces/type-options";
 import { ElanCompilerError } from "../elan-compiler-error";
 import { globalKeyword, libraryKeyword } from "../keywords";
-import { isAstIdNode, isAstQualifiedNode, isEmptyNode, isRoot } from "../syntax-nodes/ast-helpers";
+import {
+  isAstIdNode,
+  isAstQualifiedNode,
+  isEmptyNode,
+  isRootNode,
+} from "../syntax-nodes/ast-helpers";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { EnumAsn } from "../syntax-nodes/globals/enum-asn";
 import { TupleAsn } from "../syntax-nodes/globals/tuple-asn";
@@ -48,16 +53,16 @@ import { UnknownType } from "./unknown-type";
 
 // interface type-guards
 
-export function isClass(f?: ElanSymbol | Scope): f is Class {
-  return !!f && "isClass" in f;
+export function isClass(s?: ElanSymbol | Scope): s is Class {
+  return !!s && "isClass" in s;
 }
 
-export function isGenericClass(f?: ElanSymbol | Scope): f is Class {
-  return isClass(f) && f.ofTypes?.length > 0;
+export function isGenericClass(s?: ElanSymbol | Scope): s is Class {
+  return isClass(s) && s.ofTypes?.length > 0;
 }
 
-export function isScope(f?: ElanSymbol | Scope): f is Scope {
-  return !!f && "resolveSymbol" in f && "getParentScope" in f;
+export function isScope(s?: ElanSymbol | Scope): s is Scope {
+  return !!s && "resolveSymbol" in s && "getParentScope" in s;
 }
 
 export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolType {
@@ -90,14 +95,14 @@ export function isProperty(s?: ElanSymbol): s is Property {
   return !!s && "isProperty" in s;
 }
 
-export function isMember(f?: Member | ElanSymbol): f is Member {
-  return !!f && "isMember" in f;
+export function isMember(s?: Member | ElanSymbol): s is Member {
+  return !!s && "isMember" in s;
 }
 
 // class type-guards
 
 export function isEnum(s?: ElanSymbol): s is EnumAsn {
-  return !!s && s instanceof EnumAsn;
+  return s instanceof EnumAsn;
 }
 
 export function isCall(s?: ElanSymbol | Scope): s is CallAsn {
@@ -105,15 +110,15 @@ export function isCall(s?: ElanSymbol | Scope): s is CallAsn {
 }
 
 export function isListImmutableType(s?: SymbolType): s is ClassType {
-  return !!s && s instanceof ClassType && s.className === ListImmutableName;
+  return s instanceof ClassType && s.className === ListImmutableName;
 }
 
 export function isListType(s?: SymbolType): s is ClassType {
-  return !!s && s instanceof ClassType && s.className === ListName;
+  return s instanceof ClassType && s.className === ListName;
 }
 
 export function isClassType(s?: SymbolType): s is ClassType {
-  return !!s && "inheritsFrom" in s;
+  return s instanceof ClassType;
 }
 
 export function isNumber(s: SymbolType): s is IntType | FloatType {
@@ -166,11 +171,11 @@ export function isIterableType(s?: SymbolType): boolean {
   return !!s?.typeOptions.isIterable;
 }
 
-export function isKnownType(symbolType: SymbolType): boolean {
-  return !(symbolType instanceof UnknownType);
+export function isKnownType(s: SymbolType): boolean {
+  return !(s instanceof UnknownType);
 }
 
-export function isDefinitionStatement(s: Scope): boolean {
+export function isDefinitionScope(s: Scope): boolean {
   return s instanceof AbstractDefinitionAsn || s instanceof EachAsn || s instanceof ForAsn;
 }
 
@@ -354,7 +359,7 @@ export function getGlobalScope(start: Scope): RootAstNode {
     throw new ElanCompilerError("Global scope not found");
   }
 
-  if (isRoot(start)) {
+  if (isRootNode(start)) {
     return start;
   }
 
