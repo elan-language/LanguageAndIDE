@@ -6,7 +6,7 @@
 <link href="../styles/colourScheme.css" rel="stylesheet" />
 <link href="../styles/documentation.css" rel="stylesheet" />
 <link href="../styles/elanStyle.css" rel="stylesheet" />
-<title>Elan IDE Reference</title>
+<title>Elan IDE Navigation</title>
 <script type="text/javascript" src="generated_toc.js"></script>
 </head>
 <body>
@@ -74,7 +74,7 @@ To access the <b>demo</b> or <b>file</b> menus via the keyboard:
 See also <a href="#debugging">Debugging programs</a>
 </div></div>
 </div></div>
- 
+
   <div class="accordion">
     <h2 class="acc-title" tabindex="0">Browse code</h2>
     <div class="acc-body">
@@ -82,7 +82,7 @@ See also <a href="#debugging">Debugging programs</a>
 
 <p>The code shown in the editor has three types:</p>
 <ul>
- <li><b>Instructions</b> begin with a dark blue keyword e.g: 
+ <li><b>Instructions</b> begin with a dark blue keyword e.g:
   <el-code source="prompts.elan"><el-statement id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>name</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>"<el-lit>Alice</el-lit>"</el-txt></el-field></el-statement></ed-code>
  <li><b>Comments</b> start with a hash # which is optionally followed by text:
 <el-code source="prompts.elan">
@@ -94,10 +94,9 @@ See also <a href="#debugging">Debugging programs</a>
 or like this when selected (though the specific keywords offered will depend upon the context):
 <el-code source="prompts.elan">
 <el-statement class="selected focused ok empty" id="select12" tabindex="0"><el-select><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
-</el-code> 
+</el-code>
 </ul>
 <p>Comments and <el-code>new code</el-code> prompts are <i>not</i> instructions &ndash; they do not alter the program's behaviour &ndash; but they are treated by the editor <i>like</i> instructions .</li></p>
-
 
 <h3 id="select_instructions">To select instruction(s)</h3>
 
@@ -109,14 +108,14 @@ or like this when selected (though the specific keywords offered will depend upo
     <tr><td>select the <i>first</i> instruction at the current level of indentation</td><td><b>Home</b></td><td></td><td></td></tr>
     <tr><td>select the <i>last</i> instruction at the current level of indentation</td><td><b>End</b></td><td></td><td></td></tr>
     <tr><td>select the <i>outer</i> instruction containing the current one</td><td><b>&larr;</b></td><td><td></td></td></tr>
-    <tr><td>select the <i>first inner</i> instruction contained by the current one</td><td><b>&rarr;</b></td><td></td><td></td></tr>  
+    <tr><td>select the <i>first inner</i> instruction contained by the current one</td><td><b>&rarr;</b></td><td></td><td></td></tr>
     <tr><td>add the <i>next</i> instruction to the current selection</td><td><b>Shift-&darr;</b></td><td><b>Shift</b>, and <b>click</b> on the <i>initial</i> keyword of the instruction or its number</td><td>limited to the current block of instructions</td></tr>
     <tr><td>add the <i>previous</i> instruction to the current selection</td><td><b>Shift-&uarr;</b></td><td><b>Shift</b>, and <b>click</b> on the <i>initial</i> keyword of the instruction or its number</td><td>limited to the current block of instructions</td></tr>
     <tr><td>toggle outlining on an individual instruction</td><td><a href="#select_instructions">select the instruction</a> then <b>Ctrl-o</b></td><td><b>double-click</b> on the inital keyword or instruction number</td><td></td></tr>
     <tr><td>toggle outlining for whole program</td><td><b>Ctrl-O</b> (same as <b>Ctrl-Shift-o</b>)</td><td><b>click</b> the <b>outline</b> button</td><td></td></tr>
   </table>
  </div></div>
- 
+
 <div class="accordion">
   <h2 class="acc-title" tabindex="0" id="create_instruction">Create New Instructions</h2>
   <div class="acc-body">
@@ -134,7 +133,7 @@ or like this when selected (though the specific keywords offered will depend upo
       <tr><td>select <i>any field</i> within an instruction</td><td></td><td><b>click</b> anywhere on the text, or placeholder, for that field.</td><td>Text cursor will be placed at the end of the field</td></tr>
         <tr><td>select the <i>first field</i> in a <i>selected</i> instruction</td><td><b>Tab</b></td><td></td><td></td></tr>
         <tr><td>select the <i>next field</i> in the same instruction</td><td><b>Tab</b></td><td></td><td>will cycle through the fields and back to the whole instruction.</td></tr>
-        <tr><td>select the <i>previous field</i> in the same instruction</td><td><b>Shift-Tab</b></td><td></td><td>will cycle through the fields and back to the whole instruction.</td></tr>  
+        <tr><td>select the <i>previous field</i> in the same instruction</td><td><b>Shift-Tab</b></td><td></td><td>will cycle through the fields and back to the whole instruction.</td></tr>
         <tr><td>select specific <i>text within</i> a field </td><td><b>Shift-&larr; or &rarr;</b></td><td><b>click</b> and <b>drag</b> across the desired characters</td><td></td></tr>
         <tr><td>select <i>all text</i> within a field</td><td><b>Ctrl-a</b></td><td></td></tr>
         <tr><td>position text-cursor at the start of a selected field</td><td><b>Home</b><td><b>click</b> anywhere within the selected field</td></td><td></td></tr>
@@ -170,7 +169,8 @@ or like this when selected (though the specific keywords offered will depend upo
     <tr><td>one or more (adjacent) existing instructions</td><td><a href="#select_instructions">select the instruction(s)</a> then <b>Ctrl-Delete</b> or <b>Ctrl-Backspace</b></td><td>Deleting a compound instruction will delete all its contained instructions with it</td></tr>
     <tr><td>a just-created instruction</td><td><b>Backspace</b></td><td>this works only if no fields have been entered or 'child' instructions added</td></tr>
     <tr><td>a 'new code' prompt that is not needed</td><td>delete the same way as an instruction</td><td></td></tr>
-    <tr><td>all 'new code' prompts</td><td>Use the <b>Trim</b> button</td><td>will remove all 'new code' prompts <i>except</i> in places where further instructions are required (for example so as not to leave an empty loop)</td></tr>
+    <tr><td>all 'new code' prompts</td><td>Use the <b>Trim</b> button</td><td>will remove all 'new code' prompts <i>except</i> in places where further instructions are required<br>
+     (for example so as not to leave an empty loop)</td></tr>
   </table>
   </div>
 
@@ -243,14 +243,15 @@ or like this when selected (though the specific keywords offered will depend upo
     <table>
       <tr><th>To...</th><th>Keyboard shortcut</th><th>Mouse gesture</th></tr>
       <tr><td>navigate to a specific line in the 'symbol dump' when paused</td><td><b>Tab</b> / <b>Shift-Tab</b></td><td>Click on the line</td></tr>
-      <tr><td>expand/collapse a specific symbol within the symbol dump</td><td><b>Enter</b></td><td>Click on the <b>+</b> or <b>-</b> at the start of the line</td></tr>  
-    </table>
+
+      <tr><td>expand/collapse a specific symbol within the symbol dump</td><td><b>Enter</b></td><td>Click on the <b>+</b> or <b>-</b> at the start of the line</td></tr>
+   </table>
 
 <h3>Using breakpoints</h3>
 <p><i>Before</i> pressing <b>debug</b>, a breakpoint may be set on one or more instructions. When run using <b>debug</b> the program
-will automatically pause on any breakpoint. Breakpoint-related actions require opening the 'context menu' on an instruction, 
-<i>either</i> via a mouse <b>right-click</b> on the instruction, or by 
-  <a href="#select_instructions">selecting the instruction</a> and then press <b>Ctrl-m</b>.</p>
+will automatically pause on any breakpoint. Breakpoint-related actions require opening the 'context menu' on an instruction,
+<i>either</i> via a mouse <b>right-click</b> on the instruction, or by
+ <a href="#select_instructions">selecting the instruction</a> and then press <b>Ctrl-m</b>.</p>
   <table>
     <tr><th>To...</th><th>Keyboard shortcut</th><th>Mouse gesture</th></tr>
     <tr><td>set a breakpoint on a <i>selected</i> instruction</td><td><b>Ctrl-m</b> for context menu, then select <b>set breakpoint</b></td><td><b>right-click</b> for context menu, then select <b>set breakpoint</b></td></tr>
