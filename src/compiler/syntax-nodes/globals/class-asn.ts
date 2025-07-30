@@ -70,7 +70,7 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
   }
 
   getChildren(): ElanSymbol[] {
-    return this.children as unknown as ElanSymbol[];
+    return this.children.filter((c) => isSymbol(c));
   }
 
   doesInherit(): boolean {

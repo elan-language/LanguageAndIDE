@@ -22,7 +22,7 @@ export class MainAsn extends CompoundAsn implements AstNode {
   }
 
   debugSymbols() {
-    return () => allScopedSymbols(this.getParentScope(), this as unknown as Scope);
+    return () => allScopedSymbols(this.getParentScope(), this);
   }
 
   compile(): string {

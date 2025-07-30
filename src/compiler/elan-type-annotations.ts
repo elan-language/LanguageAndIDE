@@ -14,6 +14,7 @@ import {
   isProcedureDescriptor,
   TypeDescriptor,
 } from "./compiler-interfaces/elan-type-interfaces";
+import { Property } from "./compiler-interfaces/property";
 import { Scope } from "./compiler-interfaces/scope";
 import { SymbolType } from "./compiler-interfaces/symbol-type";
 import { getTypeOptions, noTypeOptions, TypeOptions } from "./compiler-interfaces/type-options";
@@ -787,8 +788,7 @@ export function getSymbol(
   }
 
   if (mt === MemberType.property) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (symbol as any)["isProperty"] = true;
+    (symbol as Property)["isProperty"] = true;
   }
 
   return symbol;

@@ -16,6 +16,7 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { isAstNode } from "./ast-helpers";
 import { PropertyAsn } from "./class-members/property-asn";
 
 export class BreakpointAsn extends AbstractAstNode implements AstNode, Scope {
@@ -80,8 +81,12 @@ export class BreakpointAsn extends AbstractAstNode implements AstNode, Scope {
     return this;
   }
 
+  parentIndent(): string {
+    return isAstNode(this.scope) ? this.scope.indent() : "";
+  }
+
   indent(): string {
-    return (this.scope as unknown as AstNode).indent() + this.singleIndent();
+    return this.parentIndent() + this.singleIndent();
   }
 
   isNotGlobalOrLib(s: ElanSymbol) {

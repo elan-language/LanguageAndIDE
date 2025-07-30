@@ -44,6 +44,10 @@ import { OperationSymbol } from "./operation-symbol";
 
 // interface type guards
 
+export function isAstNode(n: AstNode | Scope): n is AstNode {
+  return !!n && "compile" in n && "fieldId" in n && "indent" in n;
+}
+
 export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
   return !!n && "qualifier" in n;
 }

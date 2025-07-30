@@ -69,7 +69,7 @@ export function isDeconstructedType(s?: SymbolType): s is DeconstructedSymbolTyp
   return !!s && "symbolTypeFor" in s;
 }
 
-export function isSymbol(s?: ElanSymbol | AstNode): s is ElanSymbol {
+export function isSymbol(s?: ElanSymbol | AstNode | Scope): s is ElanSymbol {
   return !!s && "symbolId" in s && "symbolType" in s;
 }
 
@@ -194,8 +194,8 @@ export function isProcedure(s: ElanSymbol): boolean {
   return s.symbolType() instanceof ProcedureType;
 }
 
-export function isFunction(s: ElanSymbol): boolean {
-  return s.symbolType() instanceof FunctionType;
+export function isFunction(s: ElanSymbol | Scope): boolean {
+  return isSymbol(s) && s.symbolType() instanceof FunctionType;
 }
 
 export function isPureFunction(s: ElanSymbol): boolean {

@@ -90,7 +90,7 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
     // up two or we just get the parameter again
     const parentScope = this.getParentScope();
 
-    if (isFunction(parentScope as unknown as ElanSymbol) || isConstructor(parentScope)) {
+    if (isFunction(parentScope) || isConstructor(parentScope)) {
       const symbol = parentScope.resolveSymbol(id, this);
       if (symbol.symbolScope === SymbolScope.outParameter) {
         mustNotBeOutParameter(this.compileErrors, this.fieldId);
