@@ -3,6 +3,7 @@ import { AstNode } from "../compiler-interfaces/ast-node";
 import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { Class } from "../compiler-interfaces/class";
 import { DeconstructedSymbolType } from "../compiler-interfaces/deconstructed-symbol-type";
+import { Definition } from "../compiler-interfaces/definition";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { GenericSymbolType } from "../compiler-interfaces/generic-symbol-type";
 import { Member } from "../compiler-interfaces/member";
@@ -102,12 +103,16 @@ export function isReifyableSymbolType(
   return !!s && "reify" in s;
 }
 
+export function isDefinition(s?: ElanSymbol): s is Definition {
+  return !!s && "isLet" in s && "isVariable" in s;
+}
+
 export function isVariable(s?: ElanSymbol): boolean {
-  return (s instanceof AbstractDefinitionAsn || s instanceof DefinitionAdapter) && s.isVariable();
+  return isDefinition(s) && s.isVariable();
 }
 
 export function isLet(s?: ElanSymbol): boolean {
-  return (s instanceof AbstractDefinitionAsn || s instanceof DefinitionAdapter) && s.isLet();
+  return isDefinition(s) && s.isLet();
 }
 
 export function isCall(s?: ElanSymbol | Scope): s is CallAsn {

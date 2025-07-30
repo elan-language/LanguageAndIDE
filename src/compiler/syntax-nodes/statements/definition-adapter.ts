@@ -2,8 +2,9 @@ import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { getDeconstructionIds, isLet, isVariable } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
+import { Definition } from "../../compiler-interfaces/definition";
 
-export class DefinitionAdapter implements ElanSymbol {
+export class DefinitionAdapter implements Definition {
   constructor(
     private readonly adapted: ElanSymbol,
     index: number,
