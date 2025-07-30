@@ -3,6 +3,8 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { UnknownType } from "../../../compiler/symbols/unknown-type";
 import { getId, mustBeUniqueValueInScope, mustNotBeKeyword } from "../../compile-rules";
+import { EnumValueType } from "../../symbols/enum-value-type";
+import { SymbolScope } from "../../symbols/symbol-scope";
 import { AbstractAstNode } from "../abstract-ast-node";
 import { isAstCollectionNode } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
@@ -23,6 +25,14 @@ export class EnumValuesAsn extends AbstractAstNode implements AstNode {
       return items.map((i) => getId(i));
     }
     return [];
+  }
+
+  getSymbols(typeName: string) {
+    return this.names.map((n) => ({
+      symbolId: n,
+      symbolType: () => new EnumValueType(typeName, n),
+      symbolScope: SymbolScope.program,
+    }));
   }
 
   compile(): string {

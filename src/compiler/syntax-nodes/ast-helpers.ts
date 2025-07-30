@@ -36,6 +36,7 @@ import { ConstructorAsn } from "./class-members/constructor-asn";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { EmptyAsn } from "./empty-asn";
+import { EnumValuesAsn } from "./fields/enum-values-asn";
 import { FileAsn } from "./file-asn";
 import { FunctionAsn } from "./globals/function-asn";
 import { IndexAsn } from "./index-asn";
@@ -88,6 +89,10 @@ export function isFunctionScope(scope?: Scope): scope is FunctionAsn {
 
 export function isFileScope(scope?: Scope): scope is FileAsn {
   return scope instanceof FileAsn;
+}
+
+export function isEnumValuesAsn(n: AstNode): n is EnumValuesAsn {
+  return n instanceof EnumValuesAsn;
 }
 
 export function inFunctionScope(start: Scope): boolean {

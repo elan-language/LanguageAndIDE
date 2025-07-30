@@ -169,7 +169,7 @@ export class System {
       return i1 === i2;
     }
 
-    return this.objectEquals(i1, i2); // todo
+    return this.objectEquals(i1, i2);
   }
 
   objectEquals(o1: any, o2: any) {

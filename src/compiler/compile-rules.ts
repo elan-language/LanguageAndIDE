@@ -597,14 +597,12 @@ function FailNotAssignable(
   compileErrors: CompileError[],
   location: string,
 ) {
-  let addInfo = "";
-  // special case
-  // todo fix
-  if (isListImmutableType(lhs) && isListType(rhs)) {
-    addInfo = " try converting with '.asListImmutable()'";
-  }
-
   if (isKnownType(lhs) && isKnownType(rhs)) {
+    // special case
+    const addInfo =
+      isListImmutableType(lhs) && isListType(rhs)
+        ? " try converting with '.asListImmutable()'"
+        : "";
     compileErrors.push(new TypesCompileError(rhs.name, lhs.name, addInfo, location));
   }
 }
