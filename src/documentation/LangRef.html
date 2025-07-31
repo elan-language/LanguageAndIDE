@@ -2,9 +2,9 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en-GB">
 <head>
-<link href="../styles/colourScheme.css" rel="stylesheet" />
-<link href="../styles/documentation.css" rel="stylesheet" />
-<link href="../styles/elanStyle.css" rel="stylesheet" />
+<link href="../ide/styles/colourScheme.css" rel="stylesheet" />
+<link href="../ide/styles/documentation.css" rel="stylesheet" />
+<link href="../ide/styles/elanStyle.css" rel="stylesheet" />
 <title>Elan Language Reference</title>
 <script type="text/javascript" src="generated_toc.js"></script>
 </head>
@@ -480,7 +480,7 @@ the correct types must be provided, for example, if the class <el-type>Square</e
 <el-code>property head as Square</el-code><br>
 <el-code>property body as [Square]</el-code><br>
 <ul>
-<li>A <el-kw>property</el-kw> is defined on a <span class="Link">Class</span> and must <el-code>specify</el-code> a name (conforming to the rules for an <a href="#identifier">Identifier</a>) and a Type.</li>
+<li>A <el-kw>property</el-kw> is defined on a <span class="Link">Class</span> and must <el-code>specify</el-code> a name (conforming to the rules for an <a href="#Identifier">Identifier</a>) and a Type.</li>
 <li>A <el-kw>property</el-kw> may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and pressing Ctrl-p. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 <li>If not marked <el-code>private</el-code>, a property may be read but not be written to. Properties may only be modified from outside the class by means of a <span class="Link">Procedure method</span>.</li>
 <li>A property may be given an initial value in the <el-code>constructor</el-code>.</li>
@@ -786,7 +786,6 @@ For more about ListImmutable and DictionaryImmutable literals see the <a href="L
   Once a named value has been defined, it can be referred to by the name.</p>
 
 <div id="parse_name"></div>
-<div id="identifier"></div><!-- Make both of these spellings work for the moment -->
 <h2 id="Identifier">Identifier</h2>
 <p>For all kinds of named values, the name must follow the rules for an &lsquo;identifier&rsquo;.
   It must start with a lower case letter, followed by any combination of lower case and upper case letters,
@@ -1333,12 +1332,12 @@ as well a from the <el-code>new code</el-code> prompt, i.e. every <a href="IDEGu
  followed by a space and then one or more Type names separated by commas.</p>
 
 <h3 id="MethodNameField" class="no-TOC">'name' field in a function or procedure definition</h3>
- <p>A method name must follow the rules for an <a href="#identifier">identifier</a>.</p>
+ <p>A method name must follow the rules for an <a href="#Identifier">identifier</a>.</p>
 
 <h3 id="ParamListField" class="no-TOC">'parameter definitions' in a function or procedure definition</h3>
  <p>Each parameter definition takes the form:</p>
  <el-code><el-id>name</el-id> <el-kw>as</el-kw> <el-type>Type</el-type></el-code>
- <p>The name must follow the rules for an <a href="#identifier">identifier</a>.</p>
+ <p>The name must follow the rules for an <a href="#Identifier">identifier</a>.</p>
  <p>The Type must follow the rules for a <a href="#parse_type">Type</a>.</p>
  <p>If more than one parameter is defined, the definitions must be separated by commas.</p>
 
