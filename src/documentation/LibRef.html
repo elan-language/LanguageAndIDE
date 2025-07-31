@@ -2,9 +2,9 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en-GB">
 <head>
-<link href="../styles/colourScheme.css" rel="stylesheet" />
-<link href="../styles/documentation.css" rel="stylesheet" />
-<link href="../styles/elanStyle.css" rel="stylesheet" />
+<link href="../ide/styles/colourScheme.css" rel="stylesheet" />
+<link href="../ide/styles/documentation.css" rel="stylesheet" />
+<link href="../ide/styles/elanStyle.css" rel="stylesheet" />
 <title>Elan Library Reference</title>
 <script type="text/javascript" src="generated_toc.js"></script>
 </head>
@@ -26,7 +26,7 @@
   <th>default value</th>
 </tr><tr>
   <td><el-type>Int</el-type></td>
-  <td><el-code>variable maxNumber set to 10</el-code></td>
+  <td><el-code>let maxNumber be 10</el-code></td>
   <td>0</td>
 </tr><tr>
   <td><el-type>Int</el-type></td>
@@ -97,7 +97,7 @@ in the range:</li>
   <th>default value</th>
 </tr><tr>
   <td><el-type>Float</el-type></td>
-  <td><el-code>variable phi set to 1.618</el-code></td>
+  <td><el-code>let phi be 1.618033988749895</el-code></td>
   <td>0.0</td>
 </tr><tr>
   <td><el-type>Float</el-type></td>
@@ -165,7 +165,7 @@ in the range:</li>
   <th>default value</th>
 </tr><tr>
   <td><el-type>Boolean</el-type></td>
-  <td><el-code>variable fact set to <el-id>true</el-id></el-code></td>
+  <td><el-code>variable done set to <el-id>true</el-id></el-code></td>
   <td><el-code><el-id>false</el-id></el-code></td>
 </tr>
 </table>
@@ -196,8 +196,12 @@ in the range:</li>
   <th>default value</th>
 </tr><tr>
   <td><el-type>String</el-type></td>
+  <td><el-code>let title be "Ulysses"</el-code></td>
+  <td><el-code>"", (the empty string)</el-code></td>
+</tr><tr>
+  <td><el-type>String</el-type></td>
   <td><el-code>variable greeting set to "hello"</el-code></td>
-  <td><el-code>"", i.e. the empty string</el-code></td>
+  <td><el-code>""</el-code></td>
 </tr>
 </table>
 
@@ -349,66 +353,78 @@ Instead, you use the constants <el-code><el-id>quotes</el-id></el-code>, <el-cod
 <a href="LangRef.html#Identifier">Identifiers</a> can only contain letters (without accents), numbers and underscore.</p>
 
 <h2 id="Tuple">Tuple</h2>
-A tuple< is a way of holding a small number of values as a single reference. It differs from a List in that:
-
-- A tuple may hold elements of <i>different</i> types
-- A tuple is <i>immutable</i> - you may read, but not modify, the values that they contain.
-
-A tuple may be considered a lightweight alternative to defining a specific class for some purposes. 
-Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold. Common uses include:
+<p>A <el-code>Tuple</el-code> is a way of holding a small number of values of differing Types together as a single reference.
+It may be considered a lightweight alternative to defining a specific class for some purposes.
+Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold.
+Common uses include:</p>
 <ul>
  <li>Holding a pair of x,y coordinates (each of Type <el-type>Float</el-type>) as a single unit.</li>
  <li>Allowing a function to pass back a result comprised of both a message in a <el-type>String</el-type> and a <el-type>Boolean</el-type> indicating whether the operation was successful.</li>
- <li>Returning both an updated copy of an immutable data structure and the value of an element from it, e.g. from method <el-method>pop</el-method> on a Stack.</li>
+ <li>Returning both an updated copy of an immutable data structure and the value of an element from it, e.g. from method <el-method>pop</el-method> on a <a href="#Stack"><el-method> Stack</el-method></a>.</li>
+</ul>
+A Tuple differs from a List in that:
+<ul>
+ <li>A Tuple may hold elements of <i>different</i> Types</li>
+ <li>A Tuple is <i>immutable</i> &ndash; you may read, but not modify, the values that it contains.</li>
 </ul>
 
-<h3 class="no-TOC">Defining a tuple</h3>
-<p>A new tuple is defined using this syntax:</p>
+<h3 class="no-TOC">Defining a Tuple</h3>
+<p>A new Tuple is defined using this syntax:</p>
 
 <elan-code-block>
-  <el-statement class="selected focused ok" id="let10" tabindex="-1"><el-kw>let </el-kw><el-field id="var11" class="ok" tabindex="-1"><el-txt><el-id>t1</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-kw>tuple</el-kw>(<el-lit>3</el-lit>, "<el-lit>apple</el-lit>", <el-id>true</el-id>)</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#let" target="help-iframe" tabindex="-1">?</a></el-help><el-msg></el-msg><el-fr>2</el-fr></el-statement>
+<el-statement id="let10" tabindex="-1"><el-kw>let </el-kw><el-field id="var11" class="ok" tabindex="-1"><el-txt><el-id>t1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-kw>tuple</el-kw>(<el-lit>3</el-lit>, "<el-lit>apple</el-lit>", <el-id>true</el-id>)</el-txt></el-field></el-statement>
 </elan-code-block>
 
-Note that the elements may be literal or named values. An element within a tuple may even be another tuple.
+<p>Note that the elements may be literal or named values. An element within a Tuple may even be another Tuple.</p>
 
-<h3 class="no-TOC">Passing a tuple to/from a function</h3>
-<p>You may pass a tuple into a function, or return one from a function. The type of a tuple is specified
-  in round brackets, contain the <comma-separated></comma-separated> types for each element in order, for example:
-
-<el-code-block>
-  <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident19" class="ok" tabindex="-1"><el-txt>distanceBetween</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#MethodNameField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-method>(<el-field id="params20" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-kw> returns </el-kw><el-field id="type21" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt><el-place><i>Type</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#TypeField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#function" target="help-iframe" tabindex="-1">?</a></el-help><el-msg></el-msg></el-top>
-</el-code-block>
-
-<h3 class="no-TOC">Deconstructing a tuple</h3>
-<p>An existing <el-code>tuple</el-code> (for example <el-code>point1 </el-code>below) may be deconstructed into new variables or named values (where the number of variables or names must match the number of elements in the <el-code>tuple</el-code>): </p>
-<el-code>let x, y set to point1</el-code><br>
-<el-code>variable x, y set to point1</el-code>
-<p>
-or into existing variables of the correct Type:</p>
-<el-code>variable a set to 3</el-code><br>
-<el-code>variable b set to 4</el-code><br>
-<el-code>set a, b to point1</el-code>
-<p>The 'discard' symbol <el-code>_</el-code> (underscore) may also be used when deconstructing a tuple when there is no need to capture specific elements:</p>
-<el-code>variable x, _ set to point1</el-code><br>
-<el-code>variable _, y set to point1</el-code>
-
-Where it is not convenient to use tuple deconstruction, or not possible (for example within a lambda) then individual elements
-may be accessed using the 'dotted' properties <el-id>item0</el-id>, <el-id>item1</el-id>, <el-id>item2</el-id> etc - which will be listed as
-options in the auto-completion drop down for a tuple, for example:
+<h3 class="no-TOC">Passing a Tuple to or from a function</h3>
+<p>You may pass a Tuple into a function, or return one from a function. The Type of a Tuple is specified
+  in round brackets, containing the comma-separated Types for each element in order, for example:</p>
 
 <el-code-block>
-  <el-func class="ok multiline" id="func17" tabindex="-1">
-    <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident19" class="ok" tabindex="-1"><el-txt>distanceBetween</el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#MethodNameField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-method>(<el-field id="params20" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt><el-place><i>parameter definitions</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-kw> returns </el-kw><el-field id="type21" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt><el-place><i>Type</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#TypeField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-msg></el-msg><el-fr>1</el-fr></el-top>
-    <el-statement class="ok" id="return22" tabindex="-1"><el-kw>return </el-kw><el-field id="expr23" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>((<el-id>p2</el-id>.<el-id>item0</el-id> - <el-id>p1</el-id>.<el-id>item0</el-id>)^<el-lit>2</el-lit> - (<el-id>p2</el-id>.<el-id>item1</el-id> - <el-id>p1</el-id>.<el-id>item1</el-id>)^<el-lit>2</el-lit>)</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-msg></el-msg><el-fr>2</el-fr></el-statement>
-    <el-kw>end function</el-kw>
-  </el-func>
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident19" class="ok" tabindex="-1"><el-txt>distanceBetween</el-txt></el-field></el-method>(<el-field id="params20" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type21" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field></el-top>
 </el-code-block>
 
+<h3 class="no-TOC">Deconstructing a Tuple</h3>
+
+<p>The Tuple <el-code>point</el-code> defined by:</p>
+<el-code-block source="tuples1.elan">
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>tuple</el-kw>(<el-lit>3</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field></el-statement>
+</el-code-block>
+<p> may be deconstructed into new variables or named values where the number of variables or names must match the number of elements in the Tuple, for example:</p>
+
+
+<el-code-block source="tuples1.elan">
+<el-statement class="ok" id="let6" tabindex="-1"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>x1</el-id>, <el-id>y1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="var11" tabindex="-1"><el-kw>variable </el-kw><el-field id="var12" class="ok" tabindex="-1"><el-txt><el-id>x2</el-id>, <el-id>y2</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr13" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="set23" tabindex="-1"><el-kw>set </el-kw><el-field id="ident24" class="ok" tabindex="-1"><el-txt><el-id>x2</el-id>, <el-id>y2</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr25" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field></el-statement>
+</el-code-block>
+
+<p>The 'discard' symbol <el-code>_</el-code> (underscore) may also be used when deconstructing a Tuple when there is no need to capture some of its elements:</p>
+
+<el-code-block source="tuples1.elan">
+<el-statement class="ok" id="var16" tabindex="-1"><el-kw>variable </el-kw><el-field id="var17" class="ok" tabindex="-1"><el-txt><el-id>x3</el-id>, _</el-txt></el-field><el-kw> set to </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="var19" tabindex="-1"><el-kw>variable </el-kw><el-field id="var20" class="ok" tabindex="-1"><el-txt>_, <el-id>y3</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field></el-statement>
+</el-code-block>
+
+Where it is not convenient to use Tuple deconstruction (or not possible, e.g. within a lambda) then individual elements
+may be accessed using the special properties <el-id>item0</el-id>, <el-id>item1</el-id>, <el-id>item2</el-id>,...  with the dot notation,
+for example:
+
+<el-code-block source="tuples1.elan">
+<el-func class="ok multiline" id="func17" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident19" class="ok" tabindex="-1"><el-txt>distanceBetween</el-txt></el-field></el-method>(<el-field id="params20" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type21" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field></el-top>
+<el-statement class="ok" id="return22" tabindex="-1"><el-kw>return </el-kw><el-field id="expr23" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>((<el-id>p2</el-id>.<el-id>item0</el-id> - <el-id>p1</el-id>.<el-id>item0</el-id>)^<el-lit>2</el-lit> - (<el-id>p2</el-id>.<el-id>item1</el-id> - <el-id>p1</el-id>.<el-id>item1</el-id>)^<el-lit>2</el-lit>)</el-txt></el-field></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
+</el-code-block>
+
+<p>Note that the appropriate <el-id>itemN</el-id>s will be listed in the Editor's drop-down menu options for the referenced Tuple.</p>
 <h4 class="no-TOC">Notes</h4>
 <ul>
-<li>As in most languages, an Elan <el-code>tuple</el-code> is immutable. Once defined they are effectively 'read only'. You cannot alter any of the elements in a <el-code>tuple</el-code> nor (unlike a <el-type>List</el-type>) can you create a new <el-code>tuple</el-code> from an existing one with specified differences.</li>
-<li>You cannot deconstruct a <el-code>tuple</el-code> into a mixture of new and existing variables.</li>
-<li>They may be nested: you can define a <el-code>tuple</el-code> within a <el-code>tuple</el-code>.</li>
+<li>As in most languages, an Elan <el-code>Tuple</el-code> is immutable. Once defined Tuples are effectively read-only. You cannot alter any of the elements in a Tuple nor (unlike a <el-type>List</el-type>) can you create a new Tuple from an existing one with specified differences.</li>
+<li>You cannot deconstruct a Tuple into a mixture of new and existing variables.</li>
+<li>Tuples may be nested: you can define a Tuple within a Tuple.</li>
 </ul>
 
 <h1 id="StandardDataStructures">Standard (mutable) data structures</h1>
@@ -1930,16 +1946,27 @@ the URL as a <el-type>String</el-type>, either as a literal (by surrounding it w
 </el-code-block>
 <p>The properties are listed in <a href="#Properties_VG">Vector Graphics Properties</a>.</p>
 
-<h2>Sound</h2>
+<h2 id="tone">Sound</h2>
 
-The <el-method>tone</el-method> procedure allows the generation of a simple tone. It requires three arguments to be provided:
+<p>The <el-method>tone</el-method> procedure allows the generation of a simple tone. It requires three arguments to be provided:</p>
+<ul>
+ <li>the duration of the generated tone specified in milliseconds (<el-type>Int</el-type>)</li>
+ <li>the frequency of the generated tone in Hertz (<el-type>Int</el-type>)</li>
+ <li>the volume of the tone (<el-type>Float</el-type>)</li>
+</ul>
+<p>Note that the volume paramater is only relative in that the actual volume will be modified by the various sound settings on the output device, and may even be muted.
+An example that plays a C major scale:</p>
+<el-code-block source="sound.elan">
+<el-statement class="ok" id="let39" tabindex="-1"><el-kw>let </el-kw><el-field id="var40" class="ok" tabindex="-1"><el-txt><el-id>scale</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr41" class="ok" tabindex="-1"><el-txt>[<el-lit>262</el-lit>, <el-lit>294</el-lit>, <el-lit>330</el-lit>, <el-lit>349</el-lit>, <el-lit>392</el-lit>, <el-lit>440</el-lit>, <el-lit>494</el-lit>, <el-lit>523</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let42" tabindex="-1"><el-kw>let </el-kw><el-field id="var43" class="ok" tabindex="-1"><el-txt><el-id>quaver</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr44" class="ok" tabindex="-1"><el-txt><el-lit>250</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="let45" tabindex="-1"><el-kw>let </el-kw><el-field id="var46" class="ok" tabindex="-1"><el-txt><el-id>volume</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr47" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit>.5</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="for48" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident50" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr51" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr52" class="ok" tabindex="-1"><el-txt><el-id>scale</el-id>.<el-method>length</el-method>() - <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr53" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
+<el-statement class="ok" id="call54" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident55" class="ok" tabindex="-1"><el-txt><el-method>tone</el-method></el-txt></el-field>(<el-field id="args56" class="optional ok" tabindex="-1"><el-txt><el-id>quaver</el-id>, <el-id>scale</el-id>[<el-id>i</el-id>], <el-id>volume</el-id></el-txt></el-field>)</el-top></el-statement>
+<el-kw>end for</el-kw>
+</el-statement>
+</el-code-block>
 
-- the duration of the generated tone specified in milliseconds (integer value)
-- the frequency of the generated tone in Hertz (integer value)
-- The volume of the tone (floating point value)
-
-(Note that the volume paramater is really 'relative volume' - since the actual volume at which every tone is played will
-be modified by the various sound settings on the device, and may even be muted.)</body>
 <h1>Graphics</h1>
 
 <h2 id="BlockGraphics">Block graphics</h2>
@@ -2147,7 +2174,7 @@ So for example the top left corner of the display is at (-100,75).</p>
  <li id="ImageVG"><span id="imageVG"></span><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
 </ul>
 <p>The properties of the Elan shapes reflect the names of the attributes used in the SVG tags but some differ. For example, SVG's <el-code>stroke-width</el-code>
- is set with property  <el-code>strokeWidth</el-code>, to make it a valid Elan <a href="LangRef.html#identifier">Identifier</a>.
+ is set with property  <el-code>strokeWidth</el-code>, to make it a valid Elan <a href="LangRef.html#Identifier">Identifier</a>.
 Also <el-code>stroke</el-code> and <el-code>fill</el-code> are set by the properties <el-code>strokeColour</el-code> and <el-code>fillColour</el-code>.</p>
 <p>Vector graphics are output to the Display pane in the user interface.</p>
 <p>The area is 100 units wide by 75 units high, and both integer and floating point values of the units can be used.</p>
@@ -2365,7 +2392,7 @@ So the constructors do not take any properties, and instead you add a <el-kw>wit
 
 <h2 id="Random">Random</h2>
 <h4 class="no-TOC">Generating random numbers within a function</h4>
-<p>It is <i>not</i> possible to use the system methods <el-method>random()</el-method> or <el-method>randomInt()</el-method> within a function because they create unseen side-effects. You <i>may</i> use those system methods outside the function and pass the resulting random number (as an <el-type>Int</el-type> or a <el-type>Float</el-type>) as an argument <i>into </i>a function.</p>
+<p>It is <i>not</i> possible to use the system methods <el-method>random()</el-method> or <el-method>randomInt()</el-method> within a function because they create unseen side effects. You <i>may</i> use those system methods outside the function and pass the resulting random number (as an <el-type>Int</el-type> or a <el-type>Float</el-type>) as an argument <i>into </i>a function.</p>
 <p>It <i>is possible</i> to create and use random numbers <i>within a function</i>, but it requires a different approach and is a little more complex, using a special <i>Type</i> named <el-type>Random</el-type> (note that the <el-code>R</el-code> is in upper-case), as in this example:</p>
 <el-code-block source="func_random.elan">
 <main class="ok multiline">
@@ -2511,7 +2538,7 @@ just as you would specify the Type of every parameter and the return Type for th
 <ul>
     <li>Any string that parses as an <el-type>Int</el-type> will also parse as a <el-type>Float</el-type>.</li>
     <li>If the parse fails, the second value will become zero, so you should always check the first value to see if the second value is a correct parse or just the default.</li>
-    <li> You can '<a href="#Tuple">deconstruct</a>' the tuple into two variables:
+    <li> You can '<a href="#Tuple">deconstruct</a>' the Tuple into two variables:
 <el-code-block source="parse_string.elan">
 <el-statement class="ok" id="var5" tabindex="0"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>success</el-id>, <el-id>parsedValue</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-method>parseAsInt</el-method>(<el-id>myString</el-id>)</el-txt></el-field></el-statement>
    </el-code-block></li>
@@ -2691,14 +2718,14 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 <h2 id="sequence">Sequence and SequenceWithStep</h2>
 
 <p>The <el-method>sequence</el-method> function is used to create a <el-type>List</el-type> containing a sequence
-of integer values as defined by the two (integer) parameters: <el-code><el-id>start</el-id></el-code> and <el-code><el-id>end</el-id></el-code>
+of integer values as defined by the two integer parameters: <el-code><el-id>start</el-id></el-code> and <el-code><el-id>end</el-id></el-code>
 (both being <i>inclusive</i> values).</p>
 <p>Here is an example which uses <a href="#HoFs">Higher-order Functions</a> to print the prime numbers between 2 and 30:</p>
 <el-code-block source="sequence.elan">
 <el-statement class="ok" id="print8"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-method>sequence</el-method>(<el-lit>2</el-lit>, <el-lit>30</el-lit>).<el-method>filter</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-method>sequence</el-method>(<el-lit>2</el-lit>, <el-method>sqrt</el-method>(<el-id>n</el-id>).<el-method>floor</el-method>()).<el-method>reduce</el-method>(<el-id>true</el-id>, <el-kw>lambda</el-kw> <el-id>c</el-id> <el-kw>as</el-kw> <el-type>Boolean</el-type>, <el-id>m</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>c</el-id><el-kw> and </el-kw>((<el-id>n</el-id><el-kw> mod </el-kw><el-id>m</el-id>)<el-kw> isnt </el-kw><el-lit>0</el-lit>)))</el-txt></el-field></el-statement>
 </el-code-block>
 
-<p>The <el-method>sequenceWithStep</el-method> function is similar to <el-method>sequence</el-method> but takes a third parameter
+<p>The <el-method>sequenceWithStep</el-method> function is similar to <el-method>sequence</el-method> but takes a third integer parameter
   specifying the step size, which may be positive or negative.</p>
 
 <h1 id="StandaloneProcedures">Standalone procedures</h1>
@@ -2765,15 +2792,16 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
-<p>Right-align numeric output using a lambda function:</p>
+
+<p>Right-align numeric output (powers of 9) using a lambda function:</p>
+
 <el-code-block source="printTab_R.elan">
-<el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>tab</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-lit>10</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="var6" tabindex="0"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok multiline" id="for9" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident11" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr12" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt>(<el-id>tab</el-id> - <el-lit>1</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
-<el-statement class="ok" id="var15" tabindex="0"><el-kw>variable </el-kw><el-field id="var16" class="ok" tabindex="0"><el-txt><el-id>j</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-lit>9</el-lit>^<el-id>i</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="var55" tabindex="0"><el-kw>variable </el-kw><el-field id="var56" class="ok" tabindex="0"><el-txt><el-id>f</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr57" class="ok" tabindex="0"><el-txt><el-kw>lambda</el-kw> <el-id>j</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>j</el-id>.<el-method>asString</el-method>().<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="call18" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args20" class="optional ok" tabindex="0"><el-txt><el-id>tab</el-id> - <el-method>f</el-method>(<el-id>j</el-id>), "<el-lit></el-lit>{<el-id>j</el-id>}<el-lit>\n</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="let25" tabindex="-1"><el-kw>let </el-kw><el-field id="var26" class="ok" tabindex="-1"><el-txt><el-id>tab</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr27" class="ok" tabindex="-1"><el-txt><el-lit>10</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="for9" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident11" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr13" class="ok" tabindex="-1"><el-txt>(<el-id>tab</el-id> - <el-lit>1</el-lit>)</el-txt></el-field><el-kw> step </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
+<el-statement class="ok" id="let30" tabindex="-1"><el-kw>let </el-kw><el-field id="var31" class="ok" tabindex="-1"><el-txt><el-id>j</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr32" class="ok" tabindex="-1"><el-txt><el-lit>9</el-lit>^<el-id>i</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="let33" tabindex="-1"><el-kw>let </el-kw><el-field id="var34" class="ok" tabindex="-1"><el-txt><el-id>f</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr35" class="ok" tabindex="-1"><el-txt><el-kw>lambda</el-kw> <el-id>j</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>j</el-id>.<el-method>asString</el-method>().<el-method>length</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call21" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field>(<el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>tab</el-id> - <el-method>f</el-method>(<el-id>j</el-id>), "<el-lit></el-lit>{<el-id>j</el-id>}<el-lit>\n</el-lit>"</el-txt></el-field>)</el-top></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
@@ -2906,7 +2934,13 @@ of integer values as defined by the two (integer) parameters: <el-code><el-id>st
 <p>A <b>higher-order function</b> (HoF) is one that takes in a reference to another function as a parameter, or (less commonly) that returns a reference to another function as its result. </p>
 
 <h2>Standard HoFs</h2>
-<p>The Elan standard library contains several HoFs that are widely recognised and used within functional programming.</p>
+<p>The Elan standard library contains several HoFs that are widely recognised and used within functional programming, namely
+<a href="#filter"><el-method>filter</el-method></a>,
+<a href="#map"><el-method>map</el-method></a> and
+<a href="#reduce"><el-method>reduce</el-method></a>, and also provides
+<a href="#maxBy"><el-method>maxBy</el-method></a>,
+<a href="#minBy"><el-method>minBy</el-method></a> and
+<a href="#sortBy"><el-method>sortBy</el-method></a>.</p>
 
 <h2 id="ref">Passing a function as a reference</h2>
 <p>To use a higher-order function (HoF), you have to pass in a reference to a function.
@@ -2915,20 +2949,35 @@ This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or 
 <p>On most occasions when you write the name of an existing function elsewhere in code your intent is to <i>evaluate</i> the function and, to do so, you write the name of the function followed by brackets containing such arguments as are required by the function. For this reason if you forget to add the brackets, you will get an error, for example:</p>
 <p><el-code>To evaluate function 'myfunction' add brackets. Or to create a reference to 'myfunction', precede it by 'ref'.</el-code></p>
 <p>The second sentence in this error message is for when your intention is <i>not</i> to evaluate the function, but to create a <i>reference </i>to the function. This is a valid thing to do in functional programming but is not generally done in procedural programming. As the error message says, to create a reference to a function you need to precede it by <el-code>ref</el-code> and the name of the function should then <i>not</i> be followed by brackets (or any arguments). For example:</p>
-<el-statement><el-code>variable passes set to allPupils.filter(ref passedMathsTest)</el-code></el-statement>
-<el-statement><el-code>function passedMathsTest(p as Pupil) as Boolean</el-code></el-statement>
-<el-statement><el-code>&#160; return p.mathsPercent &gt; 35</el-code></el-statement>
-<el-statement><el-code>end function</el-code></el-statement>
+
+<el-code-block source="passFuncAsRef.elan">
+<el-class class="ok multiline" id="class35" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>class </el-kw><el-field id="type36" class="ok" tabindex="-1"><el-txt><el-type>Pupil</el-type></el-txt><el-place>Name</el-place></el-field> <el-field id="text37" class="empty optional ok" tabindex="-1"></el-field></el-top>
+<el-prop class="ok" id="prop39" tabindex="-1"><el-kw>property </el-kw><el-field id="ident40" class="ok" tabindex="-1"><el-txt><el-id>mathsPercent</el-id></el-txt></el-field><el-kw> as </el-kw><el-field id="type41" class="ok" tabindex="-1"><el-txt><el-type>Int</el-type></el-txt></el-field></el-prop>
+<el-kw>end class</el-kw>
+</el-class>
+<main class="ok multiline" id="main1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+<el-statement class="ok" id="let31" tabindex="-1"><el-kw>let </el-kw><el-field id="var32" class="ok" tabindex="-1"><el-txt><el-id>allPupils</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr33" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Pupil</el-type>&gt;()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var8" tabindex="-1"><el-kw>variable </el-kw><el-field id="var9" class="ok" tabindex="-1"><el-txt><el-id>passes</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr10" class="ok" tabindex="-1"><el-txt><el-id>allPupils</el-id>.<el-method>filter</el-method>(<el-kw>ref</el-kw> <el-method>passedMathsTest</el-method>)</el-txt></el-field></el-statement>
+<el-kw>end main</el-kw>
+</main>
+<el-func class="ok multiline" id="func14" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident16" class="ok" tabindex="-1"><el-txt>passedMathsTest</el-txt></el-field></el-method>(<el-field id="params17" class="optional ok" tabindex="-1"><el-txt><el-id>p</el-id> <el-kw>as</el-kw> <el-type>Pupil</el-type></el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type18" class="ok" tabindex="-1"><el-txt><el-type>Boolean</el-type></el-txt></el-field></el-top>
+<el-statement class="ok" id="return19" tabindex="-1"><el-kw>return </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt><el-id>p</el-id>.<el-id>mathsPercent</el-id> &gt; <el-lit>35</el-lit></el-txt></el-field></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
+</el-code-block>
 
 <h2>Defining your own HoFs</h2>
 
 <h2>Library functions that process Lists</h2>
-<p>These dot methods are called on any <el-code>List,</el-code> <el-code>ListImmutable</el-code> or <el-type>String</el-type>. As Higher-order Functions they take either a <el-kw>lambda</el-kw> or a function reference as one of their arguments: see <span class="Link">Passing a function as a reference</span>.</p>
+<p>These dot methods are called on any <el-code>List,</el-code> <el-code>ListImmutable</el-code> or <el-type>String</el-type>. As Higher-order Functions they take either a <el-kw>lambda</el-kw> or a function reference as one of their arguments: see above.</p>
 <p>Although several of these methods return a <el-type>ListImmutable</el-type>, they may be converted to a List using method <el-method>asList</el-method>.</p>
 <p>These are not yet fully documented but, for readers familiar with HoFs from another programming language, some examples are shown below.</p>
 
 <h3 class="no-TOC" id="filter">filter </h3>
-<p>Example function from demo program <el-code>pathfinder.elan</el-code> in which <el-method>filter</el-method> applies the <el-code>lambda</el-code> to the <el-id>nodes</el-id> (of class Node) to find one that contains <el-id>p</el-id> (of record Point):</p>
+<p>Example of use from demo program <el-code>pathfinder.elan</el-code> in which <el-method>filter</el-method> applies the <el-code>lambda</el-code> to the <el-id>nodes</el-id> (of class Node) to find one that contains <el-id>p</el-id> (of record Point):</p>
 <el-code-block>
 <el-func class="ok multiline" id="func333" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident335" class="ok" tabindex="0"><el-txt>getNodeFor</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params336" class="optional ok" tabindex="0"><el-txt><el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type337" class="ok" tabindex="0"><el-txt><el-type>Node</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
@@ -2939,7 +2988,7 @@ This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or 
 </el-code-block>
 
 <h3 class="no-TOC" id="map">map</h3>
-<p>Example of use from demo program Maze generator:</p>
+<p>Example of use from demo program <el-code>maze-generator.elan</el-code>:</p>
 <el-code-block source="maze-generator.elan">
 <el-statement id="let156" tabindex="0"><el-kw>let </el-kw><el-field id="var157" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr158" class="ok" tabindex="0"><el-txt><el-id>p</el-id>.<el-method>neighbouringPoints</el-method>().<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type> =&gt; <el-method>getValue</el-method>(<el-id>p</el-id>, <el-id>g</el-id>))</el-txt></el-field></el-statement>
 </el-code-block>
@@ -2953,9 +3002,9 @@ This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or 
 <div id="maxBy"></div>
 <div id="minBy"></div>
 <h3 class="no-TOC">maxBy and minBy</h3>
-    <p><el-code>maxBy</el-code> and <el-code>minBy</el-code> are dot functions of <el-code>List</el-code> and <el-code>ListImmutable</el-code>.  They take a function as an argument, and return the list element corresponding to the maximum or minimum of the values returned by the function.  This prints "89" and "orange":</p>
+    <p><el-code>maxBy</el-code> and <el-code>minBy</el-code> are dot functions of <el-code>List</el-code> and <el-code>ListImmutable</el-code>.  They take a function as an argument, and return the list element corresponding to the maximum or minimum of the values returned by the function.  This prints "89" and "pear":</p>
 <el-code-block>
-<el-statement class="ok" id="let11" tabindex="0"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt>{<el-lit>33</el-lit>, <el-lit>4</el-lit>, <el-lit>0</el-lit>, <el-lit>92</el-lit>, <el-lit>89</el-lit>, <el-lit>55</el-lit>}</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let11" tabindex="0"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt>{<el-lit>33</el-lit>, <el-lit>4</el-lit>, <el-lit>0</el-lit>, <el-lit>92</el-lit>, <el-lit>89</el-lit>, <el-lit>55</el-lit>, <el-lit>102</el-lit>}</el-txt></el-field></el-statement>
 <el-statement class="ok" id="print8" tabindex="0"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-id>a</el-id>.<el-method>maxBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>x</el-id><el-kw> mod </el-kw><el-lit>10</el-lit>)</el-txt></el-field></el-statement>
 <el-statement class="ok" id="let14" tabindex="0"><el-kw>let </el-kw><el-field id="var15" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr16" class="ok" tabindex="0"><el-txt>{"<el-lit>apple</el-lit>", "<el-lit>orange</el-lit>", "<el-lit>pear</el-lit>"}</el-txt></el-field></el-statement>
 <el-statement class="ok" id="print17" tabindex="0"><el-kw>print </el-kw><el-field id="expr18" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id>.<el-method>minBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>x</el-id>.<el-method>length</el-method>())</el-txt></el-field></el-statement>
