@@ -1,5 +1,9 @@
-# ad4bf4127ae657a550bfcd94f923b3de75642e8e1799e0020c5ae6df482fc553 Elan 1.3.1 guest default_profile valid
+# f961c8d7d93b7825810a5f96c79a9d303273271a841d34712c8b1e9c1754dfa5 Elan 1.3.0 guest default_profile valid
 
 function a(age as Int) returns Int
   return age
 end function
+
+procedure b(out age as Int)
+  set age to age + 1
+end procedure
