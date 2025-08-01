@@ -1908,7 +1908,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[1, 2, 3, 4, 5]");
   });
-  test("Pass_sequence_errorIfEnd<Start", async () => {
+  test("Pass_sequence_EmptyIfEnd<Start", async () => {
     const code = `${testHeader}
 
 main
@@ -1935,9 +1935,9 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeDoesNotExecute(fileImpl, "Loop will not terminate when end < start");
+    await assertObjectCodeExecutes(fileImpl, "[]");
   });
-  test("Pass_sequenceWithError", async () => {
+  test("Pass_sequenceWithStep", async () => {
     const code = `${testHeader}
 
 main
@@ -2056,9 +2056,6 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeDoesNotExecute(
-      fileImpl,
-      "Loop will not terminate when end < start with positive step",
-    );
+    await assertObjectCodeExecutes(fileImpl, "[]");
   });
 });

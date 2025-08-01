@@ -213,9 +213,6 @@ export class StdLib {
   @elanFunction(["start", "end"], FunctionOptions.pure, ElanClass(List, [ElanInt]))
   sequence(@elanIntType() start: number, @elanIntType() end: number): List<number> {
     const seq = [];
-    if (end < start) {
-      throw new ElanRuntimeError("Loop will not terminate when end < start");
-    }
     for (let i = start; i <= end; i++) {
       seq.push(i);
     }
@@ -232,9 +229,6 @@ export class StdLib {
     if (step === 0) {
       throw new ElanRuntimeError("value for step cannot be zero");
     } else if (step > 0) {
-      if (end < start) {
-        throw new ElanRuntimeError("Loop will not terminate when end < start with positive step");
-      }
       for (let i = start; i <= end; i = i + step) {
         seq.push(i);
       }
