@@ -509,6 +509,8 @@ div.spacer{
 
 #info-tab {
   overflow-y: auto;
+  font-family: var(--ideTitleFont);
+  color: grey;
 }
 
 .tab-label {
