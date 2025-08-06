@@ -857,9 +857,10 @@ Note
  </tr><tr id="reduce_List">
   <td><el-method>reduce</el-method></td>
   <td><el-type>List</el-type></td>
-  <td><el-kw>lambda</el-kw></td>
+  <td>item of <el-type>List element's Type</el-type>, <el-kw>lambda</el-kw></td>
   <td><el-type>return type of lambda</el-type></td>
   <td>the final value obtained by applying a lambda cumulatively to each element in the input List<br>
+  taking account of the first argument as an initial (and default return) value<br>
   see <a href="#reduce"><el-method>reduce</el-method></a> in HoFs</td>
  </tr><tr id="sortBy_List">
   <td><el-method>sortBy</el-method></td>
@@ -2988,13 +2989,51 @@ This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or 
 </el-code-block>
 
 <h3 class="no-TOC" id="map">map</h3>
-<p>Example of use from demo program <el-code>maze-generator.elan</el-code>:</p>
+<p>The function <el-method>map</el-method> is used to apply a function to every element of a <el-type>List</el-type>, returning a new list.
+The function to be applied is usually specified as a <el-kw>lambda</el-kw> having a single argument of the Type of the list's elements, as in these examples:</p>
+
+<p>To raise each integer in a list to the power of 3:</p>
+<el-code-block source="map.elan">
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>li</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>5</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="print6" tabindex="-1"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>n</el-id>^<el-lit>3</el-lit>)</el-txt></el-field></el-statement>
+&rarr; [1, 8, 27, 64, 125]
+</el-code-block>
+<p>To change each string in a list to upper case:</p>
+<el-code-block source="map.elan">
+<el-statement class="ok" id="let8" tabindex="-1"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="-1"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="print11" tabindex="-1"><el-kw>print </el-kw><el-field id="expr12" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>s</el-id>.<el-method>upperCase</el-method>())</el-txt></el-field></el-statement>
+&rarr; ["TOM", "DICK", "HARRIET"]
+</el-code-block>
+<p>To reverse each string in the list of names using a function you have written:</p>
+<el-code-block source="map.elan">
+<el-statement class="ok" id="print47" tabindex="-1"><el-kw>print </el-kw><el-field id="expr48" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-method>reverseString</el-method>(<el-id>s</el-id>))</el-txt></el-field></el-statement>
+&rarr; ["moT", "kciD", "teirraH"]
+</el-code-block>
+
+<p>And this example from demo program <el-code>maze-generator.elan</el-code>:</p>
 <el-code-block source="maze-generator.elan">
 <el-statement id="let156" tabindex="0"><el-kw>let </el-kw><el-field id="var157" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr158" class="ok" tabindex="0"><el-txt><el-id>p</el-id>.<el-method>neighbouringPoints</el-method>().<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type> =&gt; <el-method>getValue</el-method>(<el-id>p</el-id>, <el-id>g</el-id>))</el-txt></el-field></el-statement>
 </el-code-block>
 
 <h3 class="no-TOC" id="reduce">reduce</h3>
-<p>Example of use from demo program Wordle:</p>
+<p>The function <el-method>reduce</el-method> is used to apply a function to every elelment of a <el-type>List</el-type> and return a single value.</p>
+<p>Its first argument is an initial value which is used by the provided function, and will be the default return if the function doesn't produce a different value.</p>
+<p>The function to be applied is usually specified as a <el-kw>lambda</el-kw> having two arguments, the first being the variable that will contain the return value,<br>
+and second being an element in the list.</p>
+<p>To reduce the integer values in a list to their sum:</p>
+<el-code-block source source="reduce.elan">
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>li</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>7</el-lit>, <el-lit>11</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="print6" tabindex="-1"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>reduce</el-method>(<el-lit>0</el-lit>, <el-kw>lambda</el-kw> <el-id>m</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>m</el-id> + <el-id>n</el-id>)</el-txt></el-field></el-statement>
+&rarr; 15
+</el-code-block>
+<p>To reduce the floating point values in a list to their sum:</p>
+<el-code-block source source="reduce.elan">
+<el-statement class="ok" id="let17" tabindex="-1"><el-kw>let </el-kw><el-field id="var18" class="ok" tabindex="-1"><el-txt><el-id>lj</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt>[<el-lit><el-lit>0</el-lit>.1</el-lit>, <el-lit><el-lit>0</el-lit>.5</el-lit>, <el-lit><el-lit>0</el-lit>.3</el-lit>, <el-lit><el-lit>0</el-lit>.7</el-lit>, <el-lit><el-lit>0</el-lit>.2</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="print20" tabindex="-1"><el-kw>print </el-kw><el-field id="expr21" class="optional ok" tabindex="-1"><el-txt><el-id>lj</el-id>.<el-method>reduce</el-method>(<el-lit><el-lit>0</el-lit>.0</el-lit>, <el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Float</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>Float</el-type> =&gt; <el-id>x</el-id> + <el-id>y</el-id>).<el-method>round</el-method>(<el-lit>1</el-lit>)</el-txt></el-field></el-statement>
+&rarr; 1.8
+</el-code-block>
+
+<p>And this example from demo program <el-code>wordle-solver.elan</el-code>:</p>
 <el-code-block source source="Wordle.elan">
 <el-statement class="ok" id="let350" tabindex="0"><el-kw>let </el-kw><el-field id="var351" class="ok" tabindex="0"><el-txt><el-id>d2</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr352" class="ok" tabindex="0"><el-txt><el-id>possAnswers</el-id>.<el-method>reduce</el-method>(<el-id>d</el-id>, <el-kw>lambda</el-kw> <el-id>dd</el-id> <el-kw>as</el-kw> <el-type>DictionaryImmutable</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Int</el-type>&gt;, <el-id>answer</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-method>incrementCount</el-method>(<el-id>dd</el-id>, <el-id>answer</el-id>, <el-id>attempt</el-id>))</el-txt></el-field></el-statement>
 </el-code-block>
@@ -3002,12 +3041,19 @@ This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or 
 <div id="maxBy"></div>
 <div id="minBy"></div>
 <h3 class="no-TOC">maxBy and minBy</h3>
-    <p><el-code>maxBy</el-code> and <el-code>minBy</el-code> are dot functions of <el-code>List</el-code> and <el-code>ListImmutable</el-code>.  They take a function as an argument, and return the list element corresponding to the maximum or minimum of the values returned by the function.  This prints "89" and "pear":</p>
+<p><el-code>maxBy</el-code> and <el-code>minBy</el-code> are dot functions of <el-code>List</el-code> and <el-code>ListImmutable</el-code>.
+They take a function as an argument, and return the list element corresponding to the maximum or minimum of the values returned by the function.</p>
+<p>To find in a list the integer that has the highest last digit:</p>
 <el-code-block>
 <el-statement class="ok" id="let11" tabindex="0"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt>{<el-lit>33</el-lit>, <el-lit>4</el-lit>, <el-lit>0</el-lit>, <el-lit>92</el-lit>, <el-lit>89</el-lit>, <el-lit>55</el-lit>, <el-lit>102</el-lit>}</el-txt></el-field></el-statement>
 <el-statement class="ok" id="print8" tabindex="0"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-id>a</el-id>.<el-method>maxBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>x</el-id><el-kw> mod </el-kw><el-lit>10</el-lit>)</el-txt></el-field></el-statement>
+&rarr; 89
+</el-code-block>
+<p>To find in a list the the shortest string:</p>
+<el-code-block>
 <el-statement class="ok" id="let14" tabindex="0"><el-kw>let </el-kw><el-field id="var15" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr16" class="ok" tabindex="0"><el-txt>{"<el-lit>apple</el-lit>", "<el-lit>orange</el-lit>", "<el-lit>pear</el-lit>"}</el-txt></el-field></el-statement>
 <el-statement class="ok" id="print17" tabindex="0"><el-kw>print </el-kw><el-field id="expr18" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id>.<el-method>minBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>x</el-id>.<el-method>length</el-method>())</el-txt></el-field></el-statement>
+&rarr; pear
 </el-code-block>
     <p>For simply finding the maximum or minimum value in a List, you can use
 <el-method>maxFloat</el-method>,
