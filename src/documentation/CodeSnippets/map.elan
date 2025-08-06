@@ -1,0 +1,32 @@
+# b0eb9b18cff223dbdea55a06fe099fb2126884a40c0d1975b7d97ffea7662ed3 Elan 1.3.1 guest default_profile valid
+
+main
+  let li be [1, 2, 3, 4, 5]
+  print li.map(lambda n as Int => n^3)
+  let names be ["Tom", "Dick", "Harriet"]
+  print names.map(lambda s as String => s.upperCase())
+  print names.map(lambda s as String => reverseString(s))
+  print reverseStringsInList(names)
+end main
+
+function reverseStringsInList(l as List<of String>) returns List<of String>
+  variable lReversed set to new List<of String>()
+  variable sl set to 0
+  each s in l
+    set lReversed to lReversed.withAppend(reverseString(s))
+  end each
+  return lReversed
+end function
+
+function reverseString(s as String) returns String
+  variable stringReversed set to ""
+  for i from 0 to s.length() - 1 step 1
+    set stringReversed to s[i] + stringReversed
+  end for
+  return stringReversed
+end function
+
+test 
+  assert reverseString("abcdefg") is "gfedcba"
+  assert reverseStringsInList(["ab", "cde"]) is ["ba", "edc"]
+end test
