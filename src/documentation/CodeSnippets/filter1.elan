@@ -1,0 +1,15 @@
+# 63be7cd9159ca27a7cb07dd3b3ad51aaef2a49ab3e36a6c383f0955f52f7feb7 Elan 1.3.1 guest default_profile valid
+
+class Pupil
+  property mathsPercent as Int
+
+end class
+
+main
+  let allPupils be new List<of Pupil>()
+  print allPupils.filter(ref passedMathsTest)
+end main
+
+function passedMathsTest(p as Pupil) returns Boolean
+  return p.mathsPercent > 65
+end function
