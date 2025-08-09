@@ -8,7 +8,7 @@ h1,h2,h3,h4
 h1 { font-size:20pt; font-weight:bold; text-indent:0pt; margin-top:20pt; margin-bottom:4pt; }
 h2 { font-size:16pt; font-weight:bold; text-indent:0pt; margin-top:16pt; margin-bottom:4pt;  border-style:solid none none none; }
 h3 { font-size:14pt; font-weight:bold; text-indent:0pt; margin-top:14pt; margin-bottom:4pt; }
-h4 { font-size:12pt; font-weight:bold; text-indent:0pt; margin-top:12pt; margin-bottom:4pt; }
+h4 { font-size:12pt; font-weight:bold; text-indent:0pt; margin-top:6pt; margin-bottom:4pt; }
 
 body { font-size:10pt; margin-left:5px; text-decoration:none; font-weight:normal; font-style:normal; text-transform:none; color:rgb(0,0,0); text-align:left; line-height:1.33; }
 .bold {
@@ -117,13 +117,13 @@ a:hover, a:focus {text-decoration: underline}
 }
 
 .accordion > .acc-title::before {
-  content: "+";
-  padding-right: 0.5em;
+  content: "\25bc";
+  padding-right: 1.0em;
 }
 
 .accordion.active > .acc-title::before {
-  content: "-";
-  padding-right: 0.5em;
+  content: "\25b2";
+  padding-right: 1.3em;
 }
 
 .acc-title:focus {
