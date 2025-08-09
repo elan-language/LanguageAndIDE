@@ -2945,10 +2945,17 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
 
 <h2 id="ref">Passing a function as a reference</h2>
 <p>To use a higher-order function (HoF), you have to pass in a reference to a function.
+
+<el-txt><input spellcheck="false" data-cursorstart="10" data-cursorend="10" size="9" style="width: 10ch" value="myFunction" tabindex="-1"></el-txt>
 This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or the keyword <el-kw>ref</el-kw> followed by the name of a function.</p>
 <p>It is also possible to use references to functions not in the context of HoFs.</p>
+
 <p>On most occasions when you write the name of an existing function elsewhere in code your intent is to <i>evaluate</i> the function and, to do so, you write the name of the function followed by brackets containing such arguments as are required by the function. For this reason if you forget to add the brackets, you will get an error, for example:</p>
-<p><el-code>To evaluate function 'myfunction' add brackets. Or to create a reference to 'myfunction', precede it by 'ref'.</el-code></p>
+
+<el-code-block>
+<el-field id="expr4" class="selected focused optional error" tabindex="-1"><el-msg class="error">To evaluate function 'myFunction' add brackets. Or to create a reference to 'myFunction', precede it by 'ref'.</el-msg></el-field>
+</el-code-block>
+
 <p>The second sentence in this error message is for when your intention is <i>not</i> to evaluate the function, but to create a <i>reference </i>to the function. This is a valid thing to do in functional programming but is not generally done in procedural programming. As the error message says, to create a reference to a function you need to precede it by <el-code>ref</el-code> and the name of the function should then <i>not</i> be followed by brackets (or any arguments). For example:</p>
 
 <el-code-block source="passFuncAsRef.elan">
@@ -2973,7 +2980,7 @@ This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or 
 <h2>Defining your own HoFs</h2>
 
 <h2>Library functions that process Lists</h2>
-<p>These dot methods are called on any <el-code>List,</el-code> <el-code>ListImmutable</el-code> or <el-type>String</el-type>. As Higher-order Functions they take either a <el-kw>lambda</el-kw> or a function reference as one of their arguments: see above.</p>
+<p>These dot methods are called on any <el-type>List,</el-type> <el-type>ListImmutable</el-type> or <el-type>String</el-type>. As Higher-order Functions they take either a <el-kw>lambda</el-kw> or a function reference as one of their arguments: see above.</p>
 <p>Although several of these methods return a <el-type>ListImmutable</el-type>, they may be converted to a List using method <el-method>asList</el-method>.</p>
 <p>These are not yet fully documented but, for readers familiar with HoFs from another programming language, some examples are shown below.</p>
 
@@ -2991,6 +2998,10 @@ This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or 
 <h3 class="no-TOC" id="map">map</h3>
 <p>The function <el-method>map</el-method> is used to apply a function to every element of a <el-type>List</el-type>, returning a new list.
 The function to be applied is usually specified as a <el-kw>lambda</el-kw> having a single argument of the Type of the list's elements, as in these examples:</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples of use</h4>
+<div class="acc-body">
 
 <p>To raise each integer in a list to the power of 3:</p>
 <el-code-block source="map.elan">
@@ -3014,12 +3025,17 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 <el-code-block source="maze-generator.elan">
 <el-statement id="let156" tabindex="0"><el-kw>let </el-kw><el-field id="var157" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr158" class="ok" tabindex="0"><el-txt><el-id>p</el-id>.<el-method>neighbouringPoints</el-method>().<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type> =&gt; <el-method>getValue</el-method>(<el-id>p</el-id>, <el-id>g</el-id>))</el-txt></el-field></el-statement>
 </el-code-block>
+</div></div>
 
 <h3 class="no-TOC" id="reduce">reduce</h3>
 <p>The function <el-method>reduce</el-method> is used to apply a function to every elelment of a <el-type>List</el-type> and return a single value.</p>
 <p>Its first argument is an initial value which is used by the provided function, and will be the default return if the function doesn't produce a different value.</p>
 <p>The function to be applied is usually specified as a <el-kw>lambda</el-kw> having two arguments, the first being the variable that will contain the return value,<br>
 and second being an element in the list.</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples of use</h4>
+<div class="acc-body">
 <p>To reduce the integer values in a list to their sum:</p>
 <el-code-block source source="reduce.elan">
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>li</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>7</el-lit>, <el-lit>11</el-lit>]</el-txt></el-field></el-statement>
@@ -3037,12 +3053,22 @@ and second being an element in the list.</p>
 <el-code-block source source="Wordle.elan">
 <el-statement class="ok" id="let350" tabindex="0"><el-kw>let </el-kw><el-field id="var351" class="ok" tabindex="0"><el-txt><el-id>d2</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr352" class="ok" tabindex="0"><el-txt><el-id>possAnswers</el-id>.<el-method>reduce</el-method>(<el-id>d</el-id>, <el-kw>lambda</el-kw> <el-id>dd</el-id> <el-kw>as</el-kw> <el-type>DictionaryImmutable</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Int</el-type>&gt;, <el-id>answer</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-method>incrementCount</el-method>(<el-id>dd</el-id>, <el-id>answer</el-id>, <el-id>attempt</el-id>))</el-txt></el-field></el-statement>
 </el-code-block>
+</div></div>
 
 <div id="maxBy"></div>
 <div id="minBy"></div>
 <h3 class="no-TOC">maxBy and minBy</h3>
-<p><el-code>maxBy</el-code> and <el-code>minBy</el-code> are dot functions of <el-code>List</el-code> and <el-code>ListImmutable</el-code>.
+<p><el-method>maxBy</el-method> and <el-method>minBy</el-method> are dot functions of <el-type>List</el-type> and <el-type>ListImmutable</el-type>.
 They take a function as an argument, and return the list element corresponding to the maximum or minimum of the values returned by the function.</p>
+<p>For simply finding the maximum or minimum value in a List, you can use
+<a href="#maxFloat"><el-method>maxFloat</el-method></a>,
+<a href="#minFloat"><el-method>minFloat</el-method></a>,
+<a href="#maxInt"><el-method>maxInt</el-method></a> or
+<a href="#minInt"><el-method>minInt</el-method></a>.</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples of use</h4>
+<div class="acc-body">
 <p>To find in a list the integer that has the highest last digit:</p>
 <el-code-block>
 <el-statement class="ok" id="let11" tabindex="0"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt>{<el-lit>33</el-lit>, <el-lit>4</el-lit>, <el-lit>0</el-lit>, <el-lit>92</el-lit>, <el-lit>89</el-lit>, <el-lit>55</el-lit>, <el-lit>102</el-lit>}</el-txt></el-field></el-statement>
@@ -3055,14 +3081,14 @@ They take a function as an argument, and return the list element corresponding t
 <el-statement class="ok" id="print17" tabindex="0"><el-kw>print </el-kw><el-field id="expr18" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id>.<el-method>minBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>x</el-id>.<el-method>length</el-method>())</el-txt></el-field></el-statement>
 &rarr; pear
 </el-code-block>
-    <p>For simply finding the maximum or minimum value in a List, you can use
-<el-method>maxFloat</el-method>,
-<el-method>minFloat</el-method>,
-<el-method>maxInt</el-method> or
-<el-method>minInt</el-method>.</p>
+</div></div>
 
 <h3 class="no-TOC" id="sortBy">sortBy</h3>
-<p><el-code>sortBy</el-code> takes a <el-kw>lambda</el-kw> that takes two arguments (of the same Type as that of the <el-code>ListImmutable</el-code> being sorted) and compares them, returning an integer with one of the values -1, 0, or +1, to indicate whether the first argument should be placed respectively before, adjacent to or after the second argument in the sorted result, where &#8216;adjacent to&#8217; means it does not matter whether before or after):</p>
+<p><el-method>sortBy</el-method> takes a <el-kw>lambda</el-kw> that takes two arguments (of the same Type as that of the <el-type>ListImmutable</el-type> being sorted) and compares them, returning an integer with one of the values -1, 0, or +1, to indicate whether the first argument should be placed respectively before, adjacent to or after the second argument in the sorted result, where &#8216;adjacent to&#8217; means it does not matter whether before or after):</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples of use</h4>
+<div class="acc-body">
 
 <el-code-block source="sortBy_Int.elan">
 <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>numbers</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>[<el-lit>27</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>31</el-lit>, <el-lit>37</el-lit>, <el-lit>11</el-lit>, <el-lit>13</el-lit>, <el-lit>17</el-lit>, <el-lit>19</el-lit>, <el-lit>23</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -3076,8 +3102,22 @@ They take a function as an argument, and return the list element corresponding t
 <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>names</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id>.<el-method>isAfter</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id>.<el-method>isBefore</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
+</div></div>
 
 <hr>
 <p><b>Elan Library Reference</b> go to the <a href="#top">top</a></p>
+<script>
+  var accordions = document.getElementsByClassName("acc-title");
+  for (const item of accordions) {
+    item.addEventListener("click", function() {
+      item.parentElement.classList.toggle("active");
+    });
+    item.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        item.parentElement.classList.toggle("active");
+      }
+    });
+  }
+</script>
 </body>
 </html>
