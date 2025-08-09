@@ -1,4 +1,4 @@
-# a7ef6792975fca81f76121b2fe0c92f16d4b6a166da209d11324e1f177529728 Elan 1.3.2 guest default_profile valid
+# 6a54b166f07db441601ffd545082751ed54516b9cffc6f4a92e624845758436c Elan 1.3.1 guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -6,7 +6,6 @@ main
   let rnd be new Random()
   call rnd.initialiseFromClock()
   variable game set to newGame(rnd)
-  set game to newApple(game)
   while game.isOn
     set blocks to updateGraphics(game, blocks)
     call displayBlocks(blocks)
@@ -71,7 +70,8 @@ function hasHitEdge(g as Game) returns Boolean
 end function
 
 function newGame(rnd as Random) returns Game
-  return new Game() with rnd set to rnd, head set to newSquare(22, 15), body set to {newSquare(20, 15), newSquare(21, 15)}, priorTail set to empty Square, key set to "d", isOn set to true
+  let g be new Game() with rnd set to rnd, head set to newSquare(22, 15), body set to {newSquare(20, 15), newSquare(21, 15)}, priorTail set to empty Square, key set to "d", isOn set to true
+  return newApple(g)
 end function
 
 record Game
@@ -100,6 +100,10 @@ record Square
 
   property y as Int
 
+  function asString() returns String
+    return "{property.x}, {property.y}"
+  end function
+
 end record
 
 test clockTick
@@ -123,13 +127,12 @@ end test
 test updateGraphics
   variable blocks set to new Array2D<of Int>(40, 30, white)
   let g1 be newGame(new Random())
-  let g2 be newApple(g1)
-  set blocks to updateGraphics(g2, blocks)
+  set blocks to updateGraphics(g1, blocks)
   assert blocks[12, 15] is red
   assert blocks[22, 15] is green
   assert blocks[21, 15] is white
-  let g4 be clockTick(g2, "d")
-  set blocks to updateGraphics(g4, blocks)
+  let g3 be clockTick(g1, "d")
+  set blocks to updateGraphics(g3, blocks)
   assert blocks[12, 15] is red
   assert blocks[22, 15] is green
   assert blocks[23, 15] is green
@@ -137,16 +140,16 @@ end test
 
 test newApple
   let g1 be newGame(new Random())
-  assert g1.apple is empty Square
+  assert g1.apple is newSquare(12, 15)
   let g2 be newApple(g1)
-  assert g2.apple is newSquare(12, 15)
+  assert g2.apple is newSquare(10, 12)
   let g3 be newApple(g2)
-  assert g3.apple is newSquare(10, 12)
+  assert g3.apple is newSquare(28, 24)
   # test that apple is never over snake
   let g4 be newGame(new Random())
-  let g5 be copy g4 with body set to {newSquare(12, 15)}
+  let g5 be copy g4 with body set to {newSquare(10, 12)}
   let g6 be newApple(g5)
-  assert g6.apple is newSquare(10, 12)
+  assert g6.apple is newSquare(28, 24)
 end test
 
 test score
@@ -189,7 +192,7 @@ test eatAppleIfPoss
   let g4 be copy g2 with head set to newSquare(23, 15)
   let g5 be eatAppleIfPoss(g4)
   assert g5.body.length() is 2
-  assert g5.apple is newSquare(12, 15)
+  assert g5.apple is newSquare(10, 12)
   assert g5.priorTail is g1.priorTail
 end test
 
@@ -234,7 +237,8 @@ end test
 test newGame
   let rnd be new Random()
   let game be newGame(rnd)
-  assert game.rnd is rnd
+  let toTest be game.rnd is rnd
+  assert toTest is false
   assert game.head is newSquare(22, 15)
   let body be game.body
   assert body.length() is 2
