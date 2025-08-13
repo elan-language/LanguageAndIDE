@@ -1690,11 +1690,11 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
  <li>The method <el-method>asString</el-method> is so widely applicable because it enables you to print
  most variables and data structures to the Display for debugging purposes.</li>
  <li>The length of a <el-type>Dictionary</el-type> or <el-type>DictionaryImmutable</el-type> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:</li>
-  <p><el-code>print dict.keys().length()</el-code> &rarr; 15</p>
+  <p><el-code>print dict.keys().length()</el-code> &#x25b6; 15</p>
  <li>Checking whether an item is contained in a <el-type>Dictionary</el-type> or <el-type>DictionaryImmutable</el-type> can be
   done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:</li>
-  <p><el-code>print dict.keys().contains(42)</el-code> &rarr; <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code></p>
-  <p><el-code>print dict.values().contains("widget")</el-code> &rarr; <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code></p>
+  <p><el-code>print dict.keys().contains(42)</el-code> &#x25b6; <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code></p>
+  <p><el-code>print dict.values().contains("widget")</el-code> &#x25b6; <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code></p>
 </ul>
 
 <h1 id="Input/output">Input/output</h1>
@@ -2794,7 +2794,7 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
 </el-statement>
 </el-code-block>
 
-<p>Right-align numeric output (powers of 9) using a lambda function:</p>
+<p>Right-align numeric output (powers of 9) using a lambda:</p>
 
 <el-code-block source="printTab_R.elan">
 <el-statement class="ok" id="let25" tabindex="-1"><el-kw>let </el-kw><el-field id="var26" class="ok" tabindex="-1"><el-txt><el-id>tab</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr27" class="ok" tabindex="-1"><el-txt><el-lit>10</el-lit></el-txt></el-field></el-statement>
@@ -2985,7 +2985,12 @@ This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or 
 <p>These are not yet fully documented but, for readers familiar with HoFs from another programming language, some examples are shown below.</p>
 
 <h3 class="no-TOC" id="filter">filter </h3>
-<p>Example of use from demo program <el-code>pathfinder.elan</el-code> in which <el-method>filter</el-method> applies the <el-code>lambda</el-code> to the <el-id>nodes</el-id> (of class Node) to find one that contains <el-id>p</el-id> (of record Point):</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>filter</el-method></h4>
+<div class="acc-body">
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from demo program <el-code>pathfinder.elan</el-code> in which <el-method>filter</el-method> applies the <el-kw>lambda</el-kw> to the <el-id>nodes</el-id> (of class <el-type>Node</el-type>) to find one that contains <el-id>p</el-id> (of record Point):</p>
 <el-code-block>
 <el-func class="ok multiline" id="func333" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident335" class="ok" tabindex="0"><el-txt>getNodeFor</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params336" class="optional ok" tabindex="0"><el-txt><el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type337" class="ok" tabindex="0"><el-txt><el-type>Node</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
@@ -2994,116 +2999,173 @@ This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or 
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
+</div></div>
+<hr>
 
 <h3 class="no-TOC" id="map">map</h3>
 <p>The function <el-method>map</el-method> is used to apply a function to every element of a <el-type>List</el-type>, returning a new list.
 The function to be applied is usually specified as a <el-kw>lambda</el-kw> having a single argument of the Type of the list's elements, as in these examples:</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples of use</h4>
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>map</el-method></h4>
 <div class="acc-body">
 
-<p>To raise each integer in a list to the power of 3:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To cube each integer value in a list:</p>
 <el-code-block source="map.elan">
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>li</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>5</el-lit>]</el-txt></el-field></el-statement>
 <el-statement class="ok" id="print6" tabindex="-1"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>n</el-id>^<el-lit>3</el-lit>)</el-txt></el-field></el-statement>
-&rarr; [1, 8, 27, 64, 125]
+&nbsp;&nbsp;&#x27f6; [1, 8, 27, 64, 125]
 </el-code-block>
-<p>To change each string in a list to upper case:</p>
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To change each string in a list to upper case:</p>
 <el-code-block source="map.elan">
 <el-statement class="ok" id="let8" tabindex="-1"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="-1"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt></el-field></el-statement>
 <el-statement class="ok" id="print11" tabindex="-1"><el-kw>print </el-kw><el-field id="expr12" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>s</el-id>.<el-method>upperCase</el-method>())</el-txt></el-field></el-statement>
-&rarr; ["TOM", "DICK", "HARRIET"]
-</el-code-block>
-<p>To reverse each string in the list of names using a function you have written:</p>
-<el-code-block source="map.elan">
-<el-statement class="ok" id="print47" tabindex="-1"><el-kw>print </el-kw><el-field id="expr48" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-method>reverseString</el-method>(<el-id>s</el-id>))</el-txt></el-field></el-statement>
-&rarr; ["moT", "kciD", "teirraH"]
+&nbsp;&nbsp;&#x27f6; ["TOM", "DICK", "HARRIET"]
 </el-code-block>
 
-<p>And this example from demo program <el-code>maze-generator.elan</el-code>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To reverse each string in the list of names using a function you have written:</p>
+<el-code-block source="map.elan">
+<el-statement class="ok" id="print47" tabindex="-1"><el-kw>print </el-kw><el-field id="expr48" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-method>reverseString</el-method>(<el-id>s</el-id>))</el-txt></el-field></el-statement>
+&nbsp;&nbsp;&#x27f6; ["moT", "kciD", "teirraH"]
+</el-code-block>
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; And this example from demo program <el-code>maze-generator.elan</el-code>:</p>
 <el-code-block source="maze-generator.elan">
 <el-statement id="let156" tabindex="0"><el-kw>let </el-kw><el-field id="var157" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr158" class="ok" tabindex="0"><el-txt><el-id>p</el-id>.<el-method>neighbouringPoints</el-method>().<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type> =&gt; <el-method>getValue</el-method>(<el-id>p</el-id>, <el-id>g</el-id>))</el-txt></el-field></el-statement>
 </el-code-block>
 </div></div>
+<hr>
 
 <h3 class="no-TOC" id="reduce">reduce</h3>
-<p>The function <el-method>reduce</el-method> is used to apply a function to every elelment of a <el-type>List</el-type> and return a single value.</p>
-<p>Its first argument is an initial value which is used by the provided function, and will be the default return if the function doesn't produce a different value.</p>
-<p>The function to be applied is usually specified as a <el-kw>lambda</el-kw> having two arguments, the first being the variable that will contain the return value,<br>
-and second being an element in the list.</p>
+<p>The function <el-method>reduce</el-method> is used to apply a function <el-id>(F)</el-id> to every elelment of Type <el-id>(E)</el-id>
+in a <el-type>List</el-type> or <el-type>ListImmutable</el-type> <el-id>(L)</el-id>,
+and return a single value which may be of any Type <el-id>(T)</el-id>.</p>
+<p>As shown in this table, <el-method>reduce</el-method> takes two arguments, the second being a function that also takes two arguments.</p>
+
+<table class="tableMethod">
+ <tr>
+  <th>reduce<br>arguments</th>
+  <th>Type</th>
+  <th>description</th>
+ </tr><tr>
+  <td>1</td>
+  <td><el-id>(T)</el-id> Type of the function's<br>output</td>
+  <td>initial value used by the function, and<br>the default return value<br>if the function doesn't change it</td>
+ </tr><tr>
+  <td>2</td>
+  <td><el-id>(F)</el-id> Function</td>
+  <td>either a <el-kw>lambda</el-kw> or a function reference</td>
+ </tr> <tr>
+  <th>lambda or function<br>arguments</th>
+  <th>Type</th>
+  <th>description</th>
+ </tr><tr>
+  <td>1</td>
+  <td><el-id>(T)</el-id> Type of the function's<br>output</td>
+  <td>cumulative value created by the function</td>
+ </tr><tr>
+  <td>2</td>
+  <td><el-id>(E)</el-id> Type of input list's items</td>
+  <td>refers successively to each item in the list</td>
+ </tr>
+</table>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples of use</h4>
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>reduce</el-method></h4>
 <div class="acc-body">
-<p>To reduce the integer values in a list to their sum:</p>
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To reduce the integer values in a list to their sum:</p>
 <el-code-block source source="reduce.elan">
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>li</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>4</el-lit>, <el-lit>7</el-lit>, <el-lit>11</el-lit>]</el-txt></el-field></el-statement>
 <el-statement class="ok" id="print6" tabindex="-1"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>reduce</el-method>(<el-lit>0</el-lit>, <el-kw>lambda</el-kw> <el-id>m</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>m</el-id> + <el-id>n</el-id>)</el-txt></el-field></el-statement>
-&rarr; 15
-</el-code-block>
-<p>To reduce the floating point values in a list to their sum:</p>
-<el-code-block source source="reduce.elan">
-<el-statement class="ok" id="let17" tabindex="-1"><el-kw>let </el-kw><el-field id="var18" class="ok" tabindex="-1"><el-txt><el-id>lj</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt>[<el-lit><el-lit>0</el-lit>.1</el-lit>, <el-lit><el-lit>0</el-lit>.5</el-lit>, <el-lit><el-lit>0</el-lit>.3</el-lit>, <el-lit><el-lit>0</el-lit>.7</el-lit>, <el-lit><el-lit>0</el-lit>.2</el-lit>]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="print20" tabindex="-1"><el-kw>print </el-kw><el-field id="expr21" class="optional ok" tabindex="-1"><el-txt><el-id>lj</el-id>.<el-method>reduce</el-method>(<el-lit><el-lit>0</el-lit>.0</el-lit>, <el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Float</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>Float</el-type> =&gt; <el-id>x</el-id> + <el-id>y</el-id>).<el-method>round</el-method>(<el-lit>1</el-lit>)</el-txt></el-field></el-statement>
-&rarr; 1.8
+&nbsp;&nbsp;&#x27f6; 15
 </el-code-block>
 
-<p>And this example from demo program <el-code>wordle-solver.elan</el-code>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To reduce the floating point values in a list to their sum:</p>
+<el-code-block source source="reduce.elan">
+<el-statement class="ok" id="let12" tabindex="-1"><el-kw>let </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>lj</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt>[<el-lit><el-lit>0</el-lit>.1</el-lit>, <el-lit><el-lit>2</el-lit>.5</el-lit>, <el-lit>2</el-lit>, <el-lit><el-lit>0</el-lit>.3</el-lit>, <el-lit><el-lit>5</el-lit>.7</el-lit>, <el-lit><el-lit>0</el-lit>.2</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="print15" tabindex="-1"><el-kw>print </el-kw><el-field id="expr16" class="optional ok" tabindex="-1"><el-txt><el-id>lj</el-id>.<el-method>reduce</el-method>(<el-lit><el-lit>0</el-lit>.0</el-lit>, <el-kw>lambda</el-kw> <el-id>fsum</el-id> <el-kw>as</el-kw> <el-type>Float</el-type>, <el-id>item</el-id> <el-kw>as</el-kw> <el-type>Float</el-type> =&gt; <el-id>fsum</el-id> + <el-id>item</el-id>).<el-method>round</el-method>(<el-lit>1</el-lit>)</el-txt></el-field></el-statement>
+&nbsp;&nbsp;&#x27f6; 10.8
+</el-code-block>
+
+<h5 class="no-TOC">&nbsp;&nbsp;&nbsp;Notes</h5>
+<ul>
+ <li>You usually need to round floating point values when outputting them.</li>
+ <li>The inclusion of an integer in a <el-type>List</el-type> of floats is valid provided it is not the first value.</li>
+</ul>
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To reverse the order of items in a <el-type>List</el-type>:</p>
+<el-code-block>
+<el-statement class="ok" id="print30" tabindex="-1"><el-kw>print </el-kw><el-field id="expr31" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>reduce</el-method>(<el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-kw>lambda</el-kw> <el-id>liR</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>item</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>liR</el-id>.<el-method>withPrepend</el-method>(<el-id>item</el-id>))</el-txt></el-field></el-statement>
+&nbsp;&nbsp;&#x27f6; [11, 7, 4, 3, 2]
+</el-code-block>
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6;To reverse the order of characters in a <el-type>String</el-type>, do so via a <el-type>List</el-type> of the string's characters::</p>
+<el-code-block>
+<el-statement class="ok" id="let34" tabindex="-1"><el-kw>let </el-kw><el-field id="var35" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr36" class="ok" tabindex="-1"><el-txt>"<el-lit>'Twas brillig and the slithy toves</el-lit>"</el-txt></el-field></el-statement>
+<el-statement class="ok" id="print37" tabindex="-1"><el-kw>print </el-kw><el-field id="expr38" class="optional ok" tabindex="-1"><el-txt><el-id>s</el-id>.<el-method>split</el-method>(<el-kw>empty</el-kw> <el-type>String</el-type>).<el-method>reduce</el-method>(<el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;, <el-kw>lambda</el-kw> <el-id>sR</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;, <el-id>item</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>sR</el-id>.<el-method>withPrepend</el-method>(<el-id>item</el-id>)).<el-method>join</el-method>(<el-kw>empty</el-kw> <el-type>String</el-type>)</el-txt></el-field></el-statement>
+&nbsp;&nbsp;&#x27f6; sevot yhtils eht dna gillirb sawT'
+</el-code-block>
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; And this example on a <el-type>DictionaryImmutable</el-type> from demo program <el-code>wordle-solver.elan</el-code>:</p>
 <el-code-block source source="Wordle.elan">
 <el-statement class="ok" id="let350" tabindex="0"><el-kw>let </el-kw><el-field id="var351" class="ok" tabindex="0"><el-txt><el-id>d2</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr352" class="ok" tabindex="0"><el-txt><el-id>possAnswers</el-id>.<el-method>reduce</el-method>(<el-id>d</el-id>, <el-kw>lambda</el-kw> <el-id>dd</el-id> <el-kw>as</el-kw> <el-type>DictionaryImmutable</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Int</el-type>&gt;, <el-id>answer</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-method>incrementCount</el-method>(<el-id>dd</el-id>, <el-id>answer</el-id>, <el-id>attempt</el-id>))</el-txt></el-field></el-statement>
 </el-code-block>
 </div></div>
+<hr>
 
 <div id="maxBy"></div>
 <div id="minBy"></div>
 <h3 class="no-TOC">maxBy and minBy</h3>
 <p><el-method>maxBy</el-method> and <el-method>minBy</el-method> are dot functions of <el-type>List</el-type> and <el-type>ListImmutable</el-type>.
 They take a function as an argument, and return the list element corresponding to the maximum or minimum of the values returned by the function.</p>
-<p>For simply finding the maximum or minimum value in a List, you can use
+<p>For simply finding the maximum or minimum value in a <el-type>List</el-type>, you can use
 <a href="#maxFloat"><el-method>maxFloat</el-method></a>,
 <a href="#minFloat"><el-method>minFloat</el-method></a>,
 <a href="#maxInt"><el-method>maxInt</el-method></a> or
 <a href="#minInt"><el-method>minInt</el-method></a>.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples of use</h4>
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>maxBy</el-method> and <el-method>minBy</el-method></h4>
 <div class="acc-body">
-<p>To find in a list the integer that has the highest last digit:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To find in a list the integer that has the highest last digit:</p>
 <el-code-block>
 <el-statement class="ok" id="let11" tabindex="0"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt>{<el-lit>33</el-lit>, <el-lit>4</el-lit>, <el-lit>0</el-lit>, <el-lit>92</el-lit>, <el-lit>89</el-lit>, <el-lit>55</el-lit>, <el-lit>102</el-lit>}</el-txt></el-field></el-statement>
 <el-statement class="ok" id="print8" tabindex="0"><el-kw>print </el-kw><el-field id="expr9" class="optional ok" tabindex="0"><el-txt><el-id>a</el-id>.<el-method>maxBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>x</el-id><el-kw> mod </el-kw><el-lit>10</el-lit>)</el-txt></el-field></el-statement>
-&rarr; 89
+&nbsp;&nbsp;&#x27f6; 89
 </el-code-block>
-<p>To find in a list the the shortest string:</p>
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To find in a list the the shortest string:</p>
 <el-code-block>
 <el-statement class="ok" id="let14" tabindex="0"><el-kw>let </el-kw><el-field id="var15" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr16" class="ok" tabindex="0"><el-txt>{"<el-lit>apple</el-lit>", "<el-lit>orange</el-lit>", "<el-lit>pear</el-lit>"}</el-txt></el-field></el-statement>
 <el-statement class="ok" id="print17" tabindex="0"><el-kw>print </el-kw><el-field id="expr18" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id>.<el-method>minBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>x</el-id>.<el-method>length</el-method>())</el-txt></el-field></el-statement>
-&rarr; pear
+&nbsp;&nbsp;&#x27f6; pear
 </el-code-block>
 </div></div>
-
+<hr>
 <h3 class="no-TOC" id="sortBy">sortBy</h3>
 <p><el-method>sortBy</el-method> takes a <el-kw>lambda</el-kw> that takes two arguments (of the same Type as that of the <el-type>ListImmutable</el-type> being sorted) and compares them, returning an integer with one of the values -1, 0, or +1, to indicate whether the first argument should be placed respectively before, adjacent to or after the second argument in the sorted result, where &#8216;adjacent to&#8217; means it does not matter whether before or after):</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples of use</h4>
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>sortBy</el-method></h4>
 <div class="acc-body">
-
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To  sort integers in a <el-type>List</el-type>:</p>
 <el-code-block source="sortBy_Int.elan">
 <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>numbers</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>[<el-lit>27</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>31</el-lit>, <el-lit>37</el-lit>, <el-lit>11</el-lit>, <el-lit>13</el-lit>, <el-lit>17</el-lit>, <el-lit>19</el-lit>, <el-lit>23</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>numbers</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id> &gt; <el-id>y</el-id><el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id> &lt; <el-id>y</el-id><el-kw> then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+&nbsp;&nbsp;&#x27f6; [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
 </el-code-block>
 
-<p>And similarly for string comparisons using methods <el-method>isBefore</el-method> and <el-method>isAfter</el-method>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; And similarly for string comparisons using methods <el-method>isBefore</el-method> and <el-method>isAfter</el-method>:</p>
 <el-code-block source="sortBy_String.elan">
 <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>["<el-lit>Simon</el-lit>", "<el-lit>Pauline</el-lit>", "<el-lit>Jason</el-lit>", "<el-lit>Zelda</el-lit>", "<el-lit>Edith</el-lit>", "<el-lit>Lance</el-lit>", "<el-lit>Alice</el-lit>", "<el-lit>Paul</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>names</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id>.<el-method>isAfter</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id>.<el-method>isBefore</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+&nbsp;&nbsp;&#x27f6; [Alice, Edith, Jason, Lance, Paul, Pauline, Simon, Zelda]
 </el-code-block>
 </div></div>
-
 <hr>
 <p><b>Elan Library Reference</b> go to the <a href="#top">top</a></p>
 <script>
