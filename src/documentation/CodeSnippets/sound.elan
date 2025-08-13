@@ -1,0 +1,15 @@
+# c9ff8b5eb940a476c9b5d2b96bc96331a3f2314f58212d9116713b12c41ce39c Elan 1.3.1 guest default_profile valid
+
+main
+  let scale be [262, 294, 330, 349, 392, 440, 494, 523]
+  let scaleL be scale.length()
+  let quaver be 250
+  let volume be 1.5
+  for i from 0 to scaleL - 1 step 1
+    call tone(quaver, scale[i], volume)
+  end for
+  call pause(1000)
+  for i from 0 to scaleL - 1 step 1
+    call tone(quaver, scale[scaleL - 1 - i], volume)
+  end for
+end main

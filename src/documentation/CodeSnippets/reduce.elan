@@ -1,0 +1,20 @@
+# 4a9e04de35465fda2ef659710458c794dcce004c75d8eaab6e0fbf4b12f92cf3 Elan 1.3.1 guest default_profile valid
+
+main
+  #   sum the integers in a list
+  let li be [2, 3, 4, 7, 11]
+  print li.reduce(0, lambda isum as Int, item as Int => isum + item)
+  #   sum the floats in a list
+  let lj be [0.1, 0.5, 0.3, 0.7, 0.2]
+  print lj.reduce(0.0, lambda fsum as Float, item as Float => fsum + item).round(1)
+  #   concatenate the strings in a list
+  let ls be ["Eeny", "Meeny", "Miny", "Mo"]
+  print ls.reduce(empty String, lambda concat as String, item as String => concat + item)
+  #   find the longest string
+  print ls.reduce(empty String, lambda longest as String, item as String => if item.length() > longest.length() then item else longest)
+  #   reverse the order of a list
+  print li.reduce(empty List<of Int>, lambda liR as List<of Int>, item as Int => liR.withPrepend(item))
+  #   reverse the order of a string
+  let s be "'Twas brillig and the slithy toves"
+  print s.split(empty String).reduce(empty List<of String>, lambda sR as List<of String>, item as String => sR.withPrepend(item)).join(empty String)
+end main
