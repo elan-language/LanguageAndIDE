@@ -1,5 +1,5 @@
 import { Regexes } from "../fields/regexes";
-import { escapeHtmlChars } from "../frame-helpers";
+import { escapeHtmlChars, renderDoubleSpaceAfterCharAsLineBreak } from "../frame-helpers";
 import { RegExMatchNode } from "./regex-match-node";
 
 export class LitStringOrdinaryContents extends RegExMatchNode {
@@ -11,6 +11,6 @@ export class LitStringOrdinaryContents extends RegExMatchNode {
     super.parseText(text);
   }
   renderAsHtml(): string {
-    return `${escapeHtmlChars(super.renderAsHtml())}`;
+    return `${renderDoubleSpaceAfterCharAsLineBreak(escapeHtmlChars(super.renderAsHtml()))}`;
   }
 }
