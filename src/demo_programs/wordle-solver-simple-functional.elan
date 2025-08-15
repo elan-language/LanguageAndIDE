@@ -1,4 +1,4 @@
-# 8baf128c030163b442a87edb3dbab83a67eebd6d7fd117a445c379d3dbc572d1 Elan 1.3.2 guest default_profile valid
+# 22a507b957e514301a72802cae0cb48776d0fef3d565d4b795e3b2dab0044914 Elan 1.3.1 guest default_profile valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Works only for the 2,309 words that may be set by the official online Wordle
@@ -33,7 +33,7 @@ function markAttempt(attempt as String, target as String) returns String
     end if
   end for
   for n from 0 to 4 step 1
-    if unused.contains(attempt[n]) then
+    if (mark[n] isnt "*") and unused.contains(attempt[n]) then
       set mark to setChar(mark, n, "+")
       set unused to setChar(unused, unused.indexOf(attempt[n]), " ")
     end if
