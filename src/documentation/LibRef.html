@@ -153,6 +153,7 @@ in the range:</li>
     It may, however, be converted into an <el-type>Int</el-type> before passing, using the function <el-code>floor</el-code> or <el-code>ceiling</el-code>.</li>
  <li>If you wish to define a variable to be of Type <el-type>Float</el-type>, but initialise it with an integer value, then add <el-code>.0</el-code> on the end of the whole number, as in:<br>
  <el-code>variable hour set to 3.0</el-code></li>
+ <li>Any variable or expression that evaluates to an <el-code>Int</el-code> may always be used where a <el-code>Float</el-code> is expected.</li>
 </ul>
 
 <h2 id="Boolean">Boolean</h2>
@@ -197,7 +198,7 @@ in the range:</li>
 </tr><tr>
   <td><el-type>String</el-type></td>
   <td><el-code>let title be "Ulysses"</el-code></td>
-  <td><el-code>"", (the empty string)</el-code></td>
+  <td><el-code>""</el-code> or <el-code>empty String</el-code></td>
 </tr><tr>
   <td><el-type>String</el-type></td>
   <td><el-code>variable greeting set to "hello"</el-code></td>
@@ -209,14 +210,16 @@ in the range:</li>
 <ul>
  <li>A <el-type>String</el-type> is always delineated by double quotation marks.</li>
  <li>When typing from the keyboard into a literal string all the basic ASCII characters (0x20 to 0x7e) can be input. Similarly you can copy from
- elsewhere into a literal string provided only basic ASCII characters are include. You cannot use Alt-numeric-keypad </li>
+ elsewhere into a literal string provided only basic ASCII characters are included. You cannot use Alt-numeric-keypad to enter the accented letters and other special
+ characters in the range 0x80 to 0xff. </li>
  <li>As in most languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never modified. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</li>
- <li>Strings can be built from other strings by concatenation using the plus operator, for example</li>
+ <li>Strings can be built from other strings by concatenation using the plus operator, for example:</li>
  <ul><li><el-code>print "Hello" + " " + "World"</el-code></li></ul>
  <li>A newline may be inserted within a string with <el-code>\n</el-code>, for example:</li>
  <ul><li><el-code>print "Hello\nWorld"</el-code></li></ul>
-<li>There are no 'substring' methods in Elan because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth character to the seventh character inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <em>exclusive</em>.
+<li>There are no 'substring' methods in Elan because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth character to the seventh character inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <i>exclusive</i>.
  See <a href="LangRef.html#IndexedValue">Indexed Value</a>.</li>
+ <li>You can loop through a string picking each of its characters using the <a href="LangRef.html#each"><el-code>each</el-code></a> loop.
 <li>There are, however, many dot methods that can be applied to strings:</li>
 </ul>
 
@@ -428,6 +431,14 @@ for example:
 </ul>
 
 <h1 id="StandardDataStructures">Standard (mutable) data structures</h1>
+<p>Elan's four standard data structures have the Types <el-type>Array</el-type>, <el-type>Array2D</el-type>, <el-type>List</el-type> and <el-type>Dictionary</el-type>.
+They are all <i>mutable</i>, meaning that their contents (referred to as items or elements) may be changed directly by calling the various <i>procedure</i> dot methods defined for each structure Type.</p>
+<p>However, since procedure methods may be called only from within the <el-kw>main</el-kw> routine or a <el-kw>procedure</el-kw>,
+it is also possible to make changes via <el-kw>function</el-kw> dot methods,  which return a copy of the data structure
+with specified changes: that is why all such methods have names starting '<el-code>with</el-code>'.</p>
+<p>All four contain values (and keys in the case of a <el-type>Dictionary</el-type>) of only a single Type, that Type being specified either explicitly (as in
+<el-code>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-code>), or implicitly if the structure is created using a literal definition.</p>
+<p>This table summarises the creation and reference to these structures. Details of their methods follow.</p>
 <table class="tableStructure">
  <tr>
   <th></th>
@@ -439,25 +450,38 @@ for example:
   <th>List</th>
   <th>Dictionary</th>
  </tr><tr>
-  <td>Size</td><td>Static</td><td>Static</td><td>Dynamic</td><td>Dynamic</td></tr>
-  <tr><td>Type form<br>(example)</td>
-  <td><el-code><el-type>Array</el-type>&lt;of <el-type>String</el-type>&gt;</el-code><br>of Type <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type>, or <el-type>Boolean</el-type></td>
-  <td><el-code><el-type>Array2D</el-type>&lt;of <el-type>String</el-type>&gt;</el-code><br>of Type <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type>, or <el-type>Boolean</el-type></td>
-  <td><el-code><el-type>List</el-type>&lt;of <el-type>String</el-type>&gt;</el-code><br>of any Type including <el-type>Array</el-type><br> &ndash; or <el-type>List</el-type> for 'jagged' data</td>
-  <td><el-code><el-type>Dictionary</el-type>&lt;of <el-type>String</el-type>, <el-type>Int</el-type>&gt;</el-code><br>key must be <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type>, <el-type>Boolean</el-type>, or any<el-code>record</el-code>. Value Type may be anything</td>
+  <tr><td>Type form</td>
+  <td><el-code><el-type>Array</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code><br><el-kw>Type</el-kw> of item is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type></td>
+  <td><el-code><el-type>Array2D</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code><br><el-kw>Type</el-kw> of item is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type></td>
+  <td><el-code><el-type>List</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code><br><el-kw>Type</el-kw> of item can be any, including <el-type>Array</el-type> &ndash; or <el-type>List</el-type> for 'jagged' data</td>
+  <td><el-code><el-type>Dictionary</el-type>&lt;of <el-kw>keyType</el-kw>, <el-kw>valueType</el-kw>&gt;</el-code><br>
+  <el-kw>keyType</el-kw> is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type>, or a <el-code>record</el-code>, and<br>
+  <el-kw>valueType</el-kw> may be any Type</td>
  </tr><tr>
-  <td>literal</td>
-  <td>n/a, but can convert literal list:<br><el-code>["a","b","c"].asArray()</el-code></td>
-  <td>n/a</td>
+  <td>size</td><td>Static</td><td>Static</td><td>Dynamic</td><td>Dynamic</td></tr>
+  <td>literal definition</td>
+  <td>only as converted from a literal <el-type>List</el-type> e.g.:<el-code>["a","b","c"].<el-method>asArray</el-method>()</el-code></td>
+  <td>not available</td>
   <td><el-code>["a","b","c"]</el-code></td>
   <td><el-code>["a":3, "b":5]</el-code></td>
  </tr><tr>
-  <td>create</td>
-  <td><el-code>new <el-type>Array</el-type>&lt;of <el-type>String</el-type>&gt;(10, "")</el-code><br>any initial value of correct Type</td>
-  <td><el-code>new <el-type>Array2D</el-type>&lt;of <el-type>String</el-type>&gt;(5,8, "")</el-code><br>defines 5 arrays each of 8 elements<br>any initial value of correct Type</td>
-  <td><el-code>new <el-type>List</el-type>&lt;of <el-type>Int</el-type>&gt;()</el-code><br>created empty<br>and of any Type</td>
-  <td><el-code>new <el-type>Dictionary</el-type>&lt;of <el-type>String</el-type>, <el-type>Int</el-type>&gt;()</el-code><br>
-  Key Type must be simple value or a <el-code>record</el-code><br>Value Type can be any</td>
+  <td>create empty</td>
+  <td><el-code>empty</el-code> <el-type>Array&lt;of <el-kw>Type</el-kw>&gt;</el-type></td>
+  <td><el-code>empty</el-code> <el-type>Array2D&lt;of <el-kw>Type</el-kw>&gt;</el-type></td>
+  <td><el-code>empty</el-code> <el-type>List&lt;of <el-kw>Type</el-kw>&gt;</el-type> or<br>
+  <el-code>new <el-type>List</el-type>&lt;of <el-kw>Type&gt;</el-kw>()</el-code></td>
+  <td><el-code>empty</el-code> <el-type>Dictionary&lt;of <el-kw>keyType</el-kw>&gt;, <el-kw>valueType</el-kw>&gt;</el-type> or<br>
+  <el-code>new <el-type>Dictionary</el-type>&lt;of <el-kw>keyType</el-kw>, <el-kw>valueType&gt;</el-kw>()</el-code></td>
+ </tr><tr>
+  <td>create initialised</td>
+  <td><el-code>new <el-type>Array</el-type>&lt;of <el-kw>Type</el-kw>&gt;(<el-kw>size</el-kw>, <el-kw>value</el-kw>)</el-code><br>
+  <el-kw>size</el-kw> is the number of items, and<br><el-kw>value</el-kw> is the initial value of every item</td>
+  <td><el-code>new <el-type>Array2D</el-type>&lt;of <el-kw>Type</el-kw>&gt;(<el-kw>cols</el-kw>, <el-kw>rows</el-kw>, <el-kw>value</el-kw>)<br>
+  <el-kw>Type</el-kw> of item is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type>,<br>
+  <el-kw>cols</el-kw> is the number of columns,<el-kw><br>rows</el-kw> is the number of rows</el-code>, and<br>
+  <el-kw>value</el-kw> is the initial value of every item<br>(all are named values or literals)</td>
+  <td>not available</td>
+  <td>not available</td>
  </tr><tr>
   <td>read by index</td>
   <td><el-code>a[3]</el-code></td>
@@ -465,11 +489,11 @@ for example:
   <td><el-code>li[2]</el-code></td>
   <td><el-code>d["b"]</el-code></td>
  </tr><tr>
-  <td>read range</td>
-  <td><el-code>a[2..5]</el-code><br>lower bound is <em>inclusive</em><br>upper bound is <em>exclusive</em></td>
-  <td>n/a</td>
-  <td><el-code>li[2..5]</el-code><br>lower bound is <em>inclusive</em><br>upper bound is <em>exclusive</em></td>
-  <td> n/a</td>
+  <td>read by index range</td>
+  <td><el-code>a[2..5]</el-code><br>lower bound is <i>inclusive</i> from 0<br>upper bound is <i>exclusive</i></td>
+  <td>not available</td>
+  <td><el-code>li[2..5]</el-code><br>lower bound is <i>inclusive</i> from 0<br>upper bound is <i>exclusive</i></td>
+  <td> not available</td>
  </tr><tr>
   <td>procedure methods to mutate contents</td>
   <td>see <a href="#Array_procedures">Procedure methods on an Array</a></td>
@@ -484,17 +508,6 @@ for example:
   <td>see <a href="#Dictionary_functions">Function dot methods on a Dictionary</a></td>
  </tr>
 </table>
-<p>All four are 'mutable' &ndash; meaning that their contents may be changed directly by calling the various <i>procedure</i> dot methods that each
-Type defines.
-However, since procedure methods may be called only from within the <el-kw>main</el-kw> routine,
-or from within another <el-kw>procedure</el-kw>, it is also possible to make changes via
-<el-kw>function</el-kw> dot methods &ndash; which return a copy of the data structure,
-with the specified changes &ndash; which is why all such methods have names starting <el-code>with...</el-code>.</p>
-
-<p>All four data structures contain values of a single Type, that Type being specified either explicitly &ndash;  as in
-    <el-code>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-code> &ndash; or implicitly if the structure
-    is created from its literal definition form.</p>
-    <p>A <el-type>Dictionary</el-type> is defined with two Types: one for its keys and one for their values.</p>
 
 <h2 id="Array">Array</h2>
 <p>An array is a simple data structure containing <i>n</i> elements of a single Type, indexed from <i>0</i> to <i>n-1</i>.</p>
@@ -662,7 +675,7 @@ Note
  and are indexed from <i>0</i> to <i>n-1</i>, but is more flexible because:</p>
 <ul>
  <li>While the elements must all be of one Type, that Type is not limited to the simple value Types:
-  the element Type may also be a user-defined Type such as a <i>class</i>, <i>record</i>, another <i>List</i> or an <i>Array</i>.</li>
+  the element Type may also be a user-defined Type such as a <el-type>class</el-type>, <el-code>record</el-code>, another <el-type>List</el-type> or an <el-type>Array</el-type>.</li>
  <li>A List is created either empty or initialised from a literal definition.</li>
  <li>A List's size can be dynamically changed.</li>
 </ul>
@@ -930,7 +943,7 @@ Note
 <p>A Dictionary works like an Array, but instead of having a numeric (integer) index, each entry has a <i>key</i>. Each key is associated with a <i>value</i>,
 so the Dictionary is a set of <i>key:value</i> pairs.
 The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type>,
-<i>or</i> it may be a user-defined <i>record</i>. The values may be of any Type, and the Types of both key and value are fixed when the Dictionary is created.</p>
+<i>or</i> it may be a user-defined <el-code>record</el-code>. The values may be of any Type, and the Types of both key and value are fixed when the Dictionary is created.</p>
 
 <h3 class="no-TOC" id="Dictionary_procedures">Procedure methods on a Dictionary</h3>
 <table class="tableMethod">
@@ -1006,13 +1019,14 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
 </table>
 
 <h1 id="ImmutableDataStructures">Immutable data structures</h1>
-<p>In contrast to the <a href="#StandardDataStructures">standard (mutable) data structures</a>, <i>immutable</i>
-data structures cannot be modified directly &ndash; and hence define no <i>procedure</i> dot methods. Instead,
-changes are made by using <i>function</i> dot methods that copy the existing data structure, but with specified
-differences. Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
+<p>In contrast to the <a href="#StandardDataStructures">standard (mutable) data structures</a>, the contents (referred to as items or elements)
+ of the five <i>immutable</i> data structures cannot be modified directly, and hence the structure Types have no <i>procedure</i> dot methods defined. Instead,
+changes are made by using <i>function</i> dot methods that copy the existing data structure with specified
+changes.</p>
+<p>Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
  but some are also useful within other programming paradigms.</p>
+<p>This table summarises the creation and reference to these immutable structures. Details of their methods follow.</p>
 
-<p>The five immutable data structures defined in the Elan library are summarised in this table. More details on each Type are given below the table.</p>
 <table class="tableStructure">
  <tr>
   <th></th>
@@ -1025,42 +1039,56 @@ differences. Immutable data structures are intended specifically to facilitate t
   <th>Stack</th>
   <th>Queue</th>
  </tr><tr>
+  <td>Type form</td>
+  <td><el-code><el-type>ListImmutable</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code><br><el-kw>Type</el-kw> of item must be immutable</td>
+  <td><el-code><el-type>DictionaryImmutable</el-type>&lt;of <el-kw>keyType</el-kw>, <el-kw>valueType</el-kw>&gt;</el-code><br>
+  <el-kw>keyType</el-kw> is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or  <el-type>Boolean</el-type> or a <el-code>record</el-code> ,and<br>
+  <el-kw>valueType</el-kw> may be any immutable Type</td>
+  <td><el-code><el-type>Set</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code><br><el-kw>Type</el-kw> of item must be immutable</td>
+  <td><el-code><el-type>Stack</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code><br><el-kw>Type</el-kw> of item must be immutable</td>
+  <td><el-code><el-type>Queue</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code><br><el-kw>Type</el-kw> of item must be immutable</td>
+ </tr><tr>
   <td>Size</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td>
  </tr><tr>
-  <td>Type</td>
-  <td><el-code><el-type>ListImmutable</el-type>&lt;of <el-type>String</el-type>&gt;</el-code><br>element Type must be immutable</td>
-  <td><el-code><el-type>DictionaryImmutable</el-type>&lt;of <el-type>String</el-type>, <el-type>Int</el-type>&gt;</el-code><br>Key Type must be <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type>, <el-type>Boolean</el-type> or any <el-code>record</el-code><br>Value Type may be any immutable Type</td>
-  <td><el-code><el-type>Set</el-type>&lt;of <el-type>String</el-type>&gt;</el-code><br>element Type must be immutable</td>
-  <td><el-code><el-type>Stack</el-type>&lt;of <el-type>String</el-type>&gt;</el-code><br>element Type must be immutable</td>
-  <td><el-code><el-type>Queue</el-type>&lt;of <el-type>String</el-type>&gt;</el-code><br>element Type must be immutable</td>
- </tr><tr>
-  <td>literal</td>
+  <td>literal definition</td>
   <td><el-code>{a","b","c"}</el-code></td>
   <td><el-code>{"a":3, "b":5}</el-code></td>
-  <td>None, but can convert literal list:<br><el-code>["a","b","c"].asSet()</el-code></td>
-  <td>None</td>
-  <td>None</td>
+  <td>Only as converted from a literal <el-type>List</el-type> e.g.:<br><el-code>["a","b","c"].<el-method>asSet</el-method>()</el-code></td>
+  <td>Not available</td>
+  <td>Not available</td>
  </tr><tr>
-  <td>create</td>
-  <td><el-code>new <el-type>ListImmutable</el-type>&lt;of <el-type>String</el-type>&gt;()</el-code><br>created empty<br>must be 'of' an immutable Type</td>
-  <td><el-code>new <el-type>DictionaryImmutable</el-type>&lt;of <el-type>String</el-type>, <el-type>Int</el-type>&gt;()</el-code><br>created empty <br>Key <em>and</em> Value Types must be immutable</td>
-  <td><el-code>new <el-type>Set</el-type>&lt;of <el-type>String</el-type>&gt;()</el-code><br> created empty<br>must be 'of' an immutable Type</td>
-  <td><el-code>new <el-type>Stack</el-type>&lt;of <el-type>String</el-type>&gt;()</el-code></td>
-  <td><el-code>new <el-type>Queue</el-type>&lt;of <el-type>String</el-type>&gt;()</el-code></td>
+  <td>create empty</td>
+  <td><el-code>empty<el-type>ListImmutable</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code> or<br>
+  <el-code>new <el-type>ListImmutable</el-type>&lt;of <el-kw>Type</el-kw>&gt;()</el-code></td>
+  <td><el-code>empty <el-type>DictionaryImmutable</el-type>&lt;of <el-kw>keyType</el-kw>, <el-kw>valueType</el-kw>&gt;()</el-code> or<br>
+  <el-code>new <el-type>DictionaryImmutable</el-type>&lt;of <el-kw>keyType</el-kw>, <el-kw>valueType</el-kw>&gt;()</el-code></td>
+  <td><el-code>empty<el-type>Set</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code> or<br>
+  <el-code>new <el-type>Set</el-type>&lt;of <el-kw>Type</el-kw>&gt;()</el-code></td>
+  <td><el-code>empty<el-type>Stack</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code> or<br>
+  <el-code>new <el-type>Stack</el-type>&lt;of <el-kw>Type</el-kw>&gt;()</el-code></td>
+  <td><el-code>empty<el-type>Queue</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code> or<br>
+  <el-code>new <el-type>Queue</el-type>&lt;of <el-kw>Type</el-kw>&gt;()</el-code></td>
  </tr><tr>
-  <td>read by Key</td>
+  <td>create initialised</td>
+  <td>not available</td>
+  <td>not available</td>
+  <td>not available</td>
+  <td>not available</td>
+  <td>not available</td>
+ </tr><tr>
+  <td>read by key</td>
   <td><el-code>lim[2]</el-code></td>
-  <td><el-code>di["b"]</el-code></td>
-  <td>n/a</td>
-  <td>n/a</td>
-  <td>n/a</td>
+  <td><el-code>dim["b"]</el-code></td>
+  <td>not available</td>
+  <td>not available</td>
+  <td>not available</td>
  </tr><tr>
-  <td>read range</td>
-  <td><el-code>lim[2..5]</el-code><br>upper bound <em>exclusive</em></td>
-  <td>n/a</td>
-  <td>n/a</td>
-  <td>n/a</td>
-  <td>n/a</td>
+  <td>read by range</td>
+  <td><el-code>lim[2..5]</el-code><br>lower bound is <i>inclusive</i> from 0<br>upper bound is <i>exclusive</i></td>
+  <td>not available</td>
+  <td>not available</td>
+  <td>not available</td>
+  <td>not available</td>
  </tr><tr>
   <td>function dot methods</td>
   <td>see <a href="#ListImmutable_functions">Function dot methods on a ListImmutable</a></td>
@@ -1856,8 +1884,8 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <div id="DisplayHtml"></div>
 <div id="displayHtml"></div>
 <h2 id="Html">Displaying Html</h2>
-<p>If you attempt to embed Html in a string and then attempt to print it, you will see the string displayed literally - the Html tags
-    will not be recognised - this is for security reasons. However, it <i>is</i> possible to display formatted Html on the <b>Display.</b>
+<p>If you attempt to embed Html in a string and then attempt to print it, you will see the string displayed literally &ndash; the Html tags
+    will not be recognised &ndash; this is for security reasons. However, it <i>is</i> possible to display formatted Html on the <b>Display.</b>
     The following code:</p>
 
 <el-code-block source="Html_1.elan">
@@ -3036,9 +3064,10 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 &nbsp;&nbsp;&#x27f6; ["TOM", "DICK", "HARRIET"]
 </el-code-block>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; To reverse each string in the list of names using a function you have written:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To reverse each string in the list of names using the function <el-method>reverse</el-method>
+ (from the example of the <a href="LangRef.html#each">each</a> loop):</p>
 <el-code-block source="map.elan">
-<el-statement class="ok" id="print47" tabindex="-1"><el-kw>print </el-kw><el-field id="expr48" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-method>reverseString</el-method>(<el-id>s</el-id>))</el-txt></el-field></el-statement>
+<el-statement class="ok" id="print47" tabindex="-1"><el-kw>print </el-kw><el-field id="expr48" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-method>reverse</el-method>(<el-id>s</el-id>))</el-txt></el-field></el-statement>
 &nbsp;&nbsp;&#x27f6; ["moT", "kciD", "teirraH"]
 </el-code-block>
 
@@ -3111,13 +3140,6 @@ and return a single value which may be of any Type <el-id>(T)</el-id>.</p>
 <el-code-block>
 <el-statement class="ok" id="print30" tabindex="-1"><el-kw>print </el-kw><el-field id="expr31" class="optional ok" tabindex="-1"><el-txt><el-id>li</el-id>.<el-method>reduce</el-method>(<el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-kw>lambda</el-kw> <el-id>liR</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;, <el-id>item</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>liR</el-id>.<el-method>withPrepend</el-method>(<el-id>item</el-id>))</el-txt></el-field></el-statement>
 &nbsp;&nbsp;&#x27f6; [11, 7, 4, 3, 2]
-</el-code-block>
-
-<p>&nbsp;&nbsp;&nbsp;&#x25b6;To reverse the order of characters in a <el-type>String</el-type>, do so via a <el-type>List</el-type> of the string's characters::</p>
-<el-code-block>
-<el-statement class="ok" id="let34" tabindex="-1"><el-kw>let </el-kw><el-field id="var35" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr36" class="ok" tabindex="-1"><el-txt>"<el-lit>'Twas brillig and the slithy toves</el-lit>"</el-txt></el-field></el-statement>
-<el-statement class="ok" id="print37" tabindex="-1"><el-kw>print </el-kw><el-field id="expr38" class="optional ok" tabindex="-1"><el-txt><el-id>s</el-id>.<el-method>split</el-method>(<el-kw>empty</el-kw> <el-type>String</el-type>).<el-method>reduce</el-method>(<el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;, <el-kw>lambda</el-kw> <el-id>sR</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;, <el-id>item</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>sR</el-id>.<el-method>withPrepend</el-method>(<el-id>item</el-id>)).<el-method>join</el-method>(<el-kw>empty</el-kw> <el-type>String</el-type>)</el-txt></el-field></el-statement>
-&nbsp;&nbsp;&#x27f6; sevot yhtils eht dna gillirb sawT'
 </el-code-block>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; And this example on a <el-type>DictionaryImmutable</el-type> from demo program <el-code>wordle-solver.elan</el-code>:</p>
