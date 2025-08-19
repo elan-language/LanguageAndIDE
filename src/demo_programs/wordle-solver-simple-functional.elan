@@ -1,4 +1,4 @@
-# 22a507b957e514301a72802cae0cb48776d0fef3d565d4b795e3b2dab0044914 Elan 1.3.1 guest default_profile valid
+# 0d6ec259fe938e976e56ad4294ea6683aae92c49bc8dce4a5110921975fd993d Elan 1.3.1 guest default_profile valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Works only for the 2,309 words that may be set by the official online Wordle
@@ -27,7 +27,7 @@ function markAttempt(attempt as String, target as String) returns String
   variable mark set to "_____"
   variable unused set to target
   for n from 0 to 4 step 1
-    if unused[n] is attempt[n] then
+    if attempt[n] is unused[n] then
       set mark to setChar(mark, n, "*")
       set unused to setChar(unused, n, " ")
     end if
