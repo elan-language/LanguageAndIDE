@@ -23,9 +23,10 @@ p,img,pre,blockquote,address,td,th,li,ul
 table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {content: " \25B4\25BE"}
 
 .tableColours td { font-family:monospace; text-align:right; }
+.tableMethod th, td { padding-left:5px; padding-right:5px; }
+.tableProperty th, td { padding-left:5px; padding-right:5px; }
+.tableStructure th, td { padding-left:5px; padding-right:5px; }
 .tableType th, td { padding-left:5px; padding-right:5px; }
-.tableMethod th, td { padding-left:5px; padding-right:5px;  }
-.tableStructure th, td { padding-left:5px; padding-right:5px;  }
 
 table
  th, th * {color: white; background-color: rgb(15,71,97)}

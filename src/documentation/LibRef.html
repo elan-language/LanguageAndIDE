@@ -410,9 +410,9 @@ A Tuple differs from a List in that:
 <el-statement class="ok" id="var19" tabindex="-1"><el-kw>variable </el-kw><el-field id="var20" class="ok" tabindex="-1"><el-txt>_, <el-id>y3</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field></el-statement>
 </el-code-block>
 
-Where it is not convenient to use Tuple deconstruction (or not possible, e.g. within a lambda) then individual elements
+<p id="itemN">Where it is not convenient to use Tuple deconstruction (or not possible, e.g. within a lambda) then individual elements
 may be accessed using the special properties <el-id>item0</el-id>, <el-id>item1</el-id>, <el-id>item2</el-id>,...  with the dot notation,
-for example:
+for example:</p>
 
 <el-code-block source="tuples1.elan">
 <el-func class="ok multiline" id="func17" tabindex="-1">
@@ -888,7 +888,7 @@ Note
   <td>item of <el-type>List element's Type</el-type></td>
   <td><el-type>List</el-type></td>
   <td>a new List lengthened with the item added after the end</td>
- </tr><tr id="withAppendList">
+ </tr><tr id="withAppend_List">
   <td><el-method>withAppendList</el-method></td>
   <td><el-type>List</el-type></td>
   <td><el-type>List</el-type> of same Type</td>
@@ -906,7 +906,7 @@ Note
   <td>item of <el-type>List element's Type</el-type></td>
   <td><el-type>List</el-type></td>
   <td>a new List lengthened with the item added before the beginning</td>
- </tr><tr id="withPrependList">
+ </tr><tr id="withPrepend_List">
   <td><el-method>withPrependList</el-method></td>
   <td><el-type>List</el-type></td>
   <td><el-type>List</el-type> of same Type</td>
@@ -1489,7 +1489,12 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
    first element enqueued listed first</td>
 </tr>
 </table>
-<p>Example use of a <el-type>Stack</el-type>:</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-type>Stack</el-type> and <el-type>Queue</el-type></h4>
+<div class="acc-body">
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To push and pop strings:</p>
 <el-code-block source="stack.elan">
 <el-statement class="ok" id="var35" tabindex="0"><el-kw>variable </el-kw><el-field id="var36" class="ok" tabindex="0"><el-txt><el-id>st</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr37" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Stack</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print6" tabindex="0"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1504,7 +1509,8 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <el-statement class="ok" id="print26" tabindex="0"><el-kw>print </el-kw><el-field id="expr27" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print28" tabindex="0"><el-kw>print </el-kw><el-field id="expr29" class="optional ok" tabindex="0"><el-txt><el-id>st</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
-    <p>Example use of a <el-type>Queue</el-type>:</p>
+<hr>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To enqueue and dequeue strings:</p>
 <el-code-block source="queue.elan">
 <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>qu</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Queue</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print6" tabindex="0"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1519,6 +1525,8 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <el-statement class="ok" id="print29" tabindex="0"><el-kw>print </el-kw><el-field id="expr30" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print31" tabindex="0"><el-kw>print </el-kw><el-field id="expr32" class="optional ok" tabindex="0"><el-txt><el-id>qu</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
+<hr>
+</div></div>
 
 <h1 id="CommonDotMethods">Common dot methods</h1>
 
@@ -1718,11 +1726,11 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
  <li>The method <el-method>asString</el-method> is so widely applicable because it enables you to print
  most variables and data structures to the Display for debugging purposes.</li>
  <li>The length of a <el-type>Dictionary</el-type> or <el-type>DictionaryImmutable</el-type> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:</li>
-  <p><el-code>print dict.keys().length()</el-code> &#x25b6; 15</p>
+  <p><el-code>print dict.keys().length()</el-code> &#x27f6; 15</p>
  <li>Checking whether an item is contained in a <el-type>Dictionary</el-type> or <el-type>DictionaryImmutable</el-type> can be
   done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:</li>
-  <p><el-code>print dict.keys().contains(42)</el-code> &#x25b6; <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code></p>
-  <p><el-code>print dict.values().contains("widget")</el-code> &#x25b6; <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code></p>
+  <p><el-code>print dict.keys().contains(42)</el-code> &#x27f6; <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code></p>
+  <p><el-code>print dict.values().contains("widget")</el-code> &#x27f6; <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code></p>
 </ul>
 
 <h1 id="Input/output">Input/output</h1>
@@ -1754,7 +1762,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 </main>
 </el-code-block>
 
-<h2 id="TextFileReader">Reading Text Files</h2>
+<h2 id="TextFileReader">Reading text files</h2>
 <p>The <el-type>TextFileReader</el-type> class is used to read textual data from a file.</p>
 <p>An instance is created by the standalone system method <el-method>openFileForReading</el-method>.</p>
 <p>The available procedure methods are:</p>
@@ -1942,7 +1950,7 @@ who showed us this feature in confidence before its release, but nonetheless gen
 </el-code-block>
 
 <p>The <el-kw>with</el-kw> clause also permits you to specify a title for the image, which shows up as a tooltip on the image. It is good practice to do this for meeting accessibility guidelines.The <el-kw>with</el-kw> clause
-also offers position properties <el-code><el-id>x</el-id></el-code> and <el-code><el-id>y</el-id></el-code>. These are ignored when <i>printing</i> an image, but are required in the context of drawing <a href="#VectorGraphics">Vector Graphics</a>.</p>
+also offers position properties <el-id>x</el-id> and <el-id>y</el-id>. These are ignored when <i>printing</i> an image, but are required in the context of drawing <a href="#VectorGraphics">Vector Graphics</a>.</p>
 
 <p>An image specified in this way may also be assigned to a named value, or defined inline as an argument to a method, for example:</p>
 
@@ -2038,10 +2046,14 @@ the URL as a <el-type>String</el-type>, either as a literal (by surrounding it w
 </ul>
 
 <h2 id="TurtleGraphics">Turtle graphics</h2>
-<p>Turtle graphics are implemented in Elan with output to the Display pane on in the user interface, i.e. the 'paper' on which the Turtle draws.</p>
-<p>The area is 200 turtle units wide by 150 turtle units high, and both integer and floating point values of turtle units can be used.</p>
-<p>The origin for turtle units (0,0) is at the centre of the area: positive x rightwards, positive y upwards.
-So for example the top left corner of the display is at (-100,75).</p>
+<p>Turtle graphics are implemented in Elan with output to the Display pane in the user interface, i.e. the 'paper' on which the turtle draws.</p>
+<p>The area is 200 turtle units wide by 150 turtle units high, and both integer and floating point values of turtle units can be used.
+ If a turtle is placed or moved outside the 200 &times; 150 area boundary, it will not cause an error,
+ but the turtle and any lines drawn outside the boundary will not be visible.</p>
+<p>The origin for turtle units (0,0) is at the centre of the area: positive <i>x</i> rightwards, positive <i>y</i> upwards.
+So fthe top left corner of the display is at (-100,75).</p>
+<p>A new turtle's default starting position is at (0,0) facing upwards (<el-id>heading</el-id> is 0), from where a <el-method>move</el-method>  will be  in the <i>y</i> direction.</p>
+<p>You can move and turn a turtle, causing lines to be drawn, whether or not the turtle is showing.</p>
 <h3 class="no-TOC" id="Turtle_procedures">Procedure methods on a Turtle</h3>
 <table class="tableMethod">
  <tr>
@@ -2053,7 +2065,7 @@ So for example the top left corner of the display is at (-100,75).</p>
   <td><el-method>clearAndReset</el-method></td>
   <td><el-type>Turtle</el-type></td>
   <td>(none)</td>
-  <td>clears the turtle display and moves the turtle to its starting position and direction</td>
+  <td>clears the turtle display and moves the turtle to its starting position and heading</td>
  </tr><tr id="hide">
   <td><el-method>hide</el-method></td>
   <td><el-type>Turtle</el-type></td>
@@ -2063,13 +2075,13 @@ So for example the top left corner of the display is at (-100,75).</p>
   <td><el-method>move</el-method></td>
   <td><el-type>Turtle</el-type></td>
   <td><el-type>Int</el-type> or <el-type>Float</el-type></td>
-  <td>moves the turtle the specified number of turtle units in the direction it is facing or,<br>if negative, in the opposite direction</td>
+  <td>moves the turtle the specified number of turtle units in the direction of its heading or,<br>if negative, in the opposite direction</td>
  </tr><tr id="moveTo">
   <td><el-method>moveTo</el-method></td>
   <td><el-type>Turtle</el-type></td>
   <td><el-type>Int</el-type> or <el-type>Float</el-type>,<br>
       <el-type>Int</el-type> or <el-type>Float</el-type></td>
-  <td>moves to the x,y position specified; this is unlike "move" which moves relative to the current position and orientation; it draws a line if the pen is down, unlike placeAt</td>
+  <td>moves the turtle to the specified <i> x,y</i> position, drawing its path if its pen is down</td>
  </tr><tr id="penColour">
   <td><el-method>penColour</el-method></td>
   <td><el-type>Turtle</el-type></td>
@@ -2089,18 +2101,18 @@ So for example the top left corner of the display is at (-100,75).</p>
   <td><el-method>penWidth</el-method></td>
   <td><el-type>Turtle</el-type></td>
   <td><el-type>Int</el-type> or <el-type>Float</el-type></td>
-  <td>changes the width of the line tracing the turtle's path in the display<br>default, and minimum, is 1 </td>
+  <td>changes the width of the line tracing the turtle's path in the display<br>default (and minimum) is 1 </td>
  </tr><tr id="placeAt">
   <td><el-method>placeAt</el-method></td>
   <td><el-type>Turtle</el-type></td>
   <td><el-type>Int</el-type> or <el-type>Float</el-type>,<br>
       <el-type>Int</el-type> or <el-type>Float</el-type></td>
-  <td>places or repositions the turtle at the x,y position specified</td>
+  <td>places or repositions the turtle at the <i>x,y</i> position specified without drawing a path</td>
  </tr><tr id="show">
   <td ><el-method>show</el-method></td>
   <td><el-type>Turtle</el-type></td>
   <td>(none)</td>
-  <td>makes the turtle visible in the display as a green blob<br>marked with a black radius that indicates the direction it is facing</td>
+  <td>makes the turtle visible in the display as a green blob<br>marked with a black radius that indicates its heading</td>
  </tr><tr id="turn">
   <td><el-method>turn</el-method></td>
   <td><el-type>Turtle</el-type></td>
@@ -2114,7 +2126,9 @@ So for example the top left corner of the display is at (-100,75).</p>
  </tr>
 </table>
 <h3 class="no-TOC" id="Turtle_properties">Properties of a Turtle</h3>
-<table class="tableMethod">
+<p>The current location and heading of the turtle may be read using the properties
+  <el-id>x</el-id>, <el-id>y</el-id>, and <el-id>heading</el-id>.</p>
+<table class="tableMethod" id="properties_Turtle">
  <tr>
   <th colspan="2">Property</th>
   <th colspan="2"></th>
@@ -2124,24 +2138,23 @@ So for example the top left corner of the display is at (-100,75).</p>
   <th>description</th>
   <th>default</th>
  </tr><tr id="heading">
-  <td><el-method>heading</el-method></td>
+  <td><el-id>heading</el-id></td>
   <td><el-type>Float</el-type></td>
   <td>the direction in which the turtle is pointing<br>in degrees clockwise from North</td>
   <td>0.0 degrees,<br>i.e. upward in the Display</td>
- </tr><tr id="x_Turtle">
-  <td><el-method>x</el-method></td>
-  <td><el-type>Float</el-type></td>
-  <td>the x-coordinate of the turtle's current position</td>
-  <td>0.0</td>
- </tr><tr id="y_Turtle">
-  <td><el-method>y</el-method></td>
-  <td><el-type>Float</el-type></td>
-  <td>the y-coordinate of the turtle's current position</td>
-  <td>0.0</td>
+ </tr><tr id="xy_Turtle">
+  <td><el-id>x</el-id>, <el-id>y</el-id></td>
+  <td><el-type>Float</el-type>, <el-type>Float</el-type></td>
+  <td>the <i>x,y</i> coordinates of the turtle's current position</td>
+  <td>0.0, 0.0</td>
  </tr>
 </table>
 
-<p>Example:</p>
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples using turtle graphics</h4>
+<div class="acc-body">
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To draw a square:</p>
 <el-code-block source="turtle_graphics.elan">
 <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>t</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Turtle</el-type>()</el-txt></el-field></el-statement>
 <el-statement class="ok" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>t</el-id>.<el-method>placeAt</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt>-<el-lit>75</el-lit>, <el-lit>50</el-lit></el-txt></el-field>)</el-top></el-statement>
@@ -2154,19 +2167,9 @@ So for example the top left corner of the display is at (-100,75).</p>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
-<p>Output:</p>
 <img src="images/Pic30.png"  align="MIDDLE" width="277" height="280">
-
-<h4 class="no-TOC">Notes</h4>
-<ul>
- <li>If the turtle is placed or moved outside the 200 &times; 150 area boundary, it will not cause an error,
-  but the location of the turtle and any lines outside the boundary will not be visible.</li>
- <li>You can move and turn the turtle, causing lines to be drawn, whether or not the turtle is shown.</li>
- <li>The current location and heading of the turtle may be read using the properties
-  <el-code><el-id>x</el-id></el-code>, <el-code><el-id>y</el-id></el-code>, and <el-code><el-id>heading</el-id></el-code>.</li>
-<li>The turtle starts facing upwards (<el-id>heading</el-id> 0), so that <el-method>move</el-method> moves in the y-direction.</li>
-</ul>
-<p>Here is a more sophisticated example, using a procedure and recursion, that produces a fractal snowflake:</p>
+<hr>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To draw a fractal snowflake, using a procedure and recursion:</p>
 <el-code-block source="turtle_snowflake.elan">
 <main class="ok multiline" id="main1" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
@@ -2203,10 +2206,15 @@ So for example the top left corner of the display is at (-100,75).</p>
 <el-const class="ok multiline" id="const61" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident62" class="ok" tabindex="0"><el-txt><el-id>side</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text63" class="ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt></el-field></el-const>
 </el-code-block>
 <p><img src="images/snowflake.png"  align="MIDDLE" width="479" height="420" ></p>
+<hr>
+</div></div>
 
 <h2 id="VectorGraphics">Vector graphics</h2>
 <div id="displayVectorGraphics"></div>
-<p>Vector graphics are implemented in Elan using the SVG (Scalable Vector Graphics) element that is part of the Html specification.</p>
+<p>Vector graphics are implemented in Elan using the SVG (Scalable Vector Graphics) Html tag &lt;svg&gt;, and are output to the Display pane in the user interface.</p>
+<p>The area is 100 units wide by 75 units high, and both integer and floating point values of the units can be used.</p>
+<p>The origin of the units (0,0) is at the top left corner of the display: positive <i>x</i> rightwards, positive <i>y</i> downwards.
+So for exxample the centre of the display is at (50, 37.5).</p>
 <p>The names of the shapes broadly correspond to the names of SVG tags:</p>
 <ul>
  <li id="CircleVG"> <el-code>CircleVG</el-code> for &lt;<el-code>circle../&gt;</el-code></li>
@@ -2214,25 +2222,38 @@ So for example the top left corner of the display is at (-100,75).</p>
  <li id="RectangleVG"><el-code>RectangleVG</el-code> for <el-code>&lt;rect../&gt;</el-code></li>
  <li id="ImageVG"><span id="imageVG"></span><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
 </ul>
-<p>The properties of the Elan shapes reflect the names of the attributes used in the SVG tags but some differ. For example, SVG's <el-code>stroke-width</el-code>
- is set with property  <el-code>strokeWidth</el-code>, to make it a valid Elan <a href="LangRef.html#Identifier">Identifier</a>.
-Also <el-code>stroke</el-code> and <el-code>fill</el-code> are set by the properties <el-code>strokeColour</el-code> and <el-code>fillColour</el-code>.</p>
-<p>Vector graphics are output to the Display pane in the user interface.</p>
-<p>The area is 100 units wide by 75 units high, and both integer and floating point values of the units can be used.</p>
-<p>The origin for SVG units (0,0) is a the top left corner of the display: positive x rightwards, positive y downwards.
-So for exxample the centre of the display is at (50, 37.5).</p>
-<p>As with using SVG from Html, the shapes are drawn in the order in which they are added to the <el-type>VectorGraphic</el-type> instance:
-later shapes are positioned over earlier ones.</p>
-<p>A set of SVG shapes is defined in either a <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;  or a <el-type>List</el-type> of any specific Type of <el-type>VectorGraphic</el-type> (such as <el-type>CircleVG</el-type>) by using the List <el-method>append</el-method> method,
- and the assembled list is then displayed by a call to procedure<el-method> displayVectorGraphics</el-method> with the List as its argument. Examples
-are shown below the table of properties.</p>
+<p>The properties of these shapes reflect the names of the attributes used in the SVG tags but some names differ. For example, SVG's <el-id>stroke-width</el-id>
+ is set with property <el-id>strokeWidth</el-id>, to make it a valid Elan <a href="LangRef.html#Identifier">Identifier</a>.
+Also <el-code>stroke</el-code> and <el-code>fill</el-code> are set by the properties <el-id>strokeColour</el-id> and <el-id>fillColour</el-id>.</p>
+
+<h3 class="no-TOC">Defining Vector graphic shapes</h3>
+<p>A set of SVG shapes is defined in either a <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt; or a <el-type>List</el-type> of any specific Type of <el-type>VectorGraphic</el-type> (e.g. <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>CircleVG</el-type>&gt;) by using the <el-type>List</el-type> <el-method>append</el-method> method.</p>
+<p><el-type>VectorGraphic</el-type> is the abstract superclass of all <el-code>..VG</el-code> shapes. You would use it if you wanted to define a <el-type>List</el-type> holding different types of shape.</p>
+<p>Adding a shape returns a new instance of the list which must be assigned either to an existing variable, or to a new <el-kw>let</el-kw>.</p>
+<p>The constructors for the VG Types require arguments defining the attributes of the relevant SVG tags, so defaults are supplied from the class properties,
+as shown in the table below.</p>
+<p>To supply your own values for the properties:
+<ul>
+ <li>for a <a href="LangRef.html#new"><el-kw>new</el-kw> instance</a>, to set the value of property 'P..', use the <el-id>with</el-id> clause .</li>
+ <li>for an existing instance, to change the value of property 'P..', call the <el-method>setP..</el-method> procedure method on the <el-type>VectorGraphic</el-type> or<br>
+ (in a function) use the <el-method>withP..</el-method> dot method on the <el-type>VectorGraphic</el-type>, in either case specifying new values in the arguments.</li>
+</ul>
+<p>The <el-id>fillColour</el-id> and <el-id>strokeColour</el-id> properties may be specified as described under <a href="#Colours">Colours</a>.
+Only <el-id>fillColour</el-id> can be specified as <el-id>transparent</el-id>.</p>
+<p>Note that the <el-kw>height</el-kw> and <el-kw>width</el-kw> properties of an image are relative to the dimensions of the original graphic file.</p>
+
+<h3 class="no-TOC">Displaying Vector graphic shapes</h3>
+<p>As with <a href="#BlockGraphics">Block</a> graphics, the assembled list of shapes is not displayed until you make a call to procedure <el-method>displayVectorGraphics</el-method> with the list as its argument, thus allowing  you to make multiple changes before display.</p>
+<p>And as with using SVG in Html, the shapes are drawn in the order in which they are added to the <el-type>VectorGraphic</el-type> instance.
+Later shapes are positioned over earlier ones.</p>
 
 <h3 class="no-TOC" id="Properties_VG">Properties of Vector graphic shapes</h3>
-<table class="tableMethod">
+<table class="tableProperty">
  <tr>
   <th colspan="2">Property</th>
   <th colspan="4">Vector graphic shape</th>
   <th colspan="2">Property</th>
+  <th colspan="2">Method
  </tr><tr>
   <th>name</th>
   <th>Type</th>
@@ -2242,6 +2263,8 @@ are shown below the table of properties.</p>
   <th>RectangleVG</th>
   <th>description</th>
   <th>default</th>
+  <th>procedure</th>
+  <th>function</th>
  </tr><tr>
   <td id="alt"><el-id>alt</el-id></td>
   <td><el-type>String</el-type></td>
@@ -2251,6 +2274,8 @@ are shown below the table of properties.</p>
   <td></td>
   <td>alternate textual description (for accessibility)</td>
   <td>empty string</td>
+  <td><el-method>setAlt</el-method></td>
+  <td><el-method>withAlt</el-method></td>
  </tr><tr>
   <td id="centreX"><el-id>centreX</el-id></td>
   <td><el-type>Float</el-type></td>
@@ -2259,7 +2284,9 @@ are shown below the table of properties.</p>
   <td></td>
   <td></td>
   <td>horizontal position of circle centre</td>
-  <td>37.5</td>
+  <td>50</td>
+  <td><el-method>setCentreX</el-method></td>
+  <td><el-method>withCentreX</el-method></td>
  </tr><tr>
   <td id="centreY"><el-id>centreY</el-id></td>
   <td><el-type>Float</el-type></td>
@@ -2268,7 +2295,9 @@ are shown below the table of properties.</p>
   <td></td>
   <td></td>
   <td>vertical position of circle centre</td>
-  <td>50</td>
+  <td>37.5</td>
+  <td><el-method>setCentreY</el-method></td>
+  <td><el-method>withCentreY</el-method></td>
  </tr><tr>
   <td id="fillColour"><el-id>fillColour</el-id></td>
   <td><el-type>Int</el-type></td>
@@ -2278,6 +2307,8 @@ are shown below the table of properties.</p>
   <td>&#x2714;</td>
   <td>colour to fill the shape</td>
   <td><el-id>yellow</el-id></td>
+  <td><el-method>setFillColour</el-method></td>
+  <td><el-method>withFillColour</el-method></td>
  </tr><tr>
   <td id="height"><el-id>height</el-id></td>
   <td><el-type>Float</el-type></td>
@@ -2287,6 +2318,8 @@ are shown below the table of properties.</p>
   <td>&#x2714;</td>
   <td>height to render the shape or the image</td>
   <td>Rectangle: 20</td>
+  <td><el-method>setHeight</el-method></td>
+  <td><el-method>withHeight</el-method></td>
  </tr><tr>
   <td id="radius"><el-id>radius</el-id></td>
   <td><el-type>Float</el-type></td>
@@ -2296,6 +2329,8 @@ are shown below the table of properties.</p>
   <td></td>
   <td>radius of circle</td>
   <td>10</td>
+  <td><el-method>setRadius</el-method></td>
+  <td><el-method>withRadius</el-method></td>
  </tr><tr>
   <td id="strokeColour"><el-id>strokeColour</el-id></td>
   <td><el-type>Int</el-type></td>
@@ -2305,6 +2340,8 @@ are shown below the table of properties.</p>
   <td>&#x2714;</td>
   <td>colour of the strokes in the shape</td>
   <td><el-id>black</el-id></td>
+  <td><el-method>setStrokeColour</el-method></td>
+  <td><el-method>withStrokeColour</el-method></td>
  </tr><tr>
   <td id="strokeWidth"><el-id>strokeWidth</el-id></td>
   <td><el-type>Int</el-type></td>
@@ -2314,6 +2351,8 @@ are shown below the table of properties.</p>
   <td>&#x2714;</td>
   <td>width of the strokes in the shape</td>
   <td>1</td>
+  <td><el-method>setStrokeWidth</el-method></td>
+  <td><el-method>withStrokeWidth</el-method></td>
  </tr><tr>
   <td id="title"><el-id>title</el-id></td>
   <td><el-type>Float</el-type></td>
@@ -2323,15 +2362,8 @@ are shown below the table of properties.</p>
   <td></td>
   <td>title text</td>
   <td>empty string</td>
- </tr><tr>
-  <td id="url"><el-id>url</el-id></td>
-  <td><el-type>String</el-type></td>
-  <td></td>
-  <td>&#x2714;</td>
-  <td></td>
-  <td></td>
-  <td>URL of the image to be displayed</td>
-  <td>empty string</td>
+  <td><el-method>setTitle</el-method></td>
+  <td><el-method>withTitle</el-method></td>
  </tr><tr>
   <td id="width"><el-id>width</el-id></td>
   <td><el-type>Float</el-type></td>
@@ -2341,42 +2373,49 @@ are shown below the table of properties.</p>
   <td>&#x2714;</td>
   <td>width to render the shape or the image</td>
   <td>Rectanlge: 40</td>
+  <td><el-method>setWidth</el-method></td>
+  <td><el-method>withWidth</el-method></td>
  </tr><tr>
-  <td id="xy"><el-id>x, y</el-id></td>
+  <td id="xy_VG"><el-id>x, y</el-id></td>
   <td><el-type>Float</el-type>, <el-type>Float</el-type></td>
   <td></td>
   <td>&#x2714; &#x2714;</td>
   <td></td>
   <td>&#x2714; &#x2714;</td>
-  <td>image's x,y position from top left</td>
-  <td>Rectangle: 10, 10</td>
+  <td>image's <i>x,y</i> position from top left</td>
+  <td>Image: 0, 0<br>Rectangle: 10, 10</td>
+  <td><el-method>setX</el-method><br><el-method>setY</el-method></td>
+  <td><el-method>withX</el-method><br><el-method>withY</el-method></td>
  </tr><tr>
-  <td id="x1y1"><el-id>x1, y1</el-id></td>
+  <td id="x1y1_VG"><el-id>x1, y1</el-id></td>
   <td><el-type>Float</el-type>, <el-type>Float</el-type></td>
   <td></td>
   <td></td>
   <td>&#x2714; &#x2714;</td>
   <td></td>
-  <td>line's starting x,y position from top left</td>
-  <td>0, 0</td>
+  <td>line's starting <i>x,y</i> position from top left</td>
+  <td>10, 10</td>
+  <td><el-method>setX1</el-method><br><el-method>setY1</el-method></td>
+  <td><el-method>withX1</el-method><br><el-method>withY1</el-method></td>
  </tr><tr>
-  <td id="x2y2"><el-id>x2, y2</el-id></td>
+  <td id="x2y2_VG"><el-id>x2, y2</el-id></td>
   <td><el-type>Float</el-type>, <el-type>Float</el-type></td>
   <td></td>
   <td></td>
   <td>&#x2714; &#x2714;</td>
   <td></td>
-  <td>line's ending x,y position from top left</td>
-  <td>0, 0</td>
+  <td>line's ending <i>x,y</i> position from top left</td>
+  <td>70, 40</td>
+  <td><el-method>setX2</el-method><br><el-method>setY2</el-method></td>
+  <td><el-method>withX2</el-method><br><el-method>withY2</el-method></td>
  </tr>
 </table>
 
-<h4 class="no-TOC">Note</h4>
-<ul>
-  The height and width of an image are dependent upon the dimensions of the original graphic file.
-</ul>
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples using SVG graphics</h4>
+<div class="acc-body">
 
-<p>Example of a circle with a coloured circumference:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To draw a circle with a coloured circumference:</p>
 <el-code-block source="VG_circle.elan">
         <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>vg</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
         <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>circ</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-lit>20</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>20</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>5</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>red</el-id>, <br><el-id>strokeColour</el-id><el-kw> set to </el-kw><el-id>green</el-id>, <br><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>2</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -2384,8 +2423,9 @@ are shown below the table of properties.</p>
         <el-statement class="ok" id="call12" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="0"><el-txt><el-method>displayVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args14" class="optional ok" tabindex="0"><el-txt><el-id>vg</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
 </el-code-block>
 <p><img src="images/Pic33.png"  align="MIDDLE" width="343" height="253" ></p>
+<hr>
 
-<p>Example of a circle that changes between red and green every second:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To draw a circle that changes between red and green every second:</p>
 <el-code-block source="VG_2circles.elan">
         <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>vg</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
         <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>circ</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br><el-id>centreX</el-id><el-kw> set to </el-kw><el-lit>50</el-lit>, <br><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>37</el-lit>, <br><el-id>radius</el-id><el-kw> set to </el-kw><el-lit>30</el-lit>, <br><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>green</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -2401,20 +2441,8 @@ are shown below the table of properties.</p>
         <el-kw>end while</el-kw>
         </el-statement>
 </el-code-block>
-
-<h4 class="no-TOC">Notes</h4>
-<ul>
- <li>The constructor for each VG Type requires arguments corresponding to the Html attributes for the corresponding SVG Type.</li>
- <li>As with <a href="#BlockGraphics">Block</a> graphics the display is not updated until the <el-method>displayVectorGraphics</el-method> method is called,
-   allowing you to make multiple changes before updating the display. Similarly, the method to add a shape returns a new instance of the <el-code>VectorGraphics</el-code> which must be assigned either to an existing variable, or to a new <el-kw>let</el-kw>.</li>
- <li>The <el-code><el-id>fillColour</el-id></el-code> and <el-code><el-id>strokeColour</el-id></el-code> properties may be specified as described under <a href="#Colours">Colours</a>.
-  The <el-code><el-id>fillColour</el-id></el-code> only may also be specified as <el-code><el-id>transparent</el-id></el-code> (which has the value <el-code>-1</el-code>).</li>
- <li id="VectorGraphic"><el-type>VectorGraphic</el-type> is the abstract superclass of all <el-code>...VG</el-code> shapes. You use it if you want to define a <el-type>List</el-type> holding different types of shape.</li>
- <li>To make it easier for simple programs, the VectorGraphic shapes all have default values for their properties, and you only have to specify the ones that you want to differ.
-So the constructors do not take any properties, and instead you add a <el-kw>with</el-kw> clause listing those properties which you want to have different values.  See <a href="LangRef.html#new">New instance</a> for more about <el-kw>with</el-kw> clauses.</li>
- <li>Individual properties of any of the VG Types may be modified by calling the corresponding <el-method>set...</el-method> procedure method
-  or, if working within a function, by using the corresponding <el-method>with...</el-method> function dot method, for example <el-method>setCentreX</el-method> or <el-method>withCentreX</el-method>.</li>
-</ul>
+<hr>
+</div></div>
 
 <h2 id="combiningGraphics">Combining graphic outputs</h2>
 <p>Program outputs, whether text or graphical, can be combined in the Display. In particular, Block graphics and text or Html printing can share the Display

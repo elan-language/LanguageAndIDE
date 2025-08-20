@@ -259,7 +259,7 @@ The value is specified by the Type name for the specified <el-code>enum</el-code
   <li>Both are user-defined data structures</li>
   <li>Both are given a 'Type name'</li>
   <li>Both may define one or more properties, each with a name and Type</li>
-  <li>Both may be created or copied using a <el-code>with</el-code> clause</li>
+  <li>Both may be created or copied using a <el-kw>with</el-kw> clause</li>
   <li>Both may define encapsulated methods</li>
 </ul>
 <p>However a <el-code>record</el-code> differs  from a <el-code>class</el-code> in that:</p>
@@ -295,13 +295,13 @@ Having defined a record's Type, such as <el-code>Game</el-code> above, you can c
 <el-code-block source="newGame from snake_FP.elan">
 <el-statement class="ok" id="let603" tabindex="0"><el-kw>let </el-kw><el-field id="var604" class="ok" tabindex="0"><el-txt><el-id>g1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr605" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Game</el-type>()<el-kw> with </el-kw><br><el-id>head</el-id><el-kw> set to </el-kw><el-method>newSquare</el-method>(<el-lit>22</el-lit>, <el-lit>15</el-lit>), <br><el-id>key</el-id><el-kw> set to </el-kw>"<el-lit>d</el-lit>", <br><el-id>isOn</el-id><el-kw> set to </el-kw><el-id>true</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
-<p>Note that you are not <em>required</em> to provide a value for each property because, where a property is not specified in the '<el-code>with</el-code> clause' (as above), that property will be given the empty (default) value of the correct Type.</p>
+<p>Note that you are not <em>required</em> to provide a value for each property because, where a property is not specified in the <el-kw>with</el-kw> clause (as above), that property will be given the empty (default) value of the correct Type.</p>
 <p>You can then read the values from the properties using 'dot syntax' for example:</p>
 <el-code-block source=""><el-statement class="" id="print15" tabindex="0"><el-kw>print </el-kw><el-field id="expr16" class="optional" tabindex="0"><el-txt><el-id>sq</el-id>.<el-id>size</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
 </el-code-block>
 <p><el-code>record</el-code> Types are immutable: the properties on an instance may not be changed, directly.
   However, you can easily create another instance that is a copy of the original,
-  with all the same property values except for any specific changes made in another <el-code>with</el-code> clause.
+  with all the same property values except for any specific changes made in another <el-kw>with</el-kw> clause.
   The newly-minted copy (with changes) must be assigned to a new named value. For example:</p>
 <el-code-block>
   <el-statement class="" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>sq1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Square</el-type>()<el-kw> with </el-kw><br><el-id>x</el-id><el-kw> set to </el-kw><el-lit><el-lit>3</el-lit>.5</el-lit>, <br><el-id>y</el-id><el-kw> set to </el-kw><el-lit><el-lit>4</el-lit>.0</el-lit>, <br><el-id>size</el-id><el-kw> set to </el-kw><el-lit><el-lit>1</el-lit>.0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="error"></el-msg></el-statement>
@@ -317,7 +317,7 @@ Having defined a record's Type, such as <el-code>Game</el-code> above, you can c
   <el-statement class="ok" id="set6" tabindex="0"><el-kw>set </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>copy</el-kw> <el-id>a</el-id><el-kw> with </el-kw><br><el-id>x</el-id><el-kw> set to </el-kw><el-lit><el-lit>3</el-lit>.7</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 
-<p>This last example shows how you enter the comma-separated <el-code>with</el-code> clauses. The earlier examples show how the Editor displays a set of <el-code>with</el-code> clauses.</p>
+<p>This last example shows how you enter the comma-separated <el-kw>with</el-kw> clauses. The earlier examples show how the Editor displays a set of <el-kw>with</el-kw> clauses.</p>
 
 <p>If you want to use one or more existing property values in order to determine a new value, the property names must be prefixed with the name of the instance being copied, for example:</p>
 <el-code-block>
@@ -589,7 +589,7 @@ by <a href="#throw">throwing an exception</a> like this:</p>
 
 <h2 id="each">Each loop</h2>
 <p>The <el-code>each..in..</el-code> construct specifies looping sequentially over the itemss in a <el-type>List</el-type> or an <el-type>Array</el-type>, or over the characters in a <el-type>String</el-type>.</p>
-<p>The <el-code>each..</el-code> loop counter variable is of the same Type as the items in the List or Array, or is of Type <el-type>String</el-type> if looping over the characters in a String. The variable does not have to have been previously defined in a <el-code>variable</el-code> statement.</p>
+<p>The <el-code>each</el-code> loop counter variable is of the same Type as the items in the List or Array, or is of Type <el-type>String</el-type> if looping over the characters in a String. The variable does not have to have been previously defined in a <el-code>variable</el-code> statement.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-code>each</el-code></h4>
@@ -625,7 +625,7 @@ by <a href="#throw">throwing an exception</a> like this:</p>
 <h2 id="for">For loop</h2>
 <div id="step"></div>
 <p>The <el-code>for..from..to..step..</el-code> construct specifies looping through a sequence of integer values with a given increment.</p>
-<p>The <el-code>for..</el-code> loop counter variable (which counts from 0) is of Type <el-type>Int</el-type> and does not have to have been defined in a <el-code>variable</el-code> statement.</p>
+<p>The <el-code>for</el-code> loop counter variable (which counts from 0) is of Type <el-type>Int</el-type> and does not have to have been defined in a <el-code>variable</el-code> statement.</p>
 <p>The three defining values, <el-code>from</el-code>, <el-code>to</el-code>, and <el-code>step</el-code>, must all be of Type <el-type>Int</el-type>, positive or negative.
 and may be defined by literals, variables  or expressions that evaluate to integers.</p>
 <p>Note that, if you require a negative step value, then the literal, variable, or expression must start with a negative sign.
@@ -645,9 +645,9 @@ So if you have a variable <el-code>s</el-code> that holds a negative value to be
 <div id="if"></div>
 <h2 id="if_statement">If statement</h2>
 <p>See also <a href="#if_expression">if expression</a></p>
-<p>The <el-code>if..then..else..</el-code> and <el-code>if..then..else if..else..</el-code> constructs specify which of several code sequences is to be executed next.</p>
-<p>The <el-code>else</el-code> clause is optional.</p>
-<p>You can add as many <el-code>else if</el-code> clauses as you wish, but only one unconditional <el-code>else</el-code> (which, if present, must be the last clause).</p>
+<p>The <el-kw>if..then..else..</el-kw> and <el-kw>if..then..else if..else..</el-kw> constructs specify which of several code sequences is to be executed next.</p>
+<p>The <el-kw>else</el-kw> clause is optional.</p>
+<p>You can add as many <el-kw>else if</el-kw> clauses as you wish, but only one unconditional <el-kw>else</el-kw> (which, if present, must be the last clause).</p>
 
 Example 1:
 <el-code-block source="if_else">
@@ -699,7 +699,7 @@ It is recommended that you always use a let in preference to a variable unless y
 </ul>
 
 <h2 id="repeat">Repeat loop</h2>
-<p>The <el-kw>repeat .. end repeat when</el-kw> <el-code>condition</el-code> loop is used when you want at least one execution of the enclosed statements followed by a test that chooses either to execute them again or to exit from the loop.</p>
+<p>The <el-kw>repeat..end repeat when</el-kw> <el-code>condition</el-code> loop is used when you want at least one execution of the enclosed statements followed by a test that chooses either to execute them again or to exit from the loop.</p>
 <p><el-code>condition</el-code> is either a <el-type>Boolean</el-type> variable or an expression that evaluates to a Boolean value.</p>
 <p>If <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code> then the loop ends, if <el-code><el-id>false</el-id></el-code> it resumes. For example:</p>
 
@@ -760,7 +760,7 @@ The variable holding the exception (by default named <el-code>e</el-code>, but t
 and the initial value is given by a following expression. For example:</p>
 
 <h2 id="while">While loop</h2>
-<p>The <el-kw>while condition .. end while</el-kw> loop is used when you want execution of the enclosed statements to begin
+<p>The <el-kw>while condition..end while</el-kw> loop is used when you want execution of the enclosed statements to begin
  only if <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code>.</p>
 <p><el-code>condition</el-code> is either a <el-type>Boolean</el-type> variable or an expression that evaluates to a Boolean value.</p>
 <p>When <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code> the enclosed code is executed;
@@ -862,7 +862,7 @@ Writing a value to a specific index location is done through a method such as in
 <p id="mod"><el-code>mod</el-code> and <el-code>div</el-code> only operate on <el-code>Int</el-code> arguments, and the result is <el-code>Int</el-code>.</p>
 <pre>
     <el-code>2^3</el-code>             &rarr;  <el-code>8</el-code>
-    <el-code>2/3</el-code>             &rarr;  <el-code>0.666...</el-code>
+    <el-code>2/3</el-code>             &rarr;  <el-code>0.666..</el-code>
     <el-code>2*3</el-code>             &rarr;  <el-code>6</el-code>
     <el-code>2 + 3</el-code>         &rarr;  <el-code>5</el-code>
     <el-code>2 - 3</el-code>         &rarr;  <el-code>-1</el-code>
@@ -986,8 +986,8 @@ Notes:
 <h2 id="if_expression">If expression</h2>
 The 'if expression' is in certain respects similar to an <span class="Link">If statement</span>, but with the following differences:
 <ul>
-<li>It is written entirely within a single expression. This is possible because the <el-code>if</el-code> expression always returns a value.</li>
-<li>There is always a single <el-code>then</el-code> and a single <el-code>else</el-code> clause, and each clause contains just a single expression. The <el-code>if</el-code> expression returns the result of evaluating one of these two expressions, according to whether the condition evaluates to <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code>.</li>
+<li>It is written entirely within a single expression. This is possible because the <el-kw>if</el-kw> expression always returns a value.</li>
+<li>There is always a single <el-kw>then</el-kw> and a single <el-kw>else</el-kw> clause, and each clause contains just a single expression. The <el-kw>if</el-kw> expression returns the result of evaluating one of these two expressions, according to whether the condition evaluates to <el-id>true</el-id> or <el-id>false</el-id>.</li>
 </ul>
 <p>Here are three examples:</p>
 <el-code-block source="if_expression.elan">
@@ -1008,7 +1008,7 @@ The 'if expression' is in certain respects similar to an <span class="Link">If s
 </el-code-block>
 
 <p>Where the new instance is of a <a href="#class"> user-defined class</a> or <a href="#record">record</a> the expression may optionally
-be followed by a 'with clause` in order to specify any property values. Example of this use:</p>
+be followed by a <el-kw>with</el-kw> clause in order to specify any property values. Example of this use:</p>
 
 <el-code-block source="dealCard.elan">
 <el-func id="func302" tabindex="0">
@@ -1024,10 +1024,10 @@ be followed by a 'with clause` in order to specify any property values. Example 
 <div id="copy"></div>
 <div id="with"></div>
 <div id="copyWith"></div>
-<h2 id="copy_with">Copy with</h2>
-<p>A 'copy with' expression is used to make a copy of an existing instance, but with a different value for one or more of the properties
-  &ndash; either to assign to a named value, or as part of a more complex expression..
-It is used extensively within 'functional programming' where you are dealing with <a href="#record">record</a>s or other <i>immutable</i> types.
+<h2 id="copy_with">Copy..with</h2>
+<p>A <el-kw>copy..with</el-kw> expression is used to make a copy of an existing instance, but with a different value for one or more of the properties
+  &ndash; either to assign to a named value, or as part of a more complex expression.</p>
+<p>It is used extensively within functional programming where you are dealing with <a href="#record">record</a>s or other <i>immutable</i> Types.
 Example of use in this manner, taken from demo program <el-code>snake_FP.elan</el-code>:</p>
 
 <el-code-block>
@@ -1042,8 +1042,8 @@ Example of use in this manner, taken from demo program <el-code>snake_FP.elan</e
 </el-func>
 </el-code-block>
 
-<p>However, <el-kw>copy with</el-kw> may also be used in object-oriented programming, with instances of regular (<i>mutable</i>) classes. Also,
-  note that a <el-kw>with</el-kw> clause (following the same syntax as in a <el-kw>copy with</el-kw> expression), may be used
+<p><el-kw>copy..with</el-kw> may also be used in object-oriented programming with instances of regular (<i>mutable</i>) classes. Also,
+  note that a <el-kw>with</el-kw> clause (following the same syntax as in a <el-kw>copy..with</el-kw> expression), may be used
   within a new instance expression to set up properties for the object not specified in the constructor.</p>
 
 <h2 id="empty">Empty of Type</h2>
