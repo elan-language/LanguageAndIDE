@@ -60,17 +60,22 @@
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-<li>A literal integer or a named value of Type <el-type>Int</el-type> may
+ <li>A literal integer or a named value of Type <el-type>Int</el-type> may
 always be passed into a function or procedure that is expecting a <el-type>Float</el-type>.</li>
-<li>The <el-type>Int</el-type> type is <i>intended</i> to represent whole numbers
+ <li>The <el-type>Int</el-type> type is <i>intended</i> to represent whole numbers
 in the range:</li>
-    <ul>
+   <ul>
     <li>Maximum: 2<sup>53</sup> &ndash; 1 (which is 9007199254740991)</li>
     <li>Minimum value: &ndash; (2<sup>53</sup> &ndash; 1)</li>
     </ul>
  <li>If you go greater than the limit given above, the number will be accurate to approximately 17 decimal digits.
     Larger numbers will be rounded with zeros at the end, unless they are larger than around 2<sup>70</sup>, when they will automatically be shown
-    in exponential (scientific) format, as shown by the output from the following code:</li>
+    in exponential (scientific) format, as shown in the example.</li>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Example of large numbers</h4>
+<div class="acc-body">
+
 <el-code-block source="bigInt1.elan">
 <el-statement class="ok multiline" id="for139" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident141" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr142" class="ok" tabindex="0"><el-txt><el-lit>50</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr143" class="ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr144" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
@@ -83,7 +88,9 @@ in the range:</li>
 <p>which produces:</p>
 <img src="images/Pic88.png">
 </ul>
-
+<hr>
+</div></div
+>
 <h2 id="Float">Floating point</h2>
 <p>A floating point number is a decimal number that may have both integer and fractional parts.</p>
 <p>It may be written using exponential (scientific) notation, e.g.
@@ -2240,7 +2247,7 @@ as shown in the table below.</p>
 </ul>
 <p>The <el-id>fillColour</el-id> and <el-id>strokeColour</el-id> properties may be specified as described under <a href="#Colours">Colours</a>.
 Only <el-id>fillColour</el-id> can be specified as <el-id>transparent</el-id>.</p>
-<p>Note that the <el-kw>height</el-kw> and <el-kw>width</el-kw> properties of an image are relative to the dimensions of the original graphic file.</p>
+<p>Note that the <el-kw>height</el-kw> and <el-kw>width</el-kw> properties of an image are also dependent on the dimensions of the original graphic file.</p>
 
 <h3 class="no-TOC">Displaying Vector graphic shapes</h3>
 <p>As with <a href="#BlockGraphics">Block</a> graphics, the assembled list of shapes is not displayed until you make a call to procedure <el-method>displayVectorGraphics</el-method> with the list as its argument, thus allowing  you to make multiple changes before display.</p>
@@ -2313,7 +2320,7 @@ Later shapes are positioned over earlier ones.</p>
   <td id="height"><el-id>height</el-id></td>
   <td><el-type>Float</el-type></td>
   <td></td>
-  <td>&#x2714; see note</td>
+  <td>&#x2714;</td>
   <td></td>
   <td>&#x2714;</td>
   <td>height to render the shape or the image</td>
@@ -2368,7 +2375,7 @@ Later shapes are positioned over earlier ones.</p>
   <td id="width"><el-id>width</el-id></td>
   <td><el-type>Float</el-type></td>
   <td></td>
-  <td>&#x2714; see note</td>
+  <td>&#x2714;</td>
   <td></td>
   <td>&#x2714;</td>
   <td>width to render the shape or the image</td>
@@ -2384,8 +2391,8 @@ Later shapes are positioned over earlier ones.</p>
   <td>&#x2714; &#x2714;</td>
   <td>image's <i>x,y</i> position from top left</td>
   <td>Image: 0, 0<br>Rectangle: 10, 10</td>
-  <td><el-method>setX</el-method><br><el-method>setY</el-method></td>
-  <td><el-method>withX</el-method><br><el-method>withY</el-method></td>
+  <td><el-method>setX</el-method>, <el-method>setY</el-method></td>
+  <td><el-method>withX</el-method>, <el-method>withY</el-method></td>
  </tr><tr>
   <td id="x1y1_VG"><el-id>x1, y1</el-id></td>
   <td><el-type>Float</el-type>, <el-type>Float</el-type></td>
@@ -2395,8 +2402,8 @@ Later shapes are positioned over earlier ones.</p>
   <td></td>
   <td>line's starting <i>x,y</i> position from top left</td>
   <td>10, 10</td>
-  <td><el-method>setX1</el-method><br><el-method>setY1</el-method></td>
-  <td><el-method>withX1</el-method><br><el-method>withY1</el-method></td>
+  <td><el-method>setX1</el-method>, <el-method>setY1</el-method></td>
+  <td><el-method>withX1</el-method>, <el-method>withY1</el-method></td>
  </tr><tr>
   <td id="x2y2_VG"><el-id>x2, y2</el-id></td>
   <td><el-type>Float</el-type>, <el-type>Float</el-type></td>
@@ -2406,8 +2413,8 @@ Later shapes are positioned over earlier ones.</p>
   <td></td>
   <td>line's ending <i>x,y</i> position from top left</td>
   <td>70, 40</td>
-  <td><el-method>setX2</el-method><br><el-method>setY2</el-method></td>
-  <td><el-method>withX2</el-method><br><el-method>withY2</el-method></td>
+  <td><el-method>setX2</el-method>, <el-method>setY2</el-method></td>
+  <td><el-method>withX2</el-method>, <el-method>withY2</el-method></td>
  </tr>
 </table>
 
@@ -2462,7 +2469,61 @@ Later shapes are positioned over earlier ones.</p>
 <h2 id="Random">Random</h2>
 <h4 class="no-TOC">Generating random numbers within a function</h4>
 <p>It is <i>not</i> possible to use the system methods <el-method>random()</el-method> or <el-method>randomInt()</el-method> within a function because they create unseen side effects. You <i>may</i> use those system methods outside the function and pass the resulting random number (as an <el-type>Int</el-type> or a <el-type>Float</el-type>) as an argument <i>into </i>a function.</p>
-<p>It <i>is possible</i> to create and use random numbers <i>within a function</i>, but it requires a different approach and is a little more complex, using a special <i>Type</i> named <el-type>Random</el-type> (note that the <el-code>R</el-code> is in upper-case), as in this example:</p>
+<p>It is, however, possible to create and use random numbers within a function, but it requires a different approach and is a little more complex. You use the special Type <el-type>Random</el-type>. (Note the upper case <el-code>R</el-code> required for a Type name).</p>
+<p>You start by getting a seed random number in your <el-method>main</el-method> or in a <el-method>procedure</el-method> using method <el-method>initialiseFromClock</el-method>:</p>
+
+<el-code-block source="func_random.elan">
+<el-statement class="ok"><el-kw>variable </el-kw><el-field class="ok"><el-txt><el-id>rnd</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field class="ok"><el-txt><el-kw>new</el-kw> <el-type>Random</el-type>()</el-txt></el-field></el-statement>
+<el-statement class="ok"><el-top><el-kw>call </el-kw><el-field class="ok"><el-txt><el-id>rnd</el-id>.<el-method>initialiseFromClock</el-method></el-txt></el-field>(<el-field class="empty optional ok"><el-txt></el-txt></el-field>)</el-top></el-statement>
+</el-code-block>
+
+<p>Then, in a function, you apply the dot method <el-method>next</el-method> or <el-method>nextInt</el-method> to the <el-type>Random</el-type> passed in, which returns a 2-Tuple containing both a new random value and a new instance of Type <el-type>Random</el-type>.
+If you need another random value, you use the returned <el-type>Random</el-type> on which to apply the dot method again.</p>
+<p>Avoid applying next or nextInt more than once on the same Random because they will return the same values.</p>
+<p>If the <el-method>initialiseFromClock</el-method> call is absent, the program will still generate a sequence of random values, <i>but the sequence will be exactly the same each time you run the program.</i> Initialising from the clock ensures that you get a different sequence each run. Using Random <i>without</i> so initialising, however, can be extremely useful for testing purposes since the results are repeatable.</p>
+
+<p>The initialising procedure method is:</p>
+<table class="tableMethod">
+ <tr>
+  <th>procedure<br>method</th>
+  <th>argument<br>Type</th>
+  <th>action</th>
+ </tr><tr id="initialiseFromClock">
+  <td><el-method>initialiseFromClock</el-method></td>
+  <td><el-type>(none)</el-type></td>
+  <td>uses the system clock to provide a seed<br>from which to generate fresh random values</td>
+ </tr>
+</table>
+
+<p>The function dot methods on a <el-type>Random</el-type> are:</p>
+<table class="tableMethod">
+ <tr>
+  <th>function<br>dot method</th>
+  <th>on<br>Type</th>
+  <th>argument<br>Types</th>
+  <th>return<br>Type</th>
+  <th>returns</th>
+ </tr><tr id="next">
+  <td><el-method>next</el-method></td>
+  <td><el-type>Random</el-type></td>
+  <td><el-type>Float</el-type>,<el-type>Float</el-type></td>
+  <td><el-type>tuple(<el-type>Float</el-type>, <el-type>Random</el-type>)</el-type></td>
+  <td>random <el-type>Float</el-type> vlaue in the range of the arguments, and<br>new instance of <el-type>Random</el-type> for subsequent use</td>
+ </tr><tr id="nextInt">
+  <td><el-method>nextInt</el-method></td>
+  <td><el-type>Random</el-type></td>
+  <td><el-type>Int</el-type>, <el-type>Int</el-type></td>
+  <td><el-type>tuple(<el-type>Int</el-type>, <el-type>Random</el-type>)</el-type></td>
+  <td>random <el-type>Int</el-type> vlaue in the range of the arguments, and<br>new instance of <el-type>Random</el-type> for subsequent use</td>
+ </tr>
+</table>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Example using Type <el-type>Random</el-type></h4>
+<div class="acc-body">
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To roll a dice in a function:</p>
+
 <el-code-block source="func_random.elan">
 <main class="ok multiline">
 <el-top><el-kw>main</el-kw></el-top>
@@ -2483,9 +2544,8 @@ Later shapes are positioned over earlier ones.</p>
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
-<p>The <el-type>Random</el-type> Type defines two &#8216;function methods&#8217;: <el-method>next</el-method> and <el-method>nextInt</el-method>.</p>
-<p>Both of them return a 2-Tuple consisting of the random value (as either a <el-code>Float</el-code> or an <el-code>Int</el-code> respectively) plus a new <el-type>Random</el-type>. The <i>new</i> (returned) <el-type>Random</el-type> must be used for generating the subsequent random number (if more are required). If you call <el-code>next</el-code> repeatedly on the same instance of Random, you will always get the same value. </p>
-<p>As shown in the example, when<i> first created </i>you should call <el-method>initialiseWithClock()</el-method> on it. If you remove that call statement from the code above, the program will still generate a sequence of randomised values, <i>but the sequence will be exactly the same each time you run the program.</i> Initialising from the clock ensures that you get a different sequence each run. Using Random <i>without</i> so initialising, however, can be extremely useful for testing purposes since the results are repeatable.</p>
+</div></div>
+<hr>
 
 <h2 id="Func">Func</h2>
 <p>A function may be passed as an argument into another function (or a procedure), or returned as the result of calling another function.
