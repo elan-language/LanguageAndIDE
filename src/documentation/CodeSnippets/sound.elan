@@ -1,4 +1,4 @@
-# c9ff8b5eb940a476c9b5d2b96bc96331a3f2314f58212d9116713b12c41ce39c Elan 1.3.1 guest default_profile valid
+# 32d542d0793de04f7954801405a3112f59378ab12b95388317ce20acdc5eec54 Elan 1.3.2 guest default_profile valid
 
 main
   let scale be [262, 294, 330, 349, 392, 440, 494, 523]

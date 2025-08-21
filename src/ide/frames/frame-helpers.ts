@@ -107,7 +107,7 @@ export function escapeHtmlInclSpaces(str: string): string {
 }
 
 export function renderDoubleSpaceAfterCharAsLineBreak(str: string): string {
-  return escapeHtmlChars(str).replaceAll(/([^\s])\s\s+([^\s])/g, "$1<br>$2");
+  return escapeHtmlChars(str).replaceAll(/([^\s]|^)\s\s(\s*)([^\s]|$)/g, "$1<br>$2$3");
 }
 
 export function helper_pastePopUp(loc: Frame | Field): string {
