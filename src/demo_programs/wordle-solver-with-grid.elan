@@ -1,10 +1,14 @@
-# 821505a33df340a9c4b74e6edbb2077691524fb2501065ca0e7dd1c2120fcf25 Elan 1.3.1 guest default_profile valid
+# b339d66303b1f6a0d026ff9ce9c2d1360fe79fd969c27ce2b186e5b69695ac31 Elan 1.3.1 guest default_profile valid
 
 # Combine game and solver with menu-selector
 main
   let grid be new Array2D<of String>(5, 6, "")
   call displayHtml(generateHtml(grid))
   let html be generateHtml(grid)
+  call playReverseGame(grid)
+end main
+
+procedure playReverseGame(grid as Array2D<of String>)
   variable attemptNo set to 0
   variable solved set to false
   variable possible set to allPossibleAnswers.asList()
@@ -19,7 +23,7 @@ main
     call colourAttempt(attemptNo, grid, solved, mark)
     set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
   end while
-end main
+end procedure
 
 function possibleAnswersAfterAttempt(possible as List<of String>, attempt as String, mark as String) returns List<of String>
   variable newPossible set to new List<of String>()
@@ -34,11 +38,11 @@ end function
 
 test possibleAnswersAfterAttempt
   let prior be ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"]
-  assert possibleAnswersAfterAttempt(prior, "AAAAA", "13333") is ["ABCDE"]
-  assert possibleAnswersAfterAttempt(prior, "AXXXX", "23333") is ["BCDEA", "CDEAB", "DEABC", "EABCD"]
-  assert possibleAnswersAfterAttempt(prior, "AXXBX", "23323") is ["BCDEA", "CDEAB", "EABCD"]
-  assert possibleAnswersAfterAttempt(["RATTY"], "AORTA", "23213") is ["RATTY"]
-  assert possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "31321") is ["RASPY", "RATTY"]
+  assert possibleAnswersAfterAttempt(prior, "AAAAA", "20000") is ["ABCDE"]
+  assert possibleAnswersAfterAttempt(prior, "AXXXX", "10000") is ["BCDEA", "CDEAB", "DEABC", "EABCD"]
+  assert possibleAnswersAfterAttempt(prior, "AXXBX", "10010") is ["BCDEA", "CDEAB", "EABCD"]
+  assert possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120") is ["RATTY"]
+  assert possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012") is ["RASPY", "RATTY"]
 end test
 
 procedure enterMarks(guess as String, attemptNo as Int, grid as Array2D<of String>, out mark as String)
@@ -65,7 +69,7 @@ end procedure
 procedure colourAttempt(out attemptNo as Int, grid as Array2D<of String>, out solved as Boolean, out mark as String)
   let guess be getWord(attemptNo, grid)
   call enterMarks(guess, attemptNo, grid, mark)
-  if mark is "11111" then
+  if mark is "22222" then
     set solved to true
   else
     set attemptNo to attemptNo + 1
@@ -95,17 +99,17 @@ test setChar
 end test
 
 function markAttempt(attempt as String, target as String) returns String
-  variable mark set to "33333"
+  variable mark set to "00000"
   variable unused set to target
   for n from 0 to 4 step 1
     if attempt[n] is unused[n] then
-      set mark to setChar(mark, n, "1")
+      set mark to setChar(mark, n, "2")
       set unused to setChar(unused, n, " ")
     end if
   end for
   for n from 0 to 4 step 1
-    if (mark[n] isnt "1") and unused.contains(attempt[n]) then
-      set mark to setChar(mark, n, "2")
+    if (mark[n] isnt "2") and unused.contains(attempt[n]) then
+      set mark to setChar(mark, n, "1")
       set unused to setChar(unused, unused.indexOf(attempt[n]), " ")
     end if
   end for
@@ -113,15 +117,15 @@ function markAttempt(attempt as String, target as String) returns String
 end function
 
 test markAttempt
-  assert markAttempt("ABCDE", "XXXXX") is "33333"
-  assert markAttempt("ABCDE", "BCDEA") is "22222"
-  assert markAttempt("ABCDE", "ABCDE") is "11111"
-  assert markAttempt("SAINT", "LADLE") is "31333"
-  assert markAttempt("IDEAL", "LADLE") is "32222"
-  assert markAttempt("CABAL", "RECAP") is "23313"
-  assert markAttempt("COLON", "GLORY") is "32233"
-  assert markAttempt("AORTA", "RATTY") is "23213"
-  assert markAttempt("FAIRY", "RATTY") is "31321"
+  assert markAttempt("ABCDE", "XXXXX") is "00000"
+  assert markAttempt("ABCDE", "BCDEA") is "11111"
+  assert markAttempt("ABCDE", "ABCDE") is "22222"
+  assert markAttempt("SAINT", "LADLE") is "02000"
+  assert markAttempt("IDEAL", "LADLE") is "01111"
+  assert markAttempt("CABAL", "RECAP") is "10020"
+  assert markAttempt("COLON", "GLORY") is "01100"
+  assert markAttempt("AORTA", "RATTY") is "10120"
+  assert markAttempt("FAIRY", "RATTY") is "02012"
 end test
 
 function generateHtml(grid as Array2D<of String>) returns String
@@ -138,8 +142,6 @@ function generateHtml(grid as Array2D<of String>) returns String
   end for
   return html + "</grid>"
 end function
-
-constant markAsClass set to {"*":"correct", "+":"present", "_":"absent"}
 
 function getStyle() returns String
   return "<style>  game {openBrace}  display: flex;   flex-direction: column;  {closeBrace}  word {openBrace}   display: flex;    flex-direction: row;  {closeBrace}  ch {openBrace}  text-align: center;   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;   font-size: 28pt;   font-weight: bold; border: solid, 2px, black;   margin: 3px;   width: 60px;   height: 60px;   line-height: 55px;  {closeBrace}  ch:empty {openBrace}  border-color: lightgrey;  {closeBrace}  ch._1 {openBrace}  background-color: #6aaa64;   border-color: #6aaa64;   color: white;  {closeBrace}  ch._2 {openBrace}  background-color: #c9b458;   border-color: #c9b458;   color: white;  {closeBrace}  ch._3 {openBrace}  background-color: #787c7e;   border-color: #787c7e;   color: white;  {closeBrace}  ch.invalid {openBrace}  border-color: red;  {closeBrace}  </style>  "
