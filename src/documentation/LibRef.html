@@ -1933,7 +1933,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <h2 id="image">Displaying images</h2>
 
 <h3 class="no-TOC">Printing an image on the Display</h3>
-<p>An image that can be accessed via a URL may be printed on the display using the <el-kw>image</el-kw> keyword
+<p>An image that can be accessed via an Http URL may be printed on the display using the <el-kw>image</el-kw> keyword
 followed by the URL. Here, the URL is <i>not</i> bounded by quotes:</p>
 <el-code-block>
 <el-statement class="ok" id="print3" tabindex="0"><el-kw>print </el-kw><el-field id="expr4" class="selected focused optional ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="88" data-cursorend="88" size="87" style="width: 88ch" value="image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg"></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1947,7 +1947,8 @@ followed by the URL. Here, the URL is <i>not</i> bounded by quotes:</p>
 <p>Acknowledgement: The idea of displaying an image value as a thumbnail within the code was inspired by
     a similar feature in the language <a href="https://strype.org">Strype</a>. We are
 grateful to Prof. Michael K&ouml;lling and the team at King's College, London responsible for Strype,
-who showed us this feature in confidence before its release, but nonetheless generously allowed us to mimic it in Elan.</p>
+who showed us this feature in confidence before its release, but nonetheless generously allowed us to mimic it in Elan.
+Note that other URI protocols, e.g. <el-code>file://host/path</el-code> to access an image on your local file system, are not supported.</p>
 
 <p>When the code is run the image will be printed on the <b>Display</b>, but still thumbnail sized.
     You can specify dimensions by using a <el-kw>with</el-kw> clause like this:</p>
