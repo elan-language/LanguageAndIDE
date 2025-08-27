@@ -1,10 +1,9 @@
-# FFFF Elan 1.3.2 guest default_profile valid
+# f7c79a72d0c68698a750a95bf3b40367d5ccba151d90a22c7a2187b577a73ca3 Elan 1.3.1 guest default_profile valid
 
 main
   let grid be new Array2D<of String>(5, 6, "")
   call displayHtml(generateHtml(grid))
-  let html be generateHtml(grid)
-  call playReverseGame(grid)
+  call playGame(grid)
 end main
 
 procedure playGame(grid as Array2D<of String>)
@@ -92,7 +91,7 @@ end procedure
 procedure analyse()
   let outcomes be new Array<of Int>(10, 0)
   each word in allPossibleAnswers.asList()
-    variable possible set to allPossibleAnswers
+    variable possible set to allPossibleAnswers.asList()
     variable mark set to ""
     variable attempt set to "RAISE"
     variable attempts set to 0
