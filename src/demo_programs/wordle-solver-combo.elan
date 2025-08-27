@@ -1,5 +1,7 @@
-# 58f69c64d8fdec89e0f535c23b900e673470aa3198c39dd4ac4eb3d343782c0c Elan 1.3.1 guest default_profile valid
+# 1bf23ab4e63eb88bef6150cf04ff78a3d19604ed3d2787db17b8f7e2183350dc Elan 1.3.1 guest default_profile valid
 
+# split answerList in main and pass on
+# check user attempt is in list and give class _x if not
 main
   let choice be inputIntBetween("Enter 1 to play game, 2 to play in reverse, 3 to analyse algorithm", 1, 3)
   call clearPrintedText()
