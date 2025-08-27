@@ -1,0 +1,93 @@
+<html>
+<style>  grid {  
+    display: flex;   
+    flex-direction: column; 
+    width: 500px; 
+}  
+word {   
+display: flex;    
+flex-direction: row; 
+margin: auto;
+} 
+ch, key {  
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+font-weight: bold;
+background-color: white; 
+} 
+
+ch {  
+text-align: center;     
+font-size: 28pt;  
+border: solid, 2px, black;   
+margin: 3px;   
+width: 60px;   
+height: 60px;   
+line-height: 55px;  
+}  
+ch:empty, key:empty {  
+border-color: lightgrey;  
+}  
+key._ {
+    background-color: lightgrey;  
+}
+ch._2, key._2 {  
+background-color: #6aaa64;   
+border-color: #6aaa64;   
+color: white;  
+}  
+ch._1, key._1 {  
+background-color: #c9b458;   
+border-color: #c9b458;   
+color: white;  
+}  
+ch._0, key._0 {  
+background-color: #787c7e;   
+border-color: #787c7e;   
+color: white;  
+}  
+ch.invalid {  
+border-color: red;  
+} 
+
+keyboard {  
+    width: 500px;
+     display: flex;
+     flex-direction: column;
+     margin-top:10px; 
+} 
+
+keyboard div {  
+     display: flex;
+     flex-direction: row;
+     margin:auto; 
+}
+
+key {
+    display: block; 
+    float: left;
+    font-size: 14pt; 
+    width: 40px;
+    margin: 2px;
+    padding-bottom: 10px;
+    padding-top: 8px;
+    text-align: center;
+    border-radius: 5px;
+} 
+
+ </style>  
+ <grid>
+    <word><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch></word>
+    <word><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch></word>
+    <word><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch></word>
+    <word><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch></word>
+    <word><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch></word>
+    <word><ch class='_'>A</ch><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch><ch class='_'></ch></word>
+</grid>   
+<keyboard>
+    <div><key class='_2'>Q</key><key class='_0'>W</key><key class='_1'>E</key><key class='_'>R</key><key class='_'>T</key><key class='_'>Y</key><key class='_'>U</key><key class='_'>I</key><key class='_'>O</key><key class='_'>P</key></div>
+    <div><key class='_1'>A</key><key class='_2'>S</key><key class='_0'>D</key><key class='_'>F</key><key class='_'>G</key><key class='_'>H</key><key class='_'>J</key><key class='_'>K</key><key class='_'>L</key></div>
+    <div><key class='_2'>Z</key><key class='_2'>X</key><key class='_2'>C</key><key class='_'>V</key><key class='_'>B</key><key class='_'>N</key><key class='_'>M</key><key></key></div>
+</keyboard>
+
+</body>
+</html>
