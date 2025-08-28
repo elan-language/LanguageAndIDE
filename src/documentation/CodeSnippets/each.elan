@@ -1,4 +1,4 @@
-# 66b83cf13d567b5f2cb5291c07ea220404962dbaa61afb49b1dca00cba1065ee Elan 1.3.2 guest default_profile valid
+# a5db572892ebe96c3fa21055179a9bf134bfb353a3bc2ddbe63745ee51a3645f Elan 1.3.1 guest default_profile valid
 
 main
   variable names set to ["Tom", "Dick", "Harriet"]
@@ -6,4 +6,13 @@ main
   each n in names
     print n
   end each
+  print reverse("Harriet")
 end main
+
+function reverse(s as String) returns String
+  variable sReturn set to empty String
+  each ch in s
+    set sReturn to ch + sReturn
+  end each
+  return sReturn
+end function
