@@ -1,4 +1,4 @@
-# 67fe89f8a55940c6c87a41358845194049951bc71244d36debff1e9bea3db587 Elan 1.3.2 guest default_profile valid
+# 26c1ac9d443d5d5dba6eb42f18a8096f66acbaa96943d38d834dda588af77a58 Elan 1.4.0 guest default_profile valid
 
 main
   let names be ["Abel", "Boole", "Cantor", "Descartes"]

@@ -1,4 +1,4 @@
-# 8bd90a22d8bd71ddd974d10e813f4a8fd56af0a791d106aac8f32583a9ae4252 Elan 1.3.2 guest default_profile valid
+# e95fb4589d915b33a72196aa3d4088a14bb2b3e623fd0163fd3ad7bb5e52577d Elan 1.4.0 guest default_profile valid
 
 main
   variable vg set to new List<of VectorGraphic>()
