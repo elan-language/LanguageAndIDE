@@ -1,4 +1,4 @@
-# c0184b2428044b1fa29b3b9a86a8d3039cb2efb4473ae1c9a50b70da54412f97 Elan 1.4.0 guest default_profile valid
+# f65f16829fb8f6ee9e45c0bb09279fa44813776deb3d033d54b82456f6e4a588 Elan 1.4.0 guest default_profile valid
 
 main
   variable exit set to false
@@ -10,10 +10,13 @@ main
     call clearPrintedText()
     call clearKeyBuffer()
     if choice is 1 then
+      print "Reduce screen magnification if you can't see keys-used below grid"
       call playGame(allPossibleAnswers)
     else if choice is 2 then
+      print "Mark using: 0 (grey), 1 (yellow), 2 (green), Enter"
       call playReverseGame(allPossibleAnswers)
     else if choice is 3 then
+      print "Please wait for analysis to complete ..."
       call analyse(allPossibleAnswers)
     else
       set exit to true
@@ -36,6 +39,7 @@ procedure playGame(allPossibleAnswers as List<of String>)
     call colourAttempt(attemptNo, grid, target, solved, used)
     set attemptNo to attemptNo + 1
   end while
+  call clearPrintedText()
   if solved then
     print "Well done!"
   end if
@@ -134,7 +138,6 @@ procedure enterMark(attemptNo as Int, grid as Array2D<of String>, out mark as St
 end procedure
 
 procedure analyse(allPossibleAnswers as List<of String>)
-  print "Please wait..."
   let outcomes be new Array<of Int>(10, 0)
   each word in allPossibleAnswers
     variable possible set to allPossibleAnswers
@@ -155,7 +158,8 @@ procedure analyse(allPossibleAnswers as List<of String>)
     set success to success + outcomes[i]
     set weightedSum to weightedSum + (i*outcomes[i])
   end for
-  print "Solved within 6: {(success/2309*100).floor()}% Average: {(weightedSum/success).round(2)} attempts"
+  call clearPrintedText()
+  print "Solved within 6 attempts: {(success/2309*100).floor()}%\nAverage: {(weightedSum/success).round(2)} attempts"
   call pressAnyKeyToContinue(true)
 end procedure
 
