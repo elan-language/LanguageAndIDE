@@ -106,6 +106,10 @@ export function escapeHtmlInclSpaces(str: string): string {
   return escapeHtmlChars(str).replaceAll(/\s/g, "&nbsp;");
 }
 
+export function renderDoubleSpaceAfterCharAsLineBreak(str: string): string {
+  return escapeHtmlChars(str).replaceAll(/([^\s]|^)\s\s(\s*)([^\s]|$)/g, "$1<br>$2$3");
+}
+
 export function helper_pastePopUp(loc: Frame | Field): string {
   let popup = "";
   if (isFrame(loc) && loc.pasteError) {
