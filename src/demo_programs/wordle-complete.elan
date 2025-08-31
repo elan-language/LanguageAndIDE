@@ -1,4 +1,4 @@
-# 65376a89939f5e17552297e33c781e02d0feaf51e3a69013ebe30e5b93bfae81 Elan 1.3.1 guest default_profile valid
+# 3e3ac5ce38a16e6e4c2e205c03d90b3237a2b97fcc092fd41d2b28af062f50f8 Elan 1.3.1 guest default_profile valid
 
 main
   variable exit set to false
@@ -129,6 +129,7 @@ procedure enterMark(attemptNo as Int, grid as Array2D<of String>, out mark as St
     else if (chNo is 5) and (k is "ENTER") then
       set chNo to chNo + 1
     end if
+    call displayHtml(drawGrid(grid))
   end while
 end procedure
 
