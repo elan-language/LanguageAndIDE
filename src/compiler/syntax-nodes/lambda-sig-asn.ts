@@ -2,9 +2,10 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
-import { isDefinitionScope } from "../../compiler/symbols/symbol-helpers";
+import { getGlobalScope, isDefinitionScope } from "../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../compiler/symbols/symbol-scope";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
+import { mustNotBeOutParameter } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { ParamDefAsn } from "./param-def-asn";
 
@@ -37,6 +38,15 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
 
   compile(): string {
     this.compileErrors = [];
+
+    for (const p of this.parameters) {
+      if (p.symbolScope === SymbolScope.outParameter) {
+        mustNotBeOutParameter(this.compileErrors, this.fieldId);
+      }
+    }
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
     return this.parameters.map((p) => p.compile()).join(", ");
   }
 
