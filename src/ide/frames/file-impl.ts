@@ -798,4 +798,8 @@ export class FileImpl implements File {
   updateBreakpoints(event: BreakpointEvent) {
     parentHelper_updateBreakpoints(this, event);
   }
+
+  isGhosted(): boolean {
+    return false;
+  }
 }

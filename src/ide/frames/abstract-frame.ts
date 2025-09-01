@@ -99,7 +99,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   getFrNo(): string {
-    return this.getFile().getFrNo();
+    return this.isGhosted() ? "" : this.getFile().getFrNo();
   }
 
   fieldUpdated(_field: Field): void {
@@ -697,6 +697,11 @@ export abstract class AbstractFrame implements Frame {
   unGhost = () => {
     this.ghosted = false;
   };
+
+  isGhosted() {
+    //needs to search the whole hierarchy
+    return this.ghosted || this.getParent().isGhosted();
+  }
 
   getContextMenuItems() {
     const map = new Map<string, [string, (() => void) | undefined]>();
