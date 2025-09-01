@@ -1,4 +1,4 @@
-# f65f16829fb8f6ee9e45c0bb09279fa44813776deb3d033d54b82456f6e4a588 Elan 1.4.0 guest default_profile valid
+# e7460250302232e627414b82ef5036030628487707ff0cea7e876be9b230fa9c Elan 1.4.0 guest default_profile valid
 
 main
   variable exit set to false
@@ -8,9 +8,10 @@ main
     call clearPrintedText()
     let choice be inputIntBetween("1 to play game, 2 to play in reverse, 3 to analyse algorithm, 4 to exit", 1, 4)
     call clearPrintedText()
+    # Remove clearKeyBuffer when #1778 fixed
     call clearKeyBuffer()
     if choice is 1 then
-      print "Reduce screen magnification if you can't see keys-used below grid"
+      print "Reduce screen magnification if you can't see keys below grid"
       call playGame(allPossibleAnswers)
     else if choice is 2 then
       print "Mark using: 0 (grey), 1 (yellow), 2 (green), Enter"
@@ -93,14 +94,13 @@ procedure playReverseGame(allPossibleAnswers as List<of String>)
   variable attemptNo set to 0
   variable solved set to false
   variable possible set to allPossibleAnswers
-  variable mark set to ""
   while (attemptNo < 6) and (not solved)
     let attempt be possible[0]
     for i from 0 to 4 step 1
       call grid.put(i, attemptNo, attempt[i])
     end for
     call displayHtml(drawGrid(grid))
-    set mark to ""
+    variable mark set to ""
     call enterMark(attemptNo, grid, mark)
     if mark is "22222" then
       set solved to true
@@ -109,7 +109,8 @@ procedure playReverseGame(allPossibleAnswers as List<of String>)
       set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
     end if
     if possible.length() is 0 then
-      print "No possible answer matches marks so far"
+      print "No possible answer matches marks so far. Press any key to continue"
+      call pressAnyKeyToContinue(false)
       set attemptNo to 6
     end if
   end while
@@ -220,6 +221,7 @@ test markAttempt
   assert markAttempt("CABAL", "RECAP") is "10020"
   assert markAttempt("COLON", "GLORY") is "01100"
   assert markAttempt("AORTA", "RATTY") is "10120"
+  assert markAttempt("RATTY", "AORTA") is "11020"
   assert markAttempt("FAIRY", "RATTY") is "02012"
 end test
 

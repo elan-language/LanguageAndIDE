@@ -1,4 +1,4 @@
-# d214f5a7b9295f01dafa69d1678fff1122c552f1222c1fb0e8242cc53c17d9fd Elan 1.4.0 guest default_profile valid
+# 891ad8e16ba60bcfdf0147cab10a9c65e784b1ab62f84ac59b4e38d4e639bc5e Elan 1.4.0 guest default_profile valid
 
 main
   let allPossibleAnswers be answerList.split(" ")
@@ -16,6 +16,7 @@ main
     call colourAttempt(attemptNo, grid, target, solved, used)
     set attemptNo to attemptNo + 1
   end while
+  call clearPrintedText()
   if solved then
     print "Well done!"
   end if
@@ -86,7 +87,7 @@ function getWord(attemptNo as Int, grid as Array2D<of String>) returns String
 end function
 
 function setChar(str as String, n as Int, ch as String) returns String
-  # This is a 'stub' implementation. Your task is to implement it properly
+  # This is a 'stub' implementation - your task is to write a proper implementation
   return str
 end function
 
@@ -96,8 +97,9 @@ test setChar
 end test
 
 function markAttempt(attempt as String, target as String) returns String
-  # This is a 'stub' implementation. Your task is to implement it properly
-  return "20001"
+  # This is a 'stub' implementation - your task is to write a proper implementation
+  variable mark set to "20100"
+  return mark
 end function
 
 test markAttempt
@@ -109,6 +111,7 @@ test markAttempt
   assert markAttempt("CABAL", "RECAP") is "10020"
   assert markAttempt("COLON", "GLORY") is "01100"
   assert markAttempt("AORTA", "RATTY") is "10120"
+  assert markAttempt("RATTY", "AORTA") is "11020"
   assert markAttempt("FAIRY", "RATTY") is "02012"
 end test
 
