@@ -1381,6 +1381,8 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitString(), `"`, ParseStatus.incomplete, `"`, "", "", "");
     testNodeParse(new LitString(), `abc`, ParseStatus.invalid, "", "abc", "", "");
     testNodeParse(new LitString(), `'abc'`, ParseStatus.valid, "'abc'", "", "", "");
+    testNodeParse(new LitString(), `'abc"`, ParseStatus.incomplete, `'abc"`, "", "", "");
+    testNodeParse(new LitString(), `"abc'`, ParseStatus.incomplete, `"abc'`, "", "", "");
     //Test embedded html
     testNodeParse(
       new LitStringDoubleQuotesNonEmpty(),
