@@ -12,6 +12,7 @@ export class Regexes {
   static readonly negatableLitFloat = /^\s*-?[0-9]+\.[0-9]+((e|E)-?[0-9]+)?/;
   static readonly charValue = /[^']/;
   static readonly nonEmptyStringContent = /^[^{"]+/;
+  static readonly nonInterpolatedStringContent = /^[^']*/;
   static readonly leadingSpaceNotNL = /^[^\S\r\n]+/;
   static readonly anythingExceptUnescapedForwardSlash = /^([^\/\\]|\\.)+/;
   static readonly flags = /^[dgimsuvy]*/;

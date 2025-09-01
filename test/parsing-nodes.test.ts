@@ -28,8 +28,8 @@ import { LitFloat } from "../src/ide/frames/parse-nodes/lit-float";
 import { LitInt } from "../src/ide/frames/parse-nodes/lit-int";
 import { LitRegExp } from "../src/ide/frames/parse-nodes/lit-regExp";
 import { LitString } from "../src/ide/frames/parse-nodes/lit-string";
+import { LitStringDoubleQuotesNonEmpty } from "../src/ide/frames/parse-nodes/lit-string-double-quotes-non-empty";
 import { LitStringInterpolation } from "../src/ide/frames/parse-nodes/lit-string-interpolation";
-import { LitStringNonEmpty } from "../src/ide/frames/parse-nodes/lit-string-non-empty";
 import { LitValueNode } from "../src/ide/frames/parse-nodes/lit-value-node";
 import { MethodCallNode } from "../src/ide/frames/parse-nodes/method-call-node";
 import { Multiple } from "../src/ide/frames/parse-nodes/multiple";
@@ -1273,6 +1273,8 @@ suite("Parsing Nodes", () => {
       "",
       "",
     ); //But should fail type tests
+    testNodeParse(new LitValueNode(), `''`, ParseStatus.valid, "", "", "");
+    testNodeParse(new LitValueNode(), `'`, ParseStatus.incomplete, "", "", "");
   });
   test("DeconstructedTuple", () => {
     testNodeParse(new DeconstructedTuple(), `a, b`, ParseStatus.valid, "", "", "");
@@ -1378,10 +1380,12 @@ suite("Parsing Nodes", () => {
     testNodeParse(new LitString(), `"abc`, ParseStatus.incomplete, `"abc`, "", "", "");
     testNodeParse(new LitString(), `"`, ParseStatus.incomplete, `"`, "", "", "");
     testNodeParse(new LitString(), `abc`, ParseStatus.invalid, "", "abc", "", "");
-    testNodeParse(new LitString(), `'abc'`, ParseStatus.invalid, "", "'abc'", "", "");
+    testNodeParse(new LitString(), `'abc'`, ParseStatus.valid, "'abc'", "", "", "");
+    testNodeParse(new LitString(), `'abc"`, ParseStatus.incomplete, `'abc"`, "", "", "");
+    testNodeParse(new LitString(), `"abc'`, ParseStatus.incomplete, `"abc'`, "", "", "");
     //Test embedded html
     testNodeParse(
-      new LitStringNonEmpty(),
+      new LitStringDoubleQuotesNonEmpty(),
       `"<p>abc</p>"`,
       ParseStatus.valid,
       `"<p>abc</p>"`,
@@ -1390,7 +1394,7 @@ suite("Parsing Nodes", () => {
       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
     );
     testNodeParse(
-      new LitStringNonEmpty(),
+      new LitStringDoubleQuotesNonEmpty(),
       `"&#123;curly braces&#125;"`,
       ParseStatus.valid,
       `"&#123;curly braces&#125;"`,

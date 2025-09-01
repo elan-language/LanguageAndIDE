@@ -13,24 +13,20 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("Interpolated String", () => {
-  test("Pass_String", async () => {
+suite("Strings", () => {
+  test("Pass_SingleAndDoubleQuotes", async () => {
     const code = `${testHeader}
 
 main
-  variable a set to 1
-  variable b set to "Apple"
-  variable c set to {1,2,3}
-  print "{a} {b} {c}"
+  print "'Hello,' she said."
+  print '"Hello," she said.'
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = 1;
-  let b = "Apple";
-  let c = system.listImmutable([1, 2, 3]);
-  await system.printLine(\`\${await _stdlib.asString(a)} \${await _stdlib.asString(b)} \${await _stdlib.asString(c)}\`);
+  await system.printLine("'Hello,' she said.");
+  await system.printLine('"Hello," she said.');
 }
 return [main, _tests];}`;
 
@@ -47,7 +43,44 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1 Apple {1, 2, 3}");
+    await assertObjectCodeExecutes(fileImpl, `'Hello,' she said."Hello," she said.`);
+  });
+  test("Pass_InterpolatedAndNonInterpolatedString", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to 1
+  variable b set to "Apple"
+  variable c set to {1,2,3}
+  print "{a} {b} {c}"
+  print '{a} {b} {c}'
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 1;
+  let b = "Apple";
+  let c = system.listImmutable([1, 2, 3]);
+  await system.printLine(\`\${await _stdlib.asString(a)} \${await _stdlib.asString(b)} \${await _stdlib.asString(c)}\`);
+  await system.printLine('{a} {b} {c}');
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1 Apple {1, 2, 3}{a} {b} {c}");
   });
 
   test("Fail_missingBrace", async () => {

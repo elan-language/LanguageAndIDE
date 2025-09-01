@@ -534,29 +534,6 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_invalidLiteralString", async () => {
-    const code = `${testHeader}
-
-constant a set to 'hello'
-
-main 
-  print a
-end main
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
   test("Fail_reassignment", async () => {
     const code = `${testHeader}
 

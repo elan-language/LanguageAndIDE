@@ -2,11 +2,11 @@ import { DOUBLE_QUOTES } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
 import { LitStringInterpolation } from "./lit-string-interpolation";
-import { LitStringOrdinaryContents } from "./lit-string-ordinary-contents";
+import { LitStringDoubleQuotesContents } from "./lit-string-double-quotes-contents";
 import { Multiple } from "./multiple";
 import { PunctuationNode } from "./punctuation-node";
 
-export class LitStringNonEmpty extends AbstractSequence {
+export class LitStringDoubleQuotesNonEmpty extends AbstractSequence {
   segments: Multiple | undefined;
 
   constructor() {
@@ -17,7 +17,7 @@ export class LitStringNonEmpty extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       const field = () => new LitStringInterpolation();
-      const plainText = () => new LitStringOrdinaryContents();
+      const plainText = () => new LitStringDoubleQuotesContents();
       const segment = () => new Alternatives([field, plainText]);
       this.segments = new Multiple(segment, 1);
       this.addElement(new PunctuationNode(DOUBLE_QUOTES));
