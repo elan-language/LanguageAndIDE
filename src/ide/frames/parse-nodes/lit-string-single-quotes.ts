@@ -1,14 +1,14 @@
 import { SINGLE_QUOTE } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
-import { LitStringNonInterpContents } from "./lit-string-non-interp-contents";
+import { LitStringSingleQuotesContents } from "./lit-string-single-quotes-contents";
 import { PunctuationNode } from "./punctuation-node";
 
-export class LitStringNonInterp extends AbstractSequence {
-  contents: LitStringNonInterpContents | undefined;
+export class LitStringSingleQuotes extends AbstractSequence {
+  contents: LitStringSingleQuotesContents | undefined;
 
   parseText(text: string): void {
     if (text.length > 0) {
-      this.contents = new LitStringNonInterpContents();
+      this.contents = new LitStringSingleQuotesContents();
       this.addElement(new PunctuationNode(SINGLE_QUOTE));
       this.addElement(this.contents);
       this.addElement(new PunctuationNode(SINGLE_QUOTE));

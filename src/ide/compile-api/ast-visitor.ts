@@ -158,10 +158,10 @@ import { ListNode } from "../frames/parse-nodes/list-node";
 import { LitFloat } from "../frames/parse-nodes/lit-float";
 import { LitInt } from "../frames/parse-nodes/lit-int";
 import { LitRegExp } from "../frames/parse-nodes/lit-regExp";
-import { LitStringEmpty } from "../frames/parse-nodes/lit-string-empty";
+import { LitStringDoubleQuotesEmpty } from "../frames/parse-nodes/lit-string-double-quotes-empty";
+import { LitStringDoubleQuotesNonEmpty } from "../frames/parse-nodes/lit-string-double-quotes-non-empty";
 import { LitStringInterpolation } from "../frames/parse-nodes/lit-string-interpolation";
-import { LitStringNonEmpty } from "../frames/parse-nodes/lit-string-non-empty";
-import { LitStringNonInterp } from "../frames/parse-nodes/lit-string-non-interp";
+import { LitStringSingleQuotes } from "../frames/parse-nodes/lit-string-single-quotes";
 import { MethodCallNode } from "../frames/parse-nodes/method-call-node";
 import { Multiple } from "../frames/parse-nodes/multiple";
 import { NewInstance } from "../frames/parse-nodes/new-instance";
@@ -745,15 +745,15 @@ export function transform(
     return new LiteralFloatAsn(node.matchedText, fieldId);
   }
 
-  if (node instanceof LitStringEmpty) {
-    return new LiteralStringAsn(node.matchedText, fieldId);
-  }
-
-  if (node instanceof LitStringNonInterp) {
+  if (node instanceof LitStringSingleQuotes) {
     return new LiteralStringNonInterpAsn(node.matchedText, fieldId);
   }
 
-  if (node instanceof LitStringNonEmpty) {
+  if (node instanceof LitStringDoubleQuotesEmpty) {
+    return new LiteralStringAsn(node.matchedText, fieldId);
+  }
+
+  if (node instanceof LitStringDoubleQuotesNonEmpty) {
     const ss = node.segments ? transformMany(node.segments, fieldId, scope).items : [];
 
     if (ss.map((i) => i instanceof InterpolatedAsn).reduce((i, s) => i || s)) {
