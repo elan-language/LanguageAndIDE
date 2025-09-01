@@ -1,5 +1,6 @@
 import assert from "assert";
 
+import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
 import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
@@ -13,9 +14,8 @@ import { SetStatement } from "../src/ide/frames/statements/set-statement";
 import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
 import { Throw } from "../src/ide/frames/statements/throw";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
-import { testHeader, transforms } from "./compiler/compiler-test-helpers";
-import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { StubInputOutput } from "../src/ide/stub-input-output";
+import { testHeader, transforms } from "./compiler/compiler-test-helpers";
 
 function hash() {
   return Promise.resolve("FFFF");
@@ -748,5 +748,23 @@ end class
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+  test("#1762 Format literal strings over multiple lines", async () => {
+    const code = `${testHeader}
+
+constant s set to "  1   2    3     4      "
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = new FileImpl(
+      hash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fl.parseFrom(source);
+    const html = await fl.renderAsHtml();
+    assert.equal(html.includes("<el-lit><br>1<br> 2<br>  3<br>   4<br>    </el-lit>"), true);
   });
 });
