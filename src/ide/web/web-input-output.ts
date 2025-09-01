@@ -225,8 +225,9 @@ export class WebInputOutput implements ElanInputOutput {
     return Promise.resolve();
   }
 
-  stopReading(): Promise<void> {
+  async stopReading(): Promise<void> {
     clearInterval(this.currentInterval);
+    await this.clearKeyBuffer();
     this.display.focus();
     return Promise.resolve();
   }
@@ -257,7 +258,7 @@ export class WebInputOutput implements ElanInputOutput {
           rs("");
         } else if (entered) {
           rs(inp.value);
-          this.stopReading();
+          await this.stopReading();
           const v = inp.value.replace(/</g, "&lt;");
 
           div.removeChild(inp);
