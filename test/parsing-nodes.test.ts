@@ -1273,6 +1273,8 @@ suite("Parsing Nodes", () => {
       "",
       "",
     ); //But should fail type tests
+    testNodeParse(new LitValueNode(), `''`, ParseStatus.valid, "", "", "");
+    testNodeParse(new LitValueNode(), `'`, ParseStatus.incomplete, "", "", "");
   });
   test("DeconstructedTuple", () => {
     testNodeParse(new DeconstructedTuple(), `a, b`, ParseStatus.valid, "", "", "");

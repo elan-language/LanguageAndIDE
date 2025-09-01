@@ -1,7 +1,5 @@
 import assert from "assert";
-import { hash } from "../src/ide/util";
-import { transforms } from "./compiler/compiler-test-helpers";
-import { testExtractContextForExpression } from "./testHelpers";
+import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { Constant } from "../src/ide/frames/globals/constant";
@@ -14,8 +12,10 @@ import { CommentStatement } from "../src/ide/frames/statements/comment-statement
 import { LetStatement } from "../src/ide/frames/statements/let-statement";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 import { ParseStatus } from "../src/ide/frames/status-enums";
-import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { StubInputOutput } from "../src/ide/stub-input-output";
+import { hash } from "../src/ide/util";
+import { transforms } from "./compiler/compiler-test-helpers";
+import { testExtractContextForExpression } from "./testHelpers";
 
 suite("Field Parsing Tests", () => {
   test("parse CommentField", () => {
@@ -154,6 +154,34 @@ suite("Field Parsing Tests", () => {
     assert.equal(
       expr.textAsHtml(),
       `"<el-lit></el-lit>{<el-id>op</el-id>}<el-lit> times </el-lit>{<el-id>op2</el-id>}<el-lit> equals </el-lit>{<el-id>op1</el-id>*<el-id>op2</el-id>}<el-lit></el-lit>"`,
+    );
+  });
+
+  test("parse ExpressionField - non-interpolated string", () => {
+    const main = new MainFrame(
+      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+    );
+    const v = new VariableStatement(main);
+    const expr = v.expr;
+    expr.setFieldToKnownValidText(`'{a}"b"'`);
+    expr.parseCurrentText();
+    assert.equal(expr.readParseStatus(), ParseStatus.valid);
+    assert.equal(expr.textAsSource(), `'{a}"b"'`);
+    assert.equal(expr.textAsHtml(), `'<el-lit>{a}"b"</el-lit>'`);
+  });
+  test("parse ExpressionField - mixed strings", () => {
+    const main = new MainFrame(
+      new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
+    );
+    const v = new VariableStatement(main);
+    const expr = v.expr;
+    expr.setFieldToKnownValidText(`''+""+'ab{c}"d"'+"ab{c}'d'"`);
+    expr.parseCurrentText();
+    assert.equal(expr.readParseStatus(), ParseStatus.valid);
+    assert.equal(expr.textAsSource(), `'' + "" + 'ab{c}"d"' + "ab{c}'d'"`);
+    assert.equal(
+      expr.textAsHtml(),
+      `'<el-lit></el-lit>' + "" + '<el-lit>ab{c}"d"</el-lit>' + "<el-lit>ab</el-lit>{<el-id>c</el-id>}<el-lit>'d'</el-lit>"`,
     );
   });
 

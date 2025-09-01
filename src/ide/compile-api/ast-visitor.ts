@@ -67,6 +67,7 @@ import { LiteralListAsn } from "../../compiler/syntax-nodes/literal-list-asn";
 import { LiteralListImmutableAsn } from "../../compiler/syntax-nodes/literal-list-immutable-asn";
 import { LiteralRegExAsn } from "../../compiler/syntax-nodes/literal-regex-asn";
 import { LiteralStringAsn } from "../../compiler/syntax-nodes/literal-string-asn";
+import { LiteralStringNonInterpAsn } from "../../compiler/syntax-nodes/literal-string-non-interp-asn";
 import { LiteralTupleAsn } from "../../compiler/syntax-nodes/literal-tuple-asn";
 import { NewAsn } from "../../compiler/syntax-nodes/new-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
@@ -160,6 +161,7 @@ import { LitRegExp } from "../frames/parse-nodes/lit-regExp";
 import { LitStringEmpty } from "../frames/parse-nodes/lit-string-empty";
 import { LitStringInterpolation } from "../frames/parse-nodes/lit-string-interpolation";
 import { LitStringNonEmpty } from "../frames/parse-nodes/lit-string-non-empty";
+import { LitStringNonInterp } from "../frames/parse-nodes/lit-string-non-interp";
 import { MethodCallNode } from "../frames/parse-nodes/method-call-node";
 import { Multiple } from "../frames/parse-nodes/multiple";
 import { NewInstance } from "../frames/parse-nodes/new-instance";
@@ -745,6 +747,10 @@ export function transform(
 
   if (node instanceof LitStringEmpty) {
     return new LiteralStringAsn(node.matchedText, fieldId);
+  }
+
+  if (node instanceof LitStringNonInterp) {
+    return new LiteralStringNonInterpAsn(node.matchedText, fieldId);
   }
 
   if (node instanceof LitStringNonEmpty) {
