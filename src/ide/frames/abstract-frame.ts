@@ -29,8 +29,10 @@ import { CompileStatus, DisplayColour, ParseStatus } from "./status-enums";
 export abstract class AbstractFrame implements Frame {
   isFrame = true;
   isNew = true;
+
   private _parent: File | Parent;
   private _map?: Map<string, Selectable>;
+  private ghosted: boolean = false;
   private selected: boolean = false;
   private focused: boolean = false;
   private collapsed: boolean = false;
@@ -453,6 +455,7 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this.focused, "focused");
     this.pushClass(this.breakpointStatus !== BreakpointStatus.none, "breakpoint");
     this.pushClass(this.paused, "paused");
+    this.pushClass(this.ghosted, "ghosted");
     this._classes.push(DisplayColour[this.readDisplayStatus()]);
   }
 
@@ -687,6 +690,14 @@ export abstract class AbstractFrame implements Frame {
     );
   }
 
+  ghost = () => {
+    this.ghosted = true;
+  };
+
+  unGhost = () => {
+    this.ghosted = false;
+  };
+
   getContextMenuItems() {
     const map = new Map<string, [string, (() => void) | undefined]>();
     // Must be arrow functions for this binding
@@ -695,6 +706,11 @@ export abstract class AbstractFrame implements Frame {
       map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints]);
     } else {
       map.set("setBP", ["set breakpoint", this.setBreakPoint]);
+    }
+    if (this.ghosted) {
+      map.set("unGhost", ["unghost code", this.unGhost]);
+    } else {
+      map.set("ghost", ["ghost code", this.ghost]);
     }
     return map;
   }
