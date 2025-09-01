@@ -1753,14 +1753,15 @@ function simpleId(id: string | string[], asIndex: boolean, type: string): string
 }
 
 function simpleValue(value: number | string, type: string): string {
-  let formatted = `<el-lit>${value}</el-lit>`;
   if (type === "String") {
-    formatted = `"${formatted}"`;
+    value = `${value}`.replaceAll(">", "&gt;").replaceAll("<", "&lt;");
+    return `"<el-lit>${value}</el-lit>"`;
   } else if (type === "Float") {
     const fl = formatFloat(value);
-    formatted = `<el-lit>${fl}</el-lit>`;
+    return `<el-lit>${fl}</el-lit>`;
   }
-  return formatted;
+
+  return `<el-lit>${value}</el-lit>`;
 }
 
 function formatType(type: string) {
