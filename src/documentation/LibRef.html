@@ -1750,23 +1750,19 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <p><b>Notes</b></p>
 <ul>
 <li>When the <el-method>getKey</el-method> function is called, the system <i>does not wait for a response</i>. If a key has been pressed then that will be returned as a <b>String</b> e.g. <el-code>"a"</el-code>.</li>
-<li>Non-printable keys will be returned in the form: <b>"Backspace"</b>,"<b>Enter"</b>,<b>"ArrowDown"</b>,..</li>
+<li>Non-printable keys will be returned in the form: <b>"Backspace"</b>,"<b>Enter"</b>,<b>"ArrowDown"</b>, etc.</li>
 <li>If no key has been pressed (since the last time the method was called), it will return the empty string <el-code>""</el-code>. </li>
-<li>Pressing <i>just</i> the <b>Shift</b>, <b>Ctrl (Cmd under macOS)</b>, or <b>Alt</b> keys will not be detected by <el-method>getKey</el-method>. To read those keys use&#8230;</li>
+<li>Pressing <i>just</i> the <b>Shift</b>, <b>Ctrl</b> (<b>&#x2318; Command</b> under macOS) or <b>Alt</b> keys will not be detected by <el-method>getKey</el-method>. To read those keys use&#8230;</li>
 <li> <el-method>getKeyWithModifier</el-method> which returns a 2-tuple containing  the key pressed plus any &#8216;modifier&#8217; key such a <el-code>Shift</el-code>, <el-code>Ctrl</el-code>, or <el-code>Alt</el-code> (or the empty string if no modifier key is pressed).</li>
 <li>Both of these <el-method>getKey</el-method> methods are System methods because they have a dependency on the system and so may only be used within a <el-code>procedure</el-code> or in <el-code>main</el-code>.</li>
 </ul>
 <p>Use the procedure method <el-method>clearKeyBuffer()</el-method> if you want to enforce that the user cannot get too far ahead of the program by hitting keys in very rapid succession.</p>
 <p><el-method>waitForKey</el-method> waits for a key to be pressed, and returns it.  <el-method>pressAnyKeyToContinue</el-method> gives an optional prompt and is used when you don't need to know which key was pressed.</p>
 <el-code-block>
-<main class="ok multiline">
-<el-top><el-kw>main</el-kw></el-top>
 <el-statement class="ok"><el-top><el-kw>call </el-kw><el-field class="ok"><el-txt><el-method>pressAnyKeyToContinue</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>true</el-id></el-txt></el-field>)</el-top></el-statement>
 <el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>OK, press A or B</el-lit>"</el-txt></el-field></el-statement>
 <el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>mykey</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
 <el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>That was </el-lit>{<el-id>mykey</el-id>}<el-lit></el-lit>"</el-txt></el-field></el-statement>
-<el-kw>end main</el-kw>
-</main>
 </el-code-block>
 
 <h2 id="TextFileReader">Reading text files</h2>
@@ -1899,8 +1895,8 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <div id="DisplayHtml"></div>
 <div id="displayHtml"></div>
 <h2 id="Html">Displaying Html</h2>
-<p>If you attempt to embed Html in a string and then attempt to print it, you will see the string displayed literally &ndash; the Html tags
-    will not be recognised &ndash; this is for security reasons. However, it <i>is</i> possible to display formatted Html on the <b>Display.</b>
+<p>If you embed Html code in a string and then attempt to print it, you will see the string displayed literally: the Html tags
+    will not be recognised. This is for security reasons. However, it <i>is</i> possible to display formatted Html in the <b>Display.</b>
     The following code:</p>
 
 <el-code-block source="Html_1.elan">
@@ -1908,10 +1904,10 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 </el-code-block>
 
 <p>will produce:</p>
-<img src="images/Html_1.png" width="206" height="211">
+<img src="images/Html_1.png" width="250" height="200">
 
 <p>This Html forms another 'layer' of the Display. Any plain text that you print
-    (using <el-kw>print</el-kw> or any of the <el-method>print...</el-method> procedures)
+    (using <el-kw>print</el-kw> or any of the <el-method>print..</el-method> procedures)
     will be overlaid on top of this.</p>
 
 <p>You can programmatically clear just the Html display using the procedure <el-method>clearHtml</el-method>.</p>
@@ -1921,14 +1917,30 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
     Alternatively, you could use the constant <el-code><el-id>quotes</el-id></el-code> within braces as an interpolated field.</p>
 
 <h3 class="no-TOC">Using an embedded CSS stylesheet</h3>
-<p>You can also specify a <el-method>style</el-method> tag at the start of your Html string, to apply to the whole Html being displayed:</p>
+<p>You can also specify a &lt;style&gt; tag at the start of your Html string, to apply to the whole Html being displayed. In this case you would put
+the style definition into a named value as a literal but enclosed in <i>single</i> quotes, for example:</p>
 <el-code-block source="Html_2.elan">
-    <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>style</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>"<el-lit>&lt;style&gt; h1 </el-lit>{<el-id>openBrace</el-id>}<el-lit> color: DarkRed; font-size: 24pt; </el-lit>{<el-id>closeBrace</el-id>}<el-lit> p </el-lit>{<el-id>openBrace</el-id>}<el-lit> font-family: Serif;</el-lit>{<el-id>closeBrace</el-id>}<el-lit> &lt;/style&gt;</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    <el-statement class="ok" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-method>displayHtml</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt>"<el-lit></el-lit>{<el-id>style</el-id>}<el-lit>&lt;h1&gt;New heading&lt;/h1&gt;&lt;p&gt;some new text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>'<el-lit>&lt;style&gt; h1 { color: Red; font-size: 24pt; } p { font-family: Serif; } &lt;/style&gt;</el-lit>'</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call6" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>displayHtml</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="-1"><el-txt>"<el-lit></el-lit>{<el-id>style</el-id>}<el-lit>&lt;h1&gt;New heading&lt;/h1&gt;&lt;p&gt;some new text&lt;/p&gt;</el-lit>"</el-txt></el-field>)</el-top></el-statement>
 </el-code-block>
 
-<p>producing this result:</p>
-<img src="images/Html_2.png" width="277" height="219">
+<p>will produce:</p>
+<img src="images/Html_2.png" width="275" height="200">
+
+<p>The &lt;style&gt; string is displayed for editing like this:</p>
+<el-code-block source="Html_3.elan">
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="91" data-cursorend="91" size="90" style="width: 91ch" value="'&lt;style&gt; h1 { color: Red; font-size: 24pt; }  p { font-family: Serif; }  &lt;/style&gt;'" tabindex="-1"></el-txt></el-field></el-statement>
+</el-code-block>
+
+<p>But by inserting double spaces (for newline) and triple spaces (for newline and indent) thus:</p>
+<el-code-block source="Html_3.elan">
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="91" data-cursorend="91" size="90" style="width: 91ch" value="'&lt;style&gt;  h1 {   color: Red;   font-size: 24pt;  }  p {   font-family: Serif;  }  &lt;/style&gt;'" tabindex="-1"></el-txt></el-field></el-statement>
+</el-code-block>
+
+<p>the string can be shown folded and indented when not being edited: </p>
+<el-code-block source="Html_4.elan">
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>'<el-lit>&lt;style&gt;<br>h1 {<br> color: Red;<br> font-size: 24pt;<br>}<br>p {<br> font-family: Serif;<br>}<br>&lt;/style&gt;</el-lit>'</el-txt></el-field></el-statement>
+</el-code-block>
 
 <h2 id="image">Displaying images</h2>
 
@@ -1999,7 +2011,7 @@ the URL as a <el-type>String</el-type>, either as a literal (by surrounding it w
  <li>the frequency of the generated tone in Hertz (<el-type>Int</el-type>)</li>
  <li>the volume of the tone (<el-type>Float</el-type>)</li>
 </ul>
-<p>Note that the volume paramater is only relative in that the actual volume will be modified by the various sound settings on the output device, and may even be muted.</p>
+<p>Note that the volume parameter is only relative in that the actual volume will be modified by the various sound settings on the output device, and may even be muted.</p>
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>tone</el-method></h4>
 <div class="acc-body">
@@ -2059,7 +2071,7 @@ the URL as a <el-type>String</el-type>, either as a literal (by surrounding it w
  If a turtle is placed or moved outside the 200 &times; 150 area boundary, it will not cause an error,
  but the turtle and any lines drawn outside the boundary will not be visible.</p>
 <p>The origin for turtle units (0,0) is at the centre of the area: positive <i>x</i> rightwards, positive <i>y</i> upwards.
-So fthe top left corner of the display is at (-100,75).</p>
+So the top left corner of the display is at (-100,75).</p>
 <p>A new turtle's default starting position is at (0,0) facing upwards (<el-id>heading</el-id> is 0), from where a <el-method>move</el-method>  will be  in the <i>y</i> direction.</p>
 <p>You can move and turn a turtle, causing lines to be drawn, whether or not the turtle is showing.</p>
 <h3 class="no-TOC" id="Turtle_procedures">Procedure methods on a Turtle</h3>
@@ -2222,7 +2234,7 @@ So fthe top left corner of the display is at (-100,75).</p>
 <p>Vector graphics are implemented in Elan using the SVG (Scalable Vector Graphics) Html tag &lt;svg&gt;, and are output to the Display pane in the user interface.</p>
 <p>The area is 100 units wide by 75 units high, and both integer and floating point values of the units can be used.</p>
 <p>The origin of the units (0,0) is at the top left corner of the display: positive <i>x</i> rightwards, positive <i>y</i> downwards.
-So for exxample the centre of the display is at (50, 37.5).</p>
+So for example the centre of the display is at (50, 37.5).</p>
 <p>The names of the shapes broadly correspond to the names of SVG tags:</p>
 <ul>
  <li id="CircleVG"> <el-code>CircleVG</el-code> for &lt;<el-code>circle../&gt;</el-code></li>
@@ -2380,7 +2392,7 @@ Later shapes are positioned over earlier ones.</p>
   <td></td>
   <td>&#x2714;</td>
   <td>width to render the shape or the image</td>
-  <td>Rectanlge: 40</td>
+  <td>Rectangle: 40</td>
   <td><el-method>setWidth</el-method></td>
   <td><el-method>withWidth</el-method></td>
  </tr><tr>
@@ -2509,13 +2521,13 @@ If you need another random value, you use the returned <el-type>Random</el-type>
   <td><el-type>Random</el-type></td>
   <td><el-type>Float</el-type>,<el-type>Float</el-type></td>
   <td><el-type>tuple(<el-type>Float</el-type>, <el-type>Random</el-type>)</el-type></td>
-  <td>random <el-type>Float</el-type> vlaue in the range of the arguments, and<br>new instance of <el-type>Random</el-type> for subsequent use</td>
+  <td>random <el-type>Float</el-type> value in the range of the arguments, and<br>new instance of <el-type>Random</el-type> for subsequent use</td>
  </tr><tr id="nextInt">
   <td><el-method>nextInt</el-method></td>
   <td><el-type>Random</el-type></td>
   <td><el-type>Int</el-type>, <el-type>Int</el-type></td>
   <td><el-type>tuple(<el-type>Int</el-type>, <el-type>Random</el-type>)</el-type></td>
-  <td>random <el-type>Int</el-type> vlaue in the range of the arguments, and<br>new instance of <el-type>Random</el-type> for subsequent use</td>
+  <td>random <el-type>Int</el-type> value in the range of the arguments, and<br>new instance of <el-type>Random</el-type> for subsequent use</td>
  </tr>
 </table>
 
@@ -2873,7 +2885,7 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
   <td><el-method>clearPrintedText</el-method></td>
   <td>(none)</td>
   <td>(none)</td>
-  <td>clears the IDE's Display panel</td>
+  <td>clears the IDE's Display pane</td>
  </tr><tr id="clearKeyBuffer">
   <td><el-method>clearKeyBuffer</el-method></td>
   <td>(none)</td>
@@ -3168,7 +3180,7 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 <hr>
 
 <h3 class="no-TOC" id="reduce">reduce</h3>
-<p>The function <el-method>reduce</el-method> is used to apply a function <el-id>(F)</el-id> to every elelment of Type <el-id>(E)</el-id>
+<p>The function <el-method>reduce</el-method> is used to apply a function <el-id>(F)</el-id> to every element of Type <el-id>(E)</el-id>
 in a <el-type>List</el-type> or <el-type>ListImmutable</el-type> <el-id>(L)</el-id>,
 and return a single value which may be of any Type <el-id>(T)</el-id>.</p>
 <p>As shown in this table, <el-method>reduce</el-method> takes two arguments, the second being a function that also takes two arguments.</p>
