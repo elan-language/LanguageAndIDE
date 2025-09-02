@@ -146,14 +146,16 @@ end test\r
 
   ignore = () => {
     this.ignored = true;
+    return false;
   };
 
   unignore = () => {
     this.ignored = false;
+    return false;
   };
 
   getContextMenuItems() {
-    const map = new Map<string, [string, () => void]>(); //Normally: = super.getContextMenuItems()
+    const map = new Map<string, [string, () => boolean]>(); //Normally: = super.getContextMenuItems()
     // Must be arrow functions for this binding
     if (this.ignored) {
       map.set("unignore", ["un-ignore test (Ctrl-i)", this.unignore]);
@@ -165,5 +167,6 @@ end test\r
 
   clearBreakPoint = () => {
     this.breakpointStatus = BreakpointStatus.none;
+    return false;
   };
 }

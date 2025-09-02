@@ -312,7 +312,7 @@ export abstract class AbstractFrame implements Frame {
         if (e.optionalData) {
           // This case is when user has selected an item FROM the context menu
           const map = this.getContextMenuItems();
-          map.get(e.optionalData)![1]?.();
+          codeHasChanged = !!map.get(e.optionalData)![1]?.();
         } else {
           // Bringup the context menu
           if (!this.isSelected()) {
@@ -665,10 +665,12 @@ export abstract class AbstractFrame implements Frame {
 
   setBreakPoint = () => {
     this.breakpointStatus = BreakpointStatus.active;
+    return false;
   };
 
   clearBreakPoint = () => {
     this.breakpointStatus = BreakpointStatus.none;
+    return false;
   };
 
   toggleBreakPoint = () => {
@@ -681,6 +683,7 @@ export abstract class AbstractFrame implements Frame {
 
   clearAllBreakPoints = () => {
     this.getFile().updateBreakpoints(BreakpointEvent.clear);
+    return false;
   };
 
   hasBreakpoint() {
@@ -692,10 +695,12 @@ export abstract class AbstractFrame implements Frame {
 
   ghost = () => {
     this.ghosted = true;
+    return true;
   };
 
   unGhost = () => {
     this.ghosted = false;
+    return true;
   };
 
   isGhosted() {
@@ -704,7 +709,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   getContextMenuItems() {
-    const map = new Map<string, [string, (() => void) | undefined]>();
+    const map = new Map<string, [string, (() => boolean) | undefined]>();
     // Must be arrow functions for this binding
     if (this.hasBreakpoint()) {
       map.set("clearBP", ["clear breakpoint", this.clearBreakPoint]);
