@@ -2,7 +2,7 @@ import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { Regexes } from "./fields/regexes";
-import { isSelector } from "./frame-helpers";
+import { isSelector, updateDirectives } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { Collapsible } from "./frame-interfaces/collapsible";
 import { Frame } from "./frame-interfaces/frame";
@@ -64,6 +64,11 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
       parentHelper_readWorstParseStatusOfChildren(this),
     );
     this.setParseStatus(worstOfFieldsOrChildren);
+  }
+
+  updateDirectives(): void {
+    const children = this.getChildren();
+    updateDirectives(children);
   }
 
   updateCompileStatus(): void {

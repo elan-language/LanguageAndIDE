@@ -14,6 +14,8 @@ import { Statement } from "./frame-interfaces/statement";
 import { MainFrame } from "./globals/main-frame";
 import { ReturnStatement } from "./statements/return-statement";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus } from "./status-enums";
+import { Comment } from "./frame-interfaces/comment";
+import { ghostedKeyword } from "../../compiler/keywords";
 
 export function isCollapsible(f?: Selectable): f is Collapsible {
   return !!f && "isCollapsible" in f;
@@ -69,6 +71,10 @@ export function isGlobal(f?: Selectable | GlobalFrame): f is GlobalFrame {
 
 export function isReturnStatement(f?: Frame): f is ReturnStatement {
   return !!f && "isReturnStatement" in f;
+}
+
+export function isComment(f?: Frame | Comment): f is Comment {
+  return !!f && "isDirective" in f;
 }
 
 export function singleIndent() {
@@ -278,4 +284,23 @@ export function addPrivateToggleToContextMenu(
   } else {
     menu.set("makePrivate", ["make private (Ctrl-p)", member.makePrivate]);
   }
+}
+
+export function isGhostedDirective(frame: Frame) {
+  return isComment(frame) && frame.directive() === ghostedKeyword;
+}
+
+export function updateDirectives(children: Frame[]): void {
+  for (let i = 1; i < children.length; i++) {
+    const previous = children[i - 1];
+    const current = children[i];
+
+    if (isGhostedDirective(previous)) {
+      current.ghost();
+    } else {
+      current.unGhost();
+    }
+  }
+
+  children.forEach((c) => c.updateDirectives());
 }

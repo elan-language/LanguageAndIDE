@@ -18,6 +18,7 @@ import {
   helper_testStatusAsDisplayStatus,
   isMain,
   isSelector,
+  updateDirectives,
 } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
@@ -427,11 +428,17 @@ export class FileImpl implements File {
     );
   }
 
+  updateDirectives(): void {
+    const children = this.getChildren();
+    updateDirectives(children);
+  }
+
   refreshParseAndCompileStatuses(compileIfParsed: boolean) {
     try {
       this._parseStatus = ParseStatus.default as ParseStatus;
       this.parseError = undefined;
       this.updateAllParseStatus();
+      this.updateDirectives();
       this.resetAllCompileStatusAndErrors();
       this.resetAllTestStatus();
     } catch (e) {
@@ -627,6 +634,7 @@ export class FileImpl implements File {
       this.deselectAll();
       this.getFirstChild().select(true, false);
       this.updateAllParseStatus();
+      this.updateDirectives();
     } catch (e) {
       if (e instanceof ElanFileError) {
         this.parseError = e.message;

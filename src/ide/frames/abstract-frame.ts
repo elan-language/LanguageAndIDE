@@ -1,5 +1,8 @@
 import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { BreakpointStatus } from "../../compiler/debugging/breakpoint-status";
+import { ghostedKeyword } from "../../compiler/keywords";
+import { AbstractSelector } from "./abstract-selector";
+import { CodeSourceFromString } from "./code-source-from-string";
 import {
   expandCollapseAll,
   helper_compileMsgAsHtmlNew,
@@ -7,6 +10,7 @@ import {
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
   isFrame,
+  isGhostedDirective,
   isParent,
   isSelector,
   singleIndent,
@@ -577,6 +581,9 @@ export abstract class AbstractFrame implements Frame {
   updateParseStatus(): void {
     this._parseStatus = this.worstParseStatusOfFields();
   }
+
+  updateDirectives() {}
+
   worstParseStatusOfFields(): ParseStatus {
     return this.getFields()
       .map((g) => g.readParseStatus())
@@ -695,11 +702,33 @@ export abstract class AbstractFrame implements Frame {
 
   ghost = () => {
     this.ghosted = true;
+    const before = this.getPreviousPeerFrame();
+
+    if (!isGhostedDirective(before)) {
+      this.insertPeerSelector(true);
+      const sel = this.getPreviousPeerFrame() as AbstractSelector;
+      sel.parseFrom(new CodeSourceFromString(`# [${ghostedKeyword}]\n`));
+
+      const sel1 = this.getPreviousPeerFrame();
+      if (!isGhostedDirective(sel1)) {
+        sel1.select();
+        this.deleteSelected();
+      }
+    }
+
     return true;
   };
 
   unGhost = () => {
     this.ghosted = false;
+
+    const before = this.getPreviousPeerFrame();
+
+    if (isGhostedDirective(before)) {
+      before.select();
+      this.deleteSelected();
+    }
+
     return true;
   };
 

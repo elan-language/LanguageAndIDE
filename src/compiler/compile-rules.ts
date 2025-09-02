@@ -4,7 +4,7 @@ import { Scope } from "../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../compiler/compiler-interfaces/symbol-type";
 import { isRecord } from "../compiler/compiler-interfaces/type-options";
 import { ElanCompilerError } from "./elan-compiler-error";
-import { allKeywords, reservedWords } from "./keywords";
+import { allKeywords, compilerDirectives, reservedWords } from "./keywords";
 
 import {
   CannotCallAFunction,
@@ -1130,7 +1130,11 @@ export function mustBeKnownCompilerDirective(
   compileErrors: CompileError[],
   location: string,
 ) {
-  compileErrors.push(new UnknownCompilerDirectiveCompileError(directive, location));
+  const directiveWord = directive.replace("[", "").replace("]", "").trim();
+
+  if (!compilerDirectives.includes(directiveWord)) {
+    compileErrors.push(new UnknownCompilerDirectiveCompileError(directiveWord, location));
+  }
 }
 
 export function mustNotBeTwoUnaryExpressions(compileErrors: CompileError[], location: string) {

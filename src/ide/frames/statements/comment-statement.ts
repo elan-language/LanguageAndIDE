@@ -2,11 +2,12 @@ import { commentMarker } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { CommentField } from "../fields/comment-field";
 import { CodeSource } from "../frame-interfaces/code-source";
+import { Comment } from "../frame-interfaces/comment";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 
-export class CommentStatement extends AbstractFrame implements Statement {
+export class CommentStatement extends AbstractFrame implements Statement, Comment {
   isStatement = true;
   isMember = true;
   isAbstract = false;
@@ -42,5 +43,16 @@ export class CommentStatement extends AbstractFrame implements Statement {
 
   renderAsSource(): string {
     return `${this.indent()}# ${this.text.renderAsSource()}`;
+  }
+
+  isDirective() {
+    return this.text.renderAsSource().startsWith("[");
+  }
+
+  directive() {
+    if (this.isDirective()) {
+      return this.text.renderAsSource().replace("[", "").replace("]", "").trim();
+    }
+    return undefined;
   }
 }

@@ -23,6 +23,8 @@ export interface Frame extends Selectable {
   worstParseStatusOfFields(): ParseStatus;
   updateParseStatus(): void;
 
+  updateDirectives(): void;
+
   selectFirstField(): boolean;
   selectFieldAfter(current: Field): void;
   selectFieldBefore(current: Field): void;
@@ -55,4 +57,8 @@ export interface Frame extends Selectable {
   pasteError: string;
 
   helpActive: boolean;
+
+  ghost(): void;
+  unGhost(): void;
+  isGhosted(): boolean;
 }

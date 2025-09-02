@@ -200,3 +200,7 @@ export const reservedWords = [
   "when",
   "yield",
 ];
+
+export const ghostedKeyword = "ghosted";
+
+export const compilerDirectives = [ghostedKeyword];
