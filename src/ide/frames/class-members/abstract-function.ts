@@ -25,7 +25,7 @@ export class AbstractFunction extends AbstractFrame {
   constructor(parent: Parent) {
     super(parent);
     this.name = new IdentifierField(this);
-    this.params = new ParamListField(this);
+    this.params = new ParamListField(this, false);
     this.returnType = new TypeField(this);
   }
 
