@@ -118,9 +118,6 @@ end class`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'out' parameters are only supported on procedures.LangRef.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 });

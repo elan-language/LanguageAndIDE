@@ -13,9 +13,11 @@ export class ParamDefNode extends AbstractSequence {
   name: IdentifierNode | undefined;
   type: TypeNode | undefined;
   out: OptionalNode | undefined;
+  outPermitted: boolean;
 
-  constructor() {
+  constructor(outPermitted: boolean) {
     super();
+    this.outPermitted = outPermitted;
     this.completionWhenEmpty = "<i>name</i> as <i>Type</i>";
   }
 
@@ -25,8 +27,10 @@ export class ParamDefNode extends AbstractSequence {
         () => new KeywordNode(outKeyword),
         () => new SpaceNode(Space.required),
       ]);
-      this.out = new OptionalNode(outSpace);
-      this.addElement(this.out);
+      if (this.outPermitted) {
+        this.out = new OptionalNode(outSpace);
+        this.addElement(this.out);
+      }
       this.name = new IdentifierNode();
       this.addElement(this.name);
       this.addElement(new SpaceNode(Space.required));
@@ -46,7 +50,9 @@ export class ParamDefNode extends AbstractSequence {
 
   symbolCompletion_keywords(): Set<KeywordCompletion> {
     return this.getElements().length === 0
-      ? new Set<KeywordCompletion>([KeywordCompletion.create(outKeyword)])
+      ? this.outPermitted
+        ? new Set<KeywordCompletion>([])
+        : new Set<KeywordCompletion>([KeywordCompletion.create(outKeyword)])
       : super.symbolCompletion_keywords();
   }
 }

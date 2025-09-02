@@ -27,7 +27,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
     super(parent);
     this.file = parent as File;
     this.name = new MethodNameField(this);
-    this.params = new ParamListField(this);
+    this.params = new ParamListField(this, false);
     this.returnType = new TypeField(this);
     this.getChildren().push(new ReturnStatement(this));
   }
