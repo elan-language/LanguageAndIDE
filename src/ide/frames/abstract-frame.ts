@@ -458,7 +458,7 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this.focused, "focused");
     this.pushClass(this.breakpointStatus !== BreakpointStatus.none, "breakpoint");
     this.pushClass(this.paused, "paused");
-    this.pushClass(this.ghosted, "ghosted");
+    this.pushClass(this.isGhosted(), "ghosted");
     this._classes.push(DisplayColour[this.readDisplayStatus()]);
   }
 
@@ -740,7 +740,7 @@ export abstract class AbstractFrame implements Frame {
     } else {
       map.set("setBP", ["set breakpoint", this.setBreakPoint]);
     }
-    if (this.ghosted) {
+    if (this.isGhosted()) {
       map.set("unGhost", ["unghost code", this.unGhost]);
     } else {
       map.set("ghost", ["ghost code", this.ghost]);

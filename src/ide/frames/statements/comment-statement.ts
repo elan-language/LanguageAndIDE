@@ -55,4 +55,8 @@ export class CommentStatement extends AbstractFrame implements Statement, Commen
     }
     return undefined;
   }
+
+  override isGhosted(): boolean {
+    return false;
+  }
 }

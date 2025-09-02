@@ -54,4 +54,8 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame, Comment
     }
     return undefined;
   }
+
+  override isGhosted(): boolean {
+    return false;
+  }
 }
