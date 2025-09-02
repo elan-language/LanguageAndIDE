@@ -42,7 +42,6 @@ export interface Frame extends Selectable {
   expandCollapseAll(): void;
 
   readCompileStatus(): CompileStatus;
-  updateCompileStatus(): void;
   insertSelectorAfterLastField(): void;
   insertPeerSelector(before: boolean): void;
   selectNextFrame(): void;
@@ -58,7 +57,6 @@ export interface Frame extends Selectable {
 
   helpActive: boolean;
 
-  ghost(): void;
-  unGhost(): void;
+  setGhosted(flag: boolean): void;
   isGhosted(): boolean;
 }

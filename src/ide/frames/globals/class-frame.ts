@@ -43,6 +43,7 @@ import {
   parentHelper_updateBreakpoints,
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
+import { CompileStatus } from "../status-enums";
 
 export abstract class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsible {
   isCollapsible: boolean = true;
@@ -107,12 +108,10 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     updateDirectives(children);
   }
 
-  updateCompileStatus(): void {
-    this.getChildren().forEach((c) => c.updateCompileStatus());
+  readCompileStatus(): CompileStatus {
     const worstOfChildren = parentHelper_readWorstCompileStatusOfChildren(this);
-    super.updateCompileStatus(); //will update it based on fields and its own direct compile errors
-    const newStatus = Math.min(this.readCompileStatus(), worstOfChildren);
-    this.setCompileStatus(newStatus);
+    const newStatus = Math.min(super.readCompileStatus(), worstOfChildren);
+    return newStatus;
   }
 
   getFactory(): StatementFactory {

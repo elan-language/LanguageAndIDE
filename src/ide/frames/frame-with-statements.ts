@@ -32,6 +32,7 @@ import {
 } from "./parent-helpers";
 import { AssertStatement } from "./statements/assert-statement";
 import { StatementSelector } from "./statements/statement-selector";
+import { CompileStatus } from "./status-enums";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible {
   isFrameWithStatements = true;
@@ -71,15 +72,13 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     updateDirectives(children);
   }
 
-  updateCompileStatus(): void {
-    this.getChildren().forEach((c) => c.updateCompileStatus());
+  readCompileStatus(): CompileStatus {
     const worstOfFieldsOrChildren = Math.min(
       this.worstCompileStatusOfFields(),
       parentHelper_readWorstCompileStatusOfChildren(this),
     );
-    super.updateCompileStatus(); //will update it based on fields and its own direct compile errors
-    const newStatus = Math.min(this.readCompileStatus(), worstOfFieldsOrChildren);
-    this.setCompileStatus(newStatus);
+    const newStatus = Math.min(super.readCompileStatus(), worstOfFieldsOrChildren);
+    return newStatus;
   }
 
   getChildren(): Frame[] {

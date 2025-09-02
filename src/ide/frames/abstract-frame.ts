@@ -44,7 +44,6 @@ export abstract class AbstractFrame implements Frame {
   protected htmlId: string = "";
   protected movable: boolean = true;
   private _parseStatus: ParseStatus = ParseStatus.default;
-  private _compileStatus: CompileStatus = CompileStatus.default;
 
   protected showContextMenu = false;
   breakpointStatus: BreakpointStatus = BreakpointStatus.none;
@@ -603,20 +602,11 @@ export abstract class AbstractFrame implements Frame {
   }
 
   readCompileStatus(): CompileStatus {
-    return this._compileStatus;
-  }
-
-  updateCompileStatus(): void {
     const own = helper_deriveCompileStatusFromErrors(
       this.getFile().getAst(false)?.getCompileErrorsFor(this.htmlId) ?? [],
     );
-    this.getFields().forEach((f) => f.updateCompileStatus());
     const worstField = this.worstCompileStatusOfFields();
-    this._compileStatus = Math.min(own, worstField);
-  }
-
-  protected setCompileStatus(newStatus: CompileStatus) {
-    this._compileStatus = newStatus;
+    return Math.min(own, worstField);
   }
 
   abstract parseFrom(source: CodeSource): void;
@@ -698,6 +688,10 @@ export abstract class AbstractFrame implements Frame {
       this.breakpointStatus === BreakpointStatus.active ||
       this.breakpointStatus === BreakpointStatus.disabled
     );
+  }
+
+  setGhosted(flag: boolean) {
+    this.ghosted = flag;
   }
 
   ghost = () => {

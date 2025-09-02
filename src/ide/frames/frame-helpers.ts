@@ -294,12 +294,7 @@ export function updateDirectives(children: Frame[]): void {
   for (let i = 1; i < children.length; i++) {
     const previous = children[i - 1];
     const current = children[i];
-
-    if (isGhostedDirective(previous)) {
-      current.ghost();
-    } else {
-      current.unGhost();
-    }
+    current.setGhosted(isGhostedDirective(previous));
   }
 
   children.forEach((c) => c.updateDirectives());

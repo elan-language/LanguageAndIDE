@@ -38,7 +38,6 @@ export abstract class AbstractField implements Selectable, Field {
   private _optional: boolean = false;
   protected map: Map<string, Selectable>;
   protected _parseStatus: ParseStatus;
-  private _compileStatus: CompileStatus = CompileStatus.default;
   cursorPos: number = 0; //Relative to LH end of text
   selectionEnd: number = 0; //Relative to LH end of text
   protected rootNode?: ParseNode;
@@ -577,17 +576,13 @@ export abstract class AbstractField implements Selectable, Field {
   readParseStatus(): ParseStatus {
     return this._parseStatus!;
   }
-  resetCompileStatusAndErrors(): void {
-    this._compileStatus = CompileStatus.default;
-  }
+
   readCompileStatus(): CompileStatus {
-    return this._compileStatus;
-  }
-  updateCompileStatus(): void {
-    this._compileStatus = helper_deriveCompileStatusFromErrors(
+    return helper_deriveCompileStatusFromErrors(
       this.getFile().getAst(false)?.getCompileErrorsFor(this.htmlId) ?? [],
     );
   }
+
   select(_withFocus?: boolean, _multiSelect?: boolean, selection?: [number, number]): void {
     this.deselectAll();
     this.selected = true;

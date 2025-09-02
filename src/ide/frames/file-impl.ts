@@ -437,8 +437,8 @@ export class FileImpl implements File {
     try {
       this._parseStatus = ParseStatus.default as ParseStatus;
       this.parseError = undefined;
-      this.updateAllParseStatus();
       this.updateDirectives();
+      this.updateAllParseStatus();
       this.resetAllCompileStatusAndErrors();
       this.resetAllTestStatus();
     } catch (e) {
@@ -489,7 +489,6 @@ export class FileImpl implements File {
     return DisplayColour[status];
   }
   updateAllCompileStatus(): void {
-    this.getChildren().forEach((c) => c.updateCompileStatus());
     this._compileStatus = parentHelper_readWorstCompileStatusOfChildren(this);
   }
 
@@ -633,8 +632,8 @@ export class FileImpl implements File {
       this.removeAllSelectorsThatCanBe();
       this.deselectAll();
       this.getFirstChild().select(true, false);
-      this.updateAllParseStatus();
       this.updateDirectives();
+      this.updateAllParseStatus();
     } catch (e) {
       if (e instanceof ElanFileError) {
         this.parseError = e.message;
