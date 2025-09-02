@@ -201,29 +201,48 @@ in the range:</li>
  <tr>
   <th>name<br>of Type</th>
   <th>examples of defining<br>a literal value</th>
+  <th>syntax</th>
   <th>default value</th>
 </tr><tr>
   <td><el-type>String</el-type></td>
   <td><el-code>let title be "Ulysses"</el-code></td>
+  <td>delimited by double quotes<br>cannot contain literal { } &quot; characters<br>
+  though <a href="#StringConstants">string constants</a> can be used instead</td>
   <td><el-code>""</el-code> or <el-code>empty String</el-code></td>
 </tr><tr>
   <td><el-type>String</el-type></td>
-  <td><el-code>variable greeting set to "hello"</el-code></td>
-  <td><el-code>""</el-code></td>
+  <td><el-code>let title be 'Iliad'</el-code></td>
+  <td>delimited by single quotes<br>so can contain { } &quot; characters</td>
+  <td><el-code>''</el-code> or <el-code>empty String</el-code></td>
+</tr><tr>
+  <td><el-type>String</el-type></td>
+  <td><el-code>variable quote set to '"Hello", she said'</el-code></td>
+  <td>&quot; may be used in a string delimited by ' and<br>' may be used in a string delimited by &quot;</td>
+  <td></td>
 </tr>
 </table>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
- <li>A <el-type>String</el-type> is always delineated by double quotation marks.</li>
- <li>When typing from the keyboard into a literal string all the basic ASCII characters (0x20 to 0x7e) can be input. Similarly you can copy from
+  <li>When typing from the keyboard into a literal string all the basic ASCII characters (0x20 to 0x7e) can be input. Similarly you can copy from
  elsewhere into a literal string provided only basic ASCII characters are included. You cannot use Alt-numeric-keypad to enter the accented letters and other special
- characters in the range 0x80 to 0xff. </li>
- <li>As in most languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never modified. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</li>
+ characters in the range 0x80 to 0xff.</li>
+ <li>To insert a character from the full range, you use its Unicode (codepoint) value, in decimal or hexadecimal,
+  by means of function <a href="#unicode"><el-method>unicode</el-method></a>:
+  <ul>
+   <li><el-code>print "Spanish syntax introduces a question with a {unicode(191)}"</el-code> &#x27f6; Spanish syntax introduces a question with a &#191;</li>
+   <li><el-code>print 'This is an up arrow: {unicode(0x2191)}'</el-code> &#x27f6; This is an up arrow: &#x2191;</li>
+  </ul>
+  These examples 'interpolate' the output of function <el-method>unicode</el-method> by using curly braces (see below <a href="#InterpolatedString">Interpolated strings</a>).</li>
  <li>Strings can be built from other strings by concatenation using the plus operator, for example:</li>
- <ul><li><el-code>print "Hello" + " " + "World"</el-code></li></ul>
- <li>A newline may be inserted within a string with <el-code>\n</el-code>, for example:</li>
- <ul><li><el-code>print "Hello\nWorld"</el-code></li></ul>
+ <ul>
+  <li><el-code>print "Hello " + 'World'</el-code> &#x27f6; Hello World</li>
+ </ul>
+  <li>A newline may be inserted within a string with <el-code>\n</el-code>, for example:</li>
+ <ul>
+  <li><el-code>print "Hello\nWorld"</el-code> &#x27f6;<br> Hello<br>World</li>
+ </ul>
+ <li>As in most languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never modified. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</li>
 <li>There are no 'substring' methods in Elan because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth character to the seventh character inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <i>exclusive</i>.
  See <a href="LangRef.html#IndexedValue">Indexed Value</a>.</li>
  <li>You can loop through a string picking each of its characters using the <a href="LangRef.html#each"><el-code>each</el-code></a> loop.
@@ -347,20 +366,6 @@ For example, assuming that the variables <el-code>a</el-code> and <el-code>b</el
 <p>If <el-code>velocity</el-code> and <el-code>fuel</el-code> are already defined as <el-type>Float</el-type> then:</p>
 <p><el-code>set message to "LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}"</el-code></p>
 <p>updates variable <el-code>message</el-code> with calculated (and printable) integer values.</p>
-
-<h3 class="no-TOC" id="SpecialCharacters">Special characters</h3>
-<p>You may include single quotation marks <el-code>'</el-code>within a string, but not double quotation marks <el-code>&quot;</el-code>. Nor can you include
-the braces <el-code>&lbrace;</el-code> or <el-code>&rbrace;</el-code> within a literal string because of their special meanings.
-Instead, you use the constants <el-code><el-id>quotes</el-id></el-code>, <el-code><el-id>openBrace</el-id></el-code> and <el-code><el-id>closeBrace</el-id></el-code> respectively, e.g.</p>
-<p><el-code>print "This is a double quotation mark: " + quotes</el-code></p>
-<p><el-code>print "Here are the curly braces: {openBrace} and {closeBrace}"</el-code></p>
-<p>Alternatively, you can insert their Unicode (codepoint) values (in decimal or hexadecimal) by means of function <a href="#unicode"><el-method>unicode</el-method></a>:</p>
-<p><el-code>print "Here are the curly braces: {unicode(123)} and {unicode(125)}"</el-code></p>
-<p><el-code>print "This is an ASCII double quotation mark: " + unicode(0x22)</el-code></p>
-
-<h3 class="no-TOC" id="CharacterSets">Character Sets</h3>
-<p>Any character except quote and control characters can be used in a String.
-<a href="LangRef.html#Identifier">Identifiers</a> can only contain letters (without accents), numbers and underscore.</p>
 
 <h2 id="Tuple">Tuple</h2>
 <p>A <el-code>Tuple</el-code> is a way of holding a small number of values of differing Types together as a single reference.
@@ -2579,6 +2584,8 @@ just as you would specify the Type of every parameter and the return Type for th
 <h1 id="Constants">Constants</h1>
 
 <h2 id="StringConstants">String constants</h2>
+<p>These constants are of use when the characters { } and " are required in a string delimited by <i>double quotes</i>.
+Within a string delimited by <i>single quotes</i>, those literal characters can also be used.</p>
 <table class="tableType">
  <tr>
   <th>name</th><th>Type</th><th >value</th>

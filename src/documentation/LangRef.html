@@ -596,7 +596,7 @@ by <a href="#throw">throwing an exception</a> like this:</p>
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-code>each</el-code></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; To print each item in a <el-type>List</el-type></p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To print a <el-type>List</el-type> and then each item in it</p>
 <el-code-block source="each.elan">
 <el-statement class="ok" id="var16" tabindex="0"><el-kw>variable </el-kw><el-field id="var17" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr18" class="ok" tabindex="0"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print30" tabindex="0"><el-kw>print </el-kw><el-field id="expr31" class="optional ok" tabindex="0"><el-txt><el-id>names</el-id>[<el-lit>0</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -828,10 +828,10 @@ For more about ListImmutable and DictionaryImmutable literals see the <a href="L
 If a variable is of an indexable Type, then an index or index range may be applied to the variable within an expression. For example:
 <pre>
     <el-code>variable a set to "Hello World!"</el-code>
-    <el-code>print a[4]</el-code>        &rarr; <el-code>o</el-code>
-    <el-code>print a[4..]</el-code>    &rarr; <el-code>o World!</el-code>
-    <el-code>print a[..7]</el-code>    &rarr; <el-code>Hello W</el-code>   (since the upper bound of a range is <em>exclusive</em>)
-    <el-code>print a[0..4]</el-code>  &rarr; <el-code>Hell</el-code>         (for the same reason)
+    <el-code>print a[4]</el-code>        &#x27f6; <el-code>o</el-code>
+    <el-code>print a[4..]</el-code>    &#x27f6; <el-code>o World!</el-code>
+    <el-code>print a[..7]</el-code>    &#x27f6; <el-code>Hello W</el-code>   (since the upper bound of a range is <em>exclusive</em>)
+    <el-code>print a[0..4]</el-code>  &#x27f6; <el-code>Hell</el-code>         (for the same reason)
 </pre>
 <p>In the examples above, the result is of type String in all cases.
 When using indexing on other types:</p>
@@ -846,10 +846,10 @@ then an empty data structure of the correct type is generated.</p>
 <p>Important: unlike in many languages, indexes in Elan (whether, single, multiple, or a range) are only ever used for <em>reading</em> values.
 Writing a value to a specific index location is done through a method such as in these examples:</p>
 <pre>
-    <el-code>put</el-code>            on a   <el-code>List</el-code>
-    <el-code>withPut</el-code>        on a    <el-code>ListImmutable</el-code>
-    <el-code>put</el-code>      on a    <el-code>Dictionary</el-code>
-    <el-code>withPut</el-code>  on a    <el-code>DictionaryImmutable</el-code>
+    <el-method>put</el-method>           on a   <el-type>List</el-type>
+    <el-method>withPut</el-method>   on a    <el-type>ListImmutable</el-type>
+    <el-method>put</el-method>           on a    <el-type>Dictionary</el-type>
+    <el-method>withPut</el-method>   on a    <el-type>DictionaryImmutable</el-type>
 </pre>
 
 <div id="operator"></div>
@@ -862,13 +862,13 @@ Writing a value to a specific index location is done through a method such as in
 <div id="div"></div>
 <p id="mod"><el-code>mod</el-code> and <el-code>div</el-code> only operate on <el-code>Int</el-code> arguments, and the result is <el-code>Int</el-code>.</p>
 <pre>
-    <el-code>2^3</el-code>             &rarr;  <el-code>8</el-code>
-    <el-code>2/3</el-code>             &rarr;  <el-code>0.666..</el-code>
-    <el-code>2*3</el-code>             &rarr;  <el-code>6</el-code>
-    <el-code>2 + 3</el-code>         &rarr;  <el-code>5</el-code>
-    <el-code>2 - 3</el-code>         &rarr;  <el-code>-1</el-code>
-    <el-code>11 mod 3</el-code>   &rarr;  <el-code>2</el-code> (integer remainder)
-    <el-code>11 div 3</el-code>   &rarr;  <el-code>3</el-code> (integer division)
+    <el-code>2^3</el-code>             &#x27f6;  <el-code>8</el-code>
+    <el-code>2/3</el-code>             &#x27f6;  <el-code>0.666..</el-code>
+    <el-code>2*3</el-code>             &#x27f6;  <el-code>6</el-code>
+    <el-code>2 + 3</el-code>         &#x27f6;  <el-code>5</el-code>
+    <el-code>2 - 3</el-code>         &#x27f6;  <el-code>-1</el-code>
+    <el-code>11 mod 3</el-code>   &#x27f6;  <el-code>2</el-code> (integer remainder)
+    <el-code>11 div 3</el-code>   &#x27f6;  <el-code>3</el-code> (integer division)
 </pre>
 <p>Arithmetic operators follow the conventional rules for precedence i.e. 'BIDMAS' (or 'BODMAS').</p>
 <p>When combining <el-code>div</el-code> or <el-code>mod</el-code> with any other operators within an expression, insert brackets to avoid ambiguity e.g.:</p>
@@ -878,12 +878,12 @@ Writing a value to a specific index location is done through a method such as in
 <p>Note that <el-code>mod</el-code> is more of a remainder operator than a modulus operator -- the result takes the sign of the first argument.  If both arguments are positive, there is no difference.</p>
 The minus sign may also be used as a unary operator, and this takes precedence over binary operators so:
 <pre>
-    <el-code>2*-3</el-code>           &rarr;  <el-code>-6</el-code>
+    <el-code>2*-3</el-code>           &#x27f6;  <el-code>-6</el-code>
 </pre>
 <p>Note that the Elan editor automatically puts spaces around the <el-code>+</el-code> and <el-code>&ndash;</el-code> binary operators, but not around <el-code>^</el-code>, <el-code>/</el-code> or <el-code>*</el-code>. This is just to visually reinforce the precedence.</p>
 <p>The <el-code>div</el-code> operator rounds its result down, as if with the <el-method>floor</el-method> function.  This can give unexpected results with negative numbers, for example:</p>
 <pre>
-    <el-code>11 div -3</el-code>   &rarr;  <el-code>-4</el-code>
+    <el-code>11 div -3</el-code>   &#x27f6;  <el-code>-4</el-code>
 </pre>
 <p>The <el-code>+</el-code> operator is also used for concatenating <el-type>String</el-type>s.  See <a href="LibRef.html#String">String</a>.</p>
 
