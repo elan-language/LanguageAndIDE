@@ -1,6 +1,6 @@
-# a7a3887516f5ec7957616ff26a08950f8be1ca9ff4a794c9af355ec00a27a4a7 Elan 1.4.0 guest default_profile valid
+# 8aa805175a8b0a5dc113cd763b9e8e91985b2bb17ec4d95bedfd62683e0fdd8e Elan 1.4.0 guest default_profile valid
 
 main
-  let style be "<style> h1 {openBrace} color: DarkRed; font-size: 24pt; {closeBrace} p {openBrace} font-family: Serif;{closeBrace} </style>"
+  let style be '<style> h1 { color: Red; font-size: 24pt; } p { font-family: Serif; } </style>'
   call displayHtml("{style}<h1>New heading</h1><p>some new text</p>")
 end main

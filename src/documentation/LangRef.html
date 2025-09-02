@@ -201,9 +201,10 @@ Procedures and functions may be called or referenced recursively. For example, a
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
+<div id="TestIgnore"></div>
 <p>When a test is marked with <el-code>ignore</el-code>, that test will not be executed when the tests are run, and its result will be shown as 'not run'. The overall test status will also show in the 'warning' status (amber colour), even if all the tests that did run passed. This is to discourage you from leaving a test marked <el-code>ignore</el-code> for long.</p>
 <p>The principal reason for marking a test <el-code>ignore</el-code> is when either the test code, or code in any function being called, does not terminate. This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
-<p>If you do create such code without realising it, then when the tests are executed the test runner will 'time out' after a few seconds (most tests will pass in milliseconds), and an error message will be shown in the System info pane. The test that caused the timeout will automatically then be marked <el-code>ignore</el-code>. Your priority should then be to identify the cause of the timeout and attempt to fix it before then restoring the <el-code>test</el-code> by selecting its frame and hitting <el-code>Ctrl-i</el-code> (which is a toggle for setting and unsetting an <el-code>ignore</el-code> status).</p>
+<p>If you do create such code without realising it, then when the tests are executed the test runner will 'time out' after a few seconds (most tests will pass in milliseconds), and an error message will be shown in the Info pane. The test that caused the timeout will automatically then be marked <el-code>ignore</el-code>. Your priority should then be to identify the cause of the timeout and attempt to fix it before then restoring the <el-code>test</el-code> by selecting its frame and hitting <el-code>Ctrl-i</el-code> (which is a toggle for setting and unsetting an <el-code>ignore</el-code> status).</p>
 
 <h2 id="constant">Constant</h2>
 <p>A <el-code>constant</el-code> defines a named value that cannot change, is always defined at global level (directly within a file), and is global in scope.</p>
@@ -1296,6 +1297,9 @@ as well a from the <el-code>new code</el-code> prompt, i.e. every <a href="IDEGu
 <h3 id="mustNotBeTwoUnaryExpressions" class="no-TOC">Unsupported operation.</h3>
  <p>You cannot chain two 'unary' operators (those that apply to a single value), such as <el-code>-</el-code>
  or <el-kw>not</el-kw> successively within an expression.</p>
+
+<h3 id="TestTimeout" class="no-TOC">Tests timed out and were aborted</h3>
+<p>An error or infinite loop found in a test. Refer to <a href="#TestIgnore">ignoring tests</a>.</p>
 
 <h2>Field help</h2>
 
