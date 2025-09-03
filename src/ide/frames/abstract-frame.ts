@@ -741,9 +741,9 @@ export abstract class AbstractFrame implements Frame {
       map.set("setBP", ["set breakpoint", this.setBreakPoint]);
     }
     if (this.isGhosted()) {
-      map.set("unGhost", ["unghost code", this.unGhost]);
+      map.set("unghost", ["unghost", this.unGhost]);
     } else {
-      map.set("ghost", ["ghost code", this.ghost]);
+      map.set("ghost", ["ghost", this.ghost]);
     }
     return map;
   }
