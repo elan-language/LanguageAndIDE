@@ -1,5 +1,5 @@
 export interface editorEvent {
-  type: "click" | "dblclick" | "key" | "paste" | "contextmenu";
+  type: "click" | "dblclick" | "key" | "paste" | "contextmenu" | "replace" | "cancel";
   target: "frame";
   key?: string;
   modKey: { control: boolean; shift: boolean; alt: boolean };

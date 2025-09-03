@@ -297,6 +297,16 @@ export abstract class AbstractField implements Selectable, Field {
         }
       }
       default: {
+        if (e.type == "cancel") {
+          this.showPopupEditor = false;
+          break;
+        }
+        if (e.type === "replace") {
+          this.showPopupEditor = false;
+          this.setSelection(0, this.text.length);
+          this.deleteExistingSelection();
+        }
+
         if (key === "o" && e.modKey.control && isCollapsible(this.holder)) {
           this.holder.expandCollapse();
           this.noLongerEditingField();
@@ -730,7 +740,6 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   protected popupEditor() {
-    this.showPopupEditor = false;
     return `<div class='popup-editor'>
 <textarea data-id='${this.htmlId}'>${this.escapeDoubleQuotesAndEscapes(this.text)}</textarea>
 <button class='popup-ok'>ok</button>

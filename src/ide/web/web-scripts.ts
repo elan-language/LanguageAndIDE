@@ -1022,7 +1022,7 @@ function enable(button: HTMLButtonElement, msg = "") {
 }
 
 function getEditorMsg(
-  type: "key" | "click" | "dblclick" | "paste" | "contextmenu",
+  type: "key" | "click" | "dblclick" | "paste" | "contextmenu" | "replace" | "cancel",
   target: "frame",
   id: string | undefined,
   key: string | undefined,
@@ -1032,6 +1032,8 @@ function getEditorMsg(
 ): editorEvent {
   switch (type) {
     case "paste":
+    case "replace":
+    case "cancel":
     case "key":
       return {
         type: type,
@@ -1136,7 +1138,7 @@ async function handleUndoAndRedo(event: Event, msg: editorEvent) {
 }
 
 function isSupportedKey(evt: editorEvent) {
-  if (evt.type === "paste") {
+  if (evt.type === "paste" || evt.type === "replace" || evt.type === "cancel") {
     return true;
   }
 
@@ -1161,7 +1163,7 @@ function isSupportedKey(evt: editorEvent) {
 
 async function handleEditorEvent(
   event: Event,
-  type: "key" | "click" | "dblclick" | "paste" | "contextmenu",
+  type: "key" | "click" | "dblclick" | "paste" | "contextmenu" | "replace" | "cancel",
   target: "frame",
   modKey: { control: boolean; shift: boolean; alt: boolean },
   id?: string | undefined,
@@ -1351,8 +1353,18 @@ async function updateContent(text: string, editingField: boolean) {
   }
 
   if (document.querySelector(".popup-editor")) {
+    //const ed = document.querySelector(".popup-editor") as HTMLDivElement;
     const ip = document.querySelector(".popup-editor textarea") as HTMLTextAreaElement;
     const ok = document.querySelector(".popup-editor .popup-ok");
+    const cancel = document.querySelector(".popup-editor .popup-cancel");
+
+    // ed?.addEventListener("keydown", (e) => {
+    //   e.stopPropagation();
+    // });
+
+    // ed?.addEventListener("click", (e) => {
+    //   e.stopPropagation();
+    // });
 
     ip?.addEventListener("keydown", (e) => {
       e.stopPropagation();
@@ -1366,7 +1378,14 @@ async function updateContent(text: string, editingField: boolean) {
       const txt = ip.value;
       const id = ip.dataset.id;
       const mk = { control: false, shift: false, alt: false };
-      await handleEditorEvent(e, "paste", "frame", mk, id, txt);
+      await handleEditorEvent(e, "replace", "frame", mk, id, txt);
+    });
+
+    cancel?.addEventListener("click", async (e) => {
+      const txt = "";
+      const id = ip.dataset.id;
+      const mk = { control: false, shift: false, alt: false };
+      await handleEditorEvent(e, "cancel", "frame", mk, id, txt);
     });
   }
 
@@ -1602,6 +1621,8 @@ async function handleKeyAndRender(e: editorEvent) {
         }
         return;
       case "paste":
+      case "replace":
+      case "cancel":
       case "key":
         if (purgingKeys) {
           return;
