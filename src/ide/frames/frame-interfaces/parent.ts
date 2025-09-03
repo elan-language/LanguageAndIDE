@@ -42,5 +42,5 @@ export interface Parent {
 
   getFactory(): StatementFactory;
 
-  isGhosted(): boolean;
+  isGhostedOrWithinAGhostedFrame(): boolean;
 }

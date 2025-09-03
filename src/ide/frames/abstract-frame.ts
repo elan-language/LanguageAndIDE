@@ -102,7 +102,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   getFrNo(): string {
-    return this.isGhosted() ? "" : this.getFile().getFrNo();
+    return this.isGhostedOrWithinAGhostedFrame() ? "" : this.getFile().getFrNo();
   }
 
   fieldUpdated(_field: Field): void {
@@ -458,7 +458,7 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this.focused, "focused");
     this.pushClass(this.breakpointStatus !== BreakpointStatus.none, "breakpoint");
     this.pushClass(this.paused, "paused");
-    this.pushClass(this.isGhosted(), "ghosted");
+    this.pushClass(this.ghosted, "ghosted");
     this._classes.push(DisplayColour[this.readDisplayStatus()]);
   }
 
@@ -726,23 +726,23 @@ export abstract class AbstractFrame implements Frame {
     return true;
   };
 
-  isGhosted() {
+  isGhostedOrWithinAGhostedFrame() {
     //needs to search the whole hierarchy
-    return this.ghosted || this.getParent().isGhosted();
+    return this.ghosted || this.getParent().isGhostedOrWithinAGhostedFrame();
   }
 
   getContextMenuItems() {
     const map = new Map<string, [string, (() => boolean) | undefined]>();
     // Must be arrow functions for this binding
-    if (this.hasBreakpoint()) {
-      map.set("clearBP", ["clear breakpoint", this.clearBreakPoint]);
-      map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints]);
-    } else {
-      map.set("setBP", ["set breakpoint", this.setBreakPoint]);
-    }
-    if (this.isGhosted()) {
+    if (this.ghosted) {
       map.set("unghost", ["unghost", this.unGhost]);
-    } else {
+    } else if (!this.isGhostedOrWithinAGhostedFrame()) {
+      if (this.hasBreakpoint()) {
+        map.set("clearBP", ["clear breakpoint", this.clearBreakPoint]);
+        map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints]);
+      } else {
+        map.set("setBP", ["set breakpoint", this.setBreakPoint]);
+      }
       map.set("ghost", ["ghost", this.ghost]);
     }
     return map;

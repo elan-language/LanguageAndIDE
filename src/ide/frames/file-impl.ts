@@ -806,7 +806,7 @@ export class FileImpl implements File {
     parentHelper_updateBreakpoints(this, event);
   }
 
-  isGhosted(): boolean {
+  isGhostedOrWithinAGhostedFrame(): boolean {
     return false;
   }
 }

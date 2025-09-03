@@ -236,7 +236,7 @@ export function transform(
   scope: Scope,
 ): AstNode | undefined {
   if (node instanceof AbstractFrame) {
-    if (node.isGhosted()) {
+    if (node.isGhostedOrWithinAGhostedFrame()) {
       return EmptyAsn.Instance;
     }
   }
