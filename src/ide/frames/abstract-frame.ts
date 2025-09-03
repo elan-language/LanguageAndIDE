@@ -42,7 +42,7 @@ export abstract class AbstractFrame implements Frame {
   private collapsed: boolean = false;
   private _classes = new Array<string>();
   protected htmlId: string = "";
-  protected movable: boolean = true;
+  protected _movable: boolean = true;
   private _parseStatus: ParseStatus = ParseStatus.default;
 
   protected showContextMenu = false;
@@ -84,7 +84,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   isMovable(): boolean {
-    return this.movable && !this.isGhostedOrWithinAGhostedFrame();
+    return this._movable && !this.isGhostedOrWithinAGhostedFrame();
   }
 
   getFile(): File {
@@ -233,18 +233,22 @@ export abstract class AbstractFrame implements Frame {
         break;
       }
       case "ArrowUp": {
-        if (e.modKey.control && this.movable) {
-          this.getParent().moveSelectedChildrenUpOne();
-          codeHasChanged = true;
+        if (e.modKey.control) {
+          if (this.isMovable()) {
+            this.getParent().moveSelectedChildrenUpOne();
+            codeHasChanged = true;
+          }
         } else {
           this.selectSingleOrMulti(this.getPreviousPeerFrame(), e.modKey.shift);
         }
         break;
       }
       case "ArrowDown": {
-        if (e.modKey.control && this.movable) {
-          this.getParent().moveSelectedChildrenDownOne();
-          codeHasChanged = true;
+        if (e.modKey.control) {
+          if (this.isMovable()) {
+            this.getParent().moveSelectedChildrenDownOne();
+            codeHasChanged = true;
+          }
         } else {
           this.selectSingleOrMulti(this.getNextPeerFrame(), e.modKey.shift);
         }
@@ -418,7 +422,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   canInsertBefore(): boolean {
-    return true;
+    return !this.isGhosted();
   }
 
   canInsertAfter(): boolean {
@@ -703,21 +707,18 @@ export abstract class AbstractFrame implements Frame {
   }
 
   ghost = () => {
-    this.setGhosted(true);
     const before = this.getPreviousPeerFrame();
-
     if (!isGhostedDirective(before)) {
       this.insertPeerSelector(true);
       const sel = this.getPreviousPeerFrame() as AbstractSelector;
       sel.parseFrom(new CodeSourceFromString(`# [${ghostedKeyword}]\n`));
-
       const sel1 = this.getPreviousPeerFrame();
       if (!isGhostedDirective(sel1)) {
         sel1.select();
         this.deleteSelected();
       }
     }
-
+    this.setGhosted(true);
     return true;
   };
 

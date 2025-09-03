@@ -62,4 +62,14 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame, Comment
   override isGhostedOrWithinAGhostedFrame(): boolean {
     return this.isGhosted();
   }
+  override isMovable(): boolean {
+    return !this.isGhosted();
+  }
+  override deleteIfPermissible(): void {
+    this.insertNewSelectorIfNecessary();
+    this.delete();
+  }
+  canInsertAfter(): boolean {
+    return !this.isGhosted();
+  }
 }

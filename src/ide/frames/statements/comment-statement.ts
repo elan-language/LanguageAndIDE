@@ -67,4 +67,11 @@ export class CommentStatement extends AbstractFrame implements Statement, Commen
   override isMovable(): boolean {
     return !this.isGhosted();
   }
+  override deleteIfPermissible(): void {
+    this.insertNewSelectorIfNecessary();
+    this.delete();
+  }
+  canInsertAfter(): boolean {
+    return !this.isGhosted();
+  }
 }

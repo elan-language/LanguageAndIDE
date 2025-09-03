@@ -15,7 +15,7 @@ export class CatchStatement extends FrameWithStatements implements Statement {
     this.variable = new IdentifierField(this);
     this.variable.setPlaceholder("<i>variableName</i>");
     this.variable.setFieldToKnownValidText("e");
-    this.movable = false;
+    this._movable = false;
   }
 
   override deleteIfPermissible(): void {} // does nothing - catch can't be deleted

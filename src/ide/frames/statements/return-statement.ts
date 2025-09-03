@@ -12,7 +12,7 @@ export class ReturnStatement extends AbstractFrame implements Statement {
   expr: ExpressionField;
   constructor(parent: Parent) {
     super(parent);
-    this.movable = false;
+    this._movable = false;
     this.expr = new ExpressionField(this);
   }
   initialKeywords(): string {
