@@ -1,4 +1,4 @@
-import { commentMarker } from "../../../compiler/keywords";
+import { commentMarker, ghostedKeyword } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { CommentField } from "../fields/comment-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -56,7 +56,15 @@ export class CommentStatement extends AbstractFrame implements Statement, Commen
     return undefined;
   }
 
+  override isGhosted() {
+    return this.text.renderAsSource().startsWith(`[${ghostedKeyword}`);
+  }
+
   override isGhostedOrWithinAGhostedFrame(): boolean {
-    return false;
+    return this.isGhosted();
+  }
+
+  override isMovable(): boolean {
+    return !this.isGhosted();
   }
 }

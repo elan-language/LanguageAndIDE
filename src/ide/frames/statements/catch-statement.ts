@@ -18,9 +18,7 @@ export class CatchStatement extends FrameWithStatements implements Statement {
     this.movable = false;
   }
 
-  override deleteIfPermissible(): void {
-    // does nothing - catch can't be deleted
-  }
+  override deleteIfPermissible(): void {} // does nothing - catch can't be deleted
 
   canInsertAfter(): boolean {
     return false;

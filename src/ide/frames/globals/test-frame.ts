@@ -157,10 +157,15 @@ end test\r
   getContextMenuItems() {
     const map = new Map<string, [string, () => boolean]>(); //Normally: = super.getContextMenuItems()
     // Must be arrow functions for this binding
-    if (this.ignored) {
-      map.set("unignore", ["un-ignore test (Ctrl-i)", this.unignore]);
+    if (this.isGhosted()) {
+      map.set("unghost", ["unghost", this.unGhost]);
     } else {
-      map.set("ignore", ["ignore test (Ctrl-i)", this.ignore]);
+      map.set("ghost", ["ghost", this.ghost]);
+      if (this.ignored) {
+        map.set("unignore", ["un-ignore test (Ctrl-i)", this.unignore]);
+      } else {
+        map.set("ignore", ["ignore test (Ctrl-i)", this.ignore]);
+      }
     }
     return map;
   }

@@ -19,7 +19,7 @@ export class ReturnStatement extends AbstractFrame implements Statement {
     return returnKeyword;
   }
 
-  delete(): void {} //Does nothing as return cannot be deleted
+  override deleteIfPermissible(): void {} //Does nothing: return cannot be deleted
 
   getFields(): Field[] {
     return [this.expr];
@@ -43,6 +43,12 @@ export class ReturnStatement extends AbstractFrame implements Statement {
   }
 
   canInsertAfter(): boolean {
+    return false;
+  }
+  override isGhosted(): boolean {
+    return false;
+  }
+  override isGhostedOrWithinAGhostedFrame(): boolean {
     return false;
   }
 }

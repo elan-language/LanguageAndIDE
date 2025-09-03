@@ -36,7 +36,7 @@ export abstract class AbstractFrame implements Frame {
 
   private _parent: File | Parent;
   private _map?: Map<string, Selectable>;
-  private ghosted: boolean = false;
+  private _ghosted: boolean = false;
   private selected: boolean = false;
   private focused: boolean = false;
   private collapsed: boolean = false;
@@ -84,7 +84,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   isMovable(): boolean {
-    return this.movable;
+    return this.movable && !this.isGhostedOrWithinAGhostedFrame();
   }
 
   getFile(): File {
@@ -204,7 +204,7 @@ export abstract class AbstractFrame implements Frame {
     if (e.modKey.control && !this.controlKeys.includes(key ?? "")) {
       return false;
     }
-
+    //Always applicable
     switch (key) {
       case "Home": {
         this.getFirstPeerFrame().select(true, false);
@@ -212,18 +212,6 @@ export abstract class AbstractFrame implements Frame {
       }
       case "End": {
         this.getLastPeerFrame().select(true, false);
-        break;
-      }
-      case "Tab": {
-        if (e.modKey.shift) {
-          this.selectLastField();
-        } else {
-          this.selectFirstField();
-        }
-        break;
-      }
-      case "Enter": {
-        this.insertPeerSelector(e.modKey.shift);
         break;
       }
       case "o": {
@@ -266,12 +254,6 @@ export abstract class AbstractFrame implements Frame {
         const pt = this.getParent();
         if (isFrame(pt)) {
           pt.select(true, false);
-        }
-        break;
-      }
-      case "ArrowRight": {
-        if (isParent(this)) {
-          this.getFirstChild().select(true, false);
         }
         break;
       }
@@ -326,6 +308,29 @@ export abstract class AbstractFrame implements Frame {
         break;
       }
     }
+
+    if (!this.isGhostedOrWithinAGhostedFrame()) {
+      switch (key) {
+        case "ArrowRight": {
+          if (isParent(this)) {
+            this.getFirstChild().select(true, false);
+          }
+          break;
+        }
+        case "Enter": {
+          this.insertPeerSelector(e.modKey.shift);
+          break;
+        }
+        case "Tab": {
+          if (e.modKey.shift) {
+            this.selectLastField();
+          } else {
+            this.selectFirstField();
+          }
+          break;
+        }
+      }
+    }
     return codeHasChanged;
   }
   deleteSelected = () => {
@@ -359,7 +364,7 @@ export abstract class AbstractFrame implements Frame {
   };
 
   deleteIfPermissible(): void {
-    if (this.movable) {
+    if (this.isMovable()) {
       this.insertNewSelectorIfNecessary();
       this.delete();
     }
@@ -458,7 +463,7 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this.focused, "focused");
     this.pushClass(this.breakpointStatus !== BreakpointStatus.none, "breakpoint");
     this.pushClass(this.paused, "paused");
-    this.pushClass(this.ghosted, "ghosted");
+    this.pushClass(this.isGhosted(), "ghosted");
     this._classes.push(DisplayColour[this.readDisplayStatus()]);
   }
 
@@ -488,6 +493,9 @@ export abstract class AbstractFrame implements Frame {
   }
 
   select(withFocus: boolean, multiSelect: boolean): void {
+    if (this.isGhostedOrWithinAGhostedFrame() && !this.isGhosted()) {
+      return;
+    }
     if (!multiSelect) {
       this.deselectAll();
     }
@@ -691,11 +699,11 @@ export abstract class AbstractFrame implements Frame {
   }
 
   setGhosted(flag: boolean) {
-    this.ghosted = flag;
+    this._ghosted = flag;
   }
 
   ghost = () => {
-    this.ghosted = true;
+    this.setGhosted(true);
     const before = this.getPreviousPeerFrame();
 
     if (!isGhostedDirective(before)) {
@@ -714,7 +722,7 @@ export abstract class AbstractFrame implements Frame {
   };
 
   unGhost = () => {
-    this.ghosted = false;
+    this.setGhosted(false);
 
     const before = this.getPreviousPeerFrame();
 
@@ -726,15 +734,18 @@ export abstract class AbstractFrame implements Frame {
     return true;
   };
 
+  isGhosted() {
+    return this._ghosted;
+  }
+
   isGhostedOrWithinAGhostedFrame() {
-    //needs to search the whole hierarchy
-    return this.ghosted || this.getParent().isGhostedOrWithinAGhostedFrame();
+    return this.isGhosted() || this.getParent().isGhostedOrWithinAGhostedFrame();
   }
 
   getContextMenuItems() {
     const map = new Map<string, [string, (() => boolean) | undefined]>();
     // Must be arrow functions for this binding
-    if (this.ghosted) {
+    if (this.isGhosted()) {
       map.set("unghost", ["unghost", this.unGhost]);
     } else if (!this.isGhostedOrWithinAGhostedFrame()) {
       if (this.hasBreakpoint()) {
@@ -743,7 +754,9 @@ export abstract class AbstractFrame implements Frame {
       } else {
         map.set("setBP", ["set breakpoint", this.setBreakPoint]);
       }
-      map.set("ghost", ["ghost", this.ghost]);
+      if (this.isMovable()) {
+        map.set("ghost", ["ghost", this.ghost]);
+      }
     }
     return map;
   }

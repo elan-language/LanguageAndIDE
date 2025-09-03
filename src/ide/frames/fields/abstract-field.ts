@@ -584,21 +584,23 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   select(_withFocus?: boolean, _multiSelect?: boolean, selection?: [number, number]): void {
-    this.deselectAll();
-    this.selected = true;
-    this.focus();
-    if (selection) {
-      let [start, end] = selection;
+    if (!this.isWithinAGhostedFrame()) {
+      this.deselectAll();
+      this.selected = true;
+      this.focus();
+      if (selection) {
+        let [start, end] = selection;
 
-      if (start === this.cursorPos && end === this.selectionEnd) {
-        // selecting same range so clear selection
-        // ie we select on first click but if you then click on the selected input we send same selection and clear it
-        start = end = this.cursorPos;
+        if (start === this.cursorPos && end === this.selectionEnd) {
+          // selecting same range so clear selection
+          // ie we select on first click but if you then click on the selected input we send same selection and clear it
+          start = end = this.cursorPos;
+        }
+
+        this.setSelection(start, end);
+      } else {
+        this.setSelection(this.text.length);
       }
-
-      this.setSelection(start, end);
-    } else {
-      this.setSelection(this.text.length);
     }
   }
 
@@ -835,4 +837,8 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   abstract symbolCompletion(): string;
+
+  isWithinAGhostedFrame() {
+    return this.getHolder().isGhostedOrWithinAGhostedFrame();
+  }
 }
