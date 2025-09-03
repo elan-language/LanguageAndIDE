@@ -51,6 +51,8 @@ export abstract class AbstractField implements Selectable, Field {
   protected showingSymbolCompletion: boolean = false;
   helpActive: boolean = false;
 
+  protected showPopupEditor = false;
+
   constructor(holder: Frame) {
     this.holder = holder;
     const map = holder.getMap();
@@ -180,7 +182,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  private controlKeys = ["o", "O", "ArrowLeft", "ArrowRight", "a", "?"];
+  private controlKeys = ["o", "O", "ArrowLeft", "ArrowRight", "a", "?", "j"];
 
   processKey(e: editorEvent): boolean {
     this.codeHasChanged = false;
@@ -284,6 +286,13 @@ export abstract class AbstractField implements Selectable, Field {
       case "?": {
         if (e.modKey.control) {
           this.showHelp();
+          break;
+        }
+      }
+      case "j": {
+        if (e.modKey.control) {
+          this.setSelection(0, this.text.length);
+          this.showPopupEditor = true;
           break;
         }
       }
@@ -623,7 +632,9 @@ export abstract class AbstractField implements Selectable, Field {
 
   public textAsHtml(): string {
     let html = "";
-    if (this.selected) {
+    if (this.showPopupEditor) {
+      html = this.popupEditor();
+    } else if (this.selected) {
       html = this.fieldAsInput() + this.symbolCompletion();
     } else {
       if (this.rootNode && this._parseStatus === ParseStatus.valid) {
@@ -716,6 +727,15 @@ export abstract class AbstractField implements Selectable, Field {
     const ast = this.getFile().getAst(false);
     const symbols = getFilteredSymbols(spec, ast, this.getHolder().getHtmlId());
     return removeIfSingleFullMatch(symbols, spec.toMatch);
+  }
+
+  protected popupEditor() {
+    this.showPopupEditor = false;
+    return `<div class='popup-editor'>
+<textarea data-id='${this.htmlId}'>${this.escapeDoubleQuotesAndEscapes(this.text)}</textarea>
+<button class='popup-ok'>ok</button>
+<button class='popup-cancel'>cancel</button>
+</div>`;
   }
 
   protected popupAsHtml() {

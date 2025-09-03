@@ -1350,6 +1350,26 @@ async function updateContent(text: string, editingField: boolean) {
     }
   }
 
+  if (document.querySelector(".popup-editor")) {
+    const ip = document.querySelector(".popup-editor textarea") as HTMLTextAreaElement;
+    const ok = document.querySelector(".popup-editor .popup-ok");
+
+    ip?.addEventListener("keydown", (e) => {
+      e.stopPropagation();
+    });
+
+    ip?.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+
+    ok?.addEventListener("click", async (e) => {
+      const txt = ip.value;
+      const id = ip.dataset.id;
+      const mk = { control: false, shift: false, alt: false };
+      await handleEditorEvent(e, "paste", "frame", mk, id, txt);
+    });
+  }
+
   const helpLinks = document.querySelectorAll("el-help a");
 
   for (const item of helpLinks) {

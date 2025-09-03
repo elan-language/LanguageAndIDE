@@ -360,6 +360,7 @@ button.icon:active img + label
 }
 
 .autocomplete-popup,
+.popup-editor,
 .context-menu {
   visibility: visible;
   width: fit-content;
