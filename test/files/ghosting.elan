@@ -1,0 +1,15 @@
+# 3b9512a18f13797af14d8d962729f3096a5978a09e03641997c757a600589fd1 Elan 1.4.0 guest default_profile valid
+
+main
+  print 1
+  # [ghosted]
+  print 2
+  print 3
+  call foo()
+end main
+
+procedure foo()
+  print 4
+  print 5
+  print 6
+end procedure
