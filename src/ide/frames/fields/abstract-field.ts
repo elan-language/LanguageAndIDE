@@ -640,18 +640,21 @@ export abstract class AbstractField implements Selectable, Field {
     this.placeholder = placeholder;
   }
 
+  private unselectedText() {
+    if (this.rootNode && this._parseStatus === ParseStatus.valid) {
+      return this.rootNode.renderAsHtml();
+    }
+    return escapeHtmlChars(this.text);
+  }
+
   public textAsHtml(): string {
     let html = "";
     if (this.showPopupEditor) {
-      html = this.popupEditor();
+      html = this.unselectedText() + this.popupEditor();
     } else if (this.selected) {
       html = this.fieldAsInput() + this.symbolCompletion();
     } else {
-      if (this.rootNode && this._parseStatus === ParseStatus.valid) {
-        html = this.rootNode.renderAsHtml();
-      } else {
-        html = escapeHtmlChars(this.text);
-      }
+      html = this.unselectedText();
     }
     return html;
   }
