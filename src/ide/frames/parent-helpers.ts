@@ -182,7 +182,7 @@ export function parentHelper_moveSelectedChildrenDownOne(parent: Parent): void {
     i--;
   }
 }
-function moveDownOne(parent: Parent, child: Frame): boolean {
+export function moveDownOne(parent: Parent, child: Frame): boolean {
   let result = false;
   const i = parent.getChildren().indexOf(child);
   if (i < parent.getChildren().length - 1 && parent.getChildren()[i + 1].canInsertAfter()) {
@@ -192,7 +192,8 @@ function moveDownOne(parent: Parent, child: Frame): boolean {
   }
   return result;
 }
-function moveUpOne(parent: Parent, child: Frame): boolean {
+
+export function moveUpOne(parent: Parent, child: Frame): boolean {
   let result = false;
   const i = parent.getChildren().indexOf(child);
   if (i > 0 && parent.getChildren()[i - 1].canInsertBefore()) {

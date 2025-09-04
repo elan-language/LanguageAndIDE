@@ -1561,6 +1561,7 @@ async function handleKeyAndRender(e: editorEvent) {
   inactivityTimer = setTimeout(inactivityRefresh, inactivityTimeout);
 
   try {
+    let codeChanged = false;
     let isBeingEdited = false;
     collapseAllMenus();
     removeFocussedClassFromAllTabs();
@@ -1587,7 +1588,7 @@ async function handleKeyAndRender(e: editorEvent) {
           return;
         }
         const before = Date.now();
-        const codeChanged = handleKey(e, file);
+        codeChanged = handleKey(e, file);
         const after = Date.now();
         const delay = after - before;
         if (codeChanged === true) {
@@ -1606,8 +1607,12 @@ async function handleKeyAndRender(e: editorEvent) {
         // undefined just return
         return;
       case "contextmenu":
-        handleKey(e, file);
-        await renderAsHtml(false);
+        codeChanged = handleKey(e, file);
+        if (codeChanged) {
+          await refreshAndDisplay(true, false);
+        } else {
+          await renderAsHtml(false);
+        }
         return;
     }
   } catch (e) {

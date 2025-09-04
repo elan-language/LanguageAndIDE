@@ -84,5 +84,5 @@ export function handleKey(e: editorEvent, file: File) {
       }
     }
   }
-  return undefined;
+  return false;
 }

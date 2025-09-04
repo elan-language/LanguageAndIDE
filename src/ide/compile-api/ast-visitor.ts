@@ -96,6 +96,7 @@ import { ToAsn } from "../../compiler/syntax-nodes/to-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
 import { VarAsn } from "../../compiler/syntax-nodes/var-asn";
+import { AbstractFrame } from "../frames/abstract-frame";
 import { AbstractFunction } from "../frames/class-members/abstract-function";
 import { AbstractProcedure } from "../frames/class-members/abstract-procedure";
 import { AbstractProperty } from "../frames/class-members/abstract-property";
@@ -234,6 +235,12 @@ export function transform(
   fieldId: string,
   scope: Scope,
 ): AstNode | undefined {
+  if (node instanceof AbstractFrame) {
+    if (node.isGhostedOrWithinAGhostedFrame()) {
+      return EmptyAsn.Instance;
+    }
+  }
+
   if (node instanceof FileImpl) {
     const astRoot = new FileAsn(node.libraryScope, node.getVersion());
 
