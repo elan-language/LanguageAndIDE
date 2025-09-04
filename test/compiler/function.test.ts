@@ -1216,11 +1216,7 @@ end function`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'out' parameters are only supported on procedures.LangRef.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_OperatorsAndProceduresWithFunctionKeyword1", async () => {
