@@ -57,11 +57,13 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   public isNotInheritable = false;
   public inheritance: InheritsFromField;
   private _children: Array<Frame> = new Array<Frame>();
+
   constructor(parent: File) {
     super(parent);
     this.name = new TypeNameField(this);
     this.inheritance = new InheritsFromField(this);
     this.getChildren().push(new MemberSelector(this));
+    this.canHaveBreakPoint = false;
   }
 
   updateOfTypes(_ofTypes: SymbolType[]) {

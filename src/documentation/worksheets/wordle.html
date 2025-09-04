@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+
+<head>
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <link href="../../../out/website/styles/colourScheme.css" rel="stylesheet" />
+  <link href="../../../out/website/styles/elanStyle.css" rel="stylesheet" />
+  <link href="../../../out/website/styles/documentation.css" rel="stylesheet" />
+  <link href="../../../out/website/styles/worksheet.css" rel="stylesheet" />
+</head>
+
+<body>
+<div id="worksheet">
+  <div class="docTitle">Wordle</div>
+
+  <button id="auto-save">Auto-save to file</button><span> to continue.
+  (After that any entries made into the worksheet will be automatically saved, 
+  and you can re-load the partially-completed worksheet in future - 
+  at which point you will be asked to auto-save it again).</span>
+
+  <div class="step" id="step0">
+    <label for="username">Enter your name: </label>
+    <input type="text" id="username" class="question"/>
+    <h3>Preliminaries</h3>
+    <ul>
+      <li>If you are not familiar with Wordle puzzles, then before proceding, <a href="https://www.nytimes.com/games/wordle" target-="_blank">visit the official online
+        Wordle site</a>, read the instructions and try to solve today's puzzle.</li>
+      <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
+      <li>Remember that if the code editor has a tinted background it does not have focus and will not respond
+          to edits. To give it focus click within the editor. (If a program is running, you will need to stop it first.)</li>
+      <li>Use the auto-completion options as much as possible, because this reduces errors.</li>
+      <li>Use the <i>Hints</i> only when you <i>need</i> them - as all use of hints is recorded. Use of <b>Help</b> is encouraged and not recorded.</li>
+    </ul>
+    <label class="done" for="done0">Preliminaries completed</label>
+    <input type="checkbox" class="step-complete" id="done0" />
+  </div>
+
+  <div class="step" id="step1">
+    <h3>Step 1</h3>
+    <ul>
+      <li>Select <b>File > Load</b> and locate the file <b>wordle-start.elan</b>.
+        Select <b>File > Auto Save</b> and save the file to your personal file system. This will ensure that the changes
+        you will be making to your version of the <i>code</i> are always saved. 
+      </li>
+      <li>Run the game and the <b>Display</b> will show a re-creation of the Wordle screen. Try entering your first
+        and second guess words.  You will notice that any word you enter receives the identical response - and 
+        as you enter more words those identical responses will sooner or later become inconsistent with each other.
+      </li>
+      <li>Stop the program and explore the code. Look first at frame number XX - the function named <code>markAttempt</code>.
+      A comment in the code explains that this is a 'stub' - a minimal implementation that lets the program compile and
+      run, but which is known not to be correct. Your first task is to make the Wordle game work by writing a proper
+      implementation of this function.</li>
+      <li>Immediately below this function you will find a <code>test</code>, which is 'ghosted' 
+        (indicated by the <code># [ghosted]</code> 'compiler directive, and by the pale tint') so that it is currently ignored by the compiler).
+      Select the <code>test</code>, then from the 'context menu' (brought up on a selected instruction by <b>right-mouse-click</b>,
+    or by pressing <b>Ctrl-m</b>) and selecting <b>unghost</b>.</li>
+    <li>The <b>Test</b> status will now indicate that all of the <code>assert</code> instructions are failing.</li>
+    <li>Examine these individual assert statements noting each time <code>markAttempt</code> is called, the first argument
+    is the attempt (guess) and the second is the target (the word that has been set as the answer. The function should
+    return a string of five characters, each of which must be <code>0</code>to represent 'no match' (grey), 
+    <code>1</code>, to represent an 'out of place' match (yellow), or <code>2</code> to represent an 'in-place' match (green).
+    These three numeric digits are translated into the colours to be rendered on the Display by the <code>style</code> sheet, 
+    which may be found in frame number xx. 
+  </li>
+    </ul>
+
+    <div class="hint" id="hint1" data-hint="">Hint: Title</div> 
+    <div class="content" id="hint1content">
+      <!-- Hint content-->
+    </div>
+
+    <label class="done" for="done1">Step completed</label>
+    <input type="checkbox" class="step-complete" id="done1"/>
+    <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
+  </div>
+
+  <div class="step" id="step0">
+    <label for="username">Enter your name: </label>
+    <input type="text" id="username" class="question"/>
+    <h3>Preliminaries</h3>
+    <ul>
+      <li>If you are not familiar with Wordle puzzles, then before proceding, <a href="https://www.nytimes.com/games/wordle" target-="_blank">visit the official online
+        Wordle site</a>, read the instructions and try to solve today's puzzle.</li>
+      <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
+      <li>Remember that if the code editor has a tinted background it does not have focus and will not respond
+          to edits. To give it focus click within the editor. (If a program is running, you will need to stop it first.)</li>
+      <li>Use the auto-completion options as much as possible, because this reduces errors.</li>
+      <li>Use the <i>Hints</i> only when you <i>need</i> them - as all use of hints is recorded. Use of <b>Help</b> is encouraged and not recorded.</li>
+    </ul>
+    <label class="done" for="done0">Preliminaries completed</label>
+    <input type="checkbox" class="step-complete" id="done0" />
+  </div>
+
+  <div class="step" id="step2">
+    <h3>Step 2</h3>
+    Now we will start on implementing <code>markAttempt</code>.
+    <ul>
+      <li></li>To start on the implementation, first ch
+    </ul>
+
+    <div class="hint" id="hint1a" data-hint="">Hint: Title</div> 
+    <div class="content" id="hint1content">
+      <!-- Hint content-->
+    </div>
+
+    <label class="done" for="done1">Step completed</label>
+    <input type="checkbox" class="step-complete" id="done2"/>
+    <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
+  </div>
+
+  <div class="step" id="stepX">
+    Worksheet completed.
+
+    <div class="license">
+      <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+      This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
+          <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+        If you copy and <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+        Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
+    </div>
+  </div>
+
+  <div hidden="" id="hash"></div>
+  <div hidden="" id="changes"></div>
+</div>
+<script src="../../../out/website/worksheet-scripts.js"></script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-# d0c1e00a2e6426bf1134a85e87b1cd077ab3737879c66f7cd6de8089eefdd8e6 Elan 1.4.0 guest default_profile valid
+# bb603b76df988cdbed2b4f50730a407cd61a0a20da4df698d8a1a9e4bf1cd48e Elan 1.4.0 guest default_profile valid
 
 main
   let grid be new Array2D<of String>(5, 6, "")
@@ -84,6 +84,7 @@ function getWord(attemptNo as Int, grid as Array2D<of String>) returns String
   return guessWord
 end function
 
+# [ghosted]
 test setChar
   assert setChar("ABCDE", 0, "_") is "_BCDE"
   assert setChar("ABCDE", 4, "_") is "ABCD_"
@@ -94,6 +95,7 @@ function markAttempt(attempt as String, target as String) returns String
   return mark
 end function
 
+# [ghosted]
 test markAttempt
   assert markAttempt("ABCDE", "XXXXX") is "00000"
   assert markAttempt("ABCDE", "BCDEA") is "11111"
@@ -107,6 +109,7 @@ test markAttempt
   assert markAttempt("FAIRY", "RATTY") is "02012"
 end test
 
+# [ghosted]
 test possibleAnswersAfterAttempt
   let prior be ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"]
   assert possibleAnswersAfterAttempt(prior, "AAAAA", "20000") is ["ABCDE"]
