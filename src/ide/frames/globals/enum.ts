@@ -20,6 +20,7 @@ export class Enum extends AbstractFrame implements GlobalFrame, Collapsible {
     this.name = new TypeNameField(this);
     this.name.setPlaceholder("<i>Name</i>");
     this.values = new EnumValuesField(this);
+    this.canHaveBreakPoint = false;
   }
 
   protected setClasses() {
@@ -37,7 +38,7 @@ export class Enum extends AbstractFrame implements GlobalFrame, Collapsible {
     return "enum";
   }
   renderAsHtml(): string {
-    return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>enum </el-kw>${this.name.renderAsHtml()}</el-top> ${this.values.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-enum>`;
+    return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>enum </el-kw>${this.name.renderAsHtml()}</el-top> ${this.values.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-enum>`;
   }
 
   indent(): string {

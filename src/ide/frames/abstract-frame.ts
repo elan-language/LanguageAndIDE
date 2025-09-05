@@ -36,7 +36,6 @@ export abstract class AbstractFrame implements Frame {
 
   private _parent: File | Parent;
   private _map?: Map<string, Selectable>;
-  private _ghosted: boolean = false;
   private selected: boolean = false;
   private focused: boolean = false;
   private collapsed: boolean = false;
@@ -45,8 +44,12 @@ export abstract class AbstractFrame implements Frame {
   protected _movable: boolean = true;
   private _parseStatus: ParseStatus = ParseStatus.default;
 
+  private _ghosted: boolean = false;
+
+  protected canHaveBreakPoint = true;
   protected showContextMenu = false;
   breakpointStatus: BreakpointStatus = BreakpointStatus.none;
+
   protected paused = false;
 
   pasteError: string = "";
@@ -749,14 +752,16 @@ export abstract class AbstractFrame implements Frame {
     if (this.isGhosted()) {
       map.set("unghost", ["unghost", this.unGhost]);
     } else if (!this.isGhostedOrWithinAGhostedFrame()) {
-      if (this.hasBreakpoint()) {
-        map.set("clearBP", ["clear breakpoint", this.clearBreakPoint]);
-        map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints]);
-      } else {
-        map.set("setBP", ["set breakpoint", this.setBreakPoint]);
-      }
       if (this.isMovable()) {
         map.set("ghost", ["ghost", this.ghost]);
+      }
+      if (this.canHaveBreakPoint) {
+        if (this.hasBreakpoint()) {
+          map.set("clearBP", ["clear breakpoint", this.clearBreakPoint]);
+          map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints]);
+        } else {
+          map.set("setBP", ["set breakpoint", this.setBreakPoint]);
+        }
       }
     }
     return map;
