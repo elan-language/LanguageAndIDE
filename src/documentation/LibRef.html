@@ -463,12 +463,12 @@ with specified changes: that is why all such methods have names starting '<el-co
   <th>Dictionary</th>
  </tr><tr>
   <tr><td>Type form</td>
-  <td><el-code><el-type>Array</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code><br><el-kw>Type</el-kw> of item is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type></td>
-  <td><el-code><el-type>Array2D</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code><br><el-kw>Type</el-kw> of item is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type></td>
-  <td><el-code><el-type>List</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code><br><el-kw>Type</el-kw> of item can be any, including <el-type>Array</el-type> &ndash; or <el-type>List</el-type> for 'jagged' data</td>
-  <td><el-code><el-type>Dictionary</el-type>&lt;of <el-kw>keyType</el-kw>, <el-kw>valueType</el-kw>&gt;</el-code><br>
-  <el-kw>keyType</el-kw> is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type>, or a <el-code>record</el-code>, and<br>
-  <el-kw>valueType</el-kw> may be any Type</td>
+  <td><el-type>Array</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type></td>
+  <td><el-type>Array2D</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type></td>
+  <td><el-type>List</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item can be any, including <el-type>Array</el-type> &ndash; or <el-type>List</el-type> for 'jagged' data</td>
+  <td><el-type>Dictionary&lt;of <el-id>keyType</el-id>, <el-id>valueType</el-id>&gt;<br>
+  <el-id>keyType</el-id> is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type>, or a <el-code>record</el-code>, and<br>
+  <el-id>valueType</el-id> may be any Type</td>
  </tr><tr>
   <td>size</td><td>Static</td><td>Static</td><td>Dynamic</td><td>Dynamic</td></tr>
   <td>literal definition</td>
@@ -478,20 +478,20 @@ with specified changes: that is why all such methods have names starting '<el-co
   <td><el-code>["a":3, "b":5]</el-code></td>
  </tr><tr>
   <td>create empty</td>
-  <td><el-code>empty</el-code> <el-type>Array&lt;of <el-kw>Type</el-kw>&gt;</el-type></td>
-  <td><el-code>empty</el-code> <el-type>Array2D&lt;of <el-kw>Type</el-kw>&gt;</el-type></td>
-  <td><el-code>empty</el-code> <el-type>List&lt;of <el-kw>Type</el-kw>&gt;</el-type> or<br>
-  <el-code>new <el-type>List</el-type>&lt;of <el-kw>Type&gt;</el-kw>()</el-code></td>
-  <td><el-code>empty</el-code> <el-type>Dictionary&lt;of <el-kw>keyType</el-kw>&gt;, <el-kw>valueType</el-kw>&gt;</el-type> or<br>
-  <el-code>new <el-type>Dictionary</el-type>&lt;of <el-kw>keyType</el-kw>, <el-kw>valueType&gt;</el-kw>()</el-code></td>
+  <td><el-code>empty</el-code> <el-type>Array&lt;of <el-id>Type</el-id>&gt;</el-type></td>
+  <td><el-code>empty</el-code> <el-type>Array2D&lt;of <el-id>Type</el-id>&gt;</el-type></td>
+  <td><el-code>empty</el-code> <el-type>List&lt;of <el-id>Type</el-id>&gt;</el-type> or<br>
+  <el-code>new <el-type>List</el-type>&lt;of <el-id>Type&gt;</el-id>()</el-code></td>
+  <td><el-code>empty</el-code> <el-type>Dictionary&lt;of <el-id>keyType</el-id>&gt;, <el-id>valueType</el-id>&gt;</el-type> or<br>
+  <el-code>new <el-type>Dictionary</el-type>&lt;of <el-id>keyType</el-id>, <el-id>valueType&gt;</el-id>()</el-code></td>
  </tr><tr>
   <td>create initialised</td>
-  <td><el-code>new <el-type>Array</el-type>&lt;of <el-kw>Type</el-kw>&gt;(<el-kw>size</el-kw>, <el-kw>value</el-kw>)</el-code><br>
-  <el-kw>size</el-kw> is the number of items, and<br><el-kw>value</el-kw> is the initial value of every item</td>
-  <td><el-code>new <el-type>Array2D</el-type>&lt;of <el-kw>Type</el-kw>&gt;(<el-kw>cols</el-kw>, <el-kw>rows</el-kw>, <el-kw>value</el-kw>)<br>
-  <el-kw>Type</el-kw> of item is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type>,<br>
-  <el-kw>cols</el-kw> is the number of columns,<el-kw><br>rows</el-kw> is the number of rows</el-code>, and<br>
-  <el-kw>value</el-kw> is the initial value of every item<br>(all are named values or literals)</td>
+  <td><el-code>new <el-type>Array</el-type>&lt;of <el-id>Type</el-id>&gt;(<el-id>size</el-id>, <el-id>value</el-id>)</el-code><br>
+  <el-id>size</el-id> is the number of items, and<br><el-id>value</el-id> is the initial value of every item</td>
+  <td><el-code>new <el-type>Array2D</el-type>&lt;of <el-id>Type</el-id>&gt;(<el-id>cols</el-id>, <el-id>rows</el-id>, <el-id>value</el-id>)<br>
+  <el-id>Type</el-id> of item is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or <el-type>Boolean</el-type>,<br>
+  <el-id>cols</el-id> is the number of columns,<el-id><br>rows</el-id> is the number of rows</el-code>, and<br>
+  <el-id>value</el-id> is the initial value of every item<br>(all are named values or literals)</td>
   <td>not available</td>
   <td>not available</td>
  </tr><tr>
@@ -1052,34 +1052,34 @@ changes.</p>
   <th>Queue</th>
  </tr><tr>
   <td>Type form</td>
-  <td><el-code><el-type>ListImmutable</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code><br><el-kw>Type</el-kw> of item must be immutable</td>
-  <td><el-code><el-type>DictionaryImmutable</el-type>&lt;of <el-kw>keyType</el-kw>, <el-kw>valueType</el-kw>&gt;</el-code><br>
-  <el-kw>keyType</el-kw> is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or  <el-type>Boolean</el-type> or a <el-code>record</el-code> ,and<br>
-  <el-kw>valueType</el-kw> may be any immutable Type</td>
-  <td><el-code><el-type>Set</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code><br><el-kw>Type</el-kw> of item must be immutable</td>
-  <td><el-code><el-type>Stack</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code><br><el-kw>Type</el-kw> of item must be immutable</td>
-  <td><el-code><el-type>Queue</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code><br><el-kw>Type</el-kw> of item must be immutable</td>
+  <td><el-type>ListImmutable</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
+  <td><el-type>DictionaryImmutable</el-type>&lt;of <el-id>keyType</el-id>, <el-id>valueType</el-id>&gt;<br>
+  <el-id>keyType</el-id> is <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>String</el-type> or  <el-type>Boolean</el-type> or a <el-code>record</el-code> ,and<br>
+  <el-id>valueType</el-id> may be any immutable Type</td>
+  <td><el-type>Set</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
+  <td><el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
+  <td><el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt;<br><el-id>Type</el-id> of item must be immutable</td>
  </tr><tr>
   <td>Size</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td>
  </tr><tr>
   <td>literal definition</td>
-  <td><el-code>{a","b","c"}</el-code></td>
+  <td><el-code>{"a","b","c"}</el-code></td>
   <td><el-code>{"a":3, "b":5}</el-code></td>
   <td>Only as converted from a literal <el-type>List</el-type> e.g.:<br><el-code>["a","b","c"].<el-method>asSet</el-method>()</el-code></td>
   <td>Not available</td>
   <td>Not available</td>
  </tr><tr>
   <td>create empty</td>
-  <td><el-code>empty<el-type>ListImmutable</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code> or<br>
-  <el-code>new <el-type>ListImmutable</el-type>&lt;of <el-kw>Type</el-kw>&gt;()</el-code></td>
-  <td><el-code>empty <el-type>DictionaryImmutable</el-type>&lt;of <el-kw>keyType</el-kw>, <el-kw>valueType</el-kw>&gt;()</el-code> or<br>
-  <el-code>new <el-type>DictionaryImmutable</el-type>&lt;of <el-kw>keyType</el-kw>, <el-kw>valueType</el-kw>&gt;()</el-code></td>
-  <td><el-code>empty<el-type>Set</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code> or<br>
-  <el-code>new <el-type>Set</el-type>&lt;of <el-kw>Type</el-kw>&gt;()</el-code></td>
-  <td><el-code>empty<el-type>Stack</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code> or<br>
-  <el-code>new <el-type>Stack</el-type>&lt;of <el-kw>Type</el-kw>&gt;()</el-code></td>
-  <td><el-code>empty<el-type>Queue</el-type>&lt;of <el-kw>Type</el-kw>&gt;</el-code> or<br>
-  <el-code>new <el-type>Queue</el-type>&lt;of <el-kw>Type</el-kw>&gt;()</el-code></td>
+  <td><el-code>empty</el-code> <el-type>ListImmutable</el-type>&lt;of <el-id>Type</el-id>&gt; or<br>
+  <el-code>new <el-type>ListImmutable</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
+  <td><el-code>empty</el-code> <el-type>DictionaryImmutable</el-type>&lt;of <el-id>keyType</el-id>, <el-id>valueType</el-id>&gt;() or<br>
+  <el-code>new <el-type>DictionaryImmutable</el-type>&lt;of <el-id>keyType</el-id>, <el-id>valueType</el-id>&gt;()</el-code></td>
+  <td><el-code>empty</el-code> <el-type>Set</el-type>&lt;of <el-id>Type</el-id>&gt; or<br>
+  <el-code>new <el-type>Set</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
+  <td><el-code>empty</el-code> <el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt; or<br>
+  <el-code>new <el-type>Stack</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
+  <td><el-code>empty</el-code> <el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt; or<br>
+  <el-code>new <el-type>Queue</el-type>&lt;of <el-id>Type</el-id>&gt;()</el-code></td>
  </tr><tr>
   <td>create initialised</td>
   <td>not available</td>
@@ -1736,7 +1736,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <h4 class="no-TOC">Notes</h4>
 <ul>
  <li>The method <el-method>asString</el-method> is so widely applicable because it enables you to print
- most variables and data structures to the Display for debugging purposes.</li>
+ most variables and data structures to the IDE's Display pane for debugging purposes.</li>
  <li>The length of a <el-type>Dictionary</el-type> or <el-type>DictionaryImmutable</el-type> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:</li>
   <p><el-code>print dict.keys().length()</el-code> &#x27f6; 15</p>
  <li>Checking whether an item is contained in a <el-type>Dictionary</el-type> or <el-type>DictionaryImmutable</el-type> can be
@@ -1744,302 +1744,6 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <p><el-code>print dict.keys().contains(42)</el-code> &#x27f6; <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code></p>
   <p><el-code>print dict.values().contains("widget")</el-code> &#x27f6; <el-code><el-id>true</el-id></el-code> or <el-code><el-id>false</el-id></el-code></p>
 </ul>
-
-<h1 id="Input/output">Input/output</h1>
-
-<h2>Reading keys &#8216;on the fly&#8217;</h2>
-<p>In some applications &#8211; especially in games, for example &#8211; you want the program to react to a key pressed by the user, but without holding up the program to wait for value to be input. </p>
-<p>Whether your application makes use graphics, or just uses the <i>Console</i> for text, reading keystrokes &#8216;on the fly&#8217; is done via one of two methods:</p>
-<el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKey</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key2</el-id>, <el-id>modifier</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKeyWithModifier</el-method>()</el-txt></el-field></el-statement>
-<p><b>Notes</b></p>
-<ul>
-<li>When the <el-method>getKey</el-method> function is called, the system <i>does not wait for a response</i>. If a key has been pressed then that will be returned as a <b>String</b> e.g. <el-code>"a"</el-code>.</li>
-<li>Non-printable keys will be returned in the form: <b>"Backspace"</b>,"<b>Enter"</b>,<b>"ArrowDown"</b>, etc.</li>
-<li>If no key has been pressed (since the last time the method was called), it will return the empty string <el-code>""</el-code>. </li>
-<li>Pressing <i>just</i> the <b>Shift</b>, <b>Ctrl</b> (<b>&#x2318; Command</b> under macOS) or <b>Alt</b> keys will not be detected by <el-method>getKey</el-method>. To read those keys use&#8230;</li>
-<li> <el-method>getKeyWithModifier</el-method> which returns a 2-tuple containing  the key pressed plus any &#8216;modifier&#8217; key such a <el-code>Shift</el-code>, <el-code>Ctrl</el-code>, or <el-code>Alt</el-code> (or the empty string if no modifier key is pressed).</li>
-<li>Both of these <el-method>getKey</el-method> methods are System methods because they have a dependency on the system and so may only be used within a <el-code>procedure</el-code> or in <el-code>main</el-code>.</li>
-</ul>
-<p>Use the procedure method <el-method>clearKeyBuffer()</el-method> if you want to enforce that the user cannot get too far ahead of the program by hitting keys in very rapid succession.</p>
-<p><el-method>waitForKey</el-method> waits for a key to be pressed, and returns it.  <el-method>pressAnyKeyToContinue</el-method> gives an optional prompt and is used when you don't need to know which key was pressed.</p>
-<el-code-block>
-<el-statement class="ok"><el-top><el-kw>call </el-kw><el-field class="ok"><el-txt><el-method>pressAnyKeyToContinue</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>true</el-id></el-txt></el-field>)</el-top></el-statement>
-<el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>OK, press A or B</el-lit>"</el-txt></el-field></el-statement>
-<el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>mykey</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>That was </el-lit>{<el-id>mykey</el-id>}<el-lit></el-lit>"</el-txt></el-field></el-statement>
-</el-code-block>
-
-<h2 id="TextFileReader">Reading text files</h2>
-<p>The <el-type>TextFileReader</el-type> class is used to read textual data from a file.</p>
-<p>An instance is created by the standalone system method <el-method>openFileForReading</el-method>.</p>
-<p>The available procedure methods are:</p>
-<table class="tableMethod">
- <tr>
-  <th>procedure<br>method</th>
-  <th>argument<br>Type</th>
-  <th>action</th>
- </tr><tr id="openFileForReading">
-  <td><el-method>openFileForReading</el-method></td>
-  <td><el-type>(none)</el-type></td>
-  <td>opens a file system dialog to choose the filename to be read, which must have the filetype .txt<br>
-  and returns a file handle</td>
- </tr><tr id="readLine">
-  <td><el-method>readLine</el-method></td>
-  <td><el-type>(none)</el-type></td>
-  <td>reads the next substring from the file that is terminated with a newline</td>
- </tr><tr id="readWholeFile">
-  <td><el-method>readWholeFile</el-method></td>
-  <td><el-type>(none)</el-type></td>
-  <td>reads the whole file and closes the file</td>
- </tr><tr id="endOfFile">
-  <td><el-method>endOfFile</el-method></td>
-  <td><el-type>(none)</el-type></td>
-  <td>returns <el-code><el-id>true</el-id></el-code> after the last line has been read<br>
-  &ndash; otherwise <el-kw>false</el-kw></td>
- </tr><tr id="close">
-  <td><el-method>close</el-method></td>
-  <td><el-type>(none)</el-type></td>
-  <td>closes the file</td>
- </tr>
-</table>
-<p>These methods may be used to read a whole file in one go:</p>
-<el-code-block source="TextFileReader_1.elan">
-  <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>openFileForReading</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>text</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>readWholeFile</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="print12" tabindex="0"><el-kw>print </el-kw><el-field id="expr13" class="optional ok" tabindex="0"><el-txt><el-id>text</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code-block>
-<p>or to read a file line by line:</p>
-<el-code-block source="TextFileReader_2.elan">
-  <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>openFileForReading</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="var6" tabindex="0"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>lines</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok multiline" id="while9" tabindex="0">
-  <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-kw>not</el-kw> <el-id>file</el-id>.<el-method>endOfFile</el-method>()</el-txt><el-place><i>condition</i></el-place></el-field></el-top>
-  <el-statement class="ok" id="let12" tabindex="0"><el-kw>let </el-kw><el-field id="var13" class="ok" tabindex="0"><el-txt><el-id>line</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>readLine</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>lines</el-id>.<el-method>append</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args17" class="optional ok" tabindex="0"><el-txt><el-id>line</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-  <el-kw>end while</el-kw>
-  </el-statement>
-  <el-statement class="ok" id="call18" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>close</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args20" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-</el-code-block>
-
-<h4 class="no-TOC">Notes</h4>
-<ul>
-<li><el-code>openFileForReading</el-code> will present the user with a dialog to select the file.</li>
-<li><el-code>readWholeFile</el-code> returns a <el-type>String</el-type> containing every character in the file, without any trimming. It automatically closes the file after the read.</li>
-<li><el-code>readLine</el-code> reads as far as the next newline character (<el-code>\n</el-code>) and then automatically trims the line to remove any spaces and/or carriage-returns (which some file systems insert after the newline automatically) from the resulting line returned as a <el-type>String</el-type>. If this behaviour is not desired, you can use <el-code>readWholeFile</el-code>, which does no trimming, and then parse the resulting <el-type>String</el-type> into separate lines.</li>
-<li>Calling <el-code>file.close</el-code> after reading line by line is strongly recommended to avoid any risk of leaving the file locked. It is not necessary to call it after using <el-code>readWholeFile</el-code> because that method automatically closes the file.</li>
-<li>Calling any method on a file that is already closed will result in a runtime error.</li>
-</ul>
-
-<h2 id="TextFileWriter">Writing text files</h2>
-<p>The <el-type>TextFileWriter</el-type> class is used to write textual data to a file.</p>
-<p>An instance is created by the standalone system method <el-method>createFileForWriting</el-method>.</p>
-<p>The available procedure methods are:</p>
-<table class="tableMethod">
- <tr>
-  <th>procedure<br>method</th>
-  <th>argument<br>Type</th>
-  <th>action</th>
- </tr><tr id="createFileForWriting">
-  <td><el-method>creatFileForWriting</el-method></td>
-  <td><el-type>String</el-type></td>
-  <td>sets up a buffer for the data to be output, and specifies a filename (or the empty string)<br>
-  with or without the default filetype of .txt<br>
-  and returns a file handle</td>
- </tr><tr id="writeLine">
-  <td><el-method>writeLine</el-method></td>
-  <td><el-type>String</el-type></td>
-  <td>writes the string to the buffer</td>
- </tr><tr id="writeWholeFile">
-  <td><el-method>writeWholeFile</el-method></td>
-  <td><el-type>String</el-type></td>
-  <td>writes the string to the buffer and then outputs the buffer to the file system</td>
- </tr><tr id="saveAndClose">
-  <td><el-method>saveAndClose</el-method></td>
-  <td><el-type>String</el-type></td>
-  <td>writes the buffer to the file system</td>
- </tr>
-</table>
-<p>These methods may be used to write a whole file in one go:</p>
-<el-code-block source="TextFileWriter_1.elan">
-    <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>f</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>myFile.txt</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    <el-statement class="ok" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>f</el-id>.<el-method>writeWholeFile</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt>"<el-lit>this is\nmyText</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-</el-code-block>
-<p>or to write a file line by line:</p>
-<el-code-block source="TextFileWriter_2.elan">
-    <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>squares.txt</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    <el-statement class="ok multiline" id="for6" tabindex="0">
-    <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident8" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
-    <el-statement class="ok" id="call12" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>writeLine</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args14" class="optional ok" tabindex="0"><el-txt>"<el-lit></el-lit>{<el-id>i</el-id>}<el-lit> </el-lit>{<el-id>i</el-id>*<el-id>i</el-id>}<el-lit></el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-    <el-kw>end for</el-kw>
-    </el-statement>
-    <el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>saveAndClose</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args17" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-</el-code-block>
-
-<h4 class="no-TOC">Notes</h4>
-<ul>
-<li><el-code>writeLine</el-code> adds the string it is passed onto the end of any data previously written, with a newline character (<el-code>\n</el-code>) automatically appended.</li>
-<li>When execution reaches <el-code>saveAndClose</el-code> you will be presented with a dialog to confirm (or edit) the given filename and location where it is to be saved. It is not therefore strictly necessary to specify a filename when creating the file, since it can be specified by the user in the dialog so, in that case, you might put the empty string <el-code>""</el-code> into the parameter of <el-code>createFileForWriting</el-code>.</li>
-<li><el-code>writeWholeFile</el-code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <el-code>saveAndClose</el-code> had been called.</li>
-<li>Calling any method on a file that has already been closed (by calling either <el-code>saveAndClose</el-code> or by <el-code>writeWholeFile</el-code>) will result in a runtime error.</li>
-<li>If the user were to hit Cancel on the save dialog, then the program will exit with an error. If you want to guard against this possibility (if, for example, it might mean the loss of important data) then you should perform the save and close within a <el-code>try..catch</el-code> like this:</li>
-
-<el-code-block source="TextFileWriter_3.elan">
-<el-statement class="ok multiline" id="try35" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>try </el-kw></el-top>
-<el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>saveAndClose</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args17" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-<el-statement class="ok multiline outdent" id="catch37" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>catch exception in </el-kw><el-field id="ident39" class="ok" tabindex="0"><el-txt><el-id>e</el-id></el-txt><el-place><i>variableName</i></el-place></el-field></el-top>
-<el-statement class="ok" id="print47" tabindex="0"><el-kw>print </el-kw><el-field id="expr48" class="optional ok" tabindex="0"><el-txt>"<el-lit>File save cancelled</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-statement>
-<el-kw>end try</el-kw>
-</el-statement>
-</el-code-block>
-<p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
-</ul>
-
-<div id="DisplayHtml"></div>
-<div id="displayHtml"></div>
-<h2 id="Html">Displaying Html</h2>
-<p>If you embed Html code in a string and then attempt to print it, you will see the string displayed literally: the Html tags
-    will not be recognised. This is for security reasons. However, it <i>is</i> possible to display formatted Html in the <b>Display.</b>
-    The following code:</p>
-
-<el-code-block source="Html_1.elan">
-    <el-statement class="ok" id="call5" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-method>displayHtml</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args7" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;h1 style='color: blue;'&gt;A heading&lt;/h1&gt;&lt;p&gt;some text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>html</i></el-place></el-field>)</el-top></el-statement>
-</el-code-block>
-
-<p>will produce:</p>
-<img src="images/Html_1.png" width="250" height="200">
-
-<p>This Html forms another 'layer' of the Display. Any plain text that you print
-    (using <el-kw>print</el-kw> or any of the <el-method>print..</el-method> procedures)
-    will be overlaid on top of this.</p>
-
-<p>You can programmatically clear just the Html display using the procedure <el-method>clearHtml</el-method>.</p>
-
-<p>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above.
-    Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string.
-    Alternatively, you could use the constant <el-code><el-id>quotes</el-id></el-code> within braces as an interpolated field.</p>
-
-<h3 class="no-TOC">Using an embedded CSS stylesheet</h3>
-<p>You can also specify a &lt;style&gt; tag at the start of your Html string, to apply to the whole Html being displayed. In this case you would put
-the style definition into a named value as a literal but enclosed in <i>single</i> quotes, for example:</p>
-<el-code-block source="Html_2.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>'<el-lit>&lt;style&gt; h1 { color: Red; font-size: 24pt; } p { font-family: Serif; } &lt;/style&gt;</el-lit>'</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call6" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>displayHtml</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="-1"><el-txt>"<el-lit></el-lit>{<el-id>style</el-id>}<el-lit>&lt;h1&gt;New heading&lt;/h1&gt;&lt;p&gt;some new text&lt;/p&gt;</el-lit>"</el-txt></el-field>)</el-top></el-statement>
-</el-code-block>
-
-<p>will produce:</p>
-<img src="images/Html_2.png" width="275" height="200">
-
-<p>The &lt;style&gt; string is displayed for editing like this:</p>
-<el-code-block source="Html_3.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="91" data-cursorend="91" size="90" style="width: 91ch" value="'&lt;style&gt; h1 { color: Red; font-size: 24pt; }  p { font-family: Serif; }  &lt;/style&gt;'" tabindex="-1"></el-txt></el-field></el-statement>
-</el-code-block>
-
-<p>But by inserting double spaces (for newline) and triple spaces (for newline and indent) thus:</p>
-<el-code-block source="Html_3.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="91" data-cursorend="91" size="90" style="width: 91ch" value="'&lt;style&gt;  h1 {   color: Red;   font-size: 24pt;  }  p {   font-family: Serif;  }  &lt;/style&gt;'" tabindex="-1"></el-txt></el-field></el-statement>
-</el-code-block>
-
-<p>the string can be shown folded and indented when not being edited: </p>
-<el-code-block source="Html_4.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>'<el-lit>&lt;style&gt;<br>h1 {<br> color: Red;<br> font-size: 24pt;<br>}<br>p {<br> font-family: Serif;<br>}<br>&lt;/style&gt;</el-lit>'</el-txt></el-field></el-statement>
-</el-code-block>
-
-<h2 id="image">Displaying images</h2>
-
-<h3 class="no-TOC">Printing an image on the Display</h3>
-<p>An image that can be accessed via an Http URL may be printed on the display using the <el-kw>image</el-kw> keyword
-followed by the URL. Here, the URL is <i>not</i> bounded by quotes:</p>
-<el-code-block>
-<el-statement class="ok" id="print3" tabindex="0"><el-kw>print </el-kw><el-field id="expr4" class="selected focused optional ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="88" data-cursorend="88" size="87" style="width: 88ch" value="image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg"></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code-block>
-<p>As soon as you leave the field the text will change to show a thumbnail copy of the image:</p>
-<el-code-block>
-<el-statement class="ok" id="print3" tabindex="0"><el-kw>print </el-kw><el-field id="expr4" class="optional ok" tabindex="0"><el-txt><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg"></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code-block>
-<p>If you edit the field again, the keyword and URL will be shown.</p>
-
-<p>Acknowledgement: The idea of displaying an image value as a thumbnail within the code was inspired by
-    a similar feature in the language <a href="https://strype.org">Strype</a>. We are
-grateful to Prof. Michael K&ouml;lling and the team at King's College, London responsible for Strype,
-who showed us this feature in confidence before its release, but nonetheless generously allowed us to mimic it in Elan.
-Note that other URI protocols, e.g. <el-code>file://host/path</el-code> to access an image on your local file system, are not supported.</p>
-
-<p>When the code is run the image will be printed on the <b>Display</b>, but still thumbnail sized.
-    You can specify dimensions by using a <el-kw>with</el-kw> clause like this:</p>
-
-<el-code-block>
-<el-statement class="ok" id="print3" tabindex="0"><el-kw>print </el-kw><el-field id="expr4" class="selected focused optional ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="129" data-cursorend="129" size="128" style="width: 129ch" value="image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg with width set to 200, height set to 110"></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code-block>
-
-<p>The <el-kw>with</el-kw> clause also permits you to specify a title for the image, which shows up as a tooltip on the image. It is good practice to do this for meeting accessibility guidelines.The <el-kw>with</el-kw> clause
-also offers position properties <el-id>x</el-id> and <el-id>y</el-id>. These are ignored when <i>printing</i> an image, but are required in the context of drawing <a href="#VectorGraphics">Vector Graphics</a>.</p>
-
-<p>An image specified in this way may also be assigned to a named value, or defined inline as an argument to a method, for example:</p>
-
-<el-code-block>
-<el-statement class="ok" id="let5" tabindex="0"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>shark</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg"></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code-block>
-
-<p>The Type of a named value that holds an image is <el-type>ImageVG</el-type> &ndash; the 'VG' indicating that
-this Type is compatible with <a href="#VectorGraphics">vector graphics</a>, so an image may be added to a <el-type>List</el-type>&lt;<el-kw>of</el-kw><el-type>VectorGraphic</el-type>&gt; or displayed directly by:</p>
-
-<el-code-block>
-<el-statement class="ok" id="call5" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-method>displayVectorGraphics</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args7" class="selected focused optional ok" tabindex="0"><el-txt><input spellcheck="false" data-cursorstart="1" data-cursorend="1" size="89" style="width: 90ch" value="[image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg]"></el-txt><el-place><i>listOfVGs</i></el-place></el-field>)</el-top></el-statement>
-</el-code-block>
-
-<p>In this usage the position may be controlled by specifying the <el-code><el-id>x</el-id></el-code> and <el-code><el-id>y</el-id></el-code> coordinates for the top left corner.</p>
-
-<p>It is also possible to instantiate an <el-type>ImageVG</el-type> explicitly, but in this case you must provide
-the URL as a <el-type>String</el-type>, either as a literal (by surrounding it with quotes) or as a named value, for example:</p>
-
-<el-code-block>
-<el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>url</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>"<el-lit>https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="let7" tabindex="0"><el-kw>let </el-kw><el-field id="var8" class="ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>(<el-id>url</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print10" tabindex="0"><el-kw>print </el-kw><el-field id="expr11" class="optional ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code-block>
-
-<p>Various properties can be set on an <el-type>ImageVG</el-type>  using a <el-kw>with</el-kw> clause, for example:</p>
-<el-code-block>
-          <el-statement class="ok" id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>url</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>"<el-lit>https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="let11" tabindex="0"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="0"><el-txt><el-id>img1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>(<el-id>url</el-id>)<el-kw> with </el-kw><br><el-id>alt</el-id><el-kw> set to </el-kw>"<el-lit>shark</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code-block>
-<p>The properties are listed in <a href="#Properties_VG">Vector Graphics Properties</a>.</p>
-
-<h2 id="tone">Sound</h2>
-
-<p>The <el-method>tone</el-method> procedure allows the generation of a simple tone. It requires three arguments to be provided:</p>
-<ul>
- <li>the duration of the generated tone specified in milliseconds (<el-type>Int</el-type>)</li>
- <li>the frequency of the generated tone in Hertz (<el-type>Int</el-type>)</li>
- <li>the volume of the tone (<el-type>Float</el-type>)</li>
-</ul>
-<p>Note that the volume parameter is only relative in that the actual volume will be modified by the various sound settings on the output device, and may even be muted.</p>
-<div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>tone</el-method></h4>
-<div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; An example that plays a C major scale first ascending then descending:</p>
-<el-code-block source="sound.elan">
-</el-code-block>
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>scale</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>262</el-lit>, <el-lit>294</el-lit>, <el-lit>330</el-lit>, <el-lit>349</el-lit>, <el-lit>392</el-lit>, <el-lit>440</el-lit>, <el-lit>494</el-lit>, <el-lit>523</el-lit>]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let6" tabindex="-1"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-id>scale</el-id>.<el-method>length</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let9" tabindex="-1"><el-kw>let </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>quaver</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-lit>250</el-lit></el-txt></el-field></el-statement>
-<el-statement class="ok" id="let12" tabindex="-1"><el-kw>let </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>volume</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit>.5</el-lit></el-txt></el-field></el-statement>
-<el-statement class="ok multiline" id="for15" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident17" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id> - <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
-<el-statement class="ok" id="call21" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>tone</el-method></el-txt></el-field>(<el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>quaver</el-id>, <el-id>scale</el-id>[<el-id>i</el-id>], <el-id>volume</el-id></el-txt></el-field>)</el-top></el-statement>
-<el-kw>end for</el-kw>
-</el-statement>
-<el-statement class="ok" id="call24" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-top></el-statement>
-<el-statement class="ok multiline" id="for27" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident29" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr30" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr31" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id> - <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr32" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
-<el-statement class="ok" id="call33" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident34" class="ok" tabindex="-1"><el-txt><el-method>tone</el-method></el-txt></el-field>(<el-field id="args35" class="optional ok" tabindex="-1"><el-txt><el-id>quaver</el-id>, <el-id>scale</el-id>[<el-id>scaleL</el-id> - <el-lit>1</el-lit> - <el-id>i</el-id>], <el-id>volume</el-id></el-txt></el-field>)</el-top></el-statement>
-<el-kw>end for</el-kw>
-</el-statement>
-<hr>
-</div></div>
 
 <h1>Graphics</h1>
 
@@ -2071,7 +1775,7 @@ the URL as a <el-type>String</el-type>, either as a literal (by surrounding it w
 </ul>
 
 <h2 id="TurtleGraphics">Turtle graphics</h2>
-<p>Turtle graphics are implemented in Elan with output to the Display pane in the user interface, i.e. the 'paper' on which the turtle draws.</p>
+<p>Turtle graphics are implemented in Elan with output to the IDE's Display pane, i.e. the 'paper' on which the turtle draws.</p>
 <p>The area is 200 turtle units wide by 150 turtle units high, and both integer and floating point values of turtle units can be used.
  If a turtle is placed or moved outside the 200 &times; 150 area boundary, it will not cause an error,
  but the turtle and any lines drawn outside the boundary will not be visible.</p>
@@ -2259,13 +1963,13 @@ Also <el-code>stroke</el-code> and <el-code>fill</el-code> are set by the proper
 as shown in the table below.</p>
 <p>To supply your own values for the properties:
 <ul>
- <li>for a <a href="LangRef.html#new"><el-kw>new</el-kw> instance</a>, to set the value of property 'P..', use the <el-id>with</el-id> clause .</li>
+ <li>for a <a href="LangRef.html#new"><el-kw>new</el-kw> instance</a>, to set the value of property 'P..', use the <el-kw>with</el-kw> clause .</li>
  <li>for an existing instance, to change the value of property 'P..', call the <el-method>setP..</el-method> procedure method on the <el-type>VectorGraphic</el-type> or<br>
  (in a function) use the <el-method>withP..</el-method> dot method on the <el-type>VectorGraphic</el-type>, in either case specifying new values in the arguments.</li>
 </ul>
 <p>The <el-id>fillColour</el-id> and <el-id>strokeColour</el-id> properties may be specified as described under <a href="#Colours">Colours</a>.
 Only <el-id>fillColour</el-id> can be specified as <el-id>transparent</el-id>.</p>
-<p>Note that the <el-kw>height</el-kw> and <el-kw>width</el-kw> properties of an image are also dependent on the dimensions of the original graphic file.</p>
+<p>Note that the <el-id>height</el-id> and <el-id>width</el-id> properties of an image are also dependent on the dimensions of the original graphic file.</p>
 
 <h3 class="no-TOC">Displaying Vector graphic shapes</h3>
 <p>As with <a href="#BlockGraphics">Block</a> graphics, the assembled list of shapes is not displayed until you make a call to procedure <el-method>displayVectorGraphics</el-method> with the list as its argument, thus allowing  you to make multiple changes before display.</p>
@@ -2480,7 +2184,294 @@ Later shapes are positioned over earlier ones.</p>
  <li>Printed text <i>or</i> Html</li>
 </ol>
 <p>So some care is needed to manage the layout in the Display.</p>
-<p>Note that, while vector graphics are being drawn, printed text that exceeds the height of the display does not scroll until the graphic completes.</p>
+<p>Note that, while vector graphics are being drawn, printed text that exceeds the height of the Display does not scroll until the graphic completes.</p>
+
+<h1 id="Input/output">Input/output</h1>
+
+<h2>Reading keys &#8216;on the fly&#8217;</h2>
+<p>In some applications &#8211; especially in games, for example &#8211; you want the program to react to a key pressed by the user, but without holding up the program to wait for value to be input. </p>
+<p>Whether your application makes use graphics, or just uses the <i>Console</i> for text, reading keystrokes &#8216;on the fly&#8217; is done via one of two methods:</p>
+<el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKey</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key2</el-id>, <el-id>modifier</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKeyWithModifier</el-method>()</el-txt></el-field></el-statement>
+<p><b>Notes</b></p>
+<ul>
+<li>When the <el-method>getKey</el-method> function is called, the system <i>does not wait for a response</i>. If a key has been pressed then that will be returned as a <b>String</b> e.g. <el-code>"a"</el-code>.</li>
+<li>Non-printable keys will be returned in the form: <b>"Backspace"</b>,"<b>Enter"</b>,<b>"ArrowDown"</b>, etc.</li>
+<li>If no key has been pressed (since the last time the method was called), it will return the empty string <el-code>""</el-code>. </li>
+<li>Pressing <i>just</i> the <b>Shift</b>, <b>Ctrl</b> (<b>&#x2318; Command</b> under macOS) or <b>Alt</b> keys will not be detected by <el-method>getKey</el-method>. To read those keys use&#8230;</li>
+<li> <el-method>getKeyWithModifier</el-method> which returns a 2-tuple containing  the key pressed plus any &#8216;modifier&#8217; key such a <el-code>Shift</el-code>, <el-code>Ctrl</el-code>, or <el-code>Alt</el-code> (or the empty string if no modifier key is pressed).</li>
+<li>Both of these <el-method>getKey</el-method> methods are System methods because they have a dependency on the system and so may only be used within a <el-code>procedure</el-code> or in <el-code>main</el-code>.</li>
+</ul>
+<p>Use the procedure method <el-method>clearKeyBuffer()</el-method> if you want to enforce that the user cannot get too far ahead of the program by hitting keys in very rapid succession.</p>
+<p><el-method>waitForKey</el-method> waits for a key to be pressed, and returns it.  <el-method>pressAnyKeyToContinue</el-method> gives an optional prompt and is used when you don't need to know which key was pressed.</p>
+<el-code-block>
+<el-statement class="ok"><el-top><el-kw>call </el-kw><el-field class="ok"><el-txt><el-method>pressAnyKeyToContinue</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>true</el-id></el-txt></el-field>)</el-top></el-statement>
+<el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>OK, press A or B</el-lit>"</el-txt></el-field></el-statement>
+<el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>mykey</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>That was </el-lit>{<el-id>mykey</el-id>}<el-lit></el-lit>"</el-txt></el-field></el-statement>
+</el-code-block>
+
+<h2 id="TextFileReader">Reading text files</h2>
+<p>The <el-type>TextFileReader</el-type> class is used to read textual data from a file.</p>
+<p>An instance is created by the standalone system method <el-method>openFileForReading</el-method>.</p>
+<p>The available procedure methods are:</p>
+<table class="tableMethod">
+ <tr>
+  <th>procedure<br>method</th>
+  <th>argument<br>Type</th>
+  <th>action</th>
+ </tr><tr id="openFileForReading">
+  <td><el-method>openFileForReading</el-method></td>
+  <td><el-type>(none)</el-type></td>
+  <td>opens a file system dialog to choose the filename to be read, which must have the filetype .txt<br>
+  and returns a file handle</td>
+ </tr><tr id="readLine">
+  <td><el-method>readLine</el-method></td>
+  <td><el-type>(none)</el-type></td>
+  <td>reads the next substring from the file that is terminated with a newline</td>
+ </tr><tr id="readWholeFile">
+  <td><el-method>readWholeFile</el-method></td>
+  <td><el-type>(none)</el-type></td>
+  <td>reads the whole file and closes the file</td>
+ </tr><tr id="endOfFile">
+  <td><el-method>endOfFile</el-method></td>
+  <td><el-type>(none)</el-type></td>
+  <td>returns <el-code><el-id>true</el-id></el-code> after the last line has been read<br>
+  &ndash; otherwise <el-id>false</el-id></td>
+ </tr><tr id="close">
+  <td><el-method>close</el-method></td>
+  <td><el-type>(none)</el-type></td>
+  <td>closes the file</td>
+ </tr>
+</table>
+<p>These methods may be used to read a whole file in one go:</p>
+<el-code-block source="TextFileReader_1.elan">
+  <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>openFileForReading</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+  <el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>text</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>readWholeFile</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+  <el-statement class="ok" id="print12" tabindex="0"><el-kw>print </el-kw><el-field id="expr13" class="optional ok" tabindex="0"><el-txt><el-id>text</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-code-block>
+<p>or to read a file line by line:</p>
+<el-code-block source="TextFileReader_2.elan">
+  <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>openFileForReading</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+  <el-statement class="ok" id="var6" tabindex="0"><el-kw>variable </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>lines</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>empty</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+  <el-statement class="ok multiline" id="while9" tabindex="0">
+  <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-kw>not</el-kw> <el-id>file</el-id>.<el-method>endOfFile</el-method>()</el-txt><el-place><i>condition</i></el-place></el-field></el-top>
+  <el-statement class="ok" id="let12" tabindex="0"><el-kw>let </el-kw><el-field id="var13" class="ok" tabindex="0"><el-txt><el-id>line</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr14" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>readLine</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+  <el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>lines</el-id>.<el-method>append</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args17" class="optional ok" tabindex="0"><el-txt><el-id>line</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+  <el-kw>end while</el-kw>
+  </el-statement>
+  <el-statement class="ok" id="call18" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>close</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args20" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
+</el-code-block>
+
+<h4 class="no-TOC">Notes</h4>
+<ul>
+<li><el-code>openFileForReading</el-code> will present the user with a dialog to select the file.</li>
+<li><el-code>readWholeFile</el-code> returns a <el-type>String</el-type> containing every character in the file, without any trimming. It automatically closes the file after the read.</li>
+<li><el-code>readLine</el-code> reads as far as the next newline character (<el-code>\n</el-code>) and then automatically trims the line to remove any spaces and/or carriage-returns (which some file systems insert after the newline automatically) from the resulting line returned as a <el-type>String</el-type>. If this behaviour is not desired, you can use <el-code>readWholeFile</el-code>, which does no trimming, and then parse the resulting <el-type>String</el-type> into separate lines.</li>
+<li>Calling <el-code>file.close</el-code> after reading line by line is strongly recommended to avoid any risk of leaving the file locked. It is not necessary to call it after using <el-code>readWholeFile</el-code> because that method automatically closes the file.</li>
+<li>Calling any method on a file that is already closed will result in a runtime error.</li>
+</ul>
+
+<h2 id="TextFileWriter">Writing text files</h2>
+<p>The <el-type>TextFileWriter</el-type> class is used to write textual data to a file.</p>
+<p>An instance is created by the standalone system method <el-method>createFileForWriting</el-method>.</p>
+<p>The available procedure methods are:</p>
+<table class="tableMethod">
+ <tr>
+  <th>procedure<br>method</th>
+  <th>argument<br>Type</th>
+  <th>action</th>
+ </tr><tr id="createFileForWriting">
+  <td><el-method>creatFileForWriting</el-method></td>
+  <td><el-type>String</el-type></td>
+  <td>sets up a buffer for the data to be output, and specifies a filename (or the empty string)<br>
+  with or without the default filetype of .txt<br>
+  and returns a file handle</td>
+ </tr><tr id="writeLine">
+  <td><el-method>writeLine</el-method></td>
+  <td><el-type>String</el-type></td>
+  <td>writes the string to the buffer</td>
+ </tr><tr id="writeWholeFile">
+  <td><el-method>writeWholeFile</el-method></td>
+  <td><el-type>String</el-type></td>
+  <td>writes the string to the buffer and then outputs the buffer to the file system</td>
+ </tr><tr id="saveAndClose">
+  <td><el-method>saveAndClose</el-method></td>
+  <td><el-type>String</el-type></td>
+  <td>writes the buffer to the file system</td>
+ </tr>
+</table>
+<p>These methods may be used to write a whole file in one go:</p>
+<el-code-block source="TextFileWriter_1.elan">
+    <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>f</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>myFile.txt</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+    <el-statement class="ok" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>f</el-id>.<el-method>writeWholeFile</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt>"<el-lit>this is\nmyText</el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+</el-code-block>
+<p>or to write a file line by line:</p>
+<el-code-block source="TextFileWriter_2.elan">
+    <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>squares.txt</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+    <el-statement class="ok multiline" id="for6" tabindex="0">
+    <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident8" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
+    <el-statement class="ok" id="call12" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>writeLine</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args14" class="optional ok" tabindex="0"><el-txt>"<el-lit></el-lit>{<el-id>i</el-id>}<el-lit> </el-lit>{<el-id>i</el-id>*<el-id>i</el-id>}<el-lit></el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+    <el-kw>end for</el-kw>
+    </el-statement>
+    <el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>saveAndClose</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args17" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
+</el-code-block>
+
+<h4 class="no-TOC">Notes</h4>
+<ul>
+<li><el-code>writeLine</el-code> adds the string it is passed onto the end of any data previously written, with a newline character (<el-code>\n</el-code>) automatically appended.</li>
+<li>When execution reaches <el-code>saveAndClose</el-code> you will be presented with a dialog to confirm (or edit) the given filename and location where it is to be saved. It is not therefore strictly necessary to specify a filename when creating the file, since it can be specified by the user in the dialog so, in that case, you might put the empty string <el-code>""</el-code> into the parameter of <el-code>createFileForWriting</el-code>.</li>
+<li><el-code>writeWholeFile</el-code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <el-code>saveAndClose</el-code> had been called.</li>
+<li>Calling any method on a file that has already been closed (by calling either <el-code>saveAndClose</el-code> or by <el-code>writeWholeFile</el-code>) will result in a runtime error.</li>
+<li>If the user were to hit Cancel on the save dialog, then the program will exit with an error. If you want to guard against this possibility (if, for example, it might mean the loss of important data) then you should perform the save and close within a <el-code>try..catch</el-code> like this:</li>
+
+<el-code-block source="TextFileWriter_3.elan">
+<el-statement class="ok multiline" id="try35" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>try </el-kw></el-top>
+<el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>saveAndClose</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args17" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok multiline outdent" id="catch37" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>catch exception in </el-kw><el-field id="ident39" class="ok" tabindex="0"><el-txt><el-id>e</el-id></el-txt><el-place><i>variableName</i></el-place></el-field></el-top>
+<el-statement class="ok" id="print47" tabindex="0"><el-kw>print </el-kw><el-field id="expr48" class="optional ok" tabindex="0"><el-txt>"<el-lit>File save cancelled</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-statement>
+<el-kw>end try</el-kw>
+</el-statement>
+</el-code-block>
+<p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
+</ul>
+
+<h2 id="DisplayHtml">Rendering Html in the Display</h2>
+<p>If you embed Html code in a string and then attempt to print it, you will see the string displayed literally: the Html tags
+    will not be recognised. This is for security reasons. However, it <i>is</i> possible to display formatted Html in the <b>Display</b>.
+    The following code:</p>
+
+<el-code-block source="Html_1.elan">
+    <el-statement class="ok" id="call5" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-method>displayHtml</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args7" class="optional ok" tabindex="0"><el-txt>"<el-lit>&lt;h1 style='color: blue;'&gt;A heading&lt;/h1&gt;&lt;p&gt;some text&lt;/p&gt;</el-lit>"</el-txt><el-place><i>html</i></el-place></el-field>)</el-top></el-statement>
+</el-code-block>
+
+<p>will produce:</p>
+<img src="images/Html_1.png" width="250" height="200">
+
+<p>This Html forms another 'layer' in the IDE's Display pane. Any plain text that you print
+    (using <el-kw>print</el-kw> or any of the <el-method>print..</el-method> procedures)
+    will be overlaid on top of this.</p>
+
+<p id="clearHtml">You can clear just the Html layer in the display using the procedure <el-method>clearHtml</el-method>.</p>
+
+<p>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above.
+    Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string.
+    Alternatively, you could use the constant <el-code><el-id>quotes</el-id></el-code> within braces as an interpolated field.</p>
+
+<h3 class="no-TOC">Using an embedded CSS stylesheet</h3>
+<p>You can also specify a &lt;style&gt; tag at the start of your Html string, to apply to the whole Html being displayed. In this case you would put
+the style definition into a named value as a literal but enclosed in <i>single</i> quotes, for example:</p>
+<el-code-block source="Html_2.elan">
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>'<el-lit>&lt;style&gt; h1 { color: Red; font-size: 24pt; } p { font-family: Serif; } &lt;/style&gt;</el-lit>'</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call6" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>displayHtml</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="-1"><el-txt>"<el-lit></el-lit>{<el-id>style</el-id>}<el-lit>&lt;h1&gt;New heading&lt;/h1&gt;&lt;p&gt;some new text&lt;/p&gt;</el-lit>"</el-txt></el-field>)</el-top></el-statement>
+</el-code-block>
+
+<p>will produce:</p>
+<img src="images/Html_2.png" width="275" height="200">
+
+<p>The &lt;style&gt; string is displayed for editing like this:</p>
+<el-code-block source="Html_3.elan">
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="91" data-cursorend="91" size="90" style="width: 91ch" value="'&lt;style&gt; h1 { color: Red; font-size: 24pt; }  p { font-family: Serif; }  &lt;/style&gt;'" tabindex="-1"></el-txt></el-field></el-statement>
+</el-code-block>
+
+<p>But by inserting double spaces (for newline) and triple spaces (for newline and indent) thus:</p>
+<el-code-block source="Html_3.elan">
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="91" data-cursorend="91" size="90" style="width: 91ch" value="'&lt;style&gt;  h1 {   color: Red;   font-size: 24pt;  }  p {   font-family: Serif;  }  &lt;/style&gt;'" tabindex="-1"></el-txt></el-field></el-statement>
+</el-code-block>
+
+<p>the string can be shown folded and indented when not being edited by the inclusion of double and triple spaces: </p>
+<el-code-block source="Html_4.elan">
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>'<el-lit>&lt;style&gt;<br>h1 {<br> color: Red;<br> font-size: 24pt;<br>}<br>p {<br> font-family: Serif;<br>}<br>&lt;/style&gt;</el-lit>'</el-txt></el-field></el-statement>
+</el-code-block>
+
+<h2>Displaying images from URLs</h2>
+
+<p>An image that can be retrieved with an http or https URL may be sent to the Display pane using either of these two techniques:
+<ul>
+  <li>put the Html <b>&lt;img&gt;</b> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
+<el-code-block source="Html_4.elan">
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>"<el-lit>&lt;img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg'<br> width='400' height='200'<br> title='shark' alt='shark'&gt;</el-lit>"</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call6" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>displayHtml</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field>)</el-top></el-statement>
+</el-code-block>
+ <h5 class="no-TOC">Notes</h5>
+  <ul>
+   <li>The usual <b>&lt;img&gt;</b> tag attributes are respected, though <el-id>alt</el-id> does not give the expected tooltip when hovering over the image,
+   and <el-id>title</el-id> is only a descriptive comment.</li>
+   <li>The attributes can be shown listed vertically by inserting three spaces to signify a newline, as is done here before <el-id>width</el-id> and before <el-id>title</el-id>. </li>
+  </ul>
+
+ <li>put the URL into a Vector Graphics <el-type>ImageVG</el-type> definition and then call the <el-method>displayVG</el-method> method on it, thus:
+<el-code-block source="imageVG.elan">
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>('<el-lit>https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg</el-lit>')<el-kw> with </el-kw><br><el-id>width</el-id><el-kw> set to </el-kw><el-lit>400</el-lit>, <br><el-id>height</el-id><el-kw> set to </el-kw><el-lit>200</el-lit>, <br><el-id>alt</el-id><el-kw> set to </el-kw>"<el-lit>Shark</el-lit>"</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call11" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="-1"><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field id="args13" class="optional ok" tabindex="-1"><el-txt>[<el-id>pic</el-id>]</el-txt></el-field>)</el-top></el-statement>
+</el-code-block>
+
+ <h5 class="no-TOC">Notes</h5>
+  <ul>
+   <li>Vector graphic image properties include <el-id>height</el-id>, <el-id>width</el-id> and <el-id>alt</el-id> that match the similar Html attributes and and have the same effect.</li>
+   <li>Other vector graphic image properties such as <i>x,y</i> position, can be added into the <el-kw>with</el-kw> clause.
+  </ul>
+ </li>
+</ul>
+
+<p>Note that other URI protocols, e.g. <el-code>file://host/path</el-code> to access an image on your local file system, are not supported.</p>
+
+<p id="image">Sometimes it is useful to see a thumbnail of the image within the code. You can do this by using the <el-kw>image</el-kw> vector graphics keyword with
+the URL <i>not</i> enclosed in quotes and, optionally, properties defined in a <el-kw>with</el-kw> clause, thus::</p>
+
+<el-code-block source="image_1.elan">
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="108" data-cursorend="108" size="107" style="width: 108ch" value="image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg with alt set to &quot;Shark&quot;" tabindex="-1"></el-txt></el-field></el-statement>
+</el-code-block>
+
+On moving the editing focus away from the image field, the instruction becomes:
+
+<el-code-block>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg"></el-txt></el-field></el-statement>
+</el-code-block>
+
+<p>Here <el-id>pic</el-id> is of Type <el-type>ImageVG</el-type>, so to display it as Html, you convert it to a string:</p>
+
+<!-- some further explanation to be added here -->
+
+<p class="ack"> <b>Acknowledgement</b><br> The idea of displaying an image value as a thumbnail within the code was inspired by
+a similar feature in the language <a href="https://strype.org">Strype</a>. We are
+grateful to Prof. Michael Kölling and the team at King's College, London responsible for Strype,
+who showed us this feature in confidence before its release, but nonetheless generously allowed us to mimic it in Elan.</p>
+
+<h2 id="tone">Sound</h2>
+
+<p>The <el-method>tone</el-method> procedure allows the generation of a simple tone. It requires three arguments to be provided:</p>
+<ul>
+ <li>the duration of the generated tone specified in milliseconds (<el-type>Int</el-type>)</li>
+ <li>the frequency of the generated tone in Hertz (<el-type>Int</el-type>)</li>
+ <li>the volume of the tone (<el-type>Float</el-type>)</li>
+</ul>
+<p>Note that the volume parameter is only relative in that the actual volume will be modified by the various sound settings on the output device, and may even be muted.</p>
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>tone</el-method></h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; An example that plays a C major scale first ascending then descending:</p>
+<el-code-block source="sound.elan">
+</el-code-block>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>scale</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>262</el-lit>, <el-lit>294</el-lit>, <el-lit>330</el-lit>, <el-lit>349</el-lit>, <el-lit>392</el-lit>, <el-lit>440</el-lit>, <el-lit>494</el-lit>, <el-lit>523</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let6" tabindex="-1"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-id>scale</el-id>.<el-method>length</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let9" tabindex="-1"><el-kw>let </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>quaver</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-lit>250</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="let12" tabindex="-1"><el-kw>let </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>volume</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit>.5</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="for15" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident17" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id> - <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
+<el-statement class="ok" id="call21" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>tone</el-method></el-txt></el-field>(<el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>quaver</el-id>, <el-id>scale</el-id>[<el-id>i</el-id>], <el-id>volume</el-id></el-txt></el-field>)</el-top></el-statement>
+<el-kw>end for</el-kw>
+</el-statement>
+<el-statement class="ok" id="call24" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident25" class="ok" tabindex="-1"><el-txt><el-method>pause</el-method></el-txt></el-field>(<el-field id="args26" class="optional ok" tabindex="-1"><el-txt><el-lit>1000</el-lit></el-txt></el-field>)</el-top></el-statement>
+<el-statement class="ok multiline" id="for27" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident29" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr30" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr31" class="ok" tabindex="-1"><el-txt><el-id>scaleL</el-id> - <el-lit>1</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr32" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
+<el-statement class="ok" id="call33" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident34" class="ok" tabindex="-1"><el-txt><el-method>tone</el-method></el-txt></el-field>(<el-field id="args35" class="optional ok" tabindex="-1"><el-txt><el-id>quaver</el-id>, <el-id>scale</el-id>[<el-id>scaleL</el-id> - <el-lit>1</el-lit> - <el-id>i</el-id>], <el-id>volume</el-id></el-txt></el-field>)</el-top></el-statement>
+<el-kw>end for</el-kw>
+</el-statement>
+<hr>
+</div></div>
 
 <h1>Other Types</h1>
 
@@ -2977,7 +2968,7 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
  <li>Input/output may be performed in  procedures as well as in <el-code>main</el-code>.</li>
  <li>Some system methods are not concerned with input/output, e.g. some generate random numbers.</li>
 </ul>
-<p>The reason those are system methods is that they have a dependency on variable data that is not passed into them as arguments.</p>
+<p>The reason those are system methods is that they have a dependency on data that is not passed into them as arguments.</p>
 
 <table class="tableMethod">
  <tr>
