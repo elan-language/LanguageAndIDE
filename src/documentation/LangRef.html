@@ -157,7 +157,7 @@ Procedures and functions may be called or referenced recursively. For example, a
  <li>Elan tests are designed to test functions only. It is not possible to call a <el-code>procedure</el-code> or <el-code>main</el-code> routine within a test. Nor is it possible to use any <a href="LibRef.html#SystemMethods">System method</a> (the same rule as for a function).</li>
  <li>A test may optionally be given a name or description in free-form text, just like a comment, which plays no role in the execution of the test. You might give the test the same name as a function that it is testing, or you might describe a particular scenario that is being tested.</li>
  <li><el-code>test</el-code> methods may be written anywhere in the code, provided they are at the global level. </li>
- <li>A <el-code>test</el-code> method may contain any number of <el-code>assert</el-code> statements. When tests are run, the test runner (part of the Elan IDE), will attempt to run all <el-code>assert</el-code> statements and show each one's pass or fail outcome alongside. However, if the test hits a runtime error (as distinct from an <el-code>assert</el-code> failure) then execution of the test will stop and remaining <el-code>assert</el-code>s will be shown as 'not run'.</li>
+ <li>A <el-code>test</el-code> method may contain any number of <el-code>assert</el-code> statements. When tests are run, the test runner (which is part of the IDE), will attempt to run all <el-code>assert</el-code> statements and show each one's pass or fail outcome alongside. However, if the test hits a runtime error (as distinct from an <el-code>assert</el-code> failure) then execution of the test will stop and remaining <el-code>assert</el-code>s will be shown as 'not run'.</li>
  <li>In addition to <el-code>assert</el-code> statements, a <el-code>test</el-code> may contain any other statements that may be added into a <el-code>function</el-code> (except <el-code>return</el-code>).</li>
  <li>All <el-code>assert</el-code> statements should be at the top level within the <el-code>test</el-code> frame; none may be put into a loop structure.</li>
 </ul>
@@ -515,7 +515,7 @@ If the <el-kw>property</el-kw> is not initialised within the constructor then it
 <p>A function method follows the same syntax and rules as a global <a href="#function">function</a>. The differences are:</p>
 <ul>
 <li>A <el-code>function</el-code> method is always referenced (used) by code outside the class using 'dot syntax' on an instance.</li>
-<li>A <el-code>function</el-code> method may directly reference (read only) any <el-kw>property</el-kw> defined on the class as though it were a variable/parameter.</li>
+<li>A <el-code>function</el-code> method may directly reference (read only) any <el-kw>property</el-kw> defined on the class as though it were a variable or parameter.</li>
 <li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then pressing Ctrl-p. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 <li>asString() method</li>
 <li>asString method. This is just a regular function method with a specific name, no parameters and returning a String. If defined for a class, then if an instance of the class is printed, the <el-code>asString</el-code> function method will automatically be used. Typically <el-code>asString</el-code> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
@@ -589,7 +589,7 @@ by <a href="#throw">throwing an exception</a> like this:</p>
 <p>There is a limit to the complexity of a <el-kw>call</el-kw> statement.  Only one dot is allowed in the <el-code>procedure name</el-code> field, or two dots if the first word is <el-kw>property</el-kw>.  If you need anything more complicated, use a <el-kw>let</el-kw> statement on the line above.  See the error message explanation for <a href="#ProcRefField">'procedureName' in a call statement</a>.</p>
 
 <h2 id="each">Each loop</h2>
-<p>The <el-code>each..in..</el-code> construct specifies looping sequentially over the itemss in a <el-type>List</el-type> or an <el-type>Array</el-type>, or over the characters in a <el-type>String</el-type>.</p>
+<p>The <el-code>each..in..</el-code> construct specifies looping sequentially over the items in a <el-type>List</el-type> or an <el-type>Array</el-type>, or over the characters in a <el-type>String</el-type>.</p>
 <p>The <el-code>each</el-code> loop counter variable is of the same Type as the items in the List or Array, or is of Type <el-type>String</el-type> if looping over the characters in a String. The variable does not have to have been previously defined in a <el-code>variable</el-code> statement.</p>
 
 <div class="accordion">
@@ -679,13 +679,13 @@ Example 2:
 
 <h2 id="let">Let statement</h2>
 <p>The <el-kw>let</el-kw> statement may be thought of as being between a constant and a variable.
-Like a variable a <el-kw>let</el-kw>  may be defined only within a routine, but unlike a variable it may not be re-assigned once defined.
+Like a variable a <el-kw>let</el-kw> may be defined only within a routine, but unlike a variable it may not be re-assigned once defined.
 It is recommended that you always use a let in preference to a variable unless you need to be able to assign a new value to it.
 </p>
 <p>You can put a <el-kw>let</el-kw> in a loop, so the variable gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
 
 <h2 id="print">Print statement</h2>
-<p>The simplest way to print is with the <el-code>print</el-code> statement. For example:</p>
+<p>The simplest way to print text to the IDE's Display pane is with the <el-code>print</el-code> statement. For example:</p>
 <el-code-block>
     <el-statement class="ok" id="print5" tabindex="0"><el-kw>print </el-kw><el-field id="expr6" class="optional ok" tabindex="0"><el-txt>"<el-lit>Hello</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
     <el-statement class="ok" id="let7" tabindex="0"><el-kw>let </el-kw><el-field id="var8" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-lit>3</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -696,7 +696,7 @@ It is recommended that you always use a let in preference to a variable unless y
 
 <h4 class="no-TOC">Note</h4>
 <ul>
-<li>The last line in the example above uses an <a href="LibRef.html#InterpolatedString">interpolated strings</a>. Arguments placed within curly braces are evaluated before printing, and these may be separated by literal text and punctuation as needed. This is one recommended way to print more than one value on a line. The other way is to use <a href="LibRef.html#printLine">print procedures</a>.</li>
+<li>The last line in the example above uses <a href="LibRef.html#InterpolatedString">interpolated strings</a>. Arguments placed within curly braces are evaluated before printing, and these may be separated by literal text and punctuation as needed. This is one recommended way to print more than one value on a line. The other way is to use <a href="LibRef.html#printLine">print procedures</a>.</li>
 </ul>
 
 <h2 id="repeat">Repeat loop</h2>
@@ -812,7 +812,7 @@ For more about ListImmutable and DictionaryImmutable literals see the <a href="L
 <div id="parse_name"></div>
 <h2 id="Identifier">Identifier</h2>
 <p>For all kinds of named values, the name must follow the rules for an 'identifier'.
-  It must start with a lower case letter, followed by any combination of lower case and upper case letters,
+  It must start with a lower case letter, followed by any combination of lower and upper case letters,
    numeric digits, and the _ (underscore) symbol. It may not contain spaces or other symbols.</p>
 <p>If you happen to choose a language keyword, method name or other reserved word, an error message will tell you that you cannot use it for an identifier.</p>
 
@@ -914,7 +914,7 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 </ul>
 <p>Note that in Elan equality testing is always 'equality by value'; there is no such thing as 'equality by reference'.</p>
 <p>If the items being compared are composite types, the elements within them are compared sequentially to see if the objects are equal.  For example two distinct instances of the same class compare equal if the values of all their properties compare equal.  And two Lists compare equal if they contain the same elements in the same order.</p>
-<p>The compiler rejects any attempt to compare instances of different classes unless abstract classes and inheritance are involved.  Two instances which are subclasses of the same abstract class compare equal only if they are of the same class (and have the same property vlaues).</p>
+<p>The compiler rejects any attempt to compare instances of different classes unless abstract classes and inheritance are involved.  Two instances which are subclasses of the same abstract class compare equal only if they are of the same class (and have the same property values).</p>
 
 <h4 class="no-TOC">Numeric comparison</h4>
 <p>The numeric comparison operators are:</p>
@@ -1075,11 +1075,11 @@ Example of use in this manner, taken from demo program <el-code>snake_FP.elan</e
 <h2># comment</h2>
 <p>A comment is not an instruction: it is ignored by the compiler and does not change how the program works.
 Rather, a comment contains information <em>about</em> the program, intended to be read by a person seeking to understand or modify the code.</p>
-<p>Every comment starts with the symbol '<el-code>#</el-code>' (known as 'hash') followed by some text or a blank line. The text field in
-a comment may contain any text, except that it must not start with the open square bracket symbol '<el-code>[</el-code>'.</p>
+<p>Every comment starts with the hash symbol <el-code>#</el-code> followed by some text or a blank line. The text field in
+a comment may contain any text, except that it must not start with the open square bracket symbol <el-code>[</el-code>.</p>
 <p>Comments may be inserted at any level: in the <a href="#GlobalInstructions">Global</a>,
 <a href="#MemberInstructions">Member</a>, or <a href="#StatementInstructions">Statement</a> instruction levels,
-as well a from the <el-code>new code</el-code> prompt, i.e. every <a href="IDEGuide.html#Selector">selector</a> provides a <el-code>#</el-code> for entering a comment.</p>
+as well as from the <el-code>new code</el-code> prompt &ndash; every prompt provides a <el-code>#</el-code> for entering a comment.</p>
 <p> Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user.
   This comment is known as the 'file header' and shows the version of Elan being run.</p>
 
@@ -1237,6 +1237,7 @@ as well a from the <el-code>new code</el-code> prompt, i.e. every <a href="IDEGu
 
 <h3 id="mustNotBeKeyword" class="no-TOC">... is a keyword, and may not be used as an identifier.</h3>
  <p>An Elan keyword cannot be used to as the name for a value, property, or method. Try shortening the name, lengthening it, or using a different name</p>
+<p>For reference, the complete list of keywords is:<br><el-code>#, abstract, and, as, assert, be, call, catch, class, constant, constructor, cpy, div, each, else, empty, end, enum, exception, for, from, function, if, ignore, image, in, inherits, interface, is, isnt, lambda, let, main, mod, new, not, of, or, out, print, private, procedure, property, record, ref, repeat, return, returns, set, step, test, then, throw, to, try, variable, while, with </el-code></p>
 
 <h3 id="mustNotBeReservedWord" class="no-TOC">...  is a reserved word, and may not be used as an identifier.</h3>
  <p>In addition to Elan keywords there are certain other 'reserved words' that cannot be used to define the name for a
@@ -1254,7 +1255,7 @@ as well a from the <el-code>new code</el-code> prompt, i.e. every <a href="IDEGu
   complexity &ndash; especially in regard to debugging and interaction with the Elan editor &ndash; just to eliminate
   the minor inconvenience of having to extend the word so as to make your identifier distinct.)</li>
  </ul>
-<p>For reference, the complete list of reserved words is:<br><el-code>action, arguments, array, async, await, boolean, break, by, byte, case, catch, char, const, continue, curry, debugger, default, delete, dictionary, do, double, eval, export, extends, final, finally, float, goto, implements, import, in, instanceof, int, into, list, long, match, namespace, native, null, on, optional, otherwise, package, partial, pattern, protected, public, short, static, string, super, switch, system, synchronized, throws, todo, transient, typeof, void, volatile, var, when, yield</el-code></p>
+<p>For reference, the complete list of reserved words is:<br><el-code>action, arguments, array, async, await, boolean, break, by, byte, case, char, const, continue, curry, debugger, default, delete, dictionary, do, double, eval, export, extends, final, finally, float, goto, implements, import, instanceof, int, into, list, long, match, namespace, native, null, on, optional, otherwise, package, partial, pattern, protected, public, short, static, string, super, switch, system, synchronized, throws, todo, transient, typeof, void, volatile, var, when, yield</el-code></p>
 
 <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
  <p>An index into an array or list cannot have a negative value. If a negative is given in literal form e.g.
@@ -1386,7 +1387,7 @@ as well a from the <el-code>new code</el-code> prompt, i.e. every <a href="IDEGu
 
 <div id="parse_type"></div>
 <h3 id="TypeNameField" class="no-TOC">'Name' field in a class or enum definition</h3>
- <p>Type names always begin with a capital letter,  optionally followed by letters of either case, numeric digits,
+ <p>Type names always begin with a capital letter, optionally followed by letters of either case, numeric digits,
  or underscore symbols. Nothing else.</p>
 
 <h3 id="ValueDefField" class="no-TOC">'name' field in a let or variable instruction</h3>
