@@ -1,12 +1,12 @@
 import { catchKeyword, exceptionKeyword, inKeyword } from "../../../compiler/keywords";
+import { AbstractFrame } from "../abstract-frame";
 import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
-import { FrameWithStatements } from "../frame-with-statements";
 
-export class CatchStatement extends FrameWithStatements implements Statement {
+export class CatchStatement extends AbstractFrame implements Statement {
   isStatement = true;
   isCatch = true;
   variable: IdentifierField;
@@ -15,14 +15,10 @@ export class CatchStatement extends FrameWithStatements implements Statement {
     this.variable = new IdentifierField(this);
     this.variable.setPlaceholder("<i>variableName</i>");
     this.variable.setFieldToKnownValidText("e");
-    this._movable = false;
+    this._movable = true;
   }
 
   override deleteIfPermissible(): void {} // does nothing - catch can't be deleted
-
-  canInsertAfter(): boolean {
-    return false;
-  }
 
   protected setClasses() {
     super.setClasses();
@@ -52,22 +48,17 @@ export class CatchStatement extends FrameWithStatements implements Statement {
   keywords = `${catchKeyword} ${exceptionKeyword} ${inKeyword} `;
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1"><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${this.keywords}</el-kw>${this.variable.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}        
-</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1"><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${this.keywords}</el-kw>${this.variable.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top></el-statement>`;
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${this.keywords}${this.variable.renderAsSource()}\r
-${this.renderChildrenAsSource()}`;
+    return `${this.indent()}${this.keywords}${this.variable.renderAsSource()}`;
   }
 
-  parseTop(source: CodeSource): void {
+  parseFrom(source: CodeSource): void {
     source.removeIndent();
     source.remove(this.keywords);
     this.variable.parseFrom(source);
-  }
-  parseBottom(source: CodeSource): boolean {
-    return this.parseStandardEnding(source, "end try");
+    source.removeNewLine();
   }
 }
