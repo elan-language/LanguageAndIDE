@@ -38,6 +38,7 @@ import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
 import { EmptyAsn } from "./empty-asn";
 import { EnumValuesAsn } from "./fields/enum-values-asn";
 import { FileAsn } from "./file-asn";
+import { ConstantAsn } from "./globals/constant-asn";
 import { FunctionAsn } from "./globals/function-asn";
 import { IndexAsn } from "./index-asn";
 import { IndexDoubleAsn } from "./index-double-asn";
@@ -471,4 +472,14 @@ export function isInsideFunctionOrConstructor(scope: Scope): boolean {
     return false;
   }
   return isInsideFunctionOrConstructor(scope.getParentScope());
+}
+
+export function isInsideConstant(scope: Scope): boolean {
+  if (scope instanceof ConstantAsn) {
+    return true;
+  }
+  if (scope instanceof FileAsn) {
+    return false;
+  }
+  return isInsideConstant(scope.getParentScope());
 }

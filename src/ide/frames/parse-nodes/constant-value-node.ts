@@ -1,7 +1,9 @@
 import { AbstractAlternatives } from "./abstract-alternatives";
+import { DictionaryNode } from "./dictionary-node";
 import { IdentifierNode } from "./identifier-node";
 import { DictionaryImmutableNode } from "./immutable-dictionary-node";
 import { ListImmutableNode } from "./list-immutable-node";
+import { ListNode } from "./list-node";
 import { LitValueNode } from "./lit-value-node";
 import { TupleNode } from "./tuple-node";
 
@@ -18,6 +20,13 @@ export class ConstantValueNode extends AbstractAlternatives {
     this.alternatives.push(new ListImmutableNode(() => new ConstantValueNode()));
     this.alternatives.push(
       new DictionaryImmutableNode(
+        () => new ConstantValueNode(),
+        () => new ConstantValueNode(),
+      ),
+    );
+    this.alternatives.push(new ListNode(() => new ConstantValueNode()));
+    this.alternatives.push(
+      new DictionaryNode(
         () => new ConstantValueNode(),
         () => new ConstantValueNode(),
       ),

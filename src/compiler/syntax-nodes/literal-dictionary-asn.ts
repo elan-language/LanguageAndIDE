@@ -5,8 +5,14 @@ import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { DictionaryName } from "../../compiler/symbols/elan-type-names";
 import { getGlobalScope } from "../../compiler/symbols/symbol-helpers";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
-import { mustBeAssignableType, mustBeValidKeyType, mustHaveUniqueKeys } from "../compile-rules";
+import {
+  mustBeAssignableType,
+  mustBeImmutableCollection,
+  mustBeValidKeyType,
+  mustHaveUniqueKeys,
+} from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { isInsideConstant } from "./ast-helpers";
 import { KvpAsn } from "./kvp-asn";
 
 export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
@@ -20,6 +26,11 @@ export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
+
+    if (isInsideConstant(this.scope)) {
+      mustBeImmutableCollection(false, this.compileErrors, this.fieldId);
+    }
+
     const items = this.list.items as KvpAsn[];
 
     const keys = items.map((kvp) => kvp.key.compile());

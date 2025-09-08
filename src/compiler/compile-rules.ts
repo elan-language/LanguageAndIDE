@@ -18,6 +18,7 @@ import {
   ExtraParameterCompileError,
   FunctionRefCompileError,
   GenericParametersCompileError,
+  ImmutableCollectionCompileError,
   InvalidSourceForEachCompileError,
   IsDeprecated,
   MemberTypeCompileError,
@@ -776,6 +777,14 @@ export function mustBeAssignableType(
   if (!lhs.isAssignableFrom(rhs)) {
     FailNotAssignable(lhs, rhs, compileErrors, location);
   }
+}
+
+export function mustBeImmutableCollection(
+  list: boolean,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  compileErrors.push(new ImmutableCollectionCompileError(list, location));
 }
 
 function mustBeCompatibleRecordDeconstruction(

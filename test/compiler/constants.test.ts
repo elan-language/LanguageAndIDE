@@ -392,7 +392,10 @@ end main
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "An ordinary List cannot be defined as a constant. Consider using { } instead of [ ] to define an immutable List.LangRef.html#compile_error",
+    ]);
   });
 
   test("Pass_ListofList", async () => {
@@ -486,7 +489,10 @@ end main
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "An ordinary Dictionary cannot be defined as a constant. Consider using { } instead of [ ] to define an immutable Dictionary.LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_useInsideMain", async () => {
