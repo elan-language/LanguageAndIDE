@@ -1,7 +1,9 @@
 import { CompileError, Severity } from "../../compiler/compile-error";
+import { ghostedKeyword } from "../../compiler/keywords";
 import { TestStatus } from "../../compiler/test-status";
 import { AbstractSelector } from "./abstract-selector";
 import { Collapsible } from "./frame-interfaces/collapsible";
+import { Comment } from "./frame-interfaces/comment";
 import { Field } from "./frame-interfaces/field";
 import { File } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
@@ -14,8 +16,6 @@ import { Statement } from "./frame-interfaces/statement";
 import { MainFrame } from "./globals/main-frame";
 import { ReturnStatement } from "./statements/return-statement";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus } from "./status-enums";
-import { Comment } from "./frame-interfaces/comment";
-import { ghostedKeyword } from "../../compiler/keywords";
 
 export function isCollapsible(f?: Selectable): f is Collapsible {
   return !!f && "isCollapsible" in f;
@@ -112,8 +112,8 @@ export function escapeHtmlInclSpaces(str: string): string {
   return escapeHtmlChars(str).replaceAll(/\s/g, "&nbsp;");
 }
 
-export function renderDoubleSpaceAfterCharAsLineBreak(str: string): string {
-  return escapeHtmlChars(str).replaceAll(/([^\s]|^)\s\s(\s*)/g, "$1<br>$2");
+export function renderBackslashNasABreak(str: string): string {
+  return escapeHtmlChars(str).replaceAll(/\\n/g, "<br>");
 }
 
 export function helper_pastePopUp(loc: Frame | Field): string {
