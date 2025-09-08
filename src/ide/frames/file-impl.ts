@@ -152,7 +152,7 @@ export class FileImpl implements File {
   }
 
   get hasTests() {
-    return this._children.some((g) => g instanceof TestFrame);
+    return this._children.some((g) => g instanceof TestFrame && !g.isGhosted() && !g.ignored);
   }
 
   deleteSelectedChildren(): void {
@@ -504,7 +504,7 @@ export class FileImpl implements File {
 
   private getTestFrames(): TestFrame[] {
     return this.getChildren()
-      .filter((c) => c instanceof TestFrame)
+      .filter((c) => c instanceof TestFrame && !c.isGhosted() && !c.ignored)
       .map((c) => c as TestFrame);
   }
 
