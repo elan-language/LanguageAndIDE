@@ -216,7 +216,9 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
   getAsserts() {
     const children = this.getChildren();
-    let asserts = children.filter((c) => c instanceof AssertStatement) as AssertStatement[];
+    let asserts = children.filter(
+      (c) => c instanceof AssertStatement && !c.isGhosted(),
+    ) as AssertStatement[];
 
     for (const f of children.filter((c) => c instanceof FrameWithStatements)) {
       asserts = asserts.concat(f.getAsserts());

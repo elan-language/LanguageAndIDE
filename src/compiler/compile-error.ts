@@ -527,3 +527,15 @@ export class UnknownCompilerDirectiveCompileError extends CompileError {
     );
   }
 }
+
+export class ImmutableCollectionCompileError extends CompileError {
+  constructor(list: boolean, location: string) {
+    super(
+      DisplayPriority.second,
+      Severity.error,
+      `An ordinary ${list ? "List" : "Dictionary"} cannot be defined as a constant. Consider using { } instead of [ ] to define an immutable ${list ? "List" : "Dictionary"}.`,
+      location,
+      "LangRef.html#compile_error",
+    );
+  }
+}

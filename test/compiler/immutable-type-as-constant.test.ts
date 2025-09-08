@@ -3,6 +3,7 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
+  assertDoesNotCompile,
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -203,7 +204,10 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "An ordinary List cannot be defined as a constant. Consider using { } instead of [ ] to define an immutable List.LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_List2", async () => {
@@ -269,7 +273,10 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "An ordinary Dictionary cannot be defined as a constant. Consider using { } instead of [ ] to define an immutable Dictionary.LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_Dictionary2", async () => {
