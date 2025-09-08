@@ -47,14 +47,12 @@ ${this.indent()}${endKeyword} ${tryKeyword}`;
   }
 
   parseBottom(source: CodeSource): boolean {
-    let result = false;
-    if (source.isMatchRegEx(/^[^\S\r\n]*catch\s/)) {
+    source.removeIndent();
+    if (source.isMatchRegEx(/^catch\s/)) {
       this.catch.parseFrom(source);
       const redundantSelector = this.getFirstSelectorAsDirectChild();
       this.removeChild(redundantSelector); //So that parsing will continue from the selector *after* the catch
-    } else {
-      result = this.parseStandardEnding(source, `${endKeyword} ${tryKeyword}`);
     }
-    return result;
+    return this.parseStandardEnding(source, `${endKeyword} ${tryKeyword}`);
   }
 }
