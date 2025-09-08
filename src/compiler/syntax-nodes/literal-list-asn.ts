@@ -5,8 +5,9 @@ import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { ListName } from "../../compiler/symbols/elan-type-names";
 import { getGlobalScope } from "../../compiler/symbols/symbol-helpers";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
-import { mustBeAssignableType } from "../compile-rules";
+import { mustBeAssignableType, mustBeImmutableCollection } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { isInsideConstant } from "./ast-helpers";
 
 export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode {
   constructor(
@@ -19,6 +20,11 @@ export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode
 
   compile(): string {
     this.compileErrors = [];
+
+    if (isInsideConstant(this.scope)) {
+      mustBeImmutableCollection(true, this.compileErrors, this.fieldId);
+    }
+
     const ofType = this.items[0]?.symbolType();
 
     for (const i of this.items) {
