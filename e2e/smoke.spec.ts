@@ -287,3 +287,62 @@ test('ghost test', async ({ page }) => {
 
   await expect(page.locator('#test')).toContainText('pass');
 });
+
+test('ghost code', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('m');
+  await page.keyboard.type('l');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('fred');
+
+  
+  await expect(page.locator('#compile')).toContainText('unknown');
+
+  await page.getByText('let', { exact: true }).click({
+    button: 'right'
+  });
+
+  await page.getByText('ghost').click();
+
+  await expect(page.locator('#compile')).toContainText('ok');
+
+  await expect(page.getByText('# [ghosted]')).toBeVisible();
+
+  await page.getByText('let', { exact: true }).click({
+    button: 'right'
+  });
+
+  await page.getByText('unghost').click();
+
+  await expect(page.getByText('# [ghosted]')).not.toBeVisible();
+
+  await expect(page.locator('#compile')).toContainText('unknown');
+
+  await page.getByText('main', { exact: true }).click({
+    button: 'right'
+  });
+
+  await page.getByText('ghost').click();
+
+  await expect(page.getByText('# [ghosted]')).toBeVisible();
+
+  await expect(page.locator('#compile')).toContainText('ok');
+
+  await page.getByText('main', { exact: true }).click({
+    button: 'right'
+  });
+
+  await page.getByText('unghost').click();
+
+  await expect(page.getByText('# [ghosted]')).not.toBeVisible();
+
+  await expect(page.locator('#compile')).toContainText('unknown');
+});
