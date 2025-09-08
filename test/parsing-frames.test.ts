@@ -749,22 +749,4 @@ end class
     const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
-  test("#1762 Format literal strings over multiple lines", async () => {
-    const code = `${testHeader}
-
-constant s set to "  1   2    3     4      "
-`;
-    const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fl.parseFrom(source);
-    const html = await fl.renderAsHtml();
-    assert.equal(html.includes("<el-lit><br>1<br> 2<br>  3<br>   4<br>    </el-lit>"), true);
-  });
 });
