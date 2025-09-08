@@ -2,7 +2,7 @@ import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { Regexes } from "./fields/regexes";
-import { isSelector } from "./frame-helpers";
+import { isSelector, updateDirectives } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { Collapsible } from "./frame-interfaces/collapsible";
 import { Frame } from "./frame-interfaces/frame";
@@ -32,6 +32,7 @@ import {
 } from "./parent-helpers";
 import { AssertStatement } from "./statements/assert-statement";
 import { StatementSelector } from "./statements/statement-selector";
+import { CompileStatus } from "./status-enums";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible {
   isFrameWithStatements = true;
@@ -66,15 +67,18 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     this.setParseStatus(worstOfFieldsOrChildren);
   }
 
-  updateCompileStatus(): void {
-    this.getChildren().forEach((c) => c.updateCompileStatus());
+  updateDirectives(): void {
+    const children = this.getChildren();
+    updateDirectives(children);
+  }
+
+  readCompileStatus(): CompileStatus {
     const worstOfFieldsOrChildren = Math.min(
       this.worstCompileStatusOfFields(),
       parentHelper_readWorstCompileStatusOfChildren(this),
     );
-    super.updateCompileStatus(); //will update it based on fields and its own direct compile errors
-    const newStatus = Math.min(this.readCompileStatus(), worstOfFieldsOrChildren);
-    this.setCompileStatus(newStatus);
+    const newStatus = Math.min(super.readCompileStatus(), worstOfFieldsOrChildren);
+    return newStatus;
   }
 
   getChildren(): Frame[] {

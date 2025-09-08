@@ -15,7 +15,7 @@ import { Property } from "../class-members/property";
 import { InheritsFromField } from "../fields/inherits-from-field";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
-import { isConstructor } from "../frame-helpers";
+import { isConstructor, updateDirectives } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
@@ -43,6 +43,7 @@ import {
   parentHelper_updateBreakpoints,
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
+import { CompileStatus } from "../status-enums";
 
 export abstract class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsible {
   isCollapsible: boolean = true;
@@ -56,11 +57,13 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   public isNotInheritable = false;
   public inheritance: InheritsFromField;
   private _children: Array<Frame> = new Array<Frame>();
+
   constructor(parent: File) {
     super(parent);
     this.name = new TypeNameField(this);
     this.inheritance = new InheritsFromField(this);
     this.getChildren().push(new MemberSelector(this));
+    this.canHaveBreakPoint = false;
   }
 
   updateOfTypes(_ofTypes: SymbolType[]) {
@@ -102,12 +105,15 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     this.setParseStatus(worstOfFieldOrChildParseStatus);
   }
 
-  updateCompileStatus(): void {
-    this.getChildren().forEach((c) => c.updateCompileStatus());
+  updateDirectives(): void {
+    const children = this.getChildren();
+    updateDirectives(children);
+  }
+
+  readCompileStatus(): CompileStatus {
     const worstOfChildren = parentHelper_readWorstCompileStatusOfChildren(this);
-    super.updateCompileStatus(); //will update it based on fields and its own direct compile errors
-    const newStatus = Math.min(this.readCompileStatus(), worstOfChildren);
-    this.setCompileStatus(newStatus);
+    const newStatus = Math.min(super.readCompileStatus(), worstOfChildren);
+    return newStatus;
   }
 
   getFactory(): StatementFactory {

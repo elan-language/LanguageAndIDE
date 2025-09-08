@@ -146,24 +146,32 @@ end test\r
 
   ignore = () => {
     this.ignored = true;
+    return false;
   };
 
   unignore = () => {
     this.ignored = false;
+    return false;
   };
 
   getContextMenuItems() {
-    const map = new Map<string, [string, () => void]>(); //Normally: = super.getContextMenuItems()
+    const map = new Map<string, [string, () => boolean]>(); //Normally: = super.getContextMenuItems()
     // Must be arrow functions for this binding
-    if (this.ignored) {
-      map.set("unignore", ["un-ignore test (Ctrl-i)", this.unignore]);
+    if (this.isGhosted()) {
+      map.set("unghost", ["unghost", this.unGhost]);
     } else {
-      map.set("ignore", ["ignore test (Ctrl-i)", this.ignore]);
+      map.set("ghost", ["ghost", this.ghost]);
+      if (this.ignored) {
+        map.set("unignore", ["un-ignore test (Ctrl-i)", this.unignore]);
+      } else {
+        map.set("ignore", ["ignore test (Ctrl-i)", this.ignore]);
+      }
     }
     return map;
   }
 
   clearBreakPoint = () => {
     this.breakpointStatus = BreakpointStatus.none;
+    return false;
   };
 }

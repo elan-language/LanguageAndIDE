@@ -458,3 +458,11 @@ el-statement.paused-at > el-fr
     cursor: pointer;
     text-decoration: underline;
   }
+
+  .ghosted > *:not(.context-menu, .context-menu *, el-top), .ghosted > el-top > *:not(.context-menu) {
+    opacity: 35%;
+  }
+
+  .ghosted.selected > el-top {
+    background-color: rgba(var(--selection), 0.35);
+  }

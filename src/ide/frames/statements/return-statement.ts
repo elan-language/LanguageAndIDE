@@ -12,14 +12,14 @@ export class ReturnStatement extends AbstractFrame implements Statement {
   expr: ExpressionField;
   constructor(parent: Parent) {
     super(parent);
-    this.movable = false;
+    this._movable = false;
     this.expr = new ExpressionField(this);
   }
   initialKeywords(): string {
     return returnKeyword;
   }
 
-  delete(): void {} //Does nothing as return cannot be deleted
+  override deleteIfPermissible(): void {} //Does nothing: return cannot be deleted
 
   getFields(): Field[] {
     return [this.expr];
@@ -43,6 +43,12 @@ export class ReturnStatement extends AbstractFrame implements Statement {
   }
 
   canInsertAfter(): boolean {
+    return false;
+  }
+  override isGhosted(): boolean {
+    return false;
+  }
+  override isGhostedOrWithinAGhostedFrame(): boolean {
     return false;
   }
 }

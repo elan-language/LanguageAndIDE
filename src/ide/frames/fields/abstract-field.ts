@@ -38,7 +38,6 @@ export abstract class AbstractField implements Selectable, Field {
   private _optional: boolean = false;
   protected map: Map<string, Selectable>;
   protected _parseStatus: ParseStatus;
-  private _compileStatus: CompileStatus = CompileStatus.default;
   cursorPos: number = 0; //Relative to LH end of text
   selectionEnd: number = 0; //Relative to LH end of text
   protected rootNode?: ParseNode;
@@ -596,33 +595,31 @@ export abstract class AbstractField implements Selectable, Field {
   readParseStatus(): ParseStatus {
     return this._parseStatus!;
   }
-  resetCompileStatusAndErrors(): void {
-    this._compileStatus = CompileStatus.default;
-  }
+
   readCompileStatus(): CompileStatus {
-    return this._compileStatus;
-  }
-  updateCompileStatus(): void {
-    this._compileStatus = helper_deriveCompileStatusFromErrors(
+    return helper_deriveCompileStatusFromErrors(
       this.getFile().getAst(false)?.getCompileErrorsFor(this.htmlId) ?? [],
     );
   }
+
   select(_withFocus?: boolean, _multiSelect?: boolean, selection?: [number, number]): void {
-    this.deselectAll();
-    this.selected = true;
-    this.focus();
-    if (selection) {
-      let [start, end] = selection;
+    if (!this.isWithinAGhostedFrame()) {
+      this.deselectAll();
+      this.selected = true;
+      this.focus();
+      if (selection) {
+        let [start, end] = selection;
 
-      if (start === this.cursorPos && end === this.selectionEnd) {
-        // selecting same range so clear selection
-        // ie we select on first click but if you then click on the selected input we send same selection and clear it
-        start = end = this.cursorPos;
+        if (start === this.cursorPos && end === this.selectionEnd) {
+          // selecting same range so clear selection
+          // ie we select on first click but if you then click on the selected input we send same selection and clear it
+          start = end = this.cursorPos;
+        }
+
+        this.setSelection(start, end);
+      } else {
+        this.setSelection(this.text.length);
       }
-
-      this.setSelection(start, end);
-    } else {
-      this.setSelection(this.text.length);
     }
   }
 
@@ -872,4 +869,8 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   abstract symbolCompletion(): string;
+
+  isWithinAGhostedFrame() {
+    return this.getHolder().isGhostedOrWithinAGhostedFrame();
+  }
 }

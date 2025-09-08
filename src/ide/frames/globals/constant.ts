@@ -21,6 +21,7 @@ export class Constant extends AbstractFrame implements GlobalFrame, Collapsible 
     this.name = new IdentifierField(this);
     this.value = new ConstantValueField(this);
     this.value.setPlaceholder("<i>literal value or data structure</i>");
+    this.canHaveBreakPoint = false;
   }
   initialKeywords(): string {
     return constantKeyword;
@@ -45,7 +46,7 @@ export class Constant extends AbstractFrame implements GlobalFrame, Collapsible 
     return "const";
   }
   renderAsHtml(): string {
-    return `<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>constant </el-kw>${this.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${this.value.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-const>`;
+    return `<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>constant </el-kw>${this.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${this.value.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-const>`;
   }
 
   indent(): string {

@@ -1,0 +1,13 @@
+# 41a144f684be01156e897d582ba28c39271a0be4e723973196aa821b77e806dd Elan 1.4.0 guest default_profile valid
+
+main
+  let pic be "<img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg'   width='400' height='200'   title='shark' alt='shark'>"
+  call displayHtml(pic)
+  print "\n\npic"
+  call pause(2000)
+  call clearHtml()
+  # swap quotes: not working in 1.4.0
+  let pic2 be '<img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg"   width="400" height="200"   title="shark" alt="shark">'
+  call displayHtml(pic2)
+  print "pic2"
+end main

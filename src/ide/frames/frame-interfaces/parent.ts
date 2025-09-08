@@ -41,4 +41,6 @@ export interface Parent {
   newChildSelector(): AbstractSelector;
 
   getFactory(): StatementFactory;
+
+  isGhostedOrWithinAGhostedFrame(): boolean;
 }

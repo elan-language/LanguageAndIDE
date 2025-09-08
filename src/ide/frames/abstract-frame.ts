@@ -1,5 +1,8 @@
 import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { BreakpointStatus } from "../../compiler/debugging/breakpoint-status";
+import { ghostedKeyword } from "../../compiler/keywords";
+import { AbstractSelector } from "./abstract-selector";
+import { CodeSourceFromString } from "./code-source-from-string";
 import {
   expandCollapseAll,
   helper_compileMsgAsHtmlNew,
@@ -7,6 +10,7 @@ import {
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
   isFrame,
+  isGhostedDirective,
   isParent,
   isSelector,
   singleIndent,
@@ -29,6 +33,7 @@ import { CompileStatus, DisplayColour, ParseStatus } from "./status-enums";
 export abstract class AbstractFrame implements Frame {
   isFrame = true;
   isNew = true;
+
   private _parent: File | Parent;
   private _map?: Map<string, Selectable>;
   private selected: boolean = false;
@@ -36,12 +41,15 @@ export abstract class AbstractFrame implements Frame {
   private collapsed: boolean = false;
   private _classes = new Array<string>();
   protected htmlId: string = "";
-  protected movable: boolean = true;
+  protected _movable: boolean = true;
   private _parseStatus: ParseStatus = ParseStatus.default;
-  private _compileStatus: CompileStatus = CompileStatus.default;
 
+  private _ghosted: boolean = false;
+
+  protected canHaveBreakPoint = true;
   protected showContextMenu = false;
   breakpointStatus: BreakpointStatus = BreakpointStatus.none;
+
   protected paused = false;
 
   pasteError: string = "";
@@ -79,7 +87,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   isMovable(): boolean {
-    return this.movable;
+    return this._movable && !this.isGhostedOrWithinAGhostedFrame();
   }
 
   getFile(): File {
@@ -97,7 +105,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   getFrNo(): string {
-    return this.getFile().getFrNo();
+    return this.isGhostedOrWithinAGhostedFrame() ? "" : this.getFile().getFrNo();
   }
 
   fieldUpdated(_field: Field): void {
@@ -199,7 +207,7 @@ export abstract class AbstractFrame implements Frame {
     if (e.modKey.control && !this.controlKeys.includes(key ?? "")) {
       return false;
     }
-
+    //Always applicable
     switch (key) {
       case "Home": {
         this.getFirstPeerFrame().select(true, false);
@@ -207,18 +215,6 @@ export abstract class AbstractFrame implements Frame {
       }
       case "End": {
         this.getLastPeerFrame().select(true, false);
-        break;
-      }
-      case "Tab": {
-        if (e.modKey.shift) {
-          this.selectLastField();
-        } else {
-          this.selectFirstField();
-        }
-        break;
-      }
-      case "Enter": {
-        this.insertPeerSelector(e.modKey.shift);
         break;
       }
       case "o": {
@@ -240,18 +236,22 @@ export abstract class AbstractFrame implements Frame {
         break;
       }
       case "ArrowUp": {
-        if (e.modKey.control && this.movable) {
-          this.getParent().moveSelectedChildrenUpOne();
-          codeHasChanged = true;
+        if (e.modKey.control) {
+          if (this.isMovable()) {
+            this.getParent().moveSelectedChildrenUpOne();
+            codeHasChanged = true;
+          }
         } else {
           this.selectSingleOrMulti(this.getPreviousPeerFrame(), e.modKey.shift);
         }
         break;
       }
       case "ArrowDown": {
-        if (e.modKey.control && this.movable) {
-          this.getParent().moveSelectedChildrenDownOne();
-          codeHasChanged = true;
+        if (e.modKey.control) {
+          if (this.isMovable()) {
+            this.getParent().moveSelectedChildrenDownOne();
+            codeHasChanged = true;
+          }
         } else {
           this.selectSingleOrMulti(this.getNextPeerFrame(), e.modKey.shift);
         }
@@ -261,12 +261,6 @@ export abstract class AbstractFrame implements Frame {
         const pt = this.getParent();
         if (isFrame(pt)) {
           pt.select(true, false);
-        }
-        break;
-      }
-      case "ArrowRight": {
-        if (isParent(this)) {
-          this.getFirstChild().select(true, false);
         }
         break;
       }
@@ -310,7 +304,7 @@ export abstract class AbstractFrame implements Frame {
         if (e.optionalData) {
           // This case is when user has selected an item FROM the context menu
           const map = this.getContextMenuItems();
-          map.get(e.optionalData)![1]?.();
+          codeHasChanged = !!map.get(e.optionalData)![1]?.();
         } else {
           // Bringup the context menu
           if (!this.isSelected()) {
@@ -319,6 +313,29 @@ export abstract class AbstractFrame implements Frame {
           this.showContextMenu = true;
         }
         break;
+      }
+    }
+
+    if (!this.isGhostedOrWithinAGhostedFrame()) {
+      switch (key) {
+        case "ArrowRight": {
+          if (isParent(this)) {
+            this.getFirstChild().select(true, false);
+          }
+          break;
+        }
+        case "Enter": {
+          this.insertPeerSelector(e.modKey.shift);
+          break;
+        }
+        case "Tab": {
+          if (e.modKey.shift) {
+            this.selectLastField();
+          } else {
+            this.selectFirstField();
+          }
+          break;
+        }
       }
     }
     return codeHasChanged;
@@ -354,7 +371,7 @@ export abstract class AbstractFrame implements Frame {
   };
 
   deleteIfPermissible(): void {
-    if (this.movable) {
+    if (this.isMovable()) {
       this.insertNewSelectorIfNecessary();
       this.delete();
     }
@@ -408,7 +425,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   canInsertBefore(): boolean {
-    return true;
+    return !this.isGhosted();
   }
 
   canInsertAfter(): boolean {
@@ -453,6 +470,7 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this.focused, "focused");
     this.pushClass(this.breakpointStatus !== BreakpointStatus.none, "breakpoint");
     this.pushClass(this.paused, "paused");
+    this.pushClass(this.isGhosted(), "ghosted");
     this._classes.push(DisplayColour[this.readDisplayStatus()]);
   }
 
@@ -482,6 +500,9 @@ export abstract class AbstractFrame implements Frame {
   }
 
   select(withFocus: boolean, multiSelect: boolean): void {
+    if (this.isGhostedOrWithinAGhostedFrame() && !this.isGhosted()) {
+      return;
+    }
     if (!multiSelect) {
       this.deselectAll();
     }
@@ -574,6 +595,9 @@ export abstract class AbstractFrame implements Frame {
   updateParseStatus(): void {
     this._parseStatus = this.worstParseStatusOfFields();
   }
+
+  updateDirectives() {}
+
   worstParseStatusOfFields(): ParseStatus {
     return this.getFields()
       .map((g) => g.readParseStatus())
@@ -593,20 +617,11 @@ export abstract class AbstractFrame implements Frame {
   }
 
   readCompileStatus(): CompileStatus {
-    return this._compileStatus;
-  }
-
-  updateCompileStatus(): void {
     const own = helper_deriveCompileStatusFromErrors(
       this.getFile().getAst(false)?.getCompileErrorsFor(this.htmlId) ?? [],
     );
-    this.getFields().forEach((f) => f.updateCompileStatus());
     const worstField = this.worstCompileStatusOfFields();
-    this._compileStatus = Math.min(own, worstField);
-  }
-
-  protected setCompileStatus(newStatus: CompileStatus) {
-    this._compileStatus = newStatus;
+    return Math.min(own, worstField);
   }
 
   abstract parseFrom(source: CodeSource): void;
@@ -662,10 +677,12 @@ export abstract class AbstractFrame implements Frame {
 
   setBreakPoint = () => {
     this.breakpointStatus = BreakpointStatus.active;
+    return false;
   };
 
   clearBreakPoint = () => {
     this.breakpointStatus = BreakpointStatus.none;
+    return false;
   };
 
   toggleBreakPoint = () => {
@@ -678,6 +695,7 @@ export abstract class AbstractFrame implements Frame {
 
   clearAllBreakPoints = () => {
     this.getFile().updateBreakpoints(BreakpointEvent.clear);
+    return false;
   };
 
   hasBreakpoint() {
@@ -687,14 +705,64 @@ export abstract class AbstractFrame implements Frame {
     );
   }
 
+  setGhosted(flag: boolean) {
+    this._ghosted = flag;
+  }
+
+  ghost = () => {
+    const before = this.getPreviousPeerFrame();
+    if (!isGhostedDirective(before)) {
+      this.insertPeerSelector(true);
+      const sel = this.getPreviousPeerFrame() as AbstractSelector;
+      sel.parseFrom(new CodeSourceFromString(`# [${ghostedKeyword}]\n`));
+      const sel1 = this.getPreviousPeerFrame();
+      if (!isGhostedDirective(sel1)) {
+        sel1.select();
+        this.deleteSelected();
+      }
+    }
+    this.setGhosted(true);
+    return true;
+  };
+
+  unGhost = () => {
+    this.setGhosted(false);
+
+    const before = this.getPreviousPeerFrame();
+
+    if (isGhostedDirective(before)) {
+      before.select();
+      this.deleteSelected();
+    }
+
+    return true;
+  };
+
+  isGhosted() {
+    return this._ghosted;
+  }
+
+  isGhostedOrWithinAGhostedFrame() {
+    return this.isGhosted() || this.getParent().isGhostedOrWithinAGhostedFrame();
+  }
+
   getContextMenuItems() {
-    const map = new Map<string, [string, (() => void) | undefined]>();
+    const map = new Map<string, [string, (() => boolean) | undefined]>();
     // Must be arrow functions for this binding
-    if (this.hasBreakpoint()) {
-      map.set("clearBP", ["clear breakpoint", this.clearBreakPoint]);
-      map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints]);
-    } else {
-      map.set("setBP", ["set breakpoint", this.setBreakPoint]);
+    if (this.isGhosted()) {
+      map.set("unghost", ["unghost", this.unGhost]);
+    } else if (!this.isGhostedOrWithinAGhostedFrame()) {
+      if (this.isMovable()) {
+        map.set("ghost", ["ghost", this.ghost]);
+      }
+      if (this.canHaveBreakPoint) {
+        if (this.hasBreakpoint()) {
+          map.set("clearBP", ["clear breakpoint", this.clearBreakPoint]);
+          map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints]);
+        } else {
+          map.set("setBP", ["set breakpoint", this.setBreakPoint]);
+        }
+      }
     }
     return map;
   }

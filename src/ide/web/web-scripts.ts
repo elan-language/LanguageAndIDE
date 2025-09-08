@@ -934,7 +934,7 @@ function updateDisplayValues() {
     enable(appendButton, "Append code from a file onto the end of the existing code");
     enable(newButton, "Clear the current code and start afresh");
     enable(demosButton, "Load a demonstration program");
-    enable(trimButton, "Remove all 'newCode' selectors that can be removed (shortcut: Alt-t)");
+    enable(trimButton, "Remove all 'new code' prompts that can be removed (shortcut: Alt-t)");
     enable(expandCollapseButton, "Expand / Collapse all code regions");
     enable(preferencesButton, "Set preferences");
     enable(clearDisplayButton, "Clear display");
@@ -1600,6 +1600,7 @@ async function handleKeyAndRender(e: editorEvent) {
   inactivityTimer = setTimeout(inactivityRefresh, inactivityTimeout);
 
   try {
+    let codeChanged = false;
     let isBeingEdited = false;
     collapseAllMenus();
     removeFocussedClassFromAllTabs();
@@ -1628,7 +1629,7 @@ async function handleKeyAndRender(e: editorEvent) {
           return;
         }
         const before = Date.now();
-        const codeChanged = handleKey(e, file);
+        codeChanged = handleKey(e, file);
         const after = Date.now();
         const delay = after - before;
         if (codeChanged === true) {
@@ -1647,8 +1648,12 @@ async function handleKeyAndRender(e: editorEvent) {
         // undefined just return
         return;
       case "contextmenu":
-        handleKey(e, file);
-        await renderAsHtml(false);
+        codeChanged = handleKey(e, file);
+        if (codeChanged) {
+          await refreshAndDisplay(true, false);
+        } else {
+          await renderAsHtml(false);
+        }
         return;
     }
   } catch (e) {

@@ -18,6 +18,7 @@ import {
   helper_testStatusAsDisplayStatus,
   isMain,
   isSelector,
+  updateDirectives,
 } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
@@ -50,6 +51,8 @@ import {
   parentHelper_getFirstChild,
   parentHelper_getLastChild,
   parentHelper_insertOrGotoChildSelector,
+  parentHelper_moveSelectedChildrenDownOne,
+  parentHelper_moveSelectedChildrenUpOne,
   parentHelper_readWorstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
@@ -152,48 +155,17 @@ export class FileImpl implements File {
     return this._children.some((g) => g instanceof TestFrame);
   }
 
-  private moveDownOne(child: Frame): boolean {
-    let result = false;
-    const i = this.getChildren().indexOf(child);
-    if (i < this.getChildren().length - 1) {
-      this.getChildren().splice(i, 1);
-      this.getChildren().splice(i + 1, 0, child);
-      result = true;
-    }
-    return result;
-  }
-  private moveUpOne(child: Frame): boolean {
-    let result = false;
-    const i = this.getChildren().indexOf(child);
-    if (i > 0) {
-      this.getChildren().splice(i, 1);
-      this.getChildren().splice(i - 1, 0, child);
-      return (result = true);
-    }
-    return result;
-  }
   deleteSelectedChildren(): void {
     parentHelper_deleteSelectedChildren(this);
   }
 
   moveSelectedChildrenUpOne(): void {
-    const toMove = this.getChildren().filter((g) => g.isSelected());
-    let cont = true;
-    let i = 0;
-    while (cont && i < toMove.length) {
-      cont = this.moveUpOne(toMove[i]);
-      i++;
-    }
+    parentHelper_moveSelectedChildrenUpOne(this);
   }
   moveSelectedChildrenDownOne(): void {
-    const toMove = this.getChildren().filter((g) => g.isSelected());
-    let cont = true;
-    let i = toMove.length - 1;
-    while (cont && i >= 0) {
-      cont = this.moveDownOne(toMove[i]);
-      i--;
-    }
+    parentHelper_moveSelectedChildrenDownOne(this);
   }
+
   minimumNumberOfChildrenExceeded(): boolean {
     return this.getChildren().length > 1;
   }
@@ -427,10 +399,16 @@ export class FileImpl implements File {
     );
   }
 
+  updateDirectives(): void {
+    const children = this.getChildren();
+    updateDirectives(children);
+  }
+
   refreshParseAndCompileStatuses(compileIfParsed: boolean) {
     try {
       this._parseStatus = ParseStatus.default as ParseStatus;
       this.parseError = undefined;
+      this.updateDirectives();
       this.updateAllParseStatus();
       this.resetAllCompileStatusAndErrors();
       this.resetAllTestStatus();
@@ -482,7 +460,6 @@ export class FileImpl implements File {
     return DisplayColour[status];
   }
   updateAllCompileStatus(): void {
-    this.getChildren().forEach((c) => c.updateCompileStatus());
     this._compileStatus = parentHelper_readWorstCompileStatusOfChildren(this);
   }
 
@@ -626,6 +603,7 @@ export class FileImpl implements File {
       this.removeAllSelectorsThatCanBe();
       this.deselectAll();
       this.getFirstChild().select(true, false);
+      this.updateDirectives();
       this.updateAllParseStatus();
     } catch (e) {
       if (e instanceof ElanFileError) {
@@ -797,5 +775,9 @@ export class FileImpl implements File {
 
   updateBreakpoints(event: BreakpointEvent) {
     parentHelper_updateBreakpoints(this, event);
+  }
+
+  isGhostedOrWithinAGhostedFrame(): boolean {
+    return false;
   }
 }

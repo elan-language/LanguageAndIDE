@@ -18,7 +18,7 @@ export class CommentAsn extends AbstractAstNode implements AstNode {
     this.compileErrors = [];
 
     if (this.value.startsWith("[")) {
-      mustBeKnownCompilerDirective("", this.compileErrors, this.fieldId);
+      mustBeKnownCompilerDirective(this.value, this.compileErrors, this.fieldId);
     }
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);

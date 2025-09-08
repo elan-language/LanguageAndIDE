@@ -9,10 +9,7 @@ export interface Field extends Selectable {
   isField: boolean;
   getHolder(): Frame | File; //File because of GlobalSelector
   readCompileStatus(): CompileStatus;
-  resetCompileStatusAndErrors(): void;
-
   overtyper: Overtyper;
-  updateCompileStatus(): void;
   allPossibleSymbolCompletions: SymbolWrapper[];
   helpActive: boolean;
 }
