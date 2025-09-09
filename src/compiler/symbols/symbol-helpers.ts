@@ -561,7 +561,7 @@ export function allScopedSymbols(scope: Scope, initialScope: Scope) {
   return scope.symbolMatches("", true, initialScope).filter((s) => isNotFuncOrProcOrType(s));
 }
 
-export function getIds(sid: string) {
+export function getIdsFromString(sid: string) {
   if (sid.includes(",")) {
     return sid.split(",").map((s) => s.trim());
   }

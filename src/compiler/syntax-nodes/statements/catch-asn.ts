@@ -3,16 +3,10 @@ import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { StringType } from "../../../compiler/symbols/string-type";
-import {
-  getIds,
-  handleDeconstruction,
-  isSymbol,
-  symbolMatches,
-} from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { getId } from "../../compile-rules";
 import { catchKeyword, exceptionKeyword, inKeyword } from "../../keywords";
-import { compileNodes, isAstNode } from "../ast-helpers";
+import { childSymbolMatches, compileNodes, getChildSymbol } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 
@@ -65,49 +59,24 @@ ${compileNodes(this.compileChildren)}\r`;
   }
 
   getOuterScope() {
-    // need to get scope of IfStatement
+    // need to get scope of TryStatement
     return this.getCurrentScope().getParentScope();
-  }
-
-  getChildRange(initialScope: Scope) {
-    const fst = this.compileChildren[0];
-    const fi = this.compileChildren.indexOf(fst);
-    const li = isAstNode(initialScope) ? this.compileChildren.indexOf(initialScope) : -1;
-
-    return fi < li
-      ? this.compileChildren.slice(fi, li + 1)
-      : this.compileChildren.slice(li, fi + 1);
   }
 
   resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
     if (getId(this.variable) === id) {
       return this;
     }
-    if (this.compileChildren.length > 0) {
-      let range = this.getChildRange(initialScope);
-
-      if (range.length > 1) {
-        range = range.slice(0, range.length - 1);
-
-        for (const f of range) {
-          if (isSymbol(f) && id) {
-            const sids = getIds(f.symbolId);
-            if (sids.includes(id)) {
-              return f;
-            }
-          }
-        }
-      }
-    }
-
-    return this.getOuterScope().resolveSymbol(id, this.getCurrentScope());
+    return (
+      getChildSymbol(this.compileChildren, id, initialScope) ??
+      this.getOuterScope().resolveSymbol(id, this.getCurrentScope())
+    );
   }
 
   symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
     const matches = this.getOuterScope().symbolMatches(id, all, this.getCurrentScope());
 
     const v = getId(this.variable);
-    let localMatches: ElanSymbol[] = [];
 
     if (id === v || all) {
       const counter = {
@@ -115,18 +84,9 @@ ${compileNodes(this.compileChildren)}\r`;
         symbolType: () => StringType.Instance,
         symbolScope: SymbolScope.parameter,
       };
-      localMatches.push(counter);
+      matches.push(counter);
     }
 
-    if (this.compileChildren.length > 0) {
-      let range = this.getChildRange(initialScope);
-
-      if (range.length > 1) {
-        range = range.slice(0, range.length - 1);
-        const symbols = handleDeconstruction(range.filter((r) => isSymbol(r)));
-        localMatches = localMatches.concat(symbolMatches(id, all, symbols));
-      }
-    }
-    return localMatches.concat(matches);
+    return childSymbolMatches(this.compileChildren, id, all, matches, initialScope);
   }
 }
