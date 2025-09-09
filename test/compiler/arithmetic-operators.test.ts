@@ -238,7 +238,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine((25 % 20) < 19 ? 1 : 2);
+  await system.printLine(((25 % 20) < 19 ? 1 : 2));
 }
 return [main, _tests];}`;
 

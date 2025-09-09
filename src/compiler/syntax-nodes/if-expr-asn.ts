@@ -33,7 +33,7 @@ export class IfExprAsn extends AbstractAstNode implements AstNode {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return `${conditionCode} ? ${expr1Code} : ${expr2Code}`;
+    return `(${conditionCode} ? ${expr1Code} : ${expr2Code})`;
   }
 
   symbolType() {
