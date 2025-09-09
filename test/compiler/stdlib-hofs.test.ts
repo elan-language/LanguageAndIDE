@@ -921,7 +921,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await global.source.sortBy(async (x, y) => x === y ? 0 : x < y ? 1 : (-1))));
+  await system.printLine((await global.source.sortBy(async (x, y) => (x === y ? 0 : (x < y ? 1 : (-1))))));
   await system.printLine(global.source);
 }
 return [main, _tests];}`;
@@ -958,7 +958,7 @@ end main`;
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.printLine((await source.sortBy(async (x, y) => x === y ? 0 : x < y ? 1 : (-1))));
+  await system.printLine((await source.sortBy(async (x, y) => (x === y ? 0 : (x < y ? 1 : (-1))))));
   await system.printLine(source);
 }
 return [main, _tests];}`;
@@ -1048,7 +1048,7 @@ async function main() {
 }
 
 async function getTrailingNumber(s) {
-  return s === "" ? "" : system.safeSlice(s, (await global.last((await _stdlib.sequence(0, _stdlib.length(s) - 1).filter(async (n) => !(await global.isnumberchar(system.safeIndex(s, n))))))) + 1, _stdlib.length(s));
+  return (s === "" ? "" : system.safeSlice(s, (await global.last((await _stdlib.sequence(0, _stdlib.length(s) - 1).filter(async (n) => !(await global.isnumberchar(system.safeIndex(s, n))))))) + 1, _stdlib.length(s)));
 }
 global["getTrailingNumber"] = getTrailingNumber;
 

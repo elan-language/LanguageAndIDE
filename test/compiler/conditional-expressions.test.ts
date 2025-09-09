@@ -39,7 +39,7 @@ async function main() {
 }
 
 async function grade(score) {
-  return score > 80 ? "Distinction" : score > 60 ? "Merit" : score > 40 ? "Pass" : "Fail";
+  return (score > 80 ? "Distinction" : (score > 60 ? "Merit" : (score > 40 ? "Pass" : "Fail")));
 }
 global["grade"] = grade;
 return [main, _tests];}`;
@@ -74,7 +74,7 @@ end main
 const global = new class {};
 async function main() {
   let score = 70;
-  let grade = score > 80 ? "Distinction" : score > 60 ? "Merit" : score > 40 ? "Pass" : "Fail";
+  let grade = (score > 80 ? "Distinction" : (score > 60 ? "Merit" : (score > 40 ? "Pass" : "Fail")));
   await system.printLine(grade);
 }
 return [main, _tests];}`;
@@ -95,6 +95,41 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Merit");
   });
 
+  test("Pass_InExpression", async () => {
+    const code = `${testHeader}
+
+main
+  variable score set to 70
+  set score to score + if score is 70 then 1 else 2
+  print score
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let score = 70;
+  score = score + (score === 70 ? 1 : 2);
+  await system.printLine(score);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "71");
+  });
+
   test("Pass_MostPreciseType1", async () => {
     const code = `${testHeader}
 
@@ -109,7 +144,7 @@ end main
 const global = new class {};
 async function main() {
   let score = 70.1;
-  score = _stdlib.true ? 60.1 : 60;
+  score = (_stdlib.true ? 60.1 : 60);
   await system.printLine(score);
 }
 return [main, _tests];}`;
@@ -144,7 +179,7 @@ end main
 const global = new class {};
 async function main() {
   let score = 70.1;
-  score = _stdlib.false ? 60 : 60.1;
+  score = (_stdlib.false ? 60 : 60.1);
   await system.printLine(score);
 }
 return [main, _tests];}`;
@@ -188,7 +223,7 @@ end function`;
 const global = new class {};
 async function main() {
   let score = (await global.cast(system.initialise(await new Bar()._initialise())));
-  score = _stdlib.false ? system.initialise(await new Bar()._initialise()) : (await global.cast(system.initialise(await new Bar()._initialise())));
+  score = (_stdlib.false ? system.initialise(await new Bar()._initialise()) : (await global.cast(system.initialise(await new Bar()._initialise()))));
   await system.printLine(score);
 }
 
@@ -248,7 +283,7 @@ end function`;
 const global = new class {};
 async function main() {
   let score = (await global.cast(system.initialise(await new Bar()._initialise())));
-  score = _stdlib.false ? (await global.cast(system.initialise(await new Bar()._initialise()))) : system.initialise(await new Bar()._initialise());
+  score = (_stdlib.false ? (await global.cast(system.initialise(await new Bar()._initialise()))) : system.initialise(await new Bar()._initialise()));
   await system.printLine(score);
 }
 
