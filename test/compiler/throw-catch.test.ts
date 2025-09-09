@@ -173,7 +173,6 @@ async function main() {
     await system.printLine("not caught");
   } catch (_e) {
     let e = _e.message;
-
     await system.printLine(e);
   }
 }
@@ -232,7 +231,6 @@ async function main() {
     await system.printLine("not caught");
   } catch (_e) {
     let e = _e.message;
-
     await system.printLine(e);
   }
 }
@@ -292,7 +290,6 @@ async function main() {
     await system.printLine("not caught");
   } catch (_e) {
     let e = _e.message;
-
     let s = "";
     s = e;
     await system.printLine(s);
@@ -397,7 +394,6 @@ async function main() {
     throw new Error("fail");
   } catch (_e) {
     let e = _e.message;
-
     await system.printLine(a);
   }
 }

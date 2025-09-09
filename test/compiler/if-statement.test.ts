@@ -471,6 +471,50 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
+  test("Pass_reusevariableInElse", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to 3
+  if a is 1 then
+    let b be 1
+    print b
+  else
+    let b be a
+    print b
+  end if
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 3;
+  if (a === 1) {
+    const b = 1;
+    await system.printLine(b);
+  } else {
+    const b = a;
+    await system.printLine(b);
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
   test("Pass_variableInElseIf", async () => {
     const code = `${testHeader}
 
