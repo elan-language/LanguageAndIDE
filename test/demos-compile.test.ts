@@ -67,4 +67,7 @@ suite("Demo compile", () => {
   test("test wordle-solver", async () => {
     await testDemoProgram("wordle-solver.elan");
   });
+  test("test wordle-demo", async () => {
+    await testDemoProgram("wordle-demo.elan");
+  });
 });
