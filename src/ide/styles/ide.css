@@ -136,6 +136,8 @@ body {
 
 #printed-text {
   white-space: pre;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 #status {
