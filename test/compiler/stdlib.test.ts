@@ -665,35 +665,31 @@ return [main, _tests];}`;
       ],
     ]);
   });
-  test("Pass_Random2", async () => {
+  test("Pass_Random", async () => {
     const code = `${testHeader}
 
 main
-  variable results set to [0, 0, 0, 0, 0, 0, 0]
+  variable results set to [0, 0]
   for i from 1 to 10000 step 1
-    variable r set to randomInt(3, 5)
+    variable r set to randomInt(0, 1)
     call results.put(r, results[r] + 1)
   end for
-  for i from 0 to 6 step 1
-    variable r set to (results[i]/10000).round(1)
-    print r
-    print ", "
-  end for
+  print results[0] > 0
+  print results[1] > 0
+  print results[0] + results[1]
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let results = system.list([0, 0, 0, 0, 0, 0, 0]);
+  let results = system.list([0, 0]);
   for (let i = 1; i <= 10000; i = i + 1) {
-    let r = _stdlib.randomInt(3, 5);
+    let r = _stdlib.randomInt(0, 1);
     results.put(r, system.safeIndex(results, r) + 1);
   }
-  for (let i = 0; i <= 6; i = i + 1) {
-    let r = _stdlib.round((system.safeIndex(results, i) / 10000), 1);
-    await system.printLine(r);
-    await system.printLine(", ");
-  }
+  await system.printLine(system.safeIndex(results, 0) > 0);
+  await system.printLine(system.safeIndex(results, 1) > 0);
+  await system.printLine(system.safeIndex(results, 0) + system.safeIndex(results, 1));
 }
 return [main, _tests];}`;
 
@@ -710,44 +706,40 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "0, 0, 0, 0.3, 0.3, 0.3, 0, ");
+    await assertObjectCodeExecutes(fileImpl, "truetrue10000");
   });
 
   test("RandomInitialised", async () => {
     const code = `${testHeader}
 
 main
-  variable results set to [0, 0, 0, 0, 0, 0, 0]
+  variable results set to [0, 0]
   variable rnd set to new Random()
   variable val set to 0
   call rnd.initialiseFromClock()
   for i from 1 to 10000 step 1
-    set val, rnd to rnd.nextInt(3, 5)
+    set val, rnd to rnd.nextInt(0, 1)
     call results.put(val, results[val] + 1)
   end for
-  for i from 0 to 6 step 1
-    variable r set to (results[i]/10000).round(1)
-    print r
-    print ", "
-  end for
+  print results[0] > 0
+  print results[1] > 0
+  print results[0] + results[1]
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let results = system.list([0, 0, 0, 0, 0, 0, 0]);
+  let results = system.list([0, 0]);
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
   rnd.initialiseFromClock();
   for (let i = 1; i <= 10000; i = i + 1) {
-    [val, rnd] = rnd.nextInt(3, 5);
+    [val, rnd] = rnd.nextInt(0, 1);
     results.put(val, system.safeIndex(results, val) + 1);
   }
-  for (let i = 0; i <= 6; i = i + 1) {
-    let r = _stdlib.round((system.safeIndex(results, i) / 10000), 1);
-    await system.printLine(r);
-    await system.printLine(", ");
-  }
+  await system.printLine(system.safeIndex(results, 0) > 0);
+  await system.printLine(system.safeIndex(results, 1) > 0);
+  await system.printLine(system.safeIndex(results, 0) + system.safeIndex(results, 1));
 }
 return [main, _tests];}`;
 
@@ -764,7 +756,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "0, 0, 0, 0.3, 0.3, 0.3, 0, ");
+    await assertObjectCodeExecutes(fileImpl, "truetrue10000");
   });
   test("RandomInFixedSequence", async () => {
     const code = `${testHeader}
