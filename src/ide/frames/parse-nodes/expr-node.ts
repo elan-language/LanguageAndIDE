@@ -30,18 +30,41 @@ export class ExprNode extends AbstractAlternatives {
   }
 
   parseText(text: string): void {
-    //evaluate options that start with a keyword, first
-    if (text.trim().length > 0) {
-      this.alternatives.push(new NewInstance());
-      this.alternatives.push(new CopyWith());
-      this.alternatives.push(new IfExpr());
-      this.alternatives.push(new Lambda());
-      this.alternatives.push(new EmptyOfTypeNode());
-      this.alternatives.push(new TupleNode());
-      this.alternatives.push(new ImageNode());
-      //then others
-      this.alternatives.push(new Term());
-      this.alternatives.push(new BinaryExpression());
+    const t = text.trim();
+    if (t.length > 0) {
+      if (t.startsWith(newKeyword + " ")) {
+        this.alternatives.push(new NewInstance());
+      } else if (t.startsWith(copyKeyword + " ")) {
+        this.alternatives.push(new CopyWith());
+      } else if (t.startsWith(ifKeyword + " ")) {
+        this.alternatives.push(new IfExpr());
+      } else if (t.startsWith(lambdaKeyword + " ")) {
+        this.alternatives.push(new Lambda());
+      } else if (t.startsWith(emptyKeyword + " ")) {
+        this.alternatives.push(new EmptyOfTypeNode());
+      } else if (t.startsWith(tupleKeyword + " ")) {
+        this.alternatives.push(new TupleNode());
+      } else if (t.startsWith(imageKeyword + " ")) {
+        this.alternatives.push(new ImageNode());
+      } else {
+        const c = t[0];
+        if (c === "n") {
+          this.alternatives.push(new NewInstance());
+        } else if (c === "c") {
+          this.alternatives.push(new CopyWith());
+        } else if (c === "i") {
+          this.alternatives.push(new IfExpr());
+          this.alternatives.push(new ImageNode());
+        } else if (c === "l") {
+          this.alternatives.push(new Lambda());
+        } else if (c === "e") {
+          this.alternatives.push(new EmptyOfTypeNode());
+        } else if (c === "t") {
+          this.alternatives.push(new TupleNode());
+        }
+        this.alternatives.push(new Term());
+        this.alternatives.push(new BinaryExpression());
+      }
       super.parseText(text);
     }
   }

@@ -12,11 +12,19 @@ export class LitValueNode extends AbstractAlternatives {
   }
 
   parseText(text: string): void {
-    this.alternatives.push(new LitInt());
-    this.alternatives.push(new LitFloat());
-    this.alternatives.push(new LitString());
-    this.alternatives.push(new EnumVal());
-    this.alternatives.push(new LitRegExp());
-    super.parseText(text);
+    const t = text.trim();
+    if (t.length > 0) {
+      if (`"'`.includes(t[0])) {
+        this.alternatives.push(new LitString());
+      } else if ("-0123456789".includes(t[0])) {
+        this.alternatives.push(new LitInt());
+        this.alternatives.push(new LitFloat());
+      } else if (t[0] === `/`) {
+        this.alternatives.push(new LitRegExp());
+      } else {
+        this.alternatives.push(new EnumVal());
+      }
+      super.parseText(text);
+    }
   }
 }

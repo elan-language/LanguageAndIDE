@@ -29,25 +29,32 @@ export class TermSimple extends AbstractAlternatives {
   }
 
   parseText(text: string): void {
-    if (text.trim().length > 0) {
-      this.alternatives.push(new ListImmutableNode(() => new ExprNode()));
-      this.alternatives.push(new ListNode(() => new ExprNode()));
-      this.alternatives.push(
-        new DictionaryNode(
-          () => new ExprNode(),
-          () => new ExprNode(),
-        ),
-      );
-      this.alternatives.push(
-        new DictionaryImmutableNode(
-          () => new ExprNode(),
-          () => new ExprNode(),
-        ),
-      );
-      this.alternatives.push(new UnaryExpression());
-      this.alternatives.push(new BracketedExpression());
-      this.alternatives.push(new LitValueNode());
-      this.alternatives.push(new ReferenceNode());
+    const t = text.trim();
+    if (t.length > 0) {
+      const c = t[0];
+      if (c === "[") {
+        this.alternatives.push(new ListNode(() => new ExprNode()));
+        this.alternatives.push(
+          new DictionaryNode(
+            () => new ExprNode(),
+            () => new ExprNode(),
+          ),
+        );
+      } else if (c === "{") {
+        this.alternatives.push(new ListImmutableNode(() => new ExprNode()));
+        this.alternatives.push(
+          new DictionaryImmutableNode(
+            () => new ExprNode(),
+            () => new ExprNode(),
+          ),
+        );
+      } else if (c === "(") {
+        this.alternatives.push(new BracketedExpression());
+      } else {
+        this.alternatives.push(new UnaryExpression());
+        this.alternatives.push(new LitValueNode());
+        this.alternatives.push(new ReferenceNode());
+      }
       super.parseText(text);
     }
   }
