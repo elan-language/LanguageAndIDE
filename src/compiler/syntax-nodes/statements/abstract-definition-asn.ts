@@ -34,6 +34,10 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
   abstract isLet(): boolean;
   abstract isVariable(): boolean;
 
+  getScope() {
+    return this.compileScope ?? this.scope;
+  }
+
   ids() {
     return getIds(this.name);
   }
@@ -48,14 +52,14 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
 
     for (const i of ids) {
       mustNotBeKeyword(i, this.compileErrors, this.fieldId);
-      const symbol = this.scope.resolveSymbol(i!, this);
+      const symbol = this.getScope().resolveSymbol(i!, this);
       mustNotBeRedefined(symbol, i, this.compileErrors, this.fieldId);
     }
 
     const lhs = this.name;
     const rhs = this.expr;
 
-    mustBeCompatibleDefinitionNode(lhs, rhs, this.scope, this.compileErrors, this.fieldId);
+    mustBeCompatibleDefinitionNode(lhs, rhs, this.getScope(), this.compileErrors, this.fieldId);
 
     const lhsCode = wrapDeconstructionLhs(lhs, rhs, false);
 

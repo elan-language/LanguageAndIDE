@@ -4,6 +4,7 @@ import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
 import { CatchStatement } from "./catch-statement";
+import { StatementSelector } from "./statement-selector";
 
 export class TryStatement extends FrameWithStatements {
   catch: CatchStatement;
@@ -11,6 +12,7 @@ export class TryStatement extends FrameWithStatements {
     super(parent);
     this.catch = new CatchStatement(this);
     this.getChildren().push(this.catch);
+    this.getChildren().push(new StatementSelector(this));
   }
 
   initialKeywords(): string {
@@ -45,11 +47,12 @@ ${this.indent()}${endKeyword} ${tryKeyword}`;
   }
 
   parseBottom(source: CodeSource): boolean {
-    let result = false;
-    if (source.isMatchRegEx(/^[^\S\r\n]*catch\s/)) {
-      result = true;
+    source.removeIndent();
+    if (source.isMatchRegEx(/^catch\s/)) {
       this.catch.parseFrom(source);
+      const redundantSelector = this.getFirstSelectorAsDirectChild();
+      this.removeChild(redundantSelector); //So that parsing will continue from the selector *after* the catch
     }
-    return result;
+    return this.parseStandardEnding(source, `${endKeyword} ${tryKeyword}`);
   }
 }

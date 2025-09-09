@@ -643,12 +643,6 @@ export function transform(
     catchAsn.breakpointStatus = node.breakpointStatus;
 
     catchAsn.variable = transform(node.variable, node.getHtmlId(), catchAsn) ?? EmptyAsn.Instance;
-
-    catchAsn.children = node
-      .getChildren()
-      .filter((f) => !isSelector(f))
-      .map((f) => transform(f, f.getHtmlId(), catchAsn)) as AstNode[];
-
     return catchAsn;
   }
 
