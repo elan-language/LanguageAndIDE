@@ -193,10 +193,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(
-      fileImpl,
-      `<img src='https://elan-language.github.io/LanguageAndIDE/images/Debug.png' width='50' height='50' title='foo' alt='bar'>`,
-    );
+    await assertObjectCodeExecutes(fileImpl, `an ImageVG`);
   });
   test("Pass_PrintUncloseHtmlTag", async () => {
     const code = `${testHeader}
