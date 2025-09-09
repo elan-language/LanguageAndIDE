@@ -449,7 +449,7 @@ button.icon:active img + label
 
 #display-html {
   padding: 2px;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 #display-html iframe {
