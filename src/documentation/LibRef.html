@@ -201,53 +201,83 @@ in the range:</li>
  <tr>
   <th>name<br>of Type</th>
   <th>examples of defining<br>a literal value</th>
-  <th>syntax</th>
+  <th>details</th>
   <th>default value</th>
 </tr><tr>
   <td><el-type>String</el-type></td>
   <td><el-code>let title be "Ulysses"</el-code></td>
-  <td>delimited by double quotes<br>cannot contain literal { } &quot; characters<br>
-  though <a href="#StringConstants">string constants</a> can be used instead</td>
+  <td>delimited by double quotes,<br>cannot contain <i>literal</i> { } &quot; characters,<br>
+  but may contain <a href="#InterpolatedString">interpolated strings</a><br>
+  inclduing <a href="#StringConstants">string constants</a></td>
   <td><el-code>""</el-code> or <el-code>empty String</el-code></td>
 </tr><tr>
   <td><el-type>String</el-type></td>
   <td><el-code>let title be 'Iliad'</el-code></td>
-  <td>delimited by single quotes<br>so can contain { } &quot; characters</td>
+  <td>delimited by single quotes,<br>can contain literal { } &quot; characters,<br>but cannot contain literal ' character<br>
+  or <a href="#InterpolatedString">interpolated strings</a></td>
   <td><el-code>''</el-code> or <el-code>empty String</el-code></td>
 </tr><tr>
   <td><el-type>String</el-type></td>
   <td><el-code>variable quote set to '"Hello", she said'</el-code></td>
-  <td>&quot; may be used in a string delimited by ' and<br>' may be used in a string delimited by &quot;</td>
+  <td>&quot; may be used in a string delimited by '<br>' may be used in a string delimited by &quot;</td>
   <td></td>
 </tr>
 </table>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-  <li>When typing from the keyboard into a literal string all the basic ASCII characters (0x20 to 0x7e) can be input. Similarly you can copy from
- elsewhere into a literal string provided only basic ASCII characters are included. You cannot use Alt-numeric-keypad to enter the accented letters and other special
- characters in the range 0x80 to 0xff.</li>
+  <li>When typing from the keyboard into a literal string all the basic ASCII characters (0x20 to 0x7e) and' &pound;' can be input.
+   You cannot use Alt-numeric-keypad to enter accented letters or other special characters in the range 0x80 to 0xff.</li>
+ <li>You can, however, copy any text from outide Elan and paste it into a string, whether ASCII, extended ASCII or UTF-8 encoded.</li>
  <li>To insert a character from the full range, you use its Unicode (codepoint) value, in decimal or hexadecimal,
   by means of function <a href="#unicode"><el-method>unicode</el-method></a>:
-  <ul>
-   <li><el-code>print "Spanish syntax introduces a question with a {unicode(191)}"</el-code> &#x27f6; Spanish syntax introduces a question with a &#191;</li>
-   <li><el-code>print 'This is an up arrow: {unicode(0x2191)}'</el-code> &#x27f6; This is an up arrow: &#x2191;</li>
-  </ul>
-  These examples 'interpolate' the output of function <el-method>unicode</el-method> by using curly braces (see below <a href="#InterpolatedString">Interpolated strings</a>).</li>
+  <el-code>
+  <el-statement class="ok" id="print14" tabindex="-1"><el-kw>print </el-kw><el-field id="expr15" class="optional ok" tabindex="-1"><el-txt>"<el-lit>Spanish syntax introduces a question with a </el-lit>{<el-method>unicode</el-method>(<el-lit>191</el-lit>)}"</el-txt></el-field></el-statement>
+  &#x27f6; Spanish syntax introduces a question with a &#191;
+  </el-code>
+<br>
+  <el-code>
+  <el-statement class="ok" id="print16" tabindex="-1"><el-kw>print </el-kw><el-field id="expr17" class="optional ok" tabindex="-1"><el-txt>"<el-lit>This is an up arrow: </el-lit>{<el-method>unicode</el-method>(<el-lit>0x2191</el-lit>)}"</el-txt></el-field></el-statement>
+  &#x27f6; This is an up arrow: &#x2191;
+  </el-code>
+  <p>These examples 'interpolate' the output of function <el-method>unicode</el-method> by using curly braces (see <a href="#InterpolatedString">Interpolated strings</a>).</p></li>
  <li>Strings can be built from other strings by concatenation using the plus operator, for example:</li>
- <ul>
-  <li><el-code>print "Hello " + 'World'</el-code> &#x27f6; Hello World</li>
- </ul>
-  <li>A newline may be inserted within a string with <el-code>\n</el-code>, for example:</li>
- <ul>
-  <li><el-code>print "Hello\nWorld"</el-code> &#x27f6;<br> Hello<br>World</li>
- </ul>
+  <el-code>
+  <el-statement class="ok" id="print19" tabindex="-1"><el-kw>print </el-kw><el-field id="expr20" class="optional ok" tabindex="-1"><el-txt>"<el-lit>Hello </el-lit>" + '<el-lit>world</el-lit>'</el-txt></el-field></el-statement>
+  &#x27f6; Hello World</el-code></li>
+   <li>A newline may be inserted within a string with <el-code>\n</el-code>:
+  <el-code>
+  <el-statement class="ok" id="print21" tabindex="-1"><el-kw>print </el-kw><el-field id="expr22" class="optional ok" tabindex="-1"><el-txt>"<el-lit>Hello\nworld</el-lit>"</el-txt></el-field></el-statement>
+  &#x27f6; Hello<br>&nbsp;&nbsp;&nbsp;world</el-code>
+</li>
  <li>As in most languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never modified. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</li>
 <li>There are no 'substring' methods in Elan because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth character to the seventh character inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <i>exclusive</i>.
- See <a href="LangRef.html#IndexedValue">Indexed Value</a>.</li>
- <li>You can loop through a string picking each of its characters using the <a href="LangRef.html#each"><el-code>each</el-code></a> loop.
-<li>There are, however, many dot methods that can be applied to strings:</li>
+ See <a href="LangRef.html#IndexedValue">Indexed values</a>.</li>
+ <li>You can loop through a string picking each of its characters sequentially using the <a href="LangRef.html#each"><el-code>each</el-code></a> loop.
+<li>The dot methods that can be applied to strings are shown in the table below.</li>
 </ul>
+
+<h3 class="no-TOC" id="InterpolatedString">Interpolated strings</h3>
+<p>Strings that are enclosed by &quot; (double quotes) are automatically interpolated, that is you can insert the values of variables
+ or simple expressions within the string by enclosing them in curly braces:
+<ul>
+ <li>If <el-code>a</el-code> and <el-code>b</el-code> are named values of, say, 3 and 17:
+   <el-code>
+<el-statement class="ok" id="print62" tabindex="-1"><el-kw>print </el-kw><el-field id="expr63" class="optional ok" tabindex="-1"><el-txt>"{<el-id>a</el-id>}<el-lit> times </el-lit>{<el-id>b</el-id>}<el-lit> equals </el-lit>{<el-id>a</el-id>*<el-id>b</el-id>}"</el-txt></el-field></el-statement>
+   &#x27f6; 3 times 17 equals 51</el-code></li>
+ <li>If <el-code>velocity</el-code> and <el-code>fuel</el-code> are named values of, say, 3.0 and 50.4:
+   <el-code>
+<el-statement class="ok" id="set40" tabindex="-1"><el-kw>set </el-kw><el-field id="ident41" class="ok" tabindex="-1"><el-txt><el-id>message</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr42" class="ok" tabindex="-1"><el-txt>"<el-lit>LANDED SAFELY AT SPEED </el-lit>{(<el-id>velocity</el-id>*<el-lit>100</el-lit>).<el-method>floor</el-method>()}<el-lit> FUEL </el-lit>{<el-id>fuel</el-id>.<el-method>floor</el-method>()}"</el-txt></el-field></el-statement>
+<el-statement class="ok" id="print50" tabindex="-1"><el-kw>print </el-kw><el-field id="expr51" class="optional ok" tabindex="-1"><el-txt><el-id>message</el-id></el-txt></el-field></el-statement>
+   &#x27f6; LANDED SAFELY AT SPEED 300 FUEL 50</el-code></li>
+  <li>
+   <el-code>
+<el-statement class="ok" id="let24" tabindex="-1"><el-kw>let </el-kw><el-field id="var25" class="ok" tabindex="-1"><el-txt><el-id>r</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr26" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>2</el-lit>.0</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="print27" tabindex="-1"><el-kw>print </el-kw><el-field id="expr28" class="optional ok" tabindex="-1"><el-txt>"<el-lit>area = </el-lit>{(<el-id>pi</el-id>*<el-id>r</el-id>*<el-id>r</el-id>).<el-method>round</el-method>(<el-lit>2</el-lit>)}"</el-txt></el-field></el-statement>
+   &#x27f6; area = 12.57</el-code></li>
+</ul>
+
+<p>Strings that are enclosed by ' (single quotes) cannot have interpolated values in them.</p>
 
 <h3 class="no-TOC">Dot methods on a <el-type>String</el-type></h3>
 <table class="tableMethod">
@@ -357,15 +387,6 @@ in the range:</li>
   <td>a new string with the original rendered in upper case</td>
  </tr>
  </table>
-
-<h3 class="no-TOC" id="InterpolatedString">Interpolated strings</h3>
-<p>Strings are automatically interpolated, that is you can insert the values of variables or simple expressions within a string by enclosing them in braces.
-For example, assuming that the variables <el-code>a</el-code> and <el-code>b</el-code> are already defined as integers:</p>
-<p><el-code>print "{a} times {b} equals {a*b}"</el-code></p>
-<p>prints the sentence with the values and calculated expression inserted.</p>
-<p>If <el-code>velocity</el-code> and <el-code>fuel</el-code> are already defined as <el-type>Float</el-type> then:</p>
-<p><el-code>set message to "LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}"</el-code></p>
-<p>updates variable <el-code>message</el-code> with calculated (and printable) integer values.</p>
 
 <h2 id="Tuple">Tuple</h2>
 <p>A <el-code>Tuple</el-code> is a way of holding a small number of values of differing Types together as a single reference.
@@ -2208,7 +2229,7 @@ Later shapes are positioned over earlier ones.</p>
 <el-statement class="ok"><el-top><el-kw>call </el-kw><el-field class="ok"><el-txt><el-method>pressAnyKeyToContinue</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>true</el-id></el-txt></el-field>)</el-top></el-statement>
 <el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>OK, press A or B</el-lit>"</el-txt></el-field></el-statement>
 <el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>mykey</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>That was </el-lit>{<el-id>mykey</el-id>}<el-lit></el-lit>"</el-txt></el-field></el-statement>
+<el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>That was </el-lit>{<el-id>mykey</el-id>}"</el-txt></el-field></el-statement>
 </el-code-block>
 
 <h2 id="TextFileReader">Reading text files</h2>
@@ -2311,7 +2332,7 @@ Later shapes are positioned over earlier ones.</p>
     <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>file</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>squares.txt</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
     <el-statement class="ok multiline" id="for6" tabindex="0">
     <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident8" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr11" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
-    <el-statement class="ok" id="call12" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>writeLine</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args14" class="optional ok" tabindex="0"><el-txt>"<el-lit></el-lit>{<el-id>i</el-id>}<el-lit> </el-lit>{<el-id>i</el-id>*<el-id>i</el-id>}<el-lit></el-lit>"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+    <el-statement class="ok" id="call12" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>writeLine</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args14" class="optional ok" tabindex="0"><el-txt>"{<el-id>i</el-id>}<el-lit> </el-lit>{<el-id>i</el-id>*<el-id>i</el-id>}"</el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
     <el-kw>end for</el-kw>
     </el-statement>
     <el-statement class="ok" id="call15" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident16" class="ok" tabindex="0"><el-txt><el-id>file</el-id>.<el-method>saveAndClose</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args17" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
@@ -2365,7 +2386,7 @@ Later shapes are positioned over earlier ones.</p>
 the style definition into a named value as a literal but enclosed in <i>single</i> quotes, for example:</p>
 <el-code-block source="Html_2.elan">
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>'<el-lit>&lt;style&gt; h1 { color: Red; font-size: 24pt; } p { font-family: Serif; } &lt;/style&gt;</el-lit>'</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call6" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>displayHtml</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="-1"><el-txt>"<el-lit></el-lit>{<el-id>style</el-id>}<el-lit>&lt;h1&gt;New heading&lt;/h1&gt;&lt;p&gt;some new text&lt;/p&gt;</el-lit>"</el-txt></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="call6" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>displayHtml</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="-1"><el-txt>"{<el-id>style</el-id>}<el-lit>&lt;h1&gt;New heading&lt;/h1&gt;&lt;p&gt;some new text&lt;/p&gt;</el-lit>"</el-txt></el-field>)</el-top></el-statement>
 </el-code-block>
 
 <p>will produce:</p>
@@ -2381,7 +2402,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="91" data-cursorend="91" size="90" style="width: 91ch" value="'&lt;style&gt;  h1 {   color: Red;   font-size: 24pt;  }  p {   font-family: Serif;  }  &lt;/style&gt;'" tabindex="-1"></el-txt></el-field></el-statement>
 </el-code-block>
 
-<p>the string can be shown folded and indented when not being edited by the inclusion of double and triple spaces: </p>
+<p>the string can be shown folded and indented when not being edited: </p>
 <el-code-block source="Html_4.elan">
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>'<el-lit>&lt;style&gt;<br>h1 {<br> color: Red;<br> font-size: 24pt;<br>}<br>p {<br> font-family: Serif;<br>}<br>&lt;/style&gt;</el-lit>'</el-txt></el-field></el-statement>
 </el-code-block>
@@ -2416,9 +2437,9 @@ the style definition into a named value as a literal but enclosed in <i>single</
  </li>
 </ul>
 
-<p>Note that other URI protocols, e.g. <el-code>file://host/path</el-code> to access an image on your local file system, are not supported.</p>
+<p>Other URI schemes, such as in <el-code>file://host/path</el-code> to access an image from your local file system, are not supported.</p>
 
-<p id="image">Sometimes it is useful to see a thumbnail of the image within the code. You can do this by using the <el-kw>image</el-kw> vector graphics keyword with
+<p id="image">Sometimes it is useful to see a thumbnail of the image within your code. You can do this by using the <el-kw>image</el-kw> vector graphics keyword with
 the URL <i>not</i> enclosed in quotes and, optionally, properties defined in a <el-kw>with</el-kw> clause, thus::</p>
 
 <el-code-block source="image_1.elan">
@@ -2427,11 +2448,13 @@ the URL <i>not</i> enclosed in quotes and, optionally, properties defined in a <
 
 On moving the editing focus away from the image field, the instruction becomes:
 
+
+
 <el-code-block>
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg"></el-txt></el-field></el-statement>
 </el-code-block>
 
-<p>Here <el-id>pic</el-id> is of Type <el-type>ImageVG</el-type>, so to display it as Html, you convert it to a string:</p>
+<p>Here <el-id>pic</el-id> is of Type <el-type>ImageVG</el-type>, so to display it as Html, you convert it like this::</p>
 
 <!-- some further explanation to be added here -->
 
@@ -2927,8 +2950,8 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
 <el-statement class="ok multiline" id="for27" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident29" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr30" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr31" class="ok" tabindex="0"><el-txt><el-lit>10</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr32" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
 <el-statement class="ok" id="call36" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident37" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args38" class="optional ok" tabindex="0"><el-txt><el-lit>0</el-lit>, <el-id>i</el-id>.<el-method>asString</el-method>()</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
-<el-statement class="ok" id="call47" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident48" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args49" class="optional ok" tabindex="0"><el-txt><el-lit>10</el-lit>, "<el-lit></el-lit>{<el-id>i</el-id>^<el-lit>2</el-lit>}<el-lit></el-lit>"</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
-<el-statement class="ok" id="call60" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident61" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args62" class="optional ok" tabindex="0"><el-txt><el-lit>20</el-lit>, "<el-lit></el-lit>{<el-id>i</el-id>^<el-lit>3</el-lit>}<el-lit>\n</el-lit>"</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="call47" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident48" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args49" class="optional ok" tabindex="0"><el-txt><el-lit>10</el-lit>, "{<el-id>i</el-id>^<el-lit>2</el-lit>}"</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="call60" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident61" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args62" class="optional ok" tabindex="0"><el-txt><el-lit>20</el-lit>, "{<el-id>i</el-id>^<el-lit>3</el-lit>}<el-lit>\n</el-lit>"</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
@@ -2941,7 +2964,7 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
 <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident11" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr13" class="ok" tabindex="-1"><el-txt>(<el-id>tab</el-id> - <el-lit>1</el-lit>)</el-txt></el-field><el-kw> step </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
 <el-statement class="ok" id="let30" tabindex="-1"><el-kw>let </el-kw><el-field id="var31" class="ok" tabindex="-1"><el-txt><el-id>j</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr32" class="ok" tabindex="-1"><el-txt><el-lit>9</el-lit>^<el-id>i</el-id></el-txt></el-field></el-statement>
 <el-statement class="ok" id="let33" tabindex="-1"><el-kw>let </el-kw><el-field id="var34" class="ok" tabindex="-1"><el-txt><el-id>f</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr35" class="ok" tabindex="-1"><el-txt><el-kw>lambda</el-kw> <el-id>j</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>j</el-id>.<el-method>asString</el-method>().<el-method>length</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="call21" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field>(<el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>tab</el-id> - <el-method>f</el-method>(<el-id>j</el-id>), "<el-lit></el-lit>{<el-id>j</el-id>}<el-lit>\n</el-lit>"</el-txt></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="call21" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field>(<el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-id>tab</el-id> - <el-method>f</el-method>(<el-id>j</el-id>), "{<el-id>j</el-id>}<el-lit>\n</el-lit>"</el-txt></el-field>)</el-top></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
