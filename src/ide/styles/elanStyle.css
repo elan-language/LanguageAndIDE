@@ -219,6 +219,11 @@ el-field.empty.optional el-place, el-field.empty.optional el-place * {
     color: var(--optional);
 }
 
+el-field.selected ~ el-field.empty.optional el-place, el-field.selected ~ el-field.empty.optional el-place * {
+    display: inline;
+    color: var(--optional);
+}
+
 el-field.empty.selected el-place, el-field.empty.selected el-place * {
     display: inline;
     color: var(--reverseText);
