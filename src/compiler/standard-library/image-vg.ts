@@ -136,7 +136,12 @@ export class ImageVG extends VectorGraphic {
     return `<image x="${this.x}%" y="${this.y / 0.75}%" width="${this.width}" height="${this.height / 0.75}" href="${this.url}" title="${this.title}" alt="${this.alt}"/>`; //TODO style, size etc
   }
 
-  async asString() {
-    return `<img src='${this.url}' width='${this.width}' height='${this.height}' title='${this.title}' alt='${this.alt}'>`; //TODO style, size etc
+  @elanFunction([], FunctionOptions.pure)
+  asHtml(): string {
+    return `<img src='${this.url}' width='${this.width}' height='${this.height}' title='${this.title}' alt='${this.alt}'>`;
+  }
+
+  asString(): string {
+    return `an ImageVG`;
   }
 }

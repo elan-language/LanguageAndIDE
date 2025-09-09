@@ -25,6 +25,6 @@ export class ImageNode extends AbstractSequence {
   }
 
   override renderAsHtml(): string {
-    return `<img src="${this.url!.renderAsHtml()}">`;
+    return `<img src="${this.url!.renderAsHtml()}">${this.withClause!.renderAsHtml()}`;
   }
 }
