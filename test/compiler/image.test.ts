@@ -21,14 +21,14 @@ suite("Image", () => {
 
 main
   variable c set to image http://website.image.png
-  print c
+  print c.asHtml()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let c = system.initialise(await new _stdlib.ImageVG()._initialise("http://website.image.png"));
-  await system.printLine(c);
+  await system.printLine(c.asHtml());
 }
 return [main, _tests];}`;
 
@@ -56,14 +56,14 @@ return [main, _tests];}`;
 
 main
   variable c set to image http://website.image.png with width set to 100, height set to 200
-  print c
+  print c.asHtml()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let c = await (async () => {const _a = {...system.initialise(await new _stdlib.ImageVG()._initialise("http://website.image.png"))}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.ImageVG()._initialise("http://website.image.png")))); _a.width = 100; _a.height = 200; return _a;})();
-  await system.printLine(c);
+  await system.printLine(c.asHtml());
 }
 return [main, _tests];}`;
 
