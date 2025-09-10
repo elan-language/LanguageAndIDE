@@ -2067,7 +2067,7 @@ Later shapes are positioned over earlier ones.</p>
   <td></td>
   <td>&#x2714;</td>
   <td>height to render the shape or the image</td>
-  <td>Rectangle: 20</td>
+  <td>Image: 13.2<br>Rectangle: 20</td>
   <td><el-method>setHeight</el-method></td>
   <td><el-method>withHeight</el-method></td>
  </tr><tr>
@@ -2122,7 +2122,7 @@ Later shapes are positioned over earlier ones.</p>
   <td></td>
   <td>&#x2714;</td>
   <td>width to render the shape or the image</td>
-  <td>Rectangle: 40</td>
+  <td>Image: 13.2<br>Rectangle: 40</td>
   <td><el-method>setWidth</el-method></td>
   <td><el-method>withWidth</el-method></td>
  </tr><tr>
@@ -2409,9 +2409,10 @@ the style definition into a named value as a literal but enclosed in <i>single</
 
 <h2>Displaying images from URLs</h2>
 
-<p>An image that can be retrieved with an http or https URL may be sent to the Display pane using either of these two techniques:
+<p>An image that can be retrieved with an http or https URL may be sent to the Display, though note that other URI schemes, such as in <el-code>file://host/path</el-code> to access an image from your local file system, are not supported. Here are three techniques:
+
 <ul>
-  <li>put the Html <b>&lt;img&gt;</b> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
+ <li>put the Html <b>&lt;img&gt;</b> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
 <el-code-block source="Html_4.elan">
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>"<el-lit>&lt;img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg'<br> width='400' height='200'<br> title='shark' alt='shark'&gt;</el-lit>"</el-txt></el-field></el-statement>
 <el-statement class="ok" id="call6" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>displayHtml</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field>)</el-top></el-statement>
@@ -2420,43 +2421,43 @@ the style definition into a named value as a literal but enclosed in <i>single</
   <ul>
    <li>The usual <b>&lt;img&gt;</b> tag attributes are respected, though <el-id>alt</el-id> does not give the expected tooltip when hovering over the image,
    and <el-id>title</el-id> is only a descriptive comment.</li>
-   <li>The attributes can be shown listed vertically by inserting three spaces to signify a newline, as is done here before <el-id>width</el-id> and before <el-id>title</el-id>. </li>
+   <li>The attributes can be shown listed vertically by inserting three spaces to signify a newline, as is done here before <el-id>width</el-id> and before <el-id>title</el-id>.</li>
   </ul>
 
- <li>put the URL into a Vector Graphics <el-type>ImageVG</el-type> definition and then call the <el-method>displayVG</el-method> method on it, thus:
+ <li>put the URL into a Vector Graphics <el-type>ImageVG</el-type> definition: and then call the <el-method>displayVectorGraphics</el-method> method on it, thus:
 <el-code-block source="imageVG.elan">
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>ImageVG</el-type>('<el-lit>https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg</el-lit>')<el-kw> with </el-kw><br><el-id>width</el-id><el-kw> set to </el-kw><el-lit>400</el-lit>, <br><el-id>height</el-id><el-kw> set to </el-kw><el-lit>200</el-lit>, <br><el-id>alt</el-id><el-kw> set to </el-kw>"<el-lit>Shark</el-lit>"</el-txt></el-field></el-statement>
 <el-statement class="ok" id="call11" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="-1"><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field id="args13" class="optional ok" tabindex="-1"><el-txt>[<el-id>pic</el-id>]</el-txt></el-field>)</el-top></el-statement>
 </el-code-block>
-
  <h5 class="no-TOC">Notes</h5>
   <ul>
-   <li>Vector graphic image properties include <el-id>height</el-id>, <el-id>width</el-id> and <el-id>alt</el-id> that match the similar Html attributes and and have the same effect.</li>
-   <li>Other vector graphic image properties such as <i>x,y</i> position, can be added into the <el-kw>with</el-kw> clause.
+   <li>Vector graphic image properties include <el-id>height</el-id>, <el-id>width</el-id> and <el-id>alt</el-id>.</li>
+   <li>Other vector graphic image properties such as <i>x,y</i> position, can be added into the <el-kw>with</el-kw> clause.</li>
   </ul>
- </li>
-</ul>
 
-<p>Other URI schemes, such as in <el-code>file://host/path</el-code> to access an image from your local file system, are not supported.</p>
-
-<p id="image">Sometimes it is useful to see a thumbnail of the image within your code. You can do this by using the <el-kw>image</el-kw> vector graphics keyword with
-the URL <i>not</i> enclosed in quotes and, optionally, properties defined in a <el-kw>with</el-kw> clause, thus::</p>
+ <li>put the URL into an <el-type>ImageVG</el-type> <el-kw>image</el-kw> definition:
 
 <el-code-block source="image_1.elan">
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="108" data-cursorend="108" size="107" style="width: 108ch" value="image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg with alt set to &quot;Shark&quot;" tabindex="-1"></el-txt></el-field></el-statement>
 </el-code-block>
 
-On moving the editing focus away from the image field, the instruction becomes:
+<div id="image"></div><p>On moving the editing focus away from the <el-kw>image</el-kw> field, the instruction shows a thumbnail of the image in the code.</p>
 
+<p>Then convert it with method <el-method>asHtml</el-method> so that you can display it with the <el-method>displayHtml</el-method> method thus:</p>
 
-
-<el-code-block>
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg"></el-txt></el-field></el-statement>
+<el-code-block source="image_2.elan">
+<el-statement class="ok" id="var9" tabindex="-1"><el-kw>variable </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>vg</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt;()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg"><el-kw> with </el-kw><br><el-id>width</el-id><el-kw> set to </el-kw><el-lit>304</el-lit>, <br><el-id>height</el-id><el-kw> set to </el-kw><el-lit>139</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="call13" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident14" class="ok" tabindex="-1"><el-txt><el-id>vg</el-id>.<el-method><el-method>append</el-method></el-method></el-txt></el-field>(<el-field id="args15" class="optional ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="call16" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident17" class="ok" tabindex="-1"><el-txt><el-method>displayHtml</el-method></el-txt></el-field>(<el-field id="args18" class="optional ok" tabindex="-1"><el-txt><el-id>pic</el-id>.<el-method>asHtml</el-method>()</el-txt></el-field>)</el-top></el-statement>
 </el-code-block>
-
-<p>Here <el-id>pic</el-id> is of Type <el-type>ImageVG</el-type>, so to display it as Html, you convert it like this::</p>
-
-<!-- some further explanation to be added here -->
+ <h5 class="no-TOC">Notes</h5>
+  <ul>
+   <li>Vector graphic image properties include <el-id>height</el-id>, <el-id>width</el-id> and <el-id>alt</el-id> that match the similar Html attributes and and have the same effect.</li>
+   <li>Other vector graphic image properties such as <i>x,y</i> position, can be added into the <el-kw>with</el-kw> clause.</li>
+  </ul>
+ </li>
+</ul>
 
 <p class="ack"> <b>Acknowledgement</b><br> The idea of displaying an image value as a thumbnail within the code was inspired by
 a similar feature in the language <a href="https://strype.org">Strype</a>. We are
