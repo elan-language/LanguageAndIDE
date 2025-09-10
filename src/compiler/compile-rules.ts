@@ -88,6 +88,7 @@ import {
   inFunctionScope,
   isAstIdNode,
   isAstIndexableNode,
+  isAstQualifierNode,
   isEmptyNode,
   isInsideFunction,
   isInsideFunctionOrConstructor,
@@ -162,12 +163,17 @@ export function mustNotHaveConditionalAfterUnconditionalElse(
 export function mustBeKnownSymbol(
   symbol: ElanSymbol,
   scope: Scope,
+  onSymbol: string,
   onType: SymbolType,
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (symbol instanceof UnknownSymbol) {
-    const type = isClass(scope) ? scope.symbolId : onType instanceof UnknownType ? "" : onType.name;
+  if (symbol instanceof UnknownSymbol && onType instanceof UnknownType) {
+    const type = isClass(scope) ? scope.symbolId : "";
+    const id = onSymbol || symbol.symbolId;
+    compileErrors.push(new UndefinedSymbolCompileError(id, type, location));
+  } else if (symbol instanceof UnknownSymbol) {
+    const type = isClass(scope) ? scope.symbolId : onType.name;
     compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, type, location));
   }
 }
@@ -890,6 +896,13 @@ export function getId(astNode: AstNode) {
     return astNode.id;
   }
   return "unknown";
+}
+
+export function getQualifierId(astNode: AstNode) {
+  if (isAstQualifierNode(astNode)) {
+    return getId(astNode.value);
+  }
+  return getId(astNode);
 }
 
 export function mustNotBePropertyOnFunctionMethod(

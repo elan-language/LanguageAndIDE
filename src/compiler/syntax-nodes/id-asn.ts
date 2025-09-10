@@ -98,6 +98,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     mustBeKnownSymbol(
       symbol,
       this.updatedScope,
+      symbol.symbolId,
       UnknownType.Instance,
       this.compileErrors,
       this.fieldId,

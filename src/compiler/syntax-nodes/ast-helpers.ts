@@ -33,6 +33,7 @@ import {
   mustBeIndexableType,
   mustMatchParameters,
 } from "../compile-rules";
+import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { ElanCompilerError } from "../elan-compiler-error";
@@ -47,6 +48,7 @@ import { FunctionAsn } from "./globals/function-asn";
 import { IndexAsn } from "./index-asn";
 import { IndexDoubleAsn } from "./index-double-asn";
 import { OperationSymbol } from "./operation-symbol";
+import { QualifierAsn } from "./qualifier-asn";
 
 // interface type guards
 
@@ -56,6 +58,10 @@ export function isAstNode(n: AstNode | Scope): n is AstNode {
 
 export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
   return !!n && "qualifier" in n;
+}
+
+export function isAstQualifierNode(n: AstNode): n is AstQualifierNode {
+  return n instanceof QualifierAsn;
 }
 
 export function isAstIndexableNode(n: AstNode): n is AstIndexableNode {

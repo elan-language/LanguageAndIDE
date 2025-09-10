@@ -1809,4 +1809,26 @@ end main`;
       "'reverse' is not defined for type 'String'.LangRef.html#compile_error",
     ]);
   });
+
+  test("Fail_onUndefined", async () => {
+    const code = `${testHeader}
+
+main
+  call s.reverse()
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'s' is not defined.LangRef.html#compile_error"]);
+  });
 });
