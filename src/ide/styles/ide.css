@@ -136,8 +136,6 @@ body {
 
 #printed-text {
   white-space: pre;
-  padding-left: 5px;
-  padding-right: 5px;
 }
 
 #status {
@@ -441,7 +439,7 @@ button.icon:active img + label
 }
 
 #print {
-  padding: 2px;
+  padding: 5px;
   overflow-y: auto;
 }
 

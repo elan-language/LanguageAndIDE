@@ -78,9 +78,12 @@ export class ElanArray2D<T1> {
     @elanIntType() row: number,
     @elanGenericParamT1Type() value: T1,
   ): ElanArray2D<T1> {
-    const newList = [...this.contents];
+    const newList: T1[][] = [];
+    for (const column of this.contents) {
+      const newCol: T1[] = [...column];
+      newList.push(newCol);
+    }
     this.system!.safeArray2DSet(newList, col, row, value);
-
     return this.system!.initialise(new ElanArray2D(newList));
   }
 

@@ -953,6 +953,53 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[[o, , ], [, x, ], [, , o]]");
   });
 
+  test("Pass_2DArray_withPut", async () => {
+    const code = `${testHeader}
+
+main
+  variable oxoBoard set to new Array2D<of String>(3,3,"")
+  let ob2 be oxoBoard.withPut(0, 0, "o")
+  let ob3 be ob2.withPut(2, 1, "x")
+  let ob4 be ob3.withPut(1, 2, "o")
+  print oxoBoard
+  print ob2
+  print ob3
+  print ob4
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let oxoBoard = system.initialise(await new _stdlib.Array2D()._initialise(3, 3, ""));
+  const ob2 = oxoBoard.withPut(0, 0, "o");
+  const ob3 = ob2.withPut(2, 1, "x");
+  const ob4 = ob3.withPut(1, 2, "o");
+  await system.printLine(oxoBoard);
+  await system.printLine(ob2);
+  await system.printLine(ob3);
+  await system.printLine(ob4);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "[[, , ], [, , ], [, , ]][[o, , ], [, , ], [, , ]][[o, , ], [, , ], [, x, ]][[o, , ], [, , o], [, x, ]]",
+    );
+  });
+
   test("Pass_stringForUnicode", async () => {
     const code = `${testHeader}
 
