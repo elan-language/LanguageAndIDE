@@ -67,6 +67,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     mustBeKnownSymbol(
       symbol,
       NullScope.Instance,
+      symbol.symbolId,
       UnknownType.Instance,
       this.compileErrors,
       this.fieldId,

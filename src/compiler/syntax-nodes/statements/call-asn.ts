@@ -13,6 +13,7 @@ import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import {
   cannotPassAsOutParameter,
   checkForDeprecation,
+  getQualifierId,
   mustBeKnownSymbol,
   mustBeProcedure,
   mustBePublicMember,
@@ -104,6 +105,7 @@ export class CallAsn extends BreakpointAsn {
     mustBeKnownSymbol(
       procSymbol,
       currentScope,
+      getQualifierId(qualifier),
       qualifier.symbolType(),
       this.compileErrors,
       this.fieldId,

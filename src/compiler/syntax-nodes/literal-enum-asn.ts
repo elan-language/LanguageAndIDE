@@ -25,6 +25,7 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
     mustBeKnownSymbol(
       symbol,
       NullScope.Instance,
+      symbol.symbolId,
       UnknownType.Instance,
       this.compileErrors,
       this.fieldId,
@@ -35,6 +36,7 @@ export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
       mustBeKnownSymbol(
         value,
         NullScope.Instance,
+        value.symbolId,
         UnknownType.Instance,
         this.compileErrors,
         this.fieldId,

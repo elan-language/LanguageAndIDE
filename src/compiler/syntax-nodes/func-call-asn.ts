@@ -15,6 +15,7 @@ import {
 } from "../../compiler/symbols/symbol-helpers";
 import {
   checkForDeprecation,
+  getQualifierId,
   mustBeCallable,
   mustBeKnownSymbol,
   mustBePublicMember,
@@ -79,6 +80,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     mustBeKnownSymbol(
       funcSymbol,
       this.updatedScope,
+      getQualifierId(this.precedingNode),
       this.precedingNode.symbolType(),
       this.compileErrors,
       this.fieldId,
