@@ -450,7 +450,7 @@ function removeFocussedClassFromAllTabs() {
 helpTabLabel.addEventListener("click", showHelpTab);
 
 helpHomeButton.addEventListener("click", () => {
-  window.open("documentation/Home.html", "help-iframe")?.focus();
+  window.open("documentation/index.html", "help-iframe")?.focus();
 });
 
 helpBackButton.addEventListener("click", () => {
