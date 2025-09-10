@@ -1,4 +1,4 @@
-# 91c605140354725b7c85055806f5b4e6c743ae72b4db8304a7b3759f0535a3c9 Elan 1.4.0 guest default_profile valid
+# 8389e074d9977c35be9d7e4c290b17673152532aefd3c96cbb27d601fa77c85b Elan 1.4.0 guest default_profile valid
 
 main
   while true
@@ -155,7 +155,7 @@ procedure analyse()
     set weightedSum to weightedSum + (i*outcomes[i])
   end for
   call clearPrintedText()
-  print "Solved within 6 attempts: {(success/2309*100).floor()}%\nAverage: {(weightedSum/success).round(2)} attempts"
+  print "For all 2309 possible answers,\nthe current reverse-game algorithm\nsolved {(success/2309*100).floor()}% within 6 attempts\nwith an average of {(weightedSum/success).round(2)} attempts."
 end procedure
 
 function isUCLetter(k as String) returns Boolean
