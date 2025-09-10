@@ -1,6 +1,8 @@
-# 22f036d66aa47e466ac3a36a943d42c42be5635e35444157a658f838636e4932 Elan 1.4.0 guest default_profile valid
+# a1751a818c282fb0ee349cd4571aaa464391347563249aadc507eb02d253654e Elan 1.4.0 guest default_profile valid
 
 main
-  let pic be image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg with alt set to "Shark"
-  print pic
+  variable vg set to new List<of VectorGraphic>()
+  let pic be image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg with width set to 304, height set to 139
+  call vg.append(pic)
+  call displayHtml(pic.asHtml())
 end main
