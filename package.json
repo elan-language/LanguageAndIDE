@@ -14,6 +14,7 @@
     "Education"
   ],
   "scripts": {
+    "preprocess-worksheets": "node ./out/src/build-scripts/preprocess-worksheets.js",
     "update-documentation": "node ./out/src/build-scripts/update-documentation.js",
     "update-worksheets": "node ./out/src/build-scripts/update-worksheets.js",
     "update-build-script": "node ./out/src/build-scripts/update-build-files.js",

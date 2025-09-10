@@ -578,6 +578,30 @@ export class FileImpl implements File {
     return this.getFirstSelectorAsDirectChild();
   }
 
+  parseBodyFrom(source: CodeSource, append?: boolean): void {
+    try {
+      while (source.hasMoreCode()) {
+        if (source.isMatchRegEx(Regexes.newLine)) {
+          source.removeNewLine();
+        } else {
+          this.getNextSelector(append).parseFrom(source);
+        }
+      }
+      this.removeAllSelectorsThatCanBe();
+      this.deselectAll();
+      this.getFirstChild().select(true, false);
+      this.updateDirectives();
+      this.updateAllParseStatus();
+    } catch (e) {
+      if (e instanceof ElanFileError) {
+        this.parseError = e.message;
+      } else {
+        this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
+      }
+      this._parseStatus = ParseStatus.invalid;
+    }
+  }
+
   async parseFrom(source: CodeSource, append?: boolean): Promise<void> {
     if (!this._stdLibSymbols.isInitialised) {
       this.parseError = this._stdLibSymbols.error;
@@ -593,18 +617,7 @@ export class FileImpl implements File {
         source.removeRegEx(Regexes.newLine, false);
         source.removeRegEx(Regexes.newLine, false);
       }
-      while (source.hasMoreCode()) {
-        if (source.isMatchRegEx(Regexes.newLine)) {
-          source.removeNewLine();
-        } else {
-          this.getNextSelector(append).parseFrom(source);
-        }
-      }
-      this.removeAllSelectorsThatCanBe();
-      this.deselectAll();
-      this.getFirstChild().select(true, false);
-      this.updateDirectives();
-      this.updateAllParseStatus();
+      this.parseBodyFrom(source, append);
     } catch (e) {
       if (e instanceof ElanFileError) {
         this.parseError = e.message;
