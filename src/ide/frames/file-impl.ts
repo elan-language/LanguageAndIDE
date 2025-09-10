@@ -63,6 +63,7 @@ import {
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
 import { StatementFactoryImpl } from "./statement-factory-impl";
+import { StatementSelector } from "./statements/statement-selector";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus } from "./status-enums";
 
 // for web editor bundle
@@ -576,6 +577,26 @@ export class FileImpl implements File {
     }
 
     return this.getFirstSelectorAsDirectChild();
+  }
+
+  parseStatementFrom(source: CodeSource): string {
+    try {
+      if (source.isMatchRegEx(Regexes.newLine)) {
+        source.removeNewLine();
+      }
+      const mf = new MainFrame(this);
+      const ss = new StatementSelector(mf);
+      ss.parseFrom(source);
+      return mf.getChildren()[0].renderAsHtml();
+    } catch (e) {
+      if (e instanceof ElanFileError) {
+        this.parseError = e.message;
+      } else {
+        this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
+      }
+      this._parseStatus = ParseStatus.invalid;
+    }
+    return "";
   }
 
   parseBodyFrom(source: CodeSource, append?: boolean): void {

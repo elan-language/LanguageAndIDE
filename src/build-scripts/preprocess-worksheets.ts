@@ -31,8 +31,7 @@ function getWorksheets(sourceDir: string): string[] {
   return readdirSync(sourceDir).filter((s) => s.endsWith(".html"));
 }
 
-async function loadCodeAsModelNew(source: string): Promise<FileImpl> {
-  const codeSource = new CodeSourceFromString(source);
+async function loadCodeAsModelNew(): Promise<FileImpl> {
   const fl = new FileImpl(
     hash,
     new DefaultProfile(),
@@ -41,10 +40,6 @@ async function loadCodeAsModelNew(source: string): Promise<FileImpl> {
     new StdLib(new StubInputOutput()),
     true,
   );
-  fl.parseBodyFrom(codeSource);
-  if (fl.parseError) {
-    throw new Error(`${source}: ${fl.parseError}`);
-  }
   return fl;
 }
 
@@ -56,9 +51,19 @@ async function processWorksheet(fileName: string) {
 
   const code = source.slice(codeStart + 6, codeEnd);
 
-  const file = await loadCodeAsModelNew(code);
+  const codeSource = new CodeSourceFromString(code);
 
-  const htmlCode = await file.renderAsHtml();
+  const file = await loadCodeAsModelNew();
+
+  let htmlCode = "";
+
+  file.parseBodyFrom(codeSource);
+
+  if (!file.parseError) {
+    htmlCode = await file.renderAsHtml();
+  } else {
+    htmlCode = file.parseStatementFrom(codeSource);
+  }
 
   const updatedContent = source.slice(0, codeStart + 6) + htmlCode + source.slice(codeEnd);
 
