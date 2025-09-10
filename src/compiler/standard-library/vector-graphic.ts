@@ -1,4 +1,4 @@
-import { ClassOption, elanClass } from "../elan-type-annotations";
+import { ClassOption, elanClass, elanFunction, FunctionOptions } from "../elan-type-annotations";
 import { ElanRuntimeError } from "./elan-runtime-error";
 
 @elanClass(ClassOption.abstract)
@@ -8,6 +8,7 @@ export class VectorGraphic {
     return new VectorGraphic();
   }
 
+  @elanFunction([], FunctionOptions.pure)
   asSVG(): string {
     return "";
   }
