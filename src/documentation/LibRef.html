@@ -206,14 +206,14 @@ in the range:</li>
 </tr><tr>
   <td><el-type>String</el-type></td>
   <td><el-code>let title be "Ulysses"</el-code></td>
-  <td>delimited by double quotes. The characters <el-code>{ }</el-code>
-     define an <a href="#InterpolatedString">interpolated field</a> and so may not be included as literal characters.</td>
+  <td>delimited by double quotes<br>characters <el-code>{ }</el-code>
+     define an <a href="#InterpolatedString">interpolated field</a>, so may not be included as literal characters</td>
   <td><el-code>""</el-code> or <el-code>empty String</el-code></td>
 </tr><tr>
   <td><el-type>String</el-type></td>
   <td><el-code>let title be 'Iliad'</el-code></td>
-  <td>delimited by single quotes,<br>can contain <el-lit>{</el-lit> or <el-lit>}</el-lit> as literal characters, 
-    but can not include <a href="#InterpolatedString">interpolated fields</a></td>.
+  <td>delimited by single quotes<br>can contain <el-lit>{</el-lit> or <el-lit>}</el-lit> as literal characters,
+    but cannot include <a href="#InterpolatedString">interpolated fields</a></td>
   <td><el-code>''</el-code> or <el-code>empty String</el-code></td>
 </tr><tr>
   <td><el-type>String</el-type></td>
@@ -239,7 +239,7 @@ in the range:</li>
   <el-statement class="ok" id="print16" tabindex="-1"><el-kw>print </el-kw><el-field id="expr17" class="optional ok" tabindex="-1"><el-txt>"<el-lit>This is an up arrow: </el-lit>{<el-method>unicode</el-method>(<el-lit>0x2191</el-lit>)}"</el-txt></el-field></el-statement>
   &#x27f6; This is an up arrow: &#x2191;
   </el-code>
-  <p>These examples 'interpolate' the output of function <el-method>unicode</el-method> by using curly braces (see <a href="#InterpolatedString">Interpolated strings</a>).</p></li>
+  <p>These examples 'interpolate' the output of function <el-method>unicode</el-method> by using curly braces (see <a href="#InterpolatedString">Interpolated fields</a>).</p></li>
  <li>Strings can be built from other strings by concatenation using the plus operator, for example:</li>
   <el-code>
   <el-statement class="ok" id="print19" tabindex="-1"><el-kw>print </el-kw><el-field id="expr20" class="optional ok" tabindex="-1"><el-txt>"<el-lit>Hello </el-lit>" + '<el-lit>world</el-lit>'</el-txt></el-field></el-statement>
@@ -277,7 +277,7 @@ in the range:</li>
    &#x27f6; area = 12.57</el-code></li>
 </ul>
 
-<p>Strings that are enclosed by ' (single quotes) cannot have interpolated values in them.</p>
+<p>Strings that are enclosed by ' (single quotes) cannot have interpolated fields in them.</p>
 
 <h3 class="no-TOC">Dot methods on a <el-type>String</el-type></h3>
 <table class="tableMethod">
@@ -2288,7 +2288,7 @@ Later shapes are positioned over earlier ones.</p>
 <ul>
 <li><el-code>openFileForReading</el-code> will present the user with a dialog to select the file.</li>
 <li><el-code>readWholeFile</el-code> returns a <el-type>String</el-type> containing every character in the file, without any trimming. It automatically closes the file after the read.</li>
-<li><el-code>readLine</el-code> reads as far as the next newline character (<el-code>\n</el-code>) and then automatically trims the line to remove any spaces and/or carriage-returns (which some file systems insert after the newline automatically) from the resulting line returned as a <el-type>String</el-type>. If this behaviour is not desired, you can use <el-code>readWholeFile</el-code>, which does no trimming, and then parse the resulting <el-type>String</el-type> into separate lines.</li>
+<li><el-code>readLine</el-code> reads as far as the next newline character (<el-lit>\n</el-lit>) and then automatically trims the line to remove any spaces and/or carriage-returns (which some file systems insert after the newline automatically) from the resulting line returned as a <el-type>String</el-type>. If this behaviour is not desired, you can use <el-code>readWholeFile</el-code>, which does no trimming, and then parse the resulting <el-type>String</el-type> into separate lines.</li>
 <li>Calling <el-code>file.close</el-code> after reading line by line is strongly recommended to avoid any risk of leaving the file locked. It is not necessary to call it after using <el-code>readWholeFile</el-code> because that method automatically closes the file.</li>
 <li>Calling any method on a file that is already closed will result in a runtime error.</li>
 </ul>
@@ -2340,7 +2340,7 @@ Later shapes are positioned over earlier ones.</p>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-<li><el-code>writeLine</el-code> adds the string it is passed onto the end of any data previously written, with a newline character (<el-code>\n</el-code>) automatically appended.</li>
+<li><el-code>writeLine</el-code> adds the string it is passed onto the end of any data previously written, with a newline character (<el-lit>\n</el-lit>) automatically appended.</li>
 <li>When execution reaches <el-code>saveAndClose</el-code> you will be presented with a dialog to confirm (or edit) the given filename and location where it is to be saved. It is not therefore strictly necessary to specify a filename when creating the file, since it can be specified by the user in the dialog so, in that case, you might put the empty string <el-code>""</el-code> into the parameter of <el-code>createFileForWriting</el-code>.</li>
 <li><el-code>writeWholeFile</el-code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <el-code>saveAndClose</el-code> had been called.</li>
 <li>Calling any method on a file that has already been closed (by calling either <el-code>saveAndClose</el-code> or by <el-code>writeWholeFile</el-code>) will result in a runtime error.</li>
@@ -2397,9 +2397,9 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="91" data-cursorend="91" size="90" style="width: 91ch" value="'&lt;style&gt; h1 { color: Red; font-size: 24pt; }  p { font-family: Serif; }  &lt;/style&gt;'" tabindex="-1"></el-txt></el-field></el-statement>
 </el-code-block>
 
-<p>But by inserting double spaces (for newline) and triple spaces (for newline and indent) thus:</p>
+<p>But by inserting <el-lit>\n</el-lit> newlines thus:</p>
 <el-code-block source="Html_3.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="91" data-cursorend="91" size="90" style="width: 91ch" value="'&lt;style&gt;  h1 {   color: Red;   font-size: 24pt;  }  p {   font-family: Serif;  }  &lt;/style&gt;'" tabindex="-1"></el-txt></el-field></el-statement>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="98" data-cursorend="98" size="97" style="width: 98ch" value="'&lt;style&gt;\n h1 {\n  color: Red;\n  font-size: 24pt;\n }\n p {\n  font-family: Serif;\n }\n&lt;/style&gt;'" tabindex="-1"></el-txt></el-field></el-statement>
 </el-code-block>
 
 <p>the string can be shown folded and indented when not being edited: </p>
@@ -2432,7 +2432,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
  <h5 class="no-TOC">Notes</h5>
   <ul>
    <li>Vector graphic image properties include <el-id>height</el-id>, <el-id>width</el-id> and <el-id>alt</el-id>.</li>
-   <li>Other vector graphic image properties such as <i>x,y</i> position, can be added into the <el-kw>with</el-kw> clause.</li>
+   <li>Other vector graphic image properties such as <i>x,y</i> position can be added into the <el-kw>with</el-kw> clause.</li>
   </ul>
 
  <li>put the URL into an <el-kw>image</el-kw> definition:
@@ -2454,9 +2454,9 @@ the style definition into a named value as a literal but enclosed in <i>single</
  <h5 class="no-TOC">Notes</h5>
   <ul>
    <li>Vector graphic image properties include <el-id>height</el-id>, <el-id>width</el-id> and <el-id>alt</el-id> that match the similar Html attributes and and have the same effect.</li>
-   <li>Other vector graphic image properties such as <i>x,y</i> position, can be added into the <el-kw>with</el-kw> clause.</li>
-   <li>In the above example, the <el-id>pic</el-id> will be of type <el-type>ImageVG</el-type> which means that instead of displaying
-  it as Html, it may displayed as vector graphics as in the earlier example.</li>
+   <li>Other vector graphic image properties such as <i>x,y</i> position can be added into the <el-kw>with</el-kw> clause.</li>
+   <li>In this example, <el-id>pic</el-id> will be of type <el-type>ImageVG</el-type> which means that instead of displaying
+  it as Html it may be displayed as vector graphics (like in the earlier example).</li>
   </ul>
  </li>
 </ul>
@@ -2930,7 +2930,7 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
   <td>(none)</td>
   <td>prints the string to the Display without appending a newline so<br>
   a following call will output on the same line.<br>
-  You can put your own "\n" newlines in the argument string</td>
+  You can put your own <el-lit>\n</el-lit> newlines in the argument string</td>
  </tr><tr id="printTab">
   <td><el-method>printTab</el-method></td>
   <td><el-type>Int, String</el-type></td>
