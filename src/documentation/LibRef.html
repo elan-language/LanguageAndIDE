@@ -772,7 +772,7 @@ Note
   <td><el-type>List</el-type></td>
   <td>item of <el-type>List element's Type</el-type></td>
   <td>delete all items equal to the given item</td>
- </tr><tr id="removeAt">
+ </tr><tr id="removeAt_List">
   <td><el-method>removeAt</el-method></td>
   <td><el-type>List</el-type></td>
   <td><el-type>Int</el-type></td>
@@ -990,7 +990,7 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
   <td><el-type>Dictionary</el-type></td>
   <td>key's Type, value's Type</td>
   <td>replace the value at an existing key, or add a <i>key:value</i> pair</td>
- </tr><tr id="RemoveAt">
+ </tr><tr id="RemoveAt_Dictionary">
   <td><el-method>removeAt</el-method></td>
   <td><el-type>Dictionary</el-type></td>
   <td>key's Type</td>
@@ -1997,6 +1997,47 @@ Only <el-id>fillColour</el-id> can be specified as <el-id>transparent</el-id>.</
 <p>And as with using SVG in Html, the shapes are drawn in the order in which they are added to the <el-type>VectorGraphic</el-type> instance.
 Later shapes are positioned over earlier ones.</p>
 
+<h3 class="no-TOC" id="Methods_VG">Function dot methods on Vector graphic shapes</h3>
+<table class="tableMethod">
+ <tr>
+  <th>function<br>dot method</th>
+  <th>on<br>Type</th>
+  <th>argument<br>Types</th>
+  <th>return<br>Type</th>
+  <th>returns</th>
+ </tr><tr id="asHtml">
+  <td><el-method>asHtml</el-method></td>
+  <td><el-type>ImageVG</el-type></td>
+  <td>none</td>
+  <td><el-type>String<el-type></td>
+  <td>string containing the Html <el-lit>&lt;img&gt;</el-lit> tag filled with the image's URL and attribute values</td>
+ </tr><tr id="asSVG">
+  <td><el-method>asSVG</el-method></td>
+  <td><el-type>CircleVG</el-type></td>
+  <td>none</td>
+  <td><el-type>String<el-type></td>
+  <td>string containing the SVG <el-lit>&lt;circle&gt;</el-lit> tag filled with the circle's attribute values</td>
+ </tr><tr id="asSVG">
+  <td><el-method>asSVG</el-method></td>
+  <td><el-type>ImageVG</el-type></td>
+  <td>none</td>
+  <td><el-type>String<el-type></td>
+  <td>string containing the SVG <el-lit>&lt;image&gt;</el-lit> tag filled with the image's URL and attribute values</td>
+ </tr><tr id="asSVG">
+  <td><el-method>asSVG</el-method></td>
+  <td><el-type>LineVG</el-type></td>
+  <td>none</td>
+  <td><el-type>String<el-type></td>
+  <td>string containing the SVG <el-lit>&lt;line&gt;</el-lit> tag filled with the line's attribute values</td>
+ </tr><tr id="asSVG">
+  <td><el-method>asSVG</el-method></td>
+  <td><el-type>RectangleVG</el-type></td>
+  <td>none</td>
+  <td><el-type>String<el-type></td>
+  <td>string containing the SVG <el-lit>&lt;rectangle&gt;</el-lit> tag filled with the rectangle's attribute values</td>
+ </tr>
+</table>
+
 <h3 class="no-TOC" id="Properties_VG">Properties of Vector graphic shapes</h3>
 <table class="tableProperty">
  <tr>
@@ -2536,14 +2577,14 @@ If you need another random value, you use the returned <el-type>Random</el-type>
  </tr><tr id="next">
   <td><el-method>next</el-method></td>
   <td><el-type>Random</el-type></td>
-  <td><el-type>Float</el-type>,<el-type>Float</el-type></td>
-  <td><el-type>tuple(<el-type>Float</el-type>, <el-type>Random</el-type>)</el-type></td>
+  <td><el-type>Float, Float</el-type></td>
+  <td><el-type>tuple</el-type>(<el-type>Float, Random</el-type>)</td>
   <td>random <el-type>Float</el-type> value in the range of the arguments, and<br>new instance of <el-type>Random</el-type> for subsequent use</td>
  </tr><tr id="nextInt">
   <td><el-method>nextInt</el-method></td>
   <td><el-type>Random</el-type></td>
-  <td><el-type>Int</el-type>, <el-type>Int</el-type></td>
-  <td><el-type>tuple(<el-type>Int</el-type>, <el-type>Random</el-type>)</el-type></td>
+  <td><el-type>Int, Int</el-type></td>
+  <td><el-type>tuple</el-type>(<el-type>Int, Random</el-type>)</td>
   <td>random <el-type>Int</el-type> value in the range of the arguments, and<br>new instance of <el-type>Random</el-type> for subsequent use</td>
  </tr>
 </table>
