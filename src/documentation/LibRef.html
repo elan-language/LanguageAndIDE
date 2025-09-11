@@ -206,15 +206,14 @@ in the range:</li>
 </tr><tr>
   <td><el-type>String</el-type></td>
   <td><el-code>let title be "Ulysses"</el-code></td>
-  <td>delimited by double quotes,<br>cannot contain <i>literal</i> { } &quot; characters,<br>
-  but may contain <a href="#InterpolatedString">interpolated strings</a><br>
-  inclduing <a href="#StringConstants">string constants</a></td>
+  <td>delimited by double quotes. The characters <el-code>{ }</el-code>
+     define an <a href="#InterpolatedString">interpolated field</a> and so may not be included as literal characters.</td>
   <td><el-code>""</el-code> or <el-code>empty String</el-code></td>
 </tr><tr>
   <td><el-type>String</el-type></td>
   <td><el-code>let title be 'Iliad'</el-code></td>
-  <td>delimited by single quotes,<br>can contain literal { } &quot; characters,<br>but cannot contain literal ' character<br>
-  or <a href="#InterpolatedString">interpolated strings</a></td>
+  <td>delimited by single quotes,<br>can contain <el-lit>{</el-lit> or <el-lit>}</el-lit> as literal characters, 
+    but can not include <a href="#InterpolatedString">interpolated fields</a></td>.
   <td><el-code>''</el-code> or <el-code>empty String</el-code></td>
 </tr><tr>
   <td><el-type>String</el-type></td>
@@ -245,9 +244,10 @@ in the range:</li>
   <el-code>
   <el-statement class="ok" id="print19" tabindex="-1"><el-kw>print </el-kw><el-field id="expr20" class="optional ok" tabindex="-1"><el-txt>"<el-lit>Hello </el-lit>" + '<el-lit>world</el-lit>'</el-txt></el-field></el-statement>
   &#x27f6; Hello World</el-code></li>
-   <li>A newline may be inserted within a string with <el-code>\n</el-code>:
+   <li>A newline may be inserted within a string with <el-lit>\n</el-lit>:
   <el-code>
   <el-statement class="ok" id="print21" tabindex="-1"><el-kw>print </el-kw><el-field id="expr22" class="optional ok" tabindex="-1"><el-txt>"<el-lit>Hello\nworld</el-lit>"</el-txt></el-field></el-statement>
+  When the field is exited, the newline will be shown in the code. The newline will also be applied when the string is printed/
   &#x27f6; Hello<br>&nbsp;&nbsp;&nbsp;world</el-code>
 </li>
  <li>As in most languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never modified. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</li>
@@ -257,7 +257,7 @@ in the range:</li>
 <li>The dot methods that can be applied to strings are shown in the table below.</li>
 </ul>
 
-<h3 class="no-TOC" id="InterpolatedString">Interpolated strings</h3>
+<h3 class="no-TOC" id="InterpolatedString">Interpolated fields in strings</h3>
 <p>Strings that are enclosed by &quot; (double quotes) are automatically interpolated, that is you can insert the values of variables
  or simple expressions within the string by enclosing them in curly braces:
 <ul>
@@ -2412,7 +2412,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <p>An image that can be retrieved with an http or https URL may be sent to the Display, though note that other URI schemes, such as in <el-code>file://host/path</el-code> to access an image from your local file system, are not supported. Here are three techniques:
 
 <ul>
- <li>put the Html <b>&lt;img&gt;</b> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
+ <li>put the Html <el-lit>&lt;img&gt;</el-lit> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
 <el-code-block source="Html_4.elan">
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>"<el-lit>&lt;img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg'<br> width='400' height='200'<br> title='shark' alt='shark'&gt;</el-lit>"</el-txt></el-field></el-statement>
 <el-statement class="ok" id="call6" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>displayHtml</el-method></el-txt></el-field>(<el-field id="args8" class="optional ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field>)</el-top></el-statement>
@@ -2421,7 +2421,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
   <ul>
    <li>The usual <b>&lt;img&gt;</b> tag attributes are respected, though <el-id>alt</el-id> does not give the expected tooltip when hovering over the image,
    and <el-id>title</el-id> is only a descriptive comment.</li>
-   <li>The attributes can be shown listed vertically by inserting three spaces to signify a newline, as is done here before <el-id>width</el-id> and before <el-id>title</el-id>.</li>
+   <li>The attributes can be shown listed vertically by inserting <el-lit>\n</el-lit> to signify a newline, as is done here before <el-id>width</el-id> and before <el-id>title</el-id>.</li>
   </ul>
 
  <li>put the URL into a Vector Graphics <el-type>ImageVG</el-type> definition: and then call the <el-method>displayVectorGraphics</el-method> method on it, thus:
@@ -2435,7 +2435,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
    <li>Other vector graphic image properties such as <i>x,y</i> position, can be added into the <el-kw>with</el-kw> clause.</li>
   </ul>
 
- <li>put the URL into an <el-type>ImageVG</el-type> <el-kw>image</el-kw> definition:
+ <li>put the URL into an <el-kw>image</el-kw> definition:
 
 <el-code-block source="image_1.elan">
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>pic</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="108" data-cursorend="108" size="107" style="width: 108ch" value="image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg with alt set to &quot;Shark&quot;" tabindex="-1"></el-txt></el-field></el-statement>
@@ -2455,14 +2455,11 @@ the style definition into a named value as a literal but enclosed in <i>single</
   <ul>
    <li>Vector graphic image properties include <el-id>height</el-id>, <el-id>width</el-id> and <el-id>alt</el-id> that match the similar Html attributes and and have the same effect.</li>
    <li>Other vector graphic image properties such as <i>x,y</i> position, can be added into the <el-kw>with</el-kw> clause.</li>
+   <li>In the above example, the <el-id>pic</el-id> will be of type <el-type>ImageVG</el-type> which means that instead of displaying
+  it as Html, it may displayed as vector graphics as in the earlier example.</li>
   </ul>
  </li>
 </ul>
-
-<p class="ack"> <b>Acknowledgement</b><br> The idea of displaying an image value as a thumbnail within the code was inspired by
-a similar feature in the language <a href="https://strype.org">Strype</a>. We are
-grateful to Prof. Michael Kölling and the team at King's College, London responsible for Strype,
-who showed us this feature in confidence before its release, but nonetheless generously allowed us to mimic it in Elan.</p>
 
 <h2 id="tone">Sound</h2>
 
