@@ -1,0 +1,21 @@
+# 054d840a6b082665125f7efb835ab2709a6657b095cec8e3da0315ca650c2660 Elan 1.4.0 guest default_profile valid
+
+main
+  variable vg set to new List<of VectorGraphic>()
+  let pic be image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg with width set to 304, height set to 139
+  print pic
+  print pic.asHtml()
+  print pic.asSVG()
+  call vg.append(pic)
+  # [ghosted]
+  call displayHtml(pic.asHtml())
+  let circ be new CircleVG()
+  print circ.asSVG()
+  let rect be new RectangleVG()
+  print rect.asSVG()
+  let lin be new LineVG()
+  print lin.asSVG()
+  let url be ""
+  let img be new ImageVG("https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg")
+  print img.asSVG()
+end main
