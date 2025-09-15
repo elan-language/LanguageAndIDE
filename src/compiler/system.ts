@@ -227,7 +227,7 @@ export class System {
         (err as any).message,
         expected[0],
         "String",
-        expected[1],
+        "String",
         htmlId,
         stdlib,
       );
@@ -242,20 +242,17 @@ export class System {
     htmlId: string,
     stdlib: { asString: (a: any) => Promise<string> },
   ) {
+    let testStatus = TestStatus.pass;
+    const expectedValue = `${await stdlib.asString(expected)}`;
+    let actualValue = `${await stdlib.asString(actual)}`;
+
     if (!this.equals(actual, expected)) {
-      return new AssertOutcome(
-        TestStatus.fail,
-        `${await stdlib.asString(actual)} (${actualSt})`,
-        `${await stdlib.asString(expected)} (${expectedSt})`,
-        htmlId,
-      );
+      testStatus = TestStatus.fail;
+      if (actualSt !== expectedSt) {
+        actualValue = `${actualSt} expected: ${expectedSt}`;
+      }
     }
-    return new AssertOutcome(
-      TestStatus.pass,
-      `${await stdlib.asString(actual)}`,
-      `${await stdlib.asString(expected)}`,
-      htmlId,
-    );
+    return new AssertOutcome(testStatus, actualValue, expectedValue, htmlId);
   }
 
   deconstructList<T>(list: List<T> | ListImmutable<T>): [T, List<T> | ListImmutable<T>] {

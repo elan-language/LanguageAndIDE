@@ -77,7 +77,7 @@ export class AssertStatement extends AbstractFrame implements Statement {
       msg = `not run`;
     } else if (this.outcome.status === TestStatus.fail) {
       cls = DisplayColour[DisplayColour.error];
-      msg = `actual: ${this.outcome!.actual}`;
+      msg = `actual (computed): ${this.outcome!.actual}`;
     } else if (this.outcome.status === TestStatus.pass) {
       cls = DisplayColour[DisplayColour.ok];
       msg = `pass`;
