@@ -595,27 +595,27 @@ end test`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 _tests.push(["test1", async (_outcomes) => {
-  _outcomes.push(await system.assert(async () => _stdlib.pi, 3.141592653589793, "assert4", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.abs((-3.7)), 3.7, "assert7", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.acos(0.5), 3), 1.047, "assert10", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.asin(0.5), 3), 0.524, "assert13", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.atan(1), 2), 0.79, "assert16", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.cos(_stdlib.pi / 4), 3), 0.707, "assert19", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.exp(2), 3), 7.389, "assert22", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.logE(7.398), 2), 2, "assert25", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.log10(1000), 3, "assert28", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.log2(65536), 16, "assert31", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.sin(_stdlib.pi / 6), 2), 0.5, "assert34", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.sqrt(2), 3), 1.414, "assert37", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.tan(_stdlib.pi / 4), 2), 1, "assert40", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.sinDeg(30), 2), 0.5, "assert43", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.asinDeg(0.5), 2), 30, "assert46", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.cosDeg(60), 2), 0.5, "assert49", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.acosDeg(0.5), 2), 60, "assert52", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.tanDeg(45), 2), 1, "assert55", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.atanDeg(1), 2), 45, "assert58", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.degToRad(90), 2), 1.57, "assert61", _stdlib, false));
-  _outcomes.push(await system.assert(async () => _stdlib.round(_stdlib.radToDeg(1), 0), 57, "assert64", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.pi, "Float"], [3.141592653589793, "Float"], "assert4", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.abs((-3.7)), "Float"], [3.7, "Float"], "assert7", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.acos(0.5), 3), "Float"], [1.047, "Float"], "assert10", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.asin(0.5), 3), "Float"], [0.524, "Float"], "assert13", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.atan(1), 2), "Float"], [0.79, "Float"], "assert16", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.cos(_stdlib.pi / 4), 3), "Float"], [0.707, "Float"], "assert19", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.exp(2), 3), "Float"], [7.389, "Float"], "assert22", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.logE(7.398), 2), "Float"], [2, "Int"], "assert25", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.log10(1000), "Float"], [3, "Int"], "assert28", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.log2(65536), "Float"], [16, "Int"], "assert31", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sin(_stdlib.pi / 6), 2), "Float"], [0.5, "Float"], "assert34", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sqrt(2), 3), "Float"], [1.414, "Float"], "assert37", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.tan(_stdlib.pi / 4), 2), "Float"], [1, "Int"], "assert40", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sinDeg(30), 2), "Float"], [0.5, "Float"], "assert43", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.asinDeg(0.5), 2), "Float"], [30, "Int"], "assert46", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.cosDeg(60), 2), "Float"], [0.5, "Float"], "assert49", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.acosDeg(0.5), 2), "Float"], [60, "Int"], "assert52", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.tanDeg(45), 2), "Float"], [1, "Int"], "assert55", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.atanDeg(1), 2), "Float"], [45, "Int"], "assert58", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.degToRad(90), 2), "Float"], [1.57, "Float"], "assert61", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.radToDeg(1), 0), "Float"], [57, "Int"], "assert64", _stdlib, false));
 }]);
 
 async function main() {
