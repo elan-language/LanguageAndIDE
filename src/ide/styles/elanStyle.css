@@ -471,3 +471,7 @@ el-statement.paused-at > el-fr
   .ghosted.selected > el-top {
     background-color: rgba(var(--selection), 0.35);
   }
+
+  el-comment.ghosted { /* This applies to the [ghosted] tag only */
+    display: none;
+  }
