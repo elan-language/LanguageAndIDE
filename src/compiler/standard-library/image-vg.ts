@@ -132,6 +132,7 @@ export class ImageVG extends VectorGraphic {
     return copy;
   }
 
+  @elanFunction([], FunctionOptions.pure)
   asSVG(): string {
     return `<image x="${this.x}%" y="${this.y / 0.75}%" width="${this.width}" height="${this.height / 0.75}" href="${this.url}" title="${this.title}" alt="${this.alt}"/>`; //TODO style, size etc
   }

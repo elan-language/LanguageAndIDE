@@ -353,7 +353,7 @@ saveAsStandaloneButton.addEventListener("click", async () => {
   html = html.replace("injected_style_css", cssStyle);
   html = html.replace("injected_ide_css", cssIde);
 
-  await chromeSave(html, "standalone.html");
+  await chromeSave(html, false, "standalone.html");
 });
 
 for (const elem of demoFiles) {
@@ -450,7 +450,7 @@ function removeFocussedClassFromAllTabs() {
 helpTabLabel.addEventListener("click", showHelpTab);
 
 helpHomeButton.addEventListener("click", () => {
-  window.open("documentation/Home.html", "help-iframe")?.focus();
+  window.open("documentation/index.html", "help-iframe")?.focus();
 });
 
 helpBackButton.addEventListener("click", () => {
@@ -2219,7 +2219,7 @@ async function handleDownload(event: Event) {
   await renderAsHtml(false);
 }
 
-async function chromeSave(code: string, newName?: string) {
+async function chromeSave(code: string, updateName: boolean, newName?: string) {
   const fh = await showSaveFilePicker({
     suggestedName: newName ?? file.fileName,
     startIn: "documents",
@@ -2227,7 +2227,9 @@ async function chromeSave(code: string, newName?: string) {
     id: lastDirId,
   });
 
-  file.fileName = fh.name;
+  if (updateName) {
+    file.fileName = fh.name;
+  }
 
   const writeable = await fh.createWritable();
   await writeable.write(code);
@@ -2239,7 +2241,7 @@ async function handleChromeDownload(event: Event) {
   const code = await file.renderAsSource();
 
   try {
-    await chromeSave(code);
+    await chromeSave(code, true);
 
     saveButton.classList.remove("unsaved");
     lastSavedHash = file.currentHash;
@@ -2263,7 +2265,7 @@ async function handleChromeAutoSave(event: Event) {
   const code = await file.renderAsSource();
 
   try {
-    autoSaveFileHandle = await chromeSave(code);
+    autoSaveFileHandle = await chromeSave(code, true);
     lastSavedHash = file.currentHash;
     await renderAsHtml(false);
   } catch (_e) {

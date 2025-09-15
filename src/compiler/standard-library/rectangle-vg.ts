@@ -135,6 +135,7 @@ export class RectangleVG extends VectorGraphic {
     return copy;
   }
 
+  @elanFunction([], FunctionOptions.pure)
   asSVG(): string {
     return `<rect x="${this.x}%" y="${this.y / 0.75}%" width="${this.width}%" height="${this.height / 0.75}%" ${this.strokeAsHtml(this.strokeWidth, this.strokeColour)} ${this.fillAsHtml(this.fillColour)}/>`;
   }

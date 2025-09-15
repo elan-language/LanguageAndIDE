@@ -227,10 +227,13 @@ or like this when selected:
  <li>Select the single instruction (which may be a compound one, e.g. a <el-kw>while</el-kw> loop, or an entire <el-kw>procedure</el-kw>) to be ghosted.</li>
  <li><b>Ctrl-m</b> or right-click on the instruction keyword, and choose <el-code>ghost</el-code> from the context menu.</li>
  <li>A system comment <el-code># [ghosted]</el-code> will be inserted before the instruction, and the instruction will be displayed in pale colours.</li>
- <li>The ghosted code will then be ignored by the parser and the compiler.</li>
+ <li>The ghosted code will then be ignored by the compiler. This means, for example, that you can create two different implemenentations
+  of the same function and compare them, as long as one of them is ghosted.</li>
+<li>You can ghost code that does not compile, but you should not ghost code that does not parse: the ghosting will work, but
+  you will not then be able to get the program as a whole to parse &ndash; and will have to unghost it again to fix it.</li>
  <li>To restore a ghosted instruction, <b>Ctrl-m</b> or right-click on it and choose <el-code>unghost</el-code>. You can also
- click <b>Ctrl-Delete</b> or <b>Ctrl-Backspace</b> will on its <el-code># [ghosted]</el-code> comment.</li>
- <li>Ghosted code cannot be moved, deleted or edited without unghosting it first.>/li>
+ click <b>Ctrl-Delete</b> or <b>Ctrl-Backspace</b>  on its <el-code># [ghosted]</el-code> comment.</li>
+ <li>Ghosted code cannot be moved, deleted or edited without unghosting it first.</li>
  <li>A program containing ghosted code can be saved.</li>
  <li>Code containing ghosted instructions can be ghosted at a higher level, and remains ghosted when the higher level is unghosted.</li>
 </ul>

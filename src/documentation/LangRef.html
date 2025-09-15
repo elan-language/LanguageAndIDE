@@ -389,12 +389,18 @@ When deconstructing, the names of the values must match the names of the <el-cod
 <el-statement class="ok" id="set56" tabindex="0"><el-kw>set </el-kw><el-field id="ident57" class="ok" tabindex="0"><el-txt><el-kw>property</el-kw>.<el-id>priorTail</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr58" class="ok" tabindex="0"><el-txt><el-id>tail</el-id></el-txt></el-field></el-statement>
 <el-kw>end constructor</el-kw></el-constructor>
 </el-code-block>
-
 <p>The created instance may then be used within expressions, like any other variable.</p>
 
 <h3 class="no-TOC" id="this">Using keyword <el-kw>this</el-kw></h3>
-<p>When calling a method defined on a class, and </p>
+If in the code of class <el-type>A</el-type> you want to invoke a method in class <el-type>S</el-type> <i>and</i> pass to it the current instance of <el-type>A</el-type>,
+you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by this line in demo program <el-code>snake_OOP.elan</el-code>:</p>
 
+<el-code=block source="snake_OOP.elan">
+<el-top><el-kw>call </el-kw><el-field id="ident91" class="ok" tabindex="-1"><el-txt><el-id>apple</el-id>.<el-method><el-method>newRandomPosition</el-method></el-method></el-txt></el-field>(<el-field id="args92" class="optional ok" tabindex="-1"><el-txt><el-kw>this</el-kw></el-txt></el-field>)</el-top>
+</el-code-block>
+
+<p>Here, method <el-method>newRandomPosition</el-method> is defined on class <el-type>Apple</el-type> which needs to be passed an instance of class <el-type>Snake</el-type>.
+(<el-id>apple</el-id> is an instance of class <el-type>Apple</el-type>).</p>
 
 <h3 class="no-TOC" id="Inheritance">Inheritance</h3>
   <p>An ordinary <a href="#class">class</a> (also known as a 'concrete class') may optionally inherit from just one <a href="#abstractclass"><el-code>abstract class</el-code></a>
