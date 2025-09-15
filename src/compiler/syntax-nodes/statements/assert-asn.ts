@@ -22,9 +22,21 @@ export class AssertAsn extends BreakpointAsn implements AstNode {
     this.compileErrors = [];
     const test = this.scope as TestAsn;
     const ignored = test.ignored;
-    const expected = this.expected.compile();
-    const actual = this.actual.compile();
-    const actualFunc = `async () => ${actual}`;
-    return `${this.indent()}_outcomes.push(await system.assert(${ignored ? `""` : actualFunc}, ${ignored ? `""` : expected}, "${this.fieldId}", _stdlib, ${ignored}));`;
+    const emptyString = `""`;
+    const emptyTuple = `[${emptyString}, ${emptyString}]`;
+    let expected = emptyTuple;
+    let actual = emptyTuple;
+    const expectedValue = this.expected.compile();
+    const actualValue = this.actual.compile();
+
+    if (!ignored) {
+      const expectedSt = this.expected.symbolType().name;
+      const actualSt = this.actual.symbolType().name;
+      const actualFunc = `async () => ${actualValue}`;
+      expected = `[${expectedValue}, "${expectedSt}"]`;
+      actual = `[${actualFunc}, "${actualSt}"]`;
+    }
+
+    return `${this.indent()}_outcomes.push(await system.assert(${actual}, ${expected}, "${this.fieldId}", _stdlib, ${ignored}));`;
   }
 }
