@@ -9,6 +9,7 @@ import { elanVersion, isElanProduction } from "../../environment";
 import { Transforms } from "../compile-api/transforms";
 import { ElanFileError } from "../elan-file-error";
 import { AbstractSelector } from "./abstract-selector";
+import { MemberSelector } from "./class-members/member-selector";
 import { CodeSourceFromString } from "./code-source-from-string";
 import { Regexes } from "./fields/regexes";
 import {
@@ -581,11 +582,25 @@ export class FileImpl implements File {
 
   parseStatementFrom(source: CodeSource): string {
     try {
-      if (source.isMatchRegEx(Regexes.newLine)) {
-        source.removeNewLine();
-      }
       const mf = new MainFrame(this);
       const ss = new StatementSelector(mf);
+      ss.parseFrom(source);
+      return mf.getChildren()[0].renderAsHtml();
+    } catch (e) {
+      if (e instanceof ElanFileError) {
+        this.parseError = e.message;
+      } else {
+        this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
+      }
+      this._parseStatus = ParseStatus.invalid;
+    }
+    return "";
+  }
+
+  parseMemberFrom(source: CodeSource): string {
+    try {
+      const mf = new ConcreteClass(this);
+      const ss = new MemberSelector(mf);
       ss.parseFrom(source);
       return mf.getChildren()[0].renderAsHtml();
     } catch (e) {

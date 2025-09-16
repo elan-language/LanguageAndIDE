@@ -43,15 +43,8 @@ async function loadCodeAsModelNew(): Promise<FileImpl> {
   return fl;
 }
 
-async function processWorksheet(fileName: string) {
-  const source = loadFileAsSourceNew(fileName);
-
-  const codeStart = source.indexOf("<code>");
-  const codeEnd = source.indexOf("</code>");
-
-  const code = source.slice(codeStart + 6, codeEnd);
-
-  const codeSource = new CodeSourceFromString(code);
+export async function processWorksheetCode(code: string) {
+  let codeSource = new CodeSourceFromString(code);
 
   const file = await loadCodeAsModelNew();
 
@@ -62,8 +55,27 @@ async function processWorksheet(fileName: string) {
   if (!file.parseError) {
     htmlCode = await file.renderAsHtml();
   } else {
+    codeSource = new CodeSourceFromString(code);
     htmlCode = file.parseStatementFrom(codeSource);
+
+    if (file.parseError) {
+      codeSource = new CodeSourceFromString(code);
+      htmlCode = file.parseMemberFrom(codeSource);
+    }
   }
+
+  return htmlCode;
+}
+
+async function processWorksheet(fileName: string) {
+  const source = loadFileAsSourceNew(fileName);
+
+  const codeStart = source.indexOf("<code>");
+  const codeEnd = source.indexOf("</code>");
+
+  const code = source.slice(codeStart + 6, codeEnd);
+
+  const htmlCode = await processWorksheetCode(code);
 
   const updatedContent = source.slice(0, codeStart + 6) + htmlCode + source.slice(codeEnd);
 
