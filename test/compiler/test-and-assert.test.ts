@@ -476,7 +476,7 @@ return [main, _tests];}`;
       [
         "test10",
         [
-          new AssertOutcome(TestStatus.fail, "9 (Float)", "10 (Int)", "assert13"),
+          new AssertOutcome(TestStatus.fail, "Float expected: Int", "10", "assert13"),
           new AssertOutcome(TestStatus.pass, "16", "16", "assert16"),
         ],
       ],
@@ -574,14 +574,7 @@ return [main, _tests];}`;
     await assertTestObjectCodeExecutes(fileImpl, [
       [
         "test3",
-        [
-          new AssertOutcome(
-            TestStatus.fail,
-            "Out of range index: 1 size: 0 (String)",
-            "0 (Int)",
-            "assert9",
-          ),
-        ],
+        [new AssertOutcome(TestStatus.fail, "Out of range index: 1 size: 0", "0", "assert9")],
       ],
     ]);
   });
@@ -1131,8 +1124,8 @@ return [main, _tests];}`;
         [
           new AssertOutcome(
             TestStatus.fail,
-            "[[*, *], [*, *]] (Array2D<of String>)",
-            "[[*, *], [*, *]] (List<of List<of String>>)",
+            "Array2D<of String> expected: List<of List<of String>>",
+            "[[*, *], [*, *]]",
             "assert7",
           ),
         ],
