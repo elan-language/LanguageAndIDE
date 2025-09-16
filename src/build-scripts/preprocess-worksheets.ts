@@ -2,9 +2,13 @@ import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { StdLib } from "../compiler/standard-library/std-lib";
 import { transform, transformMany } from "../ide/compile-api/ast-visitor";
 import { Transforms } from "../ide/compile-api/transforms";
+import { MemberSelector } from "../ide/frames/class-members/member-selector";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
 import { DefaultProfile } from "../ide/frames/default-profile";
 import { FileImpl } from "../ide/frames/file-impl";
+import { ConcreteClass } from "../ide/frames/globals/concrete-class";
+import { MainFrame } from "../ide/frames/globals/main-frame";
+import { StatementSelector } from "../ide/frames/statements/statement-selector";
 import { StubInputOutput } from "../ide/stub-input-output";
 import { hash } from "../ide/util";
 
@@ -31,8 +35,8 @@ function getWorksheets(sourceDir: string): string[] {
   return readdirSync(sourceDir).filter((s) => s.endsWith(".html"));
 }
 
-async function loadCodeAsModelNew(): Promise<FileImpl> {
-  const fl = new FileImpl(
+async function newFileImpl(): Promise<FileImpl> {
+  return new FileImpl(
     hash,
     new DefaultProfile(),
     "guest",
@@ -40,31 +44,66 @@ async function loadCodeAsModelNew(): Promise<FileImpl> {
     new StdLib(new StubInputOutput()),
     true,
   );
-  return fl;
 }
 
-export async function processWorksheetCode(code: string) {
-  let codeSource = new CodeSourceFromString(code);
-
-  const file = await loadCodeAsModelNew();
-
-  let htmlCode = "";
+async function parseAsFile(code: string) {
+  const codeSource = new CodeSourceFromString(code);
+  const file = await newFileImpl();
 
   file.parseBodyFrom(codeSource);
 
-  if (!file.parseError) {
-    htmlCode = await file.renderAsHtml();
-  } else {
-    codeSource = new CodeSourceFromString(code);
-    htmlCode = file.parseStatementFrom(codeSource);
-
-    if (file.parseError) {
-      codeSource = new CodeSourceFromString(code);
-      htmlCode = file.parseMemberFrom(codeSource);
-    }
+  if (file.parseError) {
+    return "";
   }
 
-  return htmlCode;
+  return await file.renderAsHtml();
+}
+
+async function parseAsStatement(code: string) {
+  const codeSource = new CodeSourceFromString(code);
+  const file = await newFileImpl();
+
+  try {
+    const mf = new MainFrame(file);
+    const ss = new StatementSelector(mf);
+    ss.parseFrom(codeSource);
+
+    if (file.parseError) {
+      return "";
+    }
+
+    return mf.getChildren()[0].renderAsHtml();
+  } catch (_e) {
+    return "";
+  }
+}
+
+async function parseAsMember(code: string) {
+  const codeSource = new CodeSourceFromString(code);
+  const file = await newFileImpl();
+
+  try {
+    const mf = new ConcreteClass(file);
+    const ss = new MemberSelector(mf);
+    ss.parseFrom(codeSource);
+
+    if (file.parseError) {
+      return "";
+    }
+
+    return mf.getChildren()[0].renderAsHtml();
+  } catch (_e) {
+    return "";
+  }
+}
+
+export async function processWorksheetCode(code: string) {
+  return (
+    (await parseAsFile(code)) ||
+    (await parseAsStatement(code)) ||
+    (await parseAsMember(code)) ||
+    code
+  );
 }
 
 async function processWorksheet(fileName: string) {
