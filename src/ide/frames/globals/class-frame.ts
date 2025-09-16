@@ -41,6 +41,7 @@ import {
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
   parentHelper_updateBreakpoints,
+  setGhostOnSelectedChildren,
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
 import { CompileStatus } from "../status-enums";
@@ -274,5 +275,12 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   updateBreakpoints(event: BreakpointEvent): void {
     super.updateBreakpoints(event);
     parentHelper_updateBreakpoints(this, event);
+  }
+
+  ghostSelectedChildren(): void {
+    setGhostOnSelectedChildren(this, true);
+  }
+  unghostSelectedChildren(): void {
+    setGhostOnSelectedChildren(this, false);
   }
 }

@@ -58,6 +58,7 @@ import {
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
   parentHelper_updateBreakpoints,
+  setGhostOnSelectedChildren,
   worstParseStatus,
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
@@ -771,5 +772,12 @@ export class FileImpl implements File {
 
   isGhostedOrWithinAGhostedFrame(): boolean {
     return false;
+  }
+
+  ghostSelectedChildren(): void {
+    setGhostOnSelectedChildren(this, true);
+  }
+  unghostSelectedChildren(): void {
+    setGhostOnSelectedChildren(this, false);
   }
 }

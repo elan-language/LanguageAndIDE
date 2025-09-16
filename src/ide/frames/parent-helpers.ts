@@ -209,3 +209,12 @@ export function parentHelper_updateBreakpoints(parent: Parent, event: Breakpoint
     frame.updateBreakpoints(event);
   }
 }
+
+export function setGhostOnSelectedChildren(parent: Parent, ghost: boolean): void {
+  const toGhost = parentHelper_getAllSelectedChildren(parent);
+  for (const child of toGhost) {
+    if (child.isGhostable()) {
+      child.setGhosted(ghost);
+    }
+  }
+}

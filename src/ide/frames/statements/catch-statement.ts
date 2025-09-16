@@ -16,6 +16,7 @@ export class CatchStatement extends AbstractFrame implements Statement {
     this.variable.setPlaceholder("<i>variableName</i>");
     this.variable.setFieldToKnownValidText("e");
     this._movable = true;
+    this._ghostable = false;
   }
 
   override deleteIfPermissible(): void {} // does nothing - catch can't be deleted
@@ -62,9 +63,6 @@ export class CatchStatement extends AbstractFrame implements Statement {
     source.removeNewLine();
   }
   override isGhosted(): boolean {
-    return false;
-  }
-  override isGhostedOrWithinAGhostedFrame(): boolean {
     return false;
   }
 }
