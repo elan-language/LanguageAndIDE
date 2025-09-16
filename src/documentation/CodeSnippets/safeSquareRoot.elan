@@ -1,4 +1,4 @@
-# 4a2f2da022ab6fc7a870002b5a417f13c6e4444d625446db9df3ef515e4da117 Elan 1.4.0 guest default_profile valid
+# a78e2cdc0a3611519bc3ae4db4f475b44fc3a3a0e40310586a086cf6d4ff87dd Elan 1.4.2 guest default_profile valid
 
 function safeSquareRoot(x as Float) returns Float
   let root be lambda => sqrt(x)

@@ -788,6 +788,7 @@ and the initial value is given by a following expression. For example:</p>
 </el-statement>
 </el-code-block>
 
+
 <h1 id="Expression">Expressions</h1>
 <p>One of the most important constructs in programming is the 'expression'. An expression is evaluated to return a value. An expression is made up of the following possible elements:</p>
 <ul>
@@ -938,7 +939,7 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
     <el-code>&lt;=</el-code>        for     less than or equal to
 </pre>
 <p>Each is applied to two arguments of Type <el-code>Float</el-code>, but any named value or expression that evaluates to an <el-code>Int</el-code> may always be used where a <el-code>Float</el-code> is expected.</p>
-Notes:
+<h4 class="no-TOC">Notes</h4>
 <ul>
 <li>These operators cannot be applied to strings. Use the dot methods <el-code>isBefore</el-code> and <el-code>isAfter</el-code> to compare strings alphabetically.
  See <a href="LibRef.html#isAfter">Dot methods on a String</a>.</li>
@@ -962,7 +963,8 @@ An expression may simply be a function call, or it may include one or more funct
 <el-statement class="ok" id="var10" tabindex="0"><el-kw>variable </el-kw><el-field id="var11" class="ok" tabindex="0"><el-txt><el-id>name</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr12" class="ok" tabindex="0"><el-txt><el-method>inputString</el-method>("<el-lit>Your name</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="print13" tabindex="0"><el-kw>print </el-kw><el-field id="expr14" class="optional ok" tabindex="0"><el-txt><el-id>name</el-id>.<el-method>upperCase</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
-Notes:
+
+<h4 class="no-TOC">Notes</h4>
 <ul>
 <li>The third example above is not strictly a function call, but is a 'system method' call.
 System methods may be used only within the <el-code>main</el-code> routine or a <el-code>procedure</el-code>, because they have external dependencies or side effects.</li>
@@ -992,8 +994,8 @@ Example:
 <el-statement class="ok" id="return8" tabindex="0"><el-kw>return </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-id>live</el-id>.<el-method>length</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-kw>end function</el-kw> </el-func>
 </el-code-block>
-Notes:
-<ul>
+
+Notes:<ul>
 <li>Although a <el-kw>lambda</el-kw> is commonly defined 'inline' (as shown above) it is possible to assign a lambda to a variable and hence to re-use it within the scope of that variable.</li>
 </ul>
 

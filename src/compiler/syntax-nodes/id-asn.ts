@@ -13,6 +13,7 @@ import {
 import { SymbolScope } from "../../compiler/symbols/symbol-scope";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
 import {
+  getQualifierId,
   mustBeFunctionRefIfFunction,
   mustBeGlobalFunctionIfRef,
   mustBeKnownSymbol,
@@ -98,8 +99,8 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     mustBeKnownSymbol(
       symbol,
       this.updatedScope,
-      symbol.symbolId,
-      UnknownType.Instance,
+      this.precedingNode ? getQualifierId(this.precedingNode) : symbol.symbolId,
+      this.precedingNode ? this.precedingNode.symbolType() : UnknownType.Instance,
       this.compileErrors,
       this.fieldId,
     );

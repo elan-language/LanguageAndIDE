@@ -2,7 +2,7 @@ import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { Regexes } from "./fields/regexes";
-import { isSelector, updateDirectives } from "./frame-helpers";
+import { isSelector } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { Collapsible } from "./frame-interfaces/collapsible";
 import { Frame } from "./frame-interfaces/frame";
@@ -29,6 +29,7 @@ import {
   parentHelper_renderChildrenAsSource,
   parentHelper_selectFirstChild,
   parentHelper_updateBreakpoints,
+  setGhostOnSelectedChildren,
 } from "./parent-helpers";
 import { AssertStatement } from "./statements/assert-statement";
 import { StatementSelector } from "./statements/statement-selector";
@@ -65,11 +66,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
       parentHelper_readWorstParseStatusOfChildren(this),
     );
     this.setParseStatus(worstOfFieldsOrChildren);
-  }
-
-  updateDirectives(): void {
-    const children = this.getChildren();
-    updateDirectives(children);
   }
 
   readCompileStatus(): CompileStatus {
@@ -230,5 +226,12 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   updateBreakpoints(event: BreakpointEvent): void {
     super.updateBreakpoints(event);
     parentHelper_updateBreakpoints(this, event);
+  }
+
+  ghostSelectedChildren(): void {
+    setGhostOnSelectedChildren(this, true);
+  }
+  unghostSelectedChildren(): void {
+    setGhostOnSelectedChildren(this, false);
   }
 }

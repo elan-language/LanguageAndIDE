@@ -4,7 +4,7 @@ import { Scope } from "../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../compiler/compiler-interfaces/symbol-type";
 import { isRecord } from "../compiler/compiler-interfaces/type-options";
 import { ElanCompilerError } from "./elan-compiler-error";
-import { allKeywords, compilerDirectives, reservedWords } from "./keywords";
+import { allKeywords, reservedWords } from "./keywords";
 
 import {
   CannotCallAFunction,
@@ -47,7 +47,6 @@ import {
   TypeCompileError,
   TypesCompileError,
   UndefinedSymbolCompileError,
-  UnknownCompilerDirectiveCompileError,
 } from "./compile-error";
 import { Deprecation } from "./compiler-interfaces/elan-type-interfaces";
 import { BooleanType } from "./symbols/boolean-type";
@@ -1144,18 +1143,6 @@ export function mustBeGlobalFunctionIfRef(
     (symbol.symbolScope === SymbolScope.stdlib || symbol.symbolScope === SymbolScope.member)
   ) {
     compileErrors.push(new NotGlobalFunctionRefCompileError(displayName(symbol, id), location));
-  }
-}
-
-export function mustBeKnownCompilerDirective(
-  directive: string,
-  compileErrors: CompileError[],
-  location: string,
-) {
-  const directiveWord = directive.replace("[", "").replace("]", "").trim();
-
-  if (!compilerDirectives.includes(directiveWord)) {
-    compileErrors.push(new UnknownCompilerDirectiveCompileError(directiveWord, location));
   }
 }
 

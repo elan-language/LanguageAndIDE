@@ -1,4 +1,6 @@
+import { ghostedAnnotation } from "../../compiler/keywords";
 import { AbstractFrame } from "./abstract-frame";
+import { Regexes } from "./fields/regexes";
 import { helper_pastePopUp, isFrameWithStatements } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
@@ -49,14 +51,28 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   parseFrom(source: CodeSource): void {
+    let compilerDirective = "";
     source.removeIndent();
+    if (source.isMatchRegEx(Regexes.compilerDirective)) {
+      compilerDirective = source
+        .removeRegEx(Regexes.compilerDirective, false)
+        .replace("[", "")
+        .replace("] ", "");
+    }
     const options = this.optionsFilteredByContext(false).filter((o) => source.isMatch(o[0]));
     if (options.length === 1) {
       const typeToAdd = options[0][0];
       const frame = this.addFrame(typeToAdd, "");
+      this.processCompilerDirective(frame, compilerDirective);
       frame.parseFrom(source);
     } else {
       throw new Error(`${options.length} matches found at ${source.readToEndOfLine()} `);
+    }
+  }
+
+  private processCompilerDirective(frame: Frame, compilerDirective: string) {
+    if (compilerDirective === ghostedAnnotation) {
+      frame.setGhosted(true);
     }
   }
 

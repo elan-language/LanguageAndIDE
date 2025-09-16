@@ -17,6 +17,7 @@ export class AbstractProcedure extends AbstractFrame {
     super(parent);
     this.name = new IdentifierField(this);
     this.params = new ParamListField(this, true);
+    this.canHaveBreakPoint = false;
   }
 
   initialKeywords(): string {
@@ -36,12 +37,12 @@ export class AbstractProcedure extends AbstractFrame {
 
   renderAsHtml(): string {
     return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.bpAsHtml()}<el-kw>abstract procedure </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})${this.helpAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-proc>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-kw>abstract procedure </el-kw><el-method>${this.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${this.params.renderAsHtml()}<el-punc>)</el-punc>${this.helpAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-proc>
 `;
   }
 
   public override renderAsSource(): string {
-    return `${this.indent()}abstract procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
+    return `${this.indent()}${this.sourceAnnotations()}abstract procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
 `;
   }
 
