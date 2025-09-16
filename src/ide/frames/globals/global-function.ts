@@ -14,7 +14,7 @@ export class GlobalFunction extends FunctionFrame implements GlobalFrame {
   }
 
   public renderAsSource(): string {
-    return `${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnsKeyword} ${this.returnType.renderAsSource()}\r
+    return `${this.sourceAnnotations()}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnsKeyword} ${this.returnType.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${endKeyword} ${functionKeyword}\r
 `;

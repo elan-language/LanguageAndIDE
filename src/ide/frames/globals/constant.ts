@@ -53,7 +53,7 @@ export class Constant extends AbstractFrame implements GlobalFrame, Collapsible 
     return "";
   }
   renderAsSource(): string {
-    return `constant ${this.name.renderAsSource()} set to ${this.value.renderAsSource()}\r
+    return `${this.sourceAnnotations()}constant ${this.name.renderAsSource()} set to ${this.value.renderAsSource()}\r
 `;
   }
 }

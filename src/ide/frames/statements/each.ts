@@ -39,7 +39,7 @@ ${this.renderChildrenAsHtml()}
   }
 
   renderAsSource(): string {
-    return `${this.indent()}each ${this.variable.renderAsSource()} in ${this.iter.renderAsSource()}\r
+    return `${this.indent()}${this.sourceAnnotations()}each ${this.variable.renderAsSource()} in ${this.iter.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end each`;
   }

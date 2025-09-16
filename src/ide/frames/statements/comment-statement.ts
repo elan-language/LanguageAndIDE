@@ -1,4 +1,4 @@
-import { commentMarker, ghostedKeyword } from "../../../compiler/keywords";
+import { commentMarker } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { CommentField } from "../fields/comment-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -38,11 +38,11 @@ export class CommentStatement extends AbstractFrame implements Statement, Commen
   }
 
   renderAsHtml(): string {
-    return `<el-statement>${this.bpAsHtml()}<el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-kw># </el-kw>${this.text.renderAsHtml()}</el-top></el-comment></el-statement>`;
+    return `<el-statement>${this.contextMenu()}${this.bpAsHtml()}<el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-kw># </el-kw>${this.text.renderAsHtml()}</el-top></el-comment></el-statement>`;
   }
 
   renderAsSource(): string {
-    return `${this.indent()}# ${this.text.renderAsSource()}`;
+    return `${this.indent()}${this.sourceAnnotations()}# ${this.text.renderAsSource()}`;
   }
 
   isDirective() {
@@ -56,17 +56,6 @@ export class CommentStatement extends AbstractFrame implements Statement, Commen
     return undefined;
   }
 
-  override isGhosted() {
-    return this.text.renderAsSource().startsWith(`[${ghostedKeyword}`);
-  }
-
-  override isGhostedOrWithinAGhostedFrame(): boolean {
-    return this.isGhosted();
-  }
-
-  override isMovable(): boolean {
-    return !this.isGhosted();
-  }
   override deleteIfPermissible(): void {
     this.insertNewSelectorIfNecessary();
     this.delete();

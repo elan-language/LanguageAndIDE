@@ -13,6 +13,7 @@ export class ReturnStatement extends AbstractFrame implements Statement {
   constructor(parent: Parent) {
     super(parent);
     this._movable = false;
+    this._ghostable = false;
     this.expr = new ExpressionField(this);
   }
   initialKeywords(): string {
@@ -43,12 +44,6 @@ export class ReturnStatement extends AbstractFrame implements Statement {
   }
 
   canInsertAfter(): boolean {
-    return false;
-  }
-  override isGhosted(): boolean {
-    return false;
-  }
-  override isGhostedOrWithinAGhostedFrame(): boolean {
     return false;
   }
 }

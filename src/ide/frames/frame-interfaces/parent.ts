@@ -36,6 +36,8 @@ export interface Parent {
 
   moveSelectedChildrenDownOne(): void;
   moveSelectedChildrenUpOne(): void;
+  ghostSelectedChildren(): void;
+  unghostSelectedChildren(): void;
 
   insertOrGotoChildSelector(after: boolean, child: Frame): void;
   newChildSelector(): AbstractSelector;
