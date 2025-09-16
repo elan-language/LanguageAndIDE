@@ -1,14 +1,18 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { allKeywords } from "../compiler/keywords";
 import { StdLib } from "../compiler/standard-library/std-lib";
 import { transform, transformMany } from "../ide/compile-api/ast-visitor";
 import { Transforms } from "../ide/compile-api/transforms";
 import { MemberSelector } from "../ide/frames/class-members/member-selector";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
 import { DefaultProfile } from "../ide/frames/default-profile";
+import { ExpressionField } from "../ide/frames/fields/expression-field";
 import { FileImpl } from "../ide/frames/file-impl";
 import { ConcreteClass } from "../ide/frames/globals/concrete-class";
 import { MainFrame } from "../ide/frames/globals/main-frame";
+import { LetStatement } from "../ide/frames/statements/let-statement";
 import { StatementSelector } from "../ide/frames/statements/statement-selector";
+import { ParseStatus } from "../ide/frames/status-enums";
 import { StubInputOutput } from "../ide/stub-input-output";
 import { hash } from "../ide/util";
 
@@ -60,7 +64,7 @@ async function parseAsFile(code: string) {
 }
 
 async function parseAsStatement(code: string) {
-  const codeSource = new CodeSourceFromString(code);
+  const codeSource = new CodeSourceFromString(code + " ");
   const file = await newFileImpl();
 
   try {
@@ -83,26 +87,57 @@ async function parseAsMember(code: string) {
   const file = await newFileImpl();
 
   try {
-    const mf = new ConcreteClass(file);
-    const ss = new MemberSelector(mf);
-    ss.parseFrom(codeSource);
+    const cc = new ConcreteClass(file);
+    const ms = new MemberSelector(cc);
+    ms.parseFrom(codeSource);
 
     if (file.parseError) {
       return "";
     }
 
-    return mf.getChildren()[0].renderAsHtml();
+    return cc.getChildren()[0].renderAsHtml();
   } catch (_e) {
     return "";
   }
 }
 
+async function parseAsExpression(code: string) {
+  const codeSource = new CodeSourceFromString(code);
+  const file = await newFileImpl();
+
+  try {
+    const mf = new MainFrame(file);
+    const ls = new LetStatement(mf);
+    const expr = new ExpressionField(ls);
+    expr.parseFrom(codeSource);
+
+    if (expr.readParseStatus() !== ParseStatus.valid) {
+      return "";
+    }
+
+    return expr.textAsHtml();
+  } catch (_e) {
+    return "";
+  }
+}
+
+async function parseAsKeyword(code: string) {
+  const trimmed = code.trim();
+  if (allKeywords.includes(trimmed)) {
+    return `<el-kw>${trimmed}</el-kw>`;
+  }
+
+  return "";
+}
+
 export async function processWorksheetCode(code: string) {
   return (
+    (await parseAsKeyword(code)) ||
     (await parseAsFile(code)) ||
     (await parseAsStatement(code)) ||
     (await parseAsMember(code)) ||
-    code
+    (await parseAsExpression(code)) ||
+    `${code} `
   );
 }
 

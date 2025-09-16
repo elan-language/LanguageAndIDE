@@ -39,4 +39,28 @@ end constructor`;
 
     assert.strictEqual(actual.startsWith("<el-constructor"), true);
   });
+
+  test("process expression", async () => {
+    const code = `a + b`;
+
+    let actual = await processWorksheetCode(code);
+
+    assert.strictEqual(actual.startsWith("<el-id"), true);
+  });
+
+  test("process keyword1", async () => {
+    const code = `let`;
+
+    let actual = await processWorksheetCode(code);
+
+    assert.strictEqual(actual.startsWith("<el-kw"), true);
+  });
+
+  test("process keyword2", async () => {
+    const code = `property`;
+
+    let actual = await processWorksheetCode(code);
+
+    assert.strictEqual(actual.startsWith("<el-kw"), true);
+  });
 });
