@@ -314,7 +314,9 @@ end function`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'y' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "'y' is not defined for type 'Int'.LangRef.html#compile_error",
+    ]);
   });
 
   test("Pass_Redefine", async () => {

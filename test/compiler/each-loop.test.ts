@@ -470,4 +470,31 @@ end main
       "May not re-assign the loop counter 'a'.LangRef.html#compile_error",
     ]);
   });
+
+  test("Fail_undefinedCollection", async () => {
+    const code = `${testHeader}
+
+main
+  each x in a
+    let b be x.z
+  end each
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'a' is not defined.LangRef.html#compile_error",
+      "'x' is not defined.LangRef.html#compile_error",
+    ]);
+  });
 });
