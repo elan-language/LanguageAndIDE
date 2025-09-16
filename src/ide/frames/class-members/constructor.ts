@@ -30,7 +30,7 @@ export class Constructor extends FrameWithStatements {
 
   public renderAsHtml(): string {
     return `<el-constructor class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>constructor</el-kw>(${this.params.renderAsHtml()})${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>constructor</el-kw><el-punc>(</el-punc>${this.params.renderAsHtml()}<el-punc>)</el-punc>${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end constructor</el-kw>
 </el-constructor>`;

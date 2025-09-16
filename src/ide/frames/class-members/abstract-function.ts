@@ -27,6 +27,7 @@ export class AbstractFunction extends AbstractFrame {
     this.name = new IdentifierField(this);
     this.params = new ParamListField(this, false);
     this.returnType = new TypeField(this);
+    this.canHaveBreakPoint = false;
   }
 
   initialKeywords(): string {
@@ -46,7 +47,7 @@ export class AbstractFunction extends AbstractFrame {
 
   renderAsHtml(): string {
     return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.bpAsHtml()}<el-kw>${abstractKeyword} ${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method>(${this.params.renderAsHtml()})<el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.helpAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-func>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-kw>${abstractKeyword} ${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${this.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.helpAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-func>
 `;
   }
 
