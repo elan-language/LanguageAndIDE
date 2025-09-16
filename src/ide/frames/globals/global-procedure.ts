@@ -13,7 +13,7 @@ export class GlobalProcedure extends ProcedureFrame implements GlobalFrame {
   }
 
   public renderAsSource(): string {
-    return `procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
+    return `${this.compilerDirectives()}procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
 ${this.renderChildrenAsSource()}\r
 end procedure\r
 `;

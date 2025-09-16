@@ -61,4 +61,10 @@ export class CatchStatement extends AbstractFrame implements Statement {
     this.variable.parseFrom(source);
     source.removeNewLine();
   }
+  override isGhosted(): boolean {
+    return false;
+  }
+  override isGhostedOrWithinAGhostedFrame(): boolean {
+    return false;
+  }
 }

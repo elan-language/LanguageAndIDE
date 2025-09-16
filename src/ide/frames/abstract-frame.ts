@@ -1,8 +1,6 @@
 import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { BreakpointStatus } from "../../compiler/debugging/breakpoint-status";
-import { ghostedKeyword } from "../../compiler/keywords";
-import { AbstractSelector } from "./abstract-selector";
-import { CodeSourceFromString } from "./code-source-from-string";
+import { ghostedDirective } from "../../compiler/keywords";
 import {
   expandCollapseAll,
   helper_compileMsgAsHtmlNew,
@@ -10,7 +8,6 @@ import {
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
   isFrame,
-  isGhostedDirective,
   isParent,
   isSelector,
   singleIndent,
@@ -710,31 +707,12 @@ export abstract class AbstractFrame implements Frame {
   }
 
   ghost = () => {
-    const before = this.getPreviousPeerFrame();
-    if (!isGhostedDirective(before)) {
-      this.insertPeerSelector(true);
-      const sel = this.getPreviousPeerFrame() as AbstractSelector;
-      sel.parseFrom(new CodeSourceFromString(`# [${ghostedKeyword}]\n`));
-      const sel1 = this.getPreviousPeerFrame();
-      if (!isGhostedDirective(sel1)) {
-        sel1.select();
-        this.deleteSelected();
-      }
-    }
     this.setGhosted(true);
     return true;
   };
 
   unGhost = () => {
     this.setGhosted(false);
-
-    const before = this.getPreviousPeerFrame();
-
-    if (isGhostedDirective(before)) {
-      before.select();
-      this.deleteSelected();
-    }
-
     return true;
   };
 
@@ -744,6 +722,10 @@ export abstract class AbstractFrame implements Frame {
 
   isGhostedOrWithinAGhostedFrame() {
     return this.isGhosted() || this.getParent().isGhostedOrWithinAGhostedFrame();
+  }
+
+  compilerDirectives(): string {
+    return this.isGhosted() ? `[${ghostedDirective}] ` : "";
   }
 
   getContextMenuItems() {

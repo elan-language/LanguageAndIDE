@@ -43,7 +43,7 @@ ${this.renderChildrenAsHtml()}
   }
 
   public renderAsSource(): string {
-    return `main\r
+    return `${this.compilerDirectives()}main\r
 ${this.renderChildrenAsSource()}\r
 end main\r
 `;

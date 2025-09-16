@@ -51,7 +51,7 @@ export class AbstractFunction extends AbstractFrame {
   }
 
   public override renderAsSource(): string {
-    return `${this.indent()}${abstractKeyword} ${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnsKeyword} ${this.returnType.renderAsSource()}\r
+    return `${this.indent()}${this.compilerDirectives()}${abstractKeyword} ${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnsKeyword} ${this.returnType.renderAsSource()}\r
 `;
   }
 

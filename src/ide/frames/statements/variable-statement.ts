@@ -32,6 +32,6 @@ export class VariableStatement extends AbstractDefinitionStatement implements St
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${variableKeyword} ${this.name.renderAsSource()} ${setKeyword} ${toKeyword} ${this.expr.renderAsSource()}`;
+    return `${this.indent()}${this.compilerDirectives()}${variableKeyword} ${this.name.renderAsSource()} ${setKeyword} ${toKeyword} ${this.expr.renderAsSource()}`;
   }
 }

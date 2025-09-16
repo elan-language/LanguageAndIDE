@@ -15,7 +15,7 @@ import { Property } from "../class-members/property";
 import { InheritsFromField } from "../fields/inherits-from-field";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
-import { isConstructor, updateDirectives } from "../frame-helpers";
+import { isConstructor } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
@@ -103,11 +103,6 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
       parentHelper_readWorstParseStatusOfChildren(this),
     );
     this.setParseStatus(worstOfFieldOrChildParseStatus);
-  }
-
-  updateDirectives(): void {
-    const children = this.getChildren();
-    updateDirectives(children);
   }
 
   readCompileStatus(): CompileStatus {

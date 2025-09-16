@@ -45,7 +45,7 @@ export class Enum extends AbstractFrame implements GlobalFrame, Collapsible {
     return "";
   }
   renderAsSource(): string {
-    return `enum ${this.name.renderAsSource()} ${this.values.renderAsSource()}\r
+    return `${this.compilerDirectives()}enum ${this.name.renderAsSource()} ${this.values.renderAsSource()}\r
 `;
   }
 

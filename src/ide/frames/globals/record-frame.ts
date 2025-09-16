@@ -35,7 +35,7 @@ ${parentHelper_renderChildrenAsHtml(this)}
   }
 
   public renderAsSource(): string {
-    return `record ${this.name.renderAsSource()}\r
+    return `${this.compilerDirectives()}record ${this.name.renderAsSource()}\r
 ${parentHelper_renderChildrenAsSource(this)}\r
 end record\r\n`;
   }
