@@ -4,7 +4,7 @@ import { TestStatus } from "../../../compiler/test-status";
 import { AbstractFrame } from "../abstract-frame";
 import { AssertActualField } from "../fields/assert-actual-field";
 import { ExpressionField } from "../fields/expression-field";
-import { helper_compileMsgAsHtmlNew } from "../frame-helpers";
+import { escapeHtmlChars, helper_compileMsgAsHtmlNew } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -77,7 +77,7 @@ export class AssertStatement extends AbstractFrame implements Statement {
       msg = `not run`;
     } else if (this.outcome.status === TestStatus.fail) {
       cls = DisplayColour[DisplayColour.error];
-      msg = `actual (computed): ${this.outcome!.actual}`;
+      msg = escapeHtmlChars(`actual (computed): ${this.outcome.actual}`);
     } else if (this.outcome.status === TestStatus.pass) {
       cls = DisplayColour[DisplayColour.ok];
       msg = `pass`;
