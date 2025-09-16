@@ -1,4 +1,4 @@
-import { ghostedDirective } from "../../compiler/keywords";
+import { ghostedAnnotation } from "../../compiler/keywords";
 import { AbstractFrame } from "./abstract-frame";
 import { Regexes } from "./fields/regexes";
 import { helper_pastePopUp, isFrameWithStatements } from "./frame-helpers";
@@ -71,7 +71,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   private processCompilerDirective(frame: Frame, compilerDirective: string) {
-    if (compilerDirective === ghostedDirective) {
+    if (compilerDirective === ghostedAnnotation) {
       frame.setGhosted(true);
     }
   }

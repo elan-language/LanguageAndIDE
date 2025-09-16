@@ -42,7 +42,7 @@ export class AbstractProcedure extends AbstractFrame {
   }
 
   public override renderAsSource(): string {
-    return `${this.indent()}${this.compilerDirectives()}abstract procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
+    return `${this.indent()}${this.sourceAnnotations()}abstract procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
 `;
   }
 

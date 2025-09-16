@@ -1,6 +1,6 @@
 import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { BreakpointStatus } from "../../compiler/debugging/breakpoint-status";
-import { ghostedDirective } from "../../compiler/keywords";
+import { ghostedAnnotation } from "../../compiler/keywords";
 import {
   expandCollapseAll,
   helper_compileMsgAsHtmlNew,
@@ -722,8 +722,8 @@ export abstract class AbstractFrame implements Frame {
     return this.isGhosted() || this.getParent().isGhostedOrWithinAGhostedFrame();
   }
 
-  compilerDirectives(): string {
-    return this.isGhosted() ? `[${ghostedDirective}] ` : "";
+  sourceAnnotations(): string {
+    return this.isGhosted() ? `[${ghostedAnnotation}] ` : "";
   }
 
   getContextMenuItems() {

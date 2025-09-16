@@ -48,7 +48,7 @@ export class AssertStatement extends AbstractFrame implements Statement {
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${this.compilerDirectives()}assert ${this.actual.renderAsSource()} is ${this.expected.renderAsSource()}`;
+    return `${this.indent()}${this.sourceAnnotations()}assert ${this.actual.renderAsSource()} is ${this.expected.renderAsSource()}`;
   }
 
   setOutcome(outcome: AssertOutcome) {

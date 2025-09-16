@@ -46,7 +46,7 @@ export class AbstractProperty extends AbstractFrame {
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${this.compilerDirectives()}${abstractKeyword} ${propertyKeyword} ${this.name.renderAsSource()} ${asKeyword} ${this.type.renderAsSource()}\r\n`;
+    return `${this.indent()}${this.sourceAnnotations()}${abstractKeyword} ${propertyKeyword} ${this.name.renderAsSource()} ${asKeyword} ${this.type.renderAsSource()}\r\n`;
   }
 
   parseFrom(source: CodeSource): void {

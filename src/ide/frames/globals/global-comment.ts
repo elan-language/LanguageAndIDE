@@ -34,7 +34,7 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame, Comment
     return "";
   }
   renderAsSource(): string {
-    return `${this.compilerDirectives()}# ${this.text.renderAsSource()}`;
+    return `${this.sourceAnnotations()}# ${this.text.renderAsSource()}`;
   }
 
   parseFrom(source: CodeSource): void {

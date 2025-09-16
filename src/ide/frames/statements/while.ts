@@ -31,7 +31,7 @@ ${this.renderChildrenAsHtml()}
 </el-statement>`;
   }
   renderAsSource(): string {
-    return `${this.indent()}${this.compilerDirectives()}while ${this.condition.renderAsSource()}\r
+    return `${this.indent()}${this.sourceAnnotations()}while ${this.condition.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end while`;
   }

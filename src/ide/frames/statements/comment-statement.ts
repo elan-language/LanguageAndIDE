@@ -42,7 +42,7 @@ export class CommentStatement extends AbstractFrame implements Statement, Commen
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${this.compilerDirectives()}# ${this.text.renderAsSource()}`;
+    return `${this.indent()}${this.sourceAnnotations()}# ${this.text.renderAsSource()}`;
   }
 
   isDirective() {

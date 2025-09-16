@@ -84,7 +84,7 @@ ${this.renderChildrenAsHtml()}
     return "";
   }
   public renderAsSource(): string {
-    return `${this.compilerDirectives()}${this.ignoreKw()}test ${this.testDescription.renderAsSource()}\r
+    return `${this.sourceAnnotations()}${this.ignoreKw()}test ${this.testDescription.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 end test\r
 `;

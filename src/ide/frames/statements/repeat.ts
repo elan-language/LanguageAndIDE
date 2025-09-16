@@ -33,7 +33,7 @@ ${this.compileMsgAsHtml()}</el-statement>`;
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${this.compilerDirectives()}repeat\r
+    return `${this.indent()}${this.sourceAnnotations()}repeat\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end repeat when ${this.condition.renderAsSource()}`;
   }

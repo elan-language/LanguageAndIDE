@@ -48,7 +48,7 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember {
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${this.compilerDirectives()}${this.modifierAsSource()}${propertyKeyword} ${this.name.renderAsSource()} ${asKeyword} ${this.type.renderAsSource()}\r\n`;
+    return `${this.indent()}${this.sourceAnnotations()}${this.modifierAsSource()}${propertyKeyword} ${this.name.renderAsSource()} ${asKeyword} ${this.type.renderAsSource()}\r\n`;
   }
 
   isGlobalClass(st: SymbolType) {

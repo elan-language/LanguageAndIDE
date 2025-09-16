@@ -33,6 +33,6 @@ export class Throw extends AbstractFrame implements Statement {
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${this.compilerDirectives()}${throwKeyword} ${exceptionKeyword} ${this.text.renderAsSource()}`;
+    return `${this.indent()}${this.sourceAnnotations()}${throwKeyword} ${exceptionKeyword} ${this.text.renderAsSource()}`;
   }
 }

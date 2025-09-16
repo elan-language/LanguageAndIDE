@@ -31,7 +31,7 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
   }
 
   public override renderAsSource(): string {
-    return `${this.indent()}${this.compilerDirectives()}${this.modifierAsSource()}procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
+    return `${this.indent()}${this.sourceAnnotations()}${this.modifierAsSource()}procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end procedure\r
 `;

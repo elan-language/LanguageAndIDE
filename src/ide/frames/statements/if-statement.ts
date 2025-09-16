@@ -35,7 +35,7 @@ ${this.renderChildrenAsHtml()}
 </el-statement>`;
   }
   renderAsSource(): string {
-    return `${this.indent()}${this.compilerDirectives()}${ifKeyword} ${this.condition.renderAsSource()} ${thenKeyword}\r
+    return `${this.indent()}${this.sourceAnnotations()}${ifKeyword} ${this.condition.renderAsSource()} ${thenKeyword}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}${endKeyword} ${ifKeyword}`;
   }

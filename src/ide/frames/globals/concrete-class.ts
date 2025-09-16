@@ -38,13 +38,13 @@ ${parentHelper_renderChildrenAsHtml(this)}
   }
 
   public renderAsSource(): string {
-    return `${this.compilerDirectives()}class ${this.name.renderAsSource()}${this.inheritanceAsSource()}\r
+    return `${this.sourceAnnotations()}class ${this.name.renderAsSource()}${this.inheritanceAsSource()}\r
 ${parentHelper_renderChildrenAsSource(this)}\r
 end class\r\n`;
   }
 
   topKeywords(): string {
-    return `${this.compilerDirectives()}${classKeyword} `;
+    return `${this.sourceAnnotations()}${classKeyword} `;
   }
 
   bottomKeywords(): string {

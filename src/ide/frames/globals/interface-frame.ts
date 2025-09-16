@@ -40,7 +40,7 @@ ${parentHelper_renderChildrenAsHtml(this)}
   }
 
   public renderAsSource(): string {
-    return `${this.compilerDirectives()}${interfaceKeyword} ${this.name.renderAsSource()}${this.inheritanceAsSource()}\r
+    return `${this.sourceAnnotations()}${interfaceKeyword} ${this.name.renderAsSource()}${this.inheritanceAsSource()}\r
 ${parentHelper_renderChildrenAsSource(this)}\r
 ${endKeyword} ${interfaceKeyword}\r\n`;
   }

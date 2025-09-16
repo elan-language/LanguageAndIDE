@@ -37,6 +37,6 @@ export class Print extends AbstractFrame implements Statement {
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${this.compilerDirectives()}print ${this.expr.renderAsSource()}`;
+    return `${this.indent()}${this.sourceAnnotations()}print ${this.expr.renderAsSource()}`;
   }
 }

@@ -201,6 +201,6 @@ export const reservedWords = [
   "yield",
 ];
 
-export const ghostedDirective = "ghosted";
+export const ghostedAnnotation = "ghosted";
 
-export const compilerDirectives = [ghostedDirective];
+export const sourceAnnotations = [ghostedAnnotation];

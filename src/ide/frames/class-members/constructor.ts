@@ -37,7 +37,7 @@ ${this.renderChildrenAsHtml()}
   }
 
   public renderAsSource(): string {
-    return `${this.indent()}${this.compilerDirectives()}constructor(${this.params.renderAsSource()})\r
+    return `${this.indent()}${this.sourceAnnotations()}constructor(${this.params.renderAsSource()})\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end constructor\r
 `;
