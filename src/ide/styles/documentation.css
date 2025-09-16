@@ -29,7 +29,7 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
 
 table
  th, th * {color: white; background-color: rgb(15,71,97)}
- th { text-align:center; margin-top:4pt; margin-bottom:4pt }
+ th { text-align:center; margin-top:4pt; margin-bottom:4pt; padding-left: 5px; padding-right: 5px; }
  tr { text-align:left; margin-top:4pt; margin-bottom:4pt; }
  tr:nth-child(even) td { background-color: rgb(226, 226, 226); }
  tr:nth-child(odd)  td { background-color: rgb(196, 196, 196); }

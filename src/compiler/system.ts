@@ -210,8 +210,8 @@ export class System {
   }
 
   async assert(
-    actualFunc: () => Promise<any>,
-    expected: any,
+    actual: [() => Promise<any>, string],
+    expected: [any, string],
     htmlId: string,
     stdlib: { asString: (a: any) => Promise<string> },
     ignored: boolean,
@@ -220,33 +220,39 @@ export class System {
       return new AssertOutcome(TestStatus.ignored, "", "", htmlId);
     }
     try {
-      const actual = await actualFunc();
-      return await this.doAssert(actual, expected, htmlId, stdlib);
+      const actualValue = await actual[0]();
+      return await this.doAssert(actualValue, expected[0], actual[1], expected[1], htmlId, stdlib);
     } catch (err) {
-      return await this.doAssert((err as any).message, expected, htmlId, stdlib);
+      return await this.doAssert(
+        (err as any).message,
+        expected[0],
+        "String",
+        "String",
+        htmlId,
+        stdlib,
+      );
     }
   }
 
   private async doAssert(
     actual: any,
     expected: any,
+    actualSt: string,
+    expectedSt: string,
     htmlId: string,
     stdlib: { asString: (a: any) => Promise<string> },
   ) {
+    let testStatus = TestStatus.pass;
+    const expectedValue = `${await stdlib.asString(expected)}`;
+    let actualValue = `${await stdlib.asString(actual)}`;
+
     if (!this.equals(actual, expected)) {
-      return new AssertOutcome(
-        TestStatus.fail,
-        `${await stdlib.asString(actual)}`,
-        `${await stdlib.asString(expected)}`,
-        htmlId,
-      );
+      testStatus = TestStatus.fail;
+      if (actualSt !== expectedSt) {
+        actualValue = `${actualSt} expected: ${expectedSt}`;
+      }
     }
-    return new AssertOutcome(
-      TestStatus.pass,
-      `${await stdlib.asString(actual)}`,
-      `${await stdlib.asString(expected)}`,
-      htmlId,
-    );
+    return new AssertOutcome(testStatus, actualValue, expectedValue, htmlId);
   }
 
   deconstructList<T>(list: List<T> | ListImmutable<T>): [T, List<T> | ListImmutable<T>] {

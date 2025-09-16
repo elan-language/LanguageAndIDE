@@ -338,10 +338,6 @@ el-msg.error {
 /* el-field el-msg */
 
 el-field el-msg {
-    display: none;
-}
-
-el-field.selected el-msg, el-field.selected el-msg * {
     display: inline;
 }
 
