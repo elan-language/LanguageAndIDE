@@ -17,11 +17,78 @@
 <p>This Concepts document is the place for those descriptions and explanations.</p>
 <h2></h2>
 
+
 <h1 id="LanguageFeatures">Language Features</h1>
 
-<h2 id="NamedValues">Named values and variables</h2>
+<h2 id="NamedValues">Named values</h2>
 
-<p>In conventional programming, the term <b>variable</b> describes an entity in a program that contains a value, and has a name by which you can read and write its value, i.e. its value can be varied. In Elan, we call this a <b>mutable named value</b> (or just <i>mutable</i>), because the language has other named values that are <b>immutable</b> (<i>immutables</i>).</p>
+<p>In most programming, the term <b>variable</b> describes a data entity in a program that contains a value and has a name by which you can read and write its value, i.e. its value can be varied. In an Elan program, these data entities are called <b>named values</b> so that a distinction can be made between:</p>
+<ul>
+ <li><b>mutable named values</b> whose content can be assigned and re-assigned</li>
+ <li><b>immutable named values</b> whose content cannot be re-assigned, though they can be redefined</li>
+</ul>
+<p> This distinction applies both to single values and to data structures and, while it is most pertinent in funcrional programing, it provides a useful discipline in any code.</p>
+
+<h2 id="Types">Named value Types</h2>
+
+<p>Elan's named values are statically typed:  when initialised, their Type is established and cannot be changed.</p>
+
+<p>The Types and their names as used in the language are here listed, linking to further detail:</p>
+<table>
+ <tr><th></th><th>Mutable</th><th>Type name</th><th>notes</th></tr>
+ <tr><th>Fundamental Types</th><th></th><th></th><th></th></tr>
+  <tr><td>Integer</td><td>&#x2718;</td><td><a href="LibRef.html#Int"><el-type>Int</el-type></a></td><td></td></tr>
+  <tr><td>Floating point</td><td>&#x2718;</td><td><a href="LibRef.html#Float"><el-type>Float</el-type></a></td><td></td></tr>
+  <tr><td>Boolean</td><td>&#x2718;</td><td><a href="LibRef.html#Boolean"><el-type>Boolean</el-type></a></td><td></td></tr>
+  <tr><td>String</td><td>&#x2718;</td><td><a href="LibRef.html#String"><el-type>String</el-type></a></td><td></td></tr>
+  <tr><td>Group of values</td><td>see note</td><td><a href="LibRef.html#Tuple"><el-type>Tuple</el-type></a></td><td></td></tr>
+ <tr><th>Mutable data structures</th><th></th><th></th><th></th></tr>
+  <tr><td>Simple array</td><td>&#x2714;</td><td><a href="LibRef.html#Array"><el-type>Array</el-type></a></td><td></td></tr>
+  <tr><td>2-dimensional array</td><td>&#x2714;</td><td><a href="LibRef.html#Array2D"><el-type>Array2D</el-type></a></td><td></td></tr>
+  <tr><td>List</td><td>&#x2714;</td><td><a href="LibRef.html#List"><el-type>List</el-type></a></td><td></td></tr>
+  <tr><td>Look-up dictionary</td><td>&#x2714;</td><td><a href="LibRef.html#Dictionary"><el-type>Dictionary</el-type></a></td><td></td></tr>
+ <tr><th>Immutable data structures</th><th></th><th></th><th></th></tr>
+  <tr><td>List</td><td>&#x2718;</td><td><a href="LibRef.html#ListImmutable"><el-type>ListImmutable</el-type></a></td><td></td></tr>
+  <tr><td>Look-up dictionary</td><td>&#x2718;</td><td><a href="LibRef.html#DictionaryImmutable"><el-type>DictionaryImmutable</el-type></a></td><td></td></tr>
+  <tr><td>Set (maths like)</td><td>&#x2718;</td><td><a href="LibRef.html#Set"><el-type>Set</el-type></a></td><td></td></tr>
+  <tr><td>LIFO Stack</td><td></td><td><a href="LibRef.html#Stack"><el-type>Stack</el-type></a></td><td></td></tr>
+  <tr><td>FIFO Quene</td><td></td><td><a href="LibRef.html#Queue"><el-type>Queue</el-type></a></td><td></td></tr>
+ <tr><th>Data I/O classes</th><th></th><th></th><th></th></tr>
+  <tr><td>Text file input</td><td></td><td><a href="LibRef.html#TextFileReader"><el-type>TextFileReader</el-type></a></td><td></td></tr>
+  <tr><td>Text file output</td><td></td><td><a href="LibRef.html#TextFileWriter"><el-type>TextFileWriter</el-type></a></td><td></td></tr>
+ <tr><th>Graphical</th><th></th><th></th><th></th></tr>
+  <tr><td>Turtle</td><td></td><td><a href="LibRef.html#Turtle"><el-type>Turtle</el-type></a></td><td></td></tr>
+  <tr><td>Vector graphic</td><td></td><td><a href="LibRef.html#VectorGraphic"><el-type>VectorGraphic</el-type> sub-types</a></td><td></td></tr>
+ <tr><th>Other</th><th></th><th></th><th></th></tr>
+  <tr><td>Random number</td><td></td><td><a href="LibRef.html#Random"><el-type>Random</el-type></a></td><td></td></tr>
+  <tr><td>Function reference</td><td></td><td><a href="LibRef.html#Func"><el-type>Func</el-type></a></td><td></td></tr>
+ <tr><th>User defined</th><th></th><th></th><th></th></tr>
+  <tr><td>Application Class</td><td></td><td>(name of Class)</td><td></td></tr>
+</table>
+
+<h3  class="no-TOC" id="mutability">Re-assigning vs. mutating named values</h3>
+
+<table>
+ <tr><th colspan="3">define named value</th><th colspan="3">named value</th><th rowspan="2">notes</th></tr>
+ <tr><th>with</th><th>as<br>mutable Type</th><th>as<br> immutable Type</th><th>re-assign<br>with '<el-kw-th>set</el-kw-th>'</th><th>mutate</th><th>scope</th></tr>
+ <tr><td><el-kw>constant</el-kw></td></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>global</td>
+  <td><el-kw>constant</el-kw> values are set only at compile time</td></tr>
+ <tr><td><el-kw>let</el-kw></td><td>&#x2714;</td><td></td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
+  <td></td></tr>
+ <tr><td><el-kw>let</el-kw></td><td></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
+  <td></td></tr>
+ <tr><td><el-kw>variable</el-kw></td><td>&#x2714;<td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
+  <td></td></tr>
+ <tr><td>parameter</td><td>&#x2714;</td><td></td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
+  <td>formal input argument of function, procedure or <el-kw>lambda</el-kw></td></tr>
+ <tr><td>parameter</td><td></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
+  <td>formal input argument of function, procedure or <el-kw>lambda</el-kw></td></tr>
+ <tr><td><el-kw>out</el-kw> parameter</td><td>&#x2714;</td><td></td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
+  <td>formal output argument of procedure</td></tr>
+ <tr><td><el-kw>out</el-kw> parameter</td><td></td><td>&#x2714; if actual argument defined with  <el-kw>variable</el-kw>, not <el-kw>let</el-kw></td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
+  <td>formal output argument of procedure</td></tr>
+</table>
+
 
 <p>Names are given to all <a href="LibRef.html#ValueTypes"><el-type>Types</el-type></a> of such entities, whether simple data items (e.g. integer, Boolean) or data structures (e.g. array, class), and whether mutable or immutable.</p>
 

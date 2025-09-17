@@ -7,7 +7,7 @@ import { AbstractField } from "./abstract-field";
 export class AssertActualField extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
-    this.setPlaceholder("<i>computed value</i>");
+    this.setPlaceholder("<i>actual (computed) value</i>");
   }
 
   helpId(): string {

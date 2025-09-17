@@ -314,15 +314,11 @@ test('ghost code', async ({ page }) => {
 
   await expect(page.locator('#compile')).toContainText('ok');
 
-  await expect(page.getByText('# [ghosted]')).toBeVisible();
-
   await page.getByText('let', { exact: true }).click({
     button: 'right'
   });
 
   await page.getByText('unghost').click();
-
-  await expect(page.getByText('# [ghosted]')).not.toBeVisible();
 
   await expect(page.locator('#compile')).toContainText('unknown');
 
@@ -332,8 +328,6 @@ test('ghost code', async ({ page }) => {
 
   await page.getByText('ghost').click();
 
-  await expect(page.getByText('# [ghosted]')).toBeVisible();
-
   await expect(page.locator('#compile')).toContainText('ok');
 
   await page.getByText('main', { exact: true }).click({
@@ -341,8 +335,6 @@ test('ghost code', async ({ page }) => {
   });
 
   await page.getByText('unghost').click();
-
-  await expect(page.getByText('# [ghosted]')).not.toBeVisible();
 
   await expect(page.locator('#compile')).toContainText('unknown');
 });
