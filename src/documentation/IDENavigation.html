@@ -17,7 +17,7 @@
 <div class="acc-body">
   <p>Watch the video: <a href="videos/navigate-ide.html">Navigate around the IDE</a></p>
   <p><i>Always use Elan with the browser in 'full screen mode' &ndash; it makes more space available and is safer.</i></p>
-  <p>To change the text size, hold down the <b>Ctrl</b> key and use the mouse scroll wheel. (Or change the magnification via the browser's zoom menu).</p>
+  <p>To change the text size, hold down the <b>Ctrl</b> key and use the mouse scroll wheel, or change the magnification via the browser's zoom menu.</p>
   <p>If an area has a blue tinted background, it does not have browser 'focus' and will not respond to keyboard input.
 Use keyboard shortcuts or mouse or touch gestures to change the focus (which is indicated by a white background):</p>
 <table>
@@ -189,32 +189,35 @@ or like this when selected:
   <div class="accordion">
     <h3 class="acc-title" tabindex="0" id="MoveInstructions">Move instructions up or down within the same block</h3>
     <div class="acc-body">
-  Select the instructions, then press <b>Ctrl-&darr;</b> or <b>Ctrl-&uarr;</b>.<br>
-    Movement is limited to up or down <i>within the current code block</i>. <br>
+<ul>
+ <li>Select the instructions, then press <b>Ctrl-&darr;</b> or <b>Ctrl-&uarr;</b>.</li>
+ <li>Movement is limited to up or down <i>within the current code block</i>.</li>
     To move instructions to a different code block
     use cut & paste.<br>
     (It is not currently possible to <i>move</i> instructions using the mouse alone).
-  </div>
-  </div>
-
-  <div class="accordion">
-    <h3 class="acc-title" tabindex="0">Cut and paste instructions</h3>
-    <div class="acc-body">
-  <ul>
-    <li>Select the instructions to be cut, then press <b>Ctrl-x</b>.</li>
-    <li>Now create, or select, a 'new code' prompt where you want to paste the cut instructions.</li>
-    <li>Press <b>Ctrl-v</b> to paste. </li>
-  </ul>
-    Note that the pasted instructions must be compatible with the
-    new context, i.e. all of the instructions <i>could</i> have been created there in the first place.
-    If they are incompatible, no paste will take place and you will see a pop-up advisory message.
-    To restore the cut instructions to their original context, use undo.
-<ul>
-    <li>One or more successive instructions to a new location within the program</li>
-    <li>Text between two fields or externally</li>
-    <li>Code from an external source into the IDE</li>
-    <li>Code from the IDE to an external destination</li>
 </ul>
+</div></div>
+
+<div class="accordion">
+<h3 class="acc-title" tabindex="0">Cut and paste</h3>
+<div class="acc-body">
+<ul>
+ <li>To move one or more successive instructions to a new location within the program:</li>
+  <ul>
+   <li>Select the instructions to be cut, then press <b>Ctrl-x</b>.</li>
+   <li>Create, or select, a <el-code>new code</el-code> prompt where you want to paste in the cut instructions.</li>
+   <li>Press <b>Ctrl-v</b> to paste. </li>
+<p>Note that the pasted instructions must be compatible with their
+new context, i.e. all of the instructions <i>could</i> have been created there in the first place.
+If they are incompatible, no paste will take place and you will see a pop-up advisory message.
+To restore the cut instructions to their original context, use <el-code>undo</el-code>.</p>
+  </ul>
+ <li>To copy or move text between two <i>fields</i> in the program, or between program fields and external text:</li>
+  <ul>
+   <li>Use the usual select highlight text (<b>Ctrl-a</b> for all of a field) and <b>Ctrl-c</b> to copy or <b>Ctrl-x</b> to cut,
+   and then <b>Ctrl-v</b> to paste it in. </li>
+  </ul>
+ </ul>
 </div></div>
 
   <div class="accordion">
@@ -225,13 +228,14 @@ or like this when selected:
  while leaving the ghosted code fully formatted.</p>
 <ul>
  <li>Select the single instruction (which may be a compound one, e.g. a <el-kw>while</el-kw> loop, or an entire <el-kw>procedure</el-kw>) to be ghosted.</li>
- <li>Bring up the context menu with <b>Ctrl-m</b> or right-click on the instruction keyword, and choose <b>ghost</b> from the context menu.</li>
- <li>the instruction will be displayed in pale colours.</li>
+ <li><b>Ctrl-m</b> or right-click on the instruction keyword, and choose <el-code>ghost</el-code> from the context menu.</li>
+ <li>The instruction will be displayed in pale colours.</li>
  <li>The ghosted code will then be ignored by the compiler. This means, for example, that you can create two different implemenentations
   of the same function and compare them, as long as one of them is ghosted.</li>
-<li>You can ghost code that does not compile, but you should not ghost code that does not parse: the ghosting will work, but
-  you will not then be able to get the program as a whole to parse &ndash; and will have to unghost it again to fix it.</li>
- <li>To restore a ghosted instruction, bring up the context menu with <b>Ctrl-m</b> or right-click on it and choose <el-code>unghost</el-code>.</li>
+ <li>You can ghost code that does not compile, but you should not ghost code that does not parse: the ghosting will work, but
+  you will not then be able to get the program as a whole to parse, and will have to unghost it again to fix it.</li>
+ <li>To restore a ghosted instruction, <b>Ctrl-m</b> or right-click on it and choose <el-code>unghost</el-code>.</li>
+ <li>Ghosted code cannot be moved, deleted or edited without unghosting it first.</li>
  <li>A program containing ghosted code can be saved.</li>
  <li>Code containing ghosted instructions can be ghosted at a higher level, and remains ghosted when the higher level is unghosted.</li>
 </ul>
