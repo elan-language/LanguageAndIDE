@@ -176,17 +176,18 @@ Procedures and functions may be called or referenced recursively. For example, a
 <h4 class="no-TOC">Testing for runtime errors</h4>
 <p>If the expression you are testing causes a runtime error then the error will be displayed in the red fail message:</p>
 <el-code-block source="test_runtime.elan">
-<el-test class="error multiline" id="test5" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment7" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
-<el-statement class="ok" id="let62" tabindex="0"><el-kw>let </el-kw><el-field id="var63" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr64" class="ok" tabindex="0"><el-txt>[<el-lit>5</el-lit>, <el-lit>1</el-lit>, <el-lit>7</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="assert77" tabindex="0"><el-kw>assert </el-kw><el-field id="text78" class="ok" tabindex="0"><el-txt><el-id>a</el-id>[<el-lit>0</el-lit>]</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr79" class="ok" tabindex="0"><el-txt><el-lit>5</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert84" tabindex="0"><el-kw>assert </el-kw><el-field id="text85" class="ok" tabindex="0"><el-txt><el-id>a</el-id>[<el-lit>2</el-lit>]</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr86" class="ok" tabindex="0"><el-txt><el-lit>7</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert91" tabindex="0"><el-kw>assert </el-kw><el-field id="text92" class="ok" tabindex="0"><el-txt><el-id>a</el-id>[<el-lit>3</el-lit>]</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr93" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="error">actual: Out of range index: 3 size: 3</el-msg></el-statement>
+<el-test class="error multiline" id="test1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="-1"><el-txt>&nbsp;</el-txt></el-field></el-top>
+<el-statement class="ok" id="let4" tabindex="-1"><el-kw>let </el-kw><el-field id="var5" class="ok" tabindex="-1"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt>[<el-lit>5</el-lit>, <el-lit>1</el-lit>, <el-lit>7</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="assert7" tabindex="-1"><el-kw>assert </el-kw><el-field id="text8" class="ok" tabindex="-1"><el-txt><el-id>a</el-id>[<el-lit>0</el-lit>]</el-txt></el-field><el-kw> is </el-kw><el-field id="expr9" class="ok" tabindex="-1"><el-txt><el-lit>5</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert10" tabindex="-1"><el-kw>assert </el-kw><el-field id="text11" class="ok" tabindex="-1"><el-txt><el-id>a</el-id>[<el-lit>2</el-lit>]</el-txt></el-field><el-kw> is </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-lit>7</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert13" tabindex="-1"><el-kw>assert </el-kw><el-field id="text14" class="ok" tabindex="-1"><el-txt><el-id>a</el-id>[<el-lit>4</el-lit>]</el-txt></el-field><el-kw> is </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field> <el-msg class="error">actual (computed): Out of range index: 4 size: 3</el-msg></el-statement>
+<el-statement class="ok" id="assert17" tabindex="-1"><el-kw>assert </el-kw><el-field id="text18" class="ok" tabindex="-1"><el-txt><el-id>a</el-id>[<el-lit>4</el-lit>]</el-txt></el-field><el-kw> is </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt>"<el-lit>Out of range index: 4 size: 3</el-lit>"</el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-kw>end test</el-kw>
-</el-test>
-</el-code-block>
+</el-test></el-code-block>
 
 <p>If this occurs, mark the tests that you added since the last successful test run with <el-code>ignore</el-code> (see below), and then remove their ignore status one by one until the cause is identified and fixed.</p>
+<p>In the last <el-kw>assert</el-kw>, note how testing can also be done agains an expected error message.</p>
 
 <h4 class="no-TOC" id="ignore">Marking a test with <el-kw>ignore</el-kw></h4>
 <p>It is possible to mark a <el-code>test</el-code> with the <el-code>ignore</el-code> keyword, by selecting the <el-code>test</el-code> frame and then hitting Ctrl-i, as in this example:</p>
