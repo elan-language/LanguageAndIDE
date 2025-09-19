@@ -79,4 +79,20 @@ end constructor`;
 
     assert.strictEqual(actual.startsWith("<el-method"), true);
   });
+
+  test("process type1", async () => {
+    const code = `Int`;
+
+    let actual = await processWorksheetCode(code);
+
+    assert.strictEqual(actual.startsWith("<el-type"), true);
+  });
+
+  test("process type2", async () => {
+    const code = `List<of Int>`;
+
+    let actual = await processWorksheetCode(code);
+
+    assert.strictEqual(actual.startsWith("<el-type"), true);
+  });
 });

@@ -15,6 +15,7 @@ import { StatementSelector } from "../ide/frames/statements/statement-selector";
 import { ParseStatus } from "../ide/frames/status-enums";
 import { StubInputOutput } from "../ide/stub-input-output";
 import { hash } from "../ide/util";
+import { TypeField } from "../ide/frames/fields/type-field";
 
 const rootdir = `${__dirname}/../../..`;
 
@@ -121,6 +122,26 @@ async function parseAsExpression(code: string) {
   }
 }
 
+async function parseAsType(code: string) {
+  const codeSource = new CodeSourceFromString(code);
+  const file = await newFileImpl();
+
+  try {
+    const mf = new MainFrame(file);
+    const ls = new LetStatement(mf);
+    const expr = new TypeField(ls);
+    expr.parseFrom(codeSource);
+
+    if (expr.readParseStatus() !== ParseStatus.valid) {
+      return "";
+    }
+
+    return expr.textAsHtml();
+  } catch (_e) {
+    return "";
+  }
+}
+
 async function parseAsKeyword(code: string) {
   const trimmed = code.trim();
   if (allKeywords.includes(trimmed)) {
@@ -137,7 +158,8 @@ export async function processWorksheetCode(code: string) {
     (await parseAsStatement(code)) ||
     (await parseAsMember(code)) ||
     (await parseAsExpression(code)) ||
-    `${code} `
+    (await parseAsType(code)) ||
+    `${code} Code does not parse as Elan.`
   );
 }
 
