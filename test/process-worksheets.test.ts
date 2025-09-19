@@ -63,4 +63,20 @@ end constructor`;
 
     assert.strictEqual(actual.startsWith("<el-kw"), true);
   });
+
+  test("process identifier1", async () => {
+    const code = `foo`;
+
+    let actual = await processWorksheetCode(code);
+
+    assert.strictEqual(actual.startsWith("<el-id"), true);
+  });
+
+  test("process identifier2", async () => {
+    const code = `foo()`;
+
+    let actual = await processWorksheetCode(code);
+
+    assert.strictEqual(actual.startsWith("<el-method"), true);
+  });
 });
