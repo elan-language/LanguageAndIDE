@@ -15,7 +15,7 @@ import { Property } from "../class-members/property";
 import { InheritsFromField } from "../fields/inherits-from-field";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
-import { isConstructor, updateDirectives } from "../frame-helpers";
+import { isConstructor } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
@@ -41,6 +41,7 @@ import {
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
   parentHelper_updateBreakpoints,
+  setGhostOnSelectedChildren,
 } from "../parent-helpers";
 import { CommentStatement } from "../statements/comment-statement";
 import { CompileStatus } from "../status-enums";
@@ -103,11 +104,6 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
       parentHelper_readWorstParseStatusOfChildren(this),
     );
     this.setParseStatus(worstOfFieldOrChildParseStatus);
-  }
-
-  updateDirectives(): void {
-    const children = this.getChildren();
-    updateDirectives(children);
   }
 
   readCompileStatus(): CompileStatus {
@@ -279,5 +275,12 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   updateBreakpoints(event: BreakpointEvent): void {
     super.updateBreakpoints(event);
     parentHelper_updateBreakpoints(this, event);
+  }
+
+  ghostSelectedChildren(): void {
+    setGhostOnSelectedChildren(this, true);
+  }
+  unghostSelectedChildren(): void {
+    setGhostOnSelectedChildren(this, false);
   }
 }

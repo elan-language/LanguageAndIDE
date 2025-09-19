@@ -176,17 +176,18 @@ Procedures and functions may be called or referenced recursively. For example, a
 <h4 class="no-TOC">Testing for runtime errors</h4>
 <p>If the expression you are testing causes a runtime error then the error will be displayed in the red fail message:</p>
 <el-code-block source="test_runtime.elan">
-<el-test class="error multiline" id="test5" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment7" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
-<el-statement class="ok" id="let62" tabindex="0"><el-kw>let </el-kw><el-field id="var63" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr64" class="ok" tabindex="0"><el-txt>[<el-lit>5</el-lit>, <el-lit>1</el-lit>, <el-lit>7</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="assert77" tabindex="0"><el-kw>assert </el-kw><el-field id="text78" class="ok" tabindex="0"><el-txt><el-id>a</el-id>[<el-lit>0</el-lit>]</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr79" class="ok" tabindex="0"><el-txt><el-lit>5</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert84" tabindex="0"><el-kw>assert </el-kw><el-field id="text85" class="ok" tabindex="0"><el-txt><el-id>a</el-id>[<el-lit>2</el-lit>]</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr86" class="ok" tabindex="0"><el-txt><el-lit>7</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert91" tabindex="0"><el-kw>assert </el-kw><el-field id="text92" class="ok" tabindex="0"><el-txt><el-id>a</el-id>[<el-lit>3</el-lit>]</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr93" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="error">actual: Out of range index: 3 size: 3</el-msg></el-statement>
+<el-test class="error multiline" id="test1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="-1"><el-txt>&nbsp;</el-txt></el-field></el-top>
+<el-statement class="ok" id="let4" tabindex="-1"><el-kw>let </el-kw><el-field id="var5" class="ok" tabindex="-1"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt>[<el-lit>5</el-lit>, <el-lit>1</el-lit>, <el-lit>7</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="assert7" tabindex="-1"><el-kw>assert </el-kw><el-field id="text8" class="ok" tabindex="-1"><el-txt><el-id>a</el-id>[<el-lit>0</el-lit>]</el-txt></el-field><el-kw> is </el-kw><el-field id="expr9" class="ok" tabindex="-1"><el-txt><el-lit>5</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert10" tabindex="-1"><el-kw>assert </el-kw><el-field id="text11" class="ok" tabindex="-1"><el-txt><el-id>a</el-id>[<el-lit>2</el-lit>]</el-txt></el-field><el-kw> is </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-lit>7</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert13" tabindex="-1"><el-kw>assert </el-kw><el-field id="text14" class="ok" tabindex="-1"><el-txt><el-id>a</el-id>[<el-lit>4</el-lit>]</el-txt></el-field><el-kw> is </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field> <el-msg class="error">actual (computed): Out of range index: 4 size: 3</el-msg></el-statement>
+<el-statement class="ok" id="assert17" tabindex="-1"><el-kw>assert </el-kw><el-field id="text18" class="ok" tabindex="-1"><el-txt><el-id>a</el-id>[<el-lit>4</el-lit>]</el-txt></el-field><el-kw> is </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt>"<el-lit>Out of range index: 4 size: 3</el-lit>"</el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-kw>end test</el-kw>
-</el-test>
-</el-code-block>
+</el-test></el-code-block>
 
 <p>If this occurs, mark the tests that you added since the last successful test run with <el-code>ignore</el-code> (see below), and then remove their ignore status one by one until the cause is identified and fixed.</p>
+<p>In the last <el-kw>assert</el-kw>, note how testing can also be done agains an expected error message.</p>
 
 <h4 class="no-TOC" id="ignore">Marking a test with <el-kw>ignore</el-kw></h4>
 <p>It is possible to mark a <el-code>test</el-code> with the <el-code>ignore</el-code> keyword, by selecting the <el-code>test</el-code> frame and then hitting Ctrl-i, as in this example:</p>
@@ -310,7 +311,7 @@ Having defined a record's Type, such as <el-code>Game</el-code> above, you can c
 <el-code-block>
   <el-statement class="" id="let10" tabindex="0"><el-kw>let </el-kw><el-field id="var11" class="ok" tabindex="0"><el-txt><el-id>sq2</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr12" class="" tabindex="0"><el-txt><el-kw>copy</el-kw> <el-id>sq1</el-id><el-kw> with </el-kw><br><el-id>size</el-id><el-kw> set to </el-kw><el-lit><el-lit>2</el-lit>.0</el-lit>, <br><el-id>colour</el-id><el-kw> set to </el-kw><el-id>red</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
 </el-code-block>
-<p>Or even to the same name if that name is a variable:</p>
+<p>Or even to the same name if that name is a <el-kw>variable</el-kw>:</p>
 <el-code-block>
   <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Square</el-type>()<el-kw> with </el-kw><br><el-id>x</el-id><el-kw> set to </el-kw><el-lit><el-lit>3</el-lit>.5</el-lit>, <br><el-id>y</el-id><el-kw> set to </el-kw><el-lit><el-lit>4</el-lit>.0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
@@ -326,7 +327,7 @@ Having defined a record's Type, such as <el-code>Game</el-code> above, you can c
 </el-code-block>
 
 <h4 class="no-TOC" id="record_deconstruction">Record deconstruction</h4>
-<p>A record may be 'deconstructed', meaning that its properties are read into separate variables using the same syntax as for deconstructing a <span class="Link">Tuple</span>. For example, assuming that Square is a record defined as in the example above, then this code:</p>
+<p>A record may be 'deconstructed', meaning that its properties are read into separate <el-kw>variable</el-kw>s using the same syntax as for deconstructing a <span class="Link">Tuple</span>. For example, assuming that Square is a record defined as in the example above, then this code:</p>
 <el-code-block>
   <el-statement class="" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>x</el-id>, <el-id>y</el-id>, <el-id>size</el-id>, <el-id>colour</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="" tabindex="0"><el-txt><el-id>mySquare</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
 </el-code-block>
@@ -389,7 +390,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 <el-statement class="ok" id="set56" tabindex="0"><el-kw>set </el-kw><el-field id="ident57" class="ok" tabindex="0"><el-txt><el-kw>property</el-kw>.<el-id>priorTail</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr58" class="ok" tabindex="0"><el-txt><el-id>tail</el-id></el-txt></el-field></el-statement>
 <el-kw>end constructor</el-kw></el-constructor>
 </el-code-block>
-<p>The created instance may then be used within expressions, like any other variable.</p>
+<p>The created instance may then be used within expressions, like any other named value.</p>
 
 <h3 class="no-TOC" id="this">Using keyword <el-kw>this</el-kw></h3>
 If in the code of class <el-type>A</el-type> you want to invoke a method in class <el-type>S</el-type> <i>and</i> pass to it the current instance of <el-type>A</el-type>,
@@ -593,14 +594,14 @@ by <a href="#throw">throwing an exception</a> like this:</p>
   <el-statement><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>cards</el-id>.<el-method>append</el-method>(<el-id>card</el-id>)</el-statement>
 </ul>
 <p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
-<p>For procedures that you define yourself, <el-kw>out</el-kw> parameters are allowed.  In this case the corresponding argument must be the name of a variable whose value gets updated by the procedure.</p>
+<p>For procedures that you define yourself, <el-kw>out</el-kw> parameters are allowed.  In this case the corresponding argument must be the name of a <el-kw>variable</el-kw> whose value gets updated by the procedure.</p>
 <p>If the parameter is not an <el-kw>out</el-kw> parameter, any expression of the correct Type can be used as an argument.</p>
 <p>Procedures may have side-effects, for example input/output or changing a data value in an object. They can change the contents of any mutable object passed in as an argument.  For this reason, procedures cannot be called from functions, which are not allowed to have side-effects.  <el-kw>call</el-kw> statements are simply not allowed in functions, to enforce this.</p>
 <p>There is a limit to the complexity of a <el-kw>call</el-kw> statement.  Only one dot is allowed in the <el-code>procedure name</el-code> field, or two dots if the first word is <el-kw>property</el-kw>.  If you need anything more complicated, use a <el-kw>let</el-kw> statement on the line above.  See the error message explanation for <a href="#ProcRefField">'procedureName' in a call statement</a>.</p>
 
 <h2 id="each">Each loop</h2>
 <p>The <el-code>each..in..</el-code> construct specifies looping sequentially over the items in a <el-type>List</el-type> or an <el-type>Array</el-type>, or over the characters in a <el-type>String</el-type>.</p>
-<p>The <el-code>each</el-code> loop counter variable is of the same Type as the items in the List or Array, or is of Type <el-type>String</el-type> if looping over the characters in a String. The variable does not have to have been previously defined in a <el-code>variable</el-code> statement.</p>
+<p>The <el-code>each</el-code> loop counter <el-kw>variable</el-kw> is of the same Type as the items in the List or Array, or is of Type <el-type>String</el-type> if looping over the characters in a String. The variable does not have to have been previously defined in a <el-code>variable</el-code> statement.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-code>each</el-code></h4>
@@ -636,12 +637,12 @@ by <a href="#throw">throwing an exception</a> like this:</p>
 <h2 id="for">For loop</h2>
 <div id="step"></div>
 <p>The <el-code>for..from..to..step..</el-code> construct specifies looping through a sequence of integer values with a given increment.</p>
-<p>The <el-code>for</el-code> loop counter variable (which counts from 0) is of Type <el-type>Int</el-type> and does not have to have been defined in a <el-code>variable</el-code> statement.</p>
+<p>The <el-code>for</el-code> loop counter <el-kw>variable</el-kw> (which counts from 0) is of Type <el-type>Int</el-type> and does not have to have been defined in a <el-code>variable</el-code> statement.</p>
 <p>The three defining values, <el-code>from</el-code>, <el-code>to</el-code>, and <el-code>step</el-code>, must all be of Type <el-type>Int</el-type>, positive or negative.
-and may be defined by literals, variables  or expressions that evaluate to integers.</p>
-<p>Note that, if you require a negative step value, then the literal, variable, or expression must start with a negative sign.
+and may be defined by literals, <el-kw>variable</el-kw>s or expressions that evaluate to integers.</p>
+<p>Note that, if you require a negative step value, then the literal, <el-kw>variable</el-kw>, or expression must start with a negative sign.
 This is needed at compile time to determine the nature of the exit condition.
-So if you have a variable <el-code>s</el-code> that holds a negative value to be used to step in reverse order, then you would write:</p>
+So if you have a <el-kw>variable</el-kw> <el-code>s</el-code> that holds a negative value to be used to step in reverse order, then you would write:</p>
 <el-code-block source="forStepNeg.elan">
 <el-statement class="ok" id="var16" tabindex="0"><el-kw>variable </el-kw><el-field id="var17" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr18" class="ok" tabindex="0"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="var40" tabindex="0"><el-kw>variable </el-kw><el-field id="var41" class="ok" tabindex="0"><el-txt><el-id>s</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr42" class="ok" tabindex="0"><el-txt>-<el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -688,8 +689,8 @@ Example 2:
 </el-code-block>
 
 <h2 id="let">Let statement</h2>
-<p>The <el-kw>let</el-kw> statement may be thought of as being between a constant and a variable.
-Like a variable a <el-kw>let</el-kw> may be defined only within a routine, but unlike a variable it may not be re-assigned once defined.
+<p>The <el-kw>let</el-kw> statement may be thought of as being between a <el-kw>constant</el-kw> definition and a <el-kw>variable</el-kw>'s <el-kw>set</el-kw> statement..
+Like a <el-kw>variable set</el-kw> a <el-kw>let</el-kw> may be used only within a routine, but unlike a variable its value may not be changed with a <el-kw>set</el-kw>.
 It is recommended that you always use a <el-kw>let</el-kw> in preference to a <el-kw>variable</el-kw> unless you need to be able to assign a new value to it.
 </p>
 <p>You can put a <el-kw>let</el-kw> in a loop, so the variable gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
@@ -728,9 +729,9 @@ It is recommended that you always use a <el-kw>let</el-kw> in preference to a <e
 
 <h2 id="set">Set statement</h2>
 <p>
-The <el-kw>set</el-kw> statement is used to assign a new value to an existing variable.
-The new value must be of the same Type as (or a Type compatible with) that of the variable.
-A <el-kw>set</el-kw> statement may not assign a new value to a parameter within a procedure.</p>
+The <el-kw>set</el-kw> statement is used to assign a new value to an existing <el-kw>variable</el-kw>.
+The new value must be of the same Type as (or a Type compatible with) that of the <el-kw>variable</el-kw>.
+A <el-kw>set</el-kw> statement may not assign a new value to a parameter within a procedure unless it the parameter is preceded by <el-kw>out</el-kw> in the parameter list.</p>
 
 <h2 id="throw">Throw statement</h2>
 <p>You can deliberately generate, or 'throw', an exception when a specific circumstance is identified, using a <el-code>throw</el-code> statement, for example:</p>
@@ -776,7 +777,7 @@ and the initial value is given by a following expression. For example:</p>
 <h2 id="while">While loop</h2>
 <p>The <el-kw>while condition..end while</el-kw> loop is used when you want execution of the enclosed statements to begin
  only if <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code>.</p>
-<p><el-code>condition</el-code> is either a <el-type>Boolean</el-type> variable or an expression that evaluates to a Boolean value.</p>
+<p><el-code>condition</el-code> is either a <el-type>Boolean</el-type> <el-kw>variable</el-kw> or an expression that evaluates to a Boolean value.</p>
 <p>When <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code> the enclosed code is executed;
  when <el-code><el-id>false</el-id></el-code> the loop is bypassed. For example:</p>
 
@@ -938,8 +939,7 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
     <el-code>&gt;=</el-code>        for     greater than or equal to
     <el-code>&lt;=</el-code>        for     less than or equal to
 </pre>
-<p>Each is applied to two arguments of Type <el-code>Float</el-code>, but any variable or expression that evaluates to an <el-code>Int</el-code> may always be used where a <el-code>Float</el-code> is expected.</p>
-
+<p>Each is applied to two arguments of Type <el-code>Float</el-code>, but any named value or expression that evaluates to an <el-code>Int</el-code> may always be used where a <el-code>Float</el-code> is expected.</p>
 <h4 class="no-TOC">Notes</h4>
 <ul>
 <li>These operators cannot be applied to strings. Use the dot methods <el-code>isBefore</el-code> and <el-code>isAfter</el-code> to compare strings alphabetically.

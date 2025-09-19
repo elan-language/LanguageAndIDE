@@ -45,6 +45,6 @@ export class CallStatement extends AbstractFrame implements Statement {
   }
 
   renderAsSource(): string {
-    return `${this.indent()}call ${this.proc.renderAsSource()}(${this.args.renderAsSource()})`;
+    return `${this.indent()}${this.sourceAnnotations()}call ${this.proc.renderAsSource()}(${this.args.renderAsSource()})`;
   }
 }

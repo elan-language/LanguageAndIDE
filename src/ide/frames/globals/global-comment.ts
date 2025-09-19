@@ -1,4 +1,4 @@
-import { commentMarker, ghostedKeyword } from "../../../compiler/keywords";
+import { commentMarker } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { CommentField } from "../fields/comment-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -27,14 +27,14 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame, Comment
     return "com";
   }
   renderAsHtml(): string {
-    return `<el-global><el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-kw># </el-kw>${this.text.renderAsHtml()}</el-top></el-comment></el-global>`;
+    return `<el-global>${this.contextMenu()}<el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-kw># </el-kw>${this.text.renderAsHtml()}</el-top></el-comment></el-global>`;
   }
 
   indent(): string {
     return "";
   }
   renderAsSource(): string {
-    return `# ${this.text.renderAsSource()}`;
+    return `${this.sourceAnnotations()}# ${this.text.renderAsSource()}`;
   }
 
   parseFrom(source: CodeSource): void {
@@ -55,16 +55,6 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame, Comment
     return undefined;
   }
 
-  override isGhosted() {
-    return this.text.renderAsSource().startsWith(`[${ghostedKeyword}`);
-  }
-
-  override isGhostedOrWithinAGhostedFrame(): boolean {
-    return this.isGhosted();
-  }
-  override isMovable(): boolean {
-    return !this.isGhosted();
-  }
   override deleteIfPermissible(): void {
     this.insertNewSelectorIfNecessary();
     this.delete();

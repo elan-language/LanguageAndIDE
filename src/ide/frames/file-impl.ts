@@ -18,7 +18,6 @@ import {
   helper_testStatusAsDisplayStatus,
   isMain,
   isSelector,
-  updateDirectives,
 } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
@@ -59,6 +58,7 @@ import {
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
   parentHelper_updateBreakpoints,
+  setGhostOnSelectedChildren,
   worstParseStatus,
 } from "./parent-helpers";
 import { ScratchPad } from "./scratch-pad";
@@ -399,16 +399,10 @@ export class FileImpl implements File {
     );
   }
 
-  updateDirectives(): void {
-    const children = this.getChildren();
-    updateDirectives(children);
-  }
-
   refreshParseAndCompileStatuses(compileIfParsed: boolean) {
     try {
       this._parseStatus = ParseStatus.default as ParseStatus;
       this.parseError = undefined;
-      this.updateDirectives();
       this.updateAllParseStatus();
       this.resetAllCompileStatusAndErrors();
       this.resetAllTestStatus();
@@ -590,7 +584,6 @@ export class FileImpl implements File {
       this.removeAllSelectorsThatCanBe();
       this.deselectAll();
       this.getFirstChild().select(true, false);
-      this.updateDirectives();
       this.updateAllParseStatus();
     } catch (e) {
       if (e instanceof ElanFileError) {
@@ -792,5 +785,12 @@ export class FileImpl implements File {
 
   isGhostedOrWithinAGhostedFrame(): boolean {
     return false;
+  }
+
+  ghostSelectedChildren(): void {
+    setGhostOnSelectedChildren(this, true);
+  }
+  unghostSelectedChildren(): void {
+    setGhostOnSelectedChildren(this, false);
   }
 }

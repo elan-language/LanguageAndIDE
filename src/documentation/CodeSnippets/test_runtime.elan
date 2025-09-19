@@ -1,8 +1,9 @@
-# 4d0fa1706471bca14ad1ae21bc207c6d54c667b72e41399fbdf3e9e2ee18f880 Elan 1.4.0 guest default_profile valid
+# 583c42ce0781dae18e9279650e3667234c99b96505bf82a367d9824ac279199a Elan 1.4.2 guest default_profile valid
 
 test 
   let a be [5, 1, 7]
   assert a[0] is 5
   assert a[2] is 7
-  assert a[3] is 0
+  assert a[4] is 0
+  assert a[4] is "Out of range index: 4 size: 3"
 end test

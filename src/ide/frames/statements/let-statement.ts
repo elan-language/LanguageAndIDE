@@ -34,6 +34,6 @@ export class LetStatement extends AbstractDefinitionStatement implements Stateme
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${letKeyword} ${this.name.renderAsSource()} ${beKeyword} ${this.expr.renderAsSource()}`;
+    return `${this.indent()}${this.sourceAnnotations()}${letKeyword} ${this.name.renderAsSource()} ${beKeyword} ${this.expr.renderAsSource()}`;
   }
 }

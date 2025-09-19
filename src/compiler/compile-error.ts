@@ -516,18 +516,6 @@ export class NotGlobalFunctionRefCompileError extends CompileError {
   }
 }
 
-export class UnknownCompilerDirectiveCompileError extends CompileError {
-  constructor(_directive: string, location: string) {
-    super(
-      DisplayPriority.second,
-      Severity.error,
-      `a comment may not start with [ unless it is a recognised compiler directive.`,
-      location,
-      "LangRef.html#compile_error",
-    );
-  }
-}
-
 export class ImmutableCollectionCompileError extends CompileError {
   constructor(list: boolean, location: string) {
     super(

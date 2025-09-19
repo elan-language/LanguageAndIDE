@@ -1,5 +1,4 @@
 import { CompileError, Severity } from "../../compiler/compile-error";
-import { ghostedKeyword } from "../../compiler/keywords";
 import { TestStatus } from "../../compiler/test-status";
 import { AbstractSelector } from "./abstract-selector";
 import { Collapsible } from "./frame-interfaces/collapsible";
@@ -284,18 +283,4 @@ export function addPrivateToggleToContextMenu(
   } else {
     menu.set("makePrivate", ["make private (Ctrl-p)", member.makePrivate]);
   }
-}
-
-export function isGhostedDirective(frame: Frame) {
-  return isComment(frame) && frame.directive() === ghostedKeyword;
-}
-
-export function updateDirectives(children: Frame[]): void {
-  for (let i = 1; i < children.length; i++) {
-    const previous = children[i - 1];
-    const current = children[i];
-    current.setGhosted(isGhostedDirective(previous));
-  }
-
-  children.forEach((c) => c.updateDirectives());
 }

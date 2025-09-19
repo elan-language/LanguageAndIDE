@@ -2,7 +2,6 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { StringType } from "../../compiler/symbols/string-type";
 import { getGlobalScope } from "../../compiler/symbols/symbol-helpers";
-import { mustBeKnownCompilerDirective } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class CommentAsn extends AbstractAstNode implements AstNode {
@@ -16,10 +15,6 @@ export class CommentAsn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
-
-    if (this.value.startsWith("[")) {
-      mustBeKnownCompilerDirective(this.value, this.compileErrors, this.fieldId);
-    }
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

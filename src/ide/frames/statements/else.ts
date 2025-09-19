@@ -60,7 +60,7 @@ export class Else extends AbstractFrame implements Statement {
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${elseKeyword}${this.ifClauseAsSource()}${this.hasIf ? " " + thenKeyword : ""}`;
+    return `${this.indent()}${this.sourceAnnotations()}${elseKeyword}${this.ifClauseAsSource()}${this.hasIf ? " " + thenKeyword : ""}`;
   }
 
   parseFrom(source: CodeSource): void {

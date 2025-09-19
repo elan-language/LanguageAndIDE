@@ -729,6 +729,8 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'item2' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "'item2' is not defined for type 'tuple(Int, String)'.LangRef.html#compile_error",
+    ]);
   });
 });

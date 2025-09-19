@@ -46,7 +46,7 @@ ${this.renderChildrenAsHtml()}
   }
 
   renderAsSource(): string {
-    return `${this.indent()}for ${this.variable.renderAsSource()} from ${this.from.renderAsSource()} to ${this.to.renderAsSource()} step ${this.step.renderAsSource()}\r
+    return `${this.indent()}${this.sourceAnnotations()}for ${this.variable.renderAsSource()} from ${this.from.renderAsSource()} to ${this.to.renderAsSource()} step ${this.step.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end for`;
   }
