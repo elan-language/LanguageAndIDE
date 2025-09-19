@@ -23,6 +23,7 @@ export const globalKeyword = "global";
 export const ifKeyword = "if";
 export const ignoreKeyword = "ignore";
 export const imageKeyword = "image";
+export const importKeyword = "import";
 export const inKeyword = "in";
 export const inheritsKeyword = "inherits";
 export const interfaceKeyword = "interface";
@@ -97,6 +98,7 @@ export const allKeywords = [
   ifKeyword,
   ignoreKeyword,
   imageKeyword,
+  importKeyword,
   inKeyword,
   inheritsKeyword,
   interfaceKeyword,
@@ -165,13 +167,13 @@ export const reservedWords = [
   "float",
   "goto",
   "implements",
-  "import",
   "instanceof",
   "int",
   "into",
   "list",
   "long",
   "match",
+  "mock",
   "namespace",
   "native",
   "null",
@@ -183,6 +185,7 @@ export const reservedWords = [
   "pattern",
   "protected",
   "public",
+  "scenario",
   "short",
   "static",
   "stdlib", // Used for injected property
@@ -202,5 +205,6 @@ export const reservedWords = [
 ];
 
 export const ghostedAnnotation = "ghosted";
+export const importedAnnotation = "imported";
 
-export const sourceAnnotations = [ghostedAnnotation];
+export const sourceAnnotations = [ghostedAnnotation, importedAnnotation];

@@ -1,6 +1,6 @@
 import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { BreakpointStatus } from "../../compiler/debugging/breakpoint-status";
-import { ghostedAnnotation } from "../../compiler/keywords";
+import { ghostedAnnotation, importedAnnotation } from "../../compiler/keywords";
 import {
   expandCollapseAll,
   helper_compileMsgAsHtmlNew,
@@ -43,6 +43,7 @@ export abstract class AbstractFrame implements Frame {
 
   protected _ghostable: boolean = true;
   private _ghosted: boolean = false;
+  private _imported: boolean = false;
 
   protected canHaveBreakPoint = true;
   protected showContextMenu = false;
@@ -464,7 +465,8 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this.focused, "focused");
     this.pushClass(this.breakpointStatus !== BreakpointStatus.none, "breakpoint");
     this.pushClass(this.paused, "paused");
-    this.pushClass(this.isGhosted(), "ghosted");
+    this.pushClass(this.isGhosted(), ghostedAnnotation);
+    this.pushClass(this.isImported(), importedAnnotation);
     this._classes.push(DisplayColour[this.readDisplayStatus()]);
   }
 
@@ -718,18 +720,37 @@ export abstract class AbstractFrame implements Frame {
     return this._ghosted;
   }
 
+  isImported() {
+    return this._imported;
+  }
+
+  setImported(flag: boolean) {
+    this._imported = flag;
+  }
+
+  updateImport = () => {
+    // Not yet implemented
+    return false;
+  };
+
   isGhostedOrWithinAGhostedFrame() {
     return this.isGhosted() || this.getParent().isGhostedOrWithinAGhostedFrame();
   }
 
   sourceAnnotations(): string {
-    return this.isGhosted() ? `[${ghostedAnnotation}] ` : "";
+    return this.isImported()
+      ? `[${importedAnnotation}] `
+      : this.isGhosted()
+        ? `[${ghostedAnnotation}] `
+        : "";
   }
 
   getContextMenuItems() {
     const map = new Map<string, [string, (() => boolean) | undefined]>();
     // Must be arrow functions for this binding
-    if (this.isGhosted()) {
+    if (this.isImported()) {
+      map.set("update", ["update", this.updateImport]);
+    } else if (this.isGhosted()) {
       map.set("unghost", ["unghost", this.unGhost]);
     } else if (!this.isGhostedOrWithinAGhostedFrame()) {
       if (this.isGhostable()) {
