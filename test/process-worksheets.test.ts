@@ -1,5 +1,5 @@
 import assert from "assert";
-import { processWorksheetCode } from "../src/build-scripts/preprocess-worksheets";
+import { processCode, processWorksheetCode } from "../src/build-scripts/preprocess-worksheets";
 
 suite("process worksheets", () => {
   test("process file", async () => {
@@ -94,5 +94,17 @@ end constructor`;
     let actual = await processWorksheetCode(code);
 
     assert.strictEqual(actual.startsWith("<el-type"), true);
+  });
+
+  test("process multiple code", async () => {
+    const code = `<code>let</code>
+<code>Int</code>`;
+
+    let actual = await processCode(code);
+
+    let expected = `<code><el-kw>let</el-kw></code>
+<code><el-type>Int</el-type></code>`;
+
+    assert.strictEqual(actual, expected);
   });
 });

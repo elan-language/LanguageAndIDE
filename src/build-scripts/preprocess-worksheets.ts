@@ -163,17 +163,50 @@ export async function processWorksheetCode(code: string) {
   );
 }
 
+async function processEachCodeInstance(
+  initialCode: string,
+  startAt: number,
+): Promise<[string, number, number]> {
+  const toProcessCode = initialCode.slice(startAt);
+
+  const codeStart = toProcessCode.indexOf("<code>");
+  const codeEnd = toProcessCode.indexOf("</code>");
+
+  if (codeStart !== -1) {
+    const code = toProcessCode.slice(codeStart + 6, codeEnd);
+
+    const htmlCode = await processWorksheetCode(code);
+
+    return [htmlCode, startAt + codeStart + 6, startAt + codeEnd];
+  }
+
+  return ["", -1, -1];
+}
+
+export async function processCode(source: string) {
+  const updates: [string, number, number][] = [];
+
+  let [updatedCode, codeStart, codeEnd] = await processEachCodeInstance(source, 0);
+
+  while (updatedCode !== "") {
+    updates.push([updatedCode, codeStart, codeEnd]);
+    [updatedCode, codeStart, codeEnd] = await processEachCodeInstance(source, codeEnd + 7);
+  }
+
+  let updatedContent = source;
+
+  for (let i = updates.length - 1; i >= 0; i--) {
+    const [c, s, e] = updates[i];
+    updatedContent = updatedContent.slice(0, s) + c + updatedContent.slice(e);
+  }
+
+  return updatedContent;
+}
+
 async function processWorksheet(fileName: string) {
   const source = loadFileAsSourceNew(fileName);
 
-  const codeStart = source.indexOf("<code>");
-  const codeEnd = source.indexOf("</code>");
-
-  const code = source.slice(codeStart + 6, codeEnd);
-
-  const htmlCode = await processWorksheetCode(code);
-
-  const updatedContent = source.slice(0, codeStart + 6) + htmlCode + source.slice(codeEnd);
+  const updatedContent = await processCode(source);
 
   updateFileNew(fileName + ".out", updatedContent);
 }
