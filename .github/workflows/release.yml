@@ -39,7 +39,7 @@ jobs:
       id: read_file
       uses: jaywcjlove/github-action-read-file@v2.0.0
       with:
-        path: src/build-version.txt
+        path: src/ide/build-version.txt
     - name: dbg
       run: echo "${{ steps.read_file.outputs.content }}"
     - name: zip archive
