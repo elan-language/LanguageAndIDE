@@ -2,7 +2,6 @@ import { CompileError, Severity } from "../../compiler/compile-error";
 import { TestStatus } from "../../compiler/test-status";
 import { AbstractSelector } from "./abstract-selector";
 import { Collapsible } from "./frame-interfaces/collapsible";
-import { Comment } from "./frame-interfaces/comment";
 import { Field } from "./frame-interfaces/field";
 import { File } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";

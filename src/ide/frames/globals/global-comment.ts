@@ -2,12 +2,11 @@ import { commentMarker } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { CommentField } from "../fields/comment-field";
 import { CodeSource } from "../frame-interfaces/code-source";
-import { Comment } from "../frame-interfaces/comment";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
 
-export class GlobalComment extends AbstractFrame implements GlobalFrame, Comment {
+export class GlobalComment extends AbstractFrame implements GlobalFrame {
   isGlobal = true;
   public text: CommentField;
   file: File;
@@ -44,22 +43,8 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame, Comment
     source.removeNewLine();
   }
 
-  isDirective() {
-    return this.text.renderAsSource().startsWith("[");
-  }
-
-  directive() {
-    if (this.isDirective()) {
-      return this.text.renderAsSource().replace("[", "").replace("]", "").trim();
-    }
-    return undefined;
-  }
-
   override deleteIfPermissible(): void {
     this.insertNewSelectorIfNecessary();
     this.delete();
-  }
-  canInsertAfter(): boolean {
-    return !this.isGhosted();
   }
 }
