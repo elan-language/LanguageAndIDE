@@ -51,8 +51,8 @@ export class ParamDefNode extends AbstractSequence {
   symbolCompletion_keywords(): Set<KeywordCompletion> {
     return this.getElements().length === 0
       ? this.outPermitted
-        ? new Set<KeywordCompletion>([])
-        : new Set<KeywordCompletion>([KeywordCompletion.create(outKeyword)])
+        ? new Set<KeywordCompletion>([KeywordCompletion.create(outKeyword)])
+        : new Set<KeywordCompletion>([])
       : super.symbolCompletion_keywords();
   }
 }
