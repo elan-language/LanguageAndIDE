@@ -22,6 +22,14 @@
 </ul>
 <p> This distinction applies both to single values and to data structures (which contain multiple values) and, while it is most pertinent in functional programming, it provides a useful discipline in any code.</p>
 
+<h2 id="Identifier">Identifiers</h2>
+<p>For every named value, its name must follow the rules for an identifier:</p>
+<ul>
+ <li>It must start with a lowercase letter followed by any combination ot letters (upper or lowercase), digits and underscore '_' symbols.</li>
+ <li>It must not contain spaces or other symbols.</li>
+ <li>It cannot be the same as any language keyword, method or other reserved word. If you happen to choose such a name, an error message will tell you that you cannot use it for an identifier.</li>
+</ul>
+
 <h2 id="Type">Named value Types</h2>
 
 <p>Elan's named values are statically typed: when initialised, their Type is established and cannot be changed.</p>
@@ -880,9 +888,10 @@ and the initial value is given by a following expression. For example:</p>
 <p>One of the most important constructs in programming is the 'expression'. An expression is evaluated to return a value. An expression is made up of the following possible elements:</p>
 <ul>
 <li>Literal value</li>
-<li>Named value</li>
-<li>Operator (including brackets)</li>
-<li>Function call</li>
+<li><a href="#namedValue">Named value</a></li>
+<li><a href="#operator">Operator</a> (including brackets)</li>
+<li><a href="#function_call">Function call</a></li>
+<li><a href="#lambda">Lambda</a></li>
 </ul>
 <p>which this chapter describes.</p>
 
@@ -905,22 +914,10 @@ and the initial value is given by a following expression. For example:</p>
 <p>For more about List and Dictionary literals see the <a href="LibRef.html#StandardDataStructures">Standard (mutable) data structures</a> table.<br>
 For more about ListImmutable and DictionaryImmutable literals see the <a href="LibRef.html#ImmutableDataStructures">Immutable data structures</a> table.</p>
 
-<h2 id="named_value">Named value</h2>
-<p>A named value is a value that is associated with a name rather than being defined literally in code. There are various kinds of named value:</p>
-<p><a href="#constant">Constants</a>, <span class="Hyperlink"><a href="#let">let</a></span> statement, <span class="Hyperlink"><a href="#variable">variable</a></span> statement, <a href="#Parameter_passing">Parameter passing</a>, <span class="Hyperlink"><a href="#enum">enum</a></span> statement.
-  Once a named value has been defined, it can be referred to by the name.</p>
-
-<div id="parse_name"></div>
-<h2 id="Identifier">Identifier</h2>
-<p>For all kinds of named values, the name must follow the rules for an 'identifier'.
-  It must start with a lower case letter, followed by any combination of lower and upper case letters,
-   numeric digits, and the _ (underscore) symbol. It may not contain spaces or other symbols.</p>
-<p>If you happen to choose a language keyword, method name or other reserved word, an error message will tell you that you cannot use it for an identifier.</p>
-
 <div id="global"></div>
 <div id="library"></div>
 <h2 id="scoping">Scoping and name qualification</h2>
-<p>With the exception of a <el-code>constant</el-code> (below), which is global in scope, named values are always 'local': their scope is confined to the method in which they are defined. </p>
+<p>With the exception of a <a href="#constant"><el-code>constant</el-code></a>, which is global in scope, named values are always 'local': their scope is confined to the method in which they are defined. </p>
 <p>Elan allows local named values to be defined with the same name as a constant, function, or procedure defined at global level or defined in the standard library. In such cases, when the name is used within the same method, then it will refer to the local definition. If you have done this, but then need to access the <el-code>constant</el-code>, <el-code>function</el-code>, or <el-code>procedure</el-code> with the same name, then you can simply prefix the use of the name with a 'qualifier' of either <el-code>global.</el-code> or <el-code>library.</el-code> as appropriate.</p>
 
 <div id="range"></div>
