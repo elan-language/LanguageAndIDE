@@ -778,6 +778,14 @@ export class FileImpl implements File {
     return false;
   }
 
+  isWithinAnImportedFrame(): boolean {
+    return false;
+  }
+
+  isImported(): boolean {
+    return false;
+  }
+
   ghostSelectedChildren(): void {
     setGhostOnSelectedChildren(this, true);
   }

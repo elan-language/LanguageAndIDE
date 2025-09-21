@@ -488,3 +488,7 @@ el-statement.paused-at > el-fr
     content: "import ";
     color: var(--keyword);
   }
+
+  el-comment.imported > el-top::before {
+    content: "";
+  }

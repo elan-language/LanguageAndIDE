@@ -104,7 +104,9 @@ export abstract class AbstractFrame implements Frame {
   }
 
   getFrNo(): string {
-    return this.isGhostedOrWithinAGhostedFrame() ? "" : this.getFile().getFrNo();
+    return this.isGhostedOrWithinAGhostedFrame() || this.isWithinAnImportedFrame()
+      ? ""
+      : this.getFile().getFrNo();
   }
 
   fieldUpdated(_field: Field): void {
@@ -733,8 +735,13 @@ export abstract class AbstractFrame implements Frame {
     return false;
   };
 
-  isGhostedOrWithinAGhostedFrame() {
+  isGhostedOrWithinAGhostedFrame(): boolean {
     return this.isGhosted() || this.getParent().isGhostedOrWithinAGhostedFrame();
+  }
+
+  isWithinAnImportedFrame(): boolean {
+    const parent = this.getParent();
+    return parent.isImported() || parent.isWithinAnImportedFrame();
   }
 
   sourceAnnotations(): string {
