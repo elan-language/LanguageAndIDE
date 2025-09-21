@@ -1438,8 +1438,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
     <li>The methods for adding and removing an item are different for <el-type>Stack</el-type> and <el-type>Queue</el-type>, as shown here:</li>
 </ul>
 
-<div id="Stack_functions"></div><!-- so it works with both spellings -->
-<h3 class="no-TOC" id="StackFunctions">Function dot methods on a Stack</h3>
+<h3 class="no-TOC" id="Stack_functions">Function dot methods on a Stack</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1481,8 +1480,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
  </tr>
 </table>
 
-<div id="Queue_functions"></div><!-- so it works with both spellings -->
-<h3 class="no-TOC" id="QueueFunctions">Function dot methods on a Queue</h3>
+<h3 class="no-TOC" id="Queue_functions">Function dot methods on a Queue</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -2012,25 +2010,25 @@ Later shapes are positioned over earlier ones.</p>
   <td>none</td>
   <td><el-type>String<el-type></td>
   <td>string containing the Html <el-lit>&lt;img&gt;</el-lit> tag filled with the image's URL and attribute values</td>
- </tr><tr id="asSVG">
+ </tr><tr id="asSVG_Circle"><div  id="asSVG"></div>
   <td><el-method>asSVG</el-method></td>
   <td><el-type>CircleVG</el-type></td>
   <td>none</td>
   <td><el-type>String<el-type></td>
   <td>string containing the SVG <el-lit>&lt;circle&gt;</el-lit> tag filled with the circle's attribute values</td>
- </tr><tr id="asSVG">
+ </tr><tr id="asSVG_Image">
   <td><el-method>asSVG</el-method></td>
   <td><el-type>ImageVG</el-type></td>
   <td>none</td>
   <td><el-type>String<el-type></td>
   <td>string containing the SVG <el-lit>&lt;image&gt;</el-lit> tag filled with the image's URL and attribute values</td>
- </tr><tr id="asSVG">
+ </tr><tr id="asSVG_Line">
   <td><el-method>asSVG</el-method></td>
   <td><el-type>LineVG</el-type></td>
   <td>none</td>
   <td><el-type>String<el-type></td>
   <td>string containing the SVG <el-lit>&lt;line&gt;</el-lit> tag filled with the line's attribute values</td>
- </tr><tr id="asSVG">
+ </tr><tr id="asSVG_Ractangle">
   <td><el-method>asSVG</el-method></td>
   <td><el-type>RectangleVG</el-type></td>
   <td>none</td>
@@ -2449,7 +2447,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>style</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>'<el-lit>&lt;style&gt;<br>h1 {<br> color: Red;<br> font-size: 24pt;<br>}<br>p {<br> font-family: Serif;<br>}<br>&lt;/style&gt;</el-lit>'</el-txt></el-field></el-statement>
 </el-code-block>
 
-<h2>Displaying images from URLs</h2>
+<h2 id="displayImageURL">Displaying images from URLs</h2>
 
 <p>An image that can be retrieved with an http or https URL may be sent to the Display, though note that other URI schemes, such as in <el-code>file://host/path</el-code> to access an image from your local file system, are not supported. Here are three techniques:
 

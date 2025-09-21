@@ -5,7 +5,7 @@ p { margin-top:0; margin-bottom:0; line-height:inherit; }
 
 h1,h2,h3,h4
    { color: rgb(15,71,97); margin-top:0; margin-bottom:0; line-height:inherit; font-size:inherit; font-weight:inherit; }
-h1 { font-size:20pt; font-weight:bold; text-indent:0pt; margin-top:20pt; margin-bottom:4pt; }
+h1 { font-size:20pt; font-weight:bold; text-indent:0pt; margin-top:20pt; margin-bottom:4pt; background-color:rgb(226, 226, 226); }
 h2 { font-size:16pt; font-weight:bold; text-indent:0pt; margin-top:16pt; margin-bottom:4pt;  border-style:solid none none none; }
 h3 { font-size:14pt; font-weight:bold; text-indent:0pt; margin-top:14pt; margin-bottom:4pt; }
 h4 { font-size:12pt; font-weight:bold; text-indent:0pt; margin-top:6pt; margin-bottom:4pt; }
