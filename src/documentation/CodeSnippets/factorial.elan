@@ -1,4 +1,4 @@
-# 58a10e90ddce5313cf9039fb845d175ffbe9ee487fcf5c350651e63a0476b83a Elan 1.4.2 guest default_profile valid
+# 111567a04535290e93e8765bd6752ff30a07fc31f916bb63daf99cbfb1666693 Elan 1.5.0 guest default_profile valid
 
 main
   print factorial(7)
