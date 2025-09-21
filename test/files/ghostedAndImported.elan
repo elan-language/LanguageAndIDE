@@ -1,0 +1,16 @@
+# 7518e6ae8fa0c8a17d1e8d6939265cf5314c976eaa8aaae6bb3d8147440f0173 Elan 1.5.0 guest default_profile valid
+
+[ghosted] # ghosted comment
+[ghosted] main
+  for i from 1 to 10 step 1
+    print i
+  end for
+end main
+
+[imported] # imported comment
+[imported] function square(i as Int) returns Int
+  let result be i*i
+  return result
+end function
+
+constant k set to 3
