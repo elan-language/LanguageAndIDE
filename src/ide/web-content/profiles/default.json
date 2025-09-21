@@ -1,7 +1,7 @@
 {
 "name": "default_profile",
 
-"globals":["main", "procedure", "function",  "constant", "test", "enum", "class", "abstract", "interface", "record","#"],
+"globals":["main", "procedure", "function",  "constant", "test", "enum", "class", "abstract", "interface", "record", "import","#"],
 "statements":["assert", "call", "each", "else", "for", "if", "let", "match", "otherwise", "print",
                "repeat", "set", "switch", "throw", "try", "variable", "while", "#"],
 "class_members": ["constructor", "function", "procedure", "property",

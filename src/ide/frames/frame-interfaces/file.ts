@@ -73,6 +73,7 @@ export interface File extends Parent {
   createGlobalComment(): Frame;
   createConstant(): Frame;
   createTest(): Frame;
+  createImport(): Frame;
 
   parseFrom(source: CodeSource, append?: boolean): Promise<void>;
 
