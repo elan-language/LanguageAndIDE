@@ -6,6 +6,7 @@ import {
   enumKeyword,
   functionKeyword,
   ignoreKeyword,
+  importKeyword,
   interfaceKeyword,
   mainKeyword,
   procedureKeyword,
@@ -47,6 +48,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
       [interfaceKeyword, (_parent: Parent) => this.file.createInterface()],
       [commentMarker, (_parent: Parent) => this.file.createGlobalComment()],
       [ignoreKeyword, (_parent: Parent) => this.file.createTest()],
+      [importKeyword, (_parent: Parent) => this.file.createImport()],
     ];
   }
 
