@@ -36,7 +36,6 @@ import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { GlobalSelector } from "./globals/global-selector";
-import { ImportPlaceholder } from "./globals/import-placeholder";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
@@ -556,9 +555,6 @@ export class FileImpl implements File {
   }
   createTest(): Frame {
     return new TestFrame(this);
-  }
-  createImport(): Frame {
-    return new ImportPlaceholder(this);
   }
 
   getNextSelector(append?: boolean) {

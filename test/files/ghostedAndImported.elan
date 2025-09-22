@@ -1,4 +1,4 @@
-# 7518e6ae8fa0c8a17d1e8d6939265cf5314c976eaa8aaae6bb3d8147440f0173 Elan 1.5.0 guest default_profile valid
+# 8de8db8ffeabf73aecca178d2693900201fa016bbe5b5deefa5009d80fb3d03e Elan 1.5.0 guest default_profile valid
 
 [ghosted] # ghosted comment
 [ghosted] main
@@ -13,4 +13,8 @@ end main
   return result
 end function
 
-constant k set to 3
+[imported] constant k set to 3
+
+[imported] enum Status open, closed
+
+constant phi set to 1.618

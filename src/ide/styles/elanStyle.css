@@ -129,14 +129,6 @@ el-enum:has(+ :not(el-enum)) {
     padding-bottom: 1ch;
 }
 
-el-proc.imported:has(+ .imported),
-el-func.imported:has(+ .imported),
-el-test.imported:has(+ .imported),
-main.imported:has(+ .imported) {
-    display: block;
-    padding-bottom: 0;
-}
-
 /* Last member in a class/record - no added v. space (no other circumstance where they would be immediately followed by a keyword) */
 el-proc:has(+ el-kw), el-func:has(+ el-kw), el-prop:has(+ el-kw) 
 el-proc:has(+ el-kw), el-func:has(+ el-kw), el-prop:has(+ el-kw) 
@@ -480,10 +472,15 @@ el-statement.paused-at > el-fr
   }
 
 
-  .multiline.imported > :not(el-top), multiline.imported el-expand {
+  .multiline.imported > * {
     display: none;
-}
+  }
 
+ .multiline.imported > el-top, .multiline.imported > el-fr {
+    display: inline;
+  }
+
+  /* Imported */
   .imported > el-top::before {
     content: "import ";
     color: var(--keyword);
@@ -492,3 +489,8 @@ el-statement.paused-at > el-fr
   el-comment.imported > el-top::before {
     content: "";
   }
+
+  .imported:has(+ .imported) {
+    display: block;
+    padding-bottom: 0;
+}
