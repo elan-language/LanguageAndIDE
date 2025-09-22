@@ -14,6 +14,12 @@ import { Profile } from "./profile";
 import { Selectable } from "./selectable";
 import { StatementFactory } from "./statement-factory";
 
+export enum ParseMode {
+  loadNew,
+  append,
+  import,
+}
+
 export interface File extends Parent {
   isFile: boolean;
   getById(id: string): Selectable;
@@ -75,7 +81,7 @@ export interface File extends Parent {
   createTest(): Frame;
   createImport(): Frame;
 
-  parseFrom(source: CodeSource, append?: boolean): Promise<void>;
+  parseFrom(source: CodeSource, mode: ParseMode): Promise<void>;
 
   containsMain(): boolean;
 
@@ -107,8 +113,6 @@ export interface File extends Parent {
 
   getVersion(): Semver;
   getVersionString(): string;
-
-  //filteredSymbols(spec: SymbolCompletionSpec, htmlId: string): ElanSymbol[];
 
   getAst(invalidate: boolean): RootAstNode | undefined;
 }

@@ -7,7 +7,7 @@ import { TestStatus } from "../../compiler/test-status";
 import { isElanProduction } from "../../environment";
 import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
-import { File } from "../frames/frame-interfaces/file";
+import { File, ParseMode } from "../frames/frame-interfaces/file";
 import { Profile } from "../frames/frame-interfaces/profile";
 import { Group, Individual } from "../frames/frame-interfaces/user-config";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
@@ -47,6 +47,7 @@ const worksheetMenu = document.getElementById("worksheet-menu") as HTMLDivElemen
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const loadButton = document.getElementById("load") as HTMLButtonElement;
 const appendButton = document.getElementById("append") as HTMLButtonElement;
+const importButton = document.getElementById("import") as HTMLButtonElement;
 const saveButton = document.getElementById("save") as HTMLButtonElement;
 const autoSaveButton = document.getElementById("auto-save") as HTMLButtonElement;
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
@@ -329,6 +330,8 @@ loadButton.addEventListener("click", chooser(getUploader()));
 
 appendButton.addEventListener("click", chooser(getAppender()));
 
+importButton.addEventListener("click", chooser(getImporter()));
+
 saveButton.addEventListener("click", getDownloader());
 
 autoSaveButton.addEventListener("click", handleChromeAutoSave);
@@ -365,7 +368,7 @@ for (const elem of demoFiles) {
       file = new FileImpl(hash, profile, userName, transforms(), stdlib);
       file.fileName = fileName;
       clearUndoRedoAndAutoSave();
-      await readAndParse(rawCode, fileName, true);
+      await readAndParse(rawCode, fileName, true, ParseMode.loadNew);
     }
   });
 }
@@ -616,6 +619,7 @@ if (okToContinue) {
       stepButton,
       loadButton,
       appendButton,
+      importButton,
       saveButton,
       autoSaveButton,
       newButton,
@@ -792,7 +796,7 @@ async function initialDisplay(reset: boolean) {
 async function displayCode(rawCode: string, fileName: string) {
   const code = new CodeSourceFromString(rawCode);
   try {
-    await file.parseFrom(code);
+    await file.parseFrom(code, ParseMode.loadNew);
     file.fileName = fileName || file.defaultFileName;
     await refreshAndDisplay(true, false);
   } catch (e) {
@@ -905,6 +909,7 @@ function updateDisplayValues() {
         runButton,
         loadButton,
         appendButton,
+        importButton,
         saveButton,
         autoSaveButton,
         newButton,
@@ -932,6 +937,7 @@ function updateDisplayValues() {
     enable(fileButton, "File actions");
     enable(loadButton, "Load code from a file");
     enable(appendButton, "Append code from a file onto the end of the existing code");
+    enable(importButton, "Import code from a file");
     enable(newButton, "Clear the current code and start afresh");
     enable(demosButton, "Load a demonstration program");
     enable(trimButton, "Remove all 'new code' prompts that can be removed (shortcut: Alt-t)");
@@ -2102,18 +2108,23 @@ function getAppender() {
   return useChromeFileAPI() ? handleChromeAppend : handleAppend;
 }
 
-async function readAndParse(rawCode: string, fileName: string, reset: boolean, append?: boolean) {
+function getImporter() {
+  // The `showOpenFilePicker()` method of the File System Access API is supported.
+  return useChromeFileAPI() ? handleChromeImport : handleImport;
+}
+
+async function readAndParse(rawCode: string, fileName: string, reset: boolean, mode: ParseMode) {
   const code = new CodeSourceFromString(rawCode);
   file.fileName = fileName;
   try {
-    await file.parseFrom(code, append);
+    await file.parseFrom(code, mode);
     await initialDisplay(reset);
   } catch (e) {
     await showError(e as Error, fileName, reset);
   }
 }
 
-async function handleChromeUploadOrAppend(upload: boolean) {
+async function handleChromeUploadOrAppend(mode: ParseMode) {
   try {
     const [fileHandle] = await window.showOpenFilePicker({
       startIn: "documents",
@@ -2121,13 +2132,13 @@ async function handleChromeUploadOrAppend(upload: boolean) {
       id: lastDirId,
     });
     const codeFile = await fileHandle.getFile();
-    const fileName = upload ? codeFile.name : file.fileName;
+    const fileName = mode === ParseMode.loadNew ? codeFile.name : file.fileName;
     const rawCode = await codeFile.text();
-    if (upload) {
+    if (mode === ParseMode.loadNew) {
       file = new FileImpl(hash, profile, userName, transforms(), stdlib);
       clearUndoRedoAndAutoSave();
     }
-    await readAndParse(rawCode, fileName, upload, !upload);
+    await readAndParse(rawCode, fileName, mode === ParseMode.loadNew, mode);
   } catch (_e) {
     // user cancelled
     return;
@@ -2135,11 +2146,15 @@ async function handleChromeUploadOrAppend(upload: boolean) {
 }
 
 async function handleChromeUpload() {
-  await handleChromeUploadOrAppend(true);
+  await handleChromeUploadOrAppend(ParseMode.loadNew);
 }
 
 async function handleChromeAppend() {
-  await handleChromeUploadOrAppend(false);
+  await handleChromeUploadOrAppend(ParseMode.append);
+}
+
+async function handleChromeImport() {
+  await handleChromeUploadOrAppend(ParseMode.import);
 }
 
 function cursorWait() {
@@ -2150,21 +2165,21 @@ function cursorDefault() {
   document.body.style.cursor = "default";
 }
 
-async function handleUploadOrAppend(event: Event, upload: boolean) {
+async function handleUploadOrAppend(event: Event, mode: ParseMode) {
   const elanFile = (event.target as any).files?.[0] as any;
 
   if (elanFile) {
-    const fileName = upload ? elanFile.name : file.fileName;
+    const fileName = mode === ParseMode.loadNew ? elanFile.name : file.fileName;
     cursorWait();
     await clearDisplays();
     const reader = new FileReader();
     reader.addEventListener("load", async (event: any) => {
       const rawCode = event.target.result;
-      if (upload) {
+      if ((mode = ParseMode.loadNew)) {
         file = new FileImpl(hash, profile, userName, transforms(), stdlib);
         clearUndoRedoAndAutoSave();
       }
-      await readAndParse(rawCode, fileName, upload, !upload);
+      await readAndParse(rawCode, fileName, mode === ParseMode.loadNew, mode);
     });
     reader.readAsText(elanFile);
   }
@@ -2173,11 +2188,15 @@ async function handleUploadOrAppend(event: Event, upload: boolean) {
 }
 
 async function handleUpload(event: Event) {
-  await handleUploadOrAppend(event, true);
+  await handleUploadOrAppend(event, ParseMode.loadNew);
 }
 
 async function handleAppend(event: Event) {
-  await handleUploadOrAppend(event, false);
+  await handleUploadOrAppend(event, ParseMode.append);
+}
+
+async function handleImport(event: Event) {
+  await handleUploadOrAppend(event, ParseMode.import);
 }
 
 function updateFileName() {
