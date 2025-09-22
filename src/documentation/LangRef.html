@@ -101,13 +101,9 @@
  <tr><td><a href="#out"><el-kw>out</el-kw> parameter</a></td><td>&#x2714;</td><td></td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
   <td>formal output argument of procedure</td></tr>
  <tr><td><a href="#out"><el-kw>out</el-kw> parameter</a></td><td></td><td>&#x2714;</td><td>&#x2714; (see note)</td><td>&#x2714;</td><td>local</td>
-  <td>formal output argument of procedure</td></tr>
+  <td>formal output argument of procedure<br>
+  an <el-kw>out</el-kw> parameter of an immutable Type may be re-assigned<br>if the actual argument is defined with <el-kw>variable</el-kw>, not <el-kw>let</el-kw></td></tr>
 </table>
-
-<h4 class="no-TOC">Note</h4>
-<ul>
- <li>An <el-kw>out</el-kw> parameter of an immutable Type may be re-assigned if the actual argument is defined with <el-kw>variable</el-kw>, not <el-kw>let</el-kw>.</li>
-</ul>
 
 <div id="Methods"></div>
 <h1 id="GlobalInstructions">Global instructions</h1>
@@ -690,7 +686,7 @@ by <a href="#throw">throwing an exception</a> like this:</p>
 <p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
 <p>For procedures that you define yourself, <el-kw>out</el-kw> parameters are allowed.  In this case the corresponding argument must be the name of a <el-kw>variable</el-kw> whose value gets updated by the procedure.</p>
 <p>If the parameter is not an <el-kw>out</el-kw> parameter, any expression of the correct Type can be used as an argument.</p>
-<p>Procedures may have side-effects, for example input/output or changing a data value in an object. They can change the contents of any mutable object passed in as an argument.  For this reason, procedures cannot be called from functions, which are not allowed to have side-effects.  <el-kw>call</el-kw> statements are simply not allowed in functions, to enforce this.</p>
+<p>Procedures may have side effects, for example input/output or changing a data value in an object. They can change the contents of any mutable object passed in as an argument.  For this reason, procedures cannot be called from functions, which are not allowed to have side-effects.  <el-kw>call</el-kw> statements are simply not allowed in functions, to enforce this.</p>
 <p>There is a limit to the complexity of a <el-kw>call</el-kw> statement.  Only one dot is allowed in the <el-code>procedure name</el-code> field, or two dots if the first word is <el-kw>property</el-kw>.  If you need anything more complicated, use a <el-kw>let</el-kw> statement on the line above.  See the error message explanation for <a href="#ProcRefField">'procedureName' in a call statement</a>.</p>
 
 <h2 id="each">Each loop</h2>
