@@ -22,7 +22,7 @@ import {
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
-import { File } from "./frame-interfaces/file";
+import { File, ParseMode } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
 import { defaultUsername, Profile } from "./frame-interfaces/profile";
@@ -572,7 +572,7 @@ export class FileImpl implements File {
     return this.getFirstSelectorAsDirectChild();
   }
 
-  async parseFrom(source: CodeSource, append?: boolean): Promise<void> {
+  async parseFrom(source: CodeSource, mode: ParseMode): Promise<void> {
     if (!this._stdLibSymbols.isInitialised) {
       this.parseError = this._stdLibSymbols.error;
       this._parseStatus = ParseStatus.invalid;
@@ -591,7 +591,7 @@ export class FileImpl implements File {
         if (source.isMatchRegEx(Regexes.newLine)) {
           source.removeNewLine();
         } else {
-          this.getNextSelector(append).parseFrom(source);
+          this.getNextSelector(mode === ParseMode.append).parseFrom(source);
         }
       }
       this.removeAllSelectorsThatCanBe();

@@ -6,6 +6,7 @@ import { Transforms } from "../ide/compile-api/transforms";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
 import { DefaultProfile } from "../ide/frames/default-profile";
 import { FileImpl } from "../ide/frames/file-impl";
+import { ParseMode } from "../ide/frames/frame-interfaces/file";
 import { StubInputOutput } from "../ide/stub-input-output";
 import { hash } from "../ide/util";
 
@@ -45,7 +46,7 @@ async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
     new StdLib(new StubInputOutput()),
     true,
   );
-  await fl.parseFrom(codeSource);
+  await fl.parseFrom(codeSource, ParseMode.loadNew);
   if (fl.parseError) {
     throw new Error(`${sourceFile}: ${fl.parseError}`);
   }
