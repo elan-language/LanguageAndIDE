@@ -1,4 +1,4 @@
-# 8de8db8ffeabf73aecca178d2693900201fa016bbe5b5deefa5009d80fb3d03e Elan 1.5.0 guest default_profile valid
+# e4db4814d78bc1a3b616e2d49bcc7e77e589da6c5b11db0501a63a0742ab1f9c Elan 1.5.0 guest default_profile valid
 
 [ghosted] # ghosted comment
 [ghosted] main
@@ -16,5 +16,9 @@ end function
 [imported] constant k set to 3
 
 [imported] enum Status open, closed
+
+[imported] class Snake
+
+end class
 
 constant phi set to 1.618
