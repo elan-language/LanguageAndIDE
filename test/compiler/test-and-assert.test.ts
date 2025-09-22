@@ -1302,4 +1302,47 @@ end test
 
     assertDoesNotParse(fileImpl);
   });
+  test("Pass_HtmlEscapedString", async () => {
+    const code = `${testHeader}
+
+main
+end main
+
+test square
+  let actual be " 1  2   3    "
+  let expected be " 1  2   3    "
+  assert actual is expected
+end test
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+
+}
+
+_tests.push(["test3", async (_outcomes) => {
+  const actual = " 1  2   3    ";
+  const expected = " 1  2   3    ";
+  _outcomes.push(await system.assert([async () => actual, "String"], [expected, "String"], "assert12", _stdlib, false));
+}]);
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      ["test3", [new AssertOutcome(TestStatus.pass, " 1  2   3    ", " 1  2   3    ", "assert12")]],
+    ]);
+  });
 });
