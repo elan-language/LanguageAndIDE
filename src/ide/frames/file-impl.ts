@@ -557,19 +557,24 @@ export class FileImpl implements File {
     return new TestFrame(this);
   }
 
-  getNextSelector(append?: boolean) {
-    if (append) {
-      const last = this.getLastChild();
-      if (isSelector(last)) {
-        return last as GlobalSelector;
-      }
+  getNextSelector(mode: ParseMode) {
+    let frame: Frame;
 
-      parentHelper_insertOrGotoChildSelector(this, true, last);
-
-      return this.getLastChild();
+    if (mode === ParseMode.append) {
+      frame = this.getLastChild();
+    } else if (mode === ParseMode.import) {
+      frame = this.getFirstChild();
+    } else {
+      return this.getFirstSelectorAsDirectChild();
     }
 
-    return this.getFirstSelectorAsDirectChild();
+    if (isSelector(frame)) {
+      return frame as GlobalSelector;
+    }
+
+    parentHelper_insertOrGotoChildSelector(this, mode === ParseMode.append, frame);
+
+    return mode == ParseMode.append ? this.getLastChild() : this.getFirstChild();
   }
 
   async parseFrom(source: CodeSource, mode: ParseMode = ParseMode.loadNew): Promise<void> {
@@ -591,7 +596,7 @@ export class FileImpl implements File {
         if (source.isMatchRegEx(Regexes.newLine)) {
           source.removeNewLine();
         } else {
-          this.getNextSelector(mode === ParseMode.append).parseFrom(source);
+          this.getNextSelector(mode).parseFrom(source);
         }
       }
       this.removeAllSelectorsThatCanBe();
