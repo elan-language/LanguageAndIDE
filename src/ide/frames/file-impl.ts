@@ -574,7 +574,7 @@ export class FileImpl implements File {
 
     parentHelper_insertOrGotoChildSelector(this, mode === ParseMode.append, frame);
 
-    return mode == ParseMode.append ? this.getLastChild() : this.getFirstChild();
+    return mode === ParseMode.append ? this.getLastChild() : this.getFirstChild();
   }
 
   async parseFrom(source: CodeSource): Promise<void> {
