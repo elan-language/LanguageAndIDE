@@ -1,5 +1,6 @@
 import { Regexes } from "./fields/regexes";
 import { CodeSource } from "./frame-interfaces/code-source";
+import { ParseMode } from "./frame-interfaces/file";
 
 export class CodeSourceFromString implements CodeSource {
   private remainingCode: string;
@@ -7,6 +8,8 @@ export class CodeSourceFromString implements CodeSource {
   constructor(code: string) {
     this.remainingCode = code;
   }
+
+  mode: ParseMode = ParseMode.loadNew;
 
   pushBackOntoFrontOfCode(pushBack: string): void {
     this.remainingCode = pushBack + this.remainingCode;

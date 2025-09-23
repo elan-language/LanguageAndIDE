@@ -80,7 +80,7 @@ export interface File extends Parent {
   createConstant(): Frame;
   createTest(): Frame;
 
-  parseFrom(source: CodeSource, mode: ParseMode): Promise<void>;
+  parseFrom(source: CodeSource): Promise<void>;
 
   containsMain(): boolean;
 

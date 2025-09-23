@@ -46,7 +46,8 @@ async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
     new StdLib(new StubInputOutput()),
     true,
   );
-  await fl.parseFrom(codeSource, ParseMode.loadNew);
+  codeSource.mode = ParseMode.loadNew;
+  await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(`${sourceFile}: ${fl.parseError}`);
   }

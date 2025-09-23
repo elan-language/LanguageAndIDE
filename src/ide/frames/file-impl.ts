@@ -577,7 +577,7 @@ export class FileImpl implements File {
     return mode == ParseMode.append ? this.getLastChild() : this.getFirstChild();
   }
 
-  async parseFrom(source: CodeSource, mode: ParseMode = ParseMode.loadNew): Promise<void> {
+  async parseFrom(source: CodeSource): Promise<void> {
     if (!this._stdLibSymbols.isInitialised) {
       this.parseError = this._stdLibSymbols.error;
       this._parseStatus = ParseStatus.invalid;
@@ -596,7 +596,7 @@ export class FileImpl implements File {
         if (source.isMatchRegEx(Regexes.newLine)) {
           source.removeNewLine();
         } else {
-          this.getNextSelector(mode).parseFrom(source);
+          this.getNextSelector(source.mode).parseFrom(source);
         }
       }
       this.removeAllSelectorsThatCanBe();

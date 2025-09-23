@@ -368,7 +368,7 @@ for (const elem of demoFiles) {
       file = new FileImpl(hash, profile, userName, transforms(), stdlib);
       file.fileName = fileName;
       clearUndoRedoAndAutoSave();
-      await readAndParse(rawCode, fileName, true, ParseMode.loadNew);
+      await readAndParse(rawCode, fileName, ParseMode.loadNew);
     }
   });
 }
@@ -795,8 +795,9 @@ async function initialDisplay(reset: boolean) {
 
 async function displayCode(rawCode: string, fileName: string) {
   const code = new CodeSourceFromString(rawCode);
+  code.mode = ParseMode.loadNew;
   try {
-    await file.parseFrom(code, ParseMode.loadNew);
+    await file.parseFrom(code);
     file.fileName = fileName || file.defaultFileName;
     await refreshAndDisplay(true, false);
   } catch (e) {
@@ -2113,11 +2114,13 @@ function getImporter() {
   return useChromeFileAPI() ? handleChromeImport : handleImport;
 }
 
-async function readAndParse(rawCode: string, fileName: string, reset: boolean, mode: ParseMode) {
+async function readAndParse(rawCode: string, fileName: string, mode: ParseMode) {
+  const reset = mode === ParseMode.loadNew;
   const code = new CodeSourceFromString(rawCode);
+  code.mode = mode;
   file.fileName = fileName;
   try {
-    await file.parseFrom(code, mode);
+    await file.parseFrom(code);
     await initialDisplay(reset);
   } catch (e) {
     await showError(e as Error, fileName, reset);
@@ -2138,7 +2141,7 @@ async function handleChromeUploadOrAppend(mode: ParseMode) {
       file = new FileImpl(hash, profile, userName, transforms(), stdlib);
       clearUndoRedoAndAutoSave();
     }
-    await readAndParse(rawCode, fileName, mode === ParseMode.loadNew, mode);
+    await readAndParse(rawCode, fileName, mode);
   } catch (_e) {
     // user cancelled
     return;
@@ -2179,7 +2182,7 @@ async function handleUploadOrAppend(event: Event, mode: ParseMode) {
         file = new FileImpl(hash, profile, userName, transforms(), stdlib);
         clearUndoRedoAndAutoSave();
       }
-      await readAndParse(rawCode, fileName, mode === ParseMode.loadNew, mode);
+      await readAndParse(rawCode, fileName, mode);
     });
     reader.readAsText(elanFile);
   }

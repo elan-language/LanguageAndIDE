@@ -1,3 +1,5 @@
+import { ParseMode } from "./file";
+
 export interface CodeSource {
   pushBackOntoFrontOfCode(push: string): void;
   removeNewLine(): CodeSource;
@@ -14,4 +16,5 @@ export interface CodeSource {
   readUntil(regx: RegExp): string;
   readMatching(regx: RegExp): string;
   readToNonMatchingCloseBracket(): string;
+  mode: ParseMode;
 }
