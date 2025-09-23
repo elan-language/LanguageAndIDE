@@ -572,7 +572,7 @@ export class FileImpl implements File {
     return this.getFirstSelectorAsDirectChild();
   }
 
-  async parseFrom(source: CodeSource, mode: ParseMode): Promise<void> {
+  async parseFrom(source: CodeSource, mode: ParseMode = ParseMode.loadNew): Promise<void> {
     if (!this._stdLibSymbols.isInitialised) {
       this.parseError = this._stdLibSymbols.error;
       this._parseStatus = ParseStatus.invalid;
