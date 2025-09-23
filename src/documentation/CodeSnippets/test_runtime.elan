@@ -4,5 +4,6 @@ test
   let a be [5, 1, 7]
   assert a[0] is 5
   assert a[2] is 7
-  assert a[3] is 0
+  assert a[4] is 0
+  assert a[4] is "Out of range index: 4 size: 3"
 end test

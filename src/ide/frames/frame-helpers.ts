@@ -2,7 +2,6 @@ import { CompileError, Severity } from "../../compiler/compile-error";
 import { TestStatus } from "../../compiler/test-status";
 import { AbstractSelector } from "./abstract-selector";
 import { Collapsible } from "./frame-interfaces/collapsible";
-import { Comment } from "./frame-interfaces/comment";
 import { Field } from "./frame-interfaces/field";
 import { File } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
@@ -105,10 +104,6 @@ export function expandCollapseAll(file: File) {
 }
 export function escapeHtmlChars(str: string): string {
   return str.replaceAll(/&/g, "&amp;").replaceAll(/</g, "&lt;").replaceAll(/>/g, "&gt;");
-}
-
-export function escapeHtmlInclSpaces(str: string): string {
-  return escapeHtmlChars(str).replaceAll(/\s/g, "&nbsp;");
 }
 
 export function renderBackslashNasABreak(str: string): string {

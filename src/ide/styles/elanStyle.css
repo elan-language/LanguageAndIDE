@@ -336,6 +336,7 @@ el-msg.warning {
 }
 el-msg.error {
     background-color: var(--error);
+    white-space: pre;
 }
 
 /* el-field el-msg */

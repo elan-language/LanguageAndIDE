@@ -1552,7 +1552,7 @@ async function inactivityRefresh() {
 }
 
 const delayMessage =
-  "Overly complex expressions - for example involving a sequence of open brackets - can result in very slow parsing. We strongly recommended that you simplify the contents of this field, for example by breaking out parts of it into separate 'let' statements. Otherwise it might become impossible to add more text.";
+  "Overly complex expressions - for example involving a sequence of open brackets - can result in very slow parsing. We strongly recommend that you simplify the contents of this field, for example by breaking out parts of it into separate 'let' statements. Otherwise it might become impossible to add more text.";
 
 let purgingKeys = false;
 
