@@ -56,4 +56,8 @@ export class Constant extends AbstractFrame implements GlobalFrame, Collapsible 
     return `${this.sourceAnnotations()}constant ${this.name.renderAsSource()} set to ${this.value.renderAsSource()}\r
 `;
   }
+
+  override isWithinAnImportedFrame(): boolean {
+    return false; // So that frame number is still added
+  }
 }

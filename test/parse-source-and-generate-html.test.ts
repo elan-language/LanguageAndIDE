@@ -96,4 +96,10 @@ suite("Parse source and generate Html", () => {
       `${__dirname}\\files\\test1762newlineInString.html`,
     );
   });
+  test("Ghosting and Importing", async () => {
+    await assertGeneratesHtmlandSameSourceNew(
+      `${__dirname}\\files\\ghostedAndImported.elan`,
+      `${__dirname}\\files\\ghostedAndImported.html`,
+    );
+  });
 });

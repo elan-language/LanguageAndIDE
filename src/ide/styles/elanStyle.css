@@ -121,11 +121,14 @@ el-header, main, el-proc, el-func, el-class, el-constructor, el-member, el-globa
     padding-bottom: 1ch;
 }
 
-/* Only the last of consecutive properties, constants, enums, should have exta v. space */
-el-prop:has(+ :not(el-prop)), el-const:has(+ :not(el-const)), el-enum:has(+ :not(el-enum))  {
+/* Only the last of consecutive properties, constants, enums, or imported globals, should have exta v. space */
+el-prop:has(+ :not(el-prop)), 
+el-const:has(+ :not(el-const)), 
+el-enum:has(+ :not(el-enum)) {
     display: block;
     padding-bottom: 1ch;
 }
+
 /* Last member in a class/record - no added v. space (no other circumstance where they would be immediately followed by a keyword) */
 el-proc:has(+ el-kw), el-func:has(+ el-kw), el-prop:has(+ el-kw) 
 el-proc:has(+ el-kw), el-func:has(+ el-kw), el-prop:has(+ el-kw) 
@@ -468,3 +471,30 @@ el-statement.paused-at > el-fr
   .ghosted.selected > el-top {
     background-color: rgba(var(--selection), 0.35);
   }
+
+  /* Imported */
+  .multiline.imported > * {
+    display: none;
+  }
+
+ .multiline.imported > el-top,  .multiline.imported > el-fr {
+    display: inline;
+  }
+
+  .multiline.imported > el-top el-expand {
+    display: none;
+  }
+
+  .imported > el-top::before {
+    content: "import ";
+    color: var(--keyword);
+  }
+
+  el-comment.imported > el-top::before {
+    content: "";
+  }
+
+  .imported:has(+ .imported) {
+    display: block;
+    padding-bottom: 0;
+}

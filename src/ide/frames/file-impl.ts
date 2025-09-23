@@ -22,7 +22,7 @@ import {
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
-import { File } from "./frame-interfaces/file";
+import { File, ParseMode } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
 import { defaultUsername, Profile } from "./frame-interfaces/profile";
@@ -557,22 +557,27 @@ export class FileImpl implements File {
     return new TestFrame(this);
   }
 
-  getNextSelector(append?: boolean) {
-    if (append) {
-      const last = this.getLastChild();
-      if (isSelector(last)) {
-        return last as GlobalSelector;
-      }
+  getNextSelector(mode: ParseMode) {
+    let frame: Frame;
 
-      parentHelper_insertOrGotoChildSelector(this, true, last);
-
-      return this.getLastChild();
+    if (mode === ParseMode.append) {
+      frame = this.getLastChild();
+    } else if (mode === ParseMode.import) {
+      frame = this.getFirstChild();
+    } else {
+      return this.getFirstSelectorAsDirectChild();
     }
 
-    return this.getFirstSelectorAsDirectChild();
+    if (isSelector(frame)) {
+      return frame as GlobalSelector;
+    }
+
+    parentHelper_insertOrGotoChildSelector(this, mode === ParseMode.append, frame);
+
+    return mode === ParseMode.append ? this.getLastChild() : this.getFirstChild();
   }
 
-  async parseFrom(source: CodeSource, append?: boolean): Promise<void> {
+  async parseFrom(source: CodeSource): Promise<void> {
     if (!this._stdLibSymbols.isInitialised) {
       this.parseError = this._stdLibSymbols.error;
       this._parseStatus = ParseStatus.invalid;
@@ -591,7 +596,7 @@ export class FileImpl implements File {
         if (source.isMatchRegEx(Regexes.newLine)) {
           source.removeNewLine();
         } else {
-          this.getNextSelector(append).parseFrom(source);
+          this.getNextSelector(source.mode).parseFrom(source);
         }
       }
       this.removeAllSelectorsThatCanBe();
@@ -771,6 +776,14 @@ export class FileImpl implements File {
   }
 
   isGhostedOrWithinAGhostedFrame(): boolean {
+    return false;
+  }
+
+  isWithinAnImportedFrame(): boolean {
+    return false;
+  }
+
+  isImported(): boolean {
     return false;
   }
 

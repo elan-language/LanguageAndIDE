@@ -44,7 +44,7 @@ end class\r\n`;
   }
 
   topKeywords(): string {
-    return `${this.sourceAnnotations()}${classKeyword} `;
+    return `${classKeyword} `;
   }
 
   bottomKeywords(): string {

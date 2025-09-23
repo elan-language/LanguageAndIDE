@@ -1,0 +1,24 @@
+# e4db4814d78bc1a3b616e2d49bcc7e77e589da6c5b11db0501a63a0742ab1f9c Elan 1.5.0 guest default_profile valid
+
+[ghosted] # ghosted comment
+[ghosted] main
+  for i from 1 to 10 step 1
+    print i
+  end for
+end main
+
+[imported] # imported comment
+[imported] function square(i as Int) returns Int
+  let result be i*i
+  return result
+end function
+
+[imported] constant k set to 3
+
+[imported] enum Status open, closed
+
+[imported] class Snake
+
+end class
+
+constant phi set to 1.618
