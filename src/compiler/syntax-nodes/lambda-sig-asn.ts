@@ -50,7 +50,7 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
     return this.parameters.map((p) => p.compile()).join(", ");
   }
 
-  resolveSymbol(id: string, _scope: Scope): ElanSymbol {
+  resolveSymbol(id: string, scope: Scope): ElanSymbol {
     for (const p of this.parameters) {
       if (p.id.trim() === id) {
         return {
@@ -60,7 +60,10 @@ export class LambdaSigAsn extends AbstractAstNode implements Scope, AstNode {
         };
       }
     }
-    const searchScope = isDefinitionScope(this.scope) ? this.scope.getParentScope() : this.scope;
+    const searchScope =
+      isDefinitionScope(this.scope) || this.scope === scope
+        ? this.scope.getParentScope()
+        : this.scope;
 
     return searchScope.resolveSymbol(id, this.scope);
   }

@@ -20,6 +20,7 @@ import {
   mustCallExtensionViaQualifier,
   mustCallMemberViaQualifier,
 } from "../../compile-rules";
+import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import {
   isAstCollectionNode,
   isAstIdNode,
@@ -30,6 +31,7 @@ import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
 import { ProcedureAsn } from "../globals/procedure-asn";
+import { LambdaAsn } from "../lambda-asn";
 import { QualifierAsn } from "../qualifier-asn";
 import { LetAsn } from "./let-asn";
 import { VariableAsn } from "./variable-asn";
@@ -183,5 +185,27 @@ export class CallAsn extends BreakpointAsn {
       return `${wrappedInParms}${this.indent()}${this.breakPoint(this.debugSymbols())}${async}${prefix}${id}(${parms});${wrappedOutParms}`;
     }
     return "";
+  }
+
+  resolveSymbol(id: string, _initialScope: Scope): ElanSymbol {
+    // temp kludge
+    if (isAstCollectionNode(this.args)) {
+      const items = this.args.items;
+      const last = items[items.length - 1];
+
+      if (last instanceof LambdaAsn) {
+        const ss = last.signature.resolveSymbol(id, _initialScope);
+
+        if (!(ss instanceof UnknownSymbol)) {
+          return ss;
+        }
+      }
+    }
+
+    return super.resolveSymbol(id, this);
+  }
+
+  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
+    return super.symbolMatches(id, all, this);
   }
 }

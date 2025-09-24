@@ -3030,4 +3030,41 @@ end procedure`;
       expected,
     );
   });
+
+  test("Pass_lambdaParameter", async () => {
+    const code = `${testHeader}
+
+main
+  call printModified(new Foo(), lambda t as Foo => t.bar())
+end main
+  
+class Foo
+  function bar() returns Int
+    return 0
+  end function
+end class
+
+procedure printModified(i as Foo, f as Func<of Foo => Int>)
+  print f(i)
+end procedure`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["bar", "bar", "bar("]] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(
+      fileImpl,
+      "args5",
+      "new Foo(), lambda t as Foo => t.b",
+      expected,
+    );
+  });
 });
