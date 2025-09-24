@@ -683,7 +683,8 @@ end main`;
 const global = new class {};
 async function main() {
   let results = system.list([0, 0]);
-  for (let i = 1; i <= 10000; i = i + 1) {
+  const _tofor6 = 10000;
+  for (let i = 1; i <= _tofor6; i = i + 1) {
     let r = _stdlib.randomInt(0, 1);
     results.put(r, system.safeIndex(results, r) + 1);
   }
@@ -733,7 +734,8 @@ async function main() {
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
   rnd.initialiseFromClock();
-  for (let i = 1; i <= 10000; i = i + 1) {
+  const _tofor15 = 10000;
+  for (let i = 1; i <= _tofor15; i = i + 1) {
     [val, rnd] = rnd.nextInt(0, 1);
     results.put(val, system.safeIndex(results, val) + 1);
   }
@@ -782,11 +784,13 @@ async function main() {
   let results = system.list([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
-  for (let i = 1; i <= 10000; i = i + 1) {
+  const _tofor12 = 10000;
+  for (let i = 1; i <= _tofor12; i = i + 1) {
     [val, rnd] = rnd.nextInt(3, 5);
     results.put(val, system.safeIndex(results, val) + 1);
   }
-  for (let i = 0; i <= 6; i = i + 1) {
+  const _tofor24 = 6;
+  for (let i = 0; i <= _tofor24; i = i + 1) {
     let r = system.safeIndex(results, i);
     await system.printLine(r);
     await system.printLine(", ");
@@ -837,11 +841,13 @@ async function main() {
   let results = system.list([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let dice = 0;
-  for (let i = 1; i <= 10000; i = i + 1) {
+  const _tofor12 = 10000;
+  for (let i = 1; i <= _tofor12; i = i + 1) {
     [dice, rnd] = (await global.rollDice(rnd));
     results.put(dice, system.safeIndex(results, dice) + 1);
   }
-  for (let i = 0; i <= 6; i = i + 1) {
+  const _tofor24 = 6;
+  for (let i = 0; i <= _tofor24; i = i + 1) {
     let r = system.safeIndex(results, i);
     await system.printLine(r);
     await system.printLine(", ");

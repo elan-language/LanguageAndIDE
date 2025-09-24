@@ -30,7 +30,8 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  for (let i = 1; i <= 10; i = i + 1) {
+  const _tofor6 = 10;
+  for (let i = 1; i <= _tofor6; i = i + 1) {
     tot = tot + i;
   }
   await system.printLine(tot);
@@ -70,7 +71,8 @@ const global = new class {};
 async function main() {
   let tot = 0;
   let i = 0;
-  for (i = 1; i <= 10; i = i + 1) {
+  const _tofor9 = 10;
+  for (i = 1; i <= _tofor9; i = i + 1) {
     tot = tot + i;
   }
   await system.printLine(tot);
@@ -108,7 +110,8 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  for (let i = 1; i <= 10; i = i + 2) {
+  const _tofor6 = 10;
+  for (let i = 1; i <= _tofor6; i = i + 2) {
     tot = tot + i;
   }
   await system.printLine(tot);
@@ -146,7 +149,8 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  for (let i = 10; i >= 3; i = i - 1) {
+  const _tofor6 = 3;
+  for (let i = 10; i >= _tofor6; i = i - 1) {
     tot = tot + i;
   }
   await system.printLine(tot);
@@ -186,8 +190,10 @@ end main`;
 const global = new class {};
 async function main() {
   let tot = 0;
-  for (let i = 1; i <= 3; i = i + 1) {
-    for (let j = 1; j <= 4; j = j + 1) {
+  const _tofor6 = 3;
+  for (let i = 1; i <= _tofor6; i = i + 1) {
+    const _tofor12 = 4;
+    for (let j = 1; j <= _tofor12; j = j + 1) {
       tot = tot + 1;
     }
   }
@@ -229,7 +235,8 @@ async function main() {
   let lower = 1;
   let upper = 10;
   let tot = 0;
-  for (let i = lower; i <= upper; i = i + 2) {
+  const _tofor12 = upper;
+  for (let i = lower; i <= _tofor12; i = i + 2) {
     tot = tot + i;
   }
   await system.printLine(tot);
@@ -276,7 +283,8 @@ async function main() {
 }
 
 async function foo(arr) {
-  for (let i = 0; i <= 10; i = i + 1) {
+  const _tofor13 = 10;
+  for (let i = 0; i <= _tofor13; i = i + 1) {
     arr[0].put(i, 1);
   }
   await system.printLine(system.safeIndex(arr[0], 0));
@@ -297,6 +305,45 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  test("Pass_updateLimit", async () => {
+    const code = `${testHeader}
+
+main
+  variable limit set to 10
+  for i from 1 to limit step 1
+    print "{i}"
+    set limit to limit + 1
+  end for
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let limit = 10;
+  const _tofor6 = limit;
+  for (let i = 1; i <= _tofor6; i = i + 1) {
+    await system.printLine(\`\${await _stdlib.asString(i)}\`);
+    limit = limit + 1;
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "12345678910");
   });
 
   test("Fail_reuseVariableWrongType", async () => {
