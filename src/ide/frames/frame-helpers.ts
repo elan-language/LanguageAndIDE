@@ -67,6 +67,10 @@ export function isGlobal(f?: Selectable | GlobalFrame): f is GlobalFrame {
   return !!f && "isGlobal" in f;
 }
 
+export function isClass(f?: Selectable | Frame): f is Frame {
+  return !!f && "isClass" in f;
+}
+
 export function isReturnStatement(f?: Frame): f is ReturnStatement {
   return !!f && "isReturnStatement" in f;
 }

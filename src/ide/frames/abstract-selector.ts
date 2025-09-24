@@ -1,7 +1,7 @@
 import { ghostedAnnotation, importedAnnotation } from "../../compiler/keywords";
 import { AbstractFrame } from "./abstract-frame";
 import { Regexes } from "./fields/regexes";
-import { helper_pastePopUp, isFrameWithStatements } from "./frame-helpers";
+import { helper_pastePopUp, isClass, isFrameWithStatements, isGlobal } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
@@ -75,7 +75,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   private processCompilerDirective(frame: Frame, compilerDirective: string) {
-    if (compilerDirective === importedAnnotation) {
+    if (compilerDirective === importedAnnotation && (isGlobal(frame) || isClass(frame))) {
       frame.setImported(true);
     } else if (compilerDirective === ghostedAnnotation) {
       frame.setGhosted(true);

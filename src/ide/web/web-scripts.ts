@@ -326,11 +326,11 @@ newButton?.addEventListener("click", async () => {
   }
 });
 
-loadButton.addEventListener("click", chooser(getUploader()));
+loadButton.addEventListener("click", chooser(getUploader(), false));
 
-appendButton.addEventListener("click", chooser(getAppender()));
+appendButton.addEventListener("click", chooser(getAppender(), true));
 
-importButton.addEventListener("click", chooser(getImporter()));
+importButton.addEventListener("click", chooser(getImporter(), true));
 
 saveButton.addEventListener("click", getDownloader());
 
@@ -2068,9 +2068,9 @@ async function handleRunWorkerError(data: WebWorkerStatusMessage) {
   updateDisplayValues();
 }
 
-function chooser(uploader: (event: Event) => void) {
+function chooser(uploader: (event: Event) => void, noCheck: boolean) {
   return () => {
-    if (checkForUnsavedChanges(cancelMsg)) {
+    if (noCheck || checkForUnsavedChanges(cancelMsg)) {
       const f = document.createElement("input");
       f.style.display = "none";
 
