@@ -52,7 +52,8 @@ export class ForAsn extends CompoundAsn {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}for (${declare}${v} = ${f}; ${v} ${compare} ${t}; ${v} = ${v} ${incDec} ${s}) {\r
+    return `${this.indent()}const _to${this.fieldId} = ${t};\r
+${this.indent()}${this.breakPoint(this.debugSymbols())}for (${declare}${v} = ${f}; ${v} ${compare} _to${this.fieldId}; ${v} = ${v} ${incDec} ${s}) {\r
 ${this.compileChildren()}\r
 ${this.indent()}}`;
   }
@@ -68,7 +69,6 @@ ${this.indent()}}`;
         symbolScope: SymbolScope.counter,
       };
     }
-
     return super.resolveSymbol(id, initialScope);
   }
 

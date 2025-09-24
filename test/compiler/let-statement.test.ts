@@ -83,7 +83,8 @@ async function main() {
 }
 
 async function foo() {
-  for (let i = 0; i <= 4; i = i + 1) {
+  const _tofor13 = 4;
+  for (let i = 0; i <= _tofor13; i = i + 1) {
     const temp = system.safeIndex(global.li, i);
     await system.printLine(temp);
   }
@@ -132,7 +133,8 @@ async function main() {
 
 async function foo() {
   let li = system.listImmutable([1, 2, 3, 4, 5]);
-  for (let i = 0; i <= 3; i = i + 1) {
+  const _tofor13 = 3;
+  for (let i = 0; i <= _tofor13; i = i + 1) {
     const temp = system.safeIndex(li, i);
     li = li.withPut(i, system.safeIndex(li, i + 1));
     li = li.withPut(i + 1, temp);
