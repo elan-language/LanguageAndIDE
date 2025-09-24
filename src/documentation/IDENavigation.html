@@ -80,12 +80,15 @@ in the following ways:</p>
     delete any imported instruction on which others depend you will get a compile error - but you can 
     immediately restore them with <b>Undo</b>.
   </li>
-  <li>It is possible to edit the fields within the summary view of each imported instruction.
-    This is useful in that it allows for functions, or constants, to be renamed. However, any
-    such edits should be done with caution - it is possible to make edits that would cause
-    compile errors. Again, such mistakes can be remedied with <b>Undo</b>. It is not 
-    possible to edit, or even view, imported code that is not visible in the summary - if
-    you need that capability, use <b>File > Append</b> instead (see table above).
+  <li>It is not possible to edit, or even view, imported code that is not visible in the summary - if
+    you need that capability, use <b>File > Append</b> instead (see table above).</li>
+  <li>It <i>is</i> possible to edit the fields within the summary view of each imported instruction.
+    This can be useful in that it allows for functions, or constants, to be renamed - if the names would
+    clash with other code. However, <i>any
+    such edits should be undertaken with caution</i> - it is possible to make edits that would cause
+    compile errors <i?>within</i> the imported code. The <b>Compile</b> status will change to 'unknown' or 'error' 
+    - but you might not be able to see where the error is occuring, because the source code is not visible. 
+    However, such mistakes can be remedied with <b>Undo</b>. 
   </li>
   <li>When you import code you capture the state of that code at the time of the import.
     Subsequent edits to the original file will not update the imports - though you may
