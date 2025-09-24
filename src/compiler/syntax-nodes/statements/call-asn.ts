@@ -187,14 +187,13 @@ export class CallAsn extends BreakpointAsn {
     return "";
   }
 
-  resolveSymbol(id: string, _initialScope: Scope): ElanSymbol {
-    // temp kludge
+  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
     if (isAstCollectionNode(this.args)) {
       const items = this.args.items;
-      const last = items[items.length - 1];
+      const last = items.length > 0 ? items[items.length - 1] : new UnknownSymbol();
 
       if (last instanceof LambdaAsn) {
-        const ss = last.signature.resolveSymbol(id, _initialScope);
+        const ss = last.signature.resolveSymbol(id, initialScope);
 
         if (!(ss instanceof UnknownSymbol)) {
           return ss;
