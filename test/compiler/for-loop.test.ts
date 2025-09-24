@@ -307,6 +307,45 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
+  test("Pass_updateLimit", async () => {
+    const code = `${testHeader}
+
+main
+  variable limit set to 10
+  for i from 1 to limit step 1
+    print "{i}"
+    set limit to limit + 1
+  end for
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let limit = 10;
+  const _tofor6 = limit;
+  for (let i = 1; i <= _tofor6; i = i + 1) {
+    await system.printLine(\`\${await _stdlib.asString(i)}\`);
+    limit = limit + 1;
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "12345678910");
+  });
+
   test("Fail_reuseVariableWrongType", async () => {
     const code = `${testHeader}
 
