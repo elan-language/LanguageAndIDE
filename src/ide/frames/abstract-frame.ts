@@ -30,30 +30,26 @@ import { CompileStatus, DisplayColour, ParseStatus } from "./status-enums";
 export abstract class AbstractFrame implements Frame {
   isFrame = true;
   isNew = true;
+  breakpointStatus: BreakpointStatus = BreakpointStatus.none;
+  pasteError: string = "";
+  helpActive: boolean = false;
+
+  protected htmlId: string = "";
+  protected ghostable: boolean = true;
+  protected canHaveBreakPoint = true;
+  protected showContextMenu = false;
+  protected paused = false;
 
   private _parent: File | Parent;
   private _map?: Map<string, Selectable>;
-  private selected: boolean = false;
-  private focused: boolean = false;
-  private collapsed: boolean = false;
+  private _selected: boolean = false;
+  private _focused: boolean = false;
+  private _collapsed: boolean = false;
   private _classes = new Array<string>();
-  protected htmlId: string = "";
-  protected _movable: boolean = true;
+  private _movable: boolean = true;
   private _parseStatus: ParseStatus = ParseStatus.default;
-
-  protected _ghostable: boolean = true;
   private _ghosted: boolean = false;
   private _imported: boolean = false;
-
-  protected canHaveBreakPoint = true;
-  protected showContextMenu = false;
-  breakpointStatus: BreakpointStatus = BreakpointStatus.none;
-
-  protected paused = false;
-
-  pasteError: string = "";
-
-  helpActive: boolean = false;
 
   constructor(parent: Parent) {
     this._parent = parent;
@@ -72,7 +68,7 @@ export abstract class AbstractFrame implements Frame {
     const active = this.helpActive ? ` class="active"` : "";
     this.helpActive = false;
 
-    return this.selected
+    return this._selected
       ? `<el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#${this.helpId()}" target="help-iframe" tabindex="-1"${active}>?</a></el-help>`
       : ``;
   }
@@ -86,7 +82,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   isMovable(): boolean {
-    return this._movable;
+    return this._movable && !this.isImported();
   }
 
   getFile(): File {
@@ -368,10 +364,8 @@ export abstract class AbstractFrame implements Frame {
   };
 
   deleteIfPermissible(): void {
-    if (this.isMovable()) {
-      this.insertNewSelectorIfNecessary();
-      this.delete();
-    }
+    this.insertNewSelectorIfNecessary();
+    this.delete();
   }
 
   delete(): void {
@@ -462,9 +456,9 @@ export abstract class AbstractFrame implements Frame {
 
   protected setClasses() {
     this._classes = new Array<string>();
-    this.pushClass(this.collapsed, "collapsed");
-    this.pushClass(this.selected, "selected");
-    this.pushClass(this.focused, "focused");
+    this.pushClass(this._collapsed, "collapsed");
+    this.pushClass(this._selected, "selected");
+    this.pushClass(this._focused, "focused");
     this.pushClass(this.breakpointStatus !== BreakpointStatus.none, "breakpoint");
     this.pushClass(this.paused, "paused");
     this.pushClass(this.isGhosted(), ghostedAnnotation);
@@ -494,20 +488,20 @@ export abstract class AbstractFrame implements Frame {
   abstract renderAsSource(): string;
 
   isSelected(): boolean {
-    return this.selected;
+    return this._selected;
   }
 
   select(withFocus: boolean, multiSelect: boolean): void {
     if (!multiSelect) {
       this.deselectAll();
     }
-    this.selected = true;
-    this.focused = withFocus;
+    this._selected = true;
+    this._focused = withFocus;
   }
 
   deselect(): void {
-    this.selected = false;
-    this.focused = false;
+    this._selected = false;
+    this._focused = false;
   }
 
   deselectAll() {
@@ -556,31 +550,31 @@ export abstract class AbstractFrame implements Frame {
   }
 
   isCollapsed(): boolean {
-    return this.collapsed;
+    return this._collapsed;
   }
 
   collapse(): void {
     if (isCollapsible(this)) {
-      this.collapsed = true;
+      this._collapsed = true;
     }
   }
 
   expand(): void {
     if (isCollapsible(this)) {
-      this.collapsed = false;
+      this._collapsed = false;
     }
   }
 
   isFocused(): boolean {
-    return this.focused;
+    return this._focused;
   }
 
   focus(): void {
-    this.focused = true;
+    this._focused = true;
   }
 
   defocus(): void {
-    this.focused = false;
+    this._focused = false;
   }
 
   isComplete(): boolean {
@@ -701,7 +695,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   isGhostable() {
-    return this._ghostable;
+    return this.ghostable;
   }
 
   setGhosted(flag: boolean) {
@@ -730,11 +724,6 @@ export abstract class AbstractFrame implements Frame {
     this._imported = flag;
   }
 
-  updateImport = () => {
-    // Not yet implemented
-    return false;
-  };
-
   isGhostedOrWithinAGhostedFrame(): boolean {
     return this.isGhosted() || this.getParent().isGhostedOrWithinAGhostedFrame();
   }
@@ -755,9 +744,7 @@ export abstract class AbstractFrame implements Frame {
   getContextMenuItems() {
     const map = new Map<string, [string, (() => boolean) | undefined]>();
     // Must be arrow functions for this binding
-    if (this.isImported()) {
-      map.set("update", ["update", this.updateImport]);
-    } else if (this.isGhosted()) {
+    if (this.isGhosted()) {
       map.set("unghost", ["unghost", this.unGhost]);
     } else if (!this.isGhostedOrWithinAGhostedFrame()) {
       if (this.isGhostable()) {

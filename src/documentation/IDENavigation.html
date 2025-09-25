@@ -68,8 +68,7 @@ in the following ways:</p>
 <ul>
   <li>Imported code is shown in summarised form, which each global-level instruction rendered as a single line 
     - like you would see in the Outline view - and prefixed by the keyword <el-kw>import</el-kw> (except for imported comments which are imported unchanged).</li>
-  <li>Imported code is initially placed at the <i>top</i> for the file, but you may then move it elsewhere
-  - either <i>en masse</i> or as individual instructions.</li>
+  <li>Imported code is always placed at the <i>top</i> for the file.</li>
 </ul>
 
 <b>Notes:</b>
@@ -78,18 +77,10 @@ in the following ways:</p>
   <li>When you import a file, all instructions within the file are imported at once, include. However you may then
     immediately delete any parts that you do not need, provided that no other code depends upon them. If you do accidentally
     delete any imported instruction on which others depend you will get a compile error - but you can 
-    immediately restore them with <b>Undo</b>.
+    restore the deleted items with <b>Undo</b>.
   </li>
-  <li>It is not possible to edit, or even view, imported code that is not visible in the summary - if
+  <li>It is not possible to edit imported code, nor to examine code that is not visible in the summary view. If
     you need that capability, use <b>File > Append</b> instead (see table above).</li>
-  <li>It <i>is</i> possible to edit the fields within the summary view of each imported instruction.
-    This can be useful in that it allows for functions, or constants, to be renamed - if the names would
-    clash with other code. However, <i>any
-    such edits should be undertaken with caution</i> - it is possible to make edits that would cause
-    compile errors <i?>within</i> the imported code. The <b>Compile</b> status will change to 'unknown' or 'error' 
-    - but you might not be able to see where the error is occuring, because the source code is not visible. 
-    However, such mistakes can be remedied with <b>Undo</b>. 
-  </li>
   <li>When you import code you capture the state of that code at the time of the import.
     Subsequent edits to the original file will not update the imports - though you may
    update by deleting the <el-kw>import</el-kw>... statement(s), and importing the code afresh.
