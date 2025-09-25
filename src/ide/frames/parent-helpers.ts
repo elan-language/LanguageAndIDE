@@ -115,39 +115,44 @@ export function parentHelper_renderChildrenAsSource(parent: Parent): string {
   return result;
 }
 
+// Return
 export function parentHelper_insertOrGotoChildSelector(
   parent: Parent,
   after: boolean,
   child: Frame,
-) {
-  if (after && child.canInsertAfter()) {
-    insertOrGotoChildSelectorAfter(parent, child);
-  } else if (!after && child.canInsertBefore()) {
-    insertOrGotoChildSelectorBefore(parent, child);
+): AbstractSelector {
+  if (after) {
+    return insertOrGotoChildSelectorAfter(parent, child);
+  } else {
+    return insertOrGotoChildSelectorBefore(parent, child);
   }
 }
 
-function insertOrGotoChildSelectorBefore(parent: Parent, child: Frame) {
+function insertOrGotoChildSelectorBefore(parent: Parent, child: Frame): AbstractSelector {
   const prev = parent.getChildBefore(child);
   if (isSelector(prev)) {
     // if there is a selector before
     prev.select(true, false);
+    return prev;
   } else {
     const selector = parent.newChildSelector();
     parent.addChildBefore(selector, child);
     selector.select(true, false);
+    return selector;
   }
 }
 
-function insertOrGotoChildSelectorAfter(parent: Parent, child: Frame) {
+function insertOrGotoChildSelectorAfter(parent: Parent, child: Frame): AbstractSelector {
   const follow = parent.getChildAfter(child);
   if (isSelector(follow)) {
     // if there is a selector before
     follow.select(true, false);
+    return follow;
   } else {
     const selector = parent.newChildSelector();
     parent.addChildAfter(selector, child);
     selector.select(true, false);
+    return selector;
   }
 }
 
