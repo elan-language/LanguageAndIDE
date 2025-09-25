@@ -254,7 +254,7 @@ export class List<T1> {
     return false;
   }
 
-  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
+  @elanFunction(["value"], FunctionOptions.pure, ElanClass(List))
   withAppend(@elanGenericParamT1Type() value: T1): List<T1> {
     return this.newList(withAppendHelper(this.contents, value));
   }
@@ -264,7 +264,7 @@ export class List<T1> {
     return this.newList(withAppendListHelper(this.contents, toAppend.contents));
   }
 
-  @elanFunction(["index", "value"], FunctionOptions.pure, ElanClass(List))
+  @elanFunction(["value"], FunctionOptions.pure, ElanClass(List))
   withPrepend(@elanGenericParamT1Type() value: T1): List<T1> {
     return this.withInsert(0, value);
   }
