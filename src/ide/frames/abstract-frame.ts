@@ -730,11 +730,6 @@ export abstract class AbstractFrame implements Frame {
     this._imported = flag;
   }
 
-  updateImport = () => {
-    // Not yet implemented
-    return false;
-  };
-
   isGhostedOrWithinAGhostedFrame(): boolean {
     return this.isGhosted() || this.getParent().isGhostedOrWithinAGhostedFrame();
   }
@@ -755,9 +750,7 @@ export abstract class AbstractFrame implements Frame {
   getContextMenuItems() {
     const map = new Map<string, [string, (() => boolean) | undefined]>();
     // Must be arrow functions for this binding
-    if (this.isImported()) {
-      map.set("update", ["update", this.updateImport]);
-    } else if (this.isGhosted()) {
+    if (this.isGhosted()) {
       map.set("unghost", ["unghost", this.unGhost]);
     } else if (!this.isGhostedOrWithinAGhostedFrame()) {
       if (this.isGhostable()) {
