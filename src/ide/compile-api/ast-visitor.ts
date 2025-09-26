@@ -105,6 +105,7 @@ import { FunctionMethod } from "../frames/class-members/function-method";
 import { ProcedureMethod } from "../frames/class-members/procedure-method";
 import { Property } from "../frames/class-members/property";
 import { AbstractField } from "../frames/fields/abstract-field";
+import { ArgListField } from "../frames/fields/arg-list-field";
 import { InheritsFromField } from "../frames/fields/inherits-from-field";
 import { TypeField } from "../frames/fields/type-field";
 import { FileImpl } from "../frames/file-impl";
@@ -710,15 +711,6 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof AbstractField) {
-    const rn = node.getRootNode();
-    if (rn && rn.status === ParseStatus.valid) {
-      return transform(rn, node.getHtmlId(), scope);
-    }
-
-    return EmptyAsn.Instance;
-  }
-
   if (node instanceof BracketedExpression) {
     return new BracketedAsn(transform(node.expr, fieldId, scope)!, fieldId);
   }
@@ -1095,6 +1087,23 @@ export function transform(
 
   if (node instanceof FunctionRefNode) {
     return new IdAsn(node.name?.matchedText ?? "", fieldId, true, scope);
+  }
+
+  if (node instanceof ArgListField) {
+    const rn = node.getRootNode();
+    if (rn) {
+      return transform(rn, node.getHtmlId(), scope);
+    }
+    return EmptyAsn.Instance;
+  }
+
+  if (node instanceof AbstractField) {
+    const rn = node.getRootNode();
+    if (rn && rn.status === ParseStatus.valid) {
+      return transform(rn, node.getHtmlId(), scope);
+    }
+
+    return EmptyAsn.Instance;
   }
 
   throw new ElanCompilerError("Unsupported node " + (node ? node.constructor.name : "undefined"));
