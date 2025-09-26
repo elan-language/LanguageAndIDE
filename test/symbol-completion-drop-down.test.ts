@@ -484,8 +484,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["foo", "foo", "foo."],
-      ["foobar", "foobar", "foobar."],
+      ["foo", "foo", "foo"],
+      ["foobar", "foobar", "foobar"],
       ["fooyon", "fooyon", "fooyon"],
     ] as [string, string, string][];
 
@@ -3137,7 +3137,7 @@ end procedure`;
     );
   });
 
-  ignore_test("Pass_lambdaParameter4", async () => {
+  test("Pass_lambdaParameter4", async () => {
     const code = `${testHeader}
 
 main
@@ -3164,7 +3164,10 @@ end procedure`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["bar", "bar", "bar("]] as [string, string, string][];
+    const expected = [
+      ["asString", "asString", "asString("],
+      ["bar", "bar", "bar("],
+    ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(
       fileImpl,
