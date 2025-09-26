@@ -2,7 +2,7 @@ import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { IntType } from "../../../compiler/symbols/int-type";
-import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
+import { getGlobalScope, symbolMatches } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { getId, mustBeOfSymbolType } from "../../compile-rules";
@@ -74,19 +74,14 @@ ${this.indent()}}`;
 
   symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
     const matches = super.symbolMatches(id, all, initialScope);
-    const localMatches: ElanSymbol[] = [];
-
     const v = getId(this.variable);
 
-    if (id === v || all) {
-      const counter = {
-        symbolId: v,
-        symbolType: () => IntType.Instance,
-        symbolScope: SymbolScope.counter,
-      };
-      localMatches.push(counter);
-    }
+    const counter = {
+      symbolId: v,
+      symbolType: () => IntType.Instance,
+      symbolScope: SymbolScope.counter,
+    };
 
-    return localMatches.concat(matches);
+    return matches.concat(symbolMatches(id, all, [counter]));
   }
 }
