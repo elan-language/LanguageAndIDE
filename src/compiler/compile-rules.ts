@@ -30,6 +30,7 @@ import {
   MustImplementCompileError,
   MustNotBeCircularDependencyCompileError,
   MutateCompileError,
+  NonExtensionCompileError,
   NotGlobalFunctionRefCompileError,
   NotIndexableCompileError,
   NotNewableCompileError,
@@ -96,6 +97,7 @@ import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { LetAsn } from "./syntax-nodes/statements/let-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
+import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -506,6 +508,26 @@ export function mustCallExtensionViaQualifier(
 ) {
   if (ft.isExtension && isEmptyNode(qualifier)) {
     compileErrors.push(new ExtensionCompileError(location));
+  }
+}
+
+export function mustNotCallNonExtensionViaQualifier(
+  ft: FunctionType | ProcedureType,
+  name: string,
+  qualifier: AstNode,
+  scope: Scope,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (
+    !(
+      ft.isExtension ||
+      isClass(scope) ||
+      isEmptyNode(qualifier) ||
+      (isAstQualifierNode(qualifier) ? qualifier.value instanceof FixedIdAsn : false)
+    )
+  ) {
+    compileErrors.push(new NonExtensionCompileError(name, location));
   }
 }
 

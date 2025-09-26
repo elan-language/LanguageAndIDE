@@ -364,6 +364,18 @@ export class ExtensionCompileError extends CompileError {
   }
 }
 
+export class NonExtensionCompileError extends CompileError {
+  constructor(name: string, location: string) {
+    super(
+      DisplayPriority.second,
+      Severity.error,
+      `No such member ${name}.`,
+      location,
+      "LangRef.html#compile_error",
+    );
+  }
+}
+
 export class PropertyCompileError extends CompileError {
   constructor(location: string) {
     super(

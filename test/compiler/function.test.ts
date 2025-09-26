@@ -1677,4 +1677,27 @@ end main`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["'s' is not defined.LangRef.html#compile_error"]);
   });
+
+  test("Fail_standaloneFunctionAsExtension", async () => {
+    const code = `${testHeader}
+
+main
+  let x be 3
+  print x.bitShiftL(x, 2)
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["No such member bitShiftL.LangRef.html#compile_error"]);
+  });
 });
