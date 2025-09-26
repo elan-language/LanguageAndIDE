@@ -204,7 +204,19 @@ export class CallAsn extends BreakpointAsn {
     return super.resolveSymbol(id, this);
   }
 
-  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
-    return super.symbolMatches(id, all, this);
+  symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
+    const matches = super.symbolMatches(id, all, this);
+    let localMatches: ElanSymbol[] = [];
+
+    if (isAstCollectionNode(this.args)) {
+      const items = this.args.items;
+      const last = items.length > 0 ? items[items.length - 1] : new UnknownSymbol();
+
+      if (last instanceof LambdaAsn) {
+        localMatches = last.signature.symbolMatches(id, all, initialScope);
+      }
+    }
+
+    return localMatches.concat(matches);
   }
 }
