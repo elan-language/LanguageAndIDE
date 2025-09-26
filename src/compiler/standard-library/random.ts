@@ -52,7 +52,7 @@ export class Random {
     return n % 4294967296;
   }
 
-  @elanFunction([], FunctionOptions.pure, ElanTuple([ElanInt, ElanClass(Random)]))
+  @elanFunction(["min", "max"], FunctionOptions.pure, ElanTuple([ElanInt, ElanClass(Random)]))
   nextInt(@elanIntType() min: number, @elanIntType() max: number) {
     const [float, rnd2] = this.nextImpl();
     const value = Math.floor(float * (max - min + 1) + min);

@@ -245,9 +245,9 @@ export class StdLib {
     return this.system.initialise(new List(seq));
   }
 
-  @elanFunction(["match", "replacement"], FunctionOptions.pureExtension)
-  replace(s1: string, match: string, replacement: string): string {
-    return s1.replaceAll(match, replacement);
+  @elanFunction(["instance", "match", "replacement"], FunctionOptions.pureExtension)
+  replace(instance: string, match: string, replacement: string): string {
+    return instance.replaceAll(match, replacement);
   }
 
   @elanFunction([], FunctionOptions.pureExtension, ElanInt)
@@ -265,24 +265,24 @@ export class StdLib {
     return s1.toLowerCase();
   }
 
-  @elanFunction(["other"], FunctionOptions.pureExtension)
-  isBefore(s1: string, s2: string): boolean {
-    return s1 < s2;
+  @elanFunction(["instance", "other"], FunctionOptions.pureExtension)
+  isBefore(instance: string, other: string): boolean {
+    return instance < other;
   }
 
-  @elanFunction(["other"], FunctionOptions.pureExtension)
-  isAfter(s1: string, s2: string): boolean {
-    return s1 > s2;
+  @elanFunction(["instance", "other"], FunctionOptions.pureExtension)
+  isAfter(instance: string, other: string): boolean {
+    return instance > other;
   }
 
-  @elanFunction(["other"], FunctionOptions.pureExtension)
-  isAfterOrSameAs(s1: string, s2: string): boolean {
-    return s1 > s2 || s1 === s2;
+  @elanFunction(["instance", "other"], FunctionOptions.pureExtension)
+  isAfterOrSameAs(instance: string, other: string): boolean {
+    return instance > other || instance === other;
   }
 
-  @elanFunction(["", "other"], FunctionOptions.pureExtension)
-  isBeforeOrSameAs(s1: string, s2: string): boolean {
-    return s1 < s2 || s1 === s2;
+  @elanFunction(["instance", "other"], FunctionOptions.pureExtension)
+  isBeforeOrSameAs(instance: string, other: string): boolean {
+    return instance < other || instance === other;
   }
 
   @elanFunction([], FunctionOptions.pureExtension)
@@ -661,14 +661,14 @@ export class StdLib {
     return ~a;
   }
 
-  @elanFunction(["a"], FunctionOptions.pure, ElanInt)
-  bitShiftL(@elanIntType() a: number, @elanIntType() shift: number): number {
-    return a << shift;
+  @elanFunction(["value", "places"], FunctionOptions.pure, ElanInt)
+  bitShiftL(@elanIntType() value: number, @elanIntType() shift: number): number {
+    return value << shift;
   }
 
-  @elanFunction(["a"], FunctionOptions.pure, ElanInt)
-  bitShiftR(@elanIntType() a: number, @elanIntType() shift: number): number {
-    return a >>> shift; // >>> is unsigned version of >>
+  @elanFunction(["value", "places"], FunctionOptions.pure, ElanInt)
+  bitShiftR(@elanIntType() value: number, @elanIntType() places: number): number {
+    return value >>> places; // >>> is unsigned version of >>
   }
 
   @elanFunction([], FunctionOptions.pureExtension)

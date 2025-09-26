@@ -62,4 +62,5 @@ export interface Frame extends Selectable {
   isGhostedOrWithinAGhostedFrame(): boolean;
 
   setImported(flag: boolean): void;
+  isImported(): boolean;
 }

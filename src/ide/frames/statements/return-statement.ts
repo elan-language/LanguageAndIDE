@@ -12,8 +12,7 @@ export class ReturnStatement extends AbstractFrame implements Statement {
   expr: ExpressionField;
   constructor(parent: Parent) {
     super(parent);
-    this._movable = false;
-    this._ghostable = false;
+    this.ghostable = false;
     this.expr = new ExpressionField(this);
   }
   initialKeywords(): string {
@@ -21,6 +20,10 @@ export class ReturnStatement extends AbstractFrame implements Statement {
   }
 
   override deleteIfPermissible(): void {} //Does nothing: return cannot be deleted
+
+  override isMovable(): boolean {
+    return false;
+  }
 
   getFields(): Field[] {
     return [this.expr];

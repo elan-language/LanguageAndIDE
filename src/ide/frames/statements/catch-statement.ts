@@ -15,8 +15,7 @@ export class CatchStatement extends AbstractFrame implements Statement {
     this.variable = new IdentifierField(this);
     this.variable.setPlaceholder("<i>variableName</i>");
     this.variable.setFieldToKnownValidText("e");
-    this._movable = true;
-    this._ghostable = false;
+    this.ghostable = false;
   }
 
   override deleteIfPermissible(): void {} // does nothing - catch can't be deleted
