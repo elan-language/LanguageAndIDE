@@ -52,18 +52,6 @@ ${this.indent()}}`;
       };
     }
 
-    const iter = getId(this.iter);
-
-    if (id === iter) {
-      // intercept iter resolve in order to make counter so it's immutable
-      const symbol = super.resolveSymbol(id, this);
-      return {
-        symbolId: id,
-        symbolType: () => symbol.symbolType(),
-        symbolScope: SymbolScope.counter,
-      };
-    }
-
     return super.resolveSymbol(id, initialScope);
   }
 
