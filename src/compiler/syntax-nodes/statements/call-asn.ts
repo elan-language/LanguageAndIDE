@@ -19,6 +19,7 @@ import {
   mustBePublicMember,
   mustCallExtensionViaQualifier,
   mustCallMemberViaQualifier,
+  mustNotCallNonExtensionViaQualifier,
 } from "../../compile-rules";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import {
@@ -133,6 +134,16 @@ export class CallAsn extends BreakpointAsn {
 
       if (procSymbolType instanceof ProcedureType) {
         mustCallExtensionViaQualifier(procSymbolType, qualifier, this.compileErrors, this.fieldId);
+
+        mustNotCallNonExtensionViaQualifier(
+          procSymbolType,
+          procSymbol.symbolId,
+          qualifier,
+          currentScope,
+          this.compileErrors,
+          this.fieldId,
+        );
+
         mustCallMemberViaQualifier(
           id,
           procSymbolType,
