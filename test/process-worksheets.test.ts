@@ -1,5 +1,5 @@
 import assert from "assert";
-import { processCode, processWorksheetCode } from "../src/build-scripts/preprocess-worksheets";
+import { processCode, processWorksheetCode } from "../src/tools/codeParser";
 
 suite("process worksheets", () => {
   test("process file", async () => {
