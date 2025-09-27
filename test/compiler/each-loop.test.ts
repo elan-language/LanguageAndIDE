@@ -32,7 +32,8 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([7, 8, 9]);
   let n = 0;
-  for (const x of a) {
+  const _itereach9 = [...a];
+  for (const x of _itereach9) {
     n = n + x;
   }
   await system.printLine(n);
@@ -72,7 +73,8 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([7, 8, 9]).asList();
   let n = 0;
-  for (const x of a) {
+  const _itereach9 = [...a];
+  for (const x of _itereach9) {
     n = n + x;
   }
   await system.printLine(n);
@@ -109,7 +111,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = "hello";
-  for (const x of a) {
+  const _itereach6 = [...a];
+  for (const x of _itereach6) {
     await system.printLine(x);
   }
 }
@@ -145,8 +148,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  for (const x of "12") {
-    for (const y of "34") {
+  const _itereach3 = [..."12"];
+  for (const x of _itereach3) {
+    const _itereach7 = [..."34"];
+    for (const y of _itereach7) {
       await system.printLine(\`\${await _stdlib.asString(x)}\${await _stdlib.asString(y)}\`);
     }
   }
@@ -185,7 +190,8 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  for (const x of (await global.fruit())) {
+  const _itereach3 = [...(await global.fruit())];
+  for (const x of _itereach3) {
     await system.printLine(x);
   }
 }
@@ -227,7 +233,8 @@ const global = new class {
 
 };
 async function main() {
-  for (const i1 of global.ints) {
+  const _itereach6 = [...global.ints];
+  for (const i1 of _itereach6) {
 
   }
 }
@@ -247,6 +254,45 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "");
+  });
+
+  test("Pass_UpdateCollection", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [1,2,3]
+  each item in a
+    call a.append(item)
+    print item
+  end each
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([1, 2, 3]);
+  const _itereach6 = [...a];
+  for (const item of _itereach6) {
+    a.append(item);
+    await system.printLine(item);
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "123");
   });
 
   test("Fail_UndefinedIterable1", async () => {
@@ -444,13 +490,94 @@ end main
     ]);
   });
 
-  test("Fail_CannotAlterTheIterableWithinLoop", async () => {
+  test("Pass_ReassignTheIterableWithinLoop", async () => {
+    const code = `${testHeader}
+
+main
+  variable s set to "hello"
+  each ch in s
+    print ch
+    set s to "fred"
+  end each
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let s = "hello";
+  const _itereach6 = [...s];
+  for (const ch of _itereach6) {
+    await system.printLine(ch);
+    s = "fred";
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "hello");
+  });
+
+  test("Pass_AlterTheIterableWithinLoop", async () => {
     const code = `${testHeader}
 
 main
   variable a set to {1, 2, 3, 4, 5}
   each x in a
     set a to a.withAppend(x)
+    print x
+  end each
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.listImmutable([1, 2, 3, 4, 5]);
+  const _itereach6 = [...a];
+  for (const x of _itereach6) {
+    a = a.withAppend(x);
+    await system.printLine(x);
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "12345");
+  });
+
+  test("Fail_ReassignTheLetIterableWithinLoop", async () => {
+    const code = `${testHeader}
+
+main
+  let s be "hello"
+  each ch in s
+    print ch
+    set s to "fred"
   end each
 end main
 `;
@@ -466,9 +593,7 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "May not re-assign the loop counter 'a'.LangRef.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["May not re-assign the 'let' 's'.LangRef.html#compile_error"]);
   });
 
   test("Fail_undefinedCollection", async () => {

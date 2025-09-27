@@ -484,8 +484,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["foo", "foo", "foo."],
-      ["foobar", "foobar", "foobar."],
+      ["foo", "foo", "foo"],
+      ["foobar", "foobar", "foobar"],
       ["fooyon", "fooyon", "fooyon"],
     ] as [string, string, string][];
 
@@ -2997,7 +2997,7 @@ end function`;
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo().it", expected);
   });
 
-  ignore_test("Pass_tuple2", async () => {
+  test("Pass_tuple2", async () => {
     const code = `${testHeader}
 
 main
@@ -3027,6 +3027,189 @@ end procedure`;
       fileImpl,
       "args5",
       "tuple(4, 5), lambda t as (Int, Int) => t.it",
+      expected,
+    );
+  });
+
+  test("Pass_lambdaParameter1", async () => {
+    const code = `${testHeader}
+
+main
+  call printModified(lambda t as Foo => t.bar(), new Foo())
+end main
+  
+class Foo
+  function bar() returns Int
+    return 0
+  end function
+end class
+
+procedure printModified(f as Func<of Foo => Int>, i as Foo)
+  print f(i)
+end procedure`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["bar", "bar", "bar("]] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(fileImpl, "args5", "lambda t as Foo => t.b", expected);
+  });
+
+  test("Pass_lambdaParameter2", async () => {
+    const code = `${testHeader}
+
+main
+  call printModified(new Foo(), lambda t as Foo => t.bar())
+end main
+  
+class Foo
+  function bar() returns Int
+    return 0
+  end function
+end class
+
+procedure printModified(i as Foo, f as Func<of Foo => Int>)
+  print f(i)
+end procedure`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["bar", "bar", "bar("]] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(
+      fileImpl,
+      "args5",
+      "new Foo(), lambda t as Foo => t.b",
+      expected,
+    );
+  });
+
+  test("Pass_lambdaParameter3", async () => {
+    const code = `${testHeader}
+
+main
+  call printModified(new Foo(), lambda t as Foo => t.bar())
+end main
+  
+class Foo
+  function bar() returns Int
+    return 0
+  end function
+end class
+
+procedure printModified(i as Foo, f as Func<of Foo => Int>)
+  print f(i)
+end procedure`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(
+      fileImpl,
+      "args5",
+      "new Foo(), lambda t as Foo => u.b",
+      expected,
+    );
+  });
+
+  test("Pass_lambdaParameter4", async () => {
+    const code = `${testHeader}
+
+main
+  call printModified(new Foo(), lambda t as Foo => t.bar())
+end main
+  
+class Foo
+  function bar() returns Int
+    return 0
+  end function
+end class
+
+procedure printModified(i as Foo, f as Func<of Foo => Int>)
+  print f(i)
+end procedure`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      ["asString", "asString", "asString("],
+      ["bar", "bar", "bar("],
+    ] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(
+      fileImpl,
+      "args5",
+      "new Foo(), lambda t as Foo => t.",
+      expected,
+    );
+  });
+
+  test("Pass_lambdaParameter5", async () => {
+    const code = `${testHeader}
+
+main
+  call printModified(new Foo(), lambda aFoo as Foo => aFoo.bar())
+end main
+  
+class Foo
+  function bar() returns Int
+    return 0
+  end function
+end class
+
+procedure printModified(i as Foo, f as Func<of Foo => Int>)
+  print f(i)
+end procedure`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [["aFoo", "aFoo", "aFoo"]] as [string, string, string][];
+
+    await assertSymbolCompletionWithString(
+      fileImpl,
+      "args5",
+      "new Foo(), lambda aFoo as Foo => aF",
       expected,
     );
   });

@@ -2,7 +2,7 @@ import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { IntType } from "../../../compiler/symbols/int-type";
-import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
+import { getGlobalScope, symbolMatches } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { getId, mustBeOfSymbolType } from "../../compile-rules";
@@ -52,7 +52,8 @@ export class ForAsn extends CompoundAsn {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}for (${declare}${v} = ${f}; ${v} ${compare} ${t}; ${v} = ${v} ${incDec} ${s}) {\r
+    return `${this.indent()}const _to${this.fieldId} = ${t};\r
+${this.indent()}${this.breakPoint(this.debugSymbols())}for (${declare}${v} = ${f}; ${v} ${compare} _to${this.fieldId}; ${v} = ${v} ${incDec} ${s}) {\r
 ${this.compileChildren()}\r
 ${this.indent()}}`;
   }
@@ -68,25 +69,19 @@ ${this.indent()}}`;
         symbolScope: SymbolScope.counter,
       };
     }
-
     return super.resolveSymbol(id, initialScope);
   }
 
   symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
     const matches = super.symbolMatches(id, all, initialScope);
-    const localMatches: ElanSymbol[] = [];
-
     const v = getId(this.variable);
 
-    if (id === v || all) {
-      const counter = {
-        symbolId: v,
-        symbolType: () => IntType.Instance,
-        symbolScope: SymbolScope.counter,
-      };
-      localMatches.push(counter);
-    }
+    const counter = {
+      symbolId: v,
+      symbolType: () => IntType.Instance,
+      symbolScope: SymbolScope.counter,
+    };
 
-    return localMatches.concat(matches);
+    return matches.concat(symbolMatches(id, all, [counter]));
   }
 }

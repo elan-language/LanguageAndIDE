@@ -38,7 +38,7 @@ export class Enum extends AbstractFrame implements GlobalFrame, Collapsible {
     return "enum";
   }
   renderAsHtml(): string {
-    return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>enum </el-kw>${this.name.renderAsHtml()}</el-top> ${this.values.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-enum>`;
+    return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>enum </el-kw>${this.name.renderAsHtml()}</el-top> ${this.isImported() ? "" : this.values.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-enum>`;
   }
 
   indent(): string {
@@ -53,5 +53,9 @@ export class Enum extends AbstractFrame implements GlobalFrame, Collapsible {
     source.remove("enum ");
     this.name.parseFrom(source);
     this.values.parseFrom(source);
+  }
+
+  override isWithinAnImportedFrame(): boolean {
+    return false; // So that frame number is still added
   }
 }

@@ -1,7 +1,11 @@
 import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { getGlobalScope, isGenericSymbolType } from "../../../compiler/symbols/symbol-helpers";
+import {
+  getGlobalScope,
+  isGenericSymbolType,
+  symbolMatches,
+} from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { UnknownType } from "../../../compiler/symbols/unknown-type";
 import { getId, mustBeIterable, mustNotBeRedefined } from "../../compile-rules";
@@ -29,7 +33,8 @@ export class EachAsn extends CompoundAsn {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}for (const ${this.variable.compile()} of ${this.iter.compile()}) {\r
+    return `${this.indent()}const _iter${this.fieldId} = [...${this.iter.compile()}];\r
+${this.indent()}${this.breakPoint(this.debugSymbols())}for (const ${this.variable.compile()} of _iter${this.fieldId}) {\r
 ${this.compileChildren()}\r
 ${this.indent()}}`;
   }
@@ -47,38 +52,22 @@ ${this.indent()}}`;
       };
     }
 
-    const iter = getId(this.iter);
-
-    if (id === iter) {
-      // intercept iter resolve in order to make counter so it's immutable
-      const symbol = super.resolveSymbol(id, this);
-      return {
-        symbolId: id,
-        symbolType: () => symbol.symbolType(),
-        symbolScope: SymbolScope.counter,
-      };
-    }
-
     return super.resolveSymbol(id, initialScope);
   }
 
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
     const matches = super.symbolMatches(id, all, this);
-    const localMatches: ElanSymbol[] = [];
-
     const v = getId(this.variable);
 
-    if (id === v || all) {
-      const iterSt = this.iter.symbolType();
-      const st = isGenericSymbolType(iterSt) ? iterSt.ofTypes[0] : UnknownType.Instance;
-      const counter = {
-        symbolId: v,
-        symbolType: () => st,
-        symbolScope: SymbolScope.counter,
-      };
-      localMatches.push(counter);
-    }
+    const counter = {
+      symbolId: v,
+      symbolType: () => {
+        const iterSt = this.iter.symbolType();
+        return isGenericSymbolType(iterSt) ? iterSt.ofTypes[0] : UnknownType.Instance;
+      },
+      symbolScope: SymbolScope.counter,
+    };
 
-    return localMatches.concat(matches);
+    return matches.concat(symbolMatches(id, all, [counter]));
   }
 }

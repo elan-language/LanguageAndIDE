@@ -13,8 +13,100 @@
 <div id="docTOC">
 <div id="generated-toc" class="generate_from_h1 generate_for_page"></div></div>
 
+<h1 id="namedValue">Named values</h1>
+
+<p>In most programming, the term <b>variable</b> describes a data entity in a program that contains a value and has a name by which you can read and write its value, i.e. its value can be varied. In an Elan program, these data entities are called <b>named values</b> so that a distinction can be made between:</p>
+<ul>
+ <li><b>mutable named values</b> whose content can be assigned and re-assigned, e.g. with a <el-kw>set</el-kw> instruction.</li>
+ <li><b>immutable named values</b> whose content is assigned, e.g. with a <el-kw>let</el-kw> instruction, and then cannot be re-assigned.</li>
+</ul>
+<p> This distinction applies both to single values and to data structures (which contain multiple values) and, while it is most pertinent in functional programming, it provides a useful discipline in any code.</p>
+
+<h2 id="Identifier">Identifiers</h2>
+<p>For every named value, its name must follow the rules for an identifier:</p>
+<ul>
+ <li>It must start with a lowercase letter followed by any combination ot letters (upper or lowercase), digits and underscore '_' symbols.</li>
+ <li>It must not contain spaces or other symbols.</li>
+ <li>It cannot be the same as any language keyword, method or other reserved word. If you happen to choose such a name, an error message will tell you that you cannot use it for an identifier.</li>
+</ul>
+
+<h2 id="Type">Named value Types</h2>
+
+<p>Elan's named values are statically typed: when initialised, their Type is established and cannot be changed.</p>
+<p>The Types used in the language are here listed, each linking to its definition and further details:</p>
+<table>
+ <tr><th></th><th colspan="5"></th>
+ </tr><tr>
+  <td>Fundamental Types</td>
+  <td><a href="LibRef.html#Int">Integer<br><el-type>Int</el-type></a></td>
+  <td><a href="LibRef.html#Float">Floating point<br><el-type>Float</el-type></a></td>
+  <td><a href="LibRef.html#Boolean">Boolean<br><el-type>Boolean</el-type></a></td>
+  <td><a href="LibRef.html#String">Character string<br><el-type>String</el-type></a></td>
+  <td></td>
+ </tr><tr>
+  <td>Mutable data structures</td>
+  <td><a href="LibRef.html#List">List<br><el-type>List</el-type></a></td>
+  <td><a href="LibRef.html#Dictionary">Look-up dictionary<br><el-type>Dictionary</el-type></a></td>
+  <td><a href="LibRef.html#Array">Simple array<br><el-type>Array</el-type></a></td>
+  <td><a href="LibRef.html#Array2D">2-dimensional array<br><el-type>Array2D</el-type></a></td>
+  <td></td>
+ </tr><tr>
+  <td>Immutable data structures</td>
+  <td><a href="LibRef.html#ListImmutable">Immutable list<br><el-type>ListImmutable</el-type></a></td>
+  <td><a href="LibRef.html#DictionaryImmutable">Immutable look-up dictionary<br><el-type>DictionaryImmutable</el-type></a></td>
+  <td><a href="LibRef.html#SetType">Set<br><el-type>Set</el-type></a></td>
+ <td><a href="LibRef.html#Stack">LIFO stack<br><el-type>Stack</el-type></a></td>
+ <td><a href="LibRef.html#Queue">FIFO queue<br><el-type>Queue</el-type></a></td>
+ </tr><tr>
+  <td>Data I/O classes</td>
+  <td><a href="LibRef.html#TextFileReader">Text file input</a></td>
+  <td><a href="LibRef.html#TextFileWriter">Text file output</a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr>
+  <td>Graphics classes</td>
+  <td><a href="LibRef.html#TurtleGraphics">Turtle</a></td>
+  <td><a href="LibRef.html#VectorGraphics">SVG vector graphics</a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr>
+  <td>Other classes</td>
+  <td><a href="LibRef.html#Random">Random number<br><el-type>Random</el-type></a></td>
+  <td><a href="LibRef.html#Func">Function reference<br><el-type>Func</el-type></a></td>
+  <td><a href="LangRef.html#enum">Enumeration<br><el-type>enum</el-type></a></td>
+  <td><a href="LangRef.html#record">User-defined record<br><el-type>record</el-type></a></td>
+  <td><a href="LangRef.html#Class">User-defined class</a></td>
+ </tr>
+</table>
+
+<h2 id="mutability">Re-assigning vs. mutating named values</h2>
+<p>This table shows which named values can be re-assigned and/or mutated depending on how they were defined:</p>
+<table>
+ <tr><th colspan="3">define named value</th><th colspan="3">named value</th><th rowspan="2">notes</th></tr>
+ <tr><th>with</th><th>as<br>mutable Type</th><th>as<br> immutable Type</th><th>re-assign<br>with '<el-kw-th>set</el-kw-th>'</th><th>mutate</th><th>scope</th></tr>
+ <tr><td><a href="#constant"><el-kw>constant</el-kw></a></td></td><td>&#x2718;</td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>global</td>
+  <td><el-kw>constant</el-kw> values are set only at compile time</td></tr>
+ <tr><td><a href="#let"><el-kw>let</el-kw></a></td><td>&#x2714;</td><td></td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
+  <td></td></tr>
+ <tr><td><a href="#let"><el-kw>let</el-kw></a></td><td></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
+  <td></td></tr>
+ <tr><td><a href="#variable"><el-kw>variable</el-kw></a></td><td>&#x2714;<td>&#x2714;</td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
+  <td></td></tr>
+ <tr><td><a href="#Parameter">parameter</a></td><td>&#x2714;</td><td></td><td>&#x2718;</td><td>&#x2714;</td><td>local</td>
+  <td>formal input argument of function, procedure or lambda</td></tr>
+ <tr><td><a href="#Parameter">parameter</a></td><td></td><td>&#x2714;</td><td>&#x2718;</td><td>&#x2718;</td><td>local</td>
+  <td>formal input argument of function, procedure or lambda</td></tr>
+ <tr><td><a href="#out"><el-kw>out</el-kw> parameter</a></td><td>&#x2714;</td><td></td><td>&#x2714;</td><td>&#x2714;</td><td>local</td>
+  <td>formal output argument of procedure</td></tr>
+ <tr><td><a href="#out"><el-kw>out</el-kw> parameter</a></td><td></td><td>&#x2714;</td><td>&#x2714; (see note)</td><td>&#x2714;</td><td>local</td>
+  <td>formal output argument of procedure<br>
+  an <el-kw>out</el-kw> parameter of an immutable Type may be re-assigned<br>if the actual argument is defined with <el-kw>variable</el-kw>, not <el-kw>let</el-kw></td></tr>
+</table>
+
 <div id="Methods"></div>
-<h1 id="GlobalInstructions">Global Instructions</h1>
+<h1 id="GlobalInstructions">Global instructions</h1>
 <p>
  <a href="#main">main</a>,
  <a href="#procedure">procedure</a>,
@@ -59,7 +151,7 @@ Unlike a function, a procedure does not return a value.
 <li>Include <el-code>print</el-code> statements and methods.</li>
 <li>include <el-code>input</el-code> methods or other 'system' methods (such as a random number generation).</li>
 <li><el-code>call</el-code> other procedures (or itself if <a href="#recursion">'recursion'</a> is required).</li>
-<li>Assign a value to a parameter, provided that the parameter definition is preceded by the keyword <el-code>out</el-code>, as in this example:</li>
+<li id="out">Assign a value to a parameter, provided that the parameter definition is preceded by the keyword <el-code>out</el-code>, as in this example:</li>
 </ul>
 <el-code-block source="inPlaceRippleSort.elan">
   <el-proc class="ok multiline" id="proc11" tabindex="0">
@@ -110,7 +202,7 @@ Unlike a function, a procedure does not return a value.
 </el-code-block>
 
 <div id="as"></div>
-<h2 id="Parameters">Parameters</h2>
+<h2 id="Parameter">Parameters</h2>
 Parameters for both <el-code>procedures</el-code> and <el-code>functions</el-code> are defined in exactly the same way: each parameter definition takes the form:
 <br>&nbsp;&nbsp;&lt;name&gt; <el-code>as</el-code> &lt;Type&gt;
 <br> for example:
@@ -334,7 +426,7 @@ Having defined a record's Type, such as <el-code>Game</el-code> above, you can c
 <p>will read the <el-code>properties</el-code> into the four names defined.</p>
 When deconstructing, the names of the values must match the names of the <el-code>properties</el-code> of the <el-code>record</el-code>. However, the ordering of the names does not have to match the order in which the <el-code>properties</el-code> are defined in the <el-kw>record</el-kw>.
 
-<h2 id="class">Class</h2>
+<h2 id="Class">Class</h2>
 <!-- TODO Subclass and Superclass -->
 <div id="Subclass"></div>
 <div id="Superclass"></div>
@@ -513,7 +605,7 @@ If the <el-kw>property</el-kw> is not initialised within the constructor then it
 <el-code>  set property.height to height</el-code><br>
 <el-code>end procedure</el-code><br>
 
-<h2 id="procedure_method">Procedure Method</h2>
+<h2 id="procedure_method">Procedure method</h2>
 <p>A 'procedure method' follows the same syntax and rules as a global <a href="#procedure">procedure</a>. The differences are:</p>
 <ul>
 <li>A procedure method, like a function method, is always referenced (used) by code outside the class using 'dot syntax' on an instance.</li>
@@ -522,7 +614,7 @@ If the <el-kw>property</el-kw> is not initialised within the constructor then it
 </ul>
 
 <div id="FunctionMethod"></div>
-<h2 id="function_method">Function Method</h2>
+<h2 id="function_method">Function method</h2>
 <p>A function method follows the same syntax and rules as a global <a href="#function">function</a>. The differences are:</p>
 <ul>
 <li>A <el-code>function</el-code> method is always referenced (used) by code outside the class using 'dot syntax' on an instance.</li>
@@ -532,13 +624,13 @@ If the <el-kw>property</el-kw> is not initialised within the constructor then it
 <li>asString method. This is just a regular function method with a specific name, no parameters and returning a String. If defined for a class, then if an instance of the class is printed, the <el-code>asString</el-code> function method will automatically be used. Typically <el-code>asString</el-code> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
 </ul>
 
-<h2 id="abstractproperty">Abstract Property</h2>
+<h2 id="abstractproperty">Abstract property</h2>
 <p>An abstract property may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
 
 <h2 id="AbstractProcedureMethod">Abstract Procedure Method</h2>
 <p>An abstract procedure method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) procedure to match.</p>
 
-<h2 id="abstractFunctionMethod">Abstract Function Method</h2>
+<h2 id="abstractFunctionMethod">Abstract Function method</h2>
 <p>An abstract function method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
 
 <div id="statement"></div>
@@ -574,8 +666,6 @@ by <a href="#throw">throwing an exception</a> like this:</p>
 </el-statement>
 <p>which will stop the program and print the message in the Debug window (unless caught by a <a href="#try"><el-kw>try</el-kw></a> statement).</p>
 
-<div id="Parameter_passing_1"></div>
-<div id="parameter"></div>
 <h2 id="call">Procedure call</h2>
 <p>A <el-kw>call</el-kw> statement is used when you want to run a <a href="#procedure">procedure</a>.</p>
 <p>The procedure may be:</p>
@@ -596,7 +686,7 @@ by <a href="#throw">throwing an exception</a> like this:</p>
 <p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
 <p>For procedures that you define yourself, <el-kw>out</el-kw> parameters are allowed.  In this case the corresponding argument must be the name of a <el-kw>variable</el-kw> whose value gets updated by the procedure.</p>
 <p>If the parameter is not an <el-kw>out</el-kw> parameter, any expression of the correct Type can be used as an argument.</p>
-<p>Procedures may have side-effects, for example input/output or changing a data value in an object. They can change the contents of any mutable object passed in as an argument.  For this reason, procedures cannot be called from functions, which are not allowed to have side-effects.  <el-kw>call</el-kw> statements are simply not allowed in functions, to enforce this.</p>
+<p>Procedures may have side effects, for example input/output or changing a data value in an object. They can change the contents of any mutable object passed in as an argument.  For this reason, procedures cannot be called from functions, which are not allowed to have side-effects.  <el-kw>call</el-kw> statements are simply not allowed in functions, to enforce this.</p>
 <p>There is a limit to the complexity of a <el-kw>call</el-kw> statement.  Only one dot is allowed in the <el-code>procedure name</el-code> field, or two dots if the first word is <el-kw>property</el-kw>.  If you need anything more complicated, use a <el-kw>let</el-kw> statement on the line above.  See the error message explanation for <a href="#ProcRefField">'procedureName' in a call statement</a>.</p>
 
 <h2 id="each">Each loop</h2>
@@ -794,9 +884,10 @@ and the initial value is given by a following expression. For example:</p>
 <p>One of the most important constructs in programming is the 'expression'. An expression is evaluated to return a value. An expression is made up of the following possible elements:</p>
 <ul>
 <li>Literal value</li>
-<li>Named value</li>
-<li>Operator (including brackets)</li>
-<li>Function call</li>
+<li><a href="#namedValue">Named value</a></li>
+<li><a href="#operator">Operator</a> (including brackets)</li>
+<li><a href="#function_call">Function call</a></li>
+<li><a href="#lambda">Lambda</a></li>
 </ul>
 <p>which this chapter describes.</p>
 
@@ -819,22 +910,10 @@ and the initial value is given by a following expression. For example:</p>
 <p>For more about List and Dictionary literals see the <a href="LibRef.html#StandardDataStructures">Standard (mutable) data structures</a> table.<br>
 For more about ListImmutable and DictionaryImmutable literals see the <a href="LibRef.html#ImmutableDataStructures">Immutable data structures</a> table.</p>
 
-<h2 id="named_value">Named value</h2>
-<p>A named value is a value that is associated with a name rather than being defined literally in code. There are various kinds of named value:</p>
-<p><a href="#constant">Constants</a>, <span class="Hyperlink"><a href="#let">let</a></span> statement, <span class="Hyperlink"><a href="#variable">variable</a></span> statement, <a href="#Parameter_passing_1">Parameter passing</a>, <span class="Hyperlink"><a href="#enum">enum</a></span> statement.
-  Once a named value has been defined, it can be referred to by the name.</p>
-
-<div id="parse_name"></div>
-<h2 id="Identifier">Identifier</h2>
-<p>For all kinds of named values, the name must follow the rules for an 'identifier'.
-  It must start with a lower case letter, followed by any combination of lower and upper case letters,
-   numeric digits, and the _ (underscore) symbol. It may not contain spaces or other symbols.</p>
-<p>If you happen to choose a language keyword, method name or other reserved word, an error message will tell you that you cannot use it for an identifier.</p>
-
 <div id="global"></div>
 <div id="library"></div>
 <h2 id="scoping">Scoping and name qualification</h2>
-<p>With the exception of a <el-code>constant</el-code> (below), which is global in scope, named values are always 'local': their scope is confined to the method in which they are defined. </p>
+<p>With the exception of a <a href="#constant"><el-code>constant</el-code></a>, which is global in scope, named values are always 'local': their scope is confined to the method in which they are defined. </p>
 <p>Elan allows local named values to be defined with the same name as a constant, function, or procedure defined at global level or defined in the standard library. In such cases, when the name is used within the same method, then it will refer to the local definition. If you have done this, but then need to access the <el-code>constant</el-code>, <el-code>function</el-code>, or <el-code>procedure</el-code> with the same name, then you can simply prefix the use of the name with a 'qualifier' of either <el-code>global.</el-code> or <el-code>library.</el-code> as appropriate.</p>
 
 <div id="range"></div>
@@ -1099,7 +1178,7 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
 <p> Every Elan program has a single comment at the top of the file, which is generated by the system and cannot be edited or deleted by the user.
   This comment is known as the 'file header' and shows the version of Elan being run.</p>
 
-<h1 id="compile_error">Compile Errors and Warnings</h1>
+<h1 id="compile_error">Compile errors and warnings</h1>
 
 <h2></h2>
 
@@ -1317,6 +1396,11 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
 
 <h3 id="TestTimeout" class="no-TOC">Tests timed out and were aborted</h3>
 <p>An error or infinite loop found in a test. Refer to <a href="#TestIgnore">ignoring tests</a>.</p>
+
+<h3 id="complexityWarning" class="no-TOC">Overly complex expressions</h3>
+<p>Overly complex expressions &ndash; for example involving a sequence of open brackets &ndash; can result in
+very slow parsing. We strongly recommend that you you simplify the contents of this field, for example by
+breaking out parts of it into separate <el-kw>let</el-kw> statements; otherwise it might become impossible to add more text.</p>
 
 <h2>Field help</h2>
 

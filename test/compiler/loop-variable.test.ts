@@ -31,7 +31,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function removeLetters(wordAsPlayed) {
-  for (const letter of wordAsPlayed) {
+  const _itereach5 = [...wordAsPlayed];
+  for (const letter of _itereach5) {
     let x = letter;
     await removeLetter(x);
   }
@@ -81,7 +82,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function removeLetters(wordAsPlayed) {
-  for (const letter of wordAsPlayed) {
+  const _itereach5 = [...wordAsPlayed];
+  for (const letter of _itereach5) {
     await removeLetter(letter);
   }
 }

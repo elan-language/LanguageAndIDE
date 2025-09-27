@@ -46,7 +46,7 @@ export class Constant extends AbstractFrame implements GlobalFrame, Collapsible 
     return "const";
   }
   renderAsHtml(): string {
-    return `<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>constant </el-kw>${this.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${this.value.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-const>`;
+    return `<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>constant </el-kw>${this.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${this.isImported() ? "" : this.value.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-const>`;
   }
 
   indent(): string {
@@ -55,5 +55,9 @@ export class Constant extends AbstractFrame implements GlobalFrame, Collapsible 
   renderAsSource(): string {
     return `${this.sourceAnnotations()}constant ${this.name.renderAsSource()} set to ${this.value.renderAsSource()}\r
 `;
+  }
+
+  override isWithinAnImportedFrame(): boolean {
+    return false; // So that frame number is still added
   }
 }

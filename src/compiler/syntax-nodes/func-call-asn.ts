@@ -23,6 +23,7 @@ import {
   mustbeValidQualifier,
   mustCallExtensionViaQualifier,
   mustCallMemberViaQualifier,
+  mustNotCallNonExtensionViaQualifier,
 } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 import {
@@ -98,6 +99,15 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
       mustCallExtensionViaQualifier(
         funcSymbolType,
         this.precedingNode,
+        this.compileErrors,
+        this.fieldId,
+      );
+
+      mustNotCallNonExtensionViaQualifier(
+        funcSymbolType,
+        funcSymbol.symbolId,
+        this.precedingNode,
+        this.updatedScope,
         this.compileErrors,
         this.fieldId,
       );

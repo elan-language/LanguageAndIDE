@@ -539,4 +539,57 @@ end class`;
       "ListImmutable cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
     ]);
   });
+
+  test("Fail_standaloneLibProcedureAsExtension", async () => {
+    const code = `${testHeader}
+
+main
+  let x be 3
+  call x.clearPrintedText()
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'clearPrintedText' is not defined for type 'Int'.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_standaloneProcedureAsExtension", async () => {
+    const code = `${testHeader}
+
+main
+  let x be 3
+  call x.foo(x)
+end main
+
+procedure foo(x as Int)
+end procedure`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'foo' is not defined for type 'Int'.LangRef.html#compile_error",
+    ]);
+  });
 });

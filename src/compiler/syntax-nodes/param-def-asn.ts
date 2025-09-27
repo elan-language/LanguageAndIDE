@@ -1,8 +1,10 @@
 import { AstIdNode } from "../../compiler/compiler-interfaces/ast-id-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { getGlobalScope } from "../../compiler/symbols/symbol-helpers";
+import { getGlobalScope, symbolMatches } from "../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../compiler/symbols/symbol-scope";
 import { mustBeKnownSymbolType, mustNotBeKeyword } from "../compile-rules";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
@@ -36,7 +38,22 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
     return `${this.out ? "out " : ""}${this.id} as ${this.type}`;
   }
 
+  get symbolId() {
+    return this.id;
+  }
+
   get symbolScope() {
     return this.out ? SymbolScope.outParameter : SymbolScope.parameter;
+  }
+
+  resolveSymbol(id: string, _scope: Scope): ElanSymbol {
+    if (this.id.trim() === id) {
+      return this;
+    }
+    return new UnknownSymbol(id);
+  }
+
+  symbolMatches(id: string, all: boolean, _scope: Scope): ElanSymbol[] {
+    return symbolMatches(id, all, [this]);
   }
 }

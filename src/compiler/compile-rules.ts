@@ -96,6 +96,7 @@ import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { LetAsn } from "./syntax-nodes/statements/let-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
+import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -507,6 +508,32 @@ export function mustCallExtensionViaQualifier(
   if (ft.isExtension && isEmptyNode(qualifier)) {
     compileErrors.push(new ExtensionCompileError(location));
   }
+}
+
+function qualifierIsFixedIdOrEmpty(qualifier: AstNode) {
+  if (isEmptyNode(qualifier)) {
+    return true;
+  }
+
+  return isAstQualifierNode(qualifier)
+    ? qualifier.value instanceof FixedIdAsn
+    : qualifier instanceof FixedIdAsn;
+}
+
+export function mustNotCallNonExtensionViaQualifier(
+  ft: FunctionType | ProcedureType,
+  name: string,
+  qualifier: AstNode,
+  scope: Scope,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  // method is not extension with a qualifier that is not a fixed id
+  if (ft.isExtension || isClass(scope) || qualifierIsFixedIdOrEmpty(qualifier)) {
+    return;
+  }
+
+  compileErrors.push(new UndefinedSymbolCompileError(name, qualifier.symbolType().name, location));
 }
 
 export function mustbeValidQualifier(

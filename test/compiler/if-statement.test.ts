@@ -623,7 +623,8 @@ async function main() {
     await system.printLine("");
   } else if (a === 2) {
     let b = a;
-    for (let i = 0; i <= 5; i = i + 1) {
+    const _tofor17 = 5;
+    for (let i = 0; i <= _tofor17; i = i + 1) {
       b = b + i;
     }
     await system.printLine(b);

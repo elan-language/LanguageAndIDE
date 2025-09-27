@@ -53,11 +53,39 @@ To access the <b>demo</b> or <b>file</b> menus via the keyboard:
   <tr><td>use a <i>demo</i> program</td><td><b>demo</b> then select desired program</td><td></td></tr>
   <tr><td>load a program file</td><td><b>file > load</b></td><td>if the editor contains unsaved code, the user will be warned</td></tr>
   <tr><td>append a file to the current code in the editor</td><td><b>file > append</b></td><td>external code is always appended <i>to the end</i> of the current code, but may then be moved</td></tr>
+  <tr><td>import a file into the current code in the editor</td><td><b>file > import</b></td><td>see <a href="#Import">Importing code</a></td></tr>
   <tr><td>save a program file</td><td><b>file > auto save</b></td><td>any subsequent edits will be saved to the file (whenever the code parses)</td></tr>
   <tr><td>cancel auto-saving</td><td><b>file > cancel auto save</b></td><td>this action appears only after setting-up <b>auto save</b></td></tr>
   <tr><td>save a program manually</td><td><b>file > manual save</b></td><td>saves the code to file but does <i>not</i> automatically save subsequent changes</td></tr>
   <tr><td>create a standalone Html page incorporating your program</td><td><b>file > save as standalone</b></td><td>the saved .html file contains the compiled program, and will run automatically when opened</td></tr>
 </table>
+
+<h4 id="Import">Importing code</h4>
+<p>Existing Elan code may be imported into a new program via <b>File > Import</b>. This can facilitate re-use of code and
+  the development of libraries. This differs from <i>appending</i> (see table above)
+in the following ways:</p>
+
+<ul>
+  <li>Imported code is shown in summarised form, which each global-level instruction rendered as a single line 
+    - like you would see in the Outline view - and prefixed by the keyword <el-kw>import</el-kw> (except for imported comments which are imported unchanged).</li>
+  <li>Imported code is always placed at the <i>top</i> for the file.</li>
+</ul>
+
+<b>Notes:</b>
+
+<ul>
+  <li>When you import a file, all instructions within the file are imported at once, include. However you may then
+    immediately delete any parts that you do not need, provided that no other code depends upon them. If you do accidentally
+    delete any imported instruction on which others depend you will get a compile error - but you can 
+    restore the deleted items with <b>Undo</b>.
+  </li>
+  <li>It is not possible to edit imported code, nor to examine code that is not visible in the summary view. If
+    you need that capability, use <b>File > Append</b> instead (see table above).</li>
+  <li>When you import code you capture the state of that code at the time of the import.
+    Subsequent edits to the original file will not update the imports - though you may
+   update by deleting the <el-kw>import</el-kw>... statement(s), and importing the code afresh.
+  </li>
+</ul>
 </div></div>
 
 <div class="accordion">

@@ -22,7 +22,7 @@ import {
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
-import { File } from "./frame-interfaces/file";
+import { File, ParseMode } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
 import { defaultUsername, Profile } from "./frame-interfaces/profile";
@@ -314,6 +314,11 @@ export class FileImpl implements File {
   getFirstChild(): Frame {
     return parentHelper_getFirstChild(this);
   }
+  private getFirstNonImportedChild(): Frame {
+    const globals = this.getChildren();
+    const nonImported = globals.filter((g) => !g.isImported());
+    return nonImported.length > 0 ? nonImported[0] : this.getLastChild();
+  }
   getLastChild(): Frame {
     return parentHelper_getLastChild(this);
   }
@@ -557,19 +562,21 @@ export class FileImpl implements File {
     return new TestFrame(this);
   }
 
-  getNextSelector(append?: boolean) {
-    if (append) {
-      const last = this.getLastChild();
-      if (isSelector(last)) {
-        return last as GlobalSelector;
-      }
-
-      parentHelper_insertOrGotoChildSelector(this, true, last);
-
-      return this.getLastChild();
+  getNextSelector(mode: ParseMode) {
+    let frame: Frame;
+    if (mode === ParseMode.append) {
+      frame = this.getLastChild();
+      return isSelector(frame)
+        ? (frame as GlobalSelector)
+        : parentHelper_insertOrGotoChildSelector(this, true, frame);
+    } else if (mode === ParseMode.import) {
+      frame = this.getFirstNonImportedChild();
+      return isSelector(frame)
+        ? (frame as GlobalSelector)
+        : parentHelper_insertOrGotoChildSelector(this, false, frame);
+    } else {
+      return this.getFirstSelectorAsDirectChild();
     }
-
-    return this.getFirstSelectorAsDirectChild();
   }
 
   parseBodyFrom(source: CodeSource, append?: boolean): void {
@@ -578,7 +585,7 @@ export class FileImpl implements File {
         if (source.isMatchRegEx(Regexes.newLine)) {
           source.removeNewLine();
         } else {
-          this.getNextSelector(append).parseFrom(source);
+          this.getNextSelector(source.mode).parseFrom(source);
         }
       }
       this.removeAllSelectorsThatCanBe();
@@ -784,6 +791,14 @@ export class FileImpl implements File {
   }
 
   isGhostedOrWithinAGhostedFrame(): boolean {
+    return false;
+  }
+
+  isWithinAnImportedFrame(): boolean {
+    return false;
+  }
+
+  isImported(): boolean {
     return false;
   }
 
