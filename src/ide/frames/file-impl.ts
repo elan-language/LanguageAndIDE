@@ -579,7 +579,7 @@ export class FileImpl implements File {
     }
   }
 
-  parseBodyFrom(source: CodeSource, append?: boolean): void {
+  parseBodyFrom(source: CodeSource): void {
     try {
       while (source.hasMoreCode()) {
         if (source.isMatchRegEx(Regexes.newLine)) {
@@ -602,7 +602,7 @@ export class FileImpl implements File {
     }
   }
 
-  async parseFrom(source: CodeSource, append?: boolean): Promise<void> {
+  async parseFrom(source: CodeSource): Promise<void> {
     if (!this._stdLibSymbols.isInitialised) {
       this.parseError = this._stdLibSymbols.error;
       this._parseStatus = ParseStatus.invalid;
@@ -617,7 +617,7 @@ export class FileImpl implements File {
         source.removeRegEx(Regexes.newLine, false);
         source.removeRegEx(Regexes.newLine, false);
       }
-      this.parseBodyFrom(source, append);
+      this.parseBodyFrom(source);
     } catch (e) {
       if (e instanceof ElanFileError) {
         this.parseError = e.message;
