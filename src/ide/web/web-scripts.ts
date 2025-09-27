@@ -276,15 +276,19 @@ pauseButton?.addEventListener("click", () => {
 });
 
 stopButton?.addEventListener("click", () => {
-  debugMode = singleStepping = false;
-  if (runWorker) {
-    handleRunWorkerFinished();
-  }
-  if (testWorker) {
-    endTests();
-    file.setTestStatus(TestStatus.default);
-    updateDisplayValues();
-  }
+  disable([stopButton, pauseButton, stepButton], "Program is not running");
+  // do rest on next event loop for responsivenesss
+  setTimeout(() => {
+    debugMode = singleStepping = false;
+    if (runWorker) {
+      handleRunWorkerFinished();
+    }
+    if (testWorker) {
+      endTests();
+      file.setTestStatus(TestStatus.default);
+      updateDisplayValues();
+    }
+  }, 1);
 });
 
 clearDisplayButton?.addEventListener("click", async () => {
