@@ -1678,7 +1678,7 @@ end main`;
     assertDoesNotCompile(fileImpl, ["'s' is not defined.LangRef.html#compile_error"]);
   });
 
-  test("Fail_standaloneFunctionAsExtension", async () => {
+  test("Fail_standaloneLibFunctionAsExtension", async () => {
     const code = `${testHeader}
 
 main
@@ -1698,6 +1698,37 @@ end main`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["No such member bitShiftL.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "'bitShiftL' is not defined for type 'Int'.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_standaloneFunctionAsExtension", async () => {
+    const code = `${testHeader}
+
+main
+  let x be 3
+  print x.foo(x)
+end main
+
+function foo(x as Int) returns Int
+  return x
+end function`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'foo' is not defined for type 'Int'.LangRef.html#compile_error",
+    ]);
   });
 });

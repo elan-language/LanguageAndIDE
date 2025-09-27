@@ -30,7 +30,6 @@ import {
   MustImplementCompileError,
   MustNotBeCircularDependencyCompileError,
   MutateCompileError,
-  NonExtensionCompileError,
   NotGlobalFunctionRefCompileError,
   NotIndexableCompileError,
   NotNewableCompileError,
@@ -511,6 +510,16 @@ export function mustCallExtensionViaQualifier(
   }
 }
 
+function qualifierIsFixedIdOrEmpty(qualifier: AstNode) {
+  if (isEmptyNode(qualifier)) {
+    return true;
+  }
+
+  return isAstQualifierNode(qualifier)
+    ? qualifier.value instanceof FixedIdAsn
+    : qualifier instanceof FixedIdAsn;
+}
+
 export function mustNotCallNonExtensionViaQualifier(
   ft: FunctionType | ProcedureType,
   name: string,
@@ -519,16 +528,12 @@ export function mustNotCallNonExtensionViaQualifier(
   compileErrors: CompileError[],
   location: string,
 ) {
-  if (
-    !(
-      ft.isExtension ||
-      isClass(scope) ||
-      isEmptyNode(qualifier) ||
-      (isAstQualifierNode(qualifier) ? qualifier.value instanceof FixedIdAsn : false)
-    )
-  ) {
-    compileErrors.push(new NonExtensionCompileError(name, location));
+  // method is not extension with a qualifier that is not a fixed id
+  if (ft.isExtension || isClass(scope) || qualifierIsFixedIdOrEmpty(qualifier)) {
+    return;
   }
+
+  compileErrors.push(new UndefinedSymbolCompileError(name, qualifier.symbolType().name, location));
 }
 
 export function mustbeValidQualifier(
