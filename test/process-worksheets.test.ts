@@ -110,23 +110,13 @@ end constructor`;
   });
 
   test("process multiple steps", async () => {
-    const steps = `<step><content></content></step>
+    const steps = `<step id="Preliminaries"><content></content></step>
 <step><content></content></step>`;
 
     const actual = await processSteps(steps);
 
-    const expected = `<div class="step" id="step0">
-  <content></content>
-  <label class="done" for="done0">Step completed</label>
-  <input type="checkbox" class="step-complete" id="done0" />
-  <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
-</div>
-<div class="step" id="step1">
-  <content></content>
-  <label class="done" for="done1">Step completed</label>
-  <input type="checkbox" class="step-complete" id="done1" />
-  <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
-</div>`;
+    const expected = `<div class="step" id="step0"><content></content><label class="done" for="done0">Step Completed</label><input class="step-complete" type="checkbox" id="done0"><span> Total hints used: <span class="hints-taken"></span><span class="hints-total"></span></span></div>
+<div class="step" id="step1"><content></content><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span><span class="hints-total"></span></span></div>`;
 
     assert.strictEqual(actual, expected);
   });
