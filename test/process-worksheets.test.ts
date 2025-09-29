@@ -1,5 +1,6 @@
 import assert from "assert";
 import { processCode, processWorksheetCode } from "../src/tools/codeParser";
+import { processSteps } from "../src/tools/markupParser";
 
 suite("process worksheets", () => {
   test("process file", async () => {
@@ -103,7 +104,21 @@ end constructor`;
     const actual = await processCode(code);
 
     const expected = `<code><el-kw>let</el-kw></code>
-    <code><el-type>Int</el-type></code>`;
+<code><el-type>Int</el-type></code>`;
+
+    assert.strictEqual(actual, expected);
+  });
+
+  test("process step", async () => {
+    const code = `<step></step>
+<step></step>`;
+
+    const actual = await processSteps(code);
+
+    const expected = `<div class="step" id="step0">
+</div>
+<div class="step" id="step1">
+</div>`;
 
     assert.strictEqual(actual, expected);
   });
