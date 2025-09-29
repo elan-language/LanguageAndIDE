@@ -18,6 +18,9 @@ export class CatchStatement extends AbstractFrame implements Statement {
     this.ghostable = false;
   }
 
+  override isDeletable(): boolean {
+    return false;
+  }
   override deleteIfPermissible(): void {} // does nothing - catch can't be deleted
 
   protected setClasses() {
