@@ -221,11 +221,12 @@ body {
 #vector-graphics,
 #print,
 #display-html {
-  width: 100%;
-  height: 100%;
+  width: 99.5%;
+  height: 99.5%;
   position: absolute;
   top: 0;
   left: 0;
+  padding: 2px;
 }
 
 #vector-graphics {
@@ -448,7 +449,6 @@ button.icon:active img + label
 }
 
 #display-html {
-  padding: 2px;
   overflow: hidden;
 }
 
