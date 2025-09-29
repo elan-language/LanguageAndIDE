@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { processCode } from "../tools/codeParser";
+import { processSteps } from "../tools/markupParser";
 
 const rootdir = `${__dirname}/../../..`;
 
@@ -20,7 +21,8 @@ function getWorksheets(sourceDir: string): string[] {
 async function processWorksheet(fileName: string) {
   const source = loadFileAsSourceNew(fileName);
 
-  const updatedContent = await processCode(source);
+  let updatedContent = await processCode(source);
+  updatedContent = await processSteps(updatedContent);
 
   updateFileNew(fileName + ".out", updatedContent);
 }

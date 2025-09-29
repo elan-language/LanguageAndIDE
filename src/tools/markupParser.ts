@@ -1,5 +1,12 @@
-export async function processStep(_markup: string, instance: number): Promise<string> {
+export async function processStep(markup: string, instance: number): Promise<string> {
+  const endOfTag = markup.indexOf(">");
+  const content = markup.slice(endOfTag + 1);
+
   return `<div class="step" id="step${instance}">
+  ${content}
+  <label class="done" for="done${instance}">Step completed</label>
+  <input type="checkbox" class="step-complete" id="done${instance}" />
+  <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
 </div>`;
 }
 
