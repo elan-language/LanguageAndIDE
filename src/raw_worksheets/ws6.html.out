@@ -1,0 +1,27 @@
+  <div class="step" id="step1">
+    <h3>Step 1: Getting started</h3>
+    <p>From the <b>Demo</b> menu, access the <b>Merge lists</b> code,  then select <b>File > Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
+      Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b>) to undo recent changes.</li>
+
+    <div class="hint" id="hint1" data-hint="">Hint 1: Recursion</div> 
+    <div class="content" id="hint1content">
+      <ul>
+       <li>Writing a recursive function means that in <i>one or more</i> places within your implementation of <el-method>merge</el-method>
+      you will have an expression that itself makes use of the <el-method>merge</el-method> function - typically with
+      a smaller, or simpler, version of the problem of the list.
+    </li>
+      <li>One of the first things to consider when writing a recursive function is the 'boundary' (or 'exit' or 'edge' condition)
+        i.e. the specific condition(s) under which you have, or can derive, the result <i>without</i> needing to use <el-method>sort</el-method> recursively.
+      </li>
+      </ul>
+    </div>
+
+    <div class="hint" id="hint2" data-hint="">Hint 2: Getting started</div> 
+    <div class="content" id="hint2content">
+      <p>The following is generic advice for writing a function where there might be more than one path to the result:</p>
+    </div>
+
+    <label class="done" for="done1">Step completed</label>
+    <input type="checkbox" class="step-complete" id="done1"/>
+    <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
+  </div>
