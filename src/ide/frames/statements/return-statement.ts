@@ -18,9 +18,9 @@ export class ReturnStatement extends AbstractFrame implements Statement {
   initialKeywords(): string {
     return returnKeyword;
   }
-
-  override deleteIfPermissible(): void {} //Does nothing: return cannot be deleted
-
+  override isDeletable() {
+    return false;
+  }
   override isMovable(): boolean {
     return false;
   }

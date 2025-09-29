@@ -85,6 +85,10 @@ export abstract class AbstractFrame implements Frame {
     return this._movable && !this.isImported();
   }
 
+  isDeletable(): boolean {
+    return true;
+  }
+
   getFile(): File {
     return this.getParent().getFile();
   }
@@ -234,10 +238,7 @@ export abstract class AbstractFrame implements Frame {
       }
       case "ArrowUp": {
         if (e.modKey.control) {
-          if (this.isMovable()) {
-            this.getParent().moveSelectedChildrenUpOne();
-            codeHasChanged = true;
-          }
+          this.up();
         } else {
           this.selectSingleOrMulti(this.getPreviousPeerFrame(), e.modKey.shift);
         }
@@ -245,10 +246,7 @@ export abstract class AbstractFrame implements Frame {
       }
       case "ArrowDown": {
         if (e.modKey.control) {
-          if (this.isMovable()) {
-            this.getParent().moveSelectedChildrenDownOne();
-            codeHasChanged = true;
-          }
+          this.down();
         } else {
           this.selectSingleOrMulti(this.getNextPeerFrame(), e.modKey.shift);
         }
@@ -333,8 +331,25 @@ export abstract class AbstractFrame implements Frame {
     return codeHasChanged;
   }
 
+  up = () => {
+    if (this.isMovable()) {
+      this.getParent().moveSelectedChildrenUpOne();
+      return true;
+    }
+    return false;
+  };
+
+  down = () => {
+    if (this.isMovable()) {
+      this.getParent().moveSelectedChildrenDownOne();
+      return true;
+    }
+    return false;
+  };
+
   deleteSelected = () => {
     this.getParent().deleteSelectedChildren();
+    return true;
   };
 
   cut = () => {
@@ -342,13 +357,13 @@ export abstract class AbstractFrame implements Frame {
     const nonSelectors = selected.filter((s) => !(s.initialKeywords() === "selector"));
     if (nonSelectors.length === 0) {
       this.pasteError = "Cut Failed: No code to cut";
-      return;
+      return true;
     }
     const movable = nonSelectors.filter((s) => s.isMovable());
 
     if (movable.length !== nonSelectors.length) {
       this.pasteError = "Cut Failed: At least one selected frame is not moveable";
-      return;
+      return true;
     }
 
     parentHelper_removeAllSelectedChildren(this.getParent());
@@ -361,6 +376,7 @@ export abstract class AbstractFrame implements Frame {
     if (!isSelector(newFocus) && !newFocus.getParent().minimumNumberOfChildrenExceeded()) {
       newFocus.insertPeerSelector(false);
     }
+    return true;
   };
 
   deleteIfPermissible(): void {
@@ -405,6 +421,16 @@ export abstract class AbstractFrame implements Frame {
     }
     next.select(true, false);
   }
+
+  above = () => {
+    this.insertPeerSelector(true);
+    return false;
+  };
+
+  below = () => {
+    this.insertPeerSelector(false);
+    return false;
+  };
 
   insertPeerSelector(before: boolean): void {
     const parent = this.getParent();
@@ -749,6 +775,20 @@ export abstract class AbstractFrame implements Frame {
     } else if (!this.isGhostedOrWithinAGhostedFrame()) {
       if (this.isGhostable()) {
         map.set("ghost", ["ghost", this.ghost]);
+      }
+      if (this.isDeletable()) {
+        map.set("cut", ["cut (Ctrl-x)", this.cut]);
+        map.set("delete", ["delete (Ctrl-Delete or Ctrl-Backspace)", this.deleteSelected]);
+      }
+      if (this.canInsertAfter()) {
+        map.set("below", ["insert new code below (Enter)", this.below]);
+      }
+      if (this.canInsertBefore()) {
+        map.set("above", ["insert new code above (Shift-Enter)", this.above]);
+      }
+      if (this.isMovable()) {
+        map.set("up", ["move up (Ctrl-ArrowUp)", this.up]);
+        map.set("down", ["move down (Ctrl-ArrowDown)", this.down]);
       }
       if (this.canHaveBreakPoint) {
         if (this.hasBreakpoint()) {
