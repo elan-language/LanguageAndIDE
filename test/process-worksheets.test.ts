@@ -1,6 +1,6 @@
 import assert from "assert";
 import { processCode, processWorksheetCode } from "../src/tools/codeParser";
-import { processSteps } from "../src/tools/markupParser";
+import { processHints, processSteps } from "../src/tools/markupParser";
 
 suite("process worksheets", () => {
   test("process file", async () => {
@@ -117,6 +117,18 @@ end constructor`;
 
     const expected = `<div class="step" id="step0"><content></content><label class="done" for="done0">Step Completed</label><input class="step-complete" type="checkbox" id="done0"><span> Total hints used: <span class="hints-taken"></span><span class="hints-total"></span></span></div>
 <div class="step" id="step1"><content></content><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span><span class="hints-total"></span></span></div>`;
+
+    assert.strictEqual(actual, expected);
+  });
+
+  test("process multiple hints", async () => {
+    const hints = `<hint></hint><content><p>hint details</p></content>
+<hint></hint><content><p>hint details</p></content>`;
+
+    const actual = await processHints(hints);
+
+    const expected = `<div class="hint" id="hint0" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg=="></div>
+<div class="hint" id="hint1" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg=="></div>`;
 
     assert.strictEqual(actual, expected);
   });

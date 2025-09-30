@@ -65,7 +65,7 @@ export async function processHint(markup: string, instance: number): Promise<str
 
     const encoded = btoa(contentAsString);
 
-    hint.setAttribute("data-hint", encoded);
+    div.setAttribute("data-hint", encoded);
   }
 
   const hintHtml = div.outerHTML;
@@ -84,7 +84,7 @@ async function processEachHintInstance(
   const codeEnd = toProcessCode.indexOf("</content>");
 
   if (codeStart !== -1) {
-    const code = toProcessCode.slice(codeStart, codeEnd);
+    const code = toProcessCode.slice(codeStart, codeEnd + 10);
     const htmlCode = await processHint(code, instance);
 
     return [htmlCode, startAt + codeStart, startAt + codeEnd + 10];
