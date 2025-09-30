@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { processCode } from "../tools/codeParser";
 import { processSteps } from "../tools/markupParser";
+import toDiffableHtml from "diffable-html";
 
 const rootdir = `${__dirname}/../../..`;
 
@@ -23,6 +24,8 @@ async function processWorksheet(fileName: string) {
 
   let updatedContent = await processCode(source);
   updatedContent = await processSteps(updatedContent);
+
+  updatedContent = toDiffableHtml(updatedContent);
 
   updateFileNew(fileName + ".out", updatedContent);
 }

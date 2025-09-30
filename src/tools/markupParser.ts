@@ -1,5 +1,4 @@
 import { JSDOM } from "jsdom";
-import prettier from "prettier";
 
 export async function processStep(markup: string, instance: number): Promise<string> {
   const endOfTag = markup.indexOf(">");
