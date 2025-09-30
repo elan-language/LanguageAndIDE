@@ -34,7 +34,7 @@
     </b>
     ) to undo recent changes.
   </p>
-  <hint id="hint1">
+  <hint>
     Hint 1: Recursion
   </hint>
   <content>
@@ -71,7 +71,7 @@
       </li>
     </ul>
   </content>
-  <hint id="hint2">
+  <hint>
     Hint 2: Getting started
   </hint>
   <content>
