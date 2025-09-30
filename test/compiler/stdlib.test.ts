@@ -2103,4 +2103,37 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[]");
   });
+  test("Pass_shadowLibraryType", async () => {
+    const code = `${testHeader}
+
+class List
+  function asString() returns String
+    return "MyList"
+  end function
+
+end class
+
+main
+  print new List()
+  print new library.List<of Int>()
+end main
+`;
+
+    const objectCode = ``;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "MyList[]");
+  });
 });

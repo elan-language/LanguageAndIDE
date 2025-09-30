@@ -897,6 +897,12 @@ suite("Parsing Nodes", () => {
       "",
     ); //Single
   });
+  test("TypeNode - library qualifier", () => {
+    testNodeParse(new TypeNode(), `library.Random`, ParseStatus.valid, "library.Random", "", ""); //Single
+  });
+  test("TypeNode - other qualifier", () => {
+    testNodeParse(new TypeNode(), `global.Random`, ParseStatus.invalid, "", "global.Random", ""); //Single
+  });
   test("TupleNode", () => {
     testNodeParse(new TupleNode(), `tuple(3,4)`, ParseStatus.valid, "", "", "");
     testNodeParse(
