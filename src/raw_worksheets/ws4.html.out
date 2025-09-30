@@ -1,3 +1,20 @@
-<code><el-kw>let</el-kw></code>
-<code><el-type>Int</el-type></code>
-<code><el-lit>2</el-lit> + <el-lit>2</el-lit></code>
+
+<code>
+  <el-kw>
+    let
+  </el-kw>
+</code>
+<code>
+  <el-type>
+    Int
+  </el-type>
+</code>
+<code>
+  <el-lit>
+    2
+  </el-lit>
+  +
+  <el-lit>
+    2
+  </el-lit>
+</code>

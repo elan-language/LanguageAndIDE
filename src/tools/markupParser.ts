@@ -1,24 +1,5 @@
 import { JSDOM } from "jsdom";
 
-export async function processStep(markup: string, instance: number): Promise<string> {
-  const endOfTag = markup.indexOf(">");
-  const content = markup.slice(endOfTag + 1);
-  const attr = markup.slice(0, endOfTag);
-  const match = attr.match(/id\s*=\s*"(\w+)"/);
-  let heading = "";
-
-  if (match?.length === 2 && !match[1].toLowerCase().startsWith("step")) {
-    heading = `<h3>${match[1]}</h3>`;
-  }
-
-  return `<div class="step" id="step${instance}">
-  ${heading}${content}
-  <label class="done" for="done${instance}">Step completed</label>
-  <input type="checkbox" class="step-complete" id="done${instance}" />
-  <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
-</div>`;
-}
-
 export async function processStepJsDom(markup: string, instance: number): Promise<string> {
   const input = new JSDOM(markup);
   const inDoc = input.window.document;
@@ -60,7 +41,6 @@ export async function processStepJsDom(markup: string, instance: number): Promis
   const stepHtml = div.outerHTML;
 
   return stepHtml;
-  //return await prettier.format(stepHtml, { parser: "html", bracketSameLine: true });
 }
 
 async function processEachStepInstance(
@@ -74,8 +54,6 @@ async function processEachStepInstance(
   const codeEnd = toProcessCode.indexOf("</step>");
 
   if (codeStart !== -1) {
-    // const code = toProcessCode.slice(codeStart + 5, codeEnd);
-    // const htmlCode = await processStep(code, instance);
     const code = toProcessCode.slice(codeStart, codeEnd);
     const htmlCode = await processStepJsDom(code, instance);
 
