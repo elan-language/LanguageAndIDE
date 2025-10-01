@@ -34,6 +34,19 @@ async function newFileImpl(): Promise<FileImpl> {
   );
 }
 
+async function parseAsFileWithHeader(code: string) {
+  const codeSource = new CodeSourceFromString(code);
+  const file = await newFileImpl();
+
+  file.parseFrom(codeSource);
+
+  if (file.parseError) {
+    return "";
+  }
+
+  return await file.renderAsHtml(true);
+}
+
 async function parseAsFile(code: string) {
   const codeSource = new CodeSourceFromString(code);
   const file = await newFileImpl();
@@ -44,7 +57,7 @@ async function parseAsFile(code: string) {
     return "";
   }
 
-  return await file.renderAsHtml();
+  return await file.renderAsHtml(false);
 }
 
 async function parseAsStatement(code: string) {
@@ -135,9 +148,10 @@ async function parseAsKeyword(code: string) {
 }
 
 export async function processWorksheetCode(code: string) {
+  const hasHeader = code.includes("guest default_profile valid");
   return (
     (await parseAsKeyword(code)) ||
-    (await parseAsFile(code)) ||
+    (hasHeader ? await parseAsFileWithHeader(code) : await parseAsFile(code)) ||
     (await parseAsStatement(code)) ||
     (await parseAsMember(code)) ||
     (await parseAsExpression(code)) ||

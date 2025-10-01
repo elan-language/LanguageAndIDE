@@ -190,11 +190,13 @@ export class FileImpl implements File {
 
   private frNo = 1;
 
-  public async renderAsHtml(): Promise<string> {
+  public async renderAsHtml(withHeader: boolean = true): Promise<string> {
     this._frNo = 1;
     const globals = parentHelper_renderChildrenAsHtml(this);
     this.currentHash = await this.getHash();
-    return `<el-header># ${this.getHashAsHtml()} ${this.getVersionAsHtml()} ${this.getUserNameAsHtml()} ${this.getProfileNameAsHtml()}</el-header>\r\n${globals}`;
+    return withHeader
+      ? `<el-header># ${this.getHashAsHtml()} ${this.getVersionAsHtml()} ${this.getUserNameAsHtml()} ${this.getProfileNameAsHtml()}</el-header>\r\n${globals}`
+      : globals;
   }
 
   public indent(): string {

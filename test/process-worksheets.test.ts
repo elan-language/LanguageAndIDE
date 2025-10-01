@@ -3,6 +3,15 @@ import { processCode, processWorksheetCode } from "../src/tools/codeParser";
 import { processHints, processSteps } from "../src/tools/markupParser";
 
 suite("process worksheets", () => {
+  test("process file with header", async () => {
+    const code = `# 39dadda3dc0838303aa6ec281b404d197527891272e1abb29369f83f5974a6de Elan 1.5.1 guest default_profile valid
+`;
+
+    const actual = await processWorksheetCode(code);
+
+    assert.strictEqual(actual.startsWith("<el-header"), true);
+  });
+
   test("process file", async () => {
     const code = `procedure fillRandom(grid as Array2D<of Int>)
   for col from 0 to 39 step 1
@@ -15,7 +24,7 @@ end procedure`;
 
     const actual = await processWorksheetCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-header"), true);
+    assert.strictEqual(actual.startsWith("<el-proc"), true);
   });
 
   test("process statement", async () => {
