@@ -1,8 +1,15 @@
+import { libraryKeyword } from "../../../compiler/keywords";
 import { TokenType } from "../symbol-completion-helpers";
-import { RegExMatchNode } from "./regex-match-node";
+import { AbstractSequence } from "./abstract-sequence";
+import { DotAfter } from "./dot-after";
+import { KeywordNode } from "./keyword-node";
+import { OptionalNode } from "./optional-node";
+import { TypeSimpleName } from "./type-simple-name";
 
-export class TypeNameNode extends RegExMatchNode {
+export class TypeNameNode extends AbstractSequence {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
+  name: TypeSimpleName | undefined;
+  libraryQualifier: OptionalNode | undefined;
 
   constructor(
     tokenTypes: Set<TokenType> = new Set<TokenType>([
@@ -12,12 +19,26 @@ export class TypeNameNode extends RegExMatchNode {
       TokenType.type_enum,
     ]),
   ) {
-    super(/^\s*[A-Z]\w*/);
+    super();
     this.completionWhenEmpty = "<i>Type</i>";
     this.tokenTypes = tokenTypes;
   }
+
+  parseText(text: string): void {
+    if (text.length > 0) {
+      this.libraryQualifier = new OptionalNode(
+        new DotAfter(new KeywordNode(libraryKeyword, false, true)),
+      );
+      this.addElement(this.libraryQualifier);
+      this.name = new TypeSimpleName();
+      this.addElement(this.name);
+      super.parseText(text);
+    }
+  }
+
   renderAsHtml(): string {
-    return `<el-type>${this.renderAsSource()}</el-type>`;
+    const qualifier = this.libraryQualifier?.matchedNode ? `<el-kw>${libraryKeyword}</el-kw>.` : ``;
+    return `${qualifier}<el-type>${this.name?.renderAsSource()}</el-type>`;
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {

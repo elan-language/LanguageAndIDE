@@ -1,6 +1,5 @@
 import assert from "assert";
 
-import { testSymbolCompletionSpec } from "./testHelpers";
 import { Alternatives } from "../src/ide/frames/parse-nodes/alternatives";
 import { ArgListNode } from "../src/ide/frames/parse-nodes/arg-list-node";
 import { AssertActualNode } from "../src/ide/frames/parse-nodes/assert-actual-node";
@@ -18,12 +17,13 @@ import { allIds } from "../src/ide/frames/parse-nodes/parse-node-helpers";
 import { ProcRefNode } from "../src/ide/frames/parse-nodes/proc-ref-node";
 import { ReferenceNode } from "../src/ide/frames/parse-nodes/reference-node";
 import { TermSimple } from "../src/ide/frames/parse-nodes/term-simple";
-import { TypeNameNode } from "../src/ide/frames/parse-nodes/type-name-node";
 import { TypeNode } from "../src/ide/frames/parse-nodes/type-node";
+import { TypeSimpleName } from "../src/ide/frames/parse-nodes/type-simple-name";
 import { TypeSimpleOrGeneric } from "../src/ide/frames/parse-nodes/type-simple-or-generic";
 import { ValueDefNode } from "../src/ide/frames/parse-nodes/value-def-node";
 import { ParseStatus } from "../src/ide/frames/status-enums";
 import { TokenType } from "../src/ide/frames/symbol-completion-helpers";
+import { testSymbolCompletionSpec } from "./testHelpers";
 
 suite("Symbol Completion Spec", () => {
   test("MethodCallNode", () => {
@@ -170,9 +170,14 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(),
       "Foo",
       ParseStatus.incomplete,
-      TypeNameNode.name,
+      TypeSimpleName.name,
       "Foo",
-      [TokenType.type_enum],
+      [
+        TokenType.type_abstract,
+        TokenType.type_concrete,
+        TokenType.type_notInheritable,
+        TokenType.type_enum,
+      ],
       [],
     );
   });
