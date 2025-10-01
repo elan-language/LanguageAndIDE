@@ -40,9 +40,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
       mustBeConcreteClass(type, this.compileErrors, this.fieldId);
 
       if (type.subType === ClassSubType.concrete) {
-        const classSymbol = this.scope.resolveSymbol(type.className, this.scope);
-
-        libScope = classSymbol.symbolScope === SymbolScope.stdlib;
+        libScope = type.scope.symbolScope === SymbolScope.stdlib;
 
         const constructorType = type
           .resolveSymbol(`__${constructorKeyword}`, this.scope)

@@ -2103,6 +2103,38 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[]");
   });
+
+  test("Pass_LibraryType", async () => {
+    const code = `${testHeader}
+
+main
+  print new library.List<of Int>()
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.printLine(system.initialise(await new _stdlib.List()._initialise()));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[]");
+  });
+
   test("Pass_shadowLibraryType", async () => {
     const code = `${testHeader}
 
@@ -2119,7 +2151,22 @@ main
 end main
 `;
 
-    const objectCode = ``;
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+class List {
+  static emptyInstance() { return system.emptyClass(List, []);};
+  async _initialise() { return this; }
+  async asString() {
+    return "MyList";
+  }
+
+}
+
+async function main() {
+  await system.printLine(system.initialise(await new List()._initialise()));
+  await system.printLine(system.initialise(await new _stdlib.List()._initialise()));
+}
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,

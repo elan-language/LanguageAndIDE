@@ -811,11 +811,13 @@ export function transform(
   }
 
   if (node instanceof TypeGenericNode) {
-    const type = node.simpleType!.matchedText;
+    const type = node.simpleType!.name!.matchedText;
+    const qualifier =
+      transform(node.simpleType?.libraryQualifier, fieldId, scope) ?? EmptyAsn.Instance;
     const generic = node.generic;
     let gp = new Array<AstNode>();
     gp = transformMany(generic as Sequence, fieldId, scope).items;
-    return new TypeAsn(type, gp, fieldId, scope);
+    return new TypeAsn(type, qualifier, gp, fieldId, scope);
   }
 
   if (node instanceof TypeFuncNode) {
@@ -825,13 +827,13 @@ export function transform(
 
     const oup = node.returnType ? [transform(node.returnType, fieldId, scope)!] : [];
 
-    return new TypeAsn(FuncName, inp.concat(oup), fieldId, scope);
+    return new TypeAsn(FuncName, EmptyAsn.Instance, inp.concat(oup), fieldId, scope);
   }
 
   if (node instanceof TypeNameNode) {
     const type = node.matchedText;
 
-    return new TypeAsn(type, [], fieldId, scope);
+    return new TypeAsn(type, EmptyAsn.Instance, [], fieldId, scope);
   }
 
   if (node instanceof InheritanceNode) {
@@ -965,7 +967,7 @@ export function transform(
   }
 
   if (node instanceof ImageNode) {
-    const imageType = new TypeAsn(ImageName, [], fieldId, scope);
+    const imageType = new TypeAsn(ImageName, EmptyAsn.Instance, [], fieldId, scope);
     const url = new LiteralStringAsn(`"${node.url?.matchedText ?? ""}"`, fieldId);
     const obj = new NewAsn(imageType, [url], fieldId, scope);
     const withClause = transform(node.withClause, fieldId, scope) as AstCollectionNode;
@@ -1003,7 +1005,7 @@ export function transform(
 
   if (node instanceof TypeTupleNode) {
     const gp = transformMany(node.types as CSV, fieldId, scope).items;
-    return new TypeAsn(TupleName, gp, fieldId, scope);
+    return new TypeAsn(TupleName, EmptyAsn.Instance, gp, fieldId, scope);
   }
 
   if (node instanceof IndexRange) {
