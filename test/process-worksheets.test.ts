@@ -1,6 +1,6 @@
 import assert from "assert";
 import { processCode, processWorksheetCode } from "../src/tools/codeParser";
-import { processHints, processSteps } from "../src/tools/markupParser";
+import { processHints, processQuestions, processSteps } from "../src/tools/markupParser";
 
 suite("process worksheets", () => {
   test("process file with header", async () => {
@@ -144,6 +144,20 @@ end constructor`;
 
     const expected = `<div class="hint" id="hint0-0" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg=="></div>
 <div class="hint" id="hint0-1" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg=="></div>`;
+
+    assert.strictEqual(actual, expected);
+  });
+
+  test("process multiple questions", async () => {
+    const questions = `<question><p>question1 details</p></question>
+<question><p>question2 details</p></question>`;
+
+    const actual = await processQuestions(questions, 0);
+
+    const expected = `<p>question1 details</p>
+<textarea class="question" id="question0-0"></textarea>
+<p>question2 details</p>
+<textarea class="question" id="question0-1"></textarea>`;
 
     assert.strictEqual(actual, expected);
   });

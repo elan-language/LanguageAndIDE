@@ -11,9 +11,10 @@ export async function processStep(markup: string, stepInstance: number): Promise
 
   const div = outDoc.querySelector("div")!;
 
-  const updatedHints = await processHints(step?.innerHTML ?? "", stepInstance);
+  let updated = await processHints(step?.innerHTML ?? "", stepInstance);
+  updated = await processQuestions(updated, stepInstance);
 
-  div.innerHTML = updatedHints;
+  div.innerHTML = updated;
 
   const label = outDoc.createElement("label");
   label.className = "done";
@@ -43,6 +44,29 @@ export async function processStep(markup: string, stepInstance: number): Promise
   const stepHtml = div.outerHTML;
 
   return stepHtml;
+}
+
+export async function processQuestion(
+  markup: string,
+  questionInstance: number,
+  stepInstance: number,
+): Promise<string> {
+  const input = new JSDOM(markup);
+  const inDoc = input.window.document;
+
+  const output = new JSDOM(
+    `<div><p></p>
+<textarea class="question" id="question${stepInstance}-${questionInstance}"></textarea></div>`,
+  );
+  const outDoc = output.window.document;
+
+  const question = inDoc.querySelector("question");
+
+  const para = outDoc.querySelector("p")!;
+
+  para.textContent = question?.textContent ?? "";
+
+  return outDoc.querySelector("div")!.innerHTML;
 }
 
 export async function processHint(
@@ -77,6 +101,27 @@ export async function processHint(
   const hintHtml = div.outerHTML;
 
   return hintHtml;
+}
+
+async function processEachQuestionInstance(
+  initialCode: string,
+  startAt: number,
+  hintInstance: number,
+  stepInstance: number,
+): Promise<[string, number, number]> {
+  const toProcessCode = initialCode.slice(startAt);
+
+  const codeStart = toProcessCode.indexOf("<question>");
+  const codeEnd = toProcessCode.indexOf("</question>");
+
+  if (codeStart !== -1) {
+    const code = toProcessCode.slice(codeStart, codeEnd + 9);
+    const htmlCode = await processQuestion(code, hintInstance, stepInstance);
+
+    return [htmlCode, startAt + codeStart, startAt + codeEnd + 11];
+  }
+
+  return ["", -1, -1];
 }
 
 async function processEachHintInstance(
@@ -118,6 +163,38 @@ async function processEachStepInstance(
   }
 
   return ["", -1, -1];
+}
+
+export async function processQuestions(source: string, stepInstance: number) {
+  const updates: [string, number, number][] = [];
+  let questionInstance = 0;
+
+  let [updatedCode, codeStart, codeEnd] = await processEachQuestionInstance(
+    source,
+    0,
+    questionInstance,
+    stepInstance,
+  );
+  questionInstance++;
+  while (updatedCode !== "") {
+    updates.push([updatedCode, codeStart, codeEnd]);
+    [updatedCode, codeStart, codeEnd] = await processEachQuestionInstance(
+      source,
+      codeEnd,
+      questionInstance,
+      stepInstance,
+    );
+    questionInstance++;
+  }
+
+  let updatedContent = source;
+
+  for (let i = updates.length - 1; i >= 0; i--) {
+    const [c, s, e] = updates[i];
+    updatedContent = updatedContent.slice(0, s) + c + updatedContent.slice(e);
+  }
+
+  return updatedContent;
 }
 
 export async function processHints(source: string, stepInstance: number) {
