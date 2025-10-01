@@ -384,6 +384,57 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "bar");
   });
 
+  test("Pass_LibraryClassParameter", async () => {
+    const code = `${testHeader}
+
+main
+  variable b set to new library.List<of Int>()
+  print foo(b)
+end main
+
+function foo(bar as library.List<of Int>) returns String
+    return bar.asString()
+end function
+
+class List
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let b = system.initialise(await new _stdlib.List()._initialise());
+  await system.printLine((await global.foo(b)));
+}
+
+async function foo(bar) {
+  return (await _stdlib.asString(bar));
+}
+global["foo"] = foo;
+
+class List {
+  static emptyInstance() { return system.emptyClass(List, []);};
+  async _initialise() { return this; }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[]");
+  });
+
   test("Fail_ExtensionParameterCount", async () => {
     const code = `${testHeader}
 
@@ -1729,6 +1780,38 @@ end function`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "'foo' is not defined for type 'Int'.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_LibraryClassParameter", async () => {
+    const code = `${testHeader}
+
+main
+  variable b set to new List()
+  print foo(b)
+end main
+
+function foo(bar as library.List<of Int>) returns String
+    return bar.asString()
+end function
+
+class List
+
+end class`;
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: bar (List<of Int>), Provided: List.LangRef.html#compile_error",
     ]);
   });
 });
