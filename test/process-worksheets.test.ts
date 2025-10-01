@@ -112,8 +112,14 @@ end constructor`;
 
     const actual = await processCode(code);
 
-    const expected = `<code><el-kw>let</el-kw></code>
-<code><el-type>Int</el-type></code>`;
+    const expected = `
+<code class="block">
+  <el-kw>let</el-kw>
+</code>
+
+<code class="block">
+  <el-type>Int</el-type>
+</code>`;
 
     assert.strictEqual(actual, expected);
   });

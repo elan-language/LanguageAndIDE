@@ -146,7 +146,7 @@
         m
       </b>
       to create an empty
-      <code>
+      <code class="block">
         <el-kw>
           main
         </el-kw>
@@ -155,7 +155,7 @@
     </li>
     <li>
       Within the main routine add a
-      <code>
+      <code class="block">
         <el-kw>
           let
         </el-kw>
@@ -169,7 +169,7 @@
       </b>
       )
       because this reduces errors:
-      <code>
+      <code class="block">
         <el-statement
           class="none"
           id="let4"
@@ -263,7 +263,7 @@
     </li>
     <li>
       We have named this turtle
-      <code>
+      <code class="block">
         <el-global
           class="selected focused ok empty"
           id="select0"
@@ -294,7 +294,7 @@
     </li>
     <li>
       We have named this turtle
-      <code>
+      <code class="block">
         <el-id>
           t
         </el-id>
@@ -308,7 +308,7 @@
     </li>
     <li>
       The 'empty' brackets after
-      <code>
+      <code class="block">
         <el-type>
           Turtle
         </el-type>
@@ -316,7 +316,7 @@
       are necessary, but don't worry about why they are needed just
       now
       that will gradually become clearer. Note also that if you selected
-      <code>
+      <code class="block">
         <el-type>
           Turtle
         </el-type>
@@ -341,13 +341,13 @@
   </ul>
   <li>
     Follow this by adding this
-    <code>
+    <code class="block">
       <el-kw>
         call
       </el-kw>
     </code>
     instruction:
-    <code>
+    <code class="block">
       <el-statement
         class="none"
         id="call4"
@@ -434,7 +434,7 @@
     <ul>
       <li>
         This instruction can be verbalised as 'call the
-        <code>
+        <code class="block">
           <el-id>
             show
           </el-id>
@@ -454,14 +454,14 @@
         is known as a 'dotted method'.
         You'll be calling a
         lot of dotted methods on the turtle
-        <code>
+        <code class="block">
           t
           <code>
             .
           </code>
         </code>
       </li>
-      <code>
+      <code class="block">
         <code>
           <li>
             Methods are rendered in a different colour to identifiers and types.
@@ -469,12 +469,12 @@
         </code>
       </code>
     </ul>
-    <code>
+    <code class="block">
       <code>
       </code>
     </code>
   </li>
-  <code>
+  <code class="block">
     <code>
       <li>
         Run the program, noting that:
@@ -533,7 +533,7 @@
             A value given to a method (within the brackets) is known as an 'argument' (the same term is used
             in Mathematics).
             Later we will encounter methods that require more than one argument. Some methods -
-            <code>
+            <code class="block">
               <el-id>
                 show
               </el-id>

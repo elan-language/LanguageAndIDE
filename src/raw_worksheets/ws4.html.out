@@ -1,15 +1,15 @@
 
-<code>
+<code class="block">
   <el-kw>
     let
   </el-kw>
 </code>
-<code>
+<code class="block">
   <el-type>
     Int
   </el-type>
 </code>
-<code>
+<code class="block">
   <el-lit>
     2
   </el-lit>

@@ -172,9 +172,12 @@ async function processEachCodeInstance(
   if (codeStart !== -1) {
     const code = toProcessCode.slice(codeStart + 6, codeEnd);
 
-    const htmlCode = await processWorksheetCode(code);
+    const htmlCode = `
+<code class="block">
+  ${await processWorksheetCode(code)}
+</code>`;
 
-    return [htmlCode, startAt + codeStart + 6, startAt + codeEnd];
+    return [htmlCode, startAt + codeStart, startAt + codeEnd];
   }
 
   return ["", -1, -1];
@@ -194,7 +197,7 @@ export async function processCode(source: string) {
 
   for (let i = updates.length - 1; i >= 0; i--) {
     const [c, s, e] = updates[i];
-    updatedContent = updatedContent.slice(0, s) + c + updatedContent.slice(e);
+    updatedContent = updatedContent.slice(0, s) + c + updatedContent.slice(e + 7);
   }
 
   return updatedContent;
