@@ -1,29 +1,29 @@
 import { JSDOM } from "jsdom";
 
-export async function processStep(markup: string, instance: number): Promise<string> {
+export async function processStep(markup: string, stepInstance: number): Promise<string> {
   const input = new JSDOM(markup);
   const inDoc = input.window.document;
 
-  const output = new JSDOM(`<div class="step" id="step${instance}"></div>`);
+  const output = new JSDOM(`<div class="step" id="step${stepInstance}"></div>`);
   const outDoc = output.window.document;
 
   const step = inDoc.querySelector("step");
 
   const div = outDoc.querySelector("div")!;
 
-  const updatedHints = await processHints(step?.innerHTML ?? "");
+  const updatedHints = await processHints(step?.innerHTML ?? "", stepInstance);
 
   div.innerHTML = updatedHints;
 
   const label = outDoc.createElement("label");
   label.className = "done";
-  label.htmlFor = `done${instance}`;
+  label.htmlFor = `done${stepInstance}`;
   label.textContent = "Step Completed";
 
   const inp = outDoc.createElement("input");
   inp.className = "step-complete";
   inp.type = "checkbox";
-  inp.id = `done${instance}`;
+  inp.id = `done${stepInstance}`;
 
   const sp1 = outDoc.createElement("span");
   const sp2 = outDoc.createElement("span");
@@ -45,11 +45,17 @@ export async function processStep(markup: string, instance: number): Promise<str
   return stepHtml;
 }
 
-export async function processHint(markup: string, instance: number): Promise<string> {
+export async function processHint(
+  markup: string,
+  hintInstance: number,
+  stepInstance: number,
+): Promise<string> {
   const input = new JSDOM(markup);
   const inDoc = input.window.document;
 
-  const output = new JSDOM(`<div class="hint" id="hint${instance}" data-hint=""></div>`);
+  const output = new JSDOM(
+    `<div class="hint" id="hint${stepInstance}-${hintInstance}" data-hint=""></div>`,
+  );
   const outDoc = output.window.document;
 
   const hint = inDoc.querySelector("hint");
@@ -76,7 +82,8 @@ export async function processHint(markup: string, instance: number): Promise<str
 async function processEachHintInstance(
   initialCode: string,
   startAt: number,
-  instance: number,
+  hintInstance: number,
+  stepInstance: number,
 ): Promise<[string, number, number]> {
   const toProcessCode = initialCode.slice(startAt);
 
@@ -85,7 +92,7 @@ async function processEachHintInstance(
 
   if (codeStart !== -1) {
     const code = toProcessCode.slice(codeStart, codeEnd + 10);
-    const htmlCode = await processHint(code, instance);
+    const htmlCode = await processHint(code, hintInstance, stepInstance);
 
     return [htmlCode, startAt + codeStart, startAt + codeEnd + 10];
   }
@@ -113,11 +120,16 @@ async function processEachStepInstance(
   return ["", -1, -1];
 }
 
-export async function processHints(source: string) {
+export async function processHints(source: string, stepInstance: number) {
   const updates: [string, number, number][] = [];
   let hintInstance = 0;
 
-  let [updatedCode, codeStart, codeEnd] = await processEachHintInstance(source, 0, hintInstance);
+  let [updatedCode, codeStart, codeEnd] = await processEachHintInstance(
+    source,
+    0,
+    hintInstance,
+    stepInstance,
+  );
   hintInstance++;
   while (updatedCode !== "") {
     updates.push([updatedCode, codeStart, codeEnd]);
@@ -125,6 +137,7 @@ export async function processHints(source: string) {
       source,
       codeEnd,
       hintInstance,
+      stepInstance,
     );
     hintInstance++;
   }

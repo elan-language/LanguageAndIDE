@@ -125,10 +125,10 @@ end constructor`;
     const hints = `<hint></hint><content><p>hint details</p></content>
 <hint></hint><content><p>hint details</p></content>`;
 
-    const actual = await processHints(hints);
+    const actual = await processHints(hints, 0);
 
-    const expected = `<div class="hint" id="hint0" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg=="></div>
-<div class="hint" id="hint1" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg=="></div>`;
+    const expected = `<div class="hint" id="hint0-0" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg=="></div>
+<div class="hint" id="hint0-1" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg=="></div>`;
 
     assert.strictEqual(actual, expected);
   });

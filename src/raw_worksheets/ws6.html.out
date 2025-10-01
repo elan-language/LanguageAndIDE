@@ -36,14 +36,14 @@
   </p>
   <div
     class="hint"
-    id="hint0"
+    id="hint0-0"
     data-hint="CiAgICAgIDx1bD4KICAgICAgIDxsaT5Xcml0aW5nIGEgcmVjdXJzaXZlIGZ1bmN0aW9uIG1lYW5zIHRoYXQgaW4gPGk+b25lIG9yIG1vcmU8L2k+IHBsYWNlcyB3aXRoaW4geW91ciBpbXBsZW1lbnRhdGlvbiBvZiA8ZWwtbWV0aG9kPm1lcmdlPC9lbC1tZXRob2Q+CiAgICAgIHlvdSB3aWxsIGhhdmUgYW4gZXhwcmVzc2lvbiB0aGF0IGl0c2VsZiBtYWtlcyB1c2Ugb2YgdGhlIDxlbC1tZXRob2Q+bWVyZ2U8L2VsLW1ldGhvZD4gZnVuY3Rpb24gLSB0eXBpY2FsbHkgd2l0aAogICAgICBhIHNtYWxsZXIsIG9yIHNpbXBsZXIsIHZlcnNpb24gb2YgdGhlIHByb2JsZW0gb2YgdGhlIGxpc3QuCiAgICA8L2xpPgogICAgICA8bGk+T25lIG9mIHRoZSBmaXJzdCB0aGluZ3MgdG8gY29uc2lkZXIgd2hlbiB3cml0aW5nIGEgcmVjdXJzaXZlIGZ1bmN0aW9uIGlzIHRoZSAnYm91bmRhcnknIChvciAnZXhpdCcgb3IgJ2VkZ2UnIGNvbmRpdGlvbikKICAgICAgICBpLmUuIHRoZSBzcGVjaWZpYyBjb25kaXRpb24ocykgdW5kZXIgd2hpY2ggeW91IGhhdmUsIG9yIGNhbiBkZXJpdmUsIHRoZSByZXN1bHQgPGk+d2l0aG91dDwvaT4gbmVlZGluZyB0byB1c2UgPGNvZGU+PGVsLWlkPnNvcnQ8L2VsLWlkPjwvY29kZT4gcmVjdXJzaXZlbHkuCiAgICAgIDwvbGk+CiAgICAgIDwvdWw+CiAgICA="
   >
     Hint 1: Recursion
   </div>
   <div
     class="hint"
-    id="hint1"
+    id="hint0-1"
     data-hint="CiAgICAgIDxwPlRoZSBmb2xsb3dpbmcgaXMgZ2VuZXJpYyBhZHZpY2UgZm9yIHdyaXRpbmcgYSBmdW5jdGlvbiB3aGVyZSB0aGVyZSBtaWdodCBiZSBtb3JlIHRoYW4gb25lIHBhdGggdG8gdGhlIHJlc3VsdDo8L3A+CiAgICA="
   >
     Hint 2: Getting started
