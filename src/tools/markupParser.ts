@@ -114,7 +114,7 @@ async function processEachQuestionInstance(
   const codeStart = toProcessCode.indexOf("<question>");
   const codeEnd = toProcessCode.indexOf("</question>");
 
-  if (codeStart !== -1) {
+  if (codeStart !== -1 && codeEnd !== -1) {
     const code = toProcessCode.slice(codeStart, codeEnd + 9);
     const htmlCode = await processQuestion(code, hintInstance, stepInstance);
 
@@ -155,7 +155,7 @@ async function processEachStepInstance(
   const codeStart = toProcessCode.indexOf("<step");
   const codeEnd = toProcessCode.indexOf("</step>");
 
-  if (codeStart !== -1) {
+  if (codeStart !== -1 && codeEnd !== -1) {
     const code = toProcessCode.slice(codeStart, codeEnd);
     const htmlCode = await processStep(code, instance);
 
