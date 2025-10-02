@@ -2184,7 +2184,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "MyList[]");
   });
 
- test("Pass_SetComparison", async () => {
+  test("Pass_SetComparison", async () => {
     const code = `${testHeader}
 
 main
@@ -2193,12 +2193,11 @@ main
   let d be ["8", "2"].asSet()
   print b is c
   print b is d
-  let b2 be ["2", "7"].asSet()
-  let c2 be ["7", "2"].asSet()
-  let d2 be ["8", "2"].asSet()
+  let b2 be [2, 7].asSet()
+  let c2 be [7, 2].asSet()
+  let d2 be [8, 2].asSet()
   print b2 is c2
   print b2 is d2
-  print b2 is b
 end main
 `;
 
@@ -2210,12 +2209,11 @@ async function main() {
   const d = system.list(["8", "2"]).asSet();
   await system.printLine(system.objectEquals(b, c));
   await system.printLine(system.objectEquals(b, d));
-  const b2 = system.list(["2", "7"]).asSet();
-  const c2 = system.list(["7", "2"]).asSet();
-  const d2 = system.list(["8", "2"]).asSet();
+  const b2 = system.list([2, 7]).asSet();
+  const c2 = system.list([7, 2]).asSet();
+  const d2 = system.list([8, 2]).asSet();
   await system.printLine(system.objectEquals(b2, c2));
   await system.printLine(system.objectEquals(b2, d2));
-  await system.printLine(system.objectEquals(b2, b));
 }
 return [main, _tests];}`;
 
@@ -2232,6 +2230,6 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "truefalsetruefalsefalse");
+    await assertObjectCodeExecutes(fileImpl, "truefalsetruefalse");
   });
 });
