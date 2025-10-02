@@ -206,6 +206,10 @@ export class System {
       }
     }
 
+    if (o1 instanceof Set) {
+      return o1.size === o2.size && o1.isSubsetOf(o2);
+    }
+
     return true;
   }
 

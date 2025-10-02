@@ -1504,7 +1504,7 @@ async function localAndAutoSave(field: HTMLElement | undefined, editingField: bo
   if (file.readParseStatus() === ParseStatus.valid) {
     // autosave if setup
     code = code ?? (await file.renderAsSource());
-    autoSave(code);
+    await autoSave(code);
   }
 }
 
@@ -2305,13 +2305,22 @@ async function handleChromeAutoSave(event: Event) {
 async function autoSave(code: string) {
   if (autoSaveFileHandle && hasUnsavedChanges()) {
     try {
+      if (code.trim() === "") {
+        // should never write empty file - always at least header
+        throw new Error("Error with empty code file");
+      }
+
       const writeable = await autoSaveFileHandle.createWritable();
       await writeable.write(code);
       await writeable.close();
       lastSavedHash = file.currentHash;
       updateNameAndSavedStatus();
-    } catch (_e) {
-      console.warn("autosave failed");
+    } catch (e) {
+      const reason = (e as Error).message ?? "Unknown";
+      const msg = `Auto-save failed. Auto-save mode has been cancelled - please save the file manually to ensure your changes are not lost! Reason: ${reason}`;
+      alert(msg);
+      autoSaveFileHandle = undefined;
+      console.debug(`Autosave failed: error: ${e} code: ${code}`);
     }
   }
 }

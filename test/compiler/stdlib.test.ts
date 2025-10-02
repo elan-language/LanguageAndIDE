@@ -2183,4 +2183,53 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "MyList[]");
   });
+
+  test("Pass_SetComparison", async () => {
+    const code = `${testHeader}
+
+main
+  let b be ["2", "7"].asSet()
+  let c be ["7", "2"].asSet()
+  let d be ["8", "2"].asSet()
+  print b is c
+  print b is d
+  let b2 be [2, 7].asSet()
+  let c2 be [7, 2].asSet()
+  let d2 be [8, 2].asSet()
+  print b2 is c2
+  print b2 is d2
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const b = system.list(["2", "7"]).asSet();
+  const c = system.list(["7", "2"]).asSet();
+  const d = system.list(["8", "2"]).asSet();
+  await system.printLine(system.objectEquals(b, c));
+  await system.printLine(system.objectEquals(b, d));
+  const b2 = system.list([2, 7]).asSet();
+  const c2 = system.list([7, 2]).asSet();
+  const d2 = system.list([8, 2]).asSet();
+  await system.printLine(system.objectEquals(b2, c2));
+  await system.printLine(system.objectEquals(b2, d2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truefalsetruefalse");
+  });
 });
