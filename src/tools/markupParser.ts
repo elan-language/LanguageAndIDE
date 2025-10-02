@@ -1,6 +1,10 @@
 import { JSDOM } from "jsdom";
 
-export async function processStep(markup: string, stepInstance: number): Promise<string> {
+export async function processStep(
+  markup: string,
+  stepInstance: number,
+  _unused: number,
+): Promise<string> {
   const input = new JSDOM(markup);
   const inDoc = input.window.document;
 
@@ -103,25 +107,45 @@ export async function processHint(
   return hintHtml;
 }
 
-async function processEachQuestionInstance(
+async function processEachInstance(
   initialCode: string,
   startAt: number,
-  hintInstance: number,
-  stepInstance: number,
+  startTag: string,
+  endTag: string,
+  innerInstance: number,
+  outerInstance: number,
+  processor: (code: string, i1: number, i2: number) => Promise<string>,
 ): Promise<[string, number, number]> {
   const toProcessCode = initialCode.slice(startAt);
 
-  const codeStart = toProcessCode.indexOf("<question>");
-  const codeEnd = toProcessCode.indexOf("</question>") + "</question>".length;
+  const codeStart = toProcessCode.indexOf(startTag);
+  const codeEnd = toProcessCode.indexOf(endTag) + endTag.length;
 
   if (codeStart !== -1 && codeEnd !== -1) {
     const code = toProcessCode.slice(codeStart, codeEnd);
-    const htmlCode = await processQuestion(code, hintInstance, stepInstance);
+    const htmlCode = await processor(code, innerInstance, outerInstance);
 
     return [htmlCode, startAt + codeStart, startAt + codeEnd];
   }
 
   return ["", -1, -1];
+}
+
+async function processEachQuestionInstance(
+  initialCode: string,
+  startAt: number,
+  questionInstance: number,
+  stepInstance: number,
+): Promise<[string, number, number]> {
+  return await processEachInstance(
+    initialCode,
+    startAt,
+    "<question>",
+    "</question>",
+    questionInstance,
+    stepInstance,
+    processQuestion,
+  );
 }
 
 async function processEachHintInstance(
@@ -130,19 +154,15 @@ async function processEachHintInstance(
   hintInstance: number,
   stepInstance: number,
 ): Promise<[string, number, number]> {
-  const toProcessCode = initialCode.slice(startAt);
-
-  const codeStart = toProcessCode.indexOf("<hint");
-  const codeEnd = toProcessCode.indexOf("</content>") + "</content>".length;
-
-  if (codeStart !== -1 && codeEnd !== -1) {
-    const code = toProcessCode.slice(codeStart, codeEnd);
-    const htmlCode = await processHint(code, hintInstance, stepInstance);
-
-    return [htmlCode, startAt + codeStart, startAt + codeEnd];
-  }
-
-  return ["", -1, -1];
+  return await processEachInstance(
+    initialCode,
+    startAt,
+    "<hint>",
+    "</content>",
+    hintInstance,
+    stepInstance,
+    processHint,
+  );
 }
 
 async function processEachStepInstance(
@@ -150,19 +170,15 @@ async function processEachStepInstance(
   startAt: number,
   instance: number,
 ): Promise<[string, number, number]> {
-  const toProcessCode = initialCode.slice(startAt);
-
-  const codeStart = toProcessCode.indexOf("<step>");
-  const codeEnd = toProcessCode.indexOf("</step>") + "</step>".length;
-
-  if (codeStart !== -1 && codeEnd !== -1) {
-    const code = toProcessCode.slice(codeStart, codeEnd);
-    const htmlCode = await processStep(code, instance);
-
-    return [htmlCode, startAt + codeStart, startAt + codeEnd];
-  }
-
-  return ["", -1, -1];
+  return await processEachInstance(
+    initialCode,
+    startAt,
+    "<step>",
+    "</step>",
+    instance,
+    0,
+    processStep,
+  );
 }
 
 function applyChanges(source: string, updates: [string, number, number][]) {
