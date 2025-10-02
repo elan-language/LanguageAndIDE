@@ -125,7 +125,7 @@ end constructor`;
   });
 
   test("process multiple steps", async () => {
-    const steps = `<step id="Preliminaries"><content></content></step>
+    const steps = `<step><content></content></step>
 <step><content></content></step>`;
 
     const actual = await processSteps(steps);

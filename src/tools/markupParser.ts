@@ -112,13 +112,13 @@ async function processEachQuestionInstance(
   const toProcessCode = initialCode.slice(startAt);
 
   const codeStart = toProcessCode.indexOf("<question>");
-  const codeEnd = toProcessCode.indexOf("</question>");
+  const codeEnd = toProcessCode.indexOf("</question>") + "</question>".length;
 
   if (codeStart !== -1 && codeEnd !== -1) {
-    const code = toProcessCode.slice(codeStart, codeEnd + 9);
+    const code = toProcessCode.slice(codeStart, codeEnd);
     const htmlCode = await processQuestion(code, hintInstance, stepInstance);
 
-    return [htmlCode, startAt + codeStart, startAt + codeEnd + 11];
+    return [htmlCode, startAt + codeStart, startAt + codeEnd];
   }
 
   return ["", -1, -1];
@@ -133,13 +133,13 @@ async function processEachHintInstance(
   const toProcessCode = initialCode.slice(startAt);
 
   const codeStart = toProcessCode.indexOf("<hint");
-  const codeEnd = toProcessCode.indexOf("</content>");
+  const codeEnd = toProcessCode.indexOf("</content>") + "</content>".length;
 
   if (codeStart !== -1 && codeEnd !== -1) {
-    const code = toProcessCode.slice(codeStart, codeEnd + 10);
+    const code = toProcessCode.slice(codeStart, codeEnd);
     const htmlCode = await processHint(code, hintInstance, stepInstance);
 
-    return [htmlCode, startAt + codeStart, startAt + codeEnd + 10];
+    return [htmlCode, startAt + codeStart, startAt + codeEnd];
   }
 
   return ["", -1, -1];
@@ -152,17 +152,28 @@ async function processEachStepInstance(
 ): Promise<[string, number, number]> {
   const toProcessCode = initialCode.slice(startAt);
 
-  const codeStart = toProcessCode.indexOf("<step");
-  const codeEnd = toProcessCode.indexOf("</step>");
+  const codeStart = toProcessCode.indexOf("<step>");
+  const codeEnd = toProcessCode.indexOf("</step>") + "</step>".length;
 
   if (codeStart !== -1 && codeEnd !== -1) {
     const code = toProcessCode.slice(codeStart, codeEnd);
     const htmlCode = await processStep(code, instance);
 
-    return [htmlCode, startAt + codeStart, startAt + codeEnd + 7];
+    return [htmlCode, startAt + codeStart, startAt + codeEnd];
   }
 
   return ["", -1, -1];
+}
+
+function applyChanges(source: string, updates: [string, number, number][]) {
+  let updatedContent = source;
+
+  for (let i = updates.length - 1; i >= 0; i--) {
+    const [content, start, end] = updates[i];
+    updatedContent = updatedContent.slice(0, start) + content + updatedContent.slice(end);
+  }
+
+  return updatedContent;
 }
 
 export async function processQuestions(source: string, stepInstance: number) {
@@ -187,14 +198,7 @@ export async function processQuestions(source: string, stepInstance: number) {
     questionInstance++;
   }
 
-  let updatedContent = source;
-
-  for (let i = updates.length - 1; i >= 0; i--) {
-    const [c, s, e] = updates[i];
-    updatedContent = updatedContent.slice(0, s) + c + updatedContent.slice(e);
-  }
-
-  return updatedContent;
+  return applyChanges(source, updates);
 }
 
 export async function processHints(source: string, stepInstance: number) {
@@ -219,14 +223,7 @@ export async function processHints(source: string, stepInstance: number) {
     hintInstance++;
   }
 
-  let updatedContent = source;
-
-  for (let i = updates.length - 1; i >= 0; i--) {
-    const [c, s, e] = updates[i];
-    updatedContent = updatedContent.slice(0, s) + c + updatedContent.slice(e);
-  }
-
-  return updatedContent;
+  return applyChanges(source, updates);
 }
 
 export async function processSteps(source: string) {
@@ -245,12 +242,5 @@ export async function processSteps(source: string) {
     stepInstance++;
   }
 
-  let updatedContent = source;
-
-  for (let i = updates.length - 1; i >= 0; i--) {
-    const [c, s, e] = updates[i];
-    updatedContent = updatedContent.slice(0, s) + c + updatedContent.slice(e);
-  }
-
-  return updatedContent;
+  return applyChanges(source, updates);
 }
