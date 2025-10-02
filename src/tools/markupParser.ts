@@ -135,7 +135,7 @@ async function processEachHintInstance(
   const codeStart = toProcessCode.indexOf("<hint");
   const codeEnd = toProcessCode.indexOf("</content>");
 
-  if (codeStart !== -1) {
+  if (codeStart !== -1 && codeEnd !== -1) {
     const code = toProcessCode.slice(codeStart, codeEnd + 10);
     const htmlCode = await processHint(code, hintInstance, stepInstance);
 
