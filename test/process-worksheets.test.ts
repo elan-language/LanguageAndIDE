@@ -161,4 +161,30 @@ end constructor`;
 
     assert.strictEqual(actual, expected);
   });
+
+  test("process file", async () => {
+    const code = `
+            function markAttempt(attempt as String, target as String) returns String
+            variable mark set to "00000"
+            variable unused set to something
+            for n from 0 to 4 step 1
+              if attempt[n] is unused[n] then
+                set mark to setChar(mark, n, "2")
+                set unused to something
+              end if
+            end for
+            for n from 0 to 4 step 1
+              if (mark[n] isnt "2") and unused.contains(attempt[n]) then
+                set mark to setChar(mark, n, "1")
+                set unused to something
+              end if
+            end for
+            return mark
+        end function
+`;
+
+    const actual = await processWorksheetCode(code);
+
+    assert.strictEqual(actual.startsWith("<el-func"), true);
+  });
 });
