@@ -50,6 +50,7 @@ export abstract class AbstractFrame implements Frame {
   private _parseStatus: ParseStatus = ParseStatus.default;
   private _ghosted: boolean = false;
   private _imported: boolean = false;
+  private _toBeCopied = false;
 
   constructor(parent: Parent) {
     this._parent = parent;
@@ -490,6 +491,8 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this.isGhosted(), ghostedAnnotation);
     this.pushClass(this.isImported(), importedAnnotation);
     this._classes.push(DisplayColour[this.readDisplayStatus()]);
+    this.pushClass(this._toBeCopied, "to-be-copied");
+    this._toBeCopied = false;
   }
 
   protected readDisplayStatus(): DisplayColour {
@@ -645,6 +648,11 @@ export abstract class AbstractFrame implements Frame {
     return helper_compileMsgAsHtmlNew(this.getFile(), this);
   }
 
+  flagAsCopy = () => {
+    this._toBeCopied = true;
+    return false;
+  };
+
   getNextState(currentState: BreakpointStatus, event: BreakpointEvent) {
     switch (currentState) {
       case BreakpointStatus.none:
@@ -798,6 +806,7 @@ export abstract class AbstractFrame implements Frame {
           map.set("setBP", ["set breakpoint", this.setBreakPoint]);
         }
       }
+      map.set("copy", ["copy for external use ", this.flagAsCopy]);
     }
     return map;
   }
