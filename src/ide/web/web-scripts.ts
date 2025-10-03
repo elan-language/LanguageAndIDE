@@ -5,7 +5,13 @@ import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-e
 import { StdLib } from "../../compiler/standard-library/std-lib";
 import { TestStatus } from "../../compiler/test-status";
 import { isElanProduction } from "../../environment";
-import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";
+import {
+  cannotLoadFile,
+  CodeSourceFromString,
+  fileErrorPrefix,
+  FileImpl,
+  parseErrorPrefix,
+} from "../frames/file-impl";
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { File, ParseMode } from "../frames/frame-interfaces/file";
 import { Profile } from "../frames/frame-interfaces/profile";
@@ -340,6 +346,15 @@ saveButton.addEventListener("click", getDownloader());
 
 autoSaveButton.addEventListener("click", handleChromeAutoSave);
 
+async function loadDemoFile(fileName: string) {
+  const f = await fetch(fileName, { mode: "same-origin" });
+  const rawCode = await f.text();
+  file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+  file.fileName = fileName;
+  clearUndoRedoAndAutoSave();
+  await readAndParse(rawCode, fileName, ParseMode.loadNew);
+}
+
 saveAsStandaloneButton.addEventListener("click", async () => {
   let jsCode = file.compileAsWorker("", false, true);
 
@@ -367,12 +382,7 @@ for (const elem of demoFiles) {
   elem.addEventListener("click", async () => {
     if (checkForUnsavedChanges(cancelMsg)) {
       const fileName = `${elem.id}`;
-      const f = await fetch(fileName, { mode: "same-origin" });
-      const rawCode = await f.text();
-      file = new FileImpl(hash, profile, userName, transforms(), stdlib);
-      file.fileName = fileName;
-      clearUndoRedoAndAutoSave();
-      await readAndParse(rawCode, fileName, ParseMode.loadNew);
+      await loadDemoFile(fileName);
     }
   });
 }
@@ -687,7 +697,7 @@ function clearUndoRedoAndAutoSave() {
 
 async function resetFile() {
   file = new FileImpl(hash, profile, userName, transforms(), stdlib);
-  await renderAsHtml(false);
+  await initialDisplay(false);
 }
 
 function domEventType(evt: Event | undefined) {
@@ -737,6 +747,8 @@ async function showError(err: Error, fileName: string, reset: boolean) {
 
   if (err.message?.startsWith(fileErrorPrefix)) {
     systemInfoPrintSafe(err.message);
+  } else if (err.message?.startsWith(parseErrorPrefix)) {
+    systemInfoPrintSafe(cannotLoadFile);
   } else if (err.stack) {
     let msg = "";
     let stack = "";
@@ -761,6 +773,7 @@ function systemInfoPrintSafe(text: string, scroll = true) {
   // sanitise the text
   text = sanitiseHtml(text);
   systemInfoPrintUnsafe(text, scroll);
+  showInfoTab();
 }
 
 function systemInfoPrintUnsafe(text: string, scroll = true) {
@@ -1444,6 +1457,15 @@ async function updateContent(text: string, editingField: boolean) {
     activeHelp.click();
   }
 
+  const activeCopy = document.querySelector(".to-be-copied") as HTMLElement | undefined;
+
+  if (activeCopy) {
+    const id = activeCopy.id;
+    const frame = file.getById(id);
+    const code = frame.renderAsSource();
+    await navigator.clipboard.writeText(code);
+  }
+
   await localAndAutoSave(focused, editingField);
   updateDisplayValues();
 
@@ -2125,6 +2147,9 @@ async function readAndParse(rawCode: string, fileName: string, mode: ParseMode) 
   file.fileName = fileName;
   try {
     await file.parseFrom(code);
+    if (file.parseError) {
+      throw new Error(file.parseError);
+    }
     await initialDisplay(reset);
   } catch (e) {
     await showError(e as Error, fileName, reset);
@@ -2673,3 +2698,9 @@ worksheetIFrame?.contentWindow?.addEventListener("click", () => showWorksheetTab
 helpIFrame?.contentWindow?.addEventListener("click", () => showHelpTab());
 
 window.addEventListener("click", () => collapseAllMenus());
+
+window.addEventListener("message", async (m) => {
+  if (m.data && typeof m.data === "string" && m.data.endsWith(".elan")) {
+    await loadDemoFile(m.data);
+  }
+});
