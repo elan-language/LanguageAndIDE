@@ -346,6 +346,15 @@ saveButton.addEventListener("click", getDownloader());
 
 autoSaveButton.addEventListener("click", handleChromeAutoSave);
 
+async function loadDemoFile(fileName: string) {
+  const f = await fetch(fileName, { mode: "same-origin" });
+  const rawCode = await f.text();
+  file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+  file.fileName = fileName;
+  clearUndoRedoAndAutoSave();
+  await readAndParse(rawCode, fileName, ParseMode.loadNew);
+}
+
 saveAsStandaloneButton.addEventListener("click", async () => {
   let jsCode = file.compileAsWorker("", false, true);
 
@@ -373,12 +382,7 @@ for (const elem of demoFiles) {
   elem.addEventListener("click", async () => {
     if (checkForUnsavedChanges(cancelMsg)) {
       const fileName = `${elem.id}`;
-      const f = await fetch(fileName, { mode: "same-origin" });
-      const rawCode = await f.text();
-      file = new FileImpl(hash, profile, userName, transforms(), stdlib);
-      file.fileName = fileName;
-      clearUndoRedoAndAutoSave();
-      await readAndParse(rawCode, fileName, ParseMode.loadNew);
+      await loadDemoFile(fileName);
     }
   });
 }
@@ -2694,3 +2698,9 @@ worksheetIFrame?.contentWindow?.addEventListener("click", () => showWorksheetTab
 helpIFrame?.contentWindow?.addEventListener("click", () => showHelpTab());
 
 window.addEventListener("click", () => collapseAllMenus());
+
+window.addEventListener("message", async (m) => {
+  if (m.data && typeof m.data === "string" && m.data.endsWith(".elan")) {
+    await loadDemoFile(m.data);
+  }
+});
