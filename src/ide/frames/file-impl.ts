@@ -69,8 +69,9 @@ import { CompileStatus, DisplayColour, ParseStatus, RunStatus } from "./status-e
 export { CodeSourceFromString };
 
 export const fileErrorPrefix = `Cannot load file:`;
+export const parseErrorPrefix = `Parse error before:`;
 
-const cannotLoadFile = `${fileErrorPrefix} it has been created or modified outside Elan IDE`;
+export const cannotLoadFile = `${fileErrorPrefix} it has been created or modified outside Elan IDE`;
 
 export class FileImpl implements File {
   currentHash: string = "";
@@ -624,7 +625,7 @@ export class FileImpl implements File {
       if (e instanceof ElanFileError) {
         this.parseError = e.message;
       } else {
-        this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
+        this.parseError = `${parseErrorPrefix} ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
       }
       this._parseStatus = ParseStatus.invalid;
     }

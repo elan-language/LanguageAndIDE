@@ -17,6 +17,7 @@ export async function processStep(
 
   let updated = await processHints(step?.innerHTML ?? "", stepInstance);
   updated = await processQuestions(updated, stepInstance);
+  updated = await processLoads(updated, stepInstance);
 
   div.innerHTML = updated;
 
@@ -48,6 +49,30 @@ export async function processStep(
   const stepHtml = div.outerHTML;
 
   return stepHtml;
+}
+
+export async function processLoad(
+  markup: string,
+  loadInstance: number,
+  stepInstance: number,
+): Promise<string> {
+  const input = new JSDOM(markup);
+  const inDoc = input.window.document;
+
+  const output = new JSDOM(
+    `<button class="load" id="load${stepInstance}-${loadInstance}"></button>`,
+  );
+  const outDoc = output.window.document;
+
+  const load = inDoc.querySelector("load");
+  const file = load?.getAttribute("file") ?? "";
+
+  const button = outDoc.querySelector("button")!;
+
+  button.textContent = load?.textContent ?? "";
+  button.value = file;
+
+  return button.outerHTML;
 }
 
 export async function processQuestion(
@@ -131,6 +156,23 @@ async function processEachInstance(
   return ["", -1, -1];
 }
 
+async function processEachLoadInstance(
+  initialCode: string,
+  startAt: number,
+  loadInstance: number,
+  stepInstance: number,
+): Promise<[string, number, number]> {
+  return await processEachInstance(
+    initialCode,
+    startAt,
+    "<load",
+    "</load>",
+    loadInstance,
+    stepInstance,
+    processLoad,
+  );
+}
+
 async function processEachQuestionInstance(
   initialCode: string,
   startAt: number,
@@ -190,6 +232,31 @@ function applyChanges(source: string, updates: [string, number, number][]) {
   }
 
   return updatedContent;
+}
+
+export async function processLoads(source: string, stepInstance: number) {
+  const updates: [string, number, number][] = [];
+  let loadInstance = 0;
+
+  let [updatedCode, codeStart, codeEnd] = await processEachLoadInstance(
+    source,
+    0,
+    loadInstance,
+    stepInstance,
+  );
+  loadInstance++;
+  while (updatedCode !== "") {
+    updates.push([updatedCode, codeStart, codeEnd]);
+    [updatedCode, codeStart, codeEnd] = await processEachLoadInstance(
+      source,
+      codeEnd,
+      loadInstance,
+      stepInstance,
+    );
+    loadInstance++;
+  }
+
+  return applyChanges(source, updates);
 }
 
 export async function processQuestions(source: string, stepInstance: number) {

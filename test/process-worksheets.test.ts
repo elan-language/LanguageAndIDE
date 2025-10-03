@@ -1,6 +1,11 @@
 import assert from "assert";
 import { processCode, processWorksheetCode } from "../src/tools/codeParser";
-import { processHints, processQuestions, processSteps } from "../src/tools/markupParser";
+import {
+  processHints,
+  processLoads,
+  processQuestions,
+  processSteps,
+} from "../src/tools/markupParser";
 
 suite("process worksheets", () => {
   test("process file with header", async () => {
@@ -158,6 +163,18 @@ end constructor`;
 <textarea class="question" id="question0-0"></textarea>
 <p>question2 details</p>
 <textarea class="question" id="question0-1"></textarea>`;
+
+    assert.strictEqual(actual, expected);
+  });
+
+  test("process multiple loads", async () => {
+    const questions = `<load file="file1.elan">Load One</load>
+<load file="file2.elan">Load Two</load>`;
+
+    const actual = await processLoads(questions, 0);
+
+    const expected = `<button class="load" id="load0-0" value="file1.elan">Load One</button>
+<button class="load" id="load0-1" value="file2.elan">Load Two</button>`;
 
     assert.strictEqual(actual, expected);
   });
