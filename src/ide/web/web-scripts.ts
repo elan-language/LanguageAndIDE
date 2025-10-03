@@ -5,7 +5,13 @@ import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-e
 import { StdLib } from "../../compiler/standard-library/std-lib";
 import { TestStatus } from "../../compiler/test-status";
 import { isElanProduction } from "../../environment";
-import { CodeSourceFromString, fileErrorPrefix, FileImpl } from "../frames/file-impl";
+import {
+  cannotLoadFile,
+  CodeSourceFromString,
+  fileErrorPrefix,
+  FileImpl,
+  parseErrorPrefix,
+} from "../frames/file-impl";
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { File, ParseMode } from "../frames/frame-interfaces/file";
 import { Profile } from "../frames/frame-interfaces/profile";
@@ -687,7 +693,7 @@ function clearUndoRedoAndAutoSave() {
 
 async function resetFile() {
   file = new FileImpl(hash, profile, userName, transforms(), stdlib);
-  await renderAsHtml(false);
+  await initialDisplay(false);
 }
 
 function domEventType(evt: Event | undefined) {
@@ -737,6 +743,8 @@ async function showError(err: Error, fileName: string, reset: boolean) {
 
   if (err.message?.startsWith(fileErrorPrefix)) {
     systemInfoPrintSafe(err.message);
+  } else if (err.message?.startsWith(parseErrorPrefix)) {
+    systemInfoPrintSafe(cannotLoadFile);
   } else if (err.stack) {
     let msg = "";
     let stack = "";
@@ -761,6 +769,7 @@ function systemInfoPrintSafe(text: string, scroll = true) {
   // sanitise the text
   text = sanitiseHtml(text);
   systemInfoPrintUnsafe(text, scroll);
+  showInfoTab();
 }
 
 function systemInfoPrintUnsafe(text: string, scroll = true) {
@@ -2125,6 +2134,9 @@ async function readAndParse(rawCode: string, fileName: string, mode: ParseMode) 
   file.fileName = fileName;
   try {
     await file.parseFrom(code);
+    if (file.parseError) {
+      throw new Error(file.parseError);
+    }
     await initialDisplay(reset);
   } catch (e) {
     await showError(e as Error, fileName, reset);
