@@ -103,6 +103,15 @@
         </p>
         <ul>
           <li>
+            Click the button to load the starting code into the code editor:
+            <button
+              class="load"
+              value="demo/wordle-start.elan"
+            >
+              Load
+            </button>
+          </li>
+          <li>
             Load 'wordle-start.elan' and run the program. On the
             <b>
               Display
