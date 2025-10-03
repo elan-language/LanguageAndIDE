@@ -1453,6 +1453,15 @@ async function updateContent(text: string, editingField: boolean) {
     activeHelp.click();
   }
 
+  const activeCopy = document.querySelector(".to-be-copied") as HTMLElement | undefined;
+
+  if (activeCopy) {
+    const id = activeCopy.id;
+    const frame = file.getById(id);
+    const code = frame.renderAsSource();
+    await navigator.clipboard.writeText(code);
+  }
+
   await localAndAutoSave(focused, editingField);
   updateDisplayValues();
 
