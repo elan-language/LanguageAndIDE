@@ -1525,7 +1525,7 @@ async function localAndAutoSave(field: HTMLElement | undefined, editingField: bo
 
   if (file.readParseStatus() === ParseStatus.valid) {
     // autosave if setup
-    code = code ?? (await file.renderAsSource());
+    code = code || (await file.renderAsSource());
     await autoSave(code);
   }
 }
