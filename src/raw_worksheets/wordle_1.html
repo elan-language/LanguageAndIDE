@@ -1,5 +1,5 @@
 <step>
-    <h1>Step <currentStep></h1>
+    <h1>Step</h1>
     <p>We are going to create a working implementation of the Wordle puzzle.
         If you have never previously solved a Wordle puzzle, you should visit the 
         <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">official Wordle site</a>
@@ -41,18 +41,18 @@
         <li>The <el-method>markAttempt</el-method> function will need to set individual characters within
             the five-character <code>mark</code> string. The <el-method>setChar</el-method> function (instruction 73) is intended
             for this purpose, but notice that this also is a 'stub' implementation. So start by
-        unghosting the <code>test</code>> for <code>setChar</code> (immediately below the function),
+        unghosting the <code>test</code> for <code>setChar</code> (immediately below the function),
         and then write a proper implementation of <code>setChar</code> to get those tests passing.</li>
         <hint>Key ideas</hint>
         <content>
             <ul>
             <li><code>String</code> is an 'immutable' type: you can't change its contents directly, 
         you must build a new string out of parts of the input one with necessary changes incorporated.</li>
-        <li>Use 'index ranges'. If you are not familiar with these: in the <b>Help</b> tab look up <b>Library Reference > Value Types ... > String</b></li>
+        <li>Use 'index ranges'. If you are not familiar with these: in the <b>Help</b> tab look up <b>Library Reference - Value Types - String</b></li>
         <li>Build the string to be returned from three parts: the string up to the character to the changed;
             the new character; a copy of the original string <i>following</i> the character being changed.
         </li>
-        </ul>
+    </ul>
         </content>
         <hint>Syntax</hint>
         <content>
@@ -63,6 +63,7 @@
             <li>Pay particular attention to the documentation concering whether the 'bounds'
                 when specifying ranges are 'inclusive' or 'exclusive'.
             </li>
+          </ul>
         </content>
         <hint>Range values</hint>
         <content>
@@ -111,7 +112,7 @@
       end for    
     </code>
     Note that each place where you see <code>something</code> you must replace it with something
-    else - which <i>might</i> be different in each case.<a>
+    else - which <i>might</i> be different in each case.
     </content>
     <hint>Complete function (so far)</hint>
     <content>
@@ -236,7 +237,7 @@ end function
          empty space. When you have completed this, <i>all</i> tests for <el-method>markAttempt</el-method> should pass.
 
     <hint>Function showing the new instructions in outline</hint>
-    <contents>
+    <content>
         <code>
             function markAttempt(attempt as String, target as String) returns String
             variable mark set to "00000"
@@ -256,21 +257,21 @@ end function
             return mark
           end function
         </code>
-    </contents>
+    </content>
     <hint>The two new <code>set</code> instructions</hint>
-    <contents>
+    <content>
         <ul>
             <li>The right-hand-side of both the new <code>set</code> instructions will use the 
             <el-method>setChar</el-method> function (as used to set  <code>mark</code> elsewhere),
             but the first argument in each case will be <code>unused</code>, and the 
             <i>third</i> argument will be <code>" "</code>.</li>
            <li>For one of the <code>set</code> methods the <i>second</i> argument will be just <code>n</code>;
-            for the other it will need to find the <i>index</i>> of the matched character, from <i>within</i>
+            for the other it will need to find the <i>index</i> of the matched character, from <i>within</i>
             <code>unused</code>, using the dotted-method <el-method>indexOf</el-method></li>
         </ul>
-    </contents>
+    </content>
     <hint>The complete function</hint>
-    <contents>
+    <content>
         <code>
 function markAttempt(attempt as String, target as String) returns String
   variable mark set to "00000"
@@ -290,7 +291,9 @@ function markAttempt(attempt as String, target as String) returns String
   return mark
 end function
         </code>
-    </contents>
+        </content>
+    </li>
+    </ul>
 </step>
 <step>
     <h3>Mission accomplished</h3>
