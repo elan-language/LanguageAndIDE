@@ -10,6 +10,8 @@ const hintsTaken = document.querySelectorAll("span.hints-taken");
 
 const autoSaveButton = document.getElementById("auto-save");
 
+const loads = document.querySelectorAll("button.load");
+
 let fh: FileSystemFileHandle | undefined;
 
 if (fh) {
@@ -226,3 +228,10 @@ window.addEventListener("message", (m) => {
     scrollToActiveElement();
   }
 });
+
+for (const b of loads as NodeListOf<HTMLButtonElement>) {
+  b.addEventListener("click", (_e) => {
+    const file = b.value;
+    window.parent.postMessage(file, "*");
+  });
+}
