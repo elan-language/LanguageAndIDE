@@ -1,6 +1,7 @@
 .elan-code * {
     font-family: consolas, monospace;
     font-size: 11pt;
+    user-select: none; /* Selection of instructions is via specific commands. Overridden in fields for conventional selection */
 }
 .elan-code {
     color: var(--defaultText);
@@ -36,7 +37,11 @@ span {
 }
 el-kw {
     color: var(--keyword);
-} 
+}
+
+el-field, el-field * {
+    user-select: all;
+}
 el-field el-txt {
     border-style:hidden;
     border-width: 1px;
