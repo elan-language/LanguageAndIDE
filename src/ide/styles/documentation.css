@@ -134,6 +134,6 @@ a:hover, a:focus {text-decoration: underline}
   background-color: var(--selection);
 }
 
-code, el-code, el-code-block {
+body *, code, el-code, el-code-block, el-field {
   user-select: none;
 }
