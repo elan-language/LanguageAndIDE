@@ -2271,10 +2271,13 @@ async function handleDownload(event: Event) {
 }
 
 async function chromeSave(code: string, updateName: boolean, newName?: string) {
+  const name = newName ?? file.fileName;
+  const html = name.endsWith(".html");
+
   const fh = await showSaveFilePicker({
-    suggestedName: newName ?? file.fileName,
+    suggestedName: name,
     startIn: "documents",
-    types: [{ accept: { "text/elan": ".elan" } }],
+    types: html ? [{ accept: { "text/html": ".html" } }] : [{ accept: { "text/elan": ".elan" } }],
     id: lastDirId,
   });
 
