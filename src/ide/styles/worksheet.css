@@ -92,10 +92,15 @@
 
 .step textarea {
     width: 100%;
+    font-family: monospace;
+    font-weight: bold;
 }
 
 input[type="text"]
 {
     border: 1px;
     border-style: solid;
+}
+code, el-code, el-code-block {
+    user-select: none;
 }

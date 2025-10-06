@@ -133,3 +133,7 @@ a:hover, a:focus {text-decoration: underline}
 .acc-title:focus {
   background-color: var(--selection);
 }
+
+body *, code, el-code, el-code-block, el-field {
+  user-select: none;
+}
