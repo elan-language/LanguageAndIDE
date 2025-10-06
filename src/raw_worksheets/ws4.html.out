@@ -83,17 +83,17 @@
           </span>
         </span>
       </div>
-      <code class="block">
+      <code>
         <el-kw>
           let
         </el-kw>
       </code>
-      <code class="block">
+      <code>
         <el-type>
           Int
         </el-type>
       </code>
-      <code class="block">
+      <code>
         <el-lit>
           2
         </el-lit>

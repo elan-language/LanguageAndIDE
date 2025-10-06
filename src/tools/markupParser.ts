@@ -227,16 +227,18 @@ async function processEachStepInstance(
 async function processEachCodeInstance(
   initialCode: string,
   startAt: number,
+  startTag: string,
+  endTag: string,
 ): Promise<[string, number, number]> {
   return await processEachInstance(
     initialCode,
     startAt,
-    "<code>",
-    "</code>",
+    startTag,
+    endTag,
     0,
     0,
     async (initialCode: string, _i1: number = 0, _i2: number = 0) =>
-      await processWorksheetCode(initialCode, "<code>", "</code>"),
+      await processWorksheetCode(initialCode, startTag, endTag),
   );
 }
 
@@ -345,14 +347,24 @@ export async function processSteps(source: string) {
   return applyChanges(source, updates);
 }
 
-export async function processCode(source: string) {
+export async function processCode(source: string, startTag: string, endTag: string) {
   const updates: [string, number, number][] = [];
 
-  let [updatedCode, codeStart, codeEnd] = await processEachCodeInstance(source, 0);
+  let [updatedCode, codeStart, codeEnd] = await processEachCodeInstance(
+    source,
+    0,
+    startTag,
+    endTag,
+  );
 
   while (updatedCode !== "") {
     updates.push([updatedCode, codeStart, codeEnd]);
-    [updatedCode, codeStart, codeEnd] = await processEachCodeInstance(source, codeEnd);
+    [updatedCode, codeStart, codeEnd] = await processEachCodeInstance(
+      source,
+      codeEnd,
+      startTag,
+      endTag,
+    );
   }
 
   return applyChanges(source, updates);

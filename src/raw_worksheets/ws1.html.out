@@ -83,7 +83,7 @@
           </span>
         </span>
       </div>
-      <code class="block">
+      <code>
         <el-proc
           class="selected focused ok multiline"
           id="proc1"

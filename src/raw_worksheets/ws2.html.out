@@ -83,7 +83,7 @@
           </span>
         </span>
       </div>
-      <code class="block">
+      <code>
         <el-statement
           class="none multiline"
           id="for4"

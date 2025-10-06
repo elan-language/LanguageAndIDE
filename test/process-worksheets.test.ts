@@ -116,10 +116,22 @@ end constructor`;
     const code = `<code>let</code>
 <code>Int</code>`;
 
-    const actual = await processCode(code);
+    const actual = await processCode(code, "<code>", "</code>");
 
     const expected = `<code><el-kw>let</el-kw></code>
 <code><el-type>Int</el-type></code>`;
+
+    assert.strictEqual(actual, expected);
+  });
+
+  test("process multiple codeblock", async () => {
+    const code = `<codeblock>let</codeblock>
+<codeblock>Int</codeblock>`;
+
+    const actual = await processCode(code, "<codeblock>", "</codeblock>");
+
+    const expected = `<codeblock><el-kw>let</el-kw></codeblock>
+<codeblock><el-type>Int</el-type></codeblock>`;
 
     assert.strictEqual(actual, expected);
   });

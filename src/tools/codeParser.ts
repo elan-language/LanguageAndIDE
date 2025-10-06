@@ -161,7 +161,7 @@ export async function processInnerCode(code: string) {
 }
 
 export async function processWorksheetCode(codeAndTag: string, startTag: string, endTag: string) {
-  const s = codeAndTag.indexOf(startTag)+ startTag.length;
+  const s = codeAndTag.indexOf(startTag) + startTag.length;
   const e = codeAndTag.indexOf(endTag);
   const code = codeAndTag.slice(s, e);
 
