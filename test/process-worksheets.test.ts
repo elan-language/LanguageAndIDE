@@ -138,36 +138,36 @@ end constructor`;
   });
 
   test("process multiple steps", async () => {
-    const steps = `<step><content></content></step>
+    const steps = `<step><content>CURRENTSTEP</content></step>
 <step><content></content></step>`;
 
     const actual = await processSteps(steps);
 
-    const expected = `<div class="step" id="step0"><content></content><label class="done" for="done0">Step Completed</label><input class="step-complete" type="checkbox" id="done0"><span> Total hints used: <span class="hints-taken"></span><span class="hints-total"></span></span></div>
+    const expected = `<div class="step" id="step0"><content>step0</content><label class="done" for="done0">Step Completed</label><input class="step-complete" type="checkbox" id="done0"><span> Total hints used: <span class="hints-taken"></span><span class="hints-total"></span></span></div>
 <div class="step" id="step1"><content></content><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span><span class="hints-total"></span></span></div>`;
 
     assert.strictEqual(actual, expected);
   });
 
   test("process multiple hints", async () => {
-    const hints = `<hint></hint><content><p>hint details</p></content>
+    const hints = `<hint></hint><content><p>hint details CURRENTHINT</p></content>
 <hint></hint><content><p>hint details</p></content>`;
 
     const actual = await processHints(hints, 0);
 
-    const expected = `<div class="hint" id="hint0-0" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg=="></div>
+    const expected = `<div class="hint" id="hint0-0" data-hint="PHA+aGludCBkZXRhaWxzIGhpbnQwLTA8L3A+"></div>
 <div class="hint" id="hint0-1" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg=="></div>`;
 
     assert.strictEqual(actual, expected);
   });
 
   test("process multiple questions", async () => {
-    const questions = `<question><p>question1 details</p></question>
+    const questions = `<question><p>question1 details CURRENTQUESTION</p></question>
 <question><p>question2 details</p></question>`;
 
     const actual = await processQuestions(questions, 0);
 
-    const expected = `<p>question1 details</p>
+    const expected = `<p>question1 details question0-0</p>
 <textarea class="question" id="question0-0"></textarea>
 <p>question2 details</p>
 <textarea class="question" id="question0-1"></textarea>`;
@@ -176,12 +176,12 @@ end constructor`;
   });
 
   test("process multiple loads", async () => {
-    const questions = `<load file="file1.elan">Load One</load>
+    const questions = `<load file="fileCURRENTLOAD.elan">Load One</load>
 <load file="file2.elan">Load Two</load>`;
 
     const actual = await processLoads(questions, 0);
 
-    const expected = `<button class="load" id="load0-0" value="file1.elan">Load One</button>
+    const expected = `<button class="load" id="load0-0" value="fileload0-0.elan">Load One</button>
 <button class="load" id="load0-1" value="file2.elan">Load Two</button>`;
 
     assert.strictEqual(actual, expected);
