@@ -26,6 +26,7 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
 .tableProperty th, td { padding-left:5px; padding-right:5px; }
 .tableStructure th, td { padding-left:5px; padding-right:5px; }
 .tableType th, td { padding-left:5px; padding-right:5px; }
+.tableMenu th, td { padding-left:5px; padding-right:5px; }
 
 table
  th, th * {color: white; background-color: rgb(15,71,97)}
