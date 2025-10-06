@@ -1,6 +1,14 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { processCode, processSteps } from "../tools/markupParser";
 import toDiffableHtml from "diffable-html";
+import {
+  codeBlockEndTag,
+  codeBlockTag,
+  codeEndTag,
+  codeTag,
+  stepEndTag,
+  stepTag,
+} from "../tools/parserConstants";
 
 const rootdir = `${__dirname}/../../..`;
 
@@ -42,20 +50,20 @@ function wrapInWorkSheetBoilerPlate(content: string) {
 }
 
 function prependFirstStep(content: string) {
-  return `<step>
+  return `${stepTag}
   <h3>Preliminaries</h3>
   <label for="username">Enter your name: </label>
   <input class="question" type="text" id="username" />
   <ul>
     <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
   </ul>
-</step>
+${stepEndTag}
 ${content}`;
 }
 
 function appendLastStep(content: string) {
   return `${content}
-<step>
+${stepTag}
   <p>Congratulations! You have finished the worksheet, and you now know enough about navigating and editing
   code to start writing your first program &ndash; with the help of another Worksheet. Meantime,
   click <b>Help > Home > IDE Reference > Code editor</b> &ndash; for a handy summary of all the above
@@ -70,7 +78,7 @@ function appendLastStep(content: string) {
   </div>
   <div hidden="" id="hash"></div>
   <div hidden="" id="changes"></div>
-</step>`;
+${stepEndTag}`;
 }
 
 async function processWorksheet(fileName: string) {
@@ -79,8 +87,8 @@ async function processWorksheet(fileName: string) {
   source = appendLastStep(source);
 
   let updatedContent = await processSteps(source);
-  updatedContent = await processCode(updatedContent, "<code>", "</code>");
-  updatedContent = await processCode(updatedContent, "<codeblock>", "</codeblock>");
+  updatedContent = await processCode(updatedContent, codeTag, codeEndTag);
+  updatedContent = await processCode(updatedContent, codeBlockTag, codeBlockEndTag);
 
   updatedContent = wrapInWorkSheetBoilerPlate(updatedContent);
 

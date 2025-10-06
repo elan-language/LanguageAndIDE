@@ -7,6 +7,7 @@ import {
   processQuestions,
   processSteps,
 } from "../src/tools/markupParser";
+import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../src/tools/parserConstants";
 
 suite("process worksheets", () => {
   test("process file with header", async () => {
@@ -116,7 +117,7 @@ end constructor`;
     const code = `<code>let</code>
 <code>Int</code>`;
 
-    const actual = await processCode(code, "<code>", "</code>");
+    const actual = await processCode(code, codeTag, codeEndTag);
 
     const expected = `<code><el-kw>let</el-kw></code>
 <code><el-type>Int</el-type></code>`;
@@ -128,7 +129,7 @@ end constructor`;
     const code = `<codeblock>let</codeblock>
 <codeblock>Int</codeblock>`;
 
-    const actual = await processCode(code, "<codeblock>", "</codeblock>");
+    const actual = await processCode(code, codeBlockTag, codeBlockEndTag);
 
     const expected = `<codeblock><el-kw>let</el-kw></codeblock>
 <codeblock><el-type>Int</el-type></codeblock>`;
