@@ -12,7 +12,7 @@ import {
 
 const rootdir = `${__dirname}/../../..`;
 
-const worksheets = `${rootdir}/src/raw_worksheets/`;
+const worksheets = `${rootdir}/src/documentation/worksheets/`;
 
 function loadFileAsSourceNew(sourceFile: string): string {
   return readFileSync(sourceFile, "utf-8");
@@ -23,7 +23,7 @@ function updateFileNew(testDoc: string, newContent: string) {
 }
 
 function getWorksheets(sourceDir: string): string[] {
-  return readdirSync(sourceDir).filter((s) => s.endsWith(".html"));
+  return readdirSync(sourceDir).filter((s) => s.endsWith(".raw"));
 }
 
 function wrapInWorkSheetBoilerPlate(content: string) {
@@ -94,7 +94,7 @@ async function processWorksheet(fileName: string) {
 
   updatedContent = toDiffableHtml(updatedContent);
 
-  updateFileNew(fileName + ".out", updatedContent);
+  updateFileNew(fileName.slice(0, fileName.lastIndexOf(".")) + ".html", updatedContent);
 }
 
 for (const fn of getWorksheets(worksheets)) {
