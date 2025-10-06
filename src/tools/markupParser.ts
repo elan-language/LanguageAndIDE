@@ -142,7 +142,7 @@ export async function processHint(
 
   const content = hintSel?.nextElementSibling;
 
-  if (content && content.tagName === "content") {
+  if (content && content.tagName === "CONTENT") {
     const contentAsString = content.innerHTML.replaceAll(currentHintId, currentHint);
 
     const encoded = btoa(contentAsString);

@@ -8,6 +8,7 @@ import {
   processSteps,
 } from "../src/tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../src/tools/parserConstants";
+import { getWorksheets, processWorksheet } from "../src/build-scripts/preprocess-worksheets";
 
 suite("process worksheets", () => {
   test("process file with header", async () => {
@@ -213,7 +214,12 @@ end constructor`;
     assert.strictEqual(actual.startsWith("<el-func"), true);
   });
 
-   test("process test worksheets", async () => {
-     
+  test("process test worksheets", async () => {
+    const rootdir = `${__dirname}/../../`;
+    const worksheets = `${rootdir}test/raw_worksheets/`;
+
+    for (const fn of getWorksheets(worksheets)) {
+      processWorksheet(`${worksheets}${fn}`);
+    }
   });
 });

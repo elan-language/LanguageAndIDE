@@ -22,7 +22,7 @@ function updateFileNew(testDoc: string, newContent: string) {
   writeFileSync(testDoc, newContent);
 }
 
-function getWorksheets(sourceDir: string): string[] {
+export function getWorksheets(sourceDir: string): string[] {
   return readdirSync(sourceDir).filter((s) => s.endsWith(".raw"));
 }
 
@@ -81,7 +81,7 @@ ${stepTag}
 ${stepEndTag}`;
 }
 
-async function processWorksheet(fileName: string) {
+export async function processWorksheet(fileName: string) {
   let source = loadFileAsSourceNew(fileName);
   source = prependFirstStep(source);
   source = appendLastStep(source);
