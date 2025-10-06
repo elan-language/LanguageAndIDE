@@ -32,10 +32,10 @@ function wrapInWorkSheetBoilerPlate(content: string) {
 
   <head>
       <meta http-equiv="Cache-Control" content="no-store" />
-      <link href="../../../out/website/styles/colourScheme.css" rel="stylesheet" />
-      <link href="../../../out/website/styles/elanStyle.css" rel="stylesheet" />
-      <link href="../../../out/website/styles/documentation.css" rel="stylesheet" />
-      <link href="../../../out/website/styles/worksheet.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
       <title>Worksheet</title>
   </head>
 
@@ -44,7 +44,7 @@ function wrapInWorkSheetBoilerPlate(content: string) {
     <div class="docTitle">Title</div>
     <button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span>
     ${content}
-    <script src="../../../out/website/worksheet-scripts.js"></script>
+    <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
   </body>
 </html>`;
 }
