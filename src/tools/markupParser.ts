@@ -1,4 +1,5 @@
 import { JSDOM } from "jsdom";
+import { processWorksheetCode } from "./codeParser";
 
 export async function processStep(
   markup: string,
@@ -223,6 +224,22 @@ async function processEachStepInstance(
   );
 }
 
+async function processEachCodeInstance(
+  initialCode: string,
+  startAt: number,
+): Promise<[string, number, number]> {
+  return await processEachInstance(
+    initialCode,
+    startAt,
+    "<code>",
+    "</code>",
+    0,
+    0,
+    async (initialCode: string, _i1: number = 0, _i2: number = 0) =>
+      await processWorksheetCode(initialCode, "<code>", "</code>"),
+  );
+}
+
 function applyChanges(source: string, updates: [string, number, number][]) {
   let updatedContent = source;
 
@@ -323,6 +340,19 @@ export async function processSteps(source: string) {
       stepInstance,
     );
     stepInstance++;
+  }
+
+  return applyChanges(source, updates);
+}
+
+export async function processCode(source: string) {
+  const updates: [string, number, number][] = [];
+
+  let [updatedCode, codeStart, codeEnd] = await processEachCodeInstance(source, 0);
+
+  while (updatedCode !== "") {
+    updates.push([updatedCode, codeStart, codeEnd]);
+    [updatedCode, codeStart, codeEnd] = await processEachCodeInstance(source, codeEnd);
   }
 
   return applyChanges(source, updates);

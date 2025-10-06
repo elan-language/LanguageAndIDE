@@ -1,6 +1,7 @@
 import assert from "assert";
-import { processCode, processWorksheetCode } from "../src/tools/codeParser";
+import { processInnerCode } from "../src/tools/codeParser";
 import {
+  processCode,
   processHints,
   processLoads,
   processQuestions,
@@ -12,7 +13,7 @@ suite("process worksheets", () => {
     const code = `# 39dadda3dc0838303aa6ec281b404d197527891272e1abb29369f83f5974a6de Elan 1.5.1 guest default_profile valid
 `;
 
-    const actual = await processWorksheetCode(code);
+    const actual = await processInnerCode(code);
 
     assert.strictEqual(actual.startsWith("<el-header"), true);
   });
@@ -27,7 +28,7 @@ suite("process worksheets", () => {
   end for
 end procedure`;
 
-    const actual = await processWorksheetCode(code);
+    const actual = await processInnerCode(code);
 
     assert.strictEqual(actual.startsWith("<el-proc"), true);
   });
@@ -40,7 +41,7 @@ end procedure`;
   end for
 end for`;
 
-    const actual = await processWorksheetCode(code);
+    const actual = await processInnerCode(code);
 
     assert.strictEqual(actual.startsWith("<el-statement"), true);
   });
@@ -50,7 +51,7 @@ end for`;
   set property.p1 to 1
 end constructor`;
 
-    const actual = await processWorksheetCode(code);
+    const actual = await processInnerCode(code);
 
     assert.strictEqual(actual.startsWith("<el-constructor"), true);
   });
@@ -58,7 +59,7 @@ end constructor`;
   test("process expression", async () => {
     const code = `a + b`;
 
-    const actual = await processWorksheetCode(code);
+    const actual = await processInnerCode(code);
 
     assert.strictEqual(actual.startsWith("<el-id"), true);
   });
@@ -66,7 +67,7 @@ end constructor`;
   test("process keyword1", async () => {
     const code = `let`;
 
-    const actual = await processWorksheetCode(code);
+    const actual = await processInnerCode(code);
 
     assert.strictEqual(actual.startsWith("<el-kw"), true);
   });
@@ -74,7 +75,7 @@ end constructor`;
   test("process keyword2", async () => {
     const code = `property`;
 
-    const actual = await processWorksheetCode(code);
+    const actual = await processInnerCode(code);
 
     assert.strictEqual(actual.startsWith("<el-kw"), true);
   });
@@ -82,7 +83,7 @@ end constructor`;
   test("process identifier1", async () => {
     const code = `foo`;
 
-    const actual = await processWorksheetCode(code);
+    const actual = await processInnerCode(code);
 
     assert.strictEqual(actual.startsWith("<el-id"), true);
   });
@@ -90,7 +91,7 @@ end constructor`;
   test("process identifier2", async () => {
     const code = `foo()`;
 
-    const actual = await processWorksheetCode(code);
+    const actual = await processInnerCode(code);
 
     assert.strictEqual(actual.startsWith("<el-method"), true);
   });
@@ -98,7 +99,7 @@ end constructor`;
   test("process type1", async () => {
     const code = `Int`;
 
-    const actual = await processWorksheetCode(code);
+    const actual = await processInnerCode(code);
 
     assert.strictEqual(actual.startsWith("<el-type"), true);
   });
@@ -106,7 +107,7 @@ end constructor`;
   test("process type2", async () => {
     const code = `List<of Int>`;
 
-    const actual = await processWorksheetCode(code);
+    const actual = await processInnerCode(code);
 
     assert.strictEqual(actual.startsWith("<el-type"), true);
   });
@@ -117,14 +118,8 @@ end constructor`;
 
     const actual = await processCode(code);
 
-    const expected = `
-<code class="block">
-  <el-kw>let</el-kw>
-</code>
-
-<code class="block">
-  <el-type>Int</el-type>
-</code>`;
+    const expected = `<code><el-kw>let</el-kw></code>
+<code><el-type>Int</el-type></code>`;
 
     assert.strictEqual(actual, expected);
   });
@@ -200,7 +195,7 @@ end constructor`;
         end function
 `;
 
-    const actual = await processWorksheetCode(code);
+    const actual = await processInnerCode(code);
 
     assert.strictEqual(actual.startsWith("<el-func"), true);
   });

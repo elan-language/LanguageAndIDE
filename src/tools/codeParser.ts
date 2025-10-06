@@ -147,7 +147,7 @@ async function parseAsKeyword(code: string) {
   return "";
 }
 
-export async function processWorksheetCode(code: string) {
+export async function processInnerCode(code: string) {
   const hasHeader = code.includes("guest default_profile valid");
   return (
     (await parseAsKeyword(code)) ||
@@ -160,45 +160,12 @@ export async function processWorksheetCode(code: string) {
   );
 }
 
-async function processEachCodeInstance(
-  initialCode: string,
-  startAt: number,
-): Promise<[string, number, number]> {
-  const toProcessCode = initialCode.slice(startAt);
+export async function processWorksheetCode(codeAndTag: string, startTag: string, endTag: string) {
+  const s = codeAndTag.indexOf(startTag)+ startTag.length;
+  const e = codeAndTag.indexOf(endTag);
+  const code = codeAndTag.slice(s, e);
 
-  const codeStart = toProcessCode.indexOf("<code>");
-  const codeEnd = toProcessCode.indexOf("</code>");
+  const processed = await processInnerCode(code);
 
-  if (codeStart !== -1) {
-    const code = toProcessCode.slice(codeStart + 6, codeEnd);
-
-    const htmlCode = `
-<code class="block">
-  ${await processWorksheetCode(code)}
-</code>`;
-
-    return [htmlCode, startAt + codeStart, startAt + codeEnd];
-  }
-
-  return ["", -1, -1];
-}
-
-export async function processCode(source: string) {
-  const updates: [string, number, number][] = [];
-
-  let [updatedCode, codeStart, codeEnd] = await processEachCodeInstance(source, 0);
-
-  while (updatedCode !== "") {
-    updates.push([updatedCode, codeStart, codeEnd]);
-    [updatedCode, codeStart, codeEnd] = await processEachCodeInstance(source, codeEnd + 7);
-  }
-
-  let updatedContent = source;
-
-  for (let i = updates.length - 1; i >= 0; i--) {
-    const [c, s, e] = updates[i];
-    updatedContent = updatedContent.slice(0, s) + c + updatedContent.slice(e + 7);
-  }
-
-  return updatedContent;
+  return `${startTag}${processed}${endTag}`;
 }
