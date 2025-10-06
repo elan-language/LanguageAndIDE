@@ -1,0 +1,5 @@
+  <step>
+    <h3>Step 1: Getting started</h3>
+    <load file="file1.elan">Load One</load>
+    <load file="file2.elan">Load Two</load>
+  </step>

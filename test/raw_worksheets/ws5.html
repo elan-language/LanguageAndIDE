@@ -1,0 +1,960 @@
+
+<!DOCTYPE
+  HTML
+  PUBLIC
+  "-//W3C//DTD
+  4.01
+  Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd"
+>
+<html lang="en-GB">
+  <head>
+    <meta
+      http-equiv="Cache-Control"
+      content="no-store"
+    >
+    <link
+      href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css"
+      rel="stylesheet"
+    >
+    <link
+      href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css"
+      rel="stylesheet"
+    >
+    <link
+      href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css"
+      rel="stylesheet"
+    >
+    <link
+      href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css"
+      rel="stylesheet"
+    >
+    <title>
+      Worksheet
+    </title>
+  </head>
+  <body>
+    <div id="worksheet">
+      <div class="docTitle">
+        Title
+      </div>
+      <button id="auto-save">
+        Auto-save to file
+      </button>
+      <span>
+        to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).
+      </span>
+      <div
+        class="step"
+        id="step0"
+      >
+        <h3>
+          Preliminaries
+        </h3>
+        <label for="username">
+          Enter your name:
+        </label>
+        <input
+          class="question"
+          type="text"
+          id="username"
+        >
+        <ul>
+          <li>
+            Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.
+          </li>
+        </ul>
+        <label
+          class="done"
+          for="done0"
+        >
+          Step Completed
+        </label>
+        <input
+          class="step-complete"
+          type="checkbox"
+          id="done0"
+        >
+        <span>
+          Total hints used:
+          <span class="hints-taken">
+          </span>
+          <span class="hints-total">
+          </span>
+        </span>
+      </div>
+      <div
+        class="step"
+        id="step1"
+      >
+        <h3>
+          Preliminaries
+        </h3>
+        <label for="username">
+          Enter your name:
+        </label>
+        <input
+          type="text"
+          class="question"
+          id="username"
+        >
+        <ul>
+          <li>
+            Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.
+          </li>
+          <li>
+            Select
+            <b>
+              File &gt; New
+            </b>
+            to start a new program,
+      then select
+            <b>
+              File &gt; Auto Save
+            </b>
+            and complete the dialog to ensure that your
+            <i>
+              code
+            </i>
+            is always saved.
+      Remember that you can use the
+            <b>
+              Undo
+            </b>
+            button (or
+            <b>
+              Ctrl-z
+            </b>
+            ) to undo recent changes.
+          </li>
+          <li>
+            Remember that if the code editor has a tinted background it does not have focus and will not respond
+      to edits. To give it focus click within the editor. (If a program is running, you will need to stop it
+      first.)
+          </li>
+          <li>
+            Use the auto-completion options as much as possible, because this reduces errors.
+          </li>
+          <li>
+            Use the
+            <i>
+              Hints
+            </i>
+            only when you
+            <i>
+              need
+            </i>
+            them - as all use of hints is recorded. Use of
+            <b>
+              Help
+            </b>
+            is
+      encouraged and not recorded.
+          </li>
+          <li>
+            Use the
+            <b>
+              Trim
+            </b>
+            button periodically to remove leftover
+            <el-code>
+              new code
+            </el-code>
+            prompts.
+          </li>
+        </ul>
+        <label
+          class="done"
+          for="done1"
+        >
+          Step Completed
+        </label>
+        <input
+          class="step-complete"
+          type="checkbox"
+          id="done1"
+        >
+        <span>
+          Total hints used:
+          <span class="hints-taken">
+          </span>
+          <span class="hints-total">
+          </span>
+        </span>
+      </div>
+      <div
+        class="step"
+        id="step2"
+      >
+        <h3>
+          Iteration 1: Draw a shape with 'turtle graphics'
+        </h3>
+        <h3>
+          Purpose of this worksheet
+        </h3>
+        <p>
+          Our objective is to investigate the mathematical idea of a 'random walk'.
+    Imagine that you are standing in the centre of a circle with a radius of 10 paces.
+    But instead of walking straight to the edge, with each pace you make a random turn
+    - of
+          <i>
+            up to
+          </i>
+          to 90 degrees left or right. How many paces will it take to reach the edge?
+    If the turning is truly random then each attempt will take a different number: the picture below shows
+    three such paths taken:
+        </p>
+        <img
+          src="../../../out/website/documentation/images/random-walk.png"
+          width="50%"
+        >
+        <p>
+          Can we determine the
+          <i>
+            average
+          </i>
+          number of paces to reach the edge? Yes,
+    if we could perform the experiment many times.
+    And it turns out that being able to predict the average length of a different kinds of
+    random walk has significant applications in many different fields of study:
+    physics, biology, ecology, economics ..., even computer science. So we are going to build just such a
+    simulation.
+        </p>
+        <ul>
+          <li>
+            Make sure the code editor has focus i.e. has a white background.
+          </li>
+          <li>
+            From the new code options, press
+            <b>
+              m
+            </b>
+            to create an empty
+            <code>
+              <el-kw>
+                main
+              </el-kw>
+            </code>
+            routine.
+          </li>
+          <li>
+            Within the main routine add a
+            <code>
+              <el-kw>
+                let
+              </el-kw>
+            </code>
+            instruction, and edit its two fields to look like the
+      following, making as much
+      use as possible of the options offered in the drop-down list (by cursoring down to the chosen item and
+      pressing
+            <b>
+              Enter
+            </b>
+            )
+      because this reduces errors:
+            <code>
+              <el-statement
+                class="none"
+                id="let4"
+                tabindex="-1"
+              >
+                <el-kw>
+                  let
+                </el-kw>
+                <el-field
+                  id="var5"
+                  class="selected focused ok"
+                  tabindex="-1"
+                >
+                  <el-txt>
+                    <input
+                      spellcheck="false"
+                      data-cursorstart="0"
+                      data-cursorend="0"
+                      size="1"
+                      style="width: 1ch"
+                      value="t"
+                      tabindex="-1"
+                    >
+                  </el-txt>
+                  <el-place>
+                    <i>
+                      name
+                    </i>
+                  </el-place>
+                  <el-compl>
+                  </el-compl>
+                  <el-msg>
+                  </el-msg>
+                  <el-help title="Click to open Help for this field">
+                    <a
+                      href="documentation/LangRef.html#ValueDefField"
+                      target="help-iframe"
+                      tabindex="-1"
+                    >
+                      ?
+                    </a>
+                  </el-help>
+                </el-field>
+                <el-kw>
+                  be
+                </el-kw>
+                <el-field
+                  id="expr6"
+                  class="ok"
+                  tabindex="-1"
+                >
+                  <el-txt>
+                    <el-kw>
+                      new
+                    </el-kw>
+                    <el-type>
+                      Turtle
+                    </el-type>
+                    ()
+                  </el-txt>
+                  <el-place>
+                    <i>
+                      value or expression
+                    </i>
+                  </el-place>
+                  <el-compl>
+                  </el-compl>
+                  <el-msg>
+                  </el-msg>
+                  <el-help title="Click to open Help for this field">
+                    <a
+                      href="documentation/LangRef.html#ExpressionField"
+                      target="help-iframe"
+                      tabindex="-1"
+                    >
+                      ?
+                    </a>
+                  </el-help>
+                </el-field>
+                <el-msg>
+                </el-msg>
+                <el-fr>
+                  0
+                </el-fr>
+              </el-statement>
+            </code>
+            <ul>
+              <code>
+                <el-global
+                  class="selected focused ok empty"
+                  id="select0"
+                  tabindex="-1"
+                >
+                  <el-select>
+                    <el-txt>
+                    </el-txt>
+                    <el-place>
+                      new code
+                    </el-place>
+                    <div class="options">
+                      main procedure function test constant enum record class abstract interface #
+                    </div>
+                    <el-help title="Click to open Help for any of these instructions">
+                      <a
+                        href="documentation/LangRef.html#GlobalInstructions"
+                        target="help-iframe"
+                        tabindex="-1"
+                      >
+                        ?
+                      </a>
+                    </el-help>
+                  </el-select>
+                </el-global>
+              </code>
+              <ul>
+                <code>
+                  <code>
+                    <li>
+                      This instruction creates a new 'Turtle' which we will be commanding to move around the Display holding a 'pen' that shows the path it has taken.
+                    </li>
+                    Code does not parse as Elan.
+                  </code>
+                  <li>
+                    <code>
+                      code&gt;Turtle Code does not parse as Elan.
+                    </code>
+                    is a 'type' of thing and type names always begin with a capital letter
+                  </li>
+                </code>
+                <li>
+                  <code>
+                    <el-global
+                      class="selected focused ok empty"
+                      id="select0"
+                      tabindex="-1"
+                    >
+                      <el-select>
+                        <el-txt>
+                        </el-txt>
+                        <el-place>
+                          new code
+                        </el-place>
+                        <div class="options">
+                          main procedure function test constant enum record class abstract interface #
+                        </div>
+                        <el-help title="Click to open Help for any of these instructions">
+                          <a
+                            href="documentation/LangRef.html#GlobalInstructions"
+                            target="help-iframe"
+                            tabindex="-1"
+                          >
+                            ?
+                          </a>
+                        </el-help>
+                      </el-select>
+                    </el-global>
+                  </code>
+                </li>
+                <li>
+                  <code>
+                    code&gt;Turtle Code does not parse as Elan.
+                  </code>
+                  is a 'type' of thing and type names always begin with a capital letter
+                </li>
+                <li>
+                  We have named this turtle
+                  <code>
+                    <el-id>
+                      t
+                    </el-id>
+                  </code>
+                  - picking a short name because we will be referring to it often and
+      isn't likely
+      to be confused with anything else. We could have given it a longer name, and we will use longer names
+      shortly. Names (also called 'identifiers') that we give
+      to things always begin with a lower-case letter. You'll also note that identifiers and types are shown in
+      different colours in the editor.
+                </li>
+                <li>
+                  The 'empty' brackets after
+                  <code>
+                    <el-type>
+                      Turtle
+                    </el-type>
+                  </code>
+                  are necessary, but don't worry about why they are needed just
+      now
+      that will gradually become clearer. Note also that if you selected
+                  <code>
+                    <el-type>
+                      Turtle
+                    </el-type>
+                  </code>
+                  from the drop-down
+      options you
+      will have seen a prompt (white characters) telling you that brackets were needed, like this:
+      at which point just pressing
+                  <b>
+                    Tab
+                  </b>
+                  will insert the prompted characters.
+                </li>
+                <li>
+                  Whenever you see a question mark next to a field or instruction, clicking it will open the
+                  <b>
+                    Help
+                  </b>
+                  tab.
+      This may be useful when you start to write your own programs, but shouldn't be necessary in this worksheet.
+                </li>
+              </ul>
+            </ul>
+          </li>
+          <li>
+            Follow this by adding this
+            <code>
+              <el-kw>
+                call
+              </el-kw>
+            </code>
+            instruction:
+            <code>
+              <el-statement
+                class="none"
+                id="call4"
+                tabindex="-1"
+              >
+                <el-top>
+                  <el-kw>
+                    call
+                  </el-kw>
+                  <el-field
+                    id="ident5"
+                    class="selected focused ok"
+                    tabindex="-1"
+                  >
+                    <el-txt>
+                      <input
+                        spellcheck="false"
+                        data-cursorstart="0"
+                        data-cursorend="0"
+                        size="5"
+                        style="width: 6ch"
+                        value="t.show"
+                        tabindex="-1"
+                      >
+                    </el-txt>
+                    <el-place>
+                      <i>
+                        procedureName
+                      </i>
+                    </el-place>
+                    <el-compl>
+                    </el-compl>
+                    <el-msg>
+                    </el-msg>
+                    <el-help title="Click to open Help for this field">
+                      <a
+                        href="documentation/LangRef.html#ProcRefField"
+                        target="help-iframe"
+                        tabindex="-1"
+                      >
+                        ?
+                      </a>
+                    </el-help>
+                  </el-field>
+                  (
+                  <el-field
+                    id="args6"
+                    class="empty optional ok"
+                    tabindex="-1"
+                  >
+                    <el-txt>
+                    </el-txt>
+                    <el-place>
+                      <i>
+                        <i>
+                          arguments
+                        </i>
+                      </i>
+                    </el-place>
+                    <el-compl>
+                    </el-compl>
+                    <el-msg>
+                    </el-msg>
+                    <el-help title="Click to open Help for this field">
+                      <a
+                        href="documentation/LangRef.html#ArgListField"
+                        target="help-iframe"
+                        tabindex="-1"
+                      >
+                        ?
+                      </a>
+                    </el-help>
+                  </el-field>
+                  )
+                  <el-msg>
+                  </el-msg>
+                  <el-fr>
+                    0
+                  </el-fr>
+                </el-top>
+              </el-statement>
+            </code>
+            Noting that:
+            <ul>
+              <li>
+                This instruction can be verbalised as 'call the
+                <code>
+                  <el-id>
+                    show
+                  </el-id>
+                </code>
+                procedure on the turtle t'.
+              </li>
+              <li>
+                A procedure is a named piece of a code that makes a change to the system. This may also be referred to
+        as a 'method' -
+        a procedure being a particular type of method.
+              </li>
+              <li>
+                This syntax - which takes the form of
+                <i>
+                  nameOfThing.methodName
+                </i>
+                is known as a 'dotted method'.
+        You'll be calling a
+        lot of dotted methods on the turtle
+                <code>
+                  t
+                  <code>
+                    . Code does not parse as Elan.
+                  </code>
+                </code>
+              </li>
+              <code>
+                <el-global
+                  class="selected focused ok empty"
+                  id="select0"
+                  tabindex="-1"
+                >
+                  <el-select>
+                    <el-txt>
+                    </el-txt>
+                    <el-place>
+                      new code
+                    </el-place>
+                    <div class="options">
+                      main procedure function test constant enum record class abstract interface #
+                    </div>
+                    <el-help title="Click to open Help for any of these instructions">
+                      <a
+                        href="documentation/LangRef.html#GlobalInstructions"
+                        target="help-iframe"
+                        tabindex="-1"
+                      >
+                        ?
+                      </a>
+                    </el-help>
+                  </el-select>
+                </el-global>
+              </code>
+            </ul>
+          </li>
+          <code>
+            <code>
+              <li>
+                Methods are rendered in a different colour to identifiers and types.
+              </li>
+              Code does not parse as Elan.
+            </code>
+          </code>
+        </ul>
+        <code>
+          <el-global
+            class="selected focused ok empty"
+            id="select0"
+            tabindex="-1"
+          >
+            <el-select>
+              <el-txt>
+              </el-txt>
+              <el-place>
+                new code
+              </el-place>
+              <div class="options">
+                main procedure function test constant enum record class abstract interface #
+              </div>
+              <el-help title="Click to open Help for any of these instructions">
+                <a
+                  href="documentation/LangRef.html#GlobalInstructions"
+                  target="help-iframe"
+                  tabindex="-1"
+                >
+                  ?
+                </a>
+              </el-help>
+            </el-select>
+          </el-global>
+        </code>
+        <code>
+          <code>
+            Code does not parse as Elan.
+          </code>
+        </code>
+        <code>
+          <el-global
+            class="selected focused ok empty"
+            id="select0"
+            tabindex="-1"
+          >
+            <el-select>
+              <el-txt>
+              </el-txt>
+              <el-place>
+                new code
+              </el-place>
+              <div class="options">
+                main procedure function test constant enum record class abstract interface #
+              </div>
+              <el-help title="Click to open Help for any of these instructions">
+                <a
+                  href="documentation/LangRef.html#GlobalInstructions"
+                  target="help-iframe"
+                  tabindex="-1"
+                >
+                  ?
+                </a>
+              </el-help>
+            </el-select>
+          </el-global>
+        </code>
+        <code>
+          <code>
+            <li>
+              Run the program, noting that:
+              <ul>
+                <li>
+                  the
+                  <b>
+                    Display
+                  </b>
+                  shows the turtle as a small green circle. When first created it is located in
+        the centre of the
+                  <b>
+                    Display
+                  </b>
+                  , with the 'x,y' coordinates of 0,0.
+                </li>
+                <li>
+                  In turtle terms the
+                  <b>
+                    Display
+                  </b>
+                  measures 200 turtle units wide, and 150 turtle units deep.
+                </li>
+                <li>
+                  The short black line on the turtle shows that it is currently heading North.
+                </li>
+                <li>
+                  Having shown the turtle this program stops, so you can click on the code editor to give it focus
+        and resume editing the code.
+                </li>
+              </ul>
+            </li>
+            <li>
+              Add three more instructions below the
+              <el-kw>
+                call
+              </el-kw>
+              :
+              <code>
+                call t.move(10)
+      call t.turn(45)
+      call t.move(10)
+     Code does not parse as Elan.
+              </code>
+              <ul>
+                <li>
+                  Here we again calling two different procedure methods on the turtle, their names suggesting what
+            the turtle will do.
+                </li>
+                <li>
+                  Both of these methods require you to specify a value (representing the distance to move, and the
+            angle - in degrees - to turn, respectively)
+            which is placed within the brackets. That's what the brackets are for when using a method.
+                </li>
+                <li>
+                  A value given to a method (within the brackets) is known as an 'argument' (the same term is used
+            in Mathematics).
+            Later we will encounter methods that require more than one argument. Some methods -
+                  <code>
+                    <el-id>
+                      show
+                    </el-id>
+                  </code>
+                  for example -
+            don't require any arguments, but they still need the brackets.
+                </li>
+              </ul>
+              then run the program again and make sure that you understand how the trail left by the turtle's pen
+        corresponds to the three instructions that you added.
+            </li>
+          </code>
+        </code>
+        <code>
+          <el-global
+            class="selected focused ok empty"
+            id="select0"
+            tabindex="-1"
+          >
+            <el-select>
+              <el-txt>
+              </el-txt>
+              <el-place>
+                new code
+              </el-place>
+              <div class="options">
+                main procedure function test constant enum record class abstract interface #
+              </div>
+              <el-help title="Click to open Help for any of these instructions">
+                <a
+                  href="documentation/LangRef.html#GlobalInstructions"
+                  target="help-iframe"
+                  tabindex="-1"
+                >
+                  ?
+                </a>
+              </el-help>
+            </el-select>
+          </el-global>
+        </code>
+        <code>
+          <el-global
+            class="selected focused ok empty"
+            id="select0"
+            tabindex="-1"
+          >
+            <el-select>
+              <el-txt>
+              </el-txt>
+              <el-place>
+                new code
+              </el-place>
+              <div class="options">
+                main procedure function test constant enum record class abstract interface #
+              </div>
+              <el-help title="Click to open Help for any of these instructions">
+                <a
+                  href="documentation/LangRef.html#GlobalInstructions"
+                  target="help-iframe"
+                  tabindex="-1"
+                >
+                  ?
+                </a>
+              </el-help>
+            </el-select>
+          </el-global>
+        </code>
+        <code>
+          <code>
+            Code does not parse as Elan.
+          </code>
+        </code>
+        <label
+          class="done"
+          for="done2"
+        >
+          Step Completed
+        </label>
+        <input
+          class="step-complete"
+          type="checkbox"
+          id="done2"
+        >
+        <span>
+          Total hints used:
+          <span class="hints-taken">
+          </span>
+          <span class="hints-total">
+          </span>
+        </span>
+      </div>
+      <div
+        class="step"
+        id="step3"
+      >
+        <h3>
+          Iteration 2 - Draw the circle with a radius of 10 paces
+        </h3>
+        <p>
+          Returning to our problem we defined the specific random walk to be simulated as getting from the centre to the
+    edge of a circle with a
+    radius of 10 paces. We now know how to draw a regular polygon and a circle may be described as a regular polygon
+    with an infinite number of sides.
+    But since the display's resolution is not infinite we can get away with less than that! 360 sides, turning 1
+    degree each time should suffice.
+        </p>
+        <ul>
+          <li>
+            Modify the
+            <el-kw>
+              for
+            </el-kw>
+            loop so that it executes 360 times.
+          </li>
+        </ul>
+        <label
+          class="done"
+          for="done3"
+        >
+          Step Completed
+        </label>
+        <input
+          class="step-complete"
+          type="checkbox"
+          id="done3"
+        >
+        <span>
+          Total hints used:
+          <span class="hints-taken">
+          </span>
+          <span class="hints-total">
+          </span>
+        </span>
+      </div>
+      <div
+        class="step"
+        id="step4"
+      >
+        <p>
+          Congratulations! You have finished the worksheet, and you now know enough about navigating and editing
+  code to start writing your first program – with the help of another Worksheet. Meantime,
+  click
+          <b>
+            Help &gt; Home &gt; IDE Reference &gt; Code editor
+          </b>
+          – for a handy summary of all the above
+  operations, and a few more that you can also try out here.
+        </p>
+        <div class="license">
+          <img
+            decoding="async"
+            loading="lazy"
+            src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png"
+            width="118"
+            height="41"
+          >
+          This worksheet is copyright © Richard Pawson 2025, and protected by the Creative Commons license:
+          <a
+            href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
+            target="_blank"
+          >
+            Attribution-NonCommercial-NoDerivatives 4.0 International
+          </a>
+          .
+        If you copy and
+          <i>
+            modify
+          </i>
+          this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+        Please
+          <a
+            href="mailto:rpawson@nakedobjects.org"
+            target="_blank"
+          >
+            email the author
+          </a>
+          to report errors or suggest improvements.
+        </div>
+        <div
+          hidden
+          id="hash"
+        >
+        </div>
+        <div
+          hidden
+          id="changes"
+        >
+        </div>
+        <label
+          class="done"
+          for="done4"
+        >
+          Step Completed
+        </label>
+        <input
+          class="step-complete"
+          type="checkbox"
+          id="done4"
+        >
+        <span>
+          Total hints used:
+          <span class="hints-taken">
+          </span>
+          <span class="hints-total">
+          </span>
+        </span>
+      </div>
+      <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js">
+      </script>
+    </div>
+  </body>
+</html>

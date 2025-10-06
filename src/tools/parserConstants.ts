@@ -1,0 +1,27 @@
+export const currentStepId = "CURRENTSTEP";
+export const currentHintId = "CURRENTHINT";
+export const currentLoadId = "CURRENTLOAD";
+export const currentAnswerId = "CURRENTANSWER";
+export const currentQuestionId = "CURRENTQUESTION";
+export const step = "step";
+export const stepTag = `<${step}>`;
+export const stepEndTag = `</${step}>`;
+export const hint = "hint";
+export const hintTag = `<${hint}>`;
+export const hintEndTag = `</${hint}>`;
+export const answer = "answer";
+export const answerTag = `<${answer}>`;
+export const answerEndTag = `</${answer}>`;
+export const load = "load";
+export const loadTag = `<${load}`;
+export const loadEndTag = `</${load}>`;
+export const code = "code";
+export const codeTag = `<${code}>`;
+export const codeEndTag = `</${code}>`;
+export const codeblock = "codeblock";
+export const codeBlockTag = `<${codeblock}>`;
+export const codeBlockEndTag = `</${codeblock}>`;
+
+export const question = "question";
+export const questionTag = `<${question}>`;
+export const questionEndTag = `</${question}>`;
