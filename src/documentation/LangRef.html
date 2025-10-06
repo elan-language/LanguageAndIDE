@@ -190,7 +190,8 @@ Unlike a function, a procedure does not return a value.
 <div id="returns"></div>
 <h2 id="function">Function</h2>
 <p>A <el-code>function</el-code> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in a statement or expression.</p>
-<p>Unlike a <a href="#procedure">procedure</a>, a function returns a value. Also unlike a procedure, a function can have no 'side effects' and cannot depend on any <a href="LibRef.html#SystemMethods">System methods</a>.</p>
+<p>Unlike a <a href="#procedure">procedure</a>, a function returns a value. Also unlike a procedure, a function can have no side effects (i.e. references outside its code) and cannot depend on any <a href="LibRef.html#SystemMethods">System methods</a>. In particular, a function's execution cannot be interrupted by any external event, though a looping function may be detected with tests
+that <a href="#ignore">time out</a>.</p>
 <p>The <el-kw>return</el-kw> statement is followed by the value returned by the function.</p>
 <p>Example of a function:</p>
 <el-code-block source="score.elan">
@@ -294,8 +295,10 @@ Procedures and functions may be called or referenced recursively. For example, a
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
-<div id="TestIgnore"></div>
+
 <p>When a test is marked with <el-code>ignore</el-code>, that test will not be executed when the tests are run, and its result will be shown as 'not run'. The overall test status will also show in the 'warning' status (amber colour), even if all the tests that did run passed. This is to discourage you from leaving a test marked <el-code>ignore</el-code> for long.</p>
+
+<h4 class="no-TOC">Non-terminating loops and recursion</h4>
 <p>The principal reason for marking a test <el-code>ignore</el-code> is when either the test code, or code in any function being called, does not terminate. This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
 <p>If you do create such code without realising it, then when the tests are executed the test runner will 'time out' after a few seconds (most tests will pass in milliseconds), and an error message will be shown in the Info pane. The test that caused the timeout will automatically then be marked <el-code>ignore</el-code>. Your priority should then be to identify the cause of the timeout and attempt to fix it before then restoring the <el-code>test</el-code> by selecting its frame and hitting <el-code>Ctrl-i</el-code> (which is a toggle for setting and unsetting an <el-code>ignore</el-code> status).</p>
 
