@@ -23,7 +23,7 @@ function updateFileNew(testDoc: string, newContent: string) {
 }
 
 export function getWorksheets(sourceDir: string): string[] {
-  return readdirSync(sourceDir).filter((s) => s.endsWith(".raw"));
+  return readdirSync(sourceDir).filter((s) => s.endsWith(".raw.html"));
 }
 
 function wrapInWorkSheetBoilerPlate(content: string, title: string) {
@@ -96,7 +96,7 @@ export async function processWorksheet(fileName: string) {
 
   updatedContent = toDiffableHtml(updatedContent);
 
-  updateFileNew(fileName.slice(0, fileName.lastIndexOf(".")) + ".html", updatedContent);
+  updateFileNew(fileName.replace(".raw", ""), updatedContent);
 }
 
 for (const fn of getWorksheets(worksheets)) {
