@@ -2,9 +2,13 @@ import { JSDOM } from "jsdom";
 import { processWorksheetCode } from "./codeParser";
 import {
   currentHintId,
+  currentHintNumber,
   currentLoadId,
+  currentLoadNumber,
   currentQuestionId,
+  currentQuestionNumber,
   currentStepId,
+  currentStepNumber,
   hint,
   hintTag,
   load,
@@ -25,9 +29,10 @@ export async function processStep(
 ): Promise<string> {
   const input = new JSDOM(markup);
   const inDoc = input.window.document;
-  const currentStep = `${step}${stepInstance}`;
+  const num = `${stepInstance}`;
+  const id = `${step}${stepInstance}`;
 
-  const output = new JSDOM(`<div class="${step}" id="${currentStep}"></div>`);
+  const output = new JSDOM(`<div class="${step}" id="${id}"></div>`);
   const outDoc = output.window.document;
 
   const stepSel = inDoc.querySelector(step);
@@ -38,7 +43,7 @@ export async function processStep(
   updated = await processQuestions(updated, stepInstance);
   updated = await processLoads(updated, stepInstance);
 
-  updated = updated.replaceAll(currentStepId, currentStep);
+  updated = updated.replaceAll(currentStepNumber, num).replaceAll(currentStepId, id);
 
   div.innerHTML = updated;
 
@@ -79,9 +84,10 @@ export async function processLoad(
 ): Promise<string> {
   const input = new JSDOM(markup);
   const inDoc = input.window.document;
-  const currentLoad = `${load}${stepInstance}-${loadInstance}`;
+  const num = `${stepInstance}-${loadInstance}`;
+  const id = `${load}${num}`;
 
-  const output = new JSDOM(`<button class="${load}" id="${currentLoad}"></button>`);
+  const output = new JSDOM(`<button class="${load}" id="${id}"></button>`);
   const outDoc = output.window.document;
 
   const loadSel = inDoc.querySelector(load);
@@ -89,8 +95,10 @@ export async function processLoad(
 
   const button = outDoc.querySelector("button")!;
 
-  button.textContent = (loadSel?.textContent ?? "").replaceAll(currentLoadId, currentLoad);
-  button.value = file.replaceAll(currentLoadId, currentLoad);
+  button.textContent = (loadSel?.textContent ?? "")
+    .replaceAll(currentLoadNumber, num)
+    .replaceAll(currentLoadId, id);
+  button.value = file.replaceAll(currentLoadNumber, num).replaceAll(currentLoadId, id);
 
   return button.outerHTML;
 }
@@ -102,11 +110,12 @@ export async function processQuestion(
 ): Promise<string> {
   const input = new JSDOM(markup);
   const inDoc = input.window.document;
-  const currentQuestion = `${question}${stepInstance}-${questionInstance}`;
+  const num = `${stepInstance}-${questionInstance}`;
+  const id = `${question}${num}`;
 
   const output = new JSDOM(
     `<div><p></p>
-<textarea class="${question}" id="${currentQuestion}"></textarea></div>`,
+<textarea class="${question}" id="${id}"></textarea></div>`,
   );
   const outDoc = output.window.document;
 
@@ -114,10 +123,9 @@ export async function processQuestion(
 
   const para = outDoc.querySelector("p")!;
 
-  para.textContent = (questionSel?.textContent ?? "").replaceAll(
-    currentQuestionId,
-    currentQuestion,
-  );
+  para.textContent = (questionSel?.textContent ?? "")
+    .replaceAll(currentQuestionNumber, num)
+    .replaceAll(currentQuestionId, id);
 
   return outDoc.querySelector("div")!.innerHTML;
 }
@@ -129,21 +137,26 @@ export async function processHint(
 ): Promise<string> {
   const input = new JSDOM(markup);
   const inDoc = input.window.document;
-  const currentHint = `${hint}${stepInstance}-${hintInstance}`;
+  const num = `${stepInstance}-${hintInstance}`;
+  const id = `${hint}${num}`;
 
-  const output = new JSDOM(`<div class="${hint}" id="${currentHint}" data-hint=""></div>`);
+  const output = new JSDOM(`<div class="${hint}" id="${id}" data-hint=""></div>`);
   const outDoc = output.window.document;
 
   const hintSel = inDoc.querySelector(hint);
 
   const div = outDoc.querySelector("div")!;
 
-  div.textContent = hintSel?.textContent ?? "";
+  div.textContent = (hintSel?.textContent ?? "")
+    .replaceAll(currentHintNumber, num)
+    .replaceAll(currentHintId, id);
 
   const content = hintSel?.nextElementSibling;
 
   if (content && content.tagName === "CONTENT") {
-    const contentAsString = content.innerHTML.replaceAll(currentHintId, currentHint);
+    const contentAsString = content.innerHTML
+      .replaceAll(currentHintNumber, num)
+      .replaceAll(currentHintId, id);
 
     const encoded = btoa(contentAsString);
 
