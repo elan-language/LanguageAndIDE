@@ -418,19 +418,20 @@ button.icon:active img + label
   padding-right: 5px;
 }
 
-.menu-item:hover, button.menu-item:hover
-.menu-item:hover a,  button.menu-item:hover a
-{
-  background-color: grey;
-  color: white;
-  text-decoration: none;
-}
-
 .menu-item:focus,
 .menu-item:active, button.menu-item:active
 .menu-item:active a, button.menu-item:active a
 {
-  border: solid, black, 2px;
+  background-color: var(--defaultButton);
+  color: white;
+  text-decoration: none;
+}
+
+.menu-item:hover, button.menu-item:hover
+.menu-item:hover a,  button.menu-item:hover a
+{
+  background-color: var(--ideBackground);
+  color: white;
   text-decoration: none;
 }
 
