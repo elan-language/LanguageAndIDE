@@ -1,4 +1,4 @@
-# 2996e5966a5490646acbe40b88c9b2c947b41f37919ad174fdae446681a72a42 Elan 1.5.1 guest default_profile valid
+# 218f9271869ce0d65fb501a461e36c4d621c08018139335ae4f514c3c699bf02 Elan 1.6.0 guest default_profile valid
 
 main
   print "Spanish syntax introduces a question with a {unicode(191)}"

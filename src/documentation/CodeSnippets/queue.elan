@@ -1,4 +1,4 @@
-# b60e733de66ea847fe3cd7d383d9af6a21d406003364ea7b8c90c669330be7ca Elan 1.5.1 guest default_profile valid
+# 9a425b342a1f31757ae1dc1fb1e106b8f3c90db5e5f9386c60a5d80a6d7bccb2 Elan 1.6.0 guest default_profile valid
 
 main
   variable qu set to new Queue<of String>()
