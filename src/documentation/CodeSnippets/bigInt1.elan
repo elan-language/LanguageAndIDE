@@ -1,4 +1,4 @@
-# 75b9056af086e7affae0cb811d741f56e02061a3a8fffe0d301559021f959426 Elan 1.5.1 guest default_profile valid
+# 16fc7c47db982b564f98c9dcefba09a94111fd309366873b8c234a4da4daaf8e Elan 1.6.0 guest default_profile valid
 
 main
   for i from 50 to 100 step 1
