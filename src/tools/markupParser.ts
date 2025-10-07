@@ -20,6 +20,8 @@ import {
   step,
   stepEndTag,
   stepTag,
+  titleEndTag,
+  titleTag,
 } from "./parserConstants";
 
 export async function processStep(
@@ -403,4 +405,17 @@ export async function processCode(source: string, startTag: string, endTag: stri
   }
 
   return applyChanges(source, updates);
+}
+
+export function processTitle(source: string): [string, string] {
+  const start = source.indexOf(titleTag);
+  const end = source.indexOf(titleEndTag);
+
+  if (start !== -1 && end !== -1) {
+    const title = source.slice(start + titleTag.length, end);
+    source = source.slice(0, start) + source.slice(end + titleEndTag.length);
+    return [title, source];
+  }
+
+  return ["", source];
 }

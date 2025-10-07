@@ -1,5 +1,5 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { processCode, processSteps } from "../tools/markupParser";
+import { processCode, processSteps, processTitle } from "../tools/markupParser";
 import toDiffableHtml from "diffable-html";
 import {
   codeBlockEndTag,
@@ -26,7 +26,7 @@ export function getWorksheets(sourceDir: string): string[] {
   return readdirSync(sourceDir).filter((s) => s.endsWith(".raw"));
 }
 
-function wrapInWorkSheetBoilerPlate(content: string) {
+function wrapInWorkSheetBoilerPlate(content: string, title: string) {
   return `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en-GB">
 
@@ -36,12 +36,12 @@ function wrapInWorkSheetBoilerPlate(content: string) {
       <link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
       <link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
       <link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
-      <title>Worksheet</title>
+      <title>${title}</title>
   </head>
 
   <body>
     <div id="worksheet">
-    <div class="docTitle">Title</div>
+    <div class="docTitle">${title}</div>
     <button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span>
     ${content}
     <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
@@ -83,6 +83,8 @@ ${stepEndTag}`;
 
 export async function processWorksheet(fileName: string) {
   let source = loadFileAsSourceNew(fileName);
+  let title = "";
+  [title, source] = processTitle(source);
   source = prependFirstStep(source);
   source = appendLastStep(source);
 
@@ -90,7 +92,7 @@ export async function processWorksheet(fileName: string) {
   updatedContent = await processCode(updatedContent, codeTag, codeEndTag);
   updatedContent = await processCode(updatedContent, codeBlockTag, codeBlockEndTag);
 
-  updatedContent = wrapInWorkSheetBoilerPlate(updatedContent);
+  updatedContent = wrapInWorkSheetBoilerPlate(updatedContent, title);
 
   updatedContent = toDiffableHtml(updatedContent);
 

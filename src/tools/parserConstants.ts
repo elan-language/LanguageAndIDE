@@ -10,6 +10,9 @@ export const currentLoadId = "LOADID";
 export const currentAnswerId = "ANSWERID";
 export const currentQuestionId = "QUESTIONID";
 
+export const title = "title";
+export const titleTag = `<${title}>`;
+export const titleEndTag = `</${title}>`;
 export const step = "step";
 export const stepTag = `<${step}>`;
 export const stepEndTag = `</${step}>`;
