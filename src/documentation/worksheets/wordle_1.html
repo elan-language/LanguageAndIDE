@@ -30,13 +30,13 @@
       rel="stylesheet"
     >
     <title>
-      Worksheet
+      Wordle
     </title>
   </head>
   <body>
     <div id="worksheet">
       <div class="docTitle">
-        Title
+        Wordle
       </div>
       <button id="auto-save">
         Auto-save to file
@@ -88,7 +88,7 @@
         id="step1"
       >
         <h1>
-          Step step1
+          Step 1
         </h1>
         <p>
           We are going to create a working implementation of the Wordle puzzle.
@@ -152,37 +152,37 @@
             function. Comments state that the current implementation is just a 'stub' - the minimum code needed
         to allow the program to compile and run. It returns
         a five-character string, as expected:
-            <code>
+            <el-code>
               <el-lit>
                 2
               </el-lit>
-            </code>
+            </el-code>
             for an 'in-place' match (green),
-            <code>
+            <el-code>
               <el-lit>
                 1
               </el-lit>
-            </code>
+            </el-code>
             for an 'out-of-place' match (yellow), or
-            <code>
+            <el-code>
               <el-lit>
                 0
               </el-lit>
-            </code>
+            </el-code>
             for no match (grey). But
         it always returns the same mark, paying no attention to the two parameters: the 
         #
-            <code>
+            <el-code>
               <el-id>
                 attempt
               </el-id>
-            </code>
+            </el-code>
             word (your guess) and the
-            <code>
+            <el-code>
               <el-id>
                 target
               </el-id>
-            </code>
+            </el-code>
             word 
         (selected by the computer but normally hidden from the user).
           </li>
@@ -192,11 +192,11 @@
               markAttempt
             </el-method>
             function you will see a
-            <code>
+            <el-code>
               <el-kw>
                 test
               </el-kw>
-            </code>
+            </el-code>
             which has been 'ghosted'. Select the test and
             <b>
               unghost
@@ -218,11 +218,11 @@
           </li>
           <li>
             Change the 'default' value to which the
-            <code>
+            <el-code>
               <el-id>
                 mark
               </el-id>
-            </code>
+            </el-code>
             string is set, so that it returns a string of five zeroes.
           </li>
           <p>
@@ -266,11 +266,11 @@
             ,
             you would probably tell them to look for any 'green' matches first. (It's more complicated to
             to it any other way.) In the
-            <code>
+            <el-code>
               <el-kw>
                 test
               </el-kw>
-            </code>
+            </el-code>
             you can see that the first few (failing) tests are
             all looking just for green matches. So, your first task is to write an implementation that gets the four 
             'Only greens' tests passing.
@@ -282,11 +282,11 @@
             </el-method>
             function will need to set individual characters within
             the five-character
-            <code>
+            <el-code>
               <el-id>
                 mark
               </el-id>
-            </code>
+            </el-code>
             string. The
             <el-method>
               setChar
@@ -294,24 +294,24 @@
             function (instruction 73) is intended
             for this purpose, but notice that this also is a 'stub' implementation. So start by
         unghosting the
-            <code>
+            <el-code>
               <el-kw>
                 test
               </el-kw>
-            </code>
+            </el-code>
             for
-            <code>
+            <el-code>
               <el-id>
                 setChar
               </el-id>
-            </code>
+            </el-code>
             (immediately below the function),
         and then write a proper implementation of
-            <code>
+            <el-code>
               <el-id>
                 setChar
               </el-id>
-            </code>
+            </el-code>
             to get those tests passing.
           </li>
           <div
@@ -319,28 +319,48 @@
             id="hint2-0"
             data-hint="CiAgICAgICAgICAgIDx1bD4KICAgICAgICAgICAgPGxpPjxjb2RlPlN0cmluZzwvY29kZT4gaXMgYW4gJ2ltbXV0YWJsZScgdHlwZTogeW91IGNhbid0IGNoYW5nZSBpdHMgY29udGVudHMgZGlyZWN0bHksIAogICAgICAgIHlvdSBtdXN0IGJ1aWxkIGEgbmV3IHN0cmluZyBvdXQgb2YgcGFydHMgb2YgdGhlIGlucHV0IG9uZSB3aXRoIG5lY2Vzc2FyeSBjaGFuZ2VzIGluY29ycG9yYXRlZC48L2xpPgogICAgICAgIDxsaT5Vc2UgJ2luZGV4IHJhbmdlcycuIElmIHlvdSBhcmUgbm90IGZhbWlsaWFyIHdpdGggdGhlc2U6IGluIHRoZSA8Yj5IZWxwPC9iPiB0YWIgbG9vayB1cCA8Yj5MaWJyYXJ5IFJlZmVyZW5jZSAtIFZhbHVlIFR5cGVzIC0gU3RyaW5nPC9iPjwvbGk+CiAgICAgICAgPGxpPkJ1aWxkIHRoZSBzdHJpbmcgdG8gYmUgcmV0dXJuZWQgZnJvbSB0aHJlZSBwYXJ0czogdGhlIHN0cmluZyB1cCB0byB0aGUgY2hhcmFjdGVyIHRvIHRoZSBjaGFuZ2VkOwogICAgICAgICAgICB0aGUgbmV3IGNoYXJhY3RlcjsgYSBjb3B5IG9mIHRoZSBvcmlnaW5hbCBzdHJpbmcgPGk+Zm9sbG93aW5nPC9pPiB0aGUgY2hhcmFjdGVyIGJlaW5nIGNoYW5nZWQuCiAgICAgICAgPC9saT4KICAgIDwvdWw+CiAgICAgICAg"
           >
-            CURRENTHINT Key ideas
+            2-0 Key ideas
+          </div>
+          <div
+            class="content"
+            id="hint2-0content"
+          >
           </div>
           <div
             class="hint"
             id="hint2-1"
             data-hint="CiAgICAgICAgICAgIDx1bD4KICAgICAgICAgICAgICAgIDxsaT5UaGUgZXhwcmVzc2lvbiB0byBiZSByZXR1cm5lZCBieSB0aGUgZnVuY3Rpb24gbG9va3MgbGlrZSB0aGlzOgogICAgICAgICAgICA8Y29kZT5zdHJbc29tZXRoaW5nXSArIGNoICsgc3RyW3NvbWV0aGluZ108L2NvZGU+CiAgICAgICAgICAgIGJ1dCB5b3UgbmVlZCB0byByZXBsYWNlIGVhY2ggPGNvZGU+c29tZXRoaW5nPC9jb2RlPiB3aXRoIGEgc3BlY2lmaWVkIDxpPnJhbmdlPC9pPi48L2xpPgogICAgICAgICAgICA8bGk+UGF5IHBhcnRpY3VsYXIgYXR0ZW50aW9uIHRvIHRoZSBkb2N1bWVudGF0aW9uIGNvbmNlcmluZyB3aGV0aGVyIHRoZSAnYm91bmRzJwogICAgICAgICAgICAgICAgd2hlbiBzcGVjaWZ5aW5nIHJhbmdlcyBhcmUgJ2luY2x1c2l2ZScgb3IgJ2V4Y2x1c2l2ZScuCiAgICAgICAgICAgIDwvbGk+CiAgICAgICAgICA8L3VsPgogICAgICAgIA=="
           >
-            CURRENTHINT Syntax
+            2-1 Syntax
+          </div>
+          <div
+            class="content"
+            id="hint2-1content"
+          >
           </div>
           <div
             class="hint"
             id="hint2-2"
             data-hint="CiAgICAgICAgICAgIDx1bD4KICAgICAgICAgICAgICAgIDxsaT5UaGUgcmFuZ2UgZm9yIHRoZSBwYXJ0IG9mIHRoZSBzdHJpbmcgdXAgdG8sIDxpPmJ1dCBub3QgaW5jbHVkaW5nPC9pPiwgY2hhcmFjdGVyIG51bWJlciA8Y29kZT5uPC9jb2RlPgogICAgICAgICAgICAgICAgICAgIGlzIDxjb2RlPi4ubjwvY29kZT48L2xpPgogICAgICAgICAgICAgICAgPGxpPlRoZSByYW5nZSBmb3IgdGhlIHJlbWFpbmluZyBvZiB0aGUgc3RyaW5nIGFmdGVyLCA8aT5idXQgbm90IGluY2x1ZGluZzwvaT4gY2hhcmFjdGVyIG51bWJlciA8Y29kZT5uPC9jb2RlPgogICAgICAgICAgICAgICAgICAgIGlzIDxjb2RlPm4rMS4uPC9jb2RlPjwvbGk+CiAgICAgICAgICAgIDwvdWw+CiAgICAgICAg"
           >
-            CURRENTHINT Range values
+            2-2 Range values
+          </div>
+          <div
+            class="content"
+            id="hint2-2content"
+          >
           </div>
           <div
             class="hint"
             id="hint2-3"
             data-hint="CiAgICAgICAgICAgIDxjb2RlPgogICAgICAgICAgICAgICAgZnVuY3Rpb24gc2V0Q2hhcihzdHIgYXMgU3RyaW5nLCBuIGFzIEludCwgY2ggYXMgU3RyaW5nKSByZXR1cm5zIFN0cmluZwogICAgICAgICAgICAgICAgICAgIHJldHVybiBzdHJbLi5uXSArIGNoICsgc3RyW24gKyAxLi5dCiAgICAgICAgICAgICAgICBlbmQgZnVuY3Rpb24KICAgICAgICAgICAgPC9jb2RlPgogICAgICAgIA=="
           >
-            CURRENTHINT Complete code for the setChar function
+            2-3 Complete code for the setChar function
+          </div>
+          <div
+            class="content"
+            id="hint2-3content"
+          >
           </div>
         </ul>
         <label
@@ -380,17 +400,17 @@
         Start by deleting the first comment - as it will be incorrect once you start the implementation.
         (You can either keep or discard the other comment.)
         Implement this function such that the first five
-            <code>
+            <el-code>
               <el-kw>
                 assert
               </el-kw>
-            </code>
+            </el-code>
             s in the
-            <code>
+            <el-code>
               <el-kw>
                 test
               </el-kw>
-            </code>
+            </el-code>
             pass (the default case 
         and four 'Only green' cases).
           </li>
@@ -399,21 +419,36 @@
             id="hint3-0"
             data-hint="CiAgICAgICAgPHVsPgogICAgICAgICAgICA8bGk+VXNlIGEgPGNvZGU+Zm9yPC9jb2RlPiBsb29wLCBkZWZpbmluZyBhIHZhcmlhYmxlIDxjb2RlPm48L2NvZGU+IHRvIHdvcmsgdGhyb3VnaCBlYWNoIGNoYXJhY3RlciBudW1iZXIgaW4gdHVybjwvbGk+CiAgICAgICAgICAgIDxsaT5Db21wYXJlIHRoZSBjaGFyYWN0ZXIgaW4gdGhlIHNwZWNpZmllZCBwbGFjZSB3aXRoaW4gPGNvZGU+YXR0ZW1wdDwvY29kZT4gd29yZAogICAgICAgICAgICB0byB0aGUgY2hhcmFjdGVyIGluIHRoZSBzYW1lIHBvc2l0aW9uIHdpdGhpbiA8Y29kZT50YXJnZXQ8L2NvZGU+IHdvcmQuPC9saT4KICAgICAgICAgICAgPGxpPklmIHRoZXkgYXJlIHRoZSBzYW1lLCBzZXQgdGhhdCBjaGFyYWN0ZXIgbnVtYmVyIGluIDxjb2RlPm1hcms8L2NvZGU+IHRvIDIgLSBmb3IgJ2dyZWVuJy48L2xpPgogICAgICAgIDwvdWw+CiAgICA="
           >
-            CURRENTHINT Key ideas
+            3-0 Key ideas
+          </div>
+          <div
+            class="content"
+            id="hint3-0content"
+          >
           </div>
           <div
             class="hint"
             id="hint3-1"
             data-hint="CiAgICA8Y29kZT4KICAgICAgICBmb3IgbiBmcm9tIHNvbWV0aGluZyB0byBzb21ldGhpbmcgc3RlcCAxCiAgICAgICAgaWYgc29tZXRoaW5nW3NvbWV0aGluZ10gaXMgc29tZXRoaW5nW3NvbWV0aGluZ10gdGhlbgogICAgICAgICAgc2V0IHNvbWV0aGluZyB0byBzZXRDaGFyKHNvbWV0aGluZywgc29tZXRoaW5nLCBzb21ldGhpbmcpCiAgICAgICAgZW5kIGlmCiAgICAgIGVuZCBmb3IgICAgCiAgICA8L2NvZGU+CiAgICBOb3RlIHRoYXQgZWFjaCBwbGFjZSB3aGVyZSB5b3Ugc2VlIDxjb2RlPnNvbWV0aGluZzwvY29kZT4geW91IG11c3QgcmVwbGFjZSBpdCB3aXRoIHNvbWV0aGluZwogICAgZWxzZSAtIHdoaWNoIDxpPm1pZ2h0PC9pPiBiZSBkaWZmZXJlbnQgaW4gZWFjaCBjYXNlLgogICAg"
           >
-            CURRENTHINT Instruction outline
+            3-1 Instruction outline
+          </div>
+          <div
+            class="content"
+            id="hint3-1content"
+          >
           </div>
           <div
             class="hint"
             id="hint3-2"
             data-hint="CiAgICBmdW5jdGlvbiBtYXJrQXR0ZW1wdChhdHRlbXB0IGFzIFN0cmluZywgdGFyZ2V0IGFzIFN0cmluZykgcmV0dXJucyBTdHJpbmcKICAgICAgdmFyaWFibGUgbWFyayBzZXQgdG8gIjAwMDAwIgogICAgICBmb3IgbiBmcm9tIDAgdG8gNCBzdGVwIDEKICAgICAgICBpZiBhdHRlbXB0W25dIGlzIHRhcmdldFtuXSB0aGVuCiAgICAgICAgICBzZXQgbWFyayB0byBzZXRDaGFyKG1hcmssIG4sICIyIikKICAgICAgICBlbmQgaWYKICAgICAgZW5kIGZvciAKICAgICAgcmV0dXJuIG1hcmsKICAgIGVuZCBmdW5jdGlvbiAgIAogICAg"
           >
-            CURRENTHINT Complete function (so far)
+            3-2 Complete function (so far)
+          </div>
+          <div
+            class="content"
+            id="hint3-2content"
+          >
           </div>
         </ul>
         <label
@@ -442,29 +477,29 @@
         <ul>
           <li>
             Now we will tackle the yellows. Underneath the
-            <code>
+            <el-code>
               <el-kw>
                 for
               </el-kw>
-            </code>
+            </el-code>
             loop that you just created,
         create a second loop using the same values. (It might be tempting to try to process the greens and yellows
         within the same loop, but you would that to be much more difficult in the end.)
           </li>
           <li>
             Within the new loop add an
-            <code>
+            <el-code>
               <el-kw>
                 if
               </el-kw>
-            </code>
+            </el-code>
             instruction as before, but for our first stab at this,
         use the condition that the
-            <code>
+            <el-code>
               <el-id>
                 target
               </el-id>
-            </code>
+            </el-code>
             word
             <i>
               contains
@@ -473,11 +508,11 @@
           </li>
           <li>
             If it does then set the corresponding character in
-            <code>
+            <el-code>
               <el-id>
                 mark
               </el-id>
-            </code>
+            </el-code>
             to 1 for yellow.
           </li>
           <li>
@@ -502,21 +537,36 @@
           id="hint4-0"
           data-hint="VGhlIGNvbmRpdGlvbiBpczogPGNvZGU+dGFyZ2V0LmNvbnRhaW5zKGF0dGVtcHRbbl0pPC9jb2RlPg=="
         >
-          CURRENTHINT The condition
+          4-0 The condition
+        </div>
+        <div
+          class="content"
+          id="hint4-0content"
+        >
         </div>
         <div
           class="hint"
           id="hint4-1"
           data-hint="CiAgICAgICAgPGNvZGU+CiAgZm9yIG4gZnJvbSAwIHRvIDQgc3RlcCAxCiAgICBpZiBzb21ldGhpbmcgdGhlbgogICAgICBzZXQgc29tZXRoaW5nIHRvIHNldENoYXIoc29tZXRoaW5nLCBzb21ldGhpbmcsIHNvbWV0aGluZykKICAgIGVuZCBpZgogIGVuZCBmb3IKPC9jb2RlPgogICAg"
         >
-          CURRENTHINT Outline for the second loop
+          4-1 Outline for the second loop
+        </div>
+        <div
+          class="content"
+          id="hint4-1content"
+        >
         </div>
         <div
           class="hint"
           id="hint4-2"
           data-hint="CiAgICAgICAgPGNvZGU+CmZ1bmN0aW9uIG1hcmtBdHRlbXB0KGF0dGVtcHQgYXMgU3RyaW5nLCB0YXJnZXQgYXMgU3RyaW5nKSByZXR1cm5zIFN0cmluZwogIHZhcmlhYmxlIG1hcmsgc2V0IHRvICIwMDAwMCIKICBmb3IgbiBmcm9tIDAgdG8gNCBzdGVwIDEKICAgIGlmIGF0dGVtcHRbbl0gaXMgdGFyZ2V0W25dIHRoZW4KICAgICAgc2V0IG1hcmsgdG8gc2V0Q2hhcihtYXJrLCBuLCAiMiIpCiAgICBlbmQgaWYKICBlbmQgZm9yCiAgZm9yIG4gZnJvbSAwIHRvIDQgc3RlcCAxCiAgICBpZiB1bnVzZWQuY29udGFpbnMoYXR0ZW1wdFtuXSkgdGhlbgogICAgICBzZXQgbWFyayB0byBzZXRDaGFyKG1hcmssIG4sICIxIikKICAgIGVuZCBpZgogIGVuZCBmb3IKICByZXR1cm4gbWFyawplbmQgZnVuY3Rpb24KPC9jb2RlPgogICAg"
         >
-          CURRENTHINT The complete function (so far)
+          4-2 The complete function (so far)
+        </div>
+        <div
+          class="content"
+          id="hint4-2content"
+        >
         </div>
         <label
           class="done"
@@ -546,11 +596,11 @@
             The problem is: letters that were marked green in the first loop, are being 'overwritten'
             by a yellow. In the second loop we need to exlude any characters that have already been 
             marked green. Attempt it now by modifying the
-            <code>
+            <el-code>
               <el-kw>
                 if
               </el-kw>
-            </code>
+            </el-code>
             condition within in the second loop. You should
             get all the 'Green only' cases passing again, and
             <i>
@@ -562,21 +612,31 @@
               id="hint5-0"
               data-hint="PGNvZGU+KG1hcmtbbl0gaXNudCAiMiIpPC9jb2RlPg=="
             >
-              CURRENTHINT The condition
+              5-0 The condition
+            </div>
+            <div
+              class="content"
+              id="hint5-0content"
+            >
             </div>
             Add this to the existing condition using the
-            <code>
+            <el-code>
               <el-kw>
                 and
               </el-kw>
-            </code>
+            </el-code>
             operator.
             <div
               class="hint"
               id="hint5-1"
               data-hint="CiAgICAgICAgICAgIDxjb2RlPgogICAgICAgICAgZnVuY3Rpb24gbWFya0F0dGVtcHQoYXR0ZW1wdCBhcyBTdHJpbmcsIHRhcmdldCBhcyBTdHJpbmcpIHJldHVybnMgU3RyaW5nCiAgICAgICAgICAgIHZhcmlhYmxlIG1hcmsgc2V0IHRvICIwMDAwMCIKICAgICAgICAgICAgZm9yIG4gZnJvbSAwIHRvIDQgc3RlcCAxCiAgICAgICAgICAgICAgaWYgYXR0ZW1wdFtuXSBpcyB0YXJnZXRbbl0gdGhlbgogICAgICAgICAgICAgICAgc2V0IG1hcmsgdG8gc2V0Q2hhcihtYXJrLCBuLCAiMiIpCiAgICAgICAgICAgICAgZW5kIGlmCiAgICAgICAgICAgIGVuZCBmb3IKICAgICAgICAgICAgZm9yIG4gZnJvbSAwIHRvIDQgc3RlcCAxCiAgICAgICAgICAgICAgaWYgKG1hcmtbbl0gaXNudCAiMiIpIGFuZCB0YXJnZXQuY29udGFpbnMoYXR0ZW1wdFtuXSkgdGhlbgogICAgICAgICAgICAgICAgc2V0IG1hcmsgdG8gc2V0Q2hhcihtYXJrLCBuLCAiMSIpCiAgICAgICAgICAgICAgZW5kIGlmCiAgICAgICAgICAgIGVuZCBmb3IKICAgICAgICAgICAgcmV0dXJuIG1hcmsKICAgICAgICAgIGVuZCBmdW5jdGlvbgogICAgICAgIDwvY29kZT4KICAgICAgICAg"
             >
-              CURRENTHINT The complete function
+              5-1 The complete function
+            </div>
+            <div
+              class="content"
+              id="hint5-1content"
+            >
             </div>
             <p>
               Try removing the brackets around (mark[n] isnt "2"). 
@@ -626,7 +686,7 @@
             <ul>
               <li>
                 The brackets are needed around
-                <code>
+                <el-code>
                   (
                   <el-id>
                     mark
@@ -644,36 +704,36 @@
                     2
                   </el-lit>
                   ")
-                </code>
+                </el-code>
                 to specify the priority between the
-                <code>
+                <el-code>
                   <el-kw>
                     isnt
                   </el-kw>
-                </code>
+                </el-code>
                 and the
-                <code>
+                <el-code>
                   <el-kw>
                     and
                   </el-kw>
-                </code>
+                </el-code>
                 operators. Without
         them the
-                <code>
+                <el-code>
                   <el-kw>
                     and
                   </el-kw>
-                </code>
+                </el-code>
                 is applied to the
-                <code>
+                <el-code>
                   "
                   <el-lit>
                     2
                   </el-lit>
                   "
-                </code>
+                </el-code>
                 and
-                <code>
+                <el-code>
                   <el-id>
                     target
                   </el-id>
@@ -690,17 +750,17 @@
                     n
                   </el-id>
                   ])
-                </code>
+                </el-code>
                 ,
         which are not compatible.)
               </li>
               <li>
                 One of the 'Only yellows'
-                <code>
+                <el-code>
                   <el-kw>
                     assert
                   </el-kw>
-                </code>
+                </el-code>
                 s is still failing because the
                 <i>
                   both
@@ -711,51 +771,56 @@
           </li>
           <li>
             We need to keep a tally of which letters in the
-            <code>
+            <el-code>
               <el-id>
                 target
               </el-id>
-            </code>
+            </el-code>
             word have already been 'used' (or matched) - for green, and for yellow.
         The easiest way to do this would be to blank out a character in the
-            <code>
+            <el-code>
               <el-id>
                 target
               </el-id>
-            </code>
+            </el-code>
             word as it is used. However
-            <code>
+            <el-code>
               <el-id>
                 target
               </el-id>
-            </code>
+            </el-code>
             is a parameter, and Elan (deliberately) does not allow you to
-            <code>
+            <el-code>
               <el-kw>
                 set
               </el-kw>
-            </code>
+            </el-code>
             a parameter
         in a function. So, instead, at the top of the function, just below the existing definition of the
-            <code>
+            <el-code>
               <el-id>
                 mark
               </el-id>
-            </code>
+            </el-code>
             define another variable named 'unused' and initialise it 
         to the value of
-            <code>
+            <el-code>
               <el-id>
                 target
               </el-id>
-            </code>
+            </el-code>
             .
             <div
               class="hint"
               id="hint6-0"
               data-hint="PGNvZGU+dmFyaWFibGUgdW51c2VkIHNldCB0byB0YXJnZXQ8L2NvZGU+IHRvIGJlIGFkZGVkIGJlbG93IDxjb2RlPnZhcmlhYmxlIG1hcmsgc2V0IHRvICIwMDAwMCI8L2NvZGU+"
             >
-              CURRENTHINT Complete new instruction
+              6-0 Complete new instruction
+            </div>
+            <div
+              class="content"
+              id="hint6-0content"
+            >
             </div>
           </li>
           <li>
@@ -764,11 +829,11 @@
               two
             </i>
             places where
-            <code>
+            <el-code>
               <el-id>
                 target
               </el-id>
-            </code>
+            </el-code>
             is currently referenced
             <i>
               within
@@ -786,24 +851,24 @@
               both
             </i>
             places where
-            <code>
+            <el-code>
               <el-id>
                 mark
               </el-id>
-            </code>
+            </el-code>
             is being set, within the two
-            <code>
+            <el-code>
               <el-kw>
                 for
               </el-kw>
-            </code>
+            </el-code>
             loops:
          add a new instruction, underneath each, to set the corresponding character in
-            <code>
+            <el-code>
               <el-id>
                 unused
               </el-id>
-            </code>
+            </el-code>
             to a single
          empty space. When you have completed this,
             <i>
@@ -819,21 +884,36 @@
               id="hint6-1"
               data-hint="CiAgICAgICAgPGNvZGU+CiAgICAgICAgICAgIGZ1bmN0aW9uIG1hcmtBdHRlbXB0KGF0dGVtcHQgYXMgU3RyaW5nLCB0YXJnZXQgYXMgU3RyaW5nKSByZXR1cm5zIFN0cmluZwogICAgICAgICAgICB2YXJpYWJsZSBtYXJrIHNldCB0byAiMDAwMDAiCiAgICAgICAgICAgIHZhcmlhYmxlIHVudXNlZCBzZXQgdG8gc29tZXRoaW5nCiAgICAgICAgICAgIGZvciBuIGZyb20gMCB0byA0IHN0ZXAgMQogICAgICAgICAgICAgIGlmIGF0dGVtcHRbbl0gaXMgdW51c2VkW25dIHRoZW4KICAgICAgICAgICAgICAgIHNldCBtYXJrIHRvIHNldENoYXIobWFyaywgbiwgIjIiKQogICAgICAgICAgICAgICAgc2V0IHVudXNlZCB0byBzb21ldGhpbmcKICAgICAgICAgICAgICBlbmQgaWYKICAgICAgICAgICAgZW5kIGZvcgogICAgICAgICAgICBmb3IgbiBmcm9tIDAgdG8gNCBzdGVwIDEKICAgICAgICAgICAgICBpZiAobWFya1tuXSBpc250ICIyIikgYW5kIHVudXNlZC5jb250YWlucyhhdHRlbXB0W25dKSB0aGVuCiAgICAgICAgICAgICAgICBzZXQgbWFyayB0byBzZXRDaGFyKG1hcmssIG4sICIxIikKICAgICAgICAgICAgICAgIHNldCB1bnVzZWQgdG8gc29tZXRoaW5nCiAgICAgICAgICAgICAgZW5kIGlmCiAgICAgICAgICAgIGVuZCBmb3IKICAgICAgICAgICAgcmV0dXJuIG1hcmsKICAgICAgICAgIGVuZCBmdW5jdGlvbgogICAgICAgIDwvY29kZT4KICAgIA=="
             >
-              CURRENTHINT Function showing the new instructions in outline
+              6-1 Function showing the new instructions in outline
+            </div>
+            <div
+              class="content"
+              id="hint6-1content"
+            >
             </div>
             <div
               class="hint"
               id="hint6-2"
               data-hint="CiAgICAgICAgPHVsPgogICAgICAgICAgICA8bGk+VGhlIHJpZ2h0LWhhbmQtc2lkZSBvZiBib3RoIHRoZSBuZXcgPGNvZGU+c2V0PC9jb2RlPiBpbnN0cnVjdGlvbnMgd2lsbCB1c2UgdGhlIAogICAgICAgICAgICA8ZWwtbWV0aG9kPnNldENoYXI8L2VsLW1ldGhvZD4gZnVuY3Rpb24gKGFzIHVzZWQgdG8gc2V0ICA8Y29kZT5tYXJrPC9jb2RlPiBlbHNld2hlcmUpLAogICAgICAgICAgICBidXQgdGhlIGZpcnN0IGFyZ3VtZW50IGluIGVhY2ggY2FzZSB3aWxsIGJlIDxjb2RlPnVudXNlZDwvY29kZT4sIGFuZCB0aGUgCiAgICAgICAgICAgIDxpPnRoaXJkPC9pPiBhcmd1bWVudCB3aWxsIGJlIDxjb2RlPiIgIjwvY29kZT4uPC9saT4KICAgICAgICAgICA8bGk+Rm9yIG9uZSBvZiB0aGUgPGNvZGU+c2V0PC9jb2RlPiBtZXRob2RzIHRoZSA8aT5zZWNvbmQ8L2k+IGFyZ3VtZW50IHdpbGwgYmUganVzdCA8Y29kZT5uPC9jb2RlPjsKICAgICAgICAgICAgZm9yIHRoZSBvdGhlciBpdCB3aWxsIG5lZWQgdG8gZmluZCB0aGUgPGk+aW5kZXg8L2k+IG9mIHRoZSBtYXRjaGVkIGNoYXJhY3RlciwgZnJvbSA8aT53aXRoaW48L2k+CiAgICAgICAgICAgIDxjb2RlPnVudXNlZDwvY29kZT4sIHVzaW5nIHRoZSBkb3R0ZWQtbWV0aG9kIDxlbC1tZXRob2Q+aW5kZXhPZjwvZWwtbWV0aG9kPjwvbGk+CiAgICAgICAgPC91bD4KICAgIA=="
             >
-              CURRENTHINT The two new set instructions
+              6-2 The two new set instructions
+            </div>
+            <div
+              class="content"
+              id="hint6-2content"
+            >
             </div>
             <div
               class="hint"
               id="hint6-3"
               data-hint="CiAgICAgICAgPGNvZGU+CmZ1bmN0aW9uIG1hcmtBdHRlbXB0KGF0dGVtcHQgYXMgU3RyaW5nLCB0YXJnZXQgYXMgU3RyaW5nKSByZXR1cm5zIFN0cmluZwogIHZhcmlhYmxlIG1hcmsgc2V0IHRvICIwMDAwMCIKICB2YXJpYWJsZSB1bnVzZWQgc2V0IHRvIHRhcmdldAogIGZvciBuIGZyb20gMCB0byA0IHN0ZXAgMQogICAgaWYgYXR0ZW1wdFtuXSBpcyB1bnVzZWRbbl0gdGhlbgogICAgICBzZXQgbWFyayB0byBzZXRDaGFyKG1hcmssIG4sICIyIikKICAgICAgc2V0IHVudXNlZCB0byBzZXRDaGFyKHVudXNlZCwgbiwgIiAiKQogICAgZW5kIGlmCiAgZW5kIGZvcgogIGZvciBuIGZyb20gMCB0byA0IHN0ZXAgMQogICAgaWYgKG1hcmtbbl0gaXNudCAiMiIpIGFuZCB1bnVzZWQuY29udGFpbnMoYXR0ZW1wdFtuXSkgdGhlbgogICAgICBzZXQgbWFyayB0byBzZXRDaGFyKG1hcmssIG4sICIxIikKICAgICAgc2V0IHVudXNlZCB0byBzZXRDaGFyKHVudXNlZCwgdW51c2VkLmluZGV4T2YoYXR0ZW1wdFtuXSksICIgIikKICAgIGVuZCBpZgogIGVuZCBmb3IKICByZXR1cm4gbWFyawplbmQgZnVuY3Rpb24KICAgICAgICA8L2NvZGU+CiAgICAgICAg"
             >
-              CURRENTHINT The complete function
+              6-3 The complete function
+            </div>
+            <div
+              class="content"
+              id="hint6-3content"
+            >
             </div>
           </li>
         </ul>
@@ -879,11 +959,11 @@
         <ul>
           <li>
             Create a loop within
-            <code>
+            <el-code>
               <el-kw>
                 main
               </el-kw>
-            </code>
+            </el-code>
             to solve a fixed number of puzzles in succession,
         and then allow the user to specify, at the start, how many puzzles.
           </li>

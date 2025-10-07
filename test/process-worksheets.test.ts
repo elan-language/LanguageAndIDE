@@ -157,7 +157,9 @@ end constructor`;
     const actual = await processHints(hints, 0);
 
     const expected = `<div class="hint" id="hint0-0" data-hint="PHA+aGludCBkZXRhaWxzIDAtMDwvcD4=">0-0</div>
-<div class="hint" id="hint0-1" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg==">hint0-1</div>`;
+<div class="content" id="hint0-0content"></div>
+<div class="hint" id="hint0-1" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg==">hint0-1</div>
+<div class="content" id="hint0-1content"></div>`;
 
     assert.strictEqual(actual, expected);
   });
