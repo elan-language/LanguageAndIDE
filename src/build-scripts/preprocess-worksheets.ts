@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { processCode, processSteps, processTitle } from "../tools/markupParser";
 import toDiffableHtml from "diffable-html";
 import {
@@ -24,6 +24,10 @@ function updateFileNew(testDoc: string, newContent: string) {
 
 export function getWorksheets(sourceDir: string): string[] {
   return readdirSync(sourceDir).filter((s) => s.endsWith(".raw.html"));
+}
+
+export function getWorksheetSubdir(sourceDir: string): string[] {
+  return readdirSync(sourceDir).filter((s) => statSync(sourceDir + "/" + s).isDirectory());
 }
 
 function wrapInWorkSheetBoilerPlate(content: string, title: string) {
@@ -99,6 +103,14 @@ export async function processWorksheet(fileName: string) {
   updateFileNew(fileName.replace(".raw", ""), updatedContent);
 }
 
-for (const fn of getWorksheets(worksheets)) {
-  processWorksheet(`${worksheets}${fn}`);
+export async function processWorksheetsInDirectory(dir: string) {
+  for (const fn of getWorksheets(dir)) {
+    await processWorksheet(`${dir}${fn}`);
+  }
+
+  for (const sd of getWorksheetSubdir(dir)) {
+    await processWorksheetsInDirectory(`${dir}${sd}/`);
+  }
 }
+
+processWorksheetsInDirectory(worksheets);

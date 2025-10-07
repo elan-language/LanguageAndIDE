@@ -1,5 +1,5 @@
 import assert from "assert";
-import { getWorksheets, processWorksheet } from "../src/build-scripts/preprocess-worksheets";
+import { processWorksheetsInDirectory } from "../src/build-scripts/preprocess-worksheets";
 import { processInnerCode } from "../src/tools/codeParser";
 import {
   processCode,
@@ -218,8 +218,6 @@ end constructor`;
     const rootdir = `${__dirname}/../../`;
     const worksheets = `${rootdir}test/raw_worksheets/`;
 
-    for (const fn of getWorksheets(worksheets)) {
-      processWorksheet(`${worksheets}${fn}`);
-    }
+    processWorksheetsInDirectory(worksheets);
   });
 });
