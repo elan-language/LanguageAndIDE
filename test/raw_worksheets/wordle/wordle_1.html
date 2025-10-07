@@ -150,37 +150,37 @@
             function. Comments state that the current implementation is just a 'stub' - the minimum code needed
         to allow the program to compile and run. It returns
         a five-character string, as expected:
-            <code>
+            <el-code>
               <el-lit>
                 2
               </el-lit>
-            </code>
+            </el-code>
             for an 'in-place' match (green),
-            <code>
+            <el-code>
               <el-lit>
                 1
               </el-lit>
-            </code>
+            </el-code>
             for an 'out-of-place' match (yellow), or
-            <code>
+            <el-code>
               <el-lit>
                 0
               </el-lit>
-            </code>
+            </el-code>
             for no match (grey). But
         it always returns the same mark, paying no attention to the two parameters: the 
         #
-            <code>
+            <el-code>
               <el-id>
                 attempt
               </el-id>
-            </code>
+            </el-code>
             word (your guess) and the
-            <code>
+            <el-code>
               <el-id>
                 target
               </el-id>
-            </code>
+            </el-code>
             word 
         (selected by the computer but normally hidden from the user).
           </li>
@@ -190,11 +190,11 @@
               markAttempt
             </el-method>
             function you will see a
-            <code>
+            <el-code>
               <el-kw>
                 test
               </el-kw>
-            </code>
+            </el-code>
             which has been 'ghosted'. Select the test and
             <b>
               unghost
@@ -216,11 +216,11 @@
           </li>
           <li>
             Change the 'default' value to which the
-            <code>
+            <el-code>
               <el-id>
                 mark
               </el-id>
-            </code>
+            </el-code>
             string is set, so that it returns a string of five zeroes.
           </li>
           <p>
@@ -264,11 +264,11 @@
             ,
             you would probably tell them to look for any 'green' matches first. (It's more complicated to
             to it any other way.) In the
-            <code>
+            <el-code>
               <el-kw>
                 test
               </el-kw>
-            </code>
+            </el-code>
             you can see that the first few (failing) tests are
             all looking just for green matches. So, your first task is to write an implementation that gets the four 
             'Only greens' tests passing.
@@ -280,11 +280,11 @@
             </el-method>
             function will need to set individual characters within
             the five-character
-            <code>
+            <el-code>
               <el-id>
                 mark
               </el-id>
-            </code>
+            </el-code>
             string. The
             <el-method>
               setChar
@@ -292,24 +292,24 @@
             function (instruction 73) is intended
             for this purpose, but notice that this also is a 'stub' implementation. So start by
         unghosting the
-            <code>
+            <el-code>
               <el-kw>
                 test
               </el-kw>
-            </code>
+            </el-code>
             for
-            <code>
+            <el-code>
               <el-id>
                 setChar
               </el-id>
-            </code>
+            </el-code>
             (immediately below the function),
         and then write a proper implementation of
-            <code>
+            <el-code>
               <el-id>
                 setChar
               </el-id>
-            </code>
+            </el-code>
             to get those tests passing.
           </li>
           <div
@@ -378,17 +378,17 @@
         Start by deleting the first comment - as it will be incorrect once you start the implementation.
         (You can either keep or discard the other comment.)
         Implement this function such that the first five
-            <code>
+            <el-code>
               <el-kw>
                 assert
               </el-kw>
-            </code>
+            </el-code>
             s in the
-            <code>
+            <el-code>
               <el-kw>
                 test
               </el-kw>
-            </code>
+            </el-code>
             pass (the default case 
         and four 'Only green' cases).
           </li>
@@ -440,29 +440,29 @@
         <ul>
           <li>
             Now we will tackle the yellows. Underneath the
-            <code>
+            <el-code>
               <el-kw>
                 for
               </el-kw>
-            </code>
+            </el-code>
             loop that you just created,
         create a second loop using the same values. (It might be tempting to try to process the greens and yellows
         within the same loop, but you would that to be much more difficult in the end.)
           </li>
           <li>
             Within the new loop add an
-            <code>
+            <el-code>
               <el-kw>
                 if
               </el-kw>
-            </code>
+            </el-code>
             instruction as before, but for our first stab at this,
         use the condition that the
-            <code>
+            <el-code>
               <el-id>
                 target
               </el-id>
-            </code>
+            </el-code>
             word
             <i>
               contains
@@ -471,11 +471,11 @@
           </li>
           <li>
             If it does then set the corresponding character in
-            <code>
+            <el-code>
               <el-id>
                 mark
               </el-id>
-            </code>
+            </el-code>
             to 1 for yellow.
           </li>
           <li>
@@ -544,11 +544,11 @@
             The problem is: letters that were marked green in the first loop, are being 'overwritten'
             by a yellow. In the second loop we need to exlude any characters that have already been 
             marked green. Attempt it now by modifying the
-            <code>
+            <el-code>
               <el-kw>
                 if
               </el-kw>
-            </code>
+            </el-code>
             condition within in the second loop. You should
             get all the 'Green only' cases passing again, and
             <i>
@@ -563,11 +563,11 @@
               The condition
             </div>
             Add this to the existing condition using the
-            <code>
+            <el-code>
               <el-kw>
                 and
               </el-kw>
-            </code>
+            </el-code>
             operator.
             <div
               class="hint"
@@ -624,7 +624,7 @@
             <ul>
               <li>
                 The brackets are needed around
-                <code>
+                <el-code>
                   (
                   <el-id>
                     mark
@@ -642,36 +642,36 @@
                     2
                   </el-lit>
                   ")
-                </code>
+                </el-code>
                 to specify the priority between the
-                <code>
+                <el-code>
                   <el-kw>
                     isnt
                   </el-kw>
-                </code>
+                </el-code>
                 and the
-                <code>
+                <el-code>
                   <el-kw>
                     and
                   </el-kw>
-                </code>
+                </el-code>
                 operators. Without
         them the
-                <code>
+                <el-code>
                   <el-kw>
                     and
                   </el-kw>
-                </code>
+                </el-code>
                 is applied to the
-                <code>
+                <el-code>
                   "
                   <el-lit>
                     2
                   </el-lit>
                   "
-                </code>
+                </el-code>
                 and
-                <code>
+                <el-code>
                   <el-id>
                     target
                   </el-id>
@@ -688,17 +688,17 @@
                     n
                   </el-id>
                   ])
-                </code>
+                </el-code>
                 ,
         which are not compatible.)
               </li>
               <li>
                 One of the 'Only yellows'
-                <code>
+                <el-code>
                   <el-kw>
                     assert
                   </el-kw>
-                </code>
+                </el-code>
                 s is still failing because the
                 <i>
                   both
@@ -709,44 +709,44 @@
           </li>
           <li>
             We need to keep a tally of which letters in the
-            <code>
+            <el-code>
               <el-id>
                 target
               </el-id>
-            </code>
+            </el-code>
             word have already been 'used' (or matched) - for green, and for yellow.
         The easiest way to do this would be to blank out a character in the
-            <code>
+            <el-code>
               <el-id>
                 target
               </el-id>
-            </code>
+            </el-code>
             word as it is used. However
-            <code>
+            <el-code>
               <el-id>
                 target
               </el-id>
-            </code>
+            </el-code>
             is a parameter, and Elan (deliberately) does not allow you to
-            <code>
+            <el-code>
               <el-kw>
                 set
               </el-kw>
-            </code>
+            </el-code>
             a parameter
         in a function. So, instead, at the top of the function, just below the existing definition of the
-            <code>
+            <el-code>
               <el-id>
                 mark
               </el-id>
-            </code>
+            </el-code>
             define another variable named 'unused' and initialise it 
         to the value of
-            <code>
+            <el-code>
               <el-id>
                 target
               </el-id>
-            </code>
+            </el-code>
             .
             <div
               class="hint"
@@ -762,11 +762,11 @@
               two
             </i>
             places where
-            <code>
+            <el-code>
               <el-id>
                 target
               </el-id>
-            </code>
+            </el-code>
             is currently referenced
             <i>
               within
@@ -784,24 +784,24 @@
               both
             </i>
             places where
-            <code>
+            <el-code>
               <el-id>
                 mark
               </el-id>
-            </code>
+            </el-code>
             is being set, within the two
-            <code>
+            <el-code>
               <el-kw>
                 for
               </el-kw>
-            </code>
+            </el-code>
             loops:
          add a new instruction, underneath each, to set the corresponding character in
-            <code>
+            <el-code>
               <el-id>
                 unused
               </el-id>
-            </code>
+            </el-code>
             to a single
          empty space. When you have completed this,
             <i>
@@ -877,11 +877,11 @@
         <ul>
           <li>
             Create a loop within
-            <code>
+            <el-code>
               <el-kw>
                 main
               </el-kw>
-            </code>
+            </el-code>
             to solve a fixed number of puzzles in succession,
         and then allow the user to specify, at the start, how many puzzles.
           </li>
