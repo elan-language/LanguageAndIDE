@@ -1,5 +1,6 @@
+<title>Wordle</title>
 <step>
-    <h1>Step</h1>
+    <h1>Step STEPNUMBER</h1>
     <p>We are going to create a working implementation of the Wordle puzzle.
         If you have never previously solved a Wordle puzzle, you should visit the 
         <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">official Wordle site</a>
@@ -44,7 +45,7 @@
             for this purpose, but notice that this also is a 'stub' implementation. So start by
         unghosting the <code>test</code> for <code>setChar</code> (immediately below the function),
         and then write a proper implementation of <code>setChar</code> to get those tests passing.</li>
-        <hint>Key ideas</hint>
+        <hint>HINTNUMBER Key ideas</hint>
         <content>
             <ul>
             <li><code>String</code> is an 'immutable' type: you can't change its contents directly, 
@@ -55,7 +56,7 @@
         </li>
     </ul>
         </content>
-        <hint>Syntax</hint>
+        <hint>HINTNUMBER Syntax</hint>
         <content>
             <ul>
                 <li>The expression to be returned by the function looks like this:
@@ -66,7 +67,7 @@
             </li>
           </ul>
         </content>
-        <hint>Range values</hint>
+        <hint>HINTNUMBER Range values</hint>
         <content>
             <ul>
                 <li>The range for the part of the string up to, <i>but not including</i>, character number <code>n</code>
@@ -75,7 +76,7 @@
                     is <code>n+1..</code></li>
             </ul>
         </content>
-        <hint>Complete code for the setChar function</hint>
+        <hint>HINTNUMBER Complete code for the setChar function</hint>
         <content>
             <code>
                 function setChar(str as String, n as Int, ch as String) returns String
@@ -94,7 +95,7 @@
         Implement this function such that the first five <code>assert</code>s in the <code>test</code> pass (the default case 
         and four 'Only green' cases). 
     </li>
-    <hint>Key ideas</hint>
+    <hint>HINTNUMBER Key ideas</hint>
     <content>
         <ul>
             <li>Use a <code>for</code> loop, defining a variable <code>n</code> to work through each character number in turn</li>
@@ -103,7 +104,7 @@
             <li>If they are the same, set that character number in <code>mark</code> to 2 - for 'green'.</li>
         </ul>
     </content>
-    <hint>Instruction outline</hint>
+    <hint>HINTNUMBER Instruction outline</hint>
     <content>
     <code>
         for n from something to something step 1
@@ -115,7 +116,7 @@
     Note that each place where you see <code>something</code> you must replace it with something
     else - which <i>might</i> be different in each case.
     </content>
-    <hint>Complete function (so far)</hint>
+    <hint>HINTNUMBER Complete function (so far)</hint>
     <content>
     function markAttempt(attempt as String, target as String) returns String
       variable mark set to "00000"
@@ -142,9 +143,9 @@
         However, it will also have caused an unwanted consequence.</li>
         <question>What is that unwanted consequence, and why do you think this has happened? (Look at the individual cases).</question>
     </ul>
-    <hint>The condition</hint>
+    <hint>HINTNUMBER The condition</hint>
     <content>The condition is: <code>target.contains(attempt[n])</code></content>
-    <hint>Outline for the second loop</hint>
+    <hint>HINTNUMBER Outline for the second loop</hint>
     <content>
         <code>
   for n from 0 to 4 step 1
@@ -154,7 +155,7 @@
   end for
 </code>
     </content>
-    <hint>The complete function (so far)</hint>
+    <hint>HINTNUMBER The complete function (so far)</hint>
     <content>
         <code>
 function markAttempt(attempt as String, target as String) returns String
@@ -181,10 +182,10 @@ end function
             by a yellow. In the second loop we need to exlude any characters that have already been 
             marked green. Attempt it now by modifying the <code>if</code> condition within in the second loop. You should
             get all the 'Green only' cases passing again, and <i>all except one</i> of the 'Yellow only'
-         <hint>The condition</hint>
+         <hint>HINTNUMBER The condition</hint>
          <content><code>(mark[n] isnt "2")</code></content>
          Add this to the existing condition using the <code>and</code> operator. 
-         <hint>The complete function</hint>
+         <hint>HINTNUMBER The complete function</hint>
          <content>
             <code>
           function markAttempt(attempt as String, target as String) returns String
@@ -227,7 +228,7 @@ end function
         define another variable named 'unused' and initialise it 
         to the value of <code>target</code>.
 
-        <hint>Complete new instruction</hint>
+        <hint>HINTNUMBER Complete new instruction</hint>
         <content><code>variable unused set to target</code> to be added below <code>variable mark set to "00000"</code></content>
      </li>
      <li>
@@ -237,7 +238,7 @@ end function
          add a new instruction, underneath each, to set the corresponding character in <code>unused</code> to a single
          empty space. When you have completed this, <i>all</i> tests for <el-method>markAttempt</el-method> should pass.
 
-    <hint>Function showing the new instructions in outline</hint>
+    <hint>HINTNUMBER Function showing the new instructions in outline</hint>
     <content>
         <code>
             function markAttempt(attempt as String, target as String) returns String
@@ -259,7 +260,7 @@ end function
           end function
         </code>
     </content>
-    <hint>The two new <code>set</code> instructions</hint>
+    <hint>HINTNUMBER The two new <code>set</code> instructions</hint>
     <content>
         <ul>
             <li>The right-hand-side of both the new <code>set</code> instructions will use the 
@@ -271,7 +272,7 @@ end function
             <code>unused</code>, using the dotted-method <el-method>indexOf</el-method></li>
         </ul>
     </content>
-    <hint>The complete function</hint>
+    <hint>HINTNUMBER The complete function</hint>
     <content>
         <code>
 function markAttempt(attempt as String, target as String) returns String
