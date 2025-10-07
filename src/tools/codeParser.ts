@@ -15,6 +15,7 @@ import { ParseStatus } from "../ide/frames/status-enums";
 import { StubInputOutput } from "../ide/stub-input-output";
 import { transform, transformMany } from "../ide/compile-api/ast-visitor";
 import { Transforms } from "../ide/compile-api/transforms";
+import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "./parserConstants";
 
 function transforms(): Transforms {
   return {
@@ -160,6 +161,20 @@ export async function processInnerCode(code: string) {
   );
 }
 
+function transformCodeTag(tag: string) {
+  switch (tag) {
+    case codeTag:
+      return "<el-code>";
+    case codeEndTag:
+      return "</el-code>";
+    case codeBlockTag:
+      return "<el-code-block>";
+    case codeBlockEndTag:
+      return "</el-code-block>";
+  }
+  return tag;
+}
+
 export async function processWorksheetCode(codeAndTag: string, startTag: string, endTag: string) {
   const s = codeAndTag.indexOf(startTag) + startTag.length;
   const e = codeAndTag.indexOf(endTag);
@@ -167,5 +182,5 @@ export async function processWorksheetCode(codeAndTag: string, startTag: string,
 
   const processed = await processInnerCode(code);
 
-  return `${startTag}${processed}${endTag}`;
+  return `${transformCodeTag(startTag)}${processed}${transformCodeTag(endTag)}`;
 }

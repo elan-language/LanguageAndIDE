@@ -228,20 +228,20 @@
               m
             </b>
             to create an empty
-            <code>
+            <el-code>
               <el-kw>
                 main
               </el-kw>
-            </code>
+            </el-code>
             routine.
           </li>
           <li>
             Within the main routine add a
-            <code>
+            <el-code>
               <el-kw>
                 let
               </el-kw>
-            </code>
+            </el-code>
             instruction, and edit its two fields to look like the
       following, making as much
       use as possible of the options offered in the drop-down list (by cursoring down to the chosen item and
@@ -251,7 +251,7 @@
             </b>
             )
       because this reduces errors:
-            <code>
+            <el-code>
               <el-statement
                 class="none"
                 id="let4"
@@ -337,9 +337,9 @@
                   0
                 </el-fr>
               </el-statement>
-            </code>
+            </el-code>
             <ul>
-              <code>
+              <el-code>
                 <el-global
                   class="selected focused ok empty"
                   id="select0"
@@ -365,24 +365,24 @@
                     </el-help>
                   </el-select>
                 </el-global>
-              </code>
+              </el-code>
               <ul>
-                <code>
+                <el-code>
                   <code>
                     <li>
                       This instruction creates a new 'Turtle' which we will be commanding to move around the Display holding a 'pen' that shows the path it has taken.
                     </li>
                     Code does not parse as Elan.
                   </code>
-                  <li>
-                    <code>
-                      code&gt;Turtle Code does not parse as Elan.
-                    </code>
-                    is a 'type' of thing and type names always begin with a capital letter
-                  </li>
-                </code>
+                </el-code>
                 <li>
-                  <code>
+                  <el-code>
+                    code&gt;Turtle Code does not parse as Elan.
+                  </el-code>
+                  is a 'type' of thing and type names always begin with a capital letter
+                </li>
+                <li>
+                  <el-code>
                     <el-global
                       class="selected focused ok empty"
                       id="select0"
@@ -408,21 +408,21 @@
                         </el-help>
                       </el-select>
                     </el-global>
-                  </code>
+                  </el-code>
                 </li>
                 <li>
-                  <code>
+                  <el-code>
                     code&gt;Turtle Code does not parse as Elan.
-                  </code>
+                  </el-code>
                   is a 'type' of thing and type names always begin with a capital letter
                 </li>
                 <li>
                   We have named this turtle
-                  <code>
+                  <el-code>
                     <el-id>
                       t
                     </el-id>
-                  </code>
+                  </el-code>
                   - picking a short name because we will be referring to it often and
       isn't likely
       to be confused with anything else. We could have given it a longer name, and we will use longer names
@@ -432,19 +432,19 @@
                 </li>
                 <li>
                   The 'empty' brackets after
-                  <code>
+                  <el-code>
                     <el-type>
                       Turtle
                     </el-type>
-                  </code>
+                  </el-code>
                   are necessary, but don't worry about why they are needed just
       now
       that will gradually become clearer. Note also that if you selected
-                  <code>
+                  <el-code>
                     <el-type>
                       Turtle
                     </el-type>
-                  </code>
+                  </el-code>
                   from the drop-down
       options you
       will have seen a prompt (white characters) telling you that brackets were needed, like this:
@@ -467,13 +467,13 @@
           </li>
           <li>
             Follow this by adding this
-            <code>
+            <el-code>
               <el-kw>
                 call
               </el-kw>
-            </code>
+            </el-code>
             instruction:
-            <code>
+            <el-code>
               <el-statement
                 class="none"
                 id="call4"
@@ -555,16 +555,16 @@
                   </el-fr>
                 </el-top>
               </el-statement>
-            </code>
+            </el-code>
             Noting that:
             <ul>
               <li>
                 This instruction can be verbalised as 'call the
-                <code>
+                <el-code>
                   <el-id>
                     show
                   </el-id>
-                </code>
+                </el-code>
                 procedure on the turtle t'.
               </li>
               <li>
@@ -580,14 +580,14 @@
                 is known as a 'dotted method'.
         You'll be calling a
         lot of dotted methods on the turtle
-                <code>
+                <el-code>
                   t
                   <code>
                     . Code does not parse as Elan.
                   </code>
-                </code>
+                </el-code>
               </li>
-              <code>
+              <el-code>
                 <el-global
                   class="selected focused ok empty"
                   id="select0"
@@ -613,19 +613,19 @@
                     </el-help>
                   </el-select>
                 </el-global>
-              </code>
+              </el-code>
             </ul>
           </li>
-          <code>
+          <el-code>
             <code>
               <li>
                 Methods are rendered in a different colour to identifiers and types.
               </li>
               Code does not parse as Elan.
             </code>
-          </code>
+          </el-code>
         </ul>
-        <code>
+        <el-code>
           <el-global
             class="selected focused ok empty"
             id="select0"
@@ -651,13 +651,13 @@
               </el-help>
             </el-select>
           </el-global>
-        </code>
-        <code>
+        </el-code>
+        <el-code>
           <code>
             Code does not parse as Elan.
           </code>
-        </code>
-        <code>
+        </el-code>
+        <el-code>
           <el-global
             class="selected focused ok empty"
             id="select0"
@@ -683,8 +683,8 @@
               </el-help>
             </el-select>
           </el-global>
-        </code>
-        <code>
+        </el-code>
+        <el-code>
           <code>
             <li>
               Run the program, noting that:
@@ -729,35 +729,35 @@
       call t.move(10)
      Code does not parse as Elan.
               </code>
-              <ul>
-                <li>
-                  Here we again calling two different procedure methods on the turtle, their names suggesting what
-            the turtle will do.
-                </li>
-                <li>
-                  Both of these methods require you to specify a value (representing the distance to move, and the
-            angle - in degrees - to turn, respectively)
-            which is placed within the brackets. That's what the brackets are for when using a method.
-                </li>
-                <li>
-                  A value given to a method (within the brackets) is known as an 'argument' (the same term is used
-            in Mathematics).
-            Later we will encounter methods that require more than one argument. Some methods -
-                  <code>
-                    <el-id>
-                      show
-                    </el-id>
-                  </code>
-                  for example -
-            don't require any arguments, but they still need the brackets.
-                </li>
-              </ul>
-              then run the program again and make sure that you understand how the trail left by the turtle's pen
-        corresponds to the three instructions that you added.
             </li>
           </code>
-        </code>
-        <code>
+        </el-code>
+        <ul>
+          <li>
+            Here we again calling two different procedure methods on the turtle, their names suggesting what
+            the turtle will do.
+          </li>
+          <li>
+            Both of these methods require you to specify a value (representing the distance to move, and the
+            angle - in degrees - to turn, respectively)
+            which is placed within the brackets. That's what the brackets are for when using a method.
+          </li>
+          <li>
+            A value given to a method (within the brackets) is known as an 'argument' (the same term is used
+            in Mathematics).
+            Later we will encounter methods that require more than one argument. Some methods -
+            <el-code>
+              <el-id>
+                show
+              </el-id>
+            </el-code>
+            for example -
+            don't require any arguments, but they still need the brackets.
+          </li>
+        </ul>
+        then run the program again and make sure that you understand how the trail left by the turtle's pen
+        corresponds to the three instructions that you added.
+        <el-code>
           <el-global
             class="selected focused ok empty"
             id="select0"
@@ -783,8 +783,8 @@
               </el-help>
             </el-select>
           </el-global>
-        </code>
-        <code>
+        </el-code>
+        <el-code>
           <el-global
             class="selected focused ok empty"
             id="select0"
@@ -810,12 +810,12 @@
               </el-help>
             </el-select>
           </el-global>
-        </code>
-        <code>
+        </el-code>
+        <el-code>
           <code>
             Code does not parse as Elan.
           </code>
-        </code>
+        </el-code>
         <label
           class="done"
           for="done2"

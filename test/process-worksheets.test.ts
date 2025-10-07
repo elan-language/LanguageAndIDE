@@ -120,8 +120,8 @@ end constructor`;
 
     const actual = await processCode(code, codeTag, codeEndTag);
 
-    const expected = `<code><el-kw>let</el-kw></code>
-<code><el-type>Int</el-type></code>`;
+    const expected = `<el-code><el-kw>let</el-kw></el-code>
+<el-code><el-type>Int</el-type></el-code>`;
 
     assert.strictEqual(actual, expected);
   });
@@ -132,8 +132,8 @@ end constructor`;
 
     const actual = await processCode(code, codeBlockTag, codeBlockEndTag);
 
-    const expected = `<codeblock><el-kw>let</el-kw></codeblock>
-<codeblock><el-type>Int</el-type></codeblock>`;
+    const expected = `<el-code-block><el-kw>let</el-kw></el-code-block>
+<el-code-block><el-type>Int</el-type></el-code-block>`;
 
     assert.strictEqual(actual, expected);
   });
