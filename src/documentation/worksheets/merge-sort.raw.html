@@ -1,0 +1,204 @@
+
+<title>Merge Sort</title>
+  <step>
+    <h3>Getting started</h3>
+    <p>From the <b>Demo</b> menu, access the <b>Merge sort</b> code,  then select <b>File > Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
+      Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b>) to undo recent changes.</li>
+      
+    <p> Note that the code contains two functions: 
+        <el-method>sort</el-method> and <el-method>merge</el-method>, plus two tests - one to test each function -
+        with both tests covering multiple test cases (<el-kw>assert</el-kw> instructions).</li>
+        The <el-kw>assert</el-kw>s in <el-kw>test </el-kw><el-comment>merge</el-comment> are all showing <el-msg>pass</el-msg>
+        because the implementation of the <el-method>merge</el-method> function is complete and correct.
+        The <el-kw>assert</el-kw>s in <el-kw>test </el-kw><el-comment>sort</el-comment> are all failing
+        with the message: <el-msg class="error">actual: [x]</el-msg>. Looking at the code for the 
+        <el-method>sort</el-method> it is not hard to see why: this is merely a 'skeletal' implementation:
+        sufficient code only to compile, not to run correctly. Your task is to implement <el-method>sort</el-method> <i>properly</i>, until all the tests
+        pass. Your implementation should:
+        <ul>
+          <li>adopt the 'merge sort' algorithm</i></li>
+          <li>make use of the existing <el-method>merge</el-method> function</li>
+          <li>be recursive</li>
+          <li>result in all tests passing (without modifying those tests)</li>
+        </ul>
+      </p>
+
+    <hint>HINTNUMBER: Recursion</hint> 
+    <content>
+      <ul>
+       <li>Writing a recursive function means that in <i>one or more</i> places within your implementation of <el-method>sort</el-method>
+      you will have an expression that itself makes use of the <el-method>sort</el-method> function - typically with
+      to sort a <i>part</i> of the list.
+    </li>
+      <li>One of the first things to consider when writing a recursive function is the 'boundary' (or 'exit' or 'edge' condition)
+        i.e. the specific condition(s) under which you have, or can derive, the result <i>without</i> needing to use <el-method>sort</el-method> recursively.
+      </li>
+      </ul>
+    </content>
+
+    <hint>HINTNUMBER: Getting started</hint> 
+    <content>
+      <p>The following is generic advice for writing a function where there might be more than one path to the result:
+        <ul>
+          <li>start by defining a <el-kw>variable</el-kw> named <el-id>result</el-id> 
+            and then returing <el-id>result</el-id> at the end of the function. (Elan deliberately
+            does not permit you to <el-kw>return</el-kw> from multiple places in a function - or a 
+            procedure - because that breaks the principles of structured programming.)</li>
+          <li><el-id>result</el-id> needs to be initialised with a value of the correct <i>type</i>,
+          as defined in the signature of the <el-method>sort</el-method> function. This could
+          be an <el-kw>empty</el-kw> <el>List</el> of the correct type. But maybe using
+          a different value might deal with some of the test cases immediately?
+          </li>
+        </ul>
+      </p>
+    </content>
+
+    <hint>HINTNUMBER: Description of the algorithm</hint> 
+    <content>
+        <ul>
+          <li>If the input list is empty or has only one element, it does not need to be sorted</li>
+          <li>Otherwise, divide the list into two equal, or <i>approximately</i> equal parts. Think: why
+            do we need the 'approximately' qualifier? Sort each half separately, and then merge
+            the two sorted near-halves.</li>
+          <li>It <i>may</i> be helpful to write out this description as comments in the code and then
+          gradually replace comments with real code.</li>
+        </ul>
+      </p>
+    </content>
+
+    <hint>HINTNUMBER: Some useful coding idioms and hints</hint> 
+    <content>
+        <ul>
+          <li>Define a <el-kw>variable</el-kw> <i>only</i> where the named value must later be re-assigned. 
+          In all other cases, define a named value with a <el/kw>let</el>.</li>
+          <li>The method <el-method>length</el-method> - called as a 'dotted' method on a named value
+          holding a list returns its length as an integer.</li>
+          <li>You can use a 'range index' to extract a part of a list as a new list of the same
+            type. For example <el-code><el-id>myList</el-id>[3..7]</el-code> will extract the members
+            at indexes 3, 4, 5, and 6 (the upper bound is <i>exclusive</i>) - but remembed that you
+            can use named values for either or both of those bounds.</li>
+          <li>Indexes for lists (like arrays) always start from 0.</li>
+          <li>To calculate the index for the mid-point of this list, use <i>integer division</i> to divide
+            the length by two:  <el-kw>div </el-kw><el-lit>2</el-lit>, rather than <el-code>/ <el-lit>2</el-lit></el-code>.
+            Think: why is that distinction important?
+          </li>
+        </ul>
+      </p>
+    </content>
+
+    <hint>HINTNUMBER: Suggested structure</hint> 
+    <content>
+    A complete solution can consist only of these instructions. However, it is not necessarily wrong to use more instructions if you choose to.
+      <el-code-block>
+        <el-func class="ok multiline" >
+          <el-top><el-kw>function </el-kw><el-method><el-field><el-txt>sort</el-txt></el-field></el-method>(<el-field  class="optional ok"><el-txt><el-id>li</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt></el-field>)<el-kw> returns </el-kw><el-field><el-txt><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt></el-field></el-top>
+          <el-statement ><el-kw>variable </el-kw>...</el-statement>
+          <el-statement ><el-kw>let </el-kw>...</el-statement>
+          <el-statement class="ok multiline" >
+          <el-top><el-kw>if </el-kw>...</el-top>
+          <el-statement ><el-kw>let </el-kw>...</el-statement>
+          <el-statement ><el-kw>let </el-kw>...</el-statement>
+          <el-statement ><el-kw>let </el-kw>...</el-statement>
+          <el-statement ><el-kw>set </el-kw>...</el-statement>
+          <el-kw>end if</el-kw>
+          </el-statement>
+          <el-statement ><el-kw>return </el-kw>...</el-statement>
+          <el-kw>end function</el-kw>
+        </el-func>
+      </el-code-block>
+
+      Enter each of these instructions, leaving all the fields empty and <i>then</i> try to
+      work out - <i>with careful reference to Hints 3 & 4</i>, what should go into each field.
+    </content>
+
+    <hint>HINTNUMBER: First fields shown</hint> 
+    <content>
+       This code shows the first field of each instruction completed.
+       <el-code-block>
+        <el-func class="ok multiline" >
+          <el-top><el-kw>function </el-kw><el-method><el-field><el-txt>sort</el-txt></el-field></el-method>(<el-field  class="optional ok"><el-txt><el-id>li</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt></el-field>)<el-kw> returns </el-kw><el-field><el-txt><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt></el-field></el-top>
+          <el-statement ><el-kw>variable </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> set to </el-kw>...</el-statement>
+          <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>len</el-id></el-txt></el-field><el-kw> be </el-kw>...</el-statement>
+          <el-statement class="ok multiline" >
+          <el-top><el-kw>if </el-kw><el-field><el-txt><el-id>len</el-id> &gt; <el-lit>1</el-lit></el-txt></el-field><el-kw> then</el-kw></el-top>
+          <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>mid</el-id></el-txt></el-field><el-kw> be </el-kw>...</el-statement>
+          <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>frontHalf</el-id></el-txt></el-field><el-kw> be </el-kw>...</el-statement>
+          <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>backHalf</el-id></el-txt></el-field><el-kw> be </el-kw>...</el-statement>
+          <el-statement ><el-kw>set </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> to </el-kw>...</el-statement>
+          <el-kw>end if</el-kw>
+          </el-statement>
+          <el-statement ><el-kw>return </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field></el-statement>
+          <el-kw>end function</el-kw>
+        </el-func>
+      </el-code-block>
+    </content>
+
+    <hint>HINTNUMBER: Method calls shown </hint> 
+    <content>
+      This code now shows methods that are called in the remaining expression fields,
+      but does not show the arguments that must be passed into them. 
+      <el-code-block>
+        <el-func class="ok multiline" >
+          <el-top><el-kw>function </el-kw><el-method><el-field><el-txt>sort</el-txt></el-field></el-method>(<el-field  class="optional ok"><el-txt><el-id>li</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt></el-field>)<el-kw> returns </el-kw><el-field><el-txt><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt></el-field></el-top>
+          <el-statement ><el-kw>variable </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-id>li</el-id></el-txt></el-field></el-statement>
+          <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>len</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>...</el-txt></el-statement>
+          
+          <el-statement><el-top><el-kw>if </el-kw><el-field><el-txt><el-id>len</el-id> &gt; <el-lit>1</el-lit></el-txt></el-field><el-kw> then</el-kw></el-top>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>mid</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-id>len</el-id> ...</el-txt></el-field></el-statement>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>frontHalf</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>sort</el-method>...</el-txt></el-field></el-statement>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>backHalf</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>sort</el-method>...</el-txt></el-field></el-statement>
+            <el-statement ><el-kw>set </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-method>merge</el-method>...</el-txt></el-field></el-statement>
+          <el-kw>end if</el-kw></el-statement>
+          <el-statement ><el-kw>return </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field></el-statement>
+          <el-kw>end function</el-kw>
+        </el-func>
+      </el-code-block>
+    </content>
+
+    <hint>HINTNUMBER: The complete solution</hint> 
+    <content>
+       You can still gain some marks by correctly copying this code into the editor
+       and showing that the tests now all pass. <i>With careful reference to Hints 3 & 4</i>,
+        try to work out the correct arguments.
+        <el-code-block>
+          <el-func class="ok multiline" >
+            <el-top><el-kw>function </el-kw><el-method><el-field><el-txt>sort</el-txt></el-field></el-method>(<el-field  class="optional ok"><el-txt><el-id>li</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt></el-field>)<el-kw> returns </el-kw><el-field><el-txt><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt></el-field></el-top>
+            <el-statement ><el-kw>variable </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-id>li</el-id></el-txt></el-field></el-statement>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>len</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-id>li</el-id>.<el-method>length</el-method>()</el-txt></el-field></el-statement>
+            <el-statement class="ok multiline" >
+            <el-top><el-kw>if </el-kw><el-field><el-txt><el-id>len</el-id> &gt; <el-lit>1</el-lit></el-txt></el-field><el-kw> then</el-kw></el-top>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>mid</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-id>len</el-id><el-kw> div </el-kw><el-lit>2</el-lit></el-txt></el-field></el-statement>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>frontHalf</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>sort</el-method>(<el-id>li</el-id>[..<el-id>mid</el-id>])</el-txt></el-field></el-statement>
+            <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>backHalf</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>sort</el-method>(<el-id>li</el-id>[<el-id>mid</el-id>..])</el-txt></el-field></el-statement>
+            <el-statement ><el-kw>set </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> to </el-kw><el-field><el-txt><el-method>merge</el-method>(<el-id>frontHalf</el-id>, <el-id>backHalf</el-id>)</el-txt></el-field></el-statement>
+            <el-kw>end if</el-kw>
+            </el-statement>
+            <el-statement ><el-kw>return </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field></el-statement>
+            <el-kw>end function</el-kw>
+          </el-func>
+        </el-code-block>
+    </content>
+
+    <label class="done" for="done1">Step completed</label>
+    <input type="checkbox" class="step-complete" id="done1"/>
+    <span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
+  </step>
+
+  <div class="step" id="step2">
+    Worksheet completed.
+
+    <div class="license">
+      <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+      This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
+          <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+        If you copy and <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+        Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
+    </div>
+  </div>
+
+  <div hidden="" id="hash"></div>
+  <div hidden="" id="changes"></div>
+</div>
+<script src="../../../out/website/worksheet-scripts.js"></script>
+</body>
+</html>
