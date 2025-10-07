@@ -330,9 +330,6 @@ button.icon:active img + label
   margin-top: 5px;
 }
 
-
-
-
 .dropdown-content button.plain,
 .dropdown-content button.plain:hover,
 .dropdown-content button.plain:active,
@@ -393,13 +390,16 @@ button.icon:active img + label
   border-right-color: black;
 }
 
-.autocomplete-popup>div.selected,
 .autocomplete-popup>div:hover,
-.context-menu>div.selected,
-.context-menu>div:hover,
-.context-menu>div:focus {
+.context-menu>div:hover {
   color: white;
-  background-color: var(--ideBackground);
+  background-color: grey;
+}
+
+.autocomplete-popup>div.selected,
+.context-menu>div.selected,
+.context-menu>div:focus {
+  border: solid, black, 2px;
 }
 
 .dropdown {
@@ -418,14 +418,19 @@ button.icon:active img + label
   padding-right: 5px;
 }
 
-.menu-item:focus,
 .menu-item:hover, button.menu-item:hover
-.menu-item:active, button.menu-item:active
 .menu-item:hover a,  button.menu-item:hover a
+{
+  background-color: grey;
+  color: white;
+  text-decoration: none;
+}
+
+.menu-item:focus,
+.menu-item:active, button.menu-item:active
 .menu-item:active a, button.menu-item:active a
 {
-  background-color: var(--ideBackground);
-  color: white;
+  border: solid, black, 2px;
   text-decoration: none;
 }
 
