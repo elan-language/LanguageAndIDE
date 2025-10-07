@@ -1,8 +1,18 @@
-export const currentStepId = "CURRENTSTEP";
-export const currentHintId = "CURRENTHINT";
-export const currentLoadId = "CURRENTLOAD";
-export const currentAnswerId = "CURRENTANSWER";
-export const currentQuestionId = "CURRENTQUESTION";
+export const currentStepNumber = "STEPNUMBER";
+export const currentHintNumber = "HINTNUMBER";
+export const currentLoadNumber = "LOADNUMBER";
+export const currentAnswerNumber = "ANSWERNUMBER";
+export const currentQuestionNumber = "QUESTIONNUMBER";
+
+export const currentStepId = "STEPID";
+export const currentHintId = "HINTID";
+export const currentLoadId = "LOADID";
+export const currentAnswerId = "ANSWERID";
+export const currentQuestionId = "QUESTIONID";
+
+export const title = "title";
+export const titleTag = `<${title}>`;
+export const titleEndTag = `</${title}>`;
 export const step = "step";
 export const stepTag = `<${step}>`;
 export const stepEndTag = `</${step}>`;
