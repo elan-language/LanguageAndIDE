@@ -68,6 +68,7 @@ export async function processStep(
 
   spOuter.textContent = " Total hints used: ";
   spOuter.appendChild(sp1);
+  spOuter.appendChild(outDoc.createTextNode("/"));
   spOuter.appendChild(sp2);
 
   div.appendChild(label);
