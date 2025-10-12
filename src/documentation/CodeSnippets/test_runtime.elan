@@ -1,4 +1,4 @@
-# 869062043096e8688d0604a1e62f443b0b5a82c6919e20c40a5ba3a4996a52c6 Elan 1.5.1 guest default_profile valid
+# af9a924671bac861fcc291004a4ced0e883d58b314f2525221a9c14e099fac54 Elan 1.6.0 guest default_profile valid
 
 test 
   let a be [5, 1, 7]

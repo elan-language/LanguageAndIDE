@@ -191,11 +191,13 @@ export class FileImpl implements File {
 
   private frNo = 1;
 
-  public async renderAsHtml(): Promise<string> {
+  public async renderAsHtml(withHeader: boolean = true): Promise<string> {
     this._frNo = 1;
     const globals = parentHelper_renderChildrenAsHtml(this);
     this.currentHash = await this.getHash();
-    return `<el-header># ${this.getHashAsHtml()} ${this.getVersionAsHtml()} ${this.getUserNameAsHtml()} ${this.getProfileNameAsHtml()}</el-header>\r\n${globals}`;
+    return withHeader
+      ? `<el-header># ${this.getHashAsHtml()} ${this.getVersionAsHtml()} ${this.getUserNameAsHtml()} ${this.getProfileNameAsHtml()}</el-header>\r\n${globals}`
+      : globals;
   }
 
   public indent(): string {
@@ -580,6 +582,29 @@ export class FileImpl implements File {
     }
   }
 
+  parseBodyFrom(source: CodeSource): void {
+    try {
+      while (source.hasMoreCode()) {
+        if (source.isMatchRegEx(Regexes.newLine)) {
+          source.removeNewLine();
+        } else {
+          this.getNextSelector(source.mode).parseFrom(source);
+        }
+      }
+      this.removeAllSelectorsThatCanBe();
+      this.deselectAll();
+      this.getFirstChild().select(true, false);
+      this.updateAllParseStatus();
+    } catch (e) {
+      if (e instanceof ElanFileError) {
+        this.parseError = e.message;
+      } else {
+        this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
+      }
+      this._parseStatus = ParseStatus.invalid;
+    }
+  }
+
   async parseFrom(source: CodeSource): Promise<void> {
     if (!this._stdLibSymbols.isInitialised) {
       this.parseError = this._stdLibSymbols.error;
@@ -595,17 +620,7 @@ export class FileImpl implements File {
         source.removeRegEx(Regexes.newLine, false);
         source.removeRegEx(Regexes.newLine, false);
       }
-      while (source.hasMoreCode()) {
-        if (source.isMatchRegEx(Regexes.newLine)) {
-          source.removeNewLine();
-        } else {
-          this.getNextSelector(source.mode).parseFrom(source);
-        }
-      }
-      this.removeAllSelectorsThatCanBe();
-      this.deselectAll();
-      this.getFirstChild().select(true, false);
-      this.updateAllParseStatus();
+      this.parseBodyFrom(source);
     } catch (e) {
       if (e instanceof ElanFileError) {
         this.parseError = e.message;

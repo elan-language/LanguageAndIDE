@@ -67,12 +67,22 @@
             container: block / size;
             font-size: 0.7cqw;
             text-align: center;
-          }</style>
+          }
+          
+          #display-html {
+            height: 100%;
+          }
+          #display-html iFrame {
+            height: 100%;
+            width: 100%;
+          }
+          </style>
         <title>Elan program</title>
     </head>
     <body>
         <div id="display" tabindex="1">
             <div id="printed-text"></div>
+            <div id="display-html"></div>
             <div id="block-graphics"></div>
             <div id="vector-graphics"></div>
         </div>

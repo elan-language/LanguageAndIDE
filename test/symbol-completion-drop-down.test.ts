@@ -1485,6 +1485,7 @@ end function`;
       ["CircleVG", "*", "*"],
       ["ImageVG", "*", "*"],
       ["LineVG", "*", "*"],
+      ["RawVG", "*", "*"],
       ["RectangleVG", "*", "*"],
     ] as [string, string, string][];
 
@@ -2010,6 +2011,7 @@ end main`;
       ["ListImmutable", "*", "ListImmutable<of "],
       ["Queue", "*", "*"],
       ["Random", "*", "*"],
+      ["RawVG", "*", "*"],
       ["RectangleVG", "*", "*"],
       ["RegExp", "*", "*"],
       ["Set", "*", "*"],
@@ -2201,6 +2203,7 @@ end main`;
       ["ListImmutable", "*", "*"],
       ["Queue", "*", "*"],
       ["Random", "*", "*"],
+      ["RawVG", "*", "*"],
       ["RectangleVG", "*", "*"],
       ["RegExp", "*", "*"],
       ["Set", "*", "*"],
@@ -2881,6 +2884,7 @@ end main`;
       ["CircleVG", "*", "*"],
       ["ImageVG", "*", "*"],
       ["LineVG", "*", "*"],
+      ["RawVG", "*", "*"],
       ["RectangleVG", "*", "*"],
     ] as [string, string, string][];
 

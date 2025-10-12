@@ -174,9 +174,13 @@ test('demos', async ({ page }) => {
 
   await expect(page.getByText('Life')).toBeVisible();
 
+  await expect(page.getByText('Bubbles')).toBeFocused();
+
   await page.keyboard.press('ArrowDown');
 
-  await expect(page.getByText('Bubbles')).toBeFocused();
+  await expect(page.getByText('Burrow')).toBeFocused();
+
+await page.keyboard.press('ArrowUp');
 
   await page.keyboard.press('Enter');
 
@@ -203,9 +207,13 @@ test('files', async ({ page }) => {
 
   await expect(page.getByText('preferences')).toBeVisible();
 
+  await expect(page.getByTitle('Clear the current code')).toBeFocused()
+
   await page.keyboard.press('ArrowDown');
 
-  await expect(page.getByTitle('Clear the current code')).toBeFocused();
+  await expect(page.getByTitle('Load code from a file')).toBeFocused();
+
+   await page.keyboard.press('ArrowUp');
 
   await page.keyboard.press('Enter');
 
@@ -229,8 +237,6 @@ test('worksheets', async ({ page }) => {
   await page.keyboard.press('Enter');
 
   await expect(page.getByText('Guide to the worksheets')).toBeVisible();
-
-  await page.keyboard.press('ArrowDown');
 
   await expect(page.getByText('Guide to the worksheets')).toBeFocused();
 
@@ -505,8 +511,6 @@ test('run and stop program', async ({ page }) => {
 
   await expect(page.getByText('Life')).toBeVisible();
 
-  await page.keyboard.press('ArrowDown');
-
   await expect(page.getByText('Bubbles')).toBeFocused();
 
   await page.keyboard.press('Enter');
@@ -552,8 +556,6 @@ test('run and stop program uppercase', async ({ page }) => {
   await page.keyboard.press('Enter');
 
   await expect(page.getByText('Life')).toBeVisible();
-
-  await page.keyboard.press('ArrowDown');
 
   await expect(page.getByText('Bubbles')).toBeFocused();
 
