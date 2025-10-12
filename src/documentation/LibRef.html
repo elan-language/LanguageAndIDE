@@ -75,22 +75,23 @@ in the range:</li>
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of large numbers</h4>
 <div class="acc-body">
-
-<el-code-block source="bigInt1.elan">
-<el-statement class="ok multiline" id="for139" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident141" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr142" class="ok" tabindex="0"><el-txt><el-lit>50</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr143" class="ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr144" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
-<el-statement class="ok" id="call145" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident146" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args147" class="optional ok" tabindex="0"><el-txt><el-lit>0</el-lit>, <el-id>i</el-id>.<el-method>asString</el-method>()</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
-<el-statement class="ok" id="call152" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident153" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args154" class="optional ok" tabindex="0"><el-txt><el-lit>10</el-lit>, (<el-lit>2</el-lit>^<el-id>i</el-id>).<el-method>asString</el-method>()</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
-<el-statement class="ok" id="print176" tabindex="0"><el-kw>print </el-kw><el-field id="expr177" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>expression</i></el-place><el-compl><i>expression</i></el-compl></el-field></el-statement>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; This code calculates 2 raised to the power of 50 through 72, and its output is shown below:</p>
+<el-code-block source="bigInt2.elan">
+<el-statement class="ok multiline" id="for6" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident8" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr9" class="ok" tabindex="-1"><el-txt><el-lit>50</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr10" class="ok" tabindex="-1"><el-txt><el-lit>72</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
+<el-statement class="ok" id="var12" tabindex="-1"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>n</el-id>.<el-method>asString</el-method>().<el-method>length</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var15" tabindex="-1"><el-kw>variable </el-kw><el-field id="var16" class="ok" tabindex="-1"><el-txt><el-id>np</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit>^<el-id>n</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="call18" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field>(<el-field id="args20" class="optional ok" tabindex="-1"><el-txt>-<el-method>s</el-method>(<el-id>n</el-id>), "{<el-id>n</el-id>}"</el-txt></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="call21" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field>(<el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-lit>30</el-lit> - <el-method>s</el-method>(<el-id>np</el-id>), "{<el-id>np</el-id>}<el-lit><br></el-lit>"</el-txt></el-field>)</el-top></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
-<p>which produces:</p>
-<img src="images/bigIntegers.png">
+
+<img src="images/bigIntegers.png" width="285" height="471">
 </ul>
 <hr>
-</div></div
->
+</div></div>
+
 <h2 id="Float">Floating point</h2>
 <p>A floating point number is a decimal number that may have both integer and fractional parts.</p>
 <p>It may be written using exponential (scientific) notation, e.g.
@@ -2614,8 +2615,8 @@ If you need another random value, you use the returned <el-type>Random</el-type>
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
-</div></div>
 <hr>
+</div></div>
 
 <h2 id="Func">Func</h2>
 <p>A function may be passed as an argument into another function (or a procedure), or returned as the result of calling another function.
@@ -2891,7 +2892,12 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
   <td>integer bit shifted to the right by the value of the second argument,<br>i.e.  divided by 2 to the power of the second argument</td>
  </tr>
 </table>
-<p>Examples of the bitwise functions being tested:</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples of the bitwise functions being tested</h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Examples of the bitwise functions being tested</p>
+
 <el-code-block source="test_bitwise.elan">
 <el-test class="ok multiline" id="test3" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment5" class="optional ok" tabindex="0"><el-txt>bitwise</el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
@@ -2915,6 +2921,26 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 </el-test>
 </el-code-block>
 <p>The result of <el-method>bitNot</el-method>(<el-id>a</el-id>) being <el-code>-14</el-code> , when <el-code><el-id>a</el-id></el-code> is <el-code>13</el-code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as<br><el-code>00000000000000000000000000001101</el-code>, and applying <el-method>bitNot</el-method> gives<br><el-code>11111111111111111111111111110010 </el-code>which is the value <el-code>-14 </el-code>in signed two&#8217;s complement format,<br> the leftmost bit being the sign (<el-code>0</el-code> positive, <el-code>1</el-code> negative).</p>
+<hr>
+</div></div>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Single bit operations
+</h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; A reminder of single bit operations:</p>
+<table>
+ <tr><th rowspan="2"></th><th colspan="4">p,q</th></tr>
+ <tr><th</th><th>0,0</th><th>0,1</th><th>1,0</th><th>1,1</th></tr>
+ <tr><td><el-code>bitAnd(p,q)</el-code></td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+ <tr><td><el-code>bitOr(p,q)</el-code></td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+ <tr><td><el-code>bitNot(p)</el-code></td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+ <tr><td><el-code>bitXor(p,q)</el-code></td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+</table>
+<p>As noted in the example tests above, these methods act on 32-bit signed integers rather than on 1-bit values,
+so the effect of <el-method>bitNot</el-method> is not just the simple bit reversal shown here.</p>
+<hr>
+</div></div>
 
 <h2 id="sequence">Sequence and SequenceWithStep</h2>
 
@@ -3199,8 +3225,8 @@ This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or 
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
-</div></div>
 <hr>
+</div></div>
 
 <h3 class="no-TOC" id="map">map</h3>
 <p>The function <el-method>map</el-method> is used to apply a function to every element of a <el-type>List</el-type>, returning a new list.
@@ -3235,8 +3261,8 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 <el-code-block source="maze-generator.elan">
 <el-statement id="let156" tabindex="0"><el-kw>let </el-kw><el-field id="var157" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr158" class="ok" tabindex="0"><el-txt><el-id>p</el-id>.<el-method>neighbouringPoints</el-method>().<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type> =&gt; <el-method>getValue</el-method>(<el-id>p</el-id>, <el-id>g</el-id>))</el-txt></el-field></el-statement>
 </el-code-block>
-</div></div>
 <hr>
+</div></div>
 
 <h3 class="no-TOC" id="reduce">reduce</h3>
 <p>The function <el-method>reduce</el-method> is used to apply a function <el-id>(F)</el-id> to every element of Type <el-id>(E)</el-id>
@@ -3306,8 +3332,8 @@ and return a single value which may be of any Type <el-id>(T)</el-id>.</p>
 <el-code-block source source="Wordle.elan">
 <el-statement class="ok" id="let350" tabindex="0"><el-kw>let </el-kw><el-field id="var351" class="ok" tabindex="0"><el-txt><el-id>d2</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr352" class="ok" tabindex="0"><el-txt><el-id>possAnswers</el-id>.<el-method>reduce</el-method>(<el-id>d</el-id>, <el-kw>lambda</el-kw> <el-id>dd</el-id> <el-kw>as</el-kw> <el-type>DictionaryImmutable</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Int</el-type>&gt;, <el-id>answer</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-method>incrementCount</el-method>(<el-id>dd</el-id>, <el-id>answer</el-id>, <el-id>attempt</el-id>))</el-txt></el-field></el-statement>
 </el-code-block>
-</div></div>
 <hr>
+</div></div>
 
 <div id="maxBy"></div>
 <div id="minBy"></div>
@@ -3336,8 +3362,9 @@ They take a function as an argument, and return the list element corresponding t
 <el-statement class="ok" id="print17" tabindex="0"><el-kw>print </el-kw><el-field id="expr18" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id>.<el-method>minBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>x</el-id>.<el-method>length</el-method>())</el-txt></el-field></el-statement>
 &nbsp;&nbsp;&#x27f6; pear
 </el-code-block>
-</div></div>
 <hr>
+</div></div>
+
 <h3 class="no-TOC" id="sortBy">sortBy</h3>
 <p><el-method>sortBy</el-method> takes a <el-kw>lambda</el-kw> that takes two arguments (of the same Type as that of the <el-type>ListImmutable</el-type> being sorted) and compares them, returning an integer with one of the values -1, 0, or +1, to indicate whether the first argument should be placed respectively before, adjacent to or after the second argument in the sorted result, where &#8216;adjacent to&#8217; means it does not matter whether before or after):</p>
 
@@ -3359,8 +3386,9 @@ They take a function as an argument, and return the list element corresponding t
 <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 &nbsp;&nbsp;&#x27f6; [Alice, Edith, Jason, Lance, Paul, Pauline, Simon, Zelda]
 </el-code-block>
-</div></div>
 <hr>
+</div></div>
+
 <p><b>Elan Library Reference</b> go to the <a href="#top">top</a></p>
 <script>
   var accordions = document.getElementsByClassName("acc-title");
