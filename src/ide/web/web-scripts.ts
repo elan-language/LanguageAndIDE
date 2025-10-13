@@ -773,7 +773,6 @@ function systemInfoPrintSafe(text: string, scroll = true) {
   // sanitise the text
   text = sanitiseHtml(text);
   systemInfoPrintUnsafe(text, scroll);
-  showInfoTab();
 }
 
 function systemInfoPrintUnsafe(text: string, scroll = true) {
@@ -782,6 +781,7 @@ function systemInfoPrintUnsafe(text: string, scroll = true) {
     systemInfoDiv.scrollTop = systemInfoDiv.scrollHeight;
   }
   systemInfoDiv.focus();
+  showInfoTab();
 }
 
 async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean) {
@@ -1052,7 +1052,7 @@ function getEditorMsg(
   key: string | undefined,
   modKey: { control: boolean; shift: boolean; alt: boolean },
   selection: [number, number] | undefined,
-  autocomplete: string | undefined,
+  optionalData: string | undefined,
 ): editorEvent {
   switch (type) {
     case "paste":
@@ -1064,7 +1064,7 @@ function getEditorMsg(
         key: key,
         modKey: modKey,
         selection: selection,
-        optionalData: autocomplete,
+        optionalData: optionalData,
       };
     case "click":
     case "dblclick":
@@ -1083,9 +1083,20 @@ function getEditorMsg(
         id: id,
         modKey: modKey,
         selection: selection,
-        optionalData: autocomplete,
+        optionalData: optionalData,
       };
   }
+}
+
+function handleSelectorPaste(event: Event, target: HTMLElement, msg: editorEvent): boolean {
+  target.addEventListener("paste", async (event: ClipboardEvent) => {
+    const mk = { control: true, shift: false, alt: false };
+    const txt = await navigator.clipboard.readText();
+    await handleEditorEvent(event, "paste", "frame", mk, msg.id, "V", undefined, `${txt.trim()}\n`);
+  });
+
+  event.stopPropagation();
+  return true;
 }
 
 function handlePaste(event: Event, target: HTMLInputElement, msg: editorEvent): boolean {
@@ -1119,6 +1130,10 @@ function handleCut(event: Event, target: HTMLInputElement, msg: editorEvent) {
 }
 
 function handleCutAndPaste(event: Event, msg: editorEvent) {
+  if (msg.modKey.control && msg.modKey.shift && msg.key === "V") {
+    return handleSelectorPaste(event, event.target as HTMLElement, msg);
+  }
+
   if (event.target instanceof HTMLInputElement && msg.modKey.control) {
     switch (msg.key) {
       case "v":
@@ -1191,7 +1206,7 @@ async function handleEditorEvent(
   id?: string | undefined,
   key?: string | undefined,
   selection?: [number, number] | undefined,
-  autocomplete?: string | undefined,
+  optionalData?: string | undefined,
 ) {
   if (isRunningState()) {
     event?.preventDefault();
@@ -1206,7 +1221,7 @@ async function handleEditorEvent(
   // save last dom event for debug
   lastDOMEvent = event;
 
-  const msg = getEditorMsg(type, target, id, key, modKey, selection, autocomplete);
+  const msg = getEditorMsg(type, target, id, key, modKey, selection, optionalData);
 
   // save last editor event for debug
   lastEditorEvent = msg;
