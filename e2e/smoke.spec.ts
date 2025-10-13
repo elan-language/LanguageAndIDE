@@ -365,3 +365,23 @@ test('copy code', async ({ page }) => {
 
   expect(clipboardContent).toContain('let a be 1');
 });
+
+test('paste code', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await page.evaluate(() => navigator.clipboard.writeText("let a be 2"));
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('m');
+
+  await page.getByText('call').click();
+
+  await page.keyboard.press('Control+Shift+V');
+
+  await expect(page.locator('#var4')).toContainText('a');
+});
