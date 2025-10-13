@@ -4,8 +4,9 @@ import { ClassType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
-import { addPrivateToggleToContextMenu } from "../frame-helpers";
+import { addPrivateToggleToContextMenu, togglePrivatePublic } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
+import { editorEvent } from "../frame-interfaces/editor-event";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
@@ -71,13 +72,23 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember {
 
   makePublic = () => {
     this.private = false;
+    return true;
   };
   makePrivate = () => {
     this.private = true;
+    return true;
   };
   getContextMenuItems() {
     const map = super.getContextMenuItems();
     addPrivateToggleToContextMenu(this, map);
     return map;
+  }
+
+  processKey(e: editorEvent): boolean {
+    if (e.modKey.control && e.key === "p") {
+      return togglePrivatePublic(this);
+    }
+
+    return super.processKey(e);
   }
 }

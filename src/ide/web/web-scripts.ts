@@ -2507,8 +2507,6 @@ const globalKeys = [
   "I",
   "k",
   "K",
-  "p",
-  "P",
   "r",
   "R",
   "s",
