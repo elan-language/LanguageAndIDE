@@ -275,11 +275,19 @@ export function currentParameterIndex(text: string) {
 
 export function addPrivateToggleToContextMenu(
   member: PossiblyPrivateMember,
-  menu: Map<string, [string, (() => void) | undefined]>,
+  menu: Map<string, [string, (() => boolean) | undefined]>,
 ) {
   if (member.private) {
     menu.set("makePublic", ["make public (Ctrl-p)", member.makePublic]);
   } else {
     menu.set("makePrivate", ["make private (Ctrl-p)", member.makePrivate]);
+  }
+}
+
+export function togglePrivatePublic(member: PossiblyPrivateMember) {
+  if (member.private) {
+    return member.makePublic();
+  } else {
+    return member.makePrivate();
   }
 }
