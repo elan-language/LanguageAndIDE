@@ -37,8 +37,7 @@ export class ConstantAsn extends BreakpointAsn implements AstNode, Constant {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return `_${name};
-  get ${name}() { return this._${name} ??= ${this.value.compile()}; }\r
+    return `${name} = ${this.value.compile()};\r
 `;
   }
 }

@@ -730,6 +730,7 @@ end main
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope.LangRef.html#compile_error"]);
   });
+
   test("Pass_usingConstantAsKeyInConstantDictionary", async () => {
     const code = `${testHeader}
 
@@ -765,7 +766,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "{{:255, }:16711680}");
   });
 
-  test("Pass_UseConstantBeforeDefinition", async () => {
+  test("Fail_UseConstantBeforeDefinition", async () => {
     const code = `${testHeader}
 
 constant a set to b
@@ -774,20 +775,6 @@ main
   print a
 end main
 `;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  _a;
-  get a() { return this._a ??= this.b; }
-
-  _b;
-  get b() { return this._b ??= 2; }
-
-};
-async function main() {
-  await system.printLine(global.a);
-}
-return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -801,7 +788,6 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "2");
+    assertDoesNotCompile(fileImpl, ["'b' is not defined.LangRef.html#compile_error"]);
   });
 });
