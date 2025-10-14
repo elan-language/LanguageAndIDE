@@ -1,7 +1,5 @@
 import { expect, test } from '@playwright/test';
 
-
-
 test('simple program', async ({ page }) => {
   page.once('dialog', dialog => {
     //console.log(`Dialog message: ${dialog.message()}`);
@@ -400,4 +398,116 @@ test('paste invalid code', async ({ page }) => {
   await page.keyboard.press('Control+Shift+V');
 
   await expect(page.locator('div.context-menu div')).toContainText('Paste Failed:');
+});
+
+test('toggle private ', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('cl');
+  await page.keyboard.type('Foo');
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('prop');
+  await page.keyboard.type('aa');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('Int');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.press('ArrowLeft');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('m');
+  await page.keyboard.type('l');
+  await page.keyboard.type('foo');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('new Foo()');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('l');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('foo.aa');
+
+  
+  await expect(page.locator('#compile')).toContainText('ok');
+
+  await page.getByText('property', { exact: true }).click({
+    button: 'right'
+  });
+
+  await page.getByText('make private').click();
+
+  await expect(page.getByText('private ', { exact: true })).toBeVisible();
+
+  await expect(page.locator('#compile')).not.toContainText('ok');
+
+  await page.getByText('property', { exact: true }).click({
+    button: 'right'
+  });
+
+  await page.getByText('make public').click();
+
+  await expect(page.getByText('private ', { exact: true })).not.toBeVisible();
+
+  await expect(page.locator('#compile')).toContainText('ok');
+});
+
+test('toggle private by keyboard', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('cl');
+  await page.keyboard.type('Foo');
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('prop');
+  await page.keyboard.type('aa');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('Int');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.press('ArrowLeft');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('m');
+  await page.keyboard.type('l');
+  await page.keyboard.type('foo');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('new Foo()');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('l');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('foo.aa');
+
+  
+  await expect(page.locator('#compile')).toContainText('ok');
+
+  await page.getByText('property', { exact: true }).click();
+
+  await page.keyboard.press('Control+p');
+
+   await expect(page.getByText('private ', { exact: true })).toBeVisible();
+
+  await expect(page.locator('#compile')).not.toContainText('ok');
+
+  await page.getByText('property', { exact: true }).click();
+
+  await page.keyboard.press('Control+p');
+
+  await expect(page.getByText('private ', { exact: true })).not.toBeVisible();
+
+  await expect(page.locator('#compile')).toContainText('ok');
 });
