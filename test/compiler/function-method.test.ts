@@ -1215,4 +1215,56 @@ end class`;
       "ListImmutable cannot be of mutable type 'List<of Int>'.LangRef.html#compile_error",
     ]);
   });
+
+  test("Fail_ParameterNameClash1", async () => {
+    const code = `${testHeader}
+
+class Foo
+  function foo(foo as Int) returns String
+      return ""
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Parameter Name 'foo' may not be the same as function/procedure name.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_ParameterNameClash2", async () => {
+    const code = `${testHeader}
+
+class Foo
+  function foo(a as Int, foo as Int) returns String
+      return ""
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Parameter Name 'foo' may not be the same as function/procedure name.LangRef.html#compile_error",
+    ]);
+  });
 });

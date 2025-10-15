@@ -12,6 +12,7 @@ import { UnknownType } from "../../compiler/symbols/unknown-type";
 import { CompileError } from "../compile-error";
 import { BreakpointEvent } from "../debugging/breakpoint-event";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { getChildRange } from "./ast-helpers";
 import { BreakpointAsn } from "./breakpoint-asn";
 import { ConstantAsn } from "./globals/constant-asn";
 import { EnumAsn } from "./globals/enum-asn";
@@ -224,11 +225,25 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
     return "";
   }
 
-  resolveSymbol(id: string, _initialScope: Scope): ElanSymbol {
-    //unknown because of typescript quirk
-    const globalSymbols = (this.children.filter((c) => isSymbol(c)) as ElanSymbol[]).concat(
-      elanSymbols,
-    );
+  resolveSymbol(id: string, initialScope: Scope): ElanSymbol {
+    // only constants above scope
+
+    let globalSymbols: ElanSymbol[] = [];
+
+    if (initialScope instanceof ConstantAsn) {
+      const constChildren = this.children.filter((c) => c instanceof ConstantAsn);
+      const otherChildren = this.children.filter((c) => !(c instanceof ConstantAsn));
+      const range = getChildRange(constChildren, initialScope);
+
+      const all = range.concat(otherChildren).filter((c) => isSymbol(c)) as ElanSymbol[];
+
+      globalSymbols = all.concat(elanSymbols);
+    } else {
+      globalSymbols = (this.children.filter((c) => isSymbol(c)) as ElanSymbol[]).concat(
+        elanSymbols,
+      );
+    }
+
     const matches = globalSymbols.filter((s) => s.symbolId === id);
 
     if (matches.length === 1) {
