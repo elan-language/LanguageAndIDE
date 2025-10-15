@@ -15,6 +15,7 @@ import {
   mustBeUniqueNameInScope,
   mustNotBeOutParameter,
   mustNotBeRedefined,
+  mustNotBeSameAsMethodName,
 } from "../../compile-rules";
 import { AbstractAstNode } from "../abstract-ast-node";
 import { isAstCollectionNode, isAstIdNode, isConstructor } from "../ast-helpers";
@@ -115,6 +116,7 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
 
     for (const idNode of idNodes) {
       this.mustNotBeOutOnFunctionOrConstructor(idNode.id);
+      mustNotBeSameAsMethodName(idNode.id, this.scope, this.compileErrors, this.fieldId);
 
       if (idNodes.length > 1) {
         mustBeUniqueNameInScope(idNode.id, this, this.compileErrors, this.fieldId);
@@ -123,10 +125,8 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
       this.mustNotBeRedefined(idNode.id);
 
       getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
-
-      return parms.compile();
     }
 
-    return "";
+    return parms.compile();
   }
 }

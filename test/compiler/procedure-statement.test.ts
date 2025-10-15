@@ -1831,4 +1831,52 @@ end main`;
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["'s' is not defined.LangRef.html#compile_error"]);
   });
+
+  test("Fail_ParameterNameClash1", async () => {
+    const code = `${testHeader}
+
+procedure foo(foo as Int)
+
+end procedure`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Parameter Name 'foo' may not be the same as function/procedure name.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_ParameterNameClash2", async () => {
+    const code = `${testHeader}
+
+procedure foo(a as Int, foo as Int)
+
+end procedure`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Parameter Name 'foo' may not be the same as function/procedure name.LangRef.html#compile_error",
+    ]);
+  });
 });
