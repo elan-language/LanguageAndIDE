@@ -244,8 +244,6 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
       );
     }
 
-    //unknown because of typescript quirk
-
     const matches = globalSymbols.filter((s) => s.symbolId === id);
 
     if (matches.length === 1) {
