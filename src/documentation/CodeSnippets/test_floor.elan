@@ -1,7 +1,7 @@
-# 26aef0e33ed2b5f4b6caff50a19f417b37e88b954ea5367555ce91205338dc71 Elan 1.5.1 guest default_profile valid
+# f7e6e01310d6ab3a3cace6d298d35531f14d39ca845447ee416d7288eb3d9a46 Elan 1.6.0 guest default_profile valid
 
 test 
-  let n be 3.14159
+  let n be pi
   assert n.floor() is 3
   assert n.ceiling() is 4
   assert n.round(3) is 3.142
