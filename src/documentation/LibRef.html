@@ -2252,7 +2252,7 @@ Later shapes are positioned over earlier ones.</p>
 
 <h2>Reading keys &#8216;on the fly&#8217;</h2>
 <p>In some applications &#8211; especially in games, for example &#8211; you want the program to react to a key pressed by the user, but without holding up the program to wait for value to be input. </p>
-<p>Whether your application makes use graphics, or just uses the <i>Console</i> for text, reading keystrokes &#8216;on the fly&#8217; is done via one of two methods:</p>
+<p>Whether your application makes use graphics, or just uses the <i>Display</i> for text, reading keystrokes &#8216;on the fly&#8217; is done via one of two methods:</p>
 <el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKey</el-method>()</el-txt></el-field></el-statement>
 <el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key2</el-id>, <el-id>modifier</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKeyWithModifier</el-method>()</el-txt></el-field></el-statement>
 <p><b>Notes</b></p>
@@ -2416,7 +2416,7 @@ Later shapes are positioned over earlier ones.</p>
     (using <el-kw>print</el-kw> or any of the <el-method>print..</el-method> procedures)
     will be overlaid on top of this.</p>
 
-<p id="clearHtml">You can clear just the Html layer in the display using the procedure <el-method>clearHtml</el-method>.</p>
+<p>You can clear just the Html layer in the display using the procedure <a href="#clearHtml"><el-method>clearHtml</el-method></a>.</p>
 
 <p>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above.
     Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string.
@@ -2751,22 +2751,22 @@ Within a string delimited by <i>single quotes</i>, those literal characters can 
 <div id="round"></div>
 <div id="isNaN"></div>
 <div id="isInfinite"></div>
-<h2>floor, ceiling, round, isNaN, and IsInfinite</h2>
-    <p> All of these functions are called as 'dot methods' on a numeric value  of Type <el-type>Float</el-type> or <el-type>Int</el-type>.
-    <el-code>NaN</el-code> is short for 'Not A (Real) Number' Their use is illustrated with the following tests:</p>
-<el-code-block source="test_round">
-        <el-test class="ok multiline" id="test5" tabindex="0">
-            <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment7" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
-            <el-statement class="ok" id="let19" tabindex="0"><el-kw>let </el-kw><el-field id="var20" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr21" class="ok" tabindex="0"><el-txt><el-lit><el-lit>3</el-lit>.14159</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="assert26" tabindex="0"><el-kw>assert </el-kw><el-field id="text27" class="ok" tabindex="0"><el-txt><el-id>n</el-id>.<el-method>floor</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr28" class="ok" tabindex="0"><el-txt><el-lit>3</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-            <el-statement class="ok" id="assert33" tabindex="0"><el-kw>assert </el-kw><el-field id="text34" class="ok" tabindex="0"><el-txt><el-id>n</el-id>.<el-method>ceiling</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr35" class="ok" tabindex="0"><el-txt><el-lit>4</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-            <el-statement class="ok" id="assert46" tabindex="0"><el-kw>assert </el-kw><el-field id="text47" class="ok" tabindex="0"><el-txt><el-id>n</el-id>.<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr48" class="ok" tabindex="0"><el-txt><el-lit><el-lit>3</el-lit>.142</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-            <el-statement class="ok" id="assert53" tabindex="0"><el-kw>assert </el-kw><el-field id="text54" class="ok" tabindex="0"><el-txt><el-method>sqrt</el-method>(-<el-lit>1</el-lit>).<el-method>isNaN</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr55" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-            <el-statement class="ok" id="let64" tabindex="0"><el-kw>let </el-kw><el-field id="var65" class="ok" tabindex="0"><el-txt><el-id>x</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr66" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit>/<el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="assert60" tabindex="0"><el-kw>assert </el-kw><el-field id="text61" class="ok" tabindex="0"><el-txt><el-id>x</el-id>.<el-method>isInfinite</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr62" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-            <el-kw>end test</el-kw>
-            </el-test>
-    </el-code-block>
+<h2>floor, ceiling, round, isNaN, and isInfinite</h2>
+<p> All of these functions are called as 'dot methods' on a numeric value  of Type <el-type>Float</el-type> or <el-type>Int</el-type>.
+<el-code>NaN</el-code> is short for 'Not A (Real) Number' Their use is illustrated with the following tests:</p>
+<el-code-block source="test_floor.elan">
+<el-test class="ok multiline" id="test1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="-1"><el-txt>&nbsp;</el-txt></el-field></el-top>
+<el-statement class="ok" id="let4" tabindex="-1"><el-kw>let </el-kw><el-field id="var5" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt><el-id>pi</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="assert7" tabindex="-1"><el-kw>assert </el-kw><el-field id="text8" class="ok" tabindex="-1"><el-txt><el-id>n</el-id>.<el-method>floor</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr9" class="ok" tabindex="-1"><el-txt><el-lit>3</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert10" tabindex="-1"><el-kw>assert </el-kw><el-field id="text11" class="ok" tabindex="-1"><el-txt><el-id>n</el-id>.<el-method>ceiling</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-lit>4</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert13" tabindex="-1"><el-kw>assert </el-kw><el-field id="text14" class="ok" tabindex="-1"><el-txt><el-id>n</el-id>.<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>3</el-lit>.142</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert16" tabindex="-1"><el-kw>assert </el-kw><el-field id="text17" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(-<el-lit>1</el-lit>).<el-method>isNaN</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="let19" tabindex="-1"><el-kw>let </el-kw><el-field id="var20" class="ok" tabindex="-1"><el-txt><el-id>x</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit>/<el-lit>0</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="assert22" tabindex="-1"><el-kw>assert </el-kw><el-field id="text23" class="ok" tabindex="-1"><el-txt><el-id>x</el-id>.<el-method>isInfinite</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr24" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-kw>end test</el-kw>
+</el-test>
+</el-code-block>
 
 <h2 id="MathsFunctions">Maths functions</h2>
 All the maths functions take a <el-type>Float</el-type> argument and return a <el-type>Float</el-type> value.
@@ -2976,6 +2976,21 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
   <td>(none)</td>
   <td>(none)</td>
   <td>clears the IDE's keyboard input</td>
+ </tr><tr id="clearBlocks">
+  <td><el-method>clearBlocks</el-method></td>
+  <td>(none)</td>
+  <td>(none)</td>
+  <td>clears the block graphics layer of the IDE's Display pane</td>
+ </tr><tr id="clearHtml">
+  <td><el-method>clearHtml</el-method></td>
+  <td>(none)</td>
+  <td>(none)</td>
+  <td>clears the Html layer of the IDE's Display pane</td>
+ </tr><tr id="clearVG">
+  <td><el-method>clearVectorGraphics</el-method></td>
+  <td>(none)</td>
+  <td>(none)</td>
+  <td>clears the vector graphics layer of the IDE's Display pane</td>
  </tr><tr id="pressAnyKeyToContinue">
   <td><el-method>pressAnyKeyToContinue</el-method></td>
   <td><el-type>Boolean</el-type></td>
@@ -3068,6 +3083,11 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
   <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>returns the current value (in  milliseconds) of a system clock.<br>Useful for measuring elapsed time by comparing the values returned by two calls</td>
+ </tr><tr id="createFileForWriting_system">
+  <td><el-method>createFileForWriting</el-method></td>
+  <td>(none)</td>
+  <td><el-type>TextFileWriter</el-type></td>
+  <td>see <a href="#TextFileWriter">Writing text files</a></td>
  </tr><tr id="getKey">
   <td><el-method>getKey</el-method></td>
   <td>(none)</td>
@@ -3124,8 +3144,8 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
  </tr><tr id="openFileForReading_system">
   <td><el-method>openFileForReading</el-method></td>
   <td>(none)</td>
-  <td><el-class>TextFileReader</el-class></td>
-  <td>see <a href="#Input/output">Input/output</a></td>
+  <td><el-type>TextFileReader</el-type></td>
+  <td>see <a href="#TextFileReader">Reading text files</a></td>
  </tr><tr id="random">
   <td><el-method>random</el-method></td>
   <td>(none)</td>
