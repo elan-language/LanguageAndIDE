@@ -42,6 +42,7 @@ import { AbstractClassAsn } from "../../compiler/syntax-nodes/globals/abstract-c
 import { ConcreteClassAsn } from "../../compiler/syntax-nodes/globals/concrete-class-asn";
 import { ConstantAsn } from "../../compiler/syntax-nodes/globals/constant-asn";
 import { EnumAsn } from "../../compiler/syntax-nodes/globals/enum-asn";
+import { FunctionMainAsn } from "../../compiler/syntax-nodes/globals/function-main-asn";
 import { GlobalCommentAsn } from "../../compiler/syntax-nodes/globals/global-comment-asn";
 import { GlobalFunctionAsn } from "../../compiler/syntax-nodes/globals/global-function-asn";
 import { GlobalProcedureAsn } from "../../compiler/syntax-nodes/globals/global-procedure-asn";
@@ -491,7 +492,11 @@ export function transform(
   }
 
   if (node instanceof GlobalFunction) {
-    const functionAsn = new GlobalFunctionAsn(node.getHtmlId(), scope);
+    const functionAsn =
+      node.name.text === "main"
+        ? new FunctionMainAsn(node.getHtmlId(), scope)
+        : new GlobalFunctionAsn(node.getHtmlId(), scope);
+
     functionAsn.breakpointStatus = node.breakpointStatus;
 
     functionAsn.name = transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;

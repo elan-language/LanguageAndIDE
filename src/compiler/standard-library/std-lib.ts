@@ -44,6 +44,7 @@ import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphic } from "./vector-graphic";
 import { RawVG } from "./raw-vg";
+import { FSystem } from "./f-system";
 
 export class StdLib {
   constructor(io: ElanInputOutput) {
@@ -54,6 +55,9 @@ export class StdLib {
   static readonly negatableLitFloatOnly = /^\s*-?[0-9]+(\.[0-9]+)?((e|E)[+-]?[0-9]+)?$/;
 
   system: System;
+
+  @elanClassExport(FSystem)
+  FSystem = FSystem;
 
   // types
   @elanClassExport(TextFileReader)
