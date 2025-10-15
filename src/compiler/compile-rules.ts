@@ -36,6 +36,7 @@ import {
   NotRangeableCompileError,
   NotUniqueNameCompileError,
   OutParameterCompileError,
+  ParameterNameCompileError,
   ParameterTypesCompileError,
   PrivateMemberCompileError,
   PropertyCompileError,
@@ -76,6 +77,7 @@ import {
   isNumber,
   isProcedure,
   isProperty,
+  isSymbol,
   symbolScopeToFriendlyName,
 } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
@@ -1015,6 +1017,20 @@ export function cannotPassAsOutParameter(
   } else {
     if (isKnownType(parameter.symbolType())) {
       compileErrors.push(new OutParameterCompileError(parameter.toString(), location));
+    }
+  }
+}
+
+export function mustNotBeSameAsMethodName(
+  name: string,
+  scope: Scope,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (isSymbol(scope)) {
+    const methodName = scope.symbolId;
+    if (name === methodName) {
+      compileErrors.push(new ParameterNameCompileError(name, location));
     }
   }
 }

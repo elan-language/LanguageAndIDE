@@ -592,4 +592,56 @@ end procedure`;
       "'foo' is not defined for type 'Int'.LangRef.html#compile_error",
     ]);
   });
+
+  test("Fail_ParameterNameClash1", async () => {
+    const code = `${testHeader}
+
+class Foo
+  procedure foo(foo as Int)
+
+  end procedure
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Parameter Name 'foo' may not be the same as function/procedure name.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_ParameterNameClash2", async () => {
+    const code = `${testHeader}
+
+class Foo
+  procedure foo(a as Int, foo as Int)
+
+  end procedure
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Parameter Name 'foo' may not be the same as function/procedure name.LangRef.html#compile_error",
+    ]);
+  });
 });
