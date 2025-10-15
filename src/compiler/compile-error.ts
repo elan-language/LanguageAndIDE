@@ -455,6 +455,18 @@ export class NotUniqueNameCompileError extends CompileError {
   }
 }
 
+export class ParameterNameCompileError extends CompileError {
+  constructor(name: string, location: string) {
+    super(
+      DisplayPriority.second,
+      Severity.error,
+      `Parameter Name '${name}' may not be the same as function/procedure name.`,
+      location,
+      "LangRef.html#compile_error",
+    );
+  }
+}
+
 export class ReassignInFunctionCompileError extends CompileError {
   constructor(thing: string, location: string) {
     super(
