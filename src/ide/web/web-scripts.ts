@@ -2271,10 +2271,13 @@ async function handleDownload(event: Event) {
 }
 
 async function chromeSave(code: string, updateName: boolean, newName?: string) {
+  const name = newName ?? file.fileName;
+  const html = name.endsWith(".html");
+
   const fh = await showSaveFilePicker({
-    suggestedName: newName ?? file.fileName,
+    suggestedName: name,
     startIn: "documents",
-    types: [{ accept: { "text/elan": ".elan" } }],
+    types: html ? [{ accept: { "text/html": ".html" } }] : [{ accept: { "text/elan": ".elan" } }],
     id: lastDirId,
   });
 
@@ -2600,8 +2603,9 @@ function handleClickDropDownButton(event: Event) {
   const button = event.target as HTMLButtonElement;
   const isExpanded = button.getAttribute("aria-expanded") === "true";
   const menuId = button.getAttribute("aria-controls")!;
+  const menu = document.getElementById(menuId)!;
   button.setAttribute("aria-expanded", `${!isExpanded}`);
-  document.getElementById(menuId)!.hidden = isExpanded;
+  menu.hidden = isExpanded;
 
   const allDropDowns = document.querySelectorAll(
     "button[aria-haspopup='true']",
@@ -2612,6 +2616,10 @@ function handleClickDropDownButton(event: Event) {
       collapseMenu(e, false);
     }
   }
+
+  const firstitem = menu.querySelector(".menu-item") as HTMLElement;
+  firstitem.focus();
+
   event.stopPropagation();
 }
 

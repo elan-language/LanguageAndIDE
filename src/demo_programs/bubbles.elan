@@ -1,4 +1,4 @@
-# 01c52726f365004d4e7d9445624eb107236ee77636af9ed6f13c5e58e3b815bc Elan 1.5.1 guest default_profile valid
+# 907f32e47957db154e1bd477d31a485be23cb66e85edf542045063775aa4929d Elan 1.6.0 guest default_profile valid
 
 main
   let bubbles be new List<of CircleVG>()

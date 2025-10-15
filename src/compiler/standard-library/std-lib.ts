@@ -43,6 +43,7 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphic } from "./vector-graphic";
+import { RawVG } from "./raw-vg";
 
 export class StdLib {
   constructor(io: ElanInputOutput) {
@@ -90,6 +91,9 @@ export class StdLib {
 
   @elanClassExport(ImageVG)
   ImageVG = ImageVG;
+
+  @elanClassExport(RawVG)
+  RawVG = RawVG;
 
   @elanClassExport(List)
   List = List;
