@@ -730,6 +730,7 @@ end main
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope.LangRef.html#compile_error"]);
   });
+
   test("Pass_usingConstantAsKeyInConstantDictionary", async () => {
     const code = `${testHeader}
 
@@ -763,5 +764,55 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{{:255, }:16711680}");
+  });
+
+  test("Fail_UseConstantBeforeDefinition1", async () => {
+    const code = `${testHeader}
+
+constant a set to b
+constant b set to 2
+main
+  print a
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'b' is not defined.LangRef.html#compile_error"]);
+  });
+
+  test("Fail_UseConstantBeforeDefinition2", async () => {
+    const code = `${testHeader}
+
+constant a set to { b }
+constant b set to 2
+main
+  print a[0]
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'b' is not defined.LangRef.html#compile_error"]);
   });
 });
