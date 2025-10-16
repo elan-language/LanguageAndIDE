@@ -438,14 +438,15 @@ export function compileSimpleSubscript(
   compileErrors: CompileError[],
   fieldId: string,
 ) {
+  const [indexType] = getIndexAndOfType(rootType);
   if (index.index instanceof IndexDoubleAsn) {
     mustBeDoubleIndexableType(id, rootType, true, compileErrors, fieldId);
+    mustBeAssignableType(indexType, index.index.index1.symbolType(), compileErrors, fieldId);
+    mustBeAssignableType(indexType, index.index.index2.symbolType(), compileErrors, fieldId);
   } else {
     mustBeIndexableType(id, rootType, true, compileErrors, fieldId);
+    mustBeAssignableType(indexType, index.index.symbolType(), compileErrors, fieldId);
   }
-  const [indexType] = getIndexAndOfType(rootType);
-  mustBeAssignableType(indexType, index.index.symbolType(), compileErrors, fieldId);
-
   return wrapSimpleSubscript(`${prefix}${code}, ${postfix}`);
 }
 
