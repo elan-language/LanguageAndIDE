@@ -508,10 +508,11 @@ If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that 
 <p>See also: <a href="#Inheritance">Inheritance</a></p>
 
 <h2 id="constant"><el-kw>constant</el-kw></h2>
-<p>A <el-kw>constant</el-kw> defines a named value that cannot change, is always defined at global level (directly within a file), and is global in scope.
-Constants are created at compile time, so cannot be defined with reference to any function, nor use any operators.</p>
-<p>A constant can be defined as a literal <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type>,
+<p>A <el-kw>constant</el-kw> defines a named value that cannot change, is always defined at global level (directly within a file), and is global in scope.</p>
+<p>A constant is defined by a literal <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type>,
  <el-type>String</el-type>, <el-type>ListImmutable</el-type> or <el-type>DictionaryImmutable</el-type>.</p>
+<p>Constants are created at compile time, so cannot be defined with reference to any function, nor can you use any operators in an expression.</p>
+<p>Take care not to redefine a <a href="LibRef.html#Constants">system constant</a> such as <el-id>pi</el-id> or <el-id>blue</el-id> without good reason.</p>
 <p>The name of a <el-kw>constant</el-kw> follows the rules for an <a href="#Identifier">identifier</a>.</p>
 
 <p>Some examples of <el-kw>constant</el-kw> definitions (in the <el-id>colours</el-id> constant, <el-type>Suit</el-type> is an <a href="#enum"><el-kw>enum</el-kw></a>):</p>
