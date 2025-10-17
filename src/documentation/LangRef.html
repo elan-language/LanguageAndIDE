@@ -122,7 +122,7 @@ They are never indented from the lefthand edge, nor may they be located <em>with
  <a href="#test"><el-kw>test</el-kw></a>,
  <a href="#record"><el-kw>record</el-kw></a>,
  <a href="#class"><el-kw>class</el-kw></a>,
- <a href="#abstract_class"><el-kw>abstract</el-kw></a>,
+ <a href="#abstract_class"><el-kw>abstract class</el-kw></a>,
  <a href="#interface"><el-kw>interface</el-kw></a>,
  <a href="#constant"><el-kw>constant</el-kw></a> and
  <a href="#enum"><el-kw>enum</el-kw></a>.
@@ -132,6 +132,11 @@ They are never indented from the lefthand edge, nor may they be located <em>with
  <li><el-kw>test</el-kw> also contains statements, in particular the <a href="#assert"><el-kw>assert</el-kw></a> statement for testing functions during development of your program.</li>
  <li><el-kw>record</el-kw>, <el-kw>class</el-kw>, <el-kw>abstract</el-kw> (class), and <el-kw>interface</el-kw> define data structures and these always contain <a href="#Member">members</a>.</li>
  <li><el-kw>constant</el-kw> and <el-kw>enum</el-kw> do not contain any further instructions &ndash; only names and values.</li>
+ <li>The sequence of global instructions in your code is immaterial, with two exceptions:
+  <ul>
+   <li>If one <el-kw>constant</el-kw> is used in the definition of another constant, the definitions must be in logical order.</li>
+   <li>An <el-kw>abstract class</el-kw> must be declared above any <el-kw>class</el-kw> that inherits from it.</li>
+  </ul>
 </ul>
 
 <h2 id="main"><el-kw>main</el-kw></h2>
@@ -466,18 +471,20 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 <h3 class="no-TOC" id="Subclass">Subclass</h3>
 <h3 class="no-TOC" id="Superclass">Superclass</h3>
 <h3 class="no-TOC" id="Inheritance">Inheritance</h3>
+<h3 class="no-TOC" id="inherits"><el-kw>inherits</el-kw></h3>
+
   <p>An ordinary <a href="#class">class</a> (also known as a 'concrete class') may optionally inherit from just one <a href="#abstract_class"><el-code>abstract class</el-code></a>
     but may additionally inherit from any number of <a href="#interface">interfaces</a>.
     The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <el-code>abstract class</el-code> or any <el-code>interface</el-code>s that it inherits from, directly or indirectly.</p>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-  <li>An <el-kw>abstract class</el-kw> must be declared in the code above any class that inherits from it. This is the only case where the order of definition (of global constructs) matters.</li>
+  <li>An <el-kw>abstract class</el-kw> must be declared in the code above any class that inherits from it.</li>
   <li>The <el-kw>abstract class</el-kw> (if any) and the interfaces (if any) that a concrete <el-code>class</el-code> inherits from may not contain duplicates of any <el-code>abstract</el-code> member. Any duplicated definitions in the hierarchy will result in a compile error. If such duplications arise, you should factor out the common member definitions, and move them up the hierarchy or into new <el-code>interface</el-code>s inherited by the<el-code> interface</el-code>s and/or classes that need them.</li>
   <li>Inheritance hierarchies must form a tree, that is you must avoid creating a 'circular' dependency where, for example, Type <el-code>A</el-code> inherits from Type <el-code>B</el-code>, which inherits from Type <el-code> C</el-code>, which inherits from Type <el-code>A</el-code>.</li>
   <li>The various 'super-Types' (abstract classes and <el-code>interface</el-code>s) that a concrete <el-code>class</el-code> inherits from must not define conflicting members, e.g. members with the same name but having different Type signatures.</li>
+<li>See also example in <a href="#interface"><el-kw>Interface</el-kw></a></li>
 </ul>
-<h3 class="no-TOC" id="inherits"><el-kw>inherits</el-kw></h3>
 
 <h2 id="abstract_class"><el-kw>abstract class</el-kw></h2>
 <p>An <el-kw>abstract class</el-kw> may not be instantiated (and hence may not define a constructor). It may define concrete members i.e.:</p>
@@ -489,7 +496,6 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 <p>As with a concrete class, any of these members may be made <el-code>private</el-code>, after the corresponding frame has been added, by selecting that member frame and pressing Ctrl-p.</p>
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
-div id="abstract_procedure"></div>
 <p>You may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> statement. For example:</p>
 <p><el-code>abstract function calculateDiscount() as Float</el-code></p>
 <p>
@@ -499,13 +505,79 @@ If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that 
 <li>Define a concrete implementation on the superclass with a similar, but slightly different, name e.g. by adding a prefix such as: <el-code>default</el-code>.</li>
 <li>Each subclass must then define its implementation of the abstract method, but the ones needing a common implementation can be just one line, delegating responsibility up to the 'default' method on the superclass. </li>
 </ul>
-<p>See also: <a href="#Inheritance">Inheritance</a></p>
 
 <h2 id="interface"><el-kw>interface</el-kw></h2>
 <p>An <el-code>interface</el-code> is similar to an <el-code>abstract class</el-code>, with the difference that it may define only abstract members. The advantage of using an <el-code>interface</el-code> instead of an <el-code>abstract class</el-code> is that a concrete<el-code> class</el-code> can inherit from multiple <el-code>interface</el-code>s.</p>
 <p>An <el-code>interface</el-code> may inherit only from other <el-code>interface</el-code>s.</p>
 <p>Important: An <el-code>interface</el-code> must not re-declare abstract interfaces that are defined in any <el-code>interface</el-code> it inherits from, directly or indirectly.</p>
-<p>See also: <a href="#Inheritance">Inheritance</a></p>
+<p>See also: <a href="#Inheritance">Inheritance</a>.</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Example using <el-kw>interface</el-kw></h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from demo program <el-code>blackjack.elan</el-code> of:
+<ul>
+ <li>inheritance from <el-kw>interface</el-kw> <el-type>Player</el-type> to <el-kw>abstract class</el-kw> <el-type>Automated</el-type>
+  and to <el-kw>class</el-kw> <el-type>HumanPlayer</el-type>, and</li>
+ <li>inheritance from <el-kw>abstract class</el-kw> <el-type>Automated</el-type> to concrete <el-kw>class</el-kw> <el-type>Dealer</el-type></li>
+ <li>(concrete) definitions of function <el-method>getAction</el-method> and procedure <el-method>changeScoreBy</el-method> following their
+ abstract declarations.</li>
+</ul>
+<el-code-block source="blackjack.elan">
+<el-class class="ok multiline" id="class320" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>interface </el-kw><el-field id="type321" class="ok" tabindex="-1"><el-txt><el-type>Player</el-type></el-txt><el-place>Name</el-place></el-field> <el-field id="text322" class="empty optional ok" tabindex="-1"></el-field></el-top>
+<el-prop class="ok" id="prop324" tabindex="-1"><el-top><el-kw>abstract property </el-kw><el-field id="ident325" class="ok" tabindex="-1"><el-txt><el-id>hand</el-id></el-txt></el-field><el-kw> as </el-kw><el-field id="type326" class="ok" tabindex="-1"><el-txt><el-type>Hand</el-type></el-txt></el-field></el-top></el-prop>
+<el-proc class="ok" id="proc327" tabindex="-1">
+<el-top><el-kw>abstract procedure </el-kw><el-method><el-field id="ident328" class="ok" tabindex="-1"><el-txt><el-id>changeScoreBy</el-id></el-txt></el-field></el-method><el-punc>(</el-punc><el-field id="params329" class="optional ok" tabindex="-1"><el-txt><el-id>amount</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc></el-top></el-proc>
+<el-kw>end interface</el-kw>
+</el-class>
+
+<el-class class="ok multiline" id="class330" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>abstract class </el-kw><el-field id="type331" class="ok" tabindex="-1"><el-txt><el-type>Automated</el-type></el-txt><el-place>Name</el-place></el-field> <el-field id="text332" class="optional ok" tabindex="-1"><el-txt><el-kw>inherits</el-kw> <el-type>Player</el-type></el-txt></el-field></el-top>
+<el-prop class="ok" id="prop334" tabindex="-1"><el-kw>property </el-kw><el-field id="ident335" class="ok" tabindex="-1"><el-txt><el-id>hand</el-id></el-txt></el-field><el-kw> as </el-kw><el-field id="type336" class="ok" tabindex="-1"><el-txt><el-type>Hand</el-type></el-txt></el-field></el-prop>
+<el-prop class="ok" id="prop337" tabindex="-1"><el-kw>property </el-kw><el-field id="ident338" class="ok" tabindex="-1"><el-txt><el-id>score</el-id></el-txt></el-field><el-kw> as </el-kw><el-field id="type339" class="ok" tabindex="-1"><el-txt><el-type>Int</el-type></el-txt></el-field></el-prop>
+<el-func class="ok" id="func346" tabindex="-1">
+<el-top><el-kw>abstract function </el-kw><el-method><el-field id="ident347" class="ok" tabindex="-1"><el-txt><el-id>getAction</el-id></el-txt></el-field></el-method><el-punc>(</el-punc><el-field id="params348" class="empty optional ok" tabindex="-1"><el-compl><i>parameter definitions</i></el-compl></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type349" class="ok" tabindex="-1"><el-txt><el-type>Action</el-type></el-txt></el-field></el-top></el-func>
+<el-proc class="ok multiline" id="proc386" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident388" class="ok" tabindex="-1"><el-txt><el-method>changeScoreBy</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params389" class="optional ok" tabindex="-1"><el-txt><el-id>amount</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc></el-top>
+<el-statement class="ok" id="set390" tabindex="-1"><el-kw>set </el-kw><el-field id="ident391" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>score</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr392" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>score</el-id> + <el-id>amount</el-id></el-txt></el-field></el-statement>
+<el-kw>end procedure</el-kw>
+</el-proc>
+<el-kw>end class</el-kw>
+</el-class>
+<el-class class="ok multiline" id="class393" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>class </el-kw><el-field id="type394" class="ok" tabindex="-1"><el-txt><el-type>Dealer</el-type></el-txt><el-place>Name</el-place></el-field> <el-field id="text395" class="optional ok" tabindex="-1"><el-txt><el-kw>inherits</el-kw> <el-type>Automated</el-type></el-txt></el-field></el-top>
+<el-constructor class="ok multiline" id="constructor397" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>constructor</el-kw><el-punc>(</el-punc><el-field id="params399" class="optional ok" tabindex="-1"><el-txt><el-id>startingPoints</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc></el-top>
+<el-statement class="ok" id="set400" tabindex="-1"><el-kw>set </el-kw><el-field id="ident401" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>score</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr402" class="ok" tabindex="-1"><el-txt><el-id>startingPoints</el-id></el-txt></el-field></el-statement>
+<el-kw>end constructor</el-kw>
+</el-constructor>
+<el-func class="ok multiline" id="func422" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident424" class="ok" tabindex="-1"><el-txt><el-method>getAction</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params425" class="empty optional ok" tabindex="-1"><el-compl><i>parameter definitions</i></el-compl></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type426" class="ok" tabindex="-1"><el-txt><el-type>Action</el-type></el-txt></el-field></el-top>
+<el-statement class="ok" id="return427" tabindex="-1"><el-kw>return </el-kw><el-field id="expr428" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-kw>property</el-kw>.<el-id>hand</el-id>.<el-id>total</el-id> &lt; <el-lit>17</el-lit><el-kw> then </el-kw><el-type>Action</el-type>.<el-id>draw</el-id><el-kw><br>else </el-kw><el-type>Action</el-type>.<el-id>stand</el-id></el-txt></el-field></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
+<el-kw>end class</el-kw>
+</el-class>
+
+<el-class class="ok multiline" id="class436" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>class </el-kw><el-field id="type437" class="ok" tabindex="-1"><el-txt><el-type>HumanPlayer</el-type></el-txt><el-place>Name</el-place></el-field> <el-field id="text438" class="optional ok" tabindex="-1"><el-txt><el-kw>inherits</el-kw> <el-type>Player</el-type></el-txt><el-place><i>inherits ClassName(s)</i></el-place><el-msg></el-msg></el-field></el-top>
+<el-constructor class="ok multiline" id="constructor440" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>constructor</el-kw><el-punc>(</el-punc><el-field id="params442" class="optional ok" tabindex="-1"><el-txt><el-id>startingPoints</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc></el-top>
+<el-statement class="ok" id="set443" tabindex="-1"><el-kw>set </el-kw><el-field id="ident444" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>score</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr445" class="ok" tabindex="-1"><el-txt><el-id>startingPoints</el-id></el-txt></el-field></el-statement>
+<el-kw>end constructor</el-kw>
+</el-constructor>
+
+<el-proc class="ok multiline" id="proc494" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident496" class="ok" tabindex="-1"><el-txt><el-method>changeScoreBy</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params497" class="optional ok" tabindex="-1"><el-txt><el-id>amount</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc></el-top>
+<el-statement class="ok" id="set498" tabindex="-1"><el-kw>set </el-kw><el-field id="ident499" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>score</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr500" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>score</el-id> + <el-id>amount</el-id></el-txt></el-field></el-statement>
+<el-kw>end procedure</el-kw>
+</el-proc>
+<el-kw>end class</el-kw>
+</el-class>
+</el-code-block>
+<hr>
+</div></div>
 
 <h2 id="constant"><el-kw>constant</el-kw></h2>
 <p>A <el-kw>constant</el-kw> defines a named value that cannot change, is always defined at global level (directly within a file), and is global in scope.</p>
@@ -586,16 +658,19 @@ The <el-code>new code</el-code> prompt will offer a context appropriate subset o
   <th></th>
   <th colspan="2">Abstract</th>
   <th colspan="2">Concrete</th>
+  <th>notes</th>
  </tr><tr>
   <td width="150"></td>
   <td width="40"><a href="#interface"><br><el-kw>interface</el-kw></a></td>
-  <td width="40"><a href="#abstractclass"><el-kw>abstract class</el-kw></a></td>
+  <td width="40"><a href="#abstract_class"><el-kw>abstract class</el-kw></a></td>
   <td width="40"><a href="#class"><br><el-kw>class</el-kw></a></td>
   <td width="40"><a href="#record"><br><el-kw>record</el-kw></a></td>
+  <td></td>
  </tr><tr>
   <td><a href="#abstract_property"><el-kw>abstract property</el-kw></a></td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
+  <td></td>
   <td></td>
   <td></td>
  </tr><tr>
@@ -604,29 +679,34 @@ The <el-code>new code</el-code> prompt will offer a context appropriate subset o
   <td>&#x2714;</td>
   <td></td>
   <td></td>
+  <td>prototype for function reference only</td>
  </tr><tr>
   <td><a href="#abstract_procedure"><el-kw>abstract procedure</el-kw></a></td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
   <td></td>
   <td></td>
+  <td>prototype for procedure call only</td>
  </tr><tr>
   <td><a href="#property"><el-kw>property</el-kw></a></td>
   <td></td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
+  <td></td>
  </tr><tr>
   <td><a href="#function_method"><el-kw>function</el-kw> method</a></td>
   <td></td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
+  <td></td>
  </tr><tr>
   <td><a href="#procedure_method"><el-kw>procedure</el-kw> method</a></td>
   <td></td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
+  <td></td>
   <td></td>
  </tr><tr>
   <td><a href="#private"><el-kw>private property</el-kw></a></td>
@@ -634,17 +714,20 @@ The <el-code>new code</el-code> prompt will offer a context appropriate subset o
   <td></td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
+  <td></td>
  </tr><tr>
   <td><a href="#private"><el-kw>private function</el-kw></a></td>
   <td></td>
   <td></td>
   <td>&#x2714;</td>
   <td>&#x2714;</td>
+  <td></td>
  </tr><tr>
   <td><a href="#private"><el-kw>private procedure</el-kw></a></td>
   <td></td>
   <td></td>
   <td>&#x2714;</td>
+  <td></td>
   <td></td>
  </tr><tr>
   <td><a href="#constructor"><el-kw>constructor</el-kw></a></td>
@@ -652,17 +735,18 @@ The <el-code>new code</el-code> prompt will offer a context appropriate subset o
   <td></td>
   <td>&#x2714;</td>
   <td></td>
+  <td></td>
  </tr>
 </table>
 
 <h2 id="abstract_property"><el-kw>abstract property</el-kw></h2>
-<p>An abstract property may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
+<p>An abstract property may be defined only on an <a href="#abstract_class"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
 
 <h2 id="abstract_function"><el-kw>abstract function</el-kw></h2>
-<p>An abstract function method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
+<p>An abstract function method may be defined only on an <a href="#abstract_class"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
 
 <h2 id="abstract_procedure"><el-kw>abstract procedure</el-kw></h2>
-<p>An abstract procedure method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) procedure to match.</p>
+<p>An abstract procedure method may be defined only on an <a href="#abstract_class"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) procedure to match.</p>
 
 <h2 id="property"><el-kw>property</el-kw></h2>
 <p>A <el-kw>property</el-kw> is a named value defined on a <el-kw>class</el-kw> with a name conforming to the rules for an <a href="#Identifier">identifier</a>,
