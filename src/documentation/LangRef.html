@@ -73,9 +73,9 @@
   <td></td>
  </tr><tr>
   <td>User-defined Name</td>
-  <td><a href="LangRef.html#enum">Enumeration<br><el-kw>enum</el-kw> <el-type>Name</el-type></a></td>
-  <td><a href="LangRef.html#record">Record<br><el-kw>record</el-kw> <el-type>Name</el-type></a></td>
-  <td><a href="LangRef.html#class">Class<br><el-kw>class</el-kw> <el-type>Name</el-type></a></td>
+  <td><a href="#enum">Enumeration<br><el-kw>enum</el-kw> <el-type>Name</el-type></a></td>
+  <td><a href="#record">Record<br><el-kw>record</el-kw> <el-type>Name</el-type></a></td>
+  <td><a href="#class">Class<br><el-kw>class</el-kw> <el-type>Name</el-type></a></td>
   <td></td>
   <td></td>
  </tr><tr>
@@ -404,7 +404,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 <h2 id="class"><el-kw>class</el-kw></h2>
 
 <p>A <el-kw>class</el-kw> is a user-defined Type offering richer capability than an <a href="enum"><el-kw>enum</el-kw></a>
- or a <a href="record"><el-kw>record</el-kw></a>.</p>
+ or a <a href="#record"><el-kw>record</el-kw></a>.</p>
 <p>Unlike a <el-kw>record</el-kw>, a class may have a constructor and procedure methods.</p>
 <p>Like any other Type its name must begin with an uppercase letter.</p>
 
@@ -768,8 +768,7 @@ default thus:</p>
 </p>A property may be read, but not written to.
 Properties may be modified only from outside the class by means of a <a href="#procedure_method">Procedure method</a>.</p>
 
-<div id="FunctionMethod"></div>
-<h2 id="function_method"><el-kw>function</el-kw> method</h2>
+<h2 id=functionMethod"><el-kw>function</el-kw> method</h2>
 <p>A function method follows the same syntax and rules as a global <a href="#function">function</a>. The differences are:</p>
 <ul>
 <li>A <el-code>function</el-code> method is always referenced (used) by code outside the class using 'dot syntax' on an instance.</li>
@@ -1115,13 +1114,12 @@ and the initial value is given by a following expression. For example:</p>
 <li>Literal value</li>
 <li><a href="#namedValue">Named value</a></li>
 <li><a href="#operator">Operator</a> (including brackets)</li>
-<li><a href="#function_call">Function call</a></li>
+<li><a href="#functionCall">Function call</a></li>
 <li><a href="#lambda">Lambda</a></li>
 </ul>
 <p>which this chapter describes.</p>
 
-<div id="literal_value"></div>
-<h2 id="LiteralValue">Literal value</h2>
+<h2 id="literalValue">Literal value</h2>
 <p>A literal value is where a value is written 'literally' in the code, such as <el-code>3.142</el-code> &ndash; in contrast to a value that is referred to by a name.</p>
 <p>Here is a table showing some example literal values.  Follow the links for more information about each Type.</p>
 <table>
@@ -1146,8 +1144,7 @@ For more about ListImmutable and DictionaryImmutable literals see the <a href="L
 <p>Elan allows local named values to be defined with the same name as a constant, function, or procedure defined at global level or defined in the standard library. In such cases, when the name is used within the same method, then it will refer to the local definition. If you have done this, but then need to access the <el-code>constant</el-code>, <el-code>function</el-code>, or <el-code>procedure</el-code> with the same name, then you can simply prefix the use of the name with a 'qualifier' of either <el-code>global.</el-code> or <el-code>library.</el-code> as appropriate.</p>
 
 <div id="range"></div>
-<div id="IndexedValue"></div>
-<h2 id="IndexedValues">Indexed values</h2>
+<h2 id="IndexedValue">Indexed values</h2>
 If a variable is of an indexable Type, then an index or index range may be applied to the variable within an expression. For example:
 <pre>
     <el-code>variable a set to "Hello World!"</el-code>
@@ -1264,7 +1261,7 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 <el-field id="expr35" class="ok" tabindex="0"><el-txt>(<el-id>a</el-id> + <el-id>b</el-id>) &gt; (<el-id>c</el-id> - <el-id>d</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field>
 </el-code-block>
 
-<h2 id="function_call">Function reference</h2>
+<h2 id="functionCall">Function reference</h2>
 An expression may simply be a reference to a  function, or it may include several function references within it. Examples:
 <el-code-block source="sinDeg.elan">
 <el-statement class="ok" id="print5" tabindex="0"><el-kw>print </el-kw><el-field id="expr6" class="optional ok" tabindex="0"><el-txt><el-method>sinDeg</el-method>(<el-lit>30</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1348,8 +1345,7 @@ be followed by a <el-kw>with</el-kw> clause in order to specify any property val
 
 <div id="copy"></div>
 <div id="with"></div>
-<div id="copyWith"></div>
-<h2 id="copy_with"><el-kw>copy</el-kw>..<el-kw>with</el-kw></h2>
+<h2 id="copyWith"><el-kw>copy</el-kw>..<el-kw>with</el-kw></h2>
 <p>A <el-kw>copy..with</el-kw> expression is used to make a copy of an existing instance, but with a different value for one or more of the properties
   &ndash; either to assign to a named value, or as part of a more complex expression.</p>
 <p>It is used extensively within functional programming where you are dealing with <a href="#record">record</a>s or other <i>immutable</i> Types.

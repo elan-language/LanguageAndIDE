@@ -35,8 +35,6 @@ table
  tr:nth-child(even) td { background-color: rgb(226, 226, 226); }
  tr:nth-child(odd)  td { background-color: rgb(196, 196, 196); }
  td {padding-left: 5px; padding-right: 5px; vertical-align: top; }
- /* tr.x temporary class for ElanIndex during development */
- tr.x td:nth-child(3) * { color: red; }
  /* tr.subhead for ElanIndex head letters */
  tr.subhead td, tr.subhead td * { background-color: rgb(15,71,97); color: white; font-weight: bold; }
 

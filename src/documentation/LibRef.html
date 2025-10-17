@@ -224,7 +224,7 @@ in the range:</li>
 </tr>
 </table>
 
-<h4 class="no-TOC">Notes</h4>
+<h4 class="no-TOC" id="CharacterSets">Character sets</h4>
 <ul>
   <li>When typing from the keyboard into a literal string all the basic ASCII characters (0x20 to 0x7e) and' &pound;' can be input.
    You cannot use Alt-numeric-keypad to enter accented letters or other special characters in the range 0x80 to 0xff.</li>
@@ -241,6 +241,9 @@ in the range:</li>
   &#x27f6; This is an up arrow: &#x2191;
   </el-code>
   <p>These examples 'interpolate' the output of function <el-method>unicode</el-method> by using curly braces (see <a href="#InterpolatedString">Interpolated fields</a>).</p></li>
+</ul>
+<h4 class="no-TOC">Notes</h4>
+<ul>
  <li>Strings can be built from other strings by concatenation using the plus operator, for example:</li>
   <el-code>
   <el-statement class="ok" id="print19" tabindex="-1"><el-kw>print </el-kw><el-field id="expr20" class="optional ok" tabindex="-1"><el-txt>"<el-lit>Hello </el-lit>" + '<el-lit>world</el-lit>'</el-txt></el-field></el-statement>
@@ -1960,7 +1963,6 @@ So the top left corner of the display is at (-100,75).</p>
 </div></div>
 
 <h2 id="VectorGraphics">Vector graphics</h2>
-<div id="displayVectorGraphics"></div>
 <p>Vector graphics are implemented in Elan using the SVG (Scalable Vector Graphics) Html tag &lt;svg&gt;, and are output to the Display pane in the user interface.</p>
 <p>The area is 100 units wide by 75 units high, and both integer and floating point values of the units can be used.</p>
 <p>The origin of the units (0,0) is at the top left corner of the display: positive <i>x</i> rightwards, positive <i>y</i> downwards.
@@ -1970,13 +1972,13 @@ So for example the centre of the display is at (50, 37.5).</p>
  <li id="CircleVG"> <el-code>CircleVG</el-code> for &lt;<el-code>circle../&gt;</el-code></li>
  <li id="LineVG"><el-code>LineVG</el-code> for <el-code>&lt;line../&gt;</el-code></li>
  <li id="RectangleVG"><el-code>RectangleVG</el-code> for <el-code>&lt;rect../&gt;</el-code></li>
- <li id="ImageVG"><span id="imageVG"></span><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
+ <li id="ImageVG"><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
 </ul>
 <p>The properties of these shapes reflect the names of the attributes used in the SVG tags but some names differ. For example, SVG's <el-id>stroke-width</el-id>
  is set with property <el-id>strokeWidth</el-id>, to make it a valid Elan <a href="LangRef.html#Identifier">Identifier</a>.
 Also <el-code>stroke</el-code> and <el-code>fill</el-code> are set by the properties <el-id>strokeColour</el-id> and <el-id>fillColour</el-id>.</p>
 
-<h3 class="no-TOC">Defining Vector graphic shapes</h3>
+<h3 class="no-TOC" id="VectorGraphic">Defining Vector graphic shapes</h3>
 <p>A set of SVG shapes is defined in either a <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt; or a <el-type>List</el-type> of any specific Type of <el-type>VectorGraphic</el-type> (e.g. <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>CircleVG</el-type>&gt;) by using the <el-type>List</el-type> <el-method>append</el-method> method.</p>
 <p><el-type>VectorGraphic</el-type> is the abstract superclass of all <el-code>..VG</el-code> shapes. You would use it if you wanted to define a <el-type>List</el-type> holding different types of shape.</p>
 <p>Adding a shape returns a new instance of the list which must be assigned either to an existing variable, or to a new <el-kw>let</el-kw>.</p>
@@ -1992,12 +1994,12 @@ as shown in the table below.</p>
 Only <el-id>fillColour</el-id> can be specified as <el-id>transparent</el-id>.</p>
 <p>Note that the <el-id>height</el-id> and <el-id>width</el-id> properties of an image are also dependent on the dimensions of the original graphic file.</p>
 
-<h3 class="no-TOC">Displaying Vector graphic shapes</h3>
+<h3 class="no-TOC" id="displayVectorGraphics">Displaying Vector graphic shapes</h3>
 <p>As with <a href="#BlockGraphics">Block</a> graphics, the assembled list of shapes is not displayed until you make a call to procedure <el-method>displayVectorGraphics</el-method> with the list as its argument, thus allowing  you to make multiple changes before display.</p>
 <p>And as with using SVG in Html, the shapes are drawn in the order in which they are added to the <el-type>VectorGraphic</el-type> instance.
 Later shapes are positioned over earlier ones.</p>
 
-<h3 class="no-TOC" id="Methods_VG">Function dot methods on Vector graphic shapes</h3>
+<h3 class="no-TOC">Function dot methods on Vector graphic shapes</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -2235,7 +2237,7 @@ Later shapes are positioned over earlier ones.</p>
 <hr>
 </div></div>
 
-<h2 id="combiningGraphics">Combining graphic outputs</h2>
+<h2 id="CombiningGraphics">Combining graphic outputs</h2>
 <p>Program outputs, whether text or graphical, can be combined in the Display. In particular, Block graphics and text or Html printing can share the Display
  along with <i>either</i> Vector graphics <i>or</i> Turtle graphics (but not both).</p>
 <p>If you want to share the Display in this way, remember that both text and Html print outputs appear sequentially down the Display (which can be scrolled), whereas the graphic outputs are positioned in the Display using their own absolute coordinate systems.</p>
@@ -2400,7 +2402,7 @@ Later shapes are positioned over earlier ones.</p>
 <p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
 </ul>
 
-<h2 id="DisplayHtml">Rendering Html in the Display</h2>
+<h2 id="displayHtml">Rendering Html in the Display</h2>
 <p>If you embed Html code in a string and then attempt to print it, you will see the string displayed literally: the Html tags
     will not be recognised. This is for security reasons. However, it <i>is</i> possible to display formatted Html in the <b>Display</b>.
     The following code:</p>
