@@ -1,47 +1,41 @@
-# FFFF Elan 1.6.0 guest default_profile valid
+# cbbddb33e9290bcdbc42bf38652f0b12a86aefc15ea6b241c9119e91e9d213c2 Elan 1.6.0 guest default_profile valid
 
 main
-  call playGame()
+  # Simulate dealer's probability of bust from first card
+  variable dealer set to createDealer(10000)
+  for i from 0 to 12 step 1
+    let dfc be new Card() with rank set to rankValue.keys()[i]
+    for g from 1 to 10000 step 1
+      call dealer.newHand(dfc)
+      call dealer.playHandOut()
+      let outcome be dealer.hand.status
+      if outcome is Status.bust then
+        # increment a dictionary for outcome
+      end if
+    end for
+    # print out the dictionary of outcomes against face card
+  end for
 end main
 
-procedure playGame()
-  variable dealer set to createDealer(1000)
-  variable player set to createHumanPlayer(1000)
-  variable gameNo set to 0
-  variable cont set to true
-  while cont
-    call clearPrintedText()
-    call playOneRound(dealer, player)
-    let outcome be determineOutcome(dealer, player)
-    call updateScores(dealer, player, outcome)
-    print "You {outcome}"
-    print "Game: {gameNo} Dealer score: {dealer.score} Player score: {player.score}"
-    let prompt be "Enter p for play again, x for exit:"
-    let inp be inputStringFromOptions(prompt, ["p", "x"])
-    set cont to inp isnt "x"
-  end while
-end procedure
-
-procedure simulateGame()
+procedure simulate1000Games()
   let startPoints be 1000
   variable dealer set to createDealer(startPoints)
   variable playerA set to createPlayerA(startPoints)
   variable playerB set to createPlayerB(startPoints)
-  call playAllHands(dealer, playerA, playerB)
-  print dealer
-  print playerA
-  print playerB
+  for i from 1 to 1000 step 1
+    call playAllHands(dealer, playerA, playerB)
+  end for
   print "Dealer has {dealer.score} points"
   print "Player A has {playerA.score} points"
   print "Player B has {playerB.score} points"
 end procedure
 
 function getActionForPlayerA(hand as Hand, dealerFaceUp as Card) returns Action
-  return Action.draw
+  return if hand.total > 16 then Action.stand else Action.draw
 end function
 
 function getActionForPlayerB(hand as Hand, dealerFaceUp as Card) returns Action
-  return Action.stand
+  return if (hand.total < 16) or (hand.softAce and hand.total < 18) then Action.draw else Action.stand
 end function
 
 function createDealer(startPoints as Int) returns Dealer
@@ -67,8 +61,6 @@ procedure playAllHands(dealer as Dealer, playerA as AutomatedPlayer, playerB as 
   call playerB.newHand(dfc)
   call playerB.playHandOut()
   let statusB be playerB.hand.status
-  call dealer.newHand(dfc)
-  call dealer.playHandOut()
   let outcomeA be determineOutcome(dealer, playerA)
   call updateScores(dealer, playerA, outcomeA)
   let outcomeB be determineOutcome(dealer, playerB)

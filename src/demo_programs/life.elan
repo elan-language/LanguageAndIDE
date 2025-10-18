@@ -1,4 +1,4 @@
-# 5de93b0b7ea7799a34b185c50d29b242822a193e35f28da6a755069b5c1dc7e7 Elan 1.6.0 guest default_profile valid
+# 78d36993a5f119954a641a2644f8ad0467d0571e55c97a8bd62a038188450d4e Elan 1.5.0 guest default_profile valid
 
 main
   variable grid set to new Array2D<of Int>(40, 30, white)
@@ -75,10 +75,6 @@ procedure nextGeneration(out grid as Array2D<of Int>)
   end for
   set grid to next
 end procedure
-
-constant black set to 0x000000
-
-constant white set to 0xffffff
 
 test north
   assert north(tuple(3, 4)) is tuple(3, 3)
