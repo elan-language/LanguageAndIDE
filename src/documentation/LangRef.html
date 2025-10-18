@@ -17,10 +17,12 @@
 
 <p>In most programming, the term <b>variable</b> describes a data entity in a program that contains a value and has a name by which you can read and write its value, i.e. its value can be varied. In an Elan program, these data entities are called <b>named values</b> so that a distinction can be made between:</p>
 <ul>
- <li><b>mutable named values</b> whose content can be assigned and re-assigned, e.g. defined with a <el-kw>variable</el-kw> instruction and re-assigned with a <el-kw>set</el-kw> instruction.</li>
+ <li><b>mutable named values</b> whose content can be assigned and re-assigned, e.g. defined with a <el-kw>variable</el-kw> instruction and re-assigned with a <el-kw>set</el-kw> instruction or,
+ for <a href="LibRef.html#StandardDataStructures">mutable data structures</a>, there are methods for their update.</li>
  <li><b>immutable named values</b> whose content is assigned, e.g. with a <el-kw>let</el-kw> instruction, and then cannot be re-assigned.</li>
 </ul>
-<p> This distinction applies both to single values and to data structures (which contain multiple values) and, while it is most pertinent in functional programming, it provides a useful discipline in any code.</p>
+<p> This distinction applies both to single values and to data structures (which contain multiple values) and, while it is most pertinent in functional programming, it provides a useful discipline in any code. Preferring immutable named values can help avoid duplication and assist in the modularisation of code.</p>
+<p>Both kinds of named value may be initialised with either literals or expressions.</p>
 
 <h2 id="Identifier">Identifiers</h2>
 <p>For every named value, its name must follow the rules for an identifier:</p>
@@ -1405,8 +1407,6 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
 
 <h1 id="compile_error">Compile errors and warnings</h1>
 
-<h2></h2>
-
  <p>Q: What is the difference between a compile <i>error</i> and a <i>warning</i>.</p>
  <p>A: A warning usually indicates that the fix may involve <i>adding</i> some more code,
  for example adding a definition for an unknown identifier. An error usually indicates
@@ -1619,14 +1619,6 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
  <p>You cannot chain two 'unary' operators (those that apply to a single value), such as <el-code>-</el-code>
  or <el-kw>not</el-kw> successively within an expression.</p>
 
-<h3 id="TestTimeout" class="no-TOC">Tests timed out and were aborted</h3>
-<p>An error or infinite loop found in a test. Refer to <a href="#ignore">ignoring tests</a>.</p>
-
-<h3 id="complexityWarning" class="no-TOC">Overly complex expressions</h3>
-<p>Overly complex expressions &ndash; for example involving a sequence of open brackets &ndash; can result in
-very slow parsing. We strongly recommend that you you simplify the contents of this field, for example by
-breaking out parts of it into separate <el-kw>let</el-kw> statements; otherwise it might become impossible to add more text.</p>
-
 <h2>Field help</h2>
 
 <h4 id="ArgListField" class="no-TOC">'arguments' field in a call instruction</h4>
@@ -1719,6 +1711,20 @@ breaking out parts of it into separate <el-kw>let</el-kw> statements; otherwise 
  <p>The definition for a variable or for a <el-kw>let</el-kw> statement is most commonly
  a simple <a href="#parse_name">name</a>. Less commonly, it may take the form of:
  <a href="LibRef.html#Tuple">tuple deconstruction</a>, list deconstruction, or <a href="#record_deconstruction">record deconstruction</a>.</p>
+
+<h1 id="runtime_errors">Runtime errors</h1>
+
+<h2>Messages</h2>
+
+<h3 id="TestTimeout" class="no-TOC">Tests timed out and were aborted</h3>
+<p>An error or infinite loop found in a test. Refer to <a href="#ignore">ignoring tests</a>.</p>
+
+<h3 id="complexityWarning" class="no-TOC">Overly complex expressions</h3>
+<p>Overly complex expressions &ndash; for example involving a sequence of open brackets &ndash; can result in
+very slow parsing. We strongly recommend that you you simplify the contents of this field, for example by
+breaking out parts of it into separate <el-kw>let</el-kw> statements; otherwise it might become impossible to add more text.</p>
+
+<h3 id="ReferenceError" class="no-TOC">ReferenceError: Cannot access '[name]' before initialization</h3>
 
 <hr>
 <p><b>Elan Language Reference</b> go to the <a href="#top">top</a></p>
