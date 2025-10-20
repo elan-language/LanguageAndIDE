@@ -770,4 +770,31 @@ end record`;
       "Array2D must be of Type: Int, Float, String, or Boolean, with matching initial value",
     );
   });
+
+  test("Fail_IndexNotInt", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to new Array2D<of String>(3, 2, "")
+  variable b set to a["0", 1]
+  variable c set to a[0, 0.5]
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
+      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
+    ]);
+  });
 });

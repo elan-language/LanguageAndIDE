@@ -17,13 +17,15 @@
 
 <p>In most programming, the term <b>variable</b> describes a data entity in a program that contains a value and has a name by which you can read and write its value, i.e. its value can be varied. In an Elan program, these data entities are called <b>named values</b> so that a distinction can be made between:</p>
 <ul>
- <li><b>mutable named values</b> whose content can be assigned and re-assigned, e.g. defined with a <el-kw>variable</el-kw> instruction and re-assigned with a <el-kw>set</el-kw> instruction.</li>
+ <li><b>mutable named values</b> whose content can be assigned and re-assigned, e.g. defined with a <el-kw>variable</el-kw> instruction and re-assigned with a <el-kw>set</el-kw> instruction or,
+ for <a href="LibRef.html#StandardDataStructures">mutable data structures</a>, there are methods for their update.</li>
  <li><b>immutable named values</b> whose content is assigned, e.g. with a <el-kw>let</el-kw> instruction, and then cannot be re-assigned.</li>
 </ul>
-<p> This distinction applies both to single values and to data structures (which contain multiple values) and, while it is most pertinent in functional programming, it provides a useful discipline in any code.</p>
+<p>This distinction applies both to single values and to data structures (which contain multiple values) and, while it is most pertinent in functional programming, it provides a useful discipline in any code. Preferring immutable named values can help avoid duplication and assist in the modularisation of code.</p>
+<p>Both kinds of named value may be initialised with either literals or expressions.</p>
 
 <h2 id="Identifier">Identifiers</h2>
-<p>For every named value, its name must follow the rules for an identifier:</p>
+<p>For every named value, its name must follow the rules for an <b>identifier</b>:</p>
 <ul>
  <li>It must start with a lowercase letter followed by any combination ot letters (upper- or lowercase), digits and underscore '_' symbols.</li>
  <li>It must not contain spaces or other symbols.</li>
@@ -32,12 +34,12 @@
 
 <h2 id="Type">Named value Types</h2>
 
-<p>Elan's named values are statically typed: when initialised, their Type is established and cannot be changed.</p>
+<p>Named values are statically typed: when initialised, their Type is established and cannot be changed.</p>
 <p>The Types used in the language are here listed, each linking to its definition and further details:</p>
 <table>
- <tr><th></th><th colspan="5"></th>
+ <tr><th>Type group</th><th colspan="5">Types</th>
  </tr><tr>
-  <td>Fundamental Types</td>
+  <td>Fundamental</td>
   <td><a href="LibRef.html#Int">Integer<br><el-type>Int</el-type></a></td>
   <td><a href="LibRef.html#Float">Floating point<br><el-type>Float</el-type></a></td>
   <td><a href="LibRef.html#Boolean">Boolean<br><el-type>Boolean</el-type></a></td>
@@ -59,8 +61,8 @@
  <td><a href="LibRef.html#Queue">FIFO queue<br><el-type>Queue</el-type></a></td>
  </tr><tr>
   <td>Data I/O</td>
-  <td><a href="LibRef.html#TextFileReader">Text file input</a></td>
-  <td><a href="LibRef.html#TextFileWriter">Text file output</a></td>
+  <td><a href="LibRef.html#TextFileReader">Text file input<br><el-type>TextFileReader</el-type></a></td>
+  <td><a href="LibRef.html#TextFileWriter">Text file output<br><el-type>TextFileWriter</el-type></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -72,12 +74,12 @@
   <td></td>
   <td></td>
  </tr><tr>
-  <td>User-defined Name</td>
-  <td><a href="LangRef.html#enum">Enumeration<br><el-kw>enum</el-kw> <el-type>Name</el-type></a></td>
-  <td><a href="LangRef.html#record">Record<br><el-kw>record</el-kw> <el-type>Name</el-type></a></td>
-  <td><a href="LangRef.html#class">Class<br><el-kw>class</el-kw> <el-type>Name</el-type></a></td>
-  <td></td>
-  <td></td>
+  <td>User-defined</td>
+  <td><a href="#enum">Enumeration<br><el-kw>enum</el-kw> <el-type>Name</el-type></a></td>
+  <td><a href="#record">Record<br><el-kw>record</el-kw> <el-type>Name</el-type></a></td>
+  <td><a href="#class">Class<br><el-kw>class</el-kw> <el-type>Name</el-type></a></td>
+  <td><a href="#abstract_class">Abstract class<br><el-kw>abstract class</el-kw> <el-type>Name</el-type></a></td>
+  <td><a href="#interface">Interface<br><el-kw>interface</el-kw> <el-type>Name</el-type></a></td>
  </tr><tr>
   <td>Other</td>
   <td><a href="LibRef.html#Random">Random number<br><el-type>Random</el-type></a></td>
@@ -87,6 +89,15 @@
   <td></td>
   </tr>
 </table>
+
+<p>Assignments that define named values with fundamental Types don't require the Type name to be specified. Type names are, however, required in:</p>
+<ul>
+<li>parameters of functions and procedures</li>
+<li><el-kw>return</el-kw> value of a function</li>
+<li><el-kw>property</el-kw> of an interface, class or record</li>
+<li>empty named value, e.g. <el-code>empty List</el-code></li>
+<li>Data structures whose elements have a particular Type, e.g. <el-type>Array</el-type>&lt;of <el-type>Int</el-type>&gt;</li>
+</ul>
 
 <h2 id="Mutability">Re-assigning vs. mutating named values</h2>
 <p>This table shows which named values can be re-assigned and/or mutated depending on how they were defined:</p>
@@ -112,9 +123,8 @@
   an <el-kw>out</el-kw> parameter of an immutable Type may be re-assigned<br>if the actual argument is defined with <el-kw>variable</el-kw>, not <el-kw>let</el-kw></td></tr>
 </table>
 
-<div id="Methods"></div>
 <h1 id="GlobalInstructions">Global instructions</h1>
-<p>Global instructions (also referred to simply as 'globals') are located <em>directly</em> in your code at the highest level.
+<p>Global instructions (also referred to simply as <b>globals</b>) are located <em>directly</em> in your code at the highest level.
 They are never indented from the lefthand edge, nor may they be located <em>within</em> other instructions. They are:
  <a href="#main"><el-kw>main</el-kw></a>,
  <a href="#procedure"><el-kw>procedure</el-kw></a>,
@@ -122,16 +132,22 @@ They are never indented from the lefthand edge, nor may they be located <em>with
  <a href="#test"><el-kw>test</el-kw></a>,
  <a href="#record"><el-kw>record</el-kw></a>,
  <a href="#class"><el-kw>class</el-kw></a>,
- <a href="#abstractclass"><el-kw>abstract</el-kw></a>,
+ <a href="#abstract_class"><el-kw>abstract class</el-kw></a>,
  <a href="#interface"><el-kw>interface</el-kw></a>,
  <a href="#constant"><el-kw>constant</el-kw></a> and
  <a href="#enum"><el-kw>enum</el-kw></a>.
 </p>
+<div id="Method"></div>
 <ul>
- <li><el-kw>main</el-kw>, <el-kw>procedure</el-kw> and <el-kw>function</el-kw> are described as 'methods' and these are defined by one or more <a href="#statement">statements</a> within them.</li>
- <li><el-kw>test</el-kw> also contains statements, in particular the <el-kw>assert</el-kw> statement for testing functions during development of your program.</li>
+ <li><el-kw>main</el-kw>, <el-kw>procedure</el-kw> and <el-kw>function</el-kw> are described as <b>methods</b> and these are defined by one or more <a href="#statement">statements</a> within them.</li>
+ <li><el-kw>test</el-kw> also contains statements, in particular the <a href="#assert"><el-kw>assert</el-kw></a> statement for testing functions during development of your program.</li>
  <li><el-kw>record</el-kw>, <el-kw>class</el-kw>, <el-kw>abstract</el-kw> (class), and <el-kw>interface</el-kw> define data structures and these always contain <a href="#Member">members</a>.</li>
  <li><el-kw>constant</el-kw> and <el-kw>enum</el-kw> do not contain any further instructions &ndash; only names and values.</li>
+ <li>The sequence of global instructions in your code is immaterial, with two exceptions:
+  <ul>
+   <li>If one <el-kw>constant</el-kw> is used in the definition of another constant, the definitions must be in logical order.</li>
+   <li>An <el-kw>abstract class</el-kw> must be declared above any <el-kw>class</el-kw> that inherits from it.</li>
+  </ul>
 </ul>
 
 <h2 id="main"><el-kw>main</el-kw></h2>
@@ -153,7 +169,8 @@ They are never indented from the lefthand edge, nor may they be located <em>with
 
 <h2 id="procedure"><el-kw>procedure</el-kw></h2>
 <p id="Argument">A procedure is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> in a <el-kw>call</el-kw> statement.
-Unlike a function:
+ Its name must follow  the rules for an <a href="#Identifier">identifier</a>.</p>
+<p> Unlike a function:</p>
 <ul>
  <li>a procedure does not return a value (unless its parameters include an <el-kw>out</el-kw> value).</li>
  <li>a procedure can have side effects: indeed it <em>should</em> have side effects, otherwise there would be no point in calling it!</li>
@@ -201,23 +218,44 @@ Unlike a function:
 <div id="return"></div>
 <div id="returns"></div>
 <h2 id="function"><el-kw>function</el-kw></h2>
-<p>A <el-code>function</el-code> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in a statement or expression.</p>
-<p>Unlike a <a href="#procedure">procedure</a>, a function returns a value. Also unlike a procedure, a function can have no side effects (i.e. references outside its code) and cannot depend on any <a href="LibRef.html#SystemMethods">System methods</a>. In particular, a function's execution cannot be interrupted by any external event, though a looping function may be detected with tests
-that <a href="#ignore">time out</a>.</p>
+<p>A <el-code>function</el-code> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in a statement or expression. Its name must follow  the rules for an <a href="#Identifier">identifier</a></p>
+<p>Unlike a <a href="#procedure">procedure</a>:</p>
+<ul>
+ <li>A function always returns a value.</li>
+ <li>A function can have no side effects (i.e. references outside its code) and cannot depend on any <a href="LibRef.html#SystemMethods">System methods</a>.</li>
+ <li>A function's execution cannot be interrupted by any external event, though a looping function may be detected with tests that <a href="#ignore">time out</a>.</li>
+</ul >
 <p>The <el-kw>return</el-kw> statement is followed by the value returned by the function.</p>
-<p>Example of a function:</p>
-<el-code-block source="score.elan">
-<el-func class="ok multiline" id="func91" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident93" class="ok" tabindex="0"><el-txt>score</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params94" class="optional ok" tabindex="0"><el-txt><el-id>g</el-id> <el-kw>as</el-kw> <el-type>Game</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type95" class="ok" tabindex="0"><el-txt><el-type>Int</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
-<el-statement class="ok" id="return96" tabindex="0"><el-kw>return </el-kw><el-field id="expr97" class="ok" tabindex="0"><el-txt><el-id>g</el-id>.<el-id>body</el-id>.<el-method>length</el-method>() - <el-lit>2</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<p>Example of a function and a reference to it:</p>
+
+<el-code-block source="function.elan">
+<el-func class="ok multiline" id="func5" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>score</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params8" class="optional ok" tabindex="-1"><el-txt><el-id>g</el-id> <el-kw>as</el-kw> <el-type>Game</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type9" class="ok" tabindex="-1"><el-txt><el-type>Int</el-type></el-txt></el-field></el-top>
+<el-statement class="ok" id="return10" tabindex="-1"><el-kw>return </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-id>g</el-id>.<el-id>body</el-id>.<el-method>length</el-method>() - <el-lit>2</el-lit></el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
+<main class="ok multiline" id="main1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
+<el-statement class="ok" id="let17" tabindex="-1"><el-kw>let </el-kw><el-field id="var18" class="ok" tabindex="-1"><el-txt><el-id>g</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>Game</el-type>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="print3" tabindex="-1"><el-kw>print </el-kw><el-field id="expr4" class="optional ok" tabindex="-1"><el-txt><el-method>score</el-method>(<el-id>g</el-id>)</el-txt></el-field></el-statement>
+<el-kw>end main</el-kw>
+</main>
 </el-code-block>
 
+<div id="dotMethod"></div>
+<h3 class="no-TOC" id="dotSyntax">Dot syntax</h3>
+<p>The function example above includes two uses of <b>dot syntax</b> to qualify items in an expression:</p>
+<ul>
+ <li><el-code>g.body</el-code> refers to <el-kw>property</el-kw> <el-code>body</el-code> (defined in class <el-type>Game</el-type>) to return its value in the class instance named <el-code>g</el-code>.</li>
+ <li><el-code>g.body.length()</el-code> applies method <el-method>length</el-method> to the value <el-code>g.body</el-code> to return its string length.
+ This use of dot syntax is usually referred to as applying a <b>dot method</b>. Examples include the <a href="LibRef.html#CommonDotMethods">common dot methods</a></li>
+</ul>
+<p>Dot syntax is also used to <a href="LibRef.html#deconstructTuple">deconstruct a Tuple</a>.</p>
+
 <div id="as"></div>
-<h3  class="no-TOC" id="Parameter">Parameters</h3>
+<h3 class="no-TOC" id="Parameter">Parameters</h3>
 Parameters for both <el-code>procedures</el-code> and <el-code>functions</el-code> are defined in exactly the same way: each parameter definition takes the form:
-<br>&nbsp;&nbsp;&lt;name&gt; <el-code>as</el-code> &lt;Type&gt;
+<br>&nbsp;&nbsp;&lt;named value&gt; <el-code>as</el-code> &lt;Type&gt;
 <br> for example:
 <el-code-block source="ageAsInt.elan">
 <el-field id="params50" class="optional ok" tabindex="0"><el-txt><el-id>age</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>
@@ -321,7 +359,7 @@ Procedures and functions may be called or referenced recursively. For example, a
   <p>Note that a <el-code>record</el-code> has some similarity to a <a href="#class"><el-code>class</el-code></a> in that:</p>
 <ul>
   <li>Both are user-defined data structures</li>
-  <li>Both are given a 'Type name'</li>
+  <li>Both are given a Type name</li>
   <li>Both may define one or more properties, each with a name and Type</li>
   <li>Both may be created or copied using a <el-kw>with</el-kw> clause</li>
   <li>Both may define encapsulated methods</li>
@@ -360,7 +398,7 @@ Having defined a record's Type, such as <el-code>Game</el-code> above, you can c
 <el-statement class="ok" id="let603" tabindex="0"><el-kw>let </el-kw><el-field id="var604" class="ok" tabindex="0"><el-txt><el-id>g1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr605" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Game</el-type>()<el-kw> with </el-kw><br><el-id>head</el-id><el-kw> set to </el-kw><el-method>newSquare</el-method>(<el-lit>22</el-lit>, <el-lit>15</el-lit>), <br><el-id>key</el-id><el-kw> set to </el-kw>"<el-lit>d</el-lit>", <br><el-id>isOn</el-id><el-kw> set to </el-kw><el-id>true</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 <p>Note that you are not <em>required</em> to provide a value for each property because, where a property is not specified in the <el-kw>with</el-kw> clause (as above), that property will be given the empty (default) value of the correct Type.</p>
-<p>You can then read the values from the properties using 'dot syntax' for example:</p>
+<p>You can then read the values from the properties using <a href="#dotSyntax">dot syntax</a> for example:</p>
 <el-code-block source=""><el-statement class="" id="print15" tabindex="0"><el-kw>print </el-kw><el-field id="expr16" class="optional" tabindex="0"><el-txt><el-id>sq</el-id>.<el-id>size</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
 </el-code-block>
 <p><el-code>record</el-code> Types are immutable: the properties on an instance may not be changed, directly.
@@ -389,7 +427,7 @@ Having defined a record's Type, such as <el-code>Game</el-code> above, you can c
 </el-code-block>
 
 <h4 class="no-TOC" id="record_deconstruction">Record deconstruction</h4>
-<p>A record may be 'deconstructed', meaning that its properties are read into separate <el-kw>variable</el-kw>s using the same syntax as for deconstructing a <span class="Link">Tuple</span>. For example, assuming that Square is a record defined as in the example above, then this code:</p>
+<p>A record may be deconstructed, meaning that its properties are read into separate <el-kw>variable</el-kw>s using the same syntax as for deconstructing a Tuple. For example, assuming that Square is a record defined as in the example above, then this code:</p>
 <el-code-block>
   <el-statement class="" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>x</el-id>, <el-id>y</el-id>, <el-id>size</el-id>, <el-id>colour</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="" tabindex="0"><el-txt><el-id>mySquare</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
 </el-code-block>
@@ -399,7 +437,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 <h2 id="class"><el-kw>class</el-kw></h2>
 
 <p>A <el-kw>class</el-kw> is a user-defined Type offering richer capability than an <a href="enum"><el-kw>enum</el-kw></a>
- or a <a href="record"><el-kw>record</el-kw></a>.</p>
+ or a <a href="#record"><el-kw>record</el-kw></a>.</p>
 <p>Unlike a <el-kw>record</el-kw>, a class may have a constructor and procedure methods.</p>
 <p>Like any other Type its name must begin with an uppercase letter.</p>
 
@@ -431,8 +469,8 @@ When deconstructing, the names of the values must match the names of the <el-cod
 <p>A class may define:</p>
 <ul>
 <li>One or more properties &ndash; see <a href="#property">Property</a></li>
-<li><el-code>function</el-code> methods &ndash; see <span class="Link">Function method</span></li>
-<li><el-code>procedure</el-code> methods &ndash; see <span class="Link">Procedure method</span></li>
+<li><el-code>function</el-code> methods &ndash; see Function method</li>
+<li><el-code>procedure</el-code> methods &ndash; see Procedure method</li>
 <li>a <el-code>constructor</el-code> which may be used for setting up the values of properties. The <el-code>constructor</el-code> may optionally define parameters to force the calling code to provide initial values. However, it is not necessary to add a <el-code>constructor</el-code> if you have no need to initialise properties. Code in the constructor may make use of any functions, and follows the same constraints as a <el-code>function</el-code> (i.e. it may not call any <el-code>procedure</el-code>, whether defined on the <el-code>class</el-code> or outside).</li>
 </ul>
 
@@ -451,7 +489,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 </el-code-block>
 <p>The created instance may then be used within expressions, like any other named value.</p>
 
-<h3 class="no-TOC" id="this">Using keyword <el-kw>this</el-kw></h3>
+<h3 class="no-TOC" id="this"><el-kw>this</el-kw></h3>
 If in the code of class <el-type>A</el-type> you want to invoke a method in class <el-type>S</el-type> <i>and</i> pass to it the current instance of <el-type>A</el-type>,
 you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by this line in demo program <el-code>snake_OOP.elan</el-code>:</p>
 
@@ -463,25 +501,26 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 (<el-id>apple</el-id> is an instance of class <el-type>Apple</el-type>).</p>
 
 <!-- TODO Subclass and Superclass -->
-<div id="Subclass"></div>
-<div id="Superclass"></div>
-<h3 class="no-TOC" id="Inheritance">Subclass</h3>
-<h3 class="no-TOC" id="Inheritance">Superclass</h3>
+<h3 class="no-TOC" id="Subclass">Subclass</h3>
+<h3 class="no-TOC" id="Superclass">Superclass</h3>
 <h3 class="no-TOC" id="Inheritance">Inheritance</h3>
-  <p>An ordinary <a href="#class">class</a> (also known as a 'concrete class') may optionally inherit from just one <a href="#abstractclass"><el-code>abstract class</el-code></a>
+<h3 class="no-TOC" id="inherits"><el-kw>inherits</el-kw></h3>
+
+  <p>An ordinary <a href="#class">class</a> (also known as a concrete class) may optionally inherit from just one <a href="#abstract_class"><el-code>abstract class</el-code></a>
     but may additionally inherit from any number of <a href="#interface">interfaces</a>.
     The concrete class must define for itself a concrete implementation of every <em>abstract</em> member defined in the <el-code>abstract class</el-code> or any <el-code>interface</el-code>s that it inherits from, directly or indirectly.</p>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
-  <li>An <el-kw>abstract class</el-kw> must be declared in the code above any class that inherits from it. This is the only case where the order of definition (of global constructs) matters.</li>
-  <li>The <el-code>abstract class</el-code> (if any) and the interfaces (if any) that a concrete <el-code>class</el-code> inherits from may not contain duplicates of any <el-code>abstract</el-code> member. Any duplicated definitions in the hierarchy will result in a compile error. If such duplications arise, you should factor out the common member definitions, and move them up the hierarchy or into new <el-code>interface</el-code>s inherited by the<el-code> interface</el-code>s and/or classes that need them.</li>
-  <li>Inheritance hierarchies must form a tree, that is you must avoid creating a 'circular' dependency where, for example, Type <el-code>A</el-code> inherits from Type <el-code>B</el-code>, which inherits from Type <el-code> C</el-code>, which inherits from Type <el-code>A</el-code>.</li>
+  <li>An <el-kw>abstract class</el-kw> must be declared in the code above any class that inherits from it.</li>
+  <li>The <el-kw>abstract class</el-kw> (if any) and the interfaces (if any) that a concrete <el-code>class</el-code> inherits from may not contain duplicates of any <el-code>abstract</el-code> member. Any duplicated definitions in the hierarchy will result in a compile error. If such duplications arise, you should factor out the common member definitions, and move them up the hierarchy or into new <el-code>interface</el-code>s inherited by the<el-code> interface</el-code>s and/or classes that need them.</li>
+  <li>Inheritance hierarchies must form a tree, that is you must avoid creating a'circular dependency where, for example, Type <el-code>A</el-code> inherits from Type <el-code>B</el-code>, which inherits from Type <el-code> C</el-code>, which inherits from Type <el-code>A</el-code>.</li>
   <li>The various 'super-Types' (abstract classes and <el-code>interface</el-code>s) that a concrete <el-code>class</el-code> inherits from must not define conflicting members, e.g. members with the same name but having different Type signatures.</li>
+<li>See also example in <a href="#interface"><el-kw>Interface</el-kw></a></li>
 </ul>
 
-<h2 id="abstractclass"><el-kw>abstract class</el-kw></h2>
-<p>An <el-code>abstract class</el-code> may not be instantiated (and hence may not define a constructor). It may define concrete members i.e.:</p>
+<h2 id="abstract_class"><el-kw>abstract class</el-kw></h2>
+<p>An <el-kw>abstract class</el-kw> may not be instantiated (and hence may not define a constructor). It may define concrete members i.e.:</p>
 <ul>
 <li>a <el-kw>property</el-kw> </li>
 <li>a <el-code>function</el-code></li>
@@ -490,42 +529,110 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 <p>As with a concrete class, any of these members may be made <el-code>private</el-code>, after the corresponding frame has been added, by selecting that member frame and pressing Ctrl-p.</p>
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
-<p id="abstractfunction">
-<span id="abstractprocedure"></span>
-You may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> statement. For example:</p>
+<p>You may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> statement. For example:</p>
 <p><el-code>abstract function calculateDiscount() as Float</el-code></p>
 <p>
-If you wish to have several subclasses of an <el-code>abstract class</el-code> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
+If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
 <ul>
 <li>Define the method as <el-code>abstract</el-code> on the superclass.</li>
 <li>Define a concrete implementation on the superclass with a similar, but slightly different, name e.g. by adding a prefix such as: <el-code>default</el-code>.</li>
 <li>Each subclass must then define its implementation of the abstract method, but the ones needing a common implementation can be just one line, delegating responsibility up to the 'default' method on the superclass. </li>
 </ul>
-<p>See also: <a href="#Inheritance">Inheritance</a></p>
 
 <h2 id="interface"><el-kw>interface</el-kw></h2>
 <p>An <el-code>interface</el-code> is similar to an <el-code>abstract class</el-code>, with the difference that it may define only abstract members. The advantage of using an <el-code>interface</el-code> instead of an <el-code>abstract class</el-code> is that a concrete<el-code> class</el-code> can inherit from multiple <el-code>interface</el-code>s.</p>
 <p>An <el-code>interface</el-code> may inherit only from other <el-code>interface</el-code>s.</p>
 <p>Important: An <el-code>interface</el-code> must not re-declare abstract interfaces that are defined in any <el-code>interface</el-code> it inherits from, directly or indirectly.</p>
-<p>See also: <a href="#Inheritance">Inheritance</a></p>
+<p>See also: <a href="#Inheritance">Inheritance</a>.</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Example using <el-kw>interface</el-kw></h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from demo program <el-code>blackjack.elan</el-code> of:
+<ul>
+ <li>inheritance from <el-kw>interface</el-kw> <el-type>Player</el-type> to <el-kw>abstract class</el-kw> <el-type>Automated</el-type>
+  and to <el-kw>class</el-kw> <el-type>HumanPlayer</el-type>, and</li>
+ <li>inheritance from <el-kw>abstract class</el-kw> <el-type>Automated</el-type> to concrete <el-kw>class</el-kw> <el-type>Dealer</el-type></li>
+ <li>(concrete) definitions of function <el-method>getAction</el-method> and procedure <el-method>changeScoreBy</el-method> following their
+ abstract declarations.</li>
+</ul>
+<el-code-block source="blackjack.elan">
+<el-class class="ok multiline" id="class320" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>interface </el-kw><el-field id="type321" class="ok" tabindex="-1"><el-txt><el-type>Player</el-type></el-txt><el-place>Name</el-place></el-field> <el-field id="text322" class="empty optional ok" tabindex="-1"></el-field></el-top>
+<el-prop class="ok" id="prop324" tabindex="-1"><el-top><el-kw>abstract property </el-kw><el-field id="ident325" class="ok" tabindex="-1"><el-txt><el-id>hand</el-id></el-txt></el-field><el-kw> as </el-kw><el-field id="type326" class="ok" tabindex="-1"><el-txt><el-type>Hand</el-type></el-txt></el-field></el-top></el-prop>
+<el-proc class="ok" id="proc327" tabindex="-1">
+<el-top><el-kw>abstract procedure </el-kw><el-method><el-field id="ident328" class="ok" tabindex="-1"><el-txt><el-id>changeScoreBy</el-id></el-txt></el-field></el-method><el-punc>(</el-punc><el-field id="params329" class="optional ok" tabindex="-1"><el-txt><el-id>amount</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc></el-top></el-proc>
+<el-kw>end interface</el-kw>
+</el-class>
+
+<el-class class="ok multiline" id="class330" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>abstract class </el-kw><el-field id="type331" class="ok" tabindex="-1"><el-txt><el-type>Automated</el-type></el-txt><el-place>Name</el-place></el-field> <el-field id="text332" class="optional ok" tabindex="-1"><el-txt><el-kw>inherits</el-kw> <el-type>Player</el-type></el-txt></el-field></el-top>
+<el-prop class="ok" id="prop334" tabindex="-1"><el-kw>property </el-kw><el-field id="ident335" class="ok" tabindex="-1"><el-txt><el-id>hand</el-id></el-txt></el-field><el-kw> as </el-kw><el-field id="type336" class="ok" tabindex="-1"><el-txt><el-type>Hand</el-type></el-txt></el-field></el-prop>
+<el-prop class="ok" id="prop337" tabindex="-1"><el-kw>property </el-kw><el-field id="ident338" class="ok" tabindex="-1"><el-txt><el-id>score</el-id></el-txt></el-field><el-kw> as </el-kw><el-field id="type339" class="ok" tabindex="-1"><el-txt><el-type>Int</el-type></el-txt></el-field></el-prop>
+<el-func class="ok" id="func346" tabindex="-1">
+<el-top><el-kw>abstract function </el-kw><el-method><el-field id="ident347" class="ok" tabindex="-1"><el-txt><el-id>getAction</el-id></el-txt></el-field></el-method><el-punc>(</el-punc><el-field id="params348" class="empty optional ok" tabindex="-1"><el-compl><i>parameter definitions</i></el-compl></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type349" class="ok" tabindex="-1"><el-txt><el-type>Action</el-type></el-txt></el-field></el-top></el-func>
+<el-proc class="ok multiline" id="proc386" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident388" class="ok" tabindex="-1"><el-txt><el-method>changeScoreBy</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params389" class="optional ok" tabindex="-1"><el-txt><el-id>amount</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc></el-top>
+<el-statement class="ok" id="set390" tabindex="-1"><el-kw>set </el-kw><el-field id="ident391" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>score</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr392" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>score</el-id> + <el-id>amount</el-id></el-txt></el-field></el-statement>
+<el-kw>end procedure</el-kw>
+</el-proc>
+<el-kw>end class</el-kw>
+</el-class>
+<el-class class="ok multiline" id="class393" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>class </el-kw><el-field id="type394" class="ok" tabindex="-1"><el-txt><el-type>Dealer</el-type></el-txt><el-place>Name</el-place></el-field> <el-field id="text395" class="optional ok" tabindex="-1"><el-txt><el-kw>inherits</el-kw> <el-type>Automated</el-type></el-txt></el-field></el-top>
+<el-constructor class="ok multiline" id="constructor397" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>constructor</el-kw><el-punc>(</el-punc><el-field id="params399" class="optional ok" tabindex="-1"><el-txt><el-id>startingPoints</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc></el-top>
+<el-statement class="ok" id="set400" tabindex="-1"><el-kw>set </el-kw><el-field id="ident401" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>score</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr402" class="ok" tabindex="-1"><el-txt><el-id>startingPoints</el-id></el-txt></el-field></el-statement>
+<el-kw>end constructor</el-kw>
+</el-constructor>
+<el-func class="ok multiline" id="func422" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident424" class="ok" tabindex="-1"><el-txt><el-method>getAction</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params425" class="empty optional ok" tabindex="-1"><el-compl><i>parameter definitions</i></el-compl></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type426" class="ok" tabindex="-1"><el-txt><el-type>Action</el-type></el-txt></el-field></el-top>
+<el-statement class="ok" id="return427" tabindex="-1"><el-kw>return </el-kw><el-field id="expr428" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-kw>property</el-kw>.<el-id>hand</el-id>.<el-id>total</el-id> &lt; <el-lit>17</el-lit><el-kw> then </el-kw><el-type>Action</el-type>.<el-id>draw</el-id><el-kw><br>else </el-kw><el-type>Action</el-type>.<el-id>stand</el-id></el-txt></el-field></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
+<el-kw>end class</el-kw>
+</el-class>
+
+<el-class class="ok multiline" id="class436" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>class </el-kw><el-field id="type437" class="ok" tabindex="-1"><el-txt><el-type>HumanPlayer</el-type></el-txt><el-place>Name</el-place></el-field> <el-field id="text438" class="optional ok" tabindex="-1"><el-txt><el-kw>inherits</el-kw> <el-type>Player</el-type></el-txt><el-place><i>inherits ClassName(s)</i></el-place><el-msg></el-msg></el-field></el-top>
+<el-constructor class="ok multiline" id="constructor440" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>constructor</el-kw><el-punc>(</el-punc><el-field id="params442" class="optional ok" tabindex="-1"><el-txt><el-id>startingPoints</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc></el-top>
+<el-statement class="ok" id="set443" tabindex="-1"><el-kw>set </el-kw><el-field id="ident444" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>score</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr445" class="ok" tabindex="-1"><el-txt><el-id>startingPoints</el-id></el-txt></el-field></el-statement>
+<el-kw>end constructor</el-kw>
+</el-constructor>
+
+<el-proc class="ok multiline" id="proc494" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="ident496" class="ok" tabindex="-1"><el-txt><el-method>changeScoreBy</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params497" class="optional ok" tabindex="-1"><el-txt><el-id>amount</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc></el-top>
+<el-statement class="ok" id="set498" tabindex="-1"><el-kw>set </el-kw><el-field id="ident499" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>score</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr500" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>score</el-id> + <el-id>amount</el-id></el-txt></el-field></el-statement>
+<el-kw>end procedure</el-kw>
+</el-proc>
+<el-kw>end class</el-kw>
+</el-class>
+</el-code-block>
+<hr>
+</div></div>
 
 <h2 id="constant"><el-kw>constant</el-kw></h2>
-<p>A <el-kw>constant</el-kw> defines a named value that cannot change, is always defined at global level (directly within a file), and is global in scope.
-Constants are created at compile time, so cannot be defined with reference to any function, nor use any operators.</p>
-<p>A constant can be defined as a literal <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type>,
+<p>A <el-kw>constant</el-kw> defines a named value that cannot change, is always defined at global level in a program, and is global in scope.
+ Its name  follows the rules for an <a href="#Identifier">identifier</a>.</p>
+<p>A constant is defined by a literal of an immutable Type, namely <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type>,
  <el-type>String</el-type>, <el-type>ListImmutable</el-type> or <el-type>DictionaryImmutable</el-type>.</p>
-<p>The name of a <el-kw>constant</el-kw> follows the rules for an <a href="#Identifier">identifier</a>.</p>
+<p>Constants are created at compile time, so cannot be defined with reference to any function, nor can you use any operators in an expression.</p>
+<p>A constant can be defined by a previously defined constant or a system constant, but take care not to redefine a <a href="LibRef.html#Constants">system constant</a> such as <el-id>pi</el-id> or <el-id>blue</el-id> without good reason.</p>
 
-<p>Some examples of <el-kw>constant</el-kw> definitions (in the <el-id>colours</el-id> constant, <el-type>Suit</el-type> is an <a href="#enum"><el-kw>enum</el-kw></a>):</p>
+<p>Examples of literal definitions of the valid Types of constant:</p>
 
-<el-code-block source="constants_enum.elan">
-<el-const class="ok multiline" id="const5" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-id>phi</el-id></el-txt><el-place><i>name</i></el-place></el-field></el-top><el-kw> set to </el-kw><el-field id="text7" class="ok" tabindex="0"><el-txt><el-lit><el-lit>1</el-lit>.618</el-lit></el-txt><el-place><i>literal value or data structure</i></el-place></el-field></el-const>
-<el-const class="ok multiline" id="const16" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident17" class="ok" tabindex="0"><el-txt><el-id>maxHits</el-id></el-txt><el-place><i>name</i></el-place></el-field></el-top><el-kw> set to </el-kw><el-field id="text18" class="ok" tabindex="0"><el-txt><el-lit>10</el-lit></el-txt><el-place><i>literal value or data structure</i></el-place></el-field></el-const>
-<el-const class="ok multiline" id="const23" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident24" class="ok" tabindex="0"><el-txt><el-id>warningMsg</el-id></el-txt><el-place><i>name</i></el-place></el-field></el-top><el-kw> set to </el-kw><el-field id="text25" class="ok" tabindex="0"><el-txt>"<el-lit>Limit reached</el-lit>"</el-txt><el-place><i>literal value or data structure</i></el-place></el-field></el-const>
-<el-const class="ok multiline" id="const30" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident31" class="ok" tabindex="0"><el-txt><el-id>fruit</el-id></el-txt><el-place><i>name</i></el-place></el-field></el-top><el-kw> set to </el-kw><el-field id="text32" class="ok" tabindex="0"><el-txt>{"<el-lit>apple</el-lit>", "<el-lit>orange</el-lit>", "<el-lit>banana</el-lit>"}</el-txt><el-place><i>literal value or data structure</i></el-place></el-field></el-const>
-<el-const class="ok multiline" id="const39" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident40" class="ok" tabindex="0"><el-txt><el-id>turquoise</el-id></el-txt><el-place><i>name</i></el-place></el-field></el-top><el-kw> set to </el-kw><el-field id="text41" class="ok" tabindex="0"><el-txt><el-lit>0x00ced1</el-lit></el-txt><el-place><i>literal value or data structure</i></el-place></el-field></el-const>
-<el-const class="ok multiline" id="const75" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident76" class="ok" tabindex="0"><el-txt><el-id>colours</el-id></el-txt><el-place><i>name</i></el-place></el-field></el-top><el-kw> set to </el-kw><el-field id="text77" class="ok" tabindex="0"><el-txt>{<el-type>Suit</el-type>.<el-id>spades</el-id>:<el-id>black</el-id>, <el-type>Suit</el-type>.<el-id>hearts</el-id>:<el-id>red</el-id>, <el-type>Suit</el-type>.<el-id>diamonds</el-id>:<el-id>red</el-id>, <el-type>Suit</el-type>.<el-id>clubs</el-id>:<el-id>black</el-id>}</el-txt><el-place><i>literal value or data structure</i></el-place></el-field></el-const>
-<el-const class="ok multiline" id="const65" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident66" class="ok" tabindex="0"><el-txt><el-id>scrabbleValues</el-id></el-txt><el-place><i>name</i></el-place></el-field></el-top><el-kw> set to </el-kw><el-field id="text67" class="ok" tabindex="0"><el-txt>{"<el-lit>A</el-lit>":<el-lit>1</el-lit>, "<el-lit>B</el-lit>":<el-lit>3</el-lit>, "<el-lit>C</el-lit>":<el-lit>3</el-lit>, "<el-lit>D</el-lit>":<el-lit>2</el-lit>, "<el-lit>E</el-lit>":<el-lit>1</el-lit>, "<el-lit>F</el-lit>":<el-lit>4</el-lit>, "<el-lit>G</el-lit>":<el-lit>2</el-lit>, "<el-lit>H</el-lit>":<el-lit>4</el-lit>, "<el-lit>I</el-lit>":<el-lit>1</el-lit>, "<el-lit>J</el-lit>":<el-lit>8</el-lit>, "<el-lit>K</el-lit>":<el-lit>5</el-lit>, "<el-lit>L</el-lit>":<el-lit>1</el-lit>, "<el-lit>M</el-lit>":<el-lit>3</el-lit>, "<el-lit>N</el-lit>":<el-lit>1</el-lit>, "<el-lit>O</el-lit>":<el-lit>1</el-lit>, "<el-lit>P</el-lit>":<el-lit>3</el-lit>, "<el-lit>Q</el-lit>":<el-lit>10</el-lit>, "<el-lit>R</el-lit>":<el-lit>1</el-lit>, "<el-lit>S</el-lit>":<el-lit>1</el-lit>, "<el-lit>T</el-lit>":<el-lit>1</el-lit>, "<el-lit>U</el-lit>":<el-lit>1</el-lit>, "<el-lit>V</el-lit>":<el-lit>4</el-lit>, "<el-lit>W</el-lit>":<el-lit>4</el-lit>, "<el-lit>X</el-lit>":<el-lit>8</el-lit>, "<el-lit>Y</el-lit>":<el-lit>4</el-lit>, "<el-lit>Z</el-lit>":<el-lit>10</el-lit>}</el-txt><el-place><i>literal value or data structure</i></el-place></el-field></el-const>
+<el-const class="ok multiline" id="const4" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>maxHits</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text6" class="ok" tabindex="-1"><el-txt><el-lit>10</el-lit></el-txt></el-field> &mdash; an <el-type>Int</el-type> value</el-const>
+<el-const class="ok multiline" id="const53" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident54" class="ok" tabindex="-1"><el-txt><el-id>turquoise</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text55" class="ok" tabindex="-1"><el-txt><el-lit>0x00ced1</el-lit></el-txt></el-field> &mdash;  a hexadecimal <el-type>Int</el-type> value</el-const>
+<el-const class="ok multiline" id="const16" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident17" class="ok" tabindex="-1"><el-txt><el-id>liveCell</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text18" class="ok" tabindex="-1"><el-txt><el-id>black</el-id></el-txt></el-field> &mdash;  a copy of a system constant</el-const>
+<el-const class="ok multiline" id="const1" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident2" class="ok" tabindex="-1"><el-txt><el-id>phi</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text3" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit>.618</el-lit></el-txt></el-field> &mdash;  a <el-type>Float</el-type> value</el-const>
+<el-const class="ok multiline" id="const13" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident14" class="ok" tabindex="-1"><el-txt><el-id>gameOver</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text15" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> &mdash;  a <el-type>Boolean</el-type> value</el-const>
+<el-const class="ok multiline" id="const7" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident8" class="ok" tabindex="-1"><el-txt><el-id>warningMsg</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text9" class="ok" tabindex="-1"><el-txt>"<el-lit>Limit reached</el-lit>"</el-txt></el-field> &mdash;  a <el-type>String</el-type> value</el-const>
+<el-const class="ok multiline" id="const10" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident11" class="ok" tabindex="-1"><el-txt><el-id>fruit</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text12" class="ok" tabindex="-1"><el-txt>{"<el-lit>apple</el-lit>", "<el-lit>orange</el-lit>", "<el-lit>banana</el-lit>"}</el-txt></el-field> &mdash;  a <el-type>ListImmutable</el-type></el-const>
+<el-const class="ok multiline" id="const58" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident59" class="ok" tabindex="-1"><el-txt><el-id>palette</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text60" class="ok" tabindex="-1"><el-txt>{<el-id>red</el-id>, <el-id>blue</el-id>, <el-id>yellow</el-id>, <el-id>turquoise</el-id>}</el-txt></el-field> &mdash;  a <el-type>ListImmutable</el-type> of system and above defined constants</el-const>
+<el-enum class="ok multiline" id="enum28" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>enum </el-kw><el-field id="type29" class="ok" tabindex="-1"><el-txt><el-type>Suit</el-type></el-txt></el-field></el-top> <el-field id="enumVals30" class="ok" tabindex="-1"><el-txt><el-id>spades</el-id>, <el-id>hearts</el-id>, <el-id>diamonds</el-id>, <el-id>clubs</el-id></el-txt></el-field> &mdash;  an <el-kw>eum</el-kw> for use in the following constant <el-id>colours</el-id></el-enum>
+<el-const class="ok multiline" id="const19" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident20" class="ok" tabindex="-1"><el-txt><el-id>colours</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text21" class="ok" tabindex="-1"><el-txt>{<el-type>Suit</el-type>.<el-id>spades</el-id>:<el-id>black</el-id>, <el-type>Suit</el-type>.<el-id>hearts</el-id>:<el-id>red</el-id>, <el-type>Suit</el-type>.<el-id>diamonds</el-id>:<el-id>red</el-id>, <el-type>Suit</el-type>.<el-id>clubs</el-id>:<el-id>black</el-id>}</el-txt></el-field> &mdash;  a <el-type>DictionaryImmutable</el-type> using <el-kw>enum</el-kw> <el-type>Suit</el-type></el-const>
+<el-const class="ok multiline" id="const22" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident23" class="ok" tabindex="-1"><el-txt><el-id>scrabbleValues</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text24" class="ok" tabindex="-1"><el-txt>{"<el-lit>A</el-lit>":<el-lit>1</el-lit>, "<el-lit>B</el-lit>":<el-lit>3</el-lit>, "<el-lit>C</el-lit>":<el-lit>3</el-lit>, "<el-lit>D</el-lit>":<el-lit>2</el-lit>, "<el-lit>E</el-lit>":<el-lit>1</el-lit>, "<el-lit>F</el-lit>":<el-lit>4</el-lit>, "<el-lit>G</el-lit>":<el-lit>2</el-lit>, "<el-lit>H</el-lit>":<el-lit>4</el-lit>, "<el-lit>I</el-lit>":<el-lit>1</el-lit>, "<el-lit>J</el-lit>":<el-lit>8</el-lit>, "<el-lit>K</el-lit>":<el-lit>5</el-lit>, "<el-lit>L</el-lit>":<el-lit>1</el-lit>, "<el-lit>M</el-lit>":<el-lit>3</el-lit>, "<el-lit>N</el-lit>":<el-lit>1</el-lit>, "<el-lit>O</el-lit>":<el-lit>1</el-lit>, "<el-lit>P</el-lit>":<el-lit>3</el-lit>, "<el-lit>Q</el-lit>":<el-lit>10</el-lit>, "<el-lit>R</el-lit>":<el-lit>1</el-lit>, "<el-lit>S</el-lit>":<el-lit>1</el-lit>, "<el-lit>T</el-lit>":<el-lit>1</el-lit>, "<el-lit>U</el-lit>":<el-lit>1</el-lit>, "<el-lit>V</el-lit>":<el-lit>4</el-lit>, "<el-lit>W</el-lit>":<el-lit>4</el-lit>, "<el-lit>X</el-lit>":<el-lit>8</el-lit>, "<el-lit>Y</el-lit>":<el-lit>4</el-lit>, "<el-lit>Z</el-lit>":<el-lit>10</el-lit>}</el-txt></el-field> &mdash;  a <el-type>DictionaryImmutable</el-type></el-const>
 </el-code-block>
 
 <h2 id="enum"><el-kw>enum</el-kw></h2>
@@ -533,12 +640,11 @@ Constants are created at compile time, so cannot be defined with reference to an
 You define it with a Type name (so starting with an uppercase letter) followed by a
 number of values (which must be valid <a href="#Identifier">identifiers</a>).
 <p>A reference to an <el-kw>enum</el-kw> by its Type name necessarily holds one of the values.</p>
-<p>Reference to the value in an enum is by using the dot notation <el-code>enumType.enumValue</el-code>.</p>
+<p>Reference to the value in an enum is by using <a href="#dotSyntax">dot syntax</a> <el-code>enumType.enumValue</el-code>.</p>
 <p>An <el-kw>enum</el-kw> is read-only: once it has been defined it is not possible to add, remove, or update its values.</p>
 
 <p>Examples of definition and use:</p>
 <el-code-block source="constants_enum.elan">
-<el-enum class="ok multiline" id="enum120" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>enum </el-kw><el-field id="type121" class="ok" tabindex="0"><el-txt><el-type>Suit</el-type></el-txt><el-place><i>Name</i></el-place></el-field></el-top> <el-field id="enumVals122" class="ok" tabindex="0"><el-txt><el-id>spades</el-id>, <el-id>hearts</el-id>, <el-id>diamonds</el-id>, <el-id>clubs</el-id></el-txt><el-place><i>values</i></el-place></el-field></el-enum>
 <el-enum class="ok multiline" id="enum137" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>enum </el-kw><el-field id="type138" class="ok" tabindex="0"><el-txt><el-type>Action</el-type></el-txt><el-place><i>Name</i></el-place></el-field></el-top> <el-field id="enumVals139" class="ok" tabindex="0"><el-txt><el-id>stand</el-id>, <el-id>draw</el-id></el-txt><el-place><i>values</i></el-place></el-field></el-enum>
 <el-enum class="ok multiline" id="enum140" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>enum </el-kw><el-field id="type141" class="ok" tabindex="0"><el-txt><el-type>Outcome</el-type></el-txt><el-place><i>Name</i></el-place></el-field></el-top> <el-field id="enumVals142" class="ok" tabindex="0"><el-txt><el-id>undecided</el-id>, <el-id>win</el-id>, <el-id>lose</el-id>, <el-id>draw</el-id>, <el-id>winDouble</el-id></el-txt><el-place><i>values</i></el-place></el-field></el-enum>
 <el-enum class="ok multiline" id="enum143" tabindex="0"><el-top><el-expand>+</el-expand><el-kw>enum </el-kw><el-field id="type144" class="ok" tabindex="0"><el-txt><el-type>Status</el-type></el-txt><el-place><i>Name</i></el-place></el-field></el-top> <el-field id="enumVals145" class="ok" tabindex="0"><el-txt><el-id>pending</el-id>, <el-id>playing</el-id>, <el-id>standing</el-id>, <el-id>blackjack</el-id>, <el-id>bust</el-id></el-txt><el-place><i>values</i></el-place></el-field></el-enum>
@@ -561,49 +667,121 @@ number of values (which must be valid <a href="#Identifier">identifiers</a>).
 <div id="Member"></div>
 <h1 id="MemberInstructions">Member instructions</h1>
 
-<p>Member instructions (also referred to simply as 'members') are located within a
- <el-kw>class</el-kw>,
+<p>Member instructions (also referred to simply as 'members') are located within an
+ <el-kw>interface</el-kw>,
  <el-kw>abstract class</el-kw>,
- <el-kw>interface</el-kw> or
+ (concrete) <el-kw>class</el-kw> or
  <el-kw>record</el-kw>.
 The <el-code>new code</el-code> prompt will offer a context appropriate subset of the following member instructions:</p>
 <p>
- <a href="#constructor"><el-kw>constructor</el-kw></a>,
+ <a href="#abstract_property"><el-kw>abstract property</el-kw></a>,
+ <a href="#abstract_function"><el-kw>abstract function</el-kw></a>,
+ <a href="#abstract_procedure"><el-kw>abstract procedure</el-kw></a>,
  <a href="#property"><el-kw>property</el-kw></a>,
- <a href="#procedure_method"><el-kw>procedure</el-kw> method</a>,
  <a href="#function_method"><el-kw>function</el-kw> method</a>,
- <a href="#abstractproperty"><el-kw>abstract property</el-kw></a>,
- <a href="#abstractprocedure"><el-kw>abstract procedure</el-kw></a> and
- <a href="#abstractfunction"<el-kw>abstract function</el-kw></a>,
+ <a href="#procedure_method"><el-kw>procedure</el-kw> method</a> and
+ <a href="#constructor"><el-kw>constructor</el-kw></a>,
 </p>together with these 'private' versions:<p>
- <a href="#property"><el-kw>private property</el-kw></a>,
- <a href="#procedure_method"><el-kw>private procedure</el-kw></a> and
- <a href="#function_method"><el-kw>private function</el-kw></a>.
+ <a href="#private"><el-kw>private property</el-kw></a>,
+ <a href="#private"><el-kw>private function</el-kw></a> and
+ <a href="#private"><el-kw>private procedure</el-kw></a>.
 </p>
 
-<h2 id="constructor"><el-kw>constructor</el-kw></h2>
-<p>A concrete class <em>may</em> define a single <el-code>constructor</el-code>, which may:</p>
-<ul>
-<li>initialise any properties with fixed values</li>
-<li>define one or more parameters, which are then used to initialise properties</li>
-</ul>
-<p>If a class does define a constructor, and the constructor defines any parameters, then when the class is instantiated (using <el-code>new</el-code>) then values of
-the correct Types must be provided, for example, if the class <el-type>Square</el-type> defines this constructor:</p>
+<p>This table shows which kinds of property, function or procedure, and constructor are applicable to the various kinds of class.</p>
+<table class="tableType">
+ <tr>
+  <th></th>
+  <th colspan="2">Abstract</th>
+  <th colspan="2">Concrete</th>
+  <th>notes</th>
+ </tr><tr>
+  <td width="150"></td>
+  <td width="40"><a href="#interface"><br><el-kw>interface</el-kw></a></td>
+  <td width="40"><a href="#abstract_class"><el-kw>abstract class</el-kw></a></td>
+  <td width="40"><a href="#class"><br><el-kw>class</el-kw></a></td>
+  <td width="40"><a href="#record"><br><el-kw>record</el-kw></a></td>
+  <td></td>
+ </tr><tr>
+  <td><a href="#abstract_property"><el-kw>abstract property</el-kw></a></td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr>
+  <td><a href="#abstract_function"><el-kw>abstract function</el-kw></a></td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td></td>
+  <td>prototype for function reference only</td>
+ </tr><tr>
+  <td><a href="#abstract_procedure"><el-kw>abstract procedure</el-kw></a></td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td></td>
+  <td>prototype for procedure call only</td>
+ </tr><tr>
+  <td><a href="#property"><el-kw>property</el-kw></a></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td></td>
+ </tr><tr>
+  <td><a href="#function_method"><el-kw>function</el-kw> method</a></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td></td>
+ </tr><tr>
+  <td><a href="#procedure_method"><el-kw>procedure</el-kw> method</a></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td></td>
+ </tr><tr>
+  <td><a href="#private"><el-kw>private property</el-kw></a></td>
+  <td></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td></td>
+ </tr><tr>
+  <td><a href="#private"><el-kw>private function</el-kw></a></td>
+  <td></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td>&#x2714;</td>
+  <td></td>
+ </tr><tr>
+  <td><a href="#private"><el-kw>private procedure</el-kw></a></td>
+  <td></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td></td>
+ </tr><tr>
+  <td><a href="#constructor"><el-kw>constructor</el-kw></a></td>
+  <td></td>
+  <td></td>
+  <td>&#x2714;</td>
+  <td></td>
+  <td></td>
+ </tr>
+</table>
 
-<el-code-block>
-  <el-constructor class="ok multiline" id="constructor211" tabindex="0">
-    <el-top><el-expand>+</el-expand><el-kw>constructor</el-kw>(<el-field id="params213" class="optional ok" tabindex="0"><el-txt><el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)</el-top>
-    <el-statement class="ok" id="set214" tabindex="0"><el-kw>set </el-kw><el-field id="ident215" class="ok" tabindex="0"><el-txt><el-kw>property</el-kw>.<el-id>x</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr216" class="ok" tabindex="0"><el-txt><el-id>x</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    <el-statement class="ok" id="set217" tabindex="0"><el-kw>set </el-kw><el-field id="ident218" class="ok" tabindex="0"><el-txt><el-kw>property</el-kw>.<el-id>y</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr219" class="ok" tabindex="0"><el-txt><el-id>y</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    <el-kw>end constructor</el-kw>
-  </el-constructor>
-</el-code-block>
+<h2 id="abstract_property"><el-kw>abstract property</el-kw></h2>
+<p>An abstract property may be defined only on an <a href="#abstract_class"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
 
-<p>then it may be instantiated like this:</p>
+<h2 id="abstract_function"><el-kw>abstract function</el-kw></h2>
+<p>An abstract function method may be defined only on an <a href="#abstract_class"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
 
-<el-code>
-<el-statement id="let44" tabindex="0"><el-kw>let </el-kw><el-field id="var45" class="ok" tabindex="0"><el-txt><el-id>tail</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr46" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Square</el-type>(<el-lit>20</el-lit>, <el-lit>15</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code>
+<h2 id="abstract_procedure"><el-kw>abstract procedure</el-kw></h2>
+<p>An abstract procedure method may be defined only on an <a href="#abstract_class"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) procedure to match.</p>
 
 <h2 id="property"><el-kw>property</el-kw></h2>
 <p>A <el-kw>property</el-kw> is a named value defined on a <el-kw>class</el-kw> with a name conforming to the rules for an <a href="#Identifier">identifier</a>,
@@ -625,7 +803,25 @@ default thus:</p>
 </p>A property may be read, but not written to.
 Properties may be modified only from outside the class by means of a <a href="#procedure_method">Procedure method</a>.</p>
 
-<h3 id="" class="no-TOC"><el-kw>private property</el-kw></h3>
+<h2 id=functionMethod"><el-kw>function</el-kw> method</h2>
+<p>A function method follows the same syntax and rules as a global <a href="#function">function</a>. The differences are:</p>
+<ul>
+<li>A <el-code>function</el-code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
+<li>A <el-code>function</el-code> method may directly reference (read only) any <el-kw>property</el-kw> defined on the class as though it were a variable or parameter.</li>
+<li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then pressing Ctrl-p. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
+<li>asString() method</li>
+<li>asString method. This is just a regular function method with a specific name, no parameters and returning a String. If defined for a class, then if an instance of the class is printed, the <el-code>asString</el-code> function method will automatically be used. Typically <el-code>asString</el-code> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
+</ul>
+
+<h2 id="procedure_method"><el-kw>procedure</el-kw> method</h2>
+<p>A 'procedure method' follows the same syntax and rules as a global <a href="#procedure">procedure</a>. The differences are:</p>
+<ul>
+<li>A procedure method, like a function method, is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
+<li>A procedure method may read, or write to, any <el-kw>property</el-kw> defined on the class.</li>
+<li>A procedure method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then pressing Ctrl-p. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
+</ul>
+
+<h2 id="private"><el-kw>private</el-kw> (property, function, procedure)</h2>
 A <el-kw>property</el-kw> may be marked <el-kw>private</el-kw>, in which case it is visible only to code within the class and,
 if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by using the context menu on the property frame or selecting it and pressing Ctrl-p.
 This action is a toggle used both to set and to remove the modifier <el-kw>private</el-kw> modifier.
@@ -645,43 +841,39 @@ This action is a toggle used both to set and to remove the modifier <el-kw>priva
 <el-code>  set property.height to height</el-code><br>
 <el-code>end procedure</el-code><br>
 
-<h2 id="procedure_method"><el-kw>procedure</el-kw> method</h2>
-<p>A 'procedure method' follows the same syntax and rules as a global <a href="#procedure">procedure</a>. The differences are:</p>
+<h2 id="constructor"><el-kw>constructor</el-kw></h2>
+<p>A (concrete) class may have an optional <el-kw>constructor</el-kw> so as to:</p>
 <ul>
-<li>A procedure method, like a function method, is always referenced (used) by code outside the class using 'dot syntax' on an instance.</li>
-<li>A procedure method may read, or write to, any <el-kw>property</el-kw> defined on the class.</li>
-<li>A procedure method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then pressing Ctrl-p. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
+ <li>initialise properties with fixed values</li>
+ <li>define parameters which are used to initialise properties</li>
 </ul>
+<p>If a class does define a constructor, and the constructor defines parameters, then when the class is instantiated (using <el-kw>new</el-kw>) the values of
+the correct Type must be provided. For example, if the class <el-type>Square</el-type> has this constructor:</p>
 
-<div id="FunctionMethod"></div>
-<h2 id="function_method"><el-kw>function</el-kw> method</h2>
-<p>A function method follows the same syntax and rules as a global <a href="#function">function</a>. The differences are:</p>
-<ul>
-<li>A <el-code>function</el-code> method is always referenced (used) by code outside the class using 'dot syntax' on an instance.</li>
-<li>A <el-code>function</el-code> method may directly reference (read only) any <el-kw>property</el-kw> defined on the class as though it were a variable or parameter.</li>
-<li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then pressing Ctrl-p. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
-<li>asString() method</li>
-<li>asString method. This is just a regular function method with a specific name, no parameters and returning a String. If defined for a class, then if an instance of the class is printed, the <el-code>asString</el-code> function method will automatically be used. Typically <el-code>asString</el-code> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
-</ul>
+<el-code-block>
+  <el-constructor class="ok multiline" id="constructor211" tabindex="0">
+    <el-top><el-expand>+</el-expand><el-kw>constructor</el-kw>(<el-field id="params213" class="optional ok" tabindex="0"><el-txt><el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)</el-top>
+    <el-statement class="ok" id="set214" tabindex="0"><el-kw>set </el-kw><el-field id="ident215" class="ok" tabindex="0"><el-txt><el-kw>property</el-kw>.<el-id>x</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr216" class="ok" tabindex="0"><el-txt><el-id>x</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+    <el-statement class="ok" id="set217" tabindex="0"><el-kw>set </el-kw><el-field id="ident218" class="ok" tabindex="0"><el-txt><el-kw>property</el-kw>.<el-id>y</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr219" class="ok" tabindex="0"><el-txt><el-id>y</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+    <el-kw>end constructor</el-kw>
+  </el-constructor>
+</el-code-block>
 
-<h2 id="abstractproperty"><el-kw>abstract property</el-kw></h2>
-<p>An abstract property may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) property to match.</p>
+<p>then it may be instantiated like this:</p>
 
-<h2 id="AbstractProcedureMethod"><el-kw>abstract procedure</el-kw></h2>
-<p>An abstract procedure method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) procedure to match.</p>
-
-<h2 id="abstractFunctionMethod"><el-kw>abstract function</el-kw></h2>
-<p>An abstract function method may be defined only on an <a href="#abstractclass"><el-code>abstract class</el-code></a>. Any concrete subclass must then implement a concrete (regular) function to match.</p>
+<el-code>
+<el-statement id="let44" tabindex="0"><el-kw>let </el-kw><el-field id="var45" class="ok" tabindex="0"><el-txt><el-id>tail</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr46" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Square</el-type>(<el-lit>20</el-lit>, <el-lit>15</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-code>
 
 <div id="statement"></div>
 <h1 id="StatementInstructions">Statement instructions</h1>
+<p>Statement instructions (also referred to simply as 'statements') are the imperative keywords used in the methods (procedural logic) of a program, and are:</p>
 <p>
- <a href="#assert">assert</a>,
- <a href="#call">call</a>,
- <a href="#each">each</a>,
- <a href="#else">else</a>,
- <a href="#for">for</a>,
- <a href="#if">if</a>,
+ <a href="#assert"><el-kw>assert</el-kw></a>,
+ <a href="#call"><el-kw>call</el-kw></a>,
+ <a href="#each"><el-kw>each</el-kw></a>,
+ <a href="#for"><el-kw>for</el-kw></a>,
+ <a href="#if"><el-kw>if</el-kw>..<el-kw>then</el-kw>..<el-kw>else if</el-kw>..<el-kw>else</el-kw></a>,
  <a href="#let">let</a>,
  <a href="#print">print</a>,
  <a href="#repeat">repeat</a>,
@@ -689,24 +881,16 @@ This action is a toggle used both to set and to remove the modifier <el-kw>priva
  <a href="#throw">throw</a>,
  <a href="#try">try</a>,
  <a href="#variable">variable</a>,
- <a href="#while">while</a>
+ <a href="#while">while</a>.
 </p>
-<p>Statement instructions (also sometimes referred to simply as 'statements')
-  are located within 'methods'. Some of these statements may contain other statements.</p>
 
-<h2 id="assert">Assert (test)</h2>
-<p>See <a href="#test">Tests</a> for the use of the <el-kw>assert</el-kw> statement.</p>
-<p>Some other programming languages have a feature for making assertions
-while your program is running. In Elan, you can get equivalent functionality
-by <a href="#throw">throwing an exception</a> like this:</p>
-<el-statement class="ok multiline" id="if601" tabindex="0">
-<el-top><el-kw>if </el-kw><el-field id="expr603" class="ok" tabindex="0"><el-txt><el-id>yp</el-id><el-kw> is </el-kw><el-lit>0</el-lit></el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top>
-<el-statement class="ok" id="throw604" tabindex="0"><el-kw>throw exception </el-kw><el-field id="msg605" class="ok" tabindex="0"><el-txt>"<el-lit>yp is zero: </el-lit>{<el-id>xp</el-id>}<el-lit>,</el-lit>{<el-id>yp</el-id>}<el-lit> + </el-lit>{<el-id>xq</el-id>}<el-lit>,</el-lit>{<el-id>yq</el-id>}<el-lit></el-lit>"</el-txt><el-place><i>message</i></el-place></el-field></el-statement>
-<el-kw>end if</el-kw>
-</el-statement>
-<p>which will stop the program and print the message in the Debug window (unless caught by a <a href="#try"><el-kw>try</el-kw></a> statement).</p>
+<h2 id="assert"><el-kw>assert</el-kw> (test)</h2>
+<p>The <el-kw>assert</el-kw> statement is used only within a <a href="#test"><el-kw>test</el-kw></a>,
+which is the mechanism for running unit tests during program development, not during program execution.</p>
+<p>Some programming languages have a feature for making assertions while your program is running.
+ In Elan, you can get equivalent functionality by throwing an <el-kw>exception</el-kw>, as described in <a href="#throw">throw</a> statement.</p>
 
-<h2 id="call">Call (procedure)</h2>
+<h2 id="call"><el-kw>call</el-kw> (procedure)</h2>
 <p>A <el-kw>call</el-kw> statement is used when you want to run a <a href="#procedure">procedure</a>.</p>
 <p>The procedure may be:</p>
 <ul>
@@ -729,7 +913,7 @@ by <a href="#throw">throwing an exception</a> like this:</p>
 <p>Procedures may have side effects, for example input/output or changing a data value in an object. They can change the contents of any mutable object passed in as an argument.  For this reason, procedures cannot be called from functions, which are not allowed to have side-effects.  <el-kw>call</el-kw> statements are simply not allowed in functions, to enforce this.</p>
 <p>There is a limit to the complexity of a <el-kw>call</el-kw> statement.  Only one dot is allowed in the <el-code>procedure name</el-code> field, or two dots if the first word is <el-kw>property</el-kw>.  If you need anything more complicated, use a <el-kw>let</el-kw> statement on the line above.  See the error message explanation for <a href="#ProcRefField">'procedureName' in a call statement</a>.</p>
 
-<h2 id="each">Each (loop)</h2>
+<h2 id="each"><el-kw>each</el-kw> (loop)</h2>
 <p>The <el-kw>each.</el-kw>..<el-kw>in</el-kw>.. construct specifies looping sequentially over the items in a <el-type>List</el-type> or an <el-type>Array</el-type>, or over the characters in a <el-type>String</el-type>.</p>
 <p>The <el-kw>each</el-kw> loop counter variable is of the same Type as the items in the List or Array, or is of Type <el-type>String</el-type> if looping over the characters in a String. The variable does not have to have been previously defined.</p>
 
@@ -772,7 +956,7 @@ So even if the subject value is changed in any way within the <el-kw>each</el-kw
 </div></div>
 <hr>
 
-<h2 id="for">For (loop)</h2>
+<h2 id="for"><el-kw>for</el-kw> (loop)</h2>
 <div id="step"></div>
 <p>The <el-code>for..from..to..step..</el-code> construct specifies looping through a sequence of integer values with a given increment.</p>
 <p>The <el-code>for</el-code> loop counter <el-kw>variable</el-kw> (which counts from 0) is of Type <el-type>Int</el-type> and does not have to have been defined in a <el-code>variable</el-code> statement.</p>
@@ -793,7 +977,7 @@ So if you have a <el-kw>variable</el-kw> <el-code>s</el-code> that holds a negat
 
 <div id="else"></div>
 <div id="if"></div>
-<h2 id="if_statement">If..then..else..elseif</h2>
+<h2 id="if_statement"><el-kw>if</el-kw>..<el-kw>then</el-kw>..<el-kw>else if</el-kw>..<el-kw>else</el-kw></h2>
 <p>See also <a href="#if_expression">if expression</a></p>
 <p>The <el-kw>if..then..else..</el-kw> and <el-kw>if..then..else if..else..</el-kw> constructs specify which of several code sequences is to be executed next.</p>
 <p>The <el-kw>else</el-kw> clause is optional.</p>
@@ -826,14 +1010,14 @@ Example 2:
 </el-statement>
 </el-code-block>
 
-<h2 id="let">Let</h2>
+<h2 id="let"><el-kw>let</el-kw></h2>
 <p>The <el-kw>let</el-kw> statement may be thought of as being between a <el-kw>constant</el-kw> definition and a <el-kw>variable</el-kw>'s <el-kw>set</el-kw> statement..
 Like a <el-kw>variable set</el-kw> a <el-kw>let</el-kw> may be used only within a routine, but unlike a variable its value may not be changed with a <el-kw>set</el-kw>.
 It is recommended that you always use a <el-kw>let</el-kw> in preference to a <el-kw>variable</el-kw> unless you need to be able to assign a new value to it.
 </p>
 <p>You can put a <el-kw>let</el-kw> in a loop, so the variable gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
 
-<h2 id="print">Print</h2>
+<h2 id="print"><el-kw>print</el-kw></h2>
 <p>The <el-kw>print</el-kw> instruction sends text strings to the Display pane. For example:</p>
 <ul>
  <li><el-code>
@@ -852,7 +1036,7 @@ It is recommended that you always use a <el-kw>let</el-kw> in preference to a <e
 <p>The last example above uses <a href="LibRef.html#InterpolatedString">interpolated strings</a>. Arguments placed within curly braces are evaluated before printing, and these may be separated by literal text and punctuation as needed. This is one recommended way to print more than one value on a line. The other way is to use <a href="LibRef.html#printLine">print procedures</a>.</p>
 <p>If the <el-kw>print</el-kw> instruction is used without any following expression, then it prints a newline, i.e. its effect is the same as <el-code>print "\n"</el-code>.</p>
 
-<h2 id="repeat">Repeat (loop)</h2>
+<h2 id="repeat"><el-kw>repeat</el-kw> (loop)</h2>
 <p>The <el-kw>repeat..end repeat when</el-kw> <el-code>condition</el-code> loop is used when you want at least one execution of the enclosed statements followed by a test that chooses either to execute them again or to exit from the loop.</p>
 <p><el-code>condition</el-code> is either a <el-type>Boolean</el-type> variable or an expression that evaluates to a Boolean value.</p>
 <p>If <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code> then the loop ends, if <el-code><el-id>false</el-id></el-code> it resumes. For example:</p>
@@ -866,19 +1050,45 @@ It is recommended that you always use a <el-kw>let</el-kw> in preference to a <e
 </el-statement>
 </el-code-block>
 
-<h2 id="set">Set</h2>
+<h2 id="set"><el-kw>set</el-kw></h2>
 <p>
 The <el-kw>set</el-kw> statement is used to assign a new value to an existing <el-kw>variable</el-kw>.
 The new value must be of the same Type as (or a Type compatible with) that of the <el-kw>variable</el-kw>.
 A <el-kw>set</el-kw> statement may not assign a new value to a parameter within a procedure unless it the parameter is preceded by <el-kw>out</el-kw> in the parameter list.</p>
 
-<h2 id="throw">Throw</h2>
-<p>You can deliberately generate, or 'throw', an exception when a specific circumstance is identified, using a <el-code>throw</el-code> statement, for example:</p>
-<el-code>throw exception "something has happened"</el-code><br>
+<h2 id="throw"><el-kw>throw</el-kw> (exception)</h2>
+<p>You can deliberately generate, or 'throw', an exception when a specific circumstance is identified, using a <el-kw>throw</el-kw> statement
+ which defines an explanatory string. An xample:</p>
+<el-code-block source="throw.elan">
+<el-statement class="ok multiline" id="if18" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt><el-id>value</el-id> &gt; <el-id>maximum</el-id></el-txt></el-field><el-kw> then</el-kw></el-top>
+<el-statement class="ok" id="throw8" tabindex="-1"><el-kw>throw exception </el-kw><el-field id="msg9" class="ok" tabindex="-1"><el-txt>"<el-lit>proportion exceeds 100%</el-lit>"</el-txt></el-field></el-statement>
+<el-statement class="ok outdent" id="else24" tabindex="-1"><el-top>
+    <el-kw>else </el-kw><el-field id="elif26" class="empty optional ok" tabindex="-1"></el-field></el-top></el-statement>
+<el-statement class="ok" id="set31" tabindex="-1"><el-kw>set </el-kw><el-field id="ident32" class="ok" tabindex="-1"><el-txt><el-id>r</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr33" class="ok" tabindex="-1"><el-txt><el-id>value</el-id>/<el-id>maximum</el-id>*<el-id>r</el-id></el-txt></el-field></el-statement>
+<el-kw>end if</el-kw>
+</el-statement>
+</el-code-block>
+<p>At runtime, if the condition is met, execution will stop and the Display will show:</p>
+<p>
+<el-code>A Runtime error occurred in the Elan code</el-code><br>
+<el-code>Error: proportion exceeds 100%</el-code>
+</p>
+<p>This example that puts current values into the exception message string:</p>
+<el-code-block source="throw.elan">
+<el-statement class="ok multiline" id="if41" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr43" class="ok" tabindex="-1"><el-txt><el-id>yp</el-id><el-kw> is </el-kw><el-lit>0</el-lit></el-txt></el-field><el-kw> then</el-kw></el-top>
+<el-statement class="ok" id="throw44" tabindex="-1"><el-kw>throw exception </el-kw><el-field id="msg45" class="ok" tabindex="-1"><el-txt>"<el-lit>yp is zero: </el-lit>{<el-id>xp</el-id>}<el-lit>,</el-lit>{<el-id>yp</el-id>}<el-lit> + </el-lit>{<el-id>xq</el-id>}<el-lit>,</el-lit>{<el-id>yq</el-id>}"</el-txt></el-field></el-statement>
+<el-kw>end if</el-kw>
+</el-statement>
+</el-code-block>
+
+<p>For the program to retain control when an exception is raised, put the code that may cause the exception into a <a href="#try"><el-kw>try</el-kw></a> statement,
+where you can <el-kw>catch</el-kw> (i.e. receive) the exception message string, and continue as appropriate.</p>
 
 <div id="catch"></div>
 <div id="exception"></div>
-<h2 id="try">Try</h2>
+<h2 id="try"><el-kw>try</el-kw> (test)</h2>
 <p>You can test whether another piece of code might throw an exception by wrapping it in a <el-code>try</el-code> statement. This might arise when calling a <a href="LibRef.html#SystemMethods">System method</a> that is dependent upon external conditions, for example:</p>
 
 <el-code-block source="tryCatch.elan">
@@ -909,11 +1119,15 @@ The variable holding the exception (by default named <el-code>e</el-code>, but t
 </el-statement>
 </el-code-block>
 
-<h2 id="variable">Variable statement</h2>
+<h2 id="variable"><el-kw>variable</el-kw></h2>
 <p>The <el-kw>variable</el-kw> statement defines the name to be used to store mutable (i.e. changeable) data. The name defined must be a valid <a href="#Identifier">identifier</a>,
 and the initial value is given by a following expression. For example:</p>
 
-<h2 id="while">While loop</h2>
+<el-code-block>
+<el-statement class="ok" id="var40" tabindex="0"><el-kw>variable </el-kw><el-field id="var41" class="ok" tabindex="0"><el-txt><el-id>note</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr42" class="ok" tabindex="0"><el-txt><el-lit>440</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-code-block>
+
+<h2 id="while"><el-kw>while</el-kw> (loop)</h2>
 <p>The <el-kw>while condition..end while</el-kw> loop is used when you want execution of the enclosed statements to begin
  only if <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code>.</p>
 <p><el-code>condition</el-code> is either a <el-type>Boolean</el-type> <el-kw>variable</el-kw> or an expression that evaluates to a Boolean value.</p>
@@ -928,20 +1142,17 @@ and the initial value is given by a following expression. For example:</p>
 </el-statement>
 </el-code-block>
 
-
 <h1 id="Expression">Expressions</h1>
-<p>One of the most important constructs in programming is the 'expression'. An expression is evaluated to return a value. An expression is made up of the following possible elements:</p>
+<p>One of the most important constructs in programming is the <b>expression</b>. An expression evaluates and returns a value using the following elements:</p>
 <ul>
-<li>Literal value</li>
+<li><a href="#literalValue">Literal value</a></li>
 <li><a href="#namedValue">Named value</a></li>
 <li><a href="#operator">Operator</a> (including brackets)</li>
-<li><a href="#function_call">Function call</a></li>
-<li><a href="#lambda">Lambda</a></li>
+<li><a href="#functionCall"><el-kw>function</el-kw> reference</a></li>
+<li><a href="#lambda"><el-kw>lambda</el-kw></a></li>
 </ul>
-<p>which this chapter describes.</p>
 
-<div id="literal_value"></div>
-<h2 id="LiteralValue">Literal value</h2>
+<h2 id="literalValue">Literal value</h2>
 <p>A literal value is where a value is written 'literally' in the code, such as <el-code>3.142</el-code> &ndash; in contrast to a value that is referred to by a name.</p>
 <p>Here is a table showing some example literal values.  Follow the links for more information about each Type.</p>
 <table>
@@ -962,12 +1173,11 @@ For more about ListImmutable and DictionaryImmutable literals see the <a href="L
 <div id="global"></div>
 <div id="library"></div>
 <h2 id="scoping">Scoping and name qualification</h2>
-<p>With the exception of a <a href="#constant"><el-code>constant</el-code></a>, which is global in scope, named values are always 'local': their scope is confined to the method in which they are defined. </p>
-<p>Elan allows local named values to be defined with the same name as a constant, function, or procedure defined at global level or defined in the standard library. In such cases, when the name is used within the same method, then it will refer to the local definition. If you have done this, but then need to access the <el-code>constant</el-code>, <el-code>function</el-code>, or <el-code>procedure</el-code> with the same name, then you can simply prefix the use of the name with a 'qualifier' of either <el-code>global.</el-code> or <el-code>library.</el-code> as appropriate.</p>
+<p>With the exception of <a href="#constant"><el-kw>constant</el-kw></a> and <a href="#enum"><el-kw>enum</el-kw></a>, which are <i>global</i> in scope, a named values is always <i>local</i>: i.e. its use is confined to the method in which it is defined. </p>
+<p>Local named values can have the same name as a <el-code>constant</el-code>, <el-code>function</el-code>, or <el-code>procedure</el-code> defined at global level or defined in the standard library. In such cases, when the name is used within the same method, then it will refer to the local definition. If you have done this, but then need to access the <el-code>constant</el-code>, <el-code>function</el-code>, or <el-code>procedure</el-code> with the same name, then you can simply prefix the use of the name with a <i>qualifier</i> of either <el-code>global.</el-code> or <el-code>library.</el-code> as appropriate.</p>
 
 <div id="range"></div>
-<div id="IndexedValue"></div>
-<h2 id="IndexedValues">Indexed values</h2>
+<h2 id="IndexedValue">Indexed values</h2>
 If a variable is of an indexable Type, then an index or index range may be applied to the variable within an expression. For example:
 <pre>
     <el-code>variable a set to "Hello World!"</el-code>
@@ -1023,7 +1233,7 @@ The minus sign may also be used as a unary operator, and this takes precedence o
 <pre>
     <el-code>2*-3</el-code>           &#x27f6;  <el-code>-6</el-code>
 </pre>
-<p>Note that the Elan editor automatically puts spaces around the <el-code>+</el-code> and <el-code>&ndash;</el-code> binary operators, but not around <el-code>^</el-code>, <el-code>/</el-code> or <el-code>*</el-code>. This is just to visually reinforce the precedence.</p>
+<p>Note that the editor automatically puts spaces around the <el-code>+</el-code> and <el-code>&ndash;</el-code> binary operators, but not around <el-code>^</el-code>, <el-code>/</el-code> or <el-code>*</el-code>. This is just to visually reinforce the precedence.</p>
 <p>The <el-code>div</el-code> operator rounds its result down, as if with the <el-method>floor</el-method> function.  This can give unexpected results with negative numbers, for example:</p>
 <pre>
     <el-code>11 div -3</el-code>   &#x27f6;  <el-code>-4</el-code>
@@ -1084,8 +1294,8 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 <el-field id="expr35" class="ok" tabindex="0"><el-txt>(<el-id>a</el-id> + <el-id>b</el-id>) &gt; (<el-id>c</el-id> - <el-id>d</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field>
 </el-code-block>
 
-<h2 id="function_call">Function call</h2>
-An expression may simply be a function call, or it may include one or more function calls within it. Examples:
+<h2 id="functionCall">Function reference</h2>
+An expression may simply be a reference to a  function, or it may include several function references within it. Examples:
 <el-code-block source="sinDeg.elan">
 <el-statement class="ok" id="print5" tabindex="0"><el-kw>print </el-kw><el-field id="expr6" class="optional ok" tabindex="0"><el-txt><el-method>sinDeg</el-method>(<el-lit>30</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="var7" tabindex="0"><el-kw>variable </el-kw><el-field id="var8" class="ok" tabindex="0"><el-txt><el-id>x</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-method>sinDeg</el-method>(<el-lit>30</el-lit>)^<el-lit>2</el-lit> + <el-method>cosDeg</el-method>(<el-lit>30</el-lit>)^<el-lit>2</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1097,11 +1307,11 @@ An expression may simply be a function call, or it may include one or more funct
 <ul>
 <li>The third example above is not strictly a function call, but is a 'system method' call.
 System methods may be used only within the <el-code>main</el-code> routine or a <el-code>procedure</el-code>, because they have external dependencies or side effects.</li>
-<li>In the fourth example, <el-code>upperCase</el-code> is a 'dot method' that may be applied to any instance (variable or literal) of Type <el-code>String</el-code>.
+<li>In the fourth example, <el-code>upperCase</el-code> is a dot method that may be applied to any instance (variable or literal) of Type <el-code>String</el-code>.
 See <a href="LibRef.html#upperCase">Dot methods on a String</a>.</li>
 </ul>
 
-<h2 id="lambda">Lambda</h2>
+<h2 id="lambda"><el-kw>lambda</el-kw></h2>
 <p>A <el-kw>lambda</el-kw> is a lightweight means to define a function 'in line'. You typically define a <el-code>lambda</el-code>:</p>
 <ul>
 <li>If the functionality it defines is needed in only one location: typically for a particular call to a <a href="LibRef.html#HoFs">Higher-order Function</a> (HoF).</li>
@@ -1128,8 +1338,8 @@ Notes:<ul>
 <li>Although a <el-kw>lambda</el-kw> is commonly defined 'inline' (as shown above) it is possible to assign a lambda to a variable and hence to re-use it within the scope of that variable.</li>
 </ul>
 
-<h2 id="if_expression">If expression</h2>
-The 'if expression' is in certain respects similar to an <span class="Link">If statement</span>, but with the following differences:
+<h2 id="if_expression"><el-kw>if</el-kw> expression</h2>
+The 'if expression' is in certain respects similar to an <a href="#if"><el-kw>if</el-kw> statement</a>, but with the following differences:
 <ul>
 <li>It is written entirely within a single expression. This is possible because the <el-kw>if</el-kw> expression always returns a value.</li>
 <li>There is always a single <el-kw>then</el-kw> and a single <el-kw>else</el-kw> clause, and each clause contains just a single expression. The <el-kw>if</el-kw> expression returns the result of evaluating one of these two expressions, according to whether the condition evaluates to <el-id>true</el-id> or <el-id>false</el-id>.</li>
@@ -1143,7 +1353,7 @@ The 'if expression' is in certain respects similar to an <span class="Link">If s
 <el-statement class="ok" id="return104" tabindex="0"><el-kw>return </el-kw><el-field id="expr105" class="ok" tabindex="0"><el-txt><el-kw>if </el-kw><el-id>attempt</el-id>[<el-id>n</el-id>]<el-kw> is </el-kw>"<el-lit>*</el-lit>"<el-kw> then </el-kw><el-id>attempt</el-id><el-kw><br>else </el-kw><el-kw>if </el-kw><el-method>isYellow</el-method>(<el-id>attempt</el-id>, <el-id>target</el-id>, <el-id>n</el-id>)<el-kw> then </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>+</el-lit>")<el-kw><br>else </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>_</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 
-<h2 id="new">New instance</h2>
+<h2 id="new"><el-kw>new</el-kw></h2>
 <p>A 'new instance' expression is used to create a new instance of a <a href="LibRef.html#StandardDataStructures">library data structure</a>,
    or a <a href="#class"> user-defined class</a> or <a href="#record">record</a> &ndash; either to assign to a named value, or as part
   of a more complex expression. Example of use from demo program <el-code>snake_PP.elan</el-code>:</p>
@@ -1168,8 +1378,7 @@ be followed by a <el-kw>with</el-kw> clause in order to specify any property val
 
 <div id="copy"></div>
 <div id="with"></div>
-<div id="copyWith"></div>
-<h2 id="copy_with">Copy..with</h2>
+<h2 id="copyWith"><el-kw>copy</el-kw>..<el-kw>with</el-kw></h2>
 <p>A <el-kw>copy..with</el-kw> expression is used to make a copy of an existing instance, but with a different value for one or more of the properties
   &ndash; either to assign to a named value, or as part of a more complex expression.</p>
 <p>It is used extensively within functional programming where you are dealing with <a href="#record">record</a>s or other <i>immutable</i> Types.
@@ -1191,7 +1400,7 @@ Example of use in this manner, taken from demo program <el-code>snake_FP.elan</e
   note that a <el-kw>with</el-kw> clause (following the same syntax as in a <el-kw>copy..with</el-kw> expression), may be used
   within a new instance expression to set up properties for the object not specified in the constructor.</p>
 
-<h2 id="empty">Empty of Type</h2>
+<h2 id="empty"><el-kw>empty</el-kw></h2>
 <p>An 'empty of Type' expression is used to make the default (empty) instance of any Type
   &ndash; usually only created for comparing to another instance to test whether that other instance is also empty or default.
   This may arise, for example, if a <a href="#class">class</a> or <a href="#record">record</a> is defined with a property that has never had a value assigned to it.
@@ -1228,8 +1437,6 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
   This comment is known as the 'file header' and shows the version of Elan being run.</p>
 
 <h1 id="compile_error">Compile errors and warnings</h1>
-
-<h2></h2>
 
  <p>Q: What is the difference between a compile <i>error</i> and a <i>warning</i>.</p>
  <p>A: A warning usually indicates that the fix may involve <i>adding</i> some more code,
@@ -1323,8 +1530,8 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
 <div id="ExtensionFunction"></div>
 <div id="ExtensionProcedure"></div>
 <h3 id="ExtensionCompileError" class="no-TOC">Cannot call extension method directly</h3>
- <p>A method that is defined within the Library as an 'extension method', such as <el-method>asString</el-method> may only be called using 'dot syntax' on a named
- value or an expression.</p>
+ <p>A method that is defined within the Library as an <b>extension method</b>, such as <el-method>asString</el-method>, may be called on a named
+ value or an expression only using <a href="#dotSyntax">dot syntax</a>.</p>
 
 <h3 id="PropertyCompileError" class="no-TOC">Cannot prefix function with 'property'</h3>
  <p>The prefix <el-kw>property.</el-kw> may only be used before a property name: not a function name.</p>
@@ -1443,13 +1650,8 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
  <p>You cannot chain two 'unary' operators (those that apply to a single value), such as <el-code>-</el-code>
  or <el-kw>not</el-kw> successively within an expression.</p>
 
-<h3 id="TestTimeout" class="no-TOC">Tests timed out and were aborted</h3>
-<p>An error or infinite loop found in a test. Refer to <a href="#ignore">ignoring tests</a>.</p>
-
-<h3 id="complexityWarning" class="no-TOC">Overly complex expressions</h3>
-<p>Overly complex expressions &ndash; for example involving a sequence of open brackets &ndash; can result in
-very slow parsing. We strongly recommend that you you simplify the contents of this field, for example by
-breaking out parts of it into separate <el-kw>let</el-kw> statements; otherwise it might become impossible to add more text.</p>
+ <h3 id="paramNameNotSameAsItsMethod" class="no-TOC"> Parameter ... may not have the same name as the method in which it is defined.</h3>
+ <p>A function or procedure named e.g. 'foo' may not define a parameter with that same name.</p>
 
 <h2>Field help</h2>
 
@@ -1543,6 +1745,20 @@ breaking out parts of it into separate <el-kw>let</el-kw> statements; otherwise 
  <p>The definition for a variable or for a <el-kw>let</el-kw> statement is most commonly
  a simple <a href="#parse_name">name</a>. Less commonly, it may take the form of:
  <a href="LibRef.html#Tuple">tuple deconstruction</a>, list deconstruction, or <a href="#record_deconstruction">record deconstruction</a>.</p>
+
+<h1 id="runtime_errors">Runtime errors</h1>
+
+<h2>Messages</h2>
+
+<h3 id="TestTimeout" class="no-TOC">Tests timed out and were aborted</h3>
+<p>An error or infinite loop found in a test. Refer to <a href="#ignore">ignoring tests</a>.</p>
+
+<h3 id="complexityWarning" class="no-TOC">Overly complex expressions</h3>
+<p>Overly complex expressions &ndash; for example involving a sequence of open brackets &ndash; can result in
+very slow parsing. We strongly recommend that you you simplify the contents of this field, for example by
+breaking out parts of it into separate <el-kw>let</el-kw> statements; otherwise it might become impossible to add more text.</p>
+
+<h3 id="ReferenceError" class="no-TOC">ReferenceError: Cannot access '[name]' before initialization</h3>
 
 <hr>
 <p><b>Elan Language Reference</b> go to the <a href="#top">top</a></p>

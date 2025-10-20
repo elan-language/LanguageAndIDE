@@ -35,8 +35,6 @@ table
  tr:nth-child(even) td { background-color: rgb(226, 226, 226); }
  tr:nth-child(odd)  td { background-color: rgb(196, 196, 196); }
  td {padding-left: 5px; padding-right: 5px; vertical-align: top; }
- /* tr.x temporary class for ElanIndex during development */
- tr.x td:nth-child(3) * { color: red; }
  /* tr.subhead for ElanIndex head letters */
  tr.subhead td, tr.subhead td * { background-color: rgb(15,71,97); color: white; font-weight: bold; }
 
@@ -109,8 +107,9 @@ a:visited, a:link, a:active {text-decoration: none}
 a:hover, a:focus {text-decoration: underline}
 
 /* This avoids the need to have <el-code> around small snippets*/
- el-kw, el-type, el-id, el-method, el-lit {
+ el-kw, el-type, el-id, el-method, el-lit, el-comment {
   font-family: consolas, monospace;
+  white-space: normal;
 }
 
 /* Animated accordion and panel  */
