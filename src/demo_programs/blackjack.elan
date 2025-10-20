@@ -1,4 +1,4 @@
-# FFFF Elan 1.6.0 guest default_profile valid
+# 9cfa6a2dec00cdc9205ca5412c0ec53d365c78403463b58ed2aee17836ff5d10 Elan 1.6.0 guest default_profile valid
 
 main
   call playGame()

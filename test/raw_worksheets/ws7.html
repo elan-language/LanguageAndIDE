@@ -1,204 +1,48 @@
-
-<!DOCTYPE
-  HTML
-  PUBLIC
-  "-//W3C//DTD
-  4.01
-  Transitional//EN"
-  "http://www.w3.org/TR/html4/loose.dtd"
->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en-GB">
+
   <head>
-    <meta
-      http-equiv="Cache-Control"
-      content="no-store"
-    >
-    <link
-      href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css"
-      rel="stylesheet"
-    >
-    <link
-      href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css"
-      rel="stylesheet"
-    >
-    <link
-      href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css"
-      rel="stylesheet"
-    >
-    <link
-      href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css"
-      rel="stylesheet"
-    >
-    <title>
-    </title>
+      <meta http-equiv="Cache-Control" content="no-store" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
+      <title></title>
   </head>
+
   <body>
     <div id="worksheet">
-      <div class="docTitle">
-      </div>
-      <button id="auto-save">
-        Auto-save to file
-      </button>
-      <span>
-        to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).
-      </span>
-      <div
-        class="step"
-        id="step0"
-      >
-        <h3>
-          Preliminaries
-        </h3>
-        <label for="username">
-          Enter your name:
-        </label>
-        <input
-          class="question"
-          type="text"
-          id="username"
-        >
-        <ul>
-          <li>
-            Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.
-          </li>
-        </ul>
-        <label
-          class="done"
-          for="done0"
-        >
-          Step Completed
-        </label>
-        <input
-          class="step-complete"
-          type="checkbox"
-          id="done0"
-        >
-        <span>
-          Total hints used:
-          <span class="hints-taken">
-          </span>
-          /
-          <span class="hints-total">
-          </span>
-        </span>
-      </div>
-      <div
-        class="step"
-        id="step1"
-      >
-        <h3>
-          Step 1: Getting started
-        </h3>
-        <button
-          class="load"
-          id="load1-0"
-          value="file1.elan"
-        >
-          Load One
-        </button>
-        <button
-          class="load"
-          id="load1-1"
-          value="file2.elan"
-        >
-          Load Two
-        </button>
-        <label
-          class="done"
-          for="done1"
-        >
-          Step Completed
-        </label>
-        <input
-          class="step-complete"
-          type="checkbox"
-          id="done1"
-        >
-        <span>
-          Total hints used:
-          <span class="hints-taken">
-          </span>
-          /
-          <span class="hints-total">
-          </span>
-        </span>
-      </div>
-      <div
-        class="step"
-        id="step2"
-      >
-        <p>
-          Congratulations! You have finished the worksheet, and you now know enough about navigating and editing
+    <div class="docTitle"></div>
+    <button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span>
+    <div class="step" id="step0">
+  <h3>Preliminaries</h3>
+  <label for="username">Enter your name: </label>
+  <input class="question" type="text" id="username">
+  <ul>
+    <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
+  </ul>
+<label class="done" for="done0">Step Completed</label><input class="step-complete" type="checkbox" id="done0"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+  <div class="step" id="step1">
+    <h3>Step 1: Getting started</h3>
+    <button class="load" id="load1-0" value="file1.elan">Load One</button>
+    <button class="load" id="load1-1" value="file2.elan">Load Two</button>
+  <label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<div class="step" id="step2">
+  <p>Congratulations! You have finished the worksheet, and you now know enough about navigating and editing
   code to start writing your first program – with the help of another Worksheet. Meantime,
-  click
-          <b>
-            Help &gt; Home &gt; IDE Reference &gt; Code editor
-          </b>
-          – for a handy summary of all the above
-  operations, and a few more that you can also try out here.
-        </p>
-        <div class="license">
-          <img
-            decoding="async"
-            loading="lazy"
-            src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png"
-            width="118"
-            height="41"
-          >
-          This worksheet is copyright © Richard Pawson 2025, and protected by the Creative Commons license:
-          <a
-            href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
-            target="_blank"
-          >
-            Attribution-NonCommercial-NoDerivatives 4.0 International
-          </a>
-          .
-        If you copy and
-          <i>
-            modify
-          </i>
-          this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
-        Please
-          <a
-            href="mailto:rpawson@nakedobjects.org"
-            target="_blank"
-          >
-            email the author
-          </a>
-          to report errors or suggest improvements.
-        </div>
-        <div
-          hidden
-          id="hash"
-        >
-        </div>
-        <div
-          hidden
-          id="changes"
-        >
-        </div>
-        <label
-          class="done"
-          for="done2"
-        >
-          Step Completed
-        </label>
-        <input
-          class="step-complete"
-          type="checkbox"
-          id="done2"
-        >
-        <span>
-          Total hints used:
-          <span class="hints-taken">
-          </span>
-          /
-          <span class="hints-total">
-          </span>
-        </span>
-      </div>
-      <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js">
-      </script>
+  click <b>Help &gt; Home &gt; IDE Reference &gt; Code editor</b> – for a handy summary of all the above
+  operations, and a few more that you can also try out here.</p>
+  <div class="license">
+      <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+      This worksheet is copyright © Richard Pawson 2025, and protected by the Creative Commons license:
+          <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+        If you copy and <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+        Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
     </div>
+  
+  <div hidden="" id="hash"></div>
+  <div hidden="" id="changes"></div>
+<label class="done" for="done2">Step Completed</label><input class="step-complete" type="checkbox" id="done2"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+    <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
   </body>
 </html>
