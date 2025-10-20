@@ -1,0 +1,15 @@
+# 7489239df2386b77aee4a5db87d472fcecd18caf32b6ae63c920019dc5e60390 Elan 1.6.0 guest default_profile valid
+
+function score(g as Game) returns Int
+  return g.body.length() - 2
+end function
+
+main
+  let g be new Game()
+  print score(g)
+end main
+
+class Game
+  property body as String
+
+end class
