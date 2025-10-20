@@ -1,0 +1,7 @@
+# 56d24fedce5c122bfbc0a49a72f63b610e4f75ea54e37a2c92115230e34ada7c Elan 1.6.0 guest default_profile valid
+
+main
+  variable a4 set to new Array<of Int>(4, 0)
+  call a4.put(2, 5)
+  print a4
+end main
