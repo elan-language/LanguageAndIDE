@@ -246,11 +246,23 @@ They are never indented from the lefthand edge, nor may they be located <em>with
 <h3 class="no-TOC" id="dotSyntax">Dot syntax</h3>
 <p>The function example above includes two uses of <b>dot syntax</b> to qualify items in an expression:</p>
 <ul>
- <li><el-code>g.body</el-code> refers to <el-kw>property</el-kw> <el-code>body</el-code> (defined in class <el-type>Game</el-type>) to return its value in the class instance named <el-code>g</el-code>.</li>
- <li><el-code>g.body.length()</el-code> applies method <el-method>length</el-method> to the value <el-code>g.body</el-code> to return its string length.
- This use of dot syntax is usually referred to as applying a <b>dot method</b>. Examples include the <a href="LibRef.html#CommonDotMethods">common dot methods</a></li>
+ <li><el-code>g.body</el-code> refers to <el-kw>property</el-kw> <el-code>body</el-code> (defined in class <el-type>Game</el-type>)
+  to return its current value in the class instance named <el-code>g</el-code>.</li>
+ <li><el-code>g.body.length()</el-code> applies method <el-method>length</el-method> to the value <el-code>g.body</el-code> to return its string length.<br>
+ This use of dot syntax is usually referred to as applying a <b>dot method</b>.<br> Examples include the <a href="LibRef.html#CommonDotMethods">common dot methods</a></li>
 </ul>
-<p>Dot syntax is also used to <a href="LibRef.html#deconstructTuple">deconstruct a Tuple</a>.</p>
+<p>Dot syntax is also used:</p>
+<ul>
+ <li>in a call to procedure method referencing a variable, as in:
+<el-code-block source="put.elan">
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>a4</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>Array</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;(<el-lit>4</el-lit>, <el-lit>0</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="call8" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident9" class="ok" tabindex="-1"><el-txt><el-id>a4</el-id>.<el-method><el-method>put</el-method></el-method></el-txt></el-field>(<el-field id="args10" class="optional ok" tabindex="-1"><el-txt><el-lit>2</el-lit>, <el-lit>5</el-lit></el-txt></el-field>)</el-top></el-statement>
+</el-code-block>
+<p>The procedure called may be defined in a class or provided by the system.</li>
+ <li>to <a href="LibRef.html#deconstructTuple">deconstruct a Tuple</a>.</li>
+</ul>
+<p>You cannot, however, use dot syntax with your user-defined procedures at the global level,<br>
+nor with some system provided functions (e.g. <el-method>abs</el-method>) and procedures (e.g. <el-method>clearPrintedText</el-method>).</p>
 
 <div id="as"></div>
 <h3 class="no-TOC" id="Parameter">Parameters</h3>
