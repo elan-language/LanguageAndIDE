@@ -68,7 +68,7 @@ export async function processStep(
 
   spOuter.textContent = " Total hints used: ";
   spOuter.appendChild(sp1);
-  spOuter.append(" out of ");
+  spOuter.appendChild(outDoc.createTextNode("/"));
   spOuter.appendChild(sp2);
 
   div.appendChild(label);
@@ -143,12 +143,13 @@ export async function processHint(
   const num = `${stepInstance}-${hintInstance}`;
   const id = `${hint}${num}`;
 
-  const output = new JSDOM(`<div class="${hint}" id="${id}" data-hint=""></div>`);
+  const output = new JSDOM(`<div><div class="${hint}" id="${id}" data-hint=""></div>
+<div class="content" id="${id}content"></div></div>`);
   const outDoc = output.window.document;
 
   const hintSel = inDoc.querySelector(hint);
 
-  const div = outDoc.querySelector("div")!;
+  const div = outDoc.querySelector(`div.${hint}`)!;
 
   div.textContent = (hintSel?.textContent ?? "")
     .replaceAll(currentHintNumber, num)
@@ -166,9 +167,7 @@ export async function processHint(
     div.setAttribute("data-hint", encoded);
   }
 
-  const hintHtml = div.outerHTML;
-
-  return hintHtml;
+  return outDoc.querySelector(`div`)!.innerHTML;
 }
 
 async function processEachInstance(

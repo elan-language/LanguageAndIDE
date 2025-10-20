@@ -1,5 +1,6 @@
 import { ghostedAnnotation, importedAnnotation } from "../../compiler/keywords";
 import { AbstractFrame } from "./abstract-frame";
+import { CodeSourceFromString } from "./code-source-from-string";
 import { Regexes } from "./fields/regexes";
 import { helper_pastePopUp, isClass, isFrameWithStatements, isGlobal } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
@@ -35,7 +36,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     this.helpActive = false;
 
     return this.isSelected()
-      ? `<el-help title="Click to open Help for any of these instructions"> <a href="documentation/LangRef.html#${this.helpId()}" target="help-iframe" tabindex="-1"${active}>?</a></el-help>`
+      ? `<el-help contenteditable="false" title="Click to open Help for any of these instructions"> <a href="documentation/LangRef.html#${this.helpId()}" target="help-iframe" tabindex="-1"${active}>?</a></el-help>`
       : ``;
   }
 
@@ -162,7 +163,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     return `${this.indent()}`;
   }
 
-  private selectorControlKeys = ["d", "O", "v", "?"];
+  private selectorControlKeys = ["d", "O", "v", "V", "?"];
 
   processKey(e: editorEvent): boolean {
     let codeHasChanged = false;
@@ -196,6 +197,13 @@ export abstract class AbstractSelector extends AbstractFrame {
       case "v": {
         if (e.modKey.control) {
           this.paste();
+          codeHasChanged = true;
+          break; // break inside condition (unusually) because 'v' without 'Ctrl' needs to be picked up by default case.
+        }
+      }
+      case "V": {
+        if (e.modKey.control) {
+          this.pasteCode(e.optionalData ?? "");
           codeHasChanged = true;
           break; // break inside condition (unusually) because 'v' without 'Ctrl' needs to be picked up by default case.
         }
@@ -259,6 +267,15 @@ export abstract class AbstractSelector extends AbstractFrame {
       }
     } else {
       this.pasteError = "Paste Failed: Nothing to paste";
+    }
+  }
+
+  pasteCode(code: string): void {
+    try {
+      const source = new CodeSourceFromString(code);
+      this.parseFrom(source);
+    } catch (_e) {
+      this.pasteError = `Paste Failed: Cannot paste '${code}' into selector`;
     }
   }
 

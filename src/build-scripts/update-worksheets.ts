@@ -28,8 +28,9 @@ export function updateHints(contents: string) {
   for (const hint of hints) {
     const id = hint.id;
     const content = document.getElementById(`${id}content`);
+    const data = hint.getAttribute("data-hint") || "";
 
-    if (content) {
+    if (content && data === "") {
       const contentAsString = content.innerHTML;
 
       const encoded = btoa(contentAsString);

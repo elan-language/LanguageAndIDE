@@ -83,7 +83,7 @@ in the following ways:</p>
     you need that capability, use <b>File > Append</b> instead (see table above).</li>
   <li>When you import code you capture the state of that code at the time of the import.
     Subsequent edits to the original file will not update the imports, though you may
-   update by deleting the <el-kw>import</el-kw>... statements, and importing the code afresh.
+   update them by deleting the imported instructions, and importing the code afresh.
   </li>
 </ul>
 </div></div>
@@ -118,7 +118,7 @@ cause the browser tab to be closed.</p>
 </el-code>
   The first comment in a file (which shows the Elan version) is automatically created
   and cannot be edited, deleted or moved.</li>
- <li><b>new code prompts</b> look like this: <el-code>new code</el-code>,
+ <li><b>'new code' prompts</b> look like this: <el-code>new code</el-code>,
 or like this when selected:
 <el-code source="prompts.elan">
 <el-statement class="selected focused ok empty" id="select12" tabindex="0"><el-select><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
@@ -177,6 +177,7 @@ shows these options, any one of which may then be clicked on to do the action:</
  <tr><td>clear all breakpoints</td><td></td><td></td></tr>
  <tr><td>copy for external use</td><td></td><td></td></tr>
  <tr><td>ignore test</td><td>un-ignore test</td><td><b>Ctrl-i</b> (toggle)</td></tr>
+ <tr><td>make private</td><td>make public</td><td><b>Ctrl-p</b> (toggle)</td></tr>
 </table>
 
   </div></div>
@@ -202,7 +203,7 @@ shows these options, any one of which may then be clicked on to do the action:</
   If there is already a <code>new code</code> prompt where you want to insert an instruction then:
 
   <ul>
-    <li>select the new code prompt (as you would select an instruction)</li>
+    <li>select the 'new code' prompt (as you would select an instruction)</li>
     <li>type the first letter of the desired instruction, and more if several valid instructions begins the same way,
     until an instruction template is inserted, with the focus placed on its first field.</li>
   </ul>

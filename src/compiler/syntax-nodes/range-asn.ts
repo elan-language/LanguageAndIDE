@@ -10,8 +10,8 @@ import { UnaryExprAsn } from "./unary-expr-asn";
 
 export class RangeAsn extends AbstractAstNode implements AstNode {
   constructor(
-    private readonly from: AstNode,
-    private readonly to: AstNode,
+    public readonly from: AstNode,
+    public readonly to: AstNode,
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {

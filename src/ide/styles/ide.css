@@ -215,6 +215,7 @@ body {
   aspect-ratio: 4/3;
   position: relative;
   flex-shrink: 0;
+  border-top:solid 1px var(--paleTint);
 }
 
 #block-graphics,
@@ -226,8 +227,14 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+#print,
+#display-html {
   padding: 2px;
 }
+
+
 
 #vector-graphics {
   z-index: 10;
@@ -390,16 +397,17 @@ button.icon:active img + label
   border-right-color: black;
 }
 
-.autocomplete-popup>div:hover,
-.context-menu>div:hover {
+.autocomplete-popup>div.selected,
+.context-menu>div.selected,
+.context-menu>div:focus {
   color: white;
   background-color: grey;
 }
 
-.autocomplete-popup>div.selected,
-.context-menu>div.selected,
-.context-menu>div:focus {
-  border: solid, black, 2px;
+.autocomplete-popup>div:hover,
+.context-menu>div:hover {
+  color: white;
+  background-color: #404040;
 }
 
 .dropdown {
@@ -421,9 +429,9 @@ button.icon:active img + label
 .menu-item:focus,
 .menu-item:active, button.menu-item:active
 .menu-item:active a, button.menu-item:active a
-{
-  background-color: var(--defaultButton);
-  color: white;
+{ 
+  background-color: var(--disabledButton);
+  color: white; 
   text-decoration: none;
 }
 

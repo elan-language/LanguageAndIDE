@@ -144,8 +144,8 @@ end constructor`;
 
     const actual = await processSteps(steps);
 
-    const expected = `<div class="step" id="step0"><content>0</content><label class="done" for="done0">Step Completed</label><input class="step-complete" type="checkbox" id="done0"><span> Total hints used: <span class="hints-taken"></span><span class="hints-total"></span></span></div>
-<div class="step" id="step1"><content>step1</content><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span><span class="hints-total"></span></span></div>`;
+    const expected = `<div class="step" id="step0"><content>0</content><label class="done" for="done0">Step Completed</label><input class="step-complete" type="checkbox" id="done0"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<div class="step" id="step1"><content>step1</content><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>`;
 
     assert.strictEqual(actual, expected);
   });
@@ -157,7 +157,9 @@ end constructor`;
     const actual = await processHints(hints, 0);
 
     const expected = `<div class="hint" id="hint0-0" data-hint="PHA+aGludCBkZXRhaWxzIDAtMDwvcD4=">0-0</div>
-<div class="hint" id="hint0-1" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg==">hint0-1</div>`;
+<div class="content" id="hint0-0content"></div>
+<div class="hint" id="hint0-1" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg==">hint0-1</div>
+<div class="content" id="hint0-1content"></div>`;
 
     assert.strictEqual(actual, expected);
   });

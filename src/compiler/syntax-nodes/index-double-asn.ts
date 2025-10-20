@@ -9,8 +9,8 @@ import { UnaryExprAsn } from "./unary-expr-asn";
 
 export class IndexDoubleAsn extends AbstractAstNode implements AstNode {
   constructor(
-    private readonly index1: AstNode,
-    private readonly index2: AstNode,
+    public readonly index1: AstNode,
+    public readonly index2: AstNode,
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {

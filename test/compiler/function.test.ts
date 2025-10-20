@@ -1814,4 +1814,52 @@ end class`;
       "Argument types. Expected: bar (List<of Int>), Provided: List.LangRef.html#compile_error",
     ]);
   });
+
+  test("Fail_ParameterNameClash1", async () => {
+    const code = `${testHeader}
+
+function foo(foo as Int) returns String
+    return ""
+end function`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Parameter 'foo' may not have the same name as the method in which it is defined.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_ParameterNameClash2", async () => {
+    const code = `${testHeader}
+
+function foo(a as Int, foo as Int) returns String
+    return ""
+end function`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Parameter 'foo' may not have the same name as the method in which it is defined.LangRef.html#compile_error",
+    ]);
+  });
 });

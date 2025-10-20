@@ -2,7 +2,6 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { ChainedAsn } from "../../compiler/compiler-interfaces/chained-asn";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
-import { IntType } from "../../compiler/symbols/int-type";
 import { getGlobalScope } from "../../compiler/symbols/symbol-helpers";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
 import {
@@ -72,7 +71,18 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
   compileRange(indexedType: SymbolType, indexed: string, subscript: string) {
     mustBeRangeableType(indexedType, true, this.compileErrors, this.fieldId);
     const [indexType] = getIndexAndOfType(indexedType);
-    mustBeAssignableType(indexType, IntType.Instance, this.compileErrors, this.fieldId);
+    mustBeAssignableType(
+      indexType,
+      (this.index as RangeAsn).from.symbolType(),
+      this.compileErrors,
+      this.fieldId,
+    );
+    mustBeAssignableType(
+      indexType,
+      (this.index as RangeAsn).to.symbolType(),
+      this.compileErrors,
+      this.fieldId,
+    );
     return this.wrapRange(`${indexed}, ${subscript}`);
   }
 

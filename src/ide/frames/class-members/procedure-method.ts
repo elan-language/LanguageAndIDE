@@ -1,6 +1,7 @@
 import { privateKeyword } from "../../../compiler/keywords";
-import { addPrivateToggleToContextMenu, singleIndent } from "../frame-helpers";
+import { addPrivateToggleToContextMenu, singleIndent, togglePrivatePublic } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
+import { editorEvent } from "../frame-interfaces/editor-event";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
 import { ProcedureFrame } from "../globals/procedure-frame";
@@ -61,13 +62,23 @@ ${this.renderChildrenAsHtml()}
 
   makePublic = () => {
     this.private = false;
+    return true;
   };
   makePrivate = () => {
     this.private = true;
+    return true;
   };
   getContextMenuItems() {
     const map = super.getContextMenuItems();
     addPrivateToggleToContextMenu(this, map);
     return map;
+  }
+
+  processKey(e: editorEvent): boolean {
+    if (e.modKey.control && e.key === "p") {
+      return togglePrivatePublic(this);
+    }
+
+    return super.processKey(e);
   }
 }

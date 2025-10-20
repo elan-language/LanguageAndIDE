@@ -94,7 +94,7 @@ suite("Selector tests", () => {
     assert.equal(help, " constant class");
     assert.equal(
       g.renderAsHtml(),
-      `<el-global class="none" id='select1' tabindex="-1" ><el-select><el-txt>c</el-txt><el-place>new code</el-place><div class="options"> constant class</div></el-select></el-global>`,
+      `<el-global contenteditable spellcheck="false" class="none" id='select1' tabindex="-1" ><el-select><el-txt>c</el-txt><el-place>new code</el-place><div class="options"> constant class</div></el-select></el-global>`,
     );
   });
 
@@ -128,7 +128,7 @@ suite("Selector tests", () => {
     assert.equal(help, " property procedure");
     assert.equal(
       s.renderAsHtml(),
-      `<el-member class="ok" id='select5' tabindex="-1" ><el-select><el-txt>private pro</el-txt><el-place>new code</el-place><div class="options"> property procedure</div></el-select></el-member>`,
+      `<el-member contenteditable spellcheck="false" class="ok" id='select5' tabindex="-1" ><el-select><el-txt>private pro</el-txt><el-place>new code</el-place><div class="options"> property procedure</div></el-select></el-member>`,
     );
   });
 
@@ -156,7 +156,7 @@ suite("Selector tests", () => {
     assert.equal(s.getCompletion(), " property procedure");
     assert.equal(
       s.renderAsHtml(),
-      `<el-member class="ok" id='select5' tabindex="-1" ><el-select><el-txt>abstract pro</el-txt><el-place>new code</el-place><div class="options"> property procedure</div></el-select></el-member>`,
+      `<el-member contenteditable spellcheck="false" class="ok" id='select5' tabindex="-1" ><el-select><el-txt>abstract pro</el-txt><el-place>new code</el-place><div class="options"> property procedure</div></el-select></el-member>`,
     );
   });
 
@@ -193,7 +193,7 @@ suite("Selector tests", () => {
     assert.equal(help, " throw try");
     assert.equal(
       s.renderAsHtml(),
-      `<el-statement class="ok" id='select3' tabindex="-1" ><el-select><el-txt>t</el-txt><el-place>new code</el-place><div class="options"> throw try</div></el-select></el-statement>`,
+      `<el-statement contenteditable spellcheck="false" class="ok" id='select3' tabindex="-1" ><el-select><el-txt>t</el-txt><el-place>new code</el-place><div class="options"> throw try</div></el-select></el-statement>`,
     );
   });
 

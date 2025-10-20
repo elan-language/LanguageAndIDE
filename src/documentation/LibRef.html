@@ -75,22 +75,23 @@ in the range:</li>
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of large numbers</h4>
 <div class="acc-body">
-
-<el-code-block source="bigInt1.elan">
-<el-statement class="ok multiline" id="for139" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident141" class="ok" tabindex="0"><el-txt><el-id>i</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr142" class="ok" tabindex="0"><el-txt><el-lit>50</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr143" class="ok" tabindex="0"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr144" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
-<el-statement class="ok" id="call145" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident146" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args147" class="optional ok" tabindex="0"><el-txt><el-lit>0</el-lit>, <el-id>i</el-id>.<el-method>asString</el-method>()</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
-<el-statement class="ok" id="call152" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident153" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args154" class="optional ok" tabindex="0"><el-txt><el-lit>10</el-lit>, (<el-lit>2</el-lit>^<el-id>i</el-id>).<el-method>asString</el-method>()</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
-<el-statement class="ok" id="print176" tabindex="0"><el-kw>print </el-kw><el-field id="expr177" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>expression</i></el-place><el-compl><i>expression</i></el-compl></el-field></el-statement>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; This code calculates 2 raised to the power of 50 through 72, and its output is shown below:</p>
+<el-code-block source="bigInt2.elan">
+<el-statement class="ok multiline" id="for6" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident8" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr9" class="ok" tabindex="-1"><el-txt><el-lit>50</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr10" class="ok" tabindex="-1"><el-txt><el-lit>72</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt></el-field></el-top>
+<el-statement class="ok" id="var12" tabindex="-1"><el-kw>variable </el-kw><el-field id="var13" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt><el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>n</el-id>.<el-method>asString</el-method>().<el-method>length</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var15" tabindex="-1"><el-kw>variable </el-kw><el-field id="var16" class="ok" tabindex="-1"><el-txt><el-id>np</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit>^<el-id>n</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="call18" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident19" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field>(<el-field id="args20" class="optional ok" tabindex="-1"><el-txt>-<el-method>s</el-method>(<el-id>n</el-id>), "{<el-id>n</el-id>}"</el-txt></el-field>)</el-top></el-statement>
+<el-statement class="ok" id="call21" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident22" class="ok" tabindex="-1"><el-txt><el-method>printTab</el-method></el-txt></el-field>(<el-field id="args23" class="optional ok" tabindex="-1"><el-txt><el-lit>30</el-lit> - <el-method>s</el-method>(<el-id>np</el-id>), "{<el-id>np</el-id>}<el-lit><br></el-lit>"</el-txt></el-field>)</el-top></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
-<p>which produces:</p>
-<img src="images/bigIntegers.png">
+
+<img src="images/bigIntegers.png" width="285" height="471">
 </ul>
 <hr>
-</div></div
->
+</div></div>
+
 <h2 id="Float">Floating point</h2>
 <p>A floating point number is a decimal number that may have both integer and fractional parts.</p>
 <p>It may be written using exponential (scientific) notation, e.g.
@@ -223,7 +224,7 @@ in the range:</li>
 </tr>
 </table>
 
-<h4 class="no-TOC">Notes</h4>
+<h4 class="no-TOC" id="CharacterSets">Character sets</h4>
 <ul>
   <li>When typing from the keyboard into a literal string all the basic ASCII characters (0x20 to 0x7e) and' &pound;' can be input.
    You cannot use Alt-numeric-keypad to enter accented letters or other special characters in the range 0x80 to 0xff.</li>
@@ -240,6 +241,9 @@ in the range:</li>
   &#x27f6; This is an up arrow: &#x2191;
   </el-code>
   <p>These examples 'interpolate' the output of function <el-method>unicode</el-method> by using curly braces (see <a href="#InterpolatedString">Interpolated fields</a>).</p></li>
+</ul>
+<h4 class="no-TOC">Notes</h4>
+<ul>
  <li>Strings can be built from other strings by concatenation using the plus operator, for example:</li>
   <el-code>
   <el-statement class="ok" id="print19" tabindex="-1"><el-kw>print </el-kw><el-field id="expr20" class="optional ok" tabindex="-1"><el-txt>"<el-lit>Hello </el-lit>" + '<el-lit>world</el-lit>'</el-txt></el-field></el-statement>
@@ -251,7 +255,7 @@ in the range:</li>
   &#x27f6; Hello<br>&nbsp;&nbsp;&nbsp;world</el-code>
 </li>
  <li>As in most languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never modified. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</li>
-<li>There are no 'substring' methods in Elan because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth character to the seventh character inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <i>exclusive</i>.
+<li>There are no 'substring' methods in Elan, because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth character to the seventh character inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <i>exclusive</i>.
  See <a href="LangRef.html#IndexedValue">Indexed values</a>.</li>
  <li>You can loop through a string picking each of its characters sequentially using the <a href="LangRef.html#each"><el-code>each</el-code></a> loop.
 <li>The dot methods that can be applied to strings are shown in the table below.</li>
@@ -421,7 +425,7 @@ A Tuple differs from a List in that:
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident19" class="ok" tabindex="-1"><el-txt>distanceBetween</el-txt></el-field></el-method>(<el-field id="params20" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type21" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field></el-top>
 </el-code-block>
 
-<h3 class="no-TOC">Deconstructing a Tuple</h3>
+<h3 class="no-TOC" id="deconstructTuple">Deconstructing a Tuple</h3>
 
 <p>The Tuple <el-code>point</el-code> defined by:</p>
 <el-code-block source="tuples1.elan">
@@ -444,7 +448,7 @@ A Tuple differs from a List in that:
 </el-code-block>
 
 <p id="itemN">Where it is not convenient to use Tuple deconstruction (or not possible, e.g. within a lambda) then individual elements
-may be accessed using the special properties <el-id>item0</el-id>, <el-id>item1</el-id>, <el-id>item2</el-id>,...  with the dot notation,
+may be accessed using the special properties <el-id>item0</el-id>, <el-id>item1</el-id>, <el-id>item2</el-id>,...  with <a href="LangRef.html#dotSyntax">dot syntax</a>,
 for example:</p>
 
 <el-code-block source="tuples1.elan">
@@ -1795,7 +1799,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 </ul>
 
 <h2 id="TurtleGraphics">Turtle graphics</h2>
-<p>Turtle graphics are implemented in Elan with output to the IDE's Display pane, i.e. the 'paper' on which the turtle draws.</p>
+<p>Turtle graphics are implemented with output to the IDE's Display pane, i.e. the 'paper' on which the turtle draws.</p>
 <p>The area is 200 turtle units wide by 150 turtle units high, and both integer and floating point values of turtle units can be used.
  If a turtle is placed or moved outside the 200 &times; 150 area boundary, it will not cause an error,
  but the turtle and any lines drawn outside the boundary will not be visible.</p>
@@ -1959,8 +1963,7 @@ So the top left corner of the display is at (-100,75).</p>
 </div></div>
 
 <h2 id="VectorGraphics">Vector graphics</h2>
-<div id="displayVectorGraphics"></div>
-<p>Vector graphics are implemented in Elan using the SVG (Scalable Vector Graphics) Html tag &lt;svg&gt;, and are output to the Display pane in the user interface.</p>
+<p>Vector graphics are implemented using the SVG (Scalable Vector Graphics) Html tag &lt;svg&gt;, and are output to the Display pane in the user interface.</p>
 <p>The area is 100 units wide by 75 units high, and both integer and floating point values of the units can be used.</p>
 <p>The origin of the units (0,0) is at the top left corner of the display: positive <i>x</i> rightwards, positive <i>y</i> downwards.
 So for example the centre of the display is at (50, 37.5).</p>
@@ -1969,13 +1972,13 @@ So for example the centre of the display is at (50, 37.5).</p>
  <li id="CircleVG"> <el-code>CircleVG</el-code> for &lt;<el-code>circle../&gt;</el-code></li>
  <li id="LineVG"><el-code>LineVG</el-code> for <el-code>&lt;line../&gt;</el-code></li>
  <li id="RectangleVG"><el-code>RectangleVG</el-code> for <el-code>&lt;rect../&gt;</el-code></li>
- <li id="ImageVG"><span id="imageVG"></span><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
+ <li id="ImageVG"><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
 </ul>
 <p>The properties of these shapes reflect the names of the attributes used in the SVG tags but some names differ. For example, SVG's <el-id>stroke-width</el-id>
- is set with property <el-id>strokeWidth</el-id>, to make it a valid Elan <a href="LangRef.html#Identifier">Identifier</a>.
+ is set with property <el-id>strokeWidth</el-id>, to make it a valid <a href="LangRef.html#Identifier">identifier</a>.
 Also <el-code>stroke</el-code> and <el-code>fill</el-code> are set by the properties <el-id>strokeColour</el-id> and <el-id>fillColour</el-id>.</p>
 
-<h3 class="no-TOC">Defining Vector graphic shapes</h3>
+<h3 class="no-TOC" id="VectorGraphic">Defining Vector graphic shapes</h3>
 <p>A set of SVG shapes is defined in either a <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt; or a <el-type>List</el-type> of any specific Type of <el-type>VectorGraphic</el-type> (e.g. <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>CircleVG</el-type>&gt;) by using the <el-type>List</el-type> <el-method>append</el-method> method.</p>
 <p><el-type>VectorGraphic</el-type> is the abstract superclass of all <el-code>..VG</el-code> shapes. You would use it if you wanted to define a <el-type>List</el-type> holding different types of shape.</p>
 <p>Adding a shape returns a new instance of the list which must be assigned either to an existing variable, or to a new <el-kw>let</el-kw>.</p>
@@ -1991,12 +1994,12 @@ as shown in the table below.</p>
 Only <el-id>fillColour</el-id> can be specified as <el-id>transparent</el-id>.</p>
 <p>Note that the <el-id>height</el-id> and <el-id>width</el-id> properties of an image are also dependent on the dimensions of the original graphic file.</p>
 
-<h3 class="no-TOC">Displaying Vector graphic shapes</h3>
+<h3 class="no-TOC" id="displayVectorGraphics">Displaying Vector graphic shapes</h3>
 <p>As with <a href="#BlockGraphics">Block</a> graphics, the assembled list of shapes is not displayed until you make a call to procedure <el-method>displayVectorGraphics</el-method> with the list as its argument, thus allowing  you to make multiple changes before display.</p>
 <p>And as with using SVG in Html, the shapes are drawn in the order in which they are added to the <el-type>VectorGraphic</el-type> instance.
 Later shapes are positioned over earlier ones.</p>
 
-<h3 class="no-TOC" id="Methods_VG">Function dot methods on Vector graphic shapes</h3>
+<h3 class="no-TOC">Function dot methods on Vector graphic shapes</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -2234,7 +2237,7 @@ Later shapes are positioned over earlier ones.</p>
 <hr>
 </div></div>
 
-<h2 id="combiningGraphics">Combining graphic outputs</h2>
+<h2 id="CombiningGraphics">Combining graphic outputs</h2>
 <p>Program outputs, whether text or graphical, can be combined in the Display. In particular, Block graphics and text or Html printing can share the Display
  along with <i>either</i> Vector graphics <i>or</i> Turtle graphics (but not both).</p>
 <p>If you want to share the Display in this way, remember that both text and Html print outputs appear sequentially down the Display (which can be scrolled), whereas the graphic outputs are positioned in the Display using their own absolute coordinate systems.</p>
@@ -2251,7 +2254,7 @@ Later shapes are positioned over earlier ones.</p>
 
 <h2>Reading keys &#8216;on the fly&#8217;</h2>
 <p>In some applications &#8211; especially in games, for example &#8211; you want the program to react to a key pressed by the user, but without holding up the program to wait for value to be input. </p>
-<p>Whether your application makes use graphics, or just uses the <i>Console</i> for text, reading keystrokes &#8216;on the fly&#8217; is done via one of two methods:</p>
+<p>Whether your application makes use graphics, or just uses the <i>Display</i> for text, reading keystrokes &#8216;on the fly&#8217; is done via one of two methods:</p>
 <el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKey</el-method>()</el-txt></el-field></el-statement>
 <el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key2</el-id>, <el-id>modifier</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKeyWithModifier</el-method>()</el-txt></el-field></el-statement>
 <p><b>Notes</b></p>
@@ -2399,7 +2402,7 @@ Later shapes are positioned over earlier ones.</p>
 <p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
 </ul>
 
-<h2 id="DisplayHtml">Rendering Html in the Display</h2>
+<h2 id="displayHtml">Rendering Html in the Display</h2>
 <p>If you embed Html code in a string and then attempt to print it, you will see the string displayed literally: the Html tags
     will not be recognised. This is for security reasons. However, it <i>is</i> possible to display formatted Html in the <b>Display</b>.
     The following code:</p>
@@ -2415,7 +2418,7 @@ Later shapes are positioned over earlier ones.</p>
     (using <el-kw>print</el-kw> or any of the <el-method>print..</el-method> procedures)
     will be overlaid on top of this.</p>
 
-<p id="clearHtml">You can clear just the Html layer in the display using the procedure <el-method>clearHtml</el-method>.</p>
+<p>You can clear just the Html layer in the display using the procedure <a href="#clearHtml"><el-method>clearHtml</el-method></a>.</p>
 
 <p>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above.
     Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string.
@@ -2614,8 +2617,8 @@ If you need another random value, you use the returned <el-type>Random</el-type>
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
-</div></div>
 <hr>
+</div></div>
 
 <h2 id="Func">Func</h2>
 <p>A function may be passed as an argument into another function (or a procedure), or returned as the result of calling another function.
@@ -2750,22 +2753,22 @@ Within a string delimited by <i>single quotes</i>, those literal characters can 
 <div id="round"></div>
 <div id="isNaN"></div>
 <div id="isInfinite"></div>
-<h2>floor, ceiling, round, isNaN, and IsInfinite</h2>
-    <p> All of these functions are called as 'dot methods' on a numeric value  of Type <el-type>Float</el-type> or <el-type>Int</el-type>.
-    <el-code>NaN</el-code> is short for 'Not A (Real) Number' Their use is illustrated with the following tests:</p>
-<el-code-block source="test_round">
-        <el-test class="ok multiline" id="test5" tabindex="0">
-            <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment7" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
-            <el-statement class="ok" id="let19" tabindex="0"><el-kw>let </el-kw><el-field id="var20" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr21" class="ok" tabindex="0"><el-txt><el-lit><el-lit>3</el-lit>.14159</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="assert26" tabindex="0"><el-kw>assert </el-kw><el-field id="text27" class="ok" tabindex="0"><el-txt><el-id>n</el-id>.<el-method>floor</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr28" class="ok" tabindex="0"><el-txt><el-lit>3</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-            <el-statement class="ok" id="assert33" tabindex="0"><el-kw>assert </el-kw><el-field id="text34" class="ok" tabindex="0"><el-txt><el-id>n</el-id>.<el-method>ceiling</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr35" class="ok" tabindex="0"><el-txt><el-lit>4</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-            <el-statement class="ok" id="assert46" tabindex="0"><el-kw>assert </el-kw><el-field id="text47" class="ok" tabindex="0"><el-txt><el-id>n</el-id>.<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr48" class="ok" tabindex="0"><el-txt><el-lit><el-lit>3</el-lit>.142</el-lit></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-            <el-statement class="ok" id="assert53" tabindex="0"><el-kw>assert </el-kw><el-field id="text54" class="ok" tabindex="0"><el-txt><el-method>sqrt</el-method>(-<el-lit>1</el-lit>).<el-method>isNaN</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr55" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-            <el-statement class="ok" id="let64" tabindex="0"><el-kw>let </el-kw><el-field id="var65" class="ok" tabindex="0"><el-txt><el-id>x</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr66" class="ok" tabindex="0"><el-txt><el-lit>1</el-lit>/<el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            <el-statement class="ok" id="assert60" tabindex="0"><el-kw>assert </el-kw><el-field id="text61" class="ok" tabindex="0"><el-txt><el-id>x</el-id>.<el-method>isInfinite</el-method>()</el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr62" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-            <el-kw>end test</el-kw>
-            </el-test>
-    </el-code-block>
+<h2>floor, ceiling, round, isNaN, and isInfinite</h2>
+<p> All of these functions are called as 'dot methods' on a numeric value  of Type <el-type>Float</el-type> or <el-type>Int</el-type>.
+<el-code>NaN</el-code> is short for 'Not A (Real) Number' Their use is illustrated with the following tests:</p>
+<el-code-block source="test_floor.elan">
+<el-test class="ok multiline" id="test1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="-1"><el-txt>&nbsp;</el-txt></el-field></el-top>
+<el-statement class="ok" id="let4" tabindex="-1"><el-kw>let </el-kw><el-field id="var5" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt><el-id>pi</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="assert7" tabindex="-1"><el-kw>assert </el-kw><el-field id="text8" class="ok" tabindex="-1"><el-txt><el-id>n</el-id>.<el-method>floor</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr9" class="ok" tabindex="-1"><el-txt><el-lit>3</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert10" tabindex="-1"><el-kw>assert </el-kw><el-field id="text11" class="ok" tabindex="-1"><el-txt><el-id>n</el-id>.<el-method>ceiling</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-lit>4</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert13" tabindex="-1"><el-kw>assert </el-kw><el-field id="text14" class="ok" tabindex="-1"><el-txt><el-id>n</el-id>.<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>3</el-lit>.142</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert16" tabindex="-1"><el-kw>assert </el-kw><el-field id="text17" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(-<el-lit>1</el-lit>).<el-method>isNaN</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="let19" tabindex="-1"><el-kw>let </el-kw><el-field id="var20" class="ok" tabindex="-1"><el-txt><el-id>x</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit>/<el-lit>0</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="assert22" tabindex="-1"><el-kw>assert </el-kw><el-field id="text23" class="ok" tabindex="-1"><el-txt><el-id>x</el-id>.<el-method>isInfinite</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr24" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-kw>end test</el-kw>
+</el-test>
+</el-code-block>
 
 <h2 id="MathsFunctions">Maths functions</h2>
 All the maths functions take a <el-type>Float</el-type> argument and return a <el-type>Float</el-type> value.
@@ -2823,7 +2826,7 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 <h2 id="RegExp">Regular expressions</h2>
     <p>Elan's regular expressions are modelled on those of JavaScript, including the syntax for literal regular expressions. See, for example this <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions">Guide to Regular Expressions</a>.</p>
     <p>More functions for using regular expressions will be added in a future release of Elan. For now&#8230;</p>
-    <p>The method <el-code>matchesRegExp</el-code> is applied to a <el-type>String</el-type> using dot syntax and requires a <el-code>RegExp</el-code> parameter specified as a literal or as variable. It returns a <el-type>Boolean</el-type>. For example:</p>
+    <p>The method <el-code>matchesRegExp</el-code> is applied to a <el-type>String</el-type> using <a href="LangRef.html#dotSyntax">dot syntax</a> and requires a <el-code>RegExp</el-code> parameter specified as a literal or as variable. It returns a <el-type>Boolean</el-type>. For example:</p>
 
 <el-code-block source="test_regexp_1.elan">
 <el-test class="ok multiline" id="test1" tabindex="0">
@@ -2891,7 +2894,12 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
   <td>integer bit shifted to the right by the value of the second argument,<br>i.e.  divided by 2 to the power of the second argument</td>
  </tr>
 </table>
-<p>Examples of the bitwise functions being tested:</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples of the bitwise functions being tested</h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Examples of the bitwise functions being tested</p>
+
 <el-code-block source="test_bitwise.elan">
 <el-test class="ok multiline" id="test3" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment5" class="optional ok" tabindex="0"><el-txt>bitwise</el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
@@ -2915,6 +2923,26 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 </el-test>
 </el-code-block>
 <p>The result of <el-method>bitNot</el-method>(<el-id>a</el-id>) being <el-code>-14</el-code> , when <el-code><el-id>a</el-id></el-code> is <el-code>13</el-code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as<br><el-code>00000000000000000000000000001101</el-code>, and applying <el-method>bitNot</el-method> gives<br><el-code>11111111111111111111111111110010 </el-code>which is the value <el-code>-14 </el-code>in signed two&#8217;s complement format,<br> the leftmost bit being the sign (<el-code>0</el-code> positive, <el-code>1</el-code> negative).</p>
+<hr>
+</div></div>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Single bit operations
+</h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; A reminder of single bit operations:</p>
+<table>
+ <tr><th rowspan="2"></th><th colspan="4">p,q</th></tr>
+ <tr><th</th><th>0,0</th><th>0,1</th><th>1,0</th><th>1,1</th></tr>
+ <tr><td><el-code>bitAnd(p,q)</el-code></td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+ <tr><td><el-code>bitOr(p,q)</el-code></td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+ <tr><td><el-code>bitNot(p)</el-code></td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+ <tr><td><el-code>bitXor(p,q)</el-code></td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+</table>
+<p>As noted in the example tests above, these methods act on 32-bit signed integers rather than on 1-bit values,
+so the effect of <el-method>bitNot</el-method> is not just the simple bit reversal shown here.</p>
+<hr>
+</div></div>
 
 <h2 id="sequence">Sequence and SequenceWithStep</h2>
 
@@ -2950,6 +2978,21 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
   <td>(none)</td>
   <td>(none)</td>
   <td>clears the IDE's keyboard input</td>
+ </tr><tr id="clearBlocks">
+  <td><el-method>clearBlocks</el-method></td>
+  <td>(none)</td>
+  <td>(none)</td>
+  <td>clears the block graphics layer of the IDE's Display pane</td>
+ </tr><tr id="clearHtml">
+  <td><el-method>clearHtml</el-method></td>
+  <td>(none)</td>
+  <td>(none)</td>
+  <td>clears the Html layer of the IDE's Display pane</td>
+ </tr><tr id="clearVG">
+  <td><el-method>clearVectorGraphics</el-method></td>
+  <td>(none)</td>
+  <td>(none)</td>
+  <td>clears the vector graphics layer of the IDE's Display pane</td>
  </tr><tr id="pressAnyKeyToContinue">
   <td><el-method>pressAnyKeyToContinue</el-method></td>
   <td><el-type>Boolean</el-type></td>
@@ -3023,7 +3066,7 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
 </ul>
 <p>Because of these properties, system methods may be used only within the <el-code>main</el-code> routine or within a <el-code>procedure</el-code>.
  They may not be used inside a <el-code>function</el-code> that you have defined, because to do so would mean that your <el-code>function</el-code> would not be pure.</p>
-<p>System methods are all defined within the Elan standard library: you cannot write a system method yourself.</p>
+<p>System methods are all defined within the standard library: you cannot write a system method yourself.</p>
 <p>System methods are commonly associated with <a href="#Input/output">Input/output</a>, but note that:</p>
 <ul>
  <li>Input/output may be performed in  procedures as well as in <el-code>main</el-code>.</li>
@@ -3042,6 +3085,11 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
   <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>returns the current value (in  milliseconds) of a system clock.<br>Useful for measuring elapsed time by comparing the values returned by two calls</td>
+ </tr><tr id="createFileForWriting_system">
+  <td><el-method>createFileForWriting</el-method></td>
+  <td>(none)</td>
+  <td><el-type>TextFileWriter</el-type></td>
+  <td>see <a href="#TextFileWriter">Writing text files</a></td>
  </tr><tr id="getKey">
   <td><el-method>getKey</el-method></td>
   <td>(none)</td>
@@ -3098,8 +3146,8 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
  </tr><tr id="openFileForReading_system">
   <td><el-method>openFileForReading</el-method></td>
   <td>(none)</td>
-  <td><el-class>TextFileReader</el-class></td>
-  <td>see <a href="#Input/output">Input/output</a></td>
+  <td><el-type>TextFileReader</el-type></td>
+  <td>see <a href="#TextFileReader">Reading text files</a></td>
  </tr><tr id="random">
   <td><el-method>random</el-method></td>
   <td>(none)</td>
@@ -3135,7 +3183,7 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
 <p>A <b>higher-order function</b> (HoF) is one that takes in a reference to another function as a parameter, or (less commonly) that returns a reference to another function as its result. </p>
 
 <h2>Standard HoFs</h2>
-<p>The Elan standard library contains several HoFs that are widely recognised and used within functional programming, namely
+<p>The standard library contains several HoFs that are widely recognised and used within functional programming, namely
 <a href="#filter"><el-method>filter</el-method></a>,
 <a href="#map"><el-method>map</el-method></a> and
 <a href="#reduce"><el-method>reduce</el-method></a>, and also provides
@@ -3199,8 +3247,8 @@ This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or 
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
-</div></div>
 <hr>
+</div></div>
 
 <h3 class="no-TOC" id="map">map</h3>
 <p>The function <el-method>map</el-method> is used to apply a function to every element of a <el-type>List</el-type>, returning a new list.
@@ -3235,8 +3283,8 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 <el-code-block source="maze-generator.elan">
 <el-statement id="let156" tabindex="0"><el-kw>let </el-kw><el-field id="var157" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr158" class="ok" tabindex="0"><el-txt><el-id>p</el-id>.<el-method>neighbouringPoints</el-method>().<el-method>map</el-method>(<el-kw>lambda</el-kw> <el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type> =&gt; <el-method>getValue</el-method>(<el-id>p</el-id>, <el-id>g</el-id>))</el-txt></el-field></el-statement>
 </el-code-block>
-</div></div>
 <hr>
+</div></div>
 
 <h3 class="no-TOC" id="reduce">reduce</h3>
 <p>The function <el-method>reduce</el-method> is used to apply a function <el-id>(F)</el-id> to every element of Type <el-id>(E)</el-id>
@@ -3306,8 +3354,8 @@ and return a single value which may be of any Type <el-id>(T)</el-id>.</p>
 <el-code-block source source="Wordle.elan">
 <el-statement class="ok" id="let350" tabindex="0"><el-kw>let </el-kw><el-field id="var351" class="ok" tabindex="0"><el-txt><el-id>d2</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr352" class="ok" tabindex="0"><el-txt><el-id>possAnswers</el-id>.<el-method>reduce</el-method>(<el-id>d</el-id>, <el-kw>lambda</el-kw> <el-id>dd</el-id> <el-kw>as</el-kw> <el-type>DictionaryImmutable</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>Int</el-type>&gt;, <el-id>answer</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-method>incrementCount</el-method>(<el-id>dd</el-id>, <el-id>answer</el-id>, <el-id>attempt</el-id>))</el-txt></el-field></el-statement>
 </el-code-block>
-</div></div>
 <hr>
+</div></div>
 
 <div id="maxBy"></div>
 <div id="minBy"></div>
@@ -3336,8 +3384,9 @@ They take a function as an argument, and return the list element corresponding t
 <el-statement class="ok" id="print17" tabindex="0"><el-kw>print </el-kw><el-field id="expr18" class="optional ok" tabindex="0"><el-txt><el-id>fruit</el-id>.<el-method>minBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>x</el-id>.<el-method>length</el-method>())</el-txt></el-field></el-statement>
 &nbsp;&nbsp;&#x27f6; pear
 </el-code-block>
-</div></div>
 <hr>
+</div></div>
+
 <h3 class="no-TOC" id="sortBy">sortBy</h3>
 <p><el-method>sortBy</el-method> takes a <el-kw>lambda</el-kw> that takes two arguments (of the same Type as that of the <el-type>ListImmutable</el-type> being sorted) and compares them, returning an integer with one of the values -1, 0, or +1, to indicate whether the first argument should be placed respectively before, adjacent to or after the second argument in the sorted result, where &#8216;adjacent to&#8217; means it does not matter whether before or after):</p>
 
@@ -3359,8 +3408,9 @@ They take a function as an argument, and return the list element corresponding t
 <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 &nbsp;&nbsp;&#x27f6; [Alice, Edith, Jason, Lance, Paul, Pauline, Simon, Zelda]
 </el-code-block>
-</div></div>
 <hr>
+</div></div>
+
 <p><b>Elan Library Reference</b> go to the <a href="#top">top</a></p>
 <script>
   var accordions = document.getElementsByClassName("acc-title");
