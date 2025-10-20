@@ -390,16 +390,17 @@ button.icon:active img + label
   border-right-color: black;
 }
 
-.autocomplete-popup>div:hover,
-.context-menu>div:hover {
+.autocomplete-popup>div.selected,
+.context-menu>div.selected,
+.context-menu>div:focus {
   color: white;
   background-color: grey;
 }
 
-.autocomplete-popup>div.selected,
-.context-menu>div.selected,
-.context-menu>div:focus {
-  border: solid, black, 2px;
+.autocomplete-popup>div:hover,
+.context-menu>div:hover {
+  color: white;
+  background-color: #404040;
 }
 
 .dropdown {
@@ -418,19 +419,20 @@ button.icon:active img + label
   padding-right: 5px;
 }
 
-.menu-item:hover, button.menu-item:hover
-.menu-item:hover a,  button.menu-item:hover a
-{
-  background-color: grey;
-  color: white;
-  text-decoration: none;
-}
-
 .menu-item:focus,
 .menu-item:active, button.menu-item:active
 .menu-item:active a, button.menu-item:active a
+{ 
+  background-color: var(--disabledButton);
+  color: white; 
+  text-decoration: none;
+}
+
+.menu-item:hover, button.menu-item:hover
+.menu-item:hover a,  button.menu-item:hover a
 {
-  border: solid, black, 2px;
+  background-color: var(--ideBackground);
+  color: white;
   text-decoration: none;
 }
 
