@@ -255,7 +255,7 @@ in the range:</li>
   &#x27f6; Hello<br>&nbsp;&nbsp;&nbsp;world</el-code>
 </li>
  <li>As in most languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never modified. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</li>
-<li>There are no 'substring' methods in Elan because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth character to the seventh character inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <i>exclusive</i>.
+<li>There are no 'substring' methods in Elan, because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth character to the seventh character inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <i>exclusive</i>.
  See <a href="LangRef.html#IndexedValue">Indexed values</a>.</li>
  <li>You can loop through a string picking each of its characters sequentially using the <a href="LangRef.html#each"><el-code>each</el-code></a> loop.
 <li>The dot methods that can be applied to strings are shown in the table below.</li>
@@ -425,7 +425,7 @@ A Tuple differs from a List in that:
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident19" class="ok" tabindex="-1"><el-txt>distanceBetween</el-txt></el-field></el-method>(<el-field id="params20" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type21" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field></el-top>
 </el-code-block>
 
-<h3 class="no-TOC">Deconstructing a Tuple</h3>
+<h3 class="no-TOC" id="deconstructTuple">Deconstructing a Tuple</h3>
 
 <p>The Tuple <el-code>point</el-code> defined by:</p>
 <el-code-block source="tuples1.elan">
@@ -448,7 +448,7 @@ A Tuple differs from a List in that:
 </el-code-block>
 
 <p id="itemN">Where it is not convenient to use Tuple deconstruction (or not possible, e.g. within a lambda) then individual elements
-may be accessed using the special properties <el-id>item0</el-id>, <el-id>item1</el-id>, <el-id>item2</el-id>,...  with the dot notation,
+may be accessed using the special properties <el-id>item0</el-id>, <el-id>item1</el-id>, <el-id>item2</el-id>,...  with <a href="LangRef.html#dotSyntax">dot syntax</a>,
 for example:</p>
 
 <el-code-block source="tuples1.elan">
@@ -1799,7 +1799,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 </ul>
 
 <h2 id="TurtleGraphics">Turtle graphics</h2>
-<p>Turtle graphics are implemented in Elan with output to the IDE's Display pane, i.e. the 'paper' on which the turtle draws.</p>
+<p>Turtle graphics are implemented with output to the IDE's Display pane, i.e. the 'paper' on which the turtle draws.</p>
 <p>The area is 200 turtle units wide by 150 turtle units high, and both integer and floating point values of turtle units can be used.
  If a turtle is placed or moved outside the 200 &times; 150 area boundary, it will not cause an error,
  but the turtle and any lines drawn outside the boundary will not be visible.</p>
@@ -1963,7 +1963,7 @@ So the top left corner of the display is at (-100,75).</p>
 </div></div>
 
 <h2 id="VectorGraphics">Vector graphics</h2>
-<p>Vector graphics are implemented in Elan using the SVG (Scalable Vector Graphics) Html tag &lt;svg&gt;, and are output to the Display pane in the user interface.</p>
+<p>Vector graphics are implemented using the SVG (Scalable Vector Graphics) Html tag &lt;svg&gt;, and are output to the Display pane in the user interface.</p>
 <p>The area is 100 units wide by 75 units high, and both integer and floating point values of the units can be used.</p>
 <p>The origin of the units (0,0) is at the top left corner of the display: positive <i>x</i> rightwards, positive <i>y</i> downwards.
 So for example the centre of the display is at (50, 37.5).</p>
@@ -1975,7 +1975,7 @@ So for example the centre of the display is at (50, 37.5).</p>
  <li id="ImageVG"><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
 </ul>
 <p>The properties of these shapes reflect the names of the attributes used in the SVG tags but some names differ. For example, SVG's <el-id>stroke-width</el-id>
- is set with property <el-id>strokeWidth</el-id>, to make it a valid Elan <a href="LangRef.html#Identifier">Identifier</a>.
+ is set with property <el-id>strokeWidth</el-id>, to make it a valid <a href="LangRef.html#Identifier">identifier</a>.
 Also <el-code>stroke</el-code> and <el-code>fill</el-code> are set by the properties <el-id>strokeColour</el-id> and <el-id>fillColour</el-id>.</p>
 
 <h3 class="no-TOC" id="VectorGraphic">Defining Vector graphic shapes</h3>
@@ -2826,7 +2826,7 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 <h2 id="RegExp">Regular expressions</h2>
     <p>Elan's regular expressions are modelled on those of JavaScript, including the syntax for literal regular expressions. See, for example this <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions">Guide to Regular Expressions</a>.</p>
     <p>More functions for using regular expressions will be added in a future release of Elan. For now&#8230;</p>
-    <p>The method <el-code>matchesRegExp</el-code> is applied to a <el-type>String</el-type> using dot syntax and requires a <el-code>RegExp</el-code> parameter specified as a literal or as variable. It returns a <el-type>Boolean</el-type>. For example:</p>
+    <p>The method <el-code>matchesRegExp</el-code> is applied to a <el-type>String</el-type> using <a href="LangRef.html#dotSyntax">dot syntax</a> and requires a <el-code>RegExp</el-code> parameter specified as a literal or as variable. It returns a <el-type>Boolean</el-type>. For example:</p>
 
 <el-code-block source="test_regexp_1.elan">
 <el-test class="ok multiline" id="test1" tabindex="0">
@@ -3066,7 +3066,7 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
 </ul>
 <p>Because of these properties, system methods may be used only within the <el-code>main</el-code> routine or within a <el-code>procedure</el-code>.
  They may not be used inside a <el-code>function</el-code> that you have defined, because to do so would mean that your <el-code>function</el-code> would not be pure.</p>
-<p>System methods are all defined within the Elan standard library: you cannot write a system method yourself.</p>
+<p>System methods are all defined within the standard library: you cannot write a system method yourself.</p>
 <p>System methods are commonly associated with <a href="#Input/output">Input/output</a>, but note that:</p>
 <ul>
  <li>Input/output may be performed in  procedures as well as in <el-code>main</el-code>.</li>
@@ -3183,7 +3183,7 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
 <p>A <b>higher-order function</b> (HoF) is one that takes in a reference to another function as a parameter, or (less commonly) that returns a reference to another function as its result. </p>
 
 <h2>Standard HoFs</h2>
-<p>The Elan standard library contains several HoFs that are widely recognised and used within functional programming, namely
+<p>The standard library contains several HoFs that are widely recognised and used within functional programming, namely
 <a href="#filter"><el-method>filter</el-method></a>,
 <a href="#map"><el-method>map</el-method></a> and
 <a href="#reduce"><el-method>reduce</el-method></a>, and also provides

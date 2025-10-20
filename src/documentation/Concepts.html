@@ -18,37 +18,6 @@
 <h2></h2>
 
 
-<h1 id="LanguageFeatures">Language Features</h1>
-
-
-<h3 class="no-TOC">Constants</h3>
-<p>For immutable values that are of use throughout your program, you can use <a href="LangRef.html#constant"><el-kw>constant</el-kw></a> statements (outside your procedures and functions) to <el-kw>set</el-kw> names and initialise fixed values that are accessible by all executable code in your program, i.e. they have global scope. Constants are defined either with literals or by reference to predefined class properties.</p>
-
-<h3 class="no-TOC">Values at compilation and runtime</h3>
-<p><el-kw>let</el-kw>, <el-kw>variable</el-kw> and <el-kw>set</el-kw> statements are used within your procedures and functions to take their values at execution time and so can be defined by literals or expressions. <el-kw>constant</el-kw> statements, by contrast, fix their values at compilation time.</p>
-
-<h3 class="no-TOC">Scope</h3>
-The scope or area of influence of named values is restricted to the procedures or functions within which they are defined.
-
-<h3 class="no-TOC">Values and programming style</h3>
-<p>It is good practice to make as many of your named values as possible immutable, either by defining them as <el-kw>constants</el-kw> or with <el-kw>let</el-kw> statements, or by making use of Elan's <a href="LibRef.html#ImmutableDataStructures">immutable data structures</a>.</p>
-
-<h2>Type Names</h2>
-<p>The Elan language has been carefully designed so that it supports static typing without the need for beginners to include the names of types in their programs.
-For example you can write a program that counts to 10 without using the type name "Int".</p>
-<p>But there comes a point when you need to refer to the names of types when defining:</p>
-<ul>
-<li>the parameters of a function or procedure</li>
-<li>the return value of a function</li>
-<li>the properties of a record or class</li>
-<li>a variable with an empty value, for example an empty List</li>
-<li>a data type whose elements have a particular type, for example an Array&lt;of Int&gt;</li>
-</ul>
-<p>The names of all the built-in types are specified in the <a href="LibRef.html">Library Reference</a>.
-You can create your own types as <a href="LangRef.html#class">class</a>es, <a href="LangRef.html#record">record</a>s and <a href="LangRef.html#enum">enum</a>s.</p>
-
-<h2 id="Methods">Method</h2>
-<p>We use the word "method" to describe functions and procedures in general.</p>
 
 <h2 id="DotMethods">Dot method</h2>
 <p>There are many functions and procedures which belong to system-defined types or user-defined classes, and operate on an instance of that type or class.</p>
