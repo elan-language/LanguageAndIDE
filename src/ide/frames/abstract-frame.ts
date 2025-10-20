@@ -286,11 +286,8 @@ export abstract class AbstractFrame implements Frame {
         break;
       }
       case "Backspace": {
-        if (e.modKey.control) {
+        if (e.modKey.control || this.isNew) {
           this.deleteSelected();
-          codeHasChanged = true;
-        } else if (this.isNew) {
-          this.deleteIfPermissible();
           codeHasChanged = true;
         }
         break;
@@ -381,8 +378,10 @@ export abstract class AbstractFrame implements Frame {
   };
 
   deleteIfPermissible(): void {
-    this.insertNewSelectorIfNecessary();
-    this.delete();
+    if (this.isDeletable()) {
+      this.insertNewSelectorIfNecessary();
+      this.delete();
+    }
   }
 
   delete(): void {
