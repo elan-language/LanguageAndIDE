@@ -1,6 +1,5 @@
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { processCode, processSteps, processTitle } from "../tools/markupParser";
-import toDiffableHtml from "diffable-html";
 import {
   codeBlockEndTag,
   codeBlockTag,
@@ -98,7 +97,7 @@ export async function processWorksheet(fileName: string) {
 
   updatedContent = wrapInWorkSheetBoilerPlate(updatedContent, title);
 
-  updatedContent = toDiffableHtml(updatedContent);
+  //updatedContent = toDiffableHtml(updatedContent);
 
   updateFileNew(fileName.replace(".raw", ""), updatedContent);
 }
