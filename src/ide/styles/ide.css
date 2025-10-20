@@ -215,6 +215,7 @@ body {
   aspect-ratio: 4/3;
   position: relative;
   flex-shrink: 0;
+  border-top:solid 1px var(--paleTint);
 }
 
 #block-graphics,
@@ -226,8 +227,14 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+#print,
+#display-html {
   padding: 2px;
 }
+
+
 
 #vector-graphics {
   z-index: 10;
