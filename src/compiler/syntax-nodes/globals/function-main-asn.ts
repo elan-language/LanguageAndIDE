@@ -35,6 +35,7 @@ export class FunctionMainAsn extends FunctionAsn {
 
 function* _fmain(s: FSystem) {
 ${this.breakPoint(this.debugSymbols())}${this.compileChildren()}\r
-}`;
+}
+`;
   }
 }

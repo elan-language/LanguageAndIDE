@@ -18,10 +18,10 @@ suite("Functional Main", () => {
     const code = `${testHeader}
 
 function main(sys as FSystem) returns FSystem
-  let a be sys.inputInt("First number:")
-  let b be sys.inputInt("Second number:")
+  let sys1 be yield sys.inputInt("First number")
+  let sys2 be yield sys.inputInt("Second number")
   let c be (a + b).asString()
-  return sys.output(c)
+  return yield sys.output(c)
 end function
 `;
 
@@ -36,13 +36,10 @@ async function main() {
 }
 
 function* _fmain(s: FSystem) {
-  const a = sys.inputInt("First number:");
-  const b = sys.inputInt("Second number:");
+  const sys1 = yield sys.inputInt("First number");
+  const sys2 = yield sys.inputInt("Second number");
   const c = (await _stdlib.asString((a + b)));
-  return sys.output(c);
-}
-async function main() {
-
+  return yield sys.output(c);
 }
 return [main, _tests];}`;
 
@@ -62,7 +59,59 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test("spike", async () => {
+  // test("spike1", async () => {
+  //   class FSystem {
+  //     write?: () => Promise<void> = undefined;
+  //     read?: () => Promise<unknown> = undefined;
+  //     result?: unknown;
+
+  //     async evaluate() {
+  //       this.result = this.read ? await this.read() : undefined;
+  //       this.read = undefined;
+  //     }
+
+  //     async innerInputInt(prompt: string): Promise<number> {
+  //       return 22;
+  //     }
+
+  //     async innerPrint(v: any): Promise<void> {}
+
+  //     inputInt(prompt: string) {
+  //       this.read = async () => await this.innerInputInt(prompt);
+  //     }
+
+  //     print(v: unknown) {
+  //       this.write = async () => await this.innerPrint(v);
+  //     }
+  //   }
+
+  //   async function main() {
+  //     const s = new FSystem();
+  //     const it = _fmain(s);
+
+  //     for (const ss of it) {
+  //       await ss.evaluate();
+  //     }
+  //   }
+
+  //   function* _fmain(s: FSystem) {
+  //     s.inputInt("First Number:");
+  //     yield s;
+  //     const a = s.result as number;
+
+  //     s.inputInt("Second Number:");
+  //     yield s;
+  //     const b = s.result as number;
+
+  //     s.print(a + b);
+
+  //     yield s;
+  //   }
+
+  //   main();
+  // });
+
+  test("spike2", async () => {
     class FSystem {
       write?: () => Promise<void> = undefined;
       read?: () => Promise<unknown> = undefined;
@@ -73,18 +122,26 @@ return [main, _tests];}`;
         this.read = undefined;
       }
 
+      resultAsInt() {
+        return this.result as number;
+      }
+
       async innerInputInt(prompt: string): Promise<number> {
         return 22;
       }
 
       async innerPrint(v: any): Promise<void> {}
 
-      inputInt(prompt: string) {
-        this.read = async () => await this.innerInputInt(prompt);
+      inputInt(prompt: string): FSystem {
+        const ns = new FSystem();
+        ns.read = async () => await this.innerInputInt(prompt);
+        return ns
       }
 
-      print(v: unknown) {
-        this.write = async () => await this.innerPrint(v);
+      print(v: unknown): FSystem {
+        const ns = new FSystem();
+        ns.write = async () => await this.innerPrint(v);
+        return ns;
       }
     }
 
@@ -98,17 +155,16 @@ return [main, _tests];}`;
     }
 
     function* _fmain(s: FSystem) {
-      s.inputInt("First Number:");
-      yield s;
-      const a = s.result as number;
+      const s1 = s.inputInt("First Number:");
+      yield s1;
+      const a = s1.resultAsInt();
 
-      s.inputInt("Second Number:");
-      yield s;
-      const b = s.result as number;
+      const s2 = s1.inputInt("Second Number:");
+      yield s2;
+      const b = s2.resultAsInt();
 
-      s.print(a + b);
-
-      yield s;
+      const s3 = s2.print(a + b);
+      yield s3;
     }
 
     main();

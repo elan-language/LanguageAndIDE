@@ -3,7 +3,6 @@ import {
   ElanClass,
   elanClass,
   elanFunction,
-  ElanInt,
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
@@ -28,7 +27,7 @@ export class FSystem {
 
   private _stdlib!: StdLib; // injected
 
-  @elanFunction([], FunctionOptions.pure, ElanInt)
+  @elanFunction([], FunctionOptions.pure, ElanClass(FSystem))
   inputInt(_s: string) {}
 
   @elanFunction([], FunctionOptions.pure, ElanClass(FSystem))

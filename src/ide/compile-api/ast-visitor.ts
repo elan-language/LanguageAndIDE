@@ -97,6 +97,7 @@ import { ToAsn } from "../../compiler/syntax-nodes/to-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
 import { VarAsn } from "../../compiler/syntax-nodes/var-asn";
+import { YieldAsn } from "../../compiler/syntax-nodes/yield-asn";
 import { AbstractFrame } from "../frames/abstract-frame";
 import { AbstractFunction } from "../frames/class-members/abstract-function";
 import { AbstractProcedure } from "../frames/class-members/abstract-procedure";
@@ -186,6 +187,7 @@ import { TypeNameNode } from "../frames/parse-nodes/type-name-node";
 import { TypeTupleNode } from "../frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
 import { WithClause } from "../frames/parse-nodes/with-clause";
+import { YieldExprNode } from "../frames/parse-nodes/yield-expr-node";
 import { AssertStatement } from "../frames/statements/assert-statement";
 import { CallStatement } from "../frames/statements/call-statement";
 import { CatchStatement } from "../frames/statements/catch-statement";
@@ -718,6 +720,11 @@ export function transform(
 
   if (node instanceof BracketedExpression) {
     return new BracketedAsn(transform(node.expr, fieldId, scope)!, fieldId);
+  }
+
+  if (node instanceof YieldExprNode) {
+    const expr = transform(node.expr, fieldId, scope) ?? EmptyAsn.Instance;
+    return new YieldAsn(expr, fieldId);
   }
 
   if (node instanceof UnaryExpression) {

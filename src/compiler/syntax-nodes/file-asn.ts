@@ -16,6 +16,7 @@ import { getChildRange } from "./ast-helpers";
 import { BreakpointAsn } from "./breakpoint-asn";
 import { ConstantAsn } from "./globals/constant-asn";
 import { EnumAsn } from "./globals/enum-asn";
+import { FunctionMainAsn } from "./globals/function-main-asn";
 import { MainAsn } from "./globals/main-asn";
 import { TestAsn } from "./globals/test-asn";
 
@@ -144,7 +145,7 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
       ss.push(child.compile());
     }
 
-    if (!this.children.some((g) => g instanceof MainAsn)) {
+    if (!this.children.some((g) => g instanceof MainAsn || g instanceof FunctionMainAsn)) {
       const emptyMain = new MainAsn(this.fieldId, this);
       ss.push(emptyMain.compile());
     }

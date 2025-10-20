@@ -5,7 +5,7 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
-import { ExprNode } from "../parse-nodes/expr-node";
+import { YieldOrExprNode } from "../parse-nodes/yield-or-expr-node";
 import { AbstractField } from "./abstract-field";
 
 export class ExpressionField extends AbstractField {
@@ -27,7 +27,7 @@ export class ExpressionField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.rootNode = new ExprNode();
+    this.rootNode = new YieldOrExprNode();
     return this.rootNode;
   }
 
