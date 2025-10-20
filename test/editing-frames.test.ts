@@ -1,5 +1,22 @@
 import assert from "assert";
 
+import { Constructor } from "../src/ide/frames/class-members/constructor";
+import { MemberSelector } from "../src/ide/frames/class-members/member-selector";
+import { CommentField } from "../src/ide/frames/fields/comment-field";
+import { ConstantValueField } from "../src/ide/frames/fields/constant-value-field";
+import { IdentifierField } from "../src/ide/frames/fields/identifier-field";
+import { InheritsFromField } from "../src/ide/frames/fields/inherits-from-field";
+import { TypeNameField } from "../src/ide/frames/fields/type-name-field";
+import { FileImpl } from "../src/ide/frames/file-impl";
+import { ConcreteClass } from "../src/ide/frames/globals/concrete-class";
+import { Constant } from "../src/ide/frames/globals/constant";
+import { GlobalFunction } from "../src/ide/frames/globals/global-function";
+import { GlobalSelector } from "../src/ide/frames/globals/global-selector";
+import { MainFrame } from "../src/ide/frames/globals/main-frame";
+import { TestFrame } from "../src/ide/frames/globals/test-frame";
+import { ReturnStatement } from "../src/ide/frames/statements/return-statement";
+import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
+import { ParseStatus } from "../src/ide/frames/status-enums";
 import {
   classWithConstructor,
   emptyFunctionOnly,
@@ -28,23 +45,6 @@ import {
   tab,
   up,
 } from "./testHelpers";
-import { Constructor } from "../src/ide/frames/class-members/constructor";
-import { MemberSelector } from "../src/ide/frames/class-members/member-selector";
-import { CommentField } from "../src/ide/frames/fields/comment-field";
-import { ConstantValueField } from "../src/ide/frames/fields/constant-value-field";
-import { IdentifierField } from "../src/ide/frames/fields/identifier-field";
-import { InheritsFromField } from "../src/ide/frames/fields/inherits-from-field";
-import { TypeNameField } from "../src/ide/frames/fields/type-name-field";
-import { FileImpl } from "../src/ide/frames/file-impl";
-import { ConcreteClass } from "../src/ide/frames/globals/concrete-class";
-import { Constant } from "../src/ide/frames/globals/constant";
-import { GlobalFunction } from "../src/ide/frames/globals/global-function";
-import { GlobalSelector } from "../src/ide/frames/globals/global-selector";
-import { MainFrame } from "../src/ide/frames/globals/main-frame";
-import { TestFrame } from "../src/ide/frames/globals/test-frame";
-import { ReturnStatement } from "../src/ide/frames/statements/return-statement";
-import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
-import { ParseStatus } from "../src/ide/frames/status-enums";
 
 suite("Editing Frames", () => {
   test("Enter on a frame to Insert new code - creating a selector", () => {
@@ -477,6 +477,7 @@ suite("Editing Frames", () => {
     assert.equal(file.getChildren().length, 2);
     assert.equal(file.getFirstChild().getHtmlId(), "func8");
     const f2 = file.getById("func8");
+    f2.select();
     f2.processKey(key("Backspace"));
     assert.equal(file.getChildren().length, 1);
     // 3. Does not work if field has been edited
