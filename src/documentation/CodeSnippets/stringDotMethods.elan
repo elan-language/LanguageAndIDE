@@ -1,4 +1,4 @@
-# f1ab82b492adb7b1295d408c2d27589cfe36565a8ddb85d838fd336894c8a2fa Elan 1.6.0 guest default_profile valid
+# ced6043855b1dd2b0255481bcced7fbf3480d5866cf4d7e9553274156c384466 Elan 1.6.1 guest default_profile valid
 
 main
   let s be "string"
