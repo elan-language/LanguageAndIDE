@@ -1,4 +1,4 @@
-# dcf3abb318baab132df624a11540bed0bc8a237a62ad90c424c03fe8b596f3e8 Elan 1.6.0 guest default_profile valid
+# 9ed3d31e22ebbf6131800c1caca555e36eb67a1c5771d363bab54d95c166ea54 Elan 1.6.1 guest default_profile valid
 
 main
   let pic be new ImageVG('https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg') with width set to 400, height set to 200, alt set to "Shark"
