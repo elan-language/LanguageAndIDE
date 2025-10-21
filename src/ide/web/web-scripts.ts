@@ -1472,13 +1472,24 @@ async function updateContent(text: string, editingField: boolean) {
     activeHelp.click();
   }
 
-  const activeCopy = document.querySelector(".to-be-copied") as HTMLElement | undefined;
+  const activeCopy = document.querySelectorAll(".to-be-copied") as NodeListOf<HTMLElement>;
 
-  if (activeCopy) {
-    const id = activeCopy.id;
-    const frame = file.getById(id);
-    const code = frame.renderAsSource();
-    await navigator.clipboard.writeText(code);
+  if (activeCopy.length > 0) {
+    let allCode = "";
+
+    for (const ac of activeCopy) {
+      const id = ac.id;
+      const frame = file.getById(id);
+      const code = frame.renderAsSource().trim();
+
+      if (allCode) {
+        allCode = allCode + "\n" + code;
+      } else {
+        allCode = code;
+      }
+    }
+
+    await navigator.clipboard.writeText(allCode);
   }
 
   await localAndAutoSave(focused, editingField);

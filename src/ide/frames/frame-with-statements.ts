@@ -12,6 +12,7 @@ import { StatementFactory } from "./frame-interfaces/statement-factory";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
+  parentHelper_copySelectedChildren,
   parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
@@ -172,6 +173,10 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
   deleteSelectedChildren(): void {
     parentHelper_deleteSelectedChildren(this);
+  }
+
+  copySelectedChildren(): void {
+    parentHelper_copySelectedChildren(this);
   }
 
   moveSelectedChildrenUpOne(): void {

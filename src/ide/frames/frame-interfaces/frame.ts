@@ -63,4 +63,6 @@ export interface Frame extends Selectable {
 
   setImported(flag: boolean): void;
   isImported(): boolean;
+
+  flagAsCopy(): boolean;
 }

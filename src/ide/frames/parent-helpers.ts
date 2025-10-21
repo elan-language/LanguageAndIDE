@@ -168,6 +168,13 @@ export function parentHelper_deleteSelectedChildren(parent: Parent): void {
   }
 }
 
+export function parentHelper_copySelectedChildren(parent: Parent): void {
+  const toCopy = parentHelper_getAllSelectedChildren(parent);
+  for (const tc of toCopy) {
+    tc.flagAsCopy();
+  }
+}
+
 export function parentHelper_moveSelectedChildrenUpOne(parent: Parent): void {
   const toMove = parentHelper_getAllSelectedChildren(parent);
   let cont = true;
