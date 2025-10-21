@@ -346,7 +346,7 @@ export async function processHints(source: string, stepInstance: number) {
 
   let [updatedCode, codeStart, codeEnd] = await processEachHintInstance(
     source,
-    1,
+    0,
     hintInstance,
     stepInstance,
   );
