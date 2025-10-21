@@ -34,6 +34,8 @@ export interface Parent {
 
   deleteSelectedChildren(): void;
 
+  copySelectedChildren(): void;
+
   moveSelectedChildrenDownOne(): void;
   moveSelectedChildrenUpOne(): void;
   ghostSelectedChildren(): void;

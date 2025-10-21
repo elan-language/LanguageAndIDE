@@ -350,6 +350,11 @@ export abstract class AbstractFrame implements Frame {
     return true;
   };
 
+  copySelected = () => {
+    this.getParent().copySelectedChildren();
+    return false;
+  };
+
   cut = () => {
     const selected = parentHelper_getAllSelectedChildren(this.getParent());
     const nonSelectors = selected.filter((s) => !(s.initialKeywords() === "selector"));
@@ -805,7 +810,7 @@ export abstract class AbstractFrame implements Frame {
           map.set("setBP", ["set breakpoint", this.setBreakPoint]);
         }
       }
-      map.set("copy", ["copy for external use ", this.flagAsCopy]);
+      map.set("copy", ["copy for external use ", this.copySelected]);
     }
     return map;
   }

@@ -43,6 +43,7 @@ import { TestFrame } from "./globals/test-frame";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
+  parentHelper_copySelectedChildren,
   parentHelper_deleteSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_getChildBefore,
@@ -158,6 +159,10 @@ export class FileImpl implements File {
 
   deleteSelectedChildren(): void {
     parentHelper_deleteSelectedChildren(this);
+  }
+
+  copySelectedChildren(): void {
+    parentHelper_copySelectedChildren(this);
   }
 
   moveSelectedChildrenUpOne(): void {
