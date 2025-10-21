@@ -242,7 +242,7 @@ test('worksheets', async ({ page }) => {
 
   await page.keyboard.press('Enter');
 
-  await expect(page.frameLocator('#worksheet-iframe').getByText(/The standard worksheets listed below/)).toBeVisible();
+  await expect(page.frameLocator('#worksheet-iframe').getByText(/The standard worksheets/)).toBeVisible();
 
   await expect(page.getByText('Guide to the worksheets')).not.toBeVisible();
 });
