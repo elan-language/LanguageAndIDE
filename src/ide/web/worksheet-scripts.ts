@@ -5,9 +5,6 @@ const answers = document.querySelectorAll(answersSelector);
 const hints = document.querySelectorAll("div.hint");
 const doneCheckboxes = document.querySelectorAll("div.step > input.step-complete");
 
-const hintsTotal = document.querySelectorAll("span.hints-total");
-const hintsTaken = document.querySelectorAll("span.hints-taken");
-
 const autoSaveButton = document.getElementById("auto-save");
 
 const loads = document.querySelectorAll("button.load");
@@ -142,9 +139,27 @@ for (const e of answers) {
 }
 
 function updateHintsTaken() {
-  for (const ht of hintsTaken as NodeListOf<HTMLSpanElement>) {
-    const count = document.getElementsByClassName("taken").length;
-    ht.innerText = `${count}`;
+  let hintsSoFar = 0;
+  let hintsTaken = 0;
+
+  for (const step of document.querySelectorAll(
+    "div.complete, div.active",
+  ) as NodeListOf<HTMLDivElement>) {
+    hintsTaken = hintsTaken + step.querySelectorAll(".taken").length;
+    hintsSoFar = hintsSoFar + step.querySelectorAll("div.hint").length;
+  }
+
+  for (const step of document.querySelectorAll("div.active") as NodeListOf<HTMLDivElement>) {
+    const taken = step.querySelectorAll("span.hints-taken");
+    const total = step.querySelectorAll("span.hints-total");
+
+    for (const ht of taken as NodeListOf<HTMLSpanElement>) {
+      ht.innerText = `${hintsTaken}`;
+    }
+
+    for (const ht of total as NodeListOf<HTMLSpanElement>) {
+      ht.innerText = `${hintsSoFar}`;
+    }
   }
 }
 
@@ -212,16 +227,23 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
     }
 
     cb.after(getTimestamp());
+    updateHintsTaken();
     await save();
   });
 }
 
-for (const ht of hintsTotal as NodeListOf<HTMLSpanElement>) {
-  const count = hints.length;
-  ht.innerText = `${count}`;
-}
+for (const step of document.querySelectorAll("div.step") as NodeListOf<HTMLDivElement>) {
+  const hintsTaken = step.querySelectorAll("span.hints-taken");
+  const total = step.querySelectorAll("span.hints-total");
 
-updateHintsTaken();
+  for (const ht of hintsTaken as NodeListOf<HTMLSpanElement>) {
+    ht.innerText = `${0}`;
+  }
+
+  for (const ht of total as NodeListOf<HTMLSpanElement>) {
+    ht.innerText = `${0}`;
+  }
+}
 
 window.addEventListener("message", (m) => {
   if (m.data === "hasFocus") {
