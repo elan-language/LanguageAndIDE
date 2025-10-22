@@ -170,7 +170,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     return `${this.indent()}`;
   }
 
-  private selectorControlKeys = ["d", "O", "v", "V", "?"];
+  private selectorControlKeys = ["d", "O", "v", "?"];
 
   processKey(e: editorEvent): boolean {
     let codeHasChanged = false;
@@ -202,13 +202,6 @@ export abstract class AbstractSelector extends AbstractFrame {
         }
       }
       case "v": {
-        if (e.modKey.control) {
-          this.paste(e.optionalData ?? "");
-          codeHasChanged = true;
-          break; // break inside condition (unusually) because 'v' without 'Ctrl' needs to be picked up by default case.
-        }
-      }
-      case "V": {
         if (e.modKey.control) {
           this.paste(e.optionalData ?? "");
           codeHasChanged = true;

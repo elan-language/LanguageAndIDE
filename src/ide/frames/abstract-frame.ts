@@ -364,7 +364,10 @@ export abstract class AbstractFrame implements Frame {
   };
 
   copySelected = () => {
-    this.getParent().copySelectedChildren();
+    if (!this.getParent().copySelectedChildren()) {
+      this.pasteError = "Copy Failed: At least one selected frame does not parse";
+      return true;
+    }
     return false;
   };
 
@@ -382,7 +385,10 @@ export abstract class AbstractFrame implements Frame {
       return true;
     }
 
-    parentHelper_copySelectedChildren(this.getParent());
+    if (!parentHelper_copySelectedChildren(this.getParent())) {
+      this.pasteError = "Cut Failed: At least one selected frame does not parse";
+      return true;
+    }
     parentHelper_removeAllSelectedChildren(this.getParent());
 
     const last = selected[selected.length - 1];

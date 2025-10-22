@@ -164,8 +164,8 @@ export class FileImpl implements File {
     parentHelper_deleteSelectedChildren(this);
   }
 
-  copySelectedChildren(): void {
-    parentHelper_copySelectedChildren(this);
+  copySelectedChildren(): boolean {
+    return parentHelper_copySelectedChildren(this);
   }
 
   moveSelectedChildrenUpOne(): void {
