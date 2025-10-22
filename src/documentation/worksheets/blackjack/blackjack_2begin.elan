@@ -1,35 +1,8 @@
-# FFFF Elan 1.6.0 guest default_profile valid
+# 980341479e819248ffb83f0d1b4475d9516772c2501bc7e359a6d419beddffd0 Elan 1.6.1 guest default_profile valid
 
 [imported] function createDealer(startPoints as Int) returns Dealer
   return new Dealer(startPoints)
 end function
-
-[imported] function createHumanPlayer(startPoints as Int) returns HumanPlayer
-  return new HumanPlayer(startPoints)
-end function
-
-[imported] function createPlayerA(startPoints as Int) returns AutomatedPlayer
-  return new AutomatedPlayer("Player A", ref getActionForPlayerA, startPoints)
-end function
-
-[imported] function createPlayerB(startPoints as Int) returns AutomatedPlayer
-  return new AutomatedPlayer("Player B", ref getActionForPlayerB, startPoints)
-end function
-
-[imported] procedure playAllHands(dealer as Dealer, playerA as AutomatedPlayer, playerB as AutomatedPlayer)
-  let dfc be dealCard(random())
-  call playerA.newHand(dfc)
-  call playerA.playHandOut()
-  call playerB.newHand(dfc)
-  call playerB.playHandOut()
-  let statusB be playerB.hand.status
-  call dealer.newHand(dfc)
-  call dealer.playHandOut()
-  let outcomeA be determineOutcome(dealer, playerA)
-  call updateScores(dealer, playerA, outcomeA)
-  let outcomeB be determineOutcome(dealer, playerB)
-  call updateScores(dealer, playerB, outcomeB)
-end procedure
 
 [imported] procedure updateScores(dealer as Dealer, player as Player, outcome as Outcome)
   if outcome is Outcome.winDouble then
@@ -127,74 +100,6 @@ end class
 
   function asHtml() returns String
     return if property.active then "Dealer: {property.hand.asHtml()}" else "Dealer: {property.dealerFaceCard.asHtml()} {unicode(9633)}"
-  end function
-
-end class
-
-[imported] class HumanPlayer inherits Player
-  constructor(startingPoints as Int)
-    set property.score to startingPoints
-  end constructor
-
-  property score as Int
-
-  property hand as Hand
-
-  procedure newHand()
-    set property.hand to new Hand()
-    call property.hand.draw()
-    call property.hand.draw()
-    call property.hand.setStatus(Status.playing)
-  end procedure
-
-  function isPlaying() returns Boolean
-    return property.hand.status is Status.playing
-  end function
-
-  procedure nextMove()
-    let inp be inputStringFromOptions("Enter s to stand, d to draw card:", ["s", "d"])
-    if inp is "d" then
-      call property.hand.draw()
-    else
-      call property.hand.stand()
-    end if
-  end procedure
-
-  procedure changeScoreBy(amount as Int)
-    set property.score to property.score + amount
-  end procedure
-
-  function asHtml() returns String
-    return "You: {property.hand.asHtml()}"
-  end function
-
-end class
-
-[imported] class AutomatedPlayer inherits Automated
-  constructor(name as String, decisionFunc as Func<of Hand, Card => Action>, startingPoints as Int)
-    set property.name to name
-    set property.decisionFunc to ref decisionFunc
-    set property.score to startingPoints
-  end constructor
-
-  property name as String
-
-  property decisionFunc as Func<of Hand, Card => Action>
-
-  procedure newHand(faceCard as Card)
-    set property.dealerFaceCard to faceCard
-    set property.active to false
-    set property.hand to new Hand()
-    call property.hand.draw()
-    call property.hand.draw()
-  end procedure
-
-  function getAction() returns Action
-    return decisionFunc(property.hand, property.dealerFaceCard)
-  end function
-
-  function asHtml() returns String
-    return "{property.name}: {property.hand.asHtml()}"
   end function
 
 end class
@@ -310,26 +215,3 @@ end record
 [imported] constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
 
 [imported] constant htmlEscChars set to {"&clubs;", "&diams;", "&hearts;", "&spades;"}
-
-main
-  let startPoints be 1000
-  variable dealer set to createDealer(startPoints)
-  variable playerA set to createPlayerA(startPoints)
-  variable playerB set to createPlayerB(startPoints)
-  for i from 1 to 1000 step 1
-    call playAllHands(dealer, playerA, playerB)
-  end for
-  print "Dealer has {dealer.score} points"
-  print "Player A has {playerA.score} points"
-  print "Player B has {playerB.score} points"
-end main
-
-function getActionForPlayerA(hand as Hand, dealerFaceUp as Card) returns Action
-  variable act set to Action.draw
-  return act
-end function
-
-function getActionForPlayerB(hand as Hand, dealerFaceUp as Card) returns Action
-  variable act set to Action.stand
-  return act
-end function

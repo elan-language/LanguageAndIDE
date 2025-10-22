@@ -34,6 +34,7 @@
 </step>
 
 <step>
+  <h1>Step STEPNUMBER</h1>
     <ul>
         <li>If you were telling a person  how to mark an attempt word against a target word <i>manually</i>,
             you would probably tell them to look for any 'green' matches first. (It's more complicated to
@@ -45,7 +46,7 @@
             for this purpose, but notice that this also is a 'stub' implementation. So start by
         unghosting the <code>test</code> for <code>setChar</code> (immediately below the function),
         and then write a proper implementation of <code>setChar</code> to get those tests passing.</li>
-        <hint>HINTNUMBER Key ideas</hint>
+        <hint>Hint HINTNUMBER Key ideas</hint>
         <content>
             <ul>
             <li><code>String</code> is an 'immutable' type: you can't change its contents directly, 
@@ -56,7 +57,7 @@
         </li>
     </ul>
         </content>
-        <hint>HINTNUMBER Syntax</hint>
+        <hint>Hint HINTNUMBER Syntax</hint>
         <content>
             <ul>
                 <li>The expression to be returned by the function looks like this:
@@ -67,16 +68,16 @@
             </li>
           </ul>
         </content>
-        <hint>HINTNUMBER Range values</hint>
+        <hint>Hint HINTNUMBER Range values</hint>
         <content>
             <ul>
                 <li>The range for the part of the string up to, <i>but not including</i>, character number <code>n</code>
-                    is <code>..n</code></li>
+                    is <el-code>..<el-id>n</el-id></el-code></li>
                 <li>The range for the remaining of the string after, <i>but not including</i> character number <code>n</code>
-                    is <code>n+1..</code></li>
+                    is <el-code><el-id>n</el-id> + <el-lit>1</el-lit>..<el-code></li>
             </ul>
         </content>
-        <hint>HINTNUMBER Complete code for the setChar function</hint>
+        <hint>Hint HINTNUMBER Complete code for the setChar function</hint>
         <content>
             <code>
                 function setChar(str as String, n as Int, ch as String) returns String
@@ -88,6 +89,7 @@
 </step>
 
 <step>
+  <h1>Step STEPNUMBER</h1>
 <ul>
     <li>With <el-method>setChar</el-method> working we can now turn back to <el-method>markAttempt</el-method>.
         Start by deleting the first comment - as it will be incorrect once you start the implementation.
@@ -95,7 +97,7 @@
         Implement this function such that the first five <code>assert</code>s in the <code>test</code> pass (the default case 
         and four 'Only green' cases). 
     </li>
-    <hint>HINTNUMBER Key ideas</hint>
+    <hint>Hint HINTNUMBER Key ideas</hint>
     <content>
         <ul>
             <li>Use a <code>for</code> loop, defining a variable <code>n</code> to work through each character number in turn</li>
@@ -104,7 +106,7 @@
             <li>If they are the same, set that character number in <code>mark</code> to 2 - for 'green'.</li>
         </ul>
     </content>
-    <hint>HINTNUMBER Instruction outline</hint>
+    <hint>Hint HINTNUMBER Instruction outline</hint>
     <content>
     <code>
         for n from something to something step 1
@@ -116,7 +118,7 @@
     Note that each place where you see <code>something</code> you must replace it with something
     else - which <i>might</i> be different in each case.
     </content>
-    <hint>HINTNUMBER Complete function (so far)</hint>
+    <hint>Hint HINTNUMBER Complete function (so far)</hint>
     <content>
     function markAttempt(attempt as String, target as String) returns String
       variable mark set to "00000"
@@ -132,6 +134,7 @@
 </step>
 
 <step>
+  <h1>Step STEPNUMBER</h1>
     <ul>
         <li>Now we will tackle the yellows. Underneath the <code>for</code> loop that you just created,
         create a second loop using the same values. (It might be tempting to try to process the greens and yellows
@@ -143,9 +146,9 @@
         However, it will also have caused an unwanted consequence.</li>
         <question>What is that unwanted consequence, and why do you think this has happened? (Look at the individual cases).</question>
     </ul>
-    <hint>HINTNUMBER The condition</hint>
+    <hint>Hint HINTNUMBER The condition</hint>
     <content>The condition is: <code>target.contains(attempt[n])</code></content>
-    <hint>HINTNUMBER Outline for the second loop</hint>
+    <hint>Hint HINTNUMBER Outline for the second loop</hint>
     <content>
         <code>
   for n from 0 to 4 step 1
@@ -155,7 +158,7 @@
   end for
 </code>
     </content>
-    <hint>HINTNUMBER The complete function (so far)</hint>
+    <hint>Hint HINTNUMBER The complete function (so far)</hint>
     <content>
         <code>
 function markAttempt(attempt as String, target as String) returns String
@@ -177,15 +180,16 @@ end function
 </step>
 
 <step>
+  <h1>Step STEPNUMBER</h1>
     <ul>
         <li>The problem is: letters that were marked green in the first loop, are being 'overwritten'
             by a yellow. In the second loop we need to exlude any characters that have already been 
             marked green. Attempt it now by modifying the <code>if</code> condition within in the second loop. You should
             get all the 'Green only' cases passing again, and <i>all except one</i> of the 'Yellow only'
-         <hint>HINTNUMBER The condition</hint>
+         <hint>Hint HINTNUMBER The condition</hint>
          <content><code>(mark[n] isnt "2")</code></content>
          Add this to the existing condition using the <code>and</code> operator. 
-         <hint>HINTNUMBER The complete function</hint>
+         <hint>Hint HINTNUMBER The complete function</hint>
          <content>
             <code>
           function markAttempt(attempt as String, target as String) returns String
@@ -211,6 +215,7 @@ end function
     </ul>
 </step>
 <step>
+  <h1>Step STEPNUMBER</h1>
     <ul>
     <li>Answer to the previous two questions: 
     <ul>
@@ -228,7 +233,7 @@ end function
         define another variable named 'unused' and initialise it 
         to the value of <code>target</code>.
 
-        <hint>HINTNUMBER Complete new instruction</hint>
+        <hint>Hint HINTNUMBER Complete new instruction</hint>
         <content><code>variable unused set to target</code> to be added below <code>variable mark set to "00000"</code></content>
      </li>
      <li>
@@ -238,7 +243,7 @@ end function
          add a new instruction, underneath each, to set the corresponding character in <code>unused</code> to a single
          empty space. When you have completed this, <i>all</i> tests for <el-method>markAttempt</el-method> should pass.
 
-    <hint>HINTNUMBER Function showing the new instructions in outline</hint>
+    <hint>Hint HINTNUMBER Function showing the new instructions in outline</hint>
     <content>
         <code>
             function markAttempt(attempt as String, target as String) returns String
@@ -260,7 +265,7 @@ end function
           end function
         </code>
     </content>
-    <hint>HINTNUMBER The two new <code>set</code> instructions</hint>
+    <hint>Hint HINTNUMBER The two new <code>set</code> instructions</hint>
     <content>
         <ul>
             <li>The right-hand-side of both the new <code>set</code> instructions will use the 
@@ -272,7 +277,7 @@ end function
             <code>unused</code>, using the dotted-method <el-method>indexOf</el-method></li>
         </ul>
     </content>
-    <hint>HINTNUMBER The complete function</hint>
+    <hint>Hint HINTNUMBER The complete function</hint>
     <content>
         <code>
 function markAttempt(attempt as String, target as String) returns String
