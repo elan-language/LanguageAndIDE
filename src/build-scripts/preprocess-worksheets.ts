@@ -91,9 +91,9 @@ export async function processWorksheet(fileName: string) {
   source = prependFirstStep(source);
   source = appendLastStep(source);
 
-  let updatedContent = await processSteps(source);
-  updatedContent = await processCode(updatedContent, codeTag, codeEndTag);
+  let updatedContent = await processCode(source, codeTag, codeEndTag);
   updatedContent = await processCode(updatedContent, codeBlockTag, codeBlockEndTag);
+  updatedContent = await processSteps(updatedContent);
 
   updatedContent = wrapInWorkSheetBoilerPlate(updatedContent, title);
 
