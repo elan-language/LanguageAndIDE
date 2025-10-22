@@ -252,25 +252,21 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
   }
 
-  paste(code: string, root = true): void {
+  paste(code: string): void {
     try {
       const source = new CodeSourceFromString(code);
       this.parseFrom(source);
 
-      if (source.hasMoreCode()) {
+      if (source.hasMoreCode() && source.getRemainingCode().trim()) {
         const remainingCode = source.getRemainingCode();
         const frame = this.getParent().getLastChild();
         const selector = isSelector(frame)
           ? frame
           : parentHelper_insertOrGotoChildSelector(this.getParent(), true, frame);
-        selector.paste(remainingCode, false);
+        selector.paste(remainingCode);
       }
-    } catch (e) {
-      if (root) {
-        this.pasteError = `Paste Failed: Cannot paste '${code}' into selector`;
-      } else {
-        throw e;
-      }
+    } catch (_e) {
+      this.pasteError = `Paste Failed: Cannot paste '${code}' into selector`;
     }
   }
 

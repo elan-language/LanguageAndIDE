@@ -195,7 +195,18 @@ export abstract class AbstractFrame implements Frame {
     return result;
   }
 
-  private controlKeys = ["o", "O", "ArrowUp", "ArrowDown", "Backspace", "Delete", "x", "m", "?"];
+  private controlKeys = [
+    "o",
+    "O",
+    "ArrowUp",
+    "ArrowDown",
+    "Backspace",
+    "Delete",
+    "x",
+    "m",
+    "c",
+    "?",
+  ];
 
   processKey(e: editorEvent): boolean {
     let codeHasChanged = false;
@@ -287,9 +298,16 @@ export abstract class AbstractFrame implements Frame {
         }
         break;
       }
+      case "c": {
+        if (e.modKey.control) {
+          this.copySelected();
+          codeHasChanged = true;
+        }
+        break;
+      }
       case "x": {
         if (e.modKey.control) {
-          this.cut();
+          this.cutSelected();
           codeHasChanged = true;
         }
         break;
@@ -350,7 +368,7 @@ export abstract class AbstractFrame implements Frame {
     return false;
   };
 
-  cut = () => {
+  cutSelected = () => {
     const selected = parentHelper_getAllSelectedChildren(this.getParent());
     const nonSelectors = selected.filter((s) => !(s.initialKeywords() === "selector"));
     if (nonSelectors.length === 0) {
@@ -782,7 +800,7 @@ export abstract class AbstractFrame implements Frame {
         map.set("ghost", ["ghost", this.ghost]);
       }
       if (this.isDeletable()) {
-        map.set("cut", ["cut (Ctrl-x)", this.cut]);
+        map.set("cut", ["cut (Ctrl-x)", this.cutSelected]);
         map.set("delete", ["delete (Ctrl-Delete or Ctrl-Backspace)", this.deleteSelected]);
       }
       if (this.canInsertAfter()) {
@@ -803,7 +821,7 @@ export abstract class AbstractFrame implements Frame {
           map.set("setBP", ["set breakpoint", this.setBreakPoint]);
         }
       }
-      map.set("copy", ["copy for external use ", this.copySelected]);
+      map.set("copy", ["copy (Ctrl-c)", this.copySelected]);
     }
     return map;
   }
