@@ -20,11 +20,11 @@ import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
 import { Selectable } from "./frame-interfaces/selectable";
 import {
+  parentHelper_copySelectedChildren,
   parentHelper_getAllSelectedChildren,
   parentHelper_getChildAfter,
   parentHelper_removeAllSelectedChildren,
 } from "./parent-helpers";
-import { ScratchPad } from "./scratch-pad";
 import { CompileStatus, DisplayColour, ParseStatus } from "./status-enums";
 
 export abstract class AbstractFrame implements Frame {
@@ -50,7 +50,6 @@ export abstract class AbstractFrame implements Frame {
   private _parseStatus: ParseStatus = ParseStatus.default;
   private _ghosted: boolean = false;
   private _imported: boolean = false;
-  private _toBeCopied = false;
 
   constructor(parent: Parent) {
     this._parent = parent;
@@ -95,10 +94,6 @@ export abstract class AbstractFrame implements Frame {
   }
 
   abstract initialKeywords(): string;
-
-  getScratchPad(): ScratchPad {
-    return this.getFile().getScratchPad();
-  }
 
   getHtmlId(): string {
     return this.htmlId;
@@ -369,13 +364,12 @@ export abstract class AbstractFrame implements Frame {
       return true;
     }
 
+    parentHelper_copySelectedChildren(this.getParent());
     parentHelper_removeAllSelectedChildren(this.getParent());
 
     const last = selected[selected.length - 1];
     const newFocus = parentHelper_getChildAfter(this.getParent(), last);
     newFocus.select(true, false);
-    const sp = this.getScratchPad();
-    sp.addSnippet(nonSelectors);
     if (!isSelector(newFocus) && !newFocus.getParent().minimumNumberOfChildrenExceeded()) {
       newFocus.insertPeerSelector(false);
     }
@@ -495,8 +489,6 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this.isGhosted(), ghostedAnnotation);
     this.pushClass(this.isImported(), importedAnnotation);
     this._classes.push(DisplayColour[this.readDisplayStatus()]);
-    this.pushClass(this._toBeCopied, "to-be-copied");
-    this._toBeCopied = false;
   }
 
   protected readDisplayStatus(): DisplayColour {
@@ -652,8 +644,9 @@ export abstract class AbstractFrame implements Frame {
     return helper_compileMsgAsHtmlNew(this.getFile(), this);
   }
 
-  flagAsCopy = () => {
-    this._toBeCopied = true;
+  copy = () => {
+    const source = this.renderAsSource();
+    this.getFile().addCopiedSource(source);
     return false;
   };
 

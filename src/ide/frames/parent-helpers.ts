@@ -171,7 +171,7 @@ export function parentHelper_deleteSelectedChildren(parent: Parent): void {
 export function parentHelper_copySelectedChildren(parent: Parent): void {
   const toCopy = parentHelper_getAllSelectedChildren(parent);
   for (const tc of toCopy) {
-    tc.flagAsCopy();
+    tc.copy();
   }
 }
 

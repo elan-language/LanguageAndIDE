@@ -1472,16 +1472,12 @@ async function updateContent(text: string, editingField: boolean) {
     activeHelp.click();
   }
 
-  const activeCopy = document.querySelectorAll(".to-be-copied") as NodeListOf<HTMLElement>;
+  const copiedSource = file.getCopiedSource();
 
-  if (activeCopy.length > 0) {
+  if (copiedSource.length > 0) {
     let allCode = "";
 
-    for (const ac of activeCopy) {
-      const id = ac.id;
-      const frame = file.getById(id);
-      const code = frame.renderAsSource().trim();
-
+    for (const code of copiedSource) {
       if (allCode) {
         allCode = allCode + "\n" + code;
       } else {

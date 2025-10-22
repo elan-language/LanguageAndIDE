@@ -62,7 +62,6 @@ import {
   setGhostOnSelectedChildren,
   worstParseStatus,
 } from "./parent-helpers";
-import { ScratchPad } from "./scratch-pad";
 import { StatementFactoryImpl } from "./statement-factory-impl";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus } from "./status-enums";
 
@@ -87,9 +86,6 @@ export class FileImpl implements File {
   private _testStatus: TestStatus = TestStatus.default;
   private _runStatus: RunStatus = RunStatus.default;
   private _fieldBeingEdited: boolean = false;
-
-  private scratchPad: ScratchPad;
-
   private _children: Array<Frame> = new Array<Frame>();
   private _map: Map<string, Selectable>;
   private _factory: StatementFactory;
@@ -100,6 +96,8 @@ export class FileImpl implements File {
   private _frNo: number = 0;
   private _showFrameNos: boolean = true;
   ast: RootAstNode | undefined;
+
+  private copiedSource: string[] = [];
 
   constructor(
     private readonly hash: (toHash: string) => Promise<string>,
@@ -118,7 +116,16 @@ export class FileImpl implements File {
     if (allowAnyHeader) {
       this.allowAnyHeader = allowAnyHeader;
     }
-    this.scratchPad = new ScratchPad();
+  }
+
+  addCopiedSource(source: string): void {
+    this.copiedSource.push(source);
+  }
+
+  getCopiedSource(): string[] {
+    const ss = this.copiedSource;
+    this.copiedSource = [];
+    return ss;
   }
 
   private version = elanVersion;
@@ -139,10 +146,6 @@ export class FileImpl implements File {
 
   setFieldBeingEdited(value: boolean) {
     this._fieldBeingEdited = value;
-  }
-
-  getScratchPad(): ScratchPad {
-    return this.scratchPad;
   }
 
   getProfile(): Profile {

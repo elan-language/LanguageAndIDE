@@ -2,7 +2,13 @@ import { ghostedAnnotation, importedAnnotation } from "../../compiler/keywords";
 import { AbstractFrame } from "./abstract-frame";
 import { CodeSourceFromString } from "./code-source-from-string";
 import { Regexes } from "./fields/regexes";
-import { helper_pastePopUp, isClass, isFrameWithStatements, isGlobal } from "./frame-helpers";
+import {
+  helper_pastePopUp,
+  isClass,
+  isFrameWithStatements,
+  isGlobal,
+  isSelector,
+} from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
@@ -11,6 +17,7 @@ import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
 import { Profile } from "./frame-interfaces/profile";
 import { Overtyper } from "./overtyper";
+import { parentHelper_insertOrGotoChildSelector } from "./parent-helpers";
 import { ParseStatus } from "./status-enums";
 
 export abstract class AbstractSelector extends AbstractFrame {
@@ -196,14 +203,14 @@ export abstract class AbstractSelector extends AbstractFrame {
       }
       case "v": {
         if (e.modKey.control) {
-          this.paste();
+          this.paste(e.optionalData ?? "");
           codeHasChanged = true;
           break; // break inside condition (unusually) because 'v' without 'Ctrl' needs to be picked up by default case.
         }
       }
       case "V": {
         if (e.modKey.control) {
-          this.pasteCode(e.optionalData ?? "");
+          this.paste(e.optionalData ?? "");
           codeHasChanged = true;
           break; // break inside condition (unusually) because 'v' without 'Ctrl' needs to be picked up by default case.
         }
@@ -245,37 +252,25 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
   }
 
-  paste(): void {
-    const parent = this.getParent();
-    const sp = this.getScratchPad();
-    const frames = sp.readFrames();
-    let ok = frames && frames.length > 0;
-    if (ok) {
-      for (const fr of frames!) {
-        ok = ok && this.canBePastedIn(fr);
-      }
-      if (ok) {
-        for (const fr of frames!) {
-          parent.addChildBefore(fr, this);
-          fr.setParent(parent);
-          fr.select(true, false);
-        }
-        sp.remove(frames!);
-        this.deleteIfPermissible();
-      } else {
-        this.pasteError = "Paste Failed: Cannot paste frame into location";
-      }
-    } else {
-      this.pasteError = "Paste Failed: Nothing to paste";
-    }
-  }
-
-  pasteCode(code: string): void {
+  paste(code: string, root = true): void {
     try {
       const source = new CodeSourceFromString(code);
       this.parseFrom(source);
-    } catch (_e) {
-      this.pasteError = `Paste Failed: Cannot paste '${code}' into selector`;
+
+      if (source.hasMoreCode()) {
+        const remainingCode = source.getRemainingCode();
+        const frame = this.getParent().getLastChild();
+        const selector = isSelector(frame)
+          ? frame
+          : parentHelper_insertOrGotoChildSelector(this.getParent(), true, frame);
+        selector.paste(remainingCode, false);
+      }
+    } catch (e) {
+      if (root) {
+        this.pasteError = `Paste Failed: Cannot paste '${code}' into selector`;
+      } else {
+        throw e;
+      }
     }
   }
 
