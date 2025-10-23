@@ -1,66 +1,22 @@
-# FFFF Elan 1.6.0 guest default_profile valid
+# e6ce59fe524bf8187c1d674c9d07a17a94c8ec17aeb83867c71e985b57ae3461 Elan 1.6.0 guest default_profile valid
 
-main
-  call playGame()
-end main
-
-procedure playGame()
-  variable dealer set to createDealer(1000)
-  variable player set to createHumanPlayer(1000)
-  variable gameNo set to 0
-  variable cont set to true
-  while cont
-    call clearPrintedText()
-    call playOneRound(dealer, player)
-    let outcome be determineOutcome(dealer, player)
-    call updateScores(dealer, player, outcome)
-    print "You {outcome}"
-    print "Game: {gameNo} Dealer score: {dealer.score} Player score: {player.score}"
-    let prompt be "Enter p for play again, x for exit:"
-    let inp be inputStringFromOptions(prompt, ["p", "x"])
-    set cont to inp isnt "x"
-  end while
-end procedure
-
-procedure simulateGame()
-  let startPoints be 1000
-  variable dealer set to createDealer(startPoints)
-  variable playerA set to createPlayerA(startPoints)
-  variable playerB set to createPlayerB(startPoints)
-  call playAllHands(dealer, playerA, playerB)
-  print dealer
-  print playerA
-  print playerB
-  print "Dealer has {dealer.score} points"
-  print "Player A has {playerA.score} points"
-  print "Player B has {playerB.score} points"
-end procedure
-
-function getActionForPlayerA(hand as Hand, dealerFaceUp as Card) returns Action
-  return Action.draw
-end function
-
-function getActionForPlayerB(hand as Hand, dealerFaceUp as Card) returns Action
-  return Action.stand
-end function
-
-function createDealer(startPoints as Int) returns Dealer
+[imported] function createDealer(startPoints as Int) returns Dealer
   return new Dealer(startPoints)
 end function
 
-function createHumanPlayer(startPoints as Int) returns HumanPlayer
+[imported] function createHumanPlayer(startPoints as Int) returns HumanPlayer
   return new HumanPlayer(startPoints)
 end function
 
-function createPlayerA(startPoints as Int) returns AutomatedPlayer
+[imported] function createPlayerA(startPoints as Int) returns AutomatedPlayer
   return new AutomatedPlayer("Player A", ref getActionForPlayerA, startPoints)
 end function
 
-function createPlayerB(startPoints as Int) returns AutomatedPlayer
+[imported] function createPlayerB(startPoints as Int) returns AutomatedPlayer
   return new AutomatedPlayer("Player B", ref getActionForPlayerB, startPoints)
 end function
 
-procedure playAllHands(dealer as Dealer, playerA as AutomatedPlayer, playerB as AutomatedPlayer)
+[imported] procedure playAllHands(dealer as Dealer, playerA as AutomatedPlayer, playerB as AutomatedPlayer)
   let dfc be dealCard(random())
   call playerA.newHand(dfc)
   call playerA.playHandOut()
@@ -75,40 +31,7 @@ procedure playAllHands(dealer as Dealer, playerA as AutomatedPlayer, playerB as 
   call updateScores(dealer, playerB, outcomeB)
 end procedure
 
-procedure playOneRound(dealer as Dealer, player as HumanPlayer)
-  call player.newHand()
-  call dealer.newHand(dealCard(random()))
-  call displayHands(dealer, player)
-  call playersTurn(dealer, player)
-  call pause(2000)
-  call dealersTurn(dealer, player)
-end procedure
-
-procedure dealersTurn(dealer as Dealer, player as HumanPlayer)
-  call dealer.start()
-  call displayHands(dealer, player)
-  call pause(2000)
-  while dealer.hand.status is Status.playing
-    call dealer.nextMove()
-    call displayHands(dealer, player)
-    call pause(1000)
-  end while
-end procedure
-
-procedure playersTurn(dealer as Dealer, player as HumanPlayer)
-  while player.isPlaying()
-    call player.nextMove()
-    call displayHands(dealer, player)
-  end while
-end procedure
-
-procedure displayHands(dealer as Dealer, player as HumanPlayer)
-  call clearPrintedText()
-  let blankLines be "<br><br><br><br><br>"
-  call displayHtml("<br><br><br><br><br>{dealer.asHtml()}<br>{player.asHtml()}")
-end procedure
-
-procedure updateScores(dealer as Dealer, player as Player, outcome as Outcome)
+[imported] procedure updateScores(dealer as Dealer, player as Player, outcome as Outcome)
   if outcome is Outcome.winDouble then
     call player.changeScoreBy(2)
     call dealer.changeScoreBy(-2)
@@ -121,7 +44,7 @@ procedure updateScores(dealer as Dealer, player as Player, outcome as Outcome)
   end if
 end procedure
 
-function determineOutcome(dealer as Dealer, player as Player) returns Outcome
+[imported] function determineOutcome(dealer as Dealer, player as Player) returns Outcome
   let d be dealer.hand.status
   let dTot be dealer.hand.total
   let p be player.hand.status
@@ -135,21 +58,21 @@ function determineOutcome(dealer as Dealer, player as Player) returns Outcome
   return if p is bust then lose else if d is bust then win else if (d is bj) and (p is bj) then draw else if p is bj then winDouble else if d is bj then lose else if pTot > dTot then win else if pTot < dTot then lose else draw
 end function
 
-function dealCard(random as Float) returns Card
+[imported] function dealCard(random as Float) returns Card
   let number be (random*52).floor()
   let rank be rankValue.keys()[number div 4]
   let suit be number mod 4
   return new Card() with rank set to rank, suit set to suit
 end function
 
-interface Player
+[imported] interface Player
   abstract property hand as Hand
 
   abstract procedure changeScoreBy(amount as Int)
 
 end interface
 
-abstract class Automated inherits Player
+[imported] abstract class Automated inherits Player
   property hand as Hand
 
   property score as Int
@@ -185,7 +108,7 @@ abstract class Automated inherits Player
 
 end class
 
-class Dealer inherits Automated
+[imported] class Dealer inherits Automated
   constructor(startingPoints as Int)
     set property.score to startingPoints
   end constructor
@@ -208,7 +131,7 @@ class Dealer inherits Automated
 
 end class
 
-class HumanPlayer inherits Player
+[imported] class HumanPlayer inherits Player
   constructor(startingPoints as Int)
     set property.score to startingPoints
   end constructor
@@ -247,7 +170,7 @@ class HumanPlayer inherits Player
 
 end class
 
-class AutomatedPlayer inherits Automated
+[imported] class AutomatedPlayer inherits Automated
   constructor(name as String, decisionFunc as Func<of Hand, Card => Action>, startingPoints as Int)
     set property.name to name
     set property.decisionFunc to ref decisionFunc
@@ -276,7 +199,7 @@ class AutomatedPlayer inherits Automated
 
 end class
 
-class Hand
+[imported] class Hand
   property softAce as Boolean
 
   property cards as List<of Card>
@@ -356,7 +279,7 @@ class Hand
 
 end class
 
-record Card
+[imported] record Card
   property suit as Int
 
   property rank as String
@@ -378,12 +301,51 @@ record Card
 
 end record
 
-enum Action stand, draw
+[imported] enum Action stand, draw
 
-enum Outcome undecided, lose, draw, win, winDouble
+[imported] enum Outcome undecided, lose, draw, win, winDouble
 
-enum Status pending, playing, standing, blackjack, bust
+[imported] enum Status pending, playing, standing, blackjack, bust
 
-constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
+[imported] constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
 
-constant htmlEscChars set to {"&clubs;", "&diams;", "&hearts;", "&spades;"}
+[imported] constant htmlEscChars set to {"&clubs;", "&diams;", "&hearts;", "&spades;"}
+
+main
+  let startPoints be 1000000
+  variable dealer set to createDealer(startPoints)
+  variable playerA set to createPlayerA(startPoints)
+  variable playerB set to createPlayerB(startPoints)
+  for i from 1 to 1000000 step 1
+    call playAllHands(dealer, playerA, playerB)
+  end for
+  print "\n\n\n\nDealer has {dealer.score} points\nPlayer A has {playerA.score} points\nPlayer B has {playerB.score} points"
+end main
+
+function standOn(minimum as Int, hand as Hand) returns Action
+  return if hand.total < minimum then Action.draw else Action.stand
+end function
+
+function getActionForPlayerA(hand as Hand, dealerFaceUp as Card) returns Action
+  variable act set to Action.stand
+  if hand.softAce then
+    set act to standOn(18, hand)
+  else
+    set act to standOn(16, hand)
+  end if
+  return act
+end function
+
+function getActionForPlayerB(hand as Hand, dealerFaceUp as Card) returns Action
+  variable act set to Action.stand
+  if hand.softAce then
+    set act to standOn(18, hand)
+  else
+    if (dealerFaceUp.value() is 5) or (dealerFaceUp.value() is 6) then
+      set act to standOn(12, hand)
+    else
+      set act to standOn(16, hand)
+    end if
+  end if
+  return act
+end function
