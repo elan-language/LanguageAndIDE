@@ -84,3 +84,40 @@ test('lambda symbol completion function', async ({ page }) => {
 
     await expect(page.locator('#args20')).toContainText('yon');
 });
+
+test('property symbol completion', async ({ page }) => {
+    page.once('dialog', dialog => {
+        //console.log(`Dialog message: ${dialog.message()}`);
+        dialog.accept().catch(() => { });
+    });
+    await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+    await page.getByText('main procedure function test').click();
+
+    await page.keyboard.type('cl');
+    await page.keyboard.type('Foo');
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Enter');
+
+    await page.keyboard.type('prop');
+    await page.keyboard.type('bar');
+    await page.keyboard.press('Tab');
+    await page.keyboard.type('Int');
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Enter');
+
+    await page.keyboard.type('f');
+    await page.keyboard.type('yon');
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Tab');
+    await page.keyboard.type('Int');
+    await page.keyboard.press('Enter');
+    await page.keyboard.press('l');
+    await page.keyboard.press('a');
+    await page.keyboard.press('Tab');
+    await page.keyboard.type('ba');
+
+    await page.getByText('property.bar').click();
+
+    await expect(page.locator('el-txt > input')).toHaveValue('property.bar');
+});
