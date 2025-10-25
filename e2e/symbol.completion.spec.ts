@@ -120,4 +120,9 @@ test('property symbol completion', async ({ page }) => {
     await page.getByText('property.bar').click();
 
     await expect(page.locator('el-txt > input')).toHaveValue('property.bar');
+
+    // to test backspace doesn't delete entire entry #2013
+    await page.keyboard.press('Backspace');
+
+    await expect(page.locator('el-txt > input')).toHaveValue('property.ba');
 });
