@@ -181,7 +181,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  private controlKeys = ["o", "O", "ArrowLeft", "ArrowRight", "a", "?"];
+  private controlKeys = ["o", "O", "ArrowLeft", "ArrowRight", "a", "v", "?"];
 
   processKey(e: editorEvent): boolean {
     this.codeHasChanged = false;
@@ -288,6 +288,19 @@ export abstract class AbstractField implements Selectable, Field {
           break;
         }
       }
+      case "v": {
+        if (e.modKey.control) {
+          const toPaste = e.optionalData ?? "";
+          this.deleteExistingSelection();
+          for (const c of toPaste) {
+            this.processInput(c);
+          }
+          this.codeHasChanged = true;
+          this.holder.hasBeenAddedTo();
+          this.editingField();
+          break;
+        }
+      }
       default: {
         if (key === "o" && e.modKey.control && isCollapsible(this.holder)) {
           this.holder.expandCollapse();
@@ -298,14 +311,6 @@ export abstract class AbstractField implements Selectable, Field {
         } else if (key?.length === 1) {
           this.deleteExistingSelection();
           this.processInput(key);
-          this.codeHasChanged = true;
-          this.holder.hasBeenAddedTo();
-          this.editingField();
-        } else if (key && key.length > 1) {
-          this.deleteExistingSelection();
-          for (const c of key) {
-            this.processInput(c);
-          }
           this.codeHasChanged = true;
           this.holder.hasBeenAddedTo();
           this.editingField();

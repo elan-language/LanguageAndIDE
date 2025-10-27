@@ -4,7 +4,6 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { Semver } from "../../../compiler/compiler-interfaces/semver";
 import { BreakpointEvent } from "../../../compiler/debugging/breakpoint-event";
 import { TestStatus } from "../../../compiler/test-status";
-import { ScratchPad } from "../scratch-pad";
 import { CompileStatus, ParseStatus, RunStatus } from "../status-enums";
 import { CodeSource } from "./code-source";
 import { editorEvent } from "./editor-event";
@@ -41,7 +40,6 @@ export interface File extends Parent {
   getNextId(): number;
   getFactory(): StatementFactory;
   getProfile(): Profile;
-  getScratchPad(): ScratchPad;
 
   indent(): string;
   expandCollapseAll(): void;
@@ -114,4 +112,8 @@ export interface File extends Parent {
   getVersionString(): string;
 
   getAst(invalidate: boolean): RootAstNode | undefined;
+
+  addCopiedSource(source: string): void;
+
+  getCopiedSource(): string[];
 }

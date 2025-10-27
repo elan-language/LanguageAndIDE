@@ -175,8 +175,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     parentHelper_deleteSelectedChildren(this);
   }
 
-  copySelectedChildren(): void {
-    parentHelper_copySelectedChildren(this);
+  copySelectedChildren(): boolean {
+    return parentHelper_copySelectedChildren(this);
   }
 
   moveSelectedChildrenUpOne(): void {

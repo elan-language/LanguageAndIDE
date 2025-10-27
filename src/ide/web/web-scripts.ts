@@ -1088,28 +1088,44 @@ function getEditorMsg(
   }
 }
 
-function handleSelectorPaste(event: Event, target: HTMLElement, msg: editorEvent): boolean {
-  target.addEventListener("paste", async (event: ClipboardEvent) => {
-    const mk = { control: true, shift: false, alt: false };
-    const txt = await navigator.clipboard.readText();
-    await handleEditorEvent(event, "paste", "frame", mk, msg.id, "V", undefined, `${txt.trim()}\n`);
-  });
+// function handleSelectorPaste(event: Event, target: HTMLElement, msg: editorEvent): boolean {
+//   target.addEventListener("paste", async (event: ClipboardEvent) => {
+//     const mk = { control: true, shift: false, alt: false };
+//     const txt = await navigator.clipboard.readText();
+//     await handleEditorEvent(event, "paste", "frame", mk, msg.id, "v", undefined, `${txt.trim()}\n`);
+//   });
 
-  event.stopPropagation();
-  return true;
-}
+//   event.stopPropagation();
+//   return true;
+// }
 
-function handlePaste(event: Event, target: HTMLInputElement, msg: editorEvent): boolean {
+function handlePaste(event: Event, target: HTMLElement, msg: editorEvent): boolean {
   // outside of handler or selection is gone
-  const start = target.selectionStart ?? 0;
-  const end = target.selectionEnd ?? 0;
+  const start = target instanceof HTMLInputElement ? (target.selectionStart ?? 0) : 0;
+  const end = target instanceof HTMLInputElement ? (target.selectionEnd ?? 0) : 0;
   target.addEventListener("paste", async (event: ClipboardEvent) => {
-    const mk = { control: false, shift: false, alt: false };
     const txt = await navigator.clipboard.readText();
     if (start !== end) {
-      await handleEditorEvent(event, "key", "frame", mk, msg.id, "Delete", [start, end]);
+      await handleEditorEvent(
+        event,
+        "key",
+        "frame",
+        { control: false, shift: false, alt: false },
+        msg.id,
+        "Delete",
+        [start, end],
+      );
     }
-    await handleEditorEvent(event, "paste", "frame", mk, msg.id, txt);
+    await handleEditorEvent(
+      event,
+      "paste",
+      "frame",
+      { control: true, shift: false, alt: false },
+      msg.id,
+      "v",
+      undefined,
+      `${txt.trim()}\n`,
+    );
   });
   event.stopPropagation();
   return true;
@@ -1129,19 +1145,30 @@ function handleCut(event: Event, target: HTMLInputElement, msg: editorEvent) {
   return true;
 }
 
+function handleCopy(event: Event, target: HTMLInputElement) {
+  target.addEventListener("copy", async (_event: ClipboardEvent) => {
+    const txt = document.getSelection()?.toString() ?? "";
+    await navigator.clipboard.writeText(txt);
+  });
+  event.stopPropagation();
+  return true;
+}
+
 function handleCutAndPaste(event: Event, msg: editorEvent) {
-  if (msg.modKey.control && msg.modKey.shift && msg.key === "V") {
-    return handleSelectorPaste(event, event.target as HTMLElement, msg);
+  if (msg.type === "paste") {
+    return false;
+  }
+
+  if (msg.modKey.control && msg.key === "v") {
+    return handlePaste(event, event.target as HTMLElement, msg);
   }
 
   if (event.target instanceof HTMLInputElement && msg.modKey.control) {
     switch (msg.key) {
-      case "v":
-        return handlePaste(event, event.target, msg);
       case "x":
         return handleCut(event, event.target, msg);
       case "c":
-        return true;
+        return handleCopy(event, event.target);
     }
   }
 
@@ -1472,16 +1499,12 @@ async function updateContent(text: string, editingField: boolean) {
     activeHelp.click();
   }
 
-  const activeCopy = document.querySelectorAll(".to-be-copied") as NodeListOf<HTMLElement>;
+  const copiedSource = file.getCopiedSource();
 
-  if (activeCopy.length > 0) {
+  if (copiedSource.length > 0) {
     let allCode = "";
 
-    for (const ac of activeCopy) {
-      const id = ac.id;
-      const frame = file.getById(id);
-      const code = frame.renderAsSource().trim();
-
+    for (const code of copiedSource) {
       if (allCode) {
         allCode = allCode + "\n" + code;
       } else {
