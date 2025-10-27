@@ -448,3 +448,24 @@ test('toggle private by keyboard', async ({ page }) => {
 
   await expect(page.locator('#compile')).toContainText('ok');
 });
+
+test('backspace enter #2027', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+ 
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('m');
+  await page.keyboard.type('l');
+  await page.keyboard.type('foo');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('1234');
+  await page.keyboard.press('Control+a');
+  await page.keyboard.press('Backspace');
+  await page.keyboard.press('Enter');
+
+  await expect(page.locator('#expr5')).toHaveClass("empty warning")
+});
