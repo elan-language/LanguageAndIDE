@@ -805,6 +805,7 @@ export abstract class AbstractFrame implements Frame {
       if (this.isGhostable()) {
         map.set("ghost", ["ghost", this.ghost]);
       }
+      map.set("copy", ["copy (Ctrl-c)", this.copySelected]);
       if (this.isDeletable()) {
         map.set("cut", ["cut (Ctrl-x)", this.cutSelected]);
         map.set("delete", ["delete (Ctrl-Delete or Ctrl-Backspace)", this.deleteSelected]);
@@ -827,7 +828,6 @@ export abstract class AbstractFrame implements Frame {
           map.set("setBP", ["set breakpoint", this.setBreakPoint]);
         }
       }
-      map.set("copy", ["copy (Ctrl-c)", this.copySelected]);
     }
     return map;
   }
