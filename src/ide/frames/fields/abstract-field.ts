@@ -245,6 +245,7 @@ export abstract class AbstractField implements Selectable, Field {
           this.codeHasChanged = true;
         } else if (this.hasSelection()) {
           this.deleteExistingSelection();
+          this.parseCurrentText();
         } else if (this.cursorPos > 0) {
           const reduced = this.text.slice(0, this.cursorPos - 1) + this.text.slice(this.cursorPos);
           this.text = reduced;
