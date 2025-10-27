@@ -59,7 +59,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     return this.optionsFilteredByContext(userEntry).filter((o) => this.profileAllows(o[0]));
   }
 
-  parseFrom(source: CodeSource): void {
+  parseFrom(source: CodeSource): Frame {
     let compilerDirective = "";
     source.removeIndent();
     if (source.isMatchRegEx(Regexes.compilerDirective)) {
@@ -77,6 +77,7 @@ export abstract class AbstractSelector extends AbstractFrame {
       const frame = this.addFrame(typeToAdd, "");
       this.processCompilerDirective(frame, compilerDirective);
       frame.parseFrom(source);
+      return frame;
     } else {
       throw new Error(`${options.length} matches found at ${source.readToEndOfLine()} `);
     }
@@ -248,14 +249,14 @@ export abstract class AbstractSelector extends AbstractFrame {
   paste(code: string): void {
     try {
       const source = new CodeSourceFromString(code);
-      this.parseFrom(source);
+      const newFrame = this.parseFrom(source);
 
       if (source.hasMoreCode() && source.getRemainingCode().trim()) {
         const remainingCode = source.getRemainingCode();
-        const frame = this.getParent().getLastChild();
+        const frame = this.getParent().getChildAfter(newFrame);
         const selector = isSelector(frame)
           ? frame
-          : parentHelper_insertOrGotoChildSelector(this.getParent(), true, frame);
+          : parentHelper_insertOrGotoChildSelector(this.getParent(), false, frame);
         selector.paste(remainingCode);
       }
     } catch (_e) {
