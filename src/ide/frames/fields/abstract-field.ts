@@ -144,7 +144,9 @@ export abstract class AbstractField implements Selectable, Field {
 
   processAutocompleteText(txt: string | undefined) {
     if (txt) {
-      this.selectedSymbolCompletion = this.allPossibleSymbolCompletions.find((s) => s.name === txt);
+      this.selectedSymbolCompletion = this.allPossibleSymbolCompletions.find(
+        (s) => s.displayName === txt,
+      );
     }
   }
 
@@ -513,6 +515,7 @@ export abstract class AbstractField implements Selectable, Field {
     this.parseCurrentText();
     this.setSelection(this.text.length);
     this.codeHasChanged = true;
+    this.holder.hasBeenAddedTo();
   }
 
   private tab(back: boolean) {
