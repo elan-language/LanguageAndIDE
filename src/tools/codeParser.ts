@@ -44,6 +44,8 @@ async function parseAsFileWithHeader(code: string) {
   if (file.parseError) {
     return "";
   }
+  file.removeAllSelectorsThatCanBe();
+  file.deselectAll();
 
   return await file.renderAsHtml(true);
 }
@@ -57,6 +59,8 @@ async function parseAsFile(code: string) {
   if (file.parseError) {
     return "";
   }
+  file.removeAllSelectorsThatCanBe();
+  file.deselectAll();
 
   return await file.renderAsHtml(false);
 }
@@ -73,6 +77,8 @@ async function parseAsStatement(code: string) {
     if (file.parseError) {
       return "";
     }
+    file.removeAllSelectorsThatCanBe();
+    file.deselectAll();
 
     return mf.getChildren()[0].renderAsHtml();
   } catch (_e) {
@@ -92,6 +98,8 @@ async function parseAsMember(code: string) {
     if (file.parseError) {
       return "";
     }
+    file.removeAllSelectorsThatCanBe();
+    file.deselectAll();
 
     return cc.getChildren()[0].renderAsHtml();
   } catch (_e) {
@@ -112,6 +120,8 @@ async function parseAsExpression(code: string) {
     if (expr.readParseStatus() !== ParseStatus.valid) {
       return "";
     }
+    file.removeAllSelectorsThatCanBe();
+    file.deselectAll();
 
     return expr.textAsHtml();
   } catch (_e) {
@@ -132,6 +142,8 @@ async function parseAsType(code: string) {
     if (expr.readParseStatus() !== ParseStatus.valid) {
       return "";
     }
+    file.removeAllSelectorsThatCanBe();
+    file.deselectAll();
 
     return expr.textAsHtml();
   } catch (_e) {
