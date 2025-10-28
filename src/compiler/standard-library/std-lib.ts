@@ -37,13 +37,13 @@ import { List } from "./list";
 import { ListImmutable } from "./list-immutable";
 import { Queue } from "./queue";
 import { Random } from "./random";
+import { RawVG } from "./raw-vg";
 import { RectangleVG } from "./rectangle-vg";
 import { Stack } from "./stack";
 import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphic } from "./vector-graphic";
-import { RawVG } from "./raw-vg";
 
 export class StdLib {
   constructor(io: ElanInputOutput) {
@@ -413,6 +413,14 @@ export class StdLib {
   @elanProcedure([], ProcedureOptions.async)
   async clearPrintedText() {
     await this.system.elanInputOutput.clearPrintedText();
+  }
+
+  @elanProcedure([], ProcedureOptions.async)
+  async clearAllDisplays() {
+    await this.clearPrintedText();
+    await this.clearBlocks();
+    await this.clearVectorGraphics();
+    await this.clearHtml();
   }
 
   @elanFunction(["size", "initialValue"], FunctionOptions.pure, ElanClass(List))
