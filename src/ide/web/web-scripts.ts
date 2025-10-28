@@ -1374,12 +1374,13 @@ async function updateContent(text: string, editingField: boolean) {
 
     for (const item of items) {
       item.addEventListener("click", async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         const ke = event as PointerEvent | KeyboardEvent;
         const tgt = ke.target as HTMLDivElement;
         const id = tgt.dataset.id;
         const func = tgt.dataset.func;
         const txt = await navigator.clipboard.readText();
-
         handleEditorEvent(
           event,
           "contextmenu",
