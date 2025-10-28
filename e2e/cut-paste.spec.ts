@@ -22,6 +22,8 @@ test('copy code', async ({ page }) => {
 
   await page.getByText('copy (Ctrl-c)').click();
 
+  await page.waitForTimeout(1000);
+
   const clipboardContent = await page.evaluate(() => navigator.clipboard.readText());
 
   expect(clipboardContent).toContain('let a be 1');
@@ -90,6 +92,8 @@ test('copy multiple code', async ({ page }) => {
 
   await page.getByText('copy (Ctrl-c)').click();
 
+  await page.waitForTimeout(1000);
+
   let clipboardContent = await page.evaluate(() => navigator.clipboard.readText());
   clipboardContent = clipboardContent.trim().replaceAll("\r", "").replaceAll("\n", "");
 
@@ -117,6 +121,8 @@ test('cut code', async ({ page }) => {
   });
 
   await page.getByText('cut (Ctrl-x)').click();
+
+  await page.waitForTimeout(1000);
 
   const clipboardContent = await page.evaluate(() => navigator.clipboard.readText());
 
@@ -187,6 +193,8 @@ test('cut multiple code', async ({ page }) => {
 
   await page.getByText('cut (Ctrl-x)').click();
 
+  await page.waitForTimeout(1000);
+
   let clipboardContent = await page.evaluate(() => navigator.clipboard.readText());
   clipboardContent = clipboardContent.trim().replaceAll("\r", "").replaceAll("\n", "");
 
@@ -194,6 +202,28 @@ test('cut multiple code', async ({ page }) => {
 });
 
 test('paste code', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => { });
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.evaluate(() => navigator.clipboard.writeText("let a be 2"));
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('m');
+
+  await page.getByText('call').click({
+    button: 'right'
+  });
+
+  await page.getByText('paste (Ctrl-v)').click();
+
+  await expect(page.locator('#var4')).toContainText('a');
+});
+
+test('paste code with keyboard', async ({ page }) => {
   page.once('dialog', dialog => {
     //console.log(`Dialog message: ${dialog.message()}`);
     dialog.accept().catch(() => { });
@@ -214,6 +244,29 @@ test('paste code', async ({ page }) => {
 });
 
 test('paste multiple code', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => { });
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.evaluate(() => navigator.clipboard.writeText("let a be 2\nlet b be 3"));
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('m');
+
+  await page.getByText('call').click({
+    button: 'right'
+  });
+
+  await page.getByText('paste (Ctrl-v)').click();
+
+  await expect(page.locator('#var4')).toContainText('a');
+  await expect(page.locator('#var7 input')).toHaveValue('b');
+});
+
+test('paste multiple code with keyboard', async ({ page }) => {
   page.once('dialog', dialog => {
     //console.log(`Dialog message: ${dialog.message()}`);
     dialog.accept().catch(() => { });
