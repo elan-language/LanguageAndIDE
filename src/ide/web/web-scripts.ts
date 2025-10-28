@@ -1052,6 +1052,7 @@ function getEditorMsg(
   key: string | undefined,
   modKey: { control: boolean; shift: boolean; alt: boolean },
   selection: [number, number] | undefined,
+  command: string | undefined,
   optionalData: string | undefined,
 ): editorEvent {
   switch (type) {
@@ -1064,6 +1065,7 @@ function getEditorMsg(
         key: key,
         modKey: modKey,
         selection: selection,
+        command: command,
         optionalData: optionalData,
       };
     case "click":
@@ -1083,21 +1085,11 @@ function getEditorMsg(
         id: id,
         modKey: modKey,
         selection: selection,
+        command: command,
         optionalData: optionalData,
       };
   }
 }
-
-// function handleSelectorPaste(event: Event, target: HTMLElement, msg: editorEvent): boolean {
-//   target.addEventListener("paste", async (event: ClipboardEvent) => {
-//     const mk = { control: true, shift: false, alt: false };
-//     const txt = await navigator.clipboard.readText();
-//     await handleEditorEvent(event, "paste", "frame", mk, msg.id, "v", undefined, `${txt.trim()}\n`);
-//   });
-
-//   event.stopPropagation();
-//   return true;
-// }
 
 function handlePaste(event: Event, target: HTMLElement, msg: editorEvent): boolean {
   // outside of handler or selection is gone
@@ -1123,6 +1115,7 @@ function handlePaste(event: Event, target: HTMLElement, msg: editorEvent): boole
       { control: true, shift: false, alt: false },
       msg.id,
       "v",
+      undefined,
       undefined,
       `${txt.trim()}\n`,
     );
@@ -1233,6 +1226,7 @@ async function handleEditorEvent(
   id?: string | undefined,
   key?: string | undefined,
   selection?: [number, number] | undefined,
+  command?: string | undefined,
   optionalData?: string | undefined,
 ) {
   if (isRunningState()) {
@@ -1248,7 +1242,7 @@ async function handleEditorEvent(
   // save last dom event for debug
   lastDOMEvent = event;
 
-  const msg = getEditorMsg(type, target, id, key, modKey, selection, optionalData);
+  const msg = getEditorMsg(type, target, id, key, modKey, selection, command, optionalData);
 
   // save last editor event for debug
   lastEditorEvent = msg;
@@ -1379,11 +1373,12 @@ async function updateContent(text: string, editingField: boolean) {
     firstContextItem = items[0];
 
     for (const item of items) {
-      item.addEventListener("click", (event) => {
+      item.addEventListener("click", async (event) => {
         const ke = event as PointerEvent | KeyboardEvent;
         const tgt = ke.target as HTMLDivElement;
         const id = tgt.dataset.id;
         const func = tgt.dataset.func;
+        const txt = await navigator.clipboard.readText();
 
         handleEditorEvent(
           event,
@@ -1394,6 +1389,7 @@ async function updateContent(text: string, editingField: boolean) {
           "ContextMenu",
           undefined,
           func,
+          `${txt.trim()}\n`,
         );
       });
 
@@ -1465,6 +1461,7 @@ async function updateContent(text: string, editingField: boolean) {
           id,
           "Enter",
           undefined,
+          undefined,
           tgt.innerText,
         );
       });
@@ -1486,6 +1483,7 @@ async function updateContent(text: string, editingField: boolean) {
           getModKey(ke),
           id,
           "ArrowDown",
+          undefined,
           undefined,
           selected,
         );

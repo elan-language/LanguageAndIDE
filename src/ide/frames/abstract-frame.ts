@@ -325,10 +325,10 @@ export abstract class AbstractFrame implements Frame {
         // fall through
       }
       case "ContextMenu": {
-        if (e.optionalData) {
+        if (e.command) {
           // This case is when user has selected an item FROM the context menu
           const map = this.getContextMenuItems();
-          codeHasChanged = !!map.get(e.optionalData)![1]?.();
+          codeHasChanged = map.get(e.command)![1]?.(e.optionalData);
         } else {
           // Bringup the context menu
           if (!this.isSelected()) {
@@ -797,7 +797,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   getContextMenuItems() {
-    const map = new Map<string, [string, (() => boolean) | undefined]>();
+    const map = new Map<string, [string, (s?: string) => boolean]>();
     // Must be arrow functions for this binding
     if (this.isGhosted()) {
       map.set("unghost", ["unghost", this.unGhost]);
