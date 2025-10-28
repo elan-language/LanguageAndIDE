@@ -1,5 +1,22 @@
 import assert from "assert";
 
+import { Constructor } from "../src/ide/frames/class-members/constructor";
+import { MemberSelector } from "../src/ide/frames/class-members/member-selector";
+import { CommentField } from "../src/ide/frames/fields/comment-field";
+import { ConstantValueField } from "../src/ide/frames/fields/constant-value-field";
+import { IdentifierField } from "../src/ide/frames/fields/identifier-field";
+import { InheritsFromField } from "../src/ide/frames/fields/inherits-from-field";
+import { TypeNameField } from "../src/ide/frames/fields/type-name-field";
+import { FileImpl } from "../src/ide/frames/file-impl";
+import { ConcreteClass } from "../src/ide/frames/globals/concrete-class";
+import { Constant } from "../src/ide/frames/globals/constant";
+import { GlobalFunction } from "../src/ide/frames/globals/global-function";
+import { GlobalSelector } from "../src/ide/frames/globals/global-selector";
+import { MainFrame } from "../src/ide/frames/globals/main-frame";
+import { TestFrame } from "../src/ide/frames/globals/test-frame";
+import { ReturnStatement } from "../src/ide/frames/statements/return-statement";
+import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
+import { ParseStatus } from "../src/ide/frames/status-enums";
 import {
   classWithConstructor,
   emptyFunctionOnly,
@@ -28,23 +45,6 @@ import {
   tab,
   up,
 } from "./testHelpers";
-import { Constructor } from "../src/ide/frames/class-members/constructor";
-import { MemberSelector } from "../src/ide/frames/class-members/member-selector";
-import { CommentField } from "../src/ide/frames/fields/comment-field";
-import { ConstantValueField } from "../src/ide/frames/fields/constant-value-field";
-import { IdentifierField } from "../src/ide/frames/fields/identifier-field";
-import { InheritsFromField } from "../src/ide/frames/fields/inherits-from-field";
-import { TypeNameField } from "../src/ide/frames/fields/type-name-field";
-import { FileImpl } from "../src/ide/frames/file-impl";
-import { ConcreteClass } from "../src/ide/frames/globals/concrete-class";
-import { Constant } from "../src/ide/frames/globals/constant";
-import { GlobalFunction } from "../src/ide/frames/globals/global-function";
-import { GlobalSelector } from "../src/ide/frames/globals/global-selector";
-import { MainFrame } from "../src/ide/frames/globals/main-frame";
-import { TestFrame } from "../src/ide/frames/globals/test-frame";
-import { ReturnStatement } from "../src/ide/frames/statements/return-statement";
-import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
-import { ParseStatus } from "../src/ide/frames/status-enums";
 
 suite("Editing Frames", () => {
   test("Enter on a frame to Insert new code - creating a selector", () => {
@@ -285,156 +285,7 @@ suite("Editing Frames", () => {
     whil.processKey(ctrl_del());
     assert.equal(main.getChildren().length, 11);
   });
-  test("Cut", () => {
-    const file = T03_mainWithAllStatements();
-    const main = file.getById("main1") as MainFrame;
-    const var3 = file.getById("var3");
-    var3.select();
-    var3.processKey(ctrl_x());
-    const firstStatement = main.getChildren()[0];
-    assert.equal(firstStatement.getHtmlId(), "set6");
-  });
-  test("Cut - multi-select", () => {
-    const file = T03_mainWithAllStatements();
-    const main = file.getById("main1") as MainFrame;
-    const var3 = file.getById("var3");
-    var3.select();
-    const set6 = file.getById("set6");
-    set6.select(true, true);
-    set6.processKey(ctrl_x());
-    const firstStatement = main.getChildren()[0];
-    assert.equal(firstStatement.getHtmlId(), "throw9");
-  });
-  test("Paste", () => {
-    const file = T03_mainWithAllStatements();
-    const main = file.getById("main1") as MainFrame;
-    const var3 = file.getById("var3");
-    var3.select();
-    var3.processKey(ctrl_x());
-    const set6 = file.getById("set6");
-    set6.processKey(enter());
-    const selector = main.getChildren()[1];
-    assert.equal(selector.getHtmlId(), "select56");
-    selector.processKey(ctrl_v());
-    const pasted = main.getChildren()[1];
-    assert.equal(pasted.getHtmlId(), "var3");
-    const third = main.getChildren()[2];
-    assert.equal(third.getHtmlId(), "throw9");
-  });
-  test("Paste - multi-select", () => {
-    const file = T03_mainWithAllStatements();
-    const main = file.getById("main1") as MainFrame;
-    const var3 = file.getById("var3");
-    var3.select();
-    const set6 = file.getById("set6");
-    set6.select(true, true);
-    set6.processKey(ctrl_x());
-    const firstStatement = main.getChildren()[0];
-    assert.equal(firstStatement.getHtmlId(), "throw9");
-    firstStatement.select(true, false);
-    firstStatement.processKey(enter());
-    const newSel = file.getById("select56");
-    newSel.select();
-    newSel.processKey(ctrl_v());
-    const second = main.getChildren()[1];
-    assert.equal(second.getHtmlId(), "var3");
-    const third = main.getChildren()[2];
-    assert.equal(third.getHtmlId(), "set6");
-    const fourth = main.getChildren()[3];
-    assert.equal(fourth.getHtmlId(), "call11");
-  });
 
-  test("Paste at wrong level has no effect", async () => {
-    const file = await loadFileAsModelNew(`${__dirname}\\files\\single_var.elan`);
-    const runner = await createTestRunner();
-    file.refreshParseAndCompileStatuses(false);
-
-    const main = file.getById("main1") as MainFrame;
-    const var3 = file.getById("var3");
-    var3.select();
-    var3.processKey(ctrl_x());
-    main.processKey(shift_enter());
-    const globalSelect = file.getChildren()[0];
-    assert.equal(globalSelect.getHtmlId(), "select7");
-
-    globalSelect.processKey(ctrl_v());
-
-    const newFirst = file.getChildren()[0];
-
-    assert.ok(
-      globalSelect
-        .renderAsHtml()
-        .includes(
-          `<div class="context-menu"><div>Paste Failed: Cannot paste frame into location</div></div>`,
-        ),
-    );
-  });
-
-  test("#634 snippet remains in scratchpad if not successfully pasted", async () => {
-    const file = await loadFileAsModelNew(`${__dirname}\\files\\single_var.elan`);
-    const runner = await createTestRunner();
-    file.refreshParseAndCompileStatuses(false);
-
-    const main = file.getById("main1") as MainFrame;
-    const var3 = file.getById("var3");
-    var3.select();
-    var3.processKey(ctrl_x());
-    let scratchpad = (file as FileImpl).getScratchPad();
-    assert.equal(scratchpad.readFrames()?.length, 1);
-    main.processKey(shift_enter());
-    let mainStatements = main.getChildren();
-    assert.equal(mainStatements.length, 1);
-    const mainSel = file.getById("select6") as StatementSelector;
-    const globalSelect = file.getChildren()[0];
-    assert.equal(globalSelect.getHtmlId(), "select7");
-    globalSelect.select(true, false);
-
-    globalSelect.processKey(ctrl_v());
-
-    assert.ok(
-      globalSelect
-        .renderAsHtml()
-        .includes(
-          `<div class="context-menu"><div>Paste Failed: Cannot paste frame into location</div></div>`,
-        ),
-    );
-
-    const newFirst = file.getChildren()[0];
-    assert.equal(newFirst.renderAsSource(), globalSelect.renderAsSource());
-    //Now paste back into main
-    mainSel.processKey(ctrl_v());
-    mainStatements = main.getChildren();
-    assert.equal(mainStatements.length, 1);
-    assert.equal(mainStatements[0].renderAsSource(), var3.renderAsSource());
-    scratchpad = (file as FileImpl).getScratchPad();
-    assert.equal(scratchpad.readFrames(), undefined);
-  });
-  test("#622 can't cut and paste a method to global level", async () => {
-    const file = await loadFileAsModelNew(`${__dirname}\\files\\testcode622.elan`);
-    const runner = await createTestRunner();
-    file.refreshParseAndCompileStatuses(false);
-    const func9 = file.getById("func8");
-    func9.select();
-    func9.processKey(ctrl_x());
-    const scratchpad = (file as FileImpl).getScratchPad();
-    assert.equal(scratchpad.readFrames()?.length, 1);
-    const class1 = file.getById("class1");
-    class1.processKey(enter());
-    const sel18 = file.getById("select16") as GlobalSelector;
-    sel18.select(true, false);
-
-    sel18.processKey(ctrl_v());
-
-    assert.ok(
-      sel18
-        .renderAsHtml()
-        .includes(
-          `<div class="context-menu"><div>Paste Failed: Cannot paste frame into location</div></div>`,
-        ),
-    );
-
-    assert.equal(scratchpad.readFrames()?.length, 1);
-  });
   test("#644 cutting statement when there is already a selector following", async () => {
     const file = await loadFileAsModelNew(`${__dirname}\\files\\test644.elan`);
     const runner = await createTestRunner();
@@ -477,6 +328,7 @@ suite("Editing Frames", () => {
     assert.equal(file.getChildren().length, 2);
     assert.equal(file.getFirstChild().getHtmlId(), "func8");
     const f2 = file.getById("func8");
+    f2.select();
     f2.processKey(key("Backspace"));
     assert.equal(file.getChildren().length, 1);
     // 3. Does not work if field has been edited

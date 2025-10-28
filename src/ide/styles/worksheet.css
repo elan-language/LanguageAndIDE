@@ -78,6 +78,7 @@
 .done {
     color: rgb(15, 71, 97);
     font-weight: bold;
+    margin-right: 0.5em;
 }
 
 .timestamp {

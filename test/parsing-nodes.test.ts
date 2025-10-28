@@ -1029,6 +1029,7 @@ suite("Parsing Nodes", () => {
       "",
       ")",
       "",
+      "<el-kw>if </el-kw><el-id>cell</el-id><el-kw><br>then </el-kw><el-type>Colour</el-type>.<el-id>green</el-id><el-kw><br>else </el-kw><el-type>Colour</el-type>.<el-id>black</el-id>",
     );
     testNodeParse(new IfExpr(), `if cell then Colour.amber`, ParseStatus.incomplete, "", "", "");
     testNodeParse(

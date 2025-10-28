@@ -1238,7 +1238,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Parameter Name 'foo' may not be the same as function/procedure name.LangRef.html#compile_error",
+      "Parameter 'foo' may not have the same name as the method in which it is defined.LangRef.html#compile_error",
     ]);
   });
 
@@ -1264,7 +1264,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Parameter Name 'foo' may not be the same as function/procedure name.LangRef.html#compile_error",
+      "Parameter 'foo' may not have the same name as the method in which it is defined.LangRef.html#compile_error",
     ]);
   });
 });

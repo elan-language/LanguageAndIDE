@@ -1052,6 +1052,7 @@ function getEditorMsg(
   key: string | undefined,
   modKey: { control: boolean; shift: boolean; alt: boolean },
   selection: [number, number] | undefined,
+  command: string | undefined,
   optionalData: string | undefined,
 ): editorEvent {
   switch (type) {
@@ -1064,6 +1065,7 @@ function getEditorMsg(
         key: key,
         modKey: modKey,
         selection: selection,
+        command: command,
         optionalData: optionalData,
       };
     case "click":
@@ -1083,33 +1085,40 @@ function getEditorMsg(
         id: id,
         modKey: modKey,
         selection: selection,
+        command: command,
         optionalData: optionalData,
       };
   }
 }
 
-function handleSelectorPaste(event: Event, target: HTMLElement, msg: editorEvent): boolean {
-  target.addEventListener("paste", async (event: ClipboardEvent) => {
-    const mk = { control: true, shift: false, alt: false };
-    const txt = await navigator.clipboard.readText();
-    await handleEditorEvent(event, "paste", "frame", mk, msg.id, "V", undefined, `${txt.trim()}\n`);
-  });
-
-  event.stopPropagation();
-  return true;
-}
-
-function handlePaste(event: Event, target: HTMLInputElement, msg: editorEvent): boolean {
+function handlePaste(event: Event, target: HTMLElement, msg: editorEvent): boolean {
   // outside of handler or selection is gone
-  const start = target.selectionStart ?? 0;
-  const end = target.selectionEnd ?? 0;
+  const start = target instanceof HTMLInputElement ? (target.selectionStart ?? 0) : 0;
+  const end = target instanceof HTMLInputElement ? (target.selectionEnd ?? 0) : 0;
   target.addEventListener("paste", async (event: ClipboardEvent) => {
-    const mk = { control: false, shift: false, alt: false };
     const txt = await navigator.clipboard.readText();
     if (start !== end) {
-      await handleEditorEvent(event, "key", "frame", mk, msg.id, "Delete", [start, end]);
+      await handleEditorEvent(
+        event,
+        "key",
+        "frame",
+        { control: false, shift: false, alt: false },
+        msg.id,
+        "Delete",
+        [start, end],
+      );
     }
-    await handleEditorEvent(event, "paste", "frame", mk, msg.id, txt);
+    await handleEditorEvent(
+      event,
+      "paste",
+      "frame",
+      { control: true, shift: false, alt: false },
+      msg.id,
+      "v",
+      undefined,
+      undefined,
+      `${txt.trim()}\n`,
+    );
   });
   event.stopPropagation();
   return true;
@@ -1129,19 +1138,30 @@ function handleCut(event: Event, target: HTMLInputElement, msg: editorEvent) {
   return true;
 }
 
+function handleCopy(event: Event, target: HTMLInputElement) {
+  target.addEventListener("copy", async (_event: ClipboardEvent) => {
+    const txt = document.getSelection()?.toString() ?? "";
+    await navigator.clipboard.writeText(txt);
+  });
+  event.stopPropagation();
+  return true;
+}
+
 function handleCutAndPaste(event: Event, msg: editorEvent) {
-  if (msg.modKey.control && msg.modKey.shift && msg.key === "V") {
-    return handleSelectorPaste(event, event.target as HTMLElement, msg);
+  if (msg.type === "paste") {
+    return false;
+  }
+
+  if (msg.modKey.control && msg.key === "v") {
+    return handlePaste(event, event.target as HTMLElement, msg);
   }
 
   if (event.target instanceof HTMLInputElement && msg.modKey.control) {
     switch (msg.key) {
-      case "v":
-        return handlePaste(event, event.target, msg);
       case "x":
         return handleCut(event, event.target, msg);
       case "c":
-        return true;
+        return handleCopy(event, event.target);
     }
   }
 
@@ -1206,6 +1226,7 @@ async function handleEditorEvent(
   id?: string | undefined,
   key?: string | undefined,
   selection?: [number, number] | undefined,
+  command?: string | undefined,
   optionalData?: string | undefined,
 ) {
   if (isRunningState()) {
@@ -1221,7 +1242,7 @@ async function handleEditorEvent(
   // save last dom event for debug
   lastDOMEvent = event;
 
-  const msg = getEditorMsg(type, target, id, key, modKey, selection, optionalData);
+  const msg = getEditorMsg(type, target, id, key, modKey, selection, command, optionalData);
 
   // save last editor event for debug
   lastEditorEvent = msg;
@@ -1352,11 +1373,12 @@ async function updateContent(text: string, editingField: boolean) {
     firstContextItem = items[0];
 
     for (const item of items) {
-      item.addEventListener("click", (event) => {
+      item.addEventListener("click", async (event) => {
         const ke = event as PointerEvent | KeyboardEvent;
         const tgt = ke.target as HTMLDivElement;
         const id = tgt.dataset.id;
         const func = tgt.dataset.func;
+        const txt = await navigator.clipboard.readText();
 
         handleEditorEvent(
           event,
@@ -1367,6 +1389,7 @@ async function updateContent(text: string, editingField: boolean) {
           "ContextMenu",
           undefined,
           func,
+          `${txt.trim()}\n`,
         );
       });
 
@@ -1438,6 +1461,7 @@ async function updateContent(text: string, editingField: boolean) {
           id,
           "Enter",
           undefined,
+          undefined,
           tgt.innerText,
         );
       });
@@ -1460,6 +1484,7 @@ async function updateContent(text: string, editingField: boolean) {
           id,
           "ArrowDown",
           undefined,
+          undefined,
           selected,
         );
       });
@@ -1472,13 +1497,20 @@ async function updateContent(text: string, editingField: boolean) {
     activeHelp.click();
   }
 
-  const activeCopy = document.querySelector(".to-be-copied") as HTMLElement | undefined;
+  const copiedSource = file.getCopiedSource();
 
-  if (activeCopy) {
-    const id = activeCopy.id;
-    const frame = file.getById(id);
-    const code = frame.renderAsSource();
-    await navigator.clipboard.writeText(code);
+  if (copiedSource.length > 0) {
+    let allCode = "";
+
+    for (const code of copiedSource) {
+      if (allCode) {
+        allCode = allCode + "\n" + code;
+      } else {
+        allCode = code;
+      }
+    }
+
+    await navigator.clipboard.writeText(allCode);
   }
 
   await localAndAutoSave(focused, editingField);

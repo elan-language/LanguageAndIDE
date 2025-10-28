@@ -460,7 +460,7 @@ export class ParameterNameCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Parameter Name '${name}' may not be the same as function/procedure name.`,
+      `Parameter '${name}' may not have the same name as the method in which it is defined.`,
       location,
       "LangRef.html#compile_error",
     );

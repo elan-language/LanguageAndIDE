@@ -107,8 +107,9 @@ a:visited, a:link, a:active {text-decoration: none}
 a:hover, a:focus {text-decoration: underline}
 
 /* This avoids the need to have <el-code> around small snippets*/
- el-kw, el-type, el-id, el-method, el-lit {
+ el-kw, el-type, el-id, el-method, el-lit, el-comment {
   font-family: consolas, monospace;
+  white-space: normal;
 }
 
 /* Animated accordion and panel  */

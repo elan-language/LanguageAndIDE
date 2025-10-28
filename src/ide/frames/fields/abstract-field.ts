@@ -144,7 +144,9 @@ export abstract class AbstractField implements Selectable, Field {
 
   processAutocompleteText(txt: string | undefined) {
     if (txt) {
-      this.selectedSymbolCompletion = this.allPossibleSymbolCompletions.find((s) => s.name === txt);
+      this.selectedSymbolCompletion = this.allPossibleSymbolCompletions.find(
+        (s) => s.displayName === txt,
+      );
     }
   }
 
@@ -179,7 +181,7 @@ export abstract class AbstractField implements Selectable, Field {
     }
   }
 
-  private controlKeys = ["o", "O", "ArrowLeft", "ArrowRight", "a", "?"];
+  private controlKeys = ["o", "O", "ArrowLeft", "ArrowRight", "a", "v", "?"];
 
   processKey(e: editorEvent): boolean {
     this.codeHasChanged = false;
@@ -243,6 +245,7 @@ export abstract class AbstractField implements Selectable, Field {
           this.codeHasChanged = true;
         } else if (this.hasSelection()) {
           this.deleteExistingSelection();
+          this.parseCurrentText();
         } else if (this.cursorPos > 0) {
           const reduced = this.text.slice(0, this.cursorPos - 1) + this.text.slice(this.cursorPos);
           this.text = reduced;
@@ -286,6 +289,19 @@ export abstract class AbstractField implements Selectable, Field {
           break;
         }
       }
+      case "v": {
+        if (e.modKey.control) {
+          const toPaste = e.optionalData ?? "";
+          this.deleteExistingSelection();
+          for (const c of toPaste) {
+            this.processInput(c);
+          }
+          this.codeHasChanged = true;
+          this.holder.hasBeenAddedTo();
+          this.editingField();
+          break;
+        }
+      }
       default: {
         if (key === "o" && e.modKey.control && isCollapsible(this.holder)) {
           this.holder.expandCollapse();
@@ -296,14 +312,6 @@ export abstract class AbstractField implements Selectable, Field {
         } else if (key?.length === 1) {
           this.deleteExistingSelection();
           this.processInput(key);
-          this.codeHasChanged = true;
-          this.holder.hasBeenAddedTo();
-          this.editingField();
-        } else if (key && key.length > 1) {
-          this.deleteExistingSelection();
-          for (const c of key) {
-            this.processInput(c);
-          }
           this.codeHasChanged = true;
           this.holder.hasBeenAddedTo();
           this.editingField();
@@ -508,6 +516,7 @@ export abstract class AbstractField implements Selectable, Field {
     this.parseCurrentText();
     this.setSelection(this.text.length);
     this.codeHasChanged = true;
+    this.holder.hasBeenAddedTo();
   }
 
   private tab(back: boolean) {

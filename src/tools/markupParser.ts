@@ -342,7 +342,7 @@ export async function processQuestions(source: string, stepInstance: number) {
 
 export async function processHints(source: string, stepInstance: number) {
   const updates: [string, number, number][] = [];
-  let hintInstance = 0;
+  let hintInstance = 1;
 
   let [updatedCode, codeStart, codeEnd] = await processEachHintInstance(
     source,

@@ -168,6 +168,20 @@ export function parentHelper_deleteSelectedChildren(parent: Parent): void {
   }
 }
 
+export function parentHelper_copySelectedChildren(parent: Parent): boolean {
+  const toCopy = parentHelper_getAllSelectedChildren(parent);
+
+  if (toCopy.some((tc) => tc.readParseStatus() !== ParseStatus.valid)) {
+    return false;
+  }
+
+  for (const tc of toCopy) {
+    tc.copy();
+  }
+
+  return true;
+}
+
 export function parentHelper_moveSelectedChildrenUpOne(parent: Parent): void {
   const toMove = parentHelper_getAllSelectedChildren(parent);
   let cont = true;

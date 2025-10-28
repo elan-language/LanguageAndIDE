@@ -1,4 +1,4 @@
-# efe77bf3d10dda2cda040640a45fffd5c0b76aa828d2ae282291b352e1cb8381 Elan 1.6.0 guest default_profile valid
+# 09e5423c6e9f2a07b8452fa3f11918d074d15885b62ba2db1b7fdaa221f521f0 Elan 1.6.1 guest default_profile valid
 
 main
   print sinDeg(30)

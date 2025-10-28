@@ -9,6 +9,7 @@ import {
   processSteps,
 } from "../src/tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../src/tools/parserConstants";
+import { ignore_test } from "./compiler/compiler-test-helpers";
 
 suite("process worksheets", () => {
   test("process file with header", async () => {
@@ -151,15 +152,15 @@ end constructor`;
   });
 
   test("process multiple hints", async () => {
-    const hints = `<hint>HINTNUMBER</hint><content><p>hint details HINTNUMBER</p></content>
+    const hints = `<hint>HINTNUMBER</hint><content><p>hint details</p></content>
 <hint>HINTID</hint><content><p>hint details</p></content>`;
 
     const actual = await processHints(hints, 0);
 
-    const expected = `<div class="hint" id="hint0-0" data-hint="PHA+aGludCBkZXRhaWxzIDAtMDwvcD4=">0-0</div>
-<div class="content" id="hint0-0content"></div>
-<div class="hint" id="hint0-1" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg==">hint0-1</div>
-<div class="content" id="hint0-1content"></div>`;
+    const expected = `<div class="hint" id="hint0-1" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg==">0-1</div>
+<div class="content" id="hint0-1content"></div>
+<div class="hint" id="hint0-2" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg==">hint0-2</div>
+<div class="content" id="hint0-2content"></div>`;
 
     assert.strictEqual(actual, expected);
   });
