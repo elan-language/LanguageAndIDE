@@ -6,17 +6,8 @@
 
 [imported] constant styleSheet set to 'grid {\n display: flex;\n flex-direction: column;\n margin-top: 40px; width: 500px;\n}\nword {\n display: flex;\n flex-direction: row;\n margin: auto;\n}\nch, key {\n font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;\n font-weight: bold;\n background-color: white;\n}\nch {\n text-align: center;\n font-size: 18pt;\n border: solid, 1.5px, black;\n margin: 2px;\n width: 37.5px;\n height: 37.5px;\n line-height: 33px;\n}\nch:empty, key:empty {\n border-color: lightgrey;\n}\nkey._ {\n background-color: lightgrey;\n}\nch._2, key._2 {\n background-color: #6aaa64;\n border-color: #6aaa64;\n color: white;\n}\nch._1, key._1 {\n background-color: #c9b458;\n border-color: #c9b458;\n color: white;\n}\nch._0, key._0 {\n background-color: #787c7e;\n border-color: #787c7e;\n color: white;\n}\nkeyboard {\n width: 500px;\n display: flex;\n flex-direction: column;\n margin-top:5px;\n}\nkeyboard div {\n display: flex;\n flex-direction: row;\n margin:auto;\n}\nkey {\n display: block;\n float: left;\n font-size: 10pt;\n width: 23px;\n margin: 2px;\n padding-bottom: 6px;\n padding-top:5px;\n text-align: center;\n border-radius: 5px;\n}'
 
-[imported] main
-  while true
-    call clearPrintedText()
-    call playGame()
-    call pressAnyKeyToContinue(true)
-    call clearPrintedText()
-    call clearHtml()
-  end while
-end main
-
 [imported] procedure playGame()
+  call clearAllDisplays()
   let grid be new Array2D<of String>(5, 6, "")
   let used be new Dictionary<of String, String>()
   each letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -118,6 +109,10 @@ end function
   end each
   return html + "<key></key></div></keyboard>"
 end function
+
+main
+  call playGame()
+end main
 
 function markAttempt(attempt as String, target as String) returns String
   # Stub implementation - proper implementation to be written
