@@ -1,150 +1,154 @@
 <title>Wordle</title>
 <step>
-    <h1>Step STEPNUMBER</h1>
+    <h1>Step STEPNUMBER: Introduction</h1>
     <p>We are going to create a working implementation of the Wordle puzzle.
         If you have never previously solved a Wordle puzzle, you should visit the 
         <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">official Wordle site</a>
         and solve today's puzzle, so you know how it works.</p>
     <ul>
-        <li>Click the button to load the starting code into the code editor: <button class="load" value="demo/wordle-start.elan">Load</button></li>
-        <li>Load 'wordle-start.elan' and run the program. On the <b>Display</b> you will see 
+        <li>Click the button to load the starting code into the code editor: 
+          <button class="load" value="documentaion/worksheets/wordle/wordle_1begin.elan">Load</button> and then run the program.</li>
+        <li>On the <b>Display</b> you will see 
         a facsimile of the puzzle, and if you enter your first guess
         (five letters - using <b>Backspace</b> if you make a mistake - then <b>Enter</b>) each
         letter will be marked green, yellow, or grey. But if you continue with further guesses
         you will quickly discover that it marks <i>every</i> guess word with the same result!
-        Thought this program has correctly implemented the <i>presentation</i>, and the
+        Though this program has correctly implemented the <i>presentation</i>, and the
         <i>user interactions</i>, of the official puzzle, 
-        it hasn't properly implemented the core logic of how guesses are marked.</li>
-        <li>In the code, look at instruction number 75 - the <el-method>markAttempt</el-method>
-        function. Comments state that the current implementation is just a 'stub' - the minimum code needed
+        it hasn't implemented the core logic of how guesses are marked.</li>
+        <li>In the code, look at instruction number 12 - the <el-method>markAttempt</el-method>
+        function. Comments within the function boydy state that the current implementation is just a 'stub' - the minimum code needed
         to allow the program to compile and run. It returns
         a five-character string, as expected: <code>2</code> for an 'in-place' match (green), 
         <code>1</code> for an 'out-of-place' match (yellow), or <code>0</code> for no match (grey). But
         it always returns the same mark, paying no attention to the two parameters: the 
         #<code>attempt</code> word (your guess) and the <code>target</code> word 
-        (selected by the computer but normally hidden from the user).</li>
+        (selected by the computer but hidden from the user).</li>
         <li>Immediately following the <el-method>markAttempt</el-method> function you will see a <code>test</code>
             which has been 'ghosted'. Select the test and <b>unghost</b> (via the context menu: <b>Ctrl-m</b> or right-mouse-click).
              The tests will automatically run a couple of seconds later.
         <question>How many of the <code>assert</code> instructions within the test have failed?</question>
         </li>
-        <li>Change the 'default' value to which the <code>mark</code> string is set, so that it returns a string of five zeroes.</li>
+        <li><el-method>markAttempt</el-method> function, change the 'default' value to which the <code>mark</code> string is set, so that it returns a string of five zeroes.</li>
         <question>Which, if any, of the <code>assert</code> instructions within the tests now pass?</question>
         </ul>
 </step>
 
 <step>
-  <h1>Step STEPNUMBER</h1>
+  <h1>Step STEPNUMBER: Mark 'green' matches correctly</h1>
+  <ul>
+    <li>If you were telling a person  how to mark an attempt word against a target word <i>manually</i>,
+        you would probably tell them to look for any 'green' matches first. (It's more complicated to
+        to it any other way.) In the <code>test</code> you can see that the first few (failing) tests are
+        all looking just for green matches. So, your first task is to write an implementation that gets the four 
+        'Only greens' tests passing.</li>
+    <li>The <el-method>markAttempt</el-method> function will need to set individual characters within
+        the five-character <code>mark</code> string.</li>
+  </ul>
+  <question>Before using the first hint, enter any code you have written, ideas that you have, and/or things
+    that you don't know or understand.
+  </question>
+  <hint>Hint HINTNUMBER Key ideas</hint>
+  <content>
     <ul>
-        <li>If you were telling a person  how to mark an attempt word against a target word <i>manually</i>,
-            you would probably tell them to look for any 'green' matches first. (It's more complicated to
-            to it any other way.) In the <code>test</code> you can see that the first few (failing) tests are
-            all looking just for green matches. So, your first task is to write an implementation that gets the four 
-            'Only greens' tests passing.</li>
-        <li>The <el-method>markAttempt</el-method> function will need to set individual characters within
-            the five-character <code>mark</code> string. The <el-method>setChar</el-method> function (instruction 73) is intended
-            for this purpose, but notice that this also is a 'stub' implementation. So start by
-        unghosting the <code>test</code> for <code>setChar</code> (immediately below the function),
-        and then write a proper implementation of <code>setChar</code> to get those tests passing.</li>
-        <hint>Hint HINTNUMBER Key ideas</hint>
-        <content>
-            <ul>
-            <li><code>String</code> is an 'immutable' type: you can't change its contents directly, 
-        you must build a new string out of parts of the input one with necessary changes incorporated.</li>
-        <li>Use 'index ranges'. If you are not familiar with these: in the <b>Help</b> tab look up <b>Library Reference - Value Types - String</b></li>
-        <li>Build the string to be returned from three parts: the string up to the character to the changed;
-            the new character; a copy of the original string <i>following</i> the character being changed.
-        </li>
+      <li>You can access an individual character within a string by 'indexing'. Indexes start from 0, 
+        you can access just the first character of a string held by the named value <el-id>a</el-id> with
+        <code>a[0]</code>.</li>
+      <li>Given that you need to check each of the five character positions in turn, this suggests a loop.
+        Think about which <i>kind</i> of loop is most suitable.</li>
+      <li>You will need a condition for testing whether there is a 'green' match between the character in the attempt word
+        and the target word.
+      </li>
+      <li>When there is a match you will need to change the mark (for that character position) from a
+        <el-lit>0</el-lit> to a <el-lit>2</el-lit>. This is the trickiest part of this step, because 
+        <code>String</code> is an 'immutable' type in Elan (as it is in most programming languages): 
+        so you can't change its contents <i>>directly</i>. Instead,
+        you must build a new string out of parts of the input one with necessary changes incorporated.
+        Use 'index ranges' to help build this new string from parts of the original.
+        If you are not familiar with 'index ranges': look them up in <b>Library Reference - Value Types - String</b> within the <b>Help</b> tab </li>
     </ul>
-        </content>
-        <hint>Hint HINTNUMBER Syntax</hint>
-        <content>
-            <ul>
-                <li>The expression to be returned by the function looks like this:
-            <code>str[something] + ch + str[something]</code>
-            but you need to replace each <code>something</code> with a specified <i>range</i>.</li>
-            <li>Pay particular attention to the documentation concering whether the 'bounds'
-                when specifying ranges are 'inclusive' or 'exclusive'.
-            </li>
-          </ul>
-        </content>
-        <hint>Hint HINTNUMBER Range values</hint>
-        <content>
-            <ul>
-                <li>The range for the part of the string up to, <i>but not including</i>, character number <code>n</code>
-                    is <el-code>..<el-id>n</el-id></el-code></li>
-                <li>The range for the remaining of the string after, <i>but not including</i> character number <code>n</code>
-                    is <el-code><el-id>n</el-id> + <el-lit>1</el-lit>..<el-code></li>
-            </ul>
-        </content>
-        <hint>Hint HINTNUMBER Complete code for the setChar function</hint>
-        <content>
-            <code>
-                function setChar(str as String, n as Int, ch as String) returns String
-                    return str[..n] + ch + str[n + 1..]
-                end function
-            </code>
-        </content>
+    <question>Before using another hint, enter any code you have written, ideas that you have, and/or things
+      that you don't know or understand.</question>
+  </content>
+  <hint>Hint HINTNUMBER More detail</hint>
+  <content>
+    <ul>
+      <li>Use a <el-kw>for</el-kw> loop. The <i>suggested</i> name for the counter is 
+        <el-id>i</el-id> (short for 'index'). You don't <i>have</i> to use
+        this name, but this name is assumed in further hints. 
+        Remember that the 'counter' variable needs to start from zero, when used
+      for indexing. Think: what value should to count <i>to</i>, in order to include all five character positions in turn?</li>
+      <li>Use an <el-kw>if</el-kw> instruction to implement the condition. Remember that to test if two values
+      are the same you use the <el-kw>is</el-kw> keyword (separated from the values by a space). You will be comparing
+      the same indexed value from the <el-id>attempt</el-id> and <el-id>target</el-id> strings.</li>
+      <li>Build the string to be returned from three parts: the existing string up to (but not including) the character to be changed;
+        the new character; a copy of the original string <i>following</i> the character being changed.
+        Carefully check your ideas against the rules for index ranges in the documentation (<b>help</b> tab).
+      </li>
     </ul>
-</step>
-
-<step>
-  <h1>Step STEPNUMBER</h1>
-<ul>
-    <li>With <el-method>setChar</el-method> working we can now turn back to <el-method>markAttempt</el-method>.
-        Start by deleting the first comment - as it will be incorrect once you start the implementation.
-        (You can either keep or discard the other comment.)
-        Implement this function such that the first five <code>assert</code>s in the <code>test</code> pass (the default case 
-        and four 'Only green' cases). 
-    </li>
-    <hint>Hint HINTNUMBER Key ideas</hint>
-    <content>
-        <ul>
-            <li>Use a <code>for</code> loop, defining a variable <code>n</code> to work through each character number in turn</li>
-            <li>Compare the character in the specified place within <code>attempt</code> word
-            to the character in the same position within <code>target</code> word.</li>
-            <li>If they are the same, set that character number in <code>mark</code> to 2 - for 'green'.</li>
-        </ul>
-    </content>
-    <hint>Hint HINTNUMBER Instruction outline</hint>
-    <content>
-    <code>
-        for n from something to something step 1
-        if something[something] is something[something] then
-          set something to setChar(something, something, something)
-        end if
-      end for    
-    </code>
-    Note that each place where you see <code>something</code> you must replace it with something
-    else - which <i>might</i> be different in each case.
-    </content>
-    <hint>Hint HINTNUMBER Complete function (so far)</hint>
-    <content>
+    <question>Before using the another hint, enter any code you have written, ideas that you have, and/or things
+      that you don't know or understand.</question>
+  </content>
+  <hint>Hint HINTNUMBER The instruction to modify the mark</hint>
+  <content>
+    <ul>
+      <li>Use a <el-kw>set</el-kw> instruction to replace the existing value of <el-id>mark</el-id> with a new one.</li>
+      <li>The expression for the right hand side of the <el-kw>set</el-kw> instruction looks like this:
+      <codeblock>
+        mark[something] + "2" + mark[something]
+      </codeblock>
+      where you need to replace 'something' with a range - different for the two cases. The first range will be for
+      the characters <i>up to but not including</i> the current index, the second range will be from the
+      character <i>after</i> the current index, onwards.
+      </li>
+      <li>When you are writing a tricky expression like this, it can be very helpful to write your own test
+        <i>just for that expression</i>. Add this code below the function:
+        <codeblock>
+          test ranges
+            let mark be "00000"
+            let i be 3
+            assert mark[something] + "2" + mark[something] is "00020"
+          end testing
+        </codeblock>
+        again replacing <el-id>something</el-id> with the ranges, until you have the tests passing.
+        (Remember that tests will run only if all <i>other</i> code is parsing <i>and</i> compiling - if necessary
+        temporarily delete any incomplete instructions until you have this test passing.)
+      </li>
+      <question>Before using the another hint, enter any code you have written, ideas that you have, and/or things
+        that you don't know or understand.</question>
+    </ul>
+  </content>
+  <hint>Hint HINTNUMBER The complete code for the function</hint>
+  <content>
+    <p>You can delete the comments as they are no longer needed.<p>
+    <codeblock>
     function markAttempt(attempt as String, target as String) returns String
       variable mark set to "00000"
-      for n from 0 to 4 step 1
-        if attempt[n] is target[n] then
-          set mark to setChar(mark, n, "2")
+      for i from 0 to 4 step 1
+        if (attempt[i] is target[i]) then
+          set mark to mark[..i] + "2" + mark[i + 1..]
         end if
-      end for 
+      end for
       return mark
-    end function   
-    </content>
-</ul>
+    end function    
+    </codeblock>
+  </content>
+  <question>When you have completed the Step, paste in your completed <el-method>markAttempt</el-method> function here:</question>
 </step>
 
 <step>
   <h1>Step STEPNUMBER</h1>
     <ul>
         <li>Now we will tackle the yellows. Underneath the <code>for</code> loop that you just created,
-        create a second loop using the same values. (It might be tempting to try to process the greens and yellows
-        within the same loop, but you would that to be much more difficult in the end.)</li>
+        create a <i>second</i> loop using the same values. (It might be tempting to try to process the greens and yellows
+        within the same loop, but you would find that to be <i>much</i> more difficult in the end.) 
+        The new loop can use the same name for the counter, because the previous loop will already have finished using it.</li>
         <li>Within the new loop add an <code>if</code> instruction as before, but for our first stab at this,
         use the condition that the <code>target</code> word <i>contains</i> the character of interest.</li>
-        <li>If it does then set the corresponding character in <code>mark</code> to 1 for yellow.</li>
+        <li>If it does then set the corresponding character in <code>mark</code> using the same expression as in the
+        previous ('greens') loop, but setting the character to <el-lit>1</el-lit> instead of <el-lit>2</el-lit>.</li>
         <li>This first stab should get <i>most</i> (but not all) of the 'Yellow only' cases passing.
-        However, it will also have caused an unwanted consequence.</li>
-        <question>What is that unwanted consequence, and why do you think this has happened? (Look at the individual cases).</question>
+        However, it will also have caused an unwanted consequence!</li>
     </ul>
     <hint>Hint HINTNUMBER The condition</hint>
     <content>The condition is: <code>target.contains(attempt[n])</code></content>
@@ -153,7 +157,7 @@
         <code>
   for n from 0 to 4 step 1
     if something then
-      set something to setChar(something, something, something)
+      set something to something
     end if
   end for
 </code>
@@ -177,10 +181,12 @@ function markAttempt(attempt as String, target as String) returns String
 end function
 </code>
     </content>
+    <question>What is that unwanted consequence and why do you think this has happened? (Look at the individual cases in the tests).</question>
+    <p>We will fix that in the next step.</p>
 </step>
 
 <step>
-  <h1>Step STEPNUMBER</h1>
+  <h1>Step STEPNUMBER: mark the yellows without over-writing any existing 'green' marks.</h1>
     <ul>
         <li>The problem is: letters that were marked green in the first loop, are being 'overwritten'
             by a yellow. In the second loop we need to exlude any characters that have already been 
