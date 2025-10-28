@@ -148,19 +148,26 @@
         <li>If it does then set the corresponding character in <code>mark</code> using the same expression as in the
         previous ('greens') loop, but setting the character to <el-lit>1</el-lit> instead of <el-lit>2</el-lit>.</li>
         <li>This first stab should get <i>most</i> (but not all) of the 'Yellow only' cases passing.
-        However, it will also have caused an unwanted consequence!</li>
+        However, it will also have caused an unwanted consequence, which we will ask you to describe at the end of this step
+        - and then deal with in the next step.
+      </li>
     </ul>
+    <question>Before using the the first hint, enter any code you have written, ideas that you have, and/or things
+      that you don't know or understand.</question>
     <hint>Hint HINTNUMBER The condition</hint>
     <content>The condition is: <code>target.contains(attempt[n])</code></content>
     <hint>Hint HINTNUMBER Outline for the second loop</hint>
     <content>
-        <code>
-  for n from 0 to 4 step 1
-    if something then
-      set something to something
-    end if
-  end for
-</code>
+      <code>
+      for n from 0 to 4 step 1
+        if something then
+          set something to something
+        end if
+      end for
+      </code>
+      Replace 'something' with code - different code in each case.
+      <question>Before using the another hint, enter any code you have written, ideas that you have, and/or things
+        that you don't know or understand.</question>
     </content>
     <hint>Hint HINTNUMBER The complete function (so far)</hint>
     <content>
@@ -169,32 +176,36 @@ function markAttempt(attempt as String, target as String) returns String
   variable mark set to "00000"
   for n from 0 to 4 step 1
     if attempt[n] is target[n] then
-      set mark to setChar(mark, n, "2")
+      set mark to mark[..i] + "2" + mark[i + 1..]
     end if
   end for
   for n from 0 to 4 step 1
     if unused.contains(attempt[n]) then
-      set mark to setChar(mark, n, "1")
+      set mark to mark[..i] + "1" + mark[i + 1..]
     end if
   end for
   return mark
 end function
 </code>
     </content>
+    <question>When you have completed the Step, paste in your completed <el-method>markAttempt</el-method> function here:</question>
     <question>What is that unwanted consequence and why do you think this has happened? (Look at the individual cases in the tests).</question>
-    <p>We will fix that in the next step.</p>
+    <p>We will fix this issue in the next step.</p>
 </step>
 
 <step>
   <h1>Step STEPNUMBER: mark the yellows without over-writing any existing 'green' marks.</h1>
-    <ul>
-        <li>The problem is: letters that were marked green in the first loop, are being 'overwritten'
+        <p>The problem is: letters that were marked green in the first loop, are being 'overwritten'
             by a yellow. In the second loop we need to exlude any characters that have already been 
             marked green. Attempt it now by modifying the <code>if</code> condition within in the second loop. You should
-            get all the 'Green only' cases passing again, and <i>all except one</i> of the 'Yellow only'
+            get all the 'Green only' cases passing again, and <i>all except one</i> of the 'Yellow only' cases.</p>
+        <question>Before using the first hint, enter any code you have written, ideas that you have, and/or things
+          that you don't know or understand.</question>
          <hint>Hint HINTNUMBER The condition</hint>
          <content><code>(mark[n] isnt "2")</code></content>
-         Add this to the existing condition using the <code>and</code> operator. 
+         Add this to the existing condition using the <el-kw>and</el-kw> operator. 
+         <question>Before using the next first hint, enter any code you have written, ideas that you have, and/or things
+          that you don't know or understand.</question>
          <hint>Hint HINTNUMBER The complete function</hint>
          <content>
             <code>
@@ -202,12 +213,12 @@ end function
             variable mark set to "00000"
             for n from 0 to 4 step 1
               if attempt[n] is target[n] then
-                set mark to setChar(mark, n, "2")
+                set mark to mark[..i] + "2" + mark[i + 1..]
               end if
             end for
             for n from 0 to 4 step 1
               if (mark[n] isnt "2") and target.contains(attempt[n]) then
-                set mark to setChar(mark, n, "1")
+                set mark to mark[..i] + "1" + mark[i + 1..]
               end if
             end for
             return mark
@@ -216,22 +227,141 @@ end function
          </content>
          <question>Try removing the brackets around <code>(mark[n] isnt "2")</code>. 
             What happens. If you can, try to explain <i>why</i> this happens?</question>
-         <question>Why is one of the 'Yellow only' cases still failing?</question>
-        </li>
-    </ul>
+         <question>Why is one of the 'Yellow only' cases still failing? (Look at what is different about the that specific case)</question>
+         <question>When you have completed the Step, paste in your completed <el-method>markAttempt</el-method> function here:</question>
 </step>
+
 <step>
-  <h1>Step STEPNUMBER</h1>
+  <h1>Step STEPNUMBER: factor-out common code into a separate function</h1>
     <ul>
-    <li>Answer to the previous two questions: 
+    <li>First, the answers to two questions at the end of the previous step: 
+      <ul>
+          <li>The brackets are needed around <code>(mark[n] isnt "2")</code>
+          to specify the priority between the <code>isnt</code> and the <code>and</code> operators. Without
+          them the <code>and</code> is applied to the <code>"2"</code> and <code>target.contains(attempt[n])</code>,
+          which are not compatible.)</li>
+          <li>One of the 'Only yellows' <code>assert</code>s is still failing because the <i>both</i>
+          the Xs in the attempt word are being marked yellow even though there is only one X in the target word.</li>
+      </ul>
+    </li>
+    <li>Now, before moving on to dealing with the one remaining failure of the 'Only yellows' test cases, we
+      have what professional developers call a 'technical debt' issue. The two expressions that are used to 
+    update the mark are very similar - too similar:
+    <codeblock>
+      set mark to mark[..i] + "2" + mark[i + 1..]
+    </codeblock> 
+    <codeblock>
+      set mark to mark[..i] + "1" + mark[i + 1..]
+    </codeblock> 
+    Applying the 'DRY' principle (<b>D</b>on't <b>R</b>epeat <b>Y</b>ourself) we should extract this common
+    code into a separate function. The two expressions aren't <i>identical</i> so we need to 'parameterise' 
+    the expression - passing in just the part that differs as a parameter into the function.
+    </li>
+    <li>So, create a new function named <el-method>setChar</el-method> that will set a specified character
+      number, on a specified string, to a new specified character. As before, it won't actually
+      modify the original string: it will return a new string, built from the original but with the specified difference.
+    It should specify three parameters in the following order, using these names:
     <ul>
-        <li>The brackets are needed around <code>(mark[n] isnt "2")</code>
-        to specify the priority between the <code>isnt</code> and the <code>and</code> operators. Without
-        them the <code>and</code> is applied to the <code>"2"</code> and <code>target.contains(attempt[n])</code>,
-        which are not compatible.)</li>
-        <li>One of the 'Only yellows' <code>assert</code>s is still failing because the <i>both</i>
-        the Xs in the attempt word are being marked yellow even though there is only one X in the target word.</li>
-     </ul></li>
+      <li><el-id>str</el-id>The string that you need to update</li>
+      <li><el-id>n</el-id> the character number (counting from zero) that you want to change</li>
+      <li><el-id>ch</el-id> the new character (a single character string) to put in place of the existing character.</li>
+    </ul>
+
+  Start by creating just the function 'signature' - defining the name, parameters, and return type.
+  In the body of the function, initially just return an empty string <code>""</code> so that the function compiles.
+  
+  <question>The full code of the signature for the function is available in the only hint below. But before using this hint, paste in
+    your own attempt.
+  </question>
+
+   <hint>Hint HINTNUMBER: The complete function signature</hint>
+   <content>
+    <code>
+      function setChar(str as String, n as Int, ch as String) returns String
+        return ""
+      end function
+    </code>
+  </content>
+  </li>
+  <li>
+    Now write some tests for the function - expecting that they will initially fail because we haven't written the function yet.
+    Create a <el-kw>test</el-kw> with the name 'setChar' and add asserts for each of these cases:
+    <ul>
+      <li><code>setChar("ABCDE", 0, "_")</code> should return "_BCDE"</code></li>
+      <li><code>setChar("ABCDE", 1, "_")</code> should return "AB_CDE"</code></li>
+      <li><code>setChar("ABCDE", 2, "_")</code> should return "ABC_DE"</code></li>
+      <li><code>setChar("ABCDE", 3, "_")</code> should return "ABCD_E"</code></li>
+      <li><code>setChar("ABCDE", 4, "_")</code> should return "ABCD_"</code></li>
+    </ul>
+
+    <hint>Hint HINTNUMBER: The complete test</hint>
+    <content>
+     <code>
+      test setChar
+        assert setChar("ABCDE", 0, "_") is "_BCDE"
+        assert setChar("ABCDE", 1, "_") is "A_CDE"
+        assert setChar("ABCDE", 2, "_") is "AB_DE"
+        assert setChar("ABCDE", 3, "_") is "ABC_E"
+        assert setChar("ABCDE", 4, "_") is "ABCD_"
+      end test
+     </code>
+   </content>
+  </li>
+  <li>
+    Now replace the 'stub' implementation of <el-method>setChar</el-method> function (returning an empty string) with a modified version of the two
+    expressions for modifying <el-id>mark</el-id> within the <el-method>markAttempt</el-method> function,
+    making use of all three parameters defined in the <el-method>setChar</el-method> signature.
+    <question>Before opening the hint below, make an attempt at the function and paste or write it here:</question>
+    <hint>Hint HINTNUMBER: The complete code for <el-method>setChar</el-method></hint>
+    <content>
+      <code>
+        function setChar(str as String, n as Int, ch as String) returns String
+          return str[..n] + ch + str[n + 1..]
+        end function  
+      </code>
+    </content>
+  </li>
+  <li>
+    Back in the <el-method>markAttempt</el-method> function <i>replace</i> the two expressions previously referred to
+    with evaluations of the <el-method>setChar</el-method> function, providing suitable arguments for the parameters.
+    <question>Before opening the hint below, make an attempt at the function and paste or write it here:</question>
+    <hint>Hint HINTNUMBER: One of the changes</hint>
+    <content>
+      <code>
+        set mark to setChar(mark, n, "2")
+      </code>
+      Work out which instruction should be changed to this, and how to change the other relevant instruction.
+    </content>
+    <hint>Hint HINTNUMBER: The complete <el-method>markAttempt</el-method> (so far) with the changes made</hint>
+    <content>
+      <code>
+        function markAttempt(attempt as String, target as String) returns String
+          variable mark set to "00000"
+          for n from 0 to 4 step 1
+            if attempt[n] is target[n] then
+              set mark to setChar(mark, n, "2")
+            end if
+          end for
+          for n from 0 to 4 step 1
+            if (mark[n] isnt "2") and target.contains(attempt[n]) then
+              set mark to setChar(mark, n, "1")
+            end if
+          end for
+          return mark
+        end function
+      </code>
+    </content>
+  </li>  
+  We have now completed this refactoring and can return to further refining the <el-method>markAttempt</el-method>
+  function to get more of the test cases passing.
+  </ul>
+</step>
+<!--Edited to here-->
+<step>
+<h1>Step STEPNUMBER</h1>
+  There is one 'Only yellows' test that is still failing. This failure is because the attempt word has ... 
+  [edited up to here - need to make all tests use real words!]
+  <ul>
      <li>We need to keep a tally of which letters in the <code>target</code> word have already been 'used' (or matched) - for green, and for yellow.
         The easiest way to do this would be to blank out a character in the <code>target</code> word as it is used. However
         <code>target</code> is a parameter, and Elan (deliberately) does not allow you to <code>set</code> a parameter
