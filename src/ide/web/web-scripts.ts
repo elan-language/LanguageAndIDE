@@ -1389,7 +1389,7 @@ async function updateContent(text: string, editingField: boolean) {
           "ContextMenu",
           undefined,
           func,
-          txt,
+          `${txt.trim()}\n`,
         );
       });
 
