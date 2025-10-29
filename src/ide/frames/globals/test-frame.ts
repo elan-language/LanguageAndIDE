@@ -23,6 +23,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   file: File;
   private _testStatus: TestStatus;
   public ignored = false;
+  protected canHaveBreakPoint = false;
   constructor(parent: File) {
     super(parent);
     this.file = parent;
@@ -155,17 +156,11 @@ end test\r
   };
 
   getContextMenuItems() {
-    const map = new Map<string, [string, () => boolean]>(); //Normally: = super.getContextMenuItems()
-    // Must be arrow functions for this binding
-    if (this.isGhosted()) {
-      map.set("unghost", ["unghost", this.unGhost]);
+    const map = super.getContextMenuItems();
+    if (this.ignored) {
+      map.set("unignore", ["un-ignore test (Ctrl-i)", this.unignore]);
     } else {
-      map.set("ghost", ["ghost", this.ghost]);
-      if (this.ignored) {
-        map.set("unignore", ["un-ignore test (Ctrl-i)", this.unignore]);
-      } else {
-        map.set("ignore", ["ignore test (Ctrl-i)", this.ignore]);
-      }
+      map.set("ignore", ["ignore test (Ctrl-i)", this.ignore]);
     }
     return map;
   }
