@@ -12,8 +12,7 @@ export class LitStringSingleQuotesContents extends RegExMatchNode {
   }
 
   override renderAsSource(): string {
-    const s = this.sanitise(this.matchedText);
-    return s.trim();
+    return this.sanitise(this.matchedText);
   }
 
   parseText(text: string): void {
