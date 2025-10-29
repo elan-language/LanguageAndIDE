@@ -102,7 +102,6 @@
         (Remember that tests will run only if all <i>other</i> code is parsing <i>and</i> compiling - if necessary
         temporarily delete any incomplete instructions until you have this test passing.)
       </li>
-
     </ul>
   </content>
   <hint>Hint HINTNUMBER The complete code for the function</hint>
@@ -178,7 +177,7 @@ end function
 </step>
 
 <step>
-  <h1>Step STEPNUMBER: mark the yellows without over-writing any existing 'green' marks.</h1>
+  <h1>Step STEPNUMBER: mark the 'yellows' without over-writing 'greens'.</h1>
         <p>The problem is: letters that were marked green in the first loop, are being 'overwritten'
             by a yellow. In the second loop we need to exlude any characters that have already been 
             marked green. Attempt it now by modifying the <code>if</code> condition within in the second loop. You should
@@ -252,10 +251,6 @@ end function
 
   Start by creating just the function 'signature' - defining the name, parameters, and return type.
   In the body of the function, initially just return an empty string <code>""</code> so that the function compiles.
-  
-  <question>The full code of the signature for the function is available in the only hint below. But before using this hint, paste in
-    your own attempt.
-  </question>
    <hint>Hint HINTNUMBER: The complete function signature</hint>
    <content>
     <code>
@@ -269,15 +264,15 @@ end function
     Now write some tests for the function - expecting that they will initially fail because we haven't written the function yet.
     Create a <el-kw>test</el-kw> with the name 'setChar' and add asserts for each of these cases:
     <ul>
-      <li><code>setChar("00000", 0, "1")</code> should return "10000"</code></li>
-      <li><code>setChar("00000", 1, "1")</code> should return "01000</code></li>
-      <li><code>setChar("00000", 2, "1")</code> should return "00100"</code></li>
-      <li><code>setChar("00000", 3, "2")</code> should return "00020"</code></li>
-      <li><code>setChar("00000", 4, "2")</code> should return "00002"</code></li>
+      <li><code>setChar("00000", 0, "1")</code> should return <code>"10000"</code></li>
+      <li><code>setChar("00000", 1, "1")</code> should return <code>"01000"</code></li>
+      <li><code>setChar("00000", 2, "1")</code> should return <code>"00100"</code></li>
+      <li><code>setChar("00000", 3, "2")</code> should return <code>"00020"</code></li>
+      <li><code>setChar("00000", 4, "2")</code> should return <code>"00002"</code></li>
     </ul>
     <hint>Hint HINTNUMBER: The complete test</hint>
     <content>
-     <code>
+     <codeblock>
       test setChar
         assert setChar("00000", 0, "1") is "10000"
         assert setChar("00000", 1, "1") is "01000"
@@ -285,7 +280,7 @@ end function
         assert setChar("00000", 3, "2") is "00020"
         assert setChar("00000", 4, "2") is "00002"
       end test
-     </code>
+     </codeblock>
    </content>
   </li>
   <li>
@@ -406,7 +401,8 @@ end function
      <question>Has it fixed any other failing tests?</question>
   </step>
 <step>
-  To fix the final tests we need to ensure that the <i>second</i> loop - managing the yellows matches - 
+  <h1>Step STEPNUMBER Get all remaining tests passing</h1>
+  To fix the final failing tests we need to ensure that the <i>second</i> loop - managing the yellows matches - 
   <i>also</i> does not use a letter from the target word more than once. Within this loop, 
   underneath the instruction that sets the <el-id>mark</el-id>, add a new instruction
   that updates the <el-id>mark</el-id>. Note, however, that this instruction will be
@@ -427,8 +423,7 @@ end function
   </content>
   <hint>Hint HINTNUMBER The complete new instruction</hint>
   <content>
-    <codeblock>set unused to setChar(unused, unused.indexOf(attempt[n]), " ")</codeblock>
-
+    <code>set unused to setChar(unused, unused.indexOf(attempt[n]), " ")</code>
   </content>
   <hint>Hint HINTNUMBER The complete <el-method>markAttempt</el-method> function </hint>
   <content>
