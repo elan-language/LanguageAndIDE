@@ -61,7 +61,6 @@
         Use 'index ranges' to help build this new string from parts of the original.
         If you are not familiar with 'index ranges': look them up in <b>Library Reference - Value Types - String</b> within the <b>Help</b> tab </li>
     </ul>
-    <question>Before using the hint below, paste or describe what you have attempted so far here:</question>
   <hint>Hint HINTNUMBER More detail</hint>
   <content>
     <ul>
@@ -77,16 +76,14 @@
         the new character; a copy of the original string <i>following</i> the character being changed.
         Carefully check your ideas against the rules for index ranges in the documentation (<b>help</b> tab).</li>
     </ul>
-    <question>Before using the hint below, paste or describe what you have attempted so far here:</question>
+
   </content>
   <hint>Hint HINTNUMBER The instruction to modify the mark</hint>
   <content>
     <ul>
       <li>Use a <el-kw>set</el-kw> instruction to replace the existing value of <el-id>mark</el-id> with a new one.</li>
       <li>The expression for the right hand side of the <el-kw>set</el-kw> instruction looks like this:<br>
-      <code>
-        mark[something] + "2" + mark[something]
-      </code><br>
+      <code>mark[something] + "2" + mark[something]</code><br>
       where you need to replace 'something' with a range - different for the two cases. The first range will be for
       the characters <i>up to but not including</i> the current index, the second range will be from the
       character <i>after</i> the current index, onwards.
@@ -105,7 +102,7 @@
         (Remember that tests will run only if all <i>other</i> code is parsing <i>and</i> compiling - if necessary
         temporarily delete any incomplete instructions until you have this test passing.)
       </li>
-      <question>Before using the hint below, paste or describe what you have attempted so far here:</question>
+
     </ul>
   </content>
   <hint>Hint HINTNUMBER The complete code for the function</hint>
@@ -142,7 +139,6 @@
         - and then deal with in the next step.
       </li>
     </ul>
-    <question>Before using the hint below, paste or describe what you have attempted so far here:</question>
     <hint>Hint HINTNUMBER The condition</hint>
     <content>The condition is: <code>target.contains(attempt[n])</code></content>
     <hint>Hint HINTNUMBER Outline for the second loop</hint>
@@ -155,7 +151,7 @@
       end for
       </code>
       Replace 'something' with code - different code in each case.
-      <question>Before using the hint below, paste or describe what you have attempted so far here:</question>
+
     </content>
     <hint>Hint HINTNUMBER The complete function (so far)</hint>
     <content>
@@ -187,12 +183,11 @@ end function
             by a yellow. In the second loop we need to exlude any characters that have already been 
             marked green. Attempt it now by modifying the <code>if</code> condition within in the second loop. You should
             get all the 'Green only' cases passing again, and <i>all except one</i> of the 'Yellow only' cases.</p>
-        <question>Before using the hint below, paste or describe what you have attempted so far here:</question>
          <hint>Hint HINTNUMBER The condition</hint>
          <content>
           <codeblock>(mark[n] isnt "2")</codeblock>
          Add this to the existing condition using the <el-kw>and</el-kw> operator. 
-         <question>Before using the hint below, paste or describe what you have attempted so far here:</question>
+
         </content>
           <hint>Hint HINTNUMBER The complete function</hint>
           <content>
@@ -261,7 +256,6 @@ end function
   <question>The full code of the signature for the function is available in the only hint below. But before using this hint, paste in
     your own attempt.
   </question>
-
    <hint>Hint HINTNUMBER: The complete function signature</hint>
    <content>
     <code>
@@ -281,7 +275,6 @@ end function
       <li><code>setChar("00000", 3, "2")</code> should return "00020"</code></li>
       <li><code>setChar("00000", 4, "2")</code> should return "00002"</code></li>
     </ul>
-
     <hint>Hint HINTNUMBER: The complete test</hint>
     <content>
      <code>
@@ -299,7 +292,6 @@ end function
     Now replace the 'stub' implementation of <el-method>setChar</el-method> function (returning an empty string) with a modified version of the two
     expressions for modifying <el-id>mark</el-id> within the <el-method>markAttempt</el-method> function,
     making use of all three parameters defined in the <el-method>setChar</el-method> signature.
-    <question>Before using the hint below, paste or describe what you have attempted so far here:</question>
     <hint>Hint HINTNUMBER: The complete code for <el-method>setChar</el-method></hint>
     <content>
       <code>
@@ -312,7 +304,6 @@ end function
   <li>
     Back in the <el-method>markAttempt</el-method> function <i>replace</i> the two expressions previously referred to
     with evaluations of the <el-method>setChar</el-method> function, providing suitable arguments for the parameters.
-    <question>Before using the hint below, paste or describe what you have attempted so far here:</question>
     <hint>Hint HINTNUMBER: One of the changes</hint>
     <content>
       <code>
@@ -368,7 +359,6 @@ end function
         <i>empty space</i>.
      </li>
     </ul>
-    <question>Before using the hint below, paste or describe what you have attempted so far here:</question>
     <hint>Hint HINTNUMBER <el-method>markAttempt</el-method> showing changed functions in outline</hint>
     <content>
       You need to replace 'something' with correct code in each case
@@ -391,7 +381,6 @@ end function
         end function
       </codeblock>
     </content>
-    <question>Before using the hint below, paste or describe what you have attempted so far here:</question>
     <hint>Hint HINTNUMBER Complete <el-method>markAttempt</el-method> function after the changes so far</hint>
     <content>
       <codeblock>
@@ -422,25 +411,24 @@ end function
   underneath the instruction that sets the <el-id>mark</el-id>, add a new instruction
   that updates the <el-id>mark</el-id>. Note, however, that this instruction will be
   different to the one you just wrote within the <i>first</i> loop. See if you can figure it out.
-  <question>Before using the hint below, paste or describe what you have attempted so far here:</question>
   <hint>Hint HINTNUMBER Key ideas</hint>
   <content>
     <ul>
       <li>You will need to identify the character <i>number</i> of the matched letter within <el-id>unused</el-id>.</li>
       <li>A string variable has a 'dot method' named <el-method>indexOf</el-method> that will help.</li>
     </ul>
-  <question>Before using the hint below, paste or describe what you have attempted so far here:</question>
+
   </content>
   <hint>Hint HINTNUMBER A useful expression</hint>
   <content>
     The expression <code>unused.indexOf(attempt[n])</code> will calculate the character <i>number</i> (starting 0) for
     the character <code>attempt[n]</code> within <code>unused</code>.
-    <question>Before using the hint below, paste or describe what you have attempted so far here:</question>
+
   </content>
   <hint>Hint HINTNUMBER The complete new instruction</hint>
   <content>
     <codeblock>set unused to setChar(unused, unused.indexOf(attempt[n]), " ")</codeblock>
-    <question>Before using the hint below, paste or describe what you have attempted so far here:</question>
+
   </content>
   <hint>Hint HINTNUMBER The complete <el-method>markAttempt</el-method> function </hint>
   <content>
