@@ -287,6 +287,62 @@ test('paste multiple code with keyboard', async ({ page }) => {
   await expect(page.locator('#var7 input')).toHaveValue('b');
 });
 
+test('paste with new line1', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => { });
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.evaluate(() => navigator.clipboard.writeText(`'a
+a'`));
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('m');
+  await page.keyboard.type('l');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+
+  await page.keyboard.press('Control+v');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('p');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+
+  await page.getByRole('button', { name: 'run' }).click();
+  await expect(page.locator('#printed-text')).toContainText("a\na");
+});
+
+test('paste with new line2', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => { });
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.evaluate(() => navigator.clipboard.writeText("'a\na'"));
+
+  await page.getByText('main procedure function test').click();
+
+  await page.keyboard.type('m');
+  await page.keyboard.type('l');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+
+  await page.keyboard.press('Control+v');
+  await page.keyboard.press('Enter');
+
+  await page.keyboard.type('p');
+  await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
+
+  await page.getByRole('button', { name: 'run' }).click();
+  await expect(page.locator('#printed-text')).toContainText("a\na");
+});
+
+
 test('paste invalid code', async ({ page }) => {
   page.once('dialog', dialog => {
     //console.log(`Dialog message: ${dialog.message()}`);
