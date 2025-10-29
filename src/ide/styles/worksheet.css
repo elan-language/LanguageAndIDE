@@ -113,7 +113,7 @@ code, el-code, el-code-block {
 }
 
 .hint.taken::before {
-content: "\25b6";
-padding-right: 0.5em;
-color: rgb(32, 191, 32);
+    content: "\25b6";
+    padding-right: 0.5em;
+    color: rgb(32, 191, 32);
 }

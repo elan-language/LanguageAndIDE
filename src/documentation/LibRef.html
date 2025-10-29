@@ -4,6 +4,7 @@
 <link href="../ide/styles/colourScheme.css" rel="stylesheet">
 <link href="../ide/styles/documentation.css" rel="stylesheet">
 <link href="../ide/styles/elanStyle.css" rel="stylesheet">
+<link href="favicon.ico" rel="icon">
 <title>Elan Library Reference</title>
 <script type="text/javascript" src="generated_toc.js"></script>
 </head>
@@ -994,7 +995,7 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
   <td><el-type>Dictionary</el-type></td>
   <td>key's Type, value's Type</td>
   <td>replace the value at an existing key, or add a <i>key:value</i> pair</td>
- </tr><tr id="RemoveAt_Dictionary">
+ </tr><tr id="removeAt_Dictionary">
   <td><el-method>removeAt</el-method></td>
   <td><el-type>Dictionary</el-type></td>
   <td>key's Type</td>
@@ -1877,7 +1878,7 @@ So the top left corner of the display is at (-100,75).</p>
   <td>turns the turtle to face in the direction specified in degrees<br>where 0 is upward and increasing values go clockwise from there</td>
  </tr>
 </table>
-<h3 class="no-TOC" id="Turtle_properties">Properties of a Turtle</h3>
+<h3 class="no-TOC" id="Properties_Turtle">Properties of a Turtle</h3>
 <p>The current location and heading of the turtle may be read using the properties
   <el-id>x</el-id>, <el-id>y</el-id>, and <el-id>heading</el-id>.</p>
 <table class="tableMethod" id="properties_Turtle">
@@ -2401,7 +2402,7 @@ Later shapes are positioned over earlier ones.</p>
 <p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
 </ul>
 
-<h2 id="displayHtml">Rendering Html in the Display</h2>
+<h2 id="RenderHtml">Rendering Html in the Display</h2>
 <p>If you embed Html code in a string and then attempt to print it, you will see the string displayed literally: the Html tags
     will not be recognised. This is for security reasons. However, it <i>is</i> possible to display formatted Html in the <b>Display</b>.
     The following code:</p>
@@ -2972,26 +2973,31 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
   <td>(none)</td>
   <td>(none)</td>
   <td>clears the IDE's Display pane</td>
- </tr><tr id="clearKeyBuffer">
-  <td><el-method>clearKeyBuffer</el-method></td>
-  <td>(none)</td>
-  <td>(none)</td>
-  <td>clears the IDE's keyboard input</td>
  </tr><tr id="clearBlocks">
   <td><el-method>clearBlocks</el-method></td>
   <td>(none)</td>
   <td>(none)</td>
   <td>clears the block graphics layer of the IDE's Display pane</td>
- </tr><tr id="clearHtml">
-  <td><el-method>clearHtml</el-method></td>
-  <td>(none)</td>
-  <td>(none)</td>
-  <td>clears the Html layer of the IDE's Display pane</td>
  </tr><tr id="clearVG">
   <td><el-method>clearVectorGraphics</el-method></td>
   <td>(none)</td>
   <td>(none)</td>
   <td>clears the vector graphics layer of the IDE's Display pane</td>
+ </tr><tr id="clearHtml">
+  <td><el-method>clearHtml</el-method></td>
+  <td>(none)</td>
+  <td>(none)</td>
+  <td>clears the Html layer of the IDE's Display pane</td>
+ </tr><tr id="clearAllDisplays">
+  <td><el-method>clearAllDisplays</el-method></td>
+  <td>(none)</td>
+  <td>(none)</td>
+  <td>clears Display pane as well as the blocks, vector graphics and Html layers</td>
+ </tr><tr id="clearKeyBuffer">
+  <td><el-method>clearKeyBuffer</el-method></td>
+  <td>(none)</td>
+  <td>(none)</td>
+  <td>clears the IDE's keyboard input</td>
  </tr><tr id="pressAnyKeyToContinue">
   <td><el-method>pressAnyKeyToContinue</el-method></td>
   <td><el-type>Boolean</el-type></td>

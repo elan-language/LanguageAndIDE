@@ -246,9 +246,9 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
   }
 
-  paste(code: string): void {
+  paste = (code?: string): boolean => {
     try {
-      const source = new CodeSourceFromString(code);
+      const source = new CodeSourceFromString(code ?? "");
       const newFrame = this.parseFrom(source);
 
       if (source.hasMoreCode() && source.getRemainingCode().trim()) {
@@ -260,9 +260,11 @@ export abstract class AbstractSelector extends AbstractFrame {
         selector.paste(remainingCode);
       }
     } catch (_e) {
-      this.pasteError = `Paste Failed: Cannot paste '${code}' into selector`;
+      this.pasteError = `Paste Failed: Cannot paste '${code}' into prompt`;
     }
-  }
+
+    return true;
+  };
 
   canBePastedIn(frame: Frame): boolean {
     return this.optionsMatchingUserInput(frame.initialKeywords()).length === 1;
@@ -300,5 +302,14 @@ export abstract class AbstractSelector extends AbstractFrame {
 
   worstParseStatusOfFields(): ParseStatus {
     return this.text ? ParseStatus.incomplete : ParseStatus.valid;
+  }
+
+  getContextMenuItems() {
+    const map = new Map<string, [string, (s?: string) => boolean]>();
+
+    map.set("delete", ["delete (Ctrl-Delete or Ctrl-Backspace)", this.deleteSelected]);
+    map.set("paste", ["paste (Ctrl-v)", this.paste]);
+
+    return map;
   }
 }

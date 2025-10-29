@@ -5,6 +5,7 @@ export interface editorEvent {
   modKey: { control: boolean; shift: boolean; alt: boolean };
   id?: string;
   selection?: [number, number];
+  command?: string;
   optionalData?: string;
 }
 
@@ -21,6 +22,7 @@ key: ${ee?.key ?? "not set"},
 modKey: ${modKeyString(ee.modKey)},
 id: ${ee?.id ?? "not set"},
 selection: ${ee.selection ? ee.selection : "not set"},
+command: ${ee?.command ?? "not set"}
 optionalData: ${ee?.optionalData ?? "not set"}
 }`
     : "no editor event recorded";

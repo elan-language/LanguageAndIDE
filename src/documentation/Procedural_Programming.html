@@ -4,6 +4,7 @@
 <link href="../ide/styles/colourScheme.css" rel="stylesheet">
 <link href="../ide/styles/documentation.css" rel="stylesheet">
 <link href="../ide/styles/elanStyle.css" rel="stylesheet">
+<link href="favicon.ico" rel="icon">
 <title>Elan Procedural Programming</title>
 </head>
 <body>
@@ -19,12 +20,12 @@
 
 <h3>Variable statement</h3>
 <p>The <el-code>variable </el-code>statement is used to define, and initialise, a new variable. Unlike a named value defined by a let statement, a variable may be re-assigned from its initial value to a new value.</p>
-<p>The name given to the variable must follow the rules for an <a href="#Identifier">Identifier</a>.</p>
+<p>The name given to the variable must follow the rules for an <a href="LangRef.html#Identifier">Identifier</a>.</p>
 <p>The value to which the new variable is initialised may be a literal value, or a more complex expression. Either way, the resulting value defines the Type for that variable.</p>
 
 <h3>Set statement</h3>
 <p>The <el-code>set</el-code> statement is used to assign a new value to an existing variable. The new value must be of the same Type (or a Type compatible with) that of the variable.</p>
-<p>A set statement may not assign a new value to a parameter: see <a href="#Parameter_passing_1">Parameter passing</a>.</p>
+<p>A set statement may not assign a new value to a parameter: see <a href="LangRef.html#Parameter">Parameter passing</a>.</p>
 
 
 <h3 id="Parameter_passing_1">Parameter passing</h3>
@@ -92,8 +93,8 @@
 </el-code-block>
 <p>Notes</p>
 <ul>
-<li>These two methods are both <a href="#System_methods">System methods</a>, so they may be used only within <el-code>main</el-code> or a <el-code>procedure</el-code>.  A resulting <span class="Hyperlink"><a href="#System_methods">Int</a></span> or <el-code>Float</el-code> may then be used as an argument to pass into a <el-code>function</el-code>.</li>
-<li>Elan provides a separate mechanism for <a href="#Generating_random_numbers">generating random numbers within a function</a>.</li>
+<li>These two methods are both <a href="LibRef.html#SystemMethods">System methods</a>, so they may be used only within <el-code>main</el-code> or a <el-code>procedure</el-code>.  A resulting <span class="Hyperlink"><a href="#System_methods">Int</a></span> or <el-code>Float</el-code> may then be used as an argument to pass into a <el-code>function</el-code>.</li>
+<li>Elan provides a separate mechanism for <a href="LibRef.html#Random">generating random numbers within a function</a>.</li>
 </ul>
 <h2 id="h69">Comments</h2>
 <p><a href="https://www.youtube.com/watch?v=Vv2hD3EobKU">Explanatory YouTube video</a>: Elan language constructs 4 - comments</p>
