@@ -1565,6 +1565,12 @@ async function localAndAutoSave(field: HTMLElement | undefined, editingField: bo
       saveButton.classList.add("unsaved");
       undoRedoHash = file.currentHash;
       currentFieldId = newFieldId ?? "";
+
+      while (undoRedoFiles.length >= 20) {
+        const toTrim = undoRedoFiles[0];
+        undoRedoFiles = undoRedoFiles.slice(1);
+        localStorage.removeItem(toTrim);
+      }
     }
   }
 
