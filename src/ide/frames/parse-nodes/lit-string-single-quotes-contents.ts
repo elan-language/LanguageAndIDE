@@ -7,6 +7,15 @@ export class LitStringSingleQuotesContents extends RegExMatchNode {
     super(Regexes.nonInterpolatedStringContent);
   }
 
+  sanitise(s: string) {
+    return s.replaceAll("\r", "").replaceAll("\n", "\\n");
+  }
+
+  override renderAsSource(): string {
+    const s = this.sanitise(this.matchedText);
+    return s.trim();
+  }
+
   parseText(text: string): void {
     super.parseText(text);
   }
