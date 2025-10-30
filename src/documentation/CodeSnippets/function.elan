@@ -1,4 +1,4 @@
-# 5988991db257765d658ec25af2b005b69f50811b5fb5986dbd1e4c43c6c38a3c Elan 1.6.1 guest default_profile valid
+# 27811d2eea476881d18da79dc7f33f67724134bc70c740492815601dfcf412cd Elan 1.6.2 guest default_profile valid
 
 function score(g as Game) returns Int
   return g.body.length() - 2
