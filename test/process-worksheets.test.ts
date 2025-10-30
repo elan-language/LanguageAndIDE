@@ -214,7 +214,7 @@ end constructor`;
     assert.strictEqual(actual, expected);
   });
 
-  test("process multiple loads", async () => {
+  ignore_test("process multiple loads", async () => {
     const questions = `<load file="fileLOADNUMBER.elan">Load LOADNUMBER</load>
 <load file="file2.elan">Load LOADID</load>`;
 

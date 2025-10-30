@@ -104,16 +104,24 @@
     margin-top: 1em;
 }
 
+.license img {
+    display: block;
+}
+
 .step textarea {
     width: 100%;
     font-family: monospace;
     font-weight: bold;
+    color: blue
 }
 
 input[type="text"]
 {
     border: 1px;
     border-style: solid;
+}
+input.step-complete {
+    margin-top: 10px;
 }
 code, el-code, el-code-block {
     user-select: none;
