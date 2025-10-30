@@ -2930,7 +2930,8 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 <h4 class="no-TOC acc-title" tabindex="0">Single bit operations
 </h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; A reminder of single bit operations:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; A reminder of single bit operations.<br>As noted in the example tests above, these methods act on 32-bit signed integers rather than on values of only one or a few bits,
+so the effect of <el-method>bitNot</el-method> is not just the simple bit reversal shown here:</p>
 <table>
  <tr><th rowspan="2"></th><th colspan="4">p,q</th></tr>
  <tr><th</th><th>0,0</th><th>0,1</th><th>1,0</th><th>1,1</th></tr>
@@ -2939,8 +2940,6 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
  <tr><td><el-code>bitNot(p)</el-code></td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
  <tr><td><el-code>bitXor(p,q)</el-code></td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
 </table>
-<p>As noted in the example tests above, these methods act on 32-bit signed integers rather than on 1-bit values,
-so the effect of <el-method>bitNot</el-method> is not just the simple bit reversal shown here.</p>
 <hr>
 </div></div>
 
@@ -3244,11 +3243,11 @@ This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or 
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from demo program <el-code>pathfinder.elan</el-code> in which <el-method>filter</el-method> applies the <el-kw>lambda</el-kw> to the <el-id>nodes</el-id> (of class <el-type>Node</el-type>) to find one that contains <el-id>p</el-id> (of record Point):</p>
-<el-code-block>
-<el-func class="ok multiline" id="func333" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident335" class="ok" tabindex="0"><el-txt>getNodeFor</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params336" class="optional ok" tabindex="0"><el-txt><el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type337" class="ok" tabindex="0"><el-txt><el-type>Node</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
-<el-statement class="ok" id="let340" tabindex="0"><el-kw>let </el-kw><el-field id="var341" class="ok" tabindex="0"><el-txt><el-id>matches</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr342" class="ok" tabindex="0"><el-txt><el-kw>property</el-kw>.<el-id>nodes</el-id>.<el-method>filter</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Node</el-type> =&gt; <el-id>n</el-id>.<el-id>point</el-id><el-kw> is </el-kw><el-id>p</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="return338" tabindex="0"><el-kw>return </el-kw><el-field id="expr339" class="ok" tabindex="0"><el-txt><el-kw>if </el-kw><el-id>matches</el-id>.<el-method>length</el-method>()<el-kw> is </el-kw><el-lit>1</el-lit><el-kw> then </el-kw><el-id>matches</el-id>.<el-method>head</el-method>()<el-kw><br>else </el-kw><el-kw>empty</el-kw> <el-type>Node</el-type></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-code-block source="pathfinder.elan">
+<el-func class="ok multiline" id="func333" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident335" class="ok" tabindex="-1"><el-txt><el-method>getNodeFor</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params336" class="optional ok" tabindex="-1"><el-txt><el-id>p</el-id> <el-kw>as</el-kw> <el-type>Point</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type337" class="ok" tabindex="-1"><el-txt><el-type>Node</el-type></el-txt></el-field></el-top>
+<el-statement class="ok" id="let340" tabindex="-1"><el-kw>let </el-kw><el-field id="var341" class="ok" tabindex="-1"><el-txt><el-id>matches</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr342" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>nodes</el-id>.<el-method>filter</el-method>(<el-kw>lambda</el-kw> <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Node</el-type> =&gt; <el-id>n</el-id>.<el-id>point</el-id><el-kw> is </el-kw><el-id>p</el-id>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="return338" tabindex="-1"><el-kw>return </el-kw><el-field id="expr339" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>matches</el-id>.<el-method>length</el-method>()<el-kw> is </el-kw><el-lit>1</el-lit><el-kw><br>then </el-kw><el-id>matches</el-id>.<el-method>head</el-method>()<el-kw><br>else </el-kw><el-kw>empty</el-kw> <el-type>Node</el-type></el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
@@ -3400,17 +3399,18 @@ They take a function as an argument, and return the list element corresponding t
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To  sort integers in a <el-type>List</el-type>:</p>
 <el-code-block source="sortBy_Int.elan">
-<el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>numbers</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>[<el-lit>27</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>31</el-lit>, <el-lit>37</el-lit>, <el-lit>11</el-lit>, <el-lit>13</el-lit>, <el-lit>17</el-lit>, <el-lit>19</el-lit>, <el-lit>23</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>numbers</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id> &gt; <el-id>y</el-id><el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id> &lt; <el-id>y</el-id><el-kw> then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>27</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>31</el-lit>, <el-lit>37</el-lit>, <el-lit>11</el-lit>, <el-lit>13</el-lit>, <el-lit>17</el-lit>, <el-lit>19</el-lit>, <el-lit>23</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let6" tabindex="-1"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>sorted</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id> &gt; <el-id>y</el-id><el-kw><br>then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id> &lt; <el-id>y</el-id><el-kw><br>then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="print9" tabindex="-1"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="-1"><el-txt><el-id>sorted</el-id></el-txt></el-field></el-statement>
 &nbsp;&nbsp;&#x27f6; [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
 </el-code-block>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; And similarly for string comparisons using methods <el-method>isBefore</el-method> and <el-method>isAfter</el-method>:</p>
 <el-code-block source="sortBy_String.elan">
-<el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>["<el-lit>Simon</el-lit>", "<el-lit>Pauline</el-lit>", "<el-lit>Jason</el-lit>", "<el-lit>Zelda</el-lit>", "<el-lit>Edith</el-lit>", "<el-lit>Lance</el-lit>", "<el-lit>Alice</el-lit>", "<el-lit>Paul</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="let6" tabindex="0"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-id>names</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id>.<el-method>isAfter</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id>.<el-method>isBefore</el-method>(<el-id>y</el-id>)<el-kw> then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>sorted</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>["<el-lit>Simon</el-lit>", "<el-lit>Pauline</el-lit>", "<el-lit>Jason</el-lit>", "<el-lit>Zelda</el-lit>", "<el-lit>Edith</el-lit>", "<el-lit>Lance</el-lit>", "<el-lit>Alice</el-lit>", "<el-lit>Paul</el-lit>"]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let6" tabindex="-1"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>sorted</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id>.<el-method>isAfter</el-method>(<el-id>y</el-id>)<el-kw><br>then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id>.<el-method>isBefore</el-method>(<el-id>y</el-id>)<el-kw><br>then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="print9" tabindex="-1"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="-1"><el-txt><el-id>sorted</el-id></el-txt></el-field></el-statement>
 &nbsp;&nbsp;&#x27f6; [Alice, Edith, Jason, Lance, Paul, Pauline, Simon, Zelda]
 </el-code-block>
 <hr>

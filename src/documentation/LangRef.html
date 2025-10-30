@@ -276,9 +276,9 @@ Parameters for both <el-code>procedures</el-code> and <el-code>functions</el-cod
 <h3  class="no-TOC" id="recursion">Recursion</h3>
 Procedures and functions may be called or referenced recursively. For example, a simple factorial calculation:
 <el-code-block source="factorial.elan">
-<el-func class="ok multiline" id="func1" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident3" class="ok" tabindex="0"><el-txt>factorial</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params4" class="optional ok" tabindex="0"><el-txt><el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type5" class="ok" tabindex="0"><el-txt><el-type>Int</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
-<el-statement class="ok" id="return6" tabindex="0"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt>(<el-kw>if </el-kw><el-id>n</el-id> &gt; <el-lit>1</el-lit><el-kw> then </el-kw><el-id>n</el-id>*<el-method>factorial</el-method>(<el-id>n</el-id> - <el-lit>1</el-lit>)<el-kw><br>else </el-kw><el-lit>1</el-lit>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-func class="ok multiline" id="func5" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>factorial</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params8" class="optional ok" tabindex="-1"><el-txt><el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type9" class="ok" tabindex="-1"><el-txt><el-type>Int</el-type></el-txt></el-field></el-top>
+<el-statement class="ok" id="return10" tabindex="-1"><el-kw>return </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt>(<el-kw>if </el-kw><el-id>n</el-id> &gt; <el-lit>1</el-lit><el-kw><br>then </el-kw><el-id>n</el-id>*<el-method>factorial</el-method>(<el-id>n</el-id> - <el-lit>1</el-lit>)<el-kw><br>else </el-kw><el-lit>1</el-lit>)</el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
@@ -599,9 +599,10 @@ If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that 
 </el-constructor>
 <el-func class="ok multiline" id="func422" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident424" class="ok" tabindex="-1"><el-txt><el-method>getAction</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params425" class="empty optional ok" tabindex="-1"><el-compl><i>parameter definitions</i></el-compl></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type426" class="ok" tabindex="-1"><el-txt><el-type>Action</el-type></el-txt></el-field></el-top>
-<el-statement class="ok" id="return427" tabindex="-1"><el-kw>return </el-kw><el-field id="expr428" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-kw>property</el-kw>.<el-id>hand</el-id>.<el-id>total</el-id> &lt; <el-lit>17</el-lit><el-kw> then </el-kw><el-type>Action</el-type>.<el-id>draw</el-id><el-kw><br>else </el-kw><el-type>Action</el-type>.<el-id>stand</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="return427" tabindex="-1"><el-kw>return </el-kw><el-field id="expr428" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-kw>property</el-kw>.<el-id>hand</el-id>.<el-id>total</el-id> &lt; <el-lit>17</el-lit><el-kw><br>then </el-kw><el-type>Action</el-type>.<el-id>draw</el-id><el-kw><br>else </el-kw><el-type>Action</el-type>.<el-id>stand</el-id></el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
+
 <el-kw>end class</el-kw>
 </el-class>
 
@@ -834,13 +835,14 @@ Properties may be modified only from outside the class by means of a <a href="#p
 </ul>
 
 <h2 id="private"><el-kw>private</el-kw> (property, function, procedure)</h2>
-A <el-kw>property</el-kw> may be marked <el-kw>private</el-kw>, in which case it is visible only to code within the class and,
+<p>A <el-kw>property</el-kw> may be marked <el-kw>private</el-kw>, in which case it is visible only to code within the class and,
 if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by using the context menu on the property frame or selecting it and pressing Ctrl-p.
-This action is a toggle used both to set and to remove the modifier <el-kw>private</el-kw> modifier.
-
- Unless marked <el-kw>private</el-kw>, a property may be read but not be written to.
-
-<p>Examples:</p>
+This action is a toggle used both to set and to remove the modifier <el-kw>private</el-kw>.</p>
+<ul>
+ <li></li>
+ <li>A property that is not private may be read, but not written to.</li>
+ <li>A property that is private may </li>
+</ul>
 
 <ul>
 <li>Whenever you wish to access a property from within a method (or from within the constructor) on the same class, then the name of the property must be prefixed with the 'qualifier': <el-code>property. </el-code>('property-dot'). This applies whether you are reading or setting the property. By this means you can have a method parameter with the same name as a property, but they are unambiguous, because the property must be prefixed. A common pattern is to use the same name in a 'setter' method, for example:</li>
@@ -1357,12 +1359,12 @@ The 'if expression' is in certain respects similar to an <a href="#if"><el-kw>if
 <li>There is always a single <el-kw>then</el-kw> and a single <el-kw>else</el-kw> clause, and each clause contains just a single expression. The <el-kw>if</el-kw> expression returns the result of evaluating one of these two expressions, according to whether the condition evaluates to <el-id>true</el-id> or <el-id>false</el-id>.</li>
 </ul>
 <p>Here are three examples:</p>
-<el-code-block source="if_expression.elan">
-<el-statement class="ok" id="return8" tabindex="0"><el-kw>return </el-kw><el-field id="expr9" class="ok" tabindex="0"><el-txt><el-kw>if </el-kw><el-id>c</el-id> &lt; <el-lit>1160</el-lit><el-kw> then </el-kw><el-id>c</el-id> + <el-lit>40</el-lit><el-kw><br>else </el-kw><el-id>c</el-id> - <el-lit>1160</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-code-block source="wordle.solver.elan">
+<el-statement class="ok" id="return6" tabindex="-1"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>c</el-id> &lt; <el-lit>1160</el-lit><el-kw><br>then </el-kw><el-id>c</el-id> + <el-lit>40</el-lit><el-kw><br>else </el-kw><el-id>c</el-id> - <el-lit>1160</el-lit></el-txt></el-field></el-statement>
 <br>
-<el-statement class="ok" id="return25" tabindex="0"><el-kw>return </el-kw><el-field id="expr26" class="ok" tabindex="0"><el-txt><el-kw>if </el-kw><el-method>isGreen</el-method>(<el-id>attempt</el-id>, <el-id>target</el-id>, <el-id>n</el-id>)<el-kw> then </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>*</el-lit>")<el-kw><br>else </el-kw><el-id>attempt</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="return16" tabindex="-1"><el-kw>return </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-method>isGreen</el-method>(<el-id>attempt</el-id>, <el-id>target</el-id>, <el-id>n</el-id>)<el-kw><br>then </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>*</el-lit>")<el-kw><br>else </el-kw><el-id>attempt</el-id></el-txt></el-field></el-statement>
 <br>
-<el-statement class="ok" id="return104" tabindex="0"><el-kw>return </el-kw><el-field id="expr105" class="ok" tabindex="0"><el-txt><el-kw>if </el-kw><el-id>attempt</el-id>[<el-id>n</el-id>]<el-kw> is </el-kw>"<el-lit>*</el-lit>"<el-kw> then </el-kw><el-id>attempt</el-id><el-kw><br>else </el-kw><el-kw>if </el-kw><el-method>isYellow</el-method>(<el-id>attempt</el-id>, <el-id>target</el-id>, <el-id>n</el-id>)<el-kw> then </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>+</el-lit>")<el-kw><br>else </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>_</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="return46" tabindex="-1"><el-kw>return </el-kw><el-field id="expr47" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>attempt</el-id>[<el-id>n</el-id>]<el-kw> is </el-kw>"<el-lit>*</el-lit>"<el-kw><br>then </el-kw><el-id>attempt</el-id><el-kw><br>else </el-kw><el-kw>if </el-kw><el-method>isYellow</el-method>(<el-id>attempt</el-id>, <el-id>target</el-id>, <el-id>n</el-id>)<el-kw><br>then </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>+</el-lit>")<el-kw><br>else </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>_</el-lit>")</el-txt></el-field></el-statement>
 </el-code-block>
 
 <h2 id="new"><el-kw>new</el-kw></h2>
