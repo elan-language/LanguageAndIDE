@@ -260,7 +260,7 @@ export abstract class AbstractSelector extends AbstractFrame {
         selector.paste(remainingCode);
       }
     } catch (_e) {
-      this.pasteError = `Paste Failed: Cannot paste '${code}' into prompt`;
+      this.pasteError = `Paste failed: Cannot paste '${code}' into prompt`;
     }
 
     return true;
