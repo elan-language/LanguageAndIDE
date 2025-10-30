@@ -1,4 +1,4 @@
-# 7992810d5d5cd20bd0ed71af3b8545f35bb01b0da19b01ea5371a82c76b6d0cc Elan 1.6.1 guest default_profile valid
+# 578244764e07eb880933cb965fc97eed5ee27d58283ce754d3fa5d723600afbb Elan 1.6.2 guest default_profile valid
 
 main
   call playGame()
