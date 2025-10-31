@@ -359,3 +359,35 @@ test('paste invalid code', async ({ page }) => {
   await expect(page.locator('div.context-menu div')).toContainText('Paste Failed:');
 });
 
+test('paste into field', async ({ page }) => {
+  page.once('dialog', dialog => {
+    //console.log(`Dialog message: ${dialog.message()}`);
+    dialog.accept().catch(() => { });
+  });
+  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+
+  await page.keyboard.type('m');
+  await page.keyboard.type('l');
+  await page.keyboard.type('firstword');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('"hello"');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('l');
+  await page.keyboard.type('secondword');
+  await page.keyboard.press('Tab');
+  await page.keyboard.type('"world"');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('p');
+  await page.keyboard.type('secondword[2]');
+
+
+  await page.getByText('firstword').dblclick();
+  await page.keyboard.press('Control+c');
+
+  await page.getByText('secondword[2]').dblclick();
+  await page.keyboard.press('Control+v');
+
+
+   await expect(page.locator('#parse')).not.toContainText('invalid');
+});
+

@@ -1117,7 +1117,7 @@ function handlePaste(event: Event, target: HTMLElement, msg: editorEvent): boole
       "v",
       undefined,
       undefined,
-      `${txt.trim()}\n`,
+      `${txt.trim()}`,
     );
   });
   event.stopPropagation();
@@ -1390,7 +1390,7 @@ async function updateContent(text: string, editingField: boolean) {
           "ContextMenu",
           undefined,
           func,
-          `${txt.trim()}\n`,
+          `${txt.trim()}`,
         );
       });
 
