@@ -356,7 +356,7 @@ test('paste invalid code', async ({ page }) => {
 
   await page.keyboard.press('Control+v');
 
-  await expect(page.locator('div.context-menu div')).toContainText('Paste Failed:');
+  await expect(page.locator('div.context-menu div')).toContainText('Paste failed:');
 });
 
 test('paste into field', async ({ page }) => {
@@ -380,6 +380,7 @@ test('paste into field', async ({ page }) => {
   await page.keyboard.type('p');
   await page.keyboard.type('secondword[2]');
 
+  await page.waitForTimeout(1000);
 
   await page.getByText('firstword').dblclick();
   await page.keyboard.press('Control+c');
