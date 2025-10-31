@@ -248,7 +248,9 @@ export abstract class AbstractSelector extends AbstractFrame {
 
   paste = (code?: string): boolean => {
     try {
-      const source = new CodeSourceFromString(code ?? "");
+      code = (code ?? "").trim() + "\n";
+
+      const source = new CodeSourceFromString(code);
       const newFrame = this.parseFrom(source);
 
       if (source.hasMoreCode() && source.getRemainingCode().trim()) {
