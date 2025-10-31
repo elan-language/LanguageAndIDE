@@ -255,7 +255,7 @@ in the range:</li>
   &#x27f6; Hello<br>&nbsp;&nbsp;&nbsp;world</el-code>
 </li>
  <li>As in most languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never modified. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</li>
-<li>There are no 'substring' methods in Elan, because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth character to the seventh character inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <i>exclusive</i>.
+<li id="IndexRange">There are no 'substring' methods in Elan, because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth character to the seventh character inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <i>exclusive</i>.
  See <a href="LangRef.html#IndexedValue">Indexed values</a>.</li>
  <li>You can loop through a string picking each of its characters sequentially using the <a href="LangRef.html#each"><el-code>each</el-code></a> loop.
 <li>The dot methods that can be applied to strings are shown in the table below.</li>
