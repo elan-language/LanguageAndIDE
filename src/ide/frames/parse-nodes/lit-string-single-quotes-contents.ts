@@ -7,6 +7,14 @@ export class LitStringSingleQuotesContents extends RegExMatchNode {
     super(Regexes.nonInterpolatedStringContent);
   }
 
+  sanitise(s: string) {
+    return s.replaceAll("\r", "").replaceAll("\n", "\\n");
+  }
+
+  override renderAsSource(): string {
+    return this.sanitise(this.matchedText);
+  }
+
   parseText(text: string): void {
     super.parseText(text);
   }

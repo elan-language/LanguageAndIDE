@@ -1117,7 +1117,7 @@ function handlePaste(event: Event, target: HTMLElement, msg: editorEvent): boole
       "v",
       undefined,
       undefined,
-      `${txt.trim()}\n`,
+      `${txt.trim()}`,
     );
   });
   event.stopPropagation();
@@ -1390,7 +1390,7 @@ async function updateContent(text: string, editingField: boolean) {
           "ContextMenu",
           undefined,
           func,
-          `${txt.trim()}\n`,
+          `${txt.trim()}`,
         );
       });
 
@@ -1565,6 +1565,12 @@ async function localAndAutoSave(field: HTMLElement | undefined, editingField: bo
       saveButton.classList.add("unsaved");
       undoRedoHash = file.currentHash;
       currentFieldId = newFieldId ?? "";
+
+      while (undoRedoFiles.length >= 20) {
+        const toTrim = undoRedoFiles[0];
+        undoRedoFiles = undoRedoFiles.slice(1);
+        localStorage.removeItem(toTrim);
+      }
     }
   }
 

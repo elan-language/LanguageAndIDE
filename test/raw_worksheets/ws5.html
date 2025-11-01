@@ -18,9 +18,15 @@
   <h3>Preliminaries</h3>
   <label for="username">Enter your name: </label>
   <input class="question" type="text" id="username">
-  <ul>
-    <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
-  </ul>
+  <p>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</p>
+
+    <div class="license">
+      <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+      This worksheet is copyright © Richard Pawson 2025, and protected by the Creative Commons license:
+          <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+        You may freely make and distribute copies of this worksheet <i>as is</i>, but if you <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+        Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
+    </div>
 <label class="done" for="done0">Step Completed</label><input class="step-complete" type="checkbox" id="done0"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 <div class="step" id="step1">
   <h3>Preliminaries</h3>
@@ -69,7 +75,14 @@
       pressing <b>Enter</b>)
       because this reduces errors:
 
-      <el-code><el-statement class="none" id="let4" tabindex="-1"><el-kw>let </el-kw><el-field id="var5" class="ok" tabindex="-1"><el-txt><el-id>t</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>Turtle</el-type>()</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-msg></el-msg><el-fr>0</el-fr></el-statement></el-code> is a 'type' of thing and type names always begin with a capital letter
+      <el-code><el-statement class="none" id="let4" tabindex="-1"><el-kw>let </el-kw><el-field id="var5" class="ok" tabindex="-1"><el-txt><el-id>t</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> be </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>Turtle</el-type>()</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-msg></el-msg><el-fr>0</el-fr></el-statement></el-code>
+
+    <ul>
+      <li>This instruction creates a new 'Turtle' which we will be commanding to move around the Display holding a 'pen' that shows the path it has taken.</li>
+      <li>code&gt;Turtle is a 'type' of thing and type names always begin with a capital letter
+    </li>
+    <li>code&gt;Turtle is a 'type' of thing and type names always begin with a capital letter</li>
+    <li>We have named this turtle <el-code><el-global contenteditable="" spellcheck="false" class="ok empty" id="select0" tabindex="-1"><el-select><el-txt></el-txt><el-place>new code</el-place><div class="options"> main procedure function test constant enum record class abstract interface #</div></el-select></el-global></el-code> is a 'type' of thing and type names always begin with a capital letter
     </li>
     <li>code&gt;Turtle is a 'type' of thing and type names always begin with a capital letter</li>
     <li>We have named this turtle <el-code><el-global contenteditable="" spellcheck="false" class="ok empty" id="select0" tabindex="-1"><el-select><el-txt></el-txt><el-place>new code</el-place><div class="options"> main procedure function test constant enum record class abstract interface #</div></el-select></el-global></el-code> is a 'type' of thing and type names always begin with a capital letter</li>
@@ -90,7 +103,7 @@
       This may be useful when you start to write your own programs, but shouldn't be necessary in this worksheet.
     </li>
   </ul>
-  
+  </li>
   <li>Follow this by adding this <el-code><el-kw>call</el-kw></el-code> instruction:
 
     <el-code><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>t</el-id>.<el-method><el-method>show</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="empty optional ok" tabindex="-1"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code>
@@ -104,10 +117,10 @@
         a procedure being a particular type of method.</li>
       <li>This syntax - which takes the form of <i>nameOfThing.methodName</i> is known as a 'dotted method'.
         You'll be calling a
-        lot of dotted methods on the turtle <el-code>t<code>.</code></el-code></li><code>
+        lot of dotted methods on the turtle <el-code><el-id>t</el-id></el-code>.</li>
       <li>Methods are rendered in a different colour to identifiers and types.</li>
-    </code></ul><code>
-  </code></li><code>
+    </ul>
+  </li>
   <li>Run the program, noting that:
     <ul>
       <li>the <b>Display</b> shows the turtle as a small green circle. When first created it is located in
@@ -119,11 +132,9 @@
       </li>
     </ul>
   </li><li>Add three more instructions below the <el-kw>call</el-kw>:
-    <code>
-      call t.move(10)
-      call t.turn(45)
-      call t.move(10)
-     Code does not parse as Elan.
+    <el-code><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>t</el-id>.<el-method><el-method>move</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-lit>10</el-lit></el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code>
+    <el-code><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>t</el-id>.<el-method><el-method>turn</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-lit>45</el-lit></el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code>
+    <el-code><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>t</el-id>.<el-method><el-method>move</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-lit>10</el-lit></el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code>
         <ul>
           <li>Here we again calling two different procedure methods on the turtle, their names suggesting what
             the turtle will do.</li>
@@ -140,9 +151,9 @@
 
         then run the program again and make sure that you understand how the trail left by the turtle's pen
         corresponds to the three instructions that you added.
-      </code></li><code>
-    
-</code></code><label class="done" for="done2">Step Completed</label><input class="step-complete" type="checkbox" id="done2"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+      </li>
+    </ul>
+<label class="done" for="done2">Step Completed</label><input class="step-complete" type="checkbox" id="done2"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
 <div class="step" id="step3">
   <h3>Iteration 2 - Draw the circle with a radius of 10 paces</h3>
@@ -158,22 +169,9 @@
     <li>Modify the <el-kw>for</el-kw> loop so that it executes 360 times.</li>
   </ul>
 <label class="done" for="done3">Step Completed</label><input class="step-complete" type="checkbox" id="done3"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-<div class="step" id="step4">
-  <p>Congratulations! You have finished the worksheet, and you now know enough about navigating and editing
-  code to start writing your first program – with the help of another Worksheet. Meantime,
-  click <b>Help &gt; Home &gt; IDE Reference &gt; Code editor</b> – for a handy summary of all the above
-  operations, and a few more that you can also try out here.</p>
-  <div class="license">
-      <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
-      This worksheet is copyright © Richard Pawson 2025, and protected by the Creative Commons license:
-          <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
-        If you copy and <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
-        Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
-    </div>
-  
   <div hidden="" id="hash"></div>
   <div hidden="" id="changes"></div>
-<label class="done" for="done4">Step Completed</label><input class="step-complete" type="checkbox" id="done4"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
     <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
   </body>
 </html>

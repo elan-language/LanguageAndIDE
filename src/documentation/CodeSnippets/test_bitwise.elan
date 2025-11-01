@@ -1,4 +1,4 @@
-# 1fdc52762281458db0eeeffa4fe99c16c1e80f7a7ea43ed429f7c6644d387d96 Elan 1.6.1 guest default_profile valid
+# d988e254b8024f3c1a06be606afffe5fac3942f28e14278be4998313afdfab55 Elan 1.6.2 guest default_profile valid
 
 test bitwise
   variable a set to 13

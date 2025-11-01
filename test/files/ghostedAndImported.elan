@@ -1,4 +1,4 @@
-# a8e6df28695d008046800fca40f8b24bccf87b15b8ecc196d1f00e31349bfd64 Elan 1.6.1 guest default_profile valid
+# a6f8c3217ab978b301a507b4ead8ca1d3eb7142527dd7c7f19eb09bc0d069498 Elan 1.6.2 guest default_profile valid
 
 [imported] # imported comment
 [imported] function square(i as Int) returns Int

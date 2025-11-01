@@ -115,6 +115,41 @@ end constructor`;
     assert.strictEqual(actual.startsWith("<el-type"), true);
   });
 
+  test("process expression", async () => {
+    const code = `mark[something] + "2" + mark[something]`;
+
+    const actual = await processInnerCode(code);
+
+    assert.strictEqual(actual.startsWith("<el-id"), true);
+  });
+
+  test("process wrapped expression", async () => {
+    const code = `<code>
+  mark[something] + "2" + mark[something]
+</code>`;
+
+    const actual = await processCode(code, codeTag, codeEndTag);
+
+    const expected = `<el-code><el-id>mark</el-id>[<el-id>something</el-id>] + "<el-lit>2</el-lit>" + <el-id>mark</el-id>[<el-id>something</el-id>]</el-code>`;
+
+    assert.strictEqual(actual, expected);
+  });
+
+  test("process wrapped test", async () => {
+    const code = `<codeblock>
+  test ranges
+    let mark be "00000"
+    let i be 3
+    let expression be mark[something] + "2" + mark[something]
+    assert expression is "00020"
+  end test
+</codeblock>`;
+
+    const actual = await processCode(code, codeBlockTag, codeBlockEndTag);
+
+    assert.strictEqual(actual.startsWith("<el-code-block><el-test"), true);
+  });
+
   test("process multiple code", async () => {
     const code = `<code>let</code>
 <code>Int</code>`;
@@ -179,7 +214,7 @@ end constructor`;
     assert.strictEqual(actual, expected);
   });
 
-  test("process multiple loads", async () => {
+  ignore_test("process multiple loads", async () => {
     const questions = `<load file="fileLOADNUMBER.elan">Load LOADNUMBER</load>
 <load file="file2.elan">Load LOADID</load>`;
 

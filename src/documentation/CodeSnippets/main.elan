@@ -1,4 +1,4 @@
-# 868387ece6cfd8c86985dc217eb903066f83efff1055902fb9fd0e13e9ca61b1 Elan 1.6.1 guest default_profile valid
+# b0cd1f07ac88b23d3d9461b67b6bcd2ba5d697e13bb18f2883173b68beb5009f Elan 1.6.2 guest default_profile valid
 
 main
   variable li set to [3, 6, 1, 0, 99, 4, 67]

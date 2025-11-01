@@ -11,7 +11,7 @@ export class LiteralStringNonInterpAsn extends AbstractAstNode implements AstNod
   }
 
   sanitise(s: string) {
-    return s.replaceAll("\\", "\\\\").replaceAll("\\\\n", "\\n");
+    return s.replaceAll("\r", "").replaceAll("\n", "\\n");
   }
 
   compile(): string {

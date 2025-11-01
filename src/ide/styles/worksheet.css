@@ -45,6 +45,7 @@
     .hint, .content
     {
         display: none;
+        margin-left: 20px;
     }
 
     /* First hint of active step will be shown */
@@ -64,6 +65,18 @@
     .hint.taken + .content + .hint
     {
         display: block;
+    }
+
+    .hint::before {
+        content: "Available:";
+        padding-right: 0.5em;
+        color: orange;
+    }
+    
+    .hint.taken::before {
+        content: "Taken:";
+        padding-right: 0.5em;
+        color: rgb(32, 191, 32);
     }
 
 /*Styling only */
@@ -91,10 +104,15 @@
     margin-top: 1em;
 }
 
+.license img {
+    display: block;
+}
+
 .step textarea {
     width: 100%;
     font-family: monospace;
     font-weight: bold;
+    color: blue
 }
 
 input[type="text"]
@@ -102,6 +120,13 @@ input[type="text"]
     border: 1px;
     border-style: solid;
 }
+input.step-complete {
+    margin-top: 10px;
+}
 code, el-code, el-code-block {
     user-select: none;
+}
+
+el-fr {
+    display: none; /* Because the instruction numbers start from 1 for each snippet, which is misleading */
 }

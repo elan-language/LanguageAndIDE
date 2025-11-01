@@ -1,4 +1,4 @@
-# e9de6a5091e384b3bd6db2e2249cd7e9bdc34c84e5a86da4fa271d152a7a6d87 Elan 1.6.1 guest default_profile valid
+# d8634d54ec51c2af5890f0c789a673ca9857a89fa3ffaa35df9fe58cbc658e53 Elan 1.6.2 guest default_profile valid
 
 test 
   assert pi is 3.141592653589793
