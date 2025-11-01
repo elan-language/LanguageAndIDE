@@ -989,15 +989,31 @@ So if you have a <el-kw>variable</el-kw> <el-code>s</el-code> that holds a negat
 </el-statement>
 </el-code-block>
 
-<div id="else"></div>
 <div id="if"></div>
-<h2 id="if_statement"><el-kw>if</el-kw>..<el-kw>then</el-kw>..<el-kw>else if</el-kw>..<el-kw>else</el-kw></h2>
-<p>See also <a href="#if_expression">if expression</a></p>
-<p>The <el-kw>if..then..else..</el-kw> and <el-kw>if..then..else if..else..</el-kw> constructs specify which of several code sequences is to be executed next.</p>
-<p>The <el-kw>else</el-kw> clause is optional.</p>
-<p>You can add as many <el-kw>else if</el-kw> clauses as you wish, but only one unconditional <el-kw>else</el-kw> (which, if present, must be the last clause).</p>
+<div id="then"></div>
+<div id="else"></div>
+<div id="elseif"></div>
+<h2 id="if_statement"><el-kw>if</el-kw></h2>
+<p>The <el-kw>if</el-kw> statement specifies which of several code sequences is to be executed next.</p>
+<ul>
+ <li> It is structured like this:<br>
+ <el-kw>if</el-kw> <el-code>condition</el-code> <el-kw>then</el-kw><br>
+ &nbsp;&nbsp;<el-code>statements</el-code><br>
+ <el-kw>else if</el-kw> <el-code>condition</el-code> <el-kw>then</el-kw><br>
+ &nbsp;&nbsp;<el-code>statements</el-code><br>
+ <el-kw>else</el-kw><br>
+ &nbsp;&nbsp;<el-code>statements</el-code><br>
+ <el-kw>end if</el-kw></li>
+ <li>The conditions are Boolean values or expressions.</li>
+ <li><el-kw>else if</el-kw> and <el-kw>else</el-kw> clauses are optional.</li>
+ <li>You can add as many <el-kw>else if</el-kw> clauses as you wish, but only one unconditional <el-kw>else</el-kw> which, if present, must be last.</li>
+</ul>
+<p>See also <a href="#if_expression"><el-kw>if</el-kw> expression</a> for using the related <el-kw>if</el-kw>  to return a value.</p>
 
-Example 1:
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-kw>if</el-kw> statement</h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Simple choice between equality and inequality:</p>
 <el-code-block source="if_else">
 <el-statement class="ok multiline" id="if71" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr73" class="ok" tabindex="0"><el-txt><el-id>head</el-id><el-kw> is </el-kw><el-id>apple</el-id></el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top>
@@ -1008,9 +1024,9 @@ Example 1:
 <el-kw>end if</el-kw>
 </el-statement>
 </el-code-block>
-
-Example 2:
-<el-code-block source="if_else">
+<hr>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice between an equality, a Boolean and the alternative:</p>
+<el-codeblock source="if_else">
 <el-statement class="ok multiline" id="if135" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="expr137" class="ok" tabindex="0"><el-txt><el-id>item</el-id><el-kw> is </el-kw><el-id>value</el-id></el-txt><el-place><i>condition</i></el-place></el-field><el-kw> then</el-kw></el-top>
 <el-statement class="ok" id="set157" tabindex="0"><el-kw>set </el-kw><el-field id="ident158" class="ok" tabindex="0"><el-txt><el-id>result</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr159" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1023,6 +1039,8 @@ Example 2:
 <el-kw>end if</el-kw>
 </el-statement>
 </el-code-block>
+<hr>
+</div></div>
 
 <h2 id="let"><el-kw>let</el-kw></h2>
 <p>The <el-kw>let</el-kw> statement may be thought of as being between a <el-kw>constant</el-kw> definition and a <el-kw>variable</el-kw>'s <el-kw>set</el-kw> statement..
@@ -1050,6 +1068,7 @@ It is recommended that you always use a <el-kw>let</el-kw> in preference to a <e
 <p>The last example above uses <a href="LibRef.html#InterpolatedString">interpolated strings</a>. Arguments placed within curly braces are evaluated before printing, and these may be separated by literal text and punctuation as needed. This is one recommended way to print more than one value on a line. The other way is to use <a href="LibRef.html#printLine">print procedures</a>.</p>
 <p>If the <el-kw>print</el-kw> instruction is used without any following expression, then it prints a newline, i.e. its effect is the same as <el-code>print "\n"</el-code>.</p>
 
+<div id="when">
 <h2 id="repeat"><el-kw>repeat</el-kw> (loop)</h2>
 <p>The <el-kw>repeat..end repeat when</el-kw> <el-code>condition</el-code> loop is used when you want at least one execution of the enclosed statements followed by a test that chooses either to execute them again or to exit from the loop.</p>
 <p><el-code>condition</el-code> is either a <el-type>Boolean</el-type> variable or an expression that evaluates to a Boolean value.</p>
@@ -1353,19 +1372,40 @@ Notes:<ul>
 </ul>
 
 <h2 id="if_expression"><el-kw>if</el-kw> expression</h2>
-The 'if expression' is in certain respects similar to an <a href="#if"><el-kw>if</el-kw> statement</a>, but with the following differences:
+
+<p>The <el-kw>if</el-kw> expression has a similar structure to the <a href="#if"><el-kw>if</el-kw> statement</a>, but is an expression that returns a value.</p>
 <ul>
-<li>It is written entirely within a single expression. This is possible because the <el-kw>if</el-kw> expression always returns a value.</li>
-<li>There is always a single <el-kw>then</el-kw> and a single <el-kw>else</el-kw> clause, and each clause contains just a single expression. The <el-kw>if</el-kw> expression returns the result of evaluating one of these two expressions, according to whether the condition evaluates to <el-id>true</el-id> or <el-id>false</el-id>.</li>
+ <li>The conditions are Boolean values or expressions.</li>
+ <li>It specifies which of several expressions is to be evaluated to give the returned value.</li>
+ <li><el-kw>else if</el-kw> and <el-kw>else</el-kw> clauses are optional.</li>
+ <li>You can add as many <el-kw>else if</el-kw> clauses as you wish, but only one unconditional <el-kw>else</el-kw> which, if present, must be last.</li>
+ <li>Though structured like the <el-kw>if</el-kw> statement, it is edited in one field rather than in separate frames.
+ On moving away from editing an <el-kw>if</el-kw> expression, it is automatically reformatted to be similar to an <el-kw>if</el-kw> statement,
+ though without indentation. This means that an <el-kw>if</el-kw> expression should usually be kept simple.</li>
+ <li>An <el-kw>if</el-kw> expression may be used within an <el-kw>if</el-kw> expression but will be hard to read even if it is enclosed in brackets.</li>
 </ul>
-<p>Here are three examples:</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-kw>if</el-kw> expression:</h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice in <el-kw>set</el-kw> and <el-kw>let</el-kw> assignments (the brackets around the first <el-kw>if</el-kw> expression are optional):</p>
+<el-code-block source="if_exp_assign.elan">
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>c</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-lit>1160</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="set6" tabindex="-1"><el-kw>set </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-id>c</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt>(<el-kw>if </el-kw><el-id>c</el-id> &lt; <el-lit>1160</el-lit><el-kw><br>then </el-kw><el-id>c</el-id> + <el-lit>40</el-lit><el-kw><br>else </el-kw><el-id>c</el-id> - <el-lit>1160</el-lit>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let9" tabindex="-1"><el-kw>let </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>d</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>c</el-id> &lt; <el-lit>580</el-lit><el-kw><br>then </el-kw><el-id>c</el-id> - <el-lit>40</el-lit><el-kw><br>else </el-kw><el-id>c</el-id> + <el-lit>60</el-lit></el-txt></el-field></el-statement>
+</el-code-block>
+<hr>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice in a <el-kw>return</el-kw> statement:</p>
 <el-code-block source="wordle.solver.elan">
-<el-statement class="ok" id="return6" tabindex="-1"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>c</el-id> &lt; <el-lit>1160</el-lit><el-kw><br>then </el-kw><el-id>c</el-id> + <el-lit>40</el-lit><el-kw><br>else </el-kw><el-id>c</el-id> - <el-lit>1160</el-lit></el-txt></el-field></el-statement>
-<br>
 <el-statement class="ok" id="return16" tabindex="-1"><el-kw>return </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-method>isGreen</el-method>(<el-id>attempt</el-id>, <el-id>target</el-id>, <el-id>n</el-id>)<el-kw><br>then </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>*</el-lit>")<el-kw><br>else </el-kw><el-id>attempt</el-id></el-txt></el-field></el-statement>
-<br>
+</el-code-block>
+<hr>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Using <el-kw>else if</el-kw> clause:</p>
+<el-code-block source="wordle.solver.elan">
 <el-statement class="ok" id="return46" tabindex="-1"><el-kw>return </el-kw><el-field id="expr47" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>attempt</el-id>[<el-id>n</el-id>]<el-kw> is </el-kw>"<el-lit>*</el-lit>"<el-kw><br>then </el-kw><el-id>attempt</el-id><el-kw><br>else </el-kw><el-kw>if </el-kw><el-method>isYellow</el-method>(<el-id>attempt</el-id>, <el-id>target</el-id>, <el-id>n</el-id>)<el-kw><br>then </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>+</el-lit>")<el-kw><br>else </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>_</el-lit>")</el-txt></el-field></el-statement>
 </el-code-block>
+<hr>
+</div></div>
 
 <h2 id="new"><el-kw>new</el-kw></h2>
 <p>A 'new instance' expression is used to create a new instance of a <a href="LibRef.html#StandardDataStructures">library data structure</a>,
