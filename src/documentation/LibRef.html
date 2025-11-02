@@ -267,12 +267,12 @@ in the range:</li>
   &#x27f6; Hello World</el-code></li>
    <li>A newline may be inserted within a string with <el-lit>\n</el-lit>:
   <el-code>
-  <el-statement class="ok" id="print21" tabindex="-1"><el-kw>print </el-kw><el-field id="expr22" class="optional ok" tabindex="-1"><el-txt>"<el-lit>Hello\nworld</el-lit>"</el-txt></el-field></el-statement>
-  When the field is exited, the newline will be shown in the code. The newline will also be applied when the string is printed/
-  &#x27f6; Hello<br>&nbsp;&nbsp;&nbsp;world</el-code>
+  <el-statement class="ok" id="print21" tabindex="-1"><el-kw>print </el-kw><el-field id="expr22" class="optional ok" tabindex="-1"><el-txt>"<el-lit>Hello\nworld</el-lit>"</el-txt></el-field></el-statement></el-code>
+    &#x27f6; Hello<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;world
+  <p>When editing and you leave the field, the newline will be implicitly applied in your code.</p>
 </li>
- <li>As in most languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never modified. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</li>
-<li id="IndexRange">There are no 'substring' methods in Elan, because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth character to the seventh character inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <i>exclusive</i>.
+ <li>As in most languages, strings are <i>immutable</i>. When you apply any operation or function with the intent of modifying an existing string, the existing string is never changed. Instead, the operation or function will return a new string that is based on the original, but with the specified differences.</li>
+<li id="IndexRange">There are no 'substring' methods in Elan, because you can always use an index range to get a substring, e.g. <el-code>s[3..7]</el-code> gives a string containing the fourth  to the seventh characters inclusive of <el-code> s</el-code>. Note that the upper bound of the range is <i>exclusive</i>.
  See <a href="LangRef.html#IndexedValue">Indexed values</a>.</li>
  <li>You can loop through a string picking each of its characters sequentially using the <a href="LangRef.html#each"><el-code>each</el-code></a> loop.
 <li>The dot methods that can be applied to strings are shown in the table below.</li>
@@ -298,7 +298,7 @@ in the range:</li>
    &#x27f6; area = 12.57</el-code></li>
 </ul>
 
-<p>Strings that are enclosed by ' (single quotes) cannot have interpolated fields in them.</p>
+<p>Strings that are enclosed by ' (single quotes) cannot include interpolated fields.</p>
 
 <h3 class="no-TOC">Dot methods on a <el-type>String</el-type></h3>
 <table class="tableMethod">
@@ -1450,9 +1450,9 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <div id="Queue"></div>
 <h2 id="Stack">Stack and Queue</h2>
 <ul>
-    <li><el-type>Stack</el-type> and <el-type>Queue</el-type> are similar data structures except that <el-type>Stack</el-type> is &#8216;LIFO&#8217; (last in, first out), while <el-type>Queue</el-type> is FIFO (first in, first out). The names of the methods for adding/removing are different, but there are also common methods.</li>
+    <li><el-type>Stack</el-type> and <el-type>Queue</el-type> are similar data structures except that <el-type>Stack</el-type> is 'LIFO' (last in, first out), while <el-type>Queue</el-type> is FIFO (first in, first out). The names of the methods for adding/removing are different, but there are also common methods.</li>
     <li>Both a <el-type>Stack</el-type> and a <el-type>Queue</el-type> are defined with the Type of the items that they can contain, similarly to how <el-type>List</el-type> and <el-type>ListImmutable</el-type> have a specified item Type, though with different syntax. The Type is specified in the form shown below e.g. <el-code><el-type>Stack</el-type>&lt;of <el-type><el-type>String</el-type></el-type>&gt;, <el-type>Queue</el-type>&lt;of <el-type>Int</el-type>&gt;, <el-type>Stack</el-type>&lt;of (<el-type>Float</el-type>, <el-type>Float</el-type>)&gt;, <el-type>Queue</el-type>&lt;of <el-type>Square</el-type>&gt;</el-code>.</li>
-    <li>Both <el-type>Stack </el-type>and<el-type> Queue</el-type> are dynamically extensible, like <el-type>List</el-type> and <el-type>ListImmutable</el-type>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer&#8217;s memory limit is reached.</li>
+    <li>Both <el-type>Stack </el-type>and<el-type> Queue</el-type> are dynamically extensible, like <el-type>List</el-type> and <el-type>ListImmutable</el-type>. There is no need (or means) to specify a size limit as they will continue to expand until, eventually, the computer's memory limit is reached.</li>
     <li>This same syntax is used to specify the Type if you want to pass a <el-type>Stack</el-type> or <el-type>Queue</el-type> into a function, or specify it as the <el-kw>return</el-kw> Type.</li>
     <li><el-type>Stack</el-type> and <el-type>Queue</el-type> have two methods in common: <el-method>length</el-method> and <el-method>peek</el-method>.
     <el-method>peek</el-method> returns the next item to be removed, without actually removing it.</li>
@@ -2269,22 +2269,27 @@ Later shapes are positioned over earlier ones.</p>
 
 <h1 id="Input/output">Input/output</h1>
 
-<h2>Reading keys &#8216;on the fly&#8217;</h2>
-<p>In some applications &#8211; especially in games, for example &#8211; you want the program to react to a key pressed by the user, but without holding up the program to wait for value to be input. </p>
-<p>Whether your application makes use graphics, or just uses the <i>Display</i> for text, reading keystrokes &#8216;on the fly&#8217; is done via one of two methods:</p>
+<h2>Reading keys 'on the fly'</h2>
+<p>In some applications &ndash; especially in games, for example &ndash; you want the program to react to a key pressed by the user, but without holding up the program to wait for value to be input. </p>
+<p>Whether your application makes use of graphics, or uses the Display  just for text, reading keystrokes 'on the fly' is done via one of two methods:</p>
+<el-code-block>
 <el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKey</el-method>()</el-txt></el-field></el-statement>
 <el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key2</el-id>, <el-id>modifier</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKeyWithModifier</el-method>()</el-txt></el-field></el-statement>
-<p><b>Notes</b></p>
+</el-code-block>
 <ul>
-<li>When the <el-method>getKey</el-method> function is called, the system <i>does not wait for a response</i>. If a key has been pressed then that will be returned as a <b>String</b> e.g. <el-code>"a"</el-code>.</li>
-<li>Non-printable keys will be returned in the form: <b>"Backspace"</b>,"<b>Enter"</b>,<b>"ArrowDown"</b>, etc.</li>
-<li>If no key has been pressed (since the last time the method was called), it will return the empty string <el-code>""</el-code>. </li>
-<li>Pressing <i>just</i> the <b>Shift</b>, <b>Ctrl</b> (<b>&#x2318; Command</b> under macOS) or <b>Alt</b> keys will not be detected by <el-method>getKey</el-method>. To read those keys use&#8230;</li>
-<li> <el-method>getKeyWithModifier</el-method> which returns a 2-tuple containing  the key pressed plus any &#8216;modifier&#8217; key such a <el-code>Shift</el-code>, <el-code>Ctrl</el-code>, or <el-code>Alt</el-code> (or the empty string if no modifier key is pressed).</li>
-<li>Both of these <el-method>getKey</el-method> methods are System methods because they have a dependency on the system and so may only be used within a <el-code>procedure</el-code> or in <el-code>main</el-code>.</li>
+ <li>When the <el-method>getKey</el-method> function is called, the system <i>does not wait for a response</i>. If a key has been pressed then that will be returned as a <el-type>String</el-type> e.g. <el-code>"a"</el-code>.</li>
+ <li>Non-printable keys will be returned as strings, e.g. <el-code>"Home"</el-code>, <el-code>"End"</el-code>, <el-code>"Delete"</el-code>, <el-code>"Tab"</el-code>,
+ <el-code>"Backspace"</el-code>, <el-code>"Enter"</el-code>, <el-code>"Escape"</el-code>,<br>
+ <el-code>"ArrowUp"</el-code> etc., function key <el-code>"Fn"</el-code>, <el-code>"AltGraph"</el-code>, <el-code>"Meta"</el-code>, <el-code>"ContextMenu"</el-code>, as well as most others.</li>
+ <li>Pressing <i>just</i> control keys <b>Shift</b>, <b>Ctrl</b> (<b>&#x2318; Command</b> under macOS) or <b>Alt</b> keys will not be detected by <el-method>getKey</el-method>.</li>
+ <li>To read a control key when combined with an ordinary key, use method <el-method>getKeyWithModifier</el-method>. It returns a 2-tuple containing the ordinary key pressed plus the name of <i>one</i> modifier key as <el-code>"Shift"</el-code>, <el-code>"Ctrl"</el-code>, or <el-code>"Alt"</el-code> (or the empty string if no modifier key was pressed).
+ A few such modified keys will be acted on by the browser and may not then be passed to your program.</li>
+ <li>If no key has been pressed (since the last time the method was called), it will return the empty string <el-code>""</el-code>. </li>
+ <li>Both of these <el-method>getKey</el-method> methods are System methods because they have a dependency on the system and so may only be used within a <el-code>procedure</el-code> or in <el-code>main</el-code>.</li>
+ <li>Use the procedure method <el-method>clearKeyBuffer</el-method> if you want to enforce that the user cannot get too far ahead of the program by hitting keys in rapid succession.</li>
+ <li>Method <el-method>waitForKey</el-method> waits for a key to be pressed, and returns it.</li>
+ <li>Method<el-method>pressAnyKeyToContinue</el-method> gives an optional prompt and is used when you don't need to know which key was pressed.</li>
 </ul>
-<p>Use the procedure method <el-method>clearKeyBuffer()</el-method> if you want to enforce that the user cannot get too far ahead of the program by hitting keys in very rapid succession.</p>
-<p><el-method>waitForKey</el-method> waits for a key to be pressed, and returns it.  <el-method>pressAnyKeyToContinue</el-method> gives an optional prompt and is used when you don't need to know which key was pressed.</p>
 <el-code-block>
 <el-statement class="ok"><el-top><el-kw>call </el-kw><el-field class="ok"><el-txt><el-method>pressAnyKeyToContinue</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>true</el-id></el-txt></el-field>)</el-top></el-statement>
 <el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>OK, press A or B</el-lit>"</el-txt></el-field></el-statement>
