@@ -89,7 +89,7 @@ p.ack { font-size:8pt; box-sizing: content-box; padding: 5px; border: 3px double
 /* code */
 el-code, el-code *, el-code-block, el-code-block * {font-family: Consolas, Courier, monospace;}
 el-code, el-code-block {color: black} /* This is default - used only when the code is plain text. Overridden when code is marked up with tags*/
-el-code-block {display:block; margin-top:12pt; margin-bottom:12pt;}
+el-code-block {display:block; margin-top:12pt; margin-bottom:6pt;}
 
 el-code-block img {
   height: 0.9em;

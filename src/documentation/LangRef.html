@@ -46,14 +46,14 @@
   <td><a href="LibRef.html#String">Character string<br><el-type>String</el-type></a></td>
   <td></td>
  </tr><tr>
-  <td>Mutable data structures</td>
+  <td>Mutable<br> data structures</td>
   <td><a href="LibRef.html#List">List<br><el-type>List</el-type></a></td>
   <td><a href="LibRef.html#Dictionary">Look-up dictionary<br><el-type>Dictionary</el-type></a></td>
   <td><a href="LibRef.html#Array">Simple array<br><el-type>Array</el-type></a></td>
   <td><a href="LibRef.html#Array2D">2-dimensional array<br><el-type>Array2D</el-type></a></td>
   <td></td>
  </tr><tr>
-  <td>Immutable data structures</td>
+  <td>Immutable<br> data structures</td>
   <td><a href="LibRef.html#ListImmutable">Immutable list<br><el-type>ListImmutable</el-type></a></td>
   <td><a href="LibRef.html#DictionaryImmutable">Immutable look-up dictionary<br><el-type>DictionaryImmutable</el-type></a></td>
   <td><a href="LibRef.html#SetType">Set<br><el-type>Set</el-type></a></td>
@@ -92,10 +92,10 @@
 
 <p>Assignments that define named values with fundamental Types don't require the Type name to be specified. Type names are, however, required in:</p>
 <ul>
-<li>parameters of functions and procedures</li>
+<li><p><a href="#Parameter"</p>>parameters</a> of functions and procedures</li>
 <li><el-kw>return</el-kw> value of a function</li>
 <li><el-kw>property</el-kw> of an interface, class or record</li>
-<li>empty named value, e.g. <el-code>empty List</el-code></li>
+<li>empty named value, e.g. <el-kw>empty</el-kw> <el-type>List</el-type></li>
 <li>Data structures whose elements have a particular Type, e.g. <el-type>Array</el-type>&lt;of <el-type>Int</el-type>&gt;</li>
 </ul>
 
@@ -124,7 +124,7 @@
 </table>
 
 <h1 id="GlobalInstructions">Global instructions</h1>
-<p>Global instructions (also referred to simply as <b>globals</b>) are located <em>directly</em> in your code at the highest level.
+<p>Global instructions (also referred to as <b>globals</b>) are located <em>directly</em> in your code at the highest level.
 They are never indented from the lefthand edge, nor may they be located <em>within</em> other instructions. They are:
  <a href="#main"><el-kw>main</el-kw></a>,
  <a href="#procedure"><el-kw>procedure</el-kw></a>,
@@ -145,19 +145,22 @@ They are never indented from the lefthand edge, nor may they be located <em>with
  <li><el-kw>constant</el-kw> and <el-kw>enum</el-kw> do not contain any further instructions &ndash; only names and values.</li>
  <li>The sequence of global instructions in your code is immaterial, with two exceptions:
   <ul>
-   <li>If one <el-kw>constant</el-kw> is used in the definition of another constant, the definitions must be in logical order.</li>
+   <li>If one <el-kw>constant</el-kw> is used in the definition of another constant, the first must be declared above the second.</li>
    <li>An <el-kw>abstract class</el-kw> must be declared above any <el-kw>class</el-kw> that inherits from it.</li>
   </ul>
 </ul>
 
 <h2 id="main"><el-kw>main</el-kw></h2>
-<p>A program file must have a <el-kw>main</el-kw> method, sometimes called its main routine, if it is intended to be run as a program. You may, however, develop and test code that does not have a <el-kw>main</el-kw> method, either as a coding exercise or for subsequent use within another program.</p>
+<p>A program must have a <el-kw>main</el-kw> method, sometimes called its main routine, if it is intended to be run as a program. You may, however, develop and test code that does not have a <el-kw>main</el-kw> method, either as a coding exercise or for subsequent use within another program.</p>
 <p>The <el-kw>main</el-kw> method defines the start point of a program when it is run (executed).</p>
 <p>It does not have to be at the top of the file, but this is a good convention to follow.</p>
 <p>It may delegate work to one or more <a href="#procedure">procedures</a> or <a href="#function">functions</a>.</p>
-<p>There may not be more than one <el-kw>main</el-kw> in a file &ndash; the Global prompt will not show the <el-kw>main</el-kw> option when one already exists in the file.</p>
-<p>Example of a <el-kw>main</el-kw> method:</p>
+<p>There may not be more than one <el-kw>main</el-kw> in a program file, and the Global prompt will not show <el-kw>main</el-kw> as an option when one already exists in the file.</p>
 
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Example of a <el-kw>main</el-kw> method</h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; A <el-kw>main</el-kw> method</p>
 <el-code-block source="main.elan">
 <main class="multiline" id="main1" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>main</el-kw> <el-msg class="warning"></el-msg></el-top>
@@ -166,6 +169,8 @@ They are never indented from the lefthand edge, nor may they be located <em>with
 <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>li</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-kw>end main</el-kw></main>
 </el-code-block>
+<hr>
+</div></div>
 
 <h2 id="procedure"><el-kw>procedure</el-kw></h2>
 <p id="Argument">A procedure is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> in a <el-kw>call</el-kw> statement.
@@ -180,8 +185,20 @@ They are never indented from the lefthand edge, nor may they be located <em>with
 <li>include <el-kw>print</el-kw> statements and methods.</li>
 <li>include data input methods and other system methods (such as for random number generation).</li>
 <li><el-kw>call</el-kw> other procedures (or itself if <a href="#recursion">recursion</a> is required).</li>
-<li id="out">assign a value to a parameter, provided that the parameter definition is preceded by the keyword <el-kw>out</el-kw>, as in this example:</li>
+<li id="out">assign a value to a parameter, provided that the parameter definition is preceded by the keyword <el-kw>out</el-kw>.</li>
 </ul>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples of procedures</h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Calling a procedure:</p>
+<el-code-block source="sort.elan">
+  <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>li</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>[<el-lit>3</el-lit>, <el-lit>6</el-lit>, <el-lit>1</el-lit>, <el-lit>0</el-lit>, <el-lit>99</el-lit>, <el-lit>4</el-lit>, <el-lit>67</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+  <el-statement class="ok" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-method>inPlaceRippleSort</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt><el-id>li</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
+  <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>li</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+</el-code-block>
+<hr>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Using keyword <el-kw>out</el-kw></p>
 <el-code-block source="inPlaceRippleSort.elan">
   <el-proc class="ok multiline" id="proc11" tabindex="0">
   <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident13" class="ok" tabindex="0"><el-txt>inPlaceRippleSort</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params14" class="optional ok" tabindex="0"><el-txt><el-kw>out</el-kw> <el-id>arr</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt><el-place><i>parameter definitions</i></el-place></el-field>)</el-top>
@@ -208,32 +225,34 @@ They are never indented from the lefthand edge, nor may they be located <em>with
   <el-kw>end procedure</el-kw>
   </el-proc>
 </el-code-block>
-<p>Procedures are executed by means of a <a href="#call">call</a> statement, for example:</p>
-<el-code-block source="sort.elan">
-  <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>li</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>[<el-lit>3</el-lit>, <el-lit>6</el-lit>, <el-lit>1</el-lit>, <el-lit>0</el-lit>, <el-lit>99</el-lit>, <el-lit>4</el-lit>, <el-lit>67</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-method>inPlaceRippleSort</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt><el-id>li</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
-  <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>li</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code-block>
+<hr>
+</div></div>
 
 <div id="return"></div>
 <div id="returns"></div>
 <h2 id="function"><el-kw>function</el-kw></h2>
-<p>A <el-code>function</el-code> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in a statement or expression. Its name must follow  the rules for an <a href="#Identifier">identifier</a></p>
+<p>A <el-kw>function</el-kw> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in a statement or expression. Its name must follow  the rules for an <a href="#Identifier">identifier</a>.</p>
 <p>Unlike a <a href="#procedure">procedure</a>:</p>
 <ul>
- <li>A function always returns a value.</li>
- <li>A function can have no side effects (i.e. references outside its code) and cannot depend on any <a href="LibRef.html#SystemMethods">System methods</a>.</li>
- <li>A function's execution cannot be interrupted by any external event, though a looping function may be detected with tests that <a href="#ignore">time out</a>.</li>
+ <li>a function always returns a value.</li>
+ <li>a function can have no side effects (i.e. no references outside its code) and cannot depend on any <a href="LibRef.html#SystemMethods">System methods</a>.</li>
+ <li>a function's execution cannot be interrupted by any external event, though a a non-terminaring loop in a function may be detected with tests that <a href="#ignore">time out</a>.</li>
 </ul >
 <p>The <el-kw>return</el-kw> statement is followed by the value returned by the function.</p>
-<p>Example of a function and a reference to it:</p>
 
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Example of a function and reference to it</h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; The function definition</p>
 <el-code-block source="function.elan">
 <el-func class="ok multiline" id="func5" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>score</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params8" class="optional ok" tabindex="-1"><el-txt><el-id>g</el-id> <el-kw>as</el-kw> <el-type>Game</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type9" class="ok" tabindex="-1"><el-txt><el-type>Int</el-type></el-txt></el-field></el-top>
 <el-statement class="ok" id="return10" tabindex="-1"><el-kw>return </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-id>g</el-id>.<el-id>body</el-id>.<el-method>length</el-method>() - <el-lit>2</el-lit></el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
+</el-code-block>
+<hr>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Reference to the function</p>
 <main class="ok multiline" id="main1" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
 <el-statement class="ok" id="let17" tabindex="-1"><el-kw>let </el-kw><el-field id="var18" class="ok" tabindex="-1"><el-txt><el-id>g</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr19" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>Game</el-type>()</el-txt></el-field></el-statement>
@@ -241,6 +260,8 @@ They are never indented from the lefthand edge, nor may they be located <em>with
 <el-kw>end main</el-kw>
 </main>
 </el-code-block>
+<hr>
+</div></div>
 
 <div id="dotMethod"></div>
 <h3 class="no-TOC" id="dotSyntax">Dot syntax</h3>
@@ -266,8 +287,8 @@ nor with some system provided functions (e.g. <el-method>abs</el-method>) and pr
 
 <div id="as"></div>
 <h3 class="no-TOC" id="Parameter">Parameters</h3>
-Parameters for both <el-code>procedures</el-code> and <el-code>functions</el-code> are defined in exactly the same way: each parameter definition takes the form:
-<br>&nbsp;&nbsp;&lt;named value&gt; <el-code>as</el-code> &lt;Type&gt;
+Parameters for both a <el-kw>procedure</el-kw> and a <el-kw>function</el-kw> are defined in exactly the same way. Each parameter definition takes the form:
+<br>&nbsp;&nbsp;&lt;named value&gt; <el-kw>as</el-kw> &lt;Type&gt;
 <br> for example:
 <el-code-block source="ageAsInt.elan">
 <el-field id="params50" class="optional ok" tabindex="0"><el-txt><el-id>age</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>
@@ -284,8 +305,13 @@ Procedures and functions may be called or referenced recursively. For example, a
 </el-code-block>
 
 <h2 id="test"><el-kw>test</el-kw></h2>
-<p>A <el-code>test</el-code> is a set of assertions, at the global level, about the output of functions. Example of a <el-code>test</el-code>:</p>
+<p>A <el-kw>test</el-kw> instruction is at the global level, and consists of a set of assertions about the outputs of functions.</p>
+<p>Without having to run your program, the <el-kw>assert</el-kw> statements show whether your assertions pass or fail.
 
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Example of a set of <el-kw>assert</el-kw> statements that test a function</h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Test function <el-code>binarySearch</el-code> on three test lists</p>
 <el-code-block source="test_search.elan">
 <el-test class="ok multiline" id="test74" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment76" class="empty optional ok" tabindex="0"><el-txt></el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
@@ -306,19 +332,23 @@ Procedures and functions may be called or referenced recursively. For example, a
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
+<hr>
+</div></div>
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
- <li>Elan tests are designed to test functions only. It is not possible to call a <el-code>procedure</el-code> or <el-code>main</el-code> routine within a test. Nor is it possible to use any <a href="LibRef.html#SystemMethods">System method</a> (the same rule as for a function).</li>
- <li>A test may optionally be given a name or description in free-form text, just like a comment, which plays no role in the execution of the test. You might give the test the same name as a function that it is testing, or you might describe a particular scenario that is being tested.</li>
- <li><el-code>test</el-code> methods may be written anywhere in the code, provided they are at the global level. </li>
- <li>A <el-code>test</el-code> method may contain any number of <el-code>assert</el-code> statements. When tests are run, the test runner (which is part of the IDE), will attempt to run all <el-code>assert</el-code> statements and show each one's pass or fail outcome alongside. However, if the test hits a runtime error (as distinct from an <el-code>assert</el-code> failure) then execution of the test will stop and remaining <el-code>assert</el-code>s will be shown as 'not run'.</li>
- <li>In addition to <el-code>assert</el-code> statements, a <el-code>test</el-code> may contain any other statements that may be added into a <el-code>function</el-code> (except <el-code>return</el-code>).</li>
- <li>All <el-code>assert</el-code> statements should be at the top level within the <el-code>test</el-code> frame; none may be put into a loop structure.</li>
+ <li>Elan tests are designed to test functions only. It is not possible to call a <el-kw>procedure</el-kw> or <el-kw>main</el-kw> routine within a test.
+  Nor is it possible to use any <a href="LibRef.html#SystemMethods">System method</a> (the same rule as for a function).</li>
+ <li>A test may optionally be given a name or description in free-form text, just like a comment, which plays no role in the execution of the test.
+ You might give the test the same name as a function that it is testing, or you might describe a particular scenario that is being tested.</li>
+ <li><el-kw>test</el-kw> instructions may be written anywhere in the code, provided they are at the global level. </li>
+ <li>A <el-kw>test</el-kw> instruction may contain any number of <el-kw>assert</el-kw> statements. The test runner is part of the IDE and it automatically attempts to run all <el-kw>assert</el-kw> statements showing each one's pass or fail outcome alongside. However, if the test hits a runtime error (as distinct from an <el-kw>assert</el-kw> failure) then execution of the test will stop and remaining <el-kw>assert</el-kw>s will be shown as 'not run'.</li>
+ <li>In addition to <el-kw>assert</el-kw> statements, a <el-kw>test</el-kw> may contain any other statements that may be added into a <el-kw>function</el-kw>.</li>
+ <li>All <el-kw>assert</el-kw> statements should be at the top level within the <el-kw>test</el-kw> frame; none may be put into a loop structure.</li>
 </ul>
 
 <h4 class="no-TOC">Testing Float values</h4>
-<p>When testing <el-code>Float</el-code> values it is recommend that you always use the <el-code>round</el-code> function to round the computed result to a fixed number of decimal places. This avoids rounding errors and is easier to read. For example:</p>
+<p>When testing <el-type>Float</el-type> values it is recommend that you use the <el-method>round</el-method> method to round the computed result to a fixed number of decimal places. This avoids rounding errors and is easier to read. For example:</p>
 
 <el-code-block source="test_round.elan">
 <el-test class="ok multiline" id="test3" tabindex="0">
@@ -329,7 +359,7 @@ Procedures and functions may be called or referenced recursively. For example, a
 </el-code-block>
 
 <h4 class="no-TOC">Testing for runtime errors</h4>
-<p>If the expression you are testing causes a runtime error then the error will be displayed in the red fail message:</p>
+<p>If the expression you are testing would cause a runtime error then the error will be displayed in the red fail message:</p>
 <el-code-block source="test_runtime.elan">
 <el-test class="error multiline" id="test1" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="-1"><el-txt>&nbsp;</el-txt></el-field></el-top>
@@ -341,11 +371,11 @@ Procedures and functions may be called or referenced recursively. For example, a
 <el-kw>end test</el-kw>
 </el-test></el-code-block>
 
-<p>If this occurs, mark the tests that you added since the last successful test run with <el-code>ignore</el-code> (see below), and then remove their ignore status one by one until the cause is identified and fixed.</p>
-<p>In the last <el-kw>assert</el-kw>, note how testing can also be done agains an expected error message.</p>
+<p>If there are failures, mark the tests that you added since the last successful test with <el-code>ignore</el-code> (see below), and then remove their ignore status one by one until the cause is identified and fixed.</p>
+<p>In the last <el-kw>assert</el-kw> above, note how testing can also be done against an expected error message.</p>
 
 <h4 class="no-TOC" id="ignore">Marking a test with <el-kw>ignore</el-kw></h4>
-<p>It is possible to mark a <el-code>test</el-code> with the <el-code>ignore</el-code> keyword, by selecting the <el-code>test</el-code> frame and then hitting Ctrl-i, as in this example:</p>
+<p>It is possible to mark a <el-code>test</el-code> with the <el-code>ignore</el-code> keyword, by selecting the <el-code>test</el-code> frame and then keying <b>Ctrl-i</b>, as in this example:</p>
 
 <el-code-block source="test_ignore.elan">
 <el-test class="warning multiline" id="test213" tabindex="0">
@@ -362,12 +392,12 @@ Procedures and functions may be called or referenced recursively. For example, a
 
 <h4 class="no-TOC">Non-terminating loops and recursion</h4>
 <p>The principal reason for marking a test <el-code>ignore</el-code> is when either the test code, or code in any function being called, does not terminate. This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
-<p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds (most tests will pass in milliseconds), and an error message will appear. The test that caused the timeout will automatically then be marked <el-code>ignore</el-code>. Your priority should then be to identify the cause of the timeout and attempt to fix it before then restoring the <el-code>test</el-code> by selecting its frame and hitting <el-code>Ctrl-i</el-code> (which is a toggle for setting and unsetting an <el-code>ignore</el-code> status).</p>
+<p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds (most tests will pass in milliseconds), and an error message will appear. The test that caused the timeout will automatically then be marked <el-code>ignore</el-code>. Your priority should then be to identify the cause of the timeout and attempt to fix it before then restoring the <el-code>test</el-code> by selecting its frame and keying <b>Ctrl-i</b> (which is a toggle for setting and unsetting an <el-code>ignore</el-code> status).</p>
 
 <h2 id="record"><el-kw>record</el-kw></h2>
 <p>A <el-code>record</el-code> is a user-defined data structure that is given a Type name (which must begin with an uppercase letter).
   The <el-code>record</el-code> defines one or more properties, each of which has a name (starting with a lowercase letter) and a Type.
-  The Type of a property may be any simple value Type, or a <el-code>ListImmutable</el-code>, or another Type of <el-code>record</el-code> ( or even the same Type of <el-code>record</el-code>).</p>
+  The Type of a property may be any simple value Type, or a <el-code>ListImmutable</el-code>, or another Type of <el-code>record</el-code> ( or even of the same Type of <el-code>record</el-code>).</p>
   <p>Note that a <el-code>record</el-code> has some similarity to a <a href="#class"><el-code>class</el-code></a> in that:</p>
 <ul>
   <li>Both are user-defined data structures</li>
@@ -413,9 +443,9 @@ Having defined a record's Type, such as <el-code>Game</el-code> above, you can c
 <p>You can then read the values from the properties using <a href="#dotSyntax">dot syntax</a> for example:</p>
 <el-code-block source=""><el-statement class="" id="print15" tabindex="0"><el-kw>print </el-kw><el-field id="expr16" class="optional" tabindex="0"><el-txt><el-id>sq</el-id>.<el-id>size</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
 </el-code-block>
-<p><el-code>record</el-code> Types are immutable: the properties on an instance may not be changed, directly.
+<p><el-code>record</el-code> Types are immutable: the properties on an instance may not be changed directly.
   However, you can easily create another instance that is a copy of the original,
-  with all the same property values except for any specific changes made in another <el-kw>with</el-kw> clause.
+  with all the same property values except for specific changes made in a <el-kw>with</el-kw> clause.
   The newly-minted copy (with changes) must be assigned to a new named value. For example:</p>
 <el-code-block>
   <el-statement class="" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>sq1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Square</el-type>()<el-kw> with </el-kw><br><el-id>x</el-id><el-kw> set to </el-kw><el-lit><el-lit>3</el-lit>.5</el-lit>, <br><el-id>y</el-id><el-kw> set to </el-kw><el-lit><el-lit>4</el-lit>.0</el-lit>, <br><el-id>size</el-id><el-kw> set to </el-kw><el-lit><el-lit>1</el-lit>.0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="error"></el-msg></el-statement>
@@ -425,12 +455,10 @@ Having defined a record's Type, such as <el-code>Game</el-code> above, you can c
 </el-code-block>
 <p>Or even to the same name if that name is a <el-kw>variable</el-kw>:</p>
 <el-code-block>
-  <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Square</el-type>()<el-kw> with </el-kw><br><el-id>x</el-id><el-kw> set to </el-kw><el-lit><el-lit>3</el-lit>.5</el-lit>, <br><el-id>y</el-id><el-kw> set to </el-kw><el-lit><el-lit>4</el-lit>.0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="44" data-cursorend="44" size="43" style="width: 44ch" value="new Square() with x set to 3.5, y set to 4.0" tabindex="-1"></el-txt></el-field></el-statement>
+<br>
+<el-statement class="ok" id="set6" tabindex="-1"><el-kw>set </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-id>a</el-id></el-txt></el-field><el-kw> to </el-kw><el-field id="expr8" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="24" data-cursorend="24" size="23" style="width: 24ch" value="copy a with x set to 3.7" tabindex="-1"></el-txt></el-field></el-statement>
 </el-code-block>
-<el-code-block>
-  <el-statement class="ok" id="set6" tabindex="0"><el-kw>set </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-id>a</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr8" class="ok" tabindex="0"><el-txt><el-kw>copy</el-kw> <el-id>a</el-id><el-kw> with </el-kw><br><el-id>x</el-id><el-kw> set to </el-kw><el-lit><el-lit>3</el-lit>.7</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-</el-code-block>
-
 <p>This last example shows how you enter the comma-separated <el-kw>with</el-kw> clauses. The earlier examples show how the Editor displays a set of <el-kw>with</el-kw> clauses.</p>
 
 <p>If you want to use one or more existing property values in order to determine a new value, the property names must be prefixed with the name of the instance being copied, for example:</p>
@@ -538,7 +566,7 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 <li>a <el-code>function</el-code></li>
 <li>a <el-code>procedure</el-code></li>
 </ul>
-<p>As with a concrete class, any of these members may be made <el-code>private</el-code>, after the corresponding frame has been added, by selecting that member frame and pressing Ctrl-p.</p>
+<p>As with a concrete class, any of these members may be made <el-code>private</el-code>, after the corresponding frame has been added, by selecting that member frame and keying <b>Ctrl-p</b>.</p>
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
 <p>You may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> statement. For example:</p>
@@ -821,7 +849,7 @@ Properties may be modified only from outside the class by means of a <a href="#p
 <ul>
 <li>A <el-code>function</el-code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
 <li>A <el-code>function</el-code> method may directly reference (read only) any <el-kw>property</el-kw> defined on the class as though it were a variable or parameter.</li>
-<li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then pressing Ctrl-p. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
+<li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then keying <b>Ctrl-p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 <li>asString() method</li>
 <li>asString method. This is just a regular function method with a specific name, no parameters and returning a String. If defined for a class, then if an instance of the class is printed, the <el-code>asString</el-code> function method will automatically be used. Typically <el-code>asString</el-code> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
 </ul>
@@ -831,12 +859,12 @@ Properties may be modified only from outside the class by means of a <a href="#p
 <ul>
 <li>A procedure method, like a function method, is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
 <li>A procedure method may read, or write to, any <el-kw>property</el-kw> defined on the class.</li>
-<li>A procedure method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then pressing Ctrl-p. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
+<li>A procedure method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then keying <b>Ctrl-p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 </ul>
 
 <h2 id="private"><el-kw>private</el-kw> (property, function, procedure)</h2>
 <p>A <el-kw>property</el-kw> may be marked <el-kw>private</el-kw>, in which case it is visible only to code within the class and,
-if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by using the context menu on the property frame or selecting it and pressing Ctrl-p.
+if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by using the context menu on the property frame or selecting it and keying <b>Ctrl-p</b>.
 This action is a toggle used both to set and to remove the modifier <el-kw>private</el-kw>.</p>
 <ul>
  <li></li>
@@ -1211,7 +1239,7 @@ For more about ListImmutable and DictionaryImmutable literals see the <a href="L
 
 <div id="range"></div>
 <h2 id="IndexedValue">Indexed values</h2>
-If a variable is of an indexable Type, then an index or index range may be applied to the variable within an expression. For example:
+<p>If a variable is of an indexable Type, then an index or index range may be applied to the variable within an expression. For example:</p>
 <pre>
     <el-code>variable a set to "Hello World!"</el-code>
     <el-code>print a[4]</el-code>        &#x27f6; <el-code>o</el-code>
@@ -1219,23 +1247,33 @@ If a variable is of an indexable Type, then an index or index range may be appli
     <el-code>print a[..7]</el-code>    &#x27f6; <el-code>Hello W</el-code>   (since the upper bound of a range is <em>exclusive</em>)
     <el-code>print a[0..4]</el-code>  &#x27f6; <el-code>Hell</el-code>         (for the same reason)
 </pre>
-<p>In the examples above, the result is of Type String in all cases.
-When using indexing on other Types:</p>
+<p>This function overwrites the character at position <el-code>n</el-code> in string <el-code>s</el-code> with character <el-code>c</el-code>
+ (provided <el-code>n</el-code> is valid for <el-code>s</el-code>, and <el-code>c</el-code> is a single character):</p>
+<el-code-block source="setChar.elan">
+<el-func class="ok multiline" id="func1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident3" class="ok" tabindex="-1"><el-txt><el-method>setChar</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params4" class="optional ok" tabindex="-1"><el-txt><el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>c</el-id> <el-kw>as</el-kw> <el-type>String</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type5" class="ok" tabindex="-1"><el-txt><el-type>String</el-type></el-txt></el-field></el-top>
+<el-statement class="ok" id="return6" tabindex="-1"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-id>s</el-id>[..<el-id>n</el-id>] + <el-id>c</el-id> + <el-id>s</el-id>[<el-id>n</el-id> + <el-lit>1</el-lit>..]</el-txt></el-field></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
+</el-code-block>
+
+<p>In the examples above, the result is of Type String in all cases.</p>
+<p>When using indexing on other Types:</p>
 <ul>
-<li>with a single index, the result is the same Type as the elements of the data structure being indexed</li>
-<li>with an index range, the result is the same Type as the data structure itself</li>
+<li>with a single index, the result is of the same Type as the elements of the data structure being indexed</li>
+<li>with an index range, the result is of the same Type as the data structure itself</li>
 </ul>
-<p>Indexable Types are <a href="LibRef.html#String">String</a>, <a href="LibRef.html#StandardDataStructures">Array, Array2D, List, Dictionary</a>, <a href="LibRef.html#ImmutableDataStructures">ListImmutable and DictionaryImmutable</a>.</p>
-<p>Index ranges cannot be applied to Dictionary or DictionaryImmutable.</p>
+<p>Indexable Types are <a href="LibRef.html#String"><el-type>String</el-type></a>, <a href="LibRef.html#StandardDataStructures"><el-type>Array</el-type>, <el-type>Array2D</el-type>, <el-type>List</el-type>, <el-type>Dictionary</el-type></a>, <a href="LibRef.html#ImmutableDataStructures"><el-type>ListImmutable</el-type> and <el-type>DictionaryImmutable</el-type></a>.</p>
+<p>Index ranges cannot be applied to <el-type>Dictionary</el-type> or <el-type>DictionaryImmutable</el-type>.</p>
 <p>If the index values in a range are equal, or the second is smaller than the first,
 then an empty data structure of the correct Type is generated.</p>
-<p>Important: unlike in many languages, indexes in Elan (whether, single, multiple, or a range) are only ever used for <em>reading</em> values.
+<p>Unlike in many languages, indexes in Elan (whether, single, multiple, or a range) are only ever used for <em>reading</em> values.
 Writing a value to a specific index location is done through a method such as in these examples:</p>
 <pre>
-    <el-method>put</el-method>           on a   <el-type>List</el-type>
-    <el-method>withPut</el-method>   on a    <el-type>ListImmutable</el-type>
-    <el-method>put</el-method>           on a    <el-type>Dictionary</el-type>
-    <el-method>withPut</el-method>   on a    <el-type>DictionaryImmutable</el-type>
+    <a href="LibRef.html#put_List"><el-method>put</el-method></a>           on a   <el-type>List</el-type>
+    <a href="LibRef.html#withPut_ListImmutable"><el-method>withPut</el-method></a>   on a    <el-type>ListImmutable</el-type>
+    <a href="LibRef.html#put_Dictionary"><el-method>put</el-method></a>           on a    <el-type>Dictionary</el-type>
+    <a href="lIBrEF.HTML#withPut_DictionaryImmutable"><el-method>withPut</el-method></a>   on a    <el-type>DictionaryImmutable</el-type>
 </pre>
 
 <div id="operator"></div>
