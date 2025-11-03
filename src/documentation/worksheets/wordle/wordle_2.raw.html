@@ -1,0 +1,369 @@
+<title>Wordle 2: writing an automated solver</title>
+<step>
+    <h1>Step STEPNUMBER: introduction</h1>
+    Follow on from previous worksheet.
+    Implement reverse game: you choose a word, the computer makes up to six attempts, and you mark each one on screen
+    pressing: 0 to mark a letter grey; 1 to mark it yellow; 2 to mark it green.
+    Important to understand: the word must come from the shorter list - as in the real game
+    Heuristic - any 5 letter word known by your peers, but not words ending in 'S' or 'D' where the first four letters
+    would be a word in its own right e.g. BEANS, CHEWS, or LOVED
+    Also? 'Hard mode'
+</step>
+
+<step>
+  <h1>Step STEPNUMBER: Run the existing program</h1>
+  <ul>
+    <li>Load the starting code and <b>run</b> the program, and note that the computer's first attempt is <b>ARISE</b>
+      - a first attempt favoured by some human players. You can see that this is defined in instruction <b>56</b>:
+    <codeblock>
+      constant firstAttempt set to "ARISE"
+    </codeblock>
+    so we could change this to a different word, but leave it as-is for now.
+    </li>
+    <li>
+      Let's say that the 'target' word (picked by us - for the computer to identify) is <b>STAGE</b>. 
+      The computer's first attempt should be marked: Yellow, Grey, Grey, Yellow, Green, but to 
+      enter these marks we type in <b>10012</b> - the same coding that you used in the Wordle 1 project.
+      Go ahead and enter those values, remembring that you can use <b>Backspace</b> to correct a mistake,
+      and when you have all five letters coloured correctly, press <b>Enter</b>, at which point the
+      computer will make its second attempt.
+      <question>What word has the computer picked for its second attempt?</question>    
+    </li>
+    <li>Similar to the Wordle 1 worksheet, you will quickly realise that the initial code correctly
+      implements the <i>presentation</i> and <i>user-interation</i> for the reverse game, but lacks the
+      core logic needed to pick the next attempt word - so it always guesses the same word! 
+      Look at the <code>procedure</code> <el-method>playReverseGame</el-method>, which starts at instruction
+      <b>57</b>. In instruction <b>59</b> a <i>variable</i> named <code>attempt</code> is initialised to the
+      constant value <code>firstAttempt</code>, but this variable is never thereafter <code>set</code> to a
+      a different word. Given that the target word must of one of 2315 possible answers, the computer has a chance of getting
+      the right answer within six attempts of just 1/2315.
+    </li>
+    <li>The first thing we will do is change the word with each attempt, to a random choice from all the possible answers.
+      This still won't be a sensible strategy, and it will only <i>marginally</i> improve the chances of
+      getting the target within six attempts, but it is just to gain some familiarity with the code. So...
+    </li>
+    <li>Insert a new instruction within the <code>while</code> loop in <el-method>playReverseGame</el-method></el-method>
+    just after the <el-kw>end if</el-kw> that will set <code>attempt</code> to a new word, randomly selected
+    from  <code>possible</code> - which is a <el-type>List</el-type> containing all 2,315 possible answers.
+  </li>
+  </ul>
+  <hint>Hint HINTNUMBER: key ideas</hint>
+  <content>
+    <ul>
+      <li>If you need help on generating random numbers, look up: <b>Elan Library Reference > System Methods > random & randomInt</b></li>
+      <li>You will need to generate a random number that is a valid index into the <code>possible</code> list.</li>
+    </ul>
+  </content>
+  <hint>Hint HINTNUMBER: the index</hint>
+  <content>
+    <ul>
+      <li>The index value needs to be an <el-type>Int</el-type></li>
+      <li>It must be in the range 0 to the length of the list <i>minus 1</i>, inclusive.</li>
+      <li><el-method>length</el-method> is a 'dot method' available on any variable that holds a list.</li>
+      <li>You <i>may</i> generate the index in one instruction and then make use of it in a second
+      instruction, but you are encouraged to generate the index 'in line' and hence 
+      fulfill the whole requirement in a single instruction.
+    </li>
+    </ul>
+  </content>
+  <hint>Hint HINTNUMBER: the expression to which 'attempt' needs to be set</hint>
+  <content>
+    <codeblock>
+      possible[randomInt(0, possible.length() - 1)]
+    </codeblock>
+  </content>
+  <hint>Hint HINTNUMBER: the whole, modified, procedure</hint>
+  <content>
+    <codeblock>
+    while (attemptNo < 6) and (not solved)
+      call putAttemptIntoGrid(attempt, attemptNo, grid)
+      variable mark set to ""
+      call enterMark(attemptNo, grid, mark)
+      if mark is "22222" then
+        set solved to true
+      else
+        set attemptNo to attemptNo + 1
+        set attempt to possible[randomInt(0, possible.length() - 1)]
+      end if
+    end while
+    </codeblock>
+  </content>
+
+  <p>When you have implemented this change, run the program and check that it is guessing a different word each
+  time (though, as the guess is random, there is a <i>small</i> chance of repeating the same word).
+  However, the likelihood that the computer get's to the target within the maximum six attempt is still very low.
+  For the next step we need to implement a viable strategy.</p>
+</step>
+<step>
+  <h1>Step STEPNUMBER: Start to implement a simple viable strategy</h1>
+  <ul>
+  <li>Human players use many different rules and patterns to choose their next attempt word, based on the
+    marks given for previous attempts. However, one of the simplest is to pick <i>any</i> new word
+    that would be consistent with the marks given. In other words: if the word we choose as 
+    our next attempt <i>was</i> the target word, then our previous attempts would have received the
+    marks they did receive (when marked against the <i>unknown</i> target word).</li>
+  <li>We could make that choice from any of the 15,000+ words in the list <code>allWords</code>, 
+    but we are going to select our next attempt from just the 2,315 <code>allValidAnswers</code>
+    as this should increase the chances of identifying the target. (Incidentally, by adopting this
+    strategy we are, strictly speaking, playing Wordle in 'hard' mode - but let's see how we get on.)</li>
+  <li>To implement this strategy, after <i>each</i> attempt has been marked, we will filter the list held
+    in the variable <code>possible</code> down to only those words that would still be consistent with the
+    mark just given - so with each attempt the list will get smaller. So each new attempt
+    will have an increased chance of bring the target word.
+  </li>
+  <li>
+    At the bottom of the code you will see a 'ghosted' test named <el-comment>possibleAnswersAfterAttempt</el-comment>.
+    Unghost this test - which will cause a compile error because there is not yet a function named <el-method>possibleAnswersAfterAttempt</el-method>.
+  </li>
+  <li>Write a 'stub' implementation of that new method, such that everything compiles.
+  <question>Having written the stub implementaton of <el-method>possibleAnswersAfterAttempt</el-method> the tests will run.
+  How many test cases (each <code>assert</code> defines a test case) are now passing, and what do they have in common?</question></li>
+  </ul>
+  <hint>Hint HINTNUMBER: defining the function signature</hint>
+  <content>
+    The function <el-method>possibleAnswersAfterAttempt</el-method> should define three parameters in the order given below:
+    <ul>
+      <li>the <code>prior</code> list of valid answer words</li>
+      <li>the latest <code>attempt</code> word</li>
+      <li>the <code>mark</code> given to that latest attempt (also a string, but containing 0s, 1s, and 2s).</li>
+    </ul>
+    The function should return a list of strings.
+  </content>
+  <hint>Hint HINTNUMBER: defining the stub implementation</hint>
+  <content>
+    In a new instruction, define a <i>variable</i> named <code>newPossible</code> initialised to an empty list of strings.
+    Complete the auto-created <code>return</code> instruction to return that newly defined list.
+  </content>
+  <hint>Hint HINTNUMBER: the complete function so far</hint>
+  <content>
+    <code>
+    function possibleAnswersAfterAttempt(prior as List<of String>, attempt as String, mark as String) returns List<of String>
+      variable newPossible set to new List<of String>()
+      return newPossible
+    end function
+    </code>    
+  </content>
+</step>
+<step>
+  <h1>Step STEPNUMBER: Completing the implementation</h1>
+  <p>The next task is to implement <el-method>possibleAnswersAfterAttempt</el-method> such
+    that <i>all</i> the associated test cases pass.</p>
+  <p><i>If</i> you have already learned about 'higher order functions', then can apply those techniques here and implement the function as a single instruction. H
+    However, the remainder the Hints below assume that that you will be implementing the code using a loop.</p>
+  <hint>Hint HINTNUMBER: initial ideas</hint>
+  <content>
+    <ul>
+      <li>Use a loop to iterate through each of the words in the input list (<code>prior</code>). Think carefully about
+      which kind of loop is the most appropriate.</li>
+      <li>Make use of the existing function <el-method>markAttempt</el-method> (which is the same as the one you created
+      in the Wordle 1 worksheet - so we are already making good 're-use' of code).</li>
+      <li>Into <el-method>markAttempt</el-method> you will need to pass the <code>attempt</code> value, and the word
+      from the <code>prior</code> list in the role of the 'target' </li>
+      <li>If the mark returned by <el-method>markAttempt</el-method> is the same as the <code>mark</code> provided as a 
+      parameter into the <el-method>possibleAnswersAfterAttempt</el-method> function, then the word being evaluated
+      should be added into the <code>newPossible</code> list (that will eventually be returned by the function).</li>
+    </ul>
+  </content>
+  <hint>Hint HINTNUMBER: outline of new instructions</hint>
+  <content>
+  Though a <code>for</code> loop <i>could</i> be used, the <code>each</code> loop is perfect for the current requirement.
+  In the outline below each <code>something</code> needs to be replaced with specific code.
+    <codeblock>
+    function possibleAnswersAfterAttempt(prior as List<of String>, attempt as String, mark as String) returns List<of String>
+      variable newPossible set to new List<of String>()
+      each something in something
+        if something is something then
+          set something to something
+        end if
+      end each
+      return newPossible
+    end function
+  </codeblock>
+  <p>Because we are inside a <i>function</i> we cannot <code>call</code> the <el-method>append</el-method>
+  <i>procedure</i> on a list. Instead we need to evaluate the <el-method>withAppend</el-method> <i>function</i> (a dotted method on a list)
+  which returns a new list based on the original but with the new value appended.</p>
+  </content>
+  <hint>Hint HINTNUMBER: two useful expressions</hint>
+  <content>
+    <ul>
+      <li><code>markAttempt(attempt, word) is mark</code></li>
+      <li><code>newPossible.withAppend(word)</code></li>
+    </ul>
+  </content>
+  <hint>Hint HINTNUMBER: The complete function</hint>
+  <content>
+    <codeblock>
+      function possibleAnswersAfterAttempt(possible as List<of String>, attempt as String, mark as String) returns List<of String>
+        variable newPossible set to new List<of String>()
+        each word in possible
+          if markAttempt(attempt, word) is mark then
+            set newPossible to newPossible.withAppend(word)
+          end if
+        end each
+        return newPossible
+      end function      
+    </codeblock>
+  </content>
+  <p>Before marking this step as completed, make sure that <i>all</i> the test cases are now passing.</p>
+</step>
+
+<step>
+   <p>Now that we have the ability to filter the list of <code>possible</code> valid answers based on each new marked attempt
+    we can make use of that with the <el-method>playReverseGame</el-method> procedure, and hopefully ourselves
+    with a simple automated solver.
+   <p>Insert a new instruction immediately <i>after</i> instruction 70 i.e. just above the instruction that you added
+    into the procedure earlier (that sets <code>attempt</code> to a random choice). This new instruction should
+    set the list named <code>possible</code> to the new, filtered, list that results from evaluating the
+    <el-method>possibleAnswersAfterAttempt</el-method> function, passing in suitable arguments.</p>
+  <hint>Hint HINTNUMBER: the expression to evaluate the filtered version of the list</hint>
+  <content>
+    <codeblock>possibleAnswersAfterAttempt(possible, attempt, mark)</codeblock>
+  </content>
+  <hint>Hint HINTNUMBER: complete procedure so far</hint>
+  <content>
+    <codeblock>
+      procedure playReverseGame()
+        variable possible set to allValidAnswers.split(" ")
+        variable attempt set to firstAttempt
+        variable attemptNo set to 0
+        variable solved set to false
+        variable grid set to new Array2D<of String>(5, 6, "")
+        while (attemptNo < 6) and (not solved)
+          call putAttemptIntoGrid(attempt, attemptNo, grid)
+          variable mark set to ""
+          call enterMark(attemptNo, grid, mark)
+          if mark is "22222" then
+            set solved to true
+          else
+            set attemptNo to attemptNo + 1
+            set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
+            set attempt to possible[randomInt(0, possible.length() - 1)]
+          end if
+        end while
+      end procedure
+    </codeblock>
+  </content>
+  <p>Once you have implemented this change, you should be able to run the program. For the first run,
+    mark the computer's attempts against the same target word that we used at the start of this worksheet: <b>STAGE</b>.</p>
+  <question>Does the computer get to the word within six attempts?</question>
+  <p>Now run the puzzle three more times - choosing a different target word in each case. <i>Important</i>:
+  you can pick any <i>well-known</i> five letter word - provided that it is <i>not</i> a shorted word that
+  to which <b>S</b> or <b>D</b> has been appended (the official Wordle puzzle never sets such words as
+  the target, either).</p>
+  <question>Write down the three target words that you selected and, in each case write down the number of attempts
+    the computer took to solve the puzzle, or 'failed' if it did not solve it within six attempts.
+  </question>
+  <p><b>QURSH</b> is a real word, and <i>may</i> be used as an <i>attempt</i> word 
+  but it is not well-known and is never going to be set as a <i>target</i> word in the official game.
+  If you pick this word (or one of many other disallowed target words), then this 'reverse player' will not
+  be able to solve the puzzle. Try it.</p>
+  <question>What actually happens?</question>
+</step>
+<step>
+  <h1>STEPNUMBER: Two small refinements</h1>
+  <p>We will make these two small refinements in one go:
+  <ul>
+    <li>Safely guard against an unsolvable puzzle - instead of it resulting in a run-time error.</li>
+    <li>Instead of selecting the next attempt from <code>possible</code> <i>randomly</i>, just select
+    the <i>first</i> possible word - so that the algorithm is 'deterministic' (repeatable).</li>
+  </ul>
+  </p>
+  <ul>
+    <li><i>Delete</i> the following instruction (we'll replace it with something else, lower down):
+    <codeblock>
+      set attempt to possible[randomInt(0, possible.length() - 1)]
+    </codeblock></li>
+    <li>Within the <el-method>playReverseGame</el-method> procedure, <i>after</i> <el-kw>end if</el-kw> but before <el-kw>end while</el-kw>
+      add a conditional instruction that tests whether there is at least one word in the latest filtered version of <code>possible</code>.
+      If there <i>is</i>> then set <code>attempt</code> to the <i>first</i> word in that list; if not then print the message 
+      "No possible answer matches marks so far." and set <code>attemptNo</code> to 6 - an easy to end the program.</li>
+  </ul>
+  <hint>Hint HINTNUMBER: outline version of the new instructions</hint>
+  <content>
+    <code>
+    if something then
+      set something to something
+    else
+      print something
+      set something to something
+    end if
+    </code>
+  </content>
+  <hint>Hint HINTNUMBER: Complete revised procedure</hint>
+  <content>
+    <code>
+      procedure playReverseGame()
+        variable possible set to allValidAnswers.split(" ")
+        variable attempt set to firstAttempt
+        variable attemptNo set to 0
+        variable solved set to false
+        variable grid set to new Array2D<of String>(5, 6, "")
+        while (attemptNo < 6) and (not solved)
+          call putAttemptIntoGrid(attempt, attemptNo, grid)
+          variable mark set to ""
+          call enterMark(attemptNo, grid, mark)
+          if mark is "22222" then
+            set solved to true
+          else
+            set attemptNo to attemptNo + 1
+            set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
+          end if
+          if possible.length() > 0 then
+            set attempt to possible[0]
+          else
+            print "No possible answer matches marks so far."
+            set attemptNo to 6
+          end if
+        end while
+      end procedure
+    </code>
+  </content>
+  <p>When you have completed these changes, run the program and test it: three times against <i>different</i> valid target words
+  and once against <b>QURSH</b> or another very obscure 5-letter word.</p>
+</step>
+<step>
+  <h1>Congratulations! Worksheet completed.</h1>
+  <p>You have just implemented the core logic for an automated Wordle solver. Try going to the official Wordle site and
+    (assuming you have not already solved today's Wordle puzzle) see if your solver can solve today's target word
+    in 6 or fewer attempts. To do this, just enter the computer's attempt word into the official puzzle, and after
+    that has been marked, replicate the marks on your solver. Does this spoil the fun of doing Wordle? Not at all! The author
+    of this worksheet solves the official online Wordle puzzle every day, and only <i>then</i> tests his automated Wordle
+    solver, to see whether he beats the computer, or <i>vice versa</i>.
+  </p>
+  <p>There is another worksheet available - Wordle 3 - in which you write code to <i>analyse</i> the effectiveness of this
+  wordle solver, rigorously, and then suggests ways in which you could explore simple and more complex variants on the
+  algorithm implemented here.</p>
+  <p>Meantime, if you have time, explore any of the following suggestion optional extensions to the current code.</p>
+  <ul>
+    <li>Load the complete source code, by clicking the button below, and then explore how the presentation and interaction are managed.</li>
+    <li>In that source code you will see that the <code>main</code> routine just calls <el-method>playReverseGame</el-method>. You will
+    also see that the <el-method>playGame</el-method> (used in the previous worksheet) is still there. So you could modifer
+    <code>main</code> to do either one of the following:
+    <ul>
+      <li>Offer the user a simple menu with options to solve a puzzle, or set a puzzle for the computer to solve. 
+        One calls <el-method>playGame</el-method>, the other calls <el-method>playReverseGame</el-method>.</li>
+      <li>Set up a contunuous loop so that it alternates between those two modes. You might need to add some
+        further <code>print</code> instructions to make clear which mode it is in (though there is a difference
+        between the two displays. You might also find the following instruction useful at various points:
+        <codeblock>
+          call pressAnyKeyToContinue(true)
+        </codeblock>
+      </li>
+    </ul>
+    <li>
+      If you have implemented the second option above you could refine it to:
+      <ul>
+        <li>Keep track of the number of rounds played.</li>
+        <li>Keep the scores of the player and the computer for their respective rounds.</li>
+      </ul>
+      For the latter case, you need to decide whether the score is the number of puzzles successfully solved
+      within six attempts, or the average number of attempts needed, or even both. For any of them
+      you will need to get back some information from the <el-method>play...</el-method> procedures. 
+      For this you will need to use one or more <code>out</code> parameters. If you are not familiar with
+      this pattern, see example of use <el-method></el-method> <a href="documentation/LangRef.html#procedure" target="help-iframe" tabindex="-1">here</a>.
+    </li>
+  </ul>
+</step>
+
+
+  
