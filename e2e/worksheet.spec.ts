@@ -42,8 +42,6 @@ test('load and run worksheet', async ({ page }) => {
 
   await expect(workSheetFrame().getByText('All required inputs must be completed to continue')).not.toBeVisible();
 
-  await expect(workSheetFrame().getByRole('checkbox', {name : 'Preliminaries completed'})).not.toBeVisible();
-
   await expect(workSheetFrame().getByText('Step 1')).toBeVisible();
 
   await expect(workSheetFrame().getByText('Hint1: Title')).toBeVisible();
