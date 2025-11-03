@@ -168,10 +168,15 @@ export function parentHelper_deleteSelectedChildren(parent: Parent): void {
   }
 }
 
+function isValidOrIncomplete(f: Frame) {
+  const status = f.readParseStatus();
+  return status === ParseStatus.valid || status === ParseStatus.incomplete;
+}
+
 export function parentHelper_copySelectedChildren(parent: Parent): boolean {
   const toCopy = parentHelper_getAllSelectedChildren(parent);
 
-  if (toCopy.some((tc) => tc.readParseStatus() !== ParseStatus.valid)) {
+  if (toCopy.some((tc) => !isValidOrIncomplete(tc))) {
     return false;
   }
 
