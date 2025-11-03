@@ -10,21 +10,13 @@
     }
 
 /* After saving ... */
-    #worksheet.saved #auto-save,
-    #worksheet.saved #auto-save + span
+    #worksheet.saved .transient
     {
         display: none;
     }
 
 
 /* Steps */
-    /* step0 (preliminaries) only */
-    #worksheet.saved #step0.complete * {
-        display: none;
-    }
-    #worksheet.saved #step0.complete #username{
-        display: block;
-    }
 
     /* By default, invisible */
     .step {

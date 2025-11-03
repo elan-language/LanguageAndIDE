@@ -13,34 +13,33 @@
   <body>
     <div id="worksheet">
     <div class="docTitle"></div>
-    <button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span>
-    <div class="step" id="step0">
-  <h3>Preliminaries</h3>
-  <label for="username">Enter your name: </label>
-  <input class="question" type="text" id="username">
-  <p>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</p>
+
+    <ol>
+      <li><label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
+      <li>Set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</li>
+      <li class="transient"><button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span></li>
+    </ol>
 
     <div class="license">
       <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
-      This worksheet is copyright © Richard Pawson 2025, and protected by the Creative Commons license:
+      This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
           <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
         You may freely make and distribute copies of this worksheet <i>as is</i>, but if you <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
         Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
-    </div>
-<label class="done" for="done0">Step Completed</label><input class="step-complete" type="checkbox" id="done0"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-  <div class="step" id="step1">
+    </div> 
+        <div class="step" id="step0">
     <h3>Step 1: Getting started</h3>
     <p>From the <b>Demo</b> menu, access the <b>Merge lists</b> code,  then select <b>File &gt; Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
       Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b>) to undo recent changes.
     </p>
 
-    <div class="hint" id="hint1-1" data-hint="CiAgICAgIDx1bD4KICAgICAgIDxsaT5Xcml0aW5nIGEgcmVjdXJzaXZlIGZ1bmN0aW9uIG1lYW5zIHRoYXQgaW4gPGk+b25lIG9yIG1vcmU8L2k+IHBsYWNlcyB3aXRoaW4geW91ciBpbXBsZW1lbnRhdGlvbiBvZiA8ZWwtbWV0aG9kPm1lcmdlPC9lbC1tZXRob2Q+CiAgICAgIHlvdSB3aWxsIGhhdmUgYW4gZXhwcmVzc2lvbiB0aGF0IGl0c2VsZiBtYWtlcyB1c2Ugb2YgdGhlIDxlbC1tZXRob2Q+bWVyZ2U8L2VsLW1ldGhvZD4gZnVuY3Rpb24gLSB0eXBpY2FsbHkgd2l0aAogICAgICBhIHNtYWxsZXIsIG9yIHNpbXBsZXIsIHZlcnNpb24gb2YgdGhlIHByb2JsZW0gb2YgdGhlIGxpc3QuCiAgICA8L2xpPgogICAgICA8bGk+T25lIG9mIHRoZSBmaXJzdCB0aGluZ3MgdG8gY29uc2lkZXIgd2hlbiB3cml0aW5nIGEgcmVjdXJzaXZlIGZ1bmN0aW9uIGlzIHRoZSAnYm91bmRhcnknIChvciAnZXhpdCcgb3IgJ2VkZ2UnIGNvbmRpdGlvbikKICAgICAgICBpLmUuIHRoZSBzcGVjaWZpYyBjb25kaXRpb24ocykgdW5kZXIgd2hpY2ggeW91IGhhdmUsIG9yIGNhbiBkZXJpdmUsIHRoZSByZXN1bHQgPGk+d2l0aG91dDwvaT4gbmVlZGluZyB0byB1c2UgPGVsLWNvZGU+PGVsLWlkPnNvcnQ8L2VsLWlkPjwvZWwtY29kZT4gcmVjdXJzaXZlbHkuCiAgICAgIDwvbGk+CiAgICAgIDwvdWw+CiAgICA=">Hint 1: Recursion</div>
-<div class="content" id="hint1-1content"></div>
+    <div class="hint" id="hint0-1" data-hint="CiAgICAgIDx1bD4KICAgICAgIDxsaT5Xcml0aW5nIGEgcmVjdXJzaXZlIGZ1bmN0aW9uIG1lYW5zIHRoYXQgaW4gPGk+b25lIG9yIG1vcmU8L2k+IHBsYWNlcyB3aXRoaW4geW91ciBpbXBsZW1lbnRhdGlvbiBvZiA8ZWwtbWV0aG9kPm1lcmdlPC9lbC1tZXRob2Q+CiAgICAgIHlvdSB3aWxsIGhhdmUgYW4gZXhwcmVzc2lvbiB0aGF0IGl0c2VsZiBtYWtlcyB1c2Ugb2YgdGhlIDxlbC1tZXRob2Q+bWVyZ2U8L2VsLW1ldGhvZD4gZnVuY3Rpb24gLSB0eXBpY2FsbHkgd2l0aAogICAgICBhIHNtYWxsZXIsIG9yIHNpbXBsZXIsIHZlcnNpb24gb2YgdGhlIHByb2JsZW0gb2YgdGhlIGxpc3QuCiAgICA8L2xpPgogICAgICA8bGk+T25lIG9mIHRoZSBmaXJzdCB0aGluZ3MgdG8gY29uc2lkZXIgd2hlbiB3cml0aW5nIGEgcmVjdXJzaXZlIGZ1bmN0aW9uIGlzIHRoZSAnYm91bmRhcnknIChvciAnZXhpdCcgb3IgJ2VkZ2UnIGNvbmRpdGlvbikKICAgICAgICBpLmUuIHRoZSBzcGVjaWZpYyBjb25kaXRpb24ocykgdW5kZXIgd2hpY2ggeW91IGhhdmUsIG9yIGNhbiBkZXJpdmUsIHRoZSByZXN1bHQgPGk+d2l0aG91dDwvaT4gbmVlZGluZyB0byB1c2UgPGVsLWNvZGU+PGVsLWlkPnNvcnQ8L2VsLWlkPjwvZWwtY29kZT4gcmVjdXJzaXZlbHkuCiAgICAgIDwvbGk+CiAgICAgIDwvdWw+CiAgICA=">Hint 1: Recursion</div>
+<div class="content" id="hint0-1content"></div>
 
-    <div class="hint" id="hint1-2" data-hint="CiAgICAgIDxwPlRoZSBmb2xsb3dpbmcgaXMgZ2VuZXJpYyBhZHZpY2UgZm9yIHdyaXRpbmcgYSBmdW5jdGlvbiB3aGVyZSB0aGVyZSBtaWdodCBiZSBtb3JlIHRoYW4gb25lIHBhdGggdG8gdGhlIHJlc3VsdDo8L3A+CiAgICA=">Hint 2: Getting started</div>
-<div class="content" id="hint1-2content"></div>
+    <div class="hint" id="hint0-2" data-hint="CiAgICAgIDxwPlRoZSBmb2xsb3dpbmcgaXMgZ2VuZXJpYyBhZHZpY2UgZm9yIHdyaXRpbmcgYSBmdW5jdGlvbiB3aGVyZSB0aGVyZSBtaWdodCBiZSBtb3JlIHRoYW4gb25lIHBhdGggdG8gdGhlIHJlc3VsdDo8L3A+CiAgICA=">Hint 2: Getting started</div>
+<div class="content" id="hint0-2content"></div>
 
-  <label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+  <label class="done" for="done0">Step Completed</label><input class="step-complete" type="checkbox" id="done0"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
   <div hidden="" id="hash"></div>
   <div hidden="" id="changes"></div>
 

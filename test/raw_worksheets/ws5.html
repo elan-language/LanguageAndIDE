@@ -13,22 +13,21 @@
   <body>
     <div id="worksheet">
     <div class="docTitle"></div>
-    <button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span>
-    <div class="step" id="step0">
-  <h3>Preliminaries</h3>
-  <label for="username">Enter your name: </label>
-  <input class="question" type="text" id="username">
-  <p>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</p>
+
+    <ol>
+      <li><label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
+      <li>Set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</li>
+      <li class="transient"><button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span></li>
+    </ol>
 
     <div class="license">
       <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
-      This worksheet is copyright © Richard Pawson 2025, and protected by the Creative Commons license:
+      This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
           <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
         You may freely make and distribute copies of this worksheet <i>as is</i>, but if you <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
         Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
-    </div>
-<label class="done" for="done0">Step Completed</label><input class="step-complete" type="checkbox" id="done0"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-<div class="step" id="step1">
+    </div> 
+      <div class="step" id="step0">
   <h3>Preliminaries</h3>
   <label for="username">Enter your name: </label>
   <input type="text" class="question" id="username">
@@ -46,9 +45,9 @@
       encouraged and not recorded.</li>
     <li>Use the <b>Trim</b> button periodically to remove leftover <el-code>new code</el-code> prompts.</li>
   </ul>
-<label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<label class="done" for="done0">Step Completed</label><input class="step-complete" type="checkbox" id="done0"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="step" id="step2">
+<div class="step" id="step1">
   <h3>Iteration 1: Draw a shape with 'turtle graphics'</h3>
   <h3>Purpose of this worksheet</h3>
   <p>Our objective is to investigate the mathematical idea of a 'random walk'.
@@ -153,9 +152,9 @@
         corresponds to the three instructions that you added.
       </li>
     </ul>
-<label class="done" for="done2">Step Completed</label><input class="step-complete" type="checkbox" id="done2"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="step" id="step3">
+<div class="step" id="step2">
   <h3>Iteration 2 - Draw the circle with a radius of 10 paces</h3>
 
   <p>Returning to our problem we defined the specific random walk to be simulated as getting from the centre to the
@@ -168,7 +167,7 @@
   <ul>
     <li>Modify the <el-kw>for</el-kw> loop so that it executes 360 times.</li>
   </ul>
-<label class="done" for="done3">Step Completed</label><input class="step-complete" type="checkbox" id="done3"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<label class="done" for="done2">Step Completed</label><input class="step-complete" type="checkbox" id="done2"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
   <div hidden="" id="hash"></div>
   <div hidden="" id="changes"></div>
 

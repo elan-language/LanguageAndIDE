@@ -1,13 +1,6 @@
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { processCode, processSteps, processTitle } from "../tools/markupParser";
-import {
-  codeBlockEndTag,
-  codeBlockTag,
-  codeEndTag,
-  codeTag,
-  stepEndTag,
-  stepTag,
-} from "../tools/parserConstants";
+import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../tools/parserConstants";
 
 const rootdir = `${__dirname}/../../..`;
 
@@ -45,19 +38,12 @@ function wrapInWorkSheetBoilerPlate(content: string, title: string) {
   <body>
     <div id="worksheet">
     <div class="docTitle">${title}</div>
-    <button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span>
-    ${content}
-    <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
-  </body>
-</html>`;
-}
 
-function prependFirstStep(content: string) {
-  return `${stepTag}
-  <h3>Preliminaries</h3>
-  <label for="username">Enter your name: </label>
-  <input class="question" type="text" id="username" />
-  <p>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</p>
+    <ol>
+      <li><label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
+      <li>Set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</li>
+      <li class="transient"><button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span></li>
+    </ol>
 
     <div class="license">
       <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
@@ -65,9 +51,11 @@ function prependFirstStep(content: string) {
           <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
         You may freely make and distribute copies of this worksheet <i>as is</i>, but if you <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
         Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
-    </div>
-${stepEndTag}
-${content}`;
+    </div> 
+      ${content}
+    <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
+  </body>
+</html>`;
 }
 
 function appendFooter(content: string) {
@@ -81,7 +69,6 @@ export async function processWorksheet(fileName: string) {
   let source = loadFileAsSourceNew(fileName);
   let title = "";
   [title, source] = processTitle(source);
-  source = prependFirstStep(source);
   source = appendFooter(source);
 
   let updatedContent = await processCode(source, codeTag, codeEndTag);
