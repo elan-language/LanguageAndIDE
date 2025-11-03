@@ -13,22 +13,21 @@
   <body>
     <div id="worksheet">
     <div class="docTitle"></div>
-    <button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span>
-    <div class="step" id="step0">
-  <h3>Preliminaries</h3>
-  <label for="username">Enter your name: </label>
-  <input class="question" type="text" id="username">
-  <p>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</p>
+
+    <ol>
+      <li><label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
+      <li>Set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</li>
+      <li class="transient"><button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span></li>
+    </ol>
 
     <div class="license">
       <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
-      This worksheet is copyright © Richard Pawson 2025, and protected by the Creative Commons license:
+      This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
           <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
         You may freely make and distribute copies of this worksheet <i>as is</i>, but if you <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
         Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
-    </div>
-<label class="done" for="done0">Step Completed</label><input class="step-complete" type="checkbox" id="done0"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-<el-code><el-constructor class="none multiline" id='constructor6' tabindex="-1" >
+    </div> 
+      <el-code><el-constructor class="none multiline" id='constructor6' tabindex="-1" >
 <el-top><el-expand>+</el-expand><el-kw>constructor</el-kw><el-punc>(</el-punc><el-field id="params8" class="empty optional ok" tabindex="-1"><el-txt></el-txt><el-place><i>parameter definitions</i></el-place><el-compl><i>parameter definitions</i></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-punc>)</el-punc><el-msg></el-msg><el-fr>0</el-fr></el-top>
 <el-statement class="none" id='set9' tabindex="-1" ><el-kw>set </el-kw><el-field id="ident10" class="ok" tabindex="-1"><el-txt><el-kw>property</el-kw>.<el-id>p1</el-id></el-txt><el-place><i>variableName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#AssignableField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> to </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-msg></el-msg><el-fr>1</el-fr></el-statement>
 <el-kw>end constructor</el-kw>
