@@ -594,9 +594,11 @@ test('shortcut help', async ({ page }) => {
  
   await expect(page.locator('#help-home')).toBeVisible();
 
+  await page.waitForTimeout(1000);
+
   await page.keyboard.press('Control+Shift+?');
 
-  await expect(page.frameLocator('#help-iframe').getByText("Global instructions (also referred to simply as")).toBeVisible();
+  await expect(page.frameLocator('#help-iframe').getByText("Global instructions (also referred to as")).toBeVisible();
 
   await page.keyboard.press('Control+e');
 
