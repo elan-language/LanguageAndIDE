@@ -2760,7 +2760,10 @@ helpIFrame?.contentWindow?.addEventListener("click", () => showHelpTab());
 window.addEventListener("click", () => collapseAllMenus());
 
 window.addEventListener("message", async (m) => {
-  if (m.data && typeof m.data === "string" && m.data.endsWith(".elan")) {
-    await loadDemoFile(m.data);
+  if (m.data && typeof m.data === "string" && m.data.startsWith("code:")) {
+    const code = m.data.slice(5);
+    file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+    clearUndoRedoAndAutoSave();
+    await readAndParse(code, file.fileName, ParseMode.loadNew);
   }
 });

@@ -90,20 +90,26 @@ export async function processLoad(
   const num = `${stepInstance}-${loadInstance}`;
   const id = `${load}${num}`;
 
-  const output = new JSDOM(`<button class="${load}" id="${id}"></button>`);
+  const output = new JSDOM(
+    `<div><button class="${load}" id="${id}"></button><div hidden></div></div>`,
+  );
   const outDoc = output.window.document;
 
   const loadSel = inDoc.querySelector(load);
-  const file = loadSel?.getAttribute("file") ?? "";
+
+  const codeSel = loadSel?.querySelector("content");
+  const code = codeSel?.textContent ?? "";
 
   const button = outDoc.querySelector("button")!;
+  const outCode = outDoc.querySelector("div > div")!;
 
-  button.textContent = (loadSel?.textContent ?? "")
+  outCode.textContent = code;
+
+  button.textContent = (loadSel?.firstChild?.textContent ?? "")
     .replaceAll(currentLoadNumber, num)
     .replaceAll(currentLoadId, id);
-  button.value = file.replaceAll(currentLoadNumber, num).replaceAll(currentLoadId, id);
 
-  return button.outerHTML;
+  return outDoc.querySelector("div")!.innerHTML!;
 }
 
 export async function processQuestion(

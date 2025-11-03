@@ -30,12 +30,22 @@
 <label class="done" for="done0">Step Completed</label><input class="step-complete" type="checkbox" id="done0"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
   <div class="step" id="step1">
     <h3>Step 1: Getting started</h3>
-    <load file="file1.elan">Load One</load>
-    <load file="file2.elan">Load Two</load>
-  <label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+    <button class="load" id="load1-0">Load 1</button><div hidden=""># d25f98f3676899d0cff91242b9d94502ff5f7901bc5c993c1c2b9eca39641795 Elan 1.6.2 guest default_profile valid
+
+main
+  print 1
+end main
+</div>
+    <button class="load" id="load1-1">Load 2</button><div hidden=""># d25f98f3676899d0cff91242b9d94502ff5f7901bc5c993c1c2b9eca39641795 Elan 1.6.2 guest default_profile valid
+
+main
+  print 1
+end main
+</div>
+<label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
   <div hidden="" id="hash"></div>
   <div hidden="" id="changes"></div>
 
-    <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
+    <script src="http://127.0.0.1:5500/out/website/worksheet-scripts.js"></script>
   </body>
 </html>
