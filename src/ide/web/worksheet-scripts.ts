@@ -253,7 +253,7 @@ window.addEventListener("message", (m) => {
 
 for (const b of loads as NodeListOf<HTMLButtonElement>) {
   b.addEventListener("click", (_e) => {
-    const file = b.value;
-    window.parent.postMessage(file, "*");
+    const code = b.nextElementSibling?.textContent;
+    window.parent.postMessage(`code:${code}`, "*");
   });
 }
