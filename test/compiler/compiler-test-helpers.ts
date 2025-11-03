@@ -23,6 +23,10 @@ export function assertDoesNotParse(file: FileImpl) {
   assert.ok(file.parseError);
 }
 
+export function assertParseIncomplete(file: FileImpl) {
+  assert.ok(file.readParseStatus() === ParseStatus.incomplete);
+}
+
 export function assertDoesNotParseWithMessage(file: FileImpl, msg : string) {
   assert.strictEqual(file.parseError, msg, "Incorrect parse error: " + file.parseError);
 }

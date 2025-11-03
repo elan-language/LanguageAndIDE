@@ -800,7 +800,7 @@ async function initialDisplay(reset: boolean) {
   await clearDisplays();
 
   const ps = file.readParseStatus();
-  if (ps === ParseStatus.valid || ps === ParseStatus.default) {
+  if (ps === ParseStatus.valid || ps === ParseStatus.default || ps === ParseStatus.incomplete) {
     await refreshAndDisplay(false, false);
     lastSavedHash = lastSavedHash || file.currentHash;
     updateNameAndSavedStatus();
@@ -840,8 +840,7 @@ function updateNameAndSavedStatus() {
 }
 
 function canUndo() {
-  const isParsing = file.readParseStatus() === ParseStatus.valid;
-  return (isParsing && previousFileIndex > -1) || (!isParsing && currentFileIndex > -1);
+  return previousFileIndex > -1;
 }
 
 function setStatus(html: HTMLDivElement, colour: string, label: string, showTooltip = true): void {
@@ -1533,8 +1532,9 @@ async function updateContent(text: string, editingField: boolean) {
 async function localAndAutoSave(field: HTMLElement | undefined, editingField: boolean) {
   let code = "";
   const newFieldId = editingField ? field?.id : undefined;
+  const parseStatus = file.readParseStatus();
 
-  if (file.readParseStatus() === ParseStatus.valid) {
+  if (parseStatus === ParseStatus.valid || parseStatus === ParseStatus.incomplete) {
     // save to local store
 
     if (undoRedoHash !== file.currentHash && !undoRedoing) {
@@ -1572,16 +1572,14 @@ async function localAndAutoSave(field: HTMLElement | undefined, editingField: bo
         localStorage.removeItem(toTrim);
       }
     }
-  }
 
-  undoRedoHash = file.currentHash;
-  undoRedoing = false;
-
-  if (file.readParseStatus() === ParseStatus.valid) {
     // autosave if setup
     code = code || (await file.renderAsSource());
     await autoSave(code);
   }
+
+  undoRedoHash = file.currentHash;
+  undoRedoing = false;
 }
 
 function updateIndexes(indexJustUsed: number) {
@@ -1608,8 +1606,7 @@ async function replaceCode(indexToUse: number, msg: string) {
 
 async function undo() {
   if (canUndo()) {
-    const isParsing = file.readParseStatus() === ParseStatus.valid;
-    const indexToUse = isParsing ? previousFileIndex : currentFileIndex;
+    const indexToUse = previousFileIndex;
     await replaceCode(indexToUse, "Undoing...");
   }
 }
