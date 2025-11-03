@@ -5,7 +5,10 @@ import { ParseMode } from "./frame-interfaces/file";
 export class CodeSourceFromString implements CodeSource {
   private remainingCode: string;
 
-  constructor(code: string) {
+  constructor(
+    code: string,
+    private readonly noError = false,
+  ) {
     this.remainingCode = code;
   }
 
@@ -24,6 +27,10 @@ export class CodeSourceFromString implements CodeSource {
   }
   remove(match: string): CodeSource {
     if (!this.isMatch(match)) {
+      if (this.noError) {
+        this.remainingCode = "";
+        return this;
+      }
       throw new Error(`${this.readToEndOfLine()} does not match ${match}`);
     }
     this.remainingCode = this.remainingCode.substring(match.length);
@@ -33,9 +40,10 @@ export class CodeSourceFromString implements CodeSource {
     if (!this.isMatchRegEx(regx)) {
       if (optional) {
         return "";
-      } else {
-        throw new Error(`${this.readToEndOfLine()} does not match ${regx}`);
+      } else if (this.noError) {
+        return "";
       }
+      throw new Error(`${this.readToEndOfLine()} does not match ${regx}`);
     } else {
       const match = this.remainingCode.match(regx)![0];
       this.remainingCode = this.remainingCode.replace(regx, "");
