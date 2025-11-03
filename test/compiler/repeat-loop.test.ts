@@ -7,6 +7,7 @@ import {
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
+  assertParseIncomplete,
   assertParses,
   assertStatusIsValid,
   testHash,
@@ -196,7 +197,7 @@ end main
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParseIncomplete(fileImpl);
   });
 
   test("Fail_invalidCondition", async () => {
