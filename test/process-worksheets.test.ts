@@ -215,21 +215,13 @@ end constructor`;
   });
 
   test("process multiple loads", async () => {
-    const loads = `<load>Load LOADNUMBER<content>main
-  print 1
-end main</content></load>
-<load>Load LOADID<content>main
-  print 2
-end main</content></load>`;
+    const loads = `<load file="test.elan">Load LOADNUMBER</load>
+<load file="test2.elan">Load LOADID</load>`;
 
     const actual = await processLoads(loads, 0);
 
-    const expected = `<button class="load" id="load0-0">Load 0-0</button><div hidden="">main
-  print 1
-end main</div>
-<button class="load" id="load0-1">Load load0-1</button><div hidden="">main
-  print 2
-end main</div>`;
+    const expected = `<button class="load" id="load0-0">Load 0-0</button><div hidden=""></div>
+<button class="load" id="load0-1">Load load0-1</button><div hidden=""></div>`;
 
     assert.strictEqual(actual, expected);
   });

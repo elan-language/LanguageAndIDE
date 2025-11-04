@@ -13,7 +13,7 @@ import {
   hintTag,
   load,
   loadEndTag,
-  loadTag,
+  openLoadTag,
   question,
   questionEndTag,
   questionTag,
@@ -23,6 +23,13 @@ import {
   titleEndTag,
   titleTag,
 } from "./parserConstants";
+import { readFileSync } from "node:fs";
+
+let currentDir = "";
+
+export function setCurrentDir(dir: string) {
+  currentDir = dir;
+}
 
 export async function processStep(
   markup: string,
@@ -96,9 +103,14 @@ export async function processLoad(
   const outDoc = output.window.document;
 
   const loadSel = inDoc.querySelector(load);
+  const file = loadSel?.getAttribute("file") ?? "";
+  let code = "";
 
-  const codeSel = loadSel?.querySelector("content");
-  const code = codeSel?.textContent ?? "";
+  try {
+    code = readFileSync(`${currentDir}${file}`, "utf-8");
+  } catch {
+    code = "";
+  }
 
   const button = outDoc.querySelector("button")!;
   const outCode = outDoc.querySelector("div > div")!;
@@ -209,7 +221,7 @@ async function processEachLoadInstance(
   return await processEachInstance(
     initialCode,
     startAt,
-    loadTag,
+    openLoadTag,
     loadEndTag,
     loadInstance,
     stepInstance,

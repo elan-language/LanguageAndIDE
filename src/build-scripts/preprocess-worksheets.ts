@@ -1,5 +1,5 @@
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
-import { processCode, processSteps, processTitle } from "../tools/markupParser";
+import { processCode, processSteps, processTitle, setCurrentDir } from "../tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../tools/parserConstants";
 
 const rootdir = `${__dirname}/../../..`;
@@ -83,6 +83,8 @@ export async function processWorksheet(fileName: string) {
 }
 
 export async function processWorksheetsInDirectory(dir: string) {
+  setCurrentDir(dir);
+
   for (const fn of getWorksheets(dir)) {
     await processWorksheet(`${dir}${fn}`);
   }
