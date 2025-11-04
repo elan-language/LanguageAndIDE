@@ -2808,10 +2808,20 @@ helpIFrame?.contentWindow?.addEventListener("click", () => showHelpTab());
 window.addEventListener("click", () => collapseAllMenus());
 
 window.addEventListener("message", async (m) => {
-  if (m.data && typeof m.data === "string" && m.data.startsWith("code:")) {
-    const code = m.data.slice(5);
-    file = new FileImpl(hash, profile, userName, transforms(), stdlib);
-    clearUndoRedoAndAutoSave();
-    await readAndParse(code, file.fileName, ParseMode.loadNew);
+  if (m.data && typeof m.data === "string") {
+    if (m.data.startsWith("code:")) {
+      const code = m.data.slice(5);
+      file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+      clearUndoRedoAndAutoSave();
+      await readAndParse(code, file.fileName, ParseMode.loadNew);
+    }
+    if (m.data.startsWith("help:")) {
+      const link = m.data.slice(5);
+      const helpLink = document.createElement("a");
+      helpLink.href = `documentation/${link}`;
+      helpLink.target = "help-iframe";
+      helpLink.click();
+      helpTab?.click();
+    }
   }
 });

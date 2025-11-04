@@ -9,6 +9,9 @@ import {
   currentQuestionNumber,
   currentStepId,
   currentStepNumber,
+  help,
+  helpEndTag,
+  helpTag,
   hint,
   hintTag,
   load,
@@ -51,6 +54,7 @@ export async function processStep(
   let updated = await processHints(stepSel?.innerHTML ?? "", stepInstance);
   updated = await processQuestions(updated, stepInstance);
   updated = await processLoads(updated, stepInstance);
+  updated = await processHelps(updated, stepInstance);
 
   updated = updated.replaceAll(currentStepNumber, num).replaceAll(currentStepId, id);
 
@@ -85,6 +89,23 @@ export async function processStep(
   const stepHtml = div.outerHTML;
 
   return stepHtml;
+}
+
+export async function processHelp(
+  markup: string,
+  helpInstance: number,
+  stepInstance: number,
+): Promise<string> {
+  const input = new JSDOM(markup);
+  const inDoc = input.window.document;
+  const num = `${stepInstance}-${helpInstance}`;
+  const id = `${help}${num}`;
+  const link = inDoc.querySelector(help)?.textContent;
+
+  const output = new JSDOM(`<a class="help" href="${link}" id="${id}">show in Help</a>`);
+  const outDoc = output.window.document;
+
+  return outDoc.querySelector("a")!.outerHTML;
 }
 
 export async function processLoad(
@@ -229,6 +250,23 @@ async function processEachLoadInstance(
   );
 }
 
+async function processEachHelpInstance(
+  initialCode: string,
+  startAt: number,
+  helpInstance: number,
+  stepInstance: number,
+): Promise<[string, number, number]> {
+  return await processEachInstance(
+    initialCode,
+    startAt,
+    helpTag,
+    helpEndTag,
+    helpInstance,
+    stepInstance,
+    processHelp,
+  );
+}
+
 async function processEachQuestionInstance(
   initialCode: string,
   startAt: number,
@@ -328,6 +366,31 @@ export async function processLoads(source: string, stepInstance: number) {
       stepInstance,
     );
     loadInstance++;
+  }
+
+  return applyChanges(source, updates);
+}
+
+export async function processHelps(source: string, stepInstance: number) {
+  const updates: [string, number, number][] = [];
+  let helpInstance = 0;
+
+  let [updatedCode, codeStart, codeEnd] = await processEachHelpInstance(
+    source,
+    0,
+    helpInstance,
+    stepInstance,
+  );
+  helpInstance++;
+  while (updatedCode !== "") {
+    updates.push([updatedCode, codeStart, codeEnd]);
+    [updatedCode, codeStart, codeEnd] = await processEachHelpInstance(
+      source,
+      codeEnd,
+      helpInstance,
+      stepInstance,
+    );
+    helpInstance++;
   }
 
   return applyChanges(source, updates);
