@@ -1261,17 +1261,8 @@ For more about ListImmutable and DictionaryImmutable literals see the <a href="L
     <el-code>print a[..7]</el-code>    &#x27f6; <el-code>Hello W</el-code>   (since the upper bound of a range is <em>exclusive</em>)
     <el-code>print a[0..4]</el-code>  &#x27f6; <el-code>Hell</el-code>         (for the same reason)
 </pre>
-<p>This function overwrites the character at position <el-code>n</el-code> in string <el-code>s</el-code> with character <el-code>c</el-code>
- (provided <el-code>n</el-code> is valid for <el-code>s</el-code>, and <el-code>c</el-code> is a single character):</p>
-<el-code-block source="setChar.elan">
-<el-func class="ok multiline" id="func1" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident3" class="ok" tabindex="-1"><el-txt><el-method>setChar</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params4" class="optional ok" tabindex="-1"><el-txt><el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>c</el-id> <el-kw>as</el-kw> <el-type>String</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type5" class="ok" tabindex="-1"><el-txt><el-type>String</el-type></el-txt></el-field></el-top>
-<el-statement class="ok" id="return6" tabindex="-1"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-id>s</el-id>[..<el-id>n</el-id>] + <el-id>c</el-id> + <el-id>s</el-id>[<el-id>n</el-id> + <el-lit>1</el-lit>..]</el-txt></el-field></el-statement>
-<el-kw>end function</el-kw>
-</el-func>
-</el-code-block>
 
-<p>In the examples above, the result is of Type String in all cases.</p>
+<p>In the examples above, the result is of Type <el-type>String</el-type> in all cases.</p>
 <p>When using indexing on other Types:</p>
 <ul>
 <li>with a single index, the result is of the same Type as the elements of the data structure being indexed</li>
