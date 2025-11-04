@@ -7,6 +7,7 @@ const doneCheckboxes = document.querySelectorAll("div.step > input.step-complete
 
 const autoSaveButton = document.getElementById("auto-save");
 
+const helps = document.querySelectorAll("a.help");
 const loads = document.querySelectorAll("button.load");
 const userName = document.getElementById("username") as HTMLInputElement;
 const autosave = document.getElementById("auto-save") as HTMLButtonElement;
@@ -266,6 +267,15 @@ for (const b of loads as NodeListOf<HTMLButtonElement>) {
   b.addEventListener("click", (_e) => {
     const code = b.nextElementSibling?.textContent;
     window.parent.postMessage(`code:${code}`, "*");
+  });
+}
+
+for (const b of helps as NodeListOf<HTMLLinkElement>) {
+  b.addEventListener("click", (e) => {
+    const link = b.href;
+    window.parent.postMessage(`help:${link}`, "*");
+    e.preventDefault();
+    e.stopPropagation();
   });
 }
 
