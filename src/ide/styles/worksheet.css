@@ -122,3 +122,11 @@ code, el-code, el-code-block {
 el-fr {
     display: none; /* Because the instruction numbers start from 1 for each snippet, which is misleading */
 }
+
+final {
+    display: none;
+}
+
+.step.complete + final {
+    display: block;
+}

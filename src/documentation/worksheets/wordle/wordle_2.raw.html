@@ -1,37 +1,53 @@
 <title>Wordle 2: writing an automated solver</title>
 <step>
     <h1>Step STEPNUMBER: introduction</h1>
-    Follow on from previous worksheet.
-    Implement reverse game: you choose a word, the computer makes up to six attempts, and you mark each one on screen
-    pressing: 0 to mark a letter grey; 1 to mark it yellow; 2 to mark it green.
-    Important to understand: the word must come from the shorter list - as in the real game
-    Heuristic - any 5 letter word known by your peers, but not words ending in 'S' or 'D' where the first four letters
-    would be a word in its own right e.g. BEANS, CHEWS, or LOVED
-    Also? 'Hard mode'
-</step>
 
-<step>
-  <h1>Step STEPNUMBER: Run the existing program</h1>
-  <ul>
-    <li>Load the starting code and <b>run</b> the program, and note that the computer's first attempt is <b>ARISE</b>
-      - a first attempt favoured by some human players. You can see that this is defined in instruction <b>56</b>:
-    <codeblock>
-      constant firstAttempt set to "ARISE"
-    </codeblock>
-    so we could change this to a different word, but leave it as-is for now.
-    </li>
-    <li>
-      Let's say that the 'target' word (picked by us - for the computer to identify) is <b>STAGE</b>. 
-      The computer's first attempt should be marked: Yellow, Grey, Grey, Yellow, Green, but to 
-      enter these marks we type in <b>10012</b> - the same coding that you used in the Wordle 1 project.
-      Go ahead and enter those values, remembring that you can use <b>Backspace</b> to correct a mistake,
-      and when you have all five letters coloured correctly, press <b>Enter</b>, at which point the
-      computer will make its second attempt.
-      <question>What word has the computer picked for its second attempt?</question>    
-    </li>
+    <p>Following-on from 'Wordle 1: implementing the Wordle puzzle logic', in this Worksheet
+    your challenge is to implement a 'reverse game': where <i>you</i> choose a 'target' word,
+    and the computer the computer has up to six attempts to identify it, with you marking
+    the letters of each of those attempts as 'grey', 'yellow', or 'green' 
+    - using the <b>0</b>, <b>2</b>, and <b>2</b> keys, respectively. As in Wordle 1,
+    you will start off with some working code that implements the presentation and user-interaction
+    needed for the task but, as you will quickly discover, without any of the core logic needed
+    to choose suitable attempt words.</p>
+
+    <ul>
+      <li>Before we start, you need to understand the following points, which apply both to this implementation and also to the 
+        <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">official online Wordle puzzle</a>:
+        <ul>
+          <li>This list of words that are accepted as valid <i>attempt</i> words, has over 15,000 words. 
+            Some of them are very obscure words that most people would never have encountered in everyday usage.</li>
+          <li>However, the list of words that may be set as <i>target</i> words is much shorter, consisting only of words
+            likely to be recognised by most adults. Moreover, the list of target words specifically <i>excludes</i> well-known
+            words that end in 'S' or 'D' <i>where the first four letters would be a word in its own right</i>, 
+            for example <b>BEANS</b>, <b>CHEWS</b>, or <b>LOVED</b>. Some people who play Wordle regularly are not aware
+            of these facts - which can be helpful when playing, but are also important to the program we are going to write.</li>
+          <li>The official online Wordle puzzle offers a 'hard mode' (specified via the 'settings', which looks like a gear wheel).
+            In hard mode, all your attempt words must be consistent with the marks awarded to previous attempts. 
+            Paradoxically, although hard mode can be harder for human players, it is slightly easier to write
+            an automated solver that works in this way.</li>
+      </ul></li>
+      <li>
+        <load>TODO Load the starting code</load> and then <b>run</b> the program
+      </li>  
+      <li>Note that the computer's first attempt is <b>ARISE</b>
+        - a first attempt favoured by some human players. You can see that this is defined in instruction <b>56</b>:
+      <codeblock>
+        constant firstAttempt set to "ARISE"
+      </codeblock>
+      so we could change this to a different word, but leave it as-is for now.</li>
+      <li>
+        Let's say that the 'target' word (picked by us - for the computer to identify) is <b>STAGE</b>. 
+        The computer's first attempt should be marked: Yellow, Grey, Grey, Yellow, Green, but to 
+        enter these marks we type in <b>10012</b> - the same coding that you used in the Wordle 1 project.
+        Go ahead and enter those values, remembring that you can use <b>Backspace</b> to correct a mistake,
+        and when you have all five letters coloured correctly, press <b>Enter</b>, at which point the
+        computer will make its second attempt.
+        <question>What word has the computer picked for its second attempt?</question>    
+      </li>
     <li>Similar to the Wordle 1 worksheet, you will quickly realise that the initial code correctly
       implements the <i>presentation</i> and <i>user-interation</i> for the reverse game, but lacks the
-      core logic needed to pick the next attempt word - so it always guesses the same word! 
+      core logic needed to pick the next attempt word - so it always guesses the same word!  <
       Look at the <code>procedure</code> <el-method>playReverseGame</el-method>, which starts at instruction
       <b>57</b>. In instruction <b>59</b> a <i>variable</i> named <code>attempt</code> is initialised to the
       constant value <code>firstAttempt</code>, but this variable is never thereafter <code>set</code> to a
@@ -321,7 +337,7 @@
   <p>When you have completed these changes, run the program and test it: three times against <i>different</i> valid target words
   and once against <b>QURSH</b> or another very obscure 5-letter word.</p>
 </step>
-<step>
+<final>
   <h1>Congratulations! Worksheet completed.</h1>
   <p>You have just implemented the core logic for an automated Wordle solver. Try going to the official Wordle site and
     (assuming you have not already solved today's Wordle puzzle) see if your solver can solve today's target word
@@ -333,9 +349,12 @@
   <p>There is another worksheet available - Wordle 3 - in which you write code to <i>analyse</i> the effectiveness of this
   wordle solver, rigorously, and then suggests ways in which you could explore simple and more complex variants on the
   algorithm implemented here.</p>
+  <question>If you wish, you may record any feedback or further notes here:</question>
   <p>Meantime, if you have time, explore any of the following suggestion optional extensions to the current code.</p>
   <ul>
-    <li>Load the complete source code, by clicking the button below, and then explore how the presentation and interaction are managed.</li>
+    <li>
+      <load>TODO load the complete source code</load>
+      and then explore how the presentation and interaction are managed.</li>
     <li>In that source code you will see that the <code>main</code> routine just calls <el-method>playReverseGame</el-method>. You will
     also see that the <el-method>playGame</el-method> (used in the previous worksheet) is still there. So you could modifer
     <code>main</code> to do either one of the following:
@@ -363,7 +382,7 @@
       this pattern look at the example <help>LangRef.html#procedure</help>.
     </li>
   </ul>
-</step>
+</final>
 
 
   
