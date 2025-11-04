@@ -371,28 +371,42 @@ Procedures and functions may be called or referenced recursively. For example, a
 <el-kw>end test</el-kw>
 </el-test></el-code-block>
 
-<p>If there are failures, mark the tests that you added since the last successful test with <el-code>ignore</el-code> (see below), and then remove their ignore status one by one until the cause is identified and fixed.</p>
+<p>If there are failures, mark the tests that you added since the last successful test as <a href="IDENavigation.html#EditInstructions"><el-code>ghosted</el-code></a> and then remove their ghosted status one by one until the cause is identified and fixed.</p>
 <p>In the last <el-kw>assert</el-kw> above, note how testing can also be done against an expected error message.</p>
 
-<h4 class="no-TOC" id="ignore">Marking a test with <el-kw>ignore</el-kw></h4>
-<p>It is possible to mark a <el-code>test</el-code> with the <el-code>ignore</el-code> keyword, by selecting the <el-code>test</el-code> frame and then keying <b>Ctrl-i</b>, as in this example:</p>
+<h4 class="no-TOC" id="ignore">Ghosting a test to have it ignored</h4>
+<p>To ignore tests, use <a href="IDENavigation.html#EditInstructions"><el-code>ghosting</el-code></a> either on a test:</p>
 
-<el-code-block source="test_ignore.elan">
-<el-test class="warning multiline" id="test213" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>ignore test </el-kw><el-field id="comment215" class="optional ok" tabindex="0"><el-txt>clockTick</el-txt><el-place><i>optional description</i></el-place></el-field></el-top>
-<el-statement class="ok" id="let216" tabindex="0"><el-kw>let </el-kw><el-field id="var217" class="ok" tabindex="0"><el-txt><el-id>g1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr218" class="ok" tabindex="0"><el-txt><el-method>newGame</el-method>(<el-kw>new</el-kw> <el-type>Random</el-type>())</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="let219" tabindex="0"><el-kw>let </el-kw><el-field id="var220" class="ok" tabindex="0"><el-txt><el-id>g2</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr221" class="ok" tabindex="0"><el-txt><el-method>newApple</el-method>(<el-id>g1</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="let222" tabindex="0"><el-kw>let </el-kw><el-field id="var223" class="ok" tabindex="0"><el-txt><el-id>g3</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr224" class="ok" tabindex="0"><el-txt><el-method>clockTick</el-method>(<el-id>g2</el-id>, "<el-lit>s</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="assert225" tabindex="0"><el-kw>assert </el-kw><el-field id="text226" class="ok" tabindex="0"><el-txt><el-id>g3</el-id>.<el-id>head</el-id></el-txt><el-place><i>computed value</i></el-place></el-field><el-kw> is </el-kw><el-field id="expr227" class="ok" tabindex="0"><el-txt><el-method>newSquare</el-method>(<el-lit>22</el-lit>, <el-lit>16</el-lit>)</el-txt><el-place><i>expected value</i></el-place></el-field> <el-msg class="warning">not run</el-msg></el-statement>
-<el-kw>end test</el-kw>
-</el-test>
+<el-code-block source="test_ghosted.html">
+<el-test class="ghosted ok multiline" id="test210" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment212" class="optional ok" tabindex="-1"><el-txt>clockTick</el-txt></el-field></el-top>
+<el-statement class="ok" id="let213" tabindex="-1"><el-kw>let </el-kw><el-field id="var214" class="ok" tabindex="-1"><el-txt><el-id>g1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr215" class="ok" tabindex="-1"><el-txt><el-method>newGame</el-method>(<el-kw>new</el-kw> <el-type>Random</el-type>())</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let216" tabindex="-1"><el-kw>let </el-kw><el-field id="var217" class="ok" tabindex="-1"><el-txt><el-id>g2</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr218" class="ok" tabindex="-1"><el-txt><el-method>newApple</el-method>(<el-id>g1</el-id>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let219" tabindex="-1"><el-kw>let </el-kw><el-field id="var220" class="ok" tabindex="-1"><el-txt><el-id>g3</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr221" class="ok" tabindex="-1"><el-txt><el-method>clockTick</el-method>(<el-id>g2</el-id>, "<el-lit>s</el-lit>")</el-txt></el-field></el-statement>
+<el-statement class="ok" id="assert222" tabindex="-1"><el-kw>assert </el-kw><el-field id="text223" class="ok" tabindex="-1"><el-txt><el-id>g3</el-id>.<el-id>head</el-id></el-txt></el-field><el-kw> is </el-kw><el-field id="expr224" class="ok" tabindex="-1"><el-txt><el-method>newSquare</el-method>(<el-lit>22</el-lit>, <el-lit>16</el-lit>)</el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert225" tabindex="-1"><el-kw>assert </el-kw><el-field id="text226" class="ok" tabindex="-1"><el-txt><el-id>g3</el-id>.<el-id>body</el-id>.<el-method>length</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr227" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-kw>end test</el-kw></el-test>
 </el-code-block>
 
-<p>When a test is marked with <el-code>ignore</el-code>, that test will not be executed when the tests are run, and its result will be shown as 'not run'. The overall test status will also show in the 'warning' status (amber colour), even if all the tests that did run passed. This is to discourage you from leaving a test marked <el-code>ignore</el-code> for long.</p>
+<p>or just on specific <el-kw>assert</el-kw>s:</p>
+
+<el-code-block source="assert_ghosted.html">
+<el-test class="ok multiline" id="test210" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment212" class="optional ok" tabindex="-1"><el-txt>clockTick</el-txt></el-field></el-top>
+<el-statement class="ok" id="let213" tabindex="-1"><el-kw>let </el-kw><el-field id="var214" class="ok" tabindex="-1"><el-txt><el-id>g1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr215" class="ok" tabindex="-1"><el-txt><el-method>newGame</el-method>(<el-kw>new</el-kw> <el-type>Random</el-type>())</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let216" tabindex="-1"><el-kw>let </el-kw><el-field id="var217" class="ok" tabindex="-1"><el-txt><el-id>g2</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr218" class="ok" tabindex="-1"><el-txt><el-method>newApple</el-method>(<el-id>g1</el-id>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let219" tabindex="-1"><el-kw>let </el-kw><el-field id="var220" class="ok" tabindex="-1"><el-txt><el-id>g3</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr221" class="ok" tabindex="-1"><el-txt><el-method>clockTick</el-method>(<el-id>g2</el-id>, "<el-lit>s</el-lit>")</el-txt></el-field></el-statement>
+<el-statement class="selected focused ghosted ok" id="assert222" tabindex="-1"><el-kw>assert </el-kw><el-field id="text223" class="ok" tabindex="-1"><el-txt><el-id>g3</el-id>.<el-id>head</el-id></el-txt></el-field><el-kw> is </el-kw><el-field id="expr224" class="ok" tabindex="-1"><el-txt><el-method>newSquare</el-method>(<el-lit>22</el-lit>, <el-lit>16</el-lit>)</el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert225" tabindex="-1"><el-kw>assert </el-kw><el-field id="text226" class="ok" tabindex="-1"><el-txt><el-id>g3</el-id>.<el-id>body</el-id>.<el-method>length</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr227" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-kw>end test</el-kw></el-test>
+</el-code-block>
+
+<p>Even when <el-kw>test</el-kw>s or <el-kw>assert</el-kw>s are <el-code>ghosted</el-code>, all the tests will be run and their status shown, but
+the overall test status will show the status of only the unghosted tests (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
 
 <h4 class="no-TOC">Non-terminating loops and recursion</h4>
-<p>The principal reason for marking a test <el-code>ignore</el-code> is when either the test code, or code in any function being called, does not terminate. This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
-<p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds (most tests will pass in milliseconds), and an error message will appear. The test that caused the timeout will automatically then be marked <el-code>ignore</el-code>. Your priority should then be to identify the cause of the timeout and attempt to fix it before then restoring the <el-code>test</el-code> by selecting its frame and keying <b>Ctrl-i</b> (which is a toggle for setting and unsetting an <el-code>ignore</el-code> status).</p>
+<p>The principal reason for ghosting a test is when either the test code, or code in any function being called, does not terminate. This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
+<p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds (most tests will pass in milliseconds), and an error message will appear. Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the <el-code>test</el-code>.</p>
 
 <h2 id="record"><el-kw>record</el-kw></h2>
 <p>A <el-code>record</el-code> is a user-defined data structure that is given a Type name (which must begin with an uppercase letter).
@@ -1680,7 +1694,7 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
 
 <h3 id="mustNotBeKeyword" class="no-TOC">... is a keyword, and may not be used as an identifier.</h3>
  <p>An Elan keyword cannot be used to as the name for a value, property, or method. Try shortening the name, lengthening it, or using a different name</p>
-<p>For reference, the complete list of keywords is:<br><el-code>#, abstract, and, as, assert, be, call, catch, class, constant, constructor, copy, div, each, else, empty, end, enum, exception, for, from, function, if, ignore, image, in, inherits, interface, is, isnt, lambda, let, main, mod, new, not, of, or, out, print, private, procedure, property, record, ref, repeat, return, returns, set, step, test, then, this, throw, to, try, variable, while, with </el-code></p>
+<p>For reference, the complete list of keywords is:<br><el-code>#, abstract, and, as, assert, be, call, catch, class, constant, constructor, copy, div, each, else, empty, end, enum, exception, for, from, function, if, image, in, inherits, interface, is, isnt, lambda, let, main, mod, new, not, of, or, out, print, private, procedure, property, record, ref, repeat, return, returns, set, step, test, then, this, throw, to, try, variable, while, with </el-code></p>
 
 <h3 id="mustNotBeReservedWord" class="no-TOC">...  is a reserved word, and may not be used as an identifier.</h3>
  <p>In addition to Elan keywords there are certain other 'reserved words' that cannot be used to define the name for a
@@ -1843,7 +1857,7 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
 <h2>Messages</h2>
 
 <h3 id="TestTimeout" class="no-TOC">Tests timed out and were aborted</h3>
-<p>An error or infinite loop found in a test. Refer to <a href="#ignore">ignoring tests</a>.</p>
+<p>An error or infinite loop found in a test. Refer to <a href="#ignore">ghosting tests</a>.</p>
 
 <h3 id="complexityWarning" class="no-TOC">Overly complex expressions</h3>
 <p>Overly complex expressions &ndash; for example involving a sequence of open brackets &ndash; can result in
