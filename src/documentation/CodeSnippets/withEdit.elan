@@ -1,0 +1,13 @@
+# 2c9ebd58dca856d04731e94460b5a2814aad71f2d9453af24cc13697eeea163e Elan 1.6.2 guest default_profile valid
+
+main
+  variable a set to new Square() with x set to 3.5, y set to 4.0
+  set a to copy a with x set to 3.7
+end main
+
+class Square
+  property x as Float
+
+  property y as Float
+
+end class

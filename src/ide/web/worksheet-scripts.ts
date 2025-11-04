@@ -8,13 +8,20 @@ const doneCheckboxes = document.querySelectorAll("div.step > input.step-complete
 const autoSaveButton = document.getElementById("auto-save");
 
 const loads = document.querySelectorAll("button.load");
+const userName = document.getElementById("username") as HTMLInputElement;
+const autosave = document.getElementById("auto-save") as HTMLButtonElement;
 
 let fh: FileSystemFileHandle | undefined;
 
 if (fh) {
   document.getElementById("worksheet")?.classList.add("saved");
+  userName.disabled = true;
 } else {
   document.getElementById("worksheet")?.classList.remove("saved");
+}
+
+if (userName.value) {
+  userName.disabled = true;
 }
 
 async function write(code: string, fh: FileSystemFileHandle) {
@@ -33,6 +40,7 @@ async function chromeSave(code: string, newName: string) {
       id: "",
     });
     await write(code, fh);
+    userName.disabled = true;
     return fh;
   } catch {
     // cancelled
@@ -99,6 +107,9 @@ autoSaveButton!.addEventListener("click", async () => {
   } else {
     const suggestedName = document.getElementsByClassName("docTitle")[0].innerHTML;
     fh = await chromeSave(code, suggestedName);
+
+    if (fh) {
+    }
   }
 
   scrollToActiveElement();
@@ -257,3 +268,9 @@ for (const b of loads as NodeListOf<HTMLButtonElement>) {
     window.parent.postMessage(`code:${code}`, "*");
   });
 }
+
+userName.addEventListener("change", () => {
+  autosave.disabled = !userName.classList.contains("answered");
+});
+
+autosave.disabled = !userName.classList.contains("answered");
