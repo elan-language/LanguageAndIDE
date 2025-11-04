@@ -385,7 +385,7 @@ export async function processHints(source: string, stepInstance: number) {
 
 export async function processSteps(source: string) {
   const updates: [string, number, number][] = [];
-  let stepInstance = 0;
+  let stepInstance = 1;
 
   let [updatedCode, codeStart, codeEnd] = await processEachStepInstance(source, 0, stepInstance);
   stepInstance++;
