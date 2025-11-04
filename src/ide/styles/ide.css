@@ -296,6 +296,11 @@ button.plain:disabled, menu-item.button.plain:disabled {
   border-color: var(--disabledButton);
 }
 
+.menu-item.disabled {
+  color: var(--defaultButton);
+}
+
+
 /* Icon buttons */
 button.icon img, button.icon + label {
   height: 40px;

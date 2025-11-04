@@ -44,24 +44,24 @@ const codeContainer = document.querySelector(".elan-code") as HTMLDivElement;
 const runButton = document.getElementById("run-button") as HTMLButtonElement;
 const stopButton = document.getElementById("stop") as HTMLButtonElement;
 const expandCollapseButton = document.getElementById("expand-collapse") as HTMLButtonElement;
-const newButton = document.getElementById("new") as HTMLButtonElement;
+const newButton = document.getElementById("new") as HTMLDivElement;
 const demosButton = document.getElementById("demos") as HTMLButtonElement;
 const demosMenu = document.getElementById("demos-menu") as HTMLDivElement;
 const fileMenu = document.getElementById("file-menu") as HTMLDivElement;
 const worksheetMenu = document.getElementById("worksheet-menu") as HTMLDivElement;
 
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
-const loadButton = document.getElementById("load") as HTMLButtonElement;
-const appendButton = document.getElementById("append") as HTMLButtonElement;
-const importButton = document.getElementById("import") as HTMLButtonElement;
-const saveButton = document.getElementById("save") as HTMLButtonElement;
-const autoSaveButton = document.getElementById("auto-save") as HTMLButtonElement;
+const loadButton = document.getElementById("load") as HTMLDivElement;
+const appendButton = document.getElementById("append") as HTMLDivElement;
+const importButton = document.getElementById("import") as HTMLDivElement;
+const saveButton = document.getElementById("save") as HTMLDivElement;
+const autoSaveButton = document.getElementById("auto-save") as HTMLDivElement;
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
 const fileButton = document.getElementById("file") as HTMLButtonElement;
 const logoutButton = document.getElementById("logout") as HTMLButtonElement;
-const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLButtonElement;
-const preferencesButton = document.getElementById("preferences") as HTMLButtonElement;
+const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLDivElement;
+const preferencesButton = document.getElementById("preferences") as HTMLDivElement;
 
 const codeTitle = document.getElementById("code-title") as HTMLDivElement;
 const parseStatus = document.getElementById("parse") as HTMLDivElement;
@@ -327,7 +327,10 @@ expandCollapseButton?.addEventListener("click", async () => {
   await renderAsHtml(false);
 });
 
-newButton?.addEventListener("click", async () => {
+newButton?.addEventListener("click", async (event: Event) => {
+  if (isDisabled(event)) {
+    return;
+  }
   if (checkForUnsavedChanges(cancelMsg)) {
     await clearDisplays();
     clearUndoRedoAndAutoSave();
@@ -355,7 +358,11 @@ async function loadDemoFile(fileName: string) {
   await readAndParse(rawCode, fileName, ParseMode.loadNew);
 }
 
-saveAsStandaloneButton.addEventListener("click", async () => {
+saveAsStandaloneButton.addEventListener("click", async (event: Event) => {
+  if (isDisabled(event)) {
+    return;
+  }
+
   let jsCode = file.compileAsWorker("", false, true);
 
   const api = await (await fetch("elan-api.js", { mode: "same-origin" })).text();
@@ -387,7 +394,11 @@ for (const elem of demoFiles) {
   });
 }
 
-preferencesButton.addEventListener("click", () => {
+preferencesButton.addEventListener("click", (event: Event) => {
+  if (isDisabled(event)) {
+    return;
+  }
+
   const dialog = document.getElementById("preferences-dialog") as HTMLDialogElement;
   const closeButton = document.getElementById("confirmBtn");
 
@@ -886,6 +897,7 @@ function updateDisplayValues() {
   // Button control
   const isEmpty = file.readParseStatus() === ParseStatus.default;
   const isParsing = file.readParseStatus() === ParseStatus.valid;
+  const isIncomplete = file.readParseStatus() === ParseStatus.incomplete;
   const isCompiling = file.readCompileStatus() === CompileStatus.ok;
   const isRunning = isRunningState();
   const isPaused = isPausedState();
@@ -968,8 +980,8 @@ function updateDisplayValues() {
 
     if (isEmpty) {
       disable([saveButton], "Some code must be added in order to save");
-    } else if (!isParsing) {
-      disable([saveButton], "Code must be parsing in order to save");
+    } else if (!(isParsing || isIncomplete)) {
+      disable([saveButton], "Invalid code cannot be saved");
     } else if (autoSaveFileHandle) {
       disable([saveButton], "Autosave is enabled- cancel to manual save");
     } else {
@@ -1010,13 +1022,13 @@ function updateDisplayValues() {
     } else {
       if (useChromeFileAPI()) {
         autoSaveButton.innerText = "auto save";
-        if (isParsing) {
+        if (isParsing || isIncomplete) {
           enable(
             autoSaveButton,
-            "Save to file now and then auto-save to same file whenever code is changed and parses",
+            "Save to file now and then auto-save to same file whenever code is changed and is not invalid",
           );
         } else {
-          disable([autoSaveButton], "Code must be parsing in order to save");
+          disable([autoSaveButton], "Invalid code cannot be saved");
         }
       } else {
         disable([autoSaveButton], "Only available on Chrome");
@@ -1032,16 +1044,22 @@ function updateDisplayValues() {
   }
 }
 
-function disable(buttons: HTMLButtonElement[], msg = "") {
+function disable(buttons: HTMLElement[], msg = "") {
   for (const button of buttons) {
     button.setAttribute("disabled", "");
     button.setAttribute("title", msg);
+    if (button instanceof HTMLDivElement) {
+      button.classList.add("disabled");
+    }
   }
 }
 
-function enable(button: HTMLButtonElement, msg = "") {
+function enable(button: HTMLElement, msg = "") {
   button.removeAttribute("disabled");
   button.setAttribute("title", msg);
+  if (button instanceof HTMLDivElement) {
+    button.classList.remove("disabled");
+  }
 }
 
 function getEditorMsg(
@@ -2228,16 +2246,22 @@ async function handleChromeUploadOrAppend(mode: ParseMode) {
   }
 }
 
-async function handleChromeUpload() {
-  await handleChromeUploadOrAppend(ParseMode.loadNew);
+async function handleChromeUpload(event: Event) {
+  if (!isDisabled(event)) {
+    await handleChromeUploadOrAppend(ParseMode.loadNew);
+  }
 }
 
-async function handleChromeAppend() {
-  await handleChromeUploadOrAppend(ParseMode.append);
+async function handleChromeAppend(event: Event) {
+  if (!isDisabled(event)) {
+    await handleChromeUploadOrAppend(ParseMode.append);
+  }
 }
 
-async function handleChromeImport() {
-  await handleChromeUploadOrAppend(ParseMode.import);
+async function handleChromeImport(event: Event) {
+  if (!isDisabled(event)) {
+    await handleChromeUploadOrAppend(ParseMode.import);
+  }
 }
 
 function cursorWait() {
@@ -2271,15 +2295,21 @@ async function handleUploadOrAppend(event: Event, mode: ParseMode) {
 }
 
 async function handleUpload(event: Event) {
-  await handleUploadOrAppend(event, ParseMode.loadNew);
+  if (!isDisabled(event)) {
+    await handleUploadOrAppend(event, ParseMode.loadNew);
+  }
 }
 
 async function handleAppend(event: Event) {
-  await handleUploadOrAppend(event, ParseMode.append);
+  if (!isDisabled(event)) {
+    await handleUploadOrAppend(event, ParseMode.append);
+  }
 }
 
 async function handleImport(event: Event) {
-  await handleUploadOrAppend(event, ParseMode.import);
+  if (!isDisabled(event)) {
+    await handleUploadOrAppend(event, ParseMode.import);
+  }
 }
 
 function updateFileName() {
@@ -2302,6 +2332,10 @@ function updateFileName() {
 }
 
 async function handleDownload(event: Event) {
+  if (isDisabled(event)) {
+    return;
+  }
+
   updateFileName();
 
   const code = await file.renderAsSource();
@@ -2342,7 +2376,20 @@ async function chromeSave(code: string, updateName: boolean, newName?: string) {
   return fh;
 }
 
+function isDisabled(evt: Event) {
+  if (evt.target instanceof HTMLDivElement && evt.target.classList.contains("disabled")) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    return true;
+  }
+  return false;
+}
+
 async function handleChromeDownload(event: Event) {
+  if (isDisabled(event)) {
+    return;
+  }
+
   const code = await file.renderAsSource();
 
   try {
@@ -2361,6 +2408,10 @@ async function handleChromeDownload(event: Event) {
 }
 
 async function handleChromeAutoSave(event: Event) {
+  if (isDisabled(event)) {
+    return;
+  }
+
   if (autoSaveFileHandle) {
     autoSaveFileHandle = undefined;
     updateDisplayValues();
