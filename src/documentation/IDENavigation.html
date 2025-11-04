@@ -177,7 +177,6 @@ shows these options, any one of which may then be clicked on to do the action:</
  <tr><td>set breakpoint</td><td>clear breakpoint</td><td></td></tr>
  <tr><td>clear all breakpoints</td><td></td><td></td></tr>
  <tr><td>copy for external use</td><td></td><td></td></tr>
- <tr><td>ignore test</td><td>un-ignore test</td><td><b>Ctrl-i</b> (toggle)</td></tr>
  <tr><td>make private</td><td>make public</td><td><b>Ctrl-p</b> (toggle)</td></tr>
 </table>
 
@@ -281,7 +280,7 @@ To restore the cut instructions to their original context, use <el-code>undo</el
 </div></div>
 
   <div class="accordion">
-    <h3 class="acc-title" tabindex="0">Ghosting</h3>
+    <h3 class="acc-title" tabindex="0" id="Ghosting">Ghosting</h3>
     <div class="acc-body">
 <p>Instead of being able to 'comment out' code that you wish to retain but not execute,
  Elan provides a method for 'ghosting' sections of code with much the same effect,
@@ -290,7 +289,7 @@ To restore the cut instructions to their original context, use <el-code>undo</el
  <li>Select the single instruction (which may be a compound one, e.g. a <el-kw>while</el-kw> loop, or an entire <el-kw>procedure</el-kw>) to be ghosted.</li>
  <li><b>Ctrl-m</b> or right-click on the instruction keyword, and choose <el-code>ghost</el-code> from the context menu.</li>
  <li>The instruction will be displayed in pale colours.</li>
- <li>The ghosted code will then be ignored by the compiler. This means, for example, that you can create two different implementations
+ <li>The ghosted code will then be ignored by the compiler and, for ghosted tests, by the test runner. This means, for example, that you can create two different implementations
   of the same function and compare them, as long as one of them is ghosted.</li>
  <li>You can ghost code that does not compile, but you should not ghost code that does not parse: the ghosting will work, but
   you will not then be able to get the program as a whole to parse, and will have to unghost it again to fix it.</li>
