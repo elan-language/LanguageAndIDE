@@ -23,6 +23,7 @@ export const answer = "answer";
 export const answerTag = `<${answer}>`;
 export const answerEndTag = `</${answer}>`;
 export const load = "load";
+export const openLoadTag = `<${load}`;
 export const loadTag = `<${load}>`;
 export const loadEndTag = `</${load}>`;
 export const code = "code";
