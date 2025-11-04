@@ -3,6 +3,7 @@ import { processWorksheetsInDirectory } from "../src/build-scripts/preprocess-wo
 import { processInnerCode } from "../src/tools/codeParser";
 import {
   processCode,
+  processHelps,
   processHints,
   processLoads,
   processQuestions,
@@ -195,6 +196,18 @@ end constructor`;
 <div class="content" id="hint0-1content"></div>
 <div class="hint" id="hint0-2" data-hint="PHA+aGludCBkZXRhaWxzPC9wPg==">hint0-2</div>
 <div class="content" id="hint0-2content"></div>`;
+
+    assert.strictEqual(actual, expected);
+  });
+
+  test("process multiple helps", async () => {
+    const hints = `<help>LangRef.html#call</help>
+<help>LangRef.html#let</help>`;
+
+    const actual = await processHelps(hints, 0);
+
+    const expected = `<a class="help" href="LangRef.html#call" id="help0-0">show in Help</a>
+<a class="help" href="LangRef.html#let" id="help0-1">show in Help</a>`;
 
     assert.strictEqual(actual, expected);
   });
