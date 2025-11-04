@@ -2,72 +2,74 @@
 <step>
     <h1>Step STEPNUMBER: introduction</h1>
 
-    <p>Following-on from 'Wordle 1: implementing the Wordle puzzle logic', in this Worksheet
-    your challenge is to implement a 'reverse game': where <i>you</i> choose a 'target' word,
-    and the computer the computer has up to six attempts to identify it, with you marking
-    the letters of each of those attempts as 'grey', 'yellow', or 'green' 
-    - using the <b>0</b>, <b>2</b>, and <b>2</b> keys, respectively. As in Wordle 1,
+    <p>Following-on from 'Wordle 1: implementing the Wordle puzzle logic', in this worksheet
+    your challenge is to implement a <i>reverse</i> game: where <i>you</i> choose the target word,
+    and the computer is given up to six attempts to identify the word, with you marking
+    the letters of each attempt as 'grey', 'yellow', or 'green' 
+    - using the <b>0</b>, <b>1</b>, and <b>2</b> keys, respectively. As in Wordle 1,
     you will start off with some working code that implements the presentation and user-interaction
-    needed for the task but, as you will quickly discover, without any of the core logic needed
-    to choose suitable attempt words.</p>
-
+    needed for the task.</p>
+    
+    <p>Before we start, you need to understand the following points, which apply both to this implementation and also to the 
+      <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">official online Wordle puzzle</a>:
+      <ul>
+        <li>This list of words that are accepted as valid <i>attempt</i> words, has over 15,000 words. 
+          Some of them are very obscure words that most people would not encounter in everyday usage.</li>
+        <li>The list of words that may be set as <i>target</i> words is much shorter, and the words
+          more widely known. Moreover, the list of target words specifically <i>excludes</i> well-known
+          words that end in <b>S</b> or <b>D</b> <i>where the first four letters would be a word in its own right</i>, 
+          for example <b>BEANS</b>, <b>CHEWS</b>, or <b>LOVED</b>. These rules are worth knowing as a players,
+            and are important to the program we are going to write.</li>
+        <li>The official online Wordle puzzle offers a 'hard mode' (specified via the 'settings' button, 
+          which looks like a gear wheel).
+          In hard mode, all your attempt words must be consistent with the marks awarded to previous attempts. 
+          Paradoxically, although hard mode can be harder for human players, it is slightly easier to write
+          an automated solver that works in this way.</li>
+      </ul>
+    </p>
     <ul>
-      <li>Before we start, you need to understand the following points, which apply both to this implementation and also to the 
-        <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">official online Wordle puzzle</a>:
-        <ul>
-          <li>This list of words that are accepted as valid <i>attempt</i> words, has over 15,000 words. 
-            Some of them are very obscure words that most people would never have encountered in everyday usage.</li>
-          <li>However, the list of words that may be set as <i>target</i> words is much shorter, consisting only of words
-            likely to be recognised by most adults. Moreover, the list of target words specifically <i>excludes</i> well-known
-            words that end in 'S' or 'D' <i>where the first four letters would be a word in its own right</i>, 
-            for example <b>BEANS</b>, <b>CHEWS</b>, or <b>LOVED</b>. Some people who play Wordle regularly are not aware
-            of these facts - which can be helpful when playing, but are also important to the program we are going to write.</li>
-          <li>The official online Wordle puzzle offers a 'hard mode' (specified via the 'settings', which looks like a gear wheel).
-            In hard mode, all your attempt words must be consistent with the marks awarded to previous attempts. 
-            Paradoxically, although hard mode can be harder for human players, it is slightly easier to write
-            an automated solver that works in this way.</li>
-      </ul></li>
       <li>
-        <load>TODO Load the starting code</load> and then <b>run</b> the program
+        <load file="wordle_2begin.elan">Load the starting code</load> and then <b>run</b> the program
       </li>  
       <li>Note that the computer's first attempt is <b>ARISE</b>
-        - a first attempt favoured by some human players. You can see that this is defined in instruction <b>56</b>:
-      <codeblock>
-        constant firstAttempt set to "ARISE"
-      </codeblock>
-      so we could change this to a different word, but leave it as-is for now.</li>
+        - which is also favoured by some human players. You can see that this is defined in instruction <b>56</b>:
+          <codeblock>
+            constant firstAttempt set to "ARISE"
+          </codeblock>
+        We <i>could</i> change this to a different word; but we'll leave it as-is for now.
+      </li>
       <li>
         Let's say that the 'target' word (picked by us - for the computer to identify) is <b>STAGE</b>. 
-        The computer's first attempt should be marked: Yellow, Grey, Grey, Yellow, Green, but to 
-        enter these marks we type in <b>10012</b> - the same coding that you used in the Wordle 1 project.
-        Go ahead and enter those values, remembring that you can use <b>Backspace</b> to correct a mistake,
-        and when you have all five letters coloured correctly, press <b>Enter</b>, at which point the
-        computer will make its second attempt.
+        The computer's first attempt should be marked: <i>Yellow, Grey, Grey, Yellow, Green</i> but to 
+        enter these marks we type in <b>10012</b> - the same encoding that you used in the Wordle 1 project.
+        Go ahead and enter those values, remembering that you can use <b>Backspace</b> to correct a mistake.
+        When you have all five letters coloured correctly, press <b>Enter</b>, at which point the
+        computer will display its second attempt.
         <question>What word has the computer picked for its second attempt?</question>    
       </li>
-    <li>Similar to the Wordle 1 worksheet, you will quickly realise that the initial code correctly
-      implements the <i>presentation</i> and <i>user-interation</i> for the reverse game, but lacks the
-      core logic needed to pick the next attempt word - so it always guesses the same word!  <
-      Look at the <code>procedure</code> <el-method>playReverseGame</el-method>, which starts at instruction
-      <b>57</b>. In instruction <b>59</b> a <i>variable</i> named <code>attempt</code> is initialised to the
-      constant value <code>firstAttempt</code>, but this variable is never thereafter <code>set</code> to a
-      a different word. Given that the target word must of one of 2315 possible answers, the computer has a chance of getting
-      the right answer within six attempts of just 1/2315.
-    </li>
-    <li>The first thing we will do is change the word with each attempt, to a random choice from all the possible answers.
-      This still won't be a sensible strategy, and it will only <i>marginally</i> improve the chances of
-      getting the target within six attempts, but it is just to gain some familiarity with the code. So...
-    </li>
-    <li>Insert a new instruction within the <code>while</code> loop in <el-method>playReverseGame</el-method></el-method>
-    just after the <el-kw>end if</el-kw> that will set <code>attempt</code> to a new word, randomly selected
-    from  <code>possible</code> - which is a <el-type>List</el-type> containing all 2,315 possible answers.
-  </li>
-  </ul>
+      <li>Similar to the Wordle 1 worksheet, the initial code correctly
+        implements the <i>presentation</i> and <i>user-interation</i> for the reverse game, but lacks the
+        core logic needed to pick the next attempt word - so it always guesses the same word!</li>
+      <li>Look at the <code>procedure</code> <el-method>playReverseGame</el-method>, which starts at instruction
+        <b>57</b>. In instruction <b>59</b> a variable named <code>attempt</code> is initialised to the
+        constant value <code>firstAttempt</code>, but this variable is never thereafter <code>set</code> to a
+        a different word. Given that the target word must of one of 2315 possible answers, the computer has a chance of getting
+        the right answer within six attempts of just 1/2315.
+      </li>
+      <li>The first thing we will do is change the word with each attempt, to a random choice from all the possible answers.
+        This still won't be a sensible strategy, and it will only <i>marginally</i> improve the chances of
+        getting the target within six attempts, but it is just to gain some familiarity with the code. So...
+      </li>
+      <li>Insert a new instruction within the <code>while</code> loop in <el-method>playReverseGame</el-method></el-method>
+      just <i>before</i> the <el-kw>end if</el-kw>. The new instruction should set <code>attempt</code> to a new word, randomly selected
+      from <code>possible</code> - which is a <el-type>List</el-type> containing all 2,315 possible answers.
+      </li>
+    </ul>
   <hint>Hint HINTNUMBER: key ideas</hint>
   <content>
     <ul>
       <li>If you need help on generating random numbers, <help>LibRef.html#SystemMethods</help>.</li>
-      <li>You will need to generate a random number that is a valid index into the <code>possible</code> list.</li>
+      <li>You will need to generate a random number that is a valid index within the range of the <code>possible</code> list.</li>
     </ul>
   </content>
   <hint>Hint HINTNUMBER: the index</hint>
@@ -107,33 +109,31 @@
 
   <p>When you have implemented this change, run the program and check that it is guessing a different word each
   time (though, as the guess is random, there is a <i>small</i> chance of repeating the same word).
-  However, the likelihood that the computer get's to the target within the maximum six attempt is still very low.
+  However, the likelihood that the computer gets to the target within the maximum six attempt is still very low.
   For the next step we need to implement a viable strategy.</p>
 </step>
 <step>
   <h1>Step STEPNUMBER: Start to implement a simple viable strategy</h1>
   <ul>
-  <li>Human players use many different rules and patterns to choose their next attempt word, based on the
+  <li>Human players use many different strategies to choose their next attempt word, based on the
     marks given for previous attempts. However, one of the simplest is to pick <i>any</i> new word
     that would be consistent with the marks given. In other words: if the word we choose as 
-    our next attempt <i>was</i> the target word, then our previous attempts would have received the
-    marks they did receive (when marked against the <i>unknown</i> target word).</li>
+    our next attempt <i>were</i> the target word, then our previous attempts would still have received the
+    marks they did receive.</li>
   <li>We could make that choice from any of the 15,000+ words in the list <code>allWords</code>, 
     but we are going to select our next attempt from just the 2,315 <code>allValidAnswers</code>
     as this should increase the chances of identifying the target. (Incidentally, by adopting this
-    strategy we are, strictly speaking, playing Wordle in 'hard' mode - but let's see how we get on.)</li>
+    strategy we are actually playing Wordle in 'hard' mode.)</li>
   <li>To implement this strategy, after <i>each</i> attempt has been marked, we will filter the list held
     in the variable <code>possible</code> down to only those words that would still be consistent with the
-    mark just given - so with each attempt the list will get smaller. So each new attempt
+    mark just given - so with each attempt the list will get smaller. This means that each new attempt
     will have an increased chance of bring the target word.
   </li>
   <li>
     At the bottom of the code you will see a 'ghosted' test named <el-comment>possibleAnswersAfterAttempt</el-comment>.
     Unghost this test - which will cause a compile error because there is not yet a function named <el-method>possibleAnswersAfterAttempt</el-method>.
   </li>
-  <li>Write a 'stub' implementation of that new method, such that everything compiles.
-  <question>Having written the stub implementaton of <el-method>possibleAnswersAfterAttempt</el-method> the tests will run.
-  How many test cases (each <code>assert</code> defines a test case) are now passing, and what do they have in common?</question></li>
+  <li>Write a 'stub' implementation of that new <i>function</i>, such that everything compiles.
   </ul>
   <hint>Hint HINTNUMBER: defining the function signature</hint>
   <content>
@@ -147,7 +147,7 @@
   </content>
   <hint>Hint HINTNUMBER: defining the stub implementation</hint>
   <content>
-    In a new instruction, define a <i>variable</i> named <code>newPossible</code> initialised to an empty list of strings.
+    Within the function, the first instruction should define a <i>variable</i> named <code>newPossible</code> initialised to a new (empty) list of strings.
     Complete the auto-created <code>return</code> instruction to return that newly defined list.
   </content>
   <hint>Hint HINTNUMBER: the complete function so far</hint>
@@ -159,21 +159,24 @@
     end function
     </code>    
   </content>
+  <p>Having written the stub implementaton of <el-method>possibleAnswersAfterAttempt</el-method> the tests will run.
+  Each <code>assert</code> instruction defines a different 'test case'.</p>
+  <question>How many of the test cases are now passing, and what do they have in common?</question></li>
 </step>
 <step>
   <h1>Step STEPNUMBER: Completing the implementation</h1>
   <p>The next task is to implement <el-method>possibleAnswersAfterAttempt</el-method> such
     that <i>all</i> the associated test cases pass.</p>
-  <p><i>If</i> you have already learned about 'higher order functions', then can apply those techniques here and implement the function as a single instruction. H
-    However, the remainder the Hints below assume that that you will be implementing the code using a loop.</p>
+  <p><i>If</i> you have already learned about 'higher order functions', then can apply those techniques here and implement the function as a single instruction. 
+    However, the Hints below assume that that you will be implementing the code more conventionally, using a loop.</p>
   <hint>Hint HINTNUMBER: initial ideas</hint>
   <content>
     <ul>
       <li>Use a loop to iterate through each of the words in the input list (<code>prior</code>). Think carefully about
       which kind of loop is the most appropriate.</li>
       <li>Make use of the existing function <el-method>markAttempt</el-method> (which is the same as the one you created
-      in the Wordle 1 worksheet - so we are already making good 're-use' of code).</li>
-      <li>Into <el-method>markAttempt</el-method> you will need to pass the <code>attempt</code> value, and the word
+      in the Wordle 1 worksheet).</li>
+      <li>When evaluating <el-method>markAttempt</el-method> you will need to pass the <code>attempt</code> value, and the current word
       from the <code>prior</code> list in the role of the 'target' </li>
       <li>If the mark returned by <el-method>markAttempt</el-method> is the same as the <code>mark</code> provided as a 
       parameter into the <el-method>possibleAnswersAfterAttempt</el-method> function, then the word being evaluated
@@ -183,7 +186,7 @@
   <hint>Hint HINTNUMBER: outline of new instructions</hint>
   <content>
   Though a <code>for</code> loop <i>could</i> be used, the <code>each</code> loop is perfect for the current requirement.
-  In the outline below each <code>something</code> needs to be replaced with specific code.
+  In the outline below every <code>something</code> needs to be replaced with new code.
     <codeblock>
     function possibleAnswersAfterAttempt(prior as List<of String>, attempt as String, mark as String) returns List<of String>
       variable newPossible set to new List<of String>()
@@ -211,7 +214,7 @@
     <codeblock>
       function possibleAnswersAfterAttempt(possible as List<of String>, attempt as String, mark as String) returns List<of String>
         variable newPossible set to new List<of String>()
-        each word in possible
+        each word in prior
           if markAttempt(attempt, word) is mark then
             set newPossible to newPossible.withAppend(word)
           end if
@@ -224,11 +227,11 @@
 </step>
 
 <step>
+  <h1>Step STEPNUMBER: Making use of the filtered list of possible answers</h1>
    <p>Now that we have the ability to filter the list of <code>possible</code> valid answers based on each new marked attempt
-    we can make use of that with the <el-method>playReverseGame</el-method> procedure, and hopefully ourselves
-    with a simple automated solver.
-   <p>Insert a new instruction immediately <i>after</i> instruction 70 i.e. just above the instruction that you added
-    into the procedure earlier (that sets <code>attempt</code> to a random choice). This new instruction should
+    we can make use of that with the <el-method>playReverseGame</el-method> procedure.
+   <p>Insert a new instruction immediately <i>after</i> instruction <b>70</b>> i.e. just <i>above</i> the instruction that you added
+    into the procedure earlier.. This new instruction should
     set the list named <code>possible</code> to the new, filtered, list that results from evaluating the
     <el-method>possibleAnswersAfterAttempt</el-method> function, passing in suitable arguments.</p>
   <hint>Hint HINTNUMBER: the expression to evaluate the filtered version of the list</hint>
@@ -263,10 +266,10 @@
     mark the computer's attempts against the same target word that we used at the start of this worksheet: <b>STAGE</b>.</p>
   <question>Does the computer get to the word within six attempts?</question>
   <p>Now run the puzzle three more times - choosing a different target word in each case. <i>Important</i>:
-  you can pick any <i>well-known</i> five letter word - provided that it is <i>not</i> a shorted word that
+  you can pick any <i>well-known</i> five letter word - provided that it is <i>not</i> a shorter word
   to which <b>S</b> or <b>D</b> has been appended (the official Wordle puzzle never sets such words as
   the target, either).</p>
-  <question>Write down the three target words that you selected and, in each case write down the number of attempts
+  <question>Record below the three target words that you selected and, in each case write down the number of attempts
     the computer took to solve the puzzle, or 'failed' if it did not solve it within six attempts.
   </question>
   <p><b>QURSH</b> is a real word, and <i>may</i> be used as an <i>attempt</i> word 
@@ -279,20 +282,21 @@
   <h1>STEPNUMBER: Two small refinements</h1>
   <p>We will make these two small refinements in one go:
   <ul>
-    <li>Safely guard against an unsolvable puzzle - instead of it resulting in a run-time error.</li>
+    <li>Safely guard against an unsolvable puzzle - instead of it resulting in a run-time error as you saw.</li>
     <li>Instead of selecting the next attempt from <code>possible</code> <i>randomly</i>, just select
     the <i>first</i> possible word - so that the algorithm is 'deterministic' (repeatable).</li>
   </ul>
   </p>
+  <p>So...</p>
   <ul>
     <li><i>Delete</i> the following instruction (we'll replace it with something else, lower down):
     <codeblock>
       set attempt to possible[randomInt(0, possible.length() - 1)]
     </codeblock></li>
-    <li>Within the <el-method>playReverseGame</el-method> procedure, <i>after</i> <el-kw>end if</el-kw> but before <el-kw>end while</el-kw>
+    <li>Within the <el-method>playReverseGame</el-method> procedure, <i>after</i> <el-kw>end if</el-kw> but <i>before</i> <el-kw>end while</el-kw>
       add a conditional instruction that tests whether there is at least one word in the latest filtered version of <code>possible</code>.
       If there <i>is</i>> then set <code>attempt</code> to the <i>first</i> word in that list; if not then print the message 
-      "No possible answer matches marks so far." and set <code>attemptNo</code> to 6 - an easy to end the program.</li>
+      "No possible answer matches marks so far" and set <code>attemptNo</code> to 6 - the easiest way to end the program.</li>
   </ul>
   <hint>Hint HINTNUMBER: outline version of the new instructions</hint>
   <content>
@@ -327,7 +331,7 @@
           if possible.length() > 0 then
             set attempt to possible[0]
           else
-            print "No possible answer matches marks so far."
+            print "No possible answer matches marks so far"
             set attemptNo to 6
           end if
         end while
@@ -335,7 +339,9 @@
     </code>
   </content>
   <p>When you have completed these changes, run the program and test it: three times against <i>different</i> valid target words
-  and once against <b>QURSH</b> or another very obscure 5-letter word.</p>
+  and once against <b>QURSH</b> or another very obscure 5-letter word.</p> 
+
+  <p>Note that you might also the the message "No possible answer matches marks so far" if you mark any attempts <i>incorrectly</i>.</p>
 </step>
 <final>
   <h1>Congratulations! Worksheet completed.</h1>
@@ -353,7 +359,7 @@
   <p>Meantime, if you have time, explore any of the following suggestion optional extensions to the current code.</p>
   <ul>
     <li>
-      <load>TODO load the complete source code</load>
+      <load file="wordle_2source.elan">Load the complete source code</load>
       and then explore how the presentation and interaction are managed.</li>
     <li>In that source code you will see that the <code>main</code> routine just calls <el-method>playReverseGame</el-method>. You will
     also see that the <el-method>playGame</el-method> (used in the previous worksheet) is still there. So you could modifer
