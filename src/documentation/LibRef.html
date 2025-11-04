@@ -245,7 +245,7 @@ in the range:</li>
 <ul>
   <li>When typing from the keyboard into a literal string all the basic ASCII characters (0x20 to 0x7e) and' &pound;' can be input.
    You cannot use Alt-numeric-keypad to enter accented letters or other special characters in the range 0x80 to 0xff.</li>
- <li>You can, however, copy any text from outide Elan and paste it into a string, whether ASCII, extended ASCII or UTF-8 encoded.</li>
+ <li>You can, however, copy any text from outside Elan and paste it into a string, whether ASCII, extended ASCII or UTF-8 encoded.</li>
  <li>To insert a character from the full range, you use its Unicode (codepoint) value, in decimal or hexadecimal,
   by means of function <a href="#unicode"><el-method>unicode</el-method></a>:
   <el-code>
@@ -2944,7 +2944,7 @@ All the maths functions take a <el-type>Float</el-type> argument and return a <e
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
-<p>The result of <el-method>bitNot</el-method>(<el-id>a</el-id>) being <el-code>-14</el-code> , when <el-code><el-id>a</el-id></el-code> is <el-code>13</el-code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as<br><el-code>00000000000000000000000000001101</el-code>, and applying <el-method>bitNot</el-method> gives<br><el-code>11111111111111111111111111110010 </el-code>which is the value <el-code>-14 </el-code>in signed two&#8217;s complement format,<br> the leftmost bit being the sign (<el-code>0</el-code> positive, <el-code>1</el-code> negative).</p>
+<p>The result of <el-method>bitNot</el-method>(<el-id>a</el-id>) being <el-code>-14</el-code> , when <el-code><el-id>a</el-id></el-code> is <el-code>13</el-code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as<br><el-code>00000000000000000000000000001101</el-code>, and applying <el-method>bitNot</el-method> gives<br><el-code>11111111111111111111111111110010 </el-code>which is the value <el-code>-14 </el-code>in signed two's complement format,<br> the left-most bit being the sign (<el-code>0</el-code> positive, <el-code>1</el-code> negative).</p>
 <hr>
 </div></div>
 
