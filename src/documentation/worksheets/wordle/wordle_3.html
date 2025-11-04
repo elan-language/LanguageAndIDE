@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+
+  <head>
+      <meta http-equiv="Cache-Control" content="no-store" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
+      <title>Wordle 3: analysing the effectiveness of the solver</title>
+  </head>
+
+  <body>
+    <div id="worksheet">
+    <div class="docTitle">Wordle 3: analysing the effectiveness of the solver</div>
+
+    <ol>
+        <li><label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
+      <li>Set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</li>
+      <li class="transient"><button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span></li>
+    </ol>
+
+    <div class="license">
+      <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+      This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
+          <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+        You may freely make and distribute copies of this worksheet <i>as is</i>, but if you <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+        Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
+    </div> 
+      
+<div class="step" id="step1">
+    <h1>Step 1: introduction</h1>
+    <p>Following-on from 'Wordle 2: writing an automated solver', in this worksheet your challenge
+      is to write an analyser that can evaluate:
+      </p><ol>
+        <li>Just how effective the automated solver is at solving puzzles. This will be
+          done by getting it attempt to solve all 2,315 of the possible target words, and measuring
+          the percentage that it solves within six attempts and, for those successful cases,
+          the average number of attempts required.
+        </li>
+        <li>Whether <b>ARISE</b> is the best starting word or, if not, what is the best
+        starting word.</li>
+      </ol>
+    <p></p>
+
+    <p><button class="load" id="load1-0">Load the starting code</button></p><div hidden=""></div> and note the following:
+      <p></p><ul>
+        <li>Underneath all the <el-code><el-kw>import</el-kw></el-code>s you will see all the code you have written
+        in the previous projects.</li>
+        <li>The new code currently has no <el-code><el-kw>main</el-kw></el-code> routine - but you will be adding one.</li>
+        <li>There are two ghosted tests at the bottom, each covering several test cases
+          and referring to functions that do not yet exist, but you will be writing.
+        </li>
+      </ul>
+    <p></p>
+<label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step2">
+  <h1>Step 2: introduction</h1>
+  <ul>
+    <li></li>
+  </ul>
+  <div class="hint" id="hint2-1" data-hint="CiAg">Hint 2-1: key ideas</div>
+<div class="content" id="hint2-1content"></div>
+<label class="done" for="done2">Step Completed</label><input class="step-complete" type="checkbox" id="done2"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<final>
+  <h1>Congratulations! Worksheet completed</h1>
+  
+</final>
+
+
+  
+  <div hidden="" id="hash"></div>
+  <div hidden="" id="changes"></div>
+
+    <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
+  </body>
+</html>

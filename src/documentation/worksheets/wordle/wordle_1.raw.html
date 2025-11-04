@@ -6,8 +6,7 @@
         <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">official Wordle site</a>
         and solve today's puzzle, so you know how it works.</p>
     <ul>
-        <li>Click this button:  <button class="load" value="documentation/worksheets/wordle/wordle_1begin.elan">Load</button>
-          to load the starting code into the code editor, and then immediately <b>run</b> the program.</li>
+        <li><load file="wordle_1begin.elan">Load the starting code</load> and then immediately <b>run</b> the program.</li>
         <li>On the <b>Display</b> you will see 
         a facsimile of the puzzle, and if you enter your first guess
         (five letters - using <b>Backspace</b> if you make a mistake - then <b>Enter</b>) each
@@ -60,7 +59,7 @@
         you must build a new string out of parts of the original with necessary changes incorporated.</li>
       <li>  
         Use 'index ranges' to help build this new string from parts of the original.
-        If you are not familiar with 'index ranges': look them up in <b>Library Reference - Value Types - String</b> within the <b>Help</b> tab </li>
+        If you are not familiar with 'index ranges': look them up in <help>LangRef.html#IndexedValue</help> </li>
     </ul>
   <hint>Hint HINTNUMBER: more detail</hint>
   <content>
@@ -443,6 +442,8 @@ end function
   </p>
 </step>
 <final>
+  <h3>Congratulations! Worksheet completed</h3> 
+
   <p>Perhaps you were surprised that in fixing all the 'Only greens' and 'Only yellows' tests, the 'Mixed' tests
     also pass. This sort of bonus doesn't always happen, but it shows the benefits of having plenty of test cases.
     As a result of this:
@@ -459,9 +460,8 @@ end function
   If you have time, you might like to consider undertaking one or more of the following suggested improvements/extensions:
   <b>Optional refinements</b>
   <ul>
-    <li>You now have the option to <button class="load" value="documentation/worksheets/wordle/wordle_1source.elan">Load</button>
-      the full source code of the program you have been improving (now with
-      no <el-kw>import</el-kw> instructions). The initial constants are huge, so use the <b>Outline</b> button to make it easier to explore.
+    <li>You now have the option to <load file="wordle_1source.elan">Load the full source code</load>
+       of the finished program. The initial constants are huge, so use the <b>Outline</b> button to make it easier to explore.
       This will allow you to see how it is implementing the functionality
        that you haven't written - for example the user-interface. 
        You can save this source code to your own local file and then modify it as you wish,
@@ -471,7 +471,7 @@ end function
     <li>Keep track of how many of the puzzles the user solved within six attempts, and how many were not solved.
       Print this at the end of the run e.g. 'You solved 7 out of 10 puzzles within six attempts'. Note that
       to get the results back to <code>main</code> from the <el-method>playGame</el-method> procedure
-      you will need to use an <code>out</code> parameters. (See <b>Help > Language Reference > Global Instructions > Procedure</b>)</li>
+      you will need to use an <code>out</code> parameters. <help>LangRef.html#procedure</help></li>
     <li>For the puzzles successfully solved, keep track of the number of attempts taken and, at the end of the
       run of puzzle, calculate the average number of attempts, displayed to, say, 2 decimal places.</li>
     <li>Turn it onto a two player game, where each player enters their name, and each is asked to solve a puzzle in turn (with the target
