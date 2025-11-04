@@ -9,7 +9,6 @@ import {
   processSteps,
 } from "../src/tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../src/tools/parserConstants";
-import { ignore_test } from "./compiler/compiler-test-helpers";
 
 suite("process worksheets", () => {
   test("process file with header", async () => {
@@ -180,8 +179,8 @@ end constructor`;
 
     const actual = await processSteps(steps);
 
-    const expected = `<div class="step" id="step0"><content>0</content><label class="done" for="done0">Step Completed</label><input class="step-complete" type="checkbox" id="done0"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-<div class="step" id="step1"><content>step1</content><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>`;
+    const expected = `<div class="step" id="step1"><content>1</content><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<div class="step" id="step2"><content>step2</content><label class="done" for="done2">Step Completed</label><input class="step-complete" type="checkbox" id="done2"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>`;
 
     assert.strictEqual(actual, expected);
   });

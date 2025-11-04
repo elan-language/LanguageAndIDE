@@ -246,17 +246,17 @@
 <textarea class="question" id="question7-0"></textarea>
   <p></p>
 <label class="done" for="done7">Step Completed</label><input class="step-complete" type="checkbox" id="done7"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-<div class="step" id="step8">
+<final>
   <p>Perhaps you were surprised that in fixing all the 'Only greens' and 'Only yellows' tests, the 'Mixed' tests
     also pass. This sort of bonus doesn't always happen, but it shows the benefits of having plenty of test cases.
     As a result of this:
-    </p><ul>
+    <ul>
       <li>Congratulations! You have completed the worksheet.</li>
       <li>You can now <b>run</b> the program again - and this time it will work correctly.</li>
     </ul>
     you will find that each time you run it the computer picks a different target work - selected at random
     from 2,309 valid answer words.
-  <p></p>
+  </p>
 
   <h3>Optional further work</h3>
 
@@ -271,19 +271,17 @@
        You can save this source code to your own local file and then modify it as you wish,
       for example to implement one of the following...</li>
     <li>Create a loop within <el-code><el-kw>main</el-kw></el-code> to allow the user to solve multiple puzzles in a row. 
-      You might find this instruction useful: <el-code><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-method>pressAnyKeyToContinue</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code></li>
+      You might find this instruction useful: <el-code><el-statement class="none" id='call4' tabindex="-1" ><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-method>pressAnyKeyToContinue</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code></li>
     <li>Keep track of how many of the puzzles the user solved within six attempts, and how many were not solved.
       Print this at the end of the run e.g. 'You solved 7 out of 10 puzzles within six attempts'. Note that
       to get the results back to <el-code><el-kw>main</el-kw></el-code> from the <el-method>playGame</el-method> procedure
-      you will need to use an <el-code><el-kw>out</el-kw></el-code> parameters. (See <b>Help &gt; Language Reference &gt; Global Instructions &gt; Procedure</b>)</li>
+      you will need to use an <el-code><el-kw>out</el-kw></el-code> parameters. (See <b>Help > Language Reference > Global Instructions > Procedure</b>)</li>
     <li>For the puzzles successfully solved, keep track of the number of attempts taken and, at the end of the
       run of puzzle, calculate the average number of attempts, displayed to, say, 2 decimal places.</li>
     <li>Turn it onto a two player game, where each player enters their name, and each is asked to solve a puzzle in turn (with the target
       words being different for each). Show the cumulative scores for each.</li>
   </ul>
-
-  (Clicking <b>Step Completed</b> below is optional - it doesn't change anything. Either way your worksheet is completed and you can reload your worksheet at a future point. )
- <label class="done" for="done8">Step Completed</label><input class="step-complete" type="checkbox" id="done8"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div> 
+</final> 
   <div hidden="" id="hash"></div>
   <div hidden="" id="changes"></div>
 
