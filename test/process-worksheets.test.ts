@@ -3,6 +3,7 @@ import { processWorksheetsInDirectory } from "../src/build-scripts/preprocess-wo
 import { processInnerCode } from "../src/tools/codeParser";
 import {
   processCode,
+  processFinals,
   processHelps,
   processHints,
   processLoads,
@@ -182,6 +183,16 @@ end constructor`;
 
     const expected = `<div class="step" id="step1"><content>1</content><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 <div class="step" id="step2"><content>step2</content><label class="done" for="done2">Step Completed</label><input class="step-complete" type="checkbox" id="done2"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>`;
+
+    assert.strictEqual(actual, expected);
+  });
+
+  test("process final", async () => {
+    const steps = `<final><content>FINALNUMBER FINALID</content></final>`;
+
+    const actual = await processFinals(steps);
+
+    const expected = `<div class="final" id="final1"><content>1 final1</content></div>`;
 
     assert.strictEqual(actual, expected);
   });
