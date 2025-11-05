@@ -306,12 +306,6 @@ window.addEventListener("message", (m: MessageEvent<string>) => {
         return d;
       });
 
-      // const text = diff.reduce((p, part) => {
-      //   // green for additions, red for deletions
-      //   const text = part.added ? "+" + part.value : part.removed ? "-" + part.value : part.value;
-      //   return `${p}${text}\n`;
-      // }, "");
-
       const text = Diff.convertChangesToXML(diff);
 
       const diffDiv = document.createElement("div");
@@ -319,6 +313,8 @@ window.addEventListener("message", (m: MessageEvent<string>) => {
       diffDiv.innerHTML = text;
 
       document.getElementById(id)?.after(diffDiv);
+
+      diffDiv.addEventListener("click", () => diffDiv.classList.toggle("collapsed"));
     }
   }
 });
