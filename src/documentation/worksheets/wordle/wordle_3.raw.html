@@ -4,20 +4,20 @@
     <p>Following-on from 'Wordle 2: writing an automated solver', in this worksheet your challenge
       is to write an analyser that can evaluate:
       <ol>
-        <li>Just how effective the automated solver is at solving puzzles. This will be
-          done by getting it attempt to solve all 2,315 of the possible target words, and measuring
-          the percentage that it solves within six attempts and, for those successful cases,
-          the average number of attempts required.
+        <li>Just how effective that automated solver is at solving puzzles, 
+          by getting it attempt to solve all 2,315 of the possible target words, and measuring
+          the percentage that it solves within six attempts. For those successful cases,
+          it should also calculate the average number of attempts required.
         </li>
-        <li>Whether <b>ARISE</b> is the best starting word or, if not, what is the best
-        starting word.</li>
+        <li>Whether <b>ARISE</b> is the best starting word for that algorithm or, if not, 
+          what is the best starting word.</li>
       </ol>
     </p>
 
     <p><load file="">Load the starting code</load> and note the following:
       <ul>
         <li>Underneath all the <code>import</code>s you will see all the code you have written
-        in the previous projects.</li>
+        in the previous projects, plus some new code that you will be using and/or modifying in this worksheet.</li>
         <li>The new code currently has no <code>main</code> routine - but you will be adding one.</li>
         <li>There are two ghosted tests at the bottom, each covering several test cases
           and referring to functions that do not yet exist, but you will be writing.
@@ -27,13 +27,145 @@
 </step>
 
 <step>
-  <h1>Step STEPNUMBER: introduction</h1>
+  <h1>Step STEPNUMBER: implement 'attemptsNeededToSolve'</h1>
   <ul>
-    <li></li>
+    <li>Unghost the test named <el-comment>attemptsNeededToSolve</el-comment>. This will
+      cause the tests to run, but they will all fail, and it is easy to see why because
+      the function <el-method>attemptsNeededToSolve</el-method> immediately above the
+      test is just a 'stub' - the minimum code needed to compile.</li>
+    <li>A proper implementation for <el-method>attemptsNeededToSolve</el-method> will
+      re-use quite a bit of the logic from <el-method>playReverseGame</el-method>
+      but with these differences:
+      <ul>
+        <li>it is a <i>function</i>: it will not
+          not result in anything being <i>displayed</i>, so there is no need for the
+          <code>call </code><el-method>putAttemptIntoGrid</el-method>, not indeed to create
+          <code>grid</code> in the first place.
+       </li>
+        <li>it does not need to, and indeed <i>cannot</i> ask the user for input, so the 
+          it should not have the <code>call </code><el-method>putAttemptIntoGrid</el-method> instruction.
+          Instead, we can set the <code>mark</code> by evaluating the <el-method>markAttempt</el-method>
+          function that we wrote in Wordle 1. However, we don't then need to use two instructions
+          to obtain the mark - we can write it as a single <code>let</code> instruction. (It <i>could</i>
+          still be a <code>variable</code>, but we have no need to re-assign it because it is
+          define anew each time around the <code>while</code> loop, anyway.
+        </li>
+        <li>The <code>while</code> loop test only for whether the puzzle is <code>solved</code> (as in el-method>playReverseGame</el-method>)
+        because we want to know how many attempts it takes <i>even if that is 7 or more</i> - though any such case
+        will eventually be counted as a failure to solve the puzzle.</li>
+        <li>Because we will not be updating the display grid (where rows and columns start from zero),
+          <code>attemptNo</code> should be initialised to <code>1</code> rather than <code>0</code>,
+          and it should be incremented by <code>1</code> whenever the <code>mark</code> for an attempt
+          is not all-greens.
+        </li>
+      </ul>
+    </li>
+    <li>Apart from those constraints, the rest of the logic required for <el-method>attemptsNeededToSolve</el-method> exists in
+      <el-method>playReverseGame</el-method> and you will be able to copy several whole instructions from one to the other.
+      Have a go at this now - using available hints only if you need them.
+    </li>
   </ul>
-  <hint>Hint HINTNUMBER: key ideas</hint>
+  <hint>Hint HINTNUMBER: implementation in outline form</hint>
   <content>
+    <codeblock>
+      function attemptsNeededToSolve(target as String, firstAttempt as String) returns Int
+        variable possible set to something
+        variable attempt set to something
+        variable attemptNo set to something
+        variable solved set to something
+        while something
+          let mark be something
+          if something then
+            set solved to something
+          else
+            set possible to something
+            set attemptNo to something
+            set attempt to something
+          end if
+        end while
+        return attemptNo
+      end function
+    </codeblock>
+   <p>The order of the four <code>variable</code> definitions does not matter, and they are
+    all the same as in <el-method>playReverseGame</el-method> except for one, for which the required
+    the difference was stated earlier.
   </content>
+  <hint>Hint HINTNUMBER: complete implementation</hint>
+  <content>
+    <codeblock>
+      function attemptsNeededToSolve(target as String, firstAttempt as String) returns Int
+        variable possible set to allValidAnswers.split(" ")
+        variable attempt set to firstAttempt
+        variable attemptNo set to 1
+        variable solved set to false
+        while (not solved)
+          let mark be markAttempt(attempt, target)
+          if mark is "22222" then
+            set solved to true
+          else
+            set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
+            set attemptNo to attemptNo + 1
+            set attempt to possible[0]
+          end if
+        end while
+        return attemptNo
+      end function
+    </codeblock>
+  </content>
+</step>
+<step>
+  <h1>Step STEPNUMBER: write a main to use the new function</h1>
+  <p>Write a <code>main</code> routine that:
+  <ul>
+    <li>asks the user to enter a target word,</li>
+    <li>evaluates the <el-method>attemptsNeededToSolve</el-method> function for this target 
+      using <b>ARISE</b> as the first attempt,</li>
+    <li>prints the result in the form e.g. Target word QUITE took 4 attempts to solve</li>
+  </ul>
+  </p>
+  <hint>Hint HINTNUMBER: outline instructions</hint>
+  <content>
+    <code>
+      main
+        let target be something
+        let attempts be something
+        print something
+      end main
+    </code>
+  </content>
+  <hint>Hint HINTNUMBER: the input and output</hint>
+  <content>
+    <ul>
+      <li>You can use the system method <el-method>inputString</el-method>, but better
+      still is to use <el-method>inputStringWithLimits</el-method> to ensure that
+      user enters a 5-letter word. In both cases you must supply a 'prompt' string
+      that tells the user what is expected. For more info: <help>LibRef.html#SystemMethods</help></li>
+      <li>It would also be a good idea to call the dot-method <el-method>upperCase</el-method>
+      on the result of the input, rather than trusting the user to enter the word in upper case. 
+      <help>LibRef.html#String</help></li>
+      <li>The best way to generate the required output is with an 'interpolated string'. <help>LibRef.html#String</help></li>
+    </ul>
+  </content>
+  <hint>Hint HINTNUMBER: complete main routine</hint>
+  <content>
+    <code>
+      main
+        let target be inputStringWithLimits("Enter a target word", 5, 5).upperCase()
+        let attempts be attemptsNeededToSolve(target, "ARISE")
+        print "Target word {target} took {attempts} attempts to solve"
+      end main    
+    </code>
+  </content>
+  <p>When you have this implemented run the program to find out how many attempts it takes
+    to identify the target words <b>CHURN</b> and then <b>FIZZY</b>.
+    <question>Record your results here:</question>
+  </p>
+</step>
+<step>
+  <h1>Step STEPNUMBER: analyse the algorithm for all potential target words</h1>
+  <p>To identify the effectiveness of a Wordle solver we need to test it against <i>all</i> 2,315
+  valid target words, and from this determine the percentage of target words that it was
+  able to identify in 6 or fewer attempts, and, for those that were identif </p>
 </step>
 <final>
   <h1>Congratulations! Worksheet completed</h1>
