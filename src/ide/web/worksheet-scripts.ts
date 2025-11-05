@@ -292,7 +292,7 @@ window.addEventListener("message", (m: MessageEvent<string>) => {
             .filter((s) => s);
 
           if (all.length > 2) {
-            const result = [[all[0], "...", [all.length - 1]]];
+            const result = [all[0], "...", all[all.length - 1]];
 
             return {
               added: false,
