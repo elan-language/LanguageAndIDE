@@ -59,6 +59,7 @@ function wrapInWorkSheetBoilerPlate(content: string, title: string) {
         Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
     </div> 
       ${content}
+    <script src="https://elan-language.github.io/LanguageAndIDE/diff.js"></script>
     <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
   </body>
 </html>`;
