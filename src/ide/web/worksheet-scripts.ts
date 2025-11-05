@@ -14,6 +14,8 @@ const autosave = document.getElementById("auto-save") as HTMLButtonElement;
 
 let fh: FileSystemFileHandle | undefined;
 
+declare const Diff: any;
+
 if (fh) {
   document.getElementById("worksheet")?.classList.add("saved");
   userName.disabled = true;
@@ -240,6 +242,7 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
 
     cb.after(getTimestamp());
     updateHintsTaken();
+    snapShotCode(cb.id);
     await save();
   });
 }
@@ -257,9 +260,39 @@ for (const step of document.querySelectorAll("div.step") as NodeListOf<HTMLDivEl
   }
 }
 
-window.addEventListener("message", (m) => {
+window.addEventListener("message", (m: MessageEvent<string>) => {
   if (m.data === "hasFocus") {
     scrollToActiveElement();
+  }
+
+  if (m.data.startsWith("code:")) {
+    const idPrefixed = m.data.slice(5);
+    const indexOfColon = idPrefixed.indexOf(":");
+    const id = idPrefixed.slice(0, indexOfColon);
+    const newCode = idPrefixed.slice(indexOfColon + 1);
+
+    const oldCode = localStorage.getItem("code_snapshot") ?? "";
+    localStorage.setItem("code_snapshot", newCode);
+
+    const diff = Diff.diffLines(oldCode, newCode, { newLineIsToken: true }) as {
+      added: boolean;
+      removed: boolean;
+      value: string;
+    }[];
+
+    // const text = diff.reduce((p, part) => {
+    //   // green for additions, red for deletions
+    //   const text = part.added ? "+" + part.value : part.removed ? "-" + part.value : part.value;
+    //   return `${p}${text}\n`;
+    // }, "");
+
+    const text = Diff.convertChangesToXML(diff);
+
+    const diffDiv = document.createElement("div");
+    diffDiv.classList.add("diff");
+    diffDiv.innerText = text;
+
+    document.getElementById(id)?.after(diffDiv);
   }
 });
 
@@ -284,3 +317,7 @@ userName.addEventListener("change", () => {
 });
 
 autosave.disabled = !userName.classList.contains("answered");
+
+function snapShotCode(id: string) {
+  window.parent.postMessage(`snapshot:${id}`, "*");
+}

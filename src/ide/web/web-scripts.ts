@@ -2823,5 +2823,11 @@ window.addEventListener("message", async (m) => {
       helpLink.click();
       helpTab?.click();
     }
+
+    if (m.data.startsWith("snapshot:")) {
+      const id = m.data.slice(9);
+      const code = await file.renderAsSource();
+      worksheetIFrame.contentWindow?.postMessage(`code:${id}:${code}`, "*");
+    }
   }
 });
