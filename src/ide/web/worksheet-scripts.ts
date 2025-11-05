@@ -273,11 +273,38 @@ window.addEventListener("message", (m: MessageEvent<string>) => {
     localStorage.setItem("code_snapshot", newCode);
 
     if (id.startsWith("done") || id.startsWith("hint")) {
-      const diff = Diff.diffLines(oldCode, newCode, { newLineIsToken: true }) as {
+      let diff = Diff.diffLines(oldCode, newCode, { newLineIsToken: true }) as {
         added: boolean;
         removed: boolean;
         value: string;
+        count: number;
       }[];
+
+      diff = diff.map((d) => {
+        if (d.added || d.removed) {
+          return d;
+        }
+
+        if (d.count > 2) {
+          const all = d.value
+            .split("\n")
+            .map((s) => s.trimEnd())
+            .filter((s) => s);
+
+          if (all.length > 2) {
+            const result = [[all[0], "...", [all.length - 1]]];
+
+            return {
+              added: false,
+              removed: false,
+              value: result.join("\n"),
+              count: result.length,
+            };
+          }
+        }
+
+        return d;
+      });
 
       // const text = diff.reduce((p, part) => {
       //   // green for additions, red for deletions
