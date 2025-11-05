@@ -131,20 +131,24 @@ div.final {
     display: block;
 }
 
-div.diff {
-    white-space: pre;
+.diff {
+    white-space: pre; 
+    border: solid 1px black
 }
 
-ins {
+.diff, .diff * {
+    font-family: monospace;
+    font-size: 10px;
+}
+
+.diff ins {
     color: green;
     display: block;
     white-space: pre;
-    text-decoration: none;
 }
 
-del {
+.diff del {
     color: red;
     display: block;
     white-space: pre;
-    text-decoration: none;
 }
