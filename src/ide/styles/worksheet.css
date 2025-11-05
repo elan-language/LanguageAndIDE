@@ -130,3 +130,21 @@ div.final {
 .step.complete + div.final {
     display: block;
 }
+
+div.diff {
+    white-space: pre;
+}
+
+ins {
+    color: green;
+    display: block;
+    white-space: pre;
+    text-decoration: none;
+}
+
+del {
+    color: red;
+    display: block;
+    white-space: pre;
+    text-decoration: none;
+}

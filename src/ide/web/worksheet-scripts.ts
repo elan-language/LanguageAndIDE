@@ -110,9 +110,6 @@ autoSaveButton!.addEventListener("click", async () => {
   } else {
     const suggestedName = document.getElementsByClassName("docTitle")[0].innerHTML;
     fh = await chromeSave(code, suggestedName);
-
-    if (fh) {
-    }
   }
 
   scrollToActiveElement();
@@ -190,6 +187,7 @@ for (const hint of hints as NodeListOf<HTMLDivElement>) {
       hint.classList.add("taken");
       hint.append(getTimestamp());
       updateHintsTaken();
+      snapShotCode(hint.id);
       await save();
     }
   });
@@ -274,32 +272,35 @@ window.addEventListener("message", (m: MessageEvent<string>) => {
     const oldCode = localStorage.getItem("code_snapshot") ?? "";
     localStorage.setItem("code_snapshot", newCode);
 
-    const diff = Diff.diffLines(oldCode, newCode, { newLineIsToken: true }) as {
-      added: boolean;
-      removed: boolean;
-      value: string;
-    }[];
+    if (id.startsWith("done") || id.startsWith("hint")) {
+      const diff = Diff.diffLines(oldCode, newCode, { newLineIsToken: true }) as {
+        added: boolean;
+        removed: boolean;
+        value: string;
+      }[];
 
-    // const text = diff.reduce((p, part) => {
-    //   // green for additions, red for deletions
-    //   const text = part.added ? "+" + part.value : part.removed ? "-" + part.value : part.value;
-    //   return `${p}${text}\n`;
-    // }, "");
+      // const text = diff.reduce((p, part) => {
+      //   // green for additions, red for deletions
+      //   const text = part.added ? "+" + part.value : part.removed ? "-" + part.value : part.value;
+      //   return `${p}${text}\n`;
+      // }, "");
 
-    const text = Diff.convertChangesToXML(diff);
+      const text = Diff.convertChangesToXML(diff);
 
-    const diffDiv = document.createElement("div");
-    diffDiv.classList.add("diff");
-    diffDiv.innerText = text;
+      const diffDiv = document.createElement("div");
+      diffDiv.classList.add("diff");
+      diffDiv.innerHTML = text;
 
-    document.getElementById(id)?.after(diffDiv);
+      document.getElementById(id)?.after(diffDiv);
+    }
   }
 });
 
 for (const b of loads as NodeListOf<HTMLButtonElement>) {
   b.addEventListener("click", (_e) => {
-    const code = b.nextElementSibling?.textContent;
+    const code = b.nextElementSibling?.textContent ?? "";
     window.parent.postMessage(`code:${code}`, "*");
+    localStorage.setItem("code_snapshot", code);
   });
 }
 
@@ -321,3 +322,5 @@ autosave.disabled = !userName.classList.contains("answered");
 function snapShotCode(id: string) {
   window.parent.postMessage(`snapshot:${id}`, "*");
 }
+
+snapShotCode("initial");
