@@ -3,12 +3,14 @@ export const currentHintNumber = "HINTNUMBER";
 export const currentLoadNumber = "LOADNUMBER";
 export const currentAnswerNumber = "ANSWERNUMBER";
 export const currentQuestionNumber = "QUESTIONNUMBER";
+export const currentFinalNumber = "FINALNUMBER";
 
 export const currentStepId = "STEPID";
 export const currentHintId = "HINTID";
 export const currentLoadId = "LOADID";
 export const currentAnswerId = "ANSWERID";
 export const currentQuestionId = "QUESTIONID";
+export const currentFinalId = "FINALID";
 
 export const title = "title";
 export const titleTag = `<${title}>`;
@@ -16,6 +18,9 @@ export const titleEndTag = `</${title}>`;
 export const step = "step";
 export const stepTag = `<${step}>`;
 export const stepEndTag = `</${step}>`;
+export const final = "final";
+export const finalTag = `<${final}>`;
+export const finalEndTag = `</${final}>`;
 export const hint = "hint";
 export const hintTag = `<${hint}>`;
 export const hintEndTag = `</${hint}>`;

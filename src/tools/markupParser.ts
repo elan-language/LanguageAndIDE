@@ -1,6 +1,8 @@
 import { JSDOM } from "jsdom";
 import { processWorksheetCode } from "./codeParser";
 import {
+  currentFinalId,
+  currentFinalNumber,
   currentHintId,
   currentHintNumber,
   currentLoadId,
@@ -9,6 +11,9 @@ import {
   currentQuestionNumber,
   currentStepId,
   currentStepNumber,
+  final,
+  finalEndTag,
+  finalTag,
   help,
   helpEndTag,
   helpTag,
@@ -32,6 +37,36 @@ let currentDir = "";
 
 export function setCurrentDir(dir: string) {
   currentDir = dir;
+}
+
+export async function processFinal(
+  markup: string,
+  finalInstance: number,
+  _unused: number,
+): Promise<string> {
+  const input = new JSDOM(markup);
+  const inDoc = input.window.document;
+  const num = `${finalInstance}`;
+  const id = `${final}${finalInstance}`;
+
+  const output = new JSDOM(`<div class="${final}" id="${id}"></div>`);
+  const outDoc = output.window.document;
+
+  const finalSel = inDoc.querySelector(final);
+
+  const div = outDoc.querySelector("div")!;
+
+  let updated = await processQuestions(finalSel?.innerHTML ?? "", finalInstance);
+  updated = await processLoads(updated, finalInstance);
+  updated = await processHelps(updated, finalInstance);
+
+  updated = updated.replaceAll(currentFinalNumber, num).replaceAll(currentFinalId, id);
+
+  div.innerHTML = updated;
+
+  const finalHtml = div.outerHTML;
+
+  return finalHtml;
 }
 
 export async function processStep(
@@ -317,6 +352,22 @@ async function processEachStepInstance(
   );
 }
 
+async function processEachFinalInstance(
+  initialCode: string,
+  startAt: number,
+  instance: number,
+): Promise<[string, number, number]> {
+  return await processEachInstance(
+    initialCode,
+    startAt,
+    finalTag,
+    finalEndTag,
+    instance,
+    0,
+    processFinal,
+  );
+}
+
 async function processEachCodeInstance(
   initialCode: string,
   startAt: number,
@@ -460,6 +511,25 @@ export async function processSteps(source: string) {
       stepInstance,
     );
     stepInstance++;
+  }
+
+  return applyChanges(source, updates);
+}
+
+export async function processFinals(source: string) {
+  const updates: [string, number, number][] = [];
+  let finalInstance = 1;
+
+  let [updatedCode, codeStart, codeEnd] = await processEachFinalInstance(source, 0, finalInstance);
+  finalInstance++;
+  while (updatedCode !== "") {
+    updates.push([updatedCode, codeStart, codeEnd]);
+    [updatedCode, codeStart, codeEnd] = await processEachFinalInstance(
+      source,
+      codeEnd,
+      finalInstance,
+    );
+    finalInstance++;
   }
 
   return applyChanges(source, updates);
