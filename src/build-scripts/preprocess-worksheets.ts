@@ -1,5 +1,11 @@
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
-import { processCode, processSteps, processTitle, setCurrentDir } from "../tools/markupParser";
+import {
+  processCode,
+  processFinals,
+  processSteps,
+  processTitle,
+  setCurrentDir,
+} from "../tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../tools/parserConstants";
 
 const rootdir = `${__dirname}/../../..`;
@@ -74,10 +80,9 @@ export async function processWorksheet(fileName: string) {
   let updatedContent = await processCode(source, codeTag, codeEndTag);
   updatedContent = await processCode(updatedContent, codeBlockTag, codeBlockEndTag);
   updatedContent = await processSteps(updatedContent);
+  updatedContent = await processFinals(updatedContent);
 
   updatedContent = wrapInWorkSheetBoilerPlate(updatedContent, title);
-
-  //updatedContent = toDiffableHtml(updatedContent);
 
   updateFileNew(fileName.replace(".raw", ""), updatedContent);
 }

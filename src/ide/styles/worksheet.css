@@ -123,10 +123,10 @@ el-fr {
     display: none; /* Because the instruction numbers start from 1 for each snippet, which is misleading */
 }
 
-final {
+div.final {
     display: none;
 }
 
-.step.complete + final {
+.step.complete + div.final {
     display: block;
 }
