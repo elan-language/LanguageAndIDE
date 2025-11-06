@@ -8,13 +8,13 @@
     <ul>
         <li><load file="wordle_1begin.elan">Load the starting code</load> and then immediately <b>run</b> the program.</li>
         <li>On the <b>Display</b> you will see 
-        a facsimile of the puzzle, and if you enter your first guess
+        a facsimile of the puzzle, and if you enter your first attempt
         (five letters - using <b>Backspace</b> if you make a mistake - then <b>Enter</b>) each
-        letter will be marked green, yellow, or grey. But if you continue with further guesses
-        you will quickly discover that it marks <i>every</i> guess word with the same result!
+        letter will be marked green, yellow, or grey. But if you continue with further attemptes
+        you will quickly discover that it marks <i>every</i> attempt word with the same result!
         Though this program has correctly implemented the <i>presentation</i>, and the
         <i>user interactions</i>, of the official puzzle, 
-        it hasn't implemented the core logic of how guesses are marked.</li>
+        it hasn't implemented the core logic of how attemptes are marked.</li>
         <li><b>stop</b> the program</li>
         <li>In the code, look at instruction number 12 - the <el-method>markAttempt</el-method>
         function. Comments within the function body state that the current implementation is just a 'stub' - the minimum code needed
@@ -22,7 +22,7 @@
         a five-character string, as expected: <code>2</code> for an 'in-place' match (green), 
         <code>1</code> for an 'out-of-place' match (yellow), or <code>0</code> for no match (grey). But
         it always returns the same mark, paying no attention to the 
-        <code>attempt</code> word (your guess) or the <code>target</code> word 
+        <code>attempt</code> word (your attempt) or the <code>target</code> word 
         (selected by the computer but hidden from the user).</li>
         <li>Immediately following the <el-method>markAttempt</el-method> function you will see a <code>test</code>
             which has been 'ghosted'. Select the test and <b>unghost</b> (via the context menu).
@@ -452,7 +452,7 @@ end function
       <li>You can now <b>run</b> the program again - and this time it will work correctly.</li>
     </ul>
     you will find that each time you run it the computer picks a different target work - selected at random
-    from 2,309 valid answer words.
+    from 2,309 valid target words.
   </p>
 
   <h3>Optional further work</h3>
@@ -460,7 +460,7 @@ end function
   If you have time, you might like to consider undertaking one or more of the following suggested improvements/extensions:
   <b>Optional refinements</b>
   <ul>
-    <li>You now have the option to <load file="wordle_1source.elan">Load the full source code</load>
+    <li>You now have the option to <load file="wordle_1end.elan">Load the full source code</load>
        of the finished program. The initial constants are huge, so use the <b>Outline</b> button to make it easier to explore.
       This will allow you to see how it is implementing the functionality
        that you haven't written - for example the user-interface. 

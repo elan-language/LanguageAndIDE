@@ -4,40 +4,405 @@
     <p>Following-on from 'Wordle 2: writing an automated solver', in this worksheet your challenge
       is to write an analyser that can evaluate:
       <ol>
-        <li>Just how effective the automated solver is at solving puzzles. This will be
-          done by getting it attempt to solve all 2,315 of the possible target words, and measuring
-          the percentage that it solves within six attempts and, for those successful cases,
-          the average number of attempts required.
+        <li>Just how effective that automated solver is at solving puzzles, 
+          by getting it attempt to solve all 2,315 of the valid target words, and measuring
+          the percentage that it solves within six attempts. For those successful cases,
+          it should also calculate the average number of attempts required.
         </li>
-        <li>Whether <b>ARISE</b> is the best starting word or, if not, what is the best
-        starting word.</li>
+        <li>Whether <b>ARISE</b> is the best starting word for that algorithm or, if not, 
+          what is the best starting word.</li>
       </ol>
     </p>
 
     <p><load file="">Load the starting code</load> and note the following:
       <ul>
         <li>Underneath all the <code>import</code>s you will see all the code you have written
-        in the previous projects.</li>
+        in the previous projects, plus some new code that you will be using and/or modifying in this worksheet.</li>
         <li>The new code currently has no <code>main</code> routine - but you will be adding one.</li>
         <li>There are two ghosted tests at the bottom, each covering several test cases
-          and referring to functions that do not yet exist, but you will be writing.
+          and referring to functions that currently have only 'stub' implementations.
         </li>
       </ul>
     </p>
 </step>
 
 <step>
-  <h1>Step STEPNUMBER: introduction</h1>
+  <h1>Step STEPNUMBER: implement 'attemptsNeededToSolve'</h1>
   <ul>
-    <li></li>
+    <li>Unghost the test named <el-comment>attemptsNeededToSolve</el-comment>. This will
+      cause the tests to run, but they will all fail because
+      the function <el-method>attemptsNeededToSolve</el-method> immediately above the
+      test is just a 'stub' - the minimum code needed to compile.</li>
+    <li>A proper implementation for <el-method>attemptsNeededToSolve</el-method> will
+      re-use quite a bit of the logic from <el-method>playReverseGame</el-method>
+      but with these differences:
+      <ul>
+        <li>it is a <i>function</i>: it will not
+          not result in anything being <i>displayed</i>, so there is no need for the
+          <code>call</code> <el-method>putAttemptIntoGrid</el-method>, nor to create
+          <code>grid</code> in the first place.
+       </li>
+        <li>it does not need to, and indeed <i>cannot</i>, ask the user for input - so
+          it should not have the <code>call</code> <el-method>enterMark</el-method> instruction.
+          Instead, we can get the <code>mark</code> by evaluating the <el-method>markAttempt</el-method>
+          function that we wrote in Wordle 1. However, we don't then need to use two instructions
+          to obtain the mark - we can write it as a single <code>let</code> instruction. (It <i>could</i>
+          still be a <code>variable</code>, but we have no need to re-assign it because it
+          defines <code>mark</code> anew each time around the <code>while</code> loop, anyway.
+        </li>
+        <li>The <code>while</code> loop need test only for whether the puzzle is <code>solved</code>, not
+          for the number of attempts, because we want to know how many attempts it takes <i>even if that is 7 or more</i> - though any such case
+        will eventually be counted as a failure to solve the puzzle.</li>
+        <li>Because we will not be updating the display grid (where rows and columns start from zero),
+          <code>attemptNo</code> should be initialised to <code>1</code> rather than <code>0</code>,
+          and it should be incremented by <code>1</code> whenever the <code>mark</code> for an attempt
+          is not all-greens.
+        </li>
+      </ul>
+    </li>
+    <li>Apart from those constraints, the rest of the logic required for <el-method>attemptsNeededToSolve</el-method> exists in
+      <el-method>playReverseGame</el-method> and you will be able to copy several whole instructions from one to the other.
+      Have a go at this now - using available hints only if you need them.
+    </li>
   </ul>
-  <hint>Hint HINTNUMBER: key ideas</hint>
+  <hint>Hint HINTNUMBER: implementation in outline form</hint>
   <content>
+    <codeblock>
+      function attemptsNeededToSolve(target as String, firstAttempt as String) returns Int
+        variable possible set to something
+        variable attempt set to something
+        variable attemptNo set to something
+        variable solved set to something
+        while something
+          let mark be something
+          if something then
+            set solved to something
+          else
+            set possible to something
+            set attemptNo to something
+            set attempt to something
+          end if
+        end while
+        return attemptNo
+      end function
+    </codeblock>
+   <p>The order of the four <code>variable</code> definitions does not matter, and they are
+    all the same as in <el-method>playReverseGame</el-method> except for one, for which the required
+    the difference was stated earlier.</p>
   </content>
+  <hint>Hint HINTNUMBER: complete implementation</hint>
+  <content>
+    <codeblock>
+      function attemptsNeededToSolve(target as String, firstAttempt as String) returns Int
+        variable possible set to allValidAnswers.split(" ")
+        variable attempt set to firstAttempt
+        variable attemptNo set to 1
+        variable solved set to false
+        while (not solved)
+          let mark be markAttempt(attempt, target)
+          if mark is "22222" then
+            set solved to true
+          else
+            set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
+            set attemptNo to attemptNo + 1
+            set attempt to possible[0]
+          end if
+        end while
+        return attemptNo
+      end function
+    </codeblock>
+  </content>
+  <p>When your implementation of <el-method>attemptsNeededToSolve</el-method>
+  is complete, all the test-cases (<code>assert</code>s) in <code>test</code> 
+<el-comment>attemptsNeededToSolve</el-comment> should pass.</p>
+</step>
+<step>
+  <h1>Step STEPNUMBER: write a main to use the new function</h1>
+  <p>Write a <code>main</code> routine that:
+  <ul>
+    <li>asks the user to enter a target word,</li>
+    <li>evaluates the <el-method>attemptsNeededToSolve</el-method> function for this target 
+      using <b>ARISE</b> as the first attempt,</li>
+    <li>prints the result in the form (example only): 'Target word QUITE took 4 attempts to solve'</li>
+  </ul>
+  </p>
+  <hint>Hint HINTNUMBER: outline instructions</hint>
+  <content>
+    <code>
+      main
+        let target be something
+        let attempts be something
+        print something
+      end main
+    </code>
+  </content>
+  <hint>Hint HINTNUMBER: the input and output</hint>
+  <content>
+    <ul>
+      <li>You can use the system method <el-method>inputString</el-method>, but better
+      still is to use <el-method>inputStringWithLimits</el-method> to ensure that
+      user enters a 5-letter word. In both cases you must supply a 'prompt' string
+      that tells the user what is expected. For more info: <help>LibRef.html#SystemMethods</help> </li>
+      <li>It would also be a good idea to call the dot-method <el-method>upperCase</el-method>
+      on the result of the input, rather than trusting the user to enter the word in upper case. 
+      <help>LibRef.html#String</help></li>
+      <li>The best way to generate the required output is with an 'interpolated string'.
+         <help>LibRef.html#String</help></li>
+    </ul>
+  </content>
+  <hint>Hint HINTNUMBER: complete main routine</hint>
+  <content>
+    <code>
+      main
+        let target be inputStringWithLimits("Enter a target word", 5, 5).upperCase()
+        let attempts be attemptsNeededToSolve(target, "ARISE")
+        print "Target word {target} took {attempts} attempts to solve"
+      end main    
+    </code>
+  </content>
+  <p>When you have this implemented, run the program to find out how many attempts it takes
+    to identify the target words <b>CHURN</b> and then <b>FIZZY</b>.
+    <question>Record your results here:</question>
+  </p>
+</step>
+<step>
+  <h1>Step STEPNUMBER: analyse the algorithm for all potential target words</h1>
+  <p>In order to identify the effectiveness of a Wordle solver we need to test it against <i>all</i> 2,315
+    valid target words, and from this determine the percentage of of the puzzles it was
+    able to solve in 6 or fewer attempts, and, for those successes, the average number of attempts needed.</p>
+  <ul>
+    <li>Find the ghosted test named <el-comment>analyseAlgorithm</el-comment> and unghost it -
+      which will cause the test to run and the <code>assert</code>s to fail. Then look
+      at the stub implementation of the <el-method>analyseAlgorithm</el-method> just above the test.
+    </li>
+    <li>Note that the return type for this function is <code>(Float, Float)</code> which
+    means that it returns a '2-tuple'- a tuple containing <i>two</i> values - which both happen to be <el-type>Float</el-type>
+    in this case. 
+    A tuple is just a very simple, small, data structure for passing around more than one piece of data -
+    of the same or different types - in one go.
+  </li>
+  <li>As it stands, the function always returns a pair of zeros. Take note of the syntax
+    for constructing the 2-tuple to be returned: <code>tuple(something, something)</code>.</li>
+  <li>
+    In the <el-method>analyseAlgorithm</el-method> function, define two variables:
+    <ul>
+      <li><code>success</code>, representing the number of puzzles solved within 6 attempts. For now, initialise it to an example value of <code>7</code>.</li>
+      <li><code>weightedSum</code>, representing the sum of: <i>(puzzles solved in one attempt x 1) + (puzzles solved in 2 attempts x 2) + and so on</i>.
+        For now, initialise it to an example value of <code>8</code>. </li>
+    </ul>
+    (The choice of those two <i>temporary</i> initial values will become apparent shortly). 
+    These are both <i>variables</i> because later on we will need to replace the initial value with a calculated one in each case.</p>
+  <li><p>Below this, define two more values - <code>successPercent</code> and <code>average</code> - but for each these use a <code>let</code> instruction (because we won't need to re-assign them):
+    <p>For <code>successPercent</code> give it a calculated value, derived from <code>success</code> such that it will represent a percentage of the number of <code>validTargets</code>
+    <i>rounded to one decimal place.</i>.</p>
+    <p>The <code>average</code> is the <code>weightedSum</code> divided by <code>success</code> <i>rounded to two decimal places</i>.</p>
+  </li>
+  <li>
+    Change the <code>return</code> instruction to return a tuple constructed from the values <code>successPercent</code> and <code>average</code> in that order.
+  </li>
+  <li>If you have coded this correctly, then the first <code>assert</code> in the test should pass - but this is an <i>artifical</i> result, down entirely to those
+    numbers used to initialise the variables! So once you have
+    established that your implementation so far is correct,  change the <i>initial</i> values of <code>success</code> and <code>weightedSum</code> to zero
+     (causing the <code>assert</code> to fail again.)
+  </li>
+  <hint>Hint HINTNUMBER: rounding</hint>
+  <content>
+    To round a fractional value to a specified number of decimal places use <el-method>round</el-method>, which is a 'dot-method'
+    that may be applied to any value of type <el-type>Float</el-type>. But note that if you are applying this to a value <i>within a longer expression</i>, 
+    it will be applied only to the value that immediately precedes it. To apply it to the result of a calculation
+    it is safer to put brackets around the calculation, before then applying the dot method to it.
+  </content>
+  <hint>Hint HINTNUMBER: the two expressions in full</hint>
+  <content>
+    <codeblock>(success/validTargets.length()*100).round(1)</codeblock>
+    <codeblock>(weightedSum/success).round(2)</codeblock>
+  </content>
+  <hint>Hint HINTNUMBER: the complete function so far</hint>
+  <content>
+    With the temporary initialisation to test correctness of the calculations:
+    <codeblock>
+      function analyseAlgorithm(firstAttempt as String, validTargets as List<of String>) returns (Float, Float)
+        variable success set to 7
+        variable weightedSum set to 28
+        let successPercent be success/validTargets.length()*100.round(1)
+        let average be weightedSum/success.round(2)
+        return tuple(successPercent, average)
+      end function      
+    </codeblock>
+    ... and after modifying the initialisation to the correct starting values:
+    <codeblock>
+      function analyseAlgorithm(firstAttempt as String, validTargets as List<of String>) returns (Float, Float)
+        variable success set to 0
+        variable weightedSum set to 0
+        let successPercent be success/validTargets.length()*100.round(1)
+        let average be weightedSum/success.round(2)
+        return tuple(successPercent, average)
+      end function      
+    </codeblock>
+  </content>
+</step>
+<step>
+  <h1>Step STEPNUMBER: Calculate the number of successful solutions</h1>
+  <p>Now we will calculate <code>success</code> the total number of puzzles that the algorithm solves within 6 attempts.</p>
+  <p>Add a loop that evaluates the number of attempts to solve each of the targetwords provided in <code>validTargets</code>,
+      and if that number is within the limit of six, increment the value of <code>success</code> by one.</p>
+  <hint>Hint HINTNUMBER: the new code in outline</hint>
+  <content>
+    <codeblock>
+      each target in something
+        let attempts be something
+        if something then
+          set success to something
+        end if
+      end each
+    </codeblock>
+  </content>
+  <hint>Hint HINTNUMBER: the complete function so far</hint>
+  <content>
+    <codeblock>
+      function analyseAlgorithm(firstAttempt as String, validTargets as List<of String>) returns (Float, Float)
+        variable success set to 0
+        variable weightedSum set to 0
+        each target in validTargets
+          let attempts be attemptsNeededToSolve(target, firstAttempt)
+          if attempts <= 6 then
+            set success to success + 1
+          end if
+        end each
+        let successPercent be success/validTargets.length()*100.round(1)
+        let average be weightedSum/success.round(2)
+        return tuple(successPercent, average)
+      end function      
+    </codeblock>
+  </content>
+  <question>Although none of the <code>assert</code>s in the new test will be passing yet, what do you notice
+  about the two values that <i>are</i> being generated by the function in the test?</question>
+</step>
+<step>
+  <h1>Step STEPNUMBER: Calculate the weighted-sum of the number of attempts</h1>
+  <p>Now we will calculate the <code>weightedSum</code> of the number of successful attempts, from which the <code>average</code> is subsequently derived.</p>
+  <ul>
+    <li>Just before the loop, define a variable <code>outcomes</code> as an array of integers with <i>seven</i> members, initialised to zero.
+      (Strictly speaking we could manage with six members, since we are interested only in the outcomes of 1 to 6 attempts 
+      - so the first element (number <code>0</code>>) is wasted.
+    However, that's a small price to pay for simpler code - as you will see.</li>
+    <li>Within the loop, whenever a target has been identified within six attempts, 
+      increment by one the value in the array corresponding to the number of attempts taken.</li>
+    <li>Immediately <i>after</i> the end of the current loop, add a new <code>for</code> loop that goes through the index values from 1 to 6
+    (we can just ignore the unused element zero), then adds into <code>weightedSum</code> the value of that element times the index number.
+    Make sure you understand why this will produce the 'weighted sum' of the results.
+  </li>
+  </ul>
+  <hint>Hint HINTNUMBER: the array definition</hint>
+  <content>
+    <codeblock>
+      let outcomes be new Array<of Int>(7, 0)
+    </codeblock>
+  </content>
+  <hint>Hint HINTNUMBER: how to update the array</hint>
+  <content>
+    <ul>
+      <li>Within a function it is not possible to <i>mutate</i> a data structure: for example by <code>call a.put(3, 5)</code>). 
+        Instead you should use the <el-method>withPut</el-method> dotted-function on the array, which returns a new array with the change made,
+      which may be assigned back into the original variable (<code>outcomes</code>).
+      <li>To increment the value of an element by one you will need to read the <i>existing</i> value of that element. This <i>can</i>
+      be done in a separate instruction, but it can also be done 'in-line' so that the whole update can be written as a single instruction.</li>
+    </ul>
+  </content>
+  <hint>Hint HINTNUMBER: the new loop in outline</hint>
+  <content>
+    <codeblock>
+      for i from something to something step 1
+        set weightedSum to something
+      end for
+    </codeblock>
+  </content>
+  <hint>Hint HINTNUMBER: the completed instruction for updating 'outcomes'</hint>
+  <content>
+    <codeblock>
+      set outcomes to outcomes.withPut(attempts, outcomes[attempts] + 1)
+    </codeblock>
+  </content>
+  <hint>Hint HINTNUMBER: the completed function</hint>
+  <content>
+    <codeblock>
+      function analyseAlgorithm(firstAttempt as String, validTargets as List<of String>) returns (Float, Float)
+        variable success set to 0
+        variable weightedSum set to 0
+        variable outcomes set to new Array<of Int>(7, 0)
+        each target in validTargets
+          let attempts be attemptsNeededToSolve(target, firstAttempt)
+          if attempts <= 6 then
+            set success to success + 1
+            set outcomes to outcomes.withPut(attempts, outcomes[attempts] + 1)
+          end if
+        end each
+        for i from 1 to 6 step 1
+          set weightedSum to weightedSum + i*outcomes[i]
+        end for
+        let successPercent be (success/validTargets.length()*100).round(1)
+        let average be (weightedSum/success).round(2)
+        return tuple(successPercent, average)
+      end function      
+    </codeblock>
+  </content>
+  <p>When implemented, all the <code>asserts</code> in the <code>test</code><el-comment> analyseAlgorithm</el-comment> should be passing.</p>
+</step>
+<step>
+  <h1>Step STEPNUMBER: Re-write main to present the results of the analysis</h1>
+  <p>Your task is now to re-write <code>main</code> (start by deleting all the existing instructions within it) to understake the analysis and present
+  the results.
+ </p>
+ <ul>
+  <li>Because we don't know how long this analysis may take, at the beginning of <code>main</code> print the message 'Starting...' onto the display.</li>
+  <li>The <code>constant</code> <code>allValidTargetWords</code> is a single string containing 2,315 words separated by spaces. However, the
+  function <el-method>analyseAlgorithm</el-method> expects a <i>list</i> of words, where each member of the list is a single word, with no spaces.
+  If you are not familiar with how to do this, look up the various dotted-methods available on a <el-type>String</el-type> <help>LibRef.html#String</help>.</li>
+  <li>Evaluate the function <el-method>analyseAlgorithm</el-method>, passing in the <code>"ARISE"</code> as the chosen first attempt, and the list of inputStringWithLimits
+  you have just created from <code>allValidTargetWords</code>. Because this will pass back <i>two</i> values as a tuple, look up how to 'deconstruct' a tuple (<help>LibRef.Html#deconstructTuple</help>)
+  into two values named <code>successPercent</code> and <code>average</code>. (You can do this in a <code>let</code> instruction.)</li>
+  <li>Print these values formatted in the format:  'xx.x% of the puzzles solved within 6 attempts, with an average of x.xx attempts' </li>
+ </ul>
+ <hint>Hint HINTNUMBER: expression to split the target words into a list</hint>
+ <content>
+  <code>allValidTargetWords.split(" ")</code>
+ </content>
+ <hint>Hint HINTNUMBER: deconstructing the tuple returned by <el-method>analyseAlgorithm</el-method></hint>
+ <content>
+  <code>let successPercent, average be analyseAlgorithm(something, something)</code>
+ </content>
+ <hint>Hint HINTNUMBER: how to create the formatted output</el-method></hint>
+ <content>
+  <p>Use a 'interpolated fields' <help>LibRef.html#InterpolatedString</help></p>
+ </content>
+ <hint>Hint HINTNUMBER: the completed 'main'</el-method></hint>
+ <content>
+  <codeblock>
+    main
+      print "Starting..."
+      let validTargets be allValidTargetWords.split(" ")
+      let successPercent, average be analyseAlgorithm("ARISE", validTargets)
+      print "{successPercent}% of the puzzles solved within 6 attempts with an average of {average} attempts."
+    end main
+  </codeblock>
+ </content>
+ <p>Run the program</p>
+ <question>Record the results (% solved and the average number of attempts) here:</question>
+ <p>Finally, try changing <b>ARISE</b> to an alternative first attempt word. Maybe try a few likely candidates.</p>
+ <question>Record the result from the best first attempt word that you found, whether or not it was better than <b>ARISE</b>.</question>
 </step>
 <final>
   <h1>Congratulations! Worksheet completed</h1>
-  
+  <p>Hopefully you were impressed at the effectiveness of the algorithm that you wrote. It would likely beat many human players - over a reasonable run of puzzles!</p>
+
+  <p>If you have time, there are plenty of ways that you could extend this investigation into Wordle, including:</p>
+  <ul>
+    <li>Add a loop around the last three instructions in <code>main</code> to evaluate the effectiveness of using <i>each</i> of the valid target words
+    as the first attempt, and keeping a running track of the best so far. <b>Warning</b>: this could take several hours to complete! Even more
+    ambitious (and taking more than seven times longer) would be to try it for each of the 15,000+ validAttempt words as the first attempt.</li>
+    <li>Read up online about more sophisticated algorithms - several of which are <i>guaranteed</i> to solve 100% of puzzles in <i>five</i>
+    or fewer attempts, and with an average of 3.5 or lower. And someone has calculated the <i>optimum</i> strategy but to replicate that work, you're gonna need a bigger computer!</li>
+  </ul>
 </final>
 
 
