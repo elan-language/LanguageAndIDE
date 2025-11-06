@@ -32,9 +32,9 @@
         <load file="wordle_2begin.elan">Load the starting code</load> and then <b>run</b> the program
       </li>  
       <li>Note that the computer's first attempt is <b>ARISE</b>
-        - which is also favoured by some human players. You can see that this is defined in instruction <b>56</b>:
+        - which is also favoured by some human players. You can see that this is defined in instruction <b>58</b>:
           <codeblock>
-            constant firstAttempt set to "ARISE"
+            variable attempt set to "ARISE"
           </codeblock>
         We <i>could</i> change this to a different word; but we'll leave it as-is for now.
       </li>
@@ -51,8 +51,8 @@
         implements the <i>presentation</i> and <i>user-interation</i> for the reverse game, but lacks the
         core logic needed to pick the next attempt word - so it always guesses the same word!</li>
       <li>Look at the <code>procedure</code> <el-method>playReverseGame</el-method>, which starts at instruction
-        <b>57</b>. In instruction <b>59</b> a variable named <code>attempt</code> is initialised to the
-        constant value <code>firstAttempt</code>, but this variable is never thereafter <code>set</code> to a
+        <b>57</b>. In instruction <b>58</b> a variable named <code>attempt</code> is initialised to the
+        constant value <code>"ARISE"</code>, but this variable is never thereafter <code>set</code> to a
         a different word. Given that the target word must of one of 2315 possible target, the computer has a chance of getting
         solving the puzzle within six attempts of just 1/2315.
       </li>
@@ -107,8 +107,8 @@
     </codeblock>
   </content>
 
-  <p>When you have implemented this change, run the program and check that it is guessing a different word each
-  time (though, as the guess is random, there is a <i>small</i> chance of repeating the same word).
+  <p>When you have implemented this change, run the program and check that it is using a different attempt word each
+  time (though, as the attempt word is chosen at random, there is a <i>small</i> chance of repeating the same word).
   However, the likelihood that the computer gets to the target within the maximum six attempt is still very low.
   For the next step we need to implement a viable strategy.</p>
 </step>
@@ -243,7 +243,7 @@
     <codeblock>
       procedure playReverseGame()
         variable possible set to allValidTargetWords.split(" ")
-        variable attempt set to firstAttempt
+        variable attempt set to "ARISE"
         variable attemptNo set to 0
         variable solved set to false
         variable grid set to new Array2D<of String>(5, 6, "")
@@ -314,7 +314,7 @@
     <code>
       procedure playReverseGame()
         variable possible set to allValidTargetWords.split(" ")
-        variable attempt set to firstAttempt
+        variable attempt set to "ARISE"
         variable attemptNo set to 0
         variable solved set to false
         variable grid set to new Array2D<of String>(5, 6, "")
