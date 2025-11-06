@@ -53,16 +53,16 @@
       <li>Look at the <code>procedure</code> <el-method>playReverseGame</el-method>, which starts at instruction
         <b>57</b>. In instruction <b>59</b> a variable named <code>attempt</code> is initialised to the
         constant value <code>firstAttempt</code>, but this variable is never thereafter <code>set</code> to a
-        a different word. Given that the target word must of one of 2315 possible answers, the computer has a chance of getting
-        the right answer within six attempts of just 1/2315.
+        a different word. Given that the target word must of one of 2315 possible target, the computer has a chance of getting
+        solving the puzzle within six attempts of just 1/2315.
       </li>
-      <li>The first thing we will do is change the word with each attempt, to a random choice from all the possible answers.
+      <li>The first thing we will do is change the word with each attempt, to a random choice from all the possible target words.
         This still won't be a sensible strategy, and it will only <i>marginally</i> improve the chances of
         getting the target within six attempts, but it is just to gain some familiarity with the code. So...
       </li>
       <li>Insert a new instruction within the <code>while</code> loop in <el-method>playReverseGame</el-method></el-method>
       just <i>before</i> the <el-kw>end if</el-kw>. The new instruction should set <code>attempt</code> to a new word, randomly selected
-      from <code>possible</code> - which is a <el-type>List</el-type> containing all 2,315 possible answers.
+      from <code>possible</code> - which is a <el-type>List</el-type> containing all 2,315 valid target words.
       </li>
     </ul>
   <hint>Hint HINTNUMBER: key ideas</hint>
@@ -120,8 +120,8 @@
     that would be consistent with the marks given. In other words: if the word we choose as 
     our next attempt <i>were</i> the target word, then our previous attempts would still have received the
     marks they did receive.</li>
-  <li>We could make that choice from any of the 15,000+ words in the list <code>allWords</code>, 
-    but we are going to select our next attempt from just the 2,315 <code>allValidAnswers</code>
+  <li>We could make that choice from any of the 15,000+ words in the list <code>allValidAttemptWords</code>, 
+    but we are going to select our next attempt from just the 2,315 <code>allValidTargetWords</code>
     as this should increase the chances of identifying the target. (Incidentally, by adopting this
     strategy we are actually playing Wordle in 'hard' mode.)</li>
   <li>To implement this strategy, after <i>each</i> attempt has been marked, we will filter the list held
@@ -130,16 +130,16 @@
     will have an increased chance of bring the target word.
   </li>
   <li>
-    At the bottom of the code you will see a 'ghosted' test named <el-comment>possibleAnswersAfterAttempt</el-comment>.
-    Unghost this test - which will cause a compile error because there is not yet a function named <el-method>possibleAnswersAfterAttempt</el-method>.
+    At the bottom of the code you will see a 'ghosted' test named <el-comment>possibleTargetsAfterAttempt</el-comment>.
+    Unghost this test - which will cause a compile error because there is not yet a function named <el-method>possibleTargetsAfterAttempt</el-method>.
   </li>
   <li>Write a 'stub' implementation of that new <i>function</i>, such that everything compiles.
   </ul>
   <hint>Hint HINTNUMBER: defining the function signature</hint>
   <content>
-    The function <el-method>possibleAnswersAfterAttempt</el-method> should define three parameters in the order given below:
+    The function <el-method>possibleTargetsAfterAttempt</el-method> should define three parameters in the order given below:
     <ul>
-      <li>the <code>prior</code> list of valid answer words</li>
+      <li>the <code>prior</code> list of target words</li>
       <li>the latest <code>attempt</code> word</li>
       <li>the <code>mark</code> given to that latest attempt (also a string, but containing 0s, 1s, and 2s).</li>
     </ul>
@@ -153,19 +153,19 @@
   <hint>Hint HINTNUMBER: the complete function so far</hint>
   <content>
     <code>
-    function possibleAnswersAfterAttempt(prior as List<of String>, attempt as String, mark as String) returns List<of String>
+    function possibleTargetsAfterAttempt(prior as List<of String>, attempt as String, mark as String) returns List<of String>
       variable newPossible set to new List<of String>()
       return newPossible
     end function
     </code>    
   </content>
-  <p>Having written the stub implementaton of <el-method>possibleAnswersAfterAttempt</el-method> the tests will run.
+  <p>Having written the stub implementaton of <el-method>possibleTargetsAfterAttempt</el-method> the tests will run.
   Each <code>assert</code> instruction defines a different 'test case'.</p>
   <question>How many of the test cases are now passing, and what do they have in common?</question></li>
 </step>
 <step>
   <h1>Step STEPNUMBER: Completing the implementation</h1>
-  <p>The next task is to implement <el-method>possibleAnswersAfterAttempt</el-method> such
+  <p>The next task is to implement <el-method>possibleTargetsAfterAttempt</el-method> such
     that <i>all</i> the associated test cases pass.</p>
   <p><i>If</i> you have already learned about 'higher order functions', then can apply those techniques here and implement the function as a single instruction. 
     However, the Hints below assume that that you will be implementing the code more conventionally, using a loop.</p>
@@ -179,7 +179,7 @@
       <li>When evaluating <el-method>markAttempt</el-method> you will need to pass the <code>attempt</code> value, and the current word
       from the <code>prior</code> list in the role of the 'target' </li>
       <li>If the mark returned by <el-method>markAttempt</el-method> is the same as the <code>mark</code> provided as a 
-      parameter into the <el-method>possibleAnswersAfterAttempt</el-method> function, then the word being evaluated
+      parameter into the <el-method>possibleTargetsAfterAttempt</el-method> function, then the word being evaluated
       should be added into the <code>newPossible</code> list (that will eventually be returned by the function).</li>
     </ul>
   </content>
@@ -188,7 +188,7 @@
   Though a <code>for</code> loop <i>could</i> be used, the <code>each</code> loop is perfect for the current requirement.
   In the outline below every <code>something</code> needs to be replaced with new code.
     <codeblock>
-    function possibleAnswersAfterAttempt(prior as List<of String>, attempt as String, mark as String) returns List<of String>
+    function possibleTargetsAfterAttempt(prior as List<of String>, attempt as String, mark as String) returns List<of String>
       variable newPossible set to new List<of String>()
       each something in something
         if something is something then
@@ -212,7 +212,7 @@
   <hint>Hint HINTNUMBER: The complete function</hint>
   <content>
     <codeblock>
-      function possibleAnswersAfterAttempt(possible as List<of String>, attempt as String, mark as String) returns List<of String>
+      function possibleTargetsAfterAttempt(possible as List<of String>, attempt as String, mark as String) returns List<of String>
         variable newPossible set to new List<of String>()
         each word in prior
           if markAttempt(attempt, word) is mark then
@@ -227,22 +227,22 @@
 </step>
 
 <step>
-  <h1>Step STEPNUMBER: Making use of the filtered list of possible answers</h1>
-   <p>Now that we have the ability to filter the list of <code>possible</code> valid answers based on each new marked attempt
+  <h1>Step STEPNUMBER: Making use of the filtered list of possible target words</h1>
+   <p>Now that we have the ability to filter the list of <code>possible</code> target words based on each new marked attempt
     we can make use of that with the <el-method>playReverseGame</el-method> procedure.
    <p>Insert a new instruction immediately <i>after</i> instruction <b>70</b>> i.e. just <i>above</i> the instruction that you added
     into the procedure earlier.. This new instruction should
     set the list named <code>possible</code> to the new, filtered, list that results from evaluating the
-    <el-method>possibleAnswersAfterAttempt</el-method> function, passing in suitable arguments.</p>
+    <el-method>possibleTargetsAfterAttempt</el-method> function, passing in suitable arguments.</p>
   <hint>Hint HINTNUMBER: the expression to evaluate the filtered version of the list</hint>
   <content>
-    <codeblock>possibleAnswersAfterAttempt(possible, attempt, mark)</codeblock>
+    <codeblock>possibleTargetsAfterAttempt(possible, attempt, mark)</codeblock>
   </content>
   <hint>Hint HINTNUMBER: complete procedure so far</hint>
   <content>
     <codeblock>
       procedure playReverseGame()
-        variable possible set to allValidAnswers.split(" ")
+        variable possible set to allValidTargetWords.split(" ")
         variable attempt set to firstAttempt
         variable attemptNo set to 0
         variable solved set to false
@@ -255,7 +255,7 @@
             set solved to true
           else
             set attemptNo to attemptNo + 1
-            set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
+            set possible to possibleTargetsAfterAttempt(possible, attempt, mark)
             set attempt to possible[randomInt(0, possible.length() - 1)]
           end if
         end while
@@ -296,7 +296,7 @@
     <li>Within the <el-method>playReverseGame</el-method> procedure, <i>after</i> <el-kw>end if</el-kw> but <i>before</i> <el-kw>end while</el-kw>
       add a conditional instruction that tests whether there is at least one word in the latest filtered version of <code>possible</code>.
       If there <i>is</i>> then set <code>attempt</code> to the <i>first</i> word in that list; if not then print the message 
-      "No possible answer matches marks so far" and set <code>attemptNo</code> to 6 - the easiest way to end the program.</li>
+      "No possible target matches marks so far" and set <code>attemptNo</code> to 6 - the easiest way to end the program.</li>
   </ul>
   <hint>Hint HINTNUMBER: outline version of the new instructions</hint>
   <content>
@@ -313,7 +313,7 @@
   <content>
     <code>
       procedure playReverseGame()
-        variable possible set to allValidAnswers.split(" ")
+        variable possible set to allValidTargetWords.split(" ")
         variable attempt set to firstAttempt
         variable attemptNo set to 0
         variable solved set to false
@@ -326,12 +326,12 @@
             set solved to true
           else
             set attemptNo to attemptNo + 1
-            set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
+            set possible to possibleTargetsAfterAttempt(possible, attempt, mark)
           end if
           if possible.length() > 0 then
             set attempt to possible[0]
           else
-            print "No possible answer matches marks so far"
+            print "No possible target matches marks so far"
             set attemptNo to 6
           end if
         end while
@@ -341,7 +341,7 @@
   <p>When you have completed these changes, run the program and test it: three times against <i>different</i> valid target words
   and once against <b>QURSH</b> or another very obscure 5-letter word.</p> 
 
-  <p>Note that you might also the the message "No possible answer matches marks so far" if you mark any attempts <i>incorrectly</i>.</p>
+  <p>Note that you might also the the message "No possible target matches marks so far" if you mark any attempts <i>incorrectly</i>.</p>
 </step>
 <final>
   <h1>Congratulations! Worksheet completed</h1>
@@ -360,7 +360,7 @@
   <p>Meantime, if you have time, explore any of the following suggestion optional extensions to the current code.</p>
   <ul>
     <li>
-      <load file="wordle_2source.elan">Load the complete source code</load>
+      <load file="wordle_2end.elan">Load the complete source code</load>
       and then explore how the presentation and interaction are managed.</li>
     <li>In that source code you will see that the <code>main</code> routine just calls <el-method>playReverseGame</el-method>. You will
     also see that the <el-method>playGame</el-method> (used in the previous worksheet) is still there. So you could modify
