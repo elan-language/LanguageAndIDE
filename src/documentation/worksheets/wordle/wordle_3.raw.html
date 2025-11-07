@@ -14,7 +14,10 @@
       </ol>
     </p>
 
-    <p><load file="">Load the starting code</load> and note the following:
+    <p><load file="wordle_3begin">Load the starting code</load> and then immediately <b>file > auto save</b> the
+      code to your local file storage, because you will be making changes and want to ensure that your changes are saved.</p>
+      
+    <p>Notice the following:
       <ul>
         <li>Underneath all the <code>import</code>s you will see all the code you have written
         in the previous projects, plus some new code that you will be using and/or modifying in this worksheet.</li>
@@ -37,8 +40,8 @@
       re-use quite a bit of the logic from <el-method>playReverseGame</el-method>
       but with these differences:
       <ul>
-        <li>it is a <i>function</i>: it will not
-          not result in anything being <i>displayed</i>, so there is no need for the
+        <li>it is a <i>function</i>: it will not result in anything being <i>displayed</i>,
+           so there is no need for the
           <code>call</code> <el-method>putAttemptIntoGrid</el-method>, nor to create
           <code>grid</code> in the first place.
        </li>
@@ -48,7 +51,7 @@
           function that we wrote in Wordle 1. However, we don't then need to use two instructions
           to obtain the mark - we can write it as a single <code>let</code> instruction. (It <i>could</i>
           still be a <code>variable</code>, but we have no need to re-assign it because it
-          defines <code>mark</code> anew each time around the <code>while</code> loop, anyway.
+          defines <code>mark</code> anew each time around the <code>while</code> loop, anyway).
         </li>
         <li>The <code>while</code> loop need test only for whether the puzzle is <code>solved</code>, not
           for the number of attempts, because we want to know how many attempts it takes <i>even if that is 7 or more</i> - though any such case
@@ -302,7 +305,7 @@
   <hint>Hint HINTNUMBER: how to update the array</hint>
   <content>
     <ul>
-      <li>Within a function it is not possible to <i>mutate</i> a data structure: for example by <code>call a.put(3, 5)</code>). 
+      <li>Within a function it is not possible to <i>mutate</i> a data structure: for example by <code>call a.put(3, 5)</code>)
         Instead you should use the <el-method>withPut</el-method> dotted-function on the array, which returns a new array with the change made,
       which may be assigned back into the original variable (<code>outcomes</code>).
       <li>To increment the value of an element by one you will need to read the <i>existing</i> value of that element. This <i>can</i>
@@ -350,10 +353,11 @@
 </step>
 <step>
   <h1>Step STEPNUMBER: Re-write main to present the results of the analysis</h1>
-  <p>Your task is now to re-write <code>main</code> (start by deleting all the existing instructions within it) to understake the analysis and present
+  <p>Your task is now to re-write <code>main</code> to understake the analysis and present
   the results.
  </p>
  <ul>
+  <li>Start by deleting all the existing instructions within <code>main</code>.</li>
   <li>Because we don't know how long this analysis may take, at the beginning of <code>main</code> print the message 'Starting...' onto the display.</li>
   <li>The <code>constant</code> <code>allValidTargetWords</code> is a single string containing 2,315 words separated by spaces. However, the
   function <el-method>analyseAlgorithm</el-method> expects a <i>list</i> of words, where each member of the list is a single word, with no spaces.
@@ -361,7 +365,7 @@
   <li>Evaluate the function <el-method>analyseAlgorithm</el-method>, passing in the <code>"ARISE"</code> as the chosen first attempt, and the list of inputStringWithLimits
   you have just created from <code>allValidTargetWords</code>. Because this will pass back <i>two</i> values as a tuple, look up how to 'deconstruct' a tuple (<help>LibRef.Html#deconstructTuple</help>)
   into two values named <code>successPercent</code> and <code>average</code>. (You can do this in a <code>let</code> instruction.)</li>
-  <li>Print these values formatted in the format:  'xx.x% of the puzzles solved within 6 attempts, with an average of x.xx attempts' </li>
+  <li>Print these values in the format:  'xx.x% of the puzzles solved within 6 attempts, with an average of x.xx attempts' </li>
  </ul>
  <hint>Hint HINTNUMBER: expression to split the target words into a list</hint>
  <content>
@@ -373,7 +377,7 @@
  </content>
  <hint>Hint HINTNUMBER: how to create the formatted output</el-method></hint>
  <content>
-  <p>Use a 'interpolated fields' <help>LibRef.html#InterpolatedString</help></p>
+  <p>Use 'interpolated fields' <help>LibRef.html#InterpolatedString</help></p>
  </content>
  <hint>Hint HINTNUMBER: the completed 'main'</el-method></hint>
  <content>
@@ -394,8 +398,8 @@
 <final>
   <h1>Congratulations! Worksheet completed</h1>
   <p>Hopefully you were impressed at the effectiveness of the algorithm that you wrote. It would likely beat many human players - over a reasonable run of puzzles!</p>
-
-  <p>You now have the option to <load file="wordle_3end.elan">load the complete source code</load> for the program written.</p>
+  <p>You now have the option to <load file="wordle_3end.elan">load the complete source code</load> to
+  explore the parts of the code that you haven't written such as the display logic.</p>
   <p>If you have time, there are plenty of ways that you could extend this investigation into Wordle, including:</p>
   <ul>
     <li>Add a loop around the last three instructions in <code>main</code> to evaluate the effectiveness of using <i>each</i> of the valid target words
@@ -403,6 +407,11 @@
     ambitious (and taking more than seven times longer) would be to try it for each of the 15,000+ validAttempt words as the first attempt.</li>
     <li>Read up online about more sophisticated algorithms - several of which are <i>guaranteed</i> to solve 100% of puzzles in <i>five</i>
     or fewer attempts, and with an average of 3.5 or lower. And someone has calculated the <i>optimum</i> strategy but to replicate that work, you're gonna need a bigger computer!</li>
+    <li>Since the source code includes the code written in the previous worksheets
+      - Wordle 1 and Wordle 2 - you might like to go back to the end of your saved
+      versions of those two worksheets and implement any of the options suggested
+      there, or combine them in some way.
+    </li>
   </ul>
 </final>
 
