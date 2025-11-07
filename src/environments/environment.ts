@@ -3,6 +3,6 @@ export const isElanProduction = false;
 export const elanVersion = {
   major: 1,
   minor: 6,
-  patch: 2,
+  patch: 3,
   preRelease: "",
 };
