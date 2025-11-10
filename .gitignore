@@ -24,3 +24,8 @@ src/documentation/*.css
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+src/documentation/worksheets/wordle/wordle_1.html
+src/documentation/worksheets/wordle/wordle_2.html
+src/documentation/worksheets/wordle/wordle_3.html
+src/documentation/worksheets/worksheet-test-only.html
+src/documentation/worksheets/merge-sort/merge-sort.html
