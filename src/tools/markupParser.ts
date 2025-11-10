@@ -1,4 +1,5 @@
 import { JSDOM } from "jsdom";
+import { readFileSync } from "node:fs";
 import { processWorksheetCode } from "./codeParser";
 import {
   currentFinalId,
@@ -31,7 +32,6 @@ import {
   titleEndTag,
   titleTag,
 } from "./parserConstants";
-import { readFileSync } from "node:fs";
 
 let currentDir = "";
 
@@ -118,6 +118,15 @@ export async function processStep(
   spOuter.appendChild(outDoc.createTextNode("/"));
   spOuter.appendChild(sp2);
 
+  const notesHeading = outDoc.createElement("h4");
+  notesHeading.textContent = `Notes`;
+
+  const notesInput = outDoc.createElement("textarea");
+  notesInput.className = "notes";
+  notesInput.placeholder = "Student or teacher may optionally add notes here";
+
+  div.appendChild(notesHeading);
+  div.appendChild(notesInput);
   div.appendChild(label);
   div.appendChild(inp);
   div.appendChild(spOuter);
