@@ -183,6 +183,8 @@ for (const hint of hints as NodeListOf<HTMLDivElement>) {
         const content = document.getElementById(`${hint.id}content`);
         if (content) {
           content.innerHTML = atob(encryptedText);
+          const hintHelps = content.querySelectorAll("a.help") as NodeListOf<HTMLLinkElement>;
+          setupHelpLinks(hintHelps);
         }
       }
       hint.classList.add("taken");
@@ -263,21 +265,28 @@ window.addEventListener("message", (m) => {
   }
 });
 
-for (const b of loads as NodeListOf<HTMLButtonElement>) {
-  b.addEventListener("click", (_e) => {
-    const code = b.nextElementSibling?.textContent;
-    window.parent.postMessage(`code:${code}`, "*");
-  });
+function setupLoadLinks(loadLinks: NodeListOf<HTMLButtonElement>) {
+  for (const b of loadLinks) {
+    b.addEventListener("click", (_e) => {
+      const code = b.nextElementSibling?.textContent;
+      window.parent.postMessage(`code:${code}`, "*");
+    });
+  }
 }
 
-for (const b of helps as NodeListOf<HTMLLinkElement>) {
-  b.addEventListener("click", (e) => {
-    const link = b.href;
-    window.parent.postMessage(`help:${link}`, "*");
-    e.preventDefault();
-    e.stopPropagation();
-  });
+function setupHelpLinks(helpLinks: NodeListOf<HTMLLinkElement>) {
+  for (const b of helpLinks) {
+    b.addEventListener("click", (e) => {
+      const link = b.href;
+      window.parent.postMessage(`help:${link}`, "*");
+      e.preventDefault();
+      e.stopPropagation();
+    });
+  }
 }
+
+setupLoadLinks(loads as NodeListOf<HTMLButtonElement>);
+setupHelpLinks(helps as NodeListOf<HTMLLinkElement>);
 
 userName.addEventListener("change", () => {
   autosave.disabled = !userName.classList.contains("answered");
