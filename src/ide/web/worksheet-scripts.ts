@@ -159,9 +159,7 @@ function updateHintsTaken() {
   ) as NodeListOf<HTMLDivElement>) {
     hintsTaken = hintsTaken + step.querySelectorAll(".taken").length;
     hintsSoFar = hintsSoFar + step.querySelectorAll("div.hint").length;
-  }
 
-  for (const step of document.querySelectorAll("div.active") as NodeListOf<HTMLDivElement>) {
     const taken = step.querySelectorAll("span.hints-taken");
     const total = step.querySelectorAll("span.hints-total");
 
@@ -287,6 +285,7 @@ function setupHelpLinks(helpLinks: NodeListOf<HTMLLinkElement>) {
 
 setupLoadLinks(loads as NodeListOf<HTMLButtonElement>);
 setupHelpLinks(helps as NodeListOf<HTMLLinkElement>);
+updateHintsTaken();
 
 userName.addEventListener("change", () => {
   autosave.disabled = !userName.classList.contains("answered");
