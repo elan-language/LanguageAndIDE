@@ -56,9 +56,9 @@ export async function processFinal(
 
   const div = outDoc.querySelector("div")!;
 
-  let updated = await processQuestions(finalSel?.innerHTML ?? "", finalInstance);
+  let updated = await processHelps(finalSel?.innerHTML ?? "", finalInstance);
+  updated = await processQuestions(updated, finalInstance);
   updated = await processLoads(updated, finalInstance);
-  updated = await processHelps(updated, finalInstance);
 
   updated = updated.replaceAll(currentFinalNumber, num).replaceAll(currentFinalId, id);
 
@@ -86,7 +86,8 @@ export async function processStep(
 
   const div = outDoc.querySelector("div")!;
 
-  let updated = await processHints(stepSel?.innerHTML ?? "", stepInstance);
+  let updated = await processHelps(stepSel?.innerHTML ?? "", stepInstance);
+  updated = await processHints(updated, stepInstance);
   updated = await processQuestions(updated, stepInstance);
   updated = await processLoads(updated, stepInstance);
   updated = await processHelps(updated, stepInstance);
