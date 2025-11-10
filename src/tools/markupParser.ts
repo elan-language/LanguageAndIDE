@@ -2,6 +2,7 @@ import { JSDOM } from "jsdom";
 import { readFileSync } from "node:fs";
 import { processWorksheetCode } from "./codeParser";
 import {
+  code,
   currentFinalId,
   currentFinalNumber,
   currentHintId,
@@ -34,6 +35,7 @@ import {
 } from "./parserConstants";
 
 let currentDir = "";
+let finalStep = 1;
 
 export function setCurrentDir(dir: string) {
   currentDir = dir;
@@ -162,26 +164,27 @@ export async function processLoad(
   const inDoc = input.window.document;
   const num = `${stepInstance}-${loadInstance}`;
   const id = `${load}${num}`;
+  const codeId = `${code}-${load}${num}`;
 
   const output = new JSDOM(
-    `<div><button class="${load}" id="${id}"></button><div hidden></div></div>`,
+    `<div><button class="${load}" id="${id}"></button><div id="${codeId}" hidden></div></div>`,
   );
   const outDoc = output.window.document;
 
   const loadSel = inDoc.querySelector(load);
   const file = loadSel?.getAttribute("file") ?? "";
-  let code = "";
+  let fileCode = "";
 
   try {
-    code = readFileSync(`${currentDir}${file}`, "utf-8");
+    fileCode = readFileSync(`${currentDir}${file}`, "utf-8");
   } catch {
-    code = "";
+    fileCode = "";
   }
 
   const button = outDoc.querySelector("button")!;
   const outCode = outDoc.querySelector("div > div")!;
 
-  outCode.textContent = code;
+  outCode.textContent = fileCode;
 
   button.textContent = (loadSel?.firstChild?.textContent ?? "")
     .replaceAll(currentLoadNumber, num)
@@ -523,12 +526,14 @@ export async function processSteps(source: string) {
     stepInstance++;
   }
 
+  finalStep = stepInstance - 1;
+
   return applyChanges(source, updates);
 }
 
 export async function processFinals(source: string) {
   const updates: [string, number, number][] = [];
-  let finalInstance = 1;
+  let finalInstance = finalStep;
 
   let [updatedCode, codeStart, codeEnd] = await processEachFinalInstance(source, 0, finalInstance);
   finalInstance++;

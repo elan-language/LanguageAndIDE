@@ -7,6 +7,7 @@ import {
   setCurrentDir,
 } from "../tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../tools/parserConstants";
+import { isElanProduction } from "../environment";
 
 const rootdir = `${__dirname}/../../..`;
 
@@ -29,15 +30,19 @@ export function getWorksheetSubdir(sourceDir: string): string[] {
 }
 
 function wrapInWorkSheetBoilerPlate(content: string, title: string) {
+  const prodUrl = `https://elan-lang.org/`;
+  const devUrl = `https://elan-language.github.io/LanguageAndIDE/`;
+  const hostUrl = isElanProduction ? prodUrl : devUrl;
+
   return `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en-GB">
 
   <head>
       <meta http-equiv="Cache-Control" content="no-store" />
-      <link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
-      <link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
-      <link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
-      <link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
+      <link href="${hostUrl}styles/colourScheme.css" rel="stylesheet" />
+      <link href="${hostUrl}styles/elanStyle.css" rel="stylesheet" />
+      <link href="${hostUrl}styles/documentation.css" rel="stylesheet" />
+      <link href="${hostUrl}styles/worksheet.css" rel="stylesheet" />
       <title>${title}</title>
   </head>
 
@@ -59,8 +64,8 @@ function wrapInWorkSheetBoilerPlate(content: string, title: string) {
         Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
     </div> 
       ${content}
-    <script src="https://elan-language.github.io/LanguageAndIDE/diff.js"></script>
-    <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
+    <script src="${hostUrl}diff.js"></script>
+    <script src="${hostUrl}worksheet-scripts.js"></script>
   </body>
 </html>`;
 }
