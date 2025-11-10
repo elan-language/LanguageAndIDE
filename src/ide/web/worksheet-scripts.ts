@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-const answersSelector = "input.question, textarea.question, select.question";
-const answers = document.querySelectorAll(answersSelector);
+const questionsSelector = "input.question, textarea.question, select.question";
+const questions = document.querySelectorAll(questionsSelector);
+const notes = document.querySelectorAll("textarea.notes");
 const hints = document.querySelectorAll("div.hint");
 const doneCheckboxes = document.querySelectorAll("div.step > input.step-complete");
 
@@ -130,24 +131,12 @@ async function save() {
   }
 }
 
-for (const e of answers) {
-  e.addEventListener("input", async (e) => {
-    const ie = e as InputEvent;
-    const tgt = ie.target as Element;
+for (const e of questions) {
+  addEventListenerToInput(e);
+}
 
-    tgt.classList.add("answered");
-
-    if ((tgt as HTMLInputElement).type === "radio") {
-      const name = (tgt as any).name;
-      const allradio = document.querySelectorAll(`input[name=${name}]`);
-      for (const e of allradio) {
-        e.classList.add("answered");
-      }
-    }
-
-    clearTempMsgs();
-    await save();
-  });
+for (const e of notes) {
+  addEventListenerToInput(e);
 }
 
 function updateHintsTaken() {
@@ -193,6 +182,25 @@ for (const hint of hints as NodeListOf<HTMLDivElement>) {
   });
 }
 
+function addEventListenerToInput(e: Element) {
+  e.addEventListener("input", async (e) => {
+    const ie = e as InputEvent;
+    const tgt = ie.target as Element;
+
+    tgt.classList.add("answered");
+
+    if ((tgt as HTMLInputElement).type === "radio") {
+      const name = (tgt as any).name;
+      const allradio = document.querySelectorAll(`input[name=${name}]`);
+      for (const e of allradio) {
+        e.classList.add("answered");
+      }
+    }
+    clearTempMsgs();
+    await save();
+  });
+}
+
 function getTimestamp() {
   const dt = new Date();
   const sp = document.createElement("span");
@@ -207,7 +215,7 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
     const step = cb.parentElement;
     const id = cb.id.slice(4);
     if (step) {
-      const allInputs = step.querySelectorAll(answersSelector) as NodeListOf<
+      const allInputs = step.querySelectorAll(questionsSelector) as NodeListOf<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
       >;
 

@@ -181,8 +181,8 @@ end constructor`;
 
     const actual = await processSteps(steps);
 
-    const expected = `<div class="step" id="step1"><content>1</content><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-<div class="step" id="step2"><content>step2</content><label class="done" for="done2">Step Completed</label><input class="step-complete" type="checkbox" id="done2"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>`;
+    const expected = `<div class="step" id="step1"><content>1</content><h4>Notes</h4><textarea class="notes" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<div class="step" id="step2"><content>step2</content><h4>Notes</h4><textarea class="notes" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done2">Step Completed</label><input class="step-complete" type="checkbox" id="done2"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>`;
 
     assert.strictEqual(actual, expected);
   });
@@ -230,9 +230,9 @@ end constructor`;
     const actual = await processQuestions(questions, 0);
 
     const expected = `<p>question1 details 0-0</p>
-<textarea class="question" id="question0-0"></textarea>
+<textarea class="question" id="question0-0" placeholder="input is required"></textarea>
 <p>question2 details question0-1</p>
-<textarea class="question" id="question0-1"></textarea>`;
+<textarea class="question" id="question0-1" placeholder="input is required"></textarea>`;
 
     assert.strictEqual(actual, expected);
   });
