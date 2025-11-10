@@ -230,9 +230,9 @@ end constructor`;
     const actual = await processQuestions(questions, 0);
 
     const expected = `<p>question1 details 0-0</p>
-<textarea class="question" id="question0-0"></textarea>
+<textarea class="question" id="question0-0" placeholder="input is required"></textarea>
 <p>question2 details question0-1</p>
-<textarea class="question" id="question0-1"></textarea>`;
+<textarea class="question" id="question0-1" placeholder="input is required"></textarea>`;
 
     assert.strictEqual(actual, expected);
   });

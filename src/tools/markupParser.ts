@@ -205,7 +205,7 @@ export async function processQuestion(
 
   const output = new JSDOM(
     `<div><p></p>
-<textarea class="${question}" id="${id}"></textarea></div>`,
+<textarea class="${question}" id="${id}" placeholder="input is required"></textarea></div>`,
   );
   const outDoc = output.window.document;
 
