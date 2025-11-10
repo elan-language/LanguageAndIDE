@@ -266,7 +266,7 @@ window.addEventListener("message", (m) => {
 function setupLoadLinks(loadLinks: NodeListOf<HTMLButtonElement>) {
   for (const b of loadLinks) {
     b.addEventListener("click", (_e) => {
-      const code = b.nextElementSibling?.textContent;
+      const code = document.getElementById(`code-${b.id}`)?.textContent ?? "";
       window.parent.postMessage(`code:${code}`, "*");
     });
   }
