@@ -100,7 +100,7 @@
     display: block;
 }
 
-.step textarea {
+textarea {
     width: 100%;
     font-family: monospace;
     font-weight: bold;
