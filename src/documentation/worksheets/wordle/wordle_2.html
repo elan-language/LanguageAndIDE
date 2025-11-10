@@ -295,18 +295,13 @@ end procedure
 end test
 </div> and then immediately <b>file &gt; auto save</b> the
           code to your local file storage, because you will be making changes and want to ensure that your changes are saved.</li>
-      <li><b>run</b> the program. Note that the computer's first attempt is <b>ARISE</b>
-        - which is also favoured by some human players. You can see that this is defined in instruction <b>58</b>:
-          <el-code-block><el-statement class="none" id="var4" tabindex="-1"><el-kw>variable </el-kw><el-field id="var5" class="ok" tabindex="-1"><el-txt><el-id>attempt</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> set to </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt>"<el-lit>ARISE</el-lit>"</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-msg></el-msg><el-fr>0</el-fr></el-statement></el-code-block>
-        We <i>could</i> change this to a different word; but we'll leave it as-is for now.
-      </li>
-      <li>
-        Let's say that the 'target' word (picked by us - for the computer to identify) is <b>STAGE</b>. 
-        The computer's first attempt should be marked: <i>Yellow, Grey, Grey, Yellow, Green</i> but to 
-        enter these marks we type in <b>10012</b> - the same encoding that you used in the Wordle 1 project.
-        Go ahead and enter those values, remembering that you can use <b>Backspace</b> to correct a mistake.
-        When you have all five letters coloured correctly, press <b>Enter</b>, at which point the
-        computer will display its second attempt.
+        <li>We need to pick a word for the computer to solve and we'll start by picking <b>STAGE</b>.</li>
+      <li><b>run</b> the program. Note that the computer's first attempt is <b>ARISE</b>. 
+        For the target word (<b>STAGE</b>), the computer's first attempt should be marked:
+         <i>Yellow, Grey, Grey, Yellow, Green</i>.</li>
+      <li>To record those marks, type in <b>10012</b> - the same encoding that you used in the Wordle 1 project - 
+        remembering that you can use <b>Backspace</b> to correct a mistake. When you have all five letters coloured correctly,
+         press <b>Enter</b>, at which point the computer will display its second attempt.
         <p>What word has the computer picked for its second attempt?</p>
 <textarea class="question" id="question1-0"></textarea>    
       </li>
@@ -314,16 +309,14 @@ end test
         implements the <i>presentation</i> and <i>user-interation</i> for the reverse game, but lacks the
         core logic needed to pick the next attempt word - so it always guesses the same word!</li>
       <li>Look at the <el-code><el-kw>procedure</el-kw></el-code> <el-method>playReverseGame</el-method>, which starts at instruction
-        <b>57</b>. In instruction <b>58</b> a variable named <el-code><el-id>attempt</el-id></el-code> is initialised to the
+        <b>56</b>. In instruction <b>58</b> a variable named <el-code><el-id>attempt</el-id></el-code> is initialised to the
         constant value <el-code>"<el-lit>ARISE</el-lit>"</el-code>, but this variable is never thereafter <el-code><el-kw>set</el-kw></el-code> to a
-        a different word. Given that the target word must of one of 2315 possible target, the computer has a chance of getting
-        solving the puzzle within six attempts of just 1/2315.
-      </li>
+        a different word. Given that the target word must of one of 2315 possible target, the computer has a chance of
+        solving the puzzle within six attempts of just 1/2315.</li>
       <li>The first thing we will do is change the word with each attempt, to a random choice from all the possible target words.
         This still won't be a sensible strategy, and it will only <i>marginally</i> improve the chances of
-        getting the target within six attempts, but it is just to gain some familiarity with the code. So...
-      </li>
-      <li>Insert a new instruction within the <el-code><el-kw>while</el-kw></el-code> loop in <el-method>playReverseGame</el-method>
+        getting the target within six attempts, but it is just to gain some familiarity with the code. So...</li>
+      <li><b>stop</b> the program and insert a new instruction within the <el-code><el-kw>while</el-kw></el-code> loop in <el-method>playReverseGame</el-method>
       just <i>before</i> the <el-kw>end if</el-kw>. The new instruction should set <el-code><el-id>attempt</el-id></el-code> to a new word, randomly selected
       from <el-code><el-id>possible</el-id></el-code> - which is a <el-type>List</el-type> containing all 2,315 valid target words.
       </li>
@@ -344,27 +337,26 @@ end test
 <label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 <div class="step" id="step2">
   <h1>Step 2: Start to implement a simple viable strategy</h1>
-  <ul>
-  <li>Human players use many different strategies to choose their next attempt word, based on the
+  <p>Human players use many different strategies to choose their next attempt word, based on the
     marks given for previous attempts. However, one of the simplest is to pick <i>any</i> new word
     that would be consistent with the marks given. In other words: if the word we choose as 
     our next attempt <i>were</i> the target word, then our previous attempts would still have received the
-    marks they did receive.</li>
-  <li>We could make that choice from any of the 15,000+ words in the list <el-code><el-id>allValidAttemptWords</el-id></el-code>, 
+    marks they did receive.</p>
+  <p>We could make that choice from any of the 15,000+ words in the list <el-code><el-id>allValidAttemptWords</el-id></el-code>, 
     but we are going to select our next attempt from just the 2,315 <el-code><el-id>allValidTargetWords</el-id></el-code>
     as this should increase the chances of identifying the target. (Incidentally, by adopting this
-    strategy we are actually playing Wordle in 'hard' mode.)</li>
+    strategy we are actually playing Wordle in 'hard' mode.)</p>
+  <ul>
   <li>To implement this strategy, after <i>each</i> attempt has been marked, we will filter the list held
     in the variable <el-code><el-id>possible</el-id></el-code> down to only those words that would still be consistent with the
     mark just given - so with each attempt the list will get smaller. This means that each new attempt
-    will have an increased chance of bring the target word.
-  </li>
+    will have an increased chance of bring the target word.</li>
   <li>
     At the bottom of the code you will see a 'ghosted' test named <el-comment>possibleTargetsAfterAttempt</el-comment>.
-    Unghost this test - which will cause a compile error because there is not yet a function named <el-method>possibleTargetsAfterAttempt</el-method>.
-  </li>
-  <li>Write a 'stub' implementation of that new <i>function</i>, such that everything compiles.
-  </li></ul>
+    Unghost this test - which will cause a compile error because there is not yet a function named 
+    <el-method>possibleTargetsAfterAttempt</el-method>.</li>
+  <li>Write a 'stub' implementation of that new <i>function</i>, such that everything compiles.</li>
+  </ul>
   <div class="hint" id="hint2-1" data-hint="CiAgICBUaGUgZnVuY3Rpb24gPGVsLW1ldGhvZD5wb3NzaWJsZVRhcmdldHNBZnRlckF0dGVtcHQ8L2VsLW1ldGhvZD4gc2hvdWxkIGRlZmluZSB0aHJlZSBwYXJhbWV0ZXJzIGluIHRoZSBvcmRlciBnaXZlbiBiZWxvdzoKICAgIDx1bD4KICAgICAgPGxpPnRoZSA8ZWwtY29kZT48ZWwtaWQ+cHJpb3I8L2VsLWlkPjwvZWwtY29kZT4gbGlzdCBvZiB0YXJnZXQgd29yZHM8L2xpPgogICAgICA8bGk+dGhlIGxhdGVzdCA8ZWwtY29kZT48ZWwtaWQ+YXR0ZW1wdDwvZWwtaWQ+PC9lbC1jb2RlPiB3b3JkPC9saT4KICAgICAgPGxpPnRoZSA8ZWwtY29kZT48ZWwtaWQ+bWFyazwvZWwtaWQ+PC9lbC1jb2RlPiBnaXZlbiB0byB0aGF0IGxhdGVzdCBhdHRlbXB0IChhbHNvIGEgc3RyaW5nLCBidXQgY29udGFpbmluZyAwcywgMXMsIGFuZCAycykuPC9saT4KICAgIDwvdWw+CiAgICBUaGUgZnVuY3Rpb24gc2hvdWxkIHJldHVybiBhIGxpc3Qgb2Ygc3RyaW5ncy4KICA=">Hint 2-1: defining the function signature</div>
 <div class="content" id="hint2-1content"></div>
   <div class="hint" id="hint2-2" data-hint="CiAgICBXaXRoaW4gdGhlIGZ1bmN0aW9uLCB0aGUgZmlyc3QgaW5zdHJ1Y3Rpb24gc2hvdWxkIGRlZmluZSBhIDxpPnZhcmlhYmxlPC9pPiBuYW1lZCA8ZWwtY29kZT48ZWwtaWQ+bmV3UG9zc2libGU8L2VsLWlkPjwvZWwtY29kZT4gaW5pdGlhbGlzZWQgdG8gYSBuZXcgKGVtcHR5KSBsaXN0IG9mIHN0cmluZ3MuCiAgICBDb21wbGV0ZSB0aGUgYXV0by1jcmVhdGVkIDxlbC1jb2RlPjxlbC1rdz5yZXR1cm48L2VsLWt3PjwvZWwtY29kZT4gaW5zdHJ1Y3Rpb24gdG8gcmV0dXJuIHRoYXQgbmV3bHkgZGVmaW5lZCBsaXN0LgogIA==">Hint 2-2: defining the stub implementation</div>
@@ -380,7 +372,7 @@ end test
   <h1>Step 3: Completing the implementation</h1>
   <p>The next task is to implement <el-method>possibleTargetsAfterAttempt</el-method> such
     that <i>all</i> the associated test cases pass.</p>
-  <p><i>If</i> you have already learned about 'higher order functions', then can apply those techniques here and implement the function as a single instruction. 
+  <p><i>If</i> you have learned about 'higher order functions', you can apply those techniques here and implement the function as a single instruction. 
     However, the Hints below assume that that you will be implementing the code more conventionally, using a loop.</p>
   <div class="hint" id="hint3-1" data-hint="CiAgICA8dWw+CiAgICAgIDxsaT5Vc2UgYSBsb29wIHRvIGl0ZXJhdGUgdGhyb3VnaCBlYWNoIG9mIHRoZSB3b3JkcyBpbiB0aGUgaW5wdXQgbGlzdCAoPGVsLWNvZGU+PGVsLWlkPnByaW9yPC9lbC1pZD48L2VsLWNvZGU+KS4gVGhpbmsgY2FyZWZ1bGx5IGFib3V0CiAgICAgIHdoaWNoIGtpbmQgb2YgbG9vcCBpcyB0aGUgbW9zdCBhcHByb3ByaWF0ZS48L2xpPgogICAgICA8bGk+TWFrZSB1c2Ugb2YgdGhlIGV4aXN0aW5nIGZ1bmN0aW9uIDxlbC1tZXRob2Q+bWFya0F0dGVtcHQ8L2VsLW1ldGhvZD4gKHdoaWNoIGlzIHRoZSBzYW1lIGFzIHRoZSBvbmUgeW91IGNyZWF0ZWQKICAgICAgaW4gdGhlIFdvcmRsZSAxIHdvcmtzaGVldCkuPC9saT4KICAgICAgPGxpPldoZW4gZXZhbHVhdGluZyA8ZWwtbWV0aG9kPm1hcmtBdHRlbXB0PC9lbC1tZXRob2Q+IHlvdSB3aWxsIG5lZWQgdG8gcGFzcyB0aGUgPGVsLWNvZGU+PGVsLWlkPmF0dGVtcHQ8L2VsLWlkPjwvZWwtY29kZT4gdmFsdWUsIGFuZCB0aGUgY3VycmVudCB3b3JkCiAgICAgIGZyb20gdGhlIDxlbC1jb2RlPjxlbC1pZD5wcmlvcjwvZWwtaWQ+PC9lbC1jb2RlPiBsaXN0IGluIHRoZSByb2xlIG9mIHRoZSAndGFyZ2V0JyA8L2xpPgogICAgICA8bGk+SWYgdGhlIG1hcmsgcmV0dXJuZWQgYnkgPGVsLW1ldGhvZD5tYXJrQXR0ZW1wdDwvZWwtbWV0aG9kPiBpcyB0aGUgc2FtZSBhcyB0aGUgPGVsLWNvZGU+PGVsLWlkPm1hcms8L2VsLWlkPjwvZWwtY29kZT4gcHJvdmlkZWQgYXMgYSAKICAgICAgcGFyYW1ldGVyIGludG8gdGhlIDxlbC1tZXRob2Q+cG9zc2libGVUYXJnZXRzQWZ0ZXJBdHRlbXB0PC9lbC1tZXRob2Q+IGZ1bmN0aW9uLCB0aGVuIHRoZSB3b3JkIGJlaW5nIGV2YWx1YXRlZAogICAgICBzaG91bGQgYmUgYWRkZWQgaW50byB0aGUgPGVsLWNvZGU+PGVsLWlkPm5ld1Bvc3NpYmxlPC9lbC1pZD48L2VsLWNvZGU+IGxpc3QgKHRoYXQgd2lsbCBldmVudHVhbGx5IGJlIHJldHVybmVkIGJ5IHRoZSBmdW5jdGlvbikuPC9saT4KICAgIDwvdWw+CiAg">Hint 3-1: initial ideas</div>
 <div class="content" id="hint3-1content"></div>
@@ -397,8 +389,8 @@ end test
   <h1>Step 4: Making use of the filtered list of possible target words</h1>
    <p>Now that we have the ability to filter the list of <el-code><el-id>possible</el-id></el-code> target words based on each new marked attempt
     we can make use of that with the <el-method>playReverseGame</el-method> procedure.
-   </p><p>Insert a new instruction immediately <i>after</i> instruction <b>70</b>&gt; i.e. just <i>above</i> the instruction that you added
-    into the procedure earlier.. This new instruction should
+   </p><p>Insert a new instruction immediately <i>after</i> instruction <b>69</b> i.e. just <i>above</i> the instruction that you added
+    into the procedure earlier. This new instruction should
     set the list named <el-code><el-id>possible</el-id></el-code> to the new, filtered, list that results from evaluating the
     <el-method>possibleTargetsAfterAttempt</el-method> function, passing in suitable arguments.</p>
   <div class="hint" id="hint4-1" data-hint="CiAgICA8ZWwtY29kZS1ibG9jaz48ZWwtbWV0aG9kPnBvc3NpYmxlVGFyZ2V0c0FmdGVyQXR0ZW1wdDwvZWwtbWV0aG9kPig8ZWwtaWQ+cG9zc2libGU8L2VsLWlkPiwgPGVsLWlkPmF0dGVtcHQ8L2VsLWlkPiwgPGVsLWlkPm1hcms8L2VsLWlkPik8L2VsLWNvZGUtYmxvY2s+CiAg">Hint 4-1: the expression to evaluate the filtered version of the list</div>
@@ -425,7 +417,7 @@ end test
 <textarea class="question" id="question4-2"></textarea>
 <label class="done" for="done4">Step Completed</label><input class="step-complete" type="checkbox" id="done4"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 <div class="step" id="step5">
-  <h1>5: Two small refinements</h1>
+  <h1>Step 5: Two small refinements</h1>
   <p>We will make these two small refinements in one go:
   </p><ul>
     <li>Safely guard against an unsolvable puzzle - instead of it resulting in a run-time error as you saw.</li>
@@ -439,7 +431,7 @@ end test
     <el-code-block><el-statement class="none" id="set4" tabindex="-1"><el-kw>set </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>attempt</el-id></el-txt><el-place><i>variableName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#AssignableField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> to </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt><el-id>possible</el-id>[<el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-id>possible</el-id>.<el-method>length</el-method>() - <el-lit>1</el-lit>)]</el-txt><el-place><i>value or expression</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-msg></el-msg><el-fr>0</el-fr></el-statement></el-code-block></li>
     <li>Within the <el-method>playReverseGame</el-method> procedure, <i>after</i> <el-kw>end if</el-kw> but <i>before</i> <el-kw>end while</el-kw>
       add a conditional instruction that tests whether there is at least one word in the latest filtered version of <el-code><el-id>possible</el-id></el-code>.
-      If there <i>is</i>&gt; then set <el-code><el-id>attempt</el-id></el-code> to the <i>first</i> word in that list; if not then print the message 
+      If there <i>is</i> then set <el-code><el-id>attempt</el-id></el-code> to the <i>first</i> word in that list; if not then print the message 
       "No possible target matches marks so far" and set <el-code><el-id>attemptNo</el-id></el-code> to 6 - the easiest way to end the program.</li>
   </ul>
   <div class="hint" id="hint5-1" data-hint="CiAgICA8ZWwtY29kZT48ZWwtc3RhdGVtZW50IGNsYXNzPSJub25lIG11bHRpbGluZSIgaWQ9ImlmNCIgdGFiaW5kZXg9Ii0xIj4KPGVsLXRvcD48ZWwtZXhwYW5kPis8L2VsLWV4cGFuZD48ZWwta3c+aWYgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHI2IiBjbGFzcz0ib2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtaWQ+c29tZXRoaW5nPC9lbC1pZD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+Y29uZGl0aW9uPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNFeHByZXNzaW9uRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48ZWwta3c+IHRoZW48L2VsLWt3PjxlbC1mcj4wPC9lbC1mcj48L2VsLXRvcD48ZWwtbXNnPjwvZWwtbXNnPgo8ZWwtc3RhdGVtZW50IGNsYXNzPSJub25lIiBpZD0ic2V0NyIgdGFiaW5kZXg9Ii0xIj48ZWwta3c+c2V0IDwvZWwta3c+PGVsLWZpZWxkIGlkPSJpZGVudDgiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD5zb21ldGhpbmc8L2VsLWlkPjwvZWwtdHh0PjxlbC1wbGFjZT48aT52YXJpYWJsZU5hbWU8L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI0Fzc2lnbmFibGVGaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1rdz4gdG8gPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHI5IiBjbGFzcz0ib2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtaWQ+c29tZXRoaW5nPC9lbC1pZD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+dmFsdWUgb3IgZXhwcmVzc2lvbjwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjRXhwcmVzc2lvbkZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PGVsLW1zZz48L2VsLW1zZz48ZWwtZnI+MTwvZWwtZnI+PC9lbC1zdGF0ZW1lbnQ+CjxlbC1zdGF0ZW1lbnQgY2xhc3M9Im5vbmUgb3V0ZGVudCIgaWQ9ImVsc2UxMCIgdGFiaW5kZXg9Ii0xIj48ZWwtdG9wPgogICAgPGVsLWt3PmVsc2UgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImVsaWYxMiIgY2xhc3M9ImVtcHR5IG9wdGlvbmFsIG9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmlmPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNJZlNlbGVjdG9yRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48L2VsLXRvcD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj4yPC9lbC1mcj48L2VsLXN0YXRlbWVudD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ibm9uZSIgaWQ9InByaW50MTMiIHRhYmluZGV4PSItMSI+PGVsLWt3PnByaW50IDwvZWwta3c+PGVsLWZpZWxkIGlkPSJleHByMTQiIGNsYXNzPSJvcHRpb25hbCBvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD5zb21ldGhpbmc8L2VsLWlkPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5leHByZXNzaW9uPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNFeHByZXNzaW9uRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj4zPC9lbC1mcj48L2VsLXN0YXRlbWVudD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ibm9uZSIgaWQ9InNldDE1IiB0YWJpbmRleD0iLTEiPjxlbC1rdz5zZXQgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImlkZW50MTYiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD5zb21ldGhpbmc8L2VsLWlkPjwvZWwtdHh0PjxlbC1wbGFjZT48aT52YXJpYWJsZU5hbWU8L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI0Fzc2lnbmFibGVGaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1rdz4gdG8gPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHIxNyIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPnNvbWV0aGluZzwvZWwtaWQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPnZhbHVlIG9yIGV4cHJlc3Npb248L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI0V4cHJlc3Npb25GaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjQ8L2VsLWZyPjwvZWwtc3RhdGVtZW50Pgo8ZWwta3c+ZW5kIGlmPC9lbC1rdz4KPC9lbC1zdGF0ZW1lbnQ+PC9lbC1jb2RlPgogIA==">Hint 5-1: outline version of the new instructions</div>
