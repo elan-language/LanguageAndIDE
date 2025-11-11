@@ -1,8 +1,19 @@
-# 4944ba8f4b88740986bd95ffedee934952345ef877a91a847193c2eb5cd97b12 Elan 1.6.3 guest default_profile valid
+# 9bec31e6c78e437fc91f927ff3a5267a1ad8719d005e9290b1d0a79fc2d9bf6f Elan 1.6.2 guest default_profile valid
 
 main
-  call simulate1000Games()
+  let symbol be htmlEscChars[2]
+  let rank be "3"
+  let colour be "red"
+  let elements be {"a", "b", "c", "d", "e", "f", "g", "h", "i", "l", "m"}
+  variable html set to "<style>{styleSheet}</style><div class='card'>"
+  each element in elements
+    set html to html + "<div class='symbol {element} {colour}'>{symbol}</div>"
+  end each
+  set html to html + "</div></div>"
+  call displayHtml(html)
 end main
+
+constant styleSheet set to '\nbody {\n background-color: darkgreen;\n}\n.card {\n display: block;\n position: relative;\n background-color: white;\n width: 95px;\n height:140px;\n margin:20px;\n padding: 5px;\nborder-radius: 5px;\n}\n.red {\n color: red\n}\n.symbol {\n position: absolute;\n font-size: 30px;\n}\n.a {\n top: 55px;\n left: 45px;\n}\n.b {\n top: 0px;\n left: 45px;\n}\n.c {\n top:110px;\n left: 45px;\ntransform: rotate(180deg);\n}\n.d {\n top: 0px;\n left: 20px;\n}\n.e {\n top: 0px;\n left: 70px;\n}\n.f {\n top: 110px;\n left: 20px;\ntransform: rotate(180deg);\n}\n.g {\n top: 110px;\n left: 70px;\ntransform: rotate(180deg);\n}\n.h {\n top: 55px;\n left: 20px;\n}\n.i {\n top: 55px;\n left: 70px;\n}\n.l {\n top: 27px;\n left: 45px;\n}\n.m {\n top: 83px;\n left: 45px;\n}\n'
 
 procedure playGame()
   variable dealer set to createDealer(1000)
@@ -386,3 +397,5 @@ enum Status pending, playing, standing, blackjack, bust
 constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
 
 constant htmlEscChars set to {"&clubs;", "&diams;", "&hearts;", "&spades;"}
+
+constant layout set to {"A":{"a"}, "2":{"b", "c"}, "3":{"a", "b", "c"}, "4":{"d", "e", "f", "g"}, "5":{"a", "d", "e", "f", "g"}, "6":{"d", "e", "f", "g", "h", "i"}, "7":{"d", "e", "f", "g", "h", "i", "l"}, "8":{"d", "e", "f", "g", "h", "i", "l", "m"}, "9":{"a", "d", "e", "f", "g", "n", "o", "p", "r"}, "10":{"d", "e", "f", "g", "n", "o", "p", "r", "s", "t"}, "J":{"d", "g", "j"}, "Q":{"d", "g", "q"}, "K":{"d", "g", "k"}}
