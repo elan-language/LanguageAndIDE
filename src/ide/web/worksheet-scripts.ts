@@ -17,6 +17,13 @@ let fh: FileSystemFileHandle | undefined;
 
 declare const Diff: any;
 
+type change = {
+  added: boolean;
+  removed: boolean;
+  value: string;
+  count: number;
+};
+
 if (fh) {
   document.getElementById("worksheet")?.classList.add("saved");
   userName.disabled = true;
@@ -266,6 +273,26 @@ for (const step of document.querySelectorAll("div.step") as NodeListOf<HTMLDivEl
   }
 }
 
+function transformHeader(s: string): string {
+  if (s.startsWith("#")) {
+    const tokens = s.split(" ");
+    if (tokens.length === 7 && tokens[0] === "#" && tokens[2] === "Elan") {
+      return `${tokens[0]} ${tokens[2]} ${tokens[3]}\r\n`;
+    }
+  }
+  return s;
+}
+
+function fixHeader(s: string): string {
+  const firstNL = s.indexOf("\n");
+  if (firstNL !== -1) {
+    let firstLine = s.slice(0, firstNL);
+    firstLine = transformHeader(firstLine);
+    return `${firstLine}${s.slice(firstNL + 1)}`;
+  }
+  return s;
+}
+
 window.addEventListener("message", (m: MessageEvent<string>) => {
   if (m.data === "hasFocus") {
     scrollToActiveElement();
@@ -281,12 +308,9 @@ window.addEventListener("message", (m: MessageEvent<string>) => {
     localStorage.setItem("code_snapshot", newCode);
 
     if (id.startsWith("done") || id.startsWith("hint")) {
-      let diff = Diff.diffLines(oldCode, newCode, { newLineIsToken: true }) as {
-        added: boolean;
-        removed: boolean;
-        value: string;
-        count: number;
-      }[];
+      let diff = Diff.diffLines(fixHeader(oldCode), fixHeader(newCode), {
+        newLineIsToken: true,
+      }) as change[];
 
       diff = diff.map((d) => {
         if (d.added || d.removed) {
