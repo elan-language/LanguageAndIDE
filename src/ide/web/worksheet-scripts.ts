@@ -344,7 +344,7 @@ window.addEventListener("message", (m: MessageEvent<string>) => {
       diffDiv.classList.add("diff");
       diffDiv.innerHTML = text;
 
-      document.getElementById(id)?.after(diffDiv);
+      document.getElementById(id)?.before(diffDiv);
 
       diffDiv.addEventListener("click", () => diffDiv.classList.toggle("collapsed"));
     }
