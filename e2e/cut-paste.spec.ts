@@ -380,7 +380,7 @@ test('paste into field', async ({ page }) => {
   await page.keyboard.type('p');
   await page.keyboard.type('secondword[2]');
 
-  await page.waitForTimeout(1000);
+  await page.waitForTimeout(2000);
 
   await page.getByText('firstword').dblclick();
   await page.keyboard.press('Control+c');
