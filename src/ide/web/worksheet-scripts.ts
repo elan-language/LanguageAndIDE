@@ -190,6 +190,7 @@ for (const hint of hints as NodeListOf<HTMLDivElement>) {
 }
 
 for (const ss of snapshots as NodeListOf<HTMLDivElement>) {
+  ss.classList.add("collapsed");
   ss.addEventListener("click", () => ss.classList.toggle("collapsed"));
 }
 
@@ -297,38 +298,6 @@ function fixHeader(s: string): string {
   return s;
 }
 
-function convertChanges(changes: change[]) {
-  const ret = [];
-  for (let i = 0; i < changes.length; i++) {
-    const change = changes[i];
-    if (change.added) {
-      ret.push("<ins>");
-    } else if (change.removed) {
-      ret.push("<del>");
-    } else {
-      ret.push("<unc>");
-    }
-    ret.push(escapeHTML(change.value));
-    if (change.added) {
-      ret.push("</ins>");
-    } else if (change.removed) {
-      ret.push("</del>");
-    } else {
-      ret.push("</unc>");
-    }
-  }
-  return ret.join("");
-}
-
-function escapeHTML(s: string) {
-  let n = s;
-  n = n.replace(/&/g, "&amp;");
-  n = n.replace(/</g, "&lt;");
-  n = n.replace(/>/g, "&gt;");
-  n = n.replace(/"/g, "&quot;");
-  return n;
-}
-
 window.addEventListener("message", async (m: MessageEvent<string>) => {
   if (m.data === "hasFocus") {
     scrollToActiveElement();
@@ -374,7 +343,7 @@ window.addEventListener("message", async (m: MessageEvent<string>) => {
         return d;
       });
 
-      const text = convertChanges(diff);
+      const text = Diff.convertChangesToXML(diff);
 
       const diffDiv = document.createElement("div");
       diffDiv.classList.add("diff");
