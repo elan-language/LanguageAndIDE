@@ -194,7 +194,13 @@ function addEventListenerToInput(e: Element) {
     const ie = e as InputEvent;
     const tgt = ie.target as Element;
 
-    tgt.classList.add("answered");
+    if (tgt instanceof HTMLTextAreaElement || tgt instanceof HTMLInputElement) {
+      if (tgt.value) {
+        tgt.classList.add("answered");
+      } else {
+        tgt.classList.remove("answered");
+      }
+    }
 
     if ((tgt as HTMLInputElement).type === "radio") {
       const name = (tgt as any).name;
