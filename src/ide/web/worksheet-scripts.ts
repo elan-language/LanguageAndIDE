@@ -5,6 +5,7 @@ const questions = document.querySelectorAll(questionsSelector);
 const notes = document.querySelectorAll("textarea.notes");
 const hints = document.querySelectorAll("div.hint");
 const doneCheckboxes = document.querySelectorAll("div.step > input.step-complete");
+const snapshots = document.querySelectorAll("div.snapshot");
 
 const autoSaveButton = document.getElementById("auto-save");
 
@@ -184,9 +185,12 @@ for (const hint of hints as NodeListOf<HTMLDivElement>) {
       hint.append(getTimestamp());
       updateHintsTaken();
       snapShotCode(hint.id);
-      await save();
     }
   });
+}
+
+for (const ss of snapshots as NodeListOf<HTMLDivElement>) {
+  ss.addEventListener("click", () => ss.classList.toggle("collapsed"));
 }
 
 function addEventListenerToInput(e: Element) {
@@ -293,7 +297,39 @@ function fixHeader(s: string): string {
   return s;
 }
 
-window.addEventListener("message", (m: MessageEvent<string>) => {
+function convertChanges(changes: change[]) {
+  const ret = [];
+  for (let i = 0; i < changes.length; i++) {
+    const change = changes[i];
+    if (change.added) {
+      ret.push("<ins>");
+    } else if (change.removed) {
+      ret.push("<del>");
+    } else {
+      ret.push("<unc>");
+    }
+    ret.push(escapeHTML(change.value));
+    if (change.added) {
+      ret.push("</ins>");
+    } else if (change.removed) {
+      ret.push("</del>");
+    } else {
+      ret.push("</unc>");
+    }
+  }
+  return ret.join("");
+}
+
+function escapeHTML(s: string) {
+  let n = s;
+  n = n.replace(/&/g, "&amp;");
+  n = n.replace(/</g, "&lt;");
+  n = n.replace(/>/g, "&gt;");
+  n = n.replace(/"/g, "&quot;");
+  return n;
+}
+
+window.addEventListener("message", async (m: MessageEvent<string>) => {
   if (m.data === "hasFocus") {
     scrollToActiveElement();
   }
@@ -338,7 +374,7 @@ window.addEventListener("message", (m: MessageEvent<string>) => {
         return d;
       });
 
-      const text = Diff.convertChangesToXML(diff);
+      const text = convertChanges(diff);
 
       const diffDiv = document.createElement("div");
       diffDiv.classList.add("diff");
@@ -353,6 +389,7 @@ window.addEventListener("message", (m: MessageEvent<string>) => {
 
       snapshotDiv.addEventListener("click", () => snapshotDiv.classList.toggle("collapsed"));
     }
+    await save();
   }
 });
 
