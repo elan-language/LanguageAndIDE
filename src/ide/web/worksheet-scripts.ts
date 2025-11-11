@@ -361,7 +361,7 @@ function setupLoadLinks(loadLinks: NodeListOf<HTMLButtonElement>) {
     b.addEventListener("click", (_e) => {
       const code = document.getElementById(`code-${b.id}`)?.textContent ?? "";
       window.parent.postMessage(`code:${code}`, "*");
-      localStorage.setItem("code_snapshot", code);
+      snapShotCode("reset");
     });
   }
 }
