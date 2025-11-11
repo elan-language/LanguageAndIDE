@@ -128,17 +128,14 @@ el-fr {
 /* Code diffs */
 .diff {
     white-space: pre; 
-    border: solid 1px black;
+    border: solid 1px #04b304;
     overflow:hidden
+    padding-left: 1em
 }
 
 .diff, .diff * {
     font-family: monospace;
     font-size: 10px;
-}
-
-.diff {
-   padding-left: 1em;
 }
 
 .diff ins {
@@ -168,4 +165,14 @@ el-fr {
     content: "+ ";
     margin-left: -1em;
 }
+.snapshot {
+    margin-top: 10px;
+}
+.snapshot.collapsed .diff {
+    display: none;
+}
 
+.snapshot.collapsed::before {
+    content: "code \25b3";
+    color: green;
+}
