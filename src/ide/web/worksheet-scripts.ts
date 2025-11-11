@@ -5,6 +5,7 @@ const questions = document.querySelectorAll(questionsSelector);
 const notes = document.querySelectorAll("textarea.notes");
 const hints = document.querySelectorAll("div.hint");
 const doneCheckboxes = document.querySelectorAll("div.step > input.step-complete");
+const snapshots = document.querySelectorAll("div.snapshot");
 
 const autoSaveButton = document.getElementById("auto-save");
 
@@ -184,9 +185,13 @@ for (const hint of hints as NodeListOf<HTMLDivElement>) {
       hint.append(getTimestamp());
       updateHintsTaken();
       snapShotCode(hint.id);
-      await save();
     }
   });
+}
+
+for (const ss of snapshots as NodeListOf<HTMLDivElement>) {
+  ss.classList.add("collapsed");
+  ss.addEventListener("click", () => ss.classList.toggle("collapsed"));
 }
 
 function addEventListenerToInput(e: Element) {
@@ -299,7 +304,7 @@ function fixHeader(s: string): string {
   return s;
 }
 
-window.addEventListener("message", (m: MessageEvent<string>) => {
+window.addEventListener("message", async (m: MessageEvent<string>) => {
   if (m.data === "hasFocus") {
     scrollToActiveElement();
   }
@@ -359,6 +364,7 @@ window.addEventListener("message", (m: MessageEvent<string>) => {
 
       snapshotDiv.addEventListener("click", () => snapshotDiv.classList.toggle("collapsed"));
     }
+    await save();
   }
 });
 
