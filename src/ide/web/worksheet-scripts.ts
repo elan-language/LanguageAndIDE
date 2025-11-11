@@ -15,6 +15,15 @@ const autosave = document.getElementById("auto-save") as HTMLButtonElement;
 
 let fh: FileSystemFileHandle | undefined;
 
+declare const Diff: any;
+
+type change = {
+  added: boolean;
+  removed: boolean;
+  value: string;
+  count: number;
+};
+
 if (fh) {
   document.getElementById("worksheet")?.classList.add("saved");
   userName.disabled = true;
@@ -109,9 +118,6 @@ autoSaveButton!.addEventListener("click", async () => {
   } else {
     const suggestedName = document.getElementsByClassName("docTitle")[0].innerHTML;
     fh = await chromeSave(code, suggestedName);
-
-    if (fh) {
-    }
   }
 
   scrollToActiveElement();
@@ -177,6 +183,7 @@ for (const hint of hints as NodeListOf<HTMLDivElement>) {
       hint.classList.add("taken");
       hint.append(getTimestamp());
       updateHintsTaken();
+      snapShotCode(hint.id);
       await save();
     }
   });
@@ -248,6 +255,7 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
 
     cb.after(getTimestamp());
     updateHintsTaken();
+    snapShotCode(cb.id);
     await save();
   });
 }
@@ -265,9 +273,86 @@ for (const step of document.querySelectorAll("div.step") as NodeListOf<HTMLDivEl
   }
 }
 
-window.addEventListener("message", (m) => {
+function transformHeader(s: string): string {
+  if (s.startsWith("#")) {
+    const tokens = s.split(" ");
+    if (tokens.length === 7 && tokens[0] === "#" && tokens[2] === "Elan") {
+      return `${tokens[0]} ${tokens[2]} ${tokens[3]}\r\n`;
+    }
+  }
+  return s;
+}
+
+function fixHeader(s: string): string {
+  const firstNL = s.indexOf("\n");
+  if (firstNL !== -1) {
+    let firstLine = s.slice(0, firstNL);
+    firstLine = transformHeader(firstLine);
+    return `${firstLine}${s.slice(firstNL + 1)}`;
+  }
+  return s;
+}
+
+window.addEventListener("message", (m: MessageEvent<string>) => {
   if (m.data === "hasFocus") {
     scrollToActiveElement();
+  }
+
+  if (m.data.startsWith("code:")) {
+    const idPrefixed = m.data.slice(5);
+    const indexOfColon = idPrefixed.indexOf(":");
+    const id = idPrefixed.slice(0, indexOfColon);
+    const newCode = idPrefixed.slice(indexOfColon + 1);
+
+    const oldCode = localStorage.getItem("code_snapshot") ?? "";
+    localStorage.setItem("code_snapshot", newCode);
+
+    if (id.startsWith("done") || id.startsWith("hint")) {
+      let diff = Diff.diffLines(fixHeader(oldCode), fixHeader(newCode), {
+        newLineIsToken: true,
+      }) as change[];
+
+      diff = diff.map((d) => {
+        if (d.added || d.removed) {
+          return d;
+        }
+
+        if (d.count > 2) {
+          const all = d.value
+            .split("\n")
+            .map((s) => s.trimEnd())
+            .filter((s) => s);
+
+          if (all.length > 2) {
+            const result = [all[0], "...", all[all.length - 1]];
+
+            return {
+              added: false,
+              removed: false,
+              value: result.join("\n"),
+              count: result.length,
+            };
+          }
+        }
+
+        return d;
+      });
+
+      const text = Diff.convertChangesToXML(diff);
+
+      const diffDiv = document.createElement("div");
+      diffDiv.classList.add("diff");
+      diffDiv.innerHTML = text;
+
+      const snapshotDiv = document.createElement("div");
+      snapshotDiv.classList.add("snapshot");
+      snapshotDiv.classList.add("collapsed");
+      snapshotDiv.appendChild(diffDiv);
+
+      document.getElementById(id)?.before(snapshotDiv);
+
+      snapshotDiv.addEventListener("click", () => snapshotDiv.classList.toggle("collapsed"));
+    }
   }
 });
 
@@ -276,6 +361,7 @@ function setupLoadLinks(loadLinks: NodeListOf<HTMLButtonElement>) {
     b.addEventListener("click", (_e) => {
       const code = document.getElementById(`code-${b.id}`)?.textContent ?? "";
       window.parent.postMessage(`code:${code}`, "*");
+      snapShotCode("reset");
     });
   }
 }
@@ -300,3 +386,9 @@ userName.addEventListener("change", () => {
 });
 
 autosave.disabled = !userName.classList.contains("answered");
+
+function snapShotCode(id: string) {
+  window.parent.postMessage(`snapshot:${id}`, "*");
+}
+
+snapShotCode("initial");

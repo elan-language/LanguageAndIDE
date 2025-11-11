@@ -124,3 +124,48 @@ code, el-code, el-code-block {
 el-fr {
     display: none; /* Because the instruction numbers start from 1 for each snippet, which is misleading */
 }
+
+/* Code diffs */
+.diff {
+    white-space: pre; 
+    border: solid 1px black;
+    overflow:hidden
+}
+
+.diff, .diff * {
+    font-family: monospace;
+    font-size: 10px;
+}
+
+.diff {
+   padding-left: 1em;
+}
+
+.diff ins {
+    color: green;
+    background-color: #eaf2c2;
+    display: block;
+    white-space: pre;
+    text-decoration: none;
+    margin-left: 0;
+}
+
+.diff del {
+    color: red;
+    background-color: #fadad7;
+    display: block;
+    white-space: pre;
+    text-decoration: none;
+    margin-left: 0;
+}
+
+.diff del::before {
+    content: "- ";
+    margin-left: -1em;
+}
+
+.diff ins::before {
+    content: "+ ";
+    margin-left: -1em;
+}
+
