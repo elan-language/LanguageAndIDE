@@ -129,8 +129,8 @@ el-fr {
 .diff {
     white-space: pre; 
     border: solid 1px #04b304;
-    overflow:hidden
-    padding-left: 1em
+    overflow:hidden;
+    padding-left: 1.2em;
 }
 
 .diff, .diff * {
