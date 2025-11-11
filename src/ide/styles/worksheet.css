@@ -19,12 +19,14 @@
 /* Steps */
 
     /* By default, invisible */
-    .step {
+    .step, .final {
         display: none;
     }
     /* Show complete & active steps, when worksheet is saved */
     #worksheet.saved .step.complete,
-    #worksheet.saved .step.active {
+    #worksheet.saved .step.active,
+    #worksheet.saved .step.complete + .final
+    {
         display: block;
     }
     /* When step is complete hide the completion label */
@@ -100,7 +102,7 @@
     display: block;
 }
 
-.step textarea {
+textarea {
     width: 100%;
     font-family: monospace;
     font-weight: bold;
@@ -121,14 +123,6 @@ code, el-code, el-code-block {
 
 el-fr {
     display: none; /* Because the instruction numbers start from 1 for each snippet, which is misleading */
-}
-
-div.final {
-    display: none;
-}
-
-.step.complete + div.final {
-    display: block;
 }
 
 /* Code diffs */

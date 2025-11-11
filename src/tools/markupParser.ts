@@ -1,6 +1,8 @@
 import { JSDOM } from "jsdom";
+import { readFileSync } from "node:fs";
 import { processWorksheetCode } from "./codeParser";
 import {
+  code,
   currentFinalId,
   currentFinalNumber,
   currentHintId,
@@ -31,9 +33,9 @@ import {
   titleEndTag,
   titleTag,
 } from "./parserConstants";
-import { readFileSync } from "node:fs";
 
 let currentDir = "";
+let finalStep = 1;
 
 export function setCurrentDir(dir: string) {
   currentDir = dir;
@@ -56,9 +58,9 @@ export async function processFinal(
 
   const div = outDoc.querySelector("div")!;
 
-  let updated = await processQuestions(finalSel?.innerHTML ?? "", finalInstance);
+  let updated = await processHelps(finalSel?.innerHTML ?? "", finalInstance);
+  updated = await processQuestions(updated, finalInstance);
   updated = await processLoads(updated, finalInstance);
-  updated = await processHelps(updated, finalInstance);
 
   updated = updated.replaceAll(currentFinalNumber, num).replaceAll(currentFinalId, id);
 
@@ -86,7 +88,8 @@ export async function processStep(
 
   const div = outDoc.querySelector("div")!;
 
-  let updated = await processHints(stepSel?.innerHTML ?? "", stepInstance);
+  let updated = await processHelps(stepSel?.innerHTML ?? "", stepInstance);
+  updated = await processHints(updated, stepInstance);
   updated = await processQuestions(updated, stepInstance);
   updated = await processLoads(updated, stepInstance);
   updated = await processHelps(updated, stepInstance);
@@ -117,6 +120,15 @@ export async function processStep(
   spOuter.appendChild(outDoc.createTextNode("/"));
   spOuter.appendChild(sp2);
 
+  const notesHeading = outDoc.createElement("h4");
+  notesHeading.textContent = `Notes`;
+
+  const notesInput = outDoc.createElement("textarea");
+  notesInput.className = "notes";
+  notesInput.placeholder = "Student or teacher may optionally add notes here";
+
+  div.appendChild(notesHeading);
+  div.appendChild(notesInput);
   div.appendChild(label);
   div.appendChild(inp);
   div.appendChild(spOuter);
@@ -152,26 +164,27 @@ export async function processLoad(
   const inDoc = input.window.document;
   const num = `${stepInstance}-${loadInstance}`;
   const id = `${load}${num}`;
+  const codeId = `${code}-${load}${num}`;
 
   const output = new JSDOM(
-    `<div><button class="${load}" id="${id}"></button><div hidden></div></div>`,
+    `<div><button class="${load}" id="${id}"></button><div id="${codeId}" hidden></div></div>`,
   );
   const outDoc = output.window.document;
 
   const loadSel = inDoc.querySelector(load);
   const file = loadSel?.getAttribute("file") ?? "";
-  let code = "";
+  let fileCode = "";
 
   try {
-    code = readFileSync(`${currentDir}${file}`, "utf-8");
+    fileCode = readFileSync(`${currentDir}${file}`, "utf-8");
   } catch {
-    code = "";
+    fileCode = "";
   }
 
   const button = outDoc.querySelector("button")!;
   const outCode = outDoc.querySelector("div > div")!;
 
-  outCode.textContent = code;
+  outCode.textContent = fileCode;
 
   button.textContent = (loadSel?.firstChild?.textContent ?? "")
     .replaceAll(currentLoadNumber, num)
@@ -192,7 +205,7 @@ export async function processQuestion(
 
   const output = new JSDOM(
     `<div><p></p>
-<textarea class="${question}" id="${id}"></textarea></div>`,
+<textarea class="${question}" id="${id}" placeholder="input is required"></textarea></div>`,
   );
   const outDoc = output.window.document;
 
@@ -513,12 +526,14 @@ export async function processSteps(source: string) {
     stepInstance++;
   }
 
+  finalStep = stepInstance - 1;
+
   return applyChanges(source, updates);
 }
 
 export async function processFinals(source: string) {
   const updates: [string, number, number][] = [];
-  let finalInstance = 1;
+  let finalInstance = finalStep;
 
   let [updatedCode, codeStart, codeEnd] = await processEachFinalInstance(source, 0, finalInstance);
   finalInstance++;

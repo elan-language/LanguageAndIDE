@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-const answersSelector = "input.question, textarea.question, select.question";
-const answers = document.querySelectorAll(answersSelector);
+const questionsSelector = "input.question, textarea.question, select.question";
+const questions = document.querySelectorAll(questionsSelector);
+const notes = document.querySelectorAll("textarea.notes");
 const hints = document.querySelectorAll("div.hint");
 const doneCheckboxes = document.querySelectorAll("div.step > input.step-complete");
 
@@ -129,24 +130,12 @@ async function save() {
   }
 }
 
-for (const e of answers) {
-  e.addEventListener("input", async (e) => {
-    const ie = e as InputEvent;
-    const tgt = ie.target as Element;
+for (const e of questions) {
+  addEventListenerToInput(e);
+}
 
-    tgt.classList.add("answered");
-
-    if ((tgt as HTMLInputElement).type === "radio") {
-      const name = (tgt as any).name;
-      const allradio = document.querySelectorAll(`input[name=${name}]`);
-      for (const e of allradio) {
-        e.classList.add("answered");
-      }
-    }
-
-    clearTempMsgs();
-    await save();
-  });
+for (const e of notes) {
+  addEventListenerToInput(e);
 }
 
 function updateHintsTaken() {
@@ -158,9 +147,7 @@ function updateHintsTaken() {
   ) as NodeListOf<HTMLDivElement>) {
     hintsTaken = hintsTaken + step.querySelectorAll(".taken").length;
     hintsSoFar = hintsSoFar + step.querySelectorAll("div.hint").length;
-  }
 
-  for (const step of document.querySelectorAll("div.active") as NodeListOf<HTMLDivElement>) {
     const taken = step.querySelectorAll("span.hints-taken");
     const total = step.querySelectorAll("span.hints-total");
 
@@ -182,6 +169,8 @@ for (const hint of hints as NodeListOf<HTMLDivElement>) {
         const content = document.getElementById(`${hint.id}content`);
         if (content) {
           content.innerHTML = atob(encryptedText);
+          const hintHelps = content.querySelectorAll("a.help") as NodeListOf<HTMLLinkElement>;
+          setupHelpLinks(hintHelps);
         }
       }
       hint.classList.add("taken");
@@ -190,6 +179,25 @@ for (const hint of hints as NodeListOf<HTMLDivElement>) {
       snapShotCode(hint.id);
       await save();
     }
+  });
+}
+
+function addEventListenerToInput(e: Element) {
+  e.addEventListener("input", async (e) => {
+    const ie = e as InputEvent;
+    const tgt = ie.target as Element;
+
+    tgt.classList.add("answered");
+
+    if ((tgt as HTMLInputElement).type === "radio") {
+      const name = (tgt as any).name;
+      const allradio = document.querySelectorAll(`input[name=${name}]`);
+      for (const e of allradio) {
+        e.classList.add("answered");
+      }
+    }
+    clearTempMsgs();
+    await save();
   });
 }
 
@@ -207,7 +215,7 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
     const step = cb.parentElement;
     const id = cb.id.slice(4);
     if (step) {
-      const allInputs = step.querySelectorAll(answersSelector) as NodeListOf<
+      const allInputs = step.querySelectorAll(questionsSelector) as NodeListOf<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
       >;
 
@@ -319,22 +327,30 @@ window.addEventListener("message", (m: MessageEvent<string>) => {
   }
 });
 
-for (const b of loads as NodeListOf<HTMLButtonElement>) {
-  b.addEventListener("click", (_e) => {
-    const code = b.nextElementSibling?.textContent ?? "";
-    window.parent.postMessage(`code:${code}`, "*");
-    localStorage.setItem("code_snapshot", code);
-  });
+function setupLoadLinks(loadLinks: NodeListOf<HTMLButtonElement>) {
+  for (const b of loadLinks) {
+    b.addEventListener("click", (_e) => {
+      const code = document.getElementById(`code-${b.id}`)?.textContent ?? "";
+      window.parent.postMessage(`code:${code}`, "*");
+      localStorage.setItem("code_snapshot", code);
+    });
+  }
 }
 
-for (const b of helps as NodeListOf<HTMLLinkElement>) {
-  b.addEventListener("click", (e) => {
-    const link = b.href;
-    window.parent.postMessage(`help:${link}`, "*");
-    e.preventDefault();
-    e.stopPropagation();
-  });
+function setupHelpLinks(helpLinks: NodeListOf<HTMLLinkElement>) {
+  for (const b of helpLinks) {
+    b.addEventListener("click", (e) => {
+      const link = b.href;
+      window.parent.postMessage(`help:${link}`, "*");
+      e.preventDefault();
+      e.stopPropagation();
+    });
+  }
 }
+
+setupLoadLinks(loads as NodeListOf<HTMLButtonElement>);
+setupHelpLinks(helps as NodeListOf<HTMLLinkElement>);
+updateHintsTaken();
 
 userName.addEventListener("change", () => {
   autosave.disabled = !userName.classList.contains("answered");
