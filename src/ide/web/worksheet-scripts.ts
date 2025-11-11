@@ -344,9 +344,14 @@ window.addEventListener("message", (m: MessageEvent<string>) => {
       diffDiv.classList.add("diff");
       diffDiv.innerHTML = text;
 
-      document.getElementById(id)?.before(diffDiv);
+      const snapshotDiv = document.createElement("div");
+      snapshotDiv.classList.add("snapshot");
+      snapshotDiv.classList.add("collapsed");
+      snapshotDiv.appendChild(diffDiv);
 
-      diffDiv.addEventListener("click", () => diffDiv.classList.toggle("collapsed"));
+      document.getElementById(id)?.before(snapshotDiv);
+
+      snapshotDiv.addEventListener("click", () => snapshotDiv.classList.toggle("collapsed"));
     }
   }
 });
