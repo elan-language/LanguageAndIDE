@@ -27,7 +27,7 @@ type change = {
   count: number;
 };
 
-const _wsModel = createModelFromDocument(document);
+const wsModel = createModelFromDocument(document);
 
 if (fh) {
   document.getElementById("worksheet")?.classList.add("saved");
@@ -204,7 +204,10 @@ function addEventListenerToInput(e: Element) {
     const tgt = ie.target as Element;
 
     if (tgt instanceof HTMLTextAreaElement || tgt instanceof HTMLInputElement) {
-      if (tgt.value) {
+      const q = wsModel.getQuestionById(tgt.id);
+      q?.setValue(tgt.value);
+
+      if (q?.isAnswered()) {
         tgt.classList.add("answered");
       } else {
         tgt.classList.remove("answered");
