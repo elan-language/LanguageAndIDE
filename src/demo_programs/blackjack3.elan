@@ -1,4 +1,4 @@
-# 49894a8d4f7ed15b1268a588fb87c654a1d3f3e6cbd2c62969ff7b2284f26b1e Elan 1.6.3 guest default_profile valid
+# c81038f36565e7fc210e9a42db6cdde8509ef9e218b294778efc7d6e252d7b24 Elan 1.6.3 guest default_profile valid
 
 main
   let card1 be htmlForCard("A", Suit.spades)
@@ -6,10 +6,6 @@ main
   let card3 be htmlForCard("7", Suit.hearts)
   call displayHtml("<style>{styleSheet}</style><html>{card1}{card2}{card3}</html>")
 end main
-
-function tag(id as String, colour as String, content as String) returns String
-  return "<div class='{id} {colour}'>{content}</div>"
-end function
 
 function htmlForCard(rank as String, suit as Suit) returns String
   let colour be colours[suit]
@@ -19,13 +15,17 @@ function htmlForCard(rank as String, suit as Suit) returns String
   let w be tag("w", colour, symbol)
   let x be tag("x", colour, rank)
   variable grid set to ""
-  each element in layout[rank]
+  each element in gridByRank[rank]
     set grid to grid + tag(element, colour, symbol)
   end each
   return "<div class='card'>{u}{v}{grid}{w}{x}</div>"
 end function
 
-constant styleSheet set to 'body {\n    background-color: darkgreen;\n}\n.card {\n    position: relative;\n    float: left;\n    background-color: white;\n    width: 95px;\n    height:140px;\n    margin-top:20px;\n    margin-left:20px;\n    padding: 5px;\n    border-radius: 5px;\n    font-family: Helvetica, sans-serif; \n}\n.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}\n\n/* Standard spots */ \n    .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}\n\n    /* columns */\n    .d,.n,.h,.p,.f {left: 18px }\n    .a,.b,.c,.l,.m,.s,.t {left: 43px;}\n    .e,.o,.i,.r,.g {left: 68px}\n\n    /* rows */\n    .d,.b,.e {top: 0px}\n    .s {top: 20px;}\n    .l {top: 28px;}\n    .n,.o {top: 37px;}\n    .h,.a,.i {top: 57px}\n    .p,.r {top: 75px;  transform: rotate(180deg);}\n    .m {top: 86px;  transform: rotate(180deg);}\n    .t {top: 93px;  transform: rotate(180deg);}\n    .f,.c,.g {top: 114px;  transform: rotate(180deg);}\n\n/* royals */\n    .j,.q,.k {\n        top: 20px;\n        left: 20px;\n        height: 105px;\n        width: 68px;\n    }\n/* corners */\n    .u,.x {font-size: 15px; width: 15px; text-align: center;}\n    .v,.w {font-size: 20px; width: 15px; text-align: center;}\n    .u,.v {left: 0px;}\n    .w,.x {left: 89px; transform: rotate(180deg);}\n    .u {top: 2px;}   \n    .v {top: 12px;} \n    .w {top: 116px;} \n    .x {top: 132px;} \n\n/* suit colors */\n    .red {color: red}\n    .black {color: black}'
+function tag(id as String, colour as String, content as String) returns String
+  return "<div class='{id} {colour}'>{content}</div>"
+end function
+
+constant styleSheet set to 'body {\n    background-color: darkgreen;\n}\n.card {\n    position: relative;\n    float: left;\n    background-color: white;\n    width: 95px;\n    height:140px;\n    margin-top:20px;\n    margin-left:20px;\n    padding: 5px;\n    border-radius: 5px;\n    font-family: Helvetica, sans-serif; \n}\n.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}\n\n/* Standard spots */ \n    .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}\n\n    /* columns */\n    .d,.n,.h,.p,.f {left: 18px }\n    .a,.b,.c,.l,.m,.s,.t {left: 43px;}\n    .e,.o,.i,.r,.g {left: 68px}\n\n    /* rows */\n    .d,.b,.e {top: 0px}\n    .s {top: 20px;}\n    .l {top: 28px;}\n    .n,.o {top: 37px;}\n    .h,.a,.i {top: 57px}\n    .p,.r {top: 75px;  transform: rotate(180deg);}\n    .m {top: 86px;  transform: rotate(180deg);}\n    .t {top: 93px;  transform: rotate(180deg);}\n    .f,.c,.g {top: 114px;  transform: rotate(180deg);}\n\n/* royal pictures */\n    .j,.q,.k {\n        top: 20px;\n        left: 20px;\n        height: 105px;\n        width: 68px;\n    }\n/* corner summary */\n    .u,.x {font-size: 15px; width: 15px; text-align: center;}\n    .v,.w {font-size: 20px; width: 15px; text-align: center;}\n    .u,.v {left: 0px;}\n    .w,.x {left: 89px; transform: rotate(180deg);}\n    .u {top: 2px;}   \n    .v {top: 12px;} \n    .w {top: 116px;} \n    .x {top: 132px;} \n\n/* suit colors */\n    .red {color: red}\n    .black {color: black}'
 
 procedure playGame()
   variable dealer set to createDealer(1000)
@@ -100,7 +100,7 @@ end procedure
 procedure playOneRound(dealer as Dealer, player as HumanPlayer)
   call player.newHand()
   call dealer.newHand(dealCard(random()))
-  call displayHands(dealer, player)
+  [ghosted] call displayHands(dealer, player)
   call playersTurn(dealer, player)
   call pause(2000)
   call dealersTurn(dealer, player)
@@ -108,11 +108,11 @@ end procedure
 
 procedure dealersTurn(dealer as Dealer, player as HumanPlayer)
   call dealer.start()
-  call displayHands(dealer, player)
+  [ghosted] call displayHands(dealer, player)
   call pause(2000)
   while dealer.hand.status is Status.playing
     call dealer.nextMove()
-    call displayHands(dealer, player)
+    [ghosted] call displayHands(dealer, player)
     call pause(1000)
   end while
 end procedure
@@ -120,14 +120,8 @@ end procedure
 procedure playersTurn(dealer as Dealer, player as HumanPlayer)
   while player.isPlaying()
     call player.nextMove()
-    call displayHands(dealer, player)
+    [ghosted] call displayHands(dealer, player)
   end while
-end procedure
-
-procedure displayHands(dealer as Dealer, player as HumanPlayer)
-  call clearPrintedText()
-  let blankLines be "<br><br><br><br><br>"
-  call displayHtml("<br><br><br><br><br>{dealer.asHtml()}<br>{player.asHtml()}")
 end procedure
 
 procedure updateScores(dealer as Dealer, player as Player, outcome as Outcome)
@@ -161,7 +155,19 @@ function dealCard(random as Float) returns Card
   let number be (random*52).floor()
   let rank be rankValue.keys()[number div 4]
   let suit be number mod 4
-  return new Card() with rank set to rank, suit set to suit
+  return new Card() with rank set to rank, suit set to intAsSuit(suit)
+end function
+
+function intAsSuit(n as Int) returns Suit
+  variable suit set to Suit.clubs
+  if n is 1 then
+    set suit to Suit.diamonds
+  else if n is 2 then
+    set suit to Suit.hearts
+  else if n is 3 then
+    set suit to Suit.spades
+  end if
+  return suit
 end function
 
 interface Player
@@ -224,10 +230,6 @@ class Dealer inherits Automated
     return if property.hand.total < 17 then Action.draw else Action.stand
   end function
 
-  function asHtml() returns String
-    return if property.active then "Dealer: {property.hand.asHtml()}" else "Dealer: {property.dealerFaceCard.asHtml()} {unicode(9633)}"
-  end function
-
 end class
 
 class HumanPlayer inherits Player
@@ -263,10 +265,6 @@ class HumanPlayer inherits Player
     set property.score to property.score + amount
   end procedure
 
-  function asHtml() returns String
-    return "You: {property.hand.asHtml()}"
-  end function
-
 end class
 
 class AutomatedPlayer inherits Automated
@@ -292,10 +290,6 @@ class AutomatedPlayer inherits Automated
     return decisionFunc(property.hand, property.dealerFaceCard)
   end function
 
-  function asHtml() returns String
-    return "{property.name}: {property.hand.asHtml()}"
-  end function
-
 end class
 
 class Hand
@@ -308,10 +302,6 @@ class Hand
   property total as Int
 
   property status as Status
-
-  function isPairOf8s() returns Boolean
-    return (property.count is 2) and (property.cards[0].value() is 8) and (property.cards[1].value() is 8)
-  end function
 
   procedure setStatus(status as Status)
     set property.status to status
@@ -330,14 +320,14 @@ class Hand
   procedure addCard(card as Card)
     call property.cards.append(card)
     set property.count to property.count + 1
-    if card.isAce() then
+    if card.rank is ace then
       call addAce()
     else
-      set property.total to property.total + card.value()
+      set property.total to property.total + rankValue[card.rank]
     end if
     if property.total > 21 then
       call useUpSoftAceIfPossible()
-    else if card.isAce() then
+    else if card.rank is ace then
       set property.softAce to true
     end if
     if (property.count is 2) and (property.total is 21) and property.softAce then
@@ -367,36 +357,12 @@ class Hand
     end if
   end procedure
 
-  function asHtml() returns String
-    variable str set to ""
-    each card in property.cards
-      set str to str + card.asHtml() + " "
-    end each
-    set str to "{str}({property.total}) {property.status}"
-    return str
-  end function
-
 end class
 
 record Card
-  property suit as Int
+  property suit as Suit
 
   property rank as String
-
-  function value() returns Int
-    return rankValue[property.rank]
-  end function
-
-  function isAce() returns Boolean
-    return property.rank is "A"
-  end function
-
-  function asHtml() returns String
-    let blackSuit be (property.suit is 0) or (property.suit is 3)
-    let colour be if blackSuit then "black" else "red"
-    let tag be htmlEscChars[property.suit]
-    return "{property.rank}<span style='color: {colour}'>{tag}</span>"
-  end function
 
 end record
 
@@ -408,12 +374,12 @@ enum Status pending, playing, standing, blackjack, bust
 
 enum Suit clubs, diamonds, hearts, spades
 
+constant ace set to "A"
+
 constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
 
 constant symbols set to {Suit.clubs:"&clubs;", Suit.diamonds:"&diams;", Suit.hearts:"&hearts;", Suit.spades:"&spades;"}
 
 constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"red", Suit.spades:"black"}
 
-constant htmlEscChars set to {"&clubs;", "&diams;", "&hearts;", "&spades;"}
-
-constant layout set to {"A":{"a"}, "2":{"b", "c"}, "3":{"a", "b", "c"}, "4":{"d", "e", "f", "g"}, "5":{"a", "d", "e", "f", "g"}, "6":{"d", "e", "f", "g", "h", "i"}, "7":{"d", "e", "f", "g", "h", "i", "l"}, "8":{"d", "e", "f", "g", "h", "i", "l", "m"}, "9":{"a", "d", "e", "f", "g", "n", "o", "p", "r"}, "10":{"d", "e", "f", "g", "n", "o", "p", "r", "s", "t"}, "J":{"d", "g", "j"}, "Q":{"d", "g", "q"}, "K":{"d", "g", "k"}}
+constant gridByRank set to {"A":{"a"}, "2":{"b", "c"}, "3":{"a", "b", "c"}, "4":{"d", "e", "f", "g"}, "5":{"a", "d", "e", "f", "g"}, "6":{"d", "e", "f", "g", "h", "i"}, "7":{"d", "e", "f", "g", "h", "i", "l"}, "8":{"d", "e", "f", "g", "h", "i", "l", "m"}, "9":{"a", "d", "e", "f", "g", "n", "o", "p", "r"}, "10":{"d", "e", "f", "g", "n", "o", "p", "r", "s", "t"}, "J":{"d", "g", "j"}, "Q":{"d", "g", "q"}, "K":{"d", "g", "k"}}
