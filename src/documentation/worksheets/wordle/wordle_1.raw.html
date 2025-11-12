@@ -11,7 +11,7 @@
         <li><b>run</b> the program. On the <b>Display</b> you will see 
         a facsimile of the puzzle, and if you enter your first attempt
         (five letters - using <b>Backspace</b> if you make a mistake - then <b>Enter</b>) each
-        letter will be marked green, yellow, or grey. But if you continue with further attemptes
+        letter will be marked green, yellow, or grey. But if you continue with further attempts
         you will quickly discover that it marks <i>every</i> attempt word with the same result!
         Though this program has correctly implemented the <i>presentation</i>, and the
         <i>user interactions</i>, of the official puzzle, 
@@ -30,7 +30,7 @@
              The tests will then run automatically.
         <question>How many of the <code>assert</code> instructions within the test have failed?</question>
         </li>
-        <question>In the <el-method>markAttempt</el-method> function, change the 'default' value to which the <code>mark</code> string is set, so that it returns a string of five zeroes. Which, if any, of the <code>assert</code> instructions within the tests now pass?</question>
+        <question>In the <el-method>markAttempt</el-method> function, change the 'default' value to which the <code>mark</code> string is set, so that it returns a string of five zeros. Which, if any, of the <code>assert</code> instructions within the tests now pass?</question>
         </ul>
 </step>
 
@@ -202,8 +202,8 @@ end function
 <step>
   <h1>Step STEPNUMBER: mark the yellows without over-writing greens'</h1>
   <p>The problem is: letters that were marked green in the first loop are being 'overwritten'
-      by a yellow. In the second loop we need to exlude any characters that have already been 
-      marked green. Attempt it now by modifying the <code>if</code> condition within in the <i>second</i>second. You should
+      by a yellow. In the second loop we need to exclude any characters that have already been 
+      marked green. Attempt it now by modifying the <code>if</code> condition within the <i>second</i> loop. You should
       get all the 'Green only' cases passing again, and <i>all except one</i> of the 'Yellow only' cases.</p>
   <hint>Hint HINTNUMBER: comparing for 'inequality'</hint>
   <content>
@@ -243,7 +243,7 @@ end function
     end function
     </code>
   </content>
-  <question>Why is one of the 'Only yellows' cases still failing? (Look at what is different about the that specific case)</question>
+  <question>Why is one of the 'Only yellows' cases still failing? (Look at what is different about that specific case)</question>
   <p>We will address that failing test shortly, but first we are going to do a little bit of 'refactoring' - a hugely
   important practice when writing good code.</p>
 </step>
@@ -342,7 +342,7 @@ end function
     define a new variable named <code>unused</code> initialised to the value of <code>target</code>.</li>
     <li>In the <i>second</i> loop (looking for yellow matches) change the condition so that instead
     of checking whether <code>target</code> contains the character of interest, it checks <code>unused</code> instead</li>
-    <li>If a yellow match is found, after updating <code>mark</code> also update <code>unused</code> - replacing
+    <li>If a yellow match is found then, after updating <code>mark</code>, also update <code>unused</code> - replacing
     the just-used character with an empty space. (This part is slightly tricky: you need to find the location of the
     matching character within <code>unused</code>).</li>
   </ul>
@@ -394,7 +394,7 @@ end function
   </content>
   <p>If you have implemented this step correctly, you should see that the last failing 'Only yellows' test case is now passing.</p>
   <question>How many of the 'Mixed' test cases are now still failing? Can you figure out from the tests what they have in common?</question>
-  <p>You might wonder why we didn't also change <code>target</code> to <code>unused</code> in the condition.
+  <p>You might wonder why we didn't also change <code>target</code> to <code>unused</code> in the first condition.
     It wouldn't matter if you made that change - try it.</p>
     <question>Can you explain <i>why</i> that change - within the greens loop -  doesn't make any difference, when
     it <i>did</i> make a difference within the yellows loop?</question>
@@ -449,11 +449,11 @@ end function
   <h3>Congratulations! Worksheet completed</h3>
 
   <p>You have just implemented the core logic of the Wordle puzzle - how to mark attempt words against a known target word -
-    in just 14 instructions! And you have learned, or practiced several important programming patterns and techniques, 
+    in just 14 instructions! And you have learned or practised several important programming patterns and techniques, 
     including:
     <ul>
-      <li>Accessing contents of a string using an index, and an index range</li>
-      <li>Updating a string variable by building a new string from the original parts, with changes</li>
+      <li>Accessing contents of a string using an index, and an index range'.</li>
+      <li>Updating a string variable by building a new string from the original parts, with changes.</li>
       <li>Using a <code>for</code> loop for repetition (also known as 'iteration'), and an <code>if</code> instruction
       for conditional operations (also known as 'selection').</li>
       <li>Undertaking 'Test-driven' development: extending and modifying a function until all the tests pass.</li>
@@ -461,15 +461,21 @@ end function
         be tested in isolation, and which might be re-usable in further contexts also.</li>
     </ul>
   </p>
+
+  <p>If you would like to share the working application with others, click <b>file > save as standalone</b> to
+  save it as a self-contained single web page that shows only
+  an enlarged version of the <b>display</b> tab, and runs the program automatically when it is opened.
+This standalone Html file may be emailed to others. You might like to print a few more instructions within <code>main</code> and/or
+add any of the refinements below.</p>
   
   <p>You now have the option to <load file="wordle_1end.elan">Load the full source code</load>
     of the finished program. The initial constants are huge, so use the <b>outline</b> button to make it easier to explore.
     This will allow you to see how it is implementing the functionality
-    that you haven't written - for example the user-interface. 
-    You can save this source code to your own local file and then modify it as you wish</p>
+    that you haven't written - for example the user interface. 
+    You can save this source code to your own local file and then modify it as you wish.</p>
 
-  <p>There is a follow-on worksheet to this over-writing - 'Wordle 2' - in which you will re-used the <el-method>markAttempt</el-method>
-    function you have just written to write an 'reverse game' (also descrivbed as an '<i>automated solver</i>') for Wordle.
+  <p>There is a follow-on worksheet to this over-writing - 'Wordle 2' - in which you will re-use the <el-method>markAttempt</el-method>
+    function you have just written to write a 'reverse game' (also described as an '<i>automated solver</i>') for Wordle.
     Incredible as this might seem, you will be able to implement the solving algorithm by writing just 12 more instructions.</p>
 
   <p>Meantime, you might like to consider undertaking one or more of the following suggested improvements/extensions to
@@ -482,7 +488,7 @@ end function
     <li>Keep track of how many of the puzzles the user solved within six attempts, and how many were not solved.
       Print this at the end of the run e.g. 'You solved 7 out of 10 puzzles within six attempts'. Note that
       to get the results back to <code>main</code> from the <el-method>playGame</el-method> procedure
-      you will need to use one or more <code>out</code> parameters. <help>LangRef.html#procedure</help></li>
+      you will need to use one or more <code>out</code> parameters; see <help>LangRef.html#procedure</help></li>
     <li>For the puzzles successfully solved, keep track of the number of attempts taken and, at the end of the
       run of puzzle, calculate the average number of attempts, displayed to, say, 2 decimal places.</li>
     <li>Turn it onto a two player game, where each player enters their name, and each is asked to solve a puzzle in turn (with the target
