@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { createModelFromDocument } from "./worksheet-model";
+
 const questionsSelector = "input.question, textarea.question, select.question";
 const questions = document.querySelectorAll(questionsSelector);
 const notes = document.querySelectorAll("textarea.notes");
@@ -24,6 +26,8 @@ type change = {
   value: string;
   count: number;
 };
+
+const _wsModel = createModelFromDocument(document);
 
 if (fh) {
   document.getElementById("worksheet")?.classList.add("saved");
