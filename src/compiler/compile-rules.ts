@@ -693,6 +693,12 @@ export function mustBeCoercibleType(
   mustBeAssignableType(lhs, rhs, compileErrors, location);
 }
 
+export function mustBeKnownOperation(op: string, compileErrors: CompileError[], location: string) {
+  compileErrors.push(
+    new SyntaxCompileError(`'${op}' is not a known Elan operation symbol.`, location),
+  );
+}
+
 export function mustBeNumberType(st: SymbolType, compileErrors: CompileError[], location: string) {
   if (!isNumber(st)) {
     FailNotNumber(st, compileErrors, location);

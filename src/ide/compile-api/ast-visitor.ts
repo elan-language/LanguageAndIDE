@@ -12,7 +12,7 @@ import {
 } from "../../compiler/keywords";
 import { FuncName, ImageName, TupleName } from "../../compiler/symbols/elan-type-names";
 import { EnumType } from "../../compiler/symbols/enum-type";
-import { isAstIdNode, mapOperation } from "../../compiler/syntax-nodes/ast-helpers";
+import { isAstIdNode } from "../../compiler/syntax-nodes/ast-helpers";
 import { BinaryExprAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
 import { BracketedAsn } from "../../compiler/syntax-nodes/bracketed-asn";
 import { AbstractFunctionAsn } from "../../compiler/syntax-nodes/class-members/abstract-function-asn";
@@ -716,7 +716,7 @@ export function transform(
   }
 
   if (node instanceof UnaryExpression) {
-    const op = mapOperation(node.unaryOp!.matchedText);
+    const op = node.unaryOp!.matchedText.trim();
     const operand = transform(node.term, fieldId, scope) as AstNode;
 
     return new UnaryExprAsn(op, operand, fieldId, scope);
@@ -725,7 +725,7 @@ export function transform(
   if (node instanceof BinaryExpression) {
     const lhs = transform(node.lhs, fieldId, scope) as AstNode;
     const rhs = transform(node.rhs, fieldId, scope) as AstNode;
-    const op = mapOperation(node.op!.matchedText);
+    const op = node.op!.matchedText.trim();
 
     return new BinaryExprAsn(op, lhs, rhs, fieldId, scope);
   }

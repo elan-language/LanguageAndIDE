@@ -5,17 +5,17 @@ import { getGlobalScope } from "../../compiler/symbols/symbol-helpers";
 import { CompileError } from "../compile-error";
 import {
   mustBeBooleanType,
+  mustBeKnownOperation,
   mustBeNumberType,
   mustNotBeTwoUnaryExpressions as mustNotBeSequentialUnaryExpressions,
 } from "../compile-rules";
-import { ElanCompilerError } from "../elan-compiler-error";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { mapOperationSymbol } from "./ast-helpers";
+import { mapOperation } from "./ast-helpers";
 import { OperationSymbol } from "./operation-symbol";
 
 export class UnaryExprAsn extends AbstractAstNode implements AstNode {
   constructor(
-    public readonly op: OperationSymbol,
+    public readonly op: string,
     public readonly operand: AstNode,
     public readonly fieldId: string,
     private readonly scope: Scope,
@@ -25,14 +25,18 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
 
   compileErrors: CompileError[] = [];
 
-  private opToJs() {
-    switch (this.op) {
+  isNegativeOperation() {
+    return mapOperation(this.op) === OperationSymbol.Minus;
+  }
+
+  private opToJs(opSymbol: OperationSymbol) {
+    switch (opSymbol) {
       case OperationSymbol.Not:
         return "!";
       case OperationSymbol.Minus:
         return "-";
       default:
-        throw new ElanCompilerError(`No such unary op ${this.op}`);
+        return " ";
     }
   }
 
@@ -43,10 +47,16 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
       mustNotBeSequentialUnaryExpressions(this.compileErrors, this.fieldId);
     }
 
-    const code = `${this.opToJs()}${this.operand.compile()}`;
+    const opSymbol = mapOperation(this.op);
+
+    if (opSymbol === OperationSymbol.Unknown) {
+      mustBeKnownOperation(this.op, this.compileErrors, this.fieldId);
+    }
+
+    const code = `${this.opToJs(opSymbol)}${this.operand.compile()}`;
     const opSt = this.operand.symbolType();
 
-    if (this.op === OperationSymbol.Minus) {
+    if (opSymbol === OperationSymbol.Minus) {
       mustBeNumberType(opSt, this.compileErrors, this.fieldId);
       getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
       // to avoid js compile errors with exponents
@@ -61,7 +71,9 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    switch (this.op) {
+    const opSymbol = mapOperation(this.op);
+
+    switch (opSymbol) {
       case OperationSymbol.Not:
         return BooleanType.Instance;
       default:
@@ -70,6 +82,6 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
   }
 
   toString() {
-    return `${mapOperationSymbol(this.op)} ${this.operand}`;
+    return `${this.op} ${this.operand}`;
   }
 }
