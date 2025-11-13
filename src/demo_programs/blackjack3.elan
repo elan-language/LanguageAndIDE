@@ -1,4 +1,4 @@
-# 5f4a401be66d24da753750250dc68f61dc792eb64db34e8d773e38a8ce42610f Elan 1.6.3 guest default_profile valid
+# 328d1a25957f99d1b1572978832698f95eba4d45ca2656e0b2508b28b3279814 Elan 1.6.3 guest default_profile valid
 
 # TODO: Give card a 'face down' boolean property & adapt htmlForCard to cope
 # styling: start hands on separate rows
@@ -6,138 +6,70 @@
 # make work repeatedly for automated players, but easily by ghosting procedures?
 #  adjust scaling so we can show dealer + 2 auto players
 main
-  call playGame()
+  let game be new Game(1000)
+  let dealer be game.dealer
+  call game.addPlayer(new HumanPlayer("Player A", 1000))
+  call game.addPlayer(new HumanPlayer("Player B", 1000))
+  call game.newRound()
+  call display(game)
+  each player in game.players
+    while player.status() is Status.playing
+      call player.nextAction(dealer.faceCard)
+      call display(game)
+    end while
+  end each
+  call dealer.play()
+  while dealer.status() is Status.playing
+    call dealer.nextAction()
+    call display(game)
+  end while
+  call game.updateScores()
+  call display(game)
 end main
 
-function htmlForCard(rank as String, suit as Suit) returns String
-  let colour be colours[suit]
-  let symbol be symbols[suit]
-  let u be spot("u", colour, rank)
-  let v be spot("v", colour, symbol)
-  let w be spot("w", colour, symbol)
-  let x be spot("x", colour, rank)
-  variable grid set to ""
-  each location in gridByRank[rank]
-    set grid to grid + spot(location, colour, symbol)
-  end each
-  return "<div class='card'>{u}{v}{grid}{w}{x}</div>"
+function htmlForGame(game as Game) returns String
+  return ""
 end function
-
-function spot(id as String, colour as String, content as String) returns String
-  return "<div class='{id} {colour}'>{content}</div>"
-end function
-
-procedure playGame()
-  variable dealer set to createDealer(1000)
-  variable player set to createHumanPlayer(1000)
-  variable gameNo set to 0
-  variable cont set to true
-  while cont
-    call clearPrintedText()
-    call playOneRound(dealer, player)
-    let outcome be determineOutcome(dealer, player)
-    call updateScores(dealer, player, outcome)
-    print "You {outcome}"
-    print "Game: {gameNo} Dealer score: {dealer.score} Player score: {player.score}"
-    let prompt be "Enter p for play again, x for exit:"
-    let inp be inputStringFromOptions(prompt, ["p", "x"])
-    set cont to inp isnt "x"
-  end while
-end procedure
-
-procedure displayHands(dealer as Dealer, player as Player)
-  let dlr be htmlForHand(dealer.hand)
-  let plyr be htmlForHand(player.hand)
-  call displayHtml("<style>{styleSheet}</style><html>{dlr}{plyr}</html>")
-end procedure
 
 function htmlForHand(hand as Hand) returns String
+  # Add in hand status, total?
   variable html set to "<div class='hand'>"
   each card in hand.cards
     let suit be card.suit
     let rank be card.rank
-    set html to html + htmlForCard(card.rank, card.suit)
+    set html to html + htmlForCard(card)
   end each
   return html
 end function
 
-procedure simulate1000Games()
-  let startPoints be 1000
-  variable dealer set to createDealer(startPoints)
-  variable playerA set to createPlayerA(startPoints)
-  variable playerB set to createPlayerB(startPoints)
-  for i from 1 to 1000 step 1
-    call playAllHands(dealer, playerA, playerB)
-  end for
-  print "Dealer has {dealer.score} points"
-  print "Player A has {playerA.score} points"
-  print "Player B has {playerB.score} points"
-end procedure
-
-function getActionForPlayerA(hand as Hand, dealerFaceUp as Card) returns Action
-  return if hand.total > 16 then Action.stand else Action.draw
+function htmlForCard(card as Card) returns String
+  variable html set to "<div class='card'>"
+  if card.faceDown then
+    set html to html + "<div class='back'></div>"
+  else
+    let rank be card.rank
+    let suit be card.suit
+    let colour be colours[suit]
+    let symbol be symbols[suit]
+    let u be htmlForSpot("u", colour, rank)
+    let v be htmlForSpot("v", colour, symbol)
+    let w be htmlForSpot("w", colour, symbol)
+    let x be htmlForSpot("x", colour, rank)
+    variable grid set to ""
+    each location in gridByRank[rank]
+      set grid to grid + htmlForSpot(location, colour, symbol)
+    end each
+    set html to html + "{u}{v}{grid}{w}{x}"
+  end if
+  return html + "</div>"
 end function
 
-function getActionForPlayerB(hand as Hand, dealerFaceUp as Card) returns Action
-  return if (hand.total < 16) or (hand.softAce and hand.total < 18) then Action.draw else Action.stand
+function htmlForSpot(id as String, colour as String, content as String) returns String
+  return "<div class='{id} {colour}'>{content}</div>"
 end function
 
-function createDealer(startPoints as Int) returns Dealer
-  return new Dealer(startPoints)
-end function
-
-function createHumanPlayer(startPoints as Int) returns HumanPlayer
-  return new HumanPlayer(startPoints)
-end function
-
-function createPlayerA(startPoints as Int) returns AutomatedPlayer
-  return new AutomatedPlayer("Player A", ref getActionForPlayerA, startPoints)
-end function
-
-function createPlayerB(startPoints as Int) returns AutomatedPlayer
-  return new AutomatedPlayer("Player B", ref getActionForPlayerB, startPoints)
-end function
-
-procedure playAllHands(dealer as Dealer, playerA as AutomatedPlayer, playerB as AutomatedPlayer)
-  let dfc be dealCard(random())
-  call playerA.newHand(dfc)
-  call playerA.playHandOut()
-  call playerB.newHand(dfc)
-  call playerB.playHandOut()
-  let statusB be playerB.hand.status
-  call dealer.newHand(dfc)
-  call dealer.playHandOut()
-  let outcomeA be determineOutcome(dealer, playerA)
-  call updateScores(dealer, playerA, outcomeA)
-  let outcomeB be determineOutcome(dealer, playerB)
-  call updateScores(dealer, playerB, outcomeB)
-end procedure
-
-procedure playOneRound(dealer as Dealer, player as HumanPlayer)
-  call player.newHand()
-  call dealer.newHand(dealCard(random()))
-  call displayHands(dealer, player)
-  call playersTurn(dealer, player)
-  call pause(2000)
-  call dealersTurn(dealer, player)
-end procedure
-
-procedure dealersTurn(dealer as Dealer, player as HumanPlayer)
-  call dealer.start()
-  call displayHands(dealer, player)
-  call pause(2000)
-  while dealer.hand.status is Status.playing
-    call dealer.nextMove()
-    call displayHands(dealer, player)
-    call pause(1000)
-  end while
-end procedure
-
-procedure playersTurn(dealer as Dealer, player as HumanPlayer)
-  while player.isPlaying()
-    call player.nextMove()
-    call displayHands(dealer, player)
-  end while
+procedure display(game as Game)
+  call displayHtml("<style>{styleSheet}</style><html>{htmlForGame(game)}</html>")
 end procedure
 
 procedure updateScores(dealer as Dealer, player as Player, outcome as Outcome)
@@ -152,6 +84,26 @@ procedure updateScores(dealer as Dealer, player as Player, outcome as Outcome)
     call dealer.changeScoreBy(1)
   end if
 end procedure
+
+function getActionForPlayerA(hand as Hand, dealerFaceUp as Card) returns Action
+  return if hand.total > 16 then Action.stand else Action.draw
+end function
+
+function getActionForPlayerB(hand as Hand, dealerFaceUp as Card) returns Action
+  return if (hand.total < 16) or (hand.softAce and hand.total < 18) then Action.draw else Action.stand
+end function
+
+function createDealer(startPoints as Int) returns Dealer
+  return new Dealer(startPoints)
+end function
+
+function createPlayerA(startPoints as Int) returns AutomatedPlayer
+  return new AutomatedPlayer("Player A", ref getActionForPlayerA, startPoints)
+end function
+
+function createPlayerB(startPoints as Int) returns AutomatedPlayer
+  return new AutomatedPlayer("Player B", ref getActionForPlayerB, startPoints)
+end function
 
 function determineOutcome(dealer as Dealer, player as Player) returns Outcome
   let d be dealer.hand.status
@@ -186,40 +138,82 @@ function intAsSuit(n as Int) returns Suit
   return suit
 end function
 
-interface Player
+class Game
+  constructor(dealerStartPoints as Int)
+    set property.dealer to new Dealer(dealerStartPoints)
+  end constructor
+
+  property dealer as Dealer
+
+  property players as List<of Player>
+
+  procedure newRound()
+    call property.dealer.newHand()
+    each player in property.players
+      call player.newHand()
+    end each
+  end procedure
+
+  procedure updateScores()
+    each player in property.players
+      let outcome be determineOutcome(property.dealer, player)
+      call global.updateScores(property.dealer, player, outcome)
+    end each
+  end procedure
+
+  procedure addPlayer(player as Player)
+    call property.players.append(player)
+  end procedure
+
+end class
+
+abstract class Player
   abstract property hand as Hand
 
-  abstract procedure changeScoreBy(amount as Int)
+  abstract function status() returns Status
 
-end interface
+  abstract procedure nextAction(dealerFaceCard as Card)
 
-abstract class Automated inherits Player
+  abstract procedure changeScoreBy(addToScore as Int)
+
+  abstract procedure newHand()
+
+end class
+
+class Dealer
+  constructor(startingPoints as Int)
+    set property.score to startingPoints
+  end constructor
+
   property hand as Hand
 
   property score as Int
 
-  property dealerFaceCard as Card
-
   property active as Boolean
 
-  abstract function getAction() returns Action
-
-  procedure nextMove()
-    if getAction() is Action.draw then
-      call property.hand.draw()
-    else
-      call property.hand.stand()
-    end if
+  procedure play()
+    let faceDownCard be property.hand.cards[1]
+    call faceDownCard.turnFaceUp()
   end procedure
 
-  procedure playHandOut()
-    call start()
-    while property.hand.status is Status.playing
-      call nextMove()
-    end while
+  function status() returns Status
+    return property.hand.status
+  end function
+
+  property faceCard as Card
+
+  procedure newHand()
+    set property.active to false
+    set property.hand to new Hand()
+    call property.hand.draw()
+    call property.hand.draw()
+    set property.faceCard to property.hand.cards[0]
+    let hiddenCard be property.hand.cards[1]
+    call hiddenCard.turnFaceDown()
   end procedure
 
   procedure start()
+    throw exception "Is 'active' needed?"
     set property.active to true
   end procedure
 
@@ -227,31 +221,65 @@ abstract class Automated inherits Player
     set property.score to property.score + amount
   end procedure
 
+  procedure nextAction()
+    if property.hand.total < 17 then
+      call property.hand.draw()
+    else
+      call property.hand.stand()
+    end if
+  end procedure
+
 end class
 
-class Dealer inherits Automated
-  constructor(startingPoints as Int)
+class AutomatedPlayer inherits Player
+  constructor(name as String, decisionFunc as Func<of Hand, Card => Action>, startingPoints as Int)
+    set property.name to name
+    set property.decisionFunc to ref decisionFunc
     set property.score to startingPoints
   end constructor
 
-  procedure newHand(faceCard as Card)
-    set property.dealerFaceCard to faceCard
+  property name as String
+
+  property hand as Hand
+
+  property score as Int
+
+  property active as Boolean
+
+  property decisionFunc as Func<of Hand, Card => Action>
+
+  procedure newHand()
     set property.active to false
     set property.hand to new Hand()
-    call property.hand.addCard(faceCard)
+    call property.hand.draw()
     call property.hand.draw()
   end procedure
 
-  function getAction() returns Action
-    return if property.hand.total < 17 then Action.draw else Action.stand
+  procedure nextAction(dealerFaceCard as Card)
+    let act be decisionFunc(property.hand, dealerFaceCard)
+    if act is Action.draw then
+      call property.hand.draw()
+    else
+      call property.hand.stand()
+    end if
+  end procedure
+
+  procedure changeScoreBy(amount as Int)
+    set property.score to property.score + amount
+  end procedure
+
+  function status() returns Status
+    return property.hand.status
   end function
 
 end class
 
 class HumanPlayer inherits Player
-  constructor(startingPoints as Int)
-    set property.score to startingPoints
+  constructor(name as String, startingPoints as Int)
+    set property.name to name
   end constructor
+
+  property name as String
 
   property score as Int
 
@@ -268,7 +296,8 @@ class HumanPlayer inherits Player
     return property.hand.status is Status.playing
   end function
 
-  procedure nextMove()
+  procedure nextAction(dealerFaceCard as Card)
+    # TODO: change this to use getKey. Create prompt elsewhere?
     let inp be inputStringFromOptions("Enter s to stand, d to draw card:", ["s", "d"])
     if inp is "d" then
       call property.hand.draw()
@@ -281,29 +310,8 @@ class HumanPlayer inherits Player
     set property.score to property.score + amount
   end procedure
 
-end class
-
-class AutomatedPlayer inherits Automated
-  constructor(name as String, decisionFunc as Func<of Hand, Card => Action>, startingPoints as Int)
-    set property.name to name
-    set property.decisionFunc to ref decisionFunc
-    set property.score to startingPoints
-  end constructor
-
-  property name as String
-
-  property decisionFunc as Func<of Hand, Card => Action>
-
-  procedure newHand(faceCard as Card)
-    set property.dealerFaceCard to faceCard
-    set property.active to false
-    set property.hand to new Hand()
-    call property.hand.draw()
-    call property.hand.draw()
-  end procedure
-
-  function getAction() returns Action
-    return decisionFunc(property.hand, property.dealerFaceCard)
+  function status() returns Status
+    return property.hand.status
   end function
 
 end class
@@ -375,12 +383,22 @@ class Hand
 
 end class
 
-record Card
+class Card
   property suit as Suit
 
   property rank as String
 
-end record
+  property faceDown as Boolean
+
+  procedure turnFaceUp()
+    set property.faceDown to false
+  end procedure
+
+  procedure turnFaceDown()
+    set property.faceDown to true
+  end procedure
+
+end class
 
 enum Action stand, draw
 
