@@ -1,6 +1,5 @@
-# 328d1a25957f99d1b1572978832698f95eba4d45ca2656e0b2508b28b3279814 Elan 1.6.3 guest default_profile valid
+# d1987a6e7463c1cf3a248fa2b8e6f2b9dd672a0d86c7d51b96c72b739c1b0a18 Elan 1.6.3 guest default_profile valid
 
-# TODO: Give card a 'face down' boolean property & adapt htmlForCard to cope
 # styling: start hands on separate rows
 # labelling, status, instructions
 # make work repeatedly for automated players, but easily by ghosting procedures?
