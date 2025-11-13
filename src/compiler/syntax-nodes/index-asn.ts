@@ -12,7 +12,6 @@ import {
 } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { compileSimpleSubscript, getIndexAndOfType } from "./ast-helpers";
-import { OperationSymbol } from "./operation-symbol";
 import { RangeAsn } from "./range-asn";
 import { UnaryExprAsn } from "./unary-expr-asn";
 
@@ -51,7 +50,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
 
   compileSimpleSubscript(id: string, indexedType: SymbolType, indexed: string, subscript: string) {
     if (this.index instanceof UnaryExprAsn) {
-      if (this.index.op === OperationSymbol.Minus) {
+      if (this.index.isNegativeOperation()) {
         mustNotBeNegativeIndex(this.compileErrors, this.fieldId);
       }
     }

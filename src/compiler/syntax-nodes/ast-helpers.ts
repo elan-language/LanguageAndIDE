@@ -36,7 +36,6 @@ import {
 import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
-import { ElanCompilerError } from "../elan-compiler-error";
 import { ConstructorAsn } from "./class-members/constructor-asn";
 import { DeconstructedListAsn } from "./deconstructed-list-asn";
 import { DeconstructedTupleAsn } from "./deconstructed-tuple-asn";
@@ -347,14 +346,6 @@ const opMap = new Map<OperationSymbol, string>([
   [OperationSymbol.Or, "or"],
 ]);
 
-export function mapOperationSymbol(os: OperationSymbol) {
-  const op = opMap.get(os);
-  if (op) {
-    return op;
-  }
-  throw new ElanCompilerError(`Cannot map operation symbol ${os}`);
-}
-
 export function mapOperation(op: string): OperationSymbol {
   op = op.trim();
 
@@ -363,7 +354,7 @@ export function mapOperation(op: string): OperationSymbol {
       return e[0];
     }
   }
-  throw new ElanCompilerError(`Cannot map operation ${op}`);
+  return OperationSymbol.Unknown;
 }
 
 export function wrapDeconstructionRhs(lhs: AstNode, rhs: AstNode, isAssignment: boolean) {
