@@ -6,14 +6,25 @@
 body {
     background-color: darkgreen;
 }
+
+.player .details {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.hand {
+        margin-top: 5px;
+        height: 150px;
+        padding-bottom: 10px;
+    }
+    
 .card {
     position: relative;
     float: left;
     background-color: white;
     width: 95px;
     height:140px;
-    margin-top:20px;
-    margin-left:20px;
+    margin-right:10px;
     padding: 5px;
     border-radius: 5px;
     font-family: Helvetica, sans-serif; 
@@ -39,12 +50,14 @@ body {
     .t {top: 93px;  transform: rotate(180deg);}
     .f,.c,.g {top: 114px;  transform: rotate(180deg);}
 
-/* royal pictures */
+/* royal pictures (temporary: just a large letter) */
     .j,.q,.k {
-        top: 20px;
-        left: 20px;
-        height: 105px;
-        width: 68px;
+        top: 13px;
+        left: 22px;
+        height: 60px;
+        width: 60px;
+        font-size: 100px;
+        text-align: centre;
     }
 /* corner summary */
     .u,.x {font-size: 15px; width: 15px; text-align: center;}
@@ -59,38 +72,26 @@ body {
 /* suit colors */
     .red {color: red}
     .black {color: black}
-   </style>
+
+/* back */
+    .back { background-color: rgba(0, 0, 255, 0.607); height:100%; width: 100%;}
+  </style>
 </head>
 
 <body>
-   <div class="card">
-    <div class="a">a</div>
-    <div class="b">b</div>
-    <div class="c">c</div>
-    <div class="d">d</div>
-    <div class="e">e</div>
-    <div class="f">f</div>
-    <div class="g">g</div>
-    <div class="h">h</div>
-    <div class="i">i</div>
-    <div class="l">l</div>
-    <div class="m">m</div>
-    <div class="n">n</div>
-    <div class="o">o</div>
-    <div class="p">p</div>
-    <div class="r">r</div>
-    <div class="s">s</div>
-    <div class="t">t</div>
-
-    <div class="j"></div>
-
-    <div class="u">A</div>
-    <div class="v">&clubs;</div>
-    <div class="w">&clubs;</div>
-    <div class="x">10</div>
-
-   </div>
-
-
+<div class='game'>
+    <div class='hand'>
+        <div class='card'><div class='u black'>4</div><div class='v black'>♠</div><div class='d black'>♠</div><div class='e black'>♠</div><div class='f black'>♠</div><div class='g black'>♠</div><div class='w black'>♠</div><div class='x black'>4</div></div>
+        <div class='card'><div class='back'></div></div>
+    </div>
+    <div class='hand'>
+        <div class='card'><div class='u red'>8</div><div class='v red'>♥</div><div class='d red'>♥</div><div class='e red'>♥</div><div class='f red'>♥</div><div class='g red'>♥</div><div class='h red'>♥</div><div class='i red'>♥</div><div class='l red'>♥</div><div class='m red'>♥</div><div class='w red'>♥</div><div class='x red'>8</div></div>  
+        <div class='card'><div class='u red'>K</div><div class='v red'>♦</div><div class='k red'>♦</div><div class='w red'>♦</div><div class='x red'>K</div></div>
+    </div>    
+    <div class='hand'>
+        <div class='card'><div class='u red'>4</div><div class='v red'>♦</div><div class='d red'>♦</div><div class='e red'>♦</div><div class='f red'>♦</div><div class='g red'>♦</div><div class='w red'>♦</div><div class='x red'>4</div></div>
+        <div class='card'><div class='u red'>3</div><div class='v red'>♥</div><div class='a red'>♥</div><div class='b red'>♥</div><div class='c red'>♥</div><div class='w red'>♥</div><div class='x red'>3</div></div>
+    </div>
+</div>
 </body>
 </html>
