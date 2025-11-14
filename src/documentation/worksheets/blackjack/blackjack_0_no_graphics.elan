@@ -1,28 +1,112 @@
-# a948ad4413e4485617facfcca0ae72de23872523acc7977a4afbd66c6560bd61 Elan 1.6.0 guest default_profile valid
+# db237dfb391e87835e608d86b7c9829f8b5251211f7caeda8633aa677789cfde Elan 1.6.3 guest default_profile valid
 
 main
-  # Simulate dealer's probability of bust from first card
-  variable dealer set to createDealer(100000)
-  variable totalBust set to 0
-  each rank in rankValue.keys()
-    let dfc be new Card() with rank set to rank
-    variable bust set to 0
-    for g from 1 to 100000 step 1
-      call dealer.newHand(dfc)
-      call dealer.playHandOut()
-      let outcome be dealer.hand.status
-      if outcome is Status.bust then
-        set bust to bust + 1
-      end if
-    end for
-    print "Dealer face card: {rank} Dealer bust %: {(bust/1000).floor()}"
-    set totalBust to totalBust + bust
-  end each
+  call playGame()
 end main
+
+procedure playGame()
+  variable dealer set to createDealer(1000)
+  variable player set to createHumanPlayer(1000)
+  variable gameNo set to 0
+  variable cont set to true
+  while cont
+    call clearPrintedText()
+    call playOneRound(dealer, player)
+    let outcome be determineOutcome(dealer, player)
+    call updateScores(dealer, player, outcome)
+    print "You {outcome}"
+    print "Game: {gameNo} Dealer score: {dealer.score} Player score: {player.score}"
+    let prompt be "Enter p for play again, x for exit:"
+    let inp be inputStringFromOptions(prompt, ["p", "x"])
+    set cont to inp isnt "x"
+  end while
+end procedure
+
+procedure simulateGame()
+  let startPoints be 1000
+  variable dealer set to createDealer(startPoints)
+  variable playerA set to createPlayerA(startPoints)
+  variable playerB set to createPlayerB(startPoints)
+  call playAllHands(dealer, playerA, playerB)
+  print dealer
+  print playerA
+  print playerB
+  print "Dealer has {dealer.score} points"
+  print "Player A has {playerA.score} points"
+  print "Player B has {playerB.score} points"
+end procedure
+
+function getActionForPlayerA(hand as Hand, dealerFaceUp as Card) returns Action
+  return Action.draw
+end function
+
+function getActionForPlayerB(hand as Hand, dealerFaceUp as Card) returns Action
+  return Action.stand
+end function
 
 function createDealer(startPoints as Int) returns Dealer
   return new Dealer(startPoints)
 end function
+
+function createHumanPlayer(startPoints as Int) returns HumanPlayer
+  return new HumanPlayer(startPoints)
+end function
+
+function createPlayerA(startPoints as Int) returns AutomatedPlayer
+  return new AutomatedPlayer("Player A", ref getActionForPlayerA, startPoints)
+end function
+
+function createPlayerB(startPoints as Int) returns AutomatedPlayer
+  return new AutomatedPlayer("Player B", ref getActionForPlayerB, startPoints)
+end function
+
+procedure playAllHands(dealer as Dealer, playerA as AutomatedPlayer, playerB as AutomatedPlayer)
+  let dfc be dealCard(random())
+  call playerA.newHand(dfc)
+  call playerA.playHandOut()
+  call playerB.newHand(dfc)
+  call playerB.playHandOut()
+  let statusB be playerB.hand.status
+  call dealer.newHand(dfc)
+  call dealer.playHandOut()
+  let outcomeA be determineOutcome(dealer, playerA)
+  call updateScores(dealer, playerA, outcomeA)
+  let outcomeB be determineOutcome(dealer, playerB)
+  call updateScores(dealer, playerB, outcomeB)
+end procedure
+
+procedure playOneRound(dealer as Dealer, player as HumanPlayer)
+  call player.newHand()
+  call dealer.newHand(dealCard(random()))
+  call displayHands(dealer, player)
+  call playersTurn(dealer, player)
+  call pause(2000)
+  call dealersTurn(dealer, player)
+end procedure
+
+procedure dealersTurn(dealer as Dealer, player as HumanPlayer)
+  call dealer.start()
+  call displayHands(dealer, player)
+  call pause(2000)
+  while dealer.hand.status is Status.playing
+    call dealer.nextMove()
+    call displayHands(dealer, player)
+    call pause(1000)
+  end while
+end procedure
+
+procedure playersTurn(dealer as Dealer, player as HumanPlayer)
+  while player.isPlaying()
+    call player.nextMove()
+    call displayHands(dealer, player)
+  end while
+end procedure
+
+procedure displayHands(dealer as Dealer, player as HumanPlayer)
+  call clearPrintedText()
+  let blankLines be "<br><br><br><br><br>"
+  call displayHtml("<br><br><br><br><br>{dealer.asHtml()}<br>{player.asHtml()}")
+end procedure
 
 procedure updateScores(dealer as Dealer, player as Player, outcome as Outcome)
   if outcome is Outcome.winDouble then
@@ -120,6 +204,45 @@ class Dealer inherits Automated
 
   function asHtml() returns String
     return if property.active then "Dealer: {property.hand.asHtml()}" else "Dealer: {property.dealerFaceCard.asHtml()} {unicode(9633)}"
+  end function
+
+end class
+
+class HumanPlayer inherits Player
+  constructor(startingPoints as Int)
+    set property.score to startingPoints
+  end constructor
+
+  property score as Int
+
+  property hand as Hand
+
+  procedure newHand()
+    set property.hand to new Hand()
+    call property.hand.draw()
+    call property.hand.draw()
+    call property.hand.setStatus(Status.playing)
+  end procedure
+
+  function isPlaying() returns Boolean
+    return property.hand.status is Status.playing
+  end function
+
+  procedure nextMove()
+    let inp be inputStringFromOptions("Enter s to stand, d to draw card:", ["s", "d"])
+    if inp is "d" then
+      call property.hand.draw()
+    else
+      call property.hand.stand()
+    end if
+  end procedure
+
+  procedure changeScoreBy(amount as Int)
+    set property.score to property.score + amount
+  end procedure
+
+  function asHtml() returns String
+    return "You: {property.hand.asHtml()}"
   end function
 
 end class
