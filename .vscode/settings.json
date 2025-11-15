@@ -15,5 +15,10 @@
     },
     "mochaExplorer.files": "out/test/**/*.test.js",
     "mochaExplorer.require": "source-map-support/register",
-    "mochaExplorer.watch": "out/**/*.js"
+    "mochaExplorer.watch": "out/**/*.js",
+    "cSpell.words": [
+        "colour",
+        "colours",
+        "initialise"
+    ]
 }

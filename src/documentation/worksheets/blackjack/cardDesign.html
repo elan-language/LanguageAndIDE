@@ -29,7 +29,7 @@ body {
     border-radius: 5px;
     font-family: Helvetica, sans-serif; 
 }
-.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}
+.ace,.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}
 
 /* Standard spots */ 
     .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}
@@ -45,52 +45,46 @@ body {
     .l {top: 28px;}
     .n,.o {top: 37px;}
     .h,.a,.i {top: 57px}
-    .p,.r {top: 75px;  transform: rotate(180deg);}
-    .m {top: 86px;  transform: rotate(180deg);}
-    .t {top: 93px;  transform: rotate(180deg);}
-    .f,.c,.g {top: 114px;  transform: rotate(180deg);}
+    .p,.r {top: 75px;}
+    .m {top: 86px;}
+    .t {top: 93px;}
+    .f,.c,.g {top: 114px;}
 
 /* royal pictures (temporary: just a large letter) */
-    .j,.q,.k {
+    .j,.q,.k,.ace {
         top: 13px;
         left: 22px;
         height: 60px;
         width: 60px;
         font-size: 100px;
-        text-align: centre;
+        text-align: center;
     }
 /* corner summary */
-    .u,.x {font-size: 15px; width: 15px; text-align: center;}
-    .v,.w {font-size: 20px; width: 15px; text-align: center;}
-    .u,.v {left: 0px;}
-    .w,.x {left: 89px; transform: rotate(180deg);}
-    .u {top: 2px;}   
-    .v {top: 12px;} 
-    .w {top: 116px;} 
-    .x {top: 132px;} 
+    .u {font-size: 15px; width: 15px; text-align: center; left: 0px; top: 2px;}
+    .v {font-size: 20px; width: 15px; text-align: center; left: 0px; top: 12px;}
 
 /* suit colors */
     .red {color: red}
     .black {color: black}
 
 /* back */
-    .back { background-color: rgba(0, 0, 255, 0.607); height:100%; width: 100%;}
+    .card.reversed { background-color: rgba(0, 0, 255, 0.607);}
   </style>
 </head>
 
 <body>
 <div class='game'>
     <div class='hand'>
-        <div class='card'><div class='u black'>4</div><div class='v black'>♠</div><div class='d black'>♠</div><div class='e black'>♠</div><div class='f black'>♠</div><div class='g black'>♠</div><div class='w black'>♠</div><div class='x black'>4</div></div>
-        <div class='card'><div class='back'></div></div>
+        <div class='card'><div class='u black'>4</div><div class='v black'>♠</div><div class='d black'>♠</div><div class='e black'>♠</div><div class='f black'>♠</div><div class='g black'>♠</div></div>
+        <div class='card reversed'></div>
     </div>
     <div class='hand'>
-        <div class='card'><div class='u red'>8</div><div class='v red'>♥</div><div class='d red'>♥</div><div class='e red'>♥</div><div class='f red'>♥</div><div class='g red'>♥</div><div class='h red'>♥</div><div class='i red'>♥</div><div class='l red'>♥</div><div class='m red'>♥</div><div class='w red'>♥</div><div class='x red'>8</div></div>  
-        <div class='card'><div class='u red'>K</div><div class='v red'>♦</div><div class='k red'>♦</div><div class='w red'>♦</div><div class='x red'>K</div></div>
+        <div class='card'><div class='u red'>8</div><div class='v red'>♥</div><div class='d red'>♥</div><div class='e red'>♥</div><div class='f red'>♥</div><div class='g red'>♥</div><div class='h red'>♥</div><div class='i red'>♥</div><div class='l red'>♥</div><div class='m red'>♥</div></div>  
+        <div class='card'><div class='u red'>A</div><div class='v red'>♦</div><div class='ace red'>♦</div></div>
     </div>    
     <div class='hand'>
-        <div class='card'><div class='u red'>4</div><div class='v red'>♦</div><div class='d red'>♦</div><div class='e red'>♦</div><div class='f red'>♦</div><div class='g red'>♦</div><div class='w red'>♦</div><div class='x red'>4</div></div>
-        <div class='card'><div class='u red'>3</div><div class='v red'>♥</div><div class='a red'>♥</div><div class='b red'>♥</div><div class='c red'>♥</div><div class='w red'>♥</div><div class='x red'>3</div></div>
+        <div class='card'><div class='u red'>4</div><div class='v red'>♦</div><div class='d red'>♦</div><div class='e red'>♦</div><div class='f red'>♦</div><div class='g red'>♦</div></div>
+        <div class='card'><div class='u red'>3</div><div class='v red'>♥</div><div class='a red'>♥</div><div class='b red'>♥</div><div class='c red'>♥</div></div>
     </div>
 </div>
 </body>
