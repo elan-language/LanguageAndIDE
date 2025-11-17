@@ -695,7 +695,7 @@ export function mustBeCoercibleType(
 
 export function mustBeKnownOperation(op: string, compileErrors: CompileError[], location: string) {
   compileErrors.push(
-    new SyntaxCompileError(`'${op}' is not a known Elan operation symbol.`, location),
+    new SyntaxCompileError(`UNEXPECTED COMPILE ERROR:  '${op}'  Please email a screenshot to rpawson@nakedobjects.org - then edit your code until this error disappears.`, location),
   );
 }
 
