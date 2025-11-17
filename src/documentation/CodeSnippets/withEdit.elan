@@ -1,4 +1,4 @@
-# f4e10b5ade5926b3b7874776a38940bc27977602298e69cb46f29ee0e73b9707 Elan 1.6.3 guest default_profile valid
+# e7e74c7c6485c3a915575911b3f973624dde2dfd5fa551dbdfe24585afab35f9 Elan 1.6.4 guest default_profile valid
 
 main
   variable a set to new Square() with x set to 3.5, y set to 4.0
