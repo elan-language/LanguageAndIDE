@@ -2432,6 +2432,24 @@ async function handleChromeAutoSave(event: Event) {
   }
 }
 
+// lock the file while we are writing and only hold a single most recent save
+// accumulated while the file is locked.
+let fileLock = false;
+let pendingSave = "";
+
+async function writeCode(fh: FileSystemFileHandle, code: string) {
+  const writeable = await fh.createWritable();
+  await writeable.write(code);
+  await writeable.close();
+  lastSavedHash = file.currentHash;
+  updateNameAndSavedStatus();
+  if (pendingSave) {
+    const pendingCode = pendingSave;
+    pendingSave = "";
+    await writeCode(fh, pendingCode);
+  }
+}
+
 async function autoSave(code: string) {
   if (autoSaveFileHandle && hasUnsavedChanges()) {
     try {
@@ -2439,17 +2457,20 @@ async function autoSave(code: string) {
         // should never write empty file - always at least header
         throw new Error("Error with empty code file");
       }
-
-      const writeable = await autoSaveFileHandle.createWritable();
-      await writeable.write(code);
-      await writeable.close();
-      lastSavedHash = file.currentHash;
-      updateNameAndSavedStatus();
+      if (fileLock) {
+        pendingSave = code;
+      } else {
+        fileLock = true;
+        await writeCode(autoSaveFileHandle, code);
+        fileLock = false;
+      }
     } catch (e) {
       const reason = (e as Error).message ?? "Unknown";
       const msg = `Auto-save failed. Auto-save mode has been cancelled - please save the file manually to ensure your changes are not lost! Reason: ${reason}`;
       alert(msg);
       autoSaveFileHandle = undefined;
+      fileLock = false;
+      pendingSave = "";
       console.debug(`Autosave failed: error: ${e} code: ${code}`);
     }
   }
