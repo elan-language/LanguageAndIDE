@@ -132,7 +132,7 @@ export async function orderByHelper<T>(
   system: System,
 ): Promise<T[]> {
   const clone = [...contents];
-  requiredPredicate: (a: T, b:T) => Promise<number> = (a: T, b:T) => a === b ? 0 : await predicate(a, b) ? 1 : -1;
+  const requiredPredicate: (a: T, b: T) => Promise<number> = async (a: T, b: T) =>
+    a === b ? 0 : (await predicate(a, b)) ? 1 : -1;
   return await system.quickSort(clone, requiredPredicate);
 }
-
