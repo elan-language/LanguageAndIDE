@@ -1,4 +1,4 @@
-# 35909ef5594372bbbc347cf1ab4b5b6c188d8f65e97c3baf4fdbed781d487532 Elan 1.7.0 guest default_profile valid
+# 337e31065b36dad358106c07bff5728fa78601e71fe9f324ed85cd3acafe88a7 Elan 1.6.5 guest default_profile valid
 
 class Square
   constructor(x as Int, y as Int)

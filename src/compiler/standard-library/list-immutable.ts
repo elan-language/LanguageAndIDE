@@ -15,7 +15,7 @@ import {
   elanFunction,
   elanGenericParamT1Type,
   elanGenericParamT2Type,
-  elanIntType
+  elanIntType,
 } from "../elan-type-annotations";
 import { System } from "../system";
 import {

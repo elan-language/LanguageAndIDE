@@ -1,4 +1,3 @@
-import { Deprecation } from "../compiler-interfaces/elan-type-interfaces";
 import {
   ClassOption,
   ElanBoolean,
@@ -13,7 +12,6 @@ import {
   FunctionOptions,
   elanClass,
   elanClassType,
-  elanDeprecated,
   elanFuncType,
   elanFunction,
   elanGenericParamT1Type,
