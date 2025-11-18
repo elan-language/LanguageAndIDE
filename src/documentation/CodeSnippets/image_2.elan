@@ -1,4 +1,4 @@
-# 6ee286098063faaed67eccac6c357e23af2313b7c0700922f707e0c89417d586 Elan 1.6.4 guest default_profile valid
+# 10e5a21ddea662209f3c225e7779ce48cec7fc4d2be3a6cb41e09f1c94271900 Elan 1.7.0 guest default_profile valid
 
 main
   let pic be image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg with alt set to "Shark"

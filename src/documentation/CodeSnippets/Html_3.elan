@@ -1,4 +1,4 @@
-# 68935077596d681d3e864b4d6a9b5c3dd3d9d29e4e941aadf7f0c9fdc0e326cc Elan 1.6.4 guest default_profile valid
+# dba3cf84499150a9df2e9ad35cb035c3f0587bf54355b4448f42cfdec4b96dfd Elan 1.7.0 guest default_profile valid
 
 main
   let style be '<style>\n h1 {\n  color: Red;\n  font-size: 24pt;\n }\n p {\n  font-family: Serif;\n }\n</style>'

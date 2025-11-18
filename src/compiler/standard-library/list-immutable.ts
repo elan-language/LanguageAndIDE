@@ -1,3 +1,4 @@
+import { Deprecation } from "../compiler-interfaces/elan-type-interfaces";
 import {
   ClassOption,
   ElanBoolean,
@@ -11,6 +12,7 @@ import {
   FunctionOptions,
   elanClass,
   elanClassType,
+  elanDeprecated,
   elanFuncType,
   elanFunction,
   elanGenericParamT1Type,
@@ -23,6 +25,7 @@ import {
   mapHelper,
   maxByHelper,
   minByHelper,
+  orderByHelper,
   reduceHelper,
   sortByHelper,
   withAppendHelper,
@@ -179,6 +182,7 @@ export class ListImmutable<T1> {
     return minByHelper(this.contents, predicate, this.system!);
   }
 
+  @elanDeprecated(Deprecation.methodRenamed, 1, 7, "LibRef.html#sortBy")
   @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(ListImmutable))
   async sortBy(
     @elanFuncType([ElanT1, ElanT1], ElanInt)
@@ -186,6 +190,14 @@ export class ListImmutable<T1> {
   ): Promise<ListImmutable<T1>> {
     const arr = await sortByHelper(this.contents, predicate, this.system!);
     return this.newList(arr);
+  }
+
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(ListImmutable))
+  async orderBy(
+    @elanFuncType([ElanT1, ElanT1], ElanBoolean)
+    predicate: (a: T1, b: T1) => Promise<boolean>,
+  ): Promise<ListImmutable<T1>> {
+    return this.newList(await orderByHelper(this.contents, predicate, this.system!));
   }
 
   @elanFunction([], FunctionOptions.pure, ElanT1)

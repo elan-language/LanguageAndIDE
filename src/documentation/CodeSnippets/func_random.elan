@@ -1,4 +1,4 @@
-# f24ba673fee594920fbc737bd5e0dd794e4008cafe79ddb074e048e91064cbeb Elan 1.6.4 guest default_profile valid
+# c55a1f64c90991ceb40a7b72e7124e185512038e5526badecf705f82bbaffe30 Elan 1.7.0 guest default_profile valid
 
 main
   variable rnd set to new Random()
