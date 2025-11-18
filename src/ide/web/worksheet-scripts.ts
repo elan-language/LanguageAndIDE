@@ -109,6 +109,21 @@ loadAnswersButton!.addEventListener("click", async () => {
   if (txt) {
     const answers = JSON.parse(txt) as IWorksheetModel;
     wsModel.setAnswers(answers);
+
+    (document.getElementById(wsModel.username.id) as HTMLInputElement).value =
+      wsModel.username.value;
+    for (const step of wsModel.steps) {
+      if (step.done) {
+        const st = document.getElementById(step.id) as HTMLElement;
+        const cb = document.getElementById(step.id.replace("step", "done")) as HTMLInputElement;
+        markStepComplete(cb, st);
+      }
+
+      for (const hint of step.hints) {
+        
+
+      }
+    }
   }
 
   scrollToActiveElement();
@@ -222,6 +237,22 @@ function getTimestamp(time: string) {
   return sp;
 }
 
+function markStepComplete(cb: HTMLInputElement, step: HTMLElement) {
+  cb.disabled = true;
+  cb.setAttribute("checked", "true");
+  step.classList.remove("active");
+  step.classList.add("complete");
+  // for (const inp of allInputs) {
+  //   inp.disabled = true;
+  // }
+  const nextId = wsModel.getNextStep()?.id;
+  const nextStep = document.getElementById(nextId!);
+  if (nextStep) {
+    nextStep.classList.add("active");
+  }
+   cb.after(getTimestamp(wsModel.getStepById(step.id)!.timeDone));
+}
+
 for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
   cb.addEventListener("click", async (e) => {
     clearTempMsgs();
@@ -231,21 +262,8 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
       stepModel?.conditionalSetDone();
 
       if (stepModel?.done) {
-        cb.disabled = true;
-        cb.setAttribute("checked", "true");
-        step.classList.remove("active");
-        step.classList.add("complete");
-        // for (const inp of allInputs) {
-        //   inp.disabled = true;
-        // }
+        markStepComplete(cb, step);
 
-        const nextId = wsModel.getNextStep()?.id;
-        const nextStep = document.getElementById(nextId!);
-        if (nextStep) {
-          nextStep.classList.add("active");
-        }
-
-        cb.after(getTimestamp(stepModel.timeDone));
         updateHintsTaken();
         snapShotCode(cb.id);
         await save();
