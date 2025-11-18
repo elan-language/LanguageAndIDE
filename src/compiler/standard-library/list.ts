@@ -191,7 +191,6 @@ export class List<T1> {
     return minByHelper(this.contents, predicate, this.system!);
   }
 
-  @elanDeprecated(Deprecation.methodRenamed, 1, 7, "LibRef.html#sortBy")
   @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(List))
   async sortBy(
     @elanFuncType([ElanT1, ElanT1], ElanInt)
