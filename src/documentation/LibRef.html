@@ -3363,38 +3363,43 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 </div></div>
 
 <h3 class="no-TOC" id="reduce">reduce</h3>
-<p>The function <el-method>reduce</el-method> is used to apply a function <el-id>(F)</el-id> to every element of Type <el-id>(E)</el-id>
-in a <el-type>List</el-type> or <el-type>ListImmutable</el-type> <el-id>(L)</el-id>,
-and return a single value which may be of any Type <el-id>(T)</el-id>.</p>
-<p>As shown in this table, <el-method>reduce</el-method> takes two arguments, the second being a function that also takes two arguments.</p>
+<p>The function <el-method>reduce</el-method> is used to in some way combine the elements of a list to produce
+  a single result. This result can be of the same type as the elements in the list, for example to:
 
-<table class="tableMethod">
- <tr>
-  <th>reduce<br>arguments</th>
-  <th>Type</th>
-  <th>description</th>
- </tr><tr>
-  <td>1</td>
-  <td><el-id>(T)</el-id> Type of the function's<br>output</td>
-  <td>initial value used by the function, and<br>the default return value<br>if the function doesn't change it</td>
- </tr><tr>
-  <td>2</td>
-  <td><el-id>(F)</el-id> Function</td>
-  <td>either a <el-kw>lambda</el-kw> or a function reference</td>
- </tr> <tr>
-  <th>lambda or function<br>arguments</th>
-  <th>Type</th>
-  <th>description</th>
- </tr><tr>
-  <td>1</td>
-  <td><el-id>(T)</el-id> Type of the function's<br>output</td>
-  <td>cumulative value created by the function</td>
- </tr><tr>
-  <td>2</td>
-  <td><el-id>(E)</el-id> Type of input list's items</td>
-  <td>refers successively to each item in the list</td>
- </tr>
-</table>
+  <ul>
+    <li>find the sum, or sum-of-squares, of a list of numeric values</li>
+    <li>concatenate, or combine in some other way, the elements of a list of strings</li>
+  </ul>
+
+  However, the result may also be of a different type than the elements of the list, and may even 
+  be a data structure, for example to:
+
+  <ul>
+    <li>generate a <a href="#tuple">tuple</a> of the sum, sum-of-squares, and count of numerical elements.</li>
+    <li>generate a dictionary of all the unique words in a list, with the number of times each word appears in the input list.</li>
+  </ul>
+
+  <el-method>reduce</el-method> requires two arguments:
+
+  <ul>
+    <li>The first argument is the 'seed' or initial value, of the same type that you wish to be returned by the function. 
+      For example, if you were finding the sum of a list of type <el-type>Float</el-type> the seed/initial value
+      would typically be <el-lit>0.0</el-lit>, or if you were creating the dictionary of words, the seed/initial
+      value could be an empty Dictionary of the correct type(s).</li>
+    <li>The second argument is the function (or a lambda) to be applied. This function or lambda must define
+      two parameters:
+      <ul>
+          <li>the accumulating value, and therefore of the same type as the seed/initial value,</li>
+          <li>the element to which the function is applied, and therefore of the same type 
+            as the elements in the list,</li>
+      </ul>
+      and define the return type as the same type as the initial/seed value.
+    </li>
+  </ul>
+  
+  So, the specified function/lambda is applied to each element of the input list in turn, in each case passing in the current value
+  of the result. The function makes use of both to generate a <i>new</i> value for the result, to replace the current one
+  for application to the next element. This is best understood by looking at some specific examples.
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>reduce</el-method></h4>
