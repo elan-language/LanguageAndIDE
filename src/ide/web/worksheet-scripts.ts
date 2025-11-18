@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { createModelFromDocument } from "./worksheet-model";
+import { createModelFromDocument, IWorksheetModel } from "./worksheet-model";
 
 const questionsSelector = "input.question, textarea.question, select.question";
 const questions = document.querySelectorAll(questionsSelector);
@@ -10,6 +10,8 @@ const doneCheckboxes = document.querySelectorAll("div.step > input.step-complete
 const snapshots = document.querySelectorAll("div.snapshot");
 
 const autoSaveButton = document.getElementById("auto-save");
+
+const loadAnswersButton = document.getElementById("load-answers");
 
 const helps = document.querySelectorAll("a.help");
 const loads = document.querySelectorAll("button.load");
@@ -28,6 +30,7 @@ type change = {
 };
 
 const wsModel = createModelFromDocument(document);
+const usernameModel = wsModel.username;
 
 if (fh) {
   document.getElementById("worksheet")?.classList.add("saved");
@@ -36,26 +39,26 @@ if (fh) {
   document.getElementById("worksheet")?.classList.remove("saved");
 }
 
-if (userName.value) {
+if (usernameModel.isAnswered()) {
   userName.disabled = true;
 }
 
-async function write(code: string, fh: FileSystemFileHandle) {
+async function write(jsonModel: string, fh: FileSystemFileHandle) {
   const writeable = await fh.createWritable();
-  await writeable.write(code);
+  await writeable.write(jsonModel);
   await writeable.close();
   document.getElementById("worksheet")?.classList.add("saved");
 }
 
-async function chromeSave(code: string, newName: string) {
+async function chromeSave(jsonModel: string, newName: string) {
   try {
     const fh = await showSaveFilePicker({
       suggestedName: newName,
       startIn: "documents",
-      types: [{ accept: { "text/html": ".html" } }],
+      types: [{ accept: { "application/json": ".json" } }],
       id: "",
     });
-    await write(code, fh);
+    await write(jsonModel, fh);
     userName.disabled = true;
     return fh;
   } catch {
@@ -64,42 +67,19 @@ async function chromeSave(code: string, newName: string) {
   }
 }
 
-function getUpdatedDocument() {
-  for (const e of document.querySelectorAll("input[type=text]") as NodeListOf<HTMLInputElement>) {
-    const v = e.value;
-
-    e.setAttribute("value", v);
+async function chromeRead() {
+  try {
+    const [fileHandle] = await window.showOpenFilePicker({
+      startIn: "documents",
+      types: [{ accept: { "application/json": ".json" } }],
+      id: "",
+    });
+    const codeFile = await fileHandle.getFile();
+    return await codeFile.text();
+  } catch (_e) {
+    // user cancelled
+    return;
   }
-
-  for (const e of document.querySelectorAll("input[type=radio]") as NodeListOf<HTMLInputElement>) {
-    const v = e.checked ? "true" : "false";
-
-    e.setAttribute("checked", v);
-  }
-
-  for (const e of document.querySelectorAll(
-    "input[type=checkbox]",
-  ) as NodeListOf<HTMLInputElement>) {
-    if (e.checked) {
-      e.setAttribute("checked", "true");
-    }
-  }
-
-  for (const e of document.getElementsByTagName("textarea")) {
-    const v = e.value;
-
-    e.innerText = v;
-  }
-
-  for (const e of document.getElementsByTagName("select")) {
-    const options = e.options;
-    const index = options.selectedIndex;
-
-    options[index].setAttribute("selected", "");
-  }
-
-  const code = new XMLSerializer().serializeToString(document);
-  return code;
 }
 
 function scrollToActiveElement() {
@@ -116,13 +96,19 @@ function scrollToActiveElement() {
 }
 
 autoSaveButton!.addEventListener("click", async () => {
-  const code = getUpdatedDocument();
-  if (autoSaveButton?.classList.contains("test-only")) {
-    // fake out saving
-    document.getElementById("worksheet")?.classList.add("saved");
-  } else {
-    const suggestedName = document.getElementsByClassName("docTitle")[0].innerHTML;
-    fh = await chromeSave(code, suggestedName);
+  const code = JSON.stringify(wsModel);
+
+  const suggestedName = document.getElementsByClassName("docTitle")[0].innerHTML;
+  fh = await chromeSave(code, suggestedName);
+
+  scrollToActiveElement();
+});
+
+loadAnswersButton!.addEventListener("click", async () => {
+  const txt = await chromeRead();
+  if (txt) {
+    const answers = JSON.parse(txt) as IWorksheetModel;
+    wsModel.setAnswers(answers);
   }
 
   scrollToActiveElement();
@@ -137,7 +123,7 @@ function clearTempMsgs() {
 
 async function save() {
   if (fh) {
-    const code = getUpdatedDocument();
+    const code = JSON.stringify(wsModel);
     await write(code, fh);
   }
 }
@@ -175,7 +161,9 @@ function updateHintsTaken() {
 
 for (const hint of hints as NodeListOf<HTMLDivElement>) {
   hint.addEventListener("click", async (_e) => {
-    if (!hint.classList.contains("taken")) {
+    const hintModel = wsModel.getHintById(hint.id)!;
+
+    if (!hintModel?.taken) {
       const encryptedText = hint.dataset.hint || "";
       if (encryptedText !== "") {
         const content = document.getElementById(`${hint.id}content`);
@@ -185,8 +173,9 @@ for (const hint of hints as NodeListOf<HTMLDivElement>) {
           setupHelpLinks(hintHelps);
         }
       }
+      hintModel?.setTaken();
       hint.classList.add("taken");
-      hint.append(getTimestamp());
+      hint.append(getTimestamp(hintModel.timeTaken));
       updateHintsTaken();
       snapShotCode(hint.id);
     }
@@ -226,11 +215,10 @@ function addEventListenerToInput(e: Element) {
   });
 }
 
-function getTimestamp() {
-  const dt = new Date();
+function getTimestamp(time: string) {
   const sp = document.createElement("span");
   sp.classList.add("timestamp");
-  sp.innerText = `${dt.toLocaleTimeString()} ${dt.toLocaleDateString()}`;
+  sp.innerText = time;
   return sp;
 }
 
@@ -238,43 +226,37 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
   cb.addEventListener("click", async (e) => {
     clearTempMsgs();
     const step = cb.parentElement;
-    const id = cb.id.slice(4);
     if (step) {
-      const allInputs = step.querySelectorAll(questionsSelector) as NodeListOf<
-        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-      >;
+      const stepModel = wsModel.getStepById(step.id);
+      stepModel?.conditionalSetDone();
 
-      const answeredInputs = step.querySelectorAll(
-        "input.question.answered, textarea.question.answered, select.question.answered",
-      );
-      if (allInputs.length !== answeredInputs.length) {
+      if (stepModel?.done) {
+        cb.disabled = true;
+        cb.setAttribute("checked", "true");
+        step.classList.remove("active");
+        step.classList.add("complete");
+        // for (const inp of allInputs) {
+        //   inp.disabled = true;
+        // }
+
+        const nextId = wsModel.getNextStep()?.id;
+        const nextStep = document.getElementById(nextId!);
+        if (nextStep) {
+          nextStep.classList.add("active");
+        }
+
+        cb.after(getTimestamp(stepModel.timeDone));
+        updateHintsTaken();
+        snapShotCode(cb.id);
+        await save();
+      } else {
         const msg = document.createElement("div");
         msg.classList.add("temp-msg");
         msg.innerText = "All required inputs must be completed to continue";
         cb.after(msg);
         e.preventDefault();
-        return;
-      }
-
-      cb.disabled = true;
-      cb.setAttribute("checked", "true");
-      step.classList.remove("active");
-      step.classList.add("complete");
-      for (const inp of allInputs) {
-        inp.disabled = true;
-      }
-
-      const nextId = parseInt(id!) + 1;
-      const nextStep = document.getElementById(`step${nextId}`);
-      if (nextStep) {
-        nextStep.classList.add("active");
       }
     }
-
-    cb.after(getTimestamp());
-    updateHintsTaken();
-    snapShotCode(cb.id);
-    await save();
   });
 }
 
@@ -358,6 +340,14 @@ window.addEventListener("message", async (m: MessageEvent<string>) => {
 
       const text = Diff.convertChangesToXML(diff);
 
+      if (id.startsWith("hint")) {
+        const hintModel = wsModel.getHintById(id);
+        hintModel?.setDiff(text);
+      } else {
+        const stepModel = wsModel.getStepById(id.replace("done", "step"));
+        stepModel?.setDiff(text);
+      }
+
       const diffDiv = document.createElement("div");
       diffDiv.classList.add("diff");
       diffDiv.innerHTML = text;
@@ -400,11 +390,12 @@ setupLoadLinks(loads as NodeListOf<HTMLButtonElement>);
 setupHelpLinks(helps as NodeListOf<HTMLLinkElement>);
 updateHintsTaken();
 
-userName.addEventListener("change", () => {
-  autosave.disabled = !userName.classList.contains("answered");
+userName.addEventListener("change", (e) => {
+  usernameModel.setValue((e.target as any).value);
+  autosave.disabled = !usernameModel?.isAnswered();
 });
 
-autosave.disabled = !userName.classList.contains("answered");
+autosave.disabled = !usernameModel?.isAnswered();
 
 function snapShotCode(id: string) {
   window.parent.postMessage(`snapshot:${id}`, "*");

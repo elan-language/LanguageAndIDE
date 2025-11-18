@@ -51,7 +51,8 @@ function wrapInWorkSheetBoilerPlate(content: string, title: string) {
     <div class="docTitle">${title}</div>
 
     <ol>
-        <li><label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
+      <li class="transient"><button id="load-answers">Load an answer file</button></li>
+      <li><label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
       <li>Set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</li>
       <li class="transient"><button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span></li>
     </ol>
