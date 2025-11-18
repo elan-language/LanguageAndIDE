@@ -1,4 +1,4 @@
-# 1dc5b1c1e2bb49a6b7879bd6ad0e0fa4eda6f4fd3a49b3423d7ffb8dcfeada92 Elan 1.6.5 guest default_profile valid
+# e48a2056873c7613411a50599bb300c22f678c805e54f892f851731dd62fcc22 Elan 1.7.0 guest default_profile valid
 
 function sort(li as List<of String>) returns List<of String>
   variable result set to li

@@ -945,6 +945,45 @@ return [main, _tests];}`;
     );
   });
 
+  test("Pass_orderByImmutableList", async () => {
+    const code = `${testHeader}
+
+constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
+main
+  print source.orderBy(lambda x as Int, y as Int => x < y)
+  print source
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  source = system.listImmutable([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+
+};
+async function main() {
+  await system.printLine((await global.source.orderBy(async (x, y) => x < y)));
+  await system.printLine(global.source);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "{37, 31, 27, 23, 19, 17, 13, 11, 7, 5, 3, 2}{2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}",
+    );
+  });
+
   test("Pass_sortByList", async () => {
     const code = `${testHeader}
 
@@ -959,6 +998,43 @@ const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   await system.printLine((await source.sortBy(async (x, y) => (x === y ? 0 : (x < y ? 1 : (-1))))));
+  await system.printLine(source);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(
+      fileImpl,
+      "[37, 31, 27, 23, 19, 17, 13, 11, 7, 5, 3, 2][2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]",
+    );
+  });
+
+  test("Pass_orderByList", async () => {
+    const code = `${testHeader}
+
+main
+  variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  print source.orderBy(lambda x as Int, y as Int => x < y)
+  print source
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  await system.printLine((await source.orderBy(async (x, y) => x < y)));
   await system.printLine(source);
 }
 return [main, _tests];}`;
