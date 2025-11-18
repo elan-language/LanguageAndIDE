@@ -1,4 +1,4 @@
-# 8bb5f95eac9a4481e9435d52b34a93df13b55f07e5beab8c3a28f58cb4871c85 Elan 1.6.5 guest default_profile valid
+# 359715817679a44b1ec8fd3ae3a7a531d6470665cb543515589e97b5f7b657d6 Elan 1.7.0 guest default_profile valid
 
 main
   print percent(11, 10)

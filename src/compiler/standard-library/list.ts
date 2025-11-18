@@ -25,6 +25,7 @@ import {
   mapHelper,
   maxByHelper,
   minByHelper,
+  orderByHelper,
   reduceHelper,
   sortByHelper,
   withAppendHelper,
@@ -194,6 +195,14 @@ export class List<T1> {
     predicate: (a: T1, b: T1) => Promise<number>,
   ): Promise<List<T1>> {
     return this.newList(await sortByHelper(this.contents, predicate, this.system!));
+  }
+
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(List))
+  async orderBy(
+    @elanFuncType([ElanT1, ElanT1], ElanBoolean)
+    predicate: (a: T1, b: T1) => Promise<boolean>,
+  ): Promise<List<T1>> {
+    return this.newList(await orderByHelper(this.contents, predicate, this.system!));
   }
 
   @elanFunction([], FunctionOptions.pure, ElanT1)
