@@ -8,7 +8,6 @@ import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { getId, mustBeOfSymbolType } from "../../compile-rules";
 import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
-import { OperationSymbol } from "../operation-symbol";
 import { UnaryExprAsn } from "../unary-expr-asn";
 
 export class ForAsn extends CompoundAsn {
@@ -44,7 +43,7 @@ export class ForAsn extends CompoundAsn {
     let compare = "<=";
     let incDec = "+";
 
-    if (this.step instanceof UnaryExprAsn && this.step.op === OperationSymbol.Minus) {
+    if (this.step instanceof UnaryExprAsn && this.step.isNegativeOperation()) {
       compare = ">=";
       incDec = "-";
       s = this.step.operand.compile();

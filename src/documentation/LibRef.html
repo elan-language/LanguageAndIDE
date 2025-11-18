@@ -1046,13 +1046,13 @@ The key's Type must be one of <el-type>Int</el-type>, <el-type>Float</el-type>, 
   <td>item of <el-type>Dictionary key's Type</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-code><el-id>true</el-id></el-code> if the Dictionary contains the given key<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
-</tr><tr id="keys">
+</tr><tr id="keys_Dictionary">
   <td><el-method>keys</el-method></td>
   <td><el-type>Dictionary</el-type></td>
   <td>(none)</td>
   <td><el-type>List</el-type></td>
   <td>a List containing the keys</td>
-</tr><tr id="values">
+</tr><tr id="values_Dictionary">
   <td><el-method>values</el-method></td>
   <td><el-type>Dictionary</el-type></td>
   <td>(none)</td>
@@ -1306,7 +1306,13 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <th>argument<br>Types</th>
   <th>return<br>Type</th>
   <th>returns</th>
- </tr><tr id="asString_DictionaryImmutable">
+ </tr><tr id="asDictionary_Dictionary_DictionaryImmutable">
+  <td><el-method>asDictionary</el-method></td>
+  <td><el-type>DictionaryImmutable</el-type></td>
+  <td>(none)</td>
+  <td><el-type>Dictionary</el-type></td>
+  <td>a new Dictionary with the same contents as the DictionaryImmutable</td>
+</tr><tr id="asString_DictionaryImmutable">
   <td><el-method>asString</el-method></td>
   <td><el-type>DictionaryImmutable</el-type></td>
   <td>(none)</td>
@@ -1318,7 +1324,19 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td>item of <el-type>DictionaryImmutable key's Type</el-type></td>
   <td><el-type>Boolean</el-type></td>
   <td><el-code><el-id>true</el-id></el-code> if the DictionaryImmutable contains the given key<br>&ndash; <el-code><el-id>false</el-id></el-code> otherwise</td>
- </tr><tr id="withPut_DictionaryImmutable">
+ </tr><tr id="keys_DictionaryImmutable">
+  <td><el-method>keys</el-method></td>
+  <td><el-type>DictionaryImmutable</el-type></td>
+  <td>(none)</td>
+  <td><el-type>List</el-type></td>
+  <td>a List containing the keys</td>
+</tr><tr id="values_DictionaryImmutable">
+  <td><el-method>values</el-method></td>
+  <td><el-type>DictionaryImmutable</el-type></td>
+  <td>(none)</td>
+  <td><el-type>List</el-type></td>
+  <td>a List containing the values</td>
+</tr><tr id="withPut_DictionaryImmutable">
   <td><el-method>withPut</el-method></td>
   <td><el-type>DictionaryImmutable</el-type></td>
   <td>item of <el-type>DictionaryImmutable key's Type</el-type>,<br>item of <el-type>DictionaryImmutable value's Type</el-type></td>
@@ -1712,6 +1730,21 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td></td>
   <td></td>
  </tr><tr><!---->
+  <td><el-method>keys</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#keys_Dictionary">&#x2714;</a></td>
+  <td><a href="#keys_DictionaryImmutable">&#x2714;</a></td>
+  <td></td>
+  <td></td>
+  <td></td>
+ </tr><tr><!---->
   <td><el-method>length</el-method></td>
   <td></td>
   <td></td>
@@ -1741,6 +1774,21 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td></td>
   <td><a href="#peek_Stack">&#x2714;</a></td>
   <td><a href="#peek_Queue">&#x2714;</a></td>
+ </tr><tr><!---->
+  <td><el-method>values</el-method></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><a href="#values_Dictionary">&#x2714;</a></td>
+  <td><a href="#values_DictionaryImmutable">&#x2714;</a></td>
+  <td></td>
+  <td></td>
+  <td></td>
  </tr><tr><!---->
   <td><el-method>withPut</el-method></td>
   <td></td>
@@ -1790,7 +1838,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 
 <h2 id="BlockGraphics">Block graphics</h2>
 <p>Block graphics provides a simple way to create low resolution graphics, ideal for simple but engaging games for example.</p>
-<p>The graphics are displayed on a grid that is 40 blocks wide by 30 blocks high.</p>
+<p>The graphics are defined and displayed on a grid that is 40 blocks wide by 30 blocks high.</p>
 <p>Each block is be rendered as a solid colour.</p>
 <p>An example of block graphics to produce a rapidly changing pattern of coloured blocks:</p>
 
@@ -1809,7 +1857,9 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 
 <h4 class="no-TOC">Notes</h4>
 <ul>
- <li>The <el-type>Array2D</el-type> must be of Type<el-type>Int</el-type> and of size 40 x 30.</li>
+ <li>The definition of the grid must be an <el-type>Array2D</el-type> of Type <el-type>Int</el-type> and of size 40 x 30.</li>
+ <li>Each cell of the grid is referenced by integers <i>x</i>,<i>y</i> where <i>x</i> is in [0..39] and <i>y</i> is in [0..29].</li>
+ <li><i>x</i>,<i>y</i> is 0,0 at the top left cell of the grid, positive <i>x</i> to the right, positive <i>y</i> downwards.</li> 
  <li>You may create multiple <el-type>Array2Ds</el-type> holding different patterns of blocks, and switch between them
  just by passing the required one as the argument to the <el-method>displayBlocks</el-method> method.</li>
  <li>A colour is specified as an <el-type>Int</el-type>, as described under <a href="#Colours">Colours</a>.</li>

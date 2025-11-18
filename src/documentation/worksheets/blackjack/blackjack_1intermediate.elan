@@ -1,0 +1,433 @@
+# fe31672c4e6700ea25e909eec6c7dfb085a10f36a6d95c6adbd10777d3e086b7 Elan 1.6.3 guest default_profile valid
+
+[imported] constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
+
+[imported] constant symbols set to {Suit.clubs:"&clubs;", Suit.diamonds:"&diams;", Suit.hearts:"&hearts;", Suit.spades:"&spades;"}
+
+[imported] constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"red", Suit.spades:"black"}
+
+[imported] constant gridByRank set to {"A":{"a"}, "2":{"b", "c"}, "3":{"a", "b", "c"}, "4":{"d", "e", "f", "g"}, "5":{"a", "d", "e", "f", "g"}, "6":{"d", "e", "f", "g", "h", "i"}, "7":{"d", "e", "f", "g", "h", "i", "l"}, "8":{"d", "e", "f", "g", "h", "i", "l", "m"}, "9":{"a", "d", "e", "f", "g", "n", "o", "p", "r"}, "10":{"d", "e", "f", "g", "n", "o", "p", "r", "s", "t"}, "J":{"d", "g", "j"}, "Q":{"d", "g", "q"}, "K":{"d", "g", "k"}}
+
+[imported] constant styleSheet set to 'body {\n    background-color: darkgreen;\n}\n\n.player .details {\n    color: white;\n    font-family: Arial, Helvetica, sans-serif;\n}\n\n.hand {\n        margin-top: 5px;\n        height: 150px;\n        padding-bottom: 10px;\n    }\n    \n.card {\n    position: relative;\n    float: left;\n    background-color: white;\n    width: 95px;\n    height:140px;\n    margin-right:10px;\n    padding: 5px;\n    border-radius: 5px;\n    font-family: Helvetica, sans-serif; \n}\n.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}\n\n/* Standard spots */ \n    .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}\n\n    /* columns */\n    .d,.n,.h,.p,.f {left: 18px }\n    .a,.b,.c,.l,.m,.s,.t {left: 43px;}\n    .e,.o,.i,.r,.g {left: 68px}\n\n    /* rows */\n    .d,.b,.e {top: 0px}\n    .s {top: 20px;}\n    .l {top: 28px;}\n    .n,.o {top: 37px;}\n    .h,.a,.i {top: 57px}\n    .p,.r {top: 75px;  transform: rotate(180deg);}\n    .m {top: 86px;  transform: rotate(180deg);}\n    .t {top: 93px;  transform: rotate(180deg);}\n    .f,.c,.g {top: 114px;  transform: rotate(180deg);}\n\n/* royal pictures (temporary: just a large letter) */\n    .j,.q,.k {\n        top: 13px;\n        left: 22px;\n        height: 60px;\n        width: 60px;\n        font-size: 100px;\n        text-align: centre;\n    }\n/* corner summary */\n    .u,.x {font-size: 15px; width: 15px; text-align: center;}\n    .v,.w {font-size: 20px; width: 15px; text-align: center;}\n    .u,.v {left: 0px;}\n    .w,.x {left: 89px; transform: rotate(180deg);}\n    .u {top: 2px;}   \n    .v {top: 12px;} \n    .w {top: 116px;} \n    .x {top: 132px;} \n\n/* suit colors */\n    .red {color: red}\n    .black {color: black}\n\n/* back */\n    .back { background-color: rgba(0, 0, 255, 0.607); height:100%; width: 100%;}'
+
+[imported] enum Action stand, draw
+
+[imported] enum Outcome undecided, lose, draw, win, winDouble
+
+[imported] enum Status pending, playing, standing, blackjack, bust
+
+[imported] enum Suit clubs, diamonds, hearts, spades
+
+[imported] class Game
+  constructor(dealerStartPoints as Int)
+    set property.dealer to new Dealer(dealerStartPoints)
+  end constructor
+
+  property dealer as Dealer
+
+  property players as List<of Player>
+
+  procedure newRound()
+    call property.dealer.newHand()
+    each player in property.players
+      call player.newHand()
+    end each
+  end procedure
+
+  procedure updatePoints()
+    each player in property.players
+      let outcome be determineOutcome(property.dealer, player)
+      call global.updatePoints(property.dealer, player, outcome)
+    end each
+  end procedure
+
+  procedure addPlayer(player as Player)
+    call property.players.append(player)
+  end procedure
+
+end class
+
+[imported] abstract class Player
+  property name as String
+
+  property hand as Hand
+
+  property points as Int
+
+  abstract procedure nextAction(dealerFaceCard as Card)
+
+  abstract procedure newHand()
+
+  abstract procedure play()
+
+  private procedure playHelper()
+    call property.hand.setStatus(Status.playing)
+  end procedure
+
+  procedure changePointsBy(amount as Int)
+    set property.points to property.points + amount
+  end procedure
+
+  abstract function getMessage() returns String
+
+  private function messageHelper() returns String
+    variable msg set to ""
+    let status be property.hand.status
+    if status is Status.playing then
+      set msg to " - PLAYING"
+    else if status is Status.standing then
+      set msg to " - STANDING - total {property.hand.total}"
+    else if status is Status.blackjack then
+      set msg to " - BLACKJACK"
+    else if status is Status.bust then
+      set msg to " - BUST"
+    end if
+    return msg
+  end function
+
+  function getStatus() returns Status
+    return property.hand.status
+  end function
+
+end class
+
+[imported] class Dealer inherits Player
+  constructor(startingPoints as Int)
+    set property.name to "Dealer"
+    set property.points to startingPoints
+  end constructor
+
+  property faceCard as Card
+
+  procedure play()
+    call playHelper()
+    let faceDownCard be property.hand.cards[1]
+    call faceDownCard.turnFaceUp()
+  end procedure
+
+  procedure newHand()
+    set property.hand to new Hand()
+    call property.hand.initialise()
+    set property.faceCard to property.hand.cards[0]
+    let hiddenCard be property.hand.cards[1]
+    call hiddenCard.turnFaceDown()
+  end procedure
+
+  procedure nextAction(faceCard as Card)
+    if property.hand.total < 17 then
+      call property.hand.draw()
+    else
+      call property.hand.stand()
+    end if
+  end procedure
+
+  function getMessage() returns String
+    return messageHelper()
+  end function
+
+end class
+
+[imported] class HumanPlayer inherits Player
+  constructor(name as String, startingPoints as Int)
+    set property.name to name
+    set property.points to startingPoints
+  end constructor
+
+  procedure nextAction(dealerFaceCard as Card)
+    variable key set to ""
+    while key is ""
+      set key to waitForKey().lowerCase()
+      if key is "d" then
+        call property.hand.draw()
+      else if key is "s" then
+        call property.hand.stand()
+      else
+        set key to ""
+      end if
+    end while
+  end procedure
+
+  procedure newHand()
+    set property.hand to new Hand()
+    call property.hand.initialise()
+  end procedure
+
+  procedure play()
+    call playHelper()
+  end procedure
+
+  function isPlaying() returns Boolean
+    return property.hand.status is Status.playing
+  end function
+
+  function getMessage() returns String
+    variable msg set to messageHelper()
+    if getStatus() is Status.playing then
+      set msg to " - PLAYING - press 'd' to draw, 's' to stand"
+    end if
+    return msg
+  end function
+
+end class
+
+[imported] class AutomatedPlayer inherits Player
+  constructor(name as String, decisionFunc as Func<of Hand, Card => Action>, startingPoints as Int)
+    set property.name to name
+    set property.decisionFunc to ref decisionFunc
+    set property.points to startingPoints
+  end constructor
+
+  property decisionFunc as Func<of Hand, Card => Action>
+
+  procedure newHand()
+    set property.hand to new Hand()
+    call property.hand.initialise()
+  end procedure
+
+  procedure play()
+    call playHelper()
+  end procedure
+
+  procedure nextAction(dealerFaceCard as Card)
+    let act be decisionFunc(property.hand, dealerFaceCard)
+    if act is Action.draw then
+      call property.hand.draw()
+    else
+      call property.hand.stand()
+    end if
+  end procedure
+
+  function getMessage() returns String
+    return messageHelper()
+  end function
+
+end class
+
+[imported] class Hand
+  property softAce as Boolean
+
+  property cards as List<of Card>
+
+  property count as Int
+
+  property total as Int
+
+  property status as Status
+
+  procedure setStatus(status as Status)
+    set property.status to status
+  end procedure
+
+  procedure initialise()
+    call draw()
+    call draw()
+    call setStatus(Status.pending)
+  end procedure
+
+  procedure stand()
+    set property.status to Status.standing
+  end procedure
+
+  procedure draw()
+    set property.status to Status.playing
+    let card be dealCard(random())
+    call addCard(card)
+  end procedure
+
+  procedure addCard(card as Card)
+    call property.cards.append(card)
+    set property.count to property.count + 1
+    if card.rank is "A" then
+      call addAce()
+    else
+      set property.total to property.total + rankValue[card.rank]
+    end if
+    if property.total > 21 then
+      call useUpSoftAceIfPossible()
+    else if card.rank is "A" then
+      set property.softAce to true
+    end if
+    if (property.count is 2) and (property.total is 21) and property.softAce then
+      set property.status to Status.blackjack
+    else if property.total > 21 then
+      set property.status to Status.bust
+    else if property.total is 21 then
+      set property.status to Status.standing
+    end if
+  end procedure
+
+  procedure addAce()
+    if property.softAce then
+      set property.total to property.total + 1
+    else
+      set property.total to property.total + 11
+      set property.softAce to true
+    end if
+  end procedure
+
+  private procedure useUpSoftAceIfPossible()
+    if property.softAce then
+      set property.total to property.total - 10
+      set property.softAce to false
+    else
+      set property.status to Status.bust
+    end if
+  end procedure
+
+end class
+
+[imported] class Card
+  property suit as Suit
+
+  property rank as String
+
+  property faceDown as Boolean
+
+  procedure turnFaceUp()
+    set property.faceDown to false
+  end procedure
+
+  procedure turnFaceDown()
+    set property.faceDown to true
+  end procedure
+
+end class
+
+[imported] procedure updatePoints(dealer as Dealer, player as Player, outcome as Outcome)
+  if outcome is Outcome.winDouble then
+    call player.changePointsBy(2)
+    call dealer.changePointsBy(-2)
+  else if outcome is Outcome.win then
+    call player.changePointsBy(1)
+    call dealer.changePointsBy(-1)
+  else if outcome is Outcome.lose then
+    call player.changePointsBy(-1)
+    call dealer.changePointsBy(1)
+  end if
+end procedure
+
+[imported] function determineOutcome(dealer as Dealer, player as Player) returns Outcome
+  let d be dealer.hand.status
+  let dTot be dealer.hand.total
+  let p be player.hand.status
+  let pTot be player.hand.total
+  let bust be Status.bust
+  let bj be Status.blackjack
+  let win be Outcome.win
+  let winDouble be Outcome.winDouble
+  let lose be Outcome.lose
+  let draw be Outcome.draw
+  return if p is bust then lose else if d is bust then win else if (d is bj) and (p is bj) then draw else if p is bj then winDouble else if d is bj then lose else if pTot > dTot then win else if pTot < dTot then lose else draw
+end function
+
+[imported] function dealCard(random as Float) returns Card
+  let number be (random*52).floor()
+  let rank be rankValue.keys()[number div 4]
+  let suit be number mod 4
+  return new Card() with rank set to rank, suit set to intAsSuit(suit)
+end function
+
+[imported] function intAsSuit(n as Int) returns Suit
+  variable suit set to Suit.clubs
+  if n is 1 then
+    set suit to Suit.diamonds
+  else if n is 2 then
+    set suit to Suit.hearts
+  else if n is 3 then
+    set suit to Suit.spades
+  end if
+  return suit
+end function
+
+[imported] function htmlForGame(game as Game) returns String
+  variable html set to "<div class='game'>"
+  set html to html + htmlForPlayer(game.dealer)
+  each player in game.players
+    set html to html + htmlForPlayer(player)
+  end each
+  return html + "</div>"
+end function
+
+[imported] function htmlForPlayer(player as Player) returns String
+  variable html set to "<div class='player'>"
+  set html to html + "<div class='details'>{player.name} - {player.points} points {player.getMessage()}"
+  set html to html + htmlForHand(player.hand)
+  return html + "</div>"
+end function
+
+[imported] function htmlForHand(hand as Hand) returns String
+  # Add in hand status, total?
+  variable html set to "<div class='hand'>"
+  each card in hand.cards
+    let suit be card.suit
+    let rank be card.rank
+    set html to html + htmlForCard(card)
+  end each
+  return html + "</div>"
+end function
+
+[imported] function htmlForCard(card as Card) returns String
+  variable html set to "<div class='card'>"
+  if card.faceDown then
+    set html to html + "<div class='back'></div>"
+  else
+    let rank be card.rank
+    let suit be card.suit
+    let colour be colours[suit]
+    let symbol be symbols[suit]
+    let u be htmlForSpot("u", colour, rank)
+    let v be htmlForSpot("v", colour, symbol)
+    let w be htmlForSpot("w", colour, symbol)
+    let x be htmlForSpot("x", colour, rank)
+    variable grid set to ""
+    each location in gridByRank[rank]
+      set grid to grid + htmlForSpot(location, colour, symbol)
+    end each
+    set html to html + "{u}{v}{grid}{w}{x}"
+  end if
+  return html + "</div>"
+end function
+
+[imported] function htmlForSpot(id as String, colour as String, content as String) returns String
+  return "<div class='{id} {colour}'>{content}</div>"
+end function
+
+main
+  let game be new Game(1000)
+  call game.addPlayer(new AutomatedPlayer("Player A", ref strategyA, 1000))
+  call game.addPlayer(new AutomatedPlayer("Player B", ref strategyB, 1000))
+  let dealer be game.dealer
+  for i from 1 to 1000 step 1
+    call game.newRound()
+    call display(game)
+    each player in game.players
+      call player.play()
+      call display(game)
+      while player.getStatus() is Status.playing
+        call player.nextAction(dealer.faceCard)
+        call display(game)
+      end while
+    end each
+    call dealer.play()
+    while dealer.getStatus() is Status.playing
+      call dealer.nextAction(dealer.faceCard)
+      call display(game)
+    end while
+  end for
+  call game.updatePoints()
+  call display(game)
+end main
+
+procedure display(game as Game)
+  let html be "<style>{styleSheet}</style><html>{htmlForGame(game)}</html>"
+  call displayHtml(html)
+  [ghosted] call pause(1500)
+end procedure
+
+function strategyA(hand as Hand, dealerFaceUp as Card) returns Action
+  return Action.draw
+end function
+
+function strategyB(hand as Hand, dealerFaceUp as Card) returns Action
+  return Action.draw
+end function

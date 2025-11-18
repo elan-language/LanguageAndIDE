@@ -15,4 +15,5 @@ export enum OperationSymbol {
   NotEquals,
   Pow,
   Or,
+  Unknown,
 }

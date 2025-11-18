@@ -693,6 +693,15 @@ export function mustBeCoercibleType(
   mustBeAssignableType(lhs, rhs, compileErrors, location);
 }
 
+export function mustBeKnownOperation(op: string, compileErrors: CompileError[], location: string) {
+  compileErrors.push(
+    new SyntaxCompileError(
+      `UNEXPECTED COMPILE ERROR:  '${op}'  Please email a screenshot to rpawson@nakedobjects.org - then edit your code until this error disappears.`,
+      location,
+    ),
+  );
+}
+
 export function mustBeNumberType(st: SymbolType, compileErrors: CompileError[], location: string) {
   if (!isNumber(st)) {
     FailNotNumber(st, compileErrors, location);

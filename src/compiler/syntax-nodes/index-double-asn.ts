@@ -4,7 +4,6 @@ import { getGlobalScope } from "../../compiler/symbols/symbol-helpers";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
 import { mustNotBeNegativeIndex } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { OperationSymbol } from "./operation-symbol";
 import { UnaryExprAsn } from "./unary-expr-asn";
 
 export class IndexDoubleAsn extends AbstractAstNode implements AstNode {
@@ -19,7 +18,7 @@ export class IndexDoubleAsn extends AbstractAstNode implements AstNode {
 
   checkForNegativeIndex(index: AstNode) {
     if (index instanceof UnaryExprAsn) {
-      if (index.op === OperationSymbol.Minus) {
+      if (index.isNegativeOperation()) {
         mustNotBeNegativeIndex(this.compileErrors, this.fieldId);
       }
     }

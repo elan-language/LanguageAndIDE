@@ -14,16 +14,16 @@ import {
   mustBeBooleanTypes,
   mustBeCoercibleType,
   mustBeIntegerType,
+  mustBeKnownOperation,
   mustBeNumberTypes,
 } from "../compile-rules";
-import { ElanCompilerError } from "../elan-compiler-error";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { mapOperationSymbol } from "./ast-helpers";
+import { mapOperation } from "./ast-helpers";
 import { OperationSymbol } from "./operation-symbol";
 
 export class BinaryExprAsn extends AbstractAstNode implements AstNode {
   constructor(
-    private readonly op: OperationSymbol,
+    private readonly op: string,
     private readonly lhs: AstNode,
     private readonly rhs: AstNode,
     public readonly fieldId: string,
@@ -32,8 +32,8 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     super();
   }
 
-  private isEqualityOp() {
-    switch (this.op) {
+  private isEqualityOp(opSymbol: OperationSymbol) {
+    switch (opSymbol) {
       case OperationSymbol.Equals:
       case OperationSymbol.NotEquals:
         return true;
@@ -41,8 +41,8 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     return false;
   }
 
-  private isArithmeticOp() {
-    switch (this.op) {
+  private isArithmeticOp(opSymbol: OperationSymbol) {
+    switch (opSymbol) {
       case OperationSymbol.Add:
       case OperationSymbol.Minus:
       case OperationSymbol.Multiply:
@@ -53,8 +53,8 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     return false;
   }
 
-  private isIntegerOnlyOp() {
-    switch (this.op) {
+  private isIntegerOnlyOp(opSymbol: OperationSymbol) {
+    switch (opSymbol) {
       case OperationSymbol.Div:
       case OperationSymbol.Mod:
         return true;
@@ -62,8 +62,8 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     return false;
   }
 
-  private isCompareOp() {
-    switch (this.op) {
+  private isCompareOp(opSymbol: OperationSymbol) {
+    switch (opSymbol) {
       case OperationSymbol.LT:
       case OperationSymbol.GT:
       case OperationSymbol.GTE:
@@ -73,8 +73,8 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     return false;
   }
 
-  private isLogicalOp() {
-    switch (this.op) {
+  private isLogicalOp(opSymbol: OperationSymbol) {
+    switch (opSymbol) {
       case OperationSymbol.And:
       case OperationSymbol.Or:
         return true;
@@ -82,8 +82,8 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     return false;
   }
 
-  private opToJs() {
-    switch (this.op) {
+  private opToJs(opSymbol: OperationSymbol) {
+    switch (opSymbol) {
       case OperationSymbol.Add:
         return "+";
       case OperationSymbol.Minus:
@@ -115,7 +115,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       case OperationSymbol.Pow:
         return "**";
     }
-    throw new ElanCompilerError(`No mapping for op: ${this.op}`);
+    return " ";
   }
 
   isString(st: SymbolType) {
@@ -131,39 +131,45 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     const lst = this.lhs.symbolType();
     const rst = this.rhs.symbolType();
 
-    if (this.op === OperationSymbol.Add && this.isString(lst) && this.isString(rst)) {
+    const opSymbol = mapOperation(this.op);
+
+    if (opSymbol === OperationSymbol.Unknown) {
+      mustBeKnownOperation(this.op, this.compileErrors, this.fieldId);
+    }
+
+    if (opSymbol === OperationSymbol.Add && this.isString(lst) && this.isString(rst)) {
       return `${lhsCode} + ${rhsCode}`;
     }
 
-    if (this.isEqualityOp()) {
+    if (this.isEqualityOp(opSymbol)) {
       mustBeCoercibleType(lst, rst, this.compileErrors, this.fieldId);
     }
 
-    if (this.isCompareOp() || this.isArithmeticOp()) {
+    if (this.isCompareOp(opSymbol) || this.isArithmeticOp(opSymbol)) {
       mustBeNumberTypes(lst, rst, this.compileErrors, this.fieldId);
     }
 
-    if (this.isIntegerOnlyOp()) {
+    if (this.isIntegerOnlyOp(opSymbol)) {
       mustBeIntegerType(lst, rst, this.compileErrors, this.fieldId);
     }
 
-    if (this.isLogicalOp()) {
+    if (this.isLogicalOp(opSymbol)) {
       mustBeBooleanTypes(lst, rst, this.compileErrors, this.fieldId);
     }
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    if (this.op === OperationSymbol.Equals && (isValueType(lst) || isValueType(rst))) {
-      return `${lhsCode} ${this.opToJs()} ${rhsCode}`;
+    if (opSymbol === OperationSymbol.Equals && (isValueType(lst) || isValueType(rst))) {
+      return `${lhsCode} ${this.opToJs(opSymbol)} ${rhsCode}`;
     }
 
-    if (this.op === OperationSymbol.Equals) {
+    if (opSymbol === OperationSymbol.Equals) {
       return `system.objectEquals(${lhsCode}, ${rhsCode})`;
     }
 
-    let code = `${lhsCode} ${this.opToJs()} ${rhsCode}`;
+    let code = `${lhsCode} ${this.opToJs(opSymbol)} ${rhsCode}`;
 
-    if (this.op === OperationSymbol.Div) {
+    if (opSymbol === OperationSymbol.Div) {
       code = `Math.floor(${code})`;
     }
 
@@ -171,7 +177,8 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    switch (this.op) {
+    const opSymbol = mapOperation(this.op);
+    switch (opSymbol) {
       case OperationSymbol.Add:
         return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Minus:
@@ -206,6 +213,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
   }
 
   toString() {
-    return `${this.lhs} ${mapOperationSymbol(this.op)} ${this.rhs}`;
+    return `${this.lhs} ${this.op} ${this.rhs}`;
   }
 }

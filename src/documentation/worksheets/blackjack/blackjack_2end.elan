@@ -1,10 +1,30 @@
-# 1cde140fe235a858696a1050ef69a28cd5fe2af092ee93ae21f7989de20d0645 Elan 1.6.0 guest default_profile valid
+# a948ad4413e4485617facfcca0ae72de23872523acc7977a4afbd66c6560bd61 Elan 1.6.0 guest default_profile valid
 
-[imported] function createDealer(startPoints as Int) returns Dealer
+main
+  # Simulate dealer's probability of bust from first card
+  variable dealer set to createDealer(100000)
+  variable totalBust set to 0
+  each rank in rankValue.keys()
+    let dfc be new Card() with rank set to rank
+    variable bust set to 0
+    for g from 1 to 100000 step 1
+      call dealer.newHand(dfc)
+      call dealer.playHandOut()
+      let outcome be dealer.hand.status
+      if outcome is Status.bust then
+        set bust to bust + 1
+      end if
+    end for
+    print "Dealer face card: {rank} Dealer bust %: {(bust/1000).floor()}"
+    set totalBust to totalBust + bust
+  end each
+end main
+
+function createDealer(startPoints as Int) returns Dealer
   return new Dealer(startPoints)
 end function
 
-[imported] procedure updateScores(dealer as Dealer, player as Player, outcome as Outcome)
+procedure updateScores(dealer as Dealer, player as Player, outcome as Outcome)
   if outcome is Outcome.winDouble then
     call player.changeScoreBy(2)
     call dealer.changeScoreBy(-2)
@@ -17,7 +37,7 @@ end function
   end if
 end procedure
 
-[imported] function determineOutcome(dealer as Dealer, player as Player) returns Outcome
+function determineOutcome(dealer as Dealer, player as Player) returns Outcome
   let d be dealer.hand.status
   let dTot be dealer.hand.total
   let p be player.hand.status
@@ -31,21 +51,21 @@ end procedure
   return if p is bust then lose else if d is bust then win else if (d is bj) and (p is bj) then draw else if p is bj then winDouble else if d is bj then lose else if pTot > dTot then win else if pTot < dTot then lose else draw
 end function
 
-[imported] function dealCard(random as Float) returns Card
+function dealCard(random as Float) returns Card
   let number be (random*52).floor()
   let rank be rankValue.keys()[number div 4]
   let suit be number mod 4
   return new Card() with rank set to rank, suit set to suit
 end function
 
-[imported] interface Player
+interface Player
   abstract property hand as Hand
 
   abstract procedure changeScoreBy(amount as Int)
 
 end interface
 
-[imported] abstract class Automated inherits Player
+abstract class Automated inherits Player
   property hand as Hand
 
   property score as Int
@@ -81,7 +101,7 @@ end interface
 
 end class
 
-[imported] class Dealer inherits Automated
+class Dealer inherits Automated
   constructor(startingPoints as Int)
     set property.score to startingPoints
   end constructor
@@ -104,7 +124,36 @@ end class
 
 end class
 
-[imported] class Hand
+class AutomatedPlayer inherits Automated
+  constructor(name as String, decisionFunc as Func<of Hand, Card => Action>, startingPoints as Int)
+    set property.name to name
+    set property.decisionFunc to ref decisionFunc
+    set property.score to startingPoints
+  end constructor
+
+  property name as String
+
+  property decisionFunc as Func<of Hand, Card => Action>
+
+  procedure newHand(faceCard as Card)
+    set property.dealerFaceCard to faceCard
+    set property.active to false
+    set property.hand to new Hand()
+    call property.hand.draw()
+    call property.hand.draw()
+  end procedure
+
+  function getAction() returns Action
+    return decisionFunc(property.hand, property.dealerFaceCard)
+  end function
+
+  function asHtml() returns String
+    return "{property.name}: {property.hand.asHtml()}"
+  end function
+
+end class
+
+class Hand
   property softAce as Boolean
 
   property cards as List<of Card>
@@ -184,7 +233,7 @@ end class
 
 end class
 
-[imported] record Card
+record Card
   property suit as Int
 
   property rank as String
@@ -206,32 +255,12 @@ end class
 
 end record
 
-[imported] enum Action stand, draw
+enum Action stand, draw
 
-[imported] enum Outcome undecided, lose, draw, win, winDouble
+enum Outcome undecided, lose, draw, win, winDouble
 
-[imported] enum Status pending, playing, standing, blackjack, bust
+enum Status pending, playing, standing, blackjack, bust
 
-[imported] constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
+constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
 
-[imported] constant htmlEscChars set to {"&clubs;", "&diams;", "&hearts;", "&spades;"}
-
-main
-  variable dealer set to createDealer(100000)
-  variable totalBust set to 0
-  each rank in rankValue.keys()
-    let dfc be new Card() with rank set to rank
-    variable bust set to 0
-    for g from 1 to 100000 step 1
-      call dealer.newHand(dfc)
-      call dealer.playHandOut()
-      let outcome be dealer.hand.status
-      if outcome is Status.bust then
-        set bust to bust + 1
-      end if
-    end for
-    print "Dealer face card: {rank} Dealer bust: {(bust/1000).floor()}%"
-    set totalBust to totalBust + bust
-  end each
-  print "Overall bust: {(totalBust/13000).floor()}%"
-end main
+constant htmlEscChars set to {"&clubs;", "&diams;", "&hearts;", "&spades;"}
