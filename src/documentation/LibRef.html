@@ -922,6 +922,12 @@ Note
   <td><el-type>List element's Type</el-type></td>
   <td>the list element corresponding to the minimum of the values returned by a lambda<br>
   see <a href="#minBy"><el-method>minBy</el-method></a> in HoFs</td>
+ </tr><tr id="orderBy_List">
+  <td><el-method>orderBy</el-method></td>
+  <td><el-type>List</el-type></td>
+  <td><el-kw>lambda</el-kw></td>
+  <td><el-type>List</el-type></td>
+  <td>a new list with the elements ordered according to the value returned by a lambda</td>
  </tr><tr id="reduce_List">
   <td><el-method>reduce</el-method></td>
   <td><el-type>List</el-type></td>
@@ -935,8 +941,7 @@ Note
   <td><el-type>List</el-type></td>
   <td><el-kw>lambda</el-kw></td>
   <td><el-type>List</el-type></td>
-  <td>a new list with the elements sorted according to the value returned by a lambda<br>
-  see <a href="#sortBy"><el-method>sortBy</el-method></a> in HoFs</td>
+  <td><b><i>deprecated</i></b> use method <a href="#orderBy">orderBy</a> in <a href="#Hofs">HoFs</a> instead</td>
  </tr><tr id="withAppend">
   <td><el-method>withAppend</el-method></td>
   <td><el-type>List</el-type></td>
@@ -1231,6 +1236,18 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>Int</el-type>, item of <el-type>List element's Type</el-type></td>
   <td><el-type>ListImmutable</el-type></td>
   <td>a new ListImmutable with the item inserted at the specified position</td>
+ </tr><tr id="orderBy_ListImmutable">
+  <td><el-method>orderBy</el-method></td>
+  <td><el-type>ListImmutable</el-type></td>
+  <td><el-kw>lambda</el-kw></td>
+  <td><el-type>ListImmutable</el-type></td>
+  <td>a new ListImmutable with the elements ordered according to the value returned by a lambda</td>
+ </tr><tr id="sortBy_ListImmutable">
+  <td><el-method>sortBy</el-method></td>
+  <td><el-type>ListImmutable</el-type></td>
+  <td><el-kw>lambda</el-kw></td>
+  <td><el-type>ListImmutable</el-type></td>
+  <td><b><i>deprecated</i></b> use method <a href="#orderBy">orderBy</a> in <a href="#Hofs">HoFs</a> instead</td>
  </tr><tr id="withPut_ListImmutable">
   <td><el-method>withPut</el-method></td>
   <td><el-type>ListImmutable</el-type></td>
@@ -1859,7 +1876,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <ul>
  <li>The definition of the grid must be an <el-type>Array2D</el-type> of Type <el-type>Int</el-type> and of size 40 x 30.</li>
  <li>Each cell of the grid is referenced by integers <i>x</i>,<i>y</i> where <i>x</i> is in [0..39] and <i>y</i> is in [0..29].</li>
- <li><i>x</i>,<i>y</i> is 0,0 at the top left cell of the grid, positive <i>x</i> to the right, positive <i>y</i> downwards.</li> 
+ <li><i>x</i>,<i>y</i> is 0,0 at the top left cell of the grid, positive <i>x</i> to the right, positive <i>y</i> downwards.</li>
  <li>You may create multiple <el-type>Array2Ds</el-type> holding different patterns of blocks, and switch between them
  just by passing the required one as the argument to the <el-method>displayBlocks</el-method> method.</li>
  <li>A colour is specified as an <el-type>Int</el-type>, as described under <a href="#Colours">Colours</a>.</li>
@@ -3265,7 +3282,8 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
 <a href="#reduce"><el-method>reduce</el-method></a>, and also provides
 <a href="#maxBy"><el-method>maxBy</el-method></a>,
 <a href="#minBy"><el-method>minBy</el-method></a> and
-<a href="#sortBy"><el-method>sortBy</el-method></a>.</p>
+<a href="#orderBy"><el-method>orderBy</el-method></a>.</p>
+<p>(Also <a href="#sortBy"><el-method>sortBy</el-method></a> which is now <b><i>deprecated</i></b>).</p>
 
 <h2 id="ref">Passing a function as a reference</h2>
 <p>To use a higher-order function (HoF), you have to pass in a reference to a function.
@@ -3363,43 +3381,42 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
 </div></div>
 
 <h3 class="no-TOC" id="reduce">reduce</h3>
-<p>The function <el-method>reduce</el-method> is used to in some way combine the elements of a list to produce
-  a single result. This result can be of the same type as the elements in the list, for example to:
+<p>The function <el-method>reduce</el-method> is used to combine the elements of a list in some way to produce
+  a single result. This result may be of the same Type as the elements in the list, for example to:
 
   <ul>
-    <li>find the sum, or sum-of-squares, of a list of numeric values</li>
-    <li>concatenate, or combine in some other way, the elements of a list of strings</li>
+    <li>Find the sum or sum-of-squares of a list of numeric values.</li>
+    <li>Concatenate, or combine in some other way, the elements of a list of strings.</li>
   </ul>
 
-  However, the result may also be of a different type than the elements of the list, and may even 
+  The result may, however, be of a different Type than the elements of the list, and may even
   be a data structure, for example to:
 
   <ul>
-    <li>generate a <a href="#tuple">tuple</a> of the sum, sum-of-squares, and count of numerical elements.</li>
-    <li>generate a dictionary of all the unique words in a list, with the number of times each word appears in the input list.</li>
+    <li>Generate a <a href="#tuple">tuple</a> of the sum, sum-of-squares, and count of numerical elements.</li>
+    <li>Generate a dictionary of all the unique words in a list, with the number of times each word appears in the input list.</li>
   </ul>
 
   <el-method>reduce</el-method> requires two arguments:
 
-  <ul>
-    <li>The first argument is the 'seed' or initial value, of the same type that you wish to be returned by the function. 
-      For example, if you were finding the sum of a list of type <el-type>Float</el-type> the seed/initial value
-      would typically be <el-lit>0.0</el-lit>, or if you were creating the dictionary of words, the seed/initial
-      value could be an empty Dictionary of the correct type(s).</li>
-    <li>The second argument is the function (or a lambda) to be applied. This function or lambda must define
-      two parameters:
-      <ul>
-          <li>the accumulating value, and therefore of the same type as the seed/initial value,</li>
-          <li>the element to which the function is applied, and therefore of the same type 
-            as the elements in the list,</li>
-      </ul>
-      and define the return type as the same type as the initial/seed value.
+  <ol>
+    <li>The initial, or 'seed', value, of the Type that you wish to be returned by the function specified in the second argument..
+      For example, if you were finding the sum of a list of Type <el-type>Float</el-type>, the initial seed value
+      would typically be <el-lit>0.0</el-lit>. If you were creating a dictionary of words, the initial seed
+      value would be an empty Dictionary of the correct Types.</li>
+    <li>The function (or lambda) to be applied, which itself requires two arguments:
+      <ol>
+          <li>The accumulating value, which is therefore of the same Type as the initial seed value.
+          (This will be the return value of the function or lambda).</li>
+          <li>The element to which the function is applied, which is therefore of the same Type
+            as the elements in the input list.</li>
+      </ol>
     </li>
-  </ul>
-  
-  So, the specified function/lambda is applied to each element of the input list in turn, in each case passing in the current value
-  of the result. The function makes use of both to generate a <i>new</i> value for the result, to replace the current one
-  for application to the next element. This is best understood by looking at some specific examples.
+  </ol>
+
+  In other words, the specified function or lambda is applied to each element of the input list in turn, in each case passing in the current value
+  of the result. The function makes use of both to generate a <i>new</i> value for the result, replacing the current one
+  for application to the next element. This is best understood by looking at the examples.
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>reduce</el-method></h4>
@@ -3468,30 +3485,31 @@ They take a function as an argument, and return the list element corresponding t
 <hr>
 </div></div>
 
-<h3 class="no-TOC" id="sortBy">sortBy</h3>
-<p><el-method>sortBy</el-method> takes a <el-kw>lambda</el-kw> that takes two arguments (of the same Type as that of the <el-type>ListImmutable</el-type> being sorted) and compares them, returning an integer with one of the values -1, 0, or +1, to indicate whether the first argument should be placed respectively before, adjacent to or after the second argument in the sorted result, where &#8216;adjacent to&#8217; means it does not matter whether before or after):</p>
+<h3 class="no-TOC" id="orderBy">orderBy</h3>
+<p><el-method>orderBy</el-method> takes a <el-kw>lambda</el-kw> that has two arguments of the same Type as that of the <el-type>List</el-type> or <el-type>ListImmutable</el-type> to be reordered and compares them, returning a Boolean value that distinguishes between <i>less than</i> (or <i>before</i>) for numerics and <i>greater than</i> (or <i>after</i>) for strings.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>sortBy</el-method></h4>
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>orderBy</el-method></h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; To  sort integers in a <el-type>List</el-type>:</p>
-<el-code-block source="sortBy_Int.elan">
-
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>27</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>31</el-lit>, <el-lit>37</el-lit>, <el-lit>11</el-lit>, <el-lit>13</el-lit>, <el-lit>17</el-lit>, <el-lit>19</el-lit>, <el-lit>23</el-lit>]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let6" tabindex="-1"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>sorted</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id> &gt; <el-id>y</el-id><el-kw><br>then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id> &lt; <el-id>y</el-id><el-kw><br>then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="print9" tabindex="-1"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="-1"><el-txt><el-id>sorted</el-id></el-txt></el-field></el-statement>
-&nbsp;&nbsp;&#x27f6; [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To  reorder integers in a <el-type>List</el-type>, using > for ascending (you would use < for descending):</p>
+<el-code-block source="orderBy_Int.elan">
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>[<el-lit>27</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>, <el-lit>5</el-lit>, <el-lit>7</el-lit>, <el-lit>31</el-lit>, <el-lit>37</el-lit>, <el-lit>11</el-lit>, <el-lit>23</el-lit>, <el-lit>13</el-lit>, <el-lit>19</el-lit>, <el-lit>23</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let29" tabindex="-1"><el-kw>let </el-kw><el-field id="var30" class="ok" tabindex="-1"><el-txt><el-id>ordered</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr31" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id>.<el-method>orderBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> =&gt; <el-id>x</el-id> &gt; <el-id>y</el-id>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="print32" tabindex="-1"><el-kw>print </el-kw><el-field id="expr33" class="optional ok" tabindex="-1"><el-txt><el-id>ordered</el-id></el-txt></el-field></el-statement>
+&nbsp;&nbsp;&#x27f6; [2, 3, 5, 7, 11, 13, 19, 23, 23, 27, 31, 37]
 </el-code-block>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; And similarly for string comparisons using methods <el-method>isBefore</el-method> and <el-method>isAfter</el-method>:</p>
-<el-code-block source="sortBy_String.elan">
-<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>["<el-lit>Simon</el-lit>", "<el-lit>Pauline</el-lit>", "<el-lit>Jason</el-lit>", "<el-lit>Zelda</el-lit>", "<el-lit>Edith</el-lit>", "<el-lit>Lance</el-lit>", "<el-lit>Alice</el-lit>", "<el-lit>Paul</el-lit>"]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let6" tabindex="-1"><el-kw>let </el-kw><el-field id="var7" class="ok" tabindex="-1"><el-txt><el-id>sorted</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr8" class="ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>sortBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-kw>if </el-kw><el-id>x</el-id>.<el-method>isAfter</el-method>(<el-id>y</el-id>)<el-kw><br>then </el-kw><el-lit>1</el-lit><el-kw><br>else </el-kw><el-kw>if </el-kw><el-id>x</el-id>.<el-method>isBefore</el-method>(<el-id>y</el-id>)<el-kw><br>then </el-kw>-<el-lit>1</el-lit><el-kw><br>else </el-kw><el-lit>0</el-lit>)</el-txt></el-field></el-statement>
-<el-statement class="ok" id="print9" tabindex="-1"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="-1"><el-txt><el-id>sorted</el-id></el-txt></el-field></el-statement>
-&nbsp;&nbsp;&#x27f6; [Alice, Edith, Jason, Lance, Paul, Pauline, Simon, Zelda]
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To reorder strings in a <el-type>ListImmutable</el-type>, using methods <el-method>isAfter</el-method> for ascending or <el-method>isBefore</el-method> for descending:</p>
+<el-code-block source="orderBy_Int.elan">
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>{"<el-lit>Simon</el-lit>", "<el-lit>Pauline</el-lit>", "<el-lit>Jason</el-lit>", "<el-lit>Zelda</el-lit>", "<el-lit>Edith</el-lit>", "<el-lit>Lance</el-lit>", "<el-lit>Alice</el-lit>", "<el-lit>Paul</el-lit>"}</el-txt></el-field></el-statement>
+<el-statement class="ok" id="print9" tabindex="-1"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>orderBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>x</el-id>.<el-method>isBefore</el-method>(<el-id>y</el-id>))</el-txt></el-field></el-statement>
+&nbsp;&nbsp;&#x27f6; {Zelda, Simon, Pauline, Paul, Lance, Jason, Edith, Alice}
 </el-code-block>
 <hr>
 </div></div>
+
+<h3 class="no-TOC" id="sortBy">sortBy</h3>
+<p><el-method>sortBy</el-method> is <b><i>deprecated</i></b>, but is superseded by method <a href="#orderBy"><el-method>orderBy</el-method></a>.
 
 <p><b>Elan Library Reference</b> go to the <a href="#top">top</a></p>
 <script>
