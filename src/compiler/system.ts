@@ -293,6 +293,30 @@ export class System {
     return s === "system" || s === "stdlib" || s.startsWith("_");
   }
 
+  getProtoTypes(v: any): any[] {
+    const proto = Object.getPrototypeOf(v);
+
+    if (proto) {
+      return [proto].concat(this.getProtoTypes(proto));
+    }
+
+    return [];
+  }
+
+  getDescriptors(vv: any[]): { [x: string]: PropertyDescriptor } {
+    const desc: { [x: string]: PropertyDescriptor } = {};
+
+    for (const v of vv) {
+      const d = Object.getOwnPropertyDescriptors(v);
+      const dKeys = Object.keys(d);
+      for (const dk of dKeys) {
+        desc[dk] = d[dk];
+      }
+    }
+
+    return desc;
+  }
+
   async asCloneableObject(v: any): Promise<unknown> {
     if (typeof v === "boolean" || typeof v === "string" || typeof v === "number") {
       return v;
@@ -316,8 +340,8 @@ export class System {
 
     const getters: string[] = [];
 
-    const proto = Object.getPrototypeOf(v);
-    const descriptors = Object.getOwnPropertyDescriptors(proto);
+    const proto = this.getProtoTypes(v);
+    const descriptors = this.getDescriptors(proto);
     const dKeys = Object.keys(descriptors);
 
     for (const d of dKeys) {

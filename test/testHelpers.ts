@@ -88,7 +88,6 @@ export async function assertGeneratesHtmlandSameSourceNew(sourceFile: string, ht
     } else {
       throw e;
     }
-
   }
 }
 
