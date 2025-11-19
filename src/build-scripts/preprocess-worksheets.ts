@@ -63,10 +63,9 @@ function wrapInWorkSheetBoilerPlate(content: string, title: string) {
 
       <ul>
         <li><button id="load-answers">Load a previously-saved (.json) answers file</button>
-        <i>Immediately after loading, you will immediately be asked to confirm that you want to save any further edits to this file.<i>
+        <li>Immediately after loading, you will immediately be asked to confirm that you want to save any further edits to this file.</li>
         (If you don't want to do that, hit <b>Cancel</b> on the dialog to return to these two options. Note that you
         may make a copy of your answers file outside of the Elan IDE.)
-        <li>
       </ul>
 
       <p>In either case, any edits that you subsequently make in the worksheet will be auto-saved to the file.</p>
