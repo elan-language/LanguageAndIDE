@@ -251,7 +251,6 @@ function markStepComplete(cb: HTMLInputElement, step: HTMLElement) {
   cb.setAttribute("checked", "true");
   step.classList.remove("active");
   step.classList.add("complete");
-  (step.querySelector("textarea.notes") as HTMLTextAreaElement).disabled = true;
   const stepModel = wsModel.getStepById(step.id)!;
 
   for (const q of stepModel.questions) {
