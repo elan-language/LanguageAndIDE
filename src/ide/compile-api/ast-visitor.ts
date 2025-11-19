@@ -268,7 +268,6 @@ export function transform(
   if (node instanceof TestFrame) {
     const testAsn = new TestAsn(node.getHtmlId(), scope);
     testAsn.breakpointStatus = node.breakpointStatus;
-    testAsn.ignored = node.ignored;
 
     testAsn.children = node
       .getChildren()

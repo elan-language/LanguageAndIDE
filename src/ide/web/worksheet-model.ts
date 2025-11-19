@@ -29,6 +29,7 @@ interface IStepModel {
 }
 
 export interface IWorksheetModel {
+  title: string;
   username: IQuestionModel;
   steps: IStepModel[];
 }
@@ -139,6 +140,7 @@ export class HintModel implements IHintModel {
 
 export class WorksheetModel implements IWorksheetModel {
   constructor(
+    public readonly title: string,
     public readonly username: QuestionModel,
     public readonly steps: StepModel[],
   ) {}
@@ -220,6 +222,7 @@ function createHint(hint: Element): HintModel {
 
 export function createModelFromDocument(document: Document) {
   return new WorksheetModel(
+    document.querySelector("div.docTitle")!.textContent,
     createQuestion(document.querySelector("#username")!),
     Array.from(document.querySelectorAll("div.step")).map((s) => createStep(s)),
   );

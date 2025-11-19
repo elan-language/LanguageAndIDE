@@ -82,7 +82,7 @@ function wrapInWorkSheetBoilerPlate(content: string, title: string) {
     </div> 
       ${content}
     <script src="${hostUrl}diff.js"></script>
-    <script src="${hostUrl}worksheet-scripts.js"></script>
+    <script src="${hostUrl}worksheet-model-scripts.js"></script>
   </body>
 </html>`;
 }
