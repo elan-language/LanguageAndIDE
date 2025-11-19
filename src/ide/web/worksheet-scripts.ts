@@ -1,13 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {
-  change,
-  createModelFromDocument,
-  HintModel,
-  IWorksheetModel,
-  QuestionModel,
-} from "./worksheet-model";
-
 const questionsSelector = "input.question, textarea.question, select.question";
 const questions = document.querySelectorAll(questionsSelector);
 const notes = document.querySelectorAll("textarea.notes");
@@ -17,8 +9,6 @@ const snapshots = document.querySelectorAll("div.snapshot");
 
 const autoSaveButton = document.getElementById("auto-save");
 
-const loadAnswersButton = document.getElementById("load-answers");
-
 const helps = document.querySelectorAll("a.help");
 const loads = document.querySelectorAll("button.load");
 const userName = document.getElementById("username") as HTMLInputElement;
@@ -26,57 +16,86 @@ const autosave = document.getElementById("auto-save") as HTMLButtonElement;
 
 let fh: FileSystemFileHandle | undefined;
 
-declare const Diff: {
-  diffLines: (s1: string, s2: string, options: { newLineIsToken: boolean }) => change[];
-  convertChangesToXML: (diff: change[]) => string;
+declare const Diff: any;
+
+type change = {
+  added: boolean;
+  removed: boolean;
+  value: string;
+  count: number;
 };
 
-const wsModel = createModelFromDocument(document);
-
-async function write(jsonModel: string, fh: FileSystemFileHandle) {
-  try {
-    const writeable = await fh.createWritable();
-    await writeable.write(jsonModel);
-    await writeable.close();
-    document.getElementById("worksheet")?.classList.add("saved");
-  } catch (_e) {
-    document.getElementById("worksheet")?.classList.remove("saved");
-    throw _e;
-  }
+if (fh) {
+  document.getElementById("worksheet")?.classList.add("saved");
+  userName.disabled = true;
+} else {
+  document.getElementById("worksheet")?.classList.remove("saved");
 }
 
-async function chromeSave(jsonModel: string, newName: string) {
+if (userName.value) {
+  userName.disabled = true;
+}
+
+async function write(code: string, fh: FileSystemFileHandle) {
+  const writeable = await fh.createWritable();
+  await writeable.write(code);
+  await writeable.close();
+  document.getElementById("worksheet")?.classList.add("saved");
+}
+
+async function chromeSave(code: string, newName: string) {
   try {
     const fh = await showSaveFilePicker({
       suggestedName: newName,
       startIn: "documents",
-      types: [{ accept: { "application/json": ".json" } }],
+      types: [{ accept: { "text/html": ".html" } }],
       id: "",
     });
-    await write(jsonModel, fh);
+    await write(code, fh);
     userName.disabled = true;
     return fh;
   } catch {
-    document.getElementById("worksheet")?.classList.remove("saved");
     // cancelled
     return undefined;
   }
 }
 
-async function chromeRead() {
-  try {
-    const [fileHandle] = await window.showOpenFilePicker({
-      startIn: "documents",
-      types: [{ accept: { "application/json": ".json" } }],
-      id: "",
-    });
-    const codeFile = await fileHandle.getFile();
-    fh = fileHandle;
-    return await codeFile.text();
-  } catch (_e) {
-    // user cancelled
-    return;
+function getUpdatedDocument() {
+  for (const e of document.querySelectorAll("input[type=text]") as NodeListOf<HTMLInputElement>) {
+    const v = e.value;
+
+    e.setAttribute("value", v);
   }
+
+  for (const e of document.querySelectorAll("input[type=radio]") as NodeListOf<HTMLInputElement>) {
+    const v = e.checked ? "true" : "false";
+
+    e.setAttribute("checked", v);
+  }
+
+  for (const e of document.querySelectorAll(
+    "input[type=checkbox]",
+  ) as NodeListOf<HTMLInputElement>) {
+    if (e.checked) {
+      e.setAttribute("checked", "true");
+    }
+  }
+
+  for (const e of document.getElementsByTagName("textarea")) {
+    const v = e.value;
+
+    e.innerText = v;
+  }
+
+  for (const e of document.getElementsByTagName("select")) {
+    const options = e.options;
+    const index = options.selectedIndex;
+
+    options[index].setAttribute("selected", "");
+  }
+
+  const code = new XMLSerializer().serializeToString(document);
+  return code;
 }
 
 function scrollToActiveElement() {
@@ -93,72 +112,13 @@ function scrollToActiveElement() {
 }
 
 autoSaveButton!.addEventListener("click", async () => {
-  const code = JSON.stringify(wsModel);
-
-  const suggestedName = document.getElementsByClassName("docTitle")[0].innerHTML;
-  fh = await chromeSave(code, suggestedName);
-
-  scrollToActiveElement();
-});
-
-loadAnswersButton!.addEventListener("click", async () => {
-  const txt = await chromeRead();
-  if (txt) {
-    let answers: IWorksheetModel;
-    try {
-      answers = JSON.parse(txt);
-    } catch {
-      fh = undefined;
-      alert("Attempting to load an invalid JSON file");
-      return;
-    }
-
-    const title = document.querySelector("div.docTitle")?.textContent;
-    const wsTitle = answers.title;
-
-    if (title !== wsTitle) {
-      fh = undefined;
-      alert(
-        `Attempting to load answers file for a different worksheet Expected: ${title} Actual: ${wsTitle}`,
-      );
-      return;
-    }
-
+  const code = getUpdatedDocument();
+  if (autoSaveButton?.classList.contains("test-only")) {
+    // fake out saving
     document.getElementById("worksheet")?.classList.add("saved");
-
-    wsModel.setAnswers(answers);
-    resetHtml();
-
-    userName.disabled = true;
-    userName.value = wsModel.username.value;
-    for (const step of wsModel.steps) {
-      const st = document.getElementById(step.id) as HTMLElement;
-      const notes = document.getElementById(step.notes.id) as HTMLTextAreaElement;
-      notes.value = step.notes.value;
-
-      if (step.done) {
-        const doneId = step.id.replace("step", "done");
-
-        const cb = document.getElementById(doneId) as HTMLInputElement;
-        markStepComplete(cb, st);
-        setDiffInHtml(doneId, step.diff);
-      }
-
-      for (const hint of step.hints) {
-        if (hint.taken) {
-          const ht = document.getElementById(hint.id) as HTMLDivElement;
-          takeHint(ht, hint);
-          setDiffInHtml(hint.id, hint.diff);
-        }
-      }
-
-      for (const question of step.questions) {
-        const q = document.getElementById(question.id) as HTMLTextAreaElement;
-        q.value = question.value;
-        setAnswered(q, question);
-      }
-    }
-    await save();
+  } else {
+    const suggestedName = document.getElementsByClassName("docTitle")[0].innerHTML;
+    fh = await chromeSave(code, suggestedName);
   }
 
   scrollToActiveElement();
@@ -173,14 +133,8 @@ function clearTempMsgs() {
 
 async function save() {
   if (fh) {
-    const code = JSON.stringify(wsModel);
-
-    try {
-      await write(code, fh);
-    } catch (_e) {
-      document.getElementById("worksheet")?.classList.remove("saved");
-      throw _e;
-    }
+    const code = getUpdatedDocument();
+    await write(code, fh);
   }
 }
 
@@ -193,39 +147,43 @@ for (const e of notes) {
 }
 
 function updateHintsTaken() {
-  for (const step of wsModel.steps) {
-    const [hintsSoFar, hintsTaken] = wsModel.getHintsTotalAndTakenByStep(step.id);
+  let hintsSoFar = 0;
+  let hintsTaken = 0;
 
-    const st = document.getElementById(step.id)!;
-    const taken = st.querySelector("span.hints-taken") as HTMLSpanElement;
-    const total = st.querySelector("span.hints-total") as HTMLSpanElement;
-    taken.innerText = `${hintsTaken}`;
-    total.innerText = `${hintsSoFar}`;
-  }
-}
+  for (const step of document.querySelectorAll(
+    "div.complete, div.active",
+  ) as NodeListOf<HTMLDivElement>) {
+    hintsTaken = hintsTaken + step.querySelectorAll(".taken").length;
+    hintsSoFar = hintsSoFar + step.querySelectorAll("div.hint").length;
 
-function takeHint(hint: HTMLDivElement, hintModel: HintModel) {
-  const encryptedText = hint.dataset.hint || "";
-  if (encryptedText !== "") {
-    const content = document.getElementById(`${hint.id}content`);
-    if (content) {
-      content.innerHTML = atob(encryptedText);
-      const hintHelps = content.querySelectorAll("a.help") as NodeListOf<HTMLLinkElement>;
-      setupHelpLinks(hintHelps);
+    const taken = step.querySelectorAll("span.hints-taken");
+    const total = step.querySelectorAll("span.hints-total");
+
+    for (const ht of taken as NodeListOf<HTMLSpanElement>) {
+      ht.innerText = `${hintsTaken}`;
+    }
+
+    for (const ht of total as NodeListOf<HTMLSpanElement>) {
+      ht.innerText = `${hintsSoFar}`;
     }
   }
-  hint.classList.add("taken");
-  hint.append(getTimestamp(hintModel.timeTaken));
-  updateHintsTaken();
 }
 
 for (const hint of hints as NodeListOf<HTMLDivElement>) {
   hint.addEventListener("click", async (_e) => {
-    const hintModel = wsModel.getHintById(hint.id)!;
-
-    if (!hintModel.stepComplete && !hintModel.taken) {
-      hintModel?.setTaken();
-      takeHint(hint, hintModel);
+    if (!hint.classList.contains("taken")) {
+      const encryptedText = hint.dataset.hint || "";
+      if (encryptedText !== "") {
+        const content = document.getElementById(`${hint.id}content`);
+        if (content) {
+          content.innerHTML = atob(encryptedText);
+          const hintHelps = content.querySelectorAll("a.help") as NodeListOf<HTMLLinkElement>;
+          setupHelpLinks(hintHelps);
+        }
+      }
+      hint.classList.add("taken");
+      hint.append(getTimestamp());
+      updateHintsTaken();
       snapShotCode(hint.id);
     }
   });
@@ -236,81 +194,80 @@ for (const ss of snapshots as NodeListOf<HTMLDivElement>) {
   ss.addEventListener("click", () => ss.classList.toggle("collapsed"));
 }
 
-function setAnswered(question: HTMLTextAreaElement, questionModel: QuestionModel) {
-  if (questionModel.isAnswered()) {
-    question.classList.add("answered");
-  } else {
-    question.classList.remove("answered");
-  }
-}
-
 function addEventListenerToInput(e: Element) {
   e.addEventListener("input", async (e) => {
     const ie = e as InputEvent;
     const tgt = ie.target as Element;
 
-    if (tgt instanceof HTMLTextAreaElement) {
-      const q = wsModel.getQuestionOrNotesById(tgt.id)!;
-      q.setValue(tgt.value);
-      setAnswered(tgt, q);
+    if (tgt instanceof HTMLTextAreaElement || tgt instanceof HTMLInputElement) {
+      if (tgt.value) {
+        tgt.classList.add("answered");
+      } else {
+        tgt.classList.remove("answered");
+      }
+    }
+
+    if ((tgt as HTMLInputElement).type === "radio") {
+      const name = (tgt as any).name;
+      const allradio = document.querySelectorAll(`input[name=${name}]`);
+      for (const e of allradio) {
+        e.classList.add("answered");
+      }
     }
     clearTempMsgs();
     await save();
   });
 }
 
-function getTimestamp(time: string) {
+function getTimestamp() {
+  const dt = new Date();
   const sp = document.createElement("span");
   sp.classList.add("timestamp");
-  sp.innerText = time;
+  sp.innerText = `${dt.toLocaleTimeString()} ${dt.toLocaleDateString()}`;
   return sp;
-}
-
-function markStepComplete(cb: HTMLInputElement, step: HTMLElement) {
-  cb.disabled = true;
-  cb.setAttribute("checked", "true");
-  step.classList.remove("active");
-  step.classList.add("complete");
-  const stepModel = wsModel.getStepById(step.id)!;
-
-  for (const q of stepModel.questions) {
-    (document.getElementById(q.id) as HTMLTextAreaElement).disabled = true;
-  }
-
-  for (const h of stepModel.hints) {
-    h.stepComplete = true;
-  }
-
-  const nextId = wsModel.getNextStep()?.id;
-  const nextStep = document.getElementById(nextId!);
-  if (nextStep) {
-    nextStep.classList.add("active");
-  }
-  cb.after(getTimestamp(wsModel.getStepById(step.id)!.timeDone));
 }
 
 for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
   cb.addEventListener("click", async (e) => {
     clearTempMsgs();
     const step = cb.parentElement;
+    const id = cb.id.slice(4);
     if (step) {
-      const stepModel = wsModel.getStepById(step.id);
-      stepModel?.conditionalSetDone();
+      const allInputs = step.querySelectorAll(questionsSelector) as NodeListOf<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >;
 
-      if (stepModel?.done) {
-        markStepComplete(cb, step);
-
-        updateHintsTaken();
-        snapShotCode(cb.id);
-        await save();
-      } else {
+      const answeredInputs = step.querySelectorAll(
+        "input.question.answered, textarea.question.answered, select.question.answered",
+      );
+      if (allInputs.length !== answeredInputs.length) {
         const msg = document.createElement("div");
         msg.classList.add("temp-msg");
         msg.innerText = "All required inputs must be completed to continue";
         cb.after(msg);
         e.preventDefault();
+        return;
+      }
+
+      cb.disabled = true;
+      cb.setAttribute("checked", "true");
+      step.classList.remove("active");
+      step.classList.add("complete");
+      for (const inp of allInputs) {
+        inp.disabled = true;
+      }
+
+      const nextId = parseInt(id!) + 1;
+      const nextStep = document.getElementById(`step${nextId}`);
+      if (nextStep) {
+        nextStep.classList.add("active");
       }
     }
+
+    cb.after(getTimestamp());
+    updateHintsTaken();
+    snapShotCode(cb.id);
+    await save();
   });
 }
 
@@ -364,7 +321,7 @@ window.addEventListener("message", async (m: MessageEvent<string>) => {
     if (id.startsWith("done") || id.startsWith("hint")) {
       let diff = Diff.diffLines(fixHeader(oldCode), fixHeader(newCode), {
         newLineIsToken: true,
-      });
+      }) as change[];
 
       diff = diff.map((d) => {
         if (d.added || d.removed) {
@@ -392,51 +349,24 @@ window.addEventListener("message", async (m: MessageEvent<string>) => {
         return d;
       });
 
-      if (id.startsWith("hint")) {
-        const hintModel = wsModel.getHintById(id);
-        hintModel?.setDiff(diff);
-      } else {
-        const stepModel = wsModel.getStepById(id.replace("done", "step"));
-        stepModel?.setDiff(diff);
-      }
+      const text = Diff.convertChangesToXML(diff);
 
-      setDiffInHtml(id, diff);
+      const diffDiv = document.createElement("div");
+      diffDiv.classList.add("diff");
+      diffDiv.innerHTML = text;
+
+      const snapshotDiv = document.createElement("div");
+      snapshotDiv.classList.add("snapshot");
+      snapshotDiv.classList.add("collapsed");
+      snapshotDiv.appendChild(diffDiv);
+
+      document.getElementById(id)?.before(snapshotDiv);
+
+      snapshotDiv.addEventListener("click", () => snapshotDiv.classList.toggle("collapsed"));
     }
     await save();
   }
 });
-
-function resetHtml() {
-  const diffs = document.querySelectorAll("div.snapshot");
-
-  for (const diff of diffs) {
-    diff.remove();
-  }
-
-  const timestamps = document.querySelectorAll("span.timestamp");
-
-  for (const timestamp of timestamps) {
-    timestamp.remove();
-  }
-
-  clearTempMsgs();
-}
-
-function setDiffInHtml(id: string, diff: change[]) {
-  const text = Diff.convertChangesToXML(diff);
-  const diffDiv = document.createElement("div");
-  diffDiv.classList.add("diff");
-  diffDiv.innerHTML = text;
-
-  const snapshotDiv = document.createElement("div");
-  snapshotDiv.classList.add("snapshot");
-  snapshotDiv.classList.add("collapsed");
-  snapshotDiv.appendChild(diffDiv);
-
-  document.getElementById(id)?.before(snapshotDiv);
-
-  snapshotDiv.addEventListener("click", () => snapshotDiv.classList.toggle("collapsed"));
-}
 
 function setupLoadLinks(loadLinks: NodeListOf<HTMLButtonElement>) {
   for (const b of loadLinks) {
@@ -463,10 +393,11 @@ setupLoadLinks(loads as NodeListOf<HTMLButtonElement>);
 setupHelpLinks(helps as NodeListOf<HTMLLinkElement>);
 updateHintsTaken();
 
-userName.addEventListener("change", (e) => {
-  wsModel.username.setValue((e.target as any).value);
-  autosave.disabled = !wsModel.username.isAnswered();
+userName.addEventListener("change", () => {
+  autosave.disabled = !userName.classList.contains("answered");
 });
+
+autosave.disabled = !userName.classList.contains("answered");
 
 function snapShotCode(id: string) {
   window.parent.postMessage(`snapshot:${id}`, "*");
