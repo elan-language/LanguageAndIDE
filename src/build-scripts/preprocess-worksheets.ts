@@ -1,4 +1,5 @@
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { isElanProduction } from "../environment";
 import {
   processCode,
   processFinals,
@@ -7,7 +8,6 @@ import {
   setCurrentDir,
 } from "../tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../tools/parserConstants";
-import { isElanProduction } from "../environment";
 
 const rootdir = `${__dirname}/../../..`;
 
@@ -50,12 +50,28 @@ function wrapInWorkSheetBoilerPlate(content: string, title: string) {
     <div id="worksheet">
     <div class="docTitle">${title}</div>
 
-    <ol>
-      <li class="transient"><button id="load-answers">Load an answer file</button></li>
-      <li><label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
-      <li>Set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</li>
-      <li class="transient"><button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span></li>
-    </ol>
+      <p> class="transient">Choose <i>either one</i> of the two options below:<p>
+
+      <p><b>Option 1: Start this worksheet from scratch</b></p>
+
+      <ul>
+        <li>First <label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
+        <li>Then <button id="auto-save">Create and save a new answers file</button>.
+      </ul>
+
+      <p><b>Option 2: Continue, or view, previous work</b></p>
+
+      <ul>
+        <li><button id="load-answers">Load a previously-saved (.json) answers file</button>
+        <i>Immediately after loading, you will immediately be asked to confirm that you want to save any further edits to this file.<i>
+        (If you don't want to do that, hit <b>Cancel</b> on the dialog to return to these two options. Note that you
+        may make a copy of your answers file outside of the Elan IDE.)
+        <li>
+      </ul>
+
+      <p>In either case, any edits that you subsequently make in the worksheet will be auto-saved to the file.</p>
+     
+      <p>Set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</p>
 
     <div class="license">
       <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
