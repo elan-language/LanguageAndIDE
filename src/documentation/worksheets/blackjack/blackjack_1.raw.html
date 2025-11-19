@@ -1,0 +1,44 @@
+<title>Blackjack 1: exploring the Blackjack program and making small changes</title>
+<step>
+    <h1>Step STEPNUMBER: introduction</h1>
+    <p>Your first task is to play a few hands of Blackjack, to make sure that you understand how the game
+      works, and - since there are many minor variations on the game - the rules of this specific implementation.</p>
+    <p><load file="blackjack_1begin.elan">Load the starting code</load> and then immediately <b>file > auto save</b> the
+      code to your local file storage, because you will be making changes and want to ensure that your changes are saved.
+      Then immediately <b>run</b> the program and note the following:</p>
+    <ul>
+      <li>There are two players: the dealer and Player A (you). Both have 1000 points at the start.</li>
+      <li>Both have been dealt two cards, but one of the dealer's cards is face down.</li>
+      <li>Most cards have a numeric value (e.g. '7'). The Royal cards - Jack, Queen, King - each have
+        the value 10. An Ace is special: it can be valued at 11, or at 1. An Ace valued at 11 is known as a 'soft Ace'. 
+        So if a player's first two cards are <i>both</i> Aces then the starting hand total is counted as 12 (rather than 22).</li>
+      <li>If the first two cards of any player total 21 - which would require one Ace, and one Royal or 10 card -
+         then you have 'BLACKJACK' - the best hand possible - and so no further action is needed from you.</li>
+      <li>Otherwise, when it is your turn you have the option to 'draw' another card - by hitting the <b>d</b> key - or
+        to 'stand' - by hitting the 's' key.</li>
+      </li>The aim is to  get the value of your hand as close to 21 as you can - but if drawing a card causes
+        the total to go over 21, 
+        If your  total would exceed 21 and you have a soft Ace (see above), the Ace is automatically de-valued to 1. 
+        If your  total would exceed 21 and you <i>don't</i> have a soft Ace (see above), then you are 'BUST' and you have no further role - for this round.</li>
+      <li>
+      <li>When your status changes either to STANDING or BUST then play passes to the the next player or -
+        if you are the last or only player - to the dealer.<li>
+      <li>The dealer now plays out their hand - following fixed rules about when to stand and when to draw.</li>
+      <li>When all players, including the dealer, have finished their turn, the outcome is determined, and 
+        points are passed between each player and the dealer as follows:
+        <ul>
+          <li>If a player is BUST then 1 point is passed over to the dealer <i>even the dealer is also BUST</i>.</li>
+          <li>else, if a player has BLACKJACK then they gain 2 points from the dealer <i>unless</i> the dealer
+          also has BLACKJACK, in which case it is a draw and no points are exchanged.</li>
+          <li>else, if the player is STANDING and the dealer has BLACKJACK the dealer gains one point from the player.</li>
+          <li>else, if the player is STANDING and their hand total is greater than that of the dealer, the player gains one point from the dealer.</li>
+          <li>else, if the player is STANDING and their hand total is the same as that of the dealer it is a dealer, then it is a draw and
+            no points are exchanged.</li>
+          <li>else - meaning that the player's total is less than that of the dealer, then the dealer gains one point from the player.</li>
+        </ul> 
+      </li>
+      <li>The updated points for the dealer and players are now shown, and you are given the option to play another round.</li>
+    </ul>
+    <p>So, play a few rounds of the game until you have grasped the basic operation of the game.</p>
+</step>
+
