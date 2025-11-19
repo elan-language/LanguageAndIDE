@@ -92,7 +92,6 @@ export async function processStep(
   updated = await processHints(updated, stepInstance);
   updated = await processQuestions(updated, stepInstance);
   updated = await processLoads(updated, stepInstance);
-  updated = await processHelps(updated, stepInstance);
 
   updated = updated.replaceAll(currentStepNumber, num).replaceAll(currentStepId, id);
 
@@ -125,6 +124,7 @@ export async function processStep(
 
   const notesInput = outDoc.createElement("textarea");
   notesInput.className = "notes";
+  notesInput.id = `notes${stepInstance}`;
   notesInput.placeholder = "Student or teacher may optionally add notes here";
 
   div.appendChild(notesHeading);

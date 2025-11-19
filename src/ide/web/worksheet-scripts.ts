@@ -32,24 +32,17 @@ declare const Diff: {
 };
 
 const wsModel = createModelFromDocument(document);
-const usernameModel = wsModel.username;
-
-if (fh) {
-  document.getElementById("worksheet")?.classList.add("saved");
-  userName.disabled = true;
-} else {
-  document.getElementById("worksheet")?.classList.remove("saved");
-}
-
-if (usernameModel.isAnswered()) {
-  userName.disabled = true;
-}
 
 async function write(jsonModel: string, fh: FileSystemFileHandle) {
-  const writeable = await fh.createWritable();
-  await writeable.write(jsonModel);
-  await writeable.close();
-  document.getElementById("worksheet")?.classList.add("saved");
+  try {
+    const writeable = await fh.createWritable();
+    await writeable.write(jsonModel);
+    await writeable.close();
+    document.getElementById("worksheet")?.classList.add("saved");
+  } catch (_e) {
+    document.getElementById("worksheet")?.classList.remove("saved");
+    throw _e;
+  }
 }
 
 async function chromeSave(jsonModel: string, newName: string) {
@@ -64,6 +57,7 @@ async function chromeSave(jsonModel: string, newName: string) {
     userName.disabled = true;
     return fh;
   } catch {
+    document.getElementById("worksheet")?.classList.remove("saved");
     // cancelled
     return undefined;
   }
@@ -113,16 +107,20 @@ loadAnswersButton!.addEventListener("click", async () => {
   if (txt) {
     const answers = JSON.parse(txt) as IWorksheetModel;
     wsModel.setAnswers(answers);
+    resetHtml();
 
-    (document.getElementById(wsModel.username.id) as HTMLInputElement).value =
-      wsModel.username.value;
+    userName.disabled = true;
+    userName.value = wsModel.username.value;
     for (const step of wsModel.steps) {
+      const st = document.getElementById(step.id) as HTMLElement;
+      const notes = document.getElementById(step.notes.id) as HTMLTextAreaElement;
+      notes.value = step.notes.value;
+
       if (step.done) {
         const doneId = step.id.replace("step", "done");
-        const st = document.getElementById(step.id) as HTMLElement;
+
         const cb = document.getElementById(doneId) as HTMLInputElement;
         markStepComplete(cb, st);
-
         setDiffInHtml(doneId, step.diff);
       }
 
@@ -155,7 +153,13 @@ function clearTempMsgs() {
 async function save() {
   if (fh) {
     const code = JSON.stringify(wsModel);
-    await write(code, fh);
+
+    try {
+      await write(code, fh);
+    } catch (_e) {
+      document.getElementById("worksheet")?.classList.remove("saved");
+      throw _e;
+    }
   }
 }
 
@@ -168,25 +172,14 @@ for (const e of notes) {
 }
 
 function updateHintsTaken() {
-  let hintsSoFar = 0;
-  let hintsTaken = 0;
+  for (const step of wsModel.steps) {
+    const [hintsSoFar, hintsTaken] = wsModel.getHintsTotalAndTakenByStep(step.id);
 
-  for (const step of document.querySelectorAll(
-    "div.complete, div.active",
-  ) as NodeListOf<HTMLDivElement>) {
-    hintsTaken = hintsTaken + step.querySelectorAll(".taken").length;
-    hintsSoFar = hintsSoFar + step.querySelectorAll("div.hint").length;
-
-    const taken = step.querySelectorAll("span.hints-taken");
-    const total = step.querySelectorAll("span.hints-total");
-
-    for (const ht of taken as NodeListOf<HTMLSpanElement>) {
-      ht.innerText = `${hintsTaken}`;
-    }
-
-    for (const ht of total as NodeListOf<HTMLSpanElement>) {
-      ht.innerText = `${hintsSoFar}`;
-    }
+    const st = document.getElementById(step.id)!;
+    const taken = st.querySelector("span.hints-taken") as HTMLSpanElement;
+    const total = st.querySelector("span.hints-total") as HTMLSpanElement;
+    taken.innerText = `${hintsTaken}`;
+    total.innerText = `${hintsSoFar}`;
   }
 }
 
@@ -202,16 +195,16 @@ function takeHint(hint: HTMLDivElement, hintModel: HintModel) {
   }
   hint.classList.add("taken");
   hint.append(getTimestamp(hintModel.timeTaken));
+  updateHintsTaken();
 }
 
 for (const hint of hints as NodeListOf<HTMLDivElement>) {
   hint.addEventListener("click", async (_e) => {
     const hintModel = wsModel.getHintById(hint.id)!;
 
-    if (!hintModel?.taken) {
+    if (!hintModel.stepComplete && !hintModel.taken) {
       hintModel?.setTaken();
       takeHint(hint, hintModel);
-      updateHintsTaken();
       snapShotCode(hint.id);
     }
   });
@@ -236,7 +229,7 @@ function addEventListenerToInput(e: Element) {
     const tgt = ie.target as Element;
 
     if (tgt instanceof HTMLTextAreaElement) {
-      const q = wsModel.getQuestionById(tgt.id)!;
+      const q = wsModel.getQuestionOrNotesById(tgt.id)!;
       q.setValue(tgt.value);
       setAnswered(tgt, q);
     }
@@ -257,9 +250,16 @@ function markStepComplete(cb: HTMLInputElement, step: HTMLElement) {
   cb.setAttribute("checked", "true");
   step.classList.remove("active");
   step.classList.add("complete");
-  // for (const inp of allInputs) {
-  //   inp.disabled = true;
-  // }
+  (step.querySelector("textarea.notes") as HTMLTextAreaElement).disabled = true;
+  const stepModel = wsModel.getStepById(step.id)!;
+
+  for (const q of stepModel.questions) {
+    (document.getElementById(q.id) as HTMLTextAreaElement).disabled = true;
+  }
+
+  for (const h of stepModel.hints) {
+    h.stepComplete = true;
+  }
 
   const nextId = wsModel.getNextStep()?.id;
   const nextStep = document.getElementById(nextId!);
@@ -386,6 +386,22 @@ window.addEventListener("message", async (m: MessageEvent<string>) => {
   }
 });
 
+function resetHtml() {
+  const diffs = document.querySelectorAll("div.snapshot");
+
+  for (const diff of diffs) {
+    diff.remove();
+  }
+
+  const timestamps = document.querySelectorAll("span.timestamp");
+
+  for (const timestamp of timestamps) {
+    timestamp.remove();
+  }
+
+  clearTempMsgs();
+}
+
 function setDiffInHtml(id: string, diff: change[]) {
   const text = Diff.convertChangesToXML(diff);
   const diffDiv = document.createElement("div");
@@ -428,11 +444,9 @@ setupHelpLinks(helps as NodeListOf<HTMLLinkElement>);
 updateHintsTaken();
 
 userName.addEventListener("change", (e) => {
-  usernameModel.setValue((e.target as any).value);
-  autosave.disabled = !usernameModel?.isAnswered();
+  wsModel.username.setValue((e.target as any).value);
+  autosave.disabled = !wsModel.username.isAnswered();
 });
-
-autosave.disabled = !usernameModel?.isAnswered();
 
 function snapShotCode(id: string) {
   window.parent.postMessage(`snapshot:${id}`, "*");

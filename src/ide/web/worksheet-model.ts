@@ -15,10 +15,12 @@ interface IHintModel {
   diff: change[];
   taken: boolean;
   timeTaken: string;
+  stepComplete: boolean;
 }
 
 interface IStepModel {
   id: string;
+  notes: IQuestionModel;
   questions: IQuestionModel[];
   hints: IHintModel[];
   done: boolean;
@@ -59,6 +61,7 @@ export class QuestionModel implements IQuestionModel {
 class StepModel implements IStepModel {
   constructor(
     public readonly id: string,
+    public readonly notes: QuestionModel,
     public readonly questions: QuestionModel[],
     public readonly hints: HintModel[],
   ) {}
@@ -92,12 +95,17 @@ class StepModel implements IStepModel {
     this.done = answers.done;
     this.timeDone = answers.timeDone;
     this.diff = answers.diff;
+    this.notes.setAnswers(answers.notes);
     for (const a of answers.questions) {
       this.getQuestionById(a.id)?.setAnswers(a);
     }
     for (const a of answers.hints) {
       this.getHintById(a.id)?.setAnswers(a);
     }
+  }
+
+  getTakenHintsTotal() {
+    return this.hints.filter((h) => h.taken).length;
   }
 }
 
@@ -109,6 +117,8 @@ export class HintModel implements IHintModel {
   taken: boolean = false;
 
   timeTaken: string = "";
+
+  stepComplete: boolean = false;
 
   setDiff(diff: change[]) {
     this.diff = diff;
@@ -123,6 +133,7 @@ export class HintModel implements IHintModel {
     this.diff = answers.diff;
     this.taken = answers.taken;
     this.timeTaken = answers.timeTaken;
+    this.stepComplete = answers.stepComplete;
   }
 }
 
@@ -139,7 +150,12 @@ export class WorksheetModel implements IWorksheetModel {
     }
   }
 
-  getQuestionById(id: string) {
+  getQuestionOrNotesById(id: string) {
+    if (id.startsWith("notes")) {
+      const stepId = id.replace("notes", "step");
+      return this.getStepById(stepId)?.notes;
+    }
+
     for (const step of this.steps) {
       const q = step.getQuestionById(id);
       if (q) {
@@ -166,6 +182,21 @@ export class WorksheetModel implements IWorksheetModel {
   getNextStep() {
     return this.steps.find((s) => !s.done);
   }
+
+  getHintsTotalAndTakenByStep(id: string) {
+    const step = this.getStepById(id)!;
+    const previousSteps = this.steps.slice(0, this.steps.indexOf(step) + 1);
+
+    let total = 0;
+    let taken = 0;
+
+    for (const s of previousSteps) {
+      total = total + s.hints.length;
+      taken = taken + s.getTakenHintsTotal();
+    }
+
+    return [total, taken];
+  }
 }
 
 function createQuestion(question: Element): QuestionModel {
@@ -175,6 +206,7 @@ function createQuestion(question: Element): QuestionModel {
 function createStep(step: Element): StepModel {
   return new StepModel(
     step.id,
+    createQuestion(step.querySelector("textarea.notes")!),
     Array.from(step.querySelectorAll("input.question, textarea.question, select.question")).map(
       (q) => createQuestion(q),
     ),
