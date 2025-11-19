@@ -138,6 +138,7 @@ loadAnswersButton!.addEventListener("click", async () => {
         setAnswered(q, question);
       }
     }
+    await save();
   }
 
   scrollToActiveElement();
