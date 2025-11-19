@@ -1,3 +1,10 @@
+export interface change {
+  added: boolean;
+  removed: boolean;
+  value: string;
+  count: number;
+}
+
 interface IQuestionModel {
   id: string;
   value: string;
@@ -5,7 +12,7 @@ interface IQuestionModel {
 
 interface IHintModel {
   id: string;
-  diff: string;
+  diff: change[];
   taken: boolean;
   timeTaken: string;
 }
@@ -16,7 +23,7 @@ interface IStepModel {
   hints: IHintModel[];
   done: boolean;
   timeDone: string;
-  diff: string;
+  diff: change[];
 }
 
 export interface IWorksheetModel {
@@ -31,7 +38,7 @@ function getNow() {
   return `${dt.toLocaleTimeString()} ${dt.toLocaleDateString()}`;
 }
 
-class QuestionModel implements IQuestionModel {
+export class QuestionModel implements IQuestionModel {
   constructor(public readonly id: string) {}
 
   value: string = "";
@@ -60,7 +67,7 @@ class StepModel implements IStepModel {
 
   timeDone: string = "";
 
-  diff: string = "";
+  diff: change[] = [];
 
   conditionalSetDone() {
     if (this.questions.every((q) => q.isAnswered())) {
@@ -69,7 +76,7 @@ class StepModel implements IStepModel {
     }
   }
 
-  setDiff(diff: string) {
+  setDiff(diff: change[]) {
     this.diff = diff;
   }
 
@@ -94,16 +101,16 @@ class StepModel implements IStepModel {
   }
 }
 
-class HintModel implements IHintModel {
+export class HintModel implements IHintModel {
   constructor(public readonly id: string) {}
 
-  diff: string = "";
+  diff: change[] = [];
 
   taken: boolean = false;
 
   timeTaken: string = "";
 
-  setDiff(diff: string) {
+  setDiff(diff: change[]) {
     this.diff = diff;
   }
 

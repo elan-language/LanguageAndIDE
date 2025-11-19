@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { createModelFromDocument, IWorksheetModel } from "./worksheet-model";
+import {
+  change,
+  createModelFromDocument,
+  HintModel,
+  IWorksheetModel,
+  QuestionModel,
+} from "./worksheet-model";
 
 const questionsSelector = "input.question, textarea.question, select.question";
 const questions = document.querySelectorAll(questionsSelector);
@@ -20,13 +26,9 @@ const autosave = document.getElementById("auto-save") as HTMLButtonElement;
 
 let fh: FileSystemFileHandle | undefined;
 
-declare const Diff: any;
-
-type change = {
-  added: boolean;
-  removed: boolean;
-  value: string;
-  count: number;
+declare const Diff: {
+  diffLines: (s1: string, s2: string, options: { newLineIsToken: boolean }) => change[];
+  convertChangesToXML: (diff: change[]) => string;
 };
 
 const wsModel = createModelFromDocument(document);
@@ -75,6 +77,8 @@ async function chromeRead() {
       id: "",
     });
     const codeFile = await fileHandle.getFile();
+    fh = fileHandle;
+    document.getElementById("worksheet")?.classList.add("saved");
     return await codeFile.text();
   } catch (_e) {
     // user cancelled
@@ -114,14 +118,26 @@ loadAnswersButton!.addEventListener("click", async () => {
       wsModel.username.value;
     for (const step of wsModel.steps) {
       if (step.done) {
+        const doneId = step.id.replace("step", "done");
         const st = document.getElementById(step.id) as HTMLElement;
-        const cb = document.getElementById(step.id.replace("step", "done")) as HTMLInputElement;
+        const cb = document.getElementById(doneId) as HTMLInputElement;
         markStepComplete(cb, st);
+
+        setDiffInHtml(doneId, step.diff);
       }
 
       for (const hint of step.hints) {
-        
+        if (hint.taken) {
+          const ht = document.getElementById(hint.id) as HTMLDivElement;
+          takeHint(ht, hint);
+          setDiffInHtml(hint.id, hint.diff);
+        }
+      }
 
+      for (const question of step.questions) {
+        const q = document.getElementById(question.id) as HTMLTextAreaElement;
+        q.value = question.value;
+        setAnswered(q, question);
       }
     }
   }
@@ -174,23 +190,27 @@ function updateHintsTaken() {
   }
 }
 
+function takeHint(hint: HTMLDivElement, hintModel: HintModel) {
+  const encryptedText = hint.dataset.hint || "";
+  if (encryptedText !== "") {
+    const content = document.getElementById(`${hint.id}content`);
+    if (content) {
+      content.innerHTML = atob(encryptedText);
+      const hintHelps = content.querySelectorAll("a.help") as NodeListOf<HTMLLinkElement>;
+      setupHelpLinks(hintHelps);
+    }
+  }
+  hint.classList.add("taken");
+  hint.append(getTimestamp(hintModel.timeTaken));
+}
+
 for (const hint of hints as NodeListOf<HTMLDivElement>) {
   hint.addEventListener("click", async (_e) => {
     const hintModel = wsModel.getHintById(hint.id)!;
 
     if (!hintModel?.taken) {
-      const encryptedText = hint.dataset.hint || "";
-      if (encryptedText !== "") {
-        const content = document.getElementById(`${hint.id}content`);
-        if (content) {
-          content.innerHTML = atob(encryptedText);
-          const hintHelps = content.querySelectorAll("a.help") as NodeListOf<HTMLLinkElement>;
-          setupHelpLinks(hintHelps);
-        }
-      }
       hintModel?.setTaken();
-      hint.classList.add("taken");
-      hint.append(getTimestamp(hintModel.timeTaken));
+      takeHint(hint, hintModel);
       updateHintsTaken();
       snapShotCode(hint.id);
     }
@@ -202,28 +222,23 @@ for (const ss of snapshots as NodeListOf<HTMLDivElement>) {
   ss.addEventListener("click", () => ss.classList.toggle("collapsed"));
 }
 
+function setAnswered(question: HTMLTextAreaElement, questionModel: QuestionModel) {
+  if (questionModel.isAnswered()) {
+    question.classList.add("answered");
+  } else {
+    question.classList.remove("answered");
+  }
+}
+
 function addEventListenerToInput(e: Element) {
   e.addEventListener("input", async (e) => {
     const ie = e as InputEvent;
     const tgt = ie.target as Element;
 
-    if (tgt instanceof HTMLTextAreaElement || tgt instanceof HTMLInputElement) {
-      const q = wsModel.getQuestionById(tgt.id);
-      q?.setValue(tgt.value);
-
-      if (q?.isAnswered()) {
-        tgt.classList.add("answered");
-      } else {
-        tgt.classList.remove("answered");
-      }
-    }
-
-    if ((tgt as HTMLInputElement).type === "radio") {
-      const name = (tgt as any).name;
-      const allradio = document.querySelectorAll(`input[name=${name}]`);
-      for (const e of allradio) {
-        e.classList.add("answered");
-      }
+    if (tgt instanceof HTMLTextAreaElement) {
+      const q = wsModel.getQuestionById(tgt.id)!;
+      q.setValue(tgt.value);
+      setAnswered(tgt, q);
     }
     clearTempMsgs();
     await save();
@@ -245,12 +260,13 @@ function markStepComplete(cb: HTMLInputElement, step: HTMLElement) {
   // for (const inp of allInputs) {
   //   inp.disabled = true;
   // }
+
   const nextId = wsModel.getNextStep()?.id;
   const nextStep = document.getElementById(nextId!);
   if (nextStep) {
     nextStep.classList.add("active");
   }
-   cb.after(getTimestamp(wsModel.getStepById(step.id)!.timeDone));
+  cb.after(getTimestamp(wsModel.getStepById(step.id)!.timeDone));
 }
 
 for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
@@ -328,7 +344,7 @@ window.addEventListener("message", async (m: MessageEvent<string>) => {
     if (id.startsWith("done") || id.startsWith("hint")) {
       let diff = Diff.diffLines(fixHeader(oldCode), fixHeader(newCode), {
         newLineIsToken: true,
-      }) as change[];
+      });
 
       diff = diff.map((d) => {
         if (d.added || d.removed) {
@@ -356,32 +372,35 @@ window.addEventListener("message", async (m: MessageEvent<string>) => {
         return d;
       });
 
-      const text = Diff.convertChangesToXML(diff);
-
       if (id.startsWith("hint")) {
         const hintModel = wsModel.getHintById(id);
-        hintModel?.setDiff(text);
+        hintModel?.setDiff(diff);
       } else {
         const stepModel = wsModel.getStepById(id.replace("done", "step"));
-        stepModel?.setDiff(text);
+        stepModel?.setDiff(diff);
       }
 
-      const diffDiv = document.createElement("div");
-      diffDiv.classList.add("diff");
-      diffDiv.innerHTML = text;
-
-      const snapshotDiv = document.createElement("div");
-      snapshotDiv.classList.add("snapshot");
-      snapshotDiv.classList.add("collapsed");
-      snapshotDiv.appendChild(diffDiv);
-
-      document.getElementById(id)?.before(snapshotDiv);
-
-      snapshotDiv.addEventListener("click", () => snapshotDiv.classList.toggle("collapsed"));
+      setDiffInHtml(id, diff);
     }
     await save();
   }
 });
+
+function setDiffInHtml(id: string, diff: change[]) {
+  const text = Diff.convertChangesToXML(diff);
+  const diffDiv = document.createElement("div");
+  diffDiv.classList.add("diff");
+  diffDiv.innerHTML = text;
+
+  const snapshotDiv = document.createElement("div");
+  snapshotDiv.classList.add("snapshot");
+  snapshotDiv.classList.add("collapsed");
+  snapshotDiv.appendChild(diffDiv);
+
+  document.getElementById(id)?.before(snapshotDiv);
+
+  snapshotDiv.addEventListener("click", () => snapshotDiv.classList.toggle("collapsed"));
+}
 
 function setupLoadLinks(loadLinks: NodeListOf<HTMLButtonElement>) {
   for (const b of loadLinks) {
