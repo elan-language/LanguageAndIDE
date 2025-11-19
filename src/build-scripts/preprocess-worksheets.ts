@@ -50,7 +50,7 @@ function wrapInWorkSheetBoilerPlate(content: string, title: string) {
     <div id="worksheet">
     <div class="docTitle">${title}</div>
 
-      <p> class="transient">Choose <i>either one</i> of the two options below:<p>
+      <p class="transient">Choose <i>either one</i> of the two options below:</p>
 
       <p><b>Option 1: Start this worksheet from scratch</b></p>
 
