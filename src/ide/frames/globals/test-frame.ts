@@ -8,7 +8,6 @@ import {
   helper_testStatusAsDisplayStatus,
 } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
-import { editorEvent } from "../frame-interfaces/editor-event";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
@@ -22,7 +21,6 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   public testDescription: CommentField;
   file: File;
   private _testStatus: TestStatus;
-  public ignored = false;
   protected canHaveBreakPoint = false;
   constructor(parent: File) {
     super(parent);
@@ -76,7 +74,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   }
   public renderAsHtml(): string {
     return `<el-test class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${this.ignoreKw()}test </el-kw>${this.testDescription.renderAsHtml()}${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>test </el-kw>${this.testDescription.renderAsHtml()}${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 <el-kw>end test</el-kw>
 </el-test>`;
@@ -85,15 +83,15 @@ ${this.renderChildrenAsHtml()}
     return "";
   }
   public renderAsSource(): string {
-    return `${this.sourceAnnotations()}${this.ignoreKw()}test ${this.testDescription.renderAsSource()}\r
+    return `${this.sourceAnnotations()}test ${this.testDescription.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 end test\r
 `;
   }
   parseTop(source: CodeSource): void {
-    if (source.isMatch("ignore ")) {
-      source.remove("ignore ");
-      this.ignored = true;
+    if (source.isMatch(`${ignoreKeyword} `)) {
+      source.remove(`${ignoreKeyword} `);
+      this.setGhosted(true);
     }
     source.remove("test ");
     this.testDescription.parseFrom(source);
@@ -131,38 +129,6 @@ end test\r
 
   testMsgAsHtml(): string {
     return ` <el-msg class="${DisplayColour[DisplayColour.error]}">failed to run</el-msg>`;
-  }
-
-  processKey(e: editorEvent): boolean {
-    if (e.key === "i" && e.modKey.control) {
-      this.ignored = !this.ignored;
-      return true;
-    } else {
-      return super.processKey(e);
-    }
-  }
-  ignoreKw() {
-    return this.ignored ? `${ignoreKeyword} ` : ``;
-  }
-
-  ignore = () => {
-    this.ignored = true;
-    return true;
-  };
-
-  unignore = () => {
-    this.ignored = false;
-    return true;
-  };
-
-  getContextMenuItems() {
-    const map = super.getContextMenuItems();
-    if (this.ignored) {
-      map.set("unignore", ["un-ignore test (Ctrl-i)", this.unignore]);
-    } else {
-      map.set("ignore", ["ignore test (Ctrl-i)", this.ignore]);
-    }
-    return map;
   }
 
   clearBreakPoint = () => {
