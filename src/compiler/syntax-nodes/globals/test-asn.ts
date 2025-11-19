@@ -1,7 +1,6 @@
 import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
-import { compileNodes } from "../ast-helpers";
 import { CompoundAsn } from "../compound-asn";
 
 export class TestAsn extends CompoundAsn implements AstNode {
@@ -17,17 +16,8 @@ export class TestAsn extends CompoundAsn implements AstNode {
     return "";
   }
 
-  public ignored = false;
-
   private compileTestBody() {
-    const body = this.compileChildren();
-
-    if (!this.ignored || this.compileErrors.length > 0) {
-      return body;
-    }
-
-    // just return the asserts
-    return compileNodes(this.getAsserts());
+    return  this.compileChildren();
   }
 
   compile(): string {

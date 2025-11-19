@@ -674,7 +674,7 @@ end test
     );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
-    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+    assert.equal(elan, code.replaceAll("\n", "\r\n").replaceAll("ignore", "[ghosted]"));
   });
   test("#927 - 2", async () => {
     const code = `${testHeader}
@@ -698,7 +698,7 @@ end test
     );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
-    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+    assert.equal(elan, code.replaceAll("\n", "\r\n").replaceAll("ignore", "[ghosted]"));
   });
   test("#927 - 3", async () => {
     const code = `${testHeader}
@@ -722,7 +722,7 @@ end test
     );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
-    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+    assert.equal(elan, code.replaceAll("\n", "\r\n").replaceAll("ignore", "[ghosted]"));
   });
   test("#942 private members", async () => {
     const code = `${testHeader}
