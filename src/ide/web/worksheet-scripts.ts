@@ -72,7 +72,6 @@ async function chromeRead() {
     });
     const codeFile = await fileHandle.getFile();
     fh = fileHandle;
-    document.getElementById("worksheet")?.classList.add("saved");
     return await codeFile.text();
   } catch (_e) {
     // user cancelled
@@ -105,7 +104,28 @@ autoSaveButton!.addEventListener("click", async () => {
 loadAnswersButton!.addEventListener("click", async () => {
   const txt = await chromeRead();
   if (txt) {
-    const answers = JSON.parse(txt) as IWorksheetModel;
+    let answers: IWorksheetModel;
+    try {
+      answers = JSON.parse(txt);
+    } catch {
+      fh = undefined;
+      alert("Attempting to load an invalid JSON file");
+      return;
+    }
+
+    const title = document.querySelector("div.docTitle")?.textContent;
+    const wsTitle = answers.title;
+
+    if (title !== wsTitle) {
+      fh = undefined;
+      alert(
+        `Attempting to load answers file for a different worksheet Expected: ${title} Actual: ${wsTitle}`,
+      );
+      return;
+    }
+
+    document.getElementById("worksheet")?.classList.add("saved");
+
     wsModel.setAnswers(answers);
     resetHtml();
 
