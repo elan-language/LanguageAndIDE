@@ -1,0 +1,6 @@
+# fa385c067a102867974fd9f9a3666b4783093d3f3ce0675849d9175a58f2334f Elan 1.7.0 guest default_profile valid
+
+main
+  let names be {"Simon", "Pauline", "Jason", "Zelda", "Edith", "Lance", "Alice", "Paul"}
+  print names.orderBy(lambda x as String, y as String => x.isBefore(y))
+end main
