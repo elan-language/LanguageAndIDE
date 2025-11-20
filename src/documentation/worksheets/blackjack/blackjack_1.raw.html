@@ -1,14 +1,14 @@
 <title>Blackjack 1: exploring the Blackjack program and making small changes</title>
 <step>
-    <h1>Step STEPNUMBER: introduction</h1>
-    <p>Your first task is to play a few hands of Blackjack, to make sure that you understand how the game
+    <h1>Step STEPNUMBER: learning the rules of Blackjack</h1>
+    <p>Your first task is to play a few rounds of Blackjack, to make sure that you understand how the game
       works, and - since there are many minor variations on the game - the rules of this specific implementation.</p>
     <p><load file="blackjack_1begin.elan">Load the starting code</load> and then immediately <b>file > auto save</b> the
       code to your local file storage, because you will be making changes and want to ensure that your changes are saved.
       Then immediately <b>run</b> the program and note the following:</p>
     <ul>
       <li>There are two players: the dealer and Player A (you). Both have 1000 points at the start.</li>
-      <li>Both have been dealt two cards, but one of the dealer's cards is face down.</li>
+      <li>Both have been dealt two cards, but one of the dealer's cards is initially dealt face down - which is known as the 'hole card'.</li>
       <li>Most cards have a numeric value (e.g. '7'). The Royal cards - Jack, Queen, King - each have
         the value 10. An Ace is special: it can be valued at 11, or at 1. An Ace valued at 11 is known as a 'soft Ace'. 
         So if a player's first two cards are <i>both</i> Aces then the starting hand total is counted as 12 (rather than 22).</li>
@@ -23,7 +23,7 @@
       <li>
       <li>When your status changes either to STANDING or BUST then play passes to the the next player or -
         if you are the last or only player - to the dealer.<li>
-      <li>The dealer now plays out their hand - following fixed rules about when to stand and when to draw.</li>
+      <li>The dealer now plays out their hand, turning the 'hole card' face up and then following fixed rules about when to stand and when to draw.</li>
       <li>When all players, including the dealer, have finished their turn, the outcome is determined, and 
         points are passed between each player and the dealer as follows:
         <ul>
@@ -38,7 +38,49 @@
         </ul> 
       </li>
       <li>The updated points for the dealer and players are now shown, and you are given the option to play another round.</li>
+      <li>This program works with an 'infinite deck' of cards: the chance of withdrawing a specific card - such as the 7 of clubs -
+        is the same every time you draw a card, which means that there is a small chance that the same card can appear on
+        screen more than once. (The same is true in most casinos, since they use multiple packs of cards in one deck,
+        and some even use machines that shuffle the whole deck continuously.)
+      </li>
     </ul>
-    <p>So, play a few rounds of the game until you have grasped the basic operation of the game.</p>
+    <p>So, play exactly 10 rounds of the game - so that you will hopefully observe the principles listed above.</p>
+    <question>How many rounds did you play, and how many points did you, and the dealer, end up with?</question>
+    <p>Finish playing the game - either by pressing the <b>n</b> key at the end of a round, or by clicking the <b>stop</b>
+      button at any point while the program is running.</p>
 </step>
 
+<step>
+  <h1>Step STEPNUMBER: starting to explore the code</h1>
+
+  <p>To explore the code that defined the Blackjack application, the 'code editor' (the left-hand pane of the Elan screen) needs to have the browser's focus,
+    which is indicated by having a <i>white</i> background. If the code editor has a pale-tinted background, 
+    it does not currently have the browser focus. Provided that the program is not currently running (if it is, see above) you
+    can put the focus on the code editor either:
+    <ul>
+      <li>from the keyboard by pressing <b>Ctrl-e</b> (think: <b>e</b>for <b>e</b>itor).</li>
+      <li>with the mouse, by clicking within the code (it's best to click on the space, rather than the text), <i>or</i></li>
+    </ul></p>
+
+  <p>The code is made up of 'instructions' each of which has an instruction number on the right hand side of the editor. The
+    number does <i>not</i> form part of the code - it is just to make it easier to refer to a particular instruction in discussions.</p>
+
+  <p>Scroll to the bottom of the code either by:
+    <ul>
+      <li>using keyboard shortcuts: <b>PgDn</b>,<b>PgUp</b>,<b>Home</b>, <b>End</b></li>
+      <li>using the mouse scroll-wheel, or dragging the slider bar on the right of the code pane</li>
+    </ul></p>
+
+  <question>How many instructions are there in the Blackjack program</question>
+
+   <p>Notice that every instruction begins with a 'keyword' shown in dark blue - such as <code>main</code>, <code>procedure</code>, <code>variable</code>, <code>call</code>.
+  This <i>initial</i> keyword defines the instruction, so we talk about, for example, a 'call instruction'.</p>
+
+   <question>Find and list here at least five more, different, <i>initial</i> keywords:</question>
+
+   <p>If an instruction has a pale tinted background - it has the 'focus' within the editor. Where the focus is within the editor does not
+    change how the program operates, but you need to put the focus on an instruction in order to make any change to it, and sometimes
+    it is useful to move the focus just to help you read the code, or to draw attention to a particular instruction in discussions.
+    You can move the focus between instructions either:</p>
+
+    
