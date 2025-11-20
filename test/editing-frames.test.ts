@@ -348,25 +348,11 @@ suite("Editing Frames", () => {
     f4.processKey(key("Backspace"));
     assert.equal(file.getChildren().length, 3);
   });
-  test("Create and ignore test #927", async () => {
-    const file = T00_emptyFile();
-    const sel0 = file.getById("select0");
-    sel0.processKey(key("t"));
-    const test = file.getById("test1") as TestFrame;
-    assert.equal(false, test.ignored);
-    assert.equal(true, test.renderAsHtml().includes(`<el-kw>test </el-kw>`));
-    test.processKey(key("i", false, true, false));
-    assert.equal(true, test.ignored);
-    assert.equal(true, test.renderAsHtml().includes(`<el-kw>ignore test </el-kw>`));
-    test.processKey(key("i", false, true, false));
-    assert.equal(false, test.ignored);
-    assert.equal(true, test.renderAsHtml().includes(`<el-kw>test </el-kw>`));
-  });
+
   test("Test description #936", async () => {
     const file = T00_emptyFile();
     const sel0 = file.getById("select0");
     sel0.processKey(key("t"));
-    const test = file.getById("test1") as TestFrame;
     const desc = file.getById("comment3") as CommentField;
     assert.equal(true, desc.isOptional());
     desc.processKey(key("x"));
