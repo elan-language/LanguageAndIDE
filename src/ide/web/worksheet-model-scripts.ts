@@ -291,6 +291,13 @@ function markStepComplete(cb: HTMLInputElement, step: HTMLElement) {
   cb.after(getTimestamp(wsModel.getStepById(step.id)!.timeDone));
 }
 
+function addTempMsg(tgt: HTMLElement, msg: string) {
+  const div = document.createElement("div");
+  div.classList.add("temp-msg");
+  div.innerText = msg;
+  tgt.after(div);
+}
+
 for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
   cb.addEventListener("click", async (e) => {
     clearTempMsgs();
@@ -306,10 +313,7 @@ for (const cb of doneCheckboxes as NodeListOf<HTMLInputElement>) {
         snapShotCode(cb.id);
         await save();
       } else {
-        const msg = document.createElement("div");
-        msg.classList.add("temp-msg");
-        msg.innerText = "All required inputs must be completed to continue";
-        cb.after(msg);
+        addTempMsg(cb, "All required inputs must be completed to continue");
         e.preventDefault();
       }
     }
@@ -465,8 +469,17 @@ setupLoadLinks(loads as NodeListOf<HTMLButtonElement>);
 setupHelpLinks(helps as NodeListOf<HTMLLinkElement>);
 updateHintsTaken();
 
-userName.addEventListener("change", (e) => {
-  wsModel.username.setValue((e.target as any).value);
+const invalidCharacters = ["<", ">", ":", '"', "/", "\\", "|", "?", "*"];
+
+userName.addEventListener("keyup", (e) => {
+  clearTempMsgs();
+  const value = (e.target as any).value as string;
+  if (invalidCharacters.some((c) => value.includes(c))) {
+    wsModel.username.setValue("");
+    addTempMsg(userName, `Username contains an invalid character`);
+  } else {
+    wsModel.username.setValue((e.target as any).value);
+  }
   autosave.disabled = !wsModel.username.isAnswered();
   postSaveUserName.value = wsModel.username.value;
 });
