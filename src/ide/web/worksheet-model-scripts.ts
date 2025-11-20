@@ -22,6 +22,7 @@ const loadAnswersButton = document.getElementById("load-answers");
 const helps = document.querySelectorAll("a.help");
 const loads = document.querySelectorAll("button.load");
 const userName = document.getElementById("username") as HTMLInputElement;
+const postSaveUserName = document.getElementById("postsave-username") as HTMLInputElement;
 const autosave = document.getElementById("auto-save") as HTMLButtonElement;
 
 let fh: FileSystemFileHandle | undefined;
@@ -131,6 +132,7 @@ loadAnswersButton!.addEventListener("click", async () => {
 
     userName.disabled = true;
     userName.value = wsModel.username.value;
+    postSaveUserName.value = wsModel.username.value;
     for (const step of wsModel.steps) {
       const st = document.getElementById(step.id) as HTMLElement;
       const notes = document.getElementById(step.notes.id) as HTMLTextAreaElement;
@@ -466,6 +468,7 @@ updateHintsTaken();
 userName.addEventListener("change", (e) => {
   wsModel.username.setValue((e.target as any).value);
   autosave.disabled = !wsModel.username.isAnswered();
+  postSaveUserName.value = wsModel.username.value;
 });
 
 function snapShotCode(id: string) {
