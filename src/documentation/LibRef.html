@@ -30,12 +30,12 @@
   <td><el-kw>empty</el-kw> <el-type>Int</el-type></td>
 </tr><tr>
   <td><el-type>Int</el-type></td>
-  <td><el-code>let maxNumber be 10</el-code></td>
-  <td>0</td>
+  <td><el-code><el-statement class="ok" id="let13" tabindex="-1"><el-kw>let </el-kw><el-field id="var14" class="ok" tabindex="-1"><el-txt><el-id>maxNumber</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-lit>10</el-lit></el-txt></el-field></el-statement></el-code></td>
+  <td><el-code>0</el-code></td>
 </tr><tr>
   <td><el-type>Int</el-type></td>
-  <td><el-code>variable flags set to 0b1100100</el-code></td>
-  <td>0</td>
+  <td><el-code><el-statement class="ok" id="var16" tabindex="-1"><el-kw>variable </el-kw><el-field id="var17" class="ok" tabindex="-1"><el-txt><el-id>flags</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-lit>0b1100100</el-lit></el-txt></el-field></el-statement></el-code></td>
+  <td><el-code>0</el-code></td>
 </tr>
 </table>
 
@@ -113,12 +113,13 @@ in the range:</li>
   <td><el-kw>empty</el-kw> <el-type>Float</el-type></td>
 </tr><tr>
   <td><el-type>Float</el-type></td>
-  <td><el-code>let phi be 1.618033988749895</el-code></td>
-  <td>0.0</td>
+  <td><el-code><el-statement class="ok" id="let19" tabindex="-1"><el-kw>let </el-kw><el-field id="var20" class="ok" tabindex="-1"><el-txt><el-id>phi</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit>.618033988749895</el-lit></el-txt></el-field></el-statement></el-code></td>
+  <td><el-code>0.0</el-code></td>
 </tr><tr>
   <td><el-type>Float</el-type></td>
-  <td><el-code>variable reading set to 1.1e-10</el-code></td>
-  <td>0.0</td>
+  <td><el-code><el-statement class="ok" id="var22" tabindex="-1"><el-kw>variable </el-kw><el-field id="var23" class="ok" tabindex="-1"><el-txt><el-id>reading</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr24" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>1</el-lit>.1e-10</el-lit></el-txt></el-field></el-statement>
+</el-code></td>
+  <td><el-code>0.0</el-code></td>
 </tr>
 </table>
 
@@ -186,7 +187,7 @@ in the range:</li>
   <td><el-kw>empty</el-kw> <el-type>Boolean</el-type></td>
 </tr><tr>
   <td><el-type>Boolean</el-type></td>
-  <td><el-code>variable done set to <el-id>true</el-id></el-code></td>
+  <td><el-code><el-statement class="ok" id="var25" tabindex="-1"><el-kw>variable </el-kw><el-field id="var26" class="ok" tabindex="-1"><el-txt><el-id>done</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr27" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field></el-statement></el-code></td>
   <td><el-code><el-id>false</el-id></el-code></td>
 </tr>
 </table>
@@ -223,19 +224,19 @@ in the range:</li>
   <td><el-kw>empty</el-kw> <el-type>String</el-type></td>
 </tr><tr>
   <td><el-type>String</el-type></td>
-  <td><el-code>let title be "Ulysses"</el-code></td>
+  <td><el-code><el-statement class="ok" id="let28" tabindex="-1"><el-kw>let </el-kw><el-field id="var29" class="ok" tabindex="-1"><el-txt><el-id>title</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr30" class="ok" tabindex="-1"><el-txt>"<el-lit>Ulysses</el-lit>"</el-txt></el-field></el-statement></el-code></td>
   <td>delimited by double quotes<br>characters <el-code>{ }</el-code>
      define an <a href="#InterpolatedString">interpolated field</a>, so may not be included as literal characters</td>
   <td><el-code>""</el-code></td>
 </tr><tr>
   <td><el-type>String</el-type></td>
-  <td><el-code>let title be 'Iliad'</el-code></td>
+  <td><el-code><el-statement class="ok" id="let31" tabindex="-1"><el-kw>let </el-kw><el-field id="var32" class="ok" tabindex="-1"><el-txt><el-id>title</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr33" class="ok" tabindex="-1"><el-txt>'<el-lit>Iliad</el-lit>'</el-txt></el-field></el-statement></el-code></td>
   <td>delimited by single quotes<br>can contain <el-lit>{</el-lit> or <el-lit>}</el-lit> as literal characters,
     but cannot include <a href="#InterpolatedString">interpolated fields</a></td>
   <td><el-code>''</el-code></td>
 </tr><tr>
   <td><el-type>String</el-type></td>
-  <td><el-code>variable quote set to '"Hello", she said'</el-code></td>
+  <td><el-code><el-statement class="ok" id="var34" tabindex="-1"><el-kw>variable </el-kw><el-field id="var35" class="ok" tabindex="-1"><el-txt><el-id>quote</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr36" class="ok" tabindex="-1"><el-txt>'<el-lit>"Hello", she said</el-lit>'</el-txt></el-field></el-statement></el-code></td>
   <td>&quot; may be used in a string delimited by '<br>' may be used in a string delimited by &quot;</td>
   <td></td>
 </tr>
@@ -428,9 +429,9 @@ A Tuple differs from a List in that:
 <h3 class="no-TOC">Defining a Tuple</h3>
 <p>A new Tuple is defined using this syntax:</p>
 
-<elan-code-block>
+<elan-code>
 <el-statement id="let10" tabindex="-1"><el-kw>let </el-kw><el-field id="var11" class="ok" tabindex="-1"><el-txt><el-id>t1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-kw>tuple</el-kw>(<el-lit>3</el-lit>, "<el-lit>apple</el-lit>", <el-id>true</el-id>)</el-txt></el-field></el-statement>
-</elan-code-block>
+</elan-code>
 
 <p>Note that the elements may be literal or named values. An element within a Tuple may even be another Tuple.</p>
 
@@ -438,9 +439,9 @@ A Tuple differs from a List in that:
 <p>You may pass a Tuple into a function, or return one from a function. The Type of a Tuple is specified
   in round brackets, containing the comma-separated Types for each element in order, for example:</p>
 
-<el-code-block>
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident19" class="ok" tabindex="-1"><el-txt>distanceBetween</el-txt></el-field></el-method>(<el-field id="params20" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type21" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field></el-top>
-</el-code-block>
+<el-code>
+<el-kw>function </el-kw><el-method><el-field id="ident19" class="ok" tabindex="-1"><el-txt>distanceBetween</el-txt></el-field></el-method>(<el-field id="params20" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type21" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field>
+</el-code>
 
 <h3 class="no-TOC" id="deconstructTuple">Deconstructing a Tuple</h3>
 
@@ -448,7 +449,7 @@ A Tuple differs from a List in that:
 <el-code-block source="tuples1.elan">
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>point</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>tuple</el-kw>(<el-lit>3</el-lit>, <el-lit>4</el-lit>)</el-txt></el-field></el-statement>
 </el-code-block>
-<p> may be deconstructed into new variables or named values where the number of variables or names must match the number of elements in the Tuple, for example:</p>
+<p> may be deconstructed into new or existing named values where the number of names must match the number of elements in the Tuple, for example:</p>
 
 
 <el-code-block source="tuples1.elan">
@@ -479,8 +480,8 @@ for example:</p>
 <p>Note that the appropriate <el-id>itemN</el-id>s will be listed in the Editor's drop-down menu options for the referenced Tuple.</p>
 <h4 class="no-TOC">Notes</h4>
 <ul>
-<li>As in most languages, an Elan <el-code>Tuple</el-code> is immutable. Once defined Tuples are effectively read-only. You cannot alter any of the elements in a Tuple nor (unlike a <el-type>List</el-type>) can you create a new Tuple from an existing one with specified differences.</li>
-<li>You cannot deconstruct a Tuple into a mixture of new and existing variables.</li>
+<li>As in most languages, an Elan <el-code>Tuple</el-code> is immutable. Once defined, Tuples are effectively read-only. You cannot alter any of the elements in a Tuple nor (unlike a <el-type>List</el-type>) can you create a new Tuple from an existing one with specified differences.</li>
+<li>You cannot deconstruct a Tuple into a mixture of new and existing named values.</li>
 <li>Tuples may be nested: you can define a Tuple within a Tuple.</li>
 </ul>
 
