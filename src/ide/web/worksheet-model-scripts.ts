@@ -96,7 +96,8 @@ function scrollToActiveElement() {
 autoSaveButton!.addEventListener("click", async () => {
   const code = JSON.stringify(wsModel);
 
-  const suggestedName = document.getElementsByClassName("docTitle")[0].innerHTML;
+  const wsName = document.getElementsByClassName("docTitle")[0].innerHTML;
+  const suggestedName = `${wsModel.username.value} - ${wsName} - answers`;
   fh = await chromeSave(code, suggestedName);
 
   scrollToActiveElement();
