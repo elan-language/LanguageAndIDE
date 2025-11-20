@@ -29,7 +29,7 @@ export function getWorksheetSubdir(sourceDir: string): string[] {
   return readdirSync(sourceDir).filter((s) => statSync(sourceDir + "/" + s).isDirectory());
 }
 
-function wrapInWorkSheetBoilerPlate(content: string, title: string) {
+function wrapInWorkSheetBoilerPlate(content: string, title: string, version: string) {
   const prodUrl = `https://elan-lang.org/`;
   const devUrl = `https://elan-language.github.io/LanguageAndIDE/`;
   const hostUrl = isElanProduction ? prodUrl : devUrl;
@@ -49,6 +49,7 @@ function wrapInWorkSheetBoilerPlate(content: string, title: string) {
   <body>
     <div id="worksheet">
     <div class="docTitle">${title}</div>
+    <div class="version" hidden="">${version}</div>
 
     <div class="transient">
       <p class="transient">Choose <i>either one</i> of the two options below:</p>
@@ -100,7 +101,8 @@ function appendFooter(content: string) {
 export async function processWorksheet(fileName: string) {
   let source = loadFileAsSourceNew(fileName);
   let title = "";
-  [title, source] = processTitle(source);
+  let version = "";
+  [title, version, source] = processTitle(source);
   source = appendFooter(source);
 
   let updatedContent = await processCode(source, codeTag, codeEndTag);
@@ -108,7 +110,7 @@ export async function processWorksheet(fileName: string) {
   updatedContent = await processSteps(updatedContent);
   updatedContent = await processFinals(updatedContent);
 
-  updatedContent = wrapInWorkSheetBoilerPlate(updatedContent, title);
+  updatedContent = wrapInWorkSheetBoilerPlate(updatedContent, title, version);
 
   updateFileNew(fileName.replace(".raw", ""), updatedContent);
 }

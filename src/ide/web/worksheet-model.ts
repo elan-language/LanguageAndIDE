@@ -30,6 +30,7 @@ interface IStepModel {
 
 export interface IWorksheetModel {
   title: string;
+  version: string;
   username: IQuestionModel;
   steps: IStepModel[];
 }
@@ -140,12 +141,16 @@ export class HintModel implements IHintModel {
 
 export class WorksheetModel implements IWorksheetModel {
   constructor(
-    public readonly title: string,
+    public title: string,
+    public version: string,
     public readonly username: QuestionModel,
     public readonly steps: StepModel[],
   ) {}
 
   setAnswers(answers: IWorksheetModel) {
+    this.title = answers.title;
+    this.version = answers.version;
+    this.username.setAnswers(answers.username);
     this.username.setAnswers(answers.username);
     for (const a of answers.steps) {
       this.getStepById(a.id)?.setAnswers(a);
@@ -223,6 +228,7 @@ function createHint(hint: Element): HintModel {
 export function createModelFromDocument(document: Document) {
   return new WorksheetModel(
     document.querySelector("div.docTitle")!.textContent,
+    document.querySelector("div.version")!.textContent,
     createQuestion(document.querySelector("#username")!),
     Array.from(document.querySelectorAll("div.step")).map((s) => createStep(s)),
   );

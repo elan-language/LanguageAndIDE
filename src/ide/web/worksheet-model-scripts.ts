@@ -126,6 +126,17 @@ loadAnswersButton!.addEventListener("click", async () => {
       return;
     }
 
+    const version = document.querySelector("div.version")?.textContent ?? "";
+    const wsVersion = answers.version ?? "";
+
+    if (version !== wsVersion) {
+      fh = undefined;
+      alert(
+        `Attempting to load answers file for a different version of the worksheet Expected: ${version} Actual: ${wsVersion}`,
+      );
+      return;
+    }
+
     document.getElementById("worksheet")?.classList.add("saved");
 
     wsModel.setAnswers(answers);
@@ -477,7 +488,7 @@ userName.addEventListener("keyup", (e) => {
   const value = (e.target as any).value as string;
   if (invalidCharacters.some((c) => value.includes(c))) {
     wsModel.username.setValue("");
-    addTempMsg(userName, `Username contains an invalid character`);
+    addTempMsg(userName, `Username may not contain any of ${invalidCharacters.join()}`);
   } else {
     wsModel.username.setValue((e.target as any).value);
   }
