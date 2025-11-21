@@ -1,4 +1,4 @@
-# b7f7ca3a89d4f1c0173ea46478f3e2ba38f2ad96b960950171ccf618da410f1d Elan 1.7.0 guest default_profile valid
+# ef625855481f3f342da0aab66208e672bc78797f592c84dd21b16dfa7823f7e6 Elan 1.7.0 guest default_profile valid
 
 main
   variable li set to example.asList()
@@ -20,7 +20,7 @@ procedure inPlaceRippleSort(out arr as List<of Int>)
       end if
     end for
     set lastComp to lastComp - 1
-  end repeat when not changes
+  end repeat when notchanges
 end procedure
 
 constant example set to {3, 6, 1, 0, 99, 4, 67}

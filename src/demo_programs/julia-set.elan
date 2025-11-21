@@ -1,4 +1,4 @@
-# 5538488ab0f73b15d57342620811d9cf31caae0a76e4565389dd82e8faf2cfbc Elan 1.7.0 guest default_profile valid
+# 7e725b4432e0745867b9126a57ff2c389dc7e725d1beef964047c96f83c78a1b Elan 1.7.0 guest default_profile valid
 
 # After image is displayed, press: 
 # - z to zoom in, x to zoom out
@@ -38,7 +38,7 @@ function onepoint(x as Float, y as Float, maxnum as Int, p as Coords) returns In
   variable a set to x
   variable b set to y
   variable i set to 0
-  while not done
+  while notdone
     variable c set to 2*a*b
     set a to (a*a - b*b) + p.jx
     set b to c + p.jy
@@ -79,7 +79,7 @@ class Coords
     let jstep be 0.001
     # save some CPU by not recalculating until a parameter has been changed
     variable changed set to false
-    while not changed
+    while notchanged
       variable k set to getKey()
       # loop because more than one key may have been pressed
       while k isnt ""

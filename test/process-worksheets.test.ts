@@ -131,7 +131,7 @@ end constructor`;
 
     const actual = await processCode(code, codeTag, codeEndTag);
 
-    const expected = `<el-code><el-id>mark</el-id>[<el-id>something</el-id>] + "<el-lit>2</el-lit>" + <el-id>mark</el-id>[<el-id>something</el-id>]</el-code>`;
+    const expected = `<el-code><el-id>mark</el-id>[<el-id>something</el-id>]<el-op> + </el-op>"<el-lit>2</el-lit>"<el-op> + </el-op><el-id>mark</el-id>[<el-id>something</el-id>]</el-code>`;
 
     assert.strictEqual(actual, expected);
   });

@@ -2,7 +2,6 @@ import { notKeyword } from "../../../compiler/keywords";
 import { MINUS } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
-import { KeywordNode } from "./keyword-node";
 import { Space } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
 import { Sequence } from "./sequence";
@@ -20,7 +19,7 @@ export class UnaryExpression extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       const minus = () => new PunctuationNode(MINUS);
-      const not = () => new KeywordNode(notKeyword);
+      const not = () => new PunctuationNode(notKeyword);
       const sp = () => new SpaceNode(Space.added);
       const notSp = () => new Sequence([not, sp]);
       this.unaryOp = new Alternatives([minus, notSp]);
@@ -30,4 +29,11 @@ export class UnaryExpression extends AbstractSequence {
       return super.parseText(text);
     }
   }
+
+  renderAsHtml(): string {
+    return `<el-op>${this.unaryOp!.renderAsSource()}</el-op>${this.term?.renderAsHtml()}`;
+  }
+
+
+
 }

@@ -153,7 +153,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(expr.textAsSource(), `"{op} times {op2} equals {op1*op2}"`);
     assert.equal(
       expr.textAsHtml(),
-      `"<el-lit></el-lit>{<el-id>op</el-id>}<el-lit> times </el-lit>{<el-id>op2</el-id>}<el-lit> equals </el-lit>{<el-id>op1</el-id>*<el-id>op2</el-id>}<el-lit></el-lit>"`,
+      `"<el-lit></el-lit>{<el-id>op</el-id>}<el-lit> times </el-lit>{<el-id>op2</el-id>}<el-lit> equals </el-lit>{<el-id>op1</el-id><el-op>*</el-op><el-id>op2</el-id>}<el-lit></el-lit>"`,
     );
   });
 
@@ -181,7 +181,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(expr.textAsSource(), `'' + "" + 'ab{c}"d"' + "ab{c}'d'"`);
     assert.equal(
       expr.textAsHtml(),
-      `'<el-lit></el-lit>' + "" + '<el-lit>ab{c}"d"</el-lit>' + "<el-lit>ab</el-lit>{<el-id>c</el-id>}<el-lit>'d'</el-lit>"`,
+      `'<el-lit></el-lit>'<el-op> + </el-op>""<el-op> + </el-op>'<el-lit>ab{c}"d"</el-lit>'<el-op> + </el-op>"<el-lit>ab</el-lit>{<el-id>c</el-id>}<el-lit>'d'</el-lit>"`,
     );
   });
 

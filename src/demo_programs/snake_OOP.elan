@@ -1,4 +1,4 @@
-# 49e759f7d477e78850eb13ecdf2de61dbf836060561fa093967b418dc5997839 Elan 1.7.0 guest default_profile valid
+# f8c0558b519d2a007f1e3331978d40c03e3d37006a31d4118457cbb8a704f9e9 Elan 1.7.0 guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -6,7 +6,7 @@ main
   let snake be new Snake()
   let apple be new Apple()
   call apple.newRandomPosition(snake)
-  while not snake.gameOver()
+  while notsnake.gameOver()
     call snake.updateBlocks(blocks)
     call apple.updateBlocks(blocks)
     call displayBlocks(blocks)
@@ -92,7 +92,7 @@ class Apple
       let ranX be randomInt(0, 39)
       let ranY be randomInt(0, 29)
       set property.location to new Square(ranX, ranY)
-    end repeat when not snake.bodyCovers(property.location)
+    end repeat when notsnake.bodyCovers(property.location)
   end procedure
 
   procedure updateBlocks(blocks as Array2D<of Int>)
