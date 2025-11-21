@@ -1,6 +1,5 @@
 <title>Wordle 1: implementing the Wordle puzzle logic</title>
-<step>
-    <h1>Step STEPNUMBER: introduction</h1>
+<step><h1>Step STEPNUMBER: introduction</h1>
     <p>We are going to create a working implementation of the Wordle puzzle.
         If you have never previously solved a Wordle puzzle, you should visit the 
         <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">official Wordle site</a>
@@ -34,8 +33,7 @@
         </ul>
 </step>
 
-<step>
-  <h1>Step STEPNUMBER: mark green matches correctly</h1>
+<step><h1>Step STEPNUMBER: mark green matches correctly</h1>
     If you were telling a person  how to mark an attempt word against a target word <i>manually</i>,
     you would probably tell them to look for any green matches first. (It's far more complicated to
     try to do it any other way.) In the <code>test</code> you can see that the first few failing test cases 
@@ -148,8 +146,7 @@
   </p>
 </step>
 
-<step>
-  <h1>Step STEPNUMBER: start on the yellow matches</h1>
+<step><h1>Step STEPNUMBER: start on the yellow matches</h1>
     <ul>
         <li>Underneath the <code>for</code> loop that you just created,
         create a <i>second</i> loop using the same values. (It might be tempting to try to process the greens and yellows
@@ -199,8 +196,7 @@ end function
     <p>We will fix this issue in the next step.</p>
 </step>
 
-<step>
-  <h1>Step STEPNUMBER: mark the yellows without over-writing greens'</h1>
+<step><h1>Step STEPNUMBER: mark the yellows without over-writing greens'</h1>
   <p>The problem is: letters that were marked green in the first loop are being 'overwritten'
       by a yellow. In the second loop we need to exclude any characters that have already been 
       marked green. Attempt it now by modifying the <code>if</code> condition within the <i>second</i> loop. You should
@@ -248,8 +244,7 @@ end function
   important practice when writing good code.</p>
 </step>
 
-<step>
-  <h1>Step STEPNUMBER: factor-out common code into a separate function</h1>
+<step><h1>Step STEPNUMBER: factor-out common code into a separate function</h1>
     <p>Before moving on to dealing with the one remaining failure of the 'Only yellows' test cases, we
       going to deal with what professional developers call a 'code smell'! The two expressions that are used to 
       update the mark are very similar:
@@ -331,8 +326,7 @@ end function
   </ul>
 </step>
 
-<step>
-  <h1>Step STEPNUMBER: fix the remaining 'Only yellows' test</h1>
+<step><h1>Step STEPNUMBER: fix the remaining 'Only yellows' test</h1>
   <p>The 'Only yellows' test is still failing because the three <b>P</b>s in the attempt word
   are all being matched against the single <b>P</b> in the target word, which is incorrect - just the first 
   one should be marked as a yellow match. To fix this we need to ensure that the loop managing the yellow matches 
@@ -399,8 +393,8 @@ end function
     <question>Can you explain <i>why</i> that change - within the greens loop -  doesn't make any difference, when
     it <i>did</i> make a difference within the yellows loop?</question>
 </step>
-<step>
-  <h1>Step STEPNUMBER: Fix the remaining 'Mixed' test cases</h1>
+
+<step><h1>Step STEPNUMBER: Fix the remaining 'Mixed' test cases</h1>
     <p>Several of the 'Mixed' test cases are now passing as a result of fixing up the 'Greens only' and 'Yellows only' cases.
     If you look carefully you will see that for the remaining failures the function is wrongly re-using a character that
     has been marked green to match a different character as yellow. All we should need to do to fix this, is
@@ -445,8 +439,7 @@ end function
   from the 2,315 valid target words.</p>
 </step>
 
-<final>
-  <h3>Congratulations! Worksheet completed</h3>
+<final><h3>Congratulations! Worksheet completed</h3>
 
   <p>You have just implemented the core logic of the Wordle puzzle - how to mark attempt words against a known target word -
     in just 14 instructions! And you have learned or practised several important programming patterns and techniques, 

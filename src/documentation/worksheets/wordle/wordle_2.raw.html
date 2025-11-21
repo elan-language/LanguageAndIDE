@@ -1,6 +1,5 @@
 <title>Wordle 2: writing an automated solver</title>
-<step>
-    <h1>Step STEPNUMBER: introduction</h1>
+<step><h1>Step STEPNUMBER: introduction</h1>
 
     <p>Following-on from 'Wordle 1: implementing the Wordle puzzle logic', in this worksheet
     your challenge is to implement a <i>reverse</i> game: where <i>you</i> choose the target word,
@@ -103,8 +102,8 @@
   However, the likelihood that the computer gets to the target within the maximum six attempt is still very low.
   For the next step we need to implement a viable strategy.</p>
 </step>
-<step>
-  <h1>Step STEPNUMBER: Start to implement a simple viable strategy</h1>
+
+<step><h1>Step STEPNUMBER: Start to implement a simple viable strategy</h1>
   <p>Human players use many different strategies to choose their next attempt word, based on the
     marks given for previous attempts. However, one of the simplest is to pick <i>any</i> new word
     that would be consistent with the marks given. In other words: if the word we choose as 
@@ -153,8 +152,8 @@
   Each <code>assert</code> instruction defines a different 'test case'.</p>
   <question>How many of the test cases are now passing, and what do they have in common?</question></li>
 </step>
-<step>
-  <h1>Step STEPNUMBER: Completing the implementation</h1>
+
+<step><h1>Step STEPNUMBER: Completing the implementation</h1>
   <p>The next task is to implement <el-method>possibleTargetsAfterAttempt</el-method> such
     that <i>all</i> the associated test cases pass.</p>
   <p><i>If</i> you have learned about 'higher order functions', you can apply those techniques here and implement the function as a single instruction. 
@@ -216,8 +215,7 @@
   <p>Before marking this step as completed, make sure that <i>all</i> the test cases are now passing.</p>
 </step>
 
-<step>
-  <h1>Step STEPNUMBER: Making use of the filtered list of possible target words</h1>
+<step><h1>Step STEPNUMBER: Making use of the filtered list of possible target words</h1>
    <p>Now that we have the ability to filter the list of <code>possible</code> target words based on each new marked attempt
     we can make use of that with the <el-method>playReverseGame</el-method> procedure.
    <p>Insert a new instruction immediately <i>after</i> instruction <b>69</b> i.e. just <i>above</i> the instruction that you added
@@ -268,8 +266,8 @@
   be able to solve the puzzle. Try it.</p>
   <question>What actually happens?</question>
 </step>
-<step>
-  <h1>Step STEPNUMBER: Two small refinements</h1>
+
+<step><h1>Step STEPNUMBER: Two small refinements</h1>
   <p>We will make these two small refinements in one go:
   <ul>
     <li>Safely guard against an unsolvable puzzle - instead of it resulting in a run-time error as you saw.</li>
@@ -333,8 +331,8 @@
 
   <p>Note that you might also the the message "No possible target matches marks so far" if you mark any attempts <i>incorrectly</i>.</p>
 </step>
-<final>
-  <h1>Congratulations! Worksheet completed</h1>
+
+<final><h1>Congratulations! Worksheet completed</h1>
   <p>You have just implemented the core logic for an automated Wordle solver. Try going to the official Wordle site and
     (assuming you have not already solved today's Wordle puzzle) see if your solver can solve today's target word
     in 6 or fewer attempts. To do this, just enter the computer's attempt word into the official puzzle, and after

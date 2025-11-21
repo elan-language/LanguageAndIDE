@@ -1,4 +1,4 @@
-# 4fba04e30f0d48273e92d0c385e7ca081799ccc9aabc32d0759d8352b2cb1484 Elan 1.7.0 guest default_profile valid
+# 4f49c83c4ce8c8372a75d41a027a05f3ceb16904464a7a2361fb169ece640343 Elan 1.7.0 guest default_profile valid
 
 main
   let game be new Game(1000)
@@ -333,13 +333,17 @@ class Dealer inherits Player
 
   property faceCard as Card
 
+  property hasPlayed as Boolean
+
   procedure play()
     call startTurn()
     let hiddenCard be property.cards[1]
     call hiddenCard.turnFaceUp()
+    set property.hasPlayed to true
   end procedure
 
   procedure newHand()
+    set property.hasPlayed to false
     call newHandHelper()
     set property.faceCard to property.cards[0]
     let hiddenCard be property.cards[1]
@@ -356,7 +360,7 @@ class Dealer inherits Player
 
   function getMessage() returns String
     variable msg set to ""
-    if property.hasTurn then
+    if property.hasPlayed then
       set msg to statusAsString() + " - hand total: {property.handTotal}"
     end if
     return msg
@@ -378,7 +382,7 @@ class HumanPlayer inherits Player
     variable key set to ""
     call clearKeyBuffer()
     while key is ""
-      set key to waitForKey().lowerCase()
+      set key to waitForKey()
       if key is "d" then
         call draw()
       else if key is "s" then
