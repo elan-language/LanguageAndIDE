@@ -1,8 +1,0 @@
-# f863068971bd68bf9f54021822cccae5101689c55f7e3aa40220eafd2fbec750 Elan 1.0.0-pre2 guest default_profile valid
-
-main
-  let source be [27, 2, 3, 5, 7, 31, 37, 11, 13, 17, 19, 23]
-  let sorted be source.sortBy(lambda x as Int, y as Int => if x is y then 0 else if x < y then 1 else -1)
-  print sorted
-
-end main

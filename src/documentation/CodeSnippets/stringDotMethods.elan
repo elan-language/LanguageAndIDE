@@ -1,9 +1,0 @@
-# 04406f3b90af7f6dd5e6312b9aa7dc4bf530de0d8e8feaa02b71df8af1e203c2 Elan 1.7.0 guest default_profile valid
-
-main
-  let s be "string"
-  print s.length()
-  variable t set to ""
-  set t to s.replace("i", "u")
-  print s + " " + t
-end main

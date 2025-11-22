@@ -2055,9 +2055,9 @@ So for example the centre of the display is at (50, 37.5).</p>
 <p>The names of the shapes broadly correspond to the names of SVG tags:</p>
 <ul>
  <li id="CircleVG"> <el-code>CircleVG</el-code> for &lt;<el-code>circle../&gt;</el-code></li>
+ <li id="ImageVG"><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
  <li id="LineVG"><el-code>LineVG</el-code> for <el-code>&lt;line../&gt;</el-code></li>
  <li id="RectangleVG"><el-code>RectangleVG</el-code> for <el-code>&lt;rect../&gt;</el-code></li>
- <li id="ImageVG"><el-code>ImageVG</el-code> for <el-code>&lt;image../&gt;</el-code></li>
 </ul>
 <p>The properties of these shapes reflect the names of the attributes used in the SVG tags but some names differ. For example, SVG's <el-id>stroke-width</el-id>
  is set with property <el-id>strokeWidth</el-id>, to make it a valid <a href="LangRef.html#Identifier">identifier</a>.
@@ -2712,18 +2712,26 @@ If you need another random value, you use the returned <el-type>Random</el-type>
 
 <h2 id="Func">Func</h2>
 <p>A function may be passed as an argument into another function (or a procedure), or returned as the result of calling another function.
-This pattern is known as <b>Higher-order Function (HoF)</b>, and is a key idea in the Functional Programming.</p>
+This pattern is known as <b>Higher-order Function (HoF)</b>, and is a key idea in Functional Programming.</p>
 <p>To define a function that takes in another function as a parameter, or returns a function, you need to specify the Type of the function,
 just as you would specify the Type of every parameter and the return Type for the function. </p>
 
 <h3 class="no-TOC">Type name</h3>
 <p>The Type of any function starts with the word <el-type>Func</el-type> followed by angle brackets defining the Type of each parameter,
-    and the return Type for that function, following this syntax:</p>
-<!-- TODO correct the syntax -->
-<el-code><el-type>Func</el-type>&lt;of <el-type>String</el-type>, <el-type>String</el-type>, <el-type>Int</el-type> =&gt; <el-type>Boolean</el-type>&gt;</el-code>
-<p>This example defines the Type for a function that defines three parameters of Type <el-type>String</el-type>, <el-type>String</el-type>, and <el-type>Int</el-type> respectively, and returns a <el-type>Boolean</el-type> value. This Type would match that of a function definition that started:</p>
+    then a 'fat arrow' =&gt; and the return Type for that function. This <el-kw>property</el-kw> definition shows the syntax:</p>
+
 <el-code-block source="functionChars.elan">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident5" class="ok" tabindex="0"><el-txt>charactersMatchAt</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params6" class="optional ok" tabindex="0"><el-txt><el-id>a</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>b</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>position</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="0"><el-txt><el-type>Boolean</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
+<el-prop class="ok" id="prop39" tabindex="-1"><el-kw>property </el-kw><el-field id="ident40" class="ok" tabindex="-1"><el-txt><el-id>matchAt</el-id></el-txt></el-field><el-kw> as </el-kw><el-field id="type41" class="ok" tabindex="-1"><el-txt><el-type>Func</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>, <el-type>String</el-type>, <el-type>Int</el-type> =&gt; <el-type>Boolean</el-type>&gt;</el-txt></el-field></el-prop>
+</el-code-block>
+
+<p>This example defines the Type for a function that defines three parameters of Type <el-type>String</el-type>, <el-type>String</el-type>, and <el-type>Int</el-type> respectively, and returns a <el-type>Boolean</el-type> value. This Type would match that of a function definition like this:</p>
+
+<el-code-block source="functionChars.elan">
+<el-func class="ok multiline" id="func1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident3" class="ok" tabindex="-1"><el-txt><el-method>matchAt</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params4" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>b</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>p</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type5" class="ok" tabindex="-1"><el-txt><el-type>Boolean</el-type></el-txt></el-field></el-top>
+<el-statement class="ok" id="return6" tabindex="-1"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>a</el-id>[<el-id>p</el-id>]<el-kw> is </el-kw><el-id>b</el-id>[<el-id>p</el-id>]<el-kw><br>then </el-kw><el-id>true</el-id><el-kw><br>else </el-kw><el-id>false</el-id></el-txt></el-field></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
 </el-code-block>
 
 <h1 id="Constants">Constants</h1>
@@ -3501,7 +3509,7 @@ They take a function as an argument, and return the list element corresponding t
 </el-code-block>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To reorder strings in a <el-type>ListImmutable</el-type>, using methods <el-method>isAfter</el-method> for ascending or <el-method>isBefore</el-method> for descending:</p>
-<el-code-block source="orderBy_Int.elan">
+<el-code-block source="orderBy_String.elan">
 <el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>{"<el-lit>Simon</el-lit>", "<el-lit>Pauline</el-lit>", "<el-lit>Jason</el-lit>", "<el-lit>Zelda</el-lit>", "<el-lit>Edith</el-lit>", "<el-lit>Lance</el-lit>", "<el-lit>Alice</el-lit>", "<el-lit>Paul</el-lit>"}</el-txt></el-field></el-statement>
 <el-statement class="ok" id="print9" tabindex="-1"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>.<el-method>orderBy</el-method>(<el-kw>lambda</el-kw> <el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>, <el-id>y</el-id> <el-kw>as</el-kw> <el-type>String</el-type> =&gt; <el-id>x</el-id>.<el-method>isBefore</el-method>(<el-id>y</el-id>))</el-txt></el-field></el-statement>
 &nbsp;&nbsp;&#x27f6; {Zelda, Simon, Pauline, Paul, Lance, Jason, Edith, Alice}
