@@ -33,7 +33,4 @@ export class UnaryExpression extends AbstractSequence {
   renderAsHtml(): string {
     return `<el-op>${this.unaryOp!.renderAsSource()}</el-op>${this.term?.renderAsHtml()}`;
   }
-
-
-
 }

@@ -1,9 +1,9 @@
-# dd4d27db80b02c15b44d23b19c75165eba0acfb082fddd68b8a6594bf5b3a4fa Elan 1.7.0 guest default_profile valid
+# 221d0ead22f08029f64e36acc84f06bd18520311a26c52ce2647a8372ff329a9 Elan 1.7.0 guest default_profile valid
 
 main
   let file be openFileForReading()
   variable lines set to empty List<of String>
-  while notfile.endOfFile()
+  while not file.endOfFile()
     let line be file.readLine()
     call lines.append(line)
   end while

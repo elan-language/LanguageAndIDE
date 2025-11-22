@@ -1,4 +1,4 @@
-# a434f8725111aec6b0a9dbb759b9dfa5619416f7555037130207e880d74900ac Elan 1.7.0 guest default_profile valid
+# 673a101d38a9e9b6efad37908de3fc6071573e00c4945d3dcb287bd21852c5ef Elan 1.7.0 guest default_profile valid
 
 main
   let start be newPoint(5, 5)
@@ -158,7 +158,7 @@ class Solver
   function nextNodeToVisit() returns Node
     variable lowestCostSoFar set to infinity
     variable lowestCostNode set to empty Node
-    let possibilities be property.nodes.filter(lambda nd as Node => (notnd.visited) and (nd.distFromStart < infinity))
+    let possibilities be property.nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
     each nd in possibilities
       let cost be calculateCost(nd)
       if cost < lowestCostSoFar then

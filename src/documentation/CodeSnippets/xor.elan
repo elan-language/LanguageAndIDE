@@ -1,5 +1,5 @@
-# 116c4c2cd47dd53be423d390a0eab124d0e363d7f0f912865f51050250b75517 Elan 1.7.0 guest default_profile valid
+# b07f1d556d48f4b9543c233111a1c18bee3adabd430a5f03af43e174d0dd143c Elan 1.7.0 guest default_profile valid
 
 function xor(a as Boolean, b as Boolean) returns Boolean
-  return a and notb or b and nota
+  return a and not b or b and not a
 end function

@@ -1,4 +1,4 @@
-# 69791f17221d5e932d6f6ed4666220db913f7388dbb204c6063e595b38449ab0 Elan 1.7.0 guest default_profile valid
+# 16da7ab0d329cb0ee5cc56e8bec771ad10092c45cfc2960e9186b48221d11a99 Elan 1.7.0 guest default_profile valid
 
 # Program to extract the parameters for the Barnsley Fern from the Wikipedia page
 # https://en.wikipedia.org/wiki/Barnsley_fern
@@ -23,7 +23,7 @@ main
   let file be openFileForReading()
   variable result set to openbrace + openbrace
   variable skipping set to true
-  while notfile.endOfFile()
+  while not file.endOfFile()
     let line be file.readLine()
     call processoneline(line, result, skipping)
   end while
@@ -38,7 +38,7 @@ procedure processoneline(line as String, out result as String, out skipping as B
     # start of the part we are interested in
     set skipping to false
   end if
-  if notskipping then
+  if not skipping then
     # change Unicode Minus Sign to ASCII hyphen-minus
     variable linem set to line
     set linem to linem.replace(unicode(0x2212), "-")
@@ -73,7 +73,7 @@ end procedure
 # only works if the string contains at least one non-number character
 # written in a functional style, see if you can work out how it works
 function gettrailingnumber(s as String) returns String
-  return if s is "" then "" else s[last(sequence(0, s.length() - 1).filter(lambda n as Int => notisnumberchar(s[n]))) + 1..s.length()]
+  return if s is "" then "" else s[last(sequence(0, s.length() - 1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
 end function
 
 function isnumberchar(s as String) returns Boolean

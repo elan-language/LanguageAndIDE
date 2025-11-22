@@ -1,4 +1,4 @@
-# 97a9158f336dbcac90e353ccb7e73880b9be2d14533bdd2babd79f7db4424891 Elan 1.7.0 guest default_profile valid
+# 2afa103e264dc7f4954c899bfaffac3739e4a74bf40f99f7873119cbe493214e Elan 1.7.0 guest default_profile valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
@@ -49,7 +49,7 @@ function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
   variable ny set to 0.0
   each pp in params
     set cumuprob to cumuprob + pp[6]
-    if (notdone) and (r < cumuprob) then
+    if (not done) and (r < cumuprob) then
       set nx to x*pp[0] + y*pp[1] + pp[4]
       set ny to x*pp[2] + y*pp[3] + pp[5]
       set done to true

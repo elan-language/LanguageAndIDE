@@ -1,4 +1,4 @@
-# fd1c041d2a9368b1b37be97088b6d11d84a8ed8d51076c786c2d0f35bdcc9a23 Elan 1.7.0 guest default_profile valid
+# 564168b8506592bee5dce7f0174331ad5a79641b7c099d254daa70ddbf01a1b1 Elan 1.7.0 guest default_profile valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -11,7 +11,7 @@ main
   let decimal be inputIntBetween("Enter a year:", 1, 3999)
   call tm.setTape(decimal.asString())
   variable steps set to 0
-  while nottm.isHalted()
+  while not tm.isHalted()
     let rule be tm.findMatchingRule()
     call tm.singleStep()
     set steps to steps + 1

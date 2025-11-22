@@ -1,4 +1,4 @@
-# 7727bcc22e8262138cd756b15e8908b5ede235627fc63ba6c061ba1f60c3b35e Elan 1.7.0 guest default_profile valid
+# 1560c58fe99c17b5377caf8be7189f5c2961f3eff7e4d923f6b98760b71dc6a9 Elan 1.7.0 guest default_profile valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -13,7 +13,7 @@ main
   while gameOn
     call updateDisplay(blocks, head, tail, body, apple)
     call updateSnake(currentDir, tail, head, body)
-    set gameOn to nothasHitEdge(head[0], head[1]) and notbody.contains(head)
+    set gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
     if head is apple then
       call setAppleToRandomPosition(apple, body)
     else
@@ -43,7 +43,7 @@ procedure setAppleToRandomPosition(apple as List<of Int>, body as List<of List<o
   repeat
     call apple.put(0, randomInt(0, 39))
     call apple.put(1, randomInt(0, 29))
-  end repeat when notbody.contains(apple)
+  end repeat when not body.contains(apple)
 end procedure
 
 function getTailColour(tail as List<of Int>, body as List<of List<of Int>>) returns Int

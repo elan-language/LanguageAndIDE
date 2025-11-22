@@ -1645,7 +1645,7 @@ suite("Parsing Nodes", () => {
       " >",
       "",
       " >",
-      "<el-op> > </el-op>",
+      "<el-op> ></el-op>",
     );
     testNodeParse(
       new BinaryOperation(),
@@ -1683,7 +1683,15 @@ suite("Parsing Nodes", () => {
       " is ",
       "<el-op> is </el-op>",
     );
-    testNodeParse(new BinaryOperation(), `isn`, ParseStatus.incomplete, "isn", "", "isn", "isn");
+    testNodeParse(
+      new BinaryOperation(),
+      `isn`,
+      ParseStatus.incomplete,
+      "isn",
+      "",
+      "isn",
+      "<el-op>isn</el-op>",
+    );
     testNodeParse(
       new BinaryOperation(),
       `isnt`,
@@ -1721,7 +1729,15 @@ suite("Parsing Nodes", () => {
       "<el-op> and </el-op>",
     );
 
-    testNodeParse(new BinaryOperation(), `an`, ParseStatus.incomplete, "an", "", "an", "an");
+    testNodeParse(
+      new BinaryOperation(),
+      `an`,
+      ParseStatus.incomplete,
+      "an",
+      "",
+      "an",
+      "<el-op>an</el-op>",
+    );
     testNodeParse(new BinaryOperation(), `not`, ParseStatus.invalid, "", "not", "", "");
 
     //test expressions
@@ -1740,7 +1756,7 @@ suite("Parsing Nodes", () => {
       "3+",
       "",
       "3 + ",
-      "<el-lit>3</el-lit> + ",
+      "<el-lit>3</el-lit><el-op> + </el-op>",
     );
     testNodeParse(
       new BinaryExpression(),
@@ -1758,7 +1774,7 @@ suite("Parsing Nodes", () => {
       "3 ",
       "",
       "3 ",
-      "<el-lit>3</el-lit> ",
+      "<el-lit>3</el-lit><el-op> </el-op> ",
     );
     testNodeParse(
       new BinaryExpression(),
