@@ -39,7 +39,7 @@
 </ul>
 <p>then it is possible to mutate the parameter that holds that argument within the procedure, such that any reference to the argument outside the procedure will &#8216;see&#8217; the changes. </p>
 <p>A good example of this is an &#8216;in-place sort&#8217; procedure. In the following code the <el-code>arr</el-code> parameter is mutated in the two <el-code>call arr.PutAt()</el-code> statements:</p>
-<el-code-block source="in-place-ripple-sort.elan">
+<el-code-block source="inPlaceRippleSort.elan">
 <el-proc class="ok multiline" id="proc11" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-method><el-field id="ident13" class="ok" tabindex="0"><el-txt>inPlaceRippleSort</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params14" class="optional ok" tabindex="0"><el-txt><el-kw>out</el-kw> <el-id>arr</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-msg></el-msg></el-top>
 <el-statement class="ok" id="var15" tabindex="0"><el-kw>variable </el-kw><el-field id="var16" class="ok" tabindex="0"><el-txt><el-id>changes</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr17" class="ok" tabindex="0"><el-txt><el-id>true</el-id></el-txt><el-place><i>expression</i></el-place></el-field><el-msg></el-msg></el-statement>

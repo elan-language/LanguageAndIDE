@@ -1,7 +1,0 @@
-# 622087090a68cb5e301c2aa9e3c9db2bdcd49ef399cfd0908051082d0dcd70da Elan 1.7.0 guest default_profile valid
-
-main
-  let names be ["Simon", "Pauline", "Jason", "Zelda", "Edith", "Lance", "Alice", "Paul"]
-  let sorted be names.sortBy(lambda x as String, y as String => if x.isAfter(y) then 1 else if x.isBefore(y) then -1 else 0)
-  print sorted
-end main
