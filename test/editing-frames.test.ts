@@ -239,23 +239,23 @@ suite("Editing Frames", () => {
     sel.processKey(del());
     assert.equal(main.getFirstChild(), sel);
   });
-  test("Delete frame - Ctrl+backspace", () => {
-    const file = emptyFunctionOnly();
-    const func = file.getById("func1") as GlobalFunction;
-    const sel = file.getById("select0") as GlobalFunction;
-    assert.equal(file.getFirstChild(), func);
-    func.select(true, false);
-    func.processKey(ctrl_backspace());
-    assert.equal(file.getChildren().length, 1);
-    assert.equal(file.getFirstChild(), sel);
-  });
-  test("Delete frame - +Delete", () => {
+  test("Delete frame - Ctrl-Delete", () => {
     const file = emptyFunctionOnly();
     const func = file.getById("func1") as GlobalFunction;
     const sel = file.getById("select0") as GlobalFunction;
     assert.equal(file.getFirstChild(), func);
     func.select(true, false);
     func.processKey(ctrl_del());
+    assert.equal(file.getChildren().length, 1);
+    assert.equal(file.getFirstChild(), sel);
+  });
+  test("Delete frame - Ctrl-d", () => {
+    const file = emptyFunctionOnly();
+    const func = file.getById("func1") as GlobalFunction;
+    const sel = file.getById("select0") as GlobalFunction;
+    assert.equal(file.getFirstChild(), func);
+    func.select(true, false);
+    func.processKey(ctrl_backspace());
     assert.equal(file.getChildren().length, 1);
     assert.equal(file.getFirstChild(), sel);
   });

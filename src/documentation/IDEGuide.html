@@ -114,7 +114,11 @@ then be saved even if it does not compile or pass any tests.</p>
 <p>The <b>Trim</b> command is used to neaten up your code: it removes any <el-code>new code</el-code> prompts from your code <i>that can be removed</i> which is typically most of them.
 Where a <el-code>new code</el-code> prompt is not removed by <b>Trim</b> this indicates that code is still expected in that location.</p>
 
+<<<<<<< HEAD
+<p>The keyboard shortcut for <b>Trim</b> is <b>Alt+t</b>. (This is because browsers use <b>Ctrl+t</b> to open a new tab).</p>
+=======
 <p>The keyboard shortcut for <b>Trim</b> is <b>Alt-t</b>. (This is because browsers use <b>Ctrl+t</b> to open a new tab).</p>
+>>>>>>> ac4d193082477ec28a8b6faf889badb7803528b0
 
 <h2 id="ButtonOutlining">Outlining</h2>
 
@@ -150,7 +154,11 @@ may easily find the parts of code that contain issues.</p>
     You may apply <b>Undo</b> repeatedly, to go back through all parse-valid states of the code since you loaded the code, or started from <b>New</b>.
     Use the <b>Redo</b> command to revert the last <b>Undo</b> if you went back too far.</p>
 
+<<<<<<< HEAD
+    <p>The keyboard shortcut for <b>Undo</b> is <b>ctrl+z</b>, and for <b>Redo</b> is <b>ctrl+y</b>.</p>
+=======
     <p>The keyboard shortcut for <b>Undo</b> is <b>Ctrl+z</b>, and for <b>Redo</b> is <b>Ctrl+y</b>.</p>
+>>>>>>> ac4d193082477ec28a8b6faf889badb7803528b0
 
 <h1 id="Editor">2. Code editor</h1>
 
@@ -324,7 +332,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
  <p> If you want to insert new instructions in a place where there is no <el-code>new code</el-code> prompt, then <i>either</i>:</p>
     <ul>
     <li>select the instruction immediately <i>before</i> where you want the new instruction and press <b>Enter</b> <i>or</i></li>
-    <li>select the instruction immediately <i>after</i> where you want the new instruction and press <b>Shift-Enter</b></li>
+    <li>select the instruction immediately <i>after</i> where you want the new instruction and press <b>Shift+Enter</b></li>
 </ul>
 
 <h3 class="no-TOC" >How to remove unneeded <el-code>new code</el-code> prompts</h3>
@@ -346,17 +354,42 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
  <tr><td>&darr;</td> <td>Select next frame<br> (within peer-level only). </td> <td>Select next frame<br> &nbsp;(in tab order). </td> </tr>
  <tr><td>&larr;</td> <td>Select parent frame (if any).</td> <td>Move text cursor left within field.</td> </tr>
  <tr><td>&rarr;</td> <td>Select first child frame (if any).</td> <td>Move text cursor right within field.</td> </tr>
- <tr><td>Shift- &uarr;</td> <td>Add previous frame (peer-level) to current selection.</td> <td>If auto-complete options are offered (drop-down list), move the selection down one in the list. (See also Enter)</td> </tr>
- <tr><td>Shift- &darr;</td> <td>Add next frame (peer-level) to current selection.</td> <td>If auto-complete options are offered (drop-down list), move the selection up one in the list. (See also Enter)</td> </tr>
+ <tr><td>Shift+&uarr;</td> <td>Add previous frame (peer-level) to current selection.</td> <td>If auto-complete options are offered (drop-down list), move the selection down one in the list. (See also Enter)</td> </tr>
+ <tr><td>Shift+&darr;</td> <td>Add next frame (peer-level) to current selection.</td> <td>If auto-complete options are offered (drop-down list), move the selection up one in the list. (See also Enter)</td> </tr>
  <tr><td>Esc</td> <td>Escape from the code editor, and put focus on the first Button in the IDE</td> <td> </td> </tr>
+<<<<<<< HEAD
+ <tr><td>ctrl+o</td> <td>Toggle (expand/collapse) outlining on selected frame.</td> <td>Toggle (expand/collapse) outlining on the frame enclosing this field.</td> </tr>
+ <tr><td>ctrl+O <br>ctrl+Shift+o</td> <td>Toggle (expand/collapse) outlining on all frames.</td> <td>Toggle (expand/collapse) outlining on all frames.</td> </tr>
+=======
  <tr><td>Ctrl+o</td> <td>Toggle (expand/collapse) outlining on selected frame.</td> <td>Toggle (expand/collapse) outlining on the frame enclosing this field.</td> </tr>
  <tr><td>Ctrl+O <br>Ctrl+Shift-o</td> <td>Toggle (expand/collapse) outlining on all frames.</td> <td>Toggle (expand/collapse) outlining on all frames.</td> </tr>
+>>>>>>> ac4d193082477ec28a8b6faf889badb7803528b0
  </table>
  </p>
 
 <h2 id="EditingCode">Editing code</h2>
  <table>
  <tr><th style="width:8%">Keystroke</th><th style="width:46%">On a selected Frame</th> <th style="width:46%">On a selected Field</th> </tr>
+<<<<<<< HEAD
+ <tr><td>Alt+t</td> <td align="center" colspan="2">Remove all <el-code>new code</el-code> prompts that can be removed.<br> This is equivalent to clicking on the Trim button. <br> (This cannot be ctrl+t as that is defined and executed by the browser). </td> </tr>
+ <tr><td>Backspace</td> <td>On any <el-code>new code</el-code> prompt: delete the prompt. (Note that all <el-code>new code</el-code> prompts can be removed with the +/- button above the code pane).<br> <br> On a new, unmodified, frame, or from any unedited field within that new frame: delete the whole frame and go back to the prompt. This capability is to facilitate deleting a frame created unintentionally. As soon as any field has been edited, or any child frame added &#8211; the frame can only be deleted using ctrl+Delete (see below). </td> <td>Delete character to the left of the cursor.</td> </tr>
+ <tr><td>Delete</td> <td></td> <td>Delete the character to the right of the cursor.</td> </tr>
+ <tr><td>ctrl+Delete or<br> ctrl+d </td> <td>Delete the selected frame, including any frames within it.</td> <td></td> </tr>
+ <tr><td>Enter</td> <td>Insert a <el-code>new code</el-code> prompt frame below the selected one, at peer level &#8211; if permissible.</td> <td>If auto-complete options are offered (as a drop-down list), enter the selected option into the field.<br> <br> Otherwise, move to the next field (in the same frame) &#8211; like Tab. <br> <br> For last field in frame only: insert 'new code' after this field. </td> </tr>
+ <tr><td>Shift+Enter</td> <td>Insert a <el-code>new code</el-code> prompt frame above the selected one, at peer level &#8211; if permissible</td> <td>-</td> </tr>
+ <tr><td>ctrl+&uarr;</td> <td>Move selected frame(s) up, within peer level.</td> <td>-</td> </tr>
+ <tr><td>ctrl+&darr;</td> <td>Move selected frame(s) down, within peer level.</td> <td>-</td> </tr>
+ <tr><td>ctrl+&larr;</td> <td></td> <td>Move the cursor to the end of the next 'word' or other transition</td> </tr>
+ <tr><td>ctrl+&rarr;</td> <td></td> <td>Move the cursor to the end of the next 'word' or other transition</td> </tr>
+ <tr><td>ctrl+x</td> <td>Cut selected frame(s) into the scratchpad</td> <td>Cut any selected text from the field</td> </tr>
+ <tr><td>ctrl+v</td> <td>Paste text from the clipboard into the field, at the cursor.</td> <td>On a selected <el-code>new code</el-code> prompt: Paste the frame(s) added to the scratchpad in place of the 'new code' field. If any of the frames to be added is not compatible with the content of the 'new code' field then no action will take place. </td></tr>
+ <tr><td>ctrl+b</td> <td>Insert or remove a breakpoint on the frame</td> <td></td> </tr>
+ <tr><td>ctrl+i</td> <td>Toggle the <el-code>ignore</el-code> setting of a <el-code>test</el-code></td> <td></td> </tr>
+ <tr><td>ctrl+m</td> <td>Open menu of help options</td> <td></td> </tr>
+ <tr><td>ctrl+p</td> <td>Toggle the <el-code>private</el-code> status of members <el-code>property</el-code>, <el-code>function</el-code> or <el-code>procedure</el-code> of a <el-code>class</el-code></td> <td></td> </tr>
+ <tr><td>ctrl+y</td> <td>Redo last undo<br> provided that the code you undid from was parsing successfully </td> <td></td> </tr>
+ <tr><td>ctrl+z</td> <td>Undo last edit<br> Takes you back to the next most recent version <span>that parsed successfully.<br> </span>Any changes made that did not result in a successful parse will be lost. </td> <td></td> </tr>
+=======
  <tr><td>Alt-t</td> <td align="center" colspan="2">Remove all <el-code>new code</el-code> prompts that can be removed.<br> This is equivalent to clicking on the Trim button. <br> (This cannot be Ctrl+t as that is defined and executed by the browser). </td> </tr>
  <tr><td>Backspace</td> <td>On any <el-code>new code</el-code> prompt: delete the prompt. (Note that all <el-code>new code</el-code> prompts can be removed with the +/- button above the code pane).<br> <br> On a new, unmodified, frame, or from any unedited field within that new frame: delete the whole frame and go back to the prompt. This capability is to facilitate deleting a frame created unintentionally. As soon as any field has been edited, or any child frame added &#8211; the frame can only be deleted using Ctrl+Delete (see below). </td> <td>Delete character to the left of the cursor.</td> </tr>
  <tr><td>Delete</td> <td></td> <td>Delete the character to the right of the cursor.</td> </tr>
@@ -375,6 +408,7 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
  <tr><td>Ctrl+p</td> <td>Toggle the <el-code>private</el-code> status of members <el-code>property</el-code>, <el-code>function</el-code> or <el-code>procedure</el-code> of a <el-code>class</el-code></td> <td></td> </tr>
  <tr><td>Ctrl+y</td> <td>Redo last undo<br> provided that the code you undid from was parsing successfully </td> <td></td> </tr>
  <tr><td>Ctrl+z</td> <td>Undo last edit<br> Takes you back to the next most recent version <span>that parsed successfully.<br> </span>Any changes made that did not result in a successful parse will be lost. </td> <td></td> </tr>
+>>>>>>> ac4d193082477ec28a8b6faf889badb7803528b0
 </table>
 <h4 class="no-TOC">Notes</h4>
 <ul>
@@ -398,7 +432,11 @@ Note that <el-code>main</el-code> will not be shown if the program already conta
 
 <h2 id="ContextMenu">Context menu</h2>
 
+<<<<<<< HEAD
+<p>When an instruction is highlighted, you may right-mouse-click on it, or type <b>ctrl+m</b> to bring up the context menu, for example:</p>
+=======
 <p>When an instruction is highlighted, you may right-mouse-click on it, or type <b>Ctrl+m</b> to bring up the context menu, for example:</p>
+>>>>>>> ac4d193082477ec28a8b6faf889badb7803528b0
 
 <img src="images/IDE_ContextMenu.png" style="width:25%;">
 <p>Note that several of the options show a keyboard shortcut &ndash; which you may use just by selecting the instruction and pressing
@@ -525,7 +563,11 @@ The <a href="#StatusPanel">Run status</a> will then show as <el-code>paused</el-
      by clicking the <a href="#RunControls">Single step</a> button.</p>
 
 <h2 id="Breakpoint">Breakpoints</h2>
+<<<<<<< HEAD
+<p>You can place a <b>breakpoint</b> on an instruction, by selecting the instruction and then hitting <b>ctrl+b</b>,
+=======
 <p>You can place a <b>breakpoint</b> on an instruction, by selecting the instruction and then hitting <b>Ctrl+b</b>,
+>>>>>>> ac4d193082477ec28a8b6faf889badb7803528b0
     or by bringing up the <a href="#ContextMenu">Context menu</a> and selecting <b>set breakpoint</b>.
     The breakpoint will be shown as a red flash adjacent to the instruction:</p>
 
@@ -540,7 +582,11 @@ The <a href="#StatusPanel">Run status</a> will then show as <el-code>paused</el-
 </el-statement>
 </el-code-block>
 
+<<<<<<< HEAD
+    <p>Pressing <b>ctrl+b</b> on a selected instruction that already has a breakpoint will clear that breakpoint.
+=======
     <p>Pressing <b>Ctrl+b</b> on a selected instruction that already has a breakpoint will clear that breakpoint.
+>>>>>>> ac4d193082477ec28a8b6faf889badb7803528b0
     The context menu also offers options to clear a breakpoint that has been set, or to clear <i>all</i> breakpoints from the program in one go.</p>
 
     <p>Breakpoints are active <i>only when running the program via the</i> <a href="#DebugButton">Debug button</a>.
