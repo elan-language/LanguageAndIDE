@@ -3,7 +3,7 @@
   <step>
     <h3>Getting started</h3>
     <p>From the <b>Demo</b> menu, access the <b>Merge sort</b> code,  then select <b>File > Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
-      Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b>) to undo recent changes.</li>
+      Remember that you can use the <b>Undo</b> button (or <b>Ctrl+z</b>) to undo recent changes.</li>
       
     <p> Note that the code contains two functions: 
         <el-method>sort</el-method> and <el-method>merge</el-method>, plus two tests - one to test each function -
@@ -11,7 +11,7 @@
         The <el-kw>assert</el-kw>s in <el-kw>test </el-kw><el-comment>merge</el-comment> are all showing <el-msg>pass</el-msg>
         because the implementation of the <el-method>merge</el-method> function is complete and correct.
         The <el-kw>assert</el-kw>s in <el-kw>test </el-kw><el-comment>sort</el-comment> are all failing
-        with the message: <el-msg class="error">actual: [x]</el-msg>. Looking at the code for the 
+        with the message: <el-msg class="error">actual: [x]</el-msg>. Looking at the code for the
         <el-method>sort</el-method> it is not hard to see why: this is merely a 'skeletal' implementation:
         sufficient code only to compile, not to run correctly. Your task is to implement <el-method>sort</el-method> <i>properly</i>, until all the tests
         pass. Your implementation should:
@@ -23,7 +23,7 @@
         </ul>
       </p>
 
-    <hint>HINTNUMBER: Recursion</hint> 
+    <hint>HINTNUMBER: Recursion</hint>
     <content>
       <ul>
        <li>Writing a recursive function means that in <i>one or more</i> places within your implementation of <el-method>sort</el-method>
@@ -36,13 +36,13 @@
       </ul>
     </content>
 
-    <hint>HINTNUMBER: Getting started</hint> 
+    <hint>HINTNUMBER: Getting started</hint>
     <content>
       <p>The following is generic advice for writing a function where there might be more than one path to the result:
         <ul>
-          <li>start by defining a <el-kw>variable</el-kw> named <el-id>result</el-id> 
+          <li>start by defining a <el-kw>variable</el-kw> named <el-id>result</el-id>
             and then returing <el-id>result</el-id> at the end of the function. (Elan deliberately
-            does not permit you to <el-kw>return</el-kw> from multiple places in a function - or a 
+            does not permit you to <el-kw>return</el-kw> from multiple places in a function - or a
             procedure - because that breaks the principles of structured programming.)</li>
           <li><el-id>result</el-id> needs to be initialised with a value of the correct <i>type</i>,
           as defined in the signature of the <el-method>sort</el-method> function. This could
@@ -53,7 +53,7 @@
       </p>
     </content>
 
-    <hint>HINTNUMBER: Description of the algorithm</hint> 
+    <hint>HINTNUMBER: Description of the algorithm</hint>
     <content>
         <ul>
           <li>If the input list is empty or has only one element, it does not need to be sorted</li>
@@ -66,10 +66,10 @@
       </p>
     </content>
 
-    <hint>HINTNUMBER: Some useful coding idioms and hints</hint> 
+    <hint>HINTNUMBER: Some useful coding idioms and hints</hint>
     <content>
         <ul>
-          <li>Define a <el-kw>variable</el-kw> <i>only</i> where the named value must later be re-assigned. 
+          <li>Define a <el-kw>variable</el-kw> <i>only</i> where the named value must later be re-assigned.
           In all other cases, define a named value with a <el/kw>let</el>.</li>
           <li>The method <el-method>length</el-method> - called as a 'dotted' method on a named value
           holding a list returns its length as an integer.</li>
@@ -86,7 +86,7 @@
       </p>
     </content>
 
-    <hint>HINTNUMBER: Suggested structure</hint> 
+    <hint>HINTNUMBER: Suggested structure</hint>
     <content>
     A complete solution can consist only of these instructions. However, it is not necessarily wrong to use more instructions if you choose to.
       <el-code-block>
@@ -111,7 +111,7 @@
       work out - <i>with careful reference to Hints 3 & 4</i>, what should go into each field.
     </content>
 
-    <hint>HINTNUMBER: First fields shown</hint> 
+    <hint>HINTNUMBER: First fields shown</hint>
     <content>
        This code shows the first field of each instruction completed.
        <el-code-block>
@@ -133,16 +133,16 @@
       </el-code-block>
     </content>
 
-    <hint>HINTNUMBER: Method calls shown </hint> 
+    <hint>HINTNUMBER: Method calls shown </hint>
     <content>
       This code now shows methods that are called in the remaining expression fields,
-      but does not show the arguments that must be passed into them. 
+      but does not show the arguments that must be passed into them.
       <el-code-block>
         <el-func class="ok multiline" >
           <el-top><el-kw>function </el-kw><el-method><el-field><el-txt>sort</el-txt></el-field></el-method>(<el-field  class="optional ok"><el-txt><el-id>li</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt></el-field>)<el-kw> returns </el-kw><el-field><el-txt><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt></el-field></el-top>
           <el-statement ><el-kw>variable </el-kw><el-field><el-txt><el-id>result</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-id>li</el-id></el-txt></el-field></el-statement>
           <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>len</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>...</el-txt></el-statement>
-          
+
           <el-statement><el-top><el-kw>if </el-kw><el-field><el-txt><el-id>len</el-id> &gt; <el-lit>1</el-lit></el-txt></el-field><el-kw> then</el-kw></el-top>
             <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>mid</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-id>len</el-id> ...</el-txt></el-field></el-statement>
             <el-statement ><el-kw>let </el-kw><el-field><el-txt><el-id>frontHalf</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>sort</el-method>...</el-txt></el-field></el-statement>
@@ -155,7 +155,7 @@
       </el-code-block>
     </content>
 
-    <hint>HINTNUMBER: The complete solution</hint> 
+    <hint>HINTNUMBER: The complete solution</hint>
     <content>
        You can still gain some marks by correctly copying this code into the editor
        and showing that the tests now all pass. <i>With careful reference to Hints 3 & 4</i>,

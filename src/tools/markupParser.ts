@@ -32,6 +32,8 @@ import {
   stepTag,
   titleEndTag,
   titleTag,
+  versionEndTag,
+  versionTag,
 } from "./parserConstants";
 
 let currentDir = "";
@@ -92,7 +94,6 @@ export async function processStep(
   updated = await processHints(updated, stepInstance);
   updated = await processQuestions(updated, stepInstance);
   updated = await processLoads(updated, stepInstance);
-  updated = await processHelps(updated, stepInstance);
 
   updated = updated.replaceAll(currentStepNumber, num).replaceAll(currentStepId, id);
 
@@ -125,6 +126,7 @@ export async function processStep(
 
   const notesInput = outDoc.createElement("textarea");
   notesInput.className = "notes";
+  notesInput.id = `notes${stepInstance}`;
   notesInput.placeholder = "Student or teacher may optionally add notes here";
 
   div.appendChild(notesHeading);
@@ -573,15 +575,24 @@ export async function processCode(source: string, startTag: string, endTag: stri
   return applyChanges(source, updates);
 }
 
-export function processTitle(source: string): [string, string] {
-  const start = source.indexOf(titleTag);
-  const end = source.indexOf(titleEndTag);
+export function processTitle(source: string): [string, string, string] {
+  const startTitle = source.indexOf(titleTag);
+  const endTitle = source.indexOf(titleEndTag);
+  let title = "";
+  let version = "";
 
-  if (start !== -1 && end !== -1) {
-    const title = source.slice(start + titleTag.length, end);
-    source = source.slice(0, start) + source.slice(end + titleEndTag.length);
-    return [title, source];
+  if (startTitle !== -1 && endTitle !== -1) {
+    title = source.slice(startTitle + titleTag.length, endTitle);
+    source = source.slice(0, startTitle) + source.slice(endTitle + titleEndTag.length);
   }
 
-  return ["", source];
+  const startVersion = source.indexOf(versionTag);
+  const endVersion = source.indexOf(versionEndTag);
+
+  if (startVersion !== -1 && endVersion !== -1) {
+    version = source.slice(startVersion + versionTag.length, endVersion);
+    source = source.slice(0, startVersion) + source.slice(endVersion + versionEndTag.length);
+  }
+
+  return [title, version, source];
 }

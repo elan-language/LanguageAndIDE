@@ -20,7 +20,7 @@ test('copy code', async ({ page }) => {
     button: 'right'
   });
 
-  await page.getByText('copy (Ctrl-c)').click();
+  await page.getByText('copy ').click();
 
   await page.waitForTimeout(1000);
 
@@ -90,7 +90,7 @@ test('copy multiple code', async ({ page }) => {
     button: 'right'
   });
 
-  await page.getByText('copy (Ctrl-c)').click();
+  await page.getByText('copy ').click();
 
   await page.waitForTimeout(1000);
 
@@ -260,10 +260,10 @@ test('paste multiple code', async ({ page }) => {
     button: 'right'
   });
 
-  await page.getByText('paste (Ctrl-v)').click();
+  await page.getByText('paste ').click();
 
   await expect(page.locator('#var4')).toContainText('a');
-  await expect(page.locator('#var7 input')).toHaveValue('b');
+  await expect(page.locator('#var7')).toContainText('b');
 });
 
 test('paste multiple code with keyboard', async ({ page }) => {
@@ -284,7 +284,7 @@ test('paste multiple code with keyboard', async ({ page }) => {
   await page.keyboard.press('Control+v');
 
   await expect(page.locator('#var4')).toContainText('a');
-  await expect(page.locator('#var7 input')).toHaveValue('b');
+  await expect(page.locator('#var7')).toContainText('b');
 });
 
 test('paste with new line1', async ({ page }) => {

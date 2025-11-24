@@ -1,5 +1,0 @@
-# afd8fa4cd2c5ee871362bb122f26ec5e6b04dc6bb5197b37c7043e68f5b8f9d1 Elan 1.7.0 guest default_profile valid
-
-main
-  let a be createFileForWriting
-end main

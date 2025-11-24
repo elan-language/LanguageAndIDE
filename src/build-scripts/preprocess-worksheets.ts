@@ -1,4 +1,5 @@
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { isElanProduction } from "../environment";
 import {
   processCode,
   processFinals,
@@ -7,7 +8,6 @@ import {
   setCurrentDir,
 } from "../tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../tools/parserConstants";
-import { isElanProduction } from "../environment";
 
 const rootdir = `${__dirname}/../../..`;
 
@@ -29,7 +29,7 @@ export function getWorksheetSubdir(sourceDir: string): string[] {
   return readdirSync(sourceDir).filter((s) => statSync(sourceDir + "/" + s).isDirectory());
 }
 
-function wrapInWorkSheetBoilerPlate(content: string, title: string) {
+function wrapInWorkSheetBoilerPlate(content: string, title: string, version: string) {
   const prodUrl = `https://elan-lang.org/`;
   const devUrl = `https://elan-language.github.io/LanguageAndIDE/`;
   const hostUrl = isElanProduction ? prodUrl : devUrl;
@@ -49,12 +49,33 @@ function wrapInWorkSheetBoilerPlate(content: string, title: string) {
   <body>
     <div id="worksheet">
     <div class="docTitle">${title}</div>
+    <div class="version" hidden="">${version}</div>
 
-    <ol>
-        <li><label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
-      <li>Set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</li>
-      <li class="transient"><button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span></li>
-    </ol>
+    <div class="transient">
+      <p class="transient">Choose <i>either one</i> of the two options below:</p>
+
+      <p><b>Option 1: Start this worksheet from scratch</b></p>
+
+      <ul>
+          <li>First <label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
+          <li>Then <button id="auto-save" disabled="">Create and save a new answers file</button>.
+      </ul>
+
+      <p><b>Option 2: Continue, or view, previous work</b></p>
+
+      <ul>
+          <li><button id="load-answers">Load a previously-saved (.json) answers file</button>
+          <li>Immediately after loading, you will immediately be asked to confirm that you want to save any further edits to this file.</li>
+          (If you don't want to do that, hit <b>Cancel</b> on the dialog to return to these two options. Note that you
+          may make a copy of your answers file outside of the Elan IDE.)
+      </ul>
+
+      <p>In either case, any edits that you subsequently make in the worksheet will be auto-saved to the file.</p>
+    </div>
+
+    <input class="question" type="text" id="postsave-username" disabled=""/>
+
+    <p>Set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</p>
 
     <div class="license">
       <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
@@ -65,7 +86,7 @@ function wrapInWorkSheetBoilerPlate(content: string, title: string) {
     </div> 
       ${content}
     <script src="${hostUrl}diff.js"></script>
-    <script src="${hostUrl}worksheet-scripts.js"></script>
+    <script src="${hostUrl}worksheet-model-scripts.js"></script>
   </body>
 </html>`;
 }
@@ -80,7 +101,8 @@ function appendFooter(content: string) {
 export async function processWorksheet(fileName: string) {
   let source = loadFileAsSourceNew(fileName);
   let title = "";
-  [title, source] = processTitle(source);
+  let version = "";
+  [title, version, source] = processTitle(source);
   source = appendFooter(source);
 
   let updatedContent = await processCode(source, codeTag, codeEndTag);
@@ -88,7 +110,7 @@ export async function processWorksheet(fileName: string) {
   updatedContent = await processSteps(updatedContent);
   updatedContent = await processFinals(updatedContent);
 
-  updatedContent = wrapInWorkSheetBoilerPlate(updatedContent, title);
+  updatedContent = wrapInWorkSheetBoilerPlate(updatedContent, title, version);
 
   updateFileNew(fileName.replace(".raw", ""), updatedContent);
 }

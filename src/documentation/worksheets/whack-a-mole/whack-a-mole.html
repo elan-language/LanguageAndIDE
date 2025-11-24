@@ -22,7 +22,7 @@
           <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
           <li>Select <b>File > New</b> to start a new program,
             then select <b>File > Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
-            Remember that you can use the <b>Undo</b> button (or <b>Ctrl-z</b>) to undo recent changes.</li>
+            Remember that you can use the <b>Undo</b> button (or <b>Ctrl+z</b>) to undo recent changes.</li>
           <li>Remember that if the code editor has a tinted background it does not have focus and will not respond
               to edits. To give it focus click within the editor. (If a program is running, you will need to stop it first.)
           </li>
@@ -118,7 +118,7 @@
             quickly and press the corresponding digit on the keyboard. We can do this with a loop. Start by
             deleting the last three instructions within <el-code>main</el-code>.
             (To delete an instruction, select it by clicking on the keyword at the start of the instruction and then
-            press <b>Ctrl-Delete</b> or <b>Ctrl-d</b>). You should be back to this:
+            press <b>Ctrl+Delete</b> or <b>Ctrl+d</b>). You should be back to this:
             <el-code-block>
                 <main class="ok multiline">
                     <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg></el-top>
@@ -131,7 +131,7 @@
         </li>
         <li><i>After the instruction that creates the array</i>, add this one to label the holes:
             <el-code-block>
-                <el-statement class="focused ok" id="print23" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-kw>print </el-kw><el-field id="expr24" class="optional ok" tabindex="0"><el-txt>"<el-lit>0  1  2  3  4  5  6  7  8  9</el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl></el-field></el-statement>
+                <el-statement class="focused ok" id="print23" tabindex="0" title="Right-mouse-click or Ctrl+m to show context menu"><el-kw>print </el-kw><el-field id="expr24" class="optional ok" tabindex="0"><el-txt>"<el-lit>0  1  2  3  4  5  6  7  8  9</el-lit>"</el-txt><el-place><i>expression</i></el-place><el-compl></el-compl></el-field></el-statement>
             </el-code-block>
         noting that there are <i>two</i> spaces between each digit.</li>
 
@@ -141,9 +141,9 @@
             an '<el-kw>each</el-kw> loop'. So as the last instruction within
             <el-kw>main</el-kw> add an <el-kw>each</el-kw> loop, completed to look like this:</li>
             <el-code-block>
-                <el-statement class="ok multiline" id="each59" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu">
+                <el-statement class="ok multiline" id="each59" tabindex="0" title="Right-mouse-click or Ctrl+m to show context menu">
                     <el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident61" class="ok" tabindex="0"><el-txt><el-id>hole</el-id></el-txt><el-place><i>variableName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="A variable name must start with a lower-case letter, optionally followed by any letters (lower or upper case), and/or numeric digits, and/or underscores - nothing else.">?</el-help></el-field><el-kw> in </el-kw><el-field id="expr62" class="ok" tabindex="0"><el-txt><el-id>holes</el-id></el-txt><el-place><i>source</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Field may contain a literal value, a reference to a variable, or an expression">?</el-help></el-field><el-msg></el-msg><el-fr>9</el-fr></el-top>
-                    <el-statement class="focused ok empty" id="select99" tabindex="0" title="Right-mouse-click or Ctrl-m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set throw try variable while #</el-help></el-select></el-statement>
+                    <el-statement class="focused ok empty" id="select99" tabindex="0" title="Right-mouse-click or Ctrl+m to show context menu"><el-select><el-txt></el-txt><el-place>new code</el-place><el-help class="selector"> call each for if let print repeat set throw try variable while #</el-help></el-select></el-statement>
                     <el-kw>end each</el-kw>
                     </el-statement>
             </el-code-block>
@@ -189,9 +189,9 @@
                 putting the fixed value <el-kw>true</el-kw> into the condition field.</li>
             <li> Cut all the instructions within <el-kw>main</el-kw> except the initial definition of
                 the <el-id>holes</el-id> array and the <el-kw>while</el-kw>, and paste them into the <el-kw>while</el-kw> loop. To do this,
-                select the top-most instruction you want to move, then press <b>Ctrl-&#8595;</b> to include successive
-                instructions below it, and press <b>Ctrl-x</b> to cut them. Then select the <el-code>new code</el-code>
-                within the <el-kw>while</el-kw> loop and paste in the cut instructions with <b>Ctrl-v</b>.
+                select the top-most instruction you want to move, then press <b>Ctrl+&#2193;</b> to include successive
+                instructions below it, and press <b>Ctrl+x</b> to cut them. Then select the <el-code>new code</el-code>
+                within the <el-kw>while</el-kw> loop and paste in the cut instructions with <b>Ctrl+v</b>.
                 (You may also perform cut and paste from the context menu, which you access with <b>right-mouse-click</b>
                 on an instruction).</li>
             <li>If you try running the program now &ndash; noting that because the loop never exits you will need to press the
@@ -267,7 +267,7 @@
             <li>Try removing the <el-code>.<el-method>asString</el-method>()</el-code> and wait a couple of seconds to see
             the compile error. Take note of what the error message says so that if you see this again in future you
             will realise that you are trying to compare values of different types. Then restore the <el-code>.<el-method>asString</el-method>()</el-code> -
-            you don't need to type it again, you can just press <b>Ctrl-z</b> (undo).
+            you don't need to type it again, you can just press <b>Ctrl+z</b> (undo).
             </li>
             <li>Now within the body of the <el-kw>if</el-kw> instruction add:
             <el-code-block>

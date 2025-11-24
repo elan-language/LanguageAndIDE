@@ -243,6 +243,8 @@ async function runProgram() {
 }
 
 runButton?.addEventListener("click", async () => {
+  file.removeAllSelectorsThatCanBe();
+  await renderAsHtml(false);
   runButton.focus();
   showDisplayTab();
   debugMode = singleStepping = processingSingleStep = false;
@@ -1005,7 +1007,7 @@ function updateDisplayValues() {
     }
 
     if (canUndo()) {
-      enable(undoButton, "Undo last change (Ctrl-z)");
+      enable(undoButton, "Undo last change (Ctrl+z)");
     } else {
       disable([undoButton], "Nothing to undo");
     }
@@ -1013,7 +1015,7 @@ function updateDisplayValues() {
     if (nextFileIndex === -1) {
       disable([redoButton], "Nothing to redo");
     } else {
-      enable(redoButton, "Redo last change (Ctrl-y)");
+      enable(redoButton, "Redo last change (Ctrl+y)");
     }
 
     if (autoSaveFileHandle) {
@@ -1820,7 +1822,6 @@ function handleRunWorkerFinished() {
   file.setRunStatus(RunStatus.default);
   clearPaused();
   updateDisplayValues();
-  showCode();
 }
 
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];

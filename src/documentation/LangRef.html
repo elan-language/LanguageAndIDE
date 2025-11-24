@@ -192,7 +192,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 <h4 class="no-TOC acc-title" tabindex="0">Examples of procedures</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Calling a procedure:</p>
-<el-code-block source="sort.elan">
+<el-code-block source="inPlaceRippleSort.elan">
   <el-statement class="ok" id="var3" tabindex="0"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>li</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt>[<el-lit>3</el-lit>, <el-lit>6</el-lit>, <el-lit>1</el-lit>, <el-lit>0</el-lit>, <el-lit>99</el-lit>, <el-lit>4</el-lit>, <el-lit>67</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
   <el-statement class="ok" id="call6" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident7" class="ok" tabindex="0"><el-txt><el-method>inPlaceRippleSort</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args8" class="optional ok" tabindex="0"><el-txt><el-id>li</el-id></el-txt><el-place><i>arguments</i></el-place></el-field>)</el-top></el-statement>
   <el-statement class="ok" id="print9" tabindex="0"><el-kw>print </el-kw><el-field id="expr10" class="optional ok" tabindex="0"><el-txt><el-id>li</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -228,8 +228,6 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 <hr>
 </div></div>
 
-<div id="return"></div>
-<div id="returns"></div>
 <h2 id="function"><el-kw>function</el-kw></h2>
 <p>A <el-kw>function</el-kw> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in a statement or expression. Its name must follow  the rules for an <a href="#Identifier">identifier</a>.</p>
 <p>Unlike a <a href="#procedure">procedure</a>:</p>
@@ -237,9 +235,19 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
  <li>a function always returns a value.</li>
  <li>a function can have no side effects (i.e. no references outside its code) and cannot depend on any <a href="LibRef.html#SystemMethods">System methods</a>.</li>
  <li>a function's execution cannot be interrupted by any external event, though a a non-terminaring loop in a function may be detected with tests that <a href="#ignore">time out</a>.</li>
-</ul >
-<p>The <el-kw>return</el-kw> statement is followed by the value returned by the function.</p>
-
+</ul>
+<p id="returns"></p>A function definition is comprised of its input parameters (with their Types), followed by the automatically added keyword <el-kw>returns</el-kw>,
+and the Type of the value that will be returned, for example:
+<el-code-block source="function.elan">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>factorial</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params8" class="optional ok" tabindex="-1"><el-txt><el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type9" class="ok" tabindex="-1"><el-txt><el-type>Int</el-type></el-txt></el-field></el-top>
+</el-code-block>
+</p>
+<p id="return">A <el-kw>return</el-kw> statement is automatically added as the last instruction of a function, since a function <i>must</i> return a value,
+and there can be only one <el-kw>return</el-kw> statement in a function.</p>
+<p>You follow the <el-kw>return</el-kw> statement with the value to be returned by the function. This may be an expression that will be evaluated before returning. for example:</p>
+<el-code-block source="returnExp.elan">
+<el-statement class="ok" id="return6" tabindex="-1"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw>(<el-id>a</el-id>^<el-id>b</el-id>) &lt; (<el-id>b</el-id>^<el-id>a</el-id>)<el-kw><br>then </el-kw><el-id>true</el-id><el-kw><br>else </el-kw><el-id>false</el-id></el-txt></el-field></el-statement>
+</el-code-block>
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of a function and reference to it</h4>
 <div class="acc-body">
@@ -287,15 +295,14 @@ nor with some system provided functions (e.g. <el-method>abs</el-method>) and pr
 
 <div id="as"></div>
 <h3 class="no-TOC" id="Parameter">Parameters</h3>
-Parameters for both a <el-kw>procedure</el-kw> and a <el-kw>function</el-kw> are defined in exactly the same way. Each parameter definition takes the form:
-<br>&nbsp;&nbsp;&lt;named value&gt; <el-kw>as</el-kw> &lt;Type&gt;
-<br> for example:
+Parameters for both a <el-kw>procedure</el-kw> and a <el-kw>function</el-kw> are defined in exactly the same way.<br>Each parameter definition takes the form:
+<el-code>named value <el-kw>as</el-kw> Type</el-code>, for example:
 <el-code-block source="ageAsInt.elan">
 <el-field id="params50" class="optional ok" tabindex="0"><el-txt><el-id>age</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>
 </el-code-block>
 
 <h3  class="no-TOC" id="recursion">Recursion</h3>
-Procedures and functions may be called or referenced recursively. For example, a simple factorial calculation:
+Procedures and functions may be called or referenced recursively, as in this simple factorial calculation:
 <el-code-block source="factorial.elan">
 <el-func class="ok multiline" id="func5" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>factorial</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params8" class="optional ok" tabindex="-1"><el-txt><el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type9" class="ok" tabindex="-1"><el-txt><el-type>Int</el-type></el-txt></el-field></el-top>
@@ -377,7 +384,7 @@ Procedures and functions may be called or referenced recursively. For example, a
 <h4 class="no-TOC" id="ignore">Ghosting a test to have it ignored</h4>
 <p>To ignore tests, use <a href="IDENavigation.html#EditInstructions"><el-code>ghosting</el-code></a> either on a test:</p>
 
-<el-code-block source="test_ghosted.html">
+<el-code-block source="snake_FP.elan">
 <el-test class="ghosted ok multiline" id="test210" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment212" class="optional ok" tabindex="-1"><el-txt>clockTick</el-txt></el-field></el-top>
 <el-statement class="ok" id="let213" tabindex="-1"><el-kw>let </el-kw><el-field id="var214" class="ok" tabindex="-1"><el-txt><el-id>g1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr215" class="ok" tabindex="-1"><el-txt><el-method>newGame</el-method>(<el-kw>new</el-kw> <el-type>Random</el-type>())</el-txt></el-field></el-statement>
@@ -385,20 +392,23 @@ Procedures and functions may be called or referenced recursively. For example, a
 <el-statement class="ok" id="let219" tabindex="-1"><el-kw>let </el-kw><el-field id="var220" class="ok" tabindex="-1"><el-txt><el-id>g3</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr221" class="ok" tabindex="-1"><el-txt><el-method>clockTick</el-method>(<el-id>g2</el-id>, "<el-lit>s</el-lit>")</el-txt></el-field></el-statement>
 <el-statement class="ok" id="assert222" tabindex="-1"><el-kw>assert </el-kw><el-field id="text223" class="ok" tabindex="-1"><el-txt><el-id>g3</el-id>.<el-id>head</el-id></el-txt></el-field><el-kw> is </el-kw><el-field id="expr224" class="ok" tabindex="-1"><el-txt><el-method>newSquare</el-method>(<el-lit>22</el-lit>, <el-lit>16</el-lit>)</el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-statement class="ok" id="assert225" tabindex="-1"><el-kw>assert </el-kw><el-field id="text226" class="ok" tabindex="-1"><el-txt><el-id>g3</el-id>.<el-id>body</el-id>.<el-method>length</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr227" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-kw>end test</el-kw></el-test>
+<el-kw>end test</el-kw>
+</el-test>
 </el-code-block>
 
 <p>or just on specific <el-kw>assert</el-kw>s:</p>
 
-<el-code-block source="assert_ghosted.html">
+<el-code-block source="snake_FP.elan">
+</el-test>
 <el-test class="ok multiline" id="test210" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment212" class="optional ok" tabindex="-1"><el-txt>clockTick</el-txt></el-field></el-top>
 <el-statement class="ok" id="let213" tabindex="-1"><el-kw>let </el-kw><el-field id="var214" class="ok" tabindex="-1"><el-txt><el-id>g1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr215" class="ok" tabindex="-1"><el-txt><el-method>newGame</el-method>(<el-kw>new</el-kw> <el-type>Random</el-type>())</el-txt></el-field></el-statement>
 <el-statement class="ok" id="let216" tabindex="-1"><el-kw>let </el-kw><el-field id="var217" class="ok" tabindex="-1"><el-txt><el-id>g2</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr218" class="ok" tabindex="-1"><el-txt><el-method>newApple</el-method>(<el-id>g1</el-id>)</el-txt></el-field></el-statement>
 <el-statement class="ok" id="let219" tabindex="-1"><el-kw>let </el-kw><el-field id="var220" class="ok" tabindex="-1"><el-txt><el-id>g3</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr221" class="ok" tabindex="-1"><el-txt><el-method>clockTick</el-method>(<el-id>g2</el-id>, "<el-lit>s</el-lit>")</el-txt></el-field></el-statement>
-<el-statement class="selected focused ghosted ok" id="assert222" tabindex="-1"><el-kw>assert </el-kw><el-field id="text223" class="ok" tabindex="-1"><el-txt><el-id>g3</el-id>.<el-id>head</el-id></el-txt></el-field><el-kw> is </el-kw><el-field id="expr224" class="ok" tabindex="-1"><el-txt><el-method>newSquare</el-method>(<el-lit>22</el-lit>, <el-lit>16</el-lit>)</el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ghosted ok" id="assert222" tabindex="-1"><el-kw>assert </el-kw><el-field id="text223" class="ok" tabindex="-1"><el-txt><el-id>g3</el-id>.<el-id>head</el-id></el-txt></el-field><el-kw> is </el-kw><el-field id="expr224" class="ok" tabindex="-1"><el-txt><el-method>newSquare</el-method>(<el-lit>21</el-lit>, <el-lit>16</el-lit>)</el-txt></el-field> <el-msg class="error">actual (computed): 22, 16</el-msg></el-statement>
 <el-statement class="ok" id="assert225" tabindex="-1"><el-kw>assert </el-kw><el-field id="text226" class="ok" tabindex="-1"><el-txt><el-id>g3</el-id>.<el-id>body</el-id>.<el-method>length</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr227" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-kw>end test</el-kw></el-test>
+<el-kw>end test</el-kw>
+</el-test>
 </el-code-block>
 
 <p>Even when <el-kw>test</el-kw>s or <el-kw>assert</el-kw>s are <el-code>ghosted</el-code>, all the tests will be run and their status shown, but
@@ -450,12 +460,13 @@ Examples:
 </el-class>
 </el-code-block>
 Having defined a record's Type, such as <el-code>Game</el-code> above, you can create as many instances as you wish using the following syntax to specify the values:
-<el-code-block source="newGame from snake_FP.elan">
+<el-code-block source="snake_FP.elan">
 <el-statement class="ok" id="let603" tabindex="0"><el-kw>let </el-kw><el-field id="var604" class="ok" tabindex="0"><el-txt><el-id>g1</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr605" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Game</el-type>()<el-kw> with </el-kw><br><el-id>head</el-id><el-kw> set to </el-kw><el-method>newSquare</el-method>(<el-lit>22</el-lit>, <el-lit>15</el-lit>), <br><el-id>key</el-id><el-kw> set to </el-kw>"<el-lit>d</el-lit>", <br><el-id>isOn</el-id><el-kw> set to </el-kw><el-id>true</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 <p>Note that you are not <em>required</em> to provide a value for each property because, where a property is not specified in the <el-kw>with</el-kw> clause (as above), that property will be given the empty (default) value of the correct Type.</p>
 <p>You can then read the values from the properties using <a href="#dotSyntax">dot syntax</a> for example:</p>
-<el-code-block source=""><el-statement class="" id="print15" tabindex="0"><el-kw>print </el-kw><el-field id="expr16" class="optional" tabindex="0"><el-txt><el-id>sq</el-id>.<el-id>size</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
+<el-code-block>
+<el-statement class="" id="print15" tabindex="0"><el-kw>print </el-kw><el-field id="expr16" class="optional" tabindex="0"><el-txt><el-id>sq</el-id>.<el-id>size</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
 </el-code-block>
 <p><el-code>record</el-code> Types are immutable: the properties on an instance may not be changed directly.
   However, you can easily create another instance that is a copy of the original,
@@ -580,7 +591,7 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 <li>a <el-code>function</el-code></li>
 <li>a <el-code>procedure</el-code></li>
 </ul>
-<p>As with a concrete class, any of these members may be made <el-code>private</el-code>, after the corresponding frame has been added, by selecting that member frame and keying <b>Ctrl-p</b>.</p>
+<p>As with a concrete class, any of these members may be made <el-code>private</el-code>, after the corresponding frame has been added, by selecting that member frame and keying <b>Ctrl+p</b>.</p>
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
 <p>You may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> statement. For example:</p>
@@ -602,7 +613,7 @@ If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-kw>interface</el-kw></h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from demo program <el-code>blackjack.elan</el-code> of:
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from a version of program <el-code>blackjack.elan</el-code> of:
 <ul>
  <li>inheritance from <el-kw>interface</el-kw> <el-type>Player</el-type> to <el-kw>abstract class</el-kw> <el-type>Automated</el-type>
   and to <el-kw>class</el-kw> <el-type>HumanPlayer</el-type>, and</li>
@@ -863,7 +874,7 @@ Properties may be modified only from outside the class by means of a <a href="#p
 <ul>
 <li>A <el-code>function</el-code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
 <li>A <el-code>function</el-code> method may directly reference (read only) any <el-kw>property</el-kw> defined on the class as though it were a variable or parameter.</li>
-<li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then keying <b>Ctrl-p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
+<li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 <li>asString() method</li>
 <li>asString method. This is just a regular function method with a specific name, no parameters and returning a String. If defined for a class, then if an instance of the class is printed, the <el-code>asString</el-code> function method will automatically be used. Typically <el-code>asString</el-code> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
 </ul>
@@ -873,12 +884,12 @@ Properties may be modified only from outside the class by means of a <a href="#p
 <ul>
 <li>A procedure method, like a function method, is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
 <li>A procedure method may read, or write to, any <el-kw>property</el-kw> defined on the class.</li>
-<li>A procedure method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then keying <b>Ctrl-p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
+<li>A procedure method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 </ul>
 
 <h2 id="private"><el-kw>private</el-kw> (property, function, procedure)</h2>
 <p>A <el-kw>property</el-kw> may be marked <el-kw>private</el-kw>, in which case it is visible only to code within the class and,
-if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by using the context menu on the property frame or selecting it and keying <b>Ctrl-p</b>.
+if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by using the context menu on the property frame or selecting it and keying <b>Ctrl+p</b>.
 This action is a toggle used both to set and to remove the modifier <el-kw>private</el-kw>.</p>
 <ul>
  <li></li>

@@ -1,0 +1,14 @@
+# 725d19a6d45db8a6a15849fc4694763b697cb43828fde4012a4927eaf352cf1d Elan 1.7.0 guest default_profile valid
+
+function matchAt(a as String, b as String, p as Int) returns Boolean
+  return if a[p] is b[p] then true else false
+end function
+
+class Sequence
+  property matchAt as Func<of String, String, Int => Boolean>
+
+end class
+
+main
+  let m be new Sequence()
+end main

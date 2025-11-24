@@ -22,7 +22,7 @@
     "copy-static-files": "npm run preprocess-worksheets && npm run copy-web-files && npm run update-elan-files-script && cpr ./src/demo_programs ./out/website/demo -o && cpr ./src/documentation ./out/website/documentation -f .*\\.raw\\.html -o && npm run update-documentation",
     "build-website": "npm run copy-static-files && npm run compile-web",
     "compile-test-api": "esbuild ./src/ide/web/elan-api.ts --bundle --format=esm --outfile=out/test/elan-api.js",
-    "compile-web": "esbuild ./out/src/ide/web/web-scripts.js --bundle --outfile=out/website/web-scripts.js && esbuild ./src/ide/web/elan-api.ts --bundle --format=esm --outfile=out/website/elan-api.js && esbuild ./src/ide/web/standalone.ts --bundle --outfile=out/website/standalone.js && esbuild ./src/ide/web/worksheet-scripts.ts --bundle --outfile=out/website/worksheet-scripts.js",
+    "compile-web": "esbuild ./out/src/ide/web/web-scripts.js --bundle --outfile=out/website/web-scripts.js && esbuild ./src/ide/web/elan-api.ts --bundle --format=esm --outfile=out/website/elan-api.js && esbuild ./src/ide/web/standalone.ts --bundle --outfile=out/website/standalone.js && esbuild ./src/ide/web/worksheet-scripts.ts --bundle --outfile=out/website/worksheet-scripts.js && esbuild ./src/ide/web/worksheet-model-scripts.ts --bundle --outfile=out/website/worksheet-model-scripts.js",
     "compile-test": "tsc -p ./test && npm run format-test",
     "compile-src": "tsc -p ./",
     "compile-base": "npm run compile-src && npm run format-src && npm run lint",
