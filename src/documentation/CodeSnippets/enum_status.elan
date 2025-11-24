@@ -1,7 +1,0 @@
-# aa9643b996a9d4c03a9bdf256edd76faf2f5cbc9076ce7393cf3473bd77a1c34 Elan 1.7.0 guest default_profile valid
-
-main
-  variable x set to Status.pending
-end main
-
-enum Status pending, playing
