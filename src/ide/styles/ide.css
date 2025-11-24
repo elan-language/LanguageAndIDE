@@ -418,6 +418,13 @@ button.icon:active img + label
   background-color: #404040;
 }
 
+.context-menu-item .kb {
+  float: right;
+  padding-left: 20px;
+  padding-right: 5px;
+  font-weight: bold;
+}
+
 .dropdown {
   position: relative;
   display: inline-block;
