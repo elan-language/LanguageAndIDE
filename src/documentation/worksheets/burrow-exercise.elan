@@ -12,8 +12,8 @@
 # Run the program to check that this displays a red block in the centre of the Display
 # 5. After the other instructions in main, add an infinite loop ('while true')
 # 6. Select the first of the existing call instructions, then Shift-↓ to also select
-#    the second one, cut them (Ctrl-x) then select the 'new code' within the while loop
-#    and paste them there with Ctrl-v.
+#    the second one, cut them (Ctrl+x) then select the 'new code' within the while loop
+#    and paste them there with Ctrl+v.
 # 7. After the displayBlocks call, add another call to 'blocks.put' to change the block
 #    at x, y to black
 # 8. Add a new 'let' defining 'direction' as being a random integer in the range 0 to 3

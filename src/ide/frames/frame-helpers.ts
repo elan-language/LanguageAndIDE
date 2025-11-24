@@ -1,5 +1,6 @@
 import { CompileError, Severity } from "../../compiler/compile-error";
 import { TestStatus } from "../../compiler/test-status";
+import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
 import { Collapsible } from "./frame-interfaces/collapsible";
 import { Field } from "./frame-interfaces/field";
@@ -278,10 +279,20 @@ export function addPrivateToggleToContextMenu(
   menu: Map<string, [string, (() => boolean) | undefined]>,
 ) {
   if (member.private) {
-    menu.set("makePublic", ["make public - <b>Ctrl-p</b>", member.makePublic]);
+    menu.set("makePublic", [
+      "make public &nbsp;&nbsp; <span class='kb'>Ctrl+p</span>",
+      member.makePublic,
+    ]);
   } else {
-    menu.set("makePrivate", ["make private - <b>Ctrl-p</b>", member.makePrivate]);
+    menu.set("makePrivate", ["make private <span class='kb'>Ctrl+p</span>", member.makePrivate]);
   }
+}
+
+export function addDeleteToContextMenu(
+  member: AbstractFrame,
+  menu: Map<string, [string, (() => boolean) | undefined]>,
+) {
+  menu.set("delete", ["delete <span class='kb'>Ctrl+Backspace</span>", member.deleteSelected]);
 }
 
 export function togglePrivatePublic(member: PossiblyPrivateMember) {
