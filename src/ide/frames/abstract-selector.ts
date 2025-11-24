@@ -261,6 +261,7 @@ export abstract class AbstractSelector extends AbstractFrame {
           : parentHelper_insertOrGotoChildSelector(this.getParent(), false, frame);
         selector.paste(remainingCode);
       }
+      this.getFile().removeAllSelectorsThatCanBe();
     } catch (_e) {
       this.pasteError = `Paste failed: Cannot paste '${code}' into prompt`;
     }
