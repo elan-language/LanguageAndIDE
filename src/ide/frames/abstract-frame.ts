@@ -798,27 +798,33 @@ export abstract class AbstractFrame implements Frame {
 
   getContextMenuItems() {
     const map = new Map<string, [string, (s?: string) => boolean]>();
-    // Must be arrow functions for this binding
-    if (this.isGhosted()) {
-      map.set("unghost", ["unghost", this.unGhost]);
-    } else if (!this.isGhostedOrWithinAGhostedFrame()) {
-      if (this.isGhostable()) {
-        map.set("ghost", ["ghost", this.ghost]);
+    if (this.isGhostedOrWithinAGhostedFrame()) {
+      if (this.isGhosted()) {
+        map.set("unghost", ["unghost", this.unGhost]);
       }
-      map.set("copy", ["copy (Ctrl-c)", this.copySelected]);
-      if (this.isDeletable()) {
-        map.set("cut", ["cut (Ctrl-x)", this.cutSelected]);
-        map.set("delete", ["delete (Ctrl-Delete or Ctrl-Backspace)", this.deleteSelected]);
-      }
+    } else {
       if (this.canInsertAfter()) {
-        map.set("below", ["insert new code below (Enter)", this.below]);
+        map.set("below", ["insert new code below - <b>Enter</b>", this.below]);
       }
       if (this.canInsertBefore()) {
-        map.set("above", ["insert new code above (Shift-Enter)", this.above]);
+        map.set("above", ["insert new code above - <b>Shift-Enter</b>", this.above]);
+      }
+      if (this.isDeletable()) {
+        map.set("delete", [
+          "delete - <b>Ctrl-Delete</b> or <b>Ctrl-Backspace</b>",
+          this.deleteSelected,
+        ]);
       }
       if (this.isMovable()) {
-        map.set("up", ["move up (Ctrl-ArrowUp)", this.up]);
-        map.set("down", ["move down (Ctrl-ArrowDown)", this.down]);
+        map.set("up", ["move up - <b>Ctrl-↑</b>", this.up]);
+        map.set("down", ["move down - <b>Ctrl-↓</b>", this.down]);
+      }
+      if (this.isDeletable()) {
+        map.set("cut", ["cut - <b>Ctrl-x</b>", this.cutSelected]);
+      }
+      map.set("copy", ["copy - <b>Ctrl-c</b>", this.copySelected]);
+      if (this.isGhostable()) {
+        map.set("ghost", ["ghost", this.ghost]);
       }
       if (this.canHaveBreakPoint) {
         if (this.hasBreakpoint()) {
