@@ -17,7 +17,7 @@ export class TestAsn extends CompoundAsn implements AstNode {
   }
 
   private compileTestBody() {
-    return  this.compileChildren();
+    return this.compileChildren();
   }
 
   compile(): string {

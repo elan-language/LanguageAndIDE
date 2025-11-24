@@ -9,10 +9,20 @@
         display: inline;
     }
 
+    #postsave-username
+    {
+        display: none;
+    }
+
 /* After saving ... */
     #worksheet.saved .transient
     {
         display: none;
+    }
+
+     #worksheet.saved #postsave-username
+    {
+        display: inline;
     }
 
 
