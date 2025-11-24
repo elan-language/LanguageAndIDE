@@ -1007,7 +1007,7 @@ function updateDisplayValues() {
     }
 
     if (canUndo()) {
-      enable(undoButton, "Undo last change ");
+      enable(undoButton, "Undo last change (Ctrl+z)");
     } else {
       disable([undoButton], "Nothing to undo");
     }
@@ -1015,7 +1015,7 @@ function updateDisplayValues() {
     if (nextFileIndex === -1) {
       disable([redoButton], "Nothing to redo");
     } else {
-      enable(redoButton, "Redo last change ");
+      enable(redoButton, "Redo last change (Ctrl+y)");
     }
 
     if (autoSaveFileHandle) {
