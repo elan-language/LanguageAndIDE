@@ -21,7 +21,7 @@
 # 8. Within the each loop, call 'set...' methods on b to reduce its existing value for centreY by 1
 #    and to increase its existing radius by 0.2. You will need reference the properties e.g.
 #    b.centreY to do this
-# 9. Select the existing call to displayVectorGraphics, then using cut and paste (Ctrl-x, Ctrl-v) 
+# 9. Select the existing call to displayVectorGraphics, then using cut and paste (Ctrl+x, Ctrl+v) 
 #    move it inside the while loop, placed after the 'end each'
 # 10.To slow down the animation slightly, after that display... instuction call 'pause' 
 #    with a value of 50 (milliseconds).

@@ -591,7 +591,7 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 <li>a <el-code>function</el-code></li>
 <li>a <el-code>procedure</el-code></li>
 </ul>
-<p>As with a concrete class, any of these members may be made <el-code>private</el-code>, after the corresponding frame has been added, by selecting that member frame and keying <b>Ctrl-p</b>.</p>
+<p>As with a concrete class, any of these members may be made <el-code>private</el-code>, after the corresponding frame has been added, by selecting that member frame and keying <b>Ctrl+p</b>.</p>
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
 <p>You may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> statement. For example:</p>
@@ -874,7 +874,7 @@ Properties may be modified only from outside the class by means of a <a href="#p
 <ul>
 <li>A <el-code>function</el-code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
 <li>A <el-code>function</el-code> method may directly reference (read only) any <el-kw>property</el-kw> defined on the class as though it were a variable or parameter.</li>
-<li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then keying <b>Ctrl-p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
+<li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 <li>asString() method</li>
 <li>asString method. This is just a regular function method with a specific name, no parameters and returning a String. If defined for a class, then if an instance of the class is printed, the <el-code>asString</el-code> function method will automatically be used. Typically <el-code>asString</el-code> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
 </ul>
@@ -884,12 +884,12 @@ Properties may be modified only from outside the class by means of a <a href="#p
 <ul>
 <li>A procedure method, like a function method, is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
 <li>A procedure method may read, or write to, any <el-kw>property</el-kw> defined on the class.</li>
-<li>A procedure method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then keying <b>Ctrl-p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
+<li>A procedure method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 </ul>
 
 <h2 id="private"><el-kw>private</el-kw> (property, function, procedure)</h2>
 <p>A <el-kw>property</el-kw> may be marked <el-kw>private</el-kw>, in which case it is visible only to code within the class and,
-if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by using the context menu on the property frame or selecting it and keying <b>Ctrl-p</b>.
+if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by using the context menu on the property frame or selecting it and keying <b>Ctrl+p</b>.
 This action is a toggle used both to set and to remove the modifier <el-kw>private</el-kw>.</p>
 <ul>
  <li></li>
