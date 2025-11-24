@@ -1822,7 +1822,6 @@ function handleRunWorkerFinished() {
   file.setRunStatus(RunStatus.default);
   clearPaused();
   updateDisplayValues();
-  showCode();
 }
 
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
