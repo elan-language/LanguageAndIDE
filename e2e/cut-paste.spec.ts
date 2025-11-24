@@ -20,7 +20,7 @@ test('copy code', async ({ page }) => {
     button: 'right'
   });
 
-  await page.getByText('copy (Ctrl-c)').click();
+  await page.getByText('copy ').click();
 
   await page.waitForTimeout(1000);
 
@@ -90,7 +90,7 @@ test('copy multiple code', async ({ page }) => {
     button: 'right'
   });
 
-  await page.getByText('copy (Ctrl-c)').click();
+  await page.getByText('copy ').click();
 
   await page.waitForTimeout(1000);
 
@@ -120,7 +120,7 @@ test('cut code', async ({ page }) => {
     button: 'right'
   });
 
-  await page.getByText('cut (Ctrl-x)').click();
+  await page.getByText('cut ').click();
 
   await page.waitForTimeout(1000);
 
@@ -191,7 +191,7 @@ test('cut multiple code', async ({ page }) => {
     button: 'right'
   });
 
-  await page.getByText('cut (Ctrl-x)').click();
+  await page.getByText('cut ').click();
 
   await page.waitForTimeout(1000);
 
@@ -218,7 +218,7 @@ test('paste code', async ({ page }) => {
     button: 'right'
   });
 
-  await page.getByText('paste (Ctrl-v)').click();
+  await page.getByText('paste ').click();
 
   await expect(page.locator('#var4')).toContainText('a');
 });
@@ -260,7 +260,7 @@ test('paste multiple code', async ({ page }) => {
     button: 'right'
   });
 
-  await page.getByText('paste (Ctrl-v)').click();
+  await page.getByText('paste ').click();
 
   await expect(page.locator('#var4')).toContainText('a');
   await expect(page.locator('#var7 input')).toHaveValue('b');
