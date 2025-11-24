@@ -243,6 +243,8 @@ async function runProgram() {
 }
 
 runButton?.addEventListener("click", async () => {
+  file.removeAllSelectorsThatCanBe();
+  await renderAsHtml(false);
   runButton.focus();
   showDisplayTab();
   debugMode = singleStepping = processingSingleStep = false;
