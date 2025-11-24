@@ -243,6 +243,8 @@ async function runProgram() {
 }
 
 runButton?.addEventListener("click", async () => {
+  file.removeAllSelectorsThatCanBe();
+  await renderAsHtml(false);
   runButton.focus();
   showDisplayTab();
   debugMode = singleStepping = processingSingleStep = false;
@@ -1820,7 +1822,6 @@ function handleRunWorkerFinished() {
   file.setRunStatus(RunStatus.default);
   clearPaused();
   updateDisplayValues();
-  showCode();
 }
 
 let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
