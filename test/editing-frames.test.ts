@@ -7,13 +7,11 @@ import { ConstantValueField } from "../src/ide/frames/fields/constant-value-fiel
 import { IdentifierField } from "../src/ide/frames/fields/identifier-field";
 import { InheritsFromField } from "../src/ide/frames/fields/inherits-from-field";
 import { TypeNameField } from "../src/ide/frames/fields/type-name-field";
-import { FileImpl } from "../src/ide/frames/file-impl";
 import { ConcreteClass } from "../src/ide/frames/globals/concrete-class";
 import { Constant } from "../src/ide/frames/globals/constant";
 import { GlobalFunction } from "../src/ide/frames/globals/global-function";
 import { GlobalSelector } from "../src/ide/frames/globals/global-selector";
 import { MainFrame } from "../src/ide/frames/globals/main-frame";
-import { TestFrame } from "../src/ide/frames/globals/test-frame";
 import { ReturnStatement } from "../src/ide/frames/statements/return-statement";
 import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
 import { ParseStatus } from "../src/ide/frames/status-enums";
@@ -32,18 +30,16 @@ import {
   ctrl_del,
   ctrl_down,
   ctrl_up,
-  ctrl_v,
   ctrl_x,
   del,
   enter,
   key,
   loadFileAsModelNew,
   shift_down,
-  shift_enter,
   shift_tab,
   shift_up,
   tab,
-  up,
+  up
 } from "./testHelpers";
 
 suite("Editing Frames", () => {
@@ -239,23 +235,23 @@ suite("Editing Frames", () => {
     sel.processKey(del());
     assert.equal(main.getFirstChild(), sel);
   });
-  test("Delete frame - Ctrl-Delete", () => {
-    const file = emptyFunctionOnly();
-    const func = file.getById("func1") as GlobalFunction;
-    const sel = file.getById("select0") as GlobalFunction;
-    assert.equal(file.getFirstChild(), func);
-    func.select(true, false);
-    func.processKey(ctrl_del());
-    assert.equal(file.getChildren().length, 1);
-    assert.equal(file.getFirstChild(), sel);
-  });
-  test("Delete frame - Ctrl-d", () => {
+  test("Delete frame - Ctrl+Backspace", () => {
     const file = emptyFunctionOnly();
     const func = file.getById("func1") as GlobalFunction;
     const sel = file.getById("select0") as GlobalFunction;
     assert.equal(file.getFirstChild(), func);
     func.select(true, false);
     func.processKey(ctrl_backspace());
+    assert.equal(file.getChildren().length, 1);
+    assert.equal(file.getFirstChild(), sel);
+  });
+  test("Delete frame - Ctrl+Delete", () => {
+    const file = emptyFunctionOnly();
+    const func = file.getById("func1") as GlobalFunction;
+    const sel = file.getById("select0") as GlobalFunction;
+    assert.equal(file.getFirstChild(), func);
+    func.select(true, false);
+    func.processKey(ctrl_del());
     assert.equal(file.getChildren().length, 1);
     assert.equal(file.getFirstChild(), sel);
   });
