@@ -35,11 +35,11 @@
     <h3>Step 1: Getting started</h3>
     <p>From the <b>Demo</b> menu, access the <b>Merge lists</b> code,  then select <b>File > Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
       Remember that you can use the <b>Undo</b> button (or <b>Ctrl+z</b>) to undo recent changes.</li>
-      
-    <p> Note that the code it containsa function <el-method>merge</el-method>, and one test for this function 
+
+    <p> Note that the code it contains is a function <el-method>merge</el-method>, and one test for this function
        covering multiple test cases (<el-kw>assert</el-kw> instructions).</li>
         The <el-kw>assert</el-kw>s are all all failing
-        with the message: <el-msg class="error">actual: [x]</el-msg>. Looking at the code for the 
+        with the message: <el-msg class="error">actual: [x]</el-msg>. Looking at the code for the
         <el-method>merge</el-method> it is not hard to see why: this is merely a 'skeletal' implementation:
         sufficient code only to compile, not to run correctly. Your task is to implement
         <el-method>merge</el-method> <i>properly</i>. Your implementation should:
@@ -52,7 +52,7 @@
         </ul>
     </p>
 
-    <div class="hint" id="hint1" data-hint="">Hint 1: Recursion</div> 
+    <div class="hint" id="hint1" data-hint="">Hint 1: Recursion</div>
     <div class="content" id="hint1content">
       <ul>
        <li>Writing a recursive function means that in <i>one or more</i> places within your implementation of <el-method>merge</el-method>
@@ -65,13 +65,13 @@
       </ul>
     </div>
 
-    <div class="hint" id="hint2" data-hint="">Hint 2: Getting started</div> 
+    <div class="hint" id="hint2" data-hint="">Hint 2: Getting started</div>
     <div class="content" id="hint2content">
       <p>The following is generic advice for writing a function where there might be more than one path to the result:
         <ul>
-          <li>start by defining a <el-kw>variable</el-kw> named <el-id>result</el-id> 
+          <li>start by defining a <el-kw>variable</el-kw> named <el-id>result</el-id>
             and then returing <el-id>result</el-id> at the end of the function. (Elan deliberately
-            does not permit you to <el-kw>return</el-kw> from multiple places in a function - or a 
+            does not permit you to <el-kw>return</el-kw> from multiple places in a function - or a
             procedure - because that breaks the principles of structured programming.)</li>
           <li><el-id>result</el-id> needs to be initialised with a value of the correct <i>type</i>,
           as defined in the signature of the <el-method>merge</el-method> function. This could
@@ -81,19 +81,19 @@
       </p>
     </div>
 
-    <div class="hint" id="hint3" data-hint="">Hint 3: Description of the algorithm</div> 
+    <div class="hint" id="hint3" data-hint="">Hint 3: Description of the algorithm</div>
     <div class="content" id="hint3content">
         <ul>
           <li>If either of the input lists is empty (has length 0) then the result is just the other list.</li>
           <li>Otherwise, get hold of the first element in each list and compare them alphabetically. The result
-            may then be contained by combining the 
+            may then be contained by combining the
         </ul>
       </p>
     </div>
-    <div class="hint" id="hint4" data-hint="">Hint 4: Some useful coding idioms and hints</div> 
+    <div class="hint" id="hint4" data-hint="">Hint 4: Some useful coding idioms and hints</div>
     <div class="content" id="hint4content">
         <ul>
-          <li>Define a <el-kw>variable</el-kw> <i>only</i> where the named value must later be re-assigned. 
+          <li>Define a <el-kw>variable</el-kw> <i>only</i> where the named value must later be re-assigned.
           In all other cases, define a named value with a <el/kw>let</el>.</li>
           <li>The method <el-method>length</el-method> - called as a 'dotted' method on a named value
           holding a list returns its length as an integer.</li>
@@ -110,7 +110,7 @@
       </p>
     </div>
 
-    <div class="hint" id="hint5" data-hint="">Hint 5: Suggested structure</div> 
+    <div class="hint" id="hint5" data-hint="">Hint 5: Suggested structure</div>
     <div class="content" id="hint5content">
 
     A complete solution can consist only of these instructions. However, it is not necessarily wrong to use more instructions if you choose to.
@@ -137,7 +137,7 @@
 
     </div>
 
-    <div class="hint" id="hint6" data-hint="">Hint 6: First fields shown</div> 
+    <div class="hint" id="hint6" data-hint="">Hint 6: First fields shown</div>
     <div class="content" id="hint6content">
        This code shows the first field of each instruction completed.
        <el-code-block>
@@ -159,10 +159,10 @@
       </el-code-block>
     </div>
 
-    <div class="hint" id="hint7" data-hint="">Hint 7: Method calls shown </div> 
+    <div class="hint" id="hint7" data-hint="">Hint 7: Method calls shown </div>
     <div class="content" id="hint7content">
       This code now shows methods that are called in the remaining expression fields,
-      but does not show the arguments that must be passed into them. 
+      but does not show the arguments that must be passed into them.
       <el-code-block>
         <el-func class="ok multiline" >
           <el-top><el-kw>function </el-kw><el-method><el-field><el-txt>sort</el-txt></el-field></el-method>(<el-field  class="optional ok"><el-txt><el-id>li</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt></el-field>)<el-kw> returns </el-kw><el-field><el-txt><el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;</el-txt></el-field></el-top>
@@ -181,7 +181,7 @@
       </el-code-block>
     </div>
 
-    <div class="hint" id="hint8" data-hint="">Hint 8: The complete solution</div> 
+    <div class="hint" id="hint8" data-hint="">Hint 8: The complete solution</div>
     <div class="content" id="hint8content">
        You can still gain some marks by correctly copying this code into the editor
        and showing that the tests now all pass. <i>With careful reference to Hints 3 & 4</i>,
