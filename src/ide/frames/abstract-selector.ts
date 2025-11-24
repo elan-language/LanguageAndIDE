@@ -309,8 +309,11 @@ export abstract class AbstractSelector extends AbstractFrame {
   getContextMenuItems() {
     const map = new Map<string, [string, (s?: string) => boolean]>();
 
-    map.set("delete", ["delete (Ctrl-Delete or Ctrl-Backspace)", this.deleteSelected]);
-    map.set("paste", ["paste (Ctrl-v)", this.paste]);
+    map.set("delete", [
+      "delete - <b>Ctrl-Delete</b> or <b>Ctrl-Backspace</b>",
+      this.deleteSelected,
+    ]);
+    map.set("paste", ["paste - <b>Ctrl-v</b>", this.paste]);
 
     return map;
   }

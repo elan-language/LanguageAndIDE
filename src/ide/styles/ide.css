@@ -397,20 +397,23 @@ button.icon:active img + label
   font-family: var(--ideTitleFont);
 }
 
-.selected el-top .context-menu {
+.selected el-top .context-menu,
+.context-menu>div *{
   background-color: lightgrey;
   border-right-color: black;
 }
 
 .autocomplete-popup>div.selected,
 .context-menu>div.selected,
-.context-menu>div:focus {
+.context-menu>div:focus,
+.context-menu>div:focus *{
   color: white;
   background-color: grey;
 }
 
 .autocomplete-popup>div:hover,
-.context-menu>div:hover {
+.context-menu>div:hover,
+.context-menu>div:hover *{
   color: white;
   background-color: #404040;
 }

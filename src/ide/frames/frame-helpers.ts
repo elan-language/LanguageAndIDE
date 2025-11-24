@@ -278,9 +278,9 @@ export function addPrivateToggleToContextMenu(
   menu: Map<string, [string, (() => boolean) | undefined]>,
 ) {
   if (member.private) {
-    menu.set("makePublic", ["make public (Ctrl-p)", member.makePublic]);
+    menu.set("makePublic", ["make public - <b>Ctrl-p</b>", member.makePublic]);
   } else {
-    menu.set("makePrivate", ["make private (Ctrl-p)", member.makePrivate]);
+    menu.set("makePrivate", ["make private - <b>Ctrl-p</b>", member.makePrivate]);
   }
 }
 
