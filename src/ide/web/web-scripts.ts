@@ -1572,7 +1572,8 @@ async function localAndAutoSave(field: HTMLElement | undefined, editingField: bo
       }
       code = await file.renderAsSource();
       const timestamp = Date.now();
-      const overWriteLastEntry = newFieldId === currentFieldId;
+      // don't overwite the same field edit if it's the first edit - as then it can't be undone 
+      const overWriteLastEntry = (newFieldId === currentFieldId) && (currentFileIndex > 0);
       const id = overWriteLastEntry
         ? undoRedoFiles[currentFileIndex]
         : `${file.fileName}.${timestamp}`;
