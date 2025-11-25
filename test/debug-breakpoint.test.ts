@@ -326,6 +326,7 @@ main
   variable a set to {7,8,9}
   variable n set to 0
   each x in a
+    let z be 101
     set n to n + x
   end each
   print n
@@ -345,9 +346,10 @@ end main`;
       asDebugSymbol("a", [7, 8, 9], '{"Type":"ListImmutable<of Int>","OfTypes":{"Type":"Int"}}'),
       asDebugSymbol("n", 0, '{"Type":"Int"}'),
       asDebugSymbol("x", 7, '{"Type":"Int"}'),
+      asDebugSymbol("z", 101, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set13", expected);
+    await assertDebugBreakPoint(fileImpl, "set16", expected);
   });
 
   test("Pass_InWhileLoop", async () => {

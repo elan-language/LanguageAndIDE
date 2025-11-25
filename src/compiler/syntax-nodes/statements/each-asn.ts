@@ -55,8 +55,8 @@ ${this.indent()}}`;
     return super.resolveSymbol(id, initialScope);
   }
 
-  symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
-    const matches = super.symbolMatches(id, all, this);
+  symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
+    const matches = super.symbolMatches(id, all, initialScope);
     const v = getId(this.variable);
 
     const counter = {
