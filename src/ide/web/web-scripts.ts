@@ -1618,6 +1618,8 @@ async function replaceCode(indexToUse: number, msg: string) {
   const id = undoRedoFiles[indexToUse];
   updateIndexes(indexToUse);
   const code = localStorage.getItem(id);
+  // reset so changes on same field after this will be seen 
+  currentFieldId = "";
   if (code) {
     disable([undoButton, redoButton], msg);
     cursorWait();
