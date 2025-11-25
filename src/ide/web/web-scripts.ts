@@ -1572,8 +1572,7 @@ async function localAndAutoSave(field: HTMLElement | undefined, editingField: bo
       }
       code = await file.renderAsSource();
       const timestamp = Date.now();
-      // don't overwite the same field edit if it's the first edit - as then it can't be undone 
-      const overWriteLastEntry = (newFieldId === currentFieldId) && (currentFileIndex > 0);
+      const overWriteLastEntry = newFieldId === currentFieldId;
       const id = overWriteLastEntry
         ? undoRedoFiles[currentFileIndex]
         : `${file.fileName}.${timestamp}`;
@@ -1619,6 +1618,8 @@ async function replaceCode(indexToUse: number, msg: string) {
   const id = undoRedoFiles[indexToUse];
   updateIndexes(indexToUse);
   const code = localStorage.getItem(id);
+  // reset so changes on same field after this will be seen 
+  currentFieldId = "";
   if (code) {
     disable([undoButton, redoButton], msg);
     cursorWait();
