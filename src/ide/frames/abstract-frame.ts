@@ -1,6 +1,6 @@
 import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { BreakpointStatus } from "../../compiler/debugging/breakpoint-status";
-import { ghostedAnnotation, importedAnnotation } from "../../compiler/keywords";
+import { focusedAnnotation, ghostedAnnotation, importedAnnotation } from "../../compiler/keywords";
 import {
   addDeleteToContextMenu,
   expandCollapseAll,
@@ -542,11 +542,19 @@ export abstract class AbstractFrame implements Frame {
   }
 
   select(withFocus: boolean, multiSelect: boolean): void {
-    if (!multiSelect) {
-      this.deselectAll();
+    // if parsing a file allow focusedAnnotation to do selection/focus
+    if (!this.getFile().isParsing()) {
+      if (!multiSelect) {
+        this.deselectAll();
+      }
+      this._selected = true;
+      this._focused = withFocus;
     }
+  }
+
+  selectFromAnnotation(): void {
     this._selected = true;
-    this._focused = withFocus;
+    this._focused = true;
   }
 
   deselect(): void {
@@ -789,12 +797,22 @@ export abstract class AbstractFrame implements Frame {
     return parent.isImported() || parent.isWithinAnImportedFrame();
   }
 
+  isOrHoldsFocus() {
+    return (
+      this.isSelected() ||
+      this.isFocused() ||
+      this.getFields().some((f) => f.isFocused() || f.isSelected())
+    );
+  }
+
   sourceAnnotations(): string {
     return this.isImported()
       ? `[${importedAnnotation}] `
       : this.isGhosted()
         ? `[${ghostedAnnotation}] `
-        : "";
+        : this.isOrHoldsFocus() && this.getFile().addFocusedAnnotationToCode()
+          ? `[${focusedAnnotation}] `
+          : "";
   }
 
   getContextMenuItems() {

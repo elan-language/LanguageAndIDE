@@ -20,10 +20,11 @@ export enum ParseMode {
 }
 
 export interface File extends Parent {
+  setFocusedAnnotation(b: boolean): void;
   isFile: boolean;
   getById(id: string): Selectable;
   renderAsHtml(): Promise<string>;
-  renderAsSource(): Promise<string>;
+  renderAsSource(showFocused?: boolean): Promise<string>;
   compile(): string;
 
   compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string;
@@ -116,4 +117,8 @@ export interface File extends Parent {
   addCopiedSource(source: string): void;
 
   getCopiedSource(): string[];
+
+  addFocusedAnnotationToCode(): boolean;
+
+  isParsing(): boolean;
 }

@@ -206,5 +206,6 @@ export const reservedWords = [
 
 export const ghostedAnnotation = "ghosted";
 export const importedAnnotation = "imported";
+export const focusedAnnotation = "focused";
 
-export const sourceAnnotations = [ghostedAnnotation, importedAnnotation];
+export const sourceAnnotations = [ghostedAnnotation, importedAnnotation, focusedAnnotation];
