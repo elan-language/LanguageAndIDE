@@ -827,8 +827,6 @@ async function displayCode(rawCode: string, fileName: string) {
   const code = new CodeSourceFromString(rawCode);
   code.mode = ParseMode.loadNew;
   try {
-    // if we don't deselect all here and there are focusedAnnotataions in code we will end up with double selections
-    file.deselectAll();
     await file.parseFrom(code);
     file.fileName = fileName || file.defaultFileName;
     await refreshAndDisplay(true, false);
@@ -1552,6 +1550,7 @@ async function updateContent(text: string, editingField: boolean) {
 }
 
 async function localAndAutoSave(field: HTMLElement | undefined, editingField: boolean) {
+  let code = "";
   const newFieldId = editingField ? field?.id : undefined;
   const parseStatus = file.readParseStatus();
 
@@ -1567,7 +1566,7 @@ async function localAndAutoSave(field: HTMLElement | undefined, editingField: bo
           localStorage.removeItem(id);
         }
       }
-      const code = await file.renderAsSource(true);
+      code = await file.renderAsSource();
       const timestamp = Date.now();
       const overWriteLastEntry = newFieldId === currentFieldId;
       const id = overWriteLastEntry
@@ -1595,7 +1594,7 @@ async function localAndAutoSave(field: HTMLElement | undefined, editingField: bo
     }
 
     // autosave if setup
-    const code = await file.renderAsSource();
+    code = code || (await file.renderAsSource());
     await autoSave(code);
   }
 
