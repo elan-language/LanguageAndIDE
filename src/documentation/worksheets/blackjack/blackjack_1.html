@@ -1,0 +1,703 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+
+  <head>
+      <meta http-equiv="Cache-Control" content="no-store" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
+      <title>Blackjack 1: exploring the Blackjack program and making small changes</title>
+  </head>
+
+  <body>
+    <div id="worksheet">
+    <div class="docTitle">Blackjack 1: exploring the Blackjack program and making small changes</div>
+
+    <ol>
+        <li><label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
+      <li>Set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</li>
+      <li class="transient"><button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future &ndash; at which point you will be asked to auto-save it again).</span></li>
+    </ol>
+
+    <div class="license">
+      <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+      This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
+          <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+        You may freely make and distribute copies of this worksheet <i>as is</i>, but if you <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+        Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
+    </div> 
+      
+<div class="step" id="step1"><h1>Step 1: learning the rules of Blackjack</h1>
+    <p>Your first task is to make sure that you understand how the game
+      works, and - since there are many minor variations on the game - the rules of this specific implementation.</p>
+    
+      <p>Watch the first video:</p>
+
+      <div style="position: relative; padding-bottom: 72.67833109017496%; height: 0;"><iframe src="https://www.loom.com/embed/3dca2b1ec6384176aaf85e1b60f6ce1d" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+      <p><button class="load" id="load1-0">Load the starting code</button></p><div id="code-load1-0" hidden=""># 4f49c83c4ce8c8372a75d41a027a05f3ceb16904464a7a2361fb169ece640343 Elan 1.7.0 guest default_profile valid
+
+main
+  let game be new Game(1000)
+  call game.addPlayer(new HumanPlayer("Player A", 1000))
+  variable anotherRound set to true
+  while anotherRound
+    call playOneRound(game)
+    call game.setMessage("Points updated. Do you want to play another round? (press y or n)")
+    call clearKeyBuffer()
+    call display(game)
+    let k be waitForKey().lowerCase()
+    if k is 'y' then
+      call game.setMessage("")
+    else
+      set anotherRound to false
+    end if
+  end while
+end main
+
+procedure playOneRound(game as Game)
+  call game.newRound()
+  call display(game)
+  let dealer be game.dealer
+  each player in game.players
+    call player.startTurn()
+    call display(game)
+    while player.status is Status.active
+      call player.nextAction(dealer.faceCard)
+      call display(game)
+    end while
+  end each
+  call dealer.play()
+  call display(game)
+  while dealer.status is Status.active
+    call dealer.nextAction(dealer.faceCard)
+    call display(game)
+  end while
+  call game.updatePoints()
+end procedure
+
+procedure display(game as Game)
+  let html be "&lt;style&gt;{styleSheet}&lt;/style&gt;{htmlForGame(game)}"
+  call displayHtml(html)
+  call pause(1500)
+end procedure
+
+procedure updatePoints(dealer as Dealer, player as Player, playerOutcome as Outcome)
+  if playerOutcome is Outcome.winDouble then
+    call player.changePointsBy(2)
+    call dealer.changePointsBy(-2)
+  else if playerOutcome is Outcome.win then
+    call player.changePointsBy(1)
+    call dealer.changePointsBy(-1)
+  else if playerOutcome is Outcome.lose then
+    call player.changePointsBy(-1)
+    call dealer.changePointsBy(1)
+  end if
+end procedure
+
+function determinePlayerOutcome(dealer as Dealer, player as Player) returns Outcome
+  # These 'let' definitions are just to make the logic that follows them simpler to read
+  let d be dealer.status
+  let dTotal be dealer.handTotal
+  let p be player.status
+  let pTotal be player.handTotal
+  let bust be Status.bust
+  let bj be Status.blackjack
+  let win be Outcome.win
+  let winDouble be Outcome.winDouble
+  let lose be Outcome.lose
+  let draw be Outcome.draw
+  variable playerOutcome set to draw
+  if p is bust then
+    set playerOutcome to lose
+  else if (p is bj) and (d isnt bj) then
+    set playerOutcome to winDouble
+  else if d is bust then
+    set playerOutcome to win
+  else if (d is bj) and (p is bj) then
+    set playerOutcome to draw
+  else if p is bj then
+    set playerOutcome to winDouble
+  else if d is bj then
+    set playerOutcome to lose
+  else if pTotal &gt; dTotal then
+    set playerOutcome to win
+  else if pTotal &lt; dTotal then
+    set playerOutcome to lose
+  else
+    # strictly, this 'else' clause is redundant - as the variable was initialised to 'draw' - but added for clarity
+    set playerOutcome to draw
+  end if
+  return playerOutcome
+end function
+
+function dealCard(random as Float) returns Card
+  let number be (random*52).floor()
+  let rank be rankValue.keys()[number div 4]
+  let suit be number mod 4
+  return new Card() with rank set to rank, suit set to intAsSuit(suit)
+end function
+
+function intAsSuit(n as Int) returns Suit
+  variable suit set to Suit.clubs
+  if n is 1 then
+    set suit to Suit.diamonds
+  else if n is 2 then
+    set suit to Suit.hearts
+  else if n is 3 then
+    set suit to Suit.spades
+  end if
+  return suit
+end function
+
+function htmlForGame(game as Game) returns String
+  variable html set to "&lt;div class='game'&gt;"
+  set html to html + htmlForPlayer(game.dealer)
+  each player in game.players
+    set html to html + htmlForPlayer(player)
+  end each
+  set html to html + "&lt;div class='message'&gt;{game.message}&lt;/div&gt;"
+  return html + "&lt;/div&gt;"
+end function
+
+function htmlForPlayer(player as Player) returns String
+  variable html set to "&lt;div class='player'&gt;"
+  set html to html + "&lt;div class='details'&gt;{player.name} - {player.points} points {player.getMessage()}&lt;/div&gt;"
+  set html to html + "&lt;div class='hand'&gt;"
+  each card in player.cards
+    let suit be card.suit
+    let rank be card.rank
+    set html to html + htmlForCard(card)
+  end each
+  return html + "&lt;/div&gt;"
+end function
+
+function htmlForCard(card as Card) returns String
+  variable html set to ""
+  if card.faceDown then
+    set html to "&lt;div class='card reversed'&gt;"
+  else
+    let rank be card.rank
+    let suit be card.suit
+    let colour be colours[suit]
+    let symbol be symbols[suit]
+    set html to "&lt;div class='card {colour}'&gt;"
+    let u be htmlForSpot("u", rank)
+    let v be htmlForSpot("v", symbol)
+    variable grid set to ""
+    each location in gridByRank[rank]
+      if location is "royal" then
+        set grid to grid + htmlForSpot(location, rank)
+      else
+        set grid to grid + htmlForSpot(location, symbol)
+      end if
+    end each
+    set html to html + "{u}{v}{grid}"
+  end if
+  return html + "&lt;/div&gt;"
+end function
+
+function htmlForSpot(id as String, content as String) returns String
+  return "&lt;div class='{id}'&gt;{content}&lt;/div&gt;"
+end function
+
+function strategyA(p as Player, dealerFaceUp as Card) returns Action
+  return Action.stand
+end function
+
+function strategyB(p as Player, dealerFaceUp as Card) returns Action
+  return Action.draw
+end function
+
+class Game
+  constructor(dealerStartPoints as Int)
+    set property.dealer to new Dealer(dealerStartPoints)
+  end constructor
+
+  property dealer as Dealer
+
+  property players as List&lt;of Player&gt;
+
+  property message as String
+
+  procedure newRound()
+    call property.dealer.newHand()
+    each player in property.players
+      call player.newHand()
+    end each
+  end procedure
+
+  procedure updatePoints()
+    each player in property.players
+      let playerOutcome be determinePlayerOutcome(property.dealer, player)
+      call global.updatePoints(property.dealer, player, playerOutcome)
+    end each
+  end procedure
+
+  procedure addPlayer(player as Player)
+    call property.players.append(player)
+  end procedure
+
+  procedure setMessage(message as String)
+    set property.message to message
+  end procedure
+
+end class
+
+class Card
+  property suit as Suit
+
+  property rank as String
+
+  property faceDown as Boolean
+
+  procedure turnFaceUp()
+    set property.faceDown to false
+  end procedure
+
+  procedure turnFaceDown()
+    set property.faceDown to true
+  end procedure
+
+end class
+
+abstract class Player
+  property name as String
+
+  property points as Int
+
+  property cards as List&lt;of Card&gt;
+
+  property handTotal as Int
+
+  property softAce as Boolean
+
+  property status as Status
+
+  property hasTurn as Boolean
+
+  procedure startTurn()
+    if property.status is Status.active then
+      set property.hasTurn to true
+    end if
+  end procedure
+
+  procedure evaluateStatus(newCard as Card)
+    if (cardCount() is 2) and (property.handTotal is 21) then
+      set property.status to Status.blackjack
+    else if (property.handTotal &gt; 21) and (property.softAce) then
+      set property.handTotal to property.handTotal - 10
+      set property.softAce to false
+    else if property.handTotal &gt; 21 then
+      set property.status to Status.bust
+    else if property.handTotal is 21 then
+      set property.status to Status.standing
+    end if
+    if property.status isnt Status.active then
+      set property.hasTurn to false
+    end if
+  end procedure
+
+  procedure stand()
+    set property.status to Status.standing
+    set property.hasTurn to false
+  end procedure
+
+  procedure draw()
+    let newCard be dealCard(random())
+    call property.cards.append(newCard)
+    if newCard.rank is "A" then
+      call addAce()
+    else
+      set property.handTotal to property.handTotal + rankValue[newCard.rank]
+    end if
+    call evaluateStatus(newCard)
+  end procedure
+
+  procedure addAce()
+    if property.softAce then
+      set property.handTotal to property.handTotal + 1
+    else
+      set property.handTotal to property.handTotal + 11
+      set property.softAce to true
+    end if
+  end procedure
+
+  function cardCount() returns Int
+    return property.cards.length()
+  end function
+
+  procedure changePointsBy(amount as Int)
+    set property.points to property.points + amount
+  end procedure
+
+  abstract procedure newHand()
+
+  procedure newHandHelper()
+    set property.cards to empty List&lt;of Card&gt;
+    set property.handTotal to 0
+    set property.status to Status.active
+    call draw()
+    call draw()
+  end procedure
+
+  abstract function getMessage() returns String
+
+  function statusAsString() returns String
+    variable msg set to ""
+    let status be property.status
+    if property.hasTurn then
+      set msg to msg + " - PLAYING"
+    else if status is Status.standing then
+      set msg to msg + " - STANDING"
+    else if status is Status.blackjack then
+      set msg to msg + " - BLACKJACK"
+    else if status is Status.bust then
+      set msg to msg + " - BUST"
+    end if
+    return msg
+  end function
+
+  abstract procedure nextAction(dealerFaceCard as Card)
+
+end class
+
+class Dealer inherits Player
+  constructor(startingPoints as Int)
+    set property.name to "Dealer"
+    set property.points to startingPoints
+  end constructor
+
+  property faceCard as Card
+
+  property hasPlayed as Boolean
+
+  procedure play()
+    call startTurn()
+    let hiddenCard be property.cards[1]
+    call hiddenCard.turnFaceUp()
+    set property.hasPlayed to true
+  end procedure
+
+  procedure newHand()
+    set property.hasPlayed to false
+    call newHandHelper()
+    set property.faceCard to property.cards[0]
+    let hiddenCard be property.cards[1]
+    call hiddenCard.turnFaceDown()
+  end procedure
+
+  procedure nextAction(faceCard as Card)
+    if property.handTotal &lt; 17 then
+      call draw()
+    else
+      call stand()
+    end if
+  end procedure
+
+  function getMessage() returns String
+    variable msg set to ""
+    if property.hasPlayed then
+      set msg to statusAsString() + " - hand total: {property.handTotal}"
+    end if
+    return msg
+  end function
+
+end class
+
+class HumanPlayer inherits Player
+  constructor(name as String, startingPoints as Int)
+    set property.name to name
+    set property.points to startingPoints
+  end constructor
+
+  procedure newHand()
+    call newHandHelper()
+  end procedure
+
+  procedure nextAction(dealerFaceCard as Card)
+    variable key set to ""
+    call clearKeyBuffer()
+    while key is ""
+      set key to waitForKey()
+      if key is "d" then
+        call draw()
+      else if key is "s" then
+        call stand()
+      else
+        set key to ""
+      end if
+    end while
+  end procedure
+
+  function getMessage() returns String
+    variable msg set to statusAsString() + " - hand total: {property.handTotal}"
+    if property.hasTurn then
+      set msg to msg + " - press 'd' to draw, 's' to stand"
+    end if
+    return msg
+  end function
+
+end class
+
+class AutomatedPlayer inherits Player
+  constructor(name as String, decisionFunc as Func&lt;of Player, Card =&gt; Action&gt;, startingPoints as Int)
+    set property.name to name
+    set property.decisionFunc to ref decisionFunc
+    set property.points to startingPoints
+  end constructor
+
+  property decisionFunc as Func&lt;of Player, Card =&gt; Action&gt;
+
+  procedure newHand()
+    call newHandHelper()
+  end procedure
+
+  procedure nextAction(dealerFaceCard as Card)
+    let act be decisionFunc(this, dealerFaceCard)
+    if act is Action.draw then
+      call draw()
+    else
+      call stand()
+    end if
+  end procedure
+
+  function getMessage() returns String
+    return statusAsString() + " - hand total: {property.handTotal}"
+  end function
+
+end class
+
+enum Action stand, draw
+
+enum Outcome undecided, lose, draw, win, winDouble
+
+enum Status active, standing, blackjack, bust
+
+enum Suit clubs, diamonds, hearts, spades
+
+constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
+
+constant symbols set to {Suit.clubs:"&amp;clubs;", Suit.diamonds:"&amp;diams;", Suit.hearts:"&amp;hearts;", Suit.spades:"&amp;spades;"}
+
+constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"red", Suit.spades:"black"}
+
+constant gridByRank set to {"A":{"royal"}, "2":{"b", "c"}, "3":{"a", "b", "c"}, "4":{"d", "e", "f", "g"}, "5":{"a", "d", "e", "f", "g"}, "6":{"d", "e", "f", "g", "h", "i"}, "7":{"d", "e", "f", "g", "h", "i", "l"}, "8":{"d", "e", "f", "g", "h", "i", "l", "m"}, "9":{"a", "d", "e", "f", "g", "n", "o", "p", "r"}, "10":{"d", "e", "f", "g", "n", "o", "p", "r", "s", "t"}, "J":{"royal"}, "Q":{"royal"}, "K":{"royal"}}
+
+constant styleSheet set to ':root {\n    background-color: darkgreen;\n    padding-left: 5px;\n}\n\n.game {\n    padding: 5px;\n}\n\n.message, .details  {\n    color: white;\n    font-family: Arial, Helvetica, sans-serif;\n}\n\n.hand {\n        margin-top: 5px;\n        height: 150px;\n        padding-bottom: 10px;\n    }\n    \n.card {\n    position: relative;\n    float: left;\n    background-color: white;\n    width: 95px;\n    height:140px;\n    margin-right:10px;\n    padding: 5px;\n    border-radius: 5px;\n    font-family: Helvetica, sans-serif; \n}\n.royal,.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}\n\n/* Standard spots */ \n    .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}\n\n    /* columns */\n    .d,.n,.h,.p,.f {left: 18px }\n    .a,.b,.c,.l,.m,.s,.t {left: 43px;}\n    .e,.o,.i,.r,.g {left: 68px}\n\n    /* rows */\n    .d,.b,.e {top: 0px}\n    .s {top: 20px;}\n    .l {top: 28px;}\n    .n,.o {top: 37px;}\n    .h,.a,.i {top: 57px}\n    .p,.r {top: 75px;}\n    .m {top: 86px;}\n    .t {top: 93px;}\n    .f,.c,.g {top: 114px;}\n\n/* royals */\n    .royal {\n        position: absolute;\n        z-index: 1;\n        width: 95px;\n        height: 140px;\n        line-height: 140px;\n        font-size: 100px;\n    }\n\n/* corner summary */\n    .u {font-size: 15px; width: 15px; text-align: center; left: 0px; top: 2px;}\n    .v {font-size: 20px; width: 15px; text-align: center; left: 0px; top: 12px;}\n\n/* suit colors */\n    .red {color: red}\n    .black {color: black}\n\n/* back */\n    .card.reversed { background-color: rgba(0, 0, 255, 0.607);}'
+</div> and then immediately use <b>file &gt; auto save</b> the
+      code to your local file storage, because you will be making changes and want to ensure that your changes are saved.<p></p>
+    
+      <p>When you run the program, the <b>display</b> tab will be shown in place
+      of this worksheet, you can flip between them by clicking on the tab heading.</p>
+
+      <p>Run the program now either:
+        </p><ul>
+          <li>using the mouse, by clicking on the <b>run</b> button at the top of the screen, <i>or</i></li>
+          <li>using the keyboard, by pressing <b>Ctrl-r</b></li>
+        </ul>
+        and play exactly 10 rounds of Blackjack in the same manner as on the video - flipping back to this worksheet between rounds
+        - to make sure that you have understood the following points.<p></p>
+
+    <ul>
+      <li>All players are dealt two cards to begin with. 
+        One of the dealer's two cards is dealt face down - and is only revealed when the dealer starts their turn.</li>
+      <li>Most cards have a numeric value (e.g. '7'). The Royal cards - Jack, Queen, King - each have
+        the value 10. An Ace is special: it can be valued at 11, or at 1. An Ace valued at 11 is known as a 'soft Ace'. 
+        So if a player's first two cards are <i>both</i> Aces then the starting hand total is counted as 12 (rather than 22).</li>
+      <li>If the first two cards of any player total 21 - which would require one Ace, and one Royal or 10 card -
+         then you have 'BLACKJACK' - the best hand possible - and so no further action is needed from you.</li>
+      <li>Otherwise, when it is your turn you have the option to 'draw' another card - by hitting the <b>d</b> key - or
+        to 'stand' - by hitting the 's' key.</li>
+      The aim is to  get the value of your hand as close to 21 as you can - but if drawing a card causes
+        the total to go over 21, then if you have a soft Ace (see above), the Ace is automatically de-valued to 1. 
+        If your  total would exceed 21 and you <i>don't</i> have a soft Ace (see above), then you are 'BUST' and you have no further role - for this round.
+      <li>
+      </li><li>When your status changes either to STANDING or BUST then play passes to the the next player or -
+        if you are the last or only player - to the dealer.</li><li>
+      </li><li>The dealer now plays out their hand, initially turning the hidden card face up and then following fixed rules about
+         when to stand and when to draw.</li>
+      <li>When all players, including the dealer, have finished their turn, the outcome is determined, and 
+        points are passed between each player and the dealer as follows:
+        <ul>
+          <li>If a player is BUST then 1 point is passed over to the dealer <i>even the dealer is also BUST</i>.</li>
+          <li>else, if a player has BLACKJACK then they gain 2 points from the dealer <i>unless</i> the dealer
+          also has BLACKJACK, in which case it is a draw and no points are exchanged.</li>
+          <li>else, if the player is STANDING and the dealer has BLACKJACK the dealer gains one point from the player.</li>
+          <li>else, if the player is STANDING and their hand total is greater than that of the dealer, the player gains one point from the dealer.</li>
+          <li>else, if the player is STANDING and their hand total is the same as that of the dealer it is a dealer, then it is a draw and
+            no points are exchanged.</li>
+          <li>else - meaning that the player's total is less than that of the dealer, then the dealer gains one point from the player.</li>
+        </ul> 
+      </li>
+      <li>The updated points for the dealer and players are now shown, and you are given the option to play another round.</li>
+      <li>This program works with an 'infinite deck' of cards: the chance of withdrawing a specific card - such as the 7 of clubs -
+        is the same every time you draw a card, which means that there is a small chance that the same card can appear on
+        screen more than once. (The same is true in most casinos, since they use multiple packs of cards in one deck,
+        and some even use machines that shuffle the whole deck continuously - which is like an infinite pack.)
+      </li>
+    </ul>
+    <p>After playing 10 rounds, how many points did you, and the dealer, end up with?</p>
+<textarea class="question" id="question1-0" placeholder="input is required"></textarea>
+    <p>Finish playing the game - either by pressing the <b>n</b> key at the end of the round, or by clicking the <b>stop</b>
+      button at any point while the program is running.</p>
+<h4>Notes</h4><textarea class="notes" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step2"><h1>Step 2: starting to explore the code</h1>
+
+  <p>Watch the next video:</p>
+    <div style="position: relative; padding-bottom: 92.78350515463917%; height: 0;"><iframe src="https://www.loom.com/embed/ef774f996cda44118592e43bddeacb18" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+
+  <p>How many instructions are there in the Blackjack program?</p>
+<textarea class="question" id="question2-0" placeholder="input is required"></textarea>
+
+  <p>The initial keyword in an instruction defines the type of instruction.
+   Find and list here at least five initial keywords - not including the ones mentioned explicitly in the video:</p>
+<textarea class="question" id="question2-1" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done2">Step Completed</label><input class="step-complete" type="checkbox" id="done2"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step3"><h1>Step 3: the grammar of instructions</h1>
+
+  <p>Watch the next video:</p>
+  <div style="position: relative; padding-bottom: 65.93406593406593%; height: 0;"><iframe src="https://www.loom.com/embed/92c82097fbca43a0b3286d10d31c3bc0" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+  <p>Looking at the first few instructions only - no need to scroll the code - list below the different colours that you can see being used within the code:</p>
+<textarea class="question" id="question3-0" placeholder="input is required"></textarea>
+  <p>What is the significance of the colour dark-blue, and black?</p>
+<textarea class="question" id="question3-1" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done3">Step Completed</label><input class="step-complete" type="checkbox" id="done3"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step4"><h1>Step 4: comments</h1>
+  <p>Watch the next video:</p>
+  <div style="position: relative; padding-bottom: 65.77344701583435%; height: 0;"><iframe src="https://www.loom.com/embed/01fffe7c68964577b6fbf486c57d18ee" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+  <p>Scrolling through the code, find two comments, not including the one at the top showing the Elan version,
+  and indicate where they are below, by writing the number of the instruction immediately below each comment:</p>
+<textarea class="question" id="question4-0" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done4">Step Completed</label><input class="step-complete" type="checkbox" id="done4"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step5"><h1>Step 5: identifiers</h1>
+
+  <p>Watch the next video:</p>
+  <div style="position: relative; padding-bottom: 64.98194945848375%; height: 0;"><iframe src="https://www.loom.com/embed/3ee8d434ded64d0e88abd888390f5f53" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+  <p>Find five identifiers used in the program - not including any that were mentioned in the video - and list them here:</p>
+<textarea class="question" id="question5-0" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done5">Step Completed</label><input class="step-complete" type="checkbox" id="done5"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step6"><h1>Step 6: literals</h1>
+ 
+  <p>Watch the next video:</p>
+  <div style="position: relative; padding-bottom: 64.98194945848375%; height: 0;"><iframe src="https://www.loom.com/embed/dc154e36ff704b92bf7f7c7af278bc2f" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+  <p>Scroll down the code and find another example of a literal number, and a literal string - not referred to specifically in the video -
+   and note their instruction numbers below, specifying which refers to which kind of literal value:
+  </p>
+<textarea class="question" id="question6-0" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done6">Step Completed</label><input class="step-complete" type="checkbox" id="done6"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step7"><h1>Step 7: methods</h1>
+
+  <p>Watch the next video:</p>
+  <div style="position: relative; padding-bottom: 66.09547123623011%; height: 0;"><iframe src="https://www.loom.com/embed/5cbebd99cc744f5caf84c284b94a2486" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+  <p>Scrolling through the code, find five more methods - not including any specifically mentioned in the video - and write
+    the names of those methods here:</p>
+<textarea class="question" id="question7-0" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done7">Step Completed</label><input class="step-complete" type="checkbox" id="done7"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step8"><h1>Step 8: types</h1>
+  <div style="position: relative; padding-bottom: 64.90384615384616%; height: 0;"><iframe src="https://www.loom.com/embed/529cf528cba740ca95a493e054e24bfa" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+  <p>Which of the types mentioned in the video are defined within the standard Elan language</p>
+<textarea class="question" id="question8-0" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done8">Step Completed</label><input class="step-complete" type="checkbox" id="done8"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step9"><h1>Step 9: reading instructions</h1>
+
+  Give examples of articulating 
+
+  <p>Write out a particuar instruction in plain English</p>
+<textarea class="question" id="question9-0" placeholder="input is required"></textarea>
+
+<h4>Notes</h4><textarea class="notes" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done9">Step Completed</label><input class="step-complete" type="checkbox" id="done9"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+
+
+<div class="step" id="step10"><h1>Step 10: selecting simple and compound instructions</h1>
+   VIDEO ALREADY RECORDED
+
+   <p>List several different examples of compound instructions</p>
+<textarea class="question" id="question10-0" placeholder="input is required"></textarea>
+   <p>When a compound instruction is selected you see its 'extend' [explain] visually.  Indentation. But even if there was no indentation or coloured highlight how else could you determine extent?</p>
+<textarea class="question" id="question10-1" placeholder="input is required"></textarea>
+   <p>Can you select the header?</p>
+<textarea class="question" id="question10-2" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done10">Step Completed</label><input class="step-complete" type="checkbox" id="done10"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step11"><h1>Step 11: introducing fields</h1>
+
+  <p>Watch the next video:</p>
+  <div style="position: relative; padding-bottom: 65.37530266343825%; height: 0;"><iframe src="https://www.loom.com/embed/f795d314f64c41d68567061b6bd03923" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+  <p>Your task:</p>
+  <ul>
+    <li>Go to instruction number 3:
+      <el-code-block><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code-block>
+      Here, the code is creating a <el-code><el-kw>new</el-kw></el-code> <el-code><el-type>HumanPlayer</el-type></el-code>, giving it the name <el-code>"<el-lit>Player A</el-lit>"</el-code> and <el-code><el-lit>1000</el-lit></el-code> 
+      starting points. This is then added into the <el-code><el-id>game</el-id></el-code> using the method <el-method>addPlayer</el-method>.
+    </li><li>Select (highlight) the <i>second</i> field in that instruction - which is everything within the outer set of brackets. </li>
+    <li>Using the cursor keys, backspace, and/or delete - as on most text editors - change <el-code>"<el-lit>Player A</el-lit>"</el-code> to 
+    your own first name, <i>being careful that you keep the existing double-quote marks at either end of the name.</i></li>
+    <li>Run the game again and confirm that your name now appears in place of <b>Player A</b> on the game. 
+      Then <b>stop</b> the program and return focus to the editor.</li>
+    <li>Select the <i>first</i> field in the same instruction - and delete any one character from <el-method>addPlayer</el-method>. 
+    After a couple of seconds you will see a message appear within the code 
+    <p>What does the message say?</p>
+<textarea class="question" id="question11-0" placeholder="input is required"></textarea>
+    <p>As well as the message within the code, something else changed on the screen when you made that edit. What?</p>
+<textarea class="question" id="question11-1" placeholder="input is required"></textarea>
+    </li><li>Before completing this step, restore the edited field to its previous contents. You can do this by hand, or you
+      can click the <b>Undo</b> button at the top of the screen, or you can press <b>Ctrl-z</b> on the keyboard - the standard key combination for 'undo'.
+    </li>
+  
+  </ul>
+  <p>
+
+
+  </p>
+<h4>Notes</h4><textarea class="notes" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done11">Step Completed</label><input class="step-complete" type="checkbox" id="done11"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+
+<div class="step" id="step12"><h1>Step 12: adding and removing instructions</h1>
+  Input your name and use that instead of literal
+  Add a second and third player
+<h4>Notes</h4><textarea class="notes" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done12">Step Completed</label><input class="step-complete" type="checkbox" id="done12"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step13"><h1>Step 13: moving instructions</h1>
+ move directly - only up or down
+ cut and paste
+
+<h4>Notes</h4><textarea class="notes" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done13">Step Completed</label><input class="step-complete" type="checkbox" id="done13"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+Enter your name literally. Then via an input & named value.
+
+
+<div class="step" id="step14"><h1>Step 14: different kinds of errors</h1>
+  Start by referring to 'compile errors'
+
+Code is succinct and pedantic. Different kinds of errors that might result from a change:
+
+- Parse
+- compile
+- test
+- runtime errors?
+- logic errors
+<h4>Notes</h4><textarea class="notes" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done14">Step Completed</label><input class="step-complete" type="checkbox" id="done14"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+  <div hidden="" id="hash"></div>
+  <div hidden="" id="changes"></div>
+
+    <script src="https://elan-language.github.io/LanguageAndIDE/diff.js"></script>
+    <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-scripts.js"></script>
+  </body>
+</html>

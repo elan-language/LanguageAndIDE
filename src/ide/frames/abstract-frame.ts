@@ -2,6 +2,7 @@ import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { BreakpointStatus } from "../../compiler/debugging/breakpoint-status";
 import { focusedAnnotation, ghostedAnnotation, importedAnnotation } from "../../compiler/keywords";
 import {
+  addDeleteToContextMenu,
   expandCollapseAll,
   helper_compileMsgAsHtmlNew,
   helper_CompileOrParseAsDisplayStatus,
@@ -816,27 +817,30 @@ export abstract class AbstractFrame implements Frame {
 
   getContextMenuItems() {
     const map = new Map<string, [string, (s?: string) => boolean]>();
-    // Must be arrow functions for this binding
-    if (this.isGhosted()) {
-      map.set("unghost", ["unghost", this.unGhost]);
-    } else if (!this.isGhostedOrWithinAGhostedFrame()) {
-      if (this.isGhostable()) {
-        map.set("ghost", ["ghost", this.ghost]);
+    if (this.isGhostedOrWithinAGhostedFrame()) {
+      if (this.isGhosted()) {
+        map.set("unghost", ["unghost", this.unGhost]);
       }
-      map.set("copy", ["copy (Ctrl-c)", this.copySelected]);
-      if (this.isDeletable()) {
-        map.set("cut", ["cut (Ctrl-x)", this.cutSelected]);
-        map.set("delete", ["delete (Ctrl-Delete or Ctrl-Backspace)", this.deleteSelected]);
-      }
+    } else {
       if (this.canInsertAfter()) {
-        map.set("below", ["insert new code below (Enter)", this.below]);
+        map.set("below", ["insert new code below <span class='kb'>Enter</span>", this.below]);
       }
       if (this.canInsertBefore()) {
-        map.set("above", ["insert new code above (Shift-Enter)", this.above]);
+        map.set("above", ["insert new code above <span class='kb'>Shift+Enter</span>", this.above]);
+      }
+      if (this.isDeletable()) {
+        addDeleteToContextMenu(this, map);
       }
       if (this.isMovable()) {
-        map.set("up", ["move up (Ctrl-ArrowUp)", this.up]);
-        map.set("down", ["move down (Ctrl-ArrowDown)", this.down]);
+        map.set("up", ["move up <span class='kb'>Ctrl+↑</span>", this.up]);
+        map.set("down", ["move down <span class='kb'>Ctrl+↓</span>", this.down]);
+      }
+      if (this.isDeletable()) {
+        map.set("cut", ["cut <span class='kb'>Ctrl+x</span>", this.cutSelected]);
+      }
+      map.set("copy", ["copy <span class='kb'>Ctrl+c</span>", this.copySelected]);
+      if (this.isGhostable()) {
+        map.set("ghost", ["ghost", this.ghost]);
       }
       if (this.canHaveBreakPoint) {
         if (this.hasBreakpoint()) {

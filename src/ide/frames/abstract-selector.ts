@@ -3,6 +3,7 @@ import { AbstractFrame } from "./abstract-frame";
 import { CodeSourceFromString } from "./code-source-from-string";
 import { Regexes } from "./fields/regexes";
 import {
+  addDeleteToContextMenu,
   helper_pastePopUp,
   isClass,
   isFrameWithStatements,
@@ -313,8 +314,8 @@ export abstract class AbstractSelector extends AbstractFrame {
   getContextMenuItems() {
     const map = new Map<string, [string, (s?: string) => boolean]>();
 
-    map.set("delete", ["delete (Ctrl-Delete or Ctrl-Backspace)", this.deleteSelected]);
-    map.set("paste", ["paste (Ctrl-v)", this.paste]);
+    addDeleteToContextMenu(this, map);
+    map.set("paste", ["paste <span class='kb'>Ctrl+v</span>", this.paste]);
 
     return map;
   }
