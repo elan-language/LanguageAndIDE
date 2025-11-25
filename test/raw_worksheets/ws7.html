@@ -16,30 +16,30 @@
     <div class="version" hidden=""></div>
 
     <div class="transient">
-      <p class="transient">Choose <i>either one</i> of the two options below:</p>
+      <p>First, set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</p>
+
+
+      <p class="transient">Then choose <i>either one</i> of the two options below:</p>
 
       <p><b>Option 1: Start this worksheet from scratch</b></p>
 
       <ul>
-          <li>First <label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
-          <li>Then <button id="auto-save" disabled="">Create and save a new answers file</button>.
+        <li>First <label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
+        <li>Then <button id="auto-save" disabled="">Create and save a new answers file</button>.
+        <li>All answers that you subsequently enter/edit will be auto-saved to this sheet.</li>
       </ul>
 
       <p><b>Option 2: Continue, or view, previous work</b></p>
 
       <ul>
-          <li><button id="load-answers">Load a previously-saved (.json) answers file</button>
-          <li>Immediately after loading, you will immediately be asked to confirm that you want to save any further edits to this file.</li>
-          (If you don't want to do that, hit <b>Cancel</b> on the dialog to return to these two options. Note that you
-          may make a copy of your answers file outside of the Elan IDE.)
+        <li><button id="load-answers">Load a previously-saved answers file</button></li>
+        <li>All answers that you subsequently enter/edit will be auto-saved to this sheet.</li>
+        <li>The first time you re-load an answers sheet - within a single session on Elan -
+        you will be asked to confirm that you understand this.</li>
       </ul>
-
-      <p>In either case, any edits that you subsequently make in the worksheet will be auto-saved to the file.</p>
     </div>
 
     <input class="question" type="text" id="postsave-username" disabled=""/>
-
-    <p>Set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</p>
 
     <div class="license">
       <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
@@ -50,7 +50,7 @@
     </div> 
       <div class="step" id="step1">
   <h3>Step 1: Getting started</h3>
-  <button class="load" id="load1-0">Load 1</button><div id="code-load1-0" hidden=""># 3721890f020887fd8564c93349bbb9b1d210b09659c53bd97426f6586c26915b Elan 1.6.2 guest default_profile valid
+  <button class="load" id="load1-0" data-file="test.elan">Load 1</button><div id="code-load1-0" hidden=""># 3721890f020887fd8564c93349bbb9b1d210b09659c53bd97426f6586c26915b Elan 1.6.2 guest default_profile valid
 
 function foo() returns List&lt;of Int&gt;
   return [0]

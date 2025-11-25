@@ -2838,6 +2838,7 @@ window.addEventListener("message", async (m) => {
       clearUndoRedoAndAutoSave();
       await readAndParse(code, file.fileName, ParseMode.loadNew);
     }
+    
     if (m.data.startsWith("help:")) {
       const link = m.data.slice(5);
       const helpLink = document.createElement("a");
@@ -2851,6 +2852,12 @@ window.addEventListener("message", async (m) => {
       const id = m.data.slice(9);
       const code = await file.renderAsSource();
       worksheetIFrame.contentWindow?.postMessage(`code:${id}:${code}`, "*");
+    }
+
+    if (m.data.startsWith("filename:")) {
+      const name = m.data.slice(9);
+      file.fileName = name;
+      updateNameAndSavedStatus();
     }
   }
 });

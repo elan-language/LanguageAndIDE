@@ -243,8 +243,8 @@ end constructor`;
 
     const actual = await processLoads(loads, 0);
 
-    const expected = `<button class="load" id="load0-0">Load 0-0</button><div id="code-load0-0" hidden=""></div>
-<button class="load" id="load0-1">Load load0-1</button><div id="code-load0-1" hidden=""></div>`;
+    const expected = `<button class="load" id="load0-0" data-file="test.elan">Load 0-0</button><div id="code-load0-0" hidden=""></div>
+<button class="load" id="load0-1" data-file="test2.elan">Load load0-1</button><div id="code-load0-1" hidden=""></div>`;
 
     assert.strictEqual(actual, expected);
   });
@@ -254,7 +254,7 @@ end constructor`;
 
     const actual = await processFinals(html);
 
-    const expected = `<div class="final" id="final3"><p>testing<button class="load" id="load3-0">Load 3-0</button></p><div id="code-load3-0" hidden=""></div><p></p></div>`;
+    const expected = `<div class="final" id="final3"><p>testing<button class="load" id="load3-0" data-file="test.elan">Load 3-0</button></p><div id="code-load3-0" hidden=""></div><p></p></div>`;
 
     assert.strictEqual(actual, expected);
   });
