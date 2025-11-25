@@ -188,6 +188,8 @@ export async function processLoad(
 
   outCode.textContent = fileCode;
 
+  button.setAttribute("data-file", file);
+
   button.textContent = (loadSel?.firstChild?.textContent ?? "")
     .replaceAll(currentLoadNumber, num)
     .replaceAll(currentLoadId, id);

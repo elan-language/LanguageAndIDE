@@ -456,11 +456,12 @@ function setDiffInHtml(id: string, diff: change[]) {
   snapshotDiv.addEventListener("click", () => snapshotDiv.classList.toggle("collapsed"));
 }
 
-function setupLoadLinks(loadLinks: NodeListOf<HTMLButtonElement>) {
-  for (const b of loadLinks) {
+function setupLoadButtons(loadButtons: NodeListOf<HTMLButtonElement>) {
+  for (const b of loadButtons) {
     b.addEventListener("click", (_e) => {
       const code = document.getElementById(`code-${b.id}`)?.textContent ?? "";
       window.parent.postMessage(`code:${code}`, "*");
+      window.parent.postMessage(`filename:${b.dataset.file}`, "*");
       snapShotCode("reset");
     });
   }
@@ -477,7 +478,7 @@ function setupHelpLinks(helpLinks: NodeListOf<HTMLLinkElement>) {
   }
 }
 
-setupLoadLinks(loads as NodeListOf<HTMLButtonElement>);
+setupLoadButtons(loads as NodeListOf<HTMLButtonElement>);
 setupHelpLinks(helps as NodeListOf<HTMLLinkElement>);
 updateHintsTaken();
 
