@@ -114,6 +114,7 @@
 
 textarea {
     width: 100%;
+    field-sizing: content;
     font-family: monospace;
     font-weight: bold;
     color: blue
