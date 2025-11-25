@@ -71,7 +71,11 @@ export { CodeSourceFromString };
 export const fileErrorPrefix = `Cannot load file:`;
 export const parseErrorPrefix = `Parse error before:`;
 
+export const cannotLoadInvalidHashFile = `${fileErrorPrefix} Elan header does not match the code below. The file might have been created or modified outside Elan IDE.`;
+export const cannotLoadInvalidFile = `${fileErrorPrefix} code does not begin with a valid Elan header, so cannot be loaded.`;
+export const cannotLoadEmptyFile = `${fileErrorPrefix} no code found to load.`;
 export const cannotLoadFile = `${fileErrorPrefix} it has been created or modified outside Elan IDE`;
+export const cannotLoadUnparseableFile = `${fileErrorPrefix} cannot parse code`;
 
 export class FileImpl implements File {
   currentHash: string = "";
@@ -622,6 +626,10 @@ export class FileImpl implements File {
     try {
       this.parseError = undefined;
       this._parseStatus = ParseStatus.default;
+      if (source.getRemainingCode().trim() === "") {
+         throw new ElanFileError(cannotLoadEmptyFile);
+      }
+
       await this.validateHeader(source.getRemainingCode());
       if (source.isMatch("#")) {
         source.removeRegEx(Regexes.comment, false);
@@ -650,7 +658,7 @@ export class FileImpl implements File {
       const newHash = await this.getHash(toHash);
 
       if (fileHash !== newHash) {
-        throw new ElanFileError(cannotLoadFile);
+        throw new ElanFileError(cannotLoadInvalidHashFile);
       }
     }
   }
@@ -673,7 +681,7 @@ export class FileImpl implements File {
       const tokens = version.split(".");
 
       if (tokens.length !== 3) {
-        throw new ElanFileError(cannotLoadFile);
+        throw new ElanFileError(cannotLoadInvalidFile);
       }
 
       const fileMajor = parseInt(tokens[0], 10);
@@ -681,7 +689,7 @@ export class FileImpl implements File {
       const [filePatch] = this.getPatch(tokens[2]);
 
       if (isNaN(fileMajor) || isNaN(fileMinor) || isNaN(filePatch)) {
-        throw new ElanFileError(cannotLoadFile);
+        throw new ElanFileError(cannotLoadInvalidFile);
       }
 
       if (fileMajor !== this.version.major) {
@@ -704,11 +712,11 @@ export class FileImpl implements File {
       const header = code.substring(0, eol > 0 ? eol : undefined);
       const tokens = header.split(" ");
       if (tokens.length === 7 && tokens[0] === "#" && tokens[2] === "Elan") {
-        await this.validateHash(tokens[1], code);
         this.validateVersion(tokens[3]);
+        await this.validateHash(tokens[1], code);
         this.userName = tokens[4] ?? defaultUsername;
       } else {
-        throw new ElanFileError(cannotLoadFile);
+        throw new ElanFileError(cannotLoadInvalidFile);
       }
     }
   }

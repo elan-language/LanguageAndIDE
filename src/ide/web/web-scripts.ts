@@ -6,11 +6,11 @@ import { StdLib } from "../../compiler/standard-library/std-lib";
 import { TestStatus } from "../../compiler/test-status";
 import { isElanProduction } from "../../environment";
 import {
-  cannotLoadFile,
+  cannotLoadUnparseableFile,
   CodeSourceFromString,
   fileErrorPrefix,
   FileImpl,
-  parseErrorPrefix,
+  parseErrorPrefix
 } from "../frames/file-impl";
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { File, ParseMode } from "../frames/frame-interfaces/file";
@@ -761,7 +761,7 @@ async function showError(err: Error, fileName: string, reset: boolean) {
   if (err.message?.startsWith(fileErrorPrefix)) {
     systemInfoPrintSafe(err.message);
   } else if (err.message?.startsWith(parseErrorPrefix)) {
-    systemInfoPrintSafe(cannotLoadFile);
+    systemInfoPrintSafe(cannotLoadUnparseableFile);
   } else if (err.stack) {
     let msg = "";
     let stack = "";
