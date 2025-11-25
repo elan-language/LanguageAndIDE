@@ -20,4 +20,6 @@ export interface Selectable {
 
   parseFrom(source: CodeSource): void;
   getHtmlId(): string;
+
+  selectFromAnnotation(): void;
 }

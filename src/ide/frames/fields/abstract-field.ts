@@ -593,8 +593,18 @@ export abstract class AbstractField implements Selectable, Field {
     );
   }
 
+  selectFromAnnotation(): void {
+    this.deselectAll();
+    this.selected = true;
+    this.focus();
+  }
+
   select(_withFocus?: boolean, _multiSelect?: boolean, selection?: [number, number]): void {
-    if (!this.isWithinAGhostedFrame() && !this.getHolder().isImported()) {
+    if (
+      !this.isWithinAGhostedFrame() &&
+      !this.getHolder().isImported() &&
+      !this.getFile().isParsing() // if parsing a file allow focusedAnnotation to do selection/focus
+    ) {
       this.deselectAll();
       this.selected = true;
       this.focus();

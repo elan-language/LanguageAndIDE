@@ -95,6 +95,9 @@ export class FileImpl implements File {
   private _testError?: Error;
   private _frNo: number = 0;
   private _showFrameNos: boolean = true;
+  private _addFocusedAnnotation: boolean = false;
+  private _hasFocusedAnnotation: boolean = false;
+  private _isParsing: boolean = false;
   ast: RootAstNode | undefined;
 
   private copiedSource: string[] = [];
@@ -118,8 +121,20 @@ export class FileImpl implements File {
     }
   }
 
+  setFocusedAnnotation(b: boolean): void {
+    this._hasFocusedAnnotation = b;
+  }
+
+  addFocusedAnnotationToCode() {
+    return this._addFocusedAnnotation;
+  }
+
   addCopiedSource(source: string): void {
     this.copiedSource.push(source);
+  }
+
+  isParsing() {
+    return this._isParsing;
   }
 
   getCopiedSource(): string[] {
@@ -272,9 +287,11 @@ export class FileImpl implements File {
     return `<el-profile class="${cls}">${profileName}</el-profile>`;
   }
 
-  async renderAsSource(): Promise<string> {
+  async renderAsSource(showFocused: boolean = false): Promise<string> {
+    this._addFocusedAnnotation = showFocused;
     const content = this.renderHashableContent();
     this.currentHash = await this.getHash(content);
+    this._addFocusedAnnotation = false;
     return `# ${this.currentHash} ${content}`;
   }
 
@@ -592,6 +609,7 @@ export class FileImpl implements File {
 
   parseBodyFrom(source: CodeSource): void {
     try {
+      this._isParsing = true;
       while (source.hasMoreCode()) {
         if (source.isMatchRegEx(Regexes.newLine)) {
           source.removeNewLine();
@@ -599,9 +617,14 @@ export class FileImpl implements File {
           this.getNextSelector(source.mode).parseFrom(source);
         }
       }
-      this.removeAllSelectorsThatCanBe();
-      this.deselectAll();
-      this.getFirstChild().select(true, false);
+      // allow focusedAnnotation to do selection/focus
+      if (!this._hasFocusedAnnotation) {
+        this._isParsing = false;
+        this.removeAllSelectorsThatCanBe();
+        this.deselectAll();
+        this.getFirstChild().select(true, false);
+      }
+      this.setFocusedAnnotation(false);
       this.updateAllParseStatus();
     } catch (e) {
       if (e instanceof ElanFileError) {
@@ -610,6 +633,8 @@ export class FileImpl implements File {
         this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
       }
       this._parseStatus = ParseStatus.invalid;
+    } finally {
+      this._isParsing = false;
     }
   }
 

@@ -1,4 +1,4 @@
-import { ghostedAnnotation, importedAnnotation } from "../../compiler/keywords";
+import { focusedAnnotation, ghostedAnnotation, importedAnnotation } from "../../compiler/keywords";
 import { AbstractFrame } from "./abstract-frame";
 import { CodeSourceFromString } from "./code-source-from-string";
 import { Regexes } from "./fields/regexes";
@@ -88,6 +88,9 @@ export abstract class AbstractSelector extends AbstractFrame {
       frame.setImported(true);
     } else if (compilerDirective === ghostedAnnotation) {
       frame.setGhosted(true);
+    } else if (compilerDirective === focusedAnnotation) {
+      frame.selectFromAnnotation();
+      this.getFile().setFocusedAnnotation(true);
     }
   }
 
