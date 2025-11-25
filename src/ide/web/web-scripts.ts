@@ -817,6 +817,10 @@ async function initialDisplay(reset: boolean) {
     await refreshAndDisplay(false, false);
     lastSavedHash = lastSavedHash || file.currentHash;
     updateNameAndSavedStatus();
+    if (reset) {
+      const code = await file.renderAsSource();
+      worksheetIFrame.contentWindow?.postMessage(`code:reset:${code}`, "*");
+    }
   } else {
     const msg = file.parseError || "Failed load code";
     await showError(new Error(msg), file.fileName, reset);
