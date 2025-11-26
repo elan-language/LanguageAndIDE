@@ -1196,8 +1196,21 @@ function handleCutAndPaste(event: Event, msg: editorEvent) {
   return false;
 }
 
-function handleEscape(e: editorEvent) {
+async function collapseContextMenu() {
+  const items = document.querySelectorAll(".context-menu-item") as NodeListOf<HTMLDivElement>;
+
+  if (items.length > 0) {
+    const id = items[0].dataset.id;
+    const mk = {control : false, shift : false, alt : false};
+    const msg = getEditorMsg("key", "frame", id, "Escape", mk, undefined, undefined, undefined);
+    await handleKeyAndRender(msg);
+  }
+}
+
+
+async function handleEscape(e: editorEvent) {
   if (e.key === "Escape") {
+    await collapseContextMenu();
     demosButton.focus();
     return true;
   }
@@ -1286,7 +1299,7 @@ async function handleEditorEvent(
     console.info("tests cancelled in handleEditorEvent");
   }
 
-  if (handleEscape(msg)) {
+  if (await handleEscape(msg)) {
     return;
   }
 
@@ -2803,7 +2816,7 @@ function handleMenuArrowDown() {
   } while (nextItem && (nextItem as any).disabled);
 }
 
-function handleMenuKey(event: KeyboardEvent) {
+async function handleMenuKey(event: KeyboardEvent) {
   removeFocussedClassFromAllTabs();
   const menuItem = event.target as HTMLElement;
   const menu = menuItem.parentElement as HTMLDivElement;
@@ -2813,6 +2826,7 @@ function handleMenuKey(event: KeyboardEvent) {
   } else if (event.key === "ArrowDown") {
     handleMenuArrowDown();
   } else if (event.key === "Escape") {
+    await collapseContextMenu();
     collapseMenu(button, true);
   } else if (event.key === "Enter" || event.key === "Space") {
     const focusedItem = document.activeElement as HTMLElement;
@@ -2838,7 +2852,10 @@ worksheetTab?.addEventListener("click", () => showWorksheetTab());
 worksheetIFrame?.contentWindow?.addEventListener("click", () => showWorksheetTab());
 helpIFrame?.contentWindow?.addEventListener("click", () => showHelpTab());
 
-window.addEventListener("click", () => collapseAllMenus());
+window.addEventListener("click", () => {
+  collapseContextMenu();
+  collapseAllMenus()
+});
 
 window.addEventListener("message", async (m) => {
   if (m.data && typeof m.data === "string") {

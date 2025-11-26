@@ -494,7 +494,7 @@ export class FileImpl implements File {
   }
   getTestStatusColour(): string {
     let status: DisplayColour;
-    const cs = this.readCompileStatus()
+    const cs = this.readCompileStatus();
     if (
        cs === CompileStatus.ok || cs === CompileStatus.advisory 
     ) {
