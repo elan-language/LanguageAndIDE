@@ -47,18 +47,15 @@
           <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
         You may freely make and distribute copies of this worksheet <i>as is</i>, but if you <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
         Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
-    </div>
-
+    </div> 
+      
 
 <div class="step" id="step1"><h1>Step 1: learning the rules of Blackjack</h1>
-    <p>Your first task is to make sure that you understand how the game
-      works, and - since there are many minor variations on the game - the rules of this specific implementation.</p>
-
       <p>Watch the first video:</p>
 
       <div style="position: relative; padding-bottom: 72.67833109017496%; height: 0;"><iframe src="https://www.loom.com/embed/3dca2b1ec6384176aaf85e1b60f6ce1d" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-      <p>Now <button class="load" id="load1-0" data-file="blackjack_1begin.elan">Load the starting code</button></p><div id="code-load1-0" hidden=""># 9a6bf9a75f10fe272f1e3837478b3432a0a6e570fcfde07386e7d0735907aebf Elan 1.7.0 guest default_profile valid
+      Now <button class="load" id="load1-0" data-file="blackjack_1begin.elan">Load the starting code</button><div id="code-load1-0" hidden=""># 9a6bf9a75f10fe272f1e3837478b3432a0a6e570fcfde07386e7d0735907aebf Elan 1.7.0 guest default_profile valid
 
 main
   let game be new Game(1000)
@@ -509,73 +506,60 @@ constant gridByRank set to {"A":{"royal"}, "2":{"b", "c"}, "3":{"a", "b", "c"}, 
 
 constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"red", Suit.spades:"black"}
 </div> and immediately use <b>file &gt; auto save</b> the
-     <i>code</i> to your local file storage: because you will be making changes and want to ensure that your changes are saved.<p></p>
-
+     <i>code</i> to your local file storage: because you will be making changes and want to ensure that your changes are saved.
+    
       <p>When you run the program, the <b>display</b> tab will be shown in place
       of this worksheet, you can flip between them by clicking on the tab headings.</p>
 
-      <p>Run the program now either:
+      <p>So, run the program now, either:
         </p><ul>
           <li>using the mouse, by clicking on the <b>run</b> button at the top of the screen, <i>or</i></li>
           <li>using the keyboard, by pressing <b>Ctrl+r</b></li>
         </ul>
-      and play exactly 10 rounds of Blackjack in the same manner as on the video, flipping back to this worksheet between rounds
-      to make sure that you have understood the following points:<p></p>
+      and play exactly 10 rounds of Blackjack.<p></p>
 
+      <p>Make sure that you have grasped the following points:</p>
     <ul>
-      <li>All players are dealt two cards to begin with. One of the dealer's two cards is dealt face down -
-        and is revealed when the dealer starts their turn.</li>
-      <li>The aim is to  get the value of your hand as close to 21 as you can - but if drawing a card causes
-          the total to go over 21 then (unless you have a 'soft Ace' - explained below) you will be 'BUST'
-          and your turn is over.</li>
-      <li>Most cards have a numeric value (e.g. '7'). The Royal cards - Jack, Queen, King - each have
-        the value 10. An Ace is special: it can be valued at 11, or at 1. An Ace valued at 11 is known as a 'soft Ace'.
+      <li>Most cards have a obvious numeric value. The Royal cards - Jack, Queen, King - each have
+        the value 10. An Ace is special: it can be valued at 11, or at 1. 
+        An Ace valued at 11 is known as a 'soft Ace'.
         If a dealt card takes the hand total <i>over</i> 21 then a soft Ace is automatically devalued to 1.
-        By the same logic, if a player's first two cards are <i>both</i> Aces then the starting hand total is counted as 12, rather than 22.</li>
+        </li><li>The aim is to  get the value of your hand as close to 21 as you can - but if drawing a card causes
+          the total to go over 21 then (unless you have a 'soft Ace') you will be 'BUST'
+          and your turn is over.</li>
+      
       <li>If the first two cards of any player total <i>exactly</i> 21 - which would require one Ace, and one Royal or 10 card -
-         then you have 'BLACKJACK' - the best hand possible - and so no further action is needed from you.</li>
-      <li>Otherwise, when it is your turn you have the option to 'draw' another card - by hitting the <b>d</b> key - or
-        to 'stand' - by hitting the 's' key.</li>
-    <li>When your status changes either to STANDING or BUST then play passes to the the next player or -
-        if you are the last, or only, player - to the dealer.</li>
-      <li>The dealer now plays out their hand, initially turning the hidden card face up and then following fixed rules about
-         when to stand and when to draw.</li>
-      <li>When all players, including the dealer, have finished their turn, the outcome is determined, and
-        points are passed between each player and the dealer as follows:
+         then you have 'BLACKJACK' - the best hand possible - so no further action is needed from you.</li>
+      <li>When all hands have finished playing, the outcome is determined, points swapped as follows:
         <ul>
-          <li>If a player is BUST then 1 point is passed over to the dealer <i>even the dealer is also BUST</i>.</li>
-          <li>else, if a player has BLACKJACK then they gain 2 points from the dealer <i>unless</i> the dealer
-          also has BLACKJACK, in which case it is a draw and no points are exchanged.</li>
+          <li>If a player is BUST then 1 point is passed from them to the dealer <i>even the dealer is also BUST</i>.</li>
+          <li>If a player has BLACKJACK then they gain 2 points from the dealer <i>unless</i> the dealer
+          also has BLACKJACK, in which case it is a draw.</li>
           <li>else, if the player is STANDING and the dealer has BLACKJACK the dealer gains one point from the player.</li>
-          <li>else, if the player is STANDING and their hand total is greater than that of the dealer, the player gains one point from the dealer.</li>
-          <li>else, if the player is STANDING and their hand total is the same as that of the dealer it is a dealer, then it is a draw and
-            no points are exchanged.</li>
-          <li>else - meaning that the player's total is less than that of the dealer, then the dealer gains one point from the player.</li>
-        </ul>
+          <li>else, if the player is STANDING and their hand total is greater than the dealer's, the player gains one point from the dealer.</li>
+          <li>else, if the player is STANDING and their hand total is the same as the dealer's, it is a draw.</li>
+          <li>else, if the player's total is less than the dealer's, the dealer gains one point from the player.</li>
+        </ul> 
       </li>
-      <li>The updated points for the dealer and players are now shown, and you are given the option to play another round.</li>
-      <li>This program works with an 'infinite deck' of cards: the chance of withdrawing a specific card - such as the 7 of clubs -
-        is the same every time you draw a card, which means that there is a small chance that the same card can appear on
-        screen more than once. (The same is true in most casinos, since they use multiple packs of cards in one deck;
-        some even use machines that shuffle the whole deck continuously - which is like an infinite pack.)</li>
+      <li>This program uses deck of multiple packs of cards: so there is a small chance that the same card may appear on
+        screen more than once.</li>
     </ul>
     <p>After playing 10 rounds, how many points did you, and the dealer, end up with?</p>
 <textarea class="question" id="question1-0" placeholder="input is required"></textarea>
-    <p>Finish playing the game - either by pressing the <b>n</b> key at the end of the round, or by clicking the <b>stop</b>
-      button at any point while the program is running.</p>
+    <p>If you have not already exited the program, click <b>stop</b>.</p>
 <h4>Notes</h4><textarea class="notes" id="notes1" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="step" id="step2"><h1>Step 2: starting to explore the code</h1>
+<div class="step" id="step2"><h1>Step 2: start to explore the code</h1>
 
   <p>Watch the next video:</p>
     <div style="position: relative; padding-bottom: 92.78350515463917%; height: 0;"><iframe src="https://www.loom.com/embed/ef774f996cda44118592e43bddeacb18" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 
-  <p>How many instructions are there in total within the Blackjack program?</p>
+  <p>How many instructions are there in total within the Blackjack program (just find the largest instruction number)?</p>
 <textarea class="question" id="question2-0" placeholder="input is required"></textarea>
 
   <p>The initial keyword in an instruction defines the type of instruction.
-   Find and list here at least five initial keywords - not including the ones mentioned explicitly in the video:</p>
+   Find and list here at least five initial keywords not mentioned explicitly in the video:</p>
 <textarea class="question" id="question2-1" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes2" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done2">Step Completed</label><input class="step-complete" type="checkbox" id="done2"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
@@ -584,7 +568,7 @@ constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"r
   <p>Watch the next video:</p>
   <div style="position: relative; padding-bottom: 65.93406593406593%; height: 0;"><iframe src="https://www.loom.com/embed/92c82097fbca43a0b3286d10d31c3bc0" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-  <p>Looking at the first few instructions only - no need to scroll the code - list below the different colours that you can see being used within the code:</p>
+  <p>List below the different colours that you can see being used within the code (they are all shown within the first 15 instructions):</p>
 <textarea class="question" id="question3-0" placeholder="input is required"></textarea>
   <p>What is the significance of the colour dark-blue, and black?</p>
 <textarea class="question" id="question3-1" placeholder="input is required"></textarea>
@@ -594,7 +578,7 @@ constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"r
   <p>Watch the next video:</p>
   <div style="position: relative; padding-bottom: 65.77344701583435%; height: 0;"><iframe src="https://www.loom.com/embed/01fffe7c68964577b6fbf486c57d18ee" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
   <p>Scrolling through the code, find two comments, not including the one at the top showing the Elan version,
-  and indicate where they are below, by writing the number of the instruction immediately below each comment:</p>
+  and write down the instruction number immediately below each comment:</p>
 <textarea class="question" id="question4-0" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes4" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done4">Step Completed</label><input class="step-complete" type="checkbox" id="done4"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
@@ -610,8 +594,8 @@ constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"r
 
   <p>Watch the next video:</p>
   <div style="position: relative; padding-bottom: 64.98194945848375%; height: 0;"><iframe src="https://www.loom.com/embed/dc154e36ff704b92bf7f7c7af278bc2f" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-  <p>Scroll down the code and find another example of a literal number, and a literal string - not referred to specifically in the video -
-   and note their instruction numbers below, specifying which refers to which kind of literal value:
+  <p>Find an example of a literal number, and a literal string - not including any specifically mentioned in the video -
+   and note their instruction numbers below:
   </p>
 <textarea class="question" id="question6-0" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes6" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done6">Step Completed</label><input class="step-complete" type="checkbox" id="done6"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
@@ -621,89 +605,117 @@ constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"r
   <p>Watch the next video:</p>
   <div style="position: relative; padding-bottom: 66.09547123623011%; height: 0;"><iframe src="https://www.loom.com/embed/5cbebd99cc744f5caf84c284b94a2486" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-  <p>Scrolling through the code, find five more methods - not including any specifically mentioned in the video - and write
-    the names of those methods here:</p>
+  <p>Find five method names - not including any specifically mentioned in the video - and write
+    them here:</p>
 <textarea class="question" id="question7-0" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes7" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done7">Step Completed</label><input class="step-complete" type="checkbox" id="done7"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
 <div class="step" id="step8"><h1>Step 8: types</h1>
   <div style="position: relative; padding-bottom: 64.90384615384616%; height: 0;"><iframe src="https://www.loom.com/embed/529cf528cba740ca95a493e054e24bfa" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-  <p>Which of the types mentioned in the video are defined within the standard Elan language</p>
+  <p>Which of the types mentioned in the video are defined within the standard Elan language
+    (if necessary, watch the video again)?
+  </p>
 <textarea class="question" id="question8-0" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes8" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done8">Step Completed</label><input class="step-complete" type="checkbox" id="done8"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="step" id="step9"><h1>Step 9: reading instructions</h1>
-
-  Give examples of articulating
-
-  <p>Write out a particuar instruction in plain English</p>
+<div class="step" id="step9"><h1>Step 9: selecting simple and compound instructions</h1>
+  <p>Watch the next video:</p>
+  <div style="position: relative; padding-bottom: 60.60606060606061%; height: 0;"><iframe src="https://www.loom.com/embed/1ffb5403bde04fdda5eebce6174d7f32" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+   <p>List several different examples of compound instructions</p>
 <textarea class="question" id="question9-0" placeholder="input is required"></textarea>
-
+   <p>Can you select the 'header comment' (beginning '# Elan') at the top of the code?</p>
+<textarea class="question" id="question9-1" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes9" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done9">Step Completed</label><input class="step-complete" type="checkbox" id="done9"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="step" id="step10"><h1>Step 10: selecting simple and compound instructions</h1>
-   VIDEO ALREADY RECORDED
-
-   <p>List several different examples of compound instructions</p>
+<div class="step" id="step10"><h1>Step 10: adding a new instruction</h1>
+  <p>Watch the next video:</p>
+  <div style="position: relative; padding-bottom: 64.67065868263472%; height: 0;"><iframe src="https://www.loom.com/embed/b7376d0f99cd421e810936d1841ba118" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+  <p>Your first task is to turn the program into a two-player game (not counting the dealer, played by the computer):</p>
+  <ul>
+    <li>Near the top of <el-code><el-kw>main</el-kw></el-code>, find this instruction:
+    <el-code-block><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code-block>
+    and immediately <i>below</i> it insert a new <el-code><el-kw>call</el-kw></el-code> instruction.</li>
+    <li>Into the <i>two</i> editable fields type in the same code that you see in the instruction immediately above it,
+    <i>except</i> that instead of <el-code>"<el-lit>Player A</el-lit>"</el-code>, write <el-code>"<el-lit>Player B</el-lit>"</el-code>. Note that:
+    <ul>
+      <li>your text will initially be black, but it will be coloured once you leave the field</li>
+      <li>a drop-down list will offer you some 'auto-completion' options, which can save typing and
+        errors. You can select an option with the mouse or with the cursor ↑↓ keys and <b>Enter</b>.</li>
+      <li>You might see a message appear on the right, but you can ignore it for now, unless it is coloured red 
+        (you will also then see the word <b>invalid</b> or <b>error</b> appear) in which case you should <b>Backspace</b>
+        to correct the mistake. </li>
+    </ul>
+    </li>
+    <li>When you have completed the new instruction, <b>run</b> the program, and take responsibility for both <b>Player A</b>
+    and <b>Player B</b> (or, if you are pairing with another person, control one each).</li>
+  </ul>
+  <p>When does the dealer play, now ?</p>
 <textarea class="question" id="question10-0" placeholder="input is required"></textarea>
-   <p>When a compound instruction is selected you see its 'extend' [explain] visually.  Indentation. But even if there was no indentation or coloured highlight how else could you determine extent?</p>
-<textarea class="question" id="question10-1" placeholder="input is required"></textarea>
-   <p>Can you select the header?</p>
-<textarea class="question" id="question10-2" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes10" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done10">Step Completed</label><input class="step-complete" type="checkbox" id="done10"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="step" id="step11"><h1>Step 11: adding and removing instructions</h1>
-  Input your name and use that instead of literal
-  Add a second and third player
+<div class="step" id="step11"><h1>Step 11: modifying an existing instruction</h1>
+  <ul>
+    <li> Go back to the instruction that creates <b>Player A</b> and <i>above it</i>insert a <el-code><el-kw>let</el-kw></el-code> instruction
+      and note that this features two editable fields.</li>
+    <li>In the first field enter <el-code><el-id>name1</el-id></el-code> and in the second field type in the following code
+    using the auto-completions to help <el-code><el-method>inputString</el-method>("<el-lit>Enter name for first player</el-lit>")</el-code>
+    <p>What message do you see within the code editor?</p>
+<textarea class="question" id="question11-0" placeholder="input is required"></textarea>
+    <p>And what do you observe in the 'status panel' - at the top of the screen, just to the right of the code editor?</p>
+<textarea class="question" id="question11-1" placeholder="input is required"></textarea>
+    Then revert the field back to <el-code><el-id>name2</el-id></el-code>.</li>
+    <li>Select the instruction below this - in other words the one that you added previously - and <b>Tab</b> to the second
+    field. Edit the contents, replacing the literal string <el-code>"<el-lit>Player A</el-lit>"</el-code> with <el-code><el-id>name2</el-id></el-code> 
+    (no quotation marks because this is an <i>identifier</i> that holds a string, not a literal string).</li>
+    <li>Run the program. When asked, type in your own first name, finishing with the <b>Enter</b> key.
+      <p>Has the name you entered made a difference?</p>
+<textarea class="question" id="question11-2" placeholder="input is required"></textarea>
+      <p>There is an unwanted 'side effect' on the screen - what is it?</p>
+<textarea class="question" id="question11-3" placeholder="input is required"></textarea>
+    </li>
+    <li>To fix the unwanted side effect, insert the following new instruction immediately<i>after</i> the second player is created and added to the game:
+    <el-code><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-method>clearPrintedText</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="empty optional ok" tabindex="-1"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code></li>
+    <li>Now change the program so that it asks the user to enter a name for the <i>second</i> player, this time using
+      the identifier <el-code><el-id>name2</el-id></el-code>.</li>
+    <li>Run the program again, and confirm that you can now name both players.</li>
+  </ul>
+  
+  <p>What would happen if you define the second identifier as name2, but in the next line
+  you were to write name1? (If you need to check, run the program) </p>
+<textarea class="question" id="question11-4" placeholder="input is required"></textarea>
+  <p>And what if the the second identifier was still name2 but you used name3
+  in the following instruction? This time, can you even run the program to try it?</p>
+<textarea class="question" id="question11-5" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes11" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done11">Step Completed</label><input class="step-complete" type="checkbox" id="done11"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="step" id="step12"><h1>Step 12: editing fields</h1>
+<div class="final" id="final12"><h1>Congratulations! You have completed this worksheet</h1>
 
-  <p>Watch the next video:</p>
-  <div style="position: relative; padding-bottom: 65.37530266343825%; height: 0;"><iframe src="https://www.loom.com/embed/f795d314f64c41d68567061b6bd03923" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<p>You have learned:
+</p><ul>
+  <li>How to load, run, and stop a program</li>
+  <li>How to recognise the different kinds of instructions that make up a program, including compound instructions, which contain other instructions.</li>
+  <li>How to navigate around the program, selecting different instructions in order to draw attention to them and as a prelude to modifying them.</li>
+  <li>How to insert new instructions, delete instructions, and to undo changes when they didn't do what you wanted.</li>
+</ul>
 
-  <p>Your task:</p>
-  <ul>
-    <li>Go to instruction number 3:
-      <el-code-block><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code-block>
-      Here, the code is creating a <el-code><el-kw>new</el-kw></el-code> <el-code><el-type>HumanPlayer</el-type></el-code>, giving it the name <el-code>"<el-lit>Player A</el-lit>"</el-code> and <el-code><el-lit>1000</el-lit></el-code>
-      starting points. This is then added into the <el-code><el-id>game</el-id></el-code> using the method <el-method>addPlayer</el-method>.
-    </li><li>Select (highlight) the <i>second</i> field in that instruction - which is everything within the outer set of brackets. </li>
-    <li>Using the cursor keys, backspace, and/or delete - as on most text editors - change <el-code>"<el-lit>Player A</el-lit>"</el-code> to
-    your own first name, <i>being careful that you keep the existing double-quote marks at either end of the name.</i></li>
-    <li>Run the game again and confirm that your name now appears in place of <b>Player A</b> on the game.
-      Then <b>stop</b> the program and return focus to the editor.</li>
-    <li>Select the <i>first</i> field in the same instruction - and delete any one character from <el-method>addPlayer</el-method>.
-    After a couple of seconds you will see a message appear within the code
-    <p>What does the message say?</p>
-<textarea class="question" id="question12-0" placeholder="input is required"></textarea>
-    <p>As well as the message within the code, something else changed on the screen when you made that edit. What?</p>
-<textarea class="question" id="question12-1" placeholder="input is required"></textarea>
-    </li><li>Before completing this step, restore the edited field to its previous contents. You can do this by hand, or you
-      can click the <b>Undo</b> button at the top of the screen, or you can press <b>Ctrl+z</b> on the keyboard - the standard key combination for 'undo'.
-    </li>
+<p></p>
+<p>In the next worksheet - Blackjack 2 - you'll start to do some real programming, by defining and implementing the logic
+  for a fully-automated Blackjack player - and then in the Blackjack 3 worksheet, pitting different automated players
+  against each other for thousands of games, and using the outcome to refine the strategies.</p>
 
-  </ul>
-<h4>Notes</h4><textarea class="notes" id="notes12" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done12">Step Completed</label><input class="step-complete" type="checkbox" id="done12"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<p>In the meantime, if you have time, we recommend that you watch the following additional videos - that offer
+  further techniques for navigating and editing instructions. Practice the techniques shown in each video, either while it is running,
+or immediately afterwards.</p>
 
-<div class="step" id="step13"><h1>Step 13: moving instructions</h1>
- move directly - only up or down
- cut and paste
+  <div style="position: relative; padding-bottom: 51.47759771210677%; height: 0;"><iframe src="https://www.loom.com/embed/463d3f5a94f849729eca37e47e4c08a3" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-<h4>Notes</h4><textarea class="notes" id="notes13" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done13">Step Completed</label><input class="step-complete" type="checkbox" id="done13"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+  <div style="position: relative; padding-bottom: 64.74820143884892%; height: 0;"><iframe src="https://www.loom.com/embed/64218eaa3c8c411282aeffd606ffe0c2" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-<div class="step" id="step14"><h1>Step 14: different kinds of errors</h1>
-  Start by referring to 'compile errors'
+  <div style="position: relative; padding-bottom: 57.26405090137858%; height: 0;"><iframe src="https://www.loom.com/embed/f9776ffce8c1484aada302e3e6b22e2d" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-Code is succinct and pedantic. Different kinds of errors that might result from a change:
-
-- Parse
-- compile
-- test
-- runtime errors?
-- logic errors
-<h4>Notes</h4><textarea class="notes" id="notes14" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done14">Step Completed</label><input class="step-complete" type="checkbox" id="done14"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<p>All the techniques for navigating and modifying instructions may be looked up in the <b>Help</b> tab. For example: <a class="help" href="IDENavigation.html#Navigation" id="help12-0">show in Help</a></p>
+</div>
 
   <div hidden="" id="hash"></div>
   <div hidden="" id="changes"></div>
