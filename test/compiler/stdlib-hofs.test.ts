@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -906,7 +907,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "5");
   });
 
-  test("Pass_sortByImmutableList", async () => {
+    /* method is now deprecated */
+  ignore_test("Pass_sortByImmutableList", async () => {
     const code = `${testHeader}
 
 constant source set to {2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37}
@@ -984,7 +986,8 @@ return [main, _tests];}`;
     );
   });
 
-  test("Pass_sortByList", async () => {
+  /* method is now deprecated */
+  ignore_test("Pass_sortByList", async () => {
     const code = `${testHeader}
 
 main

@@ -3292,7 +3292,6 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
 <a href="#maxBy"><el-method>maxBy</el-method></a>,
 <a href="#minBy"><el-method>minBy</el-method></a> and
 <a href="#orderBy"><el-method>orderBy</el-method></a>.</p>
-<p>(Also <a href="#sortBy"><el-method>sortBy</el-method></a> which is now <b><i>deprecated</i></b>).</p>
 
 <h2 id="ref">Passing a function as a reference</h2>
 <p>To use a higher-order function (HoF), you have to pass in a reference to a function.
@@ -3518,7 +3517,9 @@ They take a function as an argument, and return the list element corresponding t
 </div></div>
 
 <h3 class="no-TOC" id="sortBy">sortBy</h3>
-<p><el-method>sortBy</el-method> is <b><i>deprecated</i></b>, but is superseded by method <a href="#orderBy"><el-method>orderBy</el-method></a>.
+<p><el-method>sortBy</el-method> is <i>deprecated</i> as of v1.7.0, and superseded by method <a href="#orderBy"><el-method>orderBy</el-method></a>
+  which is simpler to use because the comparison operator returns a <code>Boolean</code> 
+  (indicating whether the first value presented should be placed <i>after</i> the second value, or not) rather than having to return: 1, 0, or -1.
 
 <p><b>Elan Library Reference</b> go to the <a href="#top">top</a></p>
 <script>
