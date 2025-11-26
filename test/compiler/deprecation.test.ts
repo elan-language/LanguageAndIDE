@@ -1,4 +1,4 @@
-import { Deprecation } from "../../src/compiler/compiler-interfaces/elan-type-interfaces";
+import { Deprecation, DeprecationSeverity } from "../../src/compiler/compiler-interfaces/elan-type-interfaces";
 import {
   ClassOption,
   elanClass,
@@ -46,6 +46,12 @@ export class DeprecatedClass1 {
 }
 
 class TestStdLib {
+  @elanDeprecated(Deprecation.methodRemoved, 0, 0, "LibRef.html#Xxxx", DeprecationSeverity.advisory)
+  @elanFunction([])
+  deprecatedAdvisoryFunction(): number {
+    return 0;
+  }
+  
   @elanDeprecated(Deprecation.methodRemoved, 0, 0, "LibRef.html#Xxxx")
   @elanFunction([])
   deprecatedFunction(): number {
@@ -295,6 +301,32 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertCompiles(fileImpl);
+  });
+
+   test("Pass_FunctionAdvisoryDeprecation", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to deprecatedAdvisoryFunction()
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    fileImpl.setSymbols(new StdLibSymbols(new TestStdLib()));
+
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      `Advisory: Code change suggested. Method was removed in v0.0.LibRef.html#Xxxx`,
+    ]);
   });
 
   test("Fail_FunctionDeprecation", async () => {

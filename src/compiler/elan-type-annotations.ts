@@ -4,6 +4,7 @@ import { ElanSymbol } from "./compiler-interfaces/elan-symbol";
 import {
   Deprecated,
   Deprecation,
+  DeprecationSeverity,
   ElanDescriptor,
   elanMetadataKey,
   ElanMethodDescriptor,
@@ -526,12 +527,13 @@ export function elanType(eType: TypeDescriptor) {
   };
 }
 
-function getDeprecated(reason: Deprecation, fromMajor: number, fromMinor: number, message: string) {
+function getDeprecated(reason: Deprecation, fromMajor: number, fromMinor: number, message: string, advisory : DeprecationSeverity) {
   return {
     reason: reason,
     fromMajor: fromMajor,
     fromMinor: fromMinor,
     message: message,
+    Severity : advisory
   } as Deprecated;
 }
 
@@ -540,6 +542,7 @@ export function elanDeprecated(
   fromMajor: number,
   fromMinor: number,
   message: string,
+  severity: DeprecationSeverity = DeprecationSeverity.error
 ) {
   return function (
     target: object,
@@ -551,14 +554,14 @@ export function elanDeprecated(
         Reflect.getOwnMetadata(elanMetadataKey, target, propertyKey) ??
         new ElanSignatureDescriptor();
 
-      metaData.deprecated = getDeprecated(reason, fromMajor, fromMinor, message);
+      metaData.deprecated = getDeprecated(reason, fromMajor, fromMinor, message, severity);
 
       Reflect.defineMetadata(elanMetadataKey, metaData, target, propertyKey);
     } else {
       const typeMetadata = Reflect.getMetadata(elanMetadataKey, target, propertyKey);
 
       if (typeMetadata) {
-        typeMetadata.deprecated = getDeprecated(reason, fromMajor, fromMinor, message);
+        typeMetadata.deprecated = getDeprecated(reason, fromMajor, fromMinor, message, severity);
 
         Reflect.defineMetadata(elanMetadataKey, typeMetadata, target, propertyKey);
       }

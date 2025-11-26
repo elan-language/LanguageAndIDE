@@ -800,7 +800,8 @@ function systemInfoPrintUnsafe(text: string, scroll = true) {
 async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean) {
   try {
     file.refreshParseAndCompileStatuses(compileIfParsed);
-    if (file.readCompileStatus() === CompileStatus.ok && file.hasTests) {
+    const cs = file.readCompileStatus();
+    if ((cs === CompileStatus.ok || cs === CompileStatus.advisory)  && file.hasTests) {
       await runTests();
     }
     await renderAsHtml(editingField);
@@ -904,7 +905,8 @@ function updateDisplayValues() {
   const isEmpty = file.readParseStatus() === ParseStatus.default;
   const isParsing = file.readParseStatus() === ParseStatus.valid;
   const isIncomplete = file.readParseStatus() === ParseStatus.incomplete;
-  const isCompiling = file.readCompileStatus() === CompileStatus.ok;
+  const cs = file.readCompileStatus();
+  const isCompiling = cs === CompileStatus.ok || cs === CompileStatus.advisory;
   const isRunning = isRunningState();
   const isPaused = isPausedState();
   let isTestRunning = isTestRunningState();
