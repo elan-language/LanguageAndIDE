@@ -577,6 +577,9 @@ constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"r
   <p>The initial keyword in an instruction defines the type of instruction.
    Find and list here at least five initial keywords - not including the ones mentioned explicitly in the video:</p>
 <textarea class="question" id="question2-1" placeholder="input is required"></textarea>
+
+   <p>What are the two ways to select an instruction using the mouse?</p>
+<textarea class="question" id="question2-2" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes2" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done2">Step Completed</label><input class="step-complete" type="checkbox" id="done2"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
 <div class="step" id="step3"><h1>Step 3: the different elements within instructions</h1>
@@ -654,56 +657,94 @@ constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"r
 <h4>Notes</h4><textarea class="notes" id="notes10" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done10">Step Completed</label><input class="step-complete" type="checkbox" id="done10"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
 <div class="step" id="step11"><h1>Step 11: adding and removing instructions</h1>
-  Input your name and use that instead of literal
-  Add a second and third player
+  <p>Watch the next video:</p>
+  <div style="position: relative; padding-bottom: 64.67065868263472%; height: 0;"><iframe src="https://www.loom.com/embed/b7376d0f99cd421e810936d1841ba118" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+  <p>Your first task is to turn the program into a two-player game (not counting the dealer, played by the computer):</p>
+  <ul>
+    <li>Near the top of <el-code><el-kw>main</el-kw></el-code>, find this instruction:
+    <el-code-block><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code-block>
+    and immediately <i>below</i> it insert a new <el-code><el-kw>call</el-kw></el-code> instruction.</li>
+    <li>Into the <i>two</i> editable fields type in the same code that you see in the instruction immediately above it,
+    <i>except</i> that instead of <el-code>"<el-lit>Player A</el-lit>"</el-code>, write <el-code>"<el-lit>Player B</el-lit>"</el-code>. Note that:
+    <ul>
+      <li>your text will initially be black, but it will be coloured once you leave the field</li>
+      <li>a drop-down list will offer you some 'auto-completion' options, which can save typing and
+        errors. You can select an option with the mouse or with the cursor ↑↓ keys and <b>Enter</b>.</li>
+      <li>You might see a message appear on the right, but you can ignore it for now, unless it is coloured red 
+        (you will also then see the word <b>invalid</b> or <b>error</b> appear) in which case you should <b>Backspace</b>
+        to correct the mistake. </li>
+    </ul>
+    </li>
+    <li>When you have completed the new instruction, <b>run</b> the program, and take responsibility for both <b>Player A</b>
+    and <b>Player B</b> (or, if you are pairing with another person, control one each).</li>
+  </ul>
+  <p>When does the dealer play, now ?</p>
+<textarea class="question" id="question11-0" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes11" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done11">Step Completed</label><input class="step-complete" type="checkbox" id="done11"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="step" id="step12"><h1>Step 12: editing fields</h1>
+<div class="step" id="step12"><h1>Step 12: modifying an existing instruction</h1>
 
-  <p>Watch the next video:</p>
-  <div style="position: relative; padding-bottom: 65.37530266343825%; height: 0;"><iframe src="https://www.loom.com/embed/f795d314f64c41d68567061b6bd03923" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-
-  <p>Your task:</p>
   <ul>
-    <li>Go to instruction number 3:
-      <el-code-block><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code-block>
-      Here, the code is creating a <el-code><el-kw>new</el-kw></el-code> <el-code><el-type>HumanPlayer</el-type></el-code>, giving it the name <el-code>"<el-lit>Player A</el-lit>"</el-code> and <el-code><el-lit>1000</el-lit></el-code> 
-      starting points. This is then added into the <el-code><el-id>game</el-id></el-code> using the method <el-method>addPlayer</el-method>.
-    </li><li>Select (highlight) the <i>second</i> field in that instruction - which is everything within the outer set of brackets. </li>
-    <li>Using the cursor keys, backspace, and/or delete - as on most text editors - change <el-code>"<el-lit>Player A</el-lit>"</el-code> to 
-    your own first name, <i>being careful that you keep the existing double-quote marks at either end of the name.</i></li>
-    <li>Run the game again and confirm that your name now appears in place of <b>Player A</b> on the game. 
-      Then <b>stop</b> the program and return focus to the editor.</li>
-    <li>Select the <i>first</i> field in the same instruction - and delete any one character from <el-method>addPlayer</el-method>. 
-    After a couple of seconds you will see a message appear within the code 
-    <p>What does the message say?</p>
+    <li> Go back to the instruction that creates <b>Player A</b> and <i>above it</i>insert a <el-code><el-kw>let</el-kw></el-code> instruction
+      and note that this features two editable fields.</li>
+    <li>In the first field enter <el-code><el-id>name1</el-id></el-code> and in the second field type in the following code
+    using the auto-completions to help <el-code><el-method>inputString</el-method>("<el-lit>Enter name for first player</el-lit>")</el-code>
+    <p>What message do you see within the code editor?</p>
 <textarea class="question" id="question12-0" placeholder="input is required"></textarea>
-    <p>As well as the message within the code, something else changed on the screen when you made that edit. What?</p>
+    <p>And what do you observe in the 'status panel' - at the top of the screen, just to the right of the code editor?</p>
 <textarea class="question" id="question12-1" placeholder="input is required"></textarea>
-    </li><li>Before completing this step, restore the edited field to its previous contents. You can do this by hand, or you
-      can click the <b>Undo</b> button at the top of the screen, or you can press <b>Ctrl-z</b> on the keyboard - the standard key combination for 'undo'.
+    Then revert the field back to <el-code><el-id>name2</el-id></el-code>.</li>
+    <li>Select the instruction below this - in other words the one that you added previously - and <b>Tab</b> to the second
+    field. Edit the contents, replacing the literal string <el-code>"<el-lit>Player A</el-lit>"</el-code> with <el-code><el-id>name2</el-id></el-code> 
+    (no quotation marks because this is an <i>identifier</i> that holds a string, not a literal string).</li>
+    <li>Run the program. When asked, type in your own first name, finishing with the <b>Enter</b> key.
+      <p>Has the name you entered made a difference?</p>
+<textarea class="question" id="question12-2" placeholder="input is required"></textarea>
+      <p>There is an unwanted 'side effect' on the screen - what is it?</p>
+<textarea class="question" id="question12-3" placeholder="input is required"></textarea>
     </li>
-  
+    <li>To fix the unwanted side effect, insert the following new instruction immediately<i>after</i> the second player is created and added to the game:
+    <el-code><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-method>clearPrintedText</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="empty optional ok" tabindex="-1"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code></li>
+    <li>Now change the program so that it asks the user to enter a name for the <i>second</i> player, this time using
+      the identifier <el-code><el-id>name2</el-id></el-code>.</li>
+    <li>Run the program again, and confirm that you can now name both players.</li>
   </ul>
+  
+  <p>What would happen if you define the second identifier as name2, but in the next line
+  you were to write name1? (If you need to check, run the program) </p>
+<textarea class="question" id="question12-4" placeholder="input is required"></textarea>
+  <p>And what if the the second identifier was still name2 but you used name3
+  in the following instruction? This time, can you even run the program to try it?</p>
+<textarea class="question" id="question12-5" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes12" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done12">Step Completed</label><input class="step-complete" type="checkbox" id="done12"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="step" id="step13"><h1>Step 13: moving instructions</h1>
- move directly - only up or down
- cut and paste
+<div class="final" id="final13"><h1>Congratulations! You have completed this worksheet</h1>
 
-<h4>Notes</h4><textarea class="notes" id="notes13" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done13">Step Completed</label><input class="step-complete" type="checkbox" id="done13"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<p>You have learned:
+</p><ul>
+  <li>How to load, run, and stop a program</li>
+  <li>How to recognise the different kinds of instructions that make up a program, including compound instructions, which contain other instructions.</li>
+  <li>How to navigate around the program, selecting different instructions in order to draw attention to them and as a prelude to modifying them.</li>
+  <li>How to insert new instructions, delete instructions, and to undo changes when they didn't do what you wanted.</li>
+</ul>
 
-<div class="step" id="step14"><h1>Step 14: different kinds of errors</h1>
-  Start by referring to 'compile errors'
+<p></p>
+<p>In the next worksheet - Blackjack 2 - you'll start to do some real programming, by defining and implementing the logic
+  for a fully-automated Blackjack player - and then in the Blackjack 3 worksheet, pitting different automated players
+  against each other for thousands of games, and using the outcome to refine the strategies.</p>
 
-Code is succinct and pedantic. Different kinds of errors that might result from a change:
+<p>In the meantime, if you have time, we recommend that you watch the following additional videos - that offer
+  further techniques for navigating and editing instructions. Practice the techniques shown in each video, either while it is running,
+or immediately afterwards.</p>
 
-- Parse
-- compile
-- test
-- runtime errors?
-- logic errors
-<h4>Notes</h4><textarea class="notes" id="notes14" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done14">Step Completed</label><input class="step-complete" type="checkbox" id="done14"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+  <div style="position: relative; padding-bottom: 51.47759771210677%; height: 0;"><iframe src="https://www.loom.com/embed/463d3f5a94f849729eca37e47e4c08a3" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+  <div style="position: relative; padding-bottom: 64.74820143884892%; height: 0;"><iframe src="https://www.loom.com/embed/64218eaa3c8c411282aeffd606ffe0c2" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+  <div style="position: relative; padding-bottom: 57.26405090137858%; height: 0;"><iframe src="https://www.loom.com/embed/f9776ffce8c1484aada302e3e6b22e2d" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+<p>All the techniques for navigating and modifying instructions may be looked up in the <b>Help</b> tab. For example: <a class="help" href="IDENavigation.html#Navigation" id="help13-0">show in Help</a></p>
+</div>
 
   <div hidden="" id="hash"></div>
   <div hidden="" id="changes"></div>
