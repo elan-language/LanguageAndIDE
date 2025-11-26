@@ -1,81 +1,63 @@
 <title>Blackjack 1</title>
 <version>1</version>
 <step><h1>Step STEPNUMBER: learning the rules of Blackjack</h1>
-    <p>Your first task is to make sure that you understand how the game
-      works, and - since there are many minor variations on the game - the rules of this specific implementation.</p>
-    
       <p>Watch the first video:</p>
 
       <div style="position: relative; padding-bottom: 72.67833109017496%; height: 0;"><iframe src="https://www.loom.com/embed/3dca2b1ec6384176aaf85e1b60f6ce1d" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-      <p>Now <load file="blackjack_1begin.elan">Load the starting code</load> and immediately use <b>file > auto save</b> the
-     <i>code</i> to your local file storage: because you will be making changes and want to ensure that your changes are saved.</p>
+      Now <load file="blackjack_1begin.elan">Load the starting code</load> and immediately use <b>file > auto save</b> the
+     <i>code</i> to your local file storage: because you will be making changes and want to ensure that your changes are saved.
     
       <p>When you run the program, the <b>display</b> tab will be shown in place
       of this worksheet, you can flip between them by clicking on the tab headings.</p>
 
-      <p>Run the program now either:
+      <p>So, run the program now, either:
         <ul>
           <li>using the mouse, by clicking on the <b>run</b> button at the top of the screen, <i>or</i></li>
           <li>using the keyboard, by pressing <b>Ctrl-r</b></li>
         </ul>
-      and play exactly 10 rounds of Blackjack in the same manner as on the video, flipping back to this worksheet between rounds
-      to make sure that you have understood the following points:</p>
+      and play exactly 10 rounds of Blackjack.</p>
 
+      <p>Make sure that you have grasped the following points:</p>
     <ul>
-      <li>All players are dealt two cards to begin with. One of the dealer's two cards is dealt face down - 
-        and is revealed when the dealer starts their turn.</li>
-      <li>The aim is to  get the value of your hand as close to 21 as you can - but if drawing a card causes
-          the total to go over 21 then (unless you have a 'soft Ace' - explained below) you will be 'BUST'
-          and your turn is over.</li>
-      <li>Most cards have a numeric value (e.g. '7'). The Royal cards - Jack, Queen, King - each have
-        the value 10. An Ace is special: it can be valued at 11, or at 1. An Ace valued at 11 is known as a 'soft Ace'.
+      <li>Most cards have a obvious numeric value. The Royal cards - Jack, Queen, King - each have
+        the value 10. An Ace is special: it can be valued at 11, or at 1. 
+        An Ace valued at 11 is known as a 'soft Ace'.
         If a dealt card takes the hand total <i>over</i> 21 then a soft Ace is automatically devalued to 1.
-        By the same logic, if a player's first two cards are <i>both</i> Aces then the starting hand total is counted as 12, rather than 22.</li>
+        <li>The aim is to  get the value of your hand as close to 21 as you can - but if drawing a card causes
+          the total to go over 21 then (unless you have a 'soft Ace') you will be 'BUST'
+          and your turn is over.</li>
+      
       <li>If the first two cards of any player total <i>exactly</i> 21 - which would require one Ace, and one Royal or 10 card -
-         then you have 'BLACKJACK' - the best hand possible - and so no further action is needed from you.</li>
-      <li>Otherwise, when it is your turn you have the option to 'draw' another card - by hitting the <b>d</b> key - or
-        to 'stand' - by hitting the 's' key.</li>
-    <li>When your status changes either to STANDING or BUST then play passes to the the next player or -
-        if you are the last, or only, player - to the dealer.</li>
-      <li>The dealer now plays out their hand, initially turning the hidden card face up and then following fixed rules about
-         when to stand and when to draw.</li>
-      <li>When all players, including the dealer, have finished their turn, the outcome is determined, and 
-        points are passed between each player and the dealer as follows:
+         then you have 'BLACKJACK' - the best hand possible - so no further action is needed from you.</li>
+      <li>When all hands have finished playing, the outcome is determined, points swapped as follows:
         <ul>
-          <li>If a player is BUST then 1 point is passed over to the dealer <i>even the dealer is also BUST</i>.</li>
-          <li>else, if a player has BLACKJACK then they gain 2 points from the dealer <i>unless</i> the dealer
-          also has BLACKJACK, in which case it is a draw and no points are exchanged.</li>
+          <li>If a player is BUST then 1 point is passed from them to the dealer <i>even the dealer is also BUST</i>.</li>
+          <li>If a player has BLACKJACK then they gain 2 points from the dealer <i>unless</i> the dealer
+          also has BLACKJACK, in which case it is a draw.</li>
           <li>else, if the player is STANDING and the dealer has BLACKJACK the dealer gains one point from the player.</li>
-          <li>else, if the player is STANDING and their hand total is greater than that of the dealer, the player gains one point from the dealer.</li>
-          <li>else, if the player is STANDING and their hand total is the same as that of the dealer it is a dealer, then it is a draw and
-            no points are exchanged.</li>
-          <li>else - meaning that the player's total is less than that of the dealer, then the dealer gains one point from the player.</li>
+          <li>else, if the player is STANDING and their hand total is greater than the dealer's, the player gains one point from the dealer.</li>
+          <li>else, if the player is STANDING and their hand total is the same as the dealer's, it is a draw.</li>
+          <li>else, if the player's total is less than the dealer's, the dealer gains one point from the player.</li>
         </ul> 
       </li>
-      <li>The updated points for the dealer and players are now shown, and you are given the option to play another round.</li>
-      <li>This program works with an 'infinite deck' of cards: the chance of withdrawing a specific card - such as the 7 of clubs -
-        is the same every time you draw a card, which means that there is a small chance that the same card can appear on
-        screen more than once. (The same is true in most casinos, since they use multiple packs of cards in one deck;
-        some even use machines that shuffle the whole deck continuously - which is like an infinite pack.)</li>
+      <li>This program uses deck of multiple packs of cards: so there is a small chance that the same card may appear on
+        screen more than once.</li>
     </ul>
     <question>After playing 10 rounds, how many points did you, and the dealer, end up with?</question>
-    <p>Finish playing the game - either by pressing the <b>n</b> key at the end of the round, or by clicking the <b>stop</b>
-      button at any point while the program is running.</p>
+    <p>If you have not already exited the program, click <b>stop</b>.</p>
 </step>
 
-<step><h1>Step STEPNUMBER: starting to explore the code</h1>
+<step><h1>Step STEPNUMBER: start to explore the code</h1>
 
   <p>Watch the next video:</p>
     <div style="position: relative; padding-bottom: 92.78350515463917%; height: 0;"><iframe src="https://www.loom.com/embed/ef774f996cda44118592e43bddeacb18" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 
-  <question>How many instructions are there in total within the Blackjack program?</question>
+  <question>How many instructions are there in total within the Blackjack program (just find the largest instruction number)?</question>
 
   <question>The <i>initial</i> keyword in an instruction defines the type of instruction.
-   Find and list here at least five <i>initial</i> keywords - not including the ones mentioned explicitly in the video:</question>
-
-   <question>What are the two ways to select an instruction using the mouse?</question>
+   Find and list here at least five <i>initial</i> keywords <i>not mentioned explicitly in the video</i>:</question>
 </step>
 
 <step><h1>Step STEPNUMBER: the different elements within instructions</h1>
@@ -83,15 +65,15 @@
   <p>Watch the next video:</p>
   <div style="position: relative; padding-bottom: 65.93406593406593%; height: 0;"><iframe src="https://www.loom.com/embed/92c82097fbca43a0b3286d10d31c3bc0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-  <question>Looking at the first few instructions only - no need to scroll the code - list below the different colours that you can see being used within the code:</question>
+  <question>List below the different colours that you can see being used within the code (they are all shown within the first 15 instructions):</question>
   <question>What is the significance of the colour dark-blue, and black?</question>
 </step>
 
 <step><h1>Step STEPNUMBER: comments</h1>
   <p>Watch the next video:</p>
   <div style="position: relative; padding-bottom: 65.77344701583435%; height: 0;"><iframe src="https://www.loom.com/embed/01fffe7c68964577b6fbf486c57d18ee" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-  <question>Scrolling through the code, find <i>two</i> comments, not including the one at the top showing the Elan version,
-  and indicate where they are below, by writing the <i>number</i> of the instruction immediately <i>below</i> each comment:</question>
+  <question>Scrolling through the code, find two comments, not including the one at the top showing the Elan version,
+  and write down the instruction number immediately below each comment:</question>
 </step>
 
 <step><h1>Step STEPNUMBER: identifiers</h1>
@@ -105,8 +87,8 @@
  
   <p>Watch the next video:</p>
   <div style="position: relative; padding-bottom: 64.98194945848375%; height: 0;"><iframe src="https://www.loom.com/embed/dc154e36ff704b92bf7f7c7af278bc2f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-  <question>Scroll down the code and find another example of a literal number, and a literal string - not referred to specifically in the video -
-   and note their instruction numbers below, specifying which refers to which kind of literal value:
+  <question>Find an example of a literal number, and a literal string - not including any specifically mentioned in the video -
+   and note their instruction numbers below:
   </question>
 </step>
 
@@ -115,33 +97,26 @@
   <p>Watch the next video:</p>
   <div style="position: relative; padding-bottom: 66.09547123623011%; height: 0;"><iframe src="https://www.loom.com/embed/5cbebd99cc744f5caf84c284b94a2486" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-  <question>Scrolling through the code, find five more methods - not including any specifically mentioned in the video - and write
-    the names of those methods here:</question>
+  <question>Find five method names - not including any specifically mentioned in the video - and write
+    them here:</question>
 </step>
 
 <step><h1>Step STEPNUMBER: types</h1>
   <div style="position: relative; padding-bottom: 64.90384615384616%; height: 0;"><iframe src="https://www.loom.com/embed/529cf528cba740ca95a493e054e24bfa" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-  <question>Which of the types mentioned in the video are defined within the standard Elan language</question>
-</step>
-
-<step><h1>Step STEPNUMBER: reading instructions</h1>
-
-  Give examples of articulating 
-
-  <question>Write out a particuar instruction in plain English</question>
-
+  <question>Which of the types mentioned in the video are defined within the standard Elan language
+    (if necessary, watch the video again)?
+  </question>
 </step>
 
 <step><h1>Step STEPNUMBER: selecting simple and compound instructions</h1>
-   VIDEO ALREADY RECORDED
-
+  <p>Watch the next video:</p>
+  <div style="position: relative; padding-bottom: 60.60606060606061%; height: 0;"><iframe src="https://www.loom.com/embed/1ffb5403bde04fdda5eebce6174d7f32" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
    <question>List several different examples of compound instructions</question>
-   <question>When a compound instruction is selected you see its 'extend' [explain] visually.  Indentation. But even if there was no indentation or coloured highlight how else could you determine extent?</question>
-   <question>Can you select the header?</question>
+   <question>Can you select the 'header comment' (beginning '# Elan') at the top of the code?</question>
 </step>
 
-<step><h1>Step STEPNUMBER: adding and removing instructions</h1>
+<step><h1>Step STEPNUMBER: adding a new instruction</h1>
   <p>Watch the next video:</p>
   <div style="position: relative; padding-bottom: 64.67065868263472%; height: 0;"><iframe src="https://www.loom.com/embed/b7376d0f99cd421e810936d1841ba118" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
   <p>Your first task is to turn the program into a two-player game (not counting the dealer, played by the computer):</p>
@@ -167,7 +142,6 @@
 </step>
 
 <step><h1>Step STEPNUMBER: modifying an existing instruction</h1>
-
   <ul>
     <li> Go back to the instruction that creates <b>Player A</b> and <i>above it</i>insert a <code>let</code> instruction
       and note that this features two editable fields.</li>
