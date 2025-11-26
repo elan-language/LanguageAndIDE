@@ -1,3 +1,4 @@
+import { Deprecation, DeprecationSeverity } from "../compiler-interfaces/elan-type-interfaces";
 import {
   ClassOption,
   ElanBoolean,
@@ -11,6 +12,7 @@ import {
   FunctionOptions,
   elanClass,
   elanClassType,
+  elanDeprecated,
   elanFuncType,
   elanFunction,
   elanGenericParamT1Type,
@@ -180,6 +182,7 @@ export class ListImmutable<T1> {
     return minByHelper(this.contents, predicate, this.system!);
   }
 
+  @elanDeprecated(Deprecation.methodRemoved,1,7,"LibRef.html#sortBy", DeprecationSeverity.advisory)
   @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(ListImmutable))
   async sortBy(
     @elanFuncType([ElanT1, ElanT1], ElanInt)

@@ -1,4 +1,4 @@
-import { Deprecation } from "./compiler-interfaces/elan-type-interfaces";
+import { Deprecation, DeprecationSeverity } from "./compiler-interfaces/elan-type-interfaces";
 
 export enum DisplayPriority {
   first,
@@ -10,6 +10,7 @@ export enum DisplayPriority {
 export enum Severity {
   error,
   warning,
+  advisory
 }
 
 export abstract class CompileError {
@@ -146,22 +147,25 @@ export class CannotUseSystemMethodInAFunction extends CompileError {
   }
 }
 
-function reasonString(reason: Deprecation) {
+function reasonString(reason: Deprecation, isAdvisory : boolean) {
+
+  const toAdvisory = (s : string) => isAdvisory ? "deprecated" : s;
+
   switch (reason) {
     case Deprecation.classRemoved:
-      return "Class was removed";
+      return `Class was ${toAdvisory("removed")}`;
     case Deprecation.classRenamed:
-      return "Class was renamed";
+      return `Class was ${toAdvisory("renamed")}`;
     case Deprecation.methodRemoved:
-      return "Method was removed";
+      return `Method was ${toAdvisory("removed")}`;
     case Deprecation.methodRenamed:
-      return "Method was renamed";
+      return `Method was ${toAdvisory("renamed")}`;
     case Deprecation.classParametersChanged:
-      return "Parameters for class were changed";
+      return `Parameters for class were ${toAdvisory("changed")}`;
     case Deprecation.methodParametersChanged:
-      return "Parameters for method were changed";
+      return `Parameters for method were ${toAdvisory("changed")}`;
     case Deprecation.methodHidden:
-      return "Method was hidden";
+      return `Method was ${toAdvisory("hidden")}`;
   }
 }
 
@@ -172,11 +176,14 @@ export class IsDeprecated extends CompileError {
     fromMinor: number,
     help: string,
     location: string,
+    severity : DeprecationSeverity,
   ) {
+    const isAdvisory = severity === DeprecationSeverity.advisory
+    const prefix = isAdvisory ? "Advisory: Code change suggested." : "Code change required.";
     super(
-      DisplayPriority.first,
-      Severity.error,
-      `Code change required. ${reasonString(reason)} in v${fromMajor}.${fromMinor}.`,
+      isAdvisory ? DisplayPriority.fourth : DisplayPriority.first,
+      isAdvisory ? Severity.advisory : Severity.error,
+      `${prefix} ${reasonString(reason, isAdvisory)} in v${fromMajor}.${fromMinor}.`,
       location,
       help,
     );

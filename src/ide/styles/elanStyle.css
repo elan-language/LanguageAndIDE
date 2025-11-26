@@ -100,6 +100,9 @@ el-header .error {
 el-header .warning {
     color: var(--warning)
 }
+el-header .advisory {
+    color: var(--advisory)
+}
 el-header .ok {
     color: var(--ok)
 }
@@ -182,14 +185,26 @@ el-expand {
 .multiline.collapsed.warning el-expand {
     background-color: var(--warning);
 }
+
+.multiline.collapsed.advisory el-expand {
+    background-color: var(--advisory);
+}
+
 .multiline.collapsed.error el-expand {
     background-color: var(--error);
 }
+
 
 /* Fields */
 el-field.warning, el-field.warning el-kw, el-field.warning el-type, el-field.warning el-lit, el-field.warning el-method {
     background-color: var(--warning);
 }
+
+el-field.advisory, el-field.advisory el-kw, el-field.advisory el-type, el-field.advisory el-lit, el-field.advisory el-method {
+    background-color: var(--advisory);
+}
+
+
 .error el-field, el-field.error el-kw, el-field.error  el-type, el-field.error  el-lit, el-field.error el-method {
     color: var(--defaultText);
 }
@@ -205,6 +220,10 @@ el-field.error *, el-field.error input  {
 el-field.warning *, el-field.warning input {
     background-color: var(--warning);
 }
+el-field.advisory *, el-field.advisory input {
+    background-color: var(--advisory);
+}
+
 el-field.selected.ok el-txt, el-field.selected.ok input {
     background-color: var(--ok);
 }
@@ -339,6 +358,10 @@ el-msg.ok {
 el-msg.warning {
     background-color: var(--warning);
 }
+el-msg.advisory {
+    background-color: var(--advisory);
+}
+
 el-msg.error {
     background-color: var(--error);
     white-space: pre;
@@ -379,6 +402,10 @@ el-field el-msg {
 
   .warning > el-select > el-txt {
     color: var(--warning);
+  }
+
+  .advisory > el-select > el-txt {
+    color: var(--advisory);
   }
 
   /* el-select el-place */

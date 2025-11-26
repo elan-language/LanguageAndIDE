@@ -21,6 +21,7 @@
     /* Code Highlights */
     --selection:rgb(173, 214, 255); /* All text colours */
     --ok: rgb(169, 247, 169); /* Black text */
+    --advisory: rgb(70, 164, 246); /* Both black and white text*/
     --warning: rgb(246, 193, 94); /* Both black and white text*/
     --error:  rgb(255, 90, 90); /* Black text */
     --optional:  lightgrey; /* White text */

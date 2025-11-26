@@ -20,5 +20,6 @@
         "colour",
         "colours",
         "initialise"
-    ]
+    ],
+    "search.useIgnoreFiles": false
 }

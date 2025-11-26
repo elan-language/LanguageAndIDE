@@ -21,6 +21,7 @@
     /* Code Highlights */
     --selection:#88ccee; /* All text colours */
     --ok: #009988; /* Black text */
+    --advisory: #ee7733; /* Both black and white text*/
     --warning: #ee7733; /* Both black and white text*/
     --error:  #ee3377; /* Black text */
     --optional:  #bbbbbb; /* White text */

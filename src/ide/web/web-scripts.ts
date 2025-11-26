@@ -522,6 +522,9 @@ function warningOrError(tgt: HTMLDivElement): [boolean, string] {
   if (tgt.classList.contains("error")) {
     return [true, "error"];
   }
+  if (tgt.classList.contains("advisory")) {
+    return [true, "advisory"];
+  }
   return [false, ""];
 }
 
@@ -800,7 +803,8 @@ function systemInfoPrintUnsafe(text: string, scroll = true) {
 async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean) {
   try {
     file.refreshParseAndCompileStatuses(compileIfParsed);
-    if (file.readCompileStatus() === CompileStatus.ok && file.hasTests) {
+    const cs = file.readCompileStatus();
+    if ((cs === CompileStatus.ok || cs === CompileStatus.advisory)  && file.hasTests) {
       await runTests();
     }
     await renderAsHtml(editingField);
@@ -904,7 +908,8 @@ function updateDisplayValues() {
   const isEmpty = file.readParseStatus() === ParseStatus.default;
   const isParsing = file.readParseStatus() === ParseStatus.valid;
   const isIncomplete = file.readParseStatus() === ParseStatus.incomplete;
-  const isCompiling = file.readCompileStatus() === CompileStatus.ok;
+  const cs = file.readCompileStatus();
+  const isCompiling = cs === CompileStatus.ok || cs === CompileStatus.advisory;
   const isRunning = isRunningState();
   const isPaused = isPausedState();
   let isTestRunning = isTestRunningState();
@@ -975,7 +980,7 @@ function updateDisplayValues() {
     enable(importButton, "Import code from a file");
     enable(newButton, "Clear the current code and start afresh");
     enable(demosButton, "Load a demonstration program");
-    enable(trimButton, "Remove all 'new code' prompts that can be removed (shortcut: Alt-t)");
+    enable(trimButton, "Remove all 'new code' prompts that can be removed (shortcut: Alt+t)");
     enable(expandCollapseButton, "Expand / Collapse all code regions");
     enable(preferencesButton, "Set preferences");
     enable(clearDisplayButton, "Clear display");
