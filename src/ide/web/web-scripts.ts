@@ -973,7 +973,7 @@ function updateDisplayValues() {
     enable(importButton, "Import code from a file");
     enable(newButton, "Clear the current code and start afresh");
     enable(demosButton, "Load a demonstration program");
-    enable(trimButton, "Remove all 'new code' prompts that can be removed (shortcut: Alt-t)");
+    enable(trimButton, "Remove all 'new code' prompts that can be removed (shortcut: Alt+t)");
     enable(expandCollapseButton, "Expand / Collapse all code regions");
     enable(preferencesButton, "Set preferences");
     enable(clearDisplayButton, "Clear display");

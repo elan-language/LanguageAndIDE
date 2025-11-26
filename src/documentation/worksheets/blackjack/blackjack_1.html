@@ -47,13 +47,13 @@
           <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
         You may freely make and distribute copies of this worksheet <i>as is</i>, but if you <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
         Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
-    </div> 
-      
+    </div>
+
 
 <div class="step" id="step1"><h1>Step 1: learning the rules of Blackjack</h1>
     <p>Your first task is to make sure that you understand how the game
       works, and - since there are many minor variations on the game - the rules of this specific implementation.</p>
-    
+
       <p>Watch the first video:</p>
 
       <div style="position: relative; padding-bottom: 72.67833109017496%; height: 0;"><iframe src="https://www.loom.com/embed/3dca2b1ec6384176aaf85e1b60f6ce1d" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
@@ -510,20 +510,20 @@ constant gridByRank set to {"A":{"royal"}, "2":{"b", "c"}, "3":{"a", "b", "c"}, 
 constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"red", Suit.spades:"black"}
 </div> and immediately use <b>file &gt; auto save</b> the
      <i>code</i> to your local file storage: because you will be making changes and want to ensure that your changes are saved.<p></p>
-    
+
       <p>When you run the program, the <b>display</b> tab will be shown in place
       of this worksheet, you can flip between them by clicking on the tab headings.</p>
 
       <p>Run the program now either:
         </p><ul>
           <li>using the mouse, by clicking on the <b>run</b> button at the top of the screen, <i>or</i></li>
-          <li>using the keyboard, by pressing <b>Ctrl-r</b></li>
+          <li>using the keyboard, by pressing <b>Ctrl+r</b></li>
         </ul>
       and play exactly 10 rounds of Blackjack in the same manner as on the video, flipping back to this worksheet between rounds
       to make sure that you have understood the following points:<p></p>
 
     <ul>
-      <li>All players are dealt two cards to begin with. One of the dealer's two cards is dealt face down - 
+      <li>All players are dealt two cards to begin with. One of the dealer's two cards is dealt face down -
         and is revealed when the dealer starts their turn.</li>
       <li>The aim is to  get the value of your hand as close to 21 as you can - but if drawing a card causes
           the total to go over 21 then (unless you have a 'soft Ace' - explained below) you will be 'BUST'
@@ -540,7 +540,7 @@ constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"r
         if you are the last, or only, player - to the dealer.</li>
       <li>The dealer now plays out their hand, initially turning the hidden card face up and then following fixed rules about
          when to stand and when to draw.</li>
-      <li>When all players, including the dealer, have finished their turn, the outcome is determined, and 
+      <li>When all players, including the dealer, have finished their turn, the outcome is determined, and
         points are passed between each player and the dealer as follows:
         <ul>
           <li>If a player is BUST then 1 point is passed over to the dealer <i>even the dealer is also BUST</i>.</li>
@@ -551,7 +551,7 @@ constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"r
           <li>else, if the player is STANDING and their hand total is the same as that of the dealer it is a dealer, then it is a draw and
             no points are exchanged.</li>
           <li>else - meaning that the player's total is less than that of the dealer, then the dealer gains one point from the player.</li>
-        </ul> 
+        </ul>
       </li>
       <li>The updated points for the dealer and players are now shown, and you are given the option to play another round.</li>
       <li>This program works with an 'infinite deck' of cards: the chance of withdrawing a specific card - such as the 7 of clubs -
@@ -607,7 +607,7 @@ constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"r
 <h4>Notes</h4><textarea class="notes" id="notes5" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done5">Step Completed</label><input class="step-complete" type="checkbox" id="done5"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
 <div class="step" id="step6"><h1>Step 6: literals</h1>
- 
+
   <p>Watch the next video:</p>
   <div style="position: relative; padding-bottom: 64.98194945848375%; height: 0;"><iframe src="https://www.loom.com/embed/dc154e36ff704b92bf7f7c7af278bc2f" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
   <p>Scroll down the code and find another example of a literal number, and a literal string - not referred to specifically in the video -
@@ -635,7 +635,7 @@ constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"r
 
 <div class="step" id="step9"><h1>Step 9: reading instructions</h1>
 
-  Give examples of articulating 
+  Give examples of articulating
 
   <p>Write out a particuar instruction in plain English</p>
 <textarea class="question" id="question9-0" placeholder="input is required"></textarea>
@@ -667,23 +667,23 @@ constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"r
   <ul>
     <li>Go to instruction number 3:
       <el-code-block><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code-block>
-      Here, the code is creating a <el-code><el-kw>new</el-kw></el-code> <el-code><el-type>HumanPlayer</el-type></el-code>, giving it the name <el-code>"<el-lit>Player A</el-lit>"</el-code> and <el-code><el-lit>1000</el-lit></el-code> 
+      Here, the code is creating a <el-code><el-kw>new</el-kw></el-code> <el-code><el-type>HumanPlayer</el-type></el-code>, giving it the name <el-code>"<el-lit>Player A</el-lit>"</el-code> and <el-code><el-lit>1000</el-lit></el-code>
       starting points. This is then added into the <el-code><el-id>game</el-id></el-code> using the method <el-method>addPlayer</el-method>.
     </li><li>Select (highlight) the <i>second</i> field in that instruction - which is everything within the outer set of brackets. </li>
-    <li>Using the cursor keys, backspace, and/or delete - as on most text editors - change <el-code>"<el-lit>Player A</el-lit>"</el-code> to 
+    <li>Using the cursor keys, backspace, and/or delete - as on most text editors - change <el-code>"<el-lit>Player A</el-lit>"</el-code> to
     your own first name, <i>being careful that you keep the existing double-quote marks at either end of the name.</i></li>
-    <li>Run the game again and confirm that your name now appears in place of <b>Player A</b> on the game. 
+    <li>Run the game again and confirm that your name now appears in place of <b>Player A</b> on the game.
       Then <b>stop</b> the program and return focus to the editor.</li>
-    <li>Select the <i>first</i> field in the same instruction - and delete any one character from <el-method>addPlayer</el-method>. 
-    After a couple of seconds you will see a message appear within the code 
+    <li>Select the <i>first</i> field in the same instruction - and delete any one character from <el-method>addPlayer</el-method>.
+    After a couple of seconds you will see a message appear within the code
     <p>What does the message say?</p>
 <textarea class="question" id="question12-0" placeholder="input is required"></textarea>
     <p>As well as the message within the code, something else changed on the screen when you made that edit. What?</p>
 <textarea class="question" id="question12-1" placeholder="input is required"></textarea>
     </li><li>Before completing this step, restore the edited field to its previous contents. You can do this by hand, or you
-      can click the <b>Undo</b> button at the top of the screen, or you can press <b>Ctrl-z</b> on the keyboard - the standard key combination for 'undo'.
+      can click the <b>Undo</b> button at the top of the screen, or you can press <b>Ctrl+z</b> on the keyboard - the standard key combination for 'undo'.
     </li>
-  
+
   </ul>
 <h4>Notes</h4><textarea class="notes" id="notes12" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done12">Step Completed</label><input class="step-complete" type="checkbox" id="done12"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
