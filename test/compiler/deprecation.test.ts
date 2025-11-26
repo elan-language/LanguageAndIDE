@@ -325,7 +325,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      `Advisory: Code change suggested. Method was removed in v0.0.LibRef.html#Xxxx`,
+      `Advisory: Code change suggested. Method was deprecated in v0.0.LibRef.html#Xxxx`,
     ]);
   });
 
