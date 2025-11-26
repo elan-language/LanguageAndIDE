@@ -178,7 +178,7 @@ export class IsDeprecated extends CompileError {
     location: string,
     severity : DeprecationSeverity,
   ) {
-    const isAdvisory = severity === DeprecationSeverity.advisory
+    const isAdvisory = severity === DeprecationSeverity.advisory;
     const prefix = isAdvisory ? "Advisory: Code change suggested." : "Code change required.";
     super(
       isAdvisory ? DisplayPriority.fourth : DisplayPriority.first,

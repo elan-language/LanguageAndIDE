@@ -299,6 +299,10 @@ export abstract class AbstractFrame implements Frame {
         }
         break;
       }
+      case "Escape": {
+        this.showContextMenu = false;
+        break;
+      }
       case "c": {
         if (e.modKey.control) {
           this.copySelected();

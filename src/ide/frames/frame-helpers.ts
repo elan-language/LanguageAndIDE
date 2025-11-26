@@ -169,7 +169,7 @@ export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): Co
     const hasWarnings = errors.some((e) => e.severity === Severity.warning);
 
     if (hasErrors) {
-      return CompileStatus.error
+      return CompileStatus.error;
     }
     if (hasWarnings) {
       return CompileStatus.unknown_symbol;
