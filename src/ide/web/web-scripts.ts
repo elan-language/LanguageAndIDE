@@ -522,6 +522,9 @@ function warningOrError(tgt: HTMLDivElement): [boolean, string] {
   if (tgt.classList.contains("error")) {
     return [true, "error"];
   }
+  if (tgt.classList.contains("advisory")) {
+    return [true, "advisory"];
+  }
   return [false, ""];
 }
 
