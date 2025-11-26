@@ -442,7 +442,7 @@ export class FileImpl implements File {
   }
 
   refreshTestStatuses(outcomes: [string, AssertOutcome[]][]) {
-    if (this._compileStatus === CompileStatus.ok) {
+    if (this._compileStatus === CompileStatus.ok || this._compileStatus === CompileStatus.advisory) {
       let errors: Error[] = [];
       for (const outcome of outcomes) {
         const [tid, asserts] = outcome;
@@ -494,13 +494,13 @@ export class FileImpl implements File {
   }
   getTestStatusColour(): string {
     let status: DisplayColour;
+    const cs = this.readCompileStatus()
     if (
-      this.readParseStatus() !== ParseStatus.valid ||
-      this.readCompileStatus() !== CompileStatus.ok
+       cs === CompileStatus.ok || cs === CompileStatus.advisory 
     ) {
-      status = DisplayColour.none;
+       status = helper_testStatusAsDisplayStatus(this.readTestStatus());
     } else {
-      status = helper_testStatusAsDisplayStatus(this.readTestStatus());
+       status = DisplayColour.none;
     }
     return DisplayColour[status];
   }

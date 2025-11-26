@@ -13,11 +13,17 @@ export enum Deprecation {
   methodHidden,
 }
 
+export enum DeprecationSeverity {
+  error,
+  advisory,
+}
+
 export interface Deprecated {
   reason: Deprecation;
   fromMajor: number;
   fromMinor: number;
   message: string;
+  Severity: DeprecationSeverity
 }
 
 export interface ElanDescriptor {

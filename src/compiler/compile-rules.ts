@@ -95,10 +95,10 @@ import {
   isInsideFunctionOrConstructor,
 } from "./syntax-nodes/ast-helpers";
 import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
+import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { LetAsn } from "./syntax-nodes/statements/let-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
-import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -304,7 +304,7 @@ export function checkForDeprecation(
 
     if (fromMajor < version.major || (fromMajor === version.major && fromMinor <= version.minor)) {
       compileErrors.push(
-        new IsDeprecated(reason, fromMajor, fromMinor, symbolType.deprecated.message, location),
+        new IsDeprecated(reason, fromMajor, fromMinor, symbolType.deprecated.message, location, symbolType.deprecated.Severity),
       );
     }
   }

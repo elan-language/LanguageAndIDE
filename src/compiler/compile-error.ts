@@ -1,4 +1,4 @@
-import { Deprecation } from "./compiler-interfaces/elan-type-interfaces";
+import { Deprecation, DeprecationSeverity } from "./compiler-interfaces/elan-type-interfaces";
 
 export enum DisplayPriority {
   first,
@@ -10,6 +10,7 @@ export enum DisplayPriority {
 export enum Severity {
   error,
   warning,
+  advisory
 }
 
 export abstract class CompileError {
@@ -172,11 +173,13 @@ export class IsDeprecated extends CompileError {
     fromMinor: number,
     help: string,
     location: string,
+    severity : DeprecationSeverity,
   ) {
+    const prefix = severity === DeprecationSeverity.advisory ? "Advisory: Code change suggested." : "Code change required.";
     super(
       DisplayPriority.first,
-      Severity.error,
-      `Code change required. ${reasonString(reason)} in v${fromMajor}.${fromMinor}.`,
+      severity ? Severity.advisory : Severity.error,
+      `${prefix} ${reasonString(reason)} in v${fromMajor}.${fromMinor}.`,
       location,
       help,
     );

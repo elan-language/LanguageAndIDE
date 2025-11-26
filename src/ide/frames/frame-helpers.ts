@@ -142,7 +142,7 @@ export function helper_compileMsgAsHtmlNew(file: File, loc: Frame | Field): stri
   }
   let cls = "";
   const compile = helper_compileStatusAsDisplayStatus(loc.readCompileStatus());
-  if (compile === DisplayColour.error || compile === DisplayColour.warning) {
+  if (compile === DisplayColour.error || compile === DisplayColour.warning || compile === DisplayColour.advisory) {
     cls = DisplayColour[compile];
   }
   if (link) {
@@ -165,9 +165,16 @@ export function helper_deriveCompileStatusFromErrors(errors: CompileError[]): Co
   if (errors.length === 0) {
     result = CompileStatus.ok;
   } else {
-    result = errors.some((e) => e.severity === Severity.error)
-      ? CompileStatus.error
-      : CompileStatus.unknown_symbol;
+    const hasErrors = errors.some((e) => e.severity === Severity.error);
+    const hasWarnings = errors.some((e) => e.severity === Severity.warning);
+
+    if (hasErrors) {
+      return CompileStatus.error
+    }
+    if (hasWarnings) {
+      return CompileStatus.unknown_symbol;
+    }
+    return CompileStatus.advisory;
   }
   return result;
 }
@@ -197,15 +204,17 @@ export function helper_parseStatusAsDisplayStatus(ps: ParseStatus): DisplayColou
 }
 
 export function helper_compileStatusAsDisplayStatus(cs: CompileStatus): DisplayColour {
-  let overall = DisplayColour.none;
-  if (cs === CompileStatus.ok) {
-    overall = DisplayColour.ok;
-  } else if (cs === CompileStatus.unknown_symbol) {
-    overall = DisplayColour.warning;
-  } else if (cs === CompileStatus.error) {
-    overall = DisplayColour.error;
+  switch (cs) {
+    case (CompileStatus.ok):
+      return DisplayColour.ok;
+    case (CompileStatus.advisory):
+      return DisplayColour.advisory;
+    case (CompileStatus.unknown_symbol):
+      return DisplayColour.warning;
+    case (CompileStatus.error):
+      return DisplayColour.error;
+    default: return DisplayColour.none;
   }
-  return overall;
 }
 
 export function helper_testStatusAsDisplayStatus(ts: TestStatus): DisplayColour {

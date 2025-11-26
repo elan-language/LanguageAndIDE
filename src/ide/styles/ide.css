@@ -188,6 +188,7 @@ body {
   background-color: var(--ok);
 }
 
+#status-values .advisory,
 #status-values .warning,
 #status-values .paused,
 #status-values .input {
@@ -198,6 +199,9 @@ body {
   background-color: var(--error);
 }
 
+#status-values .advisory {
+  background-color: var(--advisory);
+}
 
 #system-info {
   flex-grow: 1;

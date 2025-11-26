@@ -9,6 +9,7 @@ export enum ParseStatus {
 export enum CompileStatus {
   error,
   unknown_symbol,
+  advisory,
   ok,
   default,
 }
@@ -25,6 +26,7 @@ export enum RunStatus {
 export enum DisplayColour {
   error,
   warning,
+  advisory,
   ok,
   none,
 }
