@@ -3,27 +3,27 @@
 <step><h1>Step STEPNUMBER: learning the rules of Blackjack</h1>
     <p>Your first task is to make sure that you understand how the game
       works, and - since there are many minor variations on the game - the rules of this specific implementation.</p>
-    
+
       <p>Watch the first video:</p>
 
       <div style="position: relative; padding-bottom: 72.67833109017496%; height: 0;"><iframe src="https://www.loom.com/embed/3dca2b1ec6384176aaf85e1b60f6ce1d" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
       <p>Now <load file="blackjack_1begin.elan">Load the starting code</load> and immediately use <b>file > auto save</b> the
      <i>code</i> to your local file storage: because you will be making changes and want to ensure that your changes are saved.</p>
-    
+
       <p>When you run the program, the <b>display</b> tab will be shown in place
       of this worksheet, you can flip between them by clicking on the tab headings.</p>
 
       <p>Run the program now either:
         <ul>
           <li>using the mouse, by clicking on the <b>run</b> button at the top of the screen, <i>or</i></li>
-          <li>using the keyboard, by pressing <b>Ctrl-r</b></li>
+          <li>using the keyboard, by pressing <b>Ctrl+r</b></li>
         </ul>
       and play exactly 10 rounds of Blackjack in the same manner as on the video, flipping back to this worksheet between rounds
       to make sure that you have understood the following points:</p>
 
     <ul>
-      <li>All players are dealt two cards to begin with. One of the dealer's two cards is dealt face down - 
+      <li>All players are dealt two cards to begin with. One of the dealer's two cards is dealt face down -
         and is revealed when the dealer starts their turn.</li>
       <li>The aim is to  get the value of your hand as close to 21 as you can - but if drawing a card causes
           the total to go over 21 then (unless you have a 'soft Ace' - explained below) you will be 'BUST'
@@ -40,7 +40,7 @@
         if you are the last, or only, player - to the dealer.</li>
       <li>The dealer now plays out their hand, initially turning the hidden card face up and then following fixed rules about
          when to stand and when to draw.</li>
-      <li>When all players, including the dealer, have finished their turn, the outcome is determined, and 
+      <li>When all players, including the dealer, have finished their turn, the outcome is determined, and
         points are passed between each player and the dealer as follows:
         <ul>
           <li>If a player is BUST then 1 point is passed over to the dealer <i>even the dealer is also BUST</i>.</li>
@@ -51,7 +51,7 @@
           <li>else, if the player is STANDING and their hand total is the same as that of the dealer it is a dealer, then it is a draw and
             no points are exchanged.</li>
           <li>else - meaning that the player's total is less than that of the dealer, then the dealer gains one point from the player.</li>
-        </ul> 
+        </ul>
       </li>
       <li>The updated points for the dealer and players are now shown, and you are given the option to play another round.</li>
       <li>This program works with an 'infinite deck' of cards: the chance of withdrawing a specific card - such as the 7 of clubs -
@@ -100,7 +100,7 @@
 </step>
 
 <step><h1>Step STEPNUMBER: literals</h1>
- 
+
   <p>Watch the next video:</p>
   <div style="position: relative; padding-bottom: 64.98194945848375%; height: 0;"><iframe src="https://www.loom.com/embed/dc154e36ff704b92bf7f7c7af278bc2f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
   <question>Scroll down the code and find another example of a literal number, and a literal string - not referred to specifically in the video -
@@ -125,7 +125,7 @@
 
 <step><h1>Step STEPNUMBER: reading instructions</h1>
 
-  Give examples of articulating 
+  Give examples of articulating
 
   <question>Write out a particuar instruction in plain English</question>
 
@@ -153,19 +153,19 @@
   <ul>
     <li>Go to instruction number 3:
       <codeblock>call game.addPlayer(new HumanPlayer("Player A", 1000))</codeblock>
-      Here, the code is creating a <code>new</code> <code>HumanPlayer</code>, giving it the name <code>"Player A"</code> and <code>1000</code> 
+      Here, the code is creating a <code>new</code> <code>HumanPlayer</code>, giving it the name <code>"Player A"</code> and <code>1000</code>
       starting points. This is then added into the <code>game</code> using the method <el-method>addPlayer</el-method>.
     <li>Select (highlight) the <i>second</i> field in that instruction - which is everything within the outer set of brackets. </li>
-    <li>Using the cursor keys, backspace, and/or delete - as on most text editors - change <code>"Player A"</code> to 
+    <li>Using the cursor keys, backspace, and/or delete - as on most text editors - change <code>"Player A"</code> to
     your own first name, <i>being careful that you keep the existing double-quote marks at either end of the name.</i></li>
-    <li>Run the game again and confirm that your name now appears in place of <b>Player A</b> on the game. 
+    <li>Run the game again and confirm that your name now appears in place of <b>Player A</b> on the game.
       Then <b>stop</b> the program and return focus to the editor.</li>
-    <li>Select the <i>first</i> field in the same instruction - and delete any one character from <el-method>addPlayer</el-method>. 
-    After a couple of seconds you will see a message appear within the code 
+    <li>Select the <i>first</i> field in the same instruction - and delete any one character from <el-method>addPlayer</el-method>.
+    After a couple of seconds you will see a message appear within the code
     <question>What does the message say?</question>
     <question>As well as the message within the code, something else changed on the screen when you made that edit. What?</question>
     <li>Before completing this step, restore the edited field to its previous contents. You can do this by hand, or you
-      can click the <b>Undo</b> button at the top of the screen, or you can press <b>Ctrl-z</b> on the keyboard - the standard key combination for 'undo'.
+      can click the <b>Undo</b> button at the top of the screen, or you can press <b>Ctrl+z</b> on the keyboard - the standard key combination for 'undo'.
     </li>
   </li>
   </ul>
