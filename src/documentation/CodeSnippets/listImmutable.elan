@@ -1,4 +1,4 @@
-# b6a04f7797264a9bc6d7c43ce65746f9bce3d132598dbf6df6dcdd58fbbf901d Elan 1.7.0 guest default_profile valid
+# c8e5f5f0998e7c74924b481e0947cfaa7b7e950dc5bcb0bd05b1f3a6b659a6fd Elan 1.7.1 guest default_profile valid
 
 main
   # reusing variable fruit for each new ListImmutable
