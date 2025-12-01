@@ -238,6 +238,38 @@ export class System {
     }
   }
 
+  private getDiffOffset(actual: string, expected: string) {
+    for (let i = 0; i < actual.length; i++) {
+      const a = actual[i];
+      const e = expected[i];
+      if (a !== e) {
+        return i;
+      }
+    }
+    return 0;
+  }
+
+  private doAssertJavascriptString(actual: string, expected: string, htmlId: string) {
+    let diffOffset = 0;
+    const outcome = new AssertOutcome(TestStatus.fail, actual, expected, htmlId);
+
+    if (actual.length !== expected.length) {
+      const overlapLength = actual.length > expected.length ? expected.length : actual.length;
+      const overlapActual = actual.slice(0, overlapLength);
+      const overlapExpected = expected.slice(0, overlapLength);
+
+      diffOffset =
+        overlapActual === overlapExpected
+          ? overlapLength
+          : this.getDiffOffset(overlapActual, overlapExpected);
+    } else {
+      diffOffset = this.getDiffOffset(actual, expected);
+    }
+    outcome.diffOffset = diffOffset;
+
+    return outcome;
+  }
+
   private async doAssert(
     actual: any,
     expected: any,
@@ -247,6 +279,17 @@ export class System {
     stdlib: { asString: (a: any) => Promise<string> },
   ) {
     let testStatus = TestStatus.pass;
+
+    // special string comparison case
+    if (
+      typeof actual === "string" &&
+      typeof expected === "string" &&
+      actual !== expected &&
+      (actual.length > 20 || expected.length > 20)
+    ) {
+      return this.doAssertJavascriptString(actual, expected, htmlId);
+    }
+
     const expectedValue = `${await stdlib.asString(expected)}`;
     let actualValue = `${await stdlib.asString(actual)}`;
 
