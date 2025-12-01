@@ -10,7 +10,7 @@ import {
   CodeSourceFromString,
   fileErrorPrefix,
   FileImpl,
-  parseErrorPrefix
+  parseErrorPrefix,
 } from "../frames/file-impl";
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { File, ParseMode } from "../frames/frame-interfaces/file";
@@ -804,7 +804,7 @@ async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean
   try {
     file.refreshParseAndCompileStatuses(compileIfParsed);
     const cs = file.readCompileStatus();
-    if ((cs === CompileStatus.ok || cs === CompileStatus.advisory)  && file.hasTests) {
+    if ((cs === CompileStatus.ok || cs === CompileStatus.advisory) && file.hasTests) {
       await runTests();
     }
     await renderAsHtml(editingField);
@@ -1201,12 +1201,11 @@ async function collapseContextMenu() {
 
   if (items.length > 0) {
     const id = items[0].dataset.id;
-    const mk = {control : false, shift : false, alt : false};
+    const mk = { control: false, shift: false, alt: false };
     const msg = getEditorMsg("key", "frame", id, "Escape", mk, undefined, undefined, undefined);
     await handleKeyAndRender(msg);
   }
 }
-
 
 async function handleEscape(e: editorEvent) {
   if (e.key === "Escape") {
@@ -1636,7 +1635,7 @@ async function replaceCode(indexToUse: number, msg: string) {
   const id = undoRedoFiles[indexToUse];
   updateIndexes(indexToUse);
   const code = localStorage.getItem(id);
-  // reset so changes on same field after this will be seen 
+  // reset so changes on same field after this will be seen
   currentFieldId = "";
   if (code) {
     disable([undoButton, redoButton], msg);
@@ -2854,7 +2853,7 @@ helpIFrame?.contentWindow?.addEventListener("click", () => showHelpTab());
 
 window.addEventListener("click", () => {
   collapseContextMenu();
-  collapseAllMenus()
+  collapseAllMenus();
 });
 
 window.addEventListener("message", async (m) => {
@@ -2865,7 +2864,7 @@ window.addEventListener("message", async (m) => {
       clearUndoRedoAndAutoSave();
       await readAndParse(code, file.fileName, ParseMode.loadNew);
     }
-    
+
     if (m.data.startsWith("help:")) {
       const link = m.data.slice(5);
       const helpLink = document.createElement("a");

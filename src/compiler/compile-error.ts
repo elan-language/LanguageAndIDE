@@ -10,7 +10,7 @@ export enum DisplayPriority {
 export enum Severity {
   error,
   warning,
-  advisory
+  advisory,
 }
 
 export abstract class CompileError {
@@ -147,9 +147,8 @@ export class CannotUseSystemMethodInAFunction extends CompileError {
   }
 }
 
-function reasonString(reason: Deprecation, isAdvisory : boolean) {
-
-  const toAdvisory = (s : string) => isAdvisory ? "deprecated" : s;
+function reasonString(reason: Deprecation, isAdvisory: boolean) {
+  const toAdvisory = (s: string) => (isAdvisory ? "deprecated" : s);
 
   switch (reason) {
     case Deprecation.classRemoved:
@@ -176,7 +175,7 @@ export class IsDeprecated extends CompileError {
     fromMinor: number,
     help: string,
     location: string,
-    severity : DeprecationSeverity,
+    severity: DeprecationSeverity,
   ) {
     const isAdvisory = severity === DeprecationSeverity.advisory;
     const prefix = isAdvisory ? "Advisory: Code change suggested." : "Code change required.";

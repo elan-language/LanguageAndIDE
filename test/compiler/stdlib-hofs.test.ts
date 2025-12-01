@@ -907,7 +907,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "5");
   });
 
-    /* method is now deprecated */
+  /* method is now deprecated */
   ignore_test("Pass_sortByImmutableList", async () => {
     const code = `${testHeader}
 
