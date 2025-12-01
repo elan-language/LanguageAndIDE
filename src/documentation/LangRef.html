@@ -31,10 +31,9 @@
  <li>It must not contain spaces or other symbols.</li>
  <li>It cannot be the same as any language keyword, method or other reserved word. If you happen to choose such a name, an error message will tell you that it cannot be used for an identifier.</li>
 </ul>
+<p>Note that all your identifiers (together with all the language's keywords), are <i>case-sensitive</i>. So, for example, named values <el-code>xTop</el-code> and <el-code>xtop</el-code> are distinct.</p>
 
 <h2 id="Type">Named value Types</h2>
-
-<p>Named values are statically typed: when initialised, their Type is established and cannot be changed.</p>
 <p>The Types used in the language are here listed, each linking to its definition and further details:</p>
 <table>
  <tr><th>Type group</th><th colspan="5">Types</th>
@@ -89,14 +88,17 @@
   <td></td>
   </tr>
 </table>
-
-<p>Assignments that define named values with fundamental Types don't require the Type name to be specified. Type names are, however, required in:</p>
+<p>Named values are statically typed: their Type, once defined, cannot be changed. A named value's Type is:
 <ul>
-<li><p><a href="#Parameter"</p>>parameters</a> of functions and procedures</li>
-<li><el-kw>return</el-kw> value of a function</li>
-<li><el-kw>property</el-kw> of an interface, class or record</li>
-<li>empty named value, e.g. <el-kw>empty</el-kw> <el-type>List</el-type></li>
-<li>Data structures whose elements have a particular Type, e.g. <el-type>Array</el-type>&lt;of <el-type>Int</el-type>&gt;</li>
+ <li><i>either</i> automatically inferred from the value of the literal or expression defining a Fundamental Type,</li>
+ <li><i>or</i> specified in the definition of:</li>
+ <ul>
+  <li>Data structures whose elements have a particular Type, e.g. <el-type>Array</el-type>&lt;of <el-type>Int</el-type>&gt;</li>
+  <li><p><a href="#Parameter"</p>parameters</a> of functions and procedures</li>
+  <li><el-kw>return</el-kw> value of a function</li>
+  <li><el-kw>property</el-kw> of an interface, class or record</li>
+  <li>empty named value, e.g. <el-kw>empty</el-kw> <el-type>List</el-type></li>
+ </ul>
 </ul>
 
 <h2 id="Mutability">Re-assigning vs. mutating named values</h2>
@@ -122,6 +124,8 @@
   <td>formal output argument of procedure<br>
   an <el-kw>out</el-kw> parameter of an immutable Type may be re-assigned<br>if the actual argument is defined with <el-kw>variable</el-kw>, not <el-kw>let</el-kw></td></tr>
 </table>
+<p>'Scope' in this table refers to where in your code a named value is accessible. Constants, being the only values having global scope, can be referenced from anywhere in your program.
+The scope of every other kind of named value is restricted to the procedure or function within which it is declared. </p>
 
 <h1 id="GlobalInstructions">Global instructions</h1>
 <p>Global instructions (also referred to as <b>globals</b>) are located <em>directly</em> in your code at the highest level.
@@ -278,11 +282,11 @@ and there can be only one <el-kw>return</el-kw> statement in a function.</p>
  <li><el-code>g.body</el-code> refers to <el-kw>property</el-kw> <el-code>body</el-code> (defined in class <el-type>Game</el-type>)
   to return its current value in the class instance named <el-code>g</el-code>.</li>
  <li><el-code>g.body.length()</el-code> applies method <el-method>length</el-method> to the value <el-code>g.body</el-code> to return its string length.<br>
- This use of dot syntax is usually referred to as applying a <b>dot method</b>.<br> Examples include the <a href="LibRef.html#CommonDotMethods">common dot methods</a></li>
+ This use of dot syntax is usually referred to as applying a <b>dot method</b>.<br> Examples include the <a href="LibRef.html#CommonDotMethods">common dot methods</a>.</li>
 </ul>
 <p>Dot syntax is also used:</p>
 <ul>
- <li>in a call to procedure method referencing a variable, as in:
+ <li>in a call to a procedure method referencing a variable, as in:
 <el-code-block source="put.elan">
 <el-statement class="ok" id="var3" tabindex="-1"><el-kw>variable </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>a4</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>Array</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;(<el-lit>4</el-lit>, <el-lit>0</el-lit>)</el-txt></el-field></el-statement>
 <el-statement class="ok" id="call8" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident9" class="ok" tabindex="-1"><el-txt><el-id>a4</el-id>.<el-method><el-method>put</el-method></el-method></el-txt></el-field>(<el-field id="args10" class="optional ok" tabindex="-1"><el-txt><el-lit>2</el-lit>, <el-lit>5</el-lit></el-txt></el-field>)</el-top></el-statement>

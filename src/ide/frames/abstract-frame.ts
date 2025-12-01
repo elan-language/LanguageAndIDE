@@ -83,7 +83,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   isMovable(): boolean {
-    return this._movable && !this.isImported();
+    return this._movable;
   }
 
   isDeletable(): boolean {

@@ -23,7 +23,7 @@ export interface Deprecated {
   fromMajor: number;
   fromMinor: number;
   message: string;
-  Severity: DeprecationSeverity
+  Severity: DeprecationSeverity;
 }
 
 export interface ElanDescriptor {

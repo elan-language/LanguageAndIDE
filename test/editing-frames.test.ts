@@ -39,7 +39,7 @@ import {
   shift_tab,
   shift_up,
   tab,
-  up
+  up,
 } from "./testHelpers";
 
 suite("Editing Frames", () => {

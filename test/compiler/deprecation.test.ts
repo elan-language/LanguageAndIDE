@@ -1,4 +1,7 @@
-import { Deprecation, DeprecationSeverity } from "../../src/compiler/compiler-interfaces/elan-type-interfaces";
+import {
+  Deprecation,
+  DeprecationSeverity,
+} from "../../src/compiler/compiler-interfaces/elan-type-interfaces";
 import {
   ClassOption,
   elanClass,
@@ -51,7 +54,7 @@ class TestStdLib {
   deprecatedAdvisoryFunction(): number {
     return 0;
   }
-  
+
   @elanDeprecated(Deprecation.methodRemoved, 0, 0, "LibRef.html#Xxxx")
   @elanFunction([])
   deprecatedFunction(): number {
@@ -303,7 +306,7 @@ end main`;
     assertCompiles(fileImpl);
   });
 
-   test("Pass_FunctionAdvisoryDeprecation", async () => {
+  test("Pass_FunctionAdvisoryDeprecation", async () => {
     const code = `${testHeader}
 
 main

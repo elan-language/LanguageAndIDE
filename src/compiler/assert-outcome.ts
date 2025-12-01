@@ -8,4 +8,6 @@ export class AssertOutcome {
     public readonly htmlId: string,
     public readonly error?: Error,
   ) {}
+
+  diffOffset: number | undefined = undefined;
 }
