@@ -29,8 +29,3 @@ src/documentation/worksheets/wordle/wordle_2.html
 src/documentation/worksheets/wordle/wordle_3.html
 src/documentation/worksheets/worksheet-test-only.html
 src/documentation/worksheets/merge-sort/merge-sort.html
-*.ts
-*.ts
-src/ide/frames/abstract-frame.ts
-src/ide/frames/abstract-selector.ts
-src/ide/frames/frame-helpers.ts

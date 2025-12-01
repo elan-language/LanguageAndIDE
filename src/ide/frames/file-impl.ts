@@ -442,7 +442,10 @@ export class FileImpl implements File {
   }
 
   refreshTestStatuses(outcomes: [string, AssertOutcome[]][]) {
-    if (this._compileStatus === CompileStatus.ok || this._compileStatus === CompileStatus.advisory) {
+    if (
+      this._compileStatus === CompileStatus.ok ||
+      this._compileStatus === CompileStatus.advisory
+    ) {
       let errors: Error[] = [];
       for (const outcome of outcomes) {
         const [tid, asserts] = outcome;
@@ -495,12 +498,10 @@ export class FileImpl implements File {
   getTestStatusColour(): string {
     let status: DisplayColour;
     const cs = this.readCompileStatus();
-    if (
-       cs === CompileStatus.ok || cs === CompileStatus.advisory 
-    ) {
-       status = helper_testStatusAsDisplayStatus(this.readTestStatus());
+    if (cs === CompileStatus.ok || cs === CompileStatus.advisory) {
+      status = helper_testStatusAsDisplayStatus(this.readTestStatus());
     } else {
-       status = DisplayColour.none;
+      status = DisplayColour.none;
     }
     return DisplayColour[status];
   }
@@ -627,7 +628,7 @@ export class FileImpl implements File {
       this.parseError = undefined;
       this._parseStatus = ParseStatus.default;
       if (source.getRemainingCode().trim() === "") {
-         throw new ElanFileError(cannotLoadEmptyFile);
+        throw new ElanFileError(cannotLoadEmptyFile);
       }
 
       await this.validateHeader(source.getRemainingCode());

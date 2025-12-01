@@ -527,13 +527,19 @@ export function elanType(eType: TypeDescriptor) {
   };
 }
 
-function getDeprecated(reason: Deprecation, fromMajor: number, fromMinor: number, message: string, advisory : DeprecationSeverity) {
+function getDeprecated(
+  reason: Deprecation,
+  fromMajor: number,
+  fromMinor: number,
+  message: string,
+  advisory: DeprecationSeverity,
+) {
   return {
     reason: reason,
     fromMajor: fromMajor,
     fromMinor: fromMinor,
     message: message,
-    Severity : advisory
+    Severity: advisory,
   } as Deprecated;
 }
 
@@ -542,7 +548,7 @@ export function elanDeprecated(
   fromMajor: number,
   fromMinor: number,
   message: string,
-  severity: DeprecationSeverity = DeprecationSeverity.error
+  severity: DeprecationSeverity = DeprecationSeverity.error,
 ) {
   return function (
     target: object,
