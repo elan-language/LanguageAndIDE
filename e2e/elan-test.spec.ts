@@ -38,7 +38,7 @@ test('long strings fail 1', async ({ page }) => {
   await page.keyboard.press('Enter');
   await page.waitForTimeout(2000);
 
-  //await expect(page.getByText("strings differ from [36]. Actual (computed): || expected: |ex|")).toBeVisible();
+  await expect(page.getByText("strings differ from [36]. Actual (computed): || expected: |ex|")).toBeVisible();
   await expect(page.locator('#test')).toContainText('fail');
 });
 
@@ -58,7 +58,7 @@ test('long strings fail 2', async ({ page }) => {
   await page.keyboard.press('Enter');
   await page.waitForTimeout(2000);
 
-  //await expect(page.getByText("strings differ from [36]. Actual (computed): |ac| expected: ||")).toBeVisible();
+  await expect(page.getByText("strings differ from [36]. Actual (computed): |ac| expected: ||")).toBeVisible();
   await expect(page.locator('#test')).toContainText('fail');
 });
 
@@ -78,7 +78,7 @@ test('long strings fail 3', async ({ page }) => {
   await page.keyboard.press('Enter');
   await page.waitForTimeout(2000);
 
-  //await expect(page.getByText("strings differ from [18]. Actual (computed): |ty characters long| expected: |ly characters long|")).toBeVisible();
+  await expect(page.getByText("strings differ from [18]. Actual (computed): |ty characters long| expected: |ly characters long|")).toBeVisible();
   await expect(page.locator('#test')).toContainText('fail');
 });
 
