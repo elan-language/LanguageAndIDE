@@ -77,7 +77,7 @@ export class AssertStatement extends AbstractFrame implements Statement {
       if (offset !== undefined) {
         const a = outcome.actual.slice(offset, offset + 20);
         const e = outcome.expected.slice(offset, offset + 20);
-        return `strings differ from [${offset}]. Actual (computed): '${a}' expected: '${e}'`;
+        return `strings differ from [${offset}]. Actual (computed): |${a}| expected: |${e}|`;
       }
       return `actual (computed): ${outcome.actual}`;
     } else if (outcome.status === TestStatus.pass) {
