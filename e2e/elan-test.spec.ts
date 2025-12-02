@@ -58,7 +58,7 @@ test('long strings fail 2', async ({ page }) => {
   await page.keyboard.press('Enter');
   await page.waitForTimeout(2000);
 
-  await expect(page.getByText("differ at [36]. Actual (computed): ac expected: <empty>")).toBeVisible();
+  await expect(page.getByText("differ at [36]. Actual (computed): a expected: <empty>")).toBeVisible();
   await expect(page.locator('#test')).toContainText('fail');
 });
 
