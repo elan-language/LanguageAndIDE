@@ -1,8 +1,9 @@
-# 14b4ae98442a8f60e9ad11300caaae9b93d839306f396ceadce08f514ec26718 Elan 1.7.1 guest default_profile valid
+# a15be1654e2ebe202cb78ce6942ac7420498362d26ab5ab8e31d84b803351c36 Elan 1.7.1 guest default_profile valid
 
 main
   let game be new Game(1000)
-  call game.addPlayer(new HumanPlayer("Player A", 1000))
+  call game.addPlayer(new AutomatedPlayer("Player A", ref strategyB, 1000))
+  call game.addPlayer(new AutomatedPlayer("Player B", ref strategyB, 1000))
   variable anotherRound set to true
   while anotherRound
     call playOneRound(game)
@@ -44,6 +45,14 @@ procedure display(game as Game)
   call displayHtml(html)
   call pause(1500)
 end procedure
+
+function strategyA(p as Player, dealerFaceUp as Card) returns Action
+  return Action.stand
+end function
+
+function strategyB(p as Player, dealerFaceUp as Card) returns Action
+  return Action.draw
+end function
 
 procedure updatePoints(dealer as Dealer, player as Player, playerOutcome as Outcome)
   if playerOutcome is Outcome.winDouble then
@@ -94,48 +103,12 @@ function determinePlayerOutcome(dealer as Dealer, player as Player) returns Outc
   return playerOutcome
 end function
 
-test determinePlayerOutcome
-  let dbj be new Dealer(0) with status set to Status.blackjack
-  let d21 be new Dealer(0) with status set to Status.standing, handTotal set to 21
-  let d17 be new Dealer(0) with status set to Status.standing, handTotal set to 17
-  let dbu be new Dealer(0) with status set to Status.bust
-  let pbj be new HumanPlayer("", 0) with status set to Status.blackjack
-  let p21 be new HumanPlayer("", 0) with status set to Status.standing, handTotal set to 21
-  let p17 be new HumanPlayer("", 0) with status set to Status.standing, handTotal set to 17
-  let pbu be new HumanPlayer("", 0) with status set to Status.bust
-  assert determinePlayerOutcome(dbj, pbj) is Outcome.draw
-  assert determinePlayerOutcome(dbj, p21) is Outcome.lose
-  assert determinePlayerOutcome(dbj, pbu) is Outcome.lose
-  assert determinePlayerOutcome(d21, pbj) is Outcome.winDouble
-  assert determinePlayerOutcome(d21, p21) is Outcome.draw
-  assert determinePlayerOutcome(d21, p17) is Outcome.lose
-  assert determinePlayerOutcome(d21, pbu) is Outcome.lose
-  assert determinePlayerOutcome(dbu, pbj) is Outcome.winDouble
-  assert determinePlayerOutcome(dbu, p17) is Outcome.win
-  assert determinePlayerOutcome(dbu, pbu) is Outcome.lose
-end test
-
 function dealCard(random as Float) returns Card
   let number be (random*52).floor()
   let rank be rankValue.keys()[number div 4]
   let suit be number mod 4
   return new Card() with rank set to rank, suit set to intAsSuit(suit)
 end function
-
-test dealCard
-  let c1 be dealCard(0)
-  assert c1.rank is "2"
-  assert c1.suit is Suit.clubs
-  let c2 be dealCard(0.9999999)
-  assert c2.rank is "A"
-  assert c2.suit is Suit.spades
-  let c3 be dealCard(0.5)
-  assert c3.rank is "8"
-  assert c3.suit is Suit.hearts
-  let c4 be dealCard(0.24)
-  assert c4.rank is "5"
-  assert c4.suit is Suit.clubs
-end test
 
 function intAsSuit(n as Int) returns Suit
   variable suit set to Suit.clubs
@@ -149,13 +122,6 @@ function intAsSuit(n as Int) returns Suit
   return suit
 end function
 
-test intAsSuit
-  assert intAsSuit(0) is Suit.clubs
-  assert intAsSuit(1) is Suit.diamonds
-  assert intAsSuit(2) is Suit.hearts
-  assert intAsSuit(3) is Suit.spades
-end test
-
 function htmlForGame(game as Game) returns String
   variable html set to "<div class='game'>"
   set html to html + htmlForPlayer(game.dealer)
@@ -165,15 +131,6 @@ function htmlForGame(game as Game) returns String
   set html to html + "<div class='message'>{game.message}</div>"
   return html + "</div>"
 end function
-
-test htmlForGame
-  let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
-  let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
-  let p be new HumanPlayer("fred", 10) with cards set to [c1, c2]
-  let players be (empty List<of Player>).withAppend(p)
-  let g2 be new Game(1) with players set to players
-  assert htmlForGame(g2) is "<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>"
-end test
 
 function htmlForPlayer(player as Player) returns String
   variable html set to "<div class='player'>"
@@ -186,13 +143,6 @@ function htmlForPlayer(player as Player) returns String
   end each
   return html + "</div></div>"
 end function
-
-test htmlForPlayer
-  let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
-  let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
-  let p be new HumanPlayer("charlie", 10) with cards set to [c1, c2]
-  assert htmlForPlayer(p) is "<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>"
-end test
 
 function htmlForCard(card as Card) returns String
   variable html set to ""
@@ -219,21 +169,9 @@ function htmlForCard(card as Card) returns String
   return html + "</div>"
 end function
 
-test htmlForCard
-  let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
-  assert htmlForCard(c1) is "<div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div>"
-  let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
-  assert htmlForCard(c2) is "<div class='card reversed'></div>"
-end test
-
 function htmlForSpot(id as String, content as String) returns String
   return "<div class='{id}'>{content}</div>"
 end function
-
-test htmlForSpot
-  assert htmlForSpot("c", "&hearts;") is "<div class='c'>&hearts;</div>"
-  assert htmlForSpot("u", "10") is "<div class='u'>10</div>"
-end test
 
 class Game
   constructor(dealerStartPoints as Int)
@@ -464,6 +402,34 @@ class HumanPlayer inherits Player
       set msg to msg + " - press 'd' to draw, 's' to stand"
     end if
     return msg
+  end function
+
+end class
+
+class AutomatedPlayer inherits Player
+  constructor(name as String, decisionFunc as Func<of Player, Card => Action>, startingPoints as Int)
+    set property.name to name
+    set property.decisionFunc to ref decisionFunc
+    set property.points to startingPoints
+  end constructor
+
+  property decisionFunc as Func<of Player, Card => Action>
+
+  procedure newHand()
+    call newHandHelper()
+  end procedure
+
+  procedure nextAction(dealerFaceCard as Card)
+    let act be decisionFunc(this, dealerFaceCard)
+    if act is Action.draw then
+      call draw()
+    else
+      call stand()
+    end if
+  end procedure
+
+  function getMessage() returns String
+    return statusAsString() + " - hand total: {property.handTotal}"
   end function
 
 end class
