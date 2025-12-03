@@ -89,9 +89,9 @@ export class AssertStatement extends AbstractFrame implements Statement {
   private getCharacter(from: string, offset: number): string {
     let char = from.slice(offset, offset + 1);
     if (char === "") {
-      char = "<empty>";
+      char = "empty";
     } else if (char === " ") {
-      char = "<space>";
+      char = "space";
     }
     return char;
   }
