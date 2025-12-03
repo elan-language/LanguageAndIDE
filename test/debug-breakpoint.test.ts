@@ -835,4 +835,50 @@ end record`;
 
     await assertDebugBreakPoint(fileImpl, "print6", expected);
   });
+
+  test("Pass_FunctionProperty", async () => {
+    const code = `${testHeader}
+
+function foo(f as Foo) returns Int
+  return 1
+end function
+
+class Foo
+  constructor(f as Func<of Foo => Int>)
+    set property.ff to ref f
+  end constructor
+
+  property ff as Func<of Foo => Int>
+
+  function df() returns Int
+    return ff(this)
+  end function
+
+end class
+
+main
+  let a be new Foo(ref foo)
+  let b be a.df()
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const expected = [
+      asDebugSymbol(
+        "f",
+        { ff: [] },
+        '{"Type":"Foo","Properties":{"ff":{"Type":"Func<of Foo => Int>"}}}',
+      ),
+    ];
+
+    await assertDebugBreakPoint(fileImpl, "return6", expected);
+  });
 });
