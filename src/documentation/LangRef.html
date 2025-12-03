@@ -101,7 +101,13 @@
  </ul>
 </ul>
 
-<h2 id="Mutability">Re-assigning vs. mutating named values</h2>
+<h2 id="Mutability">Mutability of named values</h2>
+
+<p>The properties or contents of a named value that is of an immutable Type may not be changed directly.
+You can, however, create another instance that is a copy of the original,
+with all the same property values except for specific changes that you want to make.
+ The newly-minted copy (with changes) may be assigned either to a new named value, or as a re-definition of the original named value.</p>
+
 <p>This table shows which named values can be re-assigned and/or mutated depending on how they were defined:</p>
 <table>
  <tr><th colspan="3">define named value</th><th colspan="3">named value</th><th rowspan="2">notes</th></tr>
@@ -124,9 +130,18 @@
   <td>formal output argument of procedure<br>
   an <el-kw>out</el-kw> parameter of an immutable Type may be re-assigned<br>if the actual argument is defined with <el-kw>variable</el-kw>, not <el-kw>let</el-kw></td></tr>
 </table>
-<p>'Scope' in this table refers to where in your code a named value is accessible. Constants, being the only values having global scope, can be referenced from anywhere in your program.
-The scope of every other kind of named value is restricted to the procedure or function within which it is declared. </p>
 
+<div id="global"></div>
+<div id="library"></div>
+<h2 id="Scope">Scope and name qualification</h2>
+<p>'Scope' in the table above refers to where in your code a named value is accessible.
+ <el-kw>constant</el-kw>s and <el-kw>enum</el-kw>s, being the only values having <i>global</i> scope, can be referenced from anywhere in your program.
+ Every other kind of named value is <i>local</i> and restricted to the procedure or function within which it is defined.</p>
+<p>Local named values can have the same name as a <el-code>constant</el-code>, <el-code>function</el-code>, or <el-code>procedure</el-code> (which are all defined at global level or are in the standard library).
+ In such cases, when the name is used within the same method, then it will refer to the local definition.
+  If you have done this, but then need to access the <el-code>constant</el-code>, <el-code>function</el-code>, or <el-code>procedure</el-code> with the same name,
+  then you prefix the name with a <i>dot qualifier</i> of either <el-kw>global</el-kw> or <el-kw>library</el-kw> as appropriate</p>
+                                                    
 <h1 id="GlobalInstructions">Global instructions</h1>
 <p>Global instructions (also referred to as <b>globals</b>) are located <em>directly</em> in your code at the highest level.
 They are never indented from the left-hand edge, nor may they be located <em>within</em> other instructions. They are:
@@ -238,7 +253,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 <ul>
  <li>a function always returns a value.</li>
  <li>a function can have no side effects (i.e. no references outside its code) and cannot depend on any <a href="LibRef.html#SystemMethods">System methods</a>.</li>
- <li>a function's execution cannot be interrupted by any external event, though a a non-terminaring loop in a function may be detected with tests that <a href="#ignore">time out</a>.</li>
+ <li>a function's execution cannot be interrupted by any external event, though a a non-terminating loop in a function may be detected with tests that <a href="#ignore">time out</a>.</li>
 </ul>
 <p id="returns"></p>A function definition is comprised of its input parameters (with their Types), followed by the automatically added keyword <el-kw>returns</el-kw>,
 and the Type of the value that will be returned, for example:
@@ -425,7 +440,7 @@ the overall test status will show the status of only the unghosted tests (green 
 <h2 id="record"><el-kw>record</el-kw></h2>
 <p>A <el-code>record</el-code> is a user-defined data structure that is given a Type name (which must begin with an uppercase letter).
   The <el-code>record</el-code> defines one or more properties, each of which has a name (starting with a lowercase letter) and a Type.
-  The Type of a property may be any simple value Type, or a <el-code>ListImmutable</el-code>, or another Type of <el-code>record</el-code> ( or even of the same Type of <el-code>record</el-code>).</p>
+  The Type of a property may be any simple value Type, or a <el-code>ListImmutable</el-code>, or another Type of <el-code>record</el-code> (or even of the same Type of <el-code>record</el-code>).</p>
   <p>Note that a <el-code>record</el-code> has some similarity to a <a href="#class"><el-code>class</el-code></a> in that:</p>
 <ul>
   <li>Both are user-defined data structures</li>
@@ -473,7 +488,7 @@ Having defined a record's Type, such as <el-code>Game</el-code> above, you can c
 <el-statement class="" id="print15" tabindex="0"><el-kw>print </el-kw><el-field id="expr16" class="optional" tabindex="0"><el-txt><el-id>sq</el-id>.<el-id>size</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
 </el-code-block>
 <p><el-code>record</el-code> Types are immutable: the properties on an instance may not be changed directly.
-  However, you can easily create another instance that is a copy of the original,
+  However, you can create another instance that is a copy of the original,
   with all the same property values except for specific changes made in a <el-kw>with</el-kw> clause.
   The newly-minted copy (with changes) must be assigned to a new named value. For example:</p>
 <el-code-block>
@@ -495,7 +510,7 @@ Having defined a record's Type, such as <el-code>Game</el-code> above, you can c
   <el-statement class="" id="let9" tabindex="0"><el-kw>let </el-kw><el-field id="var10" class="ok" tabindex="0"><el-txt><el-id>sq2</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr11" class="" tabindex="0"><el-txt><el-kw>copy</el-kw> <el-id>sq1</el-id><el-kw> with </el-kw><br><el-id>size</el-id><el-kw> set to </el-kw><el-id>sq1</el-id>.<el-id>size</el-id> + <el-lit>3</el-lit></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class=""></el-msg></el-statement>
 </el-code-block>
 
-<h4 class="no-TOC" id="record_deconstruction">Record deconstruction</h4>
+<h4 class="no-TOC" id="deconstructRecord">Deconstructing a Record</h4>
 <p>A record may be deconstructed, meaning that its properties are read into separate <el-kw>variable</el-kw>s using the same syntax as for deconstructing a Tuple. For example, assuming that Square is a record defined as in the example above, then this code:</p>
 <el-code-block>
   <el-statement class="" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>x</el-id>, <el-id>y</el-id>, <el-id>size</el-id>, <el-id>colour</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="" tabindex="0"><el-txt><el-id>mySquare</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
@@ -510,7 +525,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 <p>Unlike a <el-kw>record</el-kw>, a class may have a constructor and procedure methods.</p>
 <p>Like any other Type its name must begin with an uppercase letter.</p>
 
-<h4 class="no-TOC">Definition</h4>
+<h3 class="no-TOC">Definition</h3>
 <p>Here is an example of <el-code>class</el-code> definition, taken from demo program <el-code>snake_OOP.elan</el-code>:</p>
 <el-code-block source="snake_OOP.elan">
 <el-class id="class174" tabindex="-1">
@@ -569,10 +584,6 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 <p>Here, method <el-method>newRandomPosition</el-method> is defined on class <el-type>Apple</el-type> which needs to be passed an instance of class <el-type>Snake</el-type>.
 (<el-id>apple</el-id> is an instance of class <el-type>Apple</el-type>).</p>
 
-<!-- TODO Subclass and Superclass -->
-<h3 class="no-TOC" id="Subclass">Subclass</h3>
-<h3 class="no-TOC" id="Superclass">Superclass</h3>
-<h3 class="no-TOC" id="Inheritance">Inheritance</h3>
 <h3 class="no-TOC" id="inherits"><el-kw>inherits</el-kw></h3>
 
   <p>An ordinary <a href="#class">class</a> (also known as a concrete class) may optionally inherit from just one <a href="#abstract_class"><el-code>abstract class</el-code></a>
@@ -611,7 +622,7 @@ If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that 
 <h2 id="interface"><el-kw>interface</el-kw></h2>
 <p>An <el-code>interface</el-code> is similar to an <el-code>abstract class</el-code>, with the difference that it may define only abstract members. The advantage of using an <el-code>interface</el-code> instead of an <el-code>abstract class</el-code> is that a concrete<el-code> class</el-code> can inherit from multiple <el-code>interface</el-code>s.</p>
 <p>An <el-code>interface</el-code> may inherit only from other <el-code>interface</el-code>s.</p>
-<p>Important: An <el-code>interface</el-code> must not re-declare abstract interfaces that are defined in any <el-code>interface</el-code> it inherits from, directly or indirectly.</p>
+<p>Important: An <el-code>interface</el-code> must not redeclare abstract interfaces that are defined in any <el-code>interface</el-code> it inherits from, directly or indirectly.</p>
 <p>See also: <a href="#Inheritance">Inheritance</a>.</p>
 
 <div class="accordion">
@@ -688,7 +699,7 @@ If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that 
 <p>A constant is defined by a literal of an immutable Type, namely <el-type>Int</el-type>, <el-type>Float</el-type>, <el-type>Boolean</el-type>,
  <el-type>String</el-type>, <el-type>ListImmutable</el-type> or <el-type>DictionaryImmutable</el-type>.</p>
 <p>Constants are created at compile time, so cannot be defined with reference to any function, nor can you use any operators in an expression.</p>
-<p>A constant can be defined by a previously defined constant or a system constant, but take care not to redefine a <a href="LibRef.html#Constants">system constant</a> such as <el-id>pi</el-id> or <el-id>blue</el-id> without good reason.</p>
+<p>A constant can be defined by a previously defined constant or a system constant, but take care not to re-define a <a href="LibRef.html#Constants">system constant</a> such as <el-id>pi</el-id> or <el-id>blue</el-id> without good reason.</p>
 
 <p>Examples of literal definitions of the valid Types of constant:</p>
 
@@ -1260,12 +1271,6 @@ and the initial value is given by a following expression. For example:</p>
 <p>For more about List and Dictionary literals see the <a href="LibRef.html#StandardDataStructures">Standard (mutable) data structures</a> table.<br>
 For more about ListImmutable and DictionaryImmutable literals see the <a href="LibRef.html#ImmutableDataStructures">Immutable data structures</a> table.</p>
 
-<div id="global"></div>
-<div id="library"></div>
-<h2 id="scoping">Scoping and name qualification</h2>
-<p>With the exception of <a href="#constant"><el-kw>constant</el-kw></a> and <a href="#enum"><el-kw>enum</el-kw></a>, which are <i>global</i> in scope, a named values is always <i>local</i>: i.e. its use is confined to the method in which it is defined. </p>
-<p>Local named values can have the same name as a <el-code>constant</el-code>, <el-code>function</el-code>, or <el-code>procedure</el-code> defined at global level or defined in the standard library. In such cases, when the name is used within the same method, then it will refer to the local definition. If you have done this, but then need to access the <el-code>constant</el-code>, <el-code>function</el-code>, or <el-code>procedure</el-code> with the same name, then you can simply prefix the use of the name with a <i>qualifier</i> of either <el-code>global.</el-code> or <el-code>library.</el-code> as appropriate.</p>
-
 <div id="range"></div>
 <h2 id="IndexedValue">Indexed values</h2>
 <p>If a variable is of an indexable Type, then an index or index range may be applied to the variable within an expression. For example:</p>
@@ -1426,7 +1431,7 @@ Example:
 </el-code-block>
 
 Notes:<ul>
-<li>Although a <el-kw>lambda</el-kw> is commonly defined 'inline' (as shown above) it is possible to assign a lambda to a variable and hence to re-use it within the scope of that variable.</li>
+<li>Although a <el-kw>lambda</el-kw> is commonly defined 'inline' (as shown above) it is possible to assign a lambda to a variable and hence to reuse it within the scope of that variable.</li>
 </ul>
 
 <h2 id="if_expression"><el-kw>if</el-kw> expression</h2>
@@ -1700,7 +1705,10 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
 
 <h3 id="mustNotBeKeyword" class="no-TOC">... is a keyword, and may not be used as an identifier.</h3>
  <p>An Elan keyword cannot be used to as the name for a value, property, or method. Try shortening the name, lengthening it, or using a different name</p>
-<p>For reference, the complete list of keywords is:<br><el-code>#, abstract, and, as, assert, be, call, catch, class, constant, constructor, copy, div, each, else, empty, end, enum, exception, for, from, function, if, image, in, inherits, interface, is, isnt, lambda, let, main, mod, new, not, of, or, out, print, private, procedure, property, record, ref, repeat, return, returns, set, step, test, then, this, throw, to, try, variable, while, with </el-code></p>
+<p>For reference, the complete list of keywords is:<br><el-code>#, abstract, and, as, assert, be, call, catch, class, constant, constructor, copy, div,
+ each, else, empty, end, enum, exception, for, from, function, global, if, image, in, inherits, interface, is, isnt, lambda, let, library, main, mod,
+ new, not, of, or, out, print, private, procedure, property, record, ref, repeat, return, returns, set, step, test, then, this, throw, to, try,
+ variable, while, with </el-code></p>
 
 <h3 id="mustNotBeReservedWord" class="no-TOC">...  is a reserved word, and may not be used as an identifier.</h3>
  <p>In addition to Elan keywords there are certain other 'reserved words' that cannot be used to define the name for a
@@ -1718,7 +1726,10 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
   complexity &ndash; especially in regard to debugging and interaction with the Elan editor &ndash; just to eliminate
   the minor inconvenience of having to extend the word so as to make your identifier distinct.)</li>
  </ul>
-<p>For reference, the complete list of reserved words is:<br><el-code>action, arguments, array, async, await, boolean, break, by, byte, case, char, const, continue, curry, debugger, default, delete, dictionary, do, double, eval, export, extends, final, finally, float, goto, ignore, implements, import, instanceof, int, into, list, long, match, namespace, native, null, on, optional, otherwise, package, partial, pattern, protected, public, short, static, string, super, switch, system, synchronized, throws, todo, transient, typeof, void, volatile, var, when, yield</el-code></p>
+<p>For reference, the complete list of reserved words is:<br><el-code>action, arguments, array, async, await, boolean, break, by, byte, case, char,
+ const, continue, curry, debugger, default, delete, dictionary, do, double, eval, export, extends, final, finally, float, goto, ignore, implements,
+ import, instanceof, int, into, list, long, match, namespace, native, null, on, optional, otherwise, package, partial, pattern, protected, public,
+ short, static, string, super, switch, system, synchronized, throws, todo, transient, typeof, void, volatile, var, when, yield</el-code></p>
 
 <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
  <p>An index into an array or list cannot have a negative value. If a negative is given in literal form e.g.
@@ -1795,8 +1806,8 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
  It may, however, may also take the following forms:
  <ul>
   <li>Within a <el-kw>class</el-kw> it may take the form <el-kw>property</el-kw><el-code>.</el-code><el-id>name</el-id> to set the property <el-id>name</el-id></li>
-  <li>A tuple deconstruction. See <a href="LibRef.html#Tuple">Tuple</a></li>
-  <li>A list deconstruction. See <a href="LibRef.html#List">List</a></li>
+  <li>A tuple deconstruction. See <a href="LibRef.html#deconstructTuple">Tuple</a></li>
+  <li>A list deconstruction. See <a href="LibRef.html#deconstructList">List</a></li>
  </ul></p>
 
 <h3 id="CommentField" class="no-TOC">'comment' field</h3>
@@ -1855,8 +1866,11 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
 
 <h3 id="ValueDefField" class="no-TOC">'name' field in a let or variable instruction</h3>
  <p>The definition for a variable or for a <el-kw>let</el-kw> statement is most commonly
- a simple name. Less commonly, it may take the form of:
- <a href="LibRef.html#Tuple">tuple deconstruction</a>, list deconstruction, or <a href="#record_deconstruction">record deconstruction</a>.</p>
+ a simple name. Less commonly, it may take the form of a dconstruction of a
+ <a href="LibRef.html#deconstructList">List</a>,
+ <a href="LibRef.html#deconstructListImmutable">ListImmutable</a>,
+ <a href="LibRef.html#deconstructTuple">Tuple</a> or
+ <a href="#deconstructRecord">Record</a>.</p>
 
 <h1 id="runtime_error">Runtime errors</h1>
 
