@@ -808,41 +808,38 @@ export abstract class AbstractFrame implements Frame {
 
   getContextMenuItems() {
     const map = new Map<string, [string, (s?: string) => boolean]>();
-
-    if (this.isGhostedOrWithinAGhostedFrame()) {
-      if (this.isGhosted()) {
-        map.set("unghost", ["unghost", this.unGhost]);
-        addDeleteToContextMenu(this, map);
-        map.set("deleteGhosted", ["delete ALL ghosted code", this.deleteAllGhostedInFile]);
-      }
-    } else {
-      if (this.canInsertAfter()) {
-        map.set("below", ["insert new code below <span class='kb'>Enter</span>", this.below]);
-      }
-      if (this.canInsertBefore()) {
-        map.set("above", ["insert new code above <span class='kb'>Shift+Enter</span>", this.above]);
-      }
-      if (this.isDeletable()) {
-        addDeleteToContextMenu(this, map);
-      }
-      if (this.isMovable()) {
-        map.set("up", ["move up <span class='kb'>Ctrl+↑</span>", this.up]);
-        map.set("down", ["move down <span class='kb'>Ctrl+↓</span>", this.down]);
-      }
-      if (this.isDeletable()) {
-        map.set("cut", ["cut <span class='kb'>Ctrl+x</span>", this.cutSelected]);
-      }
-      map.set("copy", ["copy <span class='kb'>Ctrl+c</span>", this.copySelected]);
-      if (this.isGhostable()) {
-        map.set("ghost", ["ghost", this.ghost]);
-      }
-      if (this.canHaveBreakPoint) {
-        if (this.hasBreakpoint()) {
-          map.set("clearBP", ["clear breakpoint", this.clearBreakPoint]);
-          map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints]);
-        } else {
-          map.set("setBP", ["set breakpoint", this.setBreakPoint]);
-        }
+    if (this.isGhosted()) {
+      map.set("unghost", ["unghost", this.unGhost]);
+    }
+    if (this.canInsertAfter()) {
+      map.set("below", ["insert new code below <span class='kb'>Enter</span>", this.below]);
+    }
+    if (this.canInsertBefore()) {
+      map.set("above", ["insert new code above <span class='kb'>Shift+Enter</span>", this.above]);
+    }
+    if (this.isDeletable()) {
+      addDeleteToContextMenu(this, map);
+    }
+    if (this.isGhosted()) {
+      map.set("deleteGhosted", ["delete ALL ghosted code", this.deleteAllGhostedInFile]);
+    }
+    if (this.isMovable()) {
+      map.set("up", ["move up <span class='kb'>Ctrl+↑</span>", this.up]);
+      map.set("down", ["move down <span class='kb'>Ctrl+↓</span>", this.down]);
+    }
+    if (this.isDeletable()) {
+      map.set("cut", ["cut <span class='kb'>Ctrl+x</span>", this.cutSelected]);
+    }
+    map.set("copy", ["copy <span class='kb'>Ctrl+c</span>", this.copySelected]);
+    if (!this.isGhosted() && this.isGhostable()) {
+      map.set("ghost", ["ghost", this.ghost]);
+    }
+    if (this.canHaveBreakPoint && !this.isGhosted()) {
+      if (this.hasBreakpoint()) {
+        map.set("clearBP", ["clear breakpoint", this.clearBreakPoint]);
+        map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints]);
+      } else {
+        map.set("setBP", ["set breakpoint", this.setBreakPoint]);
       }
     }
     return map;
