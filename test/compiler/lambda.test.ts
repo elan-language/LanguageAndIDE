@@ -7,6 +7,7 @@ import {
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
+  assertObjectCodeIsWithAdvisories,
   assertParses,
   assertStatusIsValid,
   testHash,
@@ -234,7 +235,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "5");
   });
 

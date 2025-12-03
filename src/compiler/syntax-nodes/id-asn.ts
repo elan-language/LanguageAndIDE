@@ -13,8 +13,8 @@ import {
 import { SymbolScope } from "../../compiler/symbols/symbol-scope";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
 import {
+  adviseAgainstFunctionRef,
   getQualifierId,
-  mustBeFunctionRefIfFunction,
   mustBeGlobalFunctionIfRef,
   mustBeKnownSymbol,
   mustBePropertyPrefixedOnMember,
@@ -113,11 +113,17 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
       mustBePropertyPrefixedOnMember(this.compileErrors, this.fieldId);
     }
 
-    if (!this.isFuncRef) {
-      mustBeFunctionRefIfFunction(symbol, this.id, this.compileErrors, this.fieldId);
-    } else {
-      mustBeGlobalFunctionIfRef(symbol, this.id, this.compileErrors, this.fieldId);
+    if (this.isFuncRef) {
+      adviseAgainstFunctionRef(symbol, this.compileErrors, this.fieldId);
     }
+
+    mustBeGlobalFunctionIfRef(symbol, this.id, this.compileErrors, this.fieldId);
+
+    // if (!this.isFuncRef) {
+    //   mustBeFunctionRefIfFunction(symbol, this.id, this.compileErrors, this.fieldId);
+    // } else {
+    //
+    // }
 
     const prefix =
       this.updatedScope !== NullScope.Instance

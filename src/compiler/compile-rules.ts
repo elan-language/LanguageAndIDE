@@ -1174,20 +1174,13 @@ export function mustBeNewable(type: string, compileErrors: CompileError[], locat
   compileErrors.push(new NotNewableCompileError(type, location));
 }
 
-export function mustBeFunctionRefIfFunction(
+export function adviseAgainstFunctionRef(
   symbol: ElanSymbol,
-  id: string,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (symbol.symbolType() instanceof FunctionType) {
-    compileErrors.push(
-      new FunctionRefCompileError(
-        displayName(symbol, id),
-        !(symbol.symbolScope === SymbolScope.stdlib || symbol.symbolScope === SymbolScope.member),
-        location,
-      ),
-    );
+    compileErrors.push(new FunctionRefCompileError(location));
   }
 }
 

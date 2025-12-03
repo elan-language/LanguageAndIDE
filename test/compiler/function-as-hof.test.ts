@@ -6,6 +6,7 @@ import {
   assertDoesNotCompile,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
+  assertObjectCodeIsWithAdvisories,
   assertParses,
   assertStatusIsValid,
   testHash,
@@ -58,7 +59,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "6");
   });
 
@@ -106,7 +109,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
@@ -154,7 +159,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
@@ -204,7 +211,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "10");
   });
 
@@ -245,7 +254,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "10");
   });
 
@@ -307,7 +318,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "5");
   });
 
@@ -346,11 +359,13 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "function ff");
   });
 
-  test("Fail_SetAsVariableWithoutRefKeyword", async () => {
+  test("Pass_SetAsVariableWithoutRefKeyword", async () => {
     const code = `${testHeader}
 
 main
@@ -361,6 +376,19 @@ end main
 function twice(x as Float) returns Float
   return x * 2
 end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = global.twice;
+  await system.printLine((await f(5)));
+}
+
+async function twice(x) {
+  return x * 2;
+}
+global["twice"] = twice;
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -374,9 +402,8 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'.LangRef.html#compile_error",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "10");
   });
 
   test("Fail_FunctionSignatureDoesntMatch1", async () => {
@@ -406,6 +433,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
       "Argument types. Expected: i (Int), f (Func<of Int => Int>), Provided: Int, Func<of Int, Int => Int>.LangRef.html#compile_error",
     ]);
   });
@@ -437,6 +465,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
       "Argument types. Expected: i (Int), f (Func<of Int => Int>), Provided: Int, Func<of Int => String>.LangRef.html#compile_error",
     ]);
   });
@@ -473,7 +502,7 @@ end function`;
     ]);
   });
 
-  test("Fail_PassAsParamWithoutRefKeyword", async () => {
+  test("Pass_PassAsParamWithoutRefKeyword", async () => {
     const code = `${testHeader}
 
 main
@@ -488,6 +517,23 @@ function twice(x as Float) returns Float
   return x * 2
 end function`;
 
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await printModified(3, global.twice);
+}
+
+async function printModified(i, f) {
+  await system.printLine((await f(i)));
+}
+global["printModified"] = printModified;
+
+async function twice(x) {
+  return x * 2;
+}
+global["twice"] = twice;
+return [main, _tests];}`;
+
     const fileImpl = new FileImpl(
       testHash,
       new DefaultProfile(),
@@ -500,12 +546,11 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'.LangRef.html#compile_error",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "6");
   });
 
-  test("Fail_ReturnAFunctionWithoutRefKeyword", async () => {
+  test("Pass_ReturnAFunctionWithoutRefKeyword", async () => {
     const code = `${testHeader}
 
 main
@@ -521,6 +566,24 @@ function twice(x as Float) returns Float
   return x * 2
 end function`;
 
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = (await global.getFunc());
+  await system.printLine((await f(5)));
+}
+
+async function getFunc() {
+  return global.twice;
+}
+global["getFunc"] = getFunc;
+
+async function twice(x) {
+  return x * 2;
+}
+global["twice"] = twice;
+return [main, _tests];}`;
+
     const fileImpl = new FileImpl(
       testHash,
       new DefaultProfile(),
@@ -533,12 +596,11 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'twice' add brackets. Or to create a reference to 'twice', precede it by 'ref'.LangRef.html#compile_error",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "10");
   });
 
-  test("Fail_SetAsPropertyWithoutRefKeyword", async () => {
+  test("Pass_SetAsPropertyWithoutRefKeyword", async () => {
     const code = `${testHeader}
 
 main
@@ -559,6 +621,31 @@ class Foo
 
 end class`;
 
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(await new Foo()._initialise(global.ff));
+  await system.printLine((await f.pf(5)));
+}
+
+async function ff(a) {
+  return a;
+}
+global["ff"] = ff;
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["pf", system.emptyFunc(0)]]);};
+
+  async _initialise(f) {
+    this.pf = f;
+    return this;
+  }
+
+  pf = system.emptyFunc(0);
+
+}
+return [main, _tests];}`;
+
     const fileImpl = new FileImpl(
       testHash,
       new DefaultProfile(),
@@ -571,9 +658,8 @@ end class`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'ref'.LangRef.html#compile_error",
-    ]);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "5");
   });
 
   test("Fail_InExpression1", async () => {
@@ -600,7 +686,6 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'ff' add brackets. Or to create a reference to 'ff', precede it by 'ref'.LangRef.html#compile_error",
       "Incompatible types. Expected: Float or Int, Provided: Func<of Int => Int>.LangRef.html#TypesCompileError",
     ]);
   });
@@ -629,6 +714,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
       "Incompatible types. Expected: Float or Int, Provided: Func<of Int => Int>.LangRef.html#TypesCompileError",
     ]);
   });

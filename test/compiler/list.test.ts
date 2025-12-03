@@ -8,6 +8,7 @@ import {
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
+  assertObjectCodeIsWithAdvisories,
   assertParses,
   assertStatusIsValid,
   testHash,
@@ -1663,7 +1664,11 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
+    assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+    ]);
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
@@ -2021,7 +2026,8 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Library or class function 'getKey' cannot be preceded by 'ref'.LangRef.html#NotGlobalFunctionRefCompileError",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "Library or class function 'getKey' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 
@@ -2051,7 +2057,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'bar' add brackets.LangRef.html#compile_error",
+      "Library or class function 'bar' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 

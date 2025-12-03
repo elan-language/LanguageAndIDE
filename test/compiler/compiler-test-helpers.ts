@@ -14,6 +14,7 @@ import { getTestSystem } from "./test-system";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { transform, transformMany } from "../../src/ide/compile-api/ast-visitor";
 import { Transforms } from "../../src/ide/compile-api/transforms";
+import { Severity } from "../../src/compiler/compile-error";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);
@@ -49,6 +50,27 @@ export function assertObjectCodeIs(file: FileImpl, objectCode: string) {
   const errors = file.ast?.getAllCompileErrors() || [];
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
   assert.strictEqual(actual, expected);
+}
+
+export function assertObjectCodeIsWithAdvisories(file: FileImpl, objectCode: string, msgs : string[]) {
+  const actual = file.compile().replaceAll("\r", "");
+  const expected = objectCode.replaceAll("\r", "");
+  assert.strictEqual(actual, expected);
+
+  const errors = file.ast?.getAllCompileErrors() || [];
+
+  for(const e of errors) {
+    assert.strictEqual(e.severity, Severity.advisory);
+  }
+
+  for (let i = 0; i < msgs.length; i++) {
+    
+    const m = msgs[i];
+    const e = errors[i];
+    const id = e.locationId; // to help test migration
+    const em = e.message + (e.link ?? "");
+    assert.strictEqual(em, m);
+  }
 }
 
 export function assertCompiles(file: FileImpl) {
@@ -92,7 +114,7 @@ function doImport(str: string) {
 
 function executeCode(file: FileImpl, input?: string) {
   const jsCode = file.compile();
-  const errors = file.ast?.getAllCompileErrors() || [];
+  const errors = file.ast?.getAllCompileErrors().filter(e => e.severity !== Severity.advisory) || [];
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
 
   const system = getTestSystem(input ?? "");
@@ -113,7 +135,7 @@ function executeCode(file: FileImpl, input?: string) {
 
 export async function executeTestCode(file: FileImpl, input?: string) {
   const jsCode = file.compile();
-  const errors = file.ast?.getAllCompileErrors() || [];
+  const errors = file.ast?.getAllCompileErrors().filter(e => e.severity !== Severity.advisory) || [];
   assert.strictEqual(errors.length, 0, errors.map((e) => e.message).join(", "));
 
   const system = getTestSystem(input ?? "");
