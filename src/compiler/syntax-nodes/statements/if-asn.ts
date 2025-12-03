@@ -26,8 +26,10 @@ export class IfAsn extends CompoundAsn {
         currentElse.setCompileScope(this);
         ifChildren.push(c);
       } else if (currentElse) {
-        (c as BreakpointAsn).setCompileScope(currentElse);
-        currentElse.addChild(c);
+        if (c instanceof BreakpointAsn) {
+          c.setCompileScope(currentElse);
+          currentElse.addChild(c);
+        }
       } else {
         ifChildren.push(c);
       }

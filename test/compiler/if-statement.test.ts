@@ -599,6 +599,46 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
+  test("Pass_ghostedVariableInElse", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to 2
+  if a is 1 then
+    print ""
+  else 
+    [ghosted] let b be 2
+  end if
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 2;
+  if (a === 1) {
+    await system.printLine("");
+  } else {
+
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
   test("Pass_NestedlocalVariableInElse", async () => {
     const code = `${testHeader}
 
