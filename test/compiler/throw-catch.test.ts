@@ -420,6 +420,47 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
+  test("Pass_GhostedVariableInCatch", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to 1
+  try
+    throw exception "fail"
+  catch exception in e
+    [ghosted] let a be 1
+  end try
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 1;
+  try {
+    throw new Error("fail");
+  } catch (_e) {
+    let e = _e.message;
+
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
   test("Fail_ThrowExceptionInFunction", async () => {
     const code = `${testHeader}
 
