@@ -142,7 +142,11 @@ export function helper_compileMsgAsHtmlNew(file: File, loc: Frame | Field): stri
   }
   let cls = "";
   const compile = helper_compileStatusAsDisplayStatus(loc.readCompileStatus());
-  if (compile === DisplayColour.error || compile === DisplayColour.warning || compile === DisplayColour.advisory) {
+  if (
+    compile === DisplayColour.error ||
+    compile === DisplayColour.warning ||
+    compile === DisplayColour.advisory
+  ) {
     cls = DisplayColour[compile];
   }
   if (link) {
@@ -205,15 +209,16 @@ export function helper_parseStatusAsDisplayStatus(ps: ParseStatus): DisplayColou
 
 export function helper_compileStatusAsDisplayStatus(cs: CompileStatus): DisplayColour {
   switch (cs) {
-    case (CompileStatus.ok):
+    case CompileStatus.ok:
       return DisplayColour.ok;
-    case (CompileStatus.advisory):
+    case CompileStatus.advisory:
       return DisplayColour.advisory;
-    case (CompileStatus.unknown_symbol):
+    case CompileStatus.unknown_symbol:
       return DisplayColour.warning;
-    case (CompileStatus.error):
+    case CompileStatus.error:
       return DisplayColour.error;
-    default: return DisplayColour.none;
+    default:
+      return DisplayColour.none;
   }
 }
 

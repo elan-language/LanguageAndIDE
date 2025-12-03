@@ -304,7 +304,14 @@ export function checkForDeprecation(
 
     if (fromMajor < version.major || (fromMajor === version.major && fromMinor <= version.minor)) {
       compileErrors.push(
-        new IsDeprecated(reason, fromMajor, fromMinor, symbolType.deprecated.message, location, symbolType.deprecated.Severity),
+        new IsDeprecated(
+          reason,
+          fromMajor,
+          fromMinor,
+          symbolType.deprecated.message,
+          location,
+          symbolType.deprecated.Severity,
+        ),
       );
     }
   }

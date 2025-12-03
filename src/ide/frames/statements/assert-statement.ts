@@ -69,19 +69,47 @@ export class AssertStatement extends AbstractFrame implements Statement {
     return msg;
   }
 
-  testMsgAsHtml(): string {
-    let cls = "";
-    let msg = "";
-    if (!this.outcome || this.outcome.status === TestStatus.ignored) {
-      cls = DisplayColour[DisplayColour.warning];
-      msg = `not run`;
-    } else if (this.outcome.status === TestStatus.fail) {
-      cls = DisplayColour[DisplayColour.error];
-      msg = escapeHtmlChars(`actual (computed): ${this.outcome.actual}`);
-    } else if (this.outcome.status === TestStatus.pass) {
-      cls = DisplayColour[DisplayColour.ok];
-      msg = `pass`;
+  private getMessage(outcome: AssertOutcome | undefined) {
+    if (!outcome || outcome.status === TestStatus.ignored) {
+      return "not run";
+    } else if (outcome.status === TestStatus.fail) {
+      const offset = outcome.diffOffset;
+      if (offset !== undefined) {
+        const a = this.getCharacter(outcome.actual, offset);
+        const e = this.getCharacter(outcome.expected, offset);
+        return `differ at [${offset}]. Actual (computed): ${a} expected: ${e}`;
+      }
+      return `actual (computed): ${outcome.actual}`;
+    } else if (outcome.status === TestStatus.pass) {
+      return "pass";
     }
+    return "";
+  }
+
+  private getCharacter(from: string, offset: number): string {
+    let char = from.slice(offset, offset + 1);
+    if (char === "") {
+      char = "empty";
+    } else if (char === " ") {
+      char = "space";
+    }
+    return char;
+  }
+
+  private getCls(outcome: AssertOutcome | undefined) {
+    if (!outcome || outcome.status === TestStatus.ignored) {
+      return DisplayColour[DisplayColour.warning];
+    } else if (outcome.status === TestStatus.fail) {
+      return DisplayColour[DisplayColour.error];
+    } else if (outcome.status === TestStatus.pass) {
+      return DisplayColour[DisplayColour.ok];
+    }
+    return "";
+  }
+
+  testMsgAsHtml(): string {
+    const cls = this.getCls(this.outcome);
+    const msg = escapeHtmlChars(this.getMessage(this.outcome));
     return ` <el-msg class="${cls}">${msg}</el-msg>`;
   }
 }
