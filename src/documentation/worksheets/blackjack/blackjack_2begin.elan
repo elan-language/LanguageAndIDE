@@ -1,11 +1,11 @@
-# 8a3d64ea1b1a3dc822a913e19863aa4ecb7dffc7356b7f2ebb9e9d6ad2043b83 Elan 1.7.1 guest default_profile valid
+# d5762b8c6b374d7450115c764f0bfc1952bc5605236677f587dac677e440f006 Elan 1.7.1 guest default_profile valid
 
 main
   let points be 1000
   variable rounds set to 1
   let game be new Game(points)
-  call game.addPlayer(new AutomatedPlayer("Player A", ref strategyA, points))
-  call game.addPlayer(new AutomatedPlayer("Player B", ref strategyB, points))
+  call game.addPlayer(new AutomatedPlayer("Player A", strategyA, points))
+  call game.addPlayer(new AutomatedPlayer("Player B", strategyB, points))
   while rounds > 0
     call playOneRound(game)
     call clearKeyBuffer()
@@ -401,10 +401,10 @@ end class
 
 end class
 
-[imported] class AutomatedPlayer inherits Player
+class AutomatedPlayer inherits Player
   constructor(name as String, decisionFunc as Func<of Player, Card => Action>, startingPoints as Int)
     set property.name to name
-    set property.decisionFunc to ref decisionFunc
+    set property.decisionFunc to decisionFunc
     set property.points to startingPoints
   end constructor
 
