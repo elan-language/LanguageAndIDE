@@ -1226,7 +1226,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'keys' add brackets.LangRef.html#compile_error",
+      "Library or class function 'keys' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 });

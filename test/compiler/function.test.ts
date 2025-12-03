@@ -1296,6 +1296,8 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Cannot do equality operations on Procedures or Functions.LangRef.html#CannotCompareProcFunc",
     ]);
   });
@@ -1326,6 +1328,8 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
     ]);
   });
@@ -1353,6 +1357,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
     ]);
   });
@@ -1384,7 +1389,8 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'd' add brackets. Or to create a reference to 'd', precede it by 'ref'.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Incompatible types. Expected: Func<of  => Int>, Provided: Func<of Int => Float>.LangRef.html#TypesCompileError",
     ]);
   });
@@ -1415,8 +1421,6 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'.LangRef.html#compile_error",
-      "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'.LangRef.html#compile_error",
       "Cannot do equality operations on Procedures or Functions.LangRef.html#CannotCompareProcFunc",
     ]);
   });
@@ -1447,8 +1451,6 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'.LangRef.html#compile_error",
-      "To evaluate function 'p2' add brackets. Or to create a reference to 'p2', precede it by 'ref'.LangRef.html#compile_error",
       "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
     ]);
   });
@@ -1476,7 +1478,6 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'p1' add brackets. Or to create a reference to 'p1', precede it by 'ref'.LangRef.html#compile_error",
       "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
     ]);
   });
@@ -1505,7 +1506,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'a' add brackets. Or to create a reference to 'a', precede it by 'ref'.LangRef.html#compile_error",
+      "'b' is not defined for type 'Func<of  => Int>'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1530,7 +1531,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'length' add brackets.LangRef.html#compile_error",
+      "Library or class function 'length' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 
@@ -1554,7 +1555,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'abs' add brackets.LangRef.html#compile_error",
+      "Library or class function 'abs' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 
@@ -1578,7 +1579,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'abs' add brackets.LangRef.html#compile_error",
+      "Library or class function 'abs' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 
