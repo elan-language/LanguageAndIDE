@@ -381,29 +381,21 @@ export class System {
       return arr;
     }
 
-    const getters: string[] = [];
-
     const proto = this.getProtoTypes(v);
-    const descriptors = this.getDescriptors(proto);
-    const dKeys = Object.keys(descriptors);
-
-    for (const d of dKeys) {
-      const dd = descriptors[d];
-      const isGet = dd.get;
-
-      if (isGet) {
-        getters.push(d);
-      }
-    }
-
+    const isFunction = proto[0]?.constructor.name === "AsyncFunction";
     const clone = {} as { [index: string]: any };
 
-    const keys = Object.keys(v).filter((k) => !this.ignoredProperty(k));
+    if (!isFunction) {
+      const descriptors = this.getDescriptors(proto);
+      const dKeys = Object.keys(descriptors);
+      const getters = dKeys.filter((d) => descriptors[d].get);
 
-    const keySet = new Set<string>(keys.concat(getters));
+      const keys = Object.keys(v).filter((k) => !this.ignoredProperty(k));
+      const keySet = new Set<string>(keys.concat(getters));
 
-    for (const k of keySet) {
-      clone[k] = await this.asCloneableObject(v[k]);
+      for (const k of keySet) {
+        clone[k] = await this.asCloneableObject(v[k]);
+      }
     }
 
     return clone;
