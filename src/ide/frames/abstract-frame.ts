@@ -788,6 +788,11 @@ export abstract class AbstractFrame implements Frame {
     return this.isGhosted() || this.getParent().isGhostedOrWithinAGhostedFrame();
   }
 
+  deleteAllGhostedInFile = () => {
+    this.getFile().deleteAllGhosted();
+    return true;
+  };
+
   isWithinAnImportedFrame(): boolean {
     const parent = this.getParent();
     return parent.isImported() || parent.isWithinAnImportedFrame();
@@ -803,9 +808,12 @@ export abstract class AbstractFrame implements Frame {
 
   getContextMenuItems() {
     const map = new Map<string, [string, (s?: string) => boolean]>();
+
     if (this.isGhostedOrWithinAGhostedFrame()) {
       if (this.isGhosted()) {
         map.set("unghost", ["unghost", this.unGhost]);
+        addDeleteToContextMenu(this, map);
+        map.set("deleteGhosted", ["delete ALL ghosted code", this.deleteAllGhostedInFile]);
       }
     } else {
       if (this.canInsertAfter()) {
@@ -864,5 +872,11 @@ export abstract class AbstractFrame implements Frame {
 
   protected toolTip(): string {
     return ``; // Currently not used
+  }
+
+  deleteAllGhosted(): void {
+    if (this.isGhosted()) {
+      this.delete();
+    }
   }
 }

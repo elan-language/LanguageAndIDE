@@ -289,4 +289,13 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   unghostSelectedChildren(): void {
     setGhostOnSelectedChildren(this, false);
   }
+  override deleteAllGhosted(): void {
+    if (this.isGhosted()) {
+      this.delete();
+    } else {
+      for (const child of this._children) {
+        child.deleteAllGhosted();
+      }
+    }
+  }
 }
