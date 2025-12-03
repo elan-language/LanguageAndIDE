@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+
+  <head>
+      <meta http-equiv="Cache-Control" content="no-store" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
+      <title>Blackjack 12</title>
+  </head>
+
+  <body>
+    <div id="worksheet">
+    <div class="docTitle">Blackjack 12</div>
+    <div class="version" hidden="">1</div>
+
+    <div class="transient">
+      <p>First, set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</p>
+
+
+      <p class="transient">Then choose <i>either one</i> of the two options below:</p>
+
+      <p><b>Option 1: Start this worksheet from scratch</b></p>
+
+      <ul>
+        <li>First <label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
+        <li>Then <button id="auto-save" disabled="">Create and save a new answers file</button>.
+        <li>All answers that you subsequently enter/edit will be auto-saved to this sheet.</li>
+      </ul>
+
+      <p><b>Option 2: Continue, or view, previous work</b></p>
+
+      <ul>
+        <li><button id="load-answers">Load a previously-saved answers file</button></li>
+        <li>All answers that you subsequently enter/edit will be auto-saved to this sheet.</li>
+        <li>The first time you re-load an answers sheet - within a single session on Elan -
+        you will be asked to confirm that you understand this.</li>
+      </ul>
+    </div>
+
+    <input class="question" type="text" id="postsave-username" disabled=""/>
+
+    <div class="license">
+      <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+      This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
+          <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+        You may freely make and distribute copies of this worksheet <i>as is</i>, but if you <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+        Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
+    </div> 
+      
+
+<div class="step" id="step1"><h1>Step 1: abstraction</h1>
+
+    <button class="load" id="load1-0" data-file="blackjack_12begin.elan">Load the starting code</button><div id="code-load1-0" hidden=""></div>, but <i>before running it</i>, watch the first video:<p></p>
+    <div style="position: relative; padding-bottom: 82.94930875576037%; height: 0;"><iframe src="https://www.loom.com/embed/bba7fac3a5dc487f8b473dbd7dbc40b6" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+    <p>Briefly describe the meaning of 'abstraction' in programming:</p>
+<textarea class="question" id="question1-0" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" id="notes1" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step2"><h1>Step 2: automated players</h1>
+    Watch the next video:
+    <div style="position: relative; padding-bottom: 65.37530266343825%; height: 0;"><iframe src="https://www.loom.com/embed/bb0286c8af5f4f1c9bed12b54538475d" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>Having run the program 3-4 times, which of the two players is operating the very 'high risk' strategy, and which the very 'cautious' strategy?</p>
+<textarea class="question" id="question2-0" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" id="notes2" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done2">Step Completed</label><input class="step-complete" type="checkbox" id="done2"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step3"><h1>Step 3: identifying the better of the strategies</h1>
+    Watch the next video:
+    <div style="position: relative; padding-bottom: 54.24242424242425%; height: 0;"><iframe src="https://www.loom.com/embed/4770fb88280d437793f371d9e8d9e003" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>Having run the program to play 10 rounds, how many points did the Dealer, and each of the players ended up with?</p>
+<textarea class="question" id="question3-0" placeholder="input is required"></textarea>
+    <p>Run the program a second time, and record how many points did the Dealer, and each of the players ended up with this time</p>
+<textarea class="question" id="question3-1" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" id="notes3" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done3">Step Completed</label><input class="step-complete" type="checkbox" id="done3"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<div class="step" id="step4"><h1>Step 4: speeding up the program</h1>
+
+<h4>Notes</h4><textarea class="notes" id="notes4" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done4">Step Completed</label><input class="step-complete" type="checkbox" id="done4"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<finish>
+
+</finish>
+  <div hidden="" id="hash"></div>
+  <div hidden="" id="changes"></div>
+
+    <script src="https://elan-language.github.io/LanguageAndIDE/diff.js"></script>
+    <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-model-scripts.js"></script>
+  </body>
+</html>
