@@ -401,7 +401,7 @@ end class
 
 end class
 
-class AutomatedPlayer inherits Player
+[imported] class AutomatedPlayer inherits Player
   constructor(name as String, decisionFunc as Func<of Player, Card => Action>, startingPoints as Int)
     set property.name to name
     set property.decisionFunc to decisionFunc
