@@ -408,6 +408,86 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
+  test("Pass_printFunction", async () => {
+    const code = `${testHeader}
+
+main
+  print foo
+end main
+
+function foo() returns Int
+  return 0
+end function
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.printLine(global.foo);
+}
+
+async function foo() {
+  return 0;
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "function foo");
+  });
+
+  test("Pass_printIndirectFunction", async () => {
+    const code = `${testHeader}
+
+main
+  print [foo]
+end main
+
+function foo() returns Int
+  return 0
+end function
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.printLine(system.list([global.foo]));
+}
+
+async function foo() {
+  return 0;
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[function foo]");
+  });
+
   test("Fail_noMain", async () => {
     const code = `${testHeader}
 
@@ -464,63 +544,5 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
-  });
-
-  test("Fail_printFunction", async () => {
-    const code = `${testHeader}
-
-main
-  print foo
-end main
-
-function foo() returns Int
-  return 0
-end function
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'foo' add brackets. Or to create a reference to 'foo', precede it by 'ref'.LangRef.html#compile_error",
-    ]);
-  });
-
-  test("Fail_printIndirectFunction", async () => {
-    const code = `${testHeader}
-
-main
-  print [foo]
-end main
-
-function foo() returns Int
-  return 0
-end function
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "To evaluate function 'foo' add brackets. Or to create a reference to 'foo', precede it by 'ref'.LangRef.html#compile_error",
-    ]);
   });
 });

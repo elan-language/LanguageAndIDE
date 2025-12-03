@@ -736,8 +736,8 @@ Note
  <li>A List's size can be dynamically changed.</li>
 </ul>
 <div id="tail"></div>
-<h3 class="no-TOC" id="ListDeconstruction">List Deconstruction</h3>
-<p>A List or ListImmutable may be deconstructed into new variables or named values in a similar way to deconstructing a <a href="#Tuple">Tuple</a>, but in this case:</p>
+<h3 class="no-TOC" id="deconstructList">Deconstructing a List</h3>
+<p>A List or ListImmutable may be deconstructed into new variables or named values in a similar way to deconstructing a <a href="#deconstructTuple">Tuple</a>, but in this case:</p>
 <ul>
  <li>Always use two variable names.</li>
  <li>Use a colon <el-code>:</el-code> to separate the variable names.</li>
@@ -1176,8 +1176,8 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <p>A <el-code>ListImmutable</el-code> may be defined in 'literal' form, delimited by curly brace with all the required elements separated by commas. The elements may be literal values but must all be of the same Type, for example:</p>
 <el-code>variable fruit set to {"apple", "orange", "pear"} </el-code>
 
-<h3 class="no-TOC" id="ListImmutableDeconstruction">ListImmutable Deconstruction</h3>
-<p>A <el-code>ListImmutable</el-code> can be <a href="#ListDeconstruction">deconstructed</a> just like a List, using a colon <el-code>:</el-code> to separate two variable names.</p>
+<h3 class="no-TOC" id="deconstructListImmutable">Deconstructing a ListImmutable</h3>
+<p>A <el-code>ListImmutable</el-code> can be deconstructed just like a <a href="#deconstructList">List</a>, using a colon <el-code>:</el-code> to separate two variable names.</p>
 <p><el-code>set h:t to myListImmutable</el-code></p>
 
 <h3 class="no-TOC" id="ListImmutable_functions">Function dot methods on a ListImmutable</h3>
@@ -3494,7 +3494,7 @@ They take a function as an argument, and return the list element corresponding t
 </div></div>
 
 <h3 class="no-TOC" id="orderBy">orderBy</h3>
-<p><el-method>orderBy</el-method> takes a <el-kw>lambda</el-kw> that has two arguments of the same Type as that of the <el-type>List</el-type> or <el-type>ListImmutable</el-type> to be reordered and compares them, returning a Boolean value that distinguishes between <i>less than</i> (or <i>before</i>) for numerics and <i>greater than</i> (or <i>after</i>) for strings.</p>
+<p><el-method>orderBy</el-method> takes a <el-kw>lambda</el-kw> that has two arguments of the same Type as that of the <el-type>List</el-type> or <el-type>ListImmutable</el-type> to be re-ordered and compares them, returning a Boolean value that distinguishes between <i>less than</i> (or <i>before</i>) for numerics and <i>greater than</i> (or <i>after</i>) for strings.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>orderBy</el-method></h4>
