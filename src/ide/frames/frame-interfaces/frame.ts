@@ -65,4 +65,5 @@ export interface Frame extends Selectable {
   isImported(): boolean;
 
   copy(): boolean;
+  deleteAllGhosted(): void;
 }

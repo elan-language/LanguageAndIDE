@@ -239,4 +239,14 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   unghostSelectedChildren(): void {
     setGhostOnSelectedChildren(this, false);
   }
+
+  override deleteAllGhosted(): void {
+    if (this.isGhosted()) {
+      this.delete();
+    } else {
+      for (const child of this._children) {
+        child.deleteAllGhosted();
+      }
+    }
+  }
 }
