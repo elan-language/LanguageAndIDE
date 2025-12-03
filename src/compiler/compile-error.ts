@@ -516,7 +516,7 @@ export class FunctionRefCompileError extends CompileError {
       Severity.advisory,
       `The 'ref' keyword is no longer needed and we recommend that you remove it.`,
       location,
-      "LangRef.html#compile_error",
+      "LangRef.html#ref",
     );
   }
 }

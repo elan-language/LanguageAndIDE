@@ -60,7 +60,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
     ]);
     await assertObjectCodeExecutes(fileImpl, "6");
   });
@@ -110,7 +110,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
     ]);
     await assertObjectCodeExecutes(fileImpl, "2");
   });
@@ -160,7 +160,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
     ]);
     await assertObjectCodeExecutes(fileImpl, "1");
   });
@@ -212,7 +212,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
     ]);
     await assertObjectCodeExecutes(fileImpl, "10");
   });
@@ -255,7 +255,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
     ]);
     await assertObjectCodeExecutes(fileImpl, "10");
   });
@@ -319,7 +319,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
     ]);
     await assertObjectCodeExecutes(fileImpl, "5");
   });
@@ -360,7 +360,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
     ]);
     await assertObjectCodeExecutes(fileImpl, "function ff");
   });
@@ -433,7 +433,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Argument types. Expected: i (Int), f (Func<of Int => Int>), Provided: Int, Func<of Int, Int => Int>.LangRef.html#compile_error",
     ]);
   });
@@ -465,7 +465,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Argument types. Expected: i (Int), f (Func<of Int => Int>), Provided: Int, Func<of Int => String>.LangRef.html#compile_error",
     ]);
   });
@@ -714,7 +714,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Incompatible types. Expected: Float or Int, Provided: Func<of Int => Int>.LangRef.html#TypesCompileError",
     ]);
   });

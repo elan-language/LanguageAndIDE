@@ -1296,8 +1296,8 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Cannot do equality operations on Procedures or Functions.LangRef.html#CannotCompareProcFunc",
     ]);
   });
@@ -1328,8 +1328,8 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
     ]);
   });
@@ -1357,7 +1357,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Incompatible types. Expected: Float or Int, Provided: Func<of  => Int>.LangRef.html#TypesCompileError",
     ]);
   });
@@ -1389,8 +1389,8 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Incompatible types. Expected: Func<of  => Int>, Provided: Func<of Int => Float>.LangRef.html#TypesCompileError",
     ]);
   });

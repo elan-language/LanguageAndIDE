@@ -236,7 +236,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
     ]);
     await assertObjectCodeExecutes(fileImpl, "5");
   });

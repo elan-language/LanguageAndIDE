@@ -1665,9 +1665,9 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIsWithAdvisories(fileImpl, objectCode, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
     ]);
     await assertObjectCodeExecutes(fileImpl, "1");
   });
@@ -2026,7 +2026,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#compile_error",
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Library or class function 'getKey' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
     ]);
   });

@@ -15,10 +15,10 @@ import { UnknownType } from "../../compiler/symbols/unknown-type";
 import {
   adviseAgainstFunctionRef,
   getQualifierId,
-  mustBeGlobalFunctionIfRef,
   mustBeKnownSymbol,
   mustBePropertyPrefixedOnMember,
   mustBePublicMember,
+  mustNotBeGlobalFunctionIfRef,
   mustNotBeKeyword,
 } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
@@ -117,13 +117,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
       adviseAgainstFunctionRef(symbol, this.compileErrors, this.fieldId);
     }
 
-    mustBeGlobalFunctionIfRef(symbol, this.id, this.compileErrors, this.fieldId);
-
-    // if (!this.isFuncRef) {
-    //   mustBeFunctionRefIfFunction(symbol, this.id, this.compileErrors, this.fieldId);
-    // } else {
-    //
-    // }
+    mustNotBeGlobalFunctionIfRef(symbol, this.id, this.compileErrors, this.fieldId);
 
     const prefix =
       this.updatedScope !== NullScope.Instance

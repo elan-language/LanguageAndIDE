@@ -1184,7 +1184,7 @@ export function adviseAgainstFunctionRef(
   }
 }
 
-export function mustBeGlobalFunctionIfRef(
+export function mustNotBeGlobalFunctionIfRef(
   symbol: ElanSymbol,
   id: string,
   compileErrors: CompileError[],
