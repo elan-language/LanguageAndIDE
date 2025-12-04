@@ -828,4 +828,10 @@ export class FileImpl implements File {
   unghostSelectedChildren(): void {
     setGhostOnSelectedChildren(this, false);
   }
+
+  deleteAllGhosted(): void {
+    for (const frame of this._children) {
+      frame.deleteAllGhosted();
+    }
+  }
 }

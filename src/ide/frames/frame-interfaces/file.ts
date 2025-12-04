@@ -116,4 +116,6 @@ export interface File extends Parent {
   addCopiedSource(source: string): void;
 
   getCopiedSource(): string[];
+
+  deleteAllGhosted(): void;
 }

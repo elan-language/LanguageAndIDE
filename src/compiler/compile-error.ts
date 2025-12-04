@@ -510,14 +510,13 @@ export class DuplicateKeyCompileError extends CompileError {
 }
 
 export class FunctionRefCompileError extends CompileError {
-  constructor(id: string, isGlobal: boolean, location: string) {
-    const postfix = isGlobal ? ` Or to create a reference to '${id}', precede it by 'ref'.` : "";
+  constructor(location: string) {
     super(
-      DisplayPriority.second,
-      Severity.error,
-      `To evaluate function '${id}' add brackets.${postfix}`,
+      DisplayPriority.fourth,
+      Severity.advisory,
+      `The 'ref' keyword is no longer needed and we recommend that you remove it.`,
       location,
-      "LangRef.html#compile_error",
+      "LangRef.html#ref",
     );
   }
 }
@@ -527,7 +526,7 @@ export class NotGlobalFunctionRefCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Library or class function '${id}' cannot be preceded by 'ref'.`,
+      `Library or class function '${id}' cannot be used without brackets`,
       location,
       "LangRef.html#NotGlobalFunctionRefCompileError",
     );
