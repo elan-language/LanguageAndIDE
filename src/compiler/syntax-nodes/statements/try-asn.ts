@@ -20,8 +20,10 @@ export class TryAsn extends CompoundAsn {
         currentCatch.setCompileScope(this);
         tryChildren.push(c);
       } else if (currentCatch) {
-        (c as BreakpointAsn).setCompileScope(currentCatch);
-        currentCatch.addChild(c);
+        if (c instanceof BreakpointAsn) {
+          c.setCompileScope(currentCatch);
+          currentCatch.addChild(c);
+        }
       } else {
         tryChildren.push(c);
       }

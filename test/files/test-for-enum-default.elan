@@ -1,4 +1,4 @@
-# a546d82f6bb23f62d02d6b13f84dcb6f774e834819ec848cc06685223ff05bbb Elan 1.7.1 guest default_profile valid
+# 785a0ee0d724406ee6af50850bf4cd4513f21d90326e3b5ae7b2de5de16521ff Elan 1.8.0 guest default_profile valid
 
 main
   variable r set to new Rule("a", "b", "c", "d", Dir.left)
