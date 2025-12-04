@@ -19,12 +19,47 @@
 <step><h1>Step STEPNUMBER: identifying the better of the strategies</h1>
     Watch the next video:
     <div style="position: relative; padding-bottom: 37.5751503006012%; height: 0;"><iframe src="https://www.loom.com/embed/1a14a79ab528414db3eb9ef5f8b7007f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-    <question>Having run the program to play 10 rounds, how many points did the Dealer, and each of the players ended up with?</question>
-    <question>Run the program a second time, and record how many points did the Dealer, and each of the players ended up with this time</question>
+    <question>Having run the program to play 10 rounds automatically, how many points did the Dealer, and each of the players ended up with?</question>
+    <question>Run the program a second time, and record how many points ended up with this time</question>
 </step>
 <step><h1>Step STEPNUMBER: speeding up the program</h1>
-
+    Watch the next video:
+    <div style="position: relative; padding-bottom: 78.83211678832116%; height: 0;"><iframe src="https://www.loom.com/embed/432d4c0974f24685a85b66cf7e2c822e" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    Make sure that you have ghosted the <code>pause</code> (instruction 31) and the four occurrences of <code>call display(game)</code> within
+    the <el-method>playOneRound</el-method> procedure, and run the program. You will see that both of the two players have lost points -
+    only the Dealer is ahead.
+    <question>Which of the two players has lost the least points?</question>
+    <question>Given that the result is from playing 100 rounds, and each participant started with 1000 points, calculate the <i>average</i> points lost or gained <i>per round</i> expressed as a percentage,
+    for the Dealer and each Player (where a loss is a negative percentage and a gain is positive). <i>Show how you worked this out</i>.</question>
 </step>
-<finish>
 
+<step><h1>Step STEPNUMBER: the default strategies</h1>
+    Watch the next video:
+    <div style="position: relative; padding-bottom: 73.46938775510203%; height: 0;"><iframe src="https://www.loom.com/embed/7707c7c908aa4d898bc749cef8ef93f4" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <question>What can you say that <i>every</i> function does? </question>
+</step>
+
+<step><h1>Step STEPNUMBER:implement a simple strategy with a decision</h1>
+    Watch the next video:
+    <div style="position: relative; padding-bottom: 78.3744557329463%; height: 0;"><iframe src="https://www.loom.com/embed/04a14da46c2e4feda472a45c8f549981" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <question>With the changes, does Player B now perform better than Player A - by how much?</question>
+</step>
+
+<step><h1>Step STEPNUMBER: simulating 10,000 rounds</h1>
+    Watch the next video:
+    <div style="position: relative; padding-bottom: 73.77049180327869%; height: 0;"><iframe src="https://www.loom.com/embed/f74225ce446043ae89e61b2c7172cddf" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <question>With the display now only updated after the last round, approximately how long did it take to run 10,000 rounds of Blackjack?</question>
+    <question>How many points did the Dealer, and each Player end up with?</question>
+    <question>Given that Player B is mimicking the strategy of the Dealer,
+        why are they still losing points to the Dealer? (If you can't see why, say so.)
+    </question>
+</step>
+
+<step><h1>Step STEPNUMBER: making use of the soft ace</h1>
+
+    first part of video only:
+    <div style="position: relative; padding-bottom: 73.07171853856563%; height: 0;"><iframe src="https://www.loom.com/embed/e70cc3e6e5ee4601886b0bf40516b64b" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+    </step>
+    <finish>
 </finish>

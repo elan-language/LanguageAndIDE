@@ -42,11 +42,13 @@ procedure display(game as Game)
 end procedure
 
 function strategyA(p as Player, dealerFaceUp as Card) returns Action
-  return Action.stand
+  variable act set to Action.stand
+  return act
 end function
 
 function strategyB(p as Player, dealerFaceUp as Card) returns Action
-  return Action.draw
+  variable act set to Action.draw
+  return act
 end function
 
 [imported] procedure updatePoints(dealer as Dealer, player as Player, playerOutcome as Outcome)
