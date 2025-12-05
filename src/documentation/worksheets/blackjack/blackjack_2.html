@@ -71,16 +71,59 @@
 <div class="step" id="step3"><h1>Step 3: identifying the better of the strategies</h1>
     Watch the next video:
     <div style="position: relative; padding-bottom: 37.5751503006012%; height: 0;"><iframe src="https://www.loom.com/embed/1a14a79ab528414db3eb9ef5f8b7007f" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-    <p>Having run the program to play 10 rounds, how many points did the Dealer, and each of the players ended up with?</p>
+    <p>Having run the program to play 10 rounds automatically, how many points did the Dealer, and each of the players ended up with?</p>
 <textarea class="question" id="question3-0" placeholder="input is required"></textarea>
-    <p>Run the program a second time, and record how many points did the Dealer, and each of the players ended up with this time</p>
+    <p>Run the program a second time, and record how many points ended up with this time</p>
 <textarea class="question" id="question3-1" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes3" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done3">Step Completed</label><input class="step-complete" type="checkbox" id="done3"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 <div class="step" id="step4"><h1>Step 4: speeding up the program</h1>
-
+    TODO: check video - should refer to FIVE occurrences of display within procedure
+    Watch the next video:
+    <div style="position: relative; padding-bottom: 78.83211678832116%; height: 0;"><iframe src="https://www.loom.com/embed/432d4c0974f24685a85b66cf7e2c822e" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    Make sure that you have ghosted the <el-code><el-id>pause</el-id></el-code> (instruction 31) and the <i>five</i> occurrences of <el-code><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-method>display</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-id>game</el-id></el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code> within
+    the <el-method>playOneRound</el-method> procedure, and run the program. You will see that both of the two players have lost points -
+    only the Dealer is ahead.
+    <p>Which of the two players has lost the least points?</p>
+<textarea class="question" id="question4-0" placeholder="input is required"></textarea>
+    <p>Given that the result is from playing 100 rounds, and each participant started with 1000 points, calculate the average points lost or gained per round expressed as a percentage,
+    for the Dealer and each Player (where a loss is a negative percentage and a gain is positive). Show how you worked this out.</p>
+<textarea class="question" id="question4-1" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes4" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done4">Step Completed</label><input class="step-complete" type="checkbox" id="done4"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-<finish>
 
+<div class="step" id="step5"><h1>Step 5: the default strategies</h1>
+    Watch the next video:
+    <div style="position: relative; padding-bottom: 73.46938775510203%; height: 0;"><iframe src="https://www.loom.com/embed/7707c7c908aa4d898bc749cef8ef93f4" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>What can you say that every function does? </p>
+<textarea class="question" id="question5-0" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" id="notes5" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done5">Step Completed</label><input class="step-complete" type="checkbox" id="done5"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step6"><h1>Step 6:implement a simple strategy with a decision</h1>
+    Watch the next video:
+    <div style="position: relative; padding-bottom: 78.3744557329463%; height: 0;"><iframe src="https://www.loom.com/embed/04a14da46c2e4feda472a45c8f549981" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>With the changes, does Player B now perform better than Player A - by how much?</p>
+<textarea class="question" id="question6-0" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" id="notes6" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done6">Step Completed</label><input class="step-complete" type="checkbox" id="done6"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step7"><h1>Step 7: simulating 10,000 rounds</h1>
+    Watch the next video:
+    <div style="position: relative; padding-bottom: 73.77049180327869%; height: 0;"><iframe src="https://www.loom.com/embed/f74225ce446043ae89e61b2c7172cddf" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>With the display now only updated after the last round, approximately how long did it take to run 10,000 rounds of Blackjack?</p>
+<textarea class="question" id="question7-0" placeholder="input is required"></textarea>
+    <p>How many points did the Dealer, and each Player end up with?</p>
+<textarea class="question" id="question7-1" placeholder="input is required"></textarea>
+    <p>Given that Player B is mimicking the strategy of the Dealer,
+        why are they still losing points to the Dealer? (If you can't see why, say so.)
+    </p>
+<textarea class="question" id="question7-2" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" id="notes7" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done7">Step Completed</label><input class="step-complete" type="checkbox" id="done7"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step8"><h1>Step 8: making use of the soft ace</h1>
+
+    first part of video only:
+    <div style="position: relative; padding-bottom: 73.07171853856563%; height: 0;"><iframe src="https://www.loom.com/embed/e70cc3e6e5ee4601886b0bf40516b64b" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+    <h4>Notes</h4><textarea class="notes" id="notes8" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done8">Step Completed</label><input class="step-complete" type="checkbox" id="done8"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+    <finish>
 </finish>
   <div hidden="" id="hash"></div>
   <div hidden="" id="changes"></div>
