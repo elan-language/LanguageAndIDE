@@ -373,7 +373,7 @@ Procedures and functions may be called or referenced recursively, as in this sim
  <li>All <el-kw>assert</el-kw> statements should be at the top level within the <el-kw>test</el-kw> frame; none may be put into a loop structure.</li>
 </ul>
 
-<h4 class="no-TOC">Testing Float values</h4>
+<h3 class="no-TOC">Testing Float values</h3>
 <p>When testing <el-type>Float</el-type> values it is recommend that you use the <el-method>round</el-method> method to round the computed result to a fixed number of decimal places. This avoids rounding errors and is easier to read. For example:</p>
 
 <el-code-block source="test_round.elan">
@@ -384,7 +384,7 @@ Procedures and functions may be called or referenced recursively, as in this sim
 </el-test>
 </el-code-block>
 
-<h4 class="no-TOC">Testing for runtime errors</h4>
+<h3 class="no-TOC">Testing for runtime errors</h3>
 <p>If the expression you are testing would cause a runtime error then the error will be displayed in the red fail message:</p>
 <el-code-block source="test_runtime.elan">
 <el-test class="error multiline" id="test1" tabindex="-1">
@@ -400,8 +400,40 @@ Procedures and functions may be called or referenced recursively, as in this sim
 <p>If there are failures, mark the tests that you added since the last successful test as <a href="IDENavigation.html#EditInstructions"><el-code>ghosted</el-code></a> and then remove their ghosted status one by one until the cause is identified and fixed.</p>
 <p>In the last <el-kw>assert</el-kw> above, note how testing can also be done against an expected error message.</p>
 
-<h4 class="no-TOC" id="ignore">Ghosting a test to have it ignored</h4>
-<p>To ignore tests, use <a href="IDENavigation.html#EditInstructions"><el-code>ghosting</el-code></a> either on a test:</p>
+<h3 class="no-TOC" >Testing long strings</h3>
+<p>If you have a test that compares strings longer than 20 characters, any test failure message will be reduced to reporting the position and characters
+ at which the test first fails, rather than displaying the entire strings.</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Example of testing long strings</h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Reporting the position and characters at which the comparison of long strings first fails:</p>
+
+<el-code-block source="assertLongString.elan">
+<el-const class="ok multiline" id="const1" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident2" class="ok" tabindex="-1"><el-txt><el-id>sGW</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text3" class="ok" tabindex="-1"><el-txt>'<el-lit>grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px; } word { display: flex; flex-direction: row; margin: auto; }</el-lit>'</el-txt></el-field></el-const>
+<el-func class="ok multiline" id="func4" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident6" class="ok" tabindex="-1"><el-txt><el-method>setInStyle</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params7" class="optional ok" tabindex="-1"><el-txt><el-id>s</el-id> <el-kw>as</el-kw> <el-type>String</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type8" class="ok" tabindex="-1"><el-txt><el-type>String</el-type></el-txt></el-field></el-top>
+<el-statement class="ok" id="return9" tabindex="-1"><el-kw>return </el-kw><el-field id="expr10" class="ok" tabindex="-1"><el-txt>"<el-lit>&lt;style&gt;</el-lit>" + <el-id>s</el-id> + "<el-lit>&lt;style&gt;</el-lit>"</el-txt></el-field></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
+<el-test class="error multiline" id="test11" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment13" class="empty optional ok" tabindex="-1"><el-txt>&nbsp;</el-txt></el-field></el-top>
+<el-statement class="ok" id="assert14" tabindex="-1"><el-kw>assert </el-kw><el-field id="text15" class="ok" tabindex="-1"><el-txt><el-method>setInStyle</el-method>(<el-id>sGW</el-id>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr16" class="ok" tabindex="-1"><el-txt>'<el-lit>&lt;style&gt;</el-lit>' + <el-id>sGW</el-id> + '<el-lit>&lt;/style&gt;</el-lit>'</el-txt></el-field> <el-msg class="error">differ at [146]. Actual (computed): s Expected: /</el-msg></el-statement>
+<el-kw>end test</el-kw>
+</el-test>
+</el-code-block>
+<hr>
+</div></div>
+
+<h3 class="no-TOC" id="ignore">Ignoring tests</h3>
+<p>To ignore tests, use <a href="IDENavigation.html#EditInstructions"><el-code>ghosting</el-code></a>.</p>
+<p>Even when <el-kw>test</el-kw>s or <el-kw>assert</el-kw>s are <el-code>ghosted</el-code>, all the tests will be run and their status shown, but
+the overall test status will show the status of only the unghosted tests (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples of ghosting tests</h4>
+<div class="acc-body">
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Ghosting an entire test:</p>
 
 <el-code-block source="snake_FP.elan">
 <el-test class="ghosted ok multiline" id="test210" tabindex="-1">
@@ -414,8 +446,9 @@ Procedures and functions may be called or referenced recursively, as in this sim
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
+<hr>
 
-<p>or just on specific <el-kw>assert</el-kw>s:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Ghosting an assert:</p>
 
 <el-code-block source="snake_FP.elan">
 </el-test>
@@ -429,11 +462,10 @@ Procedures and functions may be called or referenced recursively, as in this sim
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
+<hr>
+</div></div>
 
-<p>Even when <el-kw>test</el-kw>s or <el-kw>assert</el-kw>s are <el-code>ghosted</el-code>, all the tests will be run and their status shown, but
-the overall test status will show the status of only the unghosted tests (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
-
-<h4 class="no-TOC">Non-terminating loops and recursion</h4>
+<h3 class="no-TOC">Non-terminating loops and recursion</h3>
 <p>The principal reason for ghosting a test is when either the test code, or code in any function being called, does not terminate. This typically means that there is a loop (or a recursive call) with no exit condition, or where the exit condition is never met.</p>
 <p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds (most tests will pass in milliseconds), and an error message will appear. Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the <el-code>test</el-code>.</p>
 
@@ -510,7 +542,7 @@ Having defined a record's Type, such as <el-code>Game</el-code> above, you can c
   <el-statement class="" id="let9" tabindex="0"><el-kw>let </el-kw><el-field id="var10" class="ok" tabindex="0"><el-txt><el-id>sq2</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr11" class="" tabindex="0"><el-txt><el-kw>copy</el-kw> <el-id>sq1</el-id><el-kw> with </el-kw><br><el-id>size</el-id><el-kw> set to </el-kw><el-id>sq1</el-id>.<el-id>size</el-id> + <el-lit>3</el-lit></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class=""></el-msg></el-statement>
 </el-code-block>
 
-<h4 class="no-TOC" id="deconstructRecord">Deconstructing a Record</h4>
+<h3 class="no-TOC" id="deconstructRecord">Deconstructing a Record</h3>
 <p>A record may be deconstructed, meaning that its properties are read into separate <el-kw>variable</el-kw>s using the same syntax as for deconstructing a Tuple. For example, assuming that Square is a record defined as in the example above, then this code:</p>
 <el-code-block>
   <el-statement class="" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>x</el-id>, <el-id>y</el-id>, <el-id>size</el-id>, <el-id>colour</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="" tabindex="0"><el-txt><el-id>mySquare</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
@@ -628,7 +660,7 @@ If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-kw>interface</el-kw></h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from a version of program <el-code>blackjack.elan</el-code> of:
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Example from a version of program <el-code>blackjack.elan</el-code> of:</p>
 <ul>
  <li>inheritance from <el-kw>interface</el-kw> <el-type>Player</el-type> to <el-kw>abstract class</el-kw> <el-type>Automated</el-type>
   and to <el-kw>class</el-kw> <el-type>HumanPlayer</el-type>, and</li>
@@ -1304,7 +1336,7 @@ Writing a value to a specific index location is done through a method such as in
 <div id="operator"></div>
 <h2 id="Operators">Operators</h2>
 
-<h4 class="no-TOC" id="ArithmeticOperators">Arithmetic operators</h4>
+<h3 class="no-TOC" id="ArithmeticOperators">Arithmetic operators</h3>
 <p>Arithmetic operators can be applied to <el-code>Float</el-code> or <el-code>Int</el-code> arguments. The result may be a <el-code>Float</el-code> or an <el-code>Int</el-code> depending on the arguments.</p>
 <p>For <el-code>^ + - *</el-code>, the result is a <el-code>Float</el-code> if either of the arguments is a <el-code>Float</el-code>, and an <el-code>Int</el-code> if both arguments are <el-code>Int</el-code>.</p>
 <p>For <el-code>/</el-code>, the result is always a <el-code>Float</el-code>.  It can be converted to an <el-code>Int</el-code> using the <a href="LibRef.html#floor">floor()</a> function.</p>
@@ -1339,7 +1371,7 @@ The minus sign may also be used as a unary operator, and this takes precedence o
 <div id="and"></div>
 <div id="not"></div>
 <div id="or"></div>
-<h4 class="no-TOC" id="LogicalOperators">Logical operators</h4>
+<h3 class="no-TOC" id="LogicalOperators">Logical operators</h3>
 <p>Logical operators are applied to <el-code>Boolean</el-code> arguments and return a <el-code>Boolean</el-code> result.</p>
 <p><el-code>and</el-code> and <el-code>or</el-code> are binary operators<br>
 <el-code>not</el-code> is a unary operator. </p>
@@ -1353,7 +1385,7 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 <el-kw>end function</el-kw></el-func>
 </el-code-block>
 
-<h4 class="no-TOC" id="EqualityTesting">Equality testing</h4>
+<h3 class="no-TOC" id="EqualityTesting">Equality testing</h3>
 <p>Equality testing uses the <el-code>is</el-code> and <el-code>isnt</el-code> keywords with two arguments. The arguments may be of any Type.</p>
 <ul>
 <li><el-code> a is b</el-code> returns <el-kw><el-id>true</el-id></el-kw>, if <el-code>a</el-code> and <el-code>b</el-code> are both of the same Type and their values are equal. The only exception is that if one argument is of Type <el-code>Float</el-code> and the other is of Type <el-code>Int</el-code>, then <el-code>is</el-code> will return <el-code>true</el-code> if their values are the same, i.e. are the same whole number.</li>
@@ -1364,7 +1396,7 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 <p>If the items being compared are composite Types, the elements within them are compared sequentially to see if the objects are equal.  For example two distinct instances of the same class compare equal if the values of all their properties compare equal.  And two Lists compare equal if they contain the same elements in the same order.</p>
 <p>The compiler rejects any attempt to compare instances of different classes unless abstract classes and inheritance are involved.  Two instances which are subclasses of the same abstract class compare equal only if they are of the same class (and have the same property values).</p>
 
-<h4 class="no-TOC">Numeric comparison</h4>
+<h3 class="no-TOC">Numeric comparison</h3>
 <p>The numeric comparison operators are:</p>
 <pre>
     <el-code>&gt; </el-code>        for     greater than
@@ -1380,7 +1412,7 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 <li>Where a binary operator is expected, as soon as you type <el-code>&lt; </el-code>or <el-code>&gt;</el-code> the editor will automatically insert a space after it. To enter <el-code>&lt;=</el-code> or <el-code>&gt;=</el-code> you need to delete the space (using the Backspace key) and then type <el-code>=</el-code>.</li>
 </ul>
 
-<h4 class="no-TOC">Combining operators </h4>
+<h3 class="no-TOC">Combining operators </h3>
 <p>You can combine operators of different kinds, e.g. combining numeric comparison with logical operators in a single expression. However the rules of precedence between operators of different kinds are complex. It is strongly recommend that you always use brackets to disambiguate such expressions, for example:</p>
 
 <el-code-block source="combiningOperators.elan">
@@ -1775,12 +1807,12 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
  <p>You cannot chain two 'unary' operators (those that apply to a single value), such as <el-code>-</el-code>
  or <el-kw>not</el-kw> successively within an expression.</p>
 
- <h3 id="paramNameNotSameAsItsMethod" class="no-TOC"> Parameter ... may not have the same name as the method in which it is defined.</h3>
+<h3 id="paramNameNotSameAsItsMethod" class="no-TOC"> Parameter ... may not have the same name as the method in which it is defined.</h3>
  <p>A function or procedure named e.g. 'foo' may not define a parameter with that same name.</p>
 
 <h2>Field help</h2>
 
-<h4 id="ArgListField" class="no-TOC">'arguments' field in a call instruction</h4>
+<h3 id="ArgListField" class="no-TOC">'arguments' field in a call instruction</h3>
  <p>An argument list passed into a function or procedure call, must consist of one or more arguments separated by commas.
  Each argument may in general be any of:</p>
 <ul>
