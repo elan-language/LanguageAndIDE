@@ -401,13 +401,13 @@ Procedures and functions may be called or referenced recursively, as in this sim
 <p>In the last <el-kw>assert</el-kw> above, note how testing can also be done against an expected error message.</p>
 
 <h3 class="no-TOC" >Testing long strings</h3>
-<p>If you have a test that compares strings longer than 20 characters, any test failure message will be reduced to reporting the position and characters
- at which the test first fails, rather than displaying the entire strings.</p>
+<p>If you have a test that compares strings longer than 20 characters, any test failure message will be reduced to reporting the
+ <i>first</i> character at which  the actual (computed) and expected strings differ.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of testing long strings</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Reporting the position and characters at which the comparison of long strings first fails:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Reporting the first character at which the actual (computed) and expected strings differ:</p>
 
 <el-code-block source="assertLongString.elan">
 <el-const class="ok multiline" id="const1" tabindex="-1"><el-top><el-expand>+</el-expand><el-kw>constant </el-kw><el-field id="ident2" class="ok" tabindex="-1"><el-txt><el-id>sGW</el-id></el-txt></el-field></el-top><el-kw> set to </el-kw><el-field id="text3" class="ok" tabindex="-1"><el-txt>'<el-lit>grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px; } word { display: flex; flex-direction: row; margin: auto; }</el-lit>'</el-txt></el-field></el-const>
@@ -418,7 +418,7 @@ Procedures and functions may be called or referenced recursively, as in this sim
 </el-func>
 <el-test class="error multiline" id="test11" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment13" class="empty optional ok" tabindex="-1"><el-txt>&nbsp;</el-txt></el-field></el-top>
-<el-statement class="ok" id="assert14" tabindex="-1"><el-kw>assert </el-kw><el-field id="text15" class="ok" tabindex="-1"><el-txt><el-method>setInStyle</el-method>(<el-id>sGW</el-id>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr16" class="ok" tabindex="-1"><el-txt>'<el-lit>&lt;style&gt;</el-lit>' + <el-id>sGW</el-id> + '<el-lit>&lt;/style&gt;</el-lit>'</el-txt></el-field> <el-msg class="error">differ at [146]. Actual (computed): s Expected: /</el-msg></el-statement>
+<el-statement class="ok" id="assert14" tabindex="-1"><el-kw>assert </el-kw><el-field id="text15" class="ok" tabindex="-1"><el-txt><el-method>setInStyle</el-method>(<el-id>sGW</el-id>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr16" class="ok" tabindex="-1"><el-txt>'<el-lit>&lt;style&gt;</el-lit>' + <el-id>sGW</el-id> + '<el-lit>&lt;/style&gt;</el-lit>'</el-txt></el-field> <el-msg class="error">s found at [146] (expected: /)</el-msg></el-statement>
 <el-kw>end test</el-kw>
 </el-test>
 </el-code-block>
