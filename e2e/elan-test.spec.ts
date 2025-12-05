@@ -38,7 +38,7 @@ test('long strings fail 1', async ({ page }) => {
   await page.keyboard.press('Enter');
   await page.waitForTimeout(2000);
 
-  await expect(page.getByText("differ at [36]. Actual (computed): empty expected: e")).toBeVisible();
+  await expect(page.getByText("empty found at [36] (expected: e)")).toBeVisible();
   await expect(page.locator('#test')).toContainText('fail');
 });
 
@@ -58,7 +58,7 @@ test('long strings fail 2', async ({ page }) => {
   await page.keyboard.press('Enter');
   await page.waitForTimeout(2000);
 
-  await expect(page.getByText("differ at [36]. Actual (computed): a expected: empty")).toBeVisible();
+  await expect(page.getByText("a found at [36] (expected: empty)")).toBeVisible();
   await expect(page.locator('#test')).toContainText('fail');
 });
 
@@ -78,7 +78,7 @@ test('long strings fail 3', async ({ page }) => {
   await page.keyboard.press('Enter');
   await page.waitForTimeout(2000);
 
-  await expect(page.getByText("differ at [18]. Actual (computed): t expected: l")).toBeVisible();
+  await expect(page.getByText("t found at [18] (expected: l)")).toBeVisible();
   await expect(page.locator('#test')).toContainText('fail');
 });
 
@@ -98,7 +98,7 @@ test('long strings fail 4', async ({ page }) => {
   await page.keyboard.press('Enter');
   await page.waitForTimeout(2000);
 
-  await expect(page.getByText("differ at [20]. Actual (computed): c expected: space")).toBeVisible();
+  await expect(page.getByText("c found at [20] (expected: space)")).toBeVisible();
   await expect(page.locator('#test')).toContainText('fail');
 });
 
@@ -118,7 +118,7 @@ test('long strings fail 5', async ({ page }) => {
   await page.keyboard.press('Enter');
   await page.waitForTimeout(2000);
 
-  await expect(page.getByText("differ at [21]. Actual (computed): space expected: c")).toBeVisible();
+  await expect(page.getByText("space found at [21] (expected: c)")).toBeVisible();
   await expect(page.locator('#test')).toContainText('fail');
 });
 
