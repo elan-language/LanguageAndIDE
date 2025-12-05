@@ -3295,34 +3295,26 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
 
 <h2 id="ref">Passing a function as a reference</h2>
 <p>To use a higher-order function (HoF), you have to pass in a reference to a function.
+ This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or the name of a function.
+ It is also possible to use references to functions not in the context of HoFs.</p>
 
-<el-txt><input spellcheck="false" data-cursorstart="10" data-cursorend="10" size="9" style="width: 10ch" value="myFunction" tabindex="-1"></el-txt>
-This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or the keyword <el-kw>ref</el-kw> followed by the name of a function.</p>
-<p>It is also possible to use references to functions not in the context of HoFs.</p>
-
-<p>On most occasions when you write the name of an existing function elsewhere in code your intent is to <i>evaluate</i> the function and, to do so, you write the name of the function followed by brackets containing such arguments as are required by the function. For this reason if you forget to add the brackets, you will get an error, for example:</p>
-
-<el-code-block>
-<el-field id="expr4" class="selected focused optional error" tabindex="-1"><el-msg class="error">To evaluate function 'myFunction' add brackets. Or to create a reference to 'myFunction', precede it by 'ref'.</el-msg></el-field>
-</el-code-block>
-
-<p>The second sentence in this error message is for when your intention is <i>not</i> to evaluate the function, but to create a <i>reference </i>to the function. This is a valid thing to do in functional programming but is not generally done in procedural programming. As the error message says, to create a reference to a function you need to precede it by <el-code>ref</el-code> and the name of the function should then <i>not</i> be followed by brackets (or any arguments). For example:</p>
+<p>On most occasions when you write the name of an existing function elsewhere in code your intent is to <i>evaluate</i> the function and, to do so, you write the name of the function followed by brackets containing such arguments as are required by the function. When passing a function, its name is not followed by brackets (or arguments), as in this example:
 
 <el-code-block source="passFuncAsRef.elan">
-<el-class class="ok multiline" id="class35" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>class </el-kw><el-field id="type36" class="ok" tabindex="-1"><el-txt><el-type>Pupil</el-type></el-txt><el-place>Name</el-place></el-field> <el-field id="text37" class="empty optional ok" tabindex="-1"></el-field></el-top>
-<el-prop class="ok" id="prop39" tabindex="-1"><el-kw>property </el-kw><el-field id="ident40" class="ok" tabindex="-1"><el-txt><el-id>mathsPercent</el-id></el-txt></el-field><el-kw> as </el-kw><el-field id="type41" class="ok" tabindex="-1"><el-txt><el-type>Int</el-type></el-txt></el-field></el-prop>
+<el-class class="ok multiline" id="class1" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>class </el-kw><el-field id="type2" class="ok" tabindex="-1"><el-txt><el-type>Pupil</el-type></el-txt><el-place>Name</el-place></el-field> <el-field id="text3" class="empty optional ok" tabindex="-1"></el-field></el-top>
+<el-prop class="ok" id="prop5" tabindex="-1"><el-kw>property </el-kw><el-field id="ident6" class="ok" tabindex="-1"><el-txt><el-id>mathsPercent</el-id></el-txt></el-field><el-kw> as </el-kw><el-field id="type7" class="ok" tabindex="-1"><el-txt><el-type>Int</el-type></el-txt></el-field></el-prop>
 <el-kw>end class</el-kw>
 </el-class>
-<main class="ok multiline" id="main1" tabindex="-1">
+<main class="ok multiline" id="main8" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
-<el-statement class="ok" id="let31" tabindex="-1"><el-kw>let </el-kw><el-field id="var32" class="ok" tabindex="-1"><el-txt><el-id>allPupils</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr33" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Pupil</el-type>&gt;()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="var8" tabindex="-1"><el-kw>variable </el-kw><el-field id="var9" class="ok" tabindex="-1"><el-txt><el-id>passes</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr10" class="ok" tabindex="-1"><el-txt><el-id>allPupils</el-id>.<el-method>filter</el-method>(<el-kw>ref</el-kw> <el-method>passedMathsTest</el-method>)</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let10" tabindex="-1"><el-kw>let </el-kw><el-field id="var11" class="ok" tabindex="-1"><el-txt><el-id>allPupils</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Pupil</el-type>&gt;()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="var13" tabindex="-1"><el-kw>variable </el-kw><el-field id="var14" class="ok" tabindex="-1"><el-txt><el-id>passes</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-id>allPupils</el-id>.<el-method>filter</el-method>(<el-id>passedMathsTest</el-id>)</el-txt></el-field></el-statement>
 <el-kw>end main</el-kw>
 </main>
-<el-func class="ok multiline" id="func14" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident16" class="ok" tabindex="-1"><el-txt>passedMathsTest</el-txt></el-field></el-method>(<el-field id="params17" class="optional ok" tabindex="-1"><el-txt><el-id>p</el-id> <el-kw>as</el-kw> <el-type>Pupil</el-type></el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type18" class="ok" tabindex="-1"><el-txt><el-type>Boolean</el-type></el-txt></el-field></el-top>
-<el-statement class="ok" id="return19" tabindex="-1"><el-kw>return </el-kw><el-field id="expr20" class="ok" tabindex="-1"><el-txt><el-id>p</el-id>.<el-id>mathsPercent</el-id> &gt; <el-lit>35</el-lit></el-txt></el-field></el-statement>
+<el-func class="ok multiline" id="func16" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident18" class="ok" tabindex="-1"><el-txt><el-method>passedMathsTest</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params19" class="optional ok" tabindex="-1"><el-txt><el-id>p</el-id> <el-kw>as</el-kw> <el-type>Pupil</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type20" class="ok" tabindex="-1"><el-txt><el-type>Boolean</el-type></el-txt></el-field></el-top>
+<el-statement class="ok" id="return21" tabindex="-1"><el-kw>return </el-kw><el-field id="expr22" class="ok" tabindex="-1"><el-txt><el-id>p</el-id>.<el-id>mathsPercent</el-id> &gt; <el-lit>35</el-lit></el-txt></el-field></el-statement>
 <el-kw>end function</el-kw>
 </el-func>
 </el-code-block>
