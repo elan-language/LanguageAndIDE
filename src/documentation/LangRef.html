@@ -1336,11 +1336,10 @@ The minus sign may also be used as a unary operator, and this takes precedence o
 </pre>
 <p>The <el-code>+</el-code> operator is also used for concatenating <el-type>String</el-type>s.  See <a href="LibRef.html#String">String</a>.</p>
 
-<h4 class="no-TOC" id="LogicalOperators">Logical operators</h4>
-<!-- TODO table of logical operators -->
 <div id="and"></div>
 <div id="not"></div>
 <div id="or"></div>
+<h4 class="no-TOC" id="LogicalOperators">Logical operators</h4>
 <p>Logical operators are applied to <el-code>Boolean</el-code> arguments and return a <el-code>Boolean</el-code> result.</p>
 <p><el-code>and</el-code> and <el-code>or</el-code> are binary operators<br>
 <el-code>not</el-code> is a unary operator. </p>
@@ -1685,15 +1684,19 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
  <p>Attempting to define a literal <el-type>Dictionary</el-type> or <el-type>DictionaryImmutable</el-type>
  with one or more duplicated keys in the definition.</p>
 
+<!-- This message deleted>
 <h3 id="FunctionRefCompileError" class="no-TOC">To evaluate function ... add brackets ...</h3>
  <p>If you intend to <i>evaluate</i> a function, the function name must be followed by brackets even if the function
  defines no parameters. If your intent was to define a <i>reference</i> to the function (a pattern used commonly in
- 'Functional Programming' then the name of the function must be preceded by the keyword <el-kw>ref</el-kw> and a single space.</p>
+ Functional Programming) then only the name of the function is needed.</p>
+<-->
 
-<h3 id="NotGlobalFunctionRefCompileError" class="no-TOC">Library or class function ... cannot be preceded by by 'ref'</h3>
- <p>The keyword <el-kw>ref</el-kw> may be applied only to functions that you have defined in your own code as a standalone (global) function.
+<h3 id="NotGlobalFunctionRefCompileError" class="no-TOC">Library or class function ... cannot be used without brackets</h3>
+<!-- this text removed when keyword ref removed>
+ The keyword <el-kw>ref</el-kw> may be applied only to functions that you have defined in your own code as a standalone (global) function.
  It may not be applied to a function method defined on a class, nor to a library function.
- (You may, however, define your own function that simply <i>delegates</i> its implementation to a library function.)</p>
+ You may, however, define your own function that simply <i>delegates</i> its implementation to a library function.
+<-->
 
 <h3 id="UnknownCompilerDirectiveCompileError" class="no-TOC">a comment may not start with [ unless it is a recognised compiler directive</h3>
  <p>Compiler directives are a planned future capability. They will look like comments, but begin with an open square bracket.
@@ -1737,10 +1740,9 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
  If you use a named value for an index and it is negative, then this will cause a runtime error.</p>
 
 <h3 id="CannotCompareProcFunc" class="no-TOC">Cannot do equality operations on Procedures or Functions.</h3>
- <p>It is not possible to apply comparison operations to functions (with or without the <el-kw>ref</el-kw> keyword prefix)
- or procedures as themselves. It is, however, possible to compare the results of two function evaluations.
- It is possible that you are seeing this message because you intended to evaluate a function but forgot to
- add the brackets after the name.</p>
+ <p>It is not possible to apply comparison operations to functions or procedures as themselves.
+ It is, however, possible to compare the results of two function evaluations.
+ You may see this message because you intended to evaluate a function but forgot to add the brackets after the name.</p>
 
 <h3 id="mustBeImmutableType" class="no-TOC">Property ... is not of an immutable type.</h3>
  <p>Properties on a <a href="#record">record</a> may only be of immutable Types.</p>
