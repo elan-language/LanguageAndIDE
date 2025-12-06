@@ -446,13 +446,13 @@ end class
 
 end class
 
-[imported] enum Action stand, draw
+enum Action stand, draw
 
-[imported] enum Outcome undecided, lose, draw, win, winDouble
+enum Outcome undecided, lose, draw, win, winDouble
 
-[imported] enum Status active, standing, blackjack, bust
+enum Status active, standing, blackjack, bust
 
-[imported] enum Suit clubs, diamonds, hearts, spades
+enum Suit clubs, diamonds, hearts, spades
 
 [imported] constant symbols set to {Suit.clubs:"&clubs;", Suit.diamonds:"&diams;", Suit.hearts:"&hearts;", Suit.spades:"&spades;"}
 
