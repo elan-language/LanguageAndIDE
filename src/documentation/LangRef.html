@@ -24,15 +24,6 @@
 <p>This distinction applies both to single values and to data structures (which contain multiple values) and, while it is most pertinent in functional programming, it provides a useful discipline in any code. Preferring immutable named values can help avoid duplication and assist in the modularisation of code.</p>
 <p>Both kinds of named value may be initialised with either literals or expressions.</p>
 
-<h2 id="Identifier">Identifiers</h2>
-<p>For every named value, its name must follow the rules for an <b>identifier</b>:</p>
-<ul>
- <li>It must start with a lowercase letter followed by any combination ot letters (upper- or lowercase), digits and underscore '_' symbols.</li>
- <li>It must not contain spaces or other symbols.</li>
- <li>It cannot be the same as any language keyword, method or other reserved word. If you happen to choose such a name, an error message will tell you that it cannot be used for an identifier.</li>
-</ul>
-<p>Note that all your identifiers (together with all the language's keywords), are <i>case-sensitive</i>. So, for example, named values <el-code>xTop</el-code> and <el-code>xtop</el-code> are distinct.</p>
-
 <h2 id="Type">Named value Types</h2>
 <p>The Types used in the language are here listed, each linking to its definition and further details:</p>
 <table>
@@ -130,6 +121,20 @@ with all the same property values except for specific changes that you want to m
   <td>formal output argument of procedure<br>
   an <el-kw>out</el-kw> parameter of an immutable Type may be re-assigned<br>if the actual argument is defined with <el-kw>variable</el-kw>, not <el-kw>let</el-kw></td></tr>
 </table>
+
+<h2 id="Identifier">Identifiers and Type names</h2>
+<h3 class="no-TOC">Named value identifier</h3>
+<p>The name given to every named value must follow the rules for an <b>identifier</b>:</p>
+<ul>
+ <li>It must start with a lowercase letter followed by any combination ot letters (upper- or lowercase), digits and underscore '_' symbols.</li>
+ <li>It must not contain spaces or other symbols.</li>
+ <li>It cannot be the same as any language keyword, method or other reserved word. If you happen to choose such a name, an error message will tell you that it cannot be used for an identifier.</li>
+ <li>Like all the language's keywords, it is case-sensitive.</li>
+</ul>
+
+<h3 class="no-TOC" id="TypeName">Type name</h3>
+<p>Every Type, whether system (e.g. <el-type>List</el-type>)  or user defined (e.g. <el-type>MyClass</el-type>), is named like an identifier but
+ with one important difference: its first character must be an uppercase letter. Type names are also case-sensitive.</p> 
 
 <div id="global"></div>
 <div id="library"></div>
