@@ -242,7 +242,7 @@ in the range:</li>
 </tr>
 </table>
 
-<h4 class="no-TOC" id="CharacterSets">Character sets</h4>
+<h3 class="no-TOC" id="CharacterSets">Character sets</h3>
 <ul>
   <li>When typing from the keyboard into a literal string all the basic ASCII characters (0x20 to 0x7e) and' &pound;' can be input.
    You cannot use Alt+numeric-keypad to enter accented letters or other special characters in the range 0x80 to 0xff.</li>
@@ -2630,7 +2630,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
 <h1>Other Types</h1>
 
 <h2 id="Random">Random</h2>
-<h4 class="no-TOC">Generating random numbers within a function</h4>
+<h3 class="no-TOC">Generating random numbers within a function</h3>
 <p>It is <i>not</i> possible to use the system methods <el-method>random()</el-method> or <el-method>randomInt()</el-method> within a function because they create unseen side effects. You <i>may</i> use those system methods outside the function and pass the resulting random number (as an <el-type>Int</el-type> or a <el-type>Float</el-type>) as an argument <i>into </i>a function.</p>
 <p>It is, however, possible to create and use random numbers within a function, but it requires a different approach and is a little more complex. You use the special Type <el-type>Random</el-type>. (Note the upper case <el-code>R</el-code> required for a Type name).</p>
 <p>You start by getting a seed random number in your <el-method>main</el-method> or in a <el-method>procedure</el-method> using method <el-method>initialiseFromClock</el-method>:</p>
@@ -2799,7 +2799,7 @@ Within a string delimited by <i>single quotes</i>, those literal characters can 
 <p>A colour is specified as an <el-type>Int</el-type> value using one of these methods:</p>
 <ul>
  <li>the limited colours defined as library constants as in the above table.</li>
- <li>an integer in the decimal range 0 (black) to 2<sup>24-1</sup> (white).</li>
+ <li>an integer in the decimal range 0 (<el-id>black</el-id>) to 2<sup>24-1</sup> (<el-id>white</el-id>).</li>
  <li>a six digit hexadecimal value in the range <el-code>0x000000</el-code> &ndash; <el-code>0xffffff</el-code>
     using the same 'RGB' format as used in Html style, for example <el-code>0xff0000</el-code> for red.</li>
 </ul>
