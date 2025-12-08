@@ -12,6 +12,16 @@ import { RunStatus } from "../frames/status-enums";
 import { WebInputOutput } from "./web-input-output";
 import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
 import { IIDEViewModel } from "./ui-helpers";
+import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
+import { encodeCode } from "./web-helpers";
+
+export class WrappedRunStatus {
+  singleStepping = false;
+  processingSingleStep = false;
+  debugMode = false;
+  pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
+  runWorker: Worker | undefined;
+}
 
 export function readMsg(value: string | [string, string]) {
   return { type: "read", value: value } as WebWorkerReadMessage;
@@ -368,5 +378,123 @@ export function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): DebugSy
     return variables;
   } else {
     return `No values defined at this point - proceed to the next instruction`;
+  }
+}
+
+export function handleRunWorkerFinished(
+  file: File,
+  rs: WrappedRunStatus,
+  vm: IIDEViewModel,
+  elanInputOutput: WebInputOutput,
+) {
+  rs.runWorker?.terminate();
+  rs.runWorker = undefined;
+  elanInputOutput.finished();
+  console.info("elan program completed OK");
+  file.setRunStatus(RunStatus.default);
+  clearPaused();
+  vm.updateDisplayValues();
+}
+
+export async function handleRunWorkerError(
+  data: WebWorkerStatusMessage,
+  file: File,
+  rs: WrappedRunStatus,
+  vm: IIDEViewModel,
+  elanInputOutput: WebInputOutput,
+) {
+  vm.clickInfoTab();
+  rs.runWorker?.terminate();
+  rs.runWorker = undefined;
+  elanInputOutput.finished();
+  const e = data.error;
+  const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
+  await vm.showError(err, file.fileName, false);
+  file.setRunStatus(RunStatus.error);
+  clearPaused();
+  vm.updateDisplayValues();
+}
+
+export async function runProgram(
+  file: File,
+  vm: IIDEViewModel,
+  rs: WrappedRunStatus,
+  elanInputOutput: WebInputOutput,
+) {
+  try {
+    if (file.readRunStatus() === RunStatus.paused && rs.runWorker && rs.debugMode) {
+      rs.pendingBreakpoints = [];
+      resumeProgram(file, rs.singleStepping, rs.runWorker);
+      vm.updateDisplayValues();
+      return;
+    }
+
+    await vm.clearDisplays();
+    file.setRunStatus(RunStatus.running);
+    vm.updateDisplayValues();
+    const path = `${document.location.origin}${document.location.pathname}`.replace(
+      "/index.html",
+      "",
+    );
+    const jsCode = file.compileAsWorker(path, rs.debugMode, false);
+    const asUrl = encodeCode(jsCode);
+
+    rs.runWorker = new Worker(asUrl, { type: "module" });
+
+    rs.runWorker.onmessage = async (e: MessageEvent<WebWorkerMessage>) => {
+      const data = e.data;
+
+      switch (data.type) {
+        case "write":
+          await handleWorkerIO(file, data, rs.runWorker, elanInputOutput, vm);
+          break;
+        case "breakpoint":
+          if (file.readRunStatus() === RunStatus.paused) {
+            rs.pendingBreakpoints.push(data);
+          } else {
+            vm.focusInfoTab();
+
+            vm.printDebugInfo(handleRunWorkerPaused(data));
+
+            vm.setPausedAtLocation(data.pausedAt);
+          }
+          break;
+        case "singlestep":
+          if (rs.processingSingleStep) {
+            rs.pendingBreakpoints.push(data);
+          } else {
+            rs.processingSingleStep = true;
+            rs.pendingBreakpoints = [];
+            if (rs.singleStepping) {
+              vm.focusInfoTab();
+              vm.printDebugInfo(handleRunWorkerPaused(data));
+              vm.setPausedAtLocation(data.pausedAt);
+            }
+          }
+          break;
+        case "status":
+          switch (data.status) {
+            case "finished":
+              handleRunWorkerFinished(file, rs, vm, elanInputOutput);
+              break;
+            case "error":
+              await handleRunWorkerError(data, file, rs, vm, elanInputOutput);
+              break;
+          }
+      }
+    };
+
+    rs.runWorker.onerror = async (ev: ErrorEvent) => {
+      const err = new ElanRuntimeError(ev.message);
+      await vm.showError(err, file.fileName, false);
+      file.setRunStatus(RunStatus.error);
+      vm.updateDisplayValues();
+    };
+
+    rs.runWorker.postMessage({ type: "start" } as WebWorkerMessage);
+  } catch (e) {
+    console.warn(e);
+    file.setRunStatus(RunStatus.error);
+    vm.updateDisplayValues();
   }
 }

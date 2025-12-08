@@ -68,4 +68,5 @@ export interface IIDEViewModel {
   showError(err: Error, fileName: string, reset: boolean): Promise<void>;
   printDebugInfo(info: DebugSymbol[] | string): void;
   setPausedAtLocation(location: string): void;
+  clickInfoTab(): void;
 }

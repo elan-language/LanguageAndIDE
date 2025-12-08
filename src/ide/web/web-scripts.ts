@@ -20,12 +20,13 @@ import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
 import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
 import {
-  clearPaused,
   getDebugSymbol,
   getSummaryHtml,
+  handleRunWorkerFinished,
   handleRunWorkerPaused,
-  handleWorkerIO,
   resumeProgram,
+  runProgram,
+  WrappedRunStatus,
 } from "./run-program-scripts";
 import { checkIsChrome, confirmContinueOnNonChromeBrowser, IIDEViewModel } from "./ui-helpers";
 import {
@@ -39,7 +40,6 @@ import {
 } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 import {
-  WebWorkerBreakpointMessage,
   WebWorkerMessage,
   WebWorkerStatusMessage,
   WebWorkerTestMessage,
@@ -129,13 +129,10 @@ let profile: Profile;
 let userName: string | undefined;
 let lastSavedHash = "";
 let undoRedoHash = "";
-let runWorker: Worker | undefined;
 let testWorker: Worker | undefined;
 let inactivityTimer: any | undefined = undefined;
 let autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
-let singleStepping = false;
-let processingSingleStep = false;
-let debugMode = false;
+
 let lastDOMEvent: Event | undefined;
 let lastEditorEvent: editorEvent | undefined;
 let errorDOMEvent: Event | undefined;
@@ -174,9 +171,14 @@ class IDEViewModel implements IIDEViewModel {
   setPausedAtLocation(location: string) {
     setPausedAtLocation(location);
   }
-}
 
+  clickInfoTab() {
+    infoTabLabel.click();
+  }
+}
 const ideViewModel = new IDEViewModel();
+
+const rs = new WrappedRunStatus();
 
 // add all the listeners
 
@@ -216,110 +218,29 @@ function focusInfoTab() {
   systemInfoDiv.innerHTML = "";
 }
 
-async function runProgram(file: File, vm: IDEViewModel) {
-  try {
-    if (file.readRunStatus() === RunStatus.paused && runWorker && debugMode) {
-      pendingBreakpoints = [];
-      resumeProgram(file, singleStepping, runWorker);
-      vm.updateDisplayValues();
-      return;
-    }
-
-    await vm.clearDisplays();
-    file.setRunStatus(RunStatus.running);
-    vm.updateDisplayValues();
-    const path = `${document.location.origin}${document.location.pathname}`.replace(
-      "/index.html",
-      "",
-    );
-    const jsCode = file.compileAsWorker(path, debugMode, false);
-    const asUrl = encodeCode(jsCode);
-
-    runWorker = new Worker(asUrl, { type: "module" });
-
-    runWorker.onmessage = async (e: MessageEvent<WebWorkerMessage>) => {
-      const data = e.data;
-
-      switch (data.type) {
-        case "write":
-          await handleWorkerIO(file, data, runWorker, elanInputOutput, vm);
-          break;
-        case "breakpoint":
-          if (isPausedState()) {
-            pendingBreakpoints.push(data);
-          } else {
-            vm.focusInfoTab();
-
-            vm.printDebugInfo(handleRunWorkerPaused(data));
-
-            vm.setPausedAtLocation(data.pausedAt);
-          }
-          break;
-        case "singlestep":
-          if (processingSingleStep) {
-            pendingBreakpoints.push(data);
-          } else {
-            processingSingleStep = true;
-            pendingBreakpoints = [];
-            if (singleStepping) {
-              vm.focusInfoTab();
-
-              vm.printDebugInfo(handleRunWorkerPaused(data));
-
-              vm.setPausedAtLocation(data.pausedAt);
-            }
-          }
-          break;
-        case "status":
-          switch (data.status) {
-            case "finished":
-              handleRunWorkerFinished();
-              break;
-            case "error":
-              await handleRunWorkerError(data);
-              break;
-          }
-      }
-    };
-
-    runWorker.onerror = async (ev: ErrorEvent) => {
-      const err = new ElanRuntimeError(ev.message);
-      await vm.showError(err, file.fileName, false);
-      file.setRunStatus(RunStatus.error);
-      vm.updateDisplayValues();
-    };
-
-    runWorker.postMessage({ type: "start" } as WebWorkerMessage);
-  } catch (e) {
-    console.warn(e);
-    file.setRunStatus(RunStatus.error);
-    vm.updateDisplayValues();
-  }
-}
-
 runButton?.addEventListener("click", async () => {
   file.removeAllSelectorsThatCanBe();
   await renderAsHtml(false);
   runButton.focus();
   showDisplayTab();
-  debugMode = singleStepping = processingSingleStep = false;
-  await runProgram(file, ideViewModel);
+  rs.debugMode = rs.singleStepping = rs.processingSingleStep = false;
+  await runProgram(file, ideViewModel, rs, elanInputOutput);
 });
 
 runDebugButton?.addEventListener("click", async () => {
   runDebugButton.focus();
   setTimeout(showDisplayTab);
-  debugMode = true;
-  singleStepping = processingSingleStep = false;
-  await runProgram(file, ideViewModel);
+  rs.debugMode = true;
+  rs.singleStepping = rs.processingSingleStep = false;
+  await runProgram(file, ideViewModel, rs, elanInputOutput);
 });
 
 stepButton?.addEventListener("click", async () => {
-  singleStepping = true;
+  rs.singleStepping = true;
 
-  if (pendingBreakpoints.length > 0) {
-    const next = pendingBreakpoints[0];
-    pendingBreakpoints = pendingBreakpoints.slice(1);
+  if (rs.pendingBreakpoints.length > 0) {
+    const next = rs.pendingBreakpoints[0];
+    rs.pendingBreakpoints = rs.pendingBreakpoints.slice(1);
     focusInfoTab();
 
     printDebugInfo(handleRunWorkerPaused(next));
@@ -331,27 +252,27 @@ stepButton?.addEventListener("click", async () => {
     return;
   }
 
-  processingSingleStep = false;
-  if (file.readRunStatus() === RunStatus.paused && runWorker) {
-    pendingBreakpoints = [];
-    resumeProgram(file, singleStepping, runWorker);
+  rs.processingSingleStep = false;
+  if (file.readRunStatus() === RunStatus.paused && rs.runWorker) {
+    rs.pendingBreakpoints = [];
+    resumeProgram(file, rs.singleStepping, rs.runWorker);
     updateDisplayValues();
     return;
   }
 });
 
 pauseButton?.addEventListener("click", () => {
-  singleStepping = true;
-  runWorker!.postMessage({ type: "pause" } as WebWorkerMessage);
+  rs.singleStepping = true;
+  rs.runWorker!.postMessage({ type: "pause" } as WebWorkerMessage);
 });
 
 stopButton?.addEventListener("click", () => {
   disable([stopButton, pauseButton, stepButton], "Program is not running");
   // do rest on next event loop for responsivenesss
   setTimeout(() => {
-    debugMode = singleStepping = false;
-    if (runWorker) {
-      handleRunWorkerFinished();
+    rs.debugMode = rs.singleStepping = false;
+    if (rs.runWorker) {
+      handleRunWorkerFinished(file, rs, ideViewModel, elanInputOutput);
     }
     if (testWorker) {
       endTests();
@@ -956,7 +877,7 @@ function isPausedState() {
 }
 
 function setPauseButtonState(waitingForUserInput?: boolean) {
-  if (isRunningState() && debugMode && !isPausedState() && !waitingForUserInput) {
+  if (isRunningState() && rs.debugMode && !isPausedState() && !waitingForUserInput) {
     enable(pauseButton, "Pause the program");
   } else {
     disable([pauseButton], "Can only pause a program running in Debug mode");
@@ -1826,18 +1747,6 @@ function showCode() {
   }
 }
 
-function handleRunWorkerFinished() {
-  runWorker?.terminate();
-  runWorker = undefined;
-  elanInputOutput.finished();
-  console.info("elan program completed OK");
-  file.setRunStatus(RunStatus.default);
-  clearPaused();
-  updateDisplayValues();
-}
-
-let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
-
 function printDebugSymbol(s: DebugSymbol) {
   const display = getDebugSymbol(s);
   systemInfoPrintUnsafe(display);
@@ -1883,19 +1792,6 @@ function printDebugInfo(info: DebugSymbol[] | string) {
     }
     addDebugListeners();
   }
-}
-
-async function handleRunWorkerError(data: WebWorkerStatusMessage) {
-  infoTabLabel.click();
-  runWorker?.terminate();
-  runWorker = undefined;
-  elanInputOutput.finished();
-  const e = data.error;
-  const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
-  await showError(err, file.fileName, false);
-  file.setRunStatus(RunStatus.error);
-  clearPaused();
-  updateDisplayValues();
 }
 
 function chooser(uploader: (event: Event) => void, noCheck: boolean) {
