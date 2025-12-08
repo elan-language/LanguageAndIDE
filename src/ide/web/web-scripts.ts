@@ -20,6 +20,7 @@ import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
 import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
 import { getDebugSymbol, getSummaryHtml, ProgramRunner } from "./program-runner";
+import { endTests, runTests, TestRunner } from "./test-runner";
 import { checkIsChrome, confirmContinueOnNonChromeBrowser, IIDEViewModel } from "./ui-helpers";
 import {
   encodeCode,
@@ -31,11 +32,6 @@ import {
   transforms,
 } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
-import {
-  WebWorkerMessage,
-  WebWorkerStatusMessage,
-  WebWorkerTestMessage,
-} from "./web-worker-messages";
 
 // static html elements
 const codeContainer = document.querySelector(".elan-code") as HTMLDivElement;
@@ -121,7 +117,7 @@ let profile: Profile;
 let userName: string | undefined;
 let lastSavedHash = "";
 let undoRedoHash = "";
-let testWorker: Worker | undefined;
+
 let inactivityTimer: any | undefined = undefined;
 let autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
 
@@ -179,10 +175,20 @@ class IDEViewModel implements IIDEViewModel {
     runDebugButton.focus();
     setTimeout(showDisplayTab);
   }
+
+  async renderAsHtml(editingField: boolean) {
+    await renderAsHtml(editingField);
+  }
+
+  systemInfoPrintSafe(text: string, scroll = true) {
+    systemInfoPrintSafe(text, scroll);
+  }
 }
 const ideViewModel = new IDEViewModel();
 
 const programRunner = new ProgramRunner();
+
+const testRunner = new TestRunner();
 
 // add all the listeners
 
@@ -243,8 +249,8 @@ stopButton?.addEventListener("click", () => {
   // do rest on next event loop for responsivenesss
   setTimeout(() => {
     programRunner.stop(file, ideViewModel, elanInputOutput);
-    if (testWorker) {
-      endTests();
+    if (testRunner.testWorker) {
+      endTests(testRunner);
       file.setTestStatus(TestStatus.default);
       updateDisplayValues();
     }
@@ -757,7 +763,7 @@ async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean
     file.refreshParseAndCompileStatuses(compileIfParsed);
     const cs = file.readCompileStatus();
     if ((cs === CompileStatus.ok || cs === CompileStatus.advisory) && file.hasTests) {
-      await runTests();
+      await runTests(file, ideViewModel, testRunner);
     }
     await renderAsHtml(editingField);
   } catch (e) {
@@ -867,7 +873,7 @@ function updateDisplayValues() {
   let isTestRunning = isTestRunningState();
 
   if (isTestRunning && !(isParsing || isCompiling)) {
-    endTests();
+    endTests(testRunner);
     file.setTestStatus(TestStatus.default);
     isTestRunning = false;
     console.info("tests cancelled in updateDisplayValues");
@@ -1245,7 +1251,7 @@ async function handleEditorEvent(
   }
 
   if (isTestRunningState()) {
-    endTests();
+    endTests(testRunner);
     file.setTestStatus(TestStatus.default);
     console.info("tests cancelled in handleEditorEvent");
   }
@@ -2073,120 +2079,6 @@ async function autoSave(code: string) {
       pendingSave = "";
       console.debug(`Autosave failed: error: ${e} code: ${code}`);
     }
-  }
-}
-
-function endTests() {
-  cancelTestTimeout();
-  testWorker?.terminate();
-  testWorker = undefined;
-}
-
-async function handleTestWorkerFinished(data: WebWorkerTestMessage) {
-  endTests();
-  file.refreshTestStatuses(data.value);
-  console.info("elan tests completed");
-
-  const testErr = file.getTestError();
-  if (testErr) {
-    const err = testErr instanceof ElanRuntimeError ? testErr : new ElanRuntimeError(testErr);
-    await showError(err, file.fileName, false);
-  }
-
-  await renderAsHtml(false);
-  updateDisplayValues();
-}
-
-async function handleTestWorkerError(data: WebWorkerStatusMessage) {
-  endTests();
-  const e = data.error;
-  const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
-  await showError(err, file.fileName, false);
-  file.setTestStatus(TestStatus.error);
-  updateDisplayValues();
-}
-
-function handleTestAbort() {
-  endTests();
-  file.setTestStatus(TestStatus.error);
-  systemInfoPrintSafe("Tests timed out and were aborted");
-  updateDisplayValues();
-}
-
-let testTimer: any = undefined;
-
-function cancelTestTimeout() {
-  clearInterval(testTimer);
-  testTimer = undefined;
-}
-
-async function runTests() {
-  // if already running cancel and restart
-  endTests();
-  await runTestsInner();
-
-  let timeoutCount = 0;
-  const testTimeout = 2; // seconds
-
-  testTimer = setInterval(async () => {
-    timeoutCount++;
-
-    if (!testWorker) {
-      cancelTestTimeout();
-    }
-
-    if (timeoutCount === testTimeout && testWorker) {
-      cancelTestTimeout();
-      handleTestAbort();
-    }
-  }, 1000);
-}
-
-async function runTestsInner() {
-  try {
-    await clearDisplays();
-    file.setTestStatus(TestStatus.running);
-
-    updateDisplayValues();
-    const path = `${document.location.origin}${document.location.pathname}`.replace(
-      "/index.html",
-      "",
-    );
-    const jsCode = file.compileAsTestWorker(path);
-    const asUrl = encodeCode(jsCode);
-
-    testWorker = new Worker(asUrl, { type: "module" });
-
-    testWorker.onmessage = async (e: MessageEvent<WebWorkerMessage>) => {
-      const data = e.data;
-
-      switch (data.type) {
-        case "status":
-          switch (data.status) {
-            case "finished":
-              await handleTestWorkerError(data);
-              break;
-          }
-          break;
-        case "test":
-          await handleTestWorkerFinished(data);
-      }
-    };
-
-    testWorker.onerror = async (ev: ErrorEvent) => {
-      endTests();
-      const err = new ElanRuntimeError(ev.message);
-      await showError(err, file.fileName, false);
-      file.setTestStatus(TestStatus.error);
-      updateDisplayValues();
-    };
-
-    testWorker.postMessage({ type: "start" } as WebWorkerMessage);
-  } catch (e) {
-    endTests();
-    console.warn(e);
-    file.setTestStatus(TestStatus.error);
-    updateDisplayValues();
   }
 }
 

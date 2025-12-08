@@ -72,4 +72,6 @@ export interface IIDEViewModel {
   clickInfoTab(): void;
   run(file: File): Promise<void>;
   runDebug(): void;
+  renderAsHtml(editingField: boolean): Promise<void>;
+  systemInfoPrintSafe(text: string, scroll?: boolean): void;
 }
