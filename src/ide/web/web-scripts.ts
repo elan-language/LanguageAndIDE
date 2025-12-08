@@ -20,14 +20,15 @@ import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
 import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
 import {
-  clearPaused,
   getDebugSymbol,
   getSummaryHtml,
-  handleRunWorkerPaused,
-  handleWorkerIO,
-  resumeProgram,
+  pauseProgram,
+  runProgram,
+  stepProgram,
+  stopProgram,
+  WrappedRunStatus,
 } from "./run-program-scripts";
-import { checkIsChrome, confirmContinueOnNonChromeBrowser } from "./ui-helpers";
+import { checkIsChrome, confirmContinueOnNonChromeBrowser, IIDEViewModel } from "./ui-helpers";
 import {
   encodeCode,
   fetchDefaultProfile,
@@ -39,7 +40,6 @@ import {
 } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 import {
-  WebWorkerBreakpointMessage,
   WebWorkerMessage,
   WebWorkerStatusMessage,
   WebWorkerTestMessage,
@@ -129,18 +129,56 @@ let profile: Profile;
 let userName: string | undefined;
 let lastSavedHash = "";
 let undoRedoHash = "";
-let runWorker: Worker | undefined;
 let testWorker: Worker | undefined;
 let inactivityTimer: any | undefined = undefined;
 let autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
-let singleStepping = false;
-let processingSingleStep = false;
-let debugMode = false;
+
 let lastDOMEvent: Event | undefined;
 let lastEditorEvent: editorEvent | undefined;
 let errorDOMEvent: Event | undefined;
 let errorEditorEvent: editorEvent | undefined;
 let errorStack: string | undefined;
+
+class IDEViewModel implements IIDEViewModel {
+  focusInfoTab() {
+    focusInfoTab();
+  }
+
+  updateDisplayValues() {
+    updateDisplayValues();
+  }
+
+  setPauseButtonState(waitingForUserInput?: boolean) {
+    setPauseButtonState(waitingForUserInput);
+  }
+
+  togggleInputStatus(rs: RunStatus) {
+    togggleInputStatus(rs);
+  }
+
+  async clearDisplays() {
+    await clearDisplays();
+  }
+
+  async showError(err: Error, fileName: string, reset: boolean) {
+    await showError(err, fileName, reset);
+  }
+
+  printDebugInfo(info: DebugSymbol[] | string) {
+    printDebugInfo(info);
+  }
+
+  setPausedAtLocation(location: string) {
+    setPausedAtLocation(location);
+  }
+
+  clickInfoTab() {
+    infoTabLabel.click();
+  }
+}
+const ideViewModel = new IDEViewModel();
+
+const rs = new WrappedRunStatus();
 
 // add all the listeners
 
@@ -180,150 +218,36 @@ function focusInfoTab() {
   systemInfoDiv.innerHTML = "";
 }
 
-async function runProgram() {
-  try {
-    if (file.readRunStatus() === RunStatus.paused && runWorker && debugMode) {
-      pendingBreakpoints = [];
-      resumeProgram(file, singleStepping, runWorker);
-      updateDisplayValues();
-      return;
-    }
-
-    await clearDisplays();
-    file.setRunStatus(RunStatus.running);
-    updateDisplayValues();
-    const path = `${document.location.origin}${document.location.pathname}`.replace(
-      "/index.html",
-      "",
-    );
-    const jsCode = file.compileAsWorker(path, debugMode, false);
-    const asUrl = encodeCode(jsCode);
-
-    runWorker = new Worker(asUrl, { type: "module" });
-
-    runWorker.onmessage = async (e: MessageEvent<WebWorkerMessage>) => {
-      const data = e.data;
-
-      switch (data.type) {
-        case "write":
-          await handleWorkerIO(
-            file,
-            data,
-            runWorker,
-            elanInputOutput,
-            setPauseButtonState,
-            togggleInputStatus,
-          );
-          break;
-        case "breakpoint":
-          if (isPausedState()) {
-            pendingBreakpoints.push(data);
-          } else {
-            focusInfoTab();
-
-            printDebugInfo(handleRunWorkerPaused(data));
-
-            setPausedAtLocation(data.pausedAt);
-          }
-          break;
-        case "singlestep":
-          if (processingSingleStep) {
-            pendingBreakpoints.push(data);
-          } else {
-            processingSingleStep = true;
-            pendingBreakpoints = [];
-            if (singleStepping) {
-              focusInfoTab();
-
-              printDebugInfo(handleRunWorkerPaused(data));
-
-              setPausedAtLocation(data.pausedAt);
-            }
-          }
-          break;
-        case "status":
-          switch (data.status) {
-            case "finished":
-              handleRunWorkerFinished();
-              break;
-            case "error":
-              await handleRunWorkerError(data);
-              break;
-          }
-      }
-    };
-
-    runWorker.onerror = async (ev: ErrorEvent) => {
-      const err = new ElanRuntimeError(ev.message);
-      await showError(err, file.fileName, false);
-      file.setRunStatus(RunStatus.error);
-      updateDisplayValues();
-    };
-
-    runWorker.postMessage({ type: "start" } as WebWorkerMessage);
-  } catch (e) {
-    console.warn(e);
-    file.setRunStatus(RunStatus.error);
-    updateDisplayValues();
-  }
-}
-
 runButton?.addEventListener("click", async () => {
   file.removeAllSelectorsThatCanBe();
   await renderAsHtml(false);
   runButton.focus();
   showDisplayTab();
-  debugMode = singleStepping = processingSingleStep = false;
-  await runProgram();
+  rs.debugMode = rs.singleStepping = rs.processingSingleStep = false;
+  await runProgram(file, ideViewModel, rs, elanInputOutput);
 });
 
 runDebugButton?.addEventListener("click", async () => {
   runDebugButton.focus();
   setTimeout(showDisplayTab);
-  debugMode = true;
-  singleStepping = processingSingleStep = false;
-  await runProgram();
+  rs.debugMode = true;
+  rs.singleStepping = rs.processingSingleStep = false;
+  await runProgram(file, ideViewModel, rs, elanInputOutput);
 });
 
-stepButton?.addEventListener("click", async () => {
-  singleStepping = true;
-
-  if (pendingBreakpoints.length > 0) {
-    const next = pendingBreakpoints[0];
-    pendingBreakpoints = pendingBreakpoints.slice(1);
-    focusInfoTab();
-
-    printDebugInfo(handleRunWorkerPaused(next));
-
-    setPausedAtLocation(next.pausedAt);
-
-    systemInfoDiv.focus();
-    systemInfoDiv.classList.add("focussed");
-    return;
-  }
-
-  processingSingleStep = false;
-  if (file.readRunStatus() === RunStatus.paused && runWorker) {
-    pendingBreakpoints = [];
-    resumeProgram(file, singleStepping, runWorker);
-    updateDisplayValues();
-    return;
-  }
+stepButton?.addEventListener("click", () => {
+  stepProgram(file, rs, ideViewModel);
 });
 
 pauseButton?.addEventListener("click", () => {
-  singleStepping = true;
-  runWorker!.postMessage({ type: "pause" } as WebWorkerMessage);
+  pauseProgram(rs);
 });
 
 stopButton?.addEventListener("click", () => {
   disable([stopButton, pauseButton, stepButton], "Program is not running");
   // do rest on next event loop for responsivenesss
   setTimeout(() => {
-    debugMode = singleStepping = false;
-    if (runWorker) {
-      handleRunWorkerFinished();
-    }
+    stopProgram(file, rs, ideViewModel, elanInputOutput);
     if (testWorker) {
       endTests();
       file.setTestStatus(TestStatus.default);
@@ -927,7 +851,7 @@ function isPausedState() {
 }
 
 function setPauseButtonState(waitingForUserInput?: boolean) {
-  if (isRunningState() && debugMode && !isPausedState() && !waitingForUserInput) {
+  if (isRunningState() && rs.debugMode && !isPausedState() && !waitingForUserInput) {
     enable(pauseButton, "Pause the program");
   } else {
     disable([pauseButton], "Can only pause a program running in Debug mode");
@@ -1797,18 +1721,6 @@ function showCode() {
   }
 }
 
-function handleRunWorkerFinished() {
-  runWorker?.terminate();
-  runWorker = undefined;
-  elanInputOutput.finished();
-  console.info("elan program completed OK");
-  file.setRunStatus(RunStatus.default);
-  clearPaused();
-  updateDisplayValues();
-}
-
-let pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
-
 function printDebugSymbol(s: DebugSymbol) {
   const display = getDebugSymbol(s);
   systemInfoPrintUnsafe(display);
@@ -1854,19 +1766,6 @@ function printDebugInfo(info: DebugSymbol[] | string) {
     }
     addDebugListeners();
   }
-}
-
-async function handleRunWorkerError(data: WebWorkerStatusMessage) {
-  infoTabLabel.click();
-  runWorker?.terminate();
-  runWorker = undefined;
-  elanInputOutput.finished();
-  const e = data.error;
-  const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
-  await showError(err, file.fileName, false);
-  file.setRunStatus(RunStatus.error);
-  clearPaused();
-  updateDisplayValues();
 }
 
 function chooser(uploader: (event: Event) => void, noCheck: boolean) {
