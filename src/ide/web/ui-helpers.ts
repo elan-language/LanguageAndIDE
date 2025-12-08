@@ -3,6 +3,7 @@
 import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
 import { RunStatus } from "../frames/status-enums";
 import { WebWorkerReadMessage, WebWorkerStatusMessage } from "./web-worker-messages";
+import { File } from "../frames/frame-interfaces/file";
 
 // from https://stackoverflow.com/questions/4565112/how-to-find-out-if-the-user-browser-is-chrome
 export function checkIsChrome() {
@@ -69,4 +70,6 @@ export interface IIDEViewModel {
   printDebugInfo(info: DebugSymbol[] | string): void;
   setPausedAtLocation(location: string): void;
   clickInfoTab(): void;
+  run(file: File): Promise<void>;
+  runDebug(): void;
 }
