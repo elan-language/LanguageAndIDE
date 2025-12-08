@@ -19,7 +19,7 @@ import { Group, Individual } from "../frames/frame-interfaces/user-config";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
 import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
-import { getDebugSymbol, getSummaryHtml, ProgramRunner } from "./run-program-scripts";
+import { getDebugSymbol, getSummaryHtml, ProgramRunner } from "./program-runner";
 import { checkIsChrome, confirmContinueOnNonChromeBrowser, IIDEViewModel } from "./ui-helpers";
 import {
   encodeCode,
@@ -182,7 +182,7 @@ class IDEViewModel implements IIDEViewModel {
 }
 const ideViewModel = new IDEViewModel();
 
-const rs = new ProgramRunner();
+const programRunner = new ProgramRunner();
 
 // add all the listeners
 
@@ -223,26 +223,26 @@ function focusInfoTab() {
 }
 
 runButton?.addEventListener("click", async () => {
-  await rs.run(file, ideViewModel, elanInputOutput);
+  await programRunner.run(file, ideViewModel, elanInputOutput);
 });
 
 runDebugButton?.addEventListener("click", async () => {
-  await rs.runDebug(file, ideViewModel, elanInputOutput);
+  await programRunner.runDebug(file, ideViewModel, elanInputOutput);
 });
 
 stepButton?.addEventListener("click", () => {
-  rs.step(file, ideViewModel);
+  programRunner.step(file, ideViewModel);
 });
 
 pauseButton?.addEventListener("click", () => {
-  rs.pause();
+  programRunner.pause();
 });
 
 stopButton?.addEventListener("click", () => {
   disable([stopButton, pauseButton, stepButton], "Program is not running");
   // do rest on next event loop for responsivenesss
   setTimeout(() => {
-    rs.stop(file, ideViewModel, elanInputOutput);
+    programRunner.stop(file, ideViewModel, elanInputOutput);
     if (testWorker) {
       endTests();
       file.setTestStatus(TestStatus.default);
@@ -846,7 +846,7 @@ function isPausedState() {
 }
 
 function setPauseButtonState(waitingForUserInput?: boolean) {
-  if (isRunningState() && rs.debugMode && !isPausedState() && !waitingForUserInput) {
+  if (isRunningState() && programRunner.isDebugMode() && !isPausedState() && !waitingForUserInput) {
     enable(pauseButton, "Pause the program");
   } else {
     disable([pauseButton], "Can only pause a program running in Debug mode");
