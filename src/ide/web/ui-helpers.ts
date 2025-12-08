@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
+import { RunStatus } from "../frames/status-enums";
 import { WebWorkerReadMessage, WebWorkerStatusMessage } from "./web-worker-messages";
 
 // from https://stackoverflow.com/questions/4565112/how-to-find-out-if-the-user-browser-is-chrome
@@ -55,4 +57,15 @@ export function readMsg(value: string | [string, string]) {
 
 export function errorMsg(value: unknown) {
   return { type: "status", status: "error", error: value } as WebWorkerStatusMessage;
+}
+
+export interface IIDEViewModel {
+  focusInfoTab(): void;
+  updateDisplayValues(): void;
+  setPauseButtonState(waitingForUserInput?: boolean): void;
+  togggleInputStatus(rs: RunStatus): void;
+  clearDisplays(): Promise<void>;
+  showError(err: Error, fileName: string, reset: boolean): Promise<void>;
+  printDebugInfo(info: DebugSymbol[] | string): void;
+  setPausedAtLocation(location: string): void;
 }

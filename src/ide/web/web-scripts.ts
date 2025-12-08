@@ -27,7 +27,7 @@ import {
   handleWorkerIO,
   resumeProgram,
 } from "./run-program-scripts";
-import { checkIsChrome, confirmContinueOnNonChromeBrowser } from "./ui-helpers";
+import { checkIsChrome, confirmContinueOnNonChromeBrowser, IIDEViewModel } from "./ui-helpers";
 import {
   encodeCode,
   fetchDefaultProfile,
@@ -142,6 +142,42 @@ let errorDOMEvent: Event | undefined;
 let errorEditorEvent: editorEvent | undefined;
 let errorStack: string | undefined;
 
+class IDEViewModel implements IIDEViewModel {
+  focusInfoTab() {
+    focusInfoTab();
+  }
+
+  updateDisplayValues() {
+    updateDisplayValues();
+  }
+
+  setPauseButtonState(waitingForUserInput?: boolean) {
+    setPauseButtonState(waitingForUserInput);
+  }
+
+  togggleInputStatus(rs: RunStatus) {
+    togggleInputStatus(rs);
+  }
+
+  async clearDisplays() {
+    await clearDisplays();
+  }
+
+  async showError(err: Error, fileName: string, reset: boolean) {
+    await showError(err, fileName, reset);
+  }
+
+  printDebugInfo(info: DebugSymbol[] | string) {
+    printDebugInfo(info);
+  }
+
+  setPausedAtLocation(location: string) {
+    setPausedAtLocation(location);
+  }
+}
+
+const ideViewModel = new IDEViewModel();
+
 // add all the listeners
 
 undoButton.addEventListener("click", undo);
@@ -180,18 +216,18 @@ function focusInfoTab() {
   systemInfoDiv.innerHTML = "";
 }
 
-async function runProgram() {
+async function runProgram(file: File, vm: IDEViewModel) {
   try {
     if (file.readRunStatus() === RunStatus.paused && runWorker && debugMode) {
       pendingBreakpoints = [];
       resumeProgram(file, singleStepping, runWorker);
-      updateDisplayValues();
+      vm.updateDisplayValues();
       return;
     }
 
-    await clearDisplays();
+    await vm.clearDisplays();
     file.setRunStatus(RunStatus.running);
-    updateDisplayValues();
+    vm.updateDisplayValues();
     const path = `${document.location.origin}${document.location.pathname}`.replace(
       "/index.html",
       "",
@@ -206,24 +242,17 @@ async function runProgram() {
 
       switch (data.type) {
         case "write":
-          await handleWorkerIO(
-            file,
-            data,
-            runWorker,
-            elanInputOutput,
-            setPauseButtonState,
-            togggleInputStatus,
-          );
+          await handleWorkerIO(file, data, runWorker, elanInputOutput, vm);
           break;
         case "breakpoint":
           if (isPausedState()) {
             pendingBreakpoints.push(data);
           } else {
-            focusInfoTab();
+            vm.focusInfoTab();
 
-            printDebugInfo(handleRunWorkerPaused(data));
+            vm.printDebugInfo(handleRunWorkerPaused(data));
 
-            setPausedAtLocation(data.pausedAt);
+            vm.setPausedAtLocation(data.pausedAt);
           }
           break;
         case "singlestep":
@@ -233,11 +262,11 @@ async function runProgram() {
             processingSingleStep = true;
             pendingBreakpoints = [];
             if (singleStepping) {
-              focusInfoTab();
+              vm.focusInfoTab();
 
-              printDebugInfo(handleRunWorkerPaused(data));
+              vm.printDebugInfo(handleRunWorkerPaused(data));
 
-              setPausedAtLocation(data.pausedAt);
+              vm.setPausedAtLocation(data.pausedAt);
             }
           }
           break;
@@ -255,16 +284,16 @@ async function runProgram() {
 
     runWorker.onerror = async (ev: ErrorEvent) => {
       const err = new ElanRuntimeError(ev.message);
-      await showError(err, file.fileName, false);
+      await vm.showError(err, file.fileName, false);
       file.setRunStatus(RunStatus.error);
-      updateDisplayValues();
+      vm.updateDisplayValues();
     };
 
     runWorker.postMessage({ type: "start" } as WebWorkerMessage);
   } catch (e) {
     console.warn(e);
     file.setRunStatus(RunStatus.error);
-    updateDisplayValues();
+    vm.updateDisplayValues();
   }
 }
 
@@ -274,7 +303,7 @@ runButton?.addEventListener("click", async () => {
   runButton.focus();
   showDisplayTab();
   debugMode = singleStepping = processingSingleStep = false;
-  await runProgram();
+  await runProgram(file, ideViewModel);
 });
 
 runDebugButton?.addEventListener("click", async () => {
@@ -282,7 +311,7 @@ runDebugButton?.addEventListener("click", async () => {
   setTimeout(showDisplayTab);
   debugMode = true;
   singleStepping = processingSingleStep = false;
-  await runProgram();
+  await runProgram(file, ideViewModel);
 });
 
 stepButton?.addEventListener("click", async () => {

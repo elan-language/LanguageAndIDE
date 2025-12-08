@@ -11,6 +11,7 @@ import { File } from "../frames/frame-interfaces/file";
 import { RunStatus } from "../frames/status-enums";
 import { WebInputOutput } from "./web-input-output";
 import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
+import { IIDEViewModel } from "./ui-helpers";
 
 export function readMsg(value: string | [string, string]) {
   return { type: "read", value: value } as WebWorkerReadMessage;
@@ -44,20 +45,19 @@ export async function handleWorkerIO(
   data: WebWorkerWriteMessage,
   runWorker: Worker | undefined,
   elanInputOutput: WebInputOutput,
-  setPauseButtonState: (b: boolean) => void,
-  togggleInputStatus: (rs: RunStatus) => void,
+  vm: IIDEViewModel,
 ) {
   switch (data.function) {
     case "readLine":
-      setPauseButtonState(true);
-      togggleInputStatus(RunStatus.input);
+      vm.setPauseButtonState(true);
+      vm.togggleInputStatus(RunStatus.input);
       const line = await elanInputOutput.readLine();
       // program may have been stopped so check state
       const rs = file.readRunStatus();
       if (rs === RunStatus.input) {
-        togggleInputStatus(RunStatus.running);
+        vm.togggleInputStatus(RunStatus.running);
       }
-      setPauseButtonState(false);
+      vm.setPauseButtonState(false);
       runWorker?.postMessage(readMsg(line));
       break;
     case "waitForAnyKey":
