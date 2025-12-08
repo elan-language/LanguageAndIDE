@@ -498,3 +498,46 @@ export async function runProgram(
     vm.updateDisplayValues();
   }
 }
+
+export function stepProgram(file: File, rs: WrappedRunStatus, vm: IIDEViewModel) {
+  rs.singleStepping = true;
+
+  if (rs.pendingBreakpoints.length > 0) {
+    const next = rs.pendingBreakpoints[0];
+    rs.pendingBreakpoints = rs.pendingBreakpoints.slice(1);
+    vm.focusInfoTab();
+
+    vm.printDebugInfo(handleRunWorkerPaused(next));
+
+    vm.setPausedAtLocation(next.pausedAt);
+
+    // systemInfoDiv.focus();
+    // systemInfoDiv.classList.add("focussed");
+    return;
+  }
+
+  rs.processingSingleStep = false;
+  if (file.readRunStatus() === RunStatus.paused && rs.runWorker) {
+    rs.pendingBreakpoints = [];
+    resumeProgram(file, rs.singleStepping, rs.runWorker);
+    vm.updateDisplayValues();
+    return;
+  }
+}
+
+export function pauseProgram(rs: WrappedRunStatus) {
+  rs.singleStepping = true;
+  rs.runWorker!.postMessage({ type: "pause" } as WebWorkerMessage);
+}
+
+export function stopProgram(
+  file: File,
+  rs: WrappedRunStatus,
+  vm: IIDEViewModel,
+  elanInputOutput: WebInputOutput,
+) {
+  rs.debugMode = rs.singleStepping = false;
+  if (rs.runWorker) {
+    handleRunWorkerFinished(file, rs, vm, elanInputOutput);
+  }
+}

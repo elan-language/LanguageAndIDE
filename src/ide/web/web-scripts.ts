@@ -22,10 +22,10 @@ import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
 import {
   getDebugSymbol,
   getSummaryHtml,
-  handleRunWorkerFinished,
-  handleRunWorkerPaused,
-  resumeProgram,
+  pauseProgram,
   runProgram,
+  stepProgram,
+  stopProgram,
   WrappedRunStatus,
 } from "./run-program-scripts";
 import { checkIsChrome, confirmContinueOnNonChromeBrowser, IIDEViewModel } from "./ui-helpers";
@@ -235,45 +235,19 @@ runDebugButton?.addEventListener("click", async () => {
   await runProgram(file, ideViewModel, rs, elanInputOutput);
 });
 
-stepButton?.addEventListener("click", async () => {
-  rs.singleStepping = true;
-
-  if (rs.pendingBreakpoints.length > 0) {
-    const next = rs.pendingBreakpoints[0];
-    rs.pendingBreakpoints = rs.pendingBreakpoints.slice(1);
-    focusInfoTab();
-
-    printDebugInfo(handleRunWorkerPaused(next));
-
-    setPausedAtLocation(next.pausedAt);
-
-    systemInfoDiv.focus();
-    systemInfoDiv.classList.add("focussed");
-    return;
-  }
-
-  rs.processingSingleStep = false;
-  if (file.readRunStatus() === RunStatus.paused && rs.runWorker) {
-    rs.pendingBreakpoints = [];
-    resumeProgram(file, rs.singleStepping, rs.runWorker);
-    updateDisplayValues();
-    return;
-  }
+stepButton?.addEventListener("click", () => {
+  stepProgram(file, rs, ideViewModel);
 });
 
 pauseButton?.addEventListener("click", () => {
-  rs.singleStepping = true;
-  rs.runWorker!.postMessage({ type: "pause" } as WebWorkerMessage);
+  pauseProgram(rs);
 });
 
 stopButton?.addEventListener("click", () => {
   disable([stopButton, pauseButton, stepButton], "Program is not running");
   // do rest on next event loop for responsivenesss
   setTimeout(() => {
-    rs.debugMode = rs.singleStepping = false;
-    if (rs.runWorker) {
-      handleRunWorkerFinished(file, rs, ideViewModel, elanInputOutput);
-    }
+    stopProgram(file, rs, ideViewModel, elanInputOutput);
     if (testWorker) {
       endTests();
       file.setTestStatus(TestStatus.default);
