@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
+import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
+import { File } from "../frames/frame-interfaces/file";
+import { RunStatus } from "../frames/status-enums";
+import { IIDEViewModel } from "./ui-helpers";
+import { encodeCode } from "./web-helpers";
+import { WebInputOutput } from "./web-input-output";
 import {
   WebWorkerBreakpointMessage,
   WebWorkerMessage,
@@ -7,31 +14,71 @@ import {
   WebWorkerStatusMessage,
   WebWorkerWriteMessage,
 } from "./web-worker-messages";
-import { File } from "../frames/frame-interfaces/file";
-import { RunStatus } from "../frames/status-enums";
-import { WebInputOutput } from "./web-input-output";
-import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
-import { IIDEViewModel } from "./ui-helpers";
-import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
-import { encodeCode } from "./web-helpers";
 
-export class WrappedRunStatus {
+export class ProgramRunner {
   singleStepping = false;
   processingSingleStep = false;
   debugMode = false;
   pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
   runWorker: Worker | undefined;
+
+  async runDebug(file: File, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
+    vm.runDebug();
+    this.debugMode = true;
+    this.singleStepping = this.processingSingleStep = false;
+    await runProgram(file, vm, this, elanInputOutput);
+  }
+
+  async run(file: File, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
+    await vm.run(file);
+    this.debugMode = this.singleStepping = this.processingSingleStep = false;
+    await runProgram(file, vm, this, elanInputOutput);
+  }
+
+  stop(file: File, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
+    this.debugMode = this.singleStepping = false;
+    if (this.runWorker) {
+      handleRunWorkerFinished(file, this, vm, elanInputOutput);
+    }
+  }
+
+  pause() {
+    this.singleStepping = true;
+    this.runWorker!.postMessage({ type: "pause" } as WebWorkerMessage);
+  }
+
+  step(file: File, vm: IIDEViewModel) {
+    this.singleStepping = true;
+
+    if (this.pendingBreakpoints.length > 0) {
+      const next = this.pendingBreakpoints[0];
+      this.pendingBreakpoints = this.pendingBreakpoints.slice(1);
+      vm.focusInfoTab();
+
+      vm.printDebugInfo(handleRunWorkerPaused(next));
+
+      vm.setPausedAtLocation(next.pausedAt);
+      return;
+    }
+
+    this.processingSingleStep = false;
+    if (file.readRunStatus() === RunStatus.paused && this.runWorker) {
+      this.pendingBreakpoints = [];
+      resumeProgram(file, this);
+      vm.updateDisplayValues();
+    }
+  }
 }
 
-export function readMsg(value: string | [string, string]) {
+function readMsg(value: string | [string, string]) {
   return { type: "read", value: value } as WebWorkerReadMessage;
 }
 
-export function errorMsg(value: unknown) {
+function errorMsg(value: unknown) {
   return { type: "status", status: "error", error: value } as WebWorkerStatusMessage;
 }
 
-export function clearPaused() {
+function clearPaused() {
   const pausedAt = document.getElementsByClassName("paused-at");
 
   for (const e of pausedAt) {
@@ -39,18 +86,18 @@ export function clearPaused() {
   }
 }
 
-export function resumeProgram(file: File, singleStepping: boolean, runWorker: Worker) {
-  if (singleStepping) {
-    runWorker.postMessage({ type: "pause" } as WebWorkerMessage);
+function resumeProgram(file: File, rs: ProgramRunner) {
+  if (rs.singleStepping) {
+    rs.runWorker!.postMessage({ type: "pause" } as WebWorkerMessage);
   }
 
-  runWorker.postMessage({ type: "resume" } as WebWorkerMessage);
+  rs.runWorker!.postMessage({ type: "resume" } as WebWorkerMessage);
 
   clearPaused();
   file.setRunStatus(RunStatus.running);
 }
 
-export async function handleWorkerIO(
+async function handleWorkerIO(
   file: File,
   data: WebWorkerWriteMessage,
   runWorker: Worker | undefined,
@@ -117,7 +164,7 @@ export function getSummaryHtml(content: string) {
   return `<div class="summary" tabindex="0">${content}</div>`;
 }
 
-export function getDebugHtml(content1: string, content2: string) {
+function getDebugHtml(content1: string, content2: string) {
   return `<div class="expandable">${getSummaryHtml(content1)}<div class="detail">${content2}</div></div>`;
 }
 
@@ -372,7 +419,7 @@ export function getDebugSymbol(s: DebugSymbol) {
   return getDebugSymbolHtml(s.name, "", s.value, typeMap);
 }
 
-export function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): DebugSymbol[] | string {
+function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): DebugSymbol[] | string {
   const variables = data.value;
   if (variables.length > 0) {
     return variables;
@@ -381,9 +428,9 @@ export function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): DebugSy
   }
 }
 
-export function handleRunWorkerFinished(
+function handleRunWorkerFinished(
   file: File,
-  rs: WrappedRunStatus,
+  rs: ProgramRunner,
   vm: IIDEViewModel,
   elanInputOutput: WebInputOutput,
 ) {
@@ -396,10 +443,10 @@ export function handleRunWorkerFinished(
   vm.updateDisplayValues();
 }
 
-export async function handleRunWorkerError(
+async function handleRunWorkerError(
   data: WebWorkerStatusMessage,
   file: File,
-  rs: WrappedRunStatus,
+  rs: ProgramRunner,
   vm: IIDEViewModel,
   elanInputOutput: WebInputOutput,
 ) {
@@ -415,16 +462,16 @@ export async function handleRunWorkerError(
   vm.updateDisplayValues();
 }
 
-export async function runProgram(
+async function runProgram(
   file: File,
   vm: IIDEViewModel,
-  rs: WrappedRunStatus,
+  rs: ProgramRunner,
   elanInputOutput: WebInputOutput,
 ) {
   try {
     if (file.readRunStatus() === RunStatus.paused && rs.runWorker && rs.debugMode) {
       rs.pendingBreakpoints = [];
-      resumeProgram(file, rs.singleStepping, rs.runWorker);
+      resumeProgram(file, rs);
       vm.updateDisplayValues();
       return;
     }
@@ -496,48 +543,5 @@ export async function runProgram(
     console.warn(e);
     file.setRunStatus(RunStatus.error);
     vm.updateDisplayValues();
-  }
-}
-
-export function stepProgram(file: File, rs: WrappedRunStatus, vm: IIDEViewModel) {
-  rs.singleStepping = true;
-
-  if (rs.pendingBreakpoints.length > 0) {
-    const next = rs.pendingBreakpoints[0];
-    rs.pendingBreakpoints = rs.pendingBreakpoints.slice(1);
-    vm.focusInfoTab();
-
-    vm.printDebugInfo(handleRunWorkerPaused(next));
-
-    vm.setPausedAtLocation(next.pausedAt);
-
-    // systemInfoDiv.focus();
-    // systemInfoDiv.classList.add("focussed");
-    return;
-  }
-
-  rs.processingSingleStep = false;
-  if (file.readRunStatus() === RunStatus.paused && rs.runWorker) {
-    rs.pendingBreakpoints = [];
-    resumeProgram(file, rs.singleStepping, rs.runWorker);
-    vm.updateDisplayValues();
-    return;
-  }
-}
-
-export function pauseProgram(rs: WrappedRunStatus) {
-  rs.singleStepping = true;
-  rs.runWorker!.postMessage({ type: "pause" } as WebWorkerMessage);
-}
-
-export function stopProgram(
-  file: File,
-  rs: WrappedRunStatus,
-  vm: IIDEViewModel,
-  elanInputOutput: WebInputOutput,
-) {
-  rs.debugMode = rs.singleStepping = false;
-  if (rs.runWorker) {
-    handleRunWorkerFinished(file, rs, vm, elanInputOutput);
   }
 }

@@ -19,15 +19,7 @@ import { Group, Individual } from "../frames/frame-interfaces/user-config";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
 import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
-import {
-  getDebugSymbol,
-  getSummaryHtml,
-  pauseProgram,
-  runProgram,
-  stepProgram,
-  stopProgram,
-  WrappedRunStatus,
-} from "./run-program-scripts";
+import { getDebugSymbol, getSummaryHtml, ProgramRunner } from "./run-program-scripts";
 import { checkIsChrome, confirmContinueOnNonChromeBrowser, IIDEViewModel } from "./ui-helpers";
 import {
   encodeCode,
@@ -175,10 +167,22 @@ class IDEViewModel implements IIDEViewModel {
   clickInfoTab() {
     infoTabLabel.click();
   }
+
+  async run(file: File) {
+    file.removeAllSelectorsThatCanBe();
+    await renderAsHtml(false);
+    runButton.focus();
+    showDisplayTab();
+  }
+
+  runDebug() {
+    runDebugButton.focus();
+    setTimeout(showDisplayTab);
+  }
 }
 const ideViewModel = new IDEViewModel();
 
-const rs = new WrappedRunStatus();
+const rs = new ProgramRunner();
 
 // add all the listeners
 
@@ -219,35 +223,26 @@ function focusInfoTab() {
 }
 
 runButton?.addEventListener("click", async () => {
-  file.removeAllSelectorsThatCanBe();
-  await renderAsHtml(false);
-  runButton.focus();
-  showDisplayTab();
-  rs.debugMode = rs.singleStepping = rs.processingSingleStep = false;
-  await runProgram(file, ideViewModel, rs, elanInputOutput);
+  await rs.run(file, ideViewModel, elanInputOutput);
 });
 
 runDebugButton?.addEventListener("click", async () => {
-  runDebugButton.focus();
-  setTimeout(showDisplayTab);
-  rs.debugMode = true;
-  rs.singleStepping = rs.processingSingleStep = false;
-  await runProgram(file, ideViewModel, rs, elanInputOutput);
+  await rs.runDebug(file, ideViewModel, elanInputOutput);
 });
 
 stepButton?.addEventListener("click", () => {
-  stepProgram(file, rs, ideViewModel);
+  rs.step(file, ideViewModel);
 });
 
 pauseButton?.addEventListener("click", () => {
-  pauseProgram(rs);
+  rs.pause();
 });
 
 stopButton?.addEventListener("click", () => {
   disable([stopButton, pauseButton, stepButton], "Program is not running");
   // do rest on next event loop for responsivenesss
   setTimeout(() => {
-    stopProgram(file, rs, ideViewModel, elanInputOutput);
+    rs.stop(file, ideViewModel, elanInputOutput);
     if (testWorker) {
       endTests();
       file.setTestStatus(TestStatus.default);
