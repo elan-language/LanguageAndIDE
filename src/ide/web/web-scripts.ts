@@ -19,7 +19,7 @@ import { Group, Individual } from "../frames/frame-interfaces/user-config";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
 import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
-import { autoSave, canUndo, FileData, hasUnsavedChanges, updateIndexes } from "./file-helpers";
+import { UndoRedoHandler } from "./file-helpers";
 import { getDebugSymbol, getSummaryHtml, ProgramRunner } from "./program-runner";
 import { TestRunner } from "./test-runner";
 import { checkIsChrome, confirmContinueOnNonChromeBrowser, IIDEViewModel } from "./ui-helpers";
@@ -107,8 +107,6 @@ const lastDirId = "elan-files";
 
 const elanInputOutput = new WebInputOutput();
 
-let undoRedoing: boolean = false;
-
 let file: File;
 let profile: Profile;
 let userName: string | undefined;
@@ -181,6 +179,15 @@ class IDEViewModel implements IIDEViewModel {
   updateFileName(unsaved: string) {
     codeTitle.innerText = `file: ${file.fileName}${unsaved}`;
   }
+
+  async updateFileAndCode(code: string) {
+    await updateFileAndCode(code);
+  }
+
+  disableUndoRedoButtons(msg: string) {
+    disable([undoButton, redoButton], msg);
+    cursorWait();
+  }
 }
 const ideViewModel = new IDEViewModel();
 
@@ -188,13 +195,13 @@ const programRunner = new ProgramRunner();
 
 const testRunner = new TestRunner();
 
-const fileData = new FileData();
+const undoRedoHandler = new UndoRedoHandler();
 
 // add all the listeners
 
-undoButton.addEventListener("click", undo);
+undoButton.addEventListener("click", () => undoRedoHandler.undo(ideViewModel));
 
-redoButton.addEventListener("click", redo);
+redoButton.addEventListener("click", () => undoRedoHandler.redo(ideViewModel));
 
 displayDiv.addEventListener("click", () => {
   displayDiv.getElementsByTagName("input")?.[0]?.focus();
@@ -287,9 +294,9 @@ newButton?.addEventListener("click", async (event: Event) => {
   if (isDisabled(event)) {
     return;
   }
-  if (checkForUnsavedChanges(fileData, cancelMsg)) {
+  if (checkForUnsavedChanges(undoRedoHandler, cancelMsg)) {
     await clearDisplays();
-    clearUndoRedoAndAutoSave(fileData);
+    undoRedoHandler.clearUndoRedoAndAutoSave();
     file = new FileImpl(hash, profile, userName, transforms(), stdlib);
     await initialDisplay(false);
   }
@@ -310,7 +317,7 @@ async function loadDemoFile(fileName: string) {
   const rawCode = await f.text();
   file = new FileImpl(hash, profile, userName, transforms(), stdlib);
   file.fileName = fileName;
-  clearUndoRedoAndAutoSave(fileData);
+  undoRedoHandler.clearUndoRedoAndAutoSave();
   await readAndParse(rawCode, fileName, ParseMode.loadNew);
 }
 
@@ -338,12 +345,12 @@ saveAsStandaloneButton.addEventListener("click", async (event: Event) => {
   html = html.replace("injected_style_css", cssStyle);
   html = html.replace("injected_ide_css", cssIde);
 
-  await chromeSave(html, false, "standalone.html");
+  await undoRedoHandler.chromeSave(file, html, false, "standalone.html");
 });
 
 for (const elem of demoFiles) {
   elem.addEventListener("click", async () => {
-    if (checkForUnsavedChanges(fileData, cancelMsg)) {
+    if (checkForUnsavedChanges(undoRedoHandler, cancelMsg)) {
       const fileName = `${elem.id}`;
       await loadDemoFile(fileName);
     }
@@ -625,12 +632,12 @@ if (okToContinue) {
 
 const cancelMsg = "You have unsaved changes - they will be lost unless you cancel";
 
-function checkForUnsavedChanges(fd: FileData, msg: string): boolean {
-  return hasUnsavedChanges(fd, file) ? confirm(msg) : true;
+function checkForUnsavedChanges(fd: UndoRedoHandler, msg: string): boolean {
+  return fd.hasUnsavedChanges(file) ? confirm(msg) : true;
 }
 
 async function setup(p: Profile) {
-  clearUndoRedoAndAutoSave(fileData);
+  undoRedoHandler.clearUndoRedoAndAutoSave();
   profile = p;
 
   file = new FileImpl(hash, profile, userName, transforms(), stdlib);
@@ -655,16 +662,6 @@ async function clearDisplays() {
   await elanInputOutput.clearDisplay();
 }
 
-function clearUndoRedoAndAutoSave(fd: FileData) {
-  fd.autoSaveFileHandle = undefined;
-  fd.previousFileIndex = fd.nextFileIndex = fd.currentFileIndex = -1;
-  localStorage.clear();
-  fd.undoRedoFiles = [];
-  fd.lastSavedHash = "";
-  fd.currentFieldId = "";
-  fd.undoRedoHash = "";
-}
-
 async function resetFile() {
   file = new FileImpl(hash, profile, userName, transforms(), stdlib);
   await initialDisplay(false);
@@ -678,12 +675,11 @@ type: ${evt.type},
     : "no DOM event recorded";
 }
 
-async function gatherDebugInfo(fd: FileData) {
+async function gatherDebugInfo(fd: UndoRedoHandler) {
   const elanVersion = file.getVersionString();
   const now = new Date().toLocaleString();
   const body = document.getElementsByTagName("body")[0].innerHTML;
-  const id = fd.undoRedoFiles[fd.undoRedoFiles.length - 1];
-  const code = localStorage.getItem(id);
+  const code = fd.getLastCodeVersion();
   const lde = domEventType(errorDOMEvent);
   const lee = toDebugString(errorEditorEvent);
   const es = errorStack ?? "no stack recorded";
@@ -733,7 +729,7 @@ async function showError(err: Error, fileName: string, reset: boolean) {
       errorStack = err.stack;
       document
         .getElementById("bug-report")
-        ?.addEventListener("click", () => gatherDebugInfo(fileData));
+        ?.addEventListener("click", () => gatherDebugInfo(undoRedoHandler));
     }
   } else {
     systemInfoPrintSafe(err.message ?? "Unknown error parsing file");
@@ -775,8 +771,8 @@ async function initialDisplay(reset: boolean) {
   const ps = file.readParseStatus();
   if (ps === ParseStatus.valid || ps === ParseStatus.default || ps === ParseStatus.incomplete) {
     await refreshAndDisplay(false, false);
-    fileData.lastSavedHash = fileData.lastSavedHash || file.currentHash;
-    updateNameAndSavedStatus(fileData, ideViewModel);
+    undoRedoHandler.updateHash(file);
+    updateNameAndSavedStatus(undoRedoHandler, ideViewModel);
     if (reset) {
       const code = await file.renderAsSource();
       worksheetIFrame.contentWindow?.postMessage(`code:reset:${code}`, "*");
@@ -807,8 +803,8 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
   return { control: e.ctrlKey || e.metaKey, shift: e.shiftKey, alt: e.altKey };
 }
 
-function updateNameAndSavedStatus(fd: FileData, vm: IIDEViewModel) {
-  const unsaved = hasUnsavedChanges(fd, file) ? " UNSAVED" : "";
+function updateNameAndSavedStatus(fd: UndoRedoHandler, vm: IIDEViewModel) {
+  const unsaved = fd.hasUnsavedChanges(file) ? " UNSAVED" : "";
   vm.updateFileName(unsaved);
 }
 
@@ -850,7 +846,7 @@ function setPauseButtonState(waitingForUserInput?: boolean) {
 }
 
 function updateDisplayValues() {
-  updateNameAndSavedStatus(fileData, ideViewModel);
+  updateNameAndSavedStatus(undoRedoHandler, ideViewModel);
 
   // Button control
   const isEmpty = file.readParseStatus() === ParseStatus.default;
@@ -941,7 +937,7 @@ function updateDisplayValues() {
       disable([saveButton], "Some code must be added in order to save");
     } else if (!(isParsing || isIncomplete)) {
       disable([saveButton], "Invalid code cannot be saved");
-    } else if (fileData.autoSaveFileHandle) {
+    } else if (undoRedoHandler.isAutosaving()) {
       disable([saveButton], "Autosave is enabled- cancel to manual save");
     } else {
       enable(saveButton, "Save the code into a file");
@@ -963,19 +959,19 @@ function updateDisplayValues() {
       enable(saveAsStandaloneButton, "Save the program as a standalone webpage");
     }
 
-    if (canUndo(fileData)) {
+    if (undoRedoHandler.canUndo()) {
       enable(undoButton, "Undo last change (Ctrl+z)");
     } else {
       disable([undoButton], "Nothing to undo");
     }
 
-    if (fileData.nextFileIndex === -1) {
-      disable([redoButton], "Nothing to redo");
-    } else {
+    if (undoRedoHandler.canRedo()) {
       enable(redoButton, "Redo last change (Ctrl+y)");
+    } else {
+      disable([redoButton], "Nothing to redo");
     }
 
-    if (fileData.autoSaveFileHandle) {
+    if (undoRedoHandler.isAutosaving()) {
       autoSaveButton.innerText = "cancel auto save";
       enable(autoSaveButton, "Click to turn auto-save off and resume manual saving.");
     } else {
@@ -1170,11 +1166,11 @@ async function handleUndoAndRedo(event: Event, msg: editorEvent) {
     switch (msg.key) {
       case "z":
         event.stopPropagation();
-        await undo();
+        await undoRedoHandler.undo(ideViewModel);
         return true;
       case "y":
         event.stopPropagation();
-        await redo();
+        await undoRedoHandler.redo(ideViewModel);
         return true;
     }
   }
@@ -1502,7 +1498,7 @@ async function updateContent(text: string, editingField: boolean) {
     await navigator.clipboard.writeText(allCode);
   }
 
-  await localAndAutoSave(focused, editingField, fileData);
+  await undoRedoHandler.localAndAutoSave(file, focused, editingField, ideViewModel);
   updateDisplayValues();
 
   if (!isElanProduction) {
@@ -1518,90 +1514,10 @@ async function updateContent(text: string, editingField: boolean) {
   cursorDefault();
 }
 
-async function localAndAutoSave(
-  field: HTMLElement | undefined,
-  editingField: boolean,
-  fd: FileData,
-) {
-  let code = "";
-  const newFieldId = editingField ? field?.id : undefined;
-  const parseStatus = file.readParseStatus();
-
-  if (parseStatus === ParseStatus.valid || parseStatus === ParseStatus.incomplete) {
-    // save to local store
-
-    if (fd.undoRedoHash !== file.currentHash && !undoRedoing) {
-      if (fd.nextFileIndex !== -1 && fd.nextFileIndex > fd.currentFileIndex) {
-        const trimedIds = fd.undoRedoFiles.slice(fd.nextFileIndex);
-        fd.undoRedoFiles = fd.undoRedoFiles.slice(0, fd.nextFileIndex);
-
-        for (const id of trimedIds) {
-          localStorage.removeItem(id);
-        }
-      }
-      code = await file.renderAsSource();
-      const timestamp = Date.now();
-      const overWriteLastEntry = newFieldId === fd.currentFieldId;
-      const id = overWriteLastEntry
-        ? fd.undoRedoFiles[fd.currentFileIndex]
-        : `${file.fileName}.${timestamp}`;
-
-      if (!overWriteLastEntry) {
-        fd.undoRedoFiles.push(id);
-      }
-
-      fd.previousFileIndex = fd.undoRedoFiles.length > 1 ? fd.undoRedoFiles.length - 2 : -1;
-      fd.currentFileIndex = fd.undoRedoFiles.length - 1;
-      fd.nextFileIndex = -1;
-
-      localStorage.setItem(id, code);
-      saveButton.classList.add("unsaved");
-      fd.undoRedoHash = file.currentHash;
-      fd.currentFieldId = newFieldId ?? "";
-
-      while (fd.undoRedoFiles.length >= 20) {
-        const toTrim = fd.undoRedoFiles[0];
-        fd.undoRedoFiles = fd.undoRedoFiles.slice(1);
-        localStorage.removeItem(toTrim);
-      }
-    }
-
-    // autosave if setup
-    code = code || (await file.renderAsSource());
-    await autoSave(code, fileData, file, ideViewModel);
-  }
-
-  fd.undoRedoHash = file.currentHash;
-  undoRedoing = false;
-}
-
-async function replaceCode(indexToUse: number, msg: string, fd: FileData) {
-  const id = fd.undoRedoFiles[indexToUse];
-  updateIndexes(indexToUse, fd);
-  const code = localStorage.getItem(id);
-  // reset so changes on same field after this will be seen
-  fd.currentFieldId = "";
-  if (code) {
-    disable([undoButton, redoButton], msg);
-    cursorWait();
-    undoRedoing = true;
-    const fn = file.fileName;
-    file = new FileImpl(hash, profile, userName, transforms(), stdlib);
-    await displayCode(code, fn);
-  }
-}
-
-async function undo() {
-  if (canUndo(fileData)) {
-    const indexToUse = fileData.previousFileIndex;
-    await replaceCode(indexToUse, "Undoing...", fileData);
-  }
-}
-
-async function redo() {
-  if (fileData.nextFileIndex > -1) {
-    await replaceCode(fileData.nextFileIndex, "Redoing...", fileData);
-  }
+async function updateFileAndCode(code: string) {
+  const fn = file.fileName;
+  file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+  await displayCode(code, fn);
 }
 
 async function inactivityRefresh() {
@@ -1757,7 +1673,7 @@ function printDebugInfo(info: DebugSymbol[] | string) {
 
 function chooser(uploader: (event: Event) => void, noCheck: boolean) {
   return () => {
-    if (noCheck || checkForUnsavedChanges(fileData, cancelMsg)) {
+    if (noCheck || checkForUnsavedChanges(undoRedoHandler, cancelMsg)) {
       const f = document.createElement("input");
       f.style.display = "none";
 
@@ -1829,7 +1745,7 @@ async function handleChromeUploadOrAppend(mode: ParseMode) {
     const rawCode = await codeFile.text();
     if (mode === ParseMode.loadNew) {
       file = new FileImpl(hash, profile, userName, transforms(), stdlib);
-      clearUndoRedoAndAutoSave(fileData);
+      undoRedoHandler.clearUndoRedoAndAutoSave();
     }
     await readAndParse(rawCode, fileName, mode);
   } catch (_e) {
@@ -1876,7 +1792,7 @@ async function handleUploadOrAppend(event: Event, mode: ParseMode) {
       const rawCode = event.target.result;
       if ((mode = ParseMode.loadNew)) {
         file = new FileImpl(hash, profile, userName, transforms(), stdlib);
-        clearUndoRedoAndAutoSave(fileData);
+        undoRedoHandler.clearUndoRedoAndAutoSave();
       }
       await readAndParse(rawCode, fileName, mode);
     });
@@ -1942,30 +1858,9 @@ async function handleDownload(event: Event) {
   aElement.click();
   URL.revokeObjectURL(href);
   saveButton.classList.remove("unsaved");
-  fileData.lastSavedHash = file.currentHash;
+  undoRedoHandler.resetHash(file);
   event.preventDefault();
   await renderAsHtml(false);
-}
-
-async function chromeSave(code: string, updateName: boolean, newName?: string) {
-  const name = newName ?? file.fileName;
-  const html = name.endsWith(".html");
-
-  const fh = await showSaveFilePicker({
-    suggestedName: name,
-    startIn: "documents",
-    types: html ? [{ accept: { "text/html": ".html" } }] : [{ accept: { "text/elan": ".elan" } }],
-    id: lastDirId,
-  });
-
-  if (updateName) {
-    file.fileName = fh.name;
-  }
-
-  const writeable = await fh.createWritable();
-  await writeable.write(code);
-  await writeable.close();
-  return fh;
 }
 
 function isDisabled(evt: Event) {
@@ -1982,15 +1877,8 @@ async function handleChromeDownload(event: Event) {
     return;
   }
 
-  const code = await file.renderAsSource();
-
   try {
-    await chromeSave(code, true);
-
-    saveButton.classList.remove("unsaved");
-    fileData.lastSavedHash = file.currentHash;
-
-    await renderAsHtml(false);
+    await undoRedoHandler.doDownLoad(file, ideViewModel);
   } catch (_e) {
     // user cancelled
     return;
@@ -2003,19 +1891,8 @@ async function handleChromeAutoSave(event: Event) {
   if (isDisabled(event)) {
     return;
   }
-
-  if (fileData.autoSaveFileHandle) {
-    fileData.autoSaveFileHandle = undefined;
-    updateDisplayValues();
-    return;
-  }
-
-  const code = await file.renderAsSource();
-
   try {
-    fileData.autoSaveFileHandle = await chromeSave(code, true);
-    fileData.lastSavedHash = file.currentHash;
-    await renderAsHtml(false);
+    await undoRedoHandler.doAutoSave(file, ideViewModel);
   } catch (_e) {
     // user cancelled
     return;
@@ -2271,7 +2148,7 @@ window.addEventListener("message", async (m) => {
     if (m.data.startsWith("code:")) {
       const code = m.data.slice(5);
       file = new FileImpl(hash, profile, userName, transforms(), stdlib);
-      clearUndoRedoAndAutoSave(fileData);
+      undoRedoHandler.clearUndoRedoAndAutoSave();
       await readAndParse(code, file.fileName, ParseMode.loadNew);
     }
 
@@ -2293,7 +2170,7 @@ window.addEventListener("message", async (m) => {
     if (m.data.startsWith("filename:")) {
       const name = m.data.slice(9);
       file.fileName = name;
-      updateNameAndSavedStatus(fileData, ideViewModel);
+      updateNameAndSavedStatus(undoRedoHandler, ideViewModel);
     }
   }
 });

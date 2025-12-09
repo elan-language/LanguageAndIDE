@@ -75,4 +75,6 @@ export interface IIDEViewModel {
   renderAsHtml(editingField: boolean): Promise<void>;
   systemInfoPrintSafe(text: string, scroll?: boolean): void;
   updateFileName(unsaved: string): void;
+  updateFileAndCode(code: string): Promise<void>;
+  disableUndoRedoButtons(msg: string): void;
 }
