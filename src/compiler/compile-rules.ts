@@ -13,6 +13,7 @@ import {
   CannotUseSystemMethodInAFunction,
   CompileError,
   DeclaredAboveCompileError,
+  DivCompileError,
   DuplicateKeyCompileError,
   ExtensionCompileError,
   ExtraParameterCompileError,
@@ -1182,6 +1183,10 @@ export function adviseAgainstFunctionRef(
   if (symbol.symbolType() instanceof FunctionType) {
     compileErrors.push(new FunctionRefCompileError(location));
   }
+}
+
+export function adviseAgainstDiv(compileErrors: CompileError[], location: string) {
+  compileErrors.push(new DivCompileError(location));
 }
 
 export function mustNotBeGlobalFunctionIfRef(
