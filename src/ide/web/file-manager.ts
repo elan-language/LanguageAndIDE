@@ -1,6 +1,7 @@
 import { File } from "../frames/frame-interfaces/file";
 import { ParseStatus } from "../frames/status-enums";
 import { IIDEViewModel } from "./ui-helpers";
+import { encodeCode } from "./web-helpers";
 
 export class FileManager {
   private autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
@@ -161,6 +162,29 @@ export class FileManager {
 
   resetHash(file: File) {
     this.lastSavedHash = file.currentHash;
+  }
+
+  async saveAsStandAlone(file: File) {
+    let jsCode = file.compileAsWorker("", false, true);
+
+    const api = await (await fetch("elan-api.js", { mode: "same-origin" })).text();
+    let script = await (await fetch("standalone.js", { mode: "same-origin" })).text();
+    let html = await (await fetch("standalone.html", { mode: "same-origin" })).text();
+    const cssColour = await (await fetch("colourScheme.css", { mode: "same-origin" })).text();
+    const cssStyle = await (await fetch("elanStyle.css", { mode: "same-origin" })).text();
+    const cssIde = await (await fetch("ide.css", { mode: "same-origin" })).text();
+
+    jsCode = api + jsCode;
+
+    const asUrl = encodeCode(jsCode);
+
+    script = script.replace("injected_code", asUrl);
+    html = html.replace("injected_code", script);
+    html = html.replace("injected_colour_css", cssColour);
+    html = html.replace("injected_style_css", cssStyle);
+    html = html.replace("injected_ide_css", cssIde);
+
+    await this.chromeSave(file, html, false, "standalone.html");
   }
 
   private async writeCode(code: string, file: File, vm: IIDEViewModel) {

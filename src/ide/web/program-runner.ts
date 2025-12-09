@@ -209,12 +209,12 @@ async function handleWorkerIO(
   switch (data.function) {
     case "readLine":
       vm.setPauseButtonState(true);
-      vm.togggleInputStatus(RunStatus.input);
+      vm.toggleInputStatus(RunStatus.input);
       const line = await elanInputOutput.readLine();
       // program may have been stopped so check state
       const rs = file.readRunStatus();
       if (rs === RunStatus.input) {
-        vm.togggleInputStatus(RunStatus.running);
+        vm.toggleInputStatus(RunStatus.running);
       }
       vm.setPauseButtonState(false);
       runWorker?.postMessage(readMsg(line));

@@ -60,11 +60,35 @@ export function errorMsg(value: unknown) {
   return { type: "status", status: "error", error: value } as WebWorkerStatusMessage;
 }
 
+export function warningOrError(tgt: HTMLDivElement): [boolean, string] {
+  if (tgt.classList.contains("warning")) {
+    return [true, "warning"];
+  }
+  if (tgt.classList.contains("error")) {
+    return [true, "error"];
+  }
+  if (tgt.classList.contains("advisory")) {
+    return [true, "advisory"];
+  }
+  return [false, ""];
+}
+
+export function parentId(e: Element): string {
+  if (e.parentElement) {
+    if (e.parentElement.id) {
+      return e.parentElement.id;
+    }
+    return parentId(e.parentElement);
+  }
+
+  return "";
+}
+
 export interface IIDEViewModel {
   focusInfoTab(): void;
   updateDisplayValues(): void;
   setPauseButtonState(waitingForUserInput?: boolean): void;
-  togggleInputStatus(rs: RunStatus): void;
+  toggleInputStatus(rs: RunStatus): void;
   clearDisplays(): Promise<void>;
   showError(err: Error, fileName: string, reset: boolean): Promise<void>;
   printDebugInfo(info: DebugSymbol[] | string): void;
@@ -78,3 +102,44 @@ export interface IIDEViewModel {
   updateFileAndCode(code: string): Promise<void>;
   disableUndoRedoButtons(msg: string): void;
 }
+
+export const delayMessage =
+  "Overly complex expressions - for example involving a sequence of open brackets - can result in very slow parsing. We strongly recommend that you simplify the contents of this field, for example by breaking out parts of it into separate 'let' statements. Otherwise it might become impossible to add more text.";
+
+export const cancelMsg = "You have unsaved changes - they will be lost unless you cancel";
+
+export const internalErrorMsg = `Sorry, an internal error has occurred. Please help us by reporting the bug, following these steps:
+<ol>
+<li>Click on this button:  <button id="bug-report">Copy bug report to your clipboard</button></li>
+<li>In your own email system create an email to bugs@elan-lang.org, with anything in the Subject line.</li>
+<li>Paste the copied bug report (it is plain text) from your clipboard into the body of the email.</li>
+<li><b>Above</b> the pasted-in report, please describe your action immediately prior to the error message appearing</li>
+</ol>
+Please note that the report includes your Elan code. We will use this <i<>only</i> to try to reproduce and fix the bug,
+and <i>won't</i> make it public.`;
+
+export const globalKeys = [
+  "b",
+  "B",
+  "d",
+  "D",
+  "e",
+  "E",
+  "g",
+  "G",
+  "h",
+  "H",
+  "i",
+  "I",
+  "k",
+  "K",
+  "r",
+  "R",
+  "s",
+  "S",
+  "u",
+  "U",
+  "+",
+  "-",
+  "=",
+];

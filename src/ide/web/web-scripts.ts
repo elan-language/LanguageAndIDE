@@ -22,9 +22,18 @@ import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
 import { FileManager } from "./file-manager";
 import { getDebugSymbol, getSummaryHtml, ProgramRunner } from "./program-runner";
 import { TestRunner } from "./test-runner";
-import { checkIsChrome, confirmContinueOnNonChromeBrowser, IIDEViewModel } from "./ui-helpers";
 import {
-  encodeCode,
+  cancelMsg,
+  checkIsChrome,
+  confirmContinueOnNonChromeBrowser,
+  delayMessage,
+  globalKeys,
+  IIDEViewModel,
+  internalErrorMsg,
+  parentId,
+  warningOrError,
+} from "./ui-helpers";
+import {
   fetchDefaultProfile,
   fetchProfile,
   fetchUserConfig,
@@ -121,35 +130,246 @@ let errorStack: string | undefined;
 
 class IDEViewModel implements IIDEViewModel {
   focusInfoTab() {
-    focusInfoTab();
+    showInfoTab();
+    systemInfoDiv.focus();
+    systemInfoDiv.classList.add("focussed");
+    file.setRunStatus(RunStatus.paused);
+    systemInfoDiv.innerHTML = "";
   }
 
   updateDisplayValues() {
-    updateDisplayValues();
+    updateNameAndSavedStatus(fileManager, this);
+
+    // Button control
+    const isEmpty = file.readParseStatus() === ParseStatus.default;
+    const isParsing = file.readParseStatus() === ParseStatus.valid;
+    const isIncomplete = file.readParseStatus() === ParseStatus.incomplete;
+    const cs = file.readCompileStatus();
+    const isCompiling = cs === CompileStatus.ok || cs === CompileStatus.advisory;
+    const isRunning = isRunningState();
+    const isPaused = isPausedState();
+    let isTestRunning = isTestRunningState();
+
+    if (isTestRunning && !(isParsing || isCompiling)) {
+      testRunner.end();
+      file.setTestStatus(TestStatus.default);
+      isTestRunning = false;
+      console.info("tests cancelled in updateDisplayValues");
+    }
+
+    setStatus(parseStatus, file.getParseStatusColour(), file.getParseStatusLabel());
+    setStatus(compileStatus, file.getCompileStatusColour(), file.getCompileStatusLabel());
+    setStatus(testStatus, file.getTestStatusColour(), file.getTestStatusLabel());
+    setStatus(runStatus, file.getRunStatusColour(), file.getRunStatusLabel(), false);
+
+    if (isRunning || isTestRunning) {
+      codeContainer?.classList.add("running");
+
+      if (isPaused) {
+        enable(runDebugButton, "Resume the program");
+        enable(stepButton, "Single step the program");
+      } else {
+        disable(
+          [runButton, runDebugButton, stepButton],
+          isRunning ? "Program is already running" : "Tests are running",
+        );
+      }
+
+      enable(stopButton, isRunning ? "Stop the program" : "Stop the Tests");
+
+      this.setPauseButtonState();
+
+      const msg = isRunning ? "Program is running" : "Tests are running";
+      disable(
+        [
+          runButton,
+          loadButton,
+          appendButton,
+          importButton,
+          saveButton,
+          autoSaveButton,
+          newButton,
+          demosButton,
+          trimButton,
+          expandCollapseButton,
+          undoButton,
+          redoButton,
+          clearDisplayButton,
+          fileButton,
+          loadButton,
+          saveAsStandaloneButton,
+          preferencesButton,
+        ],
+        msg,
+      );
+      for (const elem of demoFiles) {
+        elem.setAttribute("hidden", "");
+      }
+    } else {
+      codeContainer?.classList.remove("running");
+
+      disable([stopButton, pauseButton, stepButton], "Program is not running");
+
+      enable(fileButton, "File actions");
+      enable(loadButton, "Load code from a file");
+      enable(appendButton, "Append code from a file onto the end of the existing code");
+      enable(importButton, "Import code from a file");
+      enable(newButton, "Clear the current code and start afresh");
+      enable(demosButton, "Load a demonstration program");
+      enable(trimButton, "Remove all 'new code' prompts that can be removed (shortcut: Alt+t)");
+      enable(expandCollapseButton, "Expand / Collapse all code regions");
+      enable(preferencesButton, "Set preferences");
+      enable(clearDisplayButton, "Clear display");
+
+      for (const elem of demoFiles) {
+        elem.removeAttribute("hidden");
+      }
+
+      if (isEmpty) {
+        disable([saveButton], "Some code must be added in order to save");
+      } else if (!(isParsing || isIncomplete)) {
+        disable([saveButton], "Invalid code cannot be saved");
+      } else if (fileManager.isAutosaving()) {
+        disable([saveButton], "Autosave is enabled- cancel to manual save");
+      } else {
+        enable(saveButton, "Save the code into a file");
+      }
+
+      if (!file.containsMain()) {
+        disable(
+          [runButton, runDebugButton, saveAsStandaloneButton],
+          "Code must have a 'main' routine to be run",
+        );
+      } else if (!isCompiling) {
+        disable(
+          [runButton, runDebugButton, saveAsStandaloneButton],
+          "Program is not yet compiled. If you have just edited a field, press Enter or Tab to complete.",
+        );
+      } else {
+        enable(runButton, "Run the program");
+        enable(runDebugButton, "Debug the program");
+        enable(saveAsStandaloneButton, "Save the program as a standalone webpage");
+      }
+
+      if (fileManager.canUndo()) {
+        enable(undoButton, "Undo last change (Ctrl+z)");
+      } else {
+        disable([undoButton], "Nothing to undo");
+      }
+
+      if (fileManager.canRedo()) {
+        enable(redoButton, "Redo last change (Ctrl+y)");
+      } else {
+        disable([redoButton], "Nothing to redo");
+      }
+
+      if (fileManager.isAutosaving()) {
+        autoSaveButton.innerText = "cancel auto save";
+        enable(autoSaveButton, "Click to turn auto-save off and resume manual saving.");
+      } else {
+        if (useChromeFileAPI()) {
+          autoSaveButton.innerText = "auto save";
+          if (isParsing || isIncomplete) {
+            enable(
+              autoSaveButton,
+              "Save to file now and then auto-save to same file whenever code is changed and is not invalid",
+            );
+          } else {
+            disable([autoSaveButton], "Invalid code cannot be saved");
+          }
+        } else {
+          disable([autoSaveButton], "Only available on Chrome");
+        }
+      }
+
+      if (userName) {
+        logoutButton.removeAttribute("hidden");
+        enable(logoutButton, "Log out");
+      } else {
+        logoutButton.setAttribute("hidden", "hidden");
+      }
+    }
   }
 
   setPauseButtonState(waitingForUserInput?: boolean) {
-    setPauseButtonState(waitingForUserInput);
+    if (
+      isRunningState() &&
+      programRunner.isDebugMode() &&
+      !isPausedState() &&
+      !waitingForUserInput
+    ) {
+      enable(pauseButton, "Pause the program");
+    } else {
+      disable([pauseButton], "Can only pause a program running in Debug mode");
+    }
   }
 
-  togggleInputStatus(rs: RunStatus) {
-    togggleInputStatus(rs);
+  toggleInputStatus(rs: RunStatus) {
+    file.setRunStatus(rs);
+    setStatus(runStatus, file.getRunStatusColour(), file.getRunStatusLabel(), false);
   }
 
   async clearDisplays() {
-    await clearDisplays();
+    clearSystemDisplay();
+    await elanInputOutput.clearDisplay();
   }
 
   async showError(err: Error, fileName: string, reset: boolean) {
-    await showError(err, fileName, reset);
+    // because otherwise we will pick up any clicks or edits done after error
+    errorDOMEvent = lastDOMEvent;
+    errorEditorEvent = lastEditorEvent;
+
+    clearSystemDisplay();
+    if (reset) {
+      await resetFile();
+    }
+
+    file.fileName = fileName;
+
+    if (err.message?.startsWith(fileErrorPrefix)) {
+      this.systemInfoPrintSafe(err.message);
+    } else if (err.message?.startsWith(parseErrorPrefix)) {
+      this.systemInfoPrintSafe(cannotLoadUnparseableFile);
+    } else if (err.stack) {
+      let msg = "";
+      let stack = "";
+      if (err instanceof ElanRuntimeError) {
+        msg = "A Runtime error occurred in the Elan code";
+        stack = err.elanStack;
+        this.systemInfoPrintSafe(msg);
+        this.systemInfoPrintSafe(stack);
+      } else {
+        // our message
+        systemInfoPrintUnsafe(internalErrorMsg, false);
+        errorStack = err.stack;
+        document
+          .getElementById("bug-report")
+          ?.addEventListener("click", () => gatherDebugInfo(fileManager));
+      }
+    } else {
+      this.systemInfoPrintSafe(err.message ?? "Unknown error parsing file");
+    }
+    this.updateDisplayValues();
   }
 
   printDebugInfo(info: DebugSymbol[] | string) {
-    printDebugInfo(info);
+    if (typeof info === "string") {
+      systemInfoPrintUnsafe(
+        getSummaryHtml(`No values defined at this point - proceed to the next instruction`),
+      );
+    } else {
+      for (const v of info) {
+        printDebugSymbol(v);
+      }
+      addDebugListeners();
+    }
   }
 
   setPausedAtLocation(location: string) {
-    setPausedAtLocation(location);
+    const pausedAt = document.getElementById(location);
+    pausedAt?.classList.add("paused-at");
+    pausedAt?.scrollIntoView();
+    this.updateDisplayValues();
   }
 
   clickInfoTab() {
@@ -158,7 +378,7 @@ class IDEViewModel implements IIDEViewModel {
 
   async run(file: File) {
     file.removeAllSelectorsThatCanBe();
-    await renderAsHtml(false);
+    await this.renderAsHtml(false);
     runButton.focus();
     showDisplayTab();
   }
@@ -169,11 +389,18 @@ class IDEViewModel implements IIDEViewModel {
   }
 
   async renderAsHtml(editingField: boolean) {
-    await renderAsHtml(editingField);
+    const content = await file.renderAsHtml();
+    try {
+      await updateContent(content, editingField);
+    } catch (e) {
+      await this.showError(e as Error, file.fileName, false);
+    }
   }
 
   systemInfoPrintSafe(text: string, scroll = true) {
-    systemInfoPrintSafe(text, scroll);
+    // sanitise the text
+    text = sanitiseHtml(text);
+    systemInfoPrintUnsafe(text, scroll);
   }
 
   updateFileName(unsaved: string) {
@@ -181,7 +408,9 @@ class IDEViewModel implements IIDEViewModel {
   }
 
   async updateFileAndCode(code: string) {
-    await updateFileAndCode(code);
+    const fn = file.fileName;
+    file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+    await displayCode(code, fn);
   }
 
   disableUndoRedoButtons(msg: string) {
@@ -189,6 +418,7 @@ class IDEViewModel implements IIDEViewModel {
     cursorWait();
   }
 }
+
 const ideViewModel = new IDEViewModel();
 
 const programRunner = new ProgramRunner();
@@ -209,7 +439,7 @@ displayDiv.addEventListener("click", () => {
 
 trimButton.addEventListener("click", async () => {
   file.removeAllSelectorsThatCanBe();
-  await renderAsHtml(false);
+  await ideViewModel.renderAsHtml(false);
 });
 
 logoutButton.addEventListener("click", async () => {
@@ -219,21 +449,6 @@ logoutButton.addEventListener("click", async () => {
 addEventListener("beforeunload", (event) => {
   event.preventDefault();
 });
-
-function setPausedAtLocation(location: string) {
-  const pausedAt = document.getElementById(location);
-  pausedAt?.classList.add("paused-at");
-  pausedAt?.scrollIntoView();
-  updateDisplayValues();
-}
-
-function focusInfoTab() {
-  showInfoTab();
-  systemInfoDiv.focus();
-  systemInfoDiv.classList.add("focussed");
-  file.setRunStatus(RunStatus.paused);
-  systemInfoDiv.innerHTML = "";
-}
 
 runButton?.addEventListener("click", async () => {
   await programRunner.run(file, ideViewModel, elanInputOutput);
@@ -287,18 +502,17 @@ loadExternalWorksheetButton?.addEventListener("click", async () => {
 
 expandCollapseButton?.addEventListener("click", async () => {
   file.expandCollapseAll();
-  await renderAsHtml(false);
+  await ideViewModel.renderAsHtml(false);
 });
 
 newButton?.addEventListener("click", async (event: Event) => {
-  if (isDisabled(event)) {
-    return;
-  }
-  if (checkForUnsavedChanges(fileManager, cancelMsg)) {
-    await clearDisplays();
-    fileManager.reset();
-    file = new FileImpl(hash, profile, userName, transforms(), stdlib);
-    await initialDisplay(false);
+  if (!isDisabled(event)) {
+    if (checkForUnsavedChanges(fileManager, cancelMsg)) {
+      await ideViewModel.clearDisplays();
+      fileManager.reset();
+      file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+      await initialDisplay(false);
+    }
   }
 });
 
@@ -322,30 +536,9 @@ async function loadDemoFile(fileName: string) {
 }
 
 saveAsStandaloneButton.addEventListener("click", async (event: Event) => {
-  if (isDisabled(event)) {
-    return;
+  if (!isDisabled(event)) {
+    await fileManager.saveAsStandAlone(file);
   }
-
-  let jsCode = file.compileAsWorker("", false, true);
-
-  const api = await (await fetch("elan-api.js", { mode: "same-origin" })).text();
-  let script = await (await fetch("standalone.js", { mode: "same-origin" })).text();
-  let html = await (await fetch("standalone.html", { mode: "same-origin" })).text();
-  const cssColour = await (await fetch("colourScheme.css", { mode: "same-origin" })).text();
-  const cssStyle = await (await fetch("elanStyle.css", { mode: "same-origin" })).text();
-  const cssIde = await (await fetch("ide.css", { mode: "same-origin" })).text();
-
-  jsCode = api + jsCode;
-
-  const asUrl = encodeCode(jsCode);
-
-  script = script.replace("injected_code", asUrl);
-  html = html.replace("injected_code", script);
-  html = html.replace("injected_colour_css", cssColour);
-  html = html.replace("injected_style_css", cssStyle);
-  html = html.replace("injected_ide_css", cssIde);
-
-  await fileManager.chromeSave(file, html, false, "standalone.html");
 });
 
 for (const elem of demoFiles) {
@@ -475,30 +668,6 @@ helpIFrame.addEventListener("load", () => {
   helpIFrame.contentWindow?.addEventListener("keydown", globalHandler);
   helpIFrame.contentWindow?.addEventListener("click", () => showHelpTab());
 });
-
-function warningOrError(tgt: HTMLDivElement): [boolean, string] {
-  if (tgt.classList.contains("warning")) {
-    return [true, "warning"];
-  }
-  if (tgt.classList.contains("error")) {
-    return [true, "error"];
-  }
-  if (tgt.classList.contains("advisory")) {
-    return [true, "advisory"];
-  }
-  return [false, ""];
-}
-
-function parentId(e: Element): string {
-  if (e.parentElement) {
-    if (e.parentElement.id) {
-      return e.parentElement.id;
-    }
-    return parentId(e.parentElement);
-  }
-
-  return "";
-}
 
 async function handleStatusClick(event: Event, tag: string, useParent: boolean) {
   const pe = event as PointerEvent;
@@ -630,8 +799,6 @@ if (okToContinue) {
   }
 }
 
-const cancelMsg = "You have unsaved changes - they will be lost unless you cancel";
-
 function checkForUnsavedChanges(fm: FileManager, msg: string): boolean {
   return fm.hasUnsavedChanges(file) ? confirm(msg) : true;
 }
@@ -644,22 +811,8 @@ async function setup(p: Profile) {
   await displayFile();
 }
 
-async function renderAsHtml(editingField: boolean) {
-  const content = await file.renderAsHtml();
-  try {
-    await updateContent(content, editingField);
-  } catch (e) {
-    await showError(e as Error, file.fileName, false);
-  }
-}
-
 function clearSystemDisplay() {
   systemInfoDiv.innerHTML = "";
-}
-
-async function clearDisplays() {
-  clearSystemDisplay();
-  await elanInputOutput.clearDisplay();
 }
 
 async function resetFile() {
@@ -689,60 +842,6 @@ async function gatherDebugInfo(fm: FileManager) {
   await navigator.clipboard.writeText(all);
 }
 
-const internalErrorMsg = `Sorry, an internal error has occurred. Please help us by reporting the bug, following these steps:
-<ol>
-<li>Click on this button:  <button id="bug-report">Copy bug report to your clipboard</button></li>
-<li>In your own email system create an email to bugs@elan-lang.org, with anything in the Subject line.</li>
-<li>Paste the copied bug report (it is plain text) from your clipboard into the body of the email.</li>
-<li><b>Above</b> the pasted-in report, please describe your action immediately prior to the error message appearing</li>
-</ol>
-Please note that the report includes your Elan code. We will use this <i<>only</i> to try to reproduce and fix the bug,
-and <i>won't</i> make it public.`;
-
-async function showError(err: Error, fileName: string, reset: boolean) {
-  // because otherwise we will pick up any clicks or edits done after error
-  errorDOMEvent = lastDOMEvent;
-  errorEditorEvent = lastEditorEvent;
-
-  clearSystemDisplay();
-  if (reset) {
-    await resetFile();
-  }
-
-  file.fileName = fileName;
-
-  if (err.message?.startsWith(fileErrorPrefix)) {
-    systemInfoPrintSafe(err.message);
-  } else if (err.message?.startsWith(parseErrorPrefix)) {
-    systemInfoPrintSafe(cannotLoadUnparseableFile);
-  } else if (err.stack) {
-    let msg = "";
-    let stack = "";
-    if (err instanceof ElanRuntimeError) {
-      msg = "A Runtime error occurred in the Elan code";
-      stack = err.elanStack;
-      systemInfoPrintSafe(msg);
-      systemInfoPrintSafe(stack);
-    } else {
-      // our message
-      systemInfoPrintUnsafe(internalErrorMsg, false);
-      errorStack = err.stack;
-      document
-        .getElementById("bug-report")
-        ?.addEventListener("click", () => gatherDebugInfo(fileManager));
-    }
-  } else {
-    systemInfoPrintSafe(err.message ?? "Unknown error parsing file");
-  }
-  updateDisplayValues();
-}
-
-function systemInfoPrintSafe(text: string, scroll = true) {
-  // sanitise the text
-  text = sanitiseHtml(text);
-  systemInfoPrintUnsafe(text, scroll);
-}
-
 function systemInfoPrintUnsafe(text: string, scroll = true) {
   systemInfoDiv.innerHTML = systemInfoDiv.innerHTML + text + "\n";
   if (scroll) {
@@ -759,14 +858,14 @@ async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean
     if ((cs === CompileStatus.ok || cs === CompileStatus.advisory) && file.hasTests) {
       await testRunner.run(file, ideViewModel);
     }
-    await renderAsHtml(editingField);
+    await ideViewModel.renderAsHtml(editingField);
   } catch (e) {
-    await showError(e as Error, file.fileName, false);
+    await ideViewModel.showError(e as Error, file.fileName, false);
   }
 }
 
 async function initialDisplay(reset: boolean) {
-  await clearDisplays();
+  await ideViewModel.clearDisplays();
 
   const ps = file.readParseStatus();
   if (ps === ParseStatus.valid || ps === ParseStatus.default || ps === ParseStatus.incomplete) {
@@ -779,7 +878,7 @@ async function initialDisplay(reset: boolean) {
     }
   } else {
     const msg = file.parseError || "Failed load code";
-    await showError(new Error(msg), file.fileName, reset);
+    await ideViewModel.showError(new Error(msg), file.fileName, reset);
   }
 }
 
@@ -791,7 +890,7 @@ async function displayCode(rawCode: string, fileName: string) {
     file.fileName = fileName || file.defaultFileName;
     await refreshAndDisplay(true, false);
   } catch (e) {
-    await showError(e as Error, fileName || file.defaultFileName, true);
+    await ideViewModel.showError(e as Error, fileName || file.defaultFileName, true);
   }
 }
 
@@ -835,168 +934,6 @@ function isTestRunningState() {
 
 function isPausedState() {
   return file.readRunStatus() === RunStatus.paused;
-}
-
-function setPauseButtonState(waitingForUserInput?: boolean) {
-  if (isRunningState() && programRunner.isDebugMode() && !isPausedState() && !waitingForUserInput) {
-    enable(pauseButton, "Pause the program");
-  } else {
-    disable([pauseButton], "Can only pause a program running in Debug mode");
-  }
-}
-
-function updateDisplayValues() {
-  updateNameAndSavedStatus(fileManager, ideViewModel);
-
-  // Button control
-  const isEmpty = file.readParseStatus() === ParseStatus.default;
-  const isParsing = file.readParseStatus() === ParseStatus.valid;
-  const isIncomplete = file.readParseStatus() === ParseStatus.incomplete;
-  const cs = file.readCompileStatus();
-  const isCompiling = cs === CompileStatus.ok || cs === CompileStatus.advisory;
-  const isRunning = isRunningState();
-  const isPaused = isPausedState();
-  let isTestRunning = isTestRunningState();
-
-  if (isTestRunning && !(isParsing || isCompiling)) {
-    testRunner.end();
-    file.setTestStatus(TestStatus.default);
-    isTestRunning = false;
-    console.info("tests cancelled in updateDisplayValues");
-  }
-
-  setStatus(parseStatus, file.getParseStatusColour(), file.getParseStatusLabel());
-  setStatus(compileStatus, file.getCompileStatusColour(), file.getCompileStatusLabel());
-  setStatus(testStatus, file.getTestStatusColour(), file.getTestStatusLabel());
-  setStatus(runStatus, file.getRunStatusColour(), file.getRunStatusLabel(), false);
-
-  if (isRunning || isTestRunning) {
-    codeContainer?.classList.add("running");
-
-    if (isPaused) {
-      enable(runDebugButton, "Resume the program");
-      enable(stepButton, "Single step the program");
-    } else {
-      disable(
-        [runButton, runDebugButton, stepButton],
-        isRunning ? "Program is already running" : "Tests are running",
-      );
-    }
-
-    enable(stopButton, isRunning ? "Stop the program" : "Stop the Tests");
-
-    setPauseButtonState();
-
-    const msg = isRunning ? "Program is running" : "Tests are running";
-    disable(
-      [
-        runButton,
-        loadButton,
-        appendButton,
-        importButton,
-        saveButton,
-        autoSaveButton,
-        newButton,
-        demosButton,
-        trimButton,
-        expandCollapseButton,
-        undoButton,
-        redoButton,
-        clearDisplayButton,
-        fileButton,
-        loadButton,
-        saveAsStandaloneButton,
-        preferencesButton,
-      ],
-      msg,
-    );
-    for (const elem of demoFiles) {
-      elem.setAttribute("hidden", "");
-    }
-  } else {
-    codeContainer?.classList.remove("running");
-
-    disable([stopButton, pauseButton, stepButton], "Program is not running");
-
-    enable(fileButton, "File actions");
-    enable(loadButton, "Load code from a file");
-    enable(appendButton, "Append code from a file onto the end of the existing code");
-    enable(importButton, "Import code from a file");
-    enable(newButton, "Clear the current code and start afresh");
-    enable(demosButton, "Load a demonstration program");
-    enable(trimButton, "Remove all 'new code' prompts that can be removed (shortcut: Alt+t)");
-    enable(expandCollapseButton, "Expand / Collapse all code regions");
-    enable(preferencesButton, "Set preferences");
-    enable(clearDisplayButton, "Clear display");
-
-    for (const elem of demoFiles) {
-      elem.removeAttribute("hidden");
-    }
-
-    if (isEmpty) {
-      disable([saveButton], "Some code must be added in order to save");
-    } else if (!(isParsing || isIncomplete)) {
-      disable([saveButton], "Invalid code cannot be saved");
-    } else if (fileManager.isAutosaving()) {
-      disable([saveButton], "Autosave is enabled- cancel to manual save");
-    } else {
-      enable(saveButton, "Save the code into a file");
-    }
-
-    if (!file.containsMain()) {
-      disable(
-        [runButton, runDebugButton, saveAsStandaloneButton],
-        "Code must have a 'main' routine to be run",
-      );
-    } else if (!isCompiling) {
-      disable(
-        [runButton, runDebugButton, saveAsStandaloneButton],
-        "Program is not yet compiled. If you have just edited a field, press Enter or Tab to complete.",
-      );
-    } else {
-      enable(runButton, "Run the program");
-      enable(runDebugButton, "Debug the program");
-      enable(saveAsStandaloneButton, "Save the program as a standalone webpage");
-    }
-
-    if (fileManager.canUndo()) {
-      enable(undoButton, "Undo last change (Ctrl+z)");
-    } else {
-      disable([undoButton], "Nothing to undo");
-    }
-
-    if (fileManager.canRedo()) {
-      enable(redoButton, "Redo last change (Ctrl+y)");
-    } else {
-      disable([redoButton], "Nothing to redo");
-    }
-
-    if (fileManager.isAutosaving()) {
-      autoSaveButton.innerText = "cancel auto save";
-      enable(autoSaveButton, "Click to turn auto-save off and resume manual saving.");
-    } else {
-      if (useChromeFileAPI()) {
-        autoSaveButton.innerText = "auto save";
-        if (isParsing || isIncomplete) {
-          enable(
-            autoSaveButton,
-            "Save to file now and then auto-save to same file whenever code is changed and is not invalid",
-          );
-        } else {
-          disable([autoSaveButton], "Invalid code cannot be saved");
-        }
-      } else {
-        disable([autoSaveButton], "Only available on Chrome");
-      }
-    }
-
-    if (userName) {
-      logoutButton.removeAttribute("hidden");
-      enable(logoutButton, "Log out");
-    } else {
-      logoutButton.setAttribute("hidden", "hidden");
-    }
-  }
 }
 
 function disable(buttons: HTMLElement[], msg = "") {
@@ -1499,7 +1436,7 @@ async function updateContent(text: string, editingField: boolean) {
   }
 
   await fileManager.save(file, focused, editingField, ideViewModel);
-  updateDisplayValues();
+  ideViewModel.updateDisplayValues();
 
   if (!isElanProduction) {
     const dbgFocused = document.querySelectorAll(".focused");
@@ -1507,17 +1444,11 @@ async function updateContent(text: string, editingField: boolean) {
     if (dbgFocused.length > 1) {
       let msg = "multiple focused ";
       dbgFocused.forEach((n) => (msg = `${msg}, Node: ${(n.nodeName, n.id)} `));
-      await showError(new Error(msg), file.fileName, false);
+      await ideViewModel.showError(new Error(msg), file.fileName, false);
     }
   }
 
   cursorDefault();
-}
-
-async function updateFileAndCode(code: string) {
-  const fn = file.fileName;
-  file = new FileImpl(hash, profile, userName, transforms(), stdlib);
-  await displayCode(code, fn);
 }
 
 async function inactivityRefresh() {
@@ -1531,9 +1462,6 @@ async function inactivityRefresh() {
 
   inactivityTimer = setTimeout(inactivityRefresh, inactivityTimeout);
 }
-
-const delayMessage =
-  "Overly complex expressions - for example involving a sequence of open brackets - can result in very slow parsing. We strongly recommend that you simplify the contents of this field, for example by breaking out parts of it into separate 'let' statements. Otherwise it might become impossible to add more text.";
 
 let purgingKeys = false;
 
@@ -1558,7 +1486,7 @@ async function handleKeyAndRender(e: editorEvent) {
         if (handleClick(e, file) && isBeingEdited) {
           await refreshAndDisplay(false, false);
         } else {
-          await renderAsHtml(false);
+          await ideViewModel.renderAsHtml(false);
         }
         return;
       case "dblclick":
@@ -1566,7 +1494,7 @@ async function handleKeyAndRender(e: editorEvent) {
         if (handleDblClick(e, file) && isBeingEdited) {
           await refreshAndDisplay(false, false);
         } else {
-          await renderAsHtml(false);
+          await ideViewModel.renderAsHtml(false);
         }
         return;
       case "paste":
@@ -1589,7 +1517,7 @@ async function handleKeyAndRender(e: editorEvent) {
           const singleKeyEdit = !(e.modKey.control || e.modKey.shift || e.modKey.alt);
           await refreshAndDisplay(false, singleKeyEdit);
         } else if (codeChanged === false) {
-          await renderAsHtml(false);
+          await ideViewModel.renderAsHtml(false);
         }
         // undefined just return
         return;
@@ -1598,18 +1526,13 @@ async function handleKeyAndRender(e: editorEvent) {
         if (codeChanged) {
           await refreshAndDisplay(true, false);
         } else {
-          await renderAsHtml(false);
+          await ideViewModel.renderAsHtml(false);
         }
         return;
     }
   } catch (e) {
-    await showError(e as Error, file.fileName, false);
+    await ideViewModel.showError(e as Error, file.fileName, false);
   }
-}
-
-function togggleInputStatus(rs: RunStatus) {
-  file.setRunStatus(rs);
-  setStatus(runStatus, file.getRunStatusColour(), file.getRunStatusLabel(), false);
 }
 
 function showCode() {
@@ -1655,19 +1578,6 @@ function addDebugListeners() {
         s.parentElement!.classList.toggle("expanded");
       }
     });
-  }
-}
-
-function printDebugInfo(info: DebugSymbol[] | string) {
-  if (typeof info === "string") {
-    systemInfoPrintUnsafe(
-      getSummaryHtml(`No values defined at this point - proceed to the next instruction`),
-    );
-  } else {
-    for (const v of info) {
-      printDebugSymbol(v);
-    }
-    addDebugListeners();
   }
 }
 
@@ -1729,7 +1639,7 @@ async function readAndParse(rawCode: string, fileName: string, mode: ParseMode) 
     }
     await initialDisplay(reset);
   } catch (e) {
-    await showError(e as Error, fileName, reset);
+    await ideViewModel.showError(e as Error, fileName, reset);
   }
 }
 
@@ -1786,7 +1696,7 @@ async function handleUploadOrAppend(event: Event, mode: ParseMode) {
   if (elanFile) {
     const fileName = mode === ParseMode.loadNew ? elanFile.name : file.fileName;
     cursorWait();
-    await clearDisplays();
+    await ideViewModel.clearDisplays();
     const reader = new FileReader();
     reader.addEventListener("load", async (event: any) => {
       const rawCode = event.target.result;
@@ -1840,27 +1750,25 @@ function updateFileName() {
 }
 
 async function handleDownload(event: Event) {
-  if (isDisabled(event)) {
-    return;
+  if (!isDisabled(event)) {
+    updateFileName();
+
+    const code = await file.renderAsSource();
+
+    const blob = new Blob([code], { type: "plain/text" });
+
+    const aElement = document.createElement("a");
+    aElement.setAttribute("download", file.fileName!);
+    const href = URL.createObjectURL(blob);
+    aElement.href = href;
+    aElement.setAttribute("target", "_blank");
+    aElement.click();
+    URL.revokeObjectURL(href);
+    saveButton.classList.remove("unsaved");
+    fileManager.resetHash(file);
+    event.preventDefault();
+    await ideViewModel.renderAsHtml(false);
   }
-
-  updateFileName();
-
-  const code = await file.renderAsSource();
-
-  const blob = new Blob([code], { type: "plain/text" });
-
-  const aElement = document.createElement("a");
-  aElement.setAttribute("download", file.fileName!);
-  const href = URL.createObjectURL(blob);
-  aElement.href = href;
-  aElement.setAttribute("target", "_blank");
-  aElement.click();
-  URL.revokeObjectURL(href);
-  saveButton.classList.remove("unsaved");
-  fileManager.resetHash(file);
-  event.preventDefault();
-  await renderAsHtml(false);
 }
 
 function isDisabled(evt: Event) {
@@ -1873,31 +1781,28 @@ function isDisabled(evt: Event) {
 }
 
 async function handleChromeDownload(event: Event) {
-  if (isDisabled(event)) {
-    return;
-  }
-
-  try {
-    await fileManager.doDownLoad(file, ideViewModel);
-  } catch (_e) {
-    // user cancelled
-    return;
-  } finally {
-    event.preventDefault();
+  if (!isDisabled(event)) {
+    try {
+      await fileManager.doDownLoad(file, ideViewModel);
+    } catch (_e) {
+      // user cancelled
+      return;
+    } finally {
+      event.preventDefault();
+    }
   }
 }
 
 async function handleChromeAutoSave(event: Event) {
-  if (isDisabled(event)) {
-    return;
-  }
-  try {
-    await fileManager.doAutoSave(file, ideViewModel);
-  } catch (_e) {
-    // user cancelled
-    return;
-  } finally {
-    event.preventDefault();
+  if (!isDisabled(event)) {
+    try {
+      await fileManager.doAutoSave(file, ideViewModel);
+    } catch (_e) {
+      // user cancelled
+      return;
+    } finally {
+      event.preventDefault();
+    }
   }
 }
 
@@ -1910,32 +1815,6 @@ if (!isElanProduction) {
 
   document.querySelector("#worksheet-tab .dropdown-content")?.append(testLink);
 }
-
-const globalKeys = [
-  "b",
-  "B",
-  "d",
-  "D",
-  "e",
-  "E",
-  "g",
-  "G",
-  "h",
-  "H",
-  "i",
-  "I",
-  "k",
-  "K",
-  "r",
-  "R",
-  "s",
-  "S",
-  "u",
-  "U",
-  "+",
-  "-",
-  "=",
-];
 
 function isGlobalKeyboardEvent(kp: Event) {
   return kp instanceof KeyboardEvent && (kp.ctrlKey || kp.metaKey) && globalKeys.includes(kp.key);
