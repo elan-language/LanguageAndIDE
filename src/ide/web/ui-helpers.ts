@@ -74,4 +74,5 @@ export interface IIDEViewModel {
   runDebug(): void;
   renderAsHtml(editingField: boolean): Promise<void>;
   systemInfoPrintSafe(text: string, scroll?: boolean): void;
+  updateFileName(unsaved: string): void;
 }

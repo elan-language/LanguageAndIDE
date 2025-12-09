@@ -19,7 +19,7 @@ import { Group, Individual } from "../frames/frame-interfaces/user-config";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
 import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
-import { canUndo, FileData, updateIndexes } from "./file-helpers";
+import { autoSave, canUndo, FileData, hasUnsavedChanges, updateIndexes } from "./file-helpers";
 import { getDebugSymbol, getSummaryHtml, ProgramRunner } from "./program-runner";
 import { TestRunner } from "./test-runner";
 import { checkIsChrome, confirmContinueOnNonChromeBrowser, IIDEViewModel } from "./ui-helpers";
@@ -112,7 +112,6 @@ let undoRedoing: boolean = false;
 let file: File;
 let profile: Profile;
 let userName: string | undefined;
-let undoRedoHash = "";
 
 let inactivityTimer: any | undefined = undefined;
 
@@ -177,6 +176,10 @@ class IDEViewModel implements IIDEViewModel {
 
   systemInfoPrintSafe(text: string, scroll = true) {
     systemInfoPrintSafe(text, scroll);
+  }
+
+  updateFileName(unsaved: string) {
+    codeTitle.innerText = `file: ${file.fileName}${unsaved}`;
   }
 }
 const ideViewModel = new IDEViewModel();
@@ -659,7 +662,7 @@ function clearUndoRedoAndAutoSave(fd: FileData) {
   fd.undoRedoFiles = [];
   fd.lastSavedHash = "";
   fd.currentFieldId = "";
-  undoRedoHash = "";
+  fd.undoRedoHash = "";
 }
 
 async function resetFile() {
@@ -773,7 +776,7 @@ async function initialDisplay(reset: boolean) {
   if (ps === ParseStatus.valid || ps === ParseStatus.default || ps === ParseStatus.incomplete) {
     await refreshAndDisplay(false, false);
     fileData.lastSavedHash = fileData.lastSavedHash || file.currentHash;
-    updateNameAndSavedStatus(fileData);
+    updateNameAndSavedStatus(fileData, ideViewModel);
     if (reset) {
       const code = await file.renderAsSource();
       worksheetIFrame.contentWindow?.postMessage(`code:reset:${code}`, "*");
@@ -804,13 +807,9 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
   return { control: e.ctrlKey || e.metaKey, shift: e.shiftKey, alt: e.altKey };
 }
 
-function hasUnsavedChanges(fd: FileData, file: File) {
-  return !(fd.lastSavedHash === file.currentHash);
-}
-
-function updateNameAndSavedStatus(fd: FileData) {
+function updateNameAndSavedStatus(fd: FileData, vm: IIDEViewModel) {
   const unsaved = hasUnsavedChanges(fd, file) ? " UNSAVED" : "";
-  codeTitle.innerText = `file: ${file.fileName}${unsaved}`;
+  vm.updateFileName(unsaved);
 }
 
 function setStatus(html: HTMLDivElement, colour: string, label: string, showTooltip = true): void {
@@ -851,7 +850,7 @@ function setPauseButtonState(waitingForUserInput?: boolean) {
 }
 
 function updateDisplayValues() {
-  updateNameAndSavedStatus(fileData);
+  updateNameAndSavedStatus(fileData, ideViewModel);
 
   // Button control
   const isEmpty = file.readParseStatus() === ParseStatus.default;
@@ -1531,7 +1530,7 @@ async function localAndAutoSave(
   if (parseStatus === ParseStatus.valid || parseStatus === ParseStatus.incomplete) {
     // save to local store
 
-    if (undoRedoHash !== file.currentHash && !undoRedoing) {
+    if (fd.undoRedoHash !== file.currentHash && !undoRedoing) {
       if (fd.nextFileIndex !== -1 && fd.nextFileIndex > fd.currentFileIndex) {
         const trimedIds = fd.undoRedoFiles.slice(fd.nextFileIndex);
         fd.undoRedoFiles = fd.undoRedoFiles.slice(0, fd.nextFileIndex);
@@ -1557,7 +1556,7 @@ async function localAndAutoSave(
 
       localStorage.setItem(id, code);
       saveButton.classList.add("unsaved");
-      undoRedoHash = file.currentHash;
+      fd.undoRedoHash = file.currentHash;
       fd.currentFieldId = newFieldId ?? "";
 
       while (fd.undoRedoFiles.length >= 20) {
@@ -1569,10 +1568,10 @@ async function localAndAutoSave(
 
     // autosave if setup
     code = code || (await file.renderAsSource());
-    await autoSave(code, fileData);
+    await autoSave(code, fileData, file, ideViewModel);
   }
 
-  undoRedoHash = file.currentHash;
+  fd.undoRedoHash = file.currentHash;
   undoRedoing = false;
 }
 
@@ -2025,50 +2024,6 @@ async function handleChromeAutoSave(event: Event) {
   }
 }
 
-// lock the file while we are writing and only hold a single most recent save
-// accumulated while the file is locked.
-let fileLock = false;
-let pendingSave = "";
-
-async function writeCode(fh: FileSystemFileHandle, code: string) {
-  const writeable = await fh.createWritable();
-  await writeable.write(code);
-  await writeable.close();
-  fileData.lastSavedHash = file.currentHash;
-  updateNameAndSavedStatus(fileData);
-  if (pendingSave) {
-    const pendingCode = pendingSave;
-    pendingSave = "";
-    await writeCode(fh, pendingCode);
-  }
-}
-
-async function autoSave(code: string, fd: FileData) {
-  if (fd.autoSaveFileHandle && hasUnsavedChanges(fd, file)) {
-    try {
-      if (code.trim() === "") {
-        // should never write empty file - always at least header
-        throw new Error("Error with empty code file");
-      }
-      if (fileLock) {
-        pendingSave = code;
-      } else {
-        fileLock = true;
-        await writeCode(fd.autoSaveFileHandle, code);
-        fileLock = false;
-      }
-    } catch (e) {
-      const reason = (e as Error).message ?? "Unknown";
-      const msg = `Auto-save failed. Auto-save mode has been cancelled - please save the file manually to ensure your changes are not lost! Reason: ${reason}`;
-      alert(msg);
-      fd.autoSaveFileHandle = undefined;
-      fileLock = false;
-      pendingSave = "";
-      console.debug(`Autosave failed: error: ${e} code: ${code}`);
-    }
-  }
-}
-
 if (!isElanProduction) {
   const testLink = document.createElement("a");
   testLink.classList.add("menu-item", "help-file");
@@ -2338,7 +2293,7 @@ window.addEventListener("message", async (m) => {
     if (m.data.startsWith("filename:")) {
       const name = m.data.slice(9);
       file.fileName = name;
-      updateNameAndSavedStatus(fileData);
+      updateNameAndSavedStatus(fileData, ideViewModel);
     }
   }
 });
