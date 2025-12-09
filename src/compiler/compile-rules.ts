@@ -13,11 +13,11 @@ import {
   CannotUseSystemMethodInAFunction,
   CompileError,
   DeclaredAboveCompileError,
-  DivCompileError,
+  DivDeprecation,
   DuplicateKeyCompileError,
   ExtensionCompileError,
   ExtraParameterCompileError,
-  FunctionRefCompileError,
+  FunctionRefDeprecation,
   GenericParametersCompileError,
   ImmutableCollectionCompileError,
   InvalidSourceForEachCompileError,
@@ -145,6 +145,7 @@ export function mustBeBooleanCondition(
       new SyntaxCompileError(
         "Condition of 'if' expression does not evaluate to a Boolean.",
         location,
+        "LangRef.html#mustBeBooleanCondition"
       ),
     );
   }
@@ -158,7 +159,9 @@ export function mustNotHaveConditionalAfterUnconditionalElse(
   const unconditionals = elses.filter((s) => !s.hasIf).length;
   if (unconditionals > 1 || (unconditionals === 1 && elses[elses.length - 1].hasIf)) {
     compileErrors.push(
-      new SyntaxCompileError(`Cannot have any clause after unconditional 'else'.`, location),
+      new SyntaxCompileError(`Cannot have any clause after unconditional 'else'.`,
+         location,
+        "LangRef.html#mustNotHaveConditionalAfterUnconditionalElse")
     );
   }
 }
@@ -207,6 +210,7 @@ export function mustNotBeKeyword(id: string, compileErrors: CompileError[], loca
       new SyntaxCompileError(
         `'${id}' is a keyword, and may not be used as an identifier.`,
         location,
+        "LangRef.html#mustNotBeKeyword"
       ),
     );
   }
@@ -215,6 +219,7 @@ export function mustNotBeKeyword(id: string, compileErrors: CompileError[], loca
       new SyntaxCompileError(
         `'${id}' is a reserved word, and may not be used as an identifier.`,
         location,
+        "LangRef.html#mustNotBeReservedWord"
       ),
     );
   }
@@ -319,7 +324,9 @@ export function checkForDeprecation(
 }
 
 export function mustNotBeNegativeIndex(compileErrors: CompileError[], location: string) {
-  compileErrors.push(new SyntaxCompileError("Index cannot be negative.", location));
+  compileErrors.push(new SyntaxCompileError("Index cannot be negative.", location, 
+    "LangRef.html#mustNotBeNegativeIndex"
+  ));
 }
 
 export function mustBeIndexableType(
@@ -759,7 +766,10 @@ export function mustBeImmutableType(
 ) {
   if (!type.typeOptions.isImmutable) {
     compileErrors.push(
-      new SyntaxCompileError(`Property ${name} is not of an immutable type.`, location),
+      new SyntaxCompileError(`Property ${name} is not of an immutable type.`, 
+        location,
+        "LangRef.html#mustBeImmutableType"
+      ),
     );
   }
 }
@@ -772,7 +782,10 @@ export function mustBeImmutableGenericType(
 ) {
   if (!ofType.typeOptions.isImmutable) {
     compileErrors.push(
-      new SyntaxCompileError(`${type} cannot be of mutable type '${ofType.name}'.`, location),
+      new SyntaxCompileError(`${type} cannot be of mutable type '${ofType.name}'.`, 
+        location,
+        "LangRef.html#mustBeImmutableGenericType"
+      ),
     );
   }
 }
@@ -789,7 +802,9 @@ export function mustBeValidKeyType(
       (ofType.typeOptions.isIndexable || ofType.typeOptions.isIterable))
   ) {
     compileErrors.push(
-      new SyntaxCompileError(`${type} cannot have key of type '${ofType.name}'.`, location),
+      new SyntaxCompileError(`${type} cannot have key of type '${ofType.name}'.`, 
+        location,
+      "LangRef.html#mustBeValidKeyType"),
     );
   }
 }
@@ -1181,12 +1196,12 @@ export function adviseAgainstFunctionRef(
   location: string,
 ) {
   if (symbol.symbolType() instanceof FunctionType) {
-    compileErrors.push(new FunctionRefCompileError(location));
+    compileErrors.push(new FunctionRefDeprecation(location));
   }
 }
 
 export function adviseAgainstDiv(compileErrors: CompileError[], location: string) {
-  compileErrors.push(new DivCompileError(location));
+  compileErrors.push(new DivDeprecation(location));
 }
 
 export function mustNotBeGlobalFunctionIfRef(
