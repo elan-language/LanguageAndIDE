@@ -4,6 +4,8 @@ export class FileData {
   previousFileIndex: number = -1;
   currentFileIndex: number = -1;
   nextFileIndex: number = -1;
+  lastSavedHash = "";
+  currentFieldId: string = "";
 }
 
 export function updateIndexes(indexJustUsed: number, fd: FileData) {

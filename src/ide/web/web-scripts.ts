@@ -108,12 +108,10 @@ const lastDirId = "elan-files";
 const elanInputOutput = new WebInputOutput();
 
 let undoRedoing: boolean = false;
-let currentFieldId: string = "";
 
 let file: File;
 let profile: Profile;
 let userName: string | undefined;
-let lastSavedHash = "";
 let undoRedoHash = "";
 
 let inactivityTimer: any | undefined = undefined;
@@ -286,7 +284,7 @@ newButton?.addEventListener("click", async (event: Event) => {
   if (isDisabled(event)) {
     return;
   }
-  if (checkForUnsavedChanges(cancelMsg)) {
+  if (checkForUnsavedChanges(fileData, cancelMsg)) {
     await clearDisplays();
     clearUndoRedoAndAutoSave(fileData);
     file = new FileImpl(hash, profile, userName, transforms(), stdlib);
@@ -342,7 +340,7 @@ saveAsStandaloneButton.addEventListener("click", async (event: Event) => {
 
 for (const elem of demoFiles) {
   elem.addEventListener("click", async () => {
-    if (checkForUnsavedChanges(cancelMsg)) {
+    if (checkForUnsavedChanges(fileData, cancelMsg)) {
       const fileName = `${elem.id}`;
       await loadDemoFile(fileName);
     }
@@ -624,8 +622,8 @@ if (okToContinue) {
 
 const cancelMsg = "You have unsaved changes - they will be lost unless you cancel";
 
-function checkForUnsavedChanges(msg: string): boolean {
-  return hasUnsavedChanges() ? confirm(msg) : true;
+function checkForUnsavedChanges(fd: FileData, msg: string): boolean {
+  return hasUnsavedChanges(fd, file) ? confirm(msg) : true;
 }
 
 async function setup(p: Profile) {
@@ -659,8 +657,8 @@ function clearUndoRedoAndAutoSave(fd: FileData) {
   fd.previousFileIndex = fd.nextFileIndex = fd.currentFileIndex = -1;
   localStorage.clear();
   fd.undoRedoFiles = [];
-  lastSavedHash = "";
-  currentFieldId = "";
+  fd.lastSavedHash = "";
+  fd.currentFieldId = "";
   undoRedoHash = "";
 }
 
@@ -774,8 +772,8 @@ async function initialDisplay(reset: boolean) {
   const ps = file.readParseStatus();
   if (ps === ParseStatus.valid || ps === ParseStatus.default || ps === ParseStatus.incomplete) {
     await refreshAndDisplay(false, false);
-    lastSavedHash = lastSavedHash || file.currentHash;
-    updateNameAndSavedStatus();
+    fileData.lastSavedHash = fileData.lastSavedHash || file.currentHash;
+    updateNameAndSavedStatus(fileData);
     if (reset) {
       const code = await file.renderAsSource();
       worksheetIFrame.contentWindow?.postMessage(`code:reset:${code}`, "*");
@@ -806,12 +804,12 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
   return { control: e.ctrlKey || e.metaKey, shift: e.shiftKey, alt: e.altKey };
 }
 
-function hasUnsavedChanges() {
-  return !(lastSavedHash === file.currentHash);
+function hasUnsavedChanges(fd: FileData, file: File) {
+  return !(fd.lastSavedHash === file.currentHash);
 }
 
-function updateNameAndSavedStatus() {
-  const unsaved = hasUnsavedChanges() ? " UNSAVED" : "";
+function updateNameAndSavedStatus(fd: FileData) {
+  const unsaved = hasUnsavedChanges(fd, file) ? " UNSAVED" : "";
   codeTitle.innerText = `file: ${file.fileName}${unsaved}`;
 }
 
@@ -853,7 +851,7 @@ function setPauseButtonState(waitingForUserInput?: boolean) {
 }
 
 function updateDisplayValues() {
-  updateNameAndSavedStatus();
+  updateNameAndSavedStatus(fileData);
 
   // Button control
   const isEmpty = file.readParseStatus() === ParseStatus.default;
@@ -1544,7 +1542,7 @@ async function localAndAutoSave(
       }
       code = await file.renderAsSource();
       const timestamp = Date.now();
-      const overWriteLastEntry = newFieldId === currentFieldId;
+      const overWriteLastEntry = newFieldId === fd.currentFieldId;
       const id = overWriteLastEntry
         ? fd.undoRedoFiles[fd.currentFileIndex]
         : `${file.fileName}.${timestamp}`;
@@ -1560,7 +1558,7 @@ async function localAndAutoSave(
       localStorage.setItem(id, code);
       saveButton.classList.add("unsaved");
       undoRedoHash = file.currentHash;
-      currentFieldId = newFieldId ?? "";
+      fd.currentFieldId = newFieldId ?? "";
 
       while (fd.undoRedoFiles.length >= 20) {
         const toTrim = fd.undoRedoFiles[0];
@@ -1583,7 +1581,7 @@ async function replaceCode(indexToUse: number, msg: string, fd: FileData) {
   updateIndexes(indexToUse, fd);
   const code = localStorage.getItem(id);
   // reset so changes on same field after this will be seen
-  currentFieldId = "";
+  fd.currentFieldId = "";
   if (code) {
     disable([undoButton, redoButton], msg);
     cursorWait();
@@ -1760,7 +1758,7 @@ function printDebugInfo(info: DebugSymbol[] | string) {
 
 function chooser(uploader: (event: Event) => void, noCheck: boolean) {
   return () => {
-    if (noCheck || checkForUnsavedChanges(cancelMsg)) {
+    if (noCheck || checkForUnsavedChanges(fileData, cancelMsg)) {
       const f = document.createElement("input");
       f.style.display = "none";
 
@@ -1945,7 +1943,7 @@ async function handleDownload(event: Event) {
   aElement.click();
   URL.revokeObjectURL(href);
   saveButton.classList.remove("unsaved");
-  lastSavedHash = file.currentHash;
+  fileData.lastSavedHash = file.currentHash;
   event.preventDefault();
   await renderAsHtml(false);
 }
@@ -1991,7 +1989,7 @@ async function handleChromeDownload(event: Event) {
     await chromeSave(code, true);
 
     saveButton.classList.remove("unsaved");
-    lastSavedHash = file.currentHash;
+    fileData.lastSavedHash = file.currentHash;
 
     await renderAsHtml(false);
   } catch (_e) {
@@ -2017,7 +2015,7 @@ async function handleChromeAutoSave(event: Event) {
 
   try {
     fileData.autoSaveFileHandle = await chromeSave(code, true);
-    lastSavedHash = file.currentHash;
+    fileData.lastSavedHash = file.currentHash;
     await renderAsHtml(false);
   } catch (_e) {
     // user cancelled
@@ -2036,8 +2034,8 @@ async function writeCode(fh: FileSystemFileHandle, code: string) {
   const writeable = await fh.createWritable();
   await writeable.write(code);
   await writeable.close();
-  lastSavedHash = file.currentHash;
-  updateNameAndSavedStatus();
+  fileData.lastSavedHash = file.currentHash;
+  updateNameAndSavedStatus(fileData);
   if (pendingSave) {
     const pendingCode = pendingSave;
     pendingSave = "";
@@ -2046,7 +2044,7 @@ async function writeCode(fh: FileSystemFileHandle, code: string) {
 }
 
 async function autoSave(code: string, fd: FileData) {
-  if (fd.autoSaveFileHandle && hasUnsavedChanges()) {
+  if (fd.autoSaveFileHandle && hasUnsavedChanges(fd, file)) {
     try {
       if (code.trim() === "") {
         // should never write empty file - always at least header
@@ -2340,7 +2338,7 @@ window.addEventListener("message", async (m) => {
     if (m.data.startsWith("filename:")) {
       const name = m.data.slice(9);
       file.fileName = name;
-      updateNameAndSavedStatus();
+      updateNameAndSavedStatus(fileData);
     }
   }
 });
