@@ -526,7 +526,7 @@ export class DivCompileError extends CompileError {
     super(
       DisplayPriority.fourth,
       Severity.advisory,
-      `'div' is deprecated. The recommended pattern for integer division is e.g. '(10/3).floor()'`,
+      `'div' is deprecated. Recommended code for integer division is e.g. (10/3).floor()`,
       location,
       "LangRef.html#div",
     );
