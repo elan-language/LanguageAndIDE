@@ -1,4 +1,4 @@
-# 354d0d36b04aa8ce7aef8b72b391388f6c0f6a2a14e776affaf519b1ce51abea Elan 1.8.0 guest default_profile valid
+# 899f55f9a440b65a2486a5d0b1cb67e5d957b5749e731d0425abc6bd95d12c24 Elan 1.8.0 guest default_profile valid
 
 # A program to investigate the Collatz Conjecture
 # https://en.wikipedia.org/wiki/Collatz_conjecture
@@ -13,8 +13,7 @@ main
     while x > 1
       # Collatz sequence
       if (x mod 2) is 0 then
-        # div always produces an Int result
-        set x to x div 2
+        set x to (x/2).floor()
       else
         set x to x*3 + 1
       end if
