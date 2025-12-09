@@ -2,7 +2,7 @@ import { File } from "../frames/frame-interfaces/file";
 import { ParseStatus } from "../frames/status-enums";
 import { IIDEViewModel } from "./ui-helpers";
 
-export class UndoRedoHandler {
+export class FileManager {
   private autoSaveFileHandle: FileSystemFileHandle | undefined = undefined;
   private undoRedoFiles: string[] = [];
   private previousFileIndex: number = -1;
@@ -16,15 +16,6 @@ export class UndoRedoHandler {
   // accumulated while the file is locked.
   private fileLock = false;
   private pendingSave = "";
-
-  updateIndexes(indexJustUsed: number) {
-    this.currentFileIndex = indexJustUsed;
-    this.nextFileIndex = indexJustUsed + 1;
-    this.nextFileIndex =
-      this.nextFileIndex > this.undoRedoFiles.length - 1 ? -1 : this.nextFileIndex;
-    this.previousFileIndex = indexJustUsed - 1;
-    this.previousFileIndex = this.previousFileIndex < -1 ? -1 : this.previousFileIndex;
-  }
 
   isAutosaving() {
     return !!this.autoSaveFileHandle;
@@ -42,53 +33,7 @@ export class UndoRedoHandler {
     return !(this.lastSavedHash === file.currentHash);
   }
 
-  async writeCode(code: string, file: File, vm: IIDEViewModel) {
-    const fh = this.autoSaveFileHandle!;
-    const writeable = await fh.createWritable();
-    await writeable.write(code);
-    await writeable.close();
-    this.lastSavedHash = file.currentHash;
-    const unsaved = this.hasUnsavedChanges(file) ? " UNSAVED" : "";
-    vm.updateFileName(unsaved);
-    if (this.pendingSave) {
-      const pendingCode = this.pendingSave;
-      this.pendingSave = "";
-      await this.writeCode(pendingCode, file, vm);
-    }
-  }
-
-  async autoSave(code: string, file: File, vm: IIDEViewModel) {
-    if (this.autoSaveFileHandle && this.hasUnsavedChanges(file)) {
-      try {
-        if (code.trim() === "") {
-          // should never write empty file - always at least header
-          throw new Error("Error with empty code file");
-        }
-        if (this.fileLock) {
-          this.pendingSave = code;
-        } else {
-          this.fileLock = true;
-          await this.writeCode(code, file, vm);
-          this.fileLock = false;
-        }
-      } catch (e) {
-        const reason = (e as Error).message ?? "Unknown";
-        const msg = `Auto-save failed. Auto-save mode has been cancelled - please save the file manually to ensure your changes are not lost! Reason: ${reason}`;
-        alert(msg);
-        this.autoSaveFileHandle = undefined;
-        this.fileLock = false;
-        this.pendingSave = "";
-        console.debug(`Autosave failed: error: ${e} code: ${code}`);
-      }
-    }
-  }
-
-  async localAndAutoSave(
-    file: File,
-    field: HTMLElement | undefined,
-    editingField: boolean,
-    vm: IIDEViewModel,
-  ) {
+  async save(file: File, field: HTMLElement | undefined, editingField: boolean, vm: IIDEViewModel) {
     let code = "";
     const newFieldId = editingField ? field?.id : undefined;
     const parseStatus = file.readParseStatus();
@@ -141,19 +86,6 @@ export class UndoRedoHandler {
     this.undoRedoing = false;
   }
 
-  async replaceCode(indexToUse: number, msg: string, vm: IIDEViewModel) {
-    const id = this.undoRedoFiles[indexToUse];
-    this.updateIndexes(indexToUse);
-    const code = localStorage.getItem(id);
-    // reset so changes on same field after this will be seen
-    this.currentFieldId = "";
-    if (code) {
-      vm.disableUndoRedoButtons(msg);
-      this.undoRedoing = true;
-      await vm.updateFileAndCode(code);
-    }
-  }
-
   async undo(vm: IIDEViewModel) {
     if (this.canUndo()) {
       const indexToUse = this.previousFileIndex;
@@ -167,7 +99,7 @@ export class UndoRedoHandler {
     }
   }
 
-  clearUndoRedoAndAutoSave() {
+  reset() {
     this.autoSaveFileHandle = undefined;
     this.previousFileIndex = this.nextFileIndex = this.currentFileIndex = -1;
     localStorage.clear();
@@ -203,22 +135,18 @@ export class UndoRedoHandler {
     if (this.isAutosaving()) {
       this.autoSaveFileHandle = undefined;
       vm.updateDisplayValues();
-      return;
+    } else {
+      const code = await file.renderAsSource();
+      this.autoSaveFileHandle = await this.chromeSave(file, code, true);
+      this.resetHash(file);
+      await vm.renderAsHtml(false);
     }
-
-    const code = await file.renderAsSource();
-
-    this.autoSaveFileHandle = await this.chromeSave(file, code, true);
-    this.resetHash(file);
-    await vm.renderAsHtml(false);
   }
 
   async doDownLoad(file: File, vm: IIDEViewModel) {
     const code = await file.renderAsSource();
     await this.chromeSave(file, code, true);
-
     this.resetHash(file);
-
     await vm.renderAsHtml(false);
   }
 
@@ -233,5 +161,68 @@ export class UndoRedoHandler {
 
   resetHash(file: File) {
     this.lastSavedHash = file.currentHash;
+  }
+
+  private async writeCode(code: string, file: File, vm: IIDEViewModel) {
+    const fh = this.autoSaveFileHandle!;
+    const writeable = await fh.createWritable();
+    await writeable.write(code);
+    await writeable.close();
+    this.lastSavedHash = file.currentHash;
+    const unsaved = this.hasUnsavedChanges(file) ? " UNSAVED" : "";
+    vm.updateFileName(unsaved);
+    if (this.pendingSave) {
+      const pendingCode = this.pendingSave;
+      this.pendingSave = "";
+      await this.writeCode(pendingCode, file, vm);
+    }
+  }
+
+  private updateIndexes(indexJustUsed: number) {
+    this.currentFileIndex = indexJustUsed;
+    this.nextFileIndex = indexJustUsed + 1;
+    this.nextFileIndex =
+      this.nextFileIndex > this.undoRedoFiles.length - 1 ? -1 : this.nextFileIndex;
+    this.previousFileIndex = indexJustUsed - 1;
+    this.previousFileIndex = this.previousFileIndex < -1 ? -1 : this.previousFileIndex;
+  }
+
+  private async autoSave(code: string, file: File, vm: IIDEViewModel) {
+    if (this.autoSaveFileHandle && this.hasUnsavedChanges(file)) {
+      try {
+        if (code.trim() === "") {
+          // should never write empty file - always at least header
+          throw new Error("Error with empty code file");
+        }
+        if (this.fileLock) {
+          this.pendingSave = code;
+        } else {
+          this.fileLock = true;
+          await this.writeCode(code, file, vm);
+          this.fileLock = false;
+        }
+      } catch (e) {
+        const reason = (e as Error).message ?? "Unknown";
+        const msg = `Auto-save failed. Auto-save mode has been cancelled - please save the file manually to ensure your changes are not lost! Reason: ${reason}`;
+        alert(msg);
+        this.autoSaveFileHandle = undefined;
+        this.fileLock = false;
+        this.pendingSave = "";
+        console.debug(`Autosave failed: error: ${e} code: ${code}`);
+      }
+    }
+  }
+
+  private async replaceCode(indexToUse: number, msg: string, vm: IIDEViewModel) {
+    const id = this.undoRedoFiles[indexToUse];
+    this.updateIndexes(indexToUse);
+    const code = localStorage.getItem(id);
+    // reset so changes on same field after this will be seen
+    this.currentFieldId = "";
+    if (code) {
+      vm.disableUndoRedoButtons(msg);
+      this.undoRedoing = true;
+      await vm.updateFileAndCode(code);
+    }
   }
 }
