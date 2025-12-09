@@ -20,7 +20,7 @@ import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
 import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
 import { getDebugSymbol, getSummaryHtml, ProgramRunner } from "./program-runner";
-import { endTests, runTests, TestRunner } from "./test-runner";
+import { TestRunner } from "./test-runner";
 import { checkIsChrome, confirmContinueOnNonChromeBrowser, IIDEViewModel } from "./ui-helpers";
 import {
   encodeCode,
@@ -249,11 +249,7 @@ stopButton?.addEventListener("click", () => {
   // do rest on next event loop for responsivenesss
   setTimeout(() => {
     programRunner.stop(file, ideViewModel, elanInputOutput);
-    if (testRunner.testWorker) {
-      endTests(testRunner);
-      file.setTestStatus(TestStatus.default);
-      updateDisplayValues();
-    }
+    testRunner.stop(file, ideViewModel);
   }, 1);
 });
 
@@ -763,7 +759,7 @@ async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean
     file.refreshParseAndCompileStatuses(compileIfParsed);
     const cs = file.readCompileStatus();
     if ((cs === CompileStatus.ok || cs === CompileStatus.advisory) && file.hasTests) {
-      await runTests(file, ideViewModel, testRunner);
+      await testRunner.run(file, ideViewModel);
     }
     await renderAsHtml(editingField);
   } catch (e) {
@@ -873,7 +869,7 @@ function updateDisplayValues() {
   let isTestRunning = isTestRunningState();
 
   if (isTestRunning && !(isParsing || isCompiling)) {
-    endTests(testRunner);
+    testRunner.end();
     file.setTestStatus(TestStatus.default);
     isTestRunning = false;
     console.info("tests cancelled in updateDisplayValues");
@@ -1251,7 +1247,7 @@ async function handleEditorEvent(
   }
 
   if (isTestRunningState()) {
-    endTests(testRunner);
+    testRunner.end();
     file.setTestStatus(TestStatus.default);
     console.info("tests cancelled in handleEditorEvent");
   }
