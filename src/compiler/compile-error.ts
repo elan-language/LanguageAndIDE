@@ -521,6 +521,18 @@ export class FunctionRefCompileError extends CompileError {
   }
 }
 
+export class DivCompileError extends CompileError {
+  constructor(location: string) {
+    super(
+      DisplayPriority.fourth,
+      Severity.advisory,
+      `'div' is deprecated. The recommended pattern for integer division is e.g. '(10/3).floor()'`,
+      location,
+      "LangRef.html#div",
+    );
+  }
+}
+
 export class NotGlobalFunctionRefCompileError extends CompileError {
   constructor(id: string, location: string) {
     super(
