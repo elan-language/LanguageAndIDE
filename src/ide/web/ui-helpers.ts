@@ -1,9 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { AssertOutcome } from "../../compiler/assert-outcome";
 import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
-import { RunStatus } from "../frames/status-enums";
+import { TestStatus } from "../../compiler/test-status";
+import { CodeSource } from "../frames/frame-interfaces/code-source";
+import { editorEvent } from "../frames/frame-interfaces/editor-event";
+import { Frame } from "../frames/frame-interfaces/frame";
+import { Selectable } from "../frames/frame-interfaces/selectable";
+import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { WebWorkerReadMessage, WebWorkerStatusMessage } from "./web-worker-messages";
-import { File } from "../frames/frame-interfaces/file";
 
 // from https://stackoverflow.com/questions/4565112/how-to-find-out-if-the-user-browser-is-chrome
 export function checkIsChrome() {
@@ -84,9 +89,79 @@ export function parentId(e: Element): string {
   return "";
 }
 
+export interface ICodeEditorViewModel {
+  fileName: string;
+
+  setRunStatus(s: RunStatus): void;
+
+  getRunStatusLabel(): string;
+
+  getRunStatusColour(): string;
+  readParseStatus(): ParseStatus;
+
+  readCompileStatus(): CompileStatus;
+
+  readRunStatus(): RunStatus;
+  readTestStatus(): TestStatus;
+
+  setTestStatus(ts: TestStatus): void;
+
+  getParseStatusColour(): string;
+  getParseStatusLabel(): string;
+  getCompileStatusColour(): string;
+  getCompileStatusLabel(): string;
+  getTestStatusColour(): string;
+  getTestStatusLabel(): string;
+
+  containsMain(): boolean;
+
+  renderAsHtml(): Promise<string>;
+
+  removeAllSelectorsThatCanBe(): void;
+
+  expandCollapseAll(): void;
+
+  getVersionString(): string;
+
+  refreshParseAndCompileStatuses(compileIfParsed: boolean): void;
+
+  hasTests: boolean;
+
+  renderAsSource(): Promise<string>;
+
+  parseFrom(source: CodeSource): Promise<void>;
+
+  parseError: string | undefined;
+
+  defaultFileName: string;
+
+  getCopiedSource(): string[];
+
+  getFieldBeingEdited(): boolean;
+
+  getFirstChild(): Frame;
+
+  recreateFile(): void;
+
+  currentHash: string;
+
+  compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string;
+
+  compileAsTestWorker(base: string): string;
+
+  refreshTestStatuses(outcomes: [string, AssertOutcome[]][]): void;
+
+  getTestError(): Error | undefined;
+
+  getById(id: string): Selectable;
+
+  getMap(): Map<string, Selectable>;
+  processKey(e: editorEvent): boolean;
+}
+
 export interface IIDEViewModel {
   focusInfoTab(): void;
-  updateDisplayValues(file: File): void;
+  updateDisplayValues(file: ICodeEditorViewModel): void;
   setPauseButtonState(waitingForUserInput?: boolean): void;
   toggleInputStatus(rs: RunStatus): void;
   clearDisplays(): Promise<void>;
@@ -94,7 +169,7 @@ export interface IIDEViewModel {
   printDebugInfo(info: DebugSymbol[] | string): void;
   setPausedAtLocation(location: string): void;
   clickInfoTab(): void;
-  run(file: File): Promise<void>;
+  run(file: ICodeEditorViewModel): Promise<void>;
   runDebug(): void;
   renderAsHtml(editingField: boolean): Promise<void>;
   systemInfoPrintSafe(text: string, scroll?: boolean): void;

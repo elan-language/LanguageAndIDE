@@ -2,9 +2,8 @@
 
 import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
 import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
-import { File } from "../frames/frame-interfaces/file";
 import { RunStatus } from "../frames/status-enums";
-import { IIDEViewModel } from "./ui-helpers";
+import { ICodeEditorViewModel, IIDEViewModel } from "./ui-helpers";
 import { encodeCode } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 import {
@@ -26,20 +25,20 @@ export class ProgramRunner {
     return this.debugMode;
   }
 
-  async runDebug(file: File, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
+  async runDebug(file: ICodeEditorViewModel, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
     vm.runDebug();
     this.debugMode = true;
     this.singleStepping = this.processingSingleStep = false;
     await this.runProgram(file, vm, elanInputOutput);
   }
 
-  async run(file: File, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
+  async run(file: ICodeEditorViewModel, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
     await vm.run(file);
     this.debugMode = this.singleStepping = this.processingSingleStep = false;
     await this.runProgram(file, vm, elanInputOutput);
   }
 
-  stop(file: File, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
+  stop(file: ICodeEditorViewModel, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
     this.debugMode = this.singleStepping = false;
 
     this.handleRunWorkerFinished(file, vm, elanInputOutput);
@@ -50,7 +49,7 @@ export class ProgramRunner {
     this.runWorker?.postMessage({ type: "pause" } as WebWorkerMessage);
   }
 
-  step(file: File, vm: IIDEViewModel) {
+  step(file: ICodeEditorViewModel, vm: IIDEViewModel) {
     this.singleStepping = true;
 
     if (this.pendingBreakpoints.length > 0) {
@@ -72,7 +71,11 @@ export class ProgramRunner {
     }
   }
 
-  private async runProgram(file: File, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
+  private async runProgram(
+    file: ICodeEditorViewModel,
+    vm: IIDEViewModel,
+    elanInputOutput: WebInputOutput,
+  ) {
     try {
       if (file.readRunStatus() === RunStatus.paused && this.runWorker && this.debugMode) {
         this.pendingBreakpoints = [];
@@ -153,7 +156,7 @@ export class ProgramRunner {
 
   private async handleRunWorkerError(
     data: WebWorkerStatusMessage,
-    file: File,
+    file: ICodeEditorViewModel,
     vm: IIDEViewModel,
     elanInputOutput: WebInputOutput,
   ) {
@@ -169,7 +172,11 @@ export class ProgramRunner {
     vm.updateDisplayValues(file);
   }
 
-  private handleRunWorkerFinished(file: File, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
+  private handleRunWorkerFinished(
+    file: ICodeEditorViewModel,
+    vm: IIDEViewModel,
+    elanInputOutput: WebInputOutput,
+  ) {
     this.runWorker?.terminate();
     this.runWorker = undefined;
     elanInputOutput.finished();
@@ -187,7 +194,7 @@ export class ProgramRunner {
       return `No values defined at this point - proceed to the next instruction`;
     }
   }
-  private resumeProgram(file: File) {
+  private resumeProgram(file: ICodeEditorViewModel) {
     if (this.singleStepping) {
       this.runWorker?.postMessage({ type: "pause" } as WebWorkerMessage);
     }
@@ -200,7 +207,7 @@ export class ProgramRunner {
 }
 
 async function handleWorkerIO(
-  file: File,
+  file: ICodeEditorViewModel,
   data: WebWorkerWriteMessage,
   runWorker: Worker | undefined,
   elanInputOutput: WebInputOutput,

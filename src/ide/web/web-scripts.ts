@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { AssertOutcome } from "../../compiler/assert-outcome";
 import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
 import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
 import { StdLib } from "../../compiler/standard-library/std-lib";
@@ -16,6 +17,7 @@ import { CodeSource } from "../frames/frame-interfaces/code-source";
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { File, ParseMode } from "../frames/frame-interfaces/file";
 import { Profile } from "../frames/frame-interfaces/profile";
+import { Selectable } from "../frames/frame-interfaces/selectable";
 import { Group, Individual } from "../frames/frame-interfaces/user-config";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
@@ -29,6 +31,7 @@ import {
   confirmContinueOnNonChromeBrowser,
   delayMessage,
   globalKeys,
+  ICodeEditorViewModel,
   IIDEViewModel,
   internalErrorMsg,
   parentId,
@@ -128,8 +131,8 @@ let errorDOMEvent: Event | undefined;
 let errorEditorEvent: editorEvent | undefined;
 let errorStack: string | undefined;
 
-class EditorViewModel {
-  file?: File = undefined;
+class CodeEditorViewModel implements ICodeEditorViewModel {
+  private file?: File = undefined;
 
   get fileName() {
     return this.file!.fileName;
@@ -244,20 +247,50 @@ class EditorViewModel {
   recreateFile() {
     this.file = new FileImpl(hash, profile, userName, transforms(), stdlib);
   }
-}
 
-const file = new EditorViewModel();
+  get currentHash() {
+    return this.file!.currentHash;
+  }
+
+  compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string {
+    return this.file!.compileAsWorker(base, debugMode, standalone);
+  }
+
+  compileAsTestWorker(base: string): string {
+    return this.file!.compileAsTestWorker(base);
+  }
+
+  refreshTestStatuses(outcomes: [string, AssertOutcome[]][]): void {
+    this.file?.refreshTestStatuses(outcomes);
+  }
+
+  getTestError(): Error | undefined {
+    return this.file!.getTestError();
+  }
+
+  getById(id: string): Selectable {
+    return this.file!.getById(id);
+  }
+
+  getMap(): Map<string, Selectable> {
+    return this.file!.getMap();
+  }
+
+  processKey(e: editorEvent): boolean {
+    return this.file!.processKey(e);
+  }
+}
 
 class IDEViewModel implements IIDEViewModel {
   focusInfoTab() {
     showInfoTab();
     systemInfoDiv.focus();
     systemInfoDiv.classList.add("focussed");
-    file.setRunStatus(RunStatus.paused);
+    codeViewModel.setRunStatus(RunStatus.paused);
     systemInfoDiv.innerHTML = "";
   }
 
-  updateDisplayValues() {
+  updateDisplayValues(file: ICodeEditorViewModel) {
     updateNameAndSavedStatus(fileManager, this);
 
     // Button control
@@ -425,8 +458,13 @@ class IDEViewModel implements IIDEViewModel {
   }
 
   toggleInputStatus(rs: RunStatus) {
-    file.setRunStatus(rs);
-    setStatus(runStatus, file.getRunStatusColour(), file.getRunStatusLabel(), false);
+    codeViewModel.setRunStatus(rs);
+    setStatus(
+      runStatus,
+      codeViewModel.getRunStatusColour(),
+      codeViewModel.getRunStatusLabel(),
+      false,
+    );
   }
 
   async clearDisplays() {
@@ -444,7 +482,7 @@ class IDEViewModel implements IIDEViewModel {
       await resetFile();
     }
 
-    file.fileName = fileName;
+    codeViewModel.fileName = fileName;
 
     if (err.message?.startsWith(fileErrorPrefix)) {
       this.systemInfoPrintSafe(err.message);
@@ -469,7 +507,7 @@ class IDEViewModel implements IIDEViewModel {
     } else {
       this.systemInfoPrintSafe(err.message ?? "Unknown error parsing file");
     }
-    this.updateDisplayValues();
+    this.updateDisplayValues(codeViewModel);
   }
 
   printDebugInfo(info: DebugSymbol[] | string) {
@@ -489,14 +527,14 @@ class IDEViewModel implements IIDEViewModel {
     const pausedAt = document.getElementById(location);
     pausedAt?.classList.add("paused-at");
     pausedAt?.scrollIntoView();
-    this.updateDisplayValues();
+    this.updateDisplayValues(codeViewModel);
   }
 
   clickInfoTab() {
     infoTabLabel.click();
   }
 
-  async run(file: File) {
+  async run(file: ICodeEditorViewModel) {
     file.removeAllSelectorsThatCanBe();
     await this.renderAsHtml(false);
     runButton.focus();
@@ -509,11 +547,11 @@ class IDEViewModel implements IIDEViewModel {
   }
 
   async renderAsHtml(editingField: boolean) {
-    const content = await file.renderAsHtml();
+    const content = await codeViewModel.renderAsHtml();
     try {
       await updateContent(content, editingField);
     } catch (e) {
-      await this.showError(e as Error, file.fileName, false);
+      await this.showError(e as Error, codeViewModel.fileName, false);
     }
   }
 
@@ -524,12 +562,12 @@ class IDEViewModel implements IIDEViewModel {
   }
 
   updateFileName(unsaved: string) {
-    codeTitle.innerText = `file: ${file.fileName}${unsaved}`;
+    codeTitle.innerText = `file: ${codeViewModel.fileName}${unsaved}`;
   }
 
   async updateFileAndCode(code: string) {
-    const fn = file.fileName;
-    file.recreateFile();
+    const fn = codeViewModel.fileName;
+    codeViewModel.recreateFile();
     await displayCode(code, fn);
   }
 
@@ -538,6 +576,8 @@ class IDEViewModel implements IIDEViewModel {
     cursorWait();
   }
 }
+
+const codeViewModel = new CodeEditorViewModel();
 
 const ideViewModel = new IDEViewModel();
 
@@ -558,7 +598,7 @@ displayDiv.addEventListener("click", () => {
 });
 
 trimButton.addEventListener("click", async () => {
-  file.removeAllSelectorsThatCanBe();
+  codeViewModel.removeAllSelectorsThatCanBe();
   await ideViewModel.renderAsHtml(false);
 });
 
@@ -571,15 +611,15 @@ addEventListener("beforeunload", (event) => {
 });
 
 runButton?.addEventListener("click", async () => {
-  await programRunner.run(file.file!, ideViewModel, elanInputOutput);
+  await programRunner.run(codeViewModel, ideViewModel, elanInputOutput);
 });
 
 runDebugButton?.addEventListener("click", async () => {
-  await programRunner.runDebug(file.file!, ideViewModel, elanInputOutput);
+  await programRunner.runDebug(codeViewModel, ideViewModel, elanInputOutput);
 });
 
 stepButton?.addEventListener("click", () => {
-  programRunner.step(file.file!, ideViewModel);
+  programRunner.step(codeViewModel, ideViewModel);
 });
 
 pauseButton?.addEventListener("click", () => {
@@ -590,8 +630,8 @@ stopButton?.addEventListener("click", () => {
   disable([stopButton, pauseButton, stepButton], "Program is not running");
   // do rest on next event loop for responsivenesss
   setTimeout(() => {
-    programRunner.stop(file.file!, ideViewModel, elanInputOutput);
-    testRunner.stop(file.file!, ideViewModel);
+    programRunner.stop(codeViewModel, ideViewModel, elanInputOutput);
+    testRunner.stop(codeViewModel, ideViewModel);
   }, 1);
 });
 
@@ -621,7 +661,7 @@ loadExternalWorksheetButton?.addEventListener("click", async () => {
 });
 
 expandCollapseButton?.addEventListener("click", async () => {
-  file.expandCollapseAll();
+  codeViewModel.expandCollapseAll();
   await ideViewModel.renderAsHtml(false);
 });
 
@@ -630,7 +670,7 @@ newButton?.addEventListener("click", async (event: Event) => {
     if (checkForUnsavedChanges(fileManager, cancelMsg)) {
       await ideViewModel.clearDisplays();
       fileManager.reset();
-      file.recreateFile();
+      codeViewModel.recreateFile();
       await initialDisplay(false);
     }
   }
@@ -649,15 +689,15 @@ autoSaveButton.addEventListener("click", handleChromeAutoSave);
 async function loadDemoFile(fileName: string) {
   const f = await fetch(fileName, { mode: "same-origin" });
   const rawCode = await f.text();
-  file.recreateFile();
-  file.fileName = fileName;
+  codeViewModel.recreateFile();
+  codeViewModel.fileName = fileName;
   fileManager.reset();
   await readAndParse(rawCode, fileName, ParseMode.loadNew);
 }
 
 saveAsStandaloneButton.addEventListener("click", async (event: Event) => {
   if (!isDisabled(event)) {
-    await fileManager.saveAsStandAlone(file.file!);
+    await fileManager.saveAsStandAlone(codeViewModel);
   }
 });
 
@@ -920,14 +960,14 @@ if (okToContinue) {
 }
 
 function checkForUnsavedChanges(fm: FileManager, msg: string): boolean {
-  return fm.hasUnsavedChanges(file.file!) ? confirm(msg) : true;
+  return fm.hasUnsavedChanges(codeViewModel) ? confirm(msg) : true;
 }
 
 async function setup(p: Profile) {
   fileManager.reset();
   profile = p;
 
-  file.recreateFile();
+  codeViewModel.recreateFile();
   await displayFile();
 }
 
@@ -936,7 +976,7 @@ function clearSystemDisplay() {
 }
 
 async function resetFile() {
-  file.recreateFile();
+  codeViewModel.recreateFile();
   await initialDisplay(false);
 }
 
@@ -949,7 +989,7 @@ type: ${evt.type},
 }
 
 async function gatherDebugInfo(fm: FileManager) {
-  const elanVersion = file.getVersionString();
+  const elanVersion = codeViewModel.getVersionString();
   const now = new Date().toLocaleString();
   const body = document.getElementsByTagName("body")[0].innerHTML;
   const code = fm.getLastCodeVersion();
@@ -973,32 +1013,32 @@ function systemInfoPrintUnsafe(text: string, scroll = true) {
 
 async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean) {
   try {
-    file.refreshParseAndCompileStatuses(compileIfParsed);
-    const cs = file.readCompileStatus();
-    if ((cs === CompileStatus.ok || cs === CompileStatus.advisory) && file.hasTests) {
-      await testRunner.run(file.file!, ideViewModel);
+    codeViewModel.refreshParseAndCompileStatuses(compileIfParsed);
+    const cs = codeViewModel.readCompileStatus();
+    if ((cs === CompileStatus.ok || cs === CompileStatus.advisory) && codeViewModel.hasTests) {
+      await testRunner.run(codeViewModel, ideViewModel);
     }
     await ideViewModel.renderAsHtml(editingField);
   } catch (e) {
-    await ideViewModel.showError(e as Error, file.fileName, false);
+    await ideViewModel.showError(e as Error, codeViewModel.fileName, false);
   }
 }
 
 async function initialDisplay(reset: boolean) {
   await ideViewModel.clearDisplays();
 
-  const ps = file.readParseStatus();
+  const ps = codeViewModel.readParseStatus();
   if (ps === ParseStatus.valid || ps === ParseStatus.default || ps === ParseStatus.incomplete) {
     await refreshAndDisplay(false, false);
-    fileManager.updateHash(file.file!);
+    fileManager.updateHash(codeViewModel);
     updateNameAndSavedStatus(fileManager, ideViewModel);
     if (reset) {
-      const code = await file.renderAsSource();
+      const code = await codeViewModel.renderAsSource();
       worksheetIFrame.contentWindow?.postMessage(`code:reset:${code}`, "*");
     }
   } else {
-    const msg = file.parseError || "Failed load code";
-    await ideViewModel.showError(new Error(msg), file.fileName, reset);
+    const msg = codeViewModel.parseError || "Failed load code";
+    await ideViewModel.showError(new Error(msg), codeViewModel.fileName, reset);
   }
 }
 
@@ -1006,11 +1046,11 @@ async function displayCode(rawCode: string, fileName: string) {
   const code = new CodeSourceFromString(rawCode);
   code.mode = ParseMode.loadNew;
   try {
-    await file.parseFrom(code);
-    file.fileName = fileName || file.defaultFileName;
+    await codeViewModel.parseFrom(code);
+    codeViewModel.fileName = fileName || codeViewModel.defaultFileName;
     await refreshAndDisplay(true, false);
   } catch (e) {
-    await ideViewModel.showError(e as Error, fileName || file.defaultFileName, true);
+    await ideViewModel.showError(e as Error, fileName || codeViewModel.defaultFileName, true);
   }
 }
 
@@ -1023,7 +1063,7 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
 }
 
 function updateNameAndSavedStatus(fm: FileManager, vm: IIDEViewModel) {
-  const unsaved = fm.hasUnsavedChanges(file.file!) ? " UNSAVED" : "";
+  const unsaved = fm.hasUnsavedChanges(codeViewModel) ? " UNSAVED" : "";
   vm.updateFileName(unsaved);
 }
 
@@ -1042,18 +1082,18 @@ function setStatus(html: HTMLDivElement, colour: string, label: string, showTool
 
 function isRunningState() {
   return (
-    file.readRunStatus() === RunStatus.running ||
-    file.readRunStatus() === RunStatus.paused ||
-    file.readRunStatus() === RunStatus.input
+    codeViewModel.readRunStatus() === RunStatus.running ||
+    codeViewModel.readRunStatus() === RunStatus.paused ||
+    codeViewModel.readRunStatus() === RunStatus.input
   );
 }
 
 function isTestRunningState() {
-  return file.readTestStatus() === TestStatus.running;
+  return codeViewModel.readTestStatus() === TestStatus.running;
 }
 
 function isPausedState() {
-  return file.readRunStatus() === RunStatus.paused;
+  return codeViewModel.readRunStatus() === RunStatus.paused;
 }
 
 function disable(buttons: HTMLElement[], msg = "") {
@@ -1295,7 +1335,7 @@ async function handleEditorEvent(
 
   if (isTestRunningState()) {
     testRunner.end();
-    file.setTestStatus(TestStatus.default);
+    codeViewModel.setTestStatus(TestStatus.default);
     console.info("tests cancelled in handleEditorEvent");
   }
 
@@ -1330,7 +1370,7 @@ function getFocused() {
  * Render the document
  */
 async function updateContent(text: string, editingField: boolean) {
-  file.setRunStatus(RunStatus.default);
+  codeViewModel.setRunStatus(RunStatus.default);
   collapseAllMenus();
 
   codeContainer!.innerHTML = text;
@@ -1539,7 +1579,7 @@ async function updateContent(text: string, editingField: boolean) {
     activeHelp.click();
   }
 
-  const copiedSource = file.getCopiedSource();
+  const copiedSource = codeViewModel.getCopiedSource();
 
   if (copiedSource.length > 0) {
     let allCode = "";
@@ -1555,8 +1595,8 @@ async function updateContent(text: string, editingField: boolean) {
     await navigator.clipboard.writeText(allCode);
   }
 
-  await fileManager.save(file.file!, focused, editingField, ideViewModel);
-  ideViewModel.updateDisplayValues();
+  await fileManager.save(codeViewModel, focused, editingField, ideViewModel);
+  ideViewModel.updateDisplayValues(codeViewModel);
 
   if (!isElanProduction) {
     const dbgFocused = document.querySelectorAll(".focused");
@@ -1564,7 +1604,7 @@ async function updateContent(text: string, editingField: boolean) {
     if (dbgFocused.length > 1) {
       let msg = "multiple focused ";
       dbgFocused.forEach((n) => (msg = `${msg}, Node: ${(n.nodeName, n.id)} `));
-      await ideViewModel.showError(new Error(msg), file.fileName, false);
+      await ideViewModel.showError(new Error(msg), codeViewModel.fileName, false);
     }
   }
 
@@ -1573,9 +1613,9 @@ async function updateContent(text: string, editingField: boolean) {
 
 async function inactivityRefresh() {
   if (
-    file.readRunStatus() !== RunStatus.running &&
-    file.readParseStatus() === ParseStatus.valid &&
-    file.readCompileStatus() === CompileStatus.default
+    codeViewModel.readRunStatus() !== RunStatus.running &&
+    codeViewModel.readParseStatus() === ParseStatus.valid &&
+    codeViewModel.readCompileStatus() === CompileStatus.default
   ) {
     await refreshAndDisplay(true, false);
   }
@@ -1586,7 +1626,7 @@ async function inactivityRefresh() {
 let purgingKeys = false;
 
 async function handleKeyAndRender(e: editorEvent) {
-  if (file.readRunStatus() === RunStatus.running) {
+  if (codeViewModel.readRunStatus() === RunStatus.running) {
     // no change while running
     return;
   }
@@ -1602,16 +1642,16 @@ async function handleKeyAndRender(e: editorEvent) {
     removeFocussedClassFromAllTabs();
     switch (e.type) {
       case "click":
-        isBeingEdited = file.getFieldBeingEdited(); //peek at value as may be changed
-        if (handleClick(e, file.file!) && isBeingEdited) {
+        isBeingEdited = codeViewModel.getFieldBeingEdited(); //peek at value as may be changed
+        if (handleClick(e, codeViewModel) && isBeingEdited) {
           await refreshAndDisplay(false, false);
         } else {
           await ideViewModel.renderAsHtml(false);
         }
         return;
       case "dblclick":
-        isBeingEdited = file.getFieldBeingEdited(); //peek at value as may be changed
-        if (handleDblClick(e, file.file!) && isBeingEdited) {
+        isBeingEdited = codeViewModel.getFieldBeingEdited(); //peek at value as may be changed
+        if (handleDblClick(e, codeViewModel) && isBeingEdited) {
           await refreshAndDisplay(false, false);
         } else {
           await ideViewModel.renderAsHtml(false);
@@ -1623,14 +1663,14 @@ async function handleKeyAndRender(e: editorEvent) {
           return;
         }
         const before = Date.now();
-        codeChanged = handleKey(e, file.file!);
+        codeChanged = handleKey(e, codeViewModel);
         const after = Date.now();
         const delay = after - before;
         if (codeChanged === true) {
           if (delay >= 1000) {
             alert(delayMessage);
             e.key = "Backspace";
-            handleKey(e, file.file!);
+            handleKey(e, codeViewModel);
             setTimeout(() => (purgingKeys = false), 500);
             purgingKeys = true;
           }
@@ -1642,7 +1682,7 @@ async function handleKeyAndRender(e: editorEvent) {
         // undefined just return
         return;
       case "contextmenu":
-        codeChanged = handleKey(e, file.file!);
+        codeChanged = handleKey(e, codeViewModel);
         if (codeChanged) {
           await refreshAndDisplay(true, false);
         } else {
@@ -1651,7 +1691,7 @@ async function handleKeyAndRender(e: editorEvent) {
         return;
     }
   } catch (e) {
-    await ideViewModel.showError(e as Error, file.fileName, false);
+    await ideViewModel.showError(e as Error, codeViewModel.fileName, false);
   }
 }
 
@@ -1662,7 +1702,7 @@ function showCode() {
   if (focused) {
     focused.focus();
   } else {
-    file.getFirstChild().select();
+    codeViewModel.getFirstChild().select();
     getFocused()?.focus();
   }
 }
@@ -1751,11 +1791,11 @@ async function readAndParse(rawCode: string, fileName: string, mode: ParseMode) 
   const reset = mode === ParseMode.loadNew;
   const code = new CodeSourceFromString(rawCode);
   code.mode = mode;
-  file.fileName = fileName;
+  codeViewModel.fileName = fileName;
   try {
-    await file.parseFrom(code);
-    if (file.parseError) {
-      throw new Error(file.parseError);
+    await codeViewModel.parseFrom(code);
+    if (codeViewModel.parseError) {
+      throw new Error(codeViewModel.parseError);
     }
     await initialDisplay(reset);
   } catch (e) {
@@ -1771,10 +1811,10 @@ async function handleChromeUploadOrAppend(mode: ParseMode) {
       id: lastDirId,
     });
     const codeFile = await fileHandle.getFile();
-    const fileName = mode === ParseMode.loadNew ? codeFile.name : file.fileName;
+    const fileName = mode === ParseMode.loadNew ? codeFile.name : codeViewModel.fileName;
     const rawCode = await codeFile.text();
     if (mode === ParseMode.loadNew) {
-      file.recreateFile();
+      codeViewModel.recreateFile();
       fileManager.reset();
     }
     await readAndParse(rawCode, fileName, mode);
@@ -1814,14 +1854,14 @@ async function handleUploadOrAppend(event: Event, mode: ParseMode) {
   const elanFile = (event.target as any).files?.[0] as any;
 
   if (elanFile) {
-    const fileName = mode === ParseMode.loadNew ? elanFile.name : file.fileName;
+    const fileName = mode === ParseMode.loadNew ? elanFile.name : codeViewModel.fileName;
     cursorWait();
     await ideViewModel.clearDisplays();
     const reader = new FileReader();
     reader.addEventListener("load", async (event: any) => {
       const rawCode = event.target.result;
       if ((mode = ParseMode.loadNew)) {
-        file.recreateFile();
+        codeViewModel.recreateFile();
         fileManager.reset();
       }
       await readAndParse(rawCode, fileName, mode);
@@ -1851,7 +1891,7 @@ async function handleImport(event: Event) {
 }
 
 function updateFileName() {
-  let fileName = prompt("Please enter your file name", file.fileName);
+  let fileName = prompt("Please enter your file name", codeViewModel.fileName);
 
   if (fileName === null) {
     // cancelled
@@ -1859,33 +1899,33 @@ function updateFileName() {
   }
 
   if (!fileName) {
-    fileName = file.defaultFileName;
+    fileName = codeViewModel.defaultFileName;
   }
 
   if (!fileName.endsWith(".elan")) {
     fileName = fileName + ".elan";
   }
 
-  file.fileName = fileName;
+  codeViewModel.fileName = fileName;
 }
 
 async function handleDownload(event: Event) {
   if (!isDisabled(event)) {
     updateFileName();
 
-    const code = await file.renderAsSource();
+    const code = await codeViewModel.renderAsSource();
 
     const blob = new Blob([code], { type: "plain/text" });
 
     const aElement = document.createElement("a");
-    aElement.setAttribute("download", file.fileName!);
+    aElement.setAttribute("download", codeViewModel.fileName!);
     const href = URL.createObjectURL(blob);
     aElement.href = href;
     aElement.setAttribute("target", "_blank");
     aElement.click();
     URL.revokeObjectURL(href);
     saveButton.classList.remove("unsaved");
-    fileManager.resetHash(file.file!);
+    fileManager.resetHash(codeViewModel);
     event.preventDefault();
     await ideViewModel.renderAsHtml(false);
   }
@@ -1903,7 +1943,7 @@ function isDisabled(evt: Event) {
 async function handleChromeDownload(event: Event) {
   if (!isDisabled(event)) {
     try {
-      await fileManager.doDownLoad(file.file!, ideViewModel);
+      await fileManager.doDownLoad(codeViewModel, ideViewModel);
     } catch (_e) {
       // user cancelled
       return;
@@ -1916,7 +1956,7 @@ async function handleChromeDownload(event: Event) {
 async function handleChromeAutoSave(event: Event) {
   if (!isDisabled(event)) {
     try {
-      await fileManager.doAutoSave(file.file!, ideViewModel);
+      await fileManager.doAutoSave(codeViewModel, ideViewModel);
     } catch (_e) {
       // user cancelled
       return;
@@ -2146,9 +2186,9 @@ window.addEventListener("message", async (m) => {
   if (m.data && typeof m.data === "string") {
     if (m.data.startsWith("code:")) {
       const code = m.data.slice(5);
-      file.recreateFile();
+      codeViewModel.recreateFile();
       fileManager.reset();
-      await readAndParse(code, file.fileName, ParseMode.loadNew);
+      await readAndParse(code, codeViewModel.fileName, ParseMode.loadNew);
     }
 
     if (m.data.startsWith("help:")) {
@@ -2162,13 +2202,13 @@ window.addEventListener("message", async (m) => {
 
     if (m.data.startsWith("snapshot:")) {
       const id = m.data.slice(9);
-      const code = await file.renderAsSource();
+      const code = await codeViewModel.renderAsSource();
       worksheetIFrame.contentWindow?.postMessage(`code:${id}:${code}`, "*");
     }
 
     if (m.data.startsWith("filename:")) {
       const name = m.data.slice(9);
-      file.fileName = name;
+      codeViewModel.fileName = name;
       updateNameAndSavedStatus(fileManager, ideViewModel);
     }
   }

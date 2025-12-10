@@ -1,7 +1,6 @@
 import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
 import { TestStatus } from "../../compiler/test-status";
-import { File } from "../frames/frame-interfaces/file";
-import { IIDEViewModel } from "./ui-helpers";
+import { ICodeEditorViewModel, IIDEViewModel } from "./ui-helpers";
 import { encodeCode } from "./web-helpers";
 import {
   WebWorkerMessage,
@@ -19,7 +18,7 @@ export class TestRunner {
     this.testWorker = undefined;
   }
 
-  stop(file: File, vm: IIDEViewModel) {
+  stop(file: ICodeEditorViewModel, vm: IIDEViewModel) {
     if (this.testWorker) {
       this.end();
       file.setTestStatus(TestStatus.default);
@@ -27,7 +26,7 @@ export class TestRunner {
     }
   }
 
-  async run(file: File, vm: IIDEViewModel) {
+  async run(file: ICodeEditorViewModel, vm: IIDEViewModel) {
     // if already running cancel and restart
     this.end();
     await this.runTests(file, vm);
@@ -54,7 +53,7 @@ export class TestRunner {
     this.testTimer = undefined;
   }
 
-  private async runTests(file: File, vm: IIDEViewModel) {
+  private async runTests(file: ICodeEditorViewModel, vm: IIDEViewModel) {
     try {
       await vm.clearDisplays();
       file.setTestStatus(TestStatus.running);
@@ -102,7 +101,11 @@ export class TestRunner {
     }
   }
 
-  private async handleError(data: WebWorkerStatusMessage, file: File, vm: IIDEViewModel) {
+  private async handleError(
+    data: WebWorkerStatusMessage,
+    file: ICodeEditorViewModel,
+    vm: IIDEViewModel,
+  ) {
     this.end();
     const e = data.error;
     const err =
@@ -112,7 +115,11 @@ export class TestRunner {
     vm.updateDisplayValues(file);
   }
 
-  private async handleFinished(data: WebWorkerTestMessage, file: File, vm: IIDEViewModel) {
+  private async handleFinished(
+    data: WebWorkerTestMessage,
+    file: ICodeEditorViewModel,
+    vm: IIDEViewModel,
+  ) {
     this.end();
     file.refreshTestStatuses(data.value);
     console.info("elan tests completed");
@@ -127,7 +134,7 @@ export class TestRunner {
     vm.updateDisplayValues(file);
   }
 
-  private handleAbort(file: File, vm: IIDEViewModel) {
+  private handleAbort(file: ICodeEditorViewModel, vm: IIDEViewModel) {
     this.end();
     file.setTestStatus(TestStatus.error);
     vm.systemInfoPrintSafe("Tests timed out and were aborted");

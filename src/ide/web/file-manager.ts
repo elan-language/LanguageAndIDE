@@ -1,6 +1,5 @@
-import { File } from "../frames/frame-interfaces/file";
 import { ParseStatus } from "../frames/status-enums";
-import { IIDEViewModel } from "./ui-helpers";
+import { ICodeEditorViewModel, IIDEViewModel } from "./ui-helpers";
 import { encodeCode } from "./web-helpers";
 
 export class FileManager {
@@ -30,11 +29,16 @@ export class FileManager {
     return this.nextFileIndex > -1;
   }
 
-  hasUnsavedChanges(file: File) {
+  hasUnsavedChanges(file: ICodeEditorViewModel) {
     return !(this.lastSavedHash === file.currentHash);
   }
 
-  async save(file: File, field: HTMLElement | undefined, editingField: boolean, vm: IIDEViewModel) {
+  async save(
+    file: ICodeEditorViewModel,
+    field: HTMLElement | undefined,
+    editingField: boolean,
+    vm: IIDEViewModel,
+  ) {
     let code = "";
     const newFieldId = editingField ? field?.id : undefined;
     const parseStatus = file.readParseStatus();
@@ -110,7 +114,12 @@ export class FileManager {
     this.undoRedoHash = "";
   }
 
-  async chromeSave(file: File, code: string, updateName: boolean, newName?: string) {
+  async chromeSave(
+    file: ICodeEditorViewModel,
+    code: string,
+    updateName: boolean,
+    newName?: string,
+  ) {
     const name = newName ?? file.fileName;
     const html = name.endsWith(".html");
     const lastDirId = "elan-files";
@@ -132,7 +141,7 @@ export class FileManager {
     return fh;
   }
 
-  async doAutoSave(file: File, vm: IIDEViewModel) {
+  async doAutoSave(file: ICodeEditorViewModel, vm: IIDEViewModel) {
     if (this.isAutosaving()) {
       this.autoSaveFileHandle = undefined;
       vm.updateDisplayValues(file);
@@ -144,7 +153,7 @@ export class FileManager {
     }
   }
 
-  async doDownLoad(file: File, vm: IIDEViewModel) {
+  async doDownLoad(file: ICodeEditorViewModel, vm: IIDEViewModel) {
     const code = await file.renderAsSource();
     await this.chromeSave(file, code, true);
     this.resetHash(file);
@@ -156,15 +165,15 @@ export class FileManager {
     return localStorage.getItem(id) || "";
   }
 
-  updateHash(file: File) {
+  updateHash(file: ICodeEditorViewModel) {
     this.lastSavedHash = this.lastSavedHash || file.currentHash;
   }
 
-  resetHash(file: File) {
+  resetHash(file: ICodeEditorViewModel) {
     this.lastSavedHash = file.currentHash;
   }
 
-  async saveAsStandAlone(file: File) {
+  async saveAsStandAlone(file: ICodeEditorViewModel) {
     let jsCode = file.compileAsWorker("", false, true);
 
     const api = await (await fetch("elan-api.js", { mode: "same-origin" })).text();
@@ -187,7 +196,7 @@ export class FileManager {
     await this.chromeSave(file, html, false, "standalone.html");
   }
 
-  private async writeCode(code: string, file: File, vm: IIDEViewModel) {
+  private async writeCode(code: string, file: ICodeEditorViewModel, vm: IIDEViewModel) {
     const fh = this.autoSaveFileHandle!;
     const writeable = await fh.createWritable();
     await writeable.write(code);
@@ -211,7 +220,7 @@ export class FileManager {
     this.previousFileIndex = this.previousFileIndex < -1 ? -1 : this.previousFileIndex;
   }
 
-  private async autoSave(code: string, file: File, vm: IIDEViewModel) {
+  private async autoSave(code: string, file: ICodeEditorViewModel, vm: IIDEViewModel) {
     if (this.autoSaveFileHandle && this.hasUnsavedChanges(file)) {
       try {
         if (code.trim() === "") {

@@ -1,14 +1,15 @@
 import { isCollapsible, isFrame } from "../frames/frame-helpers";
 import { editorEvent } from "../frames/frame-interfaces/editor-event";
-import { File } from "../frames/frame-interfaces/file";
 import { Frame } from "../frames/frame-interfaces/frame";
 import { Selectable } from "../frames/frame-interfaces/selectable";
+import { ICodeEditorViewModel } from "./ui-helpers";
 
-function getAllSelected(file: File) {
+function getAllSelected(file: ICodeEditorViewModel) {
   const v = file.getMap().values();
   return [...v].filter((s) => s.isSelected());
 }
-export function handleClick(e: editorEvent, file: File) {
+
+export function handleClick(e: editorEvent, file: ICodeEditorViewModel) {
   switch (e.target) {
     case "frame": {
       const s = file.getById(e.id!);
@@ -55,7 +56,7 @@ export function handleClick(e: editorEvent, file: File) {
   }
   return false;
 }
-export function handleDblClick(e: editorEvent, file: File) {
+export function handleDblClick(e: editorEvent, file: ICodeEditorViewModel) {
   switch (e.target) {
     case "frame": {
       const s = file.getById(e.id!);
@@ -68,7 +69,7 @@ export function handleDblClick(e: editorEvent, file: File) {
   return false;
 }
 
-export function handleKey(e: editorEvent, file: File) {
+export function handleKey(e: editorEvent, file: ICodeEditorViewModel) {
   switch (e.key) {
     case "Shift":
       break; //Short circuit repeat from modifier held-down before other key
