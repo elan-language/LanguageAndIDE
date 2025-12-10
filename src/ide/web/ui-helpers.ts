@@ -6,8 +6,11 @@ import { TestStatus } from "../../compiler/test-status";
 import { CodeSource } from "../frames/frame-interfaces/code-source";
 import { editorEvent } from "../frames/frame-interfaces/editor-event";
 import { Frame } from "../frames/frame-interfaces/frame";
+import { Profile } from "../frames/frame-interfaces/profile";
 import { Selectable } from "../frames/frame-interfaces/selectable";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
+import { FileManager } from "./file-manager";
+import { TestRunner } from "./test-runner";
 import { WebWorkerReadMessage, WebWorkerStatusMessage } from "./web-worker-messages";
 
 // from https://stackoverflow.com/questions/4565112/how-to-find-out-if-the-user-browser-is-chrome
@@ -141,7 +144,7 @@ export interface ICodeEditorViewModel {
 
   getFirstChild(): Frame;
 
-  recreateFile(): void;
+  recreateFile(profile: Profile, userName: string | undefined): void;
 
   currentHash: string;
 
@@ -157,6 +160,23 @@ export interface ICodeEditorViewModel {
 
   getMap(): Map<string, Selectable>;
   processKey(e: editorEvent): boolean;
+
+  isRunningState(): boolean;
+
+  handleKey(e: editorEvent): boolean;
+
+  handleDblClick(e: editorEvent): boolean;
+
+  handleClick(e: editorEvent): boolean;
+
+  refreshAndDisplay(
+    vm: IIDEViewModel,
+    tr: TestRunner,
+    compileIfParsed: boolean,
+    editingField: boolean,
+  ): Promise<void>;
+
+  initialDisplay(fm: FileManager, vm: IIDEViewModel, tr: TestRunner, reset: boolean): Promise<void>;
 }
 
 export interface IIDEViewModel {
@@ -176,6 +196,8 @@ export interface IIDEViewModel {
   updateFileName(unsaved: string): void;
   updateFileAndCode(code: string): Promise<void>;
   disableUndoRedoButtons(msg: string): void;
+  postCodeResetToWorksheet(code: string): void;
+  updateNameAndSavedStatus(cvm: ICodeEditorViewModel, fm: FileManager): void;
 }
 
 export const delayMessage =

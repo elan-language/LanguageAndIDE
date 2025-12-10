@@ -1,27 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { AssertOutcome } from "../../compiler/assert-outcome";
 import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
 import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
-import { StdLib } from "../../compiler/standard-library/std-lib";
 import { TestStatus } from "../../compiler/test-status";
 import { isElanProduction } from "../../environment";
 import {
   cannotLoadUnparseableFile,
   CodeSourceFromString,
   fileErrorPrefix,
-  FileImpl,
   parseErrorPrefix,
 } from "../frames/file-impl";
-import { CodeSource } from "../frames/frame-interfaces/code-source";
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
-import { File, ParseMode } from "../frames/frame-interfaces/file";
+import { ParseMode } from "../frames/frame-interfaces/file";
 import { Profile } from "../frames/frame-interfaces/profile";
-import { Selectable } from "../frames/frame-interfaces/selectable";
 import { Group, Individual } from "../frames/frame-interfaces/user-config";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
-import { StubInputOutput } from "../stub-input-output";
-import { handleClick, handleDblClick, handleKey } from "./editorHandlers";
+import { CodeEditorViewModel } from "./code-editor-view-model";
 import { FileManager } from "./file-manager";
 import { getDebugSymbol, getSummaryHtml, ProgramRunner } from "./program-runner";
 import { TestRunner } from "./test-runner";
@@ -37,14 +31,7 @@ import {
   parentId,
   warningOrError,
 } from "./ui-helpers";
-import {
-  fetchDefaultProfile,
-  fetchProfile,
-  fetchUserConfig,
-  hash,
-  sanitiseHtml,
-  transforms,
-} from "./web-helpers";
+import { fetchDefaultProfile, fetchProfile, fetchUserConfig, sanitiseHtml } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 
 // static html elements
@@ -111,9 +98,6 @@ const helpTab = document.getElementById("help-tab");
 const worksheetTab = document.getElementById("worksheet-tab");
 
 const inactivityTimeout = 2000;
-const stdlib = new StdLib(new StubInputOutput());
-const system = stdlib.system;
-system.stdlib = stdlib; // to allow injection
 
 // well known ids
 const lastDirId = "elan-files";
@@ -131,156 +115,6 @@ let errorDOMEvent: Event | undefined;
 let errorEditorEvent: editorEvent | undefined;
 let errorStack: string | undefined;
 
-class CodeEditorViewModel implements ICodeEditorViewModel {
-  private file?: File = undefined;
-
-  get fileName() {
-    return this.file!.fileName;
-  }
-
-  set fileName(fn: string) {
-    this.file!.fileName = fn;
-  }
-
-  setRunStatus(s: RunStatus) {
-    this.file?.setRunStatus(s);
-  }
-
-  getRunStatusLabel() {
-    return this.file!.getRunStatusLabel();
-  }
-  getRunStatusColour() {
-    return this.file!.getRunStatusColour();
-  }
-  readParseStatus() {
-    return this.file!.readParseStatus();
-  }
-  readCompileStatus() {
-    return this.file!.readCompileStatus();
-  }
-  readRunStatus() {
-    return this.file!.readRunStatus();
-  }
-  readTestStatus() {
-    return this.file!.readTestStatus();
-  }
-
-  setTestStatus(ts: TestStatus) {
-    this.file!.setTestStatus(ts);
-  }
-
-  getParseStatusColour() {
-    return this.file!.getParseStatusColour();
-  }
-  getParseStatusLabel() {
-    return this.file!.getParseStatusLabel();
-  }
-  getCompileStatusColour() {
-    return this.file!.getCompileStatusColour();
-  }
-  getCompileStatusLabel() {
-    return this.file!.getCompileStatusLabel();
-  }
-  getTestStatusColour() {
-    return this.file!.getTestStatusColour();
-  }
-  getTestStatusLabel() {
-    return this.file!.getTestStatusLabel();
-  }
-
-  containsMain() {
-    return this.file!.containsMain();
-  }
-
-  renderAsHtml() {
-    return this.file!.renderAsHtml();
-  }
-
-  removeAllSelectorsThatCanBe() {
-    this.file!.removeAllSelectorsThatCanBe();
-  }
-
-  expandCollapseAll() {
-    this.file!.expandCollapseAll();
-  }
-
-  getVersionString() {
-    return this.file!.getVersionString();
-  }
-
-  refreshParseAndCompileStatuses(compileIfParsed: boolean) {
-    return this.file!.refreshParseAndCompileStatuses(compileIfParsed);
-  }
-
-  get hasTests() {
-    return this.file!.hasTests;
-  }
-
-  renderAsSource() {
-    return this.file!.renderAsSource();
-  }
-
-  parseFrom(source: CodeSource) {
-    return this.file!.parseFrom(source);
-  }
-
-  get parseError() {
-    return this.file!.parseError;
-  }
-
-  get defaultFileName() {
-    return this.file!.defaultFileName;
-  }
-
-  getCopiedSource() {
-    return this.file!.getCopiedSource();
-  }
-
-  getFieldBeingEdited() {
-    return this.file!.getFieldBeingEdited();
-  }
-
-  getFirstChild() {
-    return this.file!.getFirstChild();
-  }
-
-  recreateFile() {
-    this.file = new FileImpl(hash, profile, userName, transforms(), stdlib);
-  }
-
-  get currentHash() {
-    return this.file!.currentHash;
-  }
-
-  compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string {
-    return this.file!.compileAsWorker(base, debugMode, standalone);
-  }
-
-  compileAsTestWorker(base: string): string {
-    return this.file!.compileAsTestWorker(base);
-  }
-
-  refreshTestStatuses(outcomes: [string, AssertOutcome[]][]): void {
-    this.file?.refreshTestStatuses(outcomes);
-  }
-
-  getTestError(): Error | undefined {
-    return this.file!.getTestError();
-  }
-
-  getById(id: string): Selectable {
-    return this.file!.getById(id);
-  }
-
-  getMap(): Map<string, Selectable> {
-    return this.file!.getMap();
-  }
-
-  processKey(e: editorEvent): boolean {
-    return this.file!.processKey(e);
-  }
-}
-
 class IDEViewModel implements IIDEViewModel {
   focusInfoTab() {
     showInfoTab();
@@ -290,8 +124,13 @@ class IDEViewModel implements IIDEViewModel {
     systemInfoDiv.innerHTML = "";
   }
 
+  updateNameAndSavedStatus(cvm: ICodeEditorViewModel, fm: FileManager) {
+    const unsaved = fm.hasUnsavedChanges(cvm) ? " UNSAVED" : "";
+    this.updateFileName(unsaved);
+  }
+
   updateDisplayValues(cvm: ICodeEditorViewModel) {
-    updateNameAndSavedStatus(fileManager, this);
+    this.updateNameAndSavedStatus(cvm, fileManager);
 
     // Button control
     const isEmpty = cvm.readParseStatus() === ParseStatus.default;
@@ -299,7 +138,7 @@ class IDEViewModel implements IIDEViewModel {
     const isIncomplete = cvm.readParseStatus() === ParseStatus.incomplete;
     const cs = cvm.readCompileStatus();
     const isCompiling = cs === CompileStatus.ok || cs === CompileStatus.advisory;
-    const isRunning = isRunningState();
+    const isRunning = cvm.isRunningState();
     const isPaused = isPausedState();
     let isTestRunning = isTestRunningState();
 
@@ -446,7 +285,7 @@ class IDEViewModel implements IIDEViewModel {
 
   setPauseButtonState(waitingForUserInput?: boolean) {
     if (
-      isRunningState() &&
+      codeViewModel.isRunningState() &&
       programRunner.isDebugMode() &&
       !isPausedState() &&
       !waitingForUserInput
@@ -567,13 +406,17 @@ class IDEViewModel implements IIDEViewModel {
 
   async updateFileAndCode(code: string) {
     const fn = codeViewModel.fileName;
-    codeViewModel.recreateFile();
+    codeViewModel.recreateFile(profile, userName);
     await displayCode(code, fn);
   }
 
   disableUndoRedoButtons(msg: string) {
     disable([undoButton, redoButton], msg);
     cursorWait();
+  }
+
+  postCodeResetToWorksheet(code: string) {
+    worksheetIFrame.contentWindow?.postMessage(`code:reset:${code}`, "*");
   }
 }
 
@@ -670,8 +513,8 @@ newButton?.addEventListener("click", async (event: Event) => {
     if (checkForUnsavedChanges(fileManager, cancelMsg)) {
       await ideViewModel.clearDisplays();
       fileManager.reset();
-      codeViewModel.recreateFile();
-      await initialDisplay(false);
+      codeViewModel.recreateFile(profile, userName);
+      await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, false);
     }
   }
 });
@@ -689,10 +532,10 @@ autoSaveButton.addEventListener("click", handleChromeAutoSave);
 async function loadDemoFile(fileName: string) {
   const f = await fetch(fileName, { mode: "same-origin" });
   const rawCode = await f.text();
-  codeViewModel.recreateFile();
+  codeViewModel.recreateFile(profile, userName);
   codeViewModel.fileName = fileName;
   fileManager.reset();
-  await readAndParse(rawCode, fileName, ParseMode.loadNew);
+  await readAndParse(codeViewModel, rawCode, fileName, ParseMode.loadNew);
 }
 
 saveAsStandaloneButton.addEventListener("click", async (event: Event) => {
@@ -967,7 +810,7 @@ async function setup(p: Profile) {
   fileManager.reset();
   profile = p;
 
-  codeViewModel.recreateFile();
+  codeViewModel.recreateFile(profile, userName);
   await displayFile();
 }
 
@@ -976,8 +819,8 @@ function clearSystemDisplay() {
 }
 
 async function resetFile() {
-  codeViewModel.recreateFile();
-  await initialDisplay(false);
+  codeViewModel.recreateFile(profile, userName);
+  await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, false);
 }
 
 function domEventType(evt: Event | undefined) {
@@ -1011,60 +854,24 @@ function systemInfoPrintUnsafe(text: string, scroll = true) {
   showInfoTab();
 }
 
-async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean) {
-  try {
-    codeViewModel.refreshParseAndCompileStatuses(compileIfParsed);
-    const cs = codeViewModel.readCompileStatus();
-    if ((cs === CompileStatus.ok || cs === CompileStatus.advisory) && codeViewModel.hasTests) {
-      await testRunner.run(codeViewModel, ideViewModel);
-    }
-    await ideViewModel.renderAsHtml(editingField);
-  } catch (e) {
-    await ideViewModel.showError(e as Error, codeViewModel.fileName, false);
-  }
-}
-
-async function initialDisplay(reset: boolean) {
-  await ideViewModel.clearDisplays();
-
-  const ps = codeViewModel.readParseStatus();
-  if (ps === ParseStatus.valid || ps === ParseStatus.default || ps === ParseStatus.incomplete) {
-    await refreshAndDisplay(false, false);
-    fileManager.updateHash(codeViewModel);
-    updateNameAndSavedStatus(fileManager, ideViewModel);
-    if (reset) {
-      const code = await codeViewModel.renderAsSource();
-      worksheetIFrame.contentWindow?.postMessage(`code:reset:${code}`, "*");
-    }
-  } else {
-    const msg = codeViewModel.parseError || "Failed load code";
-    await ideViewModel.showError(new Error(msg), codeViewModel.fileName, reset);
-  }
-}
-
 async function displayCode(rawCode: string, fileName: string) {
   const code = new CodeSourceFromString(rawCode);
   code.mode = ParseMode.loadNew;
   try {
     await codeViewModel.parseFrom(code);
     codeViewModel.fileName = fileName || codeViewModel.defaultFileName;
-    await refreshAndDisplay(true, false);
+    await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, true, false);
   } catch (e) {
     await ideViewModel.showError(e as Error, fileName || codeViewModel.defaultFileName, true);
   }
 }
 
 async function displayFile() {
-  await initialDisplay(true);
+  await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, true);
 }
 
 function getModKey(e: KeyboardEvent | MouseEvent) {
   return { control: e.ctrlKey || e.metaKey, shift: e.shiftKey, alt: e.altKey };
-}
-
-function updateNameAndSavedStatus(fm: FileManager, vm: IIDEViewModel) {
-  const unsaved = fm.hasUnsavedChanges(codeViewModel) ? " UNSAVED" : "";
-  vm.updateFileName(unsaved);
 }
 
 function setStatus(html: HTMLDivElement, colour: string, label: string, showTooltip = true): void {
@@ -1078,14 +885,6 @@ function setStatus(html: HTMLDivElement, colour: string, label: string, showTool
   }
 
   html.innerText = label;
-}
-
-function isRunningState() {
-  return (
-    codeViewModel.readRunStatus() === RunStatus.running ||
-    codeViewModel.readRunStatus() === RunStatus.paused ||
-    codeViewModel.readRunStatus() === RunStatus.input
-  );
 }
 
 function isTestRunningState() {
@@ -1310,7 +1109,7 @@ async function handleEditorEvent(
   command?: string | undefined,
   optionalData?: string | undefined,
 ) {
-  if (isRunningState()) {
+  if (codeViewModel.isRunningState()) {
     event?.preventDefault();
     event.stopPropagation();
     return;
@@ -1429,7 +1228,7 @@ async function updateContent(text: string, editingField: boolean) {
   const focused = getFocused();
 
   codeContainer?.addEventListener("click", (event) => {
-    if (isRunningState()) {
+    if (codeViewModel.isRunningState()) {
       event.preventDefault();
       event.stopPropagation();
       return;
@@ -1440,7 +1239,7 @@ async function updateContent(text: string, editingField: boolean) {
 
   codeContainer.addEventListener("mousedown", (event) => {
     // to prevent codeContainer taking focus on a click
-    if (isRunningState()) {
+    if (codeViewModel.isRunningState()) {
       event.preventDefault();
       event.stopPropagation();
     }
@@ -1617,7 +1416,7 @@ async function inactivityRefresh() {
     codeViewModel.readParseStatus() === ParseStatus.valid &&
     codeViewModel.readCompileStatus() === CompileStatus.default
   ) {
-    await refreshAndDisplay(true, false);
+    await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, true, false);
   }
 
   inactivityTimer = setTimeout(inactivityRefresh, inactivityTimeout);
@@ -1643,16 +1442,16 @@ async function handleKeyAndRender(e: editorEvent) {
     switch (e.type) {
       case "click":
         isBeingEdited = codeViewModel.getFieldBeingEdited(); //peek at value as may be changed
-        if (handleClick(e, codeViewModel) && isBeingEdited) {
-          await refreshAndDisplay(false, false);
+        if (codeViewModel.handleClick(e) && isBeingEdited) {
+          await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, false, false);
         } else {
           await ideViewModel.renderAsHtml(false);
         }
         return;
       case "dblclick":
         isBeingEdited = codeViewModel.getFieldBeingEdited(); //peek at value as may be changed
-        if (handleDblClick(e, codeViewModel) && isBeingEdited) {
-          await refreshAndDisplay(false, false);
+        if (codeViewModel.handleDblClick(e) && isBeingEdited) {
+          await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, false, false);
         } else {
           await ideViewModel.renderAsHtml(false);
         }
@@ -1663,28 +1462,28 @@ async function handleKeyAndRender(e: editorEvent) {
           return;
         }
         const before = Date.now();
-        codeChanged = handleKey(e, codeViewModel);
+        codeChanged = codeViewModel.handleKey(e);
         const after = Date.now();
         const delay = after - before;
         if (codeChanged === true) {
           if (delay >= 1000) {
             alert(delayMessage);
             e.key = "Backspace";
-            handleKey(e, codeViewModel);
+            codeViewModel.handleKey(e);
             setTimeout(() => (purgingKeys = false), 500);
             purgingKeys = true;
           }
           const singleKeyEdit = !(e.modKey.control || e.modKey.shift || e.modKey.alt);
-          await refreshAndDisplay(false, singleKeyEdit);
+          await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, false, singleKeyEdit);
         } else if (codeChanged === false) {
           await ideViewModel.renderAsHtml(false);
         }
         // undefined just return
         return;
       case "contextmenu":
-        codeChanged = handleKey(e, codeViewModel);
+        codeChanged = codeViewModel.handleKey(e);
         if (codeChanged) {
-          await refreshAndDisplay(true, false);
+          await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, true, false);
         } else {
           await ideViewModel.renderAsHtml(false);
         }
@@ -1787,17 +1586,22 @@ function getImporter() {
   return useChromeFileAPI() ? handleChromeImport : handleImport;
 }
 
-async function readAndParse(rawCode: string, fileName: string, mode: ParseMode) {
+async function readAndParse(
+  cvm: ICodeEditorViewModel,
+  rawCode: string,
+  fileName: string,
+  mode: ParseMode,
+) {
   const reset = mode === ParseMode.loadNew;
   const code = new CodeSourceFromString(rawCode);
   code.mode = mode;
-  codeViewModel.fileName = fileName;
+  cvm.fileName = fileName;
   try {
-    await codeViewModel.parseFrom(code);
-    if (codeViewModel.parseError) {
-      throw new Error(codeViewModel.parseError);
+    await cvm.parseFrom(code);
+    if (cvm.parseError) {
+      throw new Error(cvm.parseError);
     }
-    await initialDisplay(reset);
+    await cvm.initialDisplay(fileManager, ideViewModel, testRunner, reset);
   } catch (e) {
     await ideViewModel.showError(e as Error, fileName, reset);
   }
@@ -1814,10 +1618,10 @@ async function handleChromeUploadOrAppend(mode: ParseMode) {
     const fileName = mode === ParseMode.loadNew ? codeFile.name : codeViewModel.fileName;
     const rawCode = await codeFile.text();
     if (mode === ParseMode.loadNew) {
-      codeViewModel.recreateFile();
+      codeViewModel.recreateFile(profile, userName);
       fileManager.reset();
     }
-    await readAndParse(rawCode, fileName, mode);
+    await readAndParse(codeViewModel, rawCode, fileName, mode);
   } catch (_e) {
     // user cancelled
     return;
@@ -1861,10 +1665,10 @@ async function handleUploadOrAppend(event: Event, mode: ParseMode) {
     reader.addEventListener("load", async (event: any) => {
       const rawCode = event.target.result;
       if ((mode = ParseMode.loadNew)) {
-        codeViewModel.recreateFile();
+        codeViewModel.recreateFile(profile, userName);
         fileManager.reset();
       }
-      await readAndParse(rawCode, fileName, mode);
+      await readAndParse(codeViewModel, rawCode, fileName, mode);
     });
     reader.readAsText(elanFile);
   }
@@ -1987,7 +1791,7 @@ function globalHandler(kp: KeyboardEvent) {
       case "b":
       case "B":
         removeFocussedClassFromAllTabs();
-        if (isRunningState()) {
+        if (codeViewModel.isRunningState()) {
           clearDisplayButton.focus();
         } else {
           demosButton.focus();
@@ -2186,9 +1990,9 @@ window.addEventListener("message", async (m) => {
   if (m.data && typeof m.data === "string") {
     if (m.data.startsWith("code:")) {
       const code = m.data.slice(5);
-      codeViewModel.recreateFile();
+      codeViewModel.recreateFile(profile, userName);
       fileManager.reset();
-      await readAndParse(code, codeViewModel.fileName, ParseMode.loadNew);
+      await readAndParse(codeViewModel, code, codeViewModel.fileName, ParseMode.loadNew);
     }
 
     if (m.data.startsWith("help:")) {
@@ -2209,7 +2013,7 @@ window.addEventListener("message", async (m) => {
     if (m.data.startsWith("filename:")) {
       const name = m.data.slice(9);
       codeViewModel.fileName = name;
-      updateNameAndSavedStatus(fileManager, ideViewModel);
+      ideViewModel.updateNameAndSavedStatus(codeViewModel, fileManager);
     }
   }
 });
