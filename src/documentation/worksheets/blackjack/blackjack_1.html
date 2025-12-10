@@ -174,7 +174,7 @@ end test
 
 function dealCard(random as Float) returns Card
   let number be (random*52).floor()
-  let rank be rankValue.keys()[number div 4]
+  let rank be rankValue.keys()[(number/4).floor()]
   let suit be number mod 4
   return new Card() with rank set to rank, suit set to intAsSuit(suit)
 end function
