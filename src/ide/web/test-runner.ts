@@ -23,7 +23,7 @@ export class TestRunner {
     if (this.testWorker) {
       this.end();
       file.setTestStatus(TestStatus.default);
-      vm.updateDisplayValues();
+      vm.updateDisplayValues(file);
     }
   }
 
@@ -59,7 +59,7 @@ export class TestRunner {
       await vm.clearDisplays();
       file.setTestStatus(TestStatus.running);
 
-      vm.updateDisplayValues();
+      vm.updateDisplayValues(file);
       const path = `${document.location.origin}${document.location.pathname}`.replace(
         "/index.html",
         "",
@@ -90,7 +90,7 @@ export class TestRunner {
         const err = new ElanRuntimeError(ev.message);
         await vm.showError(err, file.fileName, false);
         file.setTestStatus(TestStatus.error);
-        vm.updateDisplayValues();
+        vm.updateDisplayValues(file);
       };
 
       this.testWorker.postMessage({ type: "start" } as WebWorkerMessage);
@@ -98,7 +98,7 @@ export class TestRunner {
       this.end();
       console.warn(e);
       file.setTestStatus(TestStatus.error);
-      vm.updateDisplayValues();
+      vm.updateDisplayValues(file);
     }
   }
 
@@ -109,7 +109,7 @@ export class TestRunner {
       e instanceof ElanRuntimeError ? e : new ElanRuntimeError(typeof e === "string" ? e : "");
     await vm.showError(err, file.fileName, false);
     file.setTestStatus(TestStatus.error);
-    vm.updateDisplayValues();
+    vm.updateDisplayValues(file);
   }
 
   private async handleFinished(data: WebWorkerTestMessage, file: File, vm: IIDEViewModel) {
@@ -124,13 +124,13 @@ export class TestRunner {
     }
 
     await vm.renderAsHtml(false);
-    vm.updateDisplayValues();
+    vm.updateDisplayValues(file);
   }
 
   private handleAbort(file: File, vm: IIDEViewModel) {
     this.end();
     file.setTestStatus(TestStatus.error);
     vm.systemInfoPrintSafe("Tests timed out and were aborted");
-    vm.updateDisplayValues();
+    vm.updateDisplayValues(file);
   }
 }

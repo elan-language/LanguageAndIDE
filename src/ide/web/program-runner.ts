@@ -68,7 +68,7 @@ export class ProgramRunner {
     if (file.readRunStatus() === RunStatus.paused && this.runWorker) {
       this.pendingBreakpoints = [];
       this.resumeProgram(file);
-      vm.updateDisplayValues();
+      vm.updateDisplayValues(file);
     }
   }
 
@@ -77,13 +77,13 @@ export class ProgramRunner {
       if (file.readRunStatus() === RunStatus.paused && this.runWorker && this.debugMode) {
         this.pendingBreakpoints = [];
         this.resumeProgram(file);
-        vm.updateDisplayValues();
+        vm.updateDisplayValues(file);
         return;
       }
 
       await vm.clearDisplays();
       file.setRunStatus(RunStatus.running);
-      vm.updateDisplayValues();
+      vm.updateDisplayValues(file);
       const path = `${document.location.origin}${document.location.pathname}`.replace(
         "/index.html",
         "",
@@ -140,14 +140,14 @@ export class ProgramRunner {
         const err = new ElanRuntimeError(ev.message);
         await vm.showError(err, file.fileName, false);
         file.setRunStatus(RunStatus.error);
-        vm.updateDisplayValues();
+        vm.updateDisplayValues(file);
       };
 
       this.runWorker.postMessage({ type: "start" } as WebWorkerMessage);
     } catch (e) {
       console.warn(e);
       file.setRunStatus(RunStatus.error);
-      vm.updateDisplayValues();
+      vm.updateDisplayValues(file);
     }
   }
 
@@ -166,7 +166,7 @@ export class ProgramRunner {
     await vm.showError(err, file.fileName, false);
     file.setRunStatus(RunStatus.error);
     clearPaused();
-    vm.updateDisplayValues();
+    vm.updateDisplayValues(file);
   }
 
   private handleRunWorkerFinished(file: File, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
@@ -176,7 +176,7 @@ export class ProgramRunner {
     console.info("elan program completed OK");
     file.setRunStatus(RunStatus.default);
     clearPaused();
-    vm.updateDisplayValues();
+    vm.updateDisplayValues(file);
   }
 
   private getDebugSymbols(data: WebWorkerBreakpointMessage): DebugSymbol[] | string {

@@ -12,6 +12,7 @@ import {
   FileImpl,
   parseErrorPrefix,
 } from "../frames/file-impl";
+import { CodeSource } from "../frames/frame-interfaces/code-source";
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { File, ParseMode } from "../frames/frame-interfaces/file";
 import { Profile } from "../frames/frame-interfaces/profile";
@@ -116,7 +117,6 @@ const lastDirId = "elan-files";
 
 const elanInputOutput = new WebInputOutput();
 
-let file: File;
 let profile: Profile;
 let userName: string | undefined;
 
@@ -127,6 +127,126 @@ let lastEditorEvent: editorEvent | undefined;
 let errorDOMEvent: Event | undefined;
 let errorEditorEvent: editorEvent | undefined;
 let errorStack: string | undefined;
+
+class EditorViewModel {
+  file?: File = undefined;
+
+  get fileName() {
+    return this.file!.fileName;
+  }
+
+  set fileName(fn: string) {
+    this.file!.fileName = fn;
+  }
+
+  setRunStatus(s: RunStatus) {
+    this.file?.setRunStatus(s);
+  }
+
+  getRunStatusLabel() {
+    return this.file!.getRunStatusLabel();
+  }
+  getRunStatusColour() {
+    return this.file!.getRunStatusColour();
+  }
+  readParseStatus() {
+    return this.file!.readParseStatus();
+  }
+  readCompileStatus() {
+    return this.file!.readCompileStatus();
+  }
+  readRunStatus() {
+    return this.file!.readRunStatus();
+  }
+  readTestStatus() {
+    return this.file!.readTestStatus();
+  }
+
+  setTestStatus(ts: TestStatus) {
+    this.file!.setTestStatus(ts);
+  }
+
+  getParseStatusColour() {
+    return this.file!.getParseStatusColour();
+  }
+  getParseStatusLabel() {
+    return this.file!.getParseStatusLabel();
+  }
+  getCompileStatusColour() {
+    return this.file!.getCompileStatusColour();
+  }
+  getCompileStatusLabel() {
+    return this.file!.getCompileStatusLabel();
+  }
+  getTestStatusColour() {
+    return this.file!.getTestStatusColour();
+  }
+  getTestStatusLabel() {
+    return this.file!.getTestStatusLabel();
+  }
+
+  containsMain() {
+    return this.file!.containsMain();
+  }
+
+  renderAsHtml() {
+    return this.file!.renderAsHtml();
+  }
+
+  removeAllSelectorsThatCanBe() {
+    this.file!.removeAllSelectorsThatCanBe();
+  }
+
+  expandCollapseAll() {
+    this.file!.expandCollapseAll();
+  }
+
+  getVersionString() {
+    return this.file!.getVersionString();
+  }
+
+  refreshParseAndCompileStatuses(compileIfParsed: boolean) {
+    return this.file!.refreshParseAndCompileStatuses(compileIfParsed);
+  }
+
+  get hasTests() {
+    return this.file!.hasTests;
+  }
+
+  renderAsSource() {
+    return this.file!.renderAsSource();
+  }
+
+  parseFrom(source: CodeSource) {
+    return this.file!.parseFrom(source);
+  }
+
+  get parseError() {
+    return this.file!.parseError;
+  }
+
+  get defaultFileName() {
+    return this.file!.defaultFileName;
+  }
+
+  getCopiedSource() {
+    return this.file!.getCopiedSource();
+  }
+
+  getFieldBeingEdited() {
+    return this.file!.getFieldBeingEdited();
+  }
+
+  getFirstChild() {
+    return this.file!.getFirstChild();
+  }
+
+  recreateFile() {
+    this.file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+  }
+}
+
+const file = new EditorViewModel();
 
 class IDEViewModel implements IIDEViewModel {
   focusInfoTab() {
@@ -409,7 +529,7 @@ class IDEViewModel implements IIDEViewModel {
 
   async updateFileAndCode(code: string) {
     const fn = file.fileName;
-    file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+    file.recreateFile();
     await displayCode(code, fn);
   }
 
@@ -451,15 +571,15 @@ addEventListener("beforeunload", (event) => {
 });
 
 runButton?.addEventListener("click", async () => {
-  await programRunner.run(file, ideViewModel, elanInputOutput);
+  await programRunner.run(file.file!, ideViewModel, elanInputOutput);
 });
 
 runDebugButton?.addEventListener("click", async () => {
-  await programRunner.runDebug(file, ideViewModel, elanInputOutput);
+  await programRunner.runDebug(file.file!, ideViewModel, elanInputOutput);
 });
 
 stepButton?.addEventListener("click", () => {
-  programRunner.step(file, ideViewModel);
+  programRunner.step(file.file!, ideViewModel);
 });
 
 pauseButton?.addEventListener("click", () => {
@@ -470,8 +590,8 @@ stopButton?.addEventListener("click", () => {
   disable([stopButton, pauseButton, stepButton], "Program is not running");
   // do rest on next event loop for responsivenesss
   setTimeout(() => {
-    programRunner.stop(file, ideViewModel, elanInputOutput);
-    testRunner.stop(file, ideViewModel);
+    programRunner.stop(file.file!, ideViewModel, elanInputOutput);
+    testRunner.stop(file.file!, ideViewModel);
   }, 1);
 });
 
@@ -510,7 +630,7 @@ newButton?.addEventListener("click", async (event: Event) => {
     if (checkForUnsavedChanges(fileManager, cancelMsg)) {
       await ideViewModel.clearDisplays();
       fileManager.reset();
-      file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+      file.recreateFile();
       await initialDisplay(false);
     }
   }
@@ -529,7 +649,7 @@ autoSaveButton.addEventListener("click", handleChromeAutoSave);
 async function loadDemoFile(fileName: string) {
   const f = await fetch(fileName, { mode: "same-origin" });
   const rawCode = await f.text();
-  file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+  file.recreateFile();
   file.fileName = fileName;
   fileManager.reset();
   await readAndParse(rawCode, fileName, ParseMode.loadNew);
@@ -537,7 +657,7 @@ async function loadDemoFile(fileName: string) {
 
 saveAsStandaloneButton.addEventListener("click", async (event: Event) => {
   if (!isDisabled(event)) {
-    await fileManager.saveAsStandAlone(file);
+    await fileManager.saveAsStandAlone(file.file!);
   }
 });
 
@@ -800,14 +920,14 @@ if (okToContinue) {
 }
 
 function checkForUnsavedChanges(fm: FileManager, msg: string): boolean {
-  return fm.hasUnsavedChanges(file) ? confirm(msg) : true;
+  return fm.hasUnsavedChanges(file.file!) ? confirm(msg) : true;
 }
 
 async function setup(p: Profile) {
   fileManager.reset();
   profile = p;
 
-  file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+  file.recreateFile();
   await displayFile();
 }
 
@@ -816,7 +936,7 @@ function clearSystemDisplay() {
 }
 
 async function resetFile() {
-  file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+  file.recreateFile();
   await initialDisplay(false);
 }
 
@@ -856,7 +976,7 @@ async function refreshAndDisplay(compileIfParsed: boolean, editingField: boolean
     file.refreshParseAndCompileStatuses(compileIfParsed);
     const cs = file.readCompileStatus();
     if ((cs === CompileStatus.ok || cs === CompileStatus.advisory) && file.hasTests) {
-      await testRunner.run(file, ideViewModel);
+      await testRunner.run(file.file!, ideViewModel);
     }
     await ideViewModel.renderAsHtml(editingField);
   } catch (e) {
@@ -870,7 +990,7 @@ async function initialDisplay(reset: boolean) {
   const ps = file.readParseStatus();
   if (ps === ParseStatus.valid || ps === ParseStatus.default || ps === ParseStatus.incomplete) {
     await refreshAndDisplay(false, false);
-    fileManager.updateHash(file);
+    fileManager.updateHash(file.file!);
     updateNameAndSavedStatus(fileManager, ideViewModel);
     if (reset) {
       const code = await file.renderAsSource();
@@ -903,7 +1023,7 @@ function getModKey(e: KeyboardEvent | MouseEvent) {
 }
 
 function updateNameAndSavedStatus(fm: FileManager, vm: IIDEViewModel) {
-  const unsaved = fm.hasUnsavedChanges(file) ? " UNSAVED" : "";
+  const unsaved = fm.hasUnsavedChanges(file.file!) ? " UNSAVED" : "";
   vm.updateFileName(unsaved);
 }
 
@@ -1435,7 +1555,7 @@ async function updateContent(text: string, editingField: boolean) {
     await navigator.clipboard.writeText(allCode);
   }
 
-  await fileManager.save(file, focused, editingField, ideViewModel);
+  await fileManager.save(file.file!, focused, editingField, ideViewModel);
   ideViewModel.updateDisplayValues();
 
   if (!isElanProduction) {
@@ -1483,7 +1603,7 @@ async function handleKeyAndRender(e: editorEvent) {
     switch (e.type) {
       case "click":
         isBeingEdited = file.getFieldBeingEdited(); //peek at value as may be changed
-        if (handleClick(e, file) && isBeingEdited) {
+        if (handleClick(e, file.file!) && isBeingEdited) {
           await refreshAndDisplay(false, false);
         } else {
           await ideViewModel.renderAsHtml(false);
@@ -1491,7 +1611,7 @@ async function handleKeyAndRender(e: editorEvent) {
         return;
       case "dblclick":
         isBeingEdited = file.getFieldBeingEdited(); //peek at value as may be changed
-        if (handleDblClick(e, file) && isBeingEdited) {
+        if (handleDblClick(e, file.file!) && isBeingEdited) {
           await refreshAndDisplay(false, false);
         } else {
           await ideViewModel.renderAsHtml(false);
@@ -1503,14 +1623,14 @@ async function handleKeyAndRender(e: editorEvent) {
           return;
         }
         const before = Date.now();
-        codeChanged = handleKey(e, file);
+        codeChanged = handleKey(e, file.file!);
         const after = Date.now();
         const delay = after - before;
         if (codeChanged === true) {
           if (delay >= 1000) {
             alert(delayMessage);
             e.key = "Backspace";
-            handleKey(e, file);
+            handleKey(e, file.file!);
             setTimeout(() => (purgingKeys = false), 500);
             purgingKeys = true;
           }
@@ -1522,7 +1642,7 @@ async function handleKeyAndRender(e: editorEvent) {
         // undefined just return
         return;
       case "contextmenu":
-        codeChanged = handleKey(e, file);
+        codeChanged = handleKey(e, file.file!);
         if (codeChanged) {
           await refreshAndDisplay(true, false);
         } else {
@@ -1654,7 +1774,7 @@ async function handleChromeUploadOrAppend(mode: ParseMode) {
     const fileName = mode === ParseMode.loadNew ? codeFile.name : file.fileName;
     const rawCode = await codeFile.text();
     if (mode === ParseMode.loadNew) {
-      file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+      file.recreateFile();
       fileManager.reset();
     }
     await readAndParse(rawCode, fileName, mode);
@@ -1701,7 +1821,7 @@ async function handleUploadOrAppend(event: Event, mode: ParseMode) {
     reader.addEventListener("load", async (event: any) => {
       const rawCode = event.target.result;
       if ((mode = ParseMode.loadNew)) {
-        file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+        file.recreateFile();
         fileManager.reset();
       }
       await readAndParse(rawCode, fileName, mode);
@@ -1765,7 +1885,7 @@ async function handleDownload(event: Event) {
     aElement.click();
     URL.revokeObjectURL(href);
     saveButton.classList.remove("unsaved");
-    fileManager.resetHash(file);
+    fileManager.resetHash(file.file!);
     event.preventDefault();
     await ideViewModel.renderAsHtml(false);
   }
@@ -1783,7 +1903,7 @@ function isDisabled(evt: Event) {
 async function handleChromeDownload(event: Event) {
   if (!isDisabled(event)) {
     try {
-      await fileManager.doDownLoad(file, ideViewModel);
+      await fileManager.doDownLoad(file.file!, ideViewModel);
     } catch (_e) {
       // user cancelled
       return;
@@ -1796,7 +1916,7 @@ async function handleChromeDownload(event: Event) {
 async function handleChromeAutoSave(event: Event) {
   if (!isDisabled(event)) {
     try {
-      await fileManager.doAutoSave(file, ideViewModel);
+      await fileManager.doAutoSave(file.file!, ideViewModel);
     } catch (_e) {
       // user cancelled
       return;
@@ -2026,7 +2146,7 @@ window.addEventListener("message", async (m) => {
   if (m.data && typeof m.data === "string") {
     if (m.data.startsWith("code:")) {
       const code = m.data.slice(5);
-      file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+      file.recreateFile();
       fileManager.reset();
       await readAndParse(code, file.fileName, ParseMode.loadNew);
     }

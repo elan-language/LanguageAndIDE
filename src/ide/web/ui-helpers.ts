@@ -86,7 +86,7 @@ export function parentId(e: Element): string {
 
 export interface IIDEViewModel {
   focusInfoTab(): void;
-  updateDisplayValues(): void;
+  updateDisplayValues(file: File): void;
   setPauseButtonState(waitingForUserInput?: boolean): void;
   toggleInputStatus(rs: RunStatus): void;
   clearDisplays(): Promise<void>;

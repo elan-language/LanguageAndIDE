@@ -135,7 +135,7 @@ export class FileManager {
   async doAutoSave(file: File, vm: IIDEViewModel) {
     if (this.isAutosaving()) {
       this.autoSaveFileHandle = undefined;
-      vm.updateDisplayValues();
+      vm.updateDisplayValues(file);
     } else {
       const code = await file.renderAsSource();
       this.autoSaveFileHandle = await this.chromeSave(file, code, true);
