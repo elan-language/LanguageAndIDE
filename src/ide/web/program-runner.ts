@@ -25,23 +25,23 @@ export class ProgramRunner {
     return this.debugMode;
   }
 
-  async runDebug(file: ICodeEditorViewModel, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
+  async runDebug(cvm: ICodeEditorViewModel, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
     vm.runDebug();
     this.debugMode = true;
     this.singleStepping = this.processingSingleStep = false;
-    await this.runProgram(file, vm, elanInputOutput);
+    await this.runProgram(cvm, vm, elanInputOutput);
   }
 
-  async run(file: ICodeEditorViewModel, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
-    await vm.run(file);
+  async run(cvm: ICodeEditorViewModel, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
+    await vm.run(cvm);
     this.debugMode = this.singleStepping = this.processingSingleStep = false;
-    await this.runProgram(file, vm, elanInputOutput);
+    await this.runProgram(cvm, vm, elanInputOutput);
   }
 
-  stop(file: ICodeEditorViewModel, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
+  stop(cvm: ICodeEditorViewModel, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
     this.debugMode = this.singleStepping = false;
 
-    this.handleRunWorkerFinished(file, vm, elanInputOutput);
+    this.handleRunWorkerFinished(cvm, vm, elanInputOutput);
   }
 
   pause() {
@@ -49,7 +49,7 @@ export class ProgramRunner {
     this.runWorker?.postMessage({ type: "pause" } as WebWorkerMessage);
   }
 
-  step(file: ICodeEditorViewModel, vm: IIDEViewModel) {
+  step(cvm: ICodeEditorViewModel, vm: IIDEViewModel) {
     this.singleStepping = true;
 
     if (this.pendingBreakpoints.length > 0) {
@@ -64,34 +64,34 @@ export class ProgramRunner {
     }
 
     this.processingSingleStep = false;
-    if (file.readRunStatus() === RunStatus.paused && this.runWorker) {
+    if (cvm.readRunStatus() === RunStatus.paused && this.runWorker) {
       this.pendingBreakpoints = [];
-      this.resumeProgram(file);
-      vm.updateDisplayValues(file);
+      this.resumeProgram(cvm);
+      vm.updateDisplayValues(cvm);
     }
   }
 
   private async runProgram(
-    file: ICodeEditorViewModel,
+    cvm: ICodeEditorViewModel,
     vm: IIDEViewModel,
     elanInputOutput: WebInputOutput,
   ) {
     try {
-      if (file.readRunStatus() === RunStatus.paused && this.runWorker && this.debugMode) {
+      if (cvm.readRunStatus() === RunStatus.paused && this.runWorker && this.debugMode) {
         this.pendingBreakpoints = [];
-        this.resumeProgram(file);
-        vm.updateDisplayValues(file);
+        this.resumeProgram(cvm);
+        vm.updateDisplayValues(cvm);
         return;
       }
 
       await vm.clearDisplays();
-      file.setRunStatus(RunStatus.running);
-      vm.updateDisplayValues(file);
+      cvm.setRunStatus(RunStatus.running);
+      vm.updateDisplayValues(cvm);
       const path = `${document.location.origin}${document.location.pathname}`.replace(
         "/index.html",
         "",
       );
-      const jsCode = file.compileAsWorker(path, this.debugMode, false);
+      const jsCode = cvm.compileAsWorker(path, this.debugMode, false);
       const asUrl = encodeCode(jsCode);
 
       this.runWorker = new Worker(asUrl, { type: "module" });
@@ -101,10 +101,10 @@ export class ProgramRunner {
 
         switch (data.type) {
           case "write":
-            await handleWorkerIO(file, data, this.runWorker, elanInputOutput, vm);
+            await handleWorkerIO(cvm, data, this.runWorker, elanInputOutput, vm);
             break;
           case "breakpoint":
-            if (file.readRunStatus() === RunStatus.paused) {
+            if (cvm.readRunStatus() === RunStatus.paused) {
               this.pendingBreakpoints.push(data);
             } else {
               vm.focusInfoTab();
@@ -130,10 +130,10 @@ export class ProgramRunner {
           case "status":
             switch (data.status) {
               case "finished":
-                this.handleRunWorkerFinished(file, vm, elanInputOutput);
+                this.handleRunWorkerFinished(cvm, vm, elanInputOutput);
                 break;
               case "error":
-                await this.handleRunWorkerError(data, file, vm, elanInputOutput);
+                await this.handleRunWorkerError(data, cvm, vm, elanInputOutput);
                 break;
             }
         }
@@ -141,22 +141,22 @@ export class ProgramRunner {
 
       this.runWorker.onerror = async (ev: ErrorEvent) => {
         const err = new ElanRuntimeError(ev.message);
-        await vm.showError(err, file.fileName, false);
-        file.setRunStatus(RunStatus.error);
-        vm.updateDisplayValues(file);
+        await vm.showError(err, cvm.fileName, false);
+        cvm.setRunStatus(RunStatus.error);
+        vm.updateDisplayValues(cvm);
       };
 
       this.runWorker.postMessage({ type: "start" } as WebWorkerMessage);
     } catch (e) {
       console.warn(e);
-      file.setRunStatus(RunStatus.error);
-      vm.updateDisplayValues(file);
+      cvm.setRunStatus(RunStatus.error);
+      vm.updateDisplayValues(cvm);
     }
   }
 
   private async handleRunWorkerError(
     data: WebWorkerStatusMessage,
-    file: ICodeEditorViewModel,
+    cvm: ICodeEditorViewModel,
     vm: IIDEViewModel,
     elanInputOutput: WebInputOutput,
   ) {
@@ -166,14 +166,14 @@ export class ProgramRunner {
     elanInputOutput.finished();
     const e = data.error;
     const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
-    await vm.showError(err, file.fileName, false);
-    file.setRunStatus(RunStatus.error);
+    await vm.showError(err, cvm.fileName, false);
+    cvm.setRunStatus(RunStatus.error);
     clearPaused();
-    vm.updateDisplayValues(file);
+    vm.updateDisplayValues(cvm);
   }
 
   private handleRunWorkerFinished(
-    file: ICodeEditorViewModel,
+    cvm: ICodeEditorViewModel,
     vm: IIDEViewModel,
     elanInputOutput: WebInputOutput,
   ) {
@@ -181,9 +181,9 @@ export class ProgramRunner {
     this.runWorker = undefined;
     elanInputOutput.finished();
     console.info("elan program completed OK");
-    file.setRunStatus(RunStatus.default);
+    cvm.setRunStatus(RunStatus.default);
     clearPaused();
-    vm.updateDisplayValues(file);
+    vm.updateDisplayValues(cvm);
   }
 
   private getDebugSymbols(data: WebWorkerBreakpointMessage): DebugSymbol[] | string {
@@ -194,7 +194,7 @@ export class ProgramRunner {
       return `No values defined at this point - proceed to the next instruction`;
     }
   }
-  private resumeProgram(file: ICodeEditorViewModel) {
+  private resumeProgram(cvm: ICodeEditorViewModel) {
     if (this.singleStepping) {
       this.runWorker?.postMessage({ type: "pause" } as WebWorkerMessage);
     }
@@ -202,12 +202,12 @@ export class ProgramRunner {
     this.runWorker?.postMessage({ type: "resume" } as WebWorkerMessage);
 
     clearPaused();
-    file.setRunStatus(RunStatus.running);
+    cvm.setRunStatus(RunStatus.running);
   }
 }
 
 async function handleWorkerIO(
-  file: ICodeEditorViewModel,
+  cvm: ICodeEditorViewModel,
   data: WebWorkerWriteMessage,
   runWorker: Worker | undefined,
   elanInputOutput: WebInputOutput,
@@ -219,7 +219,7 @@ async function handleWorkerIO(
       vm.toggleInputStatus(RunStatus.input);
       const line = await elanInputOutput.readLine();
       // program may have been stopped so check state
-      const rs = file.readRunStatus();
+      const rs = cvm.readRunStatus();
       if (rs === RunStatus.input) {
         vm.toggleInputStatus(RunStatus.running);
       }
@@ -244,8 +244,8 @@ async function handleWorkerIO(
       break;
     case "readFile":
       try {
-        const file = await elanInputOutput.readFile();
-        runWorker?.postMessage(readMsg(file));
+        const contents = await elanInputOutput.readFile();
+        runWorker?.postMessage(readMsg(contents));
       } catch (e) {
         runWorker?.postMessage(errorMsg(e));
       }

@@ -290,14 +290,14 @@ class IDEViewModel implements IIDEViewModel {
     systemInfoDiv.innerHTML = "";
   }
 
-  updateDisplayValues(file: ICodeEditorViewModel) {
+  updateDisplayValues(cvm: ICodeEditorViewModel) {
     updateNameAndSavedStatus(fileManager, this);
 
     // Button control
-    const isEmpty = file.readParseStatus() === ParseStatus.default;
-    const isParsing = file.readParseStatus() === ParseStatus.valid;
-    const isIncomplete = file.readParseStatus() === ParseStatus.incomplete;
-    const cs = file.readCompileStatus();
+    const isEmpty = cvm.readParseStatus() === ParseStatus.default;
+    const isParsing = cvm.readParseStatus() === ParseStatus.valid;
+    const isIncomplete = cvm.readParseStatus() === ParseStatus.incomplete;
+    const cs = cvm.readCompileStatus();
     const isCompiling = cs === CompileStatus.ok || cs === CompileStatus.advisory;
     const isRunning = isRunningState();
     const isPaused = isPausedState();
@@ -305,15 +305,15 @@ class IDEViewModel implements IIDEViewModel {
 
     if (isTestRunning && !(isParsing || isCompiling)) {
       testRunner.end();
-      file.setTestStatus(TestStatus.default);
+      cvm.setTestStatus(TestStatus.default);
       isTestRunning = false;
       console.info("tests cancelled in updateDisplayValues");
     }
 
-    setStatus(parseStatus, file.getParseStatusColour(), file.getParseStatusLabel());
-    setStatus(compileStatus, file.getCompileStatusColour(), file.getCompileStatusLabel());
-    setStatus(testStatus, file.getTestStatusColour(), file.getTestStatusLabel());
-    setStatus(runStatus, file.getRunStatusColour(), file.getRunStatusLabel(), false);
+    setStatus(parseStatus, cvm.getParseStatusColour(), cvm.getParseStatusLabel());
+    setStatus(compileStatus, cvm.getCompileStatusColour(), cvm.getCompileStatusLabel());
+    setStatus(testStatus, cvm.getTestStatusColour(), cvm.getTestStatusLabel());
+    setStatus(runStatus, cvm.getRunStatusColour(), cvm.getRunStatusLabel(), false);
 
     if (isRunning || isTestRunning) {
       codeContainer?.classList.add("running");
@@ -388,7 +388,7 @@ class IDEViewModel implements IIDEViewModel {
         enable(saveButton, "Save the code into a file");
       }
 
-      if (!file.containsMain()) {
+      if (!cvm.containsMain()) {
         disable(
           [runButton, runDebugButton, saveAsStandaloneButton],
           "Code must have a 'main' routine to be run",
@@ -534,8 +534,8 @@ class IDEViewModel implements IIDEViewModel {
     infoTabLabel.click();
   }
 
-  async run(file: ICodeEditorViewModel) {
-    file.removeAllSelectorsThatCanBe();
+  async run(cvm: ICodeEditorViewModel) {
+    cvm.removeAllSelectorsThatCanBe();
     await this.renderAsHtml(false);
     runButton.focus();
     showDisplayTab();

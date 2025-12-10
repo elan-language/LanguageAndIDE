@@ -18,18 +18,18 @@ export class TestRunner {
     this.testWorker = undefined;
   }
 
-  stop(file: ICodeEditorViewModel, vm: IIDEViewModel) {
+  stop(cvm: ICodeEditorViewModel, vm: IIDEViewModel) {
     if (this.testWorker) {
       this.end();
-      file.setTestStatus(TestStatus.default);
-      vm.updateDisplayValues(file);
+      cvm.setTestStatus(TestStatus.default);
+      vm.updateDisplayValues(cvm);
     }
   }
 
-  async run(file: ICodeEditorViewModel, vm: IIDEViewModel) {
+  async run(cvm: ICodeEditorViewModel, vm: IIDEViewModel) {
     // if already running cancel and restart
     this.end();
-    await this.runTests(file, vm);
+    await this.runTests(cvm, vm);
 
     let timeoutCount = 0;
     const testTimeout = 2; // seconds
@@ -43,7 +43,7 @@ export class TestRunner {
 
       if (timeoutCount === testTimeout && this.testWorker) {
         this.cancelTestTimeout();
-        this.handleAbort(file, vm);
+        this.handleAbort(cvm, vm);
       }
     }, 1000) as unknown as number | undefined;
   }
@@ -53,17 +53,17 @@ export class TestRunner {
     this.testTimer = undefined;
   }
 
-  private async runTests(file: ICodeEditorViewModel, vm: IIDEViewModel) {
+  private async runTests(cvm: ICodeEditorViewModel, vm: IIDEViewModel) {
     try {
       await vm.clearDisplays();
-      file.setTestStatus(TestStatus.running);
+      cvm.setTestStatus(TestStatus.running);
 
-      vm.updateDisplayValues(file);
+      vm.updateDisplayValues(cvm);
       const path = `${document.location.origin}${document.location.pathname}`.replace(
         "/index.html",
         "",
       );
-      const jsCode = file.compileAsTestWorker(path);
+      const jsCode = cvm.compileAsTestWorker(path);
       const asUrl = encodeCode(jsCode);
 
       this.testWorker = new Worker(asUrl, { type: "module" });
@@ -75,69 +75,69 @@ export class TestRunner {
           case "status":
             switch (data.status) {
               case "finished":
-                await this.handleError(data, file, vm);
+                await this.handleError(data, cvm, vm);
                 break;
             }
             break;
           case "test":
-            await this.handleFinished(data, file, vm);
+            await this.handleFinished(data, cvm, vm);
         }
       };
 
       this.testWorker.onerror = async (ev: ErrorEvent) => {
         this.end();
         const err = new ElanRuntimeError(ev.message);
-        await vm.showError(err, file.fileName, false);
-        file.setTestStatus(TestStatus.error);
-        vm.updateDisplayValues(file);
+        await vm.showError(err, cvm.fileName, false);
+        cvm.setTestStatus(TestStatus.error);
+        vm.updateDisplayValues(cvm);
       };
 
       this.testWorker.postMessage({ type: "start" } as WebWorkerMessage);
     } catch (e) {
       this.end();
       console.warn(e);
-      file.setTestStatus(TestStatus.error);
-      vm.updateDisplayValues(file);
+      cvm.setTestStatus(TestStatus.error);
+      vm.updateDisplayValues(cvm);
     }
   }
 
   private async handleError(
     data: WebWorkerStatusMessage,
-    file: ICodeEditorViewModel,
+    cvm: ICodeEditorViewModel,
     vm: IIDEViewModel,
   ) {
     this.end();
     const e = data.error;
     const err =
       e instanceof ElanRuntimeError ? e : new ElanRuntimeError(typeof e === "string" ? e : "");
-    await vm.showError(err, file.fileName, false);
-    file.setTestStatus(TestStatus.error);
-    vm.updateDisplayValues(file);
+    await vm.showError(err, cvm.fileName, false);
+    cvm.setTestStatus(TestStatus.error);
+    vm.updateDisplayValues(cvm);
   }
 
   private async handleFinished(
     data: WebWorkerTestMessage,
-    file: ICodeEditorViewModel,
+    cvm: ICodeEditorViewModel,
     vm: IIDEViewModel,
   ) {
     this.end();
-    file.refreshTestStatuses(data.value);
+    cvm.refreshTestStatuses(data.value);
     console.info("elan tests completed");
 
-    const testErr = file.getTestError();
+    const testErr = cvm.getTestError();
     if (testErr) {
       const err = testErr instanceof ElanRuntimeError ? testErr : new ElanRuntimeError(testErr);
-      await vm.showError(err, file.fileName, false);
+      await vm.showError(err, cvm.fileName, false);
     }
 
     await vm.renderAsHtml(false);
-    vm.updateDisplayValues(file);
+    vm.updateDisplayValues(cvm);
   }
 
-  private handleAbort(file: ICodeEditorViewModel, vm: IIDEViewModel) {
+  private handleAbort(cvm: ICodeEditorViewModel, vm: IIDEViewModel) {
     this.end();
-    file.setTestStatus(TestStatus.error);
+    cvm.setTestStatus(TestStatus.error);
     vm.systemInfoPrintSafe("Tests timed out and were aborted");
-    vm.updateDisplayValues(file);
+    vm.updateDisplayValues(cvm);
   }
 }

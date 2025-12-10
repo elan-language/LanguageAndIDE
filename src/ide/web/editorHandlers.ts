@@ -4,20 +4,20 @@ import { Frame } from "../frames/frame-interfaces/frame";
 import { Selectable } from "../frames/frame-interfaces/selectable";
 import { ICodeEditorViewModel } from "./ui-helpers";
 
-function getAllSelected(file: ICodeEditorViewModel) {
-  const v = file.getMap().values();
+function getAllSelected(cvm: ICodeEditorViewModel) {
+  const v = cvm.getMap().values();
   return [...v].filter((s) => s.isSelected());
 }
 
-export function handleClick(e: editorEvent, file: ICodeEditorViewModel) {
+export function handleClick(e: editorEvent, cvm: ICodeEditorViewModel) {
   switch (e.target) {
     case "frame": {
-      const s = file.getById(e.id!);
+      const s = cvm.getById(e.id!);
 
       if (e.modKey.shift && isFrame(s)) {
         const parent = s.getParent();
         // all current selections with same parent
-        const curSel = getAllSelected(file).filter((i) => isFrame(i) && i.getParent() === parent);
+        const curSel = getAllSelected(cvm).filter((i) => isFrame(i) && i.getParent() === parent);
 
         if (curSel.length > 0) {
           const toSelect = new Set<Selectable>();
@@ -56,10 +56,10 @@ export function handleClick(e: editorEvent, file: ICodeEditorViewModel) {
   }
   return false;
 }
-export function handleDblClick(e: editorEvent, file: ICodeEditorViewModel) {
+export function handleDblClick(e: editorEvent, cvm: ICodeEditorViewModel) {
   switch (e.target) {
     case "frame": {
-      const s = file.getById(e.id!);
+      const s = cvm.getById(e.id!);
       if (isCollapsible(s)) {
         s.expandCollapse();
       }
@@ -69,7 +69,7 @@ export function handleDblClick(e: editorEvent, file: ICodeEditorViewModel) {
   return false;
 }
 
-export function handleKey(e: editorEvent, file: ICodeEditorViewModel) {
+export function handleKey(e: editorEvent, cvm: ICodeEditorViewModel) {
   switch (e.key) {
     case "Shift":
       break; //Short circuit repeat from modifier held-down before other key
@@ -79,9 +79,9 @@ export function handleKey(e: editorEvent, file: ICodeEditorViewModel) {
       break;
     default: {
       if (e.target === "frame") {
-        return file.getById(e.id!).processKey(e);
+        return cvm.getById(e.id!).processKey(e);
       } else {
-        return file.processKey(e);
+        return cvm.processKey(e);
       }
     }
   }

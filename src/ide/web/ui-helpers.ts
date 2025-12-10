@@ -161,7 +161,7 @@ export interface ICodeEditorViewModel {
 
 export interface IIDEViewModel {
   focusInfoTab(): void;
-  updateDisplayValues(file: ICodeEditorViewModel): void;
+  updateDisplayValues(cvm: ICodeEditorViewModel): void;
   setPauseButtonState(waitingForUserInput?: boolean): void;
   toggleInputStatus(rs: RunStatus): void;
   clearDisplays(): Promise<void>;
@@ -169,7 +169,7 @@ export interface IIDEViewModel {
   printDebugInfo(info: DebugSymbol[] | string): void;
   setPausedAtLocation(location: string): void;
   clickInfoTab(): void;
-  run(file: ICodeEditorViewModel): Promise<void>;
+  run(cvm: ICodeEditorViewModel): Promise<void>;
   runDebug(): void;
   renderAsHtml(editingField: boolean): Promise<void>;
   systemInfoPrintSafe(text: string, scroll?: boolean): void;

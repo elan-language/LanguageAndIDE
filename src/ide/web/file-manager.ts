@@ -29,24 +29,24 @@ export class FileManager {
     return this.nextFileIndex > -1;
   }
 
-  hasUnsavedChanges(file: ICodeEditorViewModel) {
-    return !(this.lastSavedHash === file.currentHash);
+  hasUnsavedChanges(cvm: ICodeEditorViewModel) {
+    return !(this.lastSavedHash === cvm.currentHash);
   }
 
   async save(
-    file: ICodeEditorViewModel,
+    cvm: ICodeEditorViewModel,
     field: HTMLElement | undefined,
     editingField: boolean,
     vm: IIDEViewModel,
   ) {
     let code = "";
     const newFieldId = editingField ? field?.id : undefined;
-    const parseStatus = file.readParseStatus();
+    const parseStatus = cvm.readParseStatus();
 
     if (parseStatus === ParseStatus.valid || parseStatus === ParseStatus.incomplete) {
       // save to local store
 
-      if (this.undoRedoHash !== file.currentHash && !this.undoRedoing) {
+      if (this.undoRedoHash !== cvm.currentHash && !this.undoRedoing) {
         if (this.nextFileIndex !== -1 && this.nextFileIndex > this.currentFileIndex) {
           const trimedIds = this.undoRedoFiles.slice(this.nextFileIndex);
           this.undoRedoFiles = this.undoRedoFiles.slice(0, this.nextFileIndex);
@@ -55,12 +55,12 @@ export class FileManager {
             localStorage.removeItem(id);
           }
         }
-        code = await file.renderAsSource();
+        code = await cvm.renderAsSource();
         const timestamp = Date.now();
         const overWriteLastEntry = newFieldId === this.currentFieldId;
         const id = overWriteLastEntry
           ? this.undoRedoFiles[this.currentFileIndex]
-          : `${file.fileName}.${timestamp}`;
+          : `${cvm.fileName}.${timestamp}`;
 
         if (!overWriteLastEntry) {
           this.undoRedoFiles.push(id);
@@ -72,7 +72,7 @@ export class FileManager {
 
         localStorage.setItem(id, code);
         //saveButton.classList.add("unsaved");
-        this.undoRedoHash = file.currentHash;
+        this.undoRedoHash = cvm.currentHash;
         this.currentFieldId = newFieldId ?? "";
 
         while (this.undoRedoFiles.length >= 20) {
@@ -83,11 +83,11 @@ export class FileManager {
       }
 
       // autosave if setup
-      code = code || (await file.renderAsSource());
-      await this.autoSave(code, file, vm);
+      code = code || (await cvm.renderAsSource());
+      await this.autoSave(code, cvm, vm);
     }
 
-    this.undoRedoHash = file.currentHash;
+    this.undoRedoHash = cvm.currentHash;
     this.undoRedoing = false;
   }
 
@@ -114,13 +114,8 @@ export class FileManager {
     this.undoRedoHash = "";
   }
 
-  async chromeSave(
-    file: ICodeEditorViewModel,
-    code: string,
-    updateName: boolean,
-    newName?: string,
-  ) {
-    const name = newName ?? file.fileName;
+  async chromeSave(cvm: ICodeEditorViewModel, code: string, updateName: boolean, newName?: string) {
+    const name = newName ?? cvm.fileName;
     const html = name.endsWith(".html");
     const lastDirId = "elan-files";
 
@@ -132,7 +127,7 @@ export class FileManager {
     });
 
     if (updateName) {
-      file.fileName = fh.name;
+      cvm.fileName = fh.name;
     }
 
     const writeable = await fh.createWritable();
@@ -141,22 +136,22 @@ export class FileManager {
     return fh;
   }
 
-  async doAutoSave(file: ICodeEditorViewModel, vm: IIDEViewModel) {
+  async doAutoSave(cvm: ICodeEditorViewModel, vm: IIDEViewModel) {
     if (this.isAutosaving()) {
       this.autoSaveFileHandle = undefined;
-      vm.updateDisplayValues(file);
+      vm.updateDisplayValues(cvm);
     } else {
-      const code = await file.renderAsSource();
-      this.autoSaveFileHandle = await this.chromeSave(file, code, true);
-      this.resetHash(file);
+      const code = await cvm.renderAsSource();
+      this.autoSaveFileHandle = await this.chromeSave(cvm, code, true);
+      this.resetHash(cvm);
       await vm.renderAsHtml(false);
     }
   }
 
-  async doDownLoad(file: ICodeEditorViewModel, vm: IIDEViewModel) {
-    const code = await file.renderAsSource();
-    await this.chromeSave(file, code, true);
-    this.resetHash(file);
+  async doDownLoad(cvm: ICodeEditorViewModel, vm: IIDEViewModel) {
+    const code = await cvm.renderAsSource();
+    await this.chromeSave(cvm, code, true);
+    this.resetHash(cvm);
     await vm.renderAsHtml(false);
   }
 
@@ -165,16 +160,16 @@ export class FileManager {
     return localStorage.getItem(id) || "";
   }
 
-  updateHash(file: ICodeEditorViewModel) {
-    this.lastSavedHash = this.lastSavedHash || file.currentHash;
+  updateHash(cvm: ICodeEditorViewModel) {
+    this.lastSavedHash = this.lastSavedHash || cvm.currentHash;
   }
 
-  resetHash(file: ICodeEditorViewModel) {
-    this.lastSavedHash = file.currentHash;
+  resetHash(cvm: ICodeEditorViewModel) {
+    this.lastSavedHash = cvm.currentHash;
   }
 
-  async saveAsStandAlone(file: ICodeEditorViewModel) {
-    let jsCode = file.compileAsWorker("", false, true);
+  async saveAsStandAlone(cvm: ICodeEditorViewModel) {
+    let jsCode = cvm.compileAsWorker("", false, true);
 
     const api = await (await fetch("elan-api.js", { mode: "same-origin" })).text();
     let script = await (await fetch("standalone.js", { mode: "same-origin" })).text();
@@ -193,21 +188,21 @@ export class FileManager {
     html = html.replace("injected_style_css", cssStyle);
     html = html.replace("injected_ide_css", cssIde);
 
-    await this.chromeSave(file, html, false, "standalone.html");
+    await this.chromeSave(cvm, html, false, "standalone.html");
   }
 
-  private async writeCode(code: string, file: ICodeEditorViewModel, vm: IIDEViewModel) {
+  private async writeCode(code: string, cvm: ICodeEditorViewModel, vm: IIDEViewModel) {
     const fh = this.autoSaveFileHandle!;
     const writeable = await fh.createWritable();
     await writeable.write(code);
     await writeable.close();
-    this.lastSavedHash = file.currentHash;
-    const unsaved = this.hasUnsavedChanges(file) ? " UNSAVED" : "";
+    this.lastSavedHash = cvm.currentHash;
+    const unsaved = this.hasUnsavedChanges(cvm) ? " UNSAVED" : "";
     vm.updateFileName(unsaved);
     if (this.pendingSave) {
       const pendingCode = this.pendingSave;
       this.pendingSave = "";
-      await this.writeCode(pendingCode, file, vm);
+      await this.writeCode(pendingCode, cvm, vm);
     }
   }
 
@@ -220,8 +215,8 @@ export class FileManager {
     this.previousFileIndex = this.previousFileIndex < -1 ? -1 : this.previousFileIndex;
   }
 
-  private async autoSave(code: string, file: ICodeEditorViewModel, vm: IIDEViewModel) {
-    if (this.autoSaveFileHandle && this.hasUnsavedChanges(file)) {
+  private async autoSave(code: string, cvm: ICodeEditorViewModel, vm: IIDEViewModel) {
+    if (this.autoSaveFileHandle && this.hasUnsavedChanges(cvm)) {
       try {
         if (code.trim() === "") {
           // should never write empty file - always at least header
@@ -231,7 +226,7 @@ export class FileManager {
           this.pendingSave = code;
         } else {
           this.fileLock = true;
-          await this.writeCode(code, file, vm);
+          await this.writeCode(code, cvm, vm);
           this.fileLock = false;
         }
       } catch (e) {
