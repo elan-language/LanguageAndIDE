@@ -102,7 +102,7 @@ el-code-block img {
  tr:nth-child(odd)  td { background-color: rgb(226, 226, 226); }
 }
 
-/* Links in index */
+/* Links */
 a:visited, a:link, a:active {text-decoration: none}
 a:hover, a:focus {text-decoration: underline}
 
@@ -111,6 +111,11 @@ a:hover, a:focus {text-decoration: underline}
   font-family: consolas, monospace;
   white-space: normal;
 }
+
+ el-topic {
+  font-family:sans-serif;
+  color:black;
+} 
 
 /* Animated accordion and panel  */
 .acc-body {
