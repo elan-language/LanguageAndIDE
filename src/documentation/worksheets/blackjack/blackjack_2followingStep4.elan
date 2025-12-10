@@ -1,8 +1,8 @@
-# 12af00577d77ef246576fc111dd61e84c7e787cb0846846a8eaaac6ad88f9742 Elan 1.8.0 guest default_profile valid
+# ddf0312d2fb1a9ea308b3c9101343e6bcd06fd00d12890592542f8a7ff233f63 Elan 1.8.0 guest default_profile valid
 
 main
   let points be 1000
-  variable rounds set to 1
+  variable rounds set to 100
   let game be new Game(points)
   call game.addPlayer(new AutomatedPlayer("Player A", strategyA, points))
   call game.addPlayer(new AutomatedPlayer("Player B", strategyB, points))
@@ -16,21 +16,21 @@ end main
 
 procedure playOneRound(game as Game)
   call game.newRound()
-  call display(game)
+  [ghosted] call display(game)
   let dealer be game.dealer
   each player in game.players
     call player.startTurn()
-    call display(game)
+    [ghosted] call display(game)
     while player.status is Status.active
       call player.nextAction(dealer.faceCard)
-      call display(game)
+      [ghosted] call display(game)
     end while
   end each
   call dealer.play()
-  call display(game)
+  [ghosted] call display(game)
   while dealer.status is Status.active
     call dealer.nextAction(dealer.faceCard)
-    call display(game)
+    [ghosted] call display(game)
   end while
   call game.updatePoints()
 end procedure
