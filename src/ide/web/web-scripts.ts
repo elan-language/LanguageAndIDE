@@ -4,12 +4,7 @@ import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
 import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
 import { TestStatus } from "../../compiler/test-status";
 import { isElanProduction } from "../../environment";
-import {
-  cannotLoadUnparseableFile,
-  CodeSourceFromString,
-  fileErrorPrefix,
-  parseErrorPrefix,
-} from "../frames/file-impl";
+import { cannotLoadUnparseableFile, fileErrorPrefix, parseErrorPrefix } from "../frames/file-impl";
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { ParseMode } from "../frames/frame-interfaces/file";
 import { Profile } from "../frames/frame-interfaces/profile";
@@ -139,8 +134,8 @@ class IDEViewModel implements IIDEViewModel {
     const cs = cvm.readCompileStatus();
     const isCompiling = cs === CompileStatus.ok || cs === CompileStatus.advisory;
     const isRunning = cvm.isRunningState();
-    const isPaused = isPausedState();
-    let isTestRunning = isTestRunningState();
+    const isPaused = cvm.isPausedState();
+    let isTestRunning = cvm.isTestRunningState();
 
     if (isTestRunning && !(isParsing || isCompiling)) {
       testRunner.end();
@@ -287,7 +282,7 @@ class IDEViewModel implements IIDEViewModel {
     if (
       codeViewModel.isRunningState() &&
       programRunner.isDebugMode() &&
-      !isPausedState() &&
+      !codeViewModel.isPausedState() &&
       !waitingForUserInput
     ) {
       enable(pauseButton, "Pause the program");
@@ -318,7 +313,7 @@ class IDEViewModel implements IIDEViewModel {
 
     clearSystemDisplay();
     if (reset) {
-      await resetFile();
+      await codeViewModel.resetFile(fileManager, this, testRunner, profile, userName);
     }
 
     codeViewModel.fileName = fileName;
@@ -407,7 +402,7 @@ class IDEViewModel implements IIDEViewModel {
   async updateFileAndCode(code: string) {
     const fn = codeViewModel.fileName;
     codeViewModel.recreateFile(profile, userName);
-    await displayCode(code, fn);
+    await codeViewModel.displayCode(this, testRunner, code, fn);
   }
 
   disableUndoRedoButtons(msg: string) {
@@ -535,7 +530,14 @@ async function loadDemoFile(fileName: string) {
   codeViewModel.recreateFile(profile, userName);
   codeViewModel.fileName = fileName;
   fileManager.reset();
-  await readAndParse(codeViewModel, rawCode, fileName, ParseMode.loadNew);
+  await codeViewModel.readAndParse(
+    ideViewModel,
+    fileManager,
+    testRunner,
+    rawCode,
+    fileName,
+    ParseMode.loadNew,
+  );
 }
 
 saveAsStandaloneButton.addEventListener("click", async (event: Event) => {
@@ -811,16 +813,11 @@ async function setup(p: Profile) {
   profile = p;
 
   codeViewModel.recreateFile(profile, userName);
-  await displayFile();
+  await codeViewModel.displayFile(fileManager, ideViewModel, testRunner);
 }
 
 function clearSystemDisplay() {
   systemInfoDiv.innerHTML = "";
-}
-
-async function resetFile() {
-  codeViewModel.recreateFile(profile, userName);
-  await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, false);
 }
 
 function domEventType(evt: Event | undefined) {
@@ -854,22 +851,6 @@ function systemInfoPrintUnsafe(text: string, scroll = true) {
   showInfoTab();
 }
 
-async function displayCode(rawCode: string, fileName: string) {
-  const code = new CodeSourceFromString(rawCode);
-  code.mode = ParseMode.loadNew;
-  try {
-    await codeViewModel.parseFrom(code);
-    codeViewModel.fileName = fileName || codeViewModel.defaultFileName;
-    await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, true, false);
-  } catch (e) {
-    await ideViewModel.showError(e as Error, fileName || codeViewModel.defaultFileName, true);
-  }
-}
-
-async function displayFile() {
-  await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, true);
-}
-
 function getModKey(e: KeyboardEvent | MouseEvent) {
   return { control: e.ctrlKey || e.metaKey, shift: e.shiftKey, alt: e.altKey };
 }
@@ -885,14 +866,6 @@ function setStatus(html: HTMLDivElement, colour: string, label: string, showTool
   }
 
   html.innerText = label;
-}
-
-function isTestRunningState() {
-  return codeViewModel.readTestStatus() === TestStatus.running;
-}
-
-function isPausedState() {
-  return codeViewModel.readRunStatus() === RunStatus.paused;
 }
 
 function disable(buttons: HTMLElement[], msg = "") {
@@ -1132,7 +1105,7 @@ async function handleEditorEvent(
     return;
   }
 
-  if (isTestRunningState()) {
+  if (codeViewModel.isTestRunningState()) {
     testRunner.end();
     codeViewModel.setTestStatus(TestStatus.default);
     console.info("tests cancelled in handleEditorEvent");
@@ -1586,27 +1559,6 @@ function getImporter() {
   return useChromeFileAPI() ? handleChromeImport : handleImport;
 }
 
-async function readAndParse(
-  cvm: ICodeEditorViewModel,
-  rawCode: string,
-  fileName: string,
-  mode: ParseMode,
-) {
-  const reset = mode === ParseMode.loadNew;
-  const code = new CodeSourceFromString(rawCode);
-  code.mode = mode;
-  cvm.fileName = fileName;
-  try {
-    await cvm.parseFrom(code);
-    if (cvm.parseError) {
-      throw new Error(cvm.parseError);
-    }
-    await cvm.initialDisplay(fileManager, ideViewModel, testRunner, reset);
-  } catch (e) {
-    await ideViewModel.showError(e as Error, fileName, reset);
-  }
-}
-
 async function handleChromeUploadOrAppend(mode: ParseMode) {
   try {
     const [fileHandle] = await window.showOpenFilePicker({
@@ -1621,7 +1573,14 @@ async function handleChromeUploadOrAppend(mode: ParseMode) {
       codeViewModel.recreateFile(profile, userName);
       fileManager.reset();
     }
-    await readAndParse(codeViewModel, rawCode, fileName, mode);
+    await codeViewModel.readAndParse(
+      ideViewModel,
+      fileManager,
+      testRunner,
+      rawCode,
+      fileName,
+      mode,
+    );
   } catch (_e) {
     // user cancelled
     return;
@@ -1668,7 +1627,14 @@ async function handleUploadOrAppend(event: Event, mode: ParseMode) {
         codeViewModel.recreateFile(profile, userName);
         fileManager.reset();
       }
-      await readAndParse(codeViewModel, rawCode, fileName, mode);
+      await codeViewModel.readAndParse(
+        ideViewModel,
+        fileManager,
+        testRunner,
+        rawCode,
+        fileName,
+        mode,
+      );
     });
     reader.readAsText(elanFile);
   }
@@ -1992,7 +1958,14 @@ window.addEventListener("message", async (m) => {
       const code = m.data.slice(5);
       codeViewModel.recreateFile(profile, userName);
       fileManager.reset();
-      await readAndParse(codeViewModel, code, codeViewModel.fileName, ParseMode.loadNew);
+      await codeViewModel.readAndParse(
+        ideViewModel,
+        fileManager,
+        testRunner,
+        code,
+        codeViewModel.fileName,
+        ParseMode.loadNew,
+      );
     }
 
     if (m.data.startsWith("help:")) {

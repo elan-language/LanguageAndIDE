@@ -177,6 +177,9 @@ export interface ICodeEditorViewModel {
   ): Promise<void>;
 
   initialDisplay(fm: FileManager, vm: IIDEViewModel, tr: TestRunner, reset: boolean): Promise<void>;
+
+  isPausedState(): boolean;
+  isTestRunningState(): boolean;
 }
 
 export interface IIDEViewModel {

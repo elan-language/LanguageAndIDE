@@ -1,11 +1,11 @@
 import { AssertOutcome } from "../../compiler/assert-outcome";
 import { StdLib } from "../../compiler/standard-library/std-lib";
 import { TestStatus } from "../../compiler/test-status";
-import { FileImpl } from "../frames/file-impl";
+import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { isCollapsible, isFrame } from "../frames/frame-helpers";
 import { CodeSource } from "../frames/frame-interfaces/code-source";
 import { editorEvent } from "../frames/frame-interfaces/editor-event";
-import { File } from "../frames/frame-interfaces/file";
+import { File, ParseMode } from "../frames/frame-interfaces/file";
 import { Frame } from "../frames/frame-interfaces/frame";
 import { Profile } from "../frames/frame-interfaces/profile";
 import { Selectable } from "../frames/frame-interfaces/selectable";
@@ -298,5 +298,63 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
       const msg = this.parseError || "Failed load code";
       await vm.showError(new Error(msg), this.fileName, reset);
     }
+  }
+
+  async resetFile(
+    fm: FileManager,
+    vm: IIDEViewModel,
+    tr: TestRunner,
+    profile: Profile,
+    userName: string | undefined,
+  ) {
+    this.recreateFile(profile, userName);
+    await this.initialDisplay(fm, vm, tr, false);
+  }
+
+  async displayFile(fm: FileManager, vm: IIDEViewModel, tr: TestRunner) {
+    await this.initialDisplay(fm, vm, tr, true);
+  }
+
+  async readAndParse(
+    vm: IIDEViewModel,
+    fm: FileManager,
+    tr: TestRunner,
+    rawCode: string,
+    fileName: string,
+    mode: ParseMode,
+  ) {
+    const reset = mode === ParseMode.loadNew;
+    const code = new CodeSourceFromString(rawCode);
+    code.mode = mode;
+    this.fileName = fileName;
+    try {
+      await this.parseFrom(code);
+      if (this.parseError) {
+        throw new Error(this.parseError);
+      }
+      await this.initialDisplay(fm, vm, tr, reset);
+    } catch (e) {
+      await vm.showError(e as Error, fileName, reset);
+    }
+  }
+
+  async displayCode(vm: IIDEViewModel, tr: TestRunner, rawCode: string, fileName: string) {
+    const code = new CodeSourceFromString(rawCode);
+    code.mode = ParseMode.loadNew;
+    try {
+      await this.parseFrom(code);
+      this.fileName = fileName || this.defaultFileName;
+      await this.refreshAndDisplay(vm, tr, true, false);
+    } catch (e) {
+      await vm.showError(e as Error, fileName || this.defaultFileName, true);
+    }
+  }
+
+  isTestRunningState() {
+    return this.readTestStatus() === TestStatus.running;
+  }
+
+  isPausedState() {
+    return this.readRunStatus() === RunStatus.paused;
   }
 }
