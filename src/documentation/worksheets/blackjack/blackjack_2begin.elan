@@ -1,4 +1,4 @@
-# 12af00577d77ef246576fc111dd61e84c7e787cb0846846a8eaaac6ad88f9742 Elan 1.8.0 guest default_profile valid
+# db0cf36799c160b5378897e117b3ff35f9fe65c355759164b5e98b48a2d0dcf9 Elan 1.8.0 guest default_profile valid
 
 main
   let points be 1000
@@ -437,13 +437,13 @@ end class
 
 end class
 
-enum Action stand, draw
+[imported] enum Action stand, draw
 
-enum Outcome undecided, lose, draw, win, winDouble
+[imported] enum Outcome undecided, lose, draw, win, winDouble
 
-enum Status active, standing, blackjack, bust
+[imported] enum Status active, standing, blackjack, bust
 
-enum Suit clubs, diamonds, hearts, spades
+[imported] enum Suit clubs, diamonds, hearts, spades
 
 [imported] constant symbols set to {Suit.clubs:"&clubs;", Suit.diamonds:"&diams;", Suit.hearts:"&hearts;", Suit.spades:"&spades;"}
 

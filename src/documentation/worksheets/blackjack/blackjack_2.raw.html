@@ -1,29 +1,28 @@
 <title>Blackjack 2</title>
 <version>1</version>
-<step><h1>Step STEPNUMBER: abstraction</h1>
 
-    <p><load file="blackjack_2begin.elan">Load the starting code</load>, and
-    immediately </b>file > auto save</b> it to local file storage.</p>
-
-    <p>Before running the program, watch the first video:</p>
+<step><h1>Step STEPNUMBER: load the starting code</h1>
+    <p><load file="blackjack_2begin.elan">Load the starting code</load></p>
+    <p>Immediately <b>file > auto save</b> it to local file storage,
+    so that changes you make are preserved.</p>
+    <p>Move onto the next step before running the program.</p>
+</step>
+<step><h1>Step STEPNUMBER: exploring the code</h1>
     <div style="position: relative; padding-bottom: 74.68879668049793%; height: 0;"><iframe src="https://www.loom.com/embed/0fadd714ba414db28f2da492d3bc0132" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     <question>Briefly describe the meaning of 'abstraction' in programming:</question>
 </step>
 
 <step><h1>Step STEPNUMBER: automated players</h1>
-    Watch the next video:
     <div style="position: relative; padding-bottom: 70.7732634338139%; height: 0;"><iframe src="https://www.loom.com/embed/4716ba4d7b254ab0aa737647ae854fa0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     <question>Having run the program 3-4 times, which of the two players is operating the very 'high risk' strategy, and which the very 'cautious' strategy?</question>
 </step>
 
 <step><h1>Step STEPNUMBER: identifying the better of the strategies</h1>
-    Watch the next video:
     <div style="position: relative; padding-bottom: 37.5751503006012%; height: 0;"><iframe src="https://www.loom.com/embed/1a14a79ab528414db3eb9ef5f8b7007f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     <question>Having run the program to play 10 rounds automatically, how many points did the Dealer, and each of the players ended up with?</question>
     <question>Run the program a second time, and record how many points ended up with this time</question>
 </step>
 <step><h1>Step STEPNUMBER: speeding up the program</h1>
-    Watch the next video:
     <div style="position: relative; padding-bottom: 78.83211678832116%; height: 0;"><iframe src="https://www.loom.com/embed/432d4c0974f24685a85b66cf7e2c822e" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     Make sure that you have ghosted the <code>pause</code> (instruction 31) and all <i>five</i> occurrences of <code>call display(game)</code> within
     the <el-method>playOneRound</el-method> procedure. Then run the program. You will see that both of the two players have lost points -
@@ -34,19 +33,16 @@
 </step>
 
 <step><h1>Step STEPNUMBER: the default strategies</h1>
-    Watch the next video:
     <div style="position: relative; padding-bottom: 73.46938775510203%; height: 0;"><iframe src="https://www.loom.com/embed/7707c7c908aa4d898bc749cef8ef93f4" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     <question>What can you say that <i>every</i> function does? </question>
 </step>
 
 <step><h1>Step STEPNUMBER:implement a simple strategy with a decision</h1>
-    Watch the next video:
     <div style="position: relative; padding-bottom: 53.98406374501992%; height: 0;"><iframe src="https://www.loom.com/embed/e214a039e34546cda0cdd6bb8db72805" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     <question>With the changes, how many points does each have after running 100 games?</question>
 </step>
 
 <step><h1>Step STEPNUMBER: simulating 10,000 rounds</h1>
-    Watch the next video:
     <div style="position: relative; padding-bottom: 73.77049180327869%; height: 0;"><iframe src="https://www.loom.com/embed/f74225ce446043ae89e61b2c7172cddf" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     <question>After making the changes such that the display now only updated after the last round, approximately how long did it take to run 10,000 rounds of Blackjack?</question>
     <question>How many points did the Dealer, and each Player end up with?</question>
@@ -56,21 +52,16 @@
 </step>
 
 <step><h1>Step STEPNUMBER: making use of the soft ace</h1>
-    Watch the next video to understand the next step in improving the strategy:
     <div style="position: relative; padding-bottom: 73.07171853856563%; height: 0;"><iframe src="https://www.loom.com/embed/e70cc3e6e5ee4601886b0bf40516b64b" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-    Then watch this video to implement next improvement:
     <div style="position: relative; padding-bottom: 62.650602409638545%; height: 0;"><iframe src="https://www.loom.com/embed/f3e7072d93a24017aa26bdc14fbe61e5" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     <question>After making the changes and running the new version, what were the points for Player A and Player B?</question>
 </step>
 <step><h1>Step STEPNUMBER: paying attention to the Dealer's 'face up card'</h1>
-    Watch the next video to understand the significance of the Dealer's 'face up card':
-    <div style="position: relative; padding-bottom: 62.44979919678715%; height: 0;"><iframe src="https://www.loom.com/embed/488a54f3d8684f0692f5acd7e2e39a66" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-    And then this video to implement the next improvement to strategy:
+    <div style="position: relative; padding-bottom: 67.32673267326732%; height: 0;"><iframe src="https://www.loom.com/embed/2ab8b82ff38f4eb6b8d9e6d04b357e15" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     <div style="position: relative; padding-bottom: 62.44979919678715%; height: 0;"><iframe src="https://www.loom.com/embed/488a54f3d8684f0692f5acd7e2e39a66" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     <question>After making the changes and running the new version, what were the points for Player A and Player B?</question>
 </step>
 <step><h1>Step STEPNUMBER: expanding the scope of the previous rule</h1>
-    Watch the next video:
     <div style="position: relative; padding-bottom: 62.4%; height: 0;"><iframe src="https://www.loom.com/embed/c9365e4a549b4e19931d5dc270ce0072" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     <question>After making the changes and running the new version, what were the points for Player A and Player B?</question>
 </step>

@@ -50,9 +50,9 @@
     </div> 
       
 
-<div class="step" id="step1"><h1>Step 1: abstraction</h1>
 
-    <p><button class="load" id="load1-0" data-file="blackjack_2begin.elan">Load the starting code</button></p><div id="code-load1-0" hidden=""># 12af00577d77ef246576fc111dd61e84c7e787cb0846846a8eaaac6ad88f9742 Elan 1.8.0 guest default_profile valid
+<div class="step" id="step1"><h1>Step 1: load the starting code</h1>
+    <p><button class="load" id="load1-0" data-file="blackjack_2begin.elan">Load the starting code</button></p><div id="code-load1-0" hidden=""># db0cf36799c160b5378897e117b3ff35f9fe65c355759164b5e98b48a2d0dcf9 Elan 1.8.0 guest default_profile valid
 
 main
   let points be 1000
@@ -491,13 +491,13 @@ end class
 
 end class
 
-enum Action stand, draw
+[imported] enum Action stand, draw
 
-enum Outcome undecided, lose, draw, win, winDouble
+[imported] enum Outcome undecided, lose, draw, win, winDouble
 
-enum Status active, standing, blackjack, bust
+[imported] enum Status active, standing, blackjack, bust
 
-enum Suit clubs, diamonds, hearts, spades
+[imported] enum Suit clubs, diamonds, hearts, spades
 
 [imported] constant symbols set to {Suit.clubs:"&amp;clubs;", Suit.diamonds:"&amp;diams;", Suit.hearts:"&amp;hearts;", Suit.spades:"&amp;spades;"}
 
@@ -508,116 +508,107 @@ enum Suit clubs, diamonds, hearts, spades
 [imported] constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"red", Suit.spades:"black"}
 
 [imported] constant styleSheet set to ':root {\n    background-color: darkgreen;\n    padding-left: 5px;\n}\n\n.game {\n    padding: 5px;\n}\n\n.message, .details  {\n    color: white;\n    font-family: Arial, Helvetica, sans-serif;\n}\n\n.hand {\n        margin-top: 5px;\n        height: 150px;\n        padding-bottom: 10px;\n    }\n    \n.card {\n    position: relative;\n    float: left;\n    background-color: white;\n    width: 95px;\n    height:140px;\n    margin-right:10px;\n    padding: 5px;\n    border-radius: 5px;\n    font-family: Helvetica, sans-serif; \n}\n.royal,.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}\n\n/* Standard spots */ \n    .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}\n\n    /* columns */\n    .d,.n,.h,.p,.f {left: 18px }\n    .a,.b,.c,.l,.m,.s,.t {left: 43px;}\n    .e,.o,.i,.r,.g {left: 68px}\n\n    /* rows */\n    .d,.b,.e {top: 0px}\n    .s {top: 20px;}\n    .l {top: 28px;}\n    .n,.o {top: 37px;}\n    .h,.a,.i {top: 57px}\n    .p,.r {top: 75px;}\n    .m {top: 86px;}\n    .t {top: 93px;}\n    .f,.c,.g {top: 114px;}\n\n/* royals */\n    .royal {\n        position: absolute;\n        z-index: 1;\n        width: 95px;\n        height: 140px;\n        line-height: 140px;\n        font-size: 100px;\n    }\n\n/* corner summary */\n    .u {font-size: 15px; width: 15px; text-align: center; left: 0px; top: 2px;}\n    .v {font-size: 20px; width: 15px; text-align: center; left: 0px; top: 12px;}\n\n/* suit colors */\n    .red {color: red}\n    .black {color: black}\n\n/* back */\n    .card.reversed { background-color: rgba(0, 0, 255, 0.607);}'
-</div>, and
-    immediately file &gt; auto save it to local file storage.<p></p>
-
-    <p>Before running the program, watch the first video:</p>
+</div><p></p>
+    <p>Immediately <b>file &gt; auto save</b> it to local file storage,
+    so that changes you make are preserved.</p>
+    <p>Move onto the next step before running the program.</p>
+<h4>Notes</h4><textarea class="notes" id="notes1" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<div class="step" id="step2"><h1>Step 2: exploring the code</h1>
     <div style="position: relative; padding-bottom: 74.68879668049793%; height: 0;"><iframe src="https://www.loom.com/embed/0fadd714ba414db28f2da492d3bc0132" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     <p>Briefly describe the meaning of 'abstraction' in programming:</p>
-<textarea class="question" id="question1-0" placeholder="input is required"></textarea>
-<h4>Notes</h4><textarea class="notes" id="notes1" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-
-<div class="step" id="step2"><h1>Step 2: automated players</h1>
-    Watch the next video:
-    <div style="position: relative; padding-bottom: 70.7732634338139%; height: 0;"><iframe src="https://www.loom.com/embed/4716ba4d7b254ab0aa737647ae854fa0" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-    <p>Having run the program 3-4 times, which of the two players is operating the very 'high risk' strategy, and which the very 'cautious' strategy?</p>
 <textarea class="question" id="question2-0" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes2" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done2">Step Completed</label><input class="step-complete" type="checkbox" id="done2"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="step" id="step3"><h1>Step 3: identifying the better of the strategies</h1>
-    Watch the next video:
+<div class="step" id="step3"><h1>Step 3: automated players</h1>
+    <div style="position: relative; padding-bottom: 70.7732634338139%; height: 0;"><iframe src="https://www.loom.com/embed/4716ba4d7b254ab0aa737647ae854fa0" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>Having run the program 3-4 times, which of the two players is operating the very 'high risk' strategy, and which the very 'cautious' strategy?</p>
+<textarea class="question" id="question3-0" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" id="notes3" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done3">Step Completed</label><input class="step-complete" type="checkbox" id="done3"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step4"><h1>Step 4: identifying the better of the strategies</h1>
     <div style="position: relative; padding-bottom: 37.5751503006012%; height: 0;"><iframe src="https://www.loom.com/embed/1a14a79ab528414db3eb9ef5f8b7007f" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     <p>Having run the program to play 10 rounds automatically, how many points did the Dealer, and each of the players ended up with?</p>
-<textarea class="question" id="question3-0" placeholder="input is required"></textarea>
+<textarea class="question" id="question4-0" placeholder="input is required"></textarea>
     <p>Run the program a second time, and record how many points ended up with this time</p>
-<textarea class="question" id="question3-1" placeholder="input is required"></textarea>
-<h4>Notes</h4><textarea class="notes" id="notes3" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done3">Step Completed</label><input class="step-complete" type="checkbox" id="done3"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-<div class="step" id="step4"><h1>Step 4: speeding up the program</h1>
-    Watch the next video:
+<textarea class="question" id="question4-1" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" id="notes4" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done4">Step Completed</label><input class="step-complete" type="checkbox" id="done4"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<div class="step" id="step5"><h1>Step 5: speeding up the program</h1>
     <div style="position: relative; padding-bottom: 78.83211678832116%; height: 0;"><iframe src="https://www.loom.com/embed/432d4c0974f24685a85b66cf7e2c822e" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     Make sure that you have ghosted the <el-code><el-id>pause</el-id></el-code> (instruction 31) and all <i>five</i> occurrences of <el-code><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-method>display</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-id>game</el-id></el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code> within
     the <el-method>playOneRound</el-method> procedure. Then run the program. You will see that both of the two players have lost points -
     only the Dealer is ahead.
     <p>Which of the two players has lost the least points?</p>
-<textarea class="question" id="question4-0" placeholder="input is required"></textarea>
+<textarea class="question" id="question5-0" placeholder="input is required"></textarea>
     <p>Given that the result is from playing 100 rounds, and each participant started with 1000 points, calculate the average points lost or gained per round expressed as a percentage,
     for the Dealer and each Player (where a loss is a negative percentage and a gain is positive). Show how you worked this out.</p>
-<textarea class="question" id="question4-1" placeholder="input is required"></textarea>
-<h4>Notes</h4><textarea class="notes" id="notes4" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done4">Step Completed</label><input class="step-complete" type="checkbox" id="done4"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-
-<div class="step" id="step5"><h1>Step 5: the default strategies</h1>
-    Watch the next video:
-    <div style="position: relative; padding-bottom: 73.46938775510203%; height: 0;"><iframe src="https://www.loom.com/embed/7707c7c908aa4d898bc749cef8ef93f4" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-    <p>What can you say that every function does? </p>
-<textarea class="question" id="question5-0" placeholder="input is required"></textarea>
+<textarea class="question" id="question5-1" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes5" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done5">Step Completed</label><input class="step-complete" type="checkbox" id="done5"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="step" id="step6"><h1>Step 6:implement a simple strategy with a decision</h1>
-    Watch the next video:
-    <div style="position: relative; padding-bottom: 53.98406374501992%; height: 0;"><iframe src="https://www.loom.com/embed/e214a039e34546cda0cdd6bb8db72805" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-    <p>With the changes, how many points does each have after running 100 games?</p>
+<div class="step" id="step6"><h1>Step 6: the default strategies</h1>
+    <div style="position: relative; padding-bottom: 73.46938775510203%; height: 0;"><iframe src="https://www.loom.com/embed/7707c7c908aa4d898bc749cef8ef93f4" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>What can you say that every function does? </p>
 <textarea class="question" id="question6-0" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes6" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done6">Step Completed</label><input class="step-complete" type="checkbox" id="done6"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="step" id="step7"><h1>Step 7: simulating 10,000 rounds</h1>
-    Watch the next video:
+<div class="step" id="step7"><h1>Step 7:implement a simple strategy with a decision</h1>
+    <div style="position: relative; padding-bottom: 53.98406374501992%; height: 0;"><iframe src="https://www.loom.com/embed/e214a039e34546cda0cdd6bb8db72805" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>With the changes, how many points does each have after running 100 games?</p>
+<textarea class="question" id="question7-0" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" id="notes7" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done7">Step Completed</label><input class="step-complete" type="checkbox" id="done7"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step8"><h1>Step 8: simulating 10,000 rounds</h1>
     <div style="position: relative; padding-bottom: 73.77049180327869%; height: 0;"><iframe src="https://www.loom.com/embed/f74225ce446043ae89e61b2c7172cddf" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     <p>After making the changes such that the display now only updated after the last round, approximately how long did it take to run 10,000 rounds of Blackjack?</p>
-<textarea class="question" id="question7-0" placeholder="input is required"></textarea>
+<textarea class="question" id="question8-0" placeholder="input is required"></textarea>
     <p>How many points did the Dealer, and each Player end up with?</p>
-<textarea class="question" id="question7-1" placeholder="input is required"></textarea>
+<textarea class="question" id="question8-1" placeholder="input is required"></textarea>
     <p>Given that Player B is mimicking the strategy of the Dealer,
         why are they still losing points to the Dealer? (If you can't see why, say so.)
     </p>
-<textarea class="question" id="question7-2" placeholder="input is required"></textarea>
-<h4>Notes</h4><textarea class="notes" id="notes7" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done7">Step Completed</label><input class="step-complete" type="checkbox" id="done7"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-
-<div class="step" id="step8"><h1>Step 8: making use of the soft ace</h1>
-    Watch the next video to understand the next step in improving the strategy:
-    <div style="position: relative; padding-bottom: 73.07171853856563%; height: 0;"><iframe src="https://www.loom.com/embed/e70cc3e6e5ee4601886b0bf40516b64b" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-    Then watch this video to implement next improvement:
-    <div style="position: relative; padding-bottom: 62.650602409638545%; height: 0;"><iframe src="https://www.loom.com/embed/f3e7072d93a24017aa26bdc14fbe61e5" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-    <p>After making the changes and running the new version, what were the points for Player A and Player B?</p>
-<textarea class="question" id="question8-0" placeholder="input is required"></textarea>
+<textarea class="question" id="question8-2" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes8" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done8">Step Completed</label><input class="step-complete" type="checkbox" id="done8"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-<div class="step" id="step9"><h1>Step 9: paying attention to the Dealer's 'face up card'</h1>
-    Watch the next video to understand the significance of the Dealer's 'face up card':
-    <div style="position: relative; padding-bottom: 62.44979919678715%; height: 0;"><iframe src="https://www.loom.com/embed/488a54f3d8684f0692f5acd7e2e39a66" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-    And then this video to implement the next improvement to strategy:
-    <div style="position: relative; padding-bottom: 62.44979919678715%; height: 0;"><iframe src="https://www.loom.com/embed/488a54f3d8684f0692f5acd7e2e39a66" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+<div class="step" id="step9"><h1>Step 9: making use of the soft ace</h1>
+    <div style="position: relative; padding-bottom: 73.07171853856563%; height: 0;"><iframe src="https://www.loom.com/embed/e70cc3e6e5ee4601886b0bf40516b64b" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <div style="position: relative; padding-bottom: 62.650602409638545%; height: 0;"><iframe src="https://www.loom.com/embed/f3e7072d93a24017aa26bdc14fbe61e5" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     <p>After making the changes and running the new version, what were the points for Player A and Player B?</p>
 <textarea class="question" id="question9-0" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes9" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done9">Step Completed</label><input class="step-complete" type="checkbox" id="done9"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-<div class="step" id="step10"><h1>Step 10: expanding the scope of the previous rule</h1>
-    Watch the next video:
-    <div style="position: relative; padding-bottom: 62.4%; height: 0;"><iframe src="https://www.loom.com/embed/c9365e4a549b4e19931d5dc270ce0072" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<div class="step" id="step10"><h1>Step 10: paying attention to the Dealer's 'face up card'</h1>
+    <div style="position: relative; padding-bottom: 67.32673267326732%; height: 0;"><iframe src="https://www.loom.com/embed/2ab8b82ff38f4eb6b8d9e6d04b357e15" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <div style="position: relative; padding-bottom: 62.44979919678715%; height: 0;"><iframe src="https://www.loom.com/embed/488a54f3d8684f0692f5acd7e2e39a66" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
     <p>After making the changes and running the new version, what were the points for Player A and Player B?</p>
 <textarea class="question" id="question10-0" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes10" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done10">Step Completed</label><input class="step-complete" type="checkbox" id="done10"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-<div class="step" id="step11"><h1>Step 11: testing what you have learned</h1>
-    <p>What does defining a named value as a 'variable' allow you to then do?</p>
+<div class="step" id="step11"><h1>Step 11: expanding the scope of the previous rule</h1>
+    <div style="position: relative; padding-bottom: 62.4%; height: 0;"><iframe src="https://www.loom.com/embed/c9365e4a549b4e19931d5dc270ce0072" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>After making the changes and running the new version, what were the points for Player A and Player B?</p>
 <textarea class="question" id="question11-0" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" id="notes11" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done11">Step Completed</label><input class="step-complete" type="checkbox" id="done11"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<div class="step" id="step12"><h1>Step 12: testing what you have learned</h1>
+    <p>What does defining a named value as a 'variable' allow you to then do?</p>
+<textarea class="question" id="question12-0" placeholder="input is required"></textarea>
     <p>When defining a variable, what two things must you specify?</p>
-<textarea class="question" id="question11-1" placeholder="input is required"></textarea>
+<textarea class="question" id="question12-1" placeholder="input is required"></textarea>
     <p>What kind of instruction is used to change the value of a variable?</p>
-<textarea class="question" id="question11-2" placeholder="input is required"></textarea>
+<textarea class="question" id="question12-2" placeholder="input is required"></textarea>
     <p>What must the code written into the 'condition' field of an 'if' instruction evaluate to?</p>
-<textarea class="question" id="question11-3" placeholder="input is required"></textarea>
+<textarea class="question" id="question12-3" placeholder="input is required"></textarea>
     <p>Some types offer 'properties'. What is a property?</p>
-<textarea class="question" id="question11-4" placeholder="input is required"></textarea>
+<textarea class="question" id="question12-4" placeholder="input is required"></textarea>
     <p>If you have a named value and you want to see what properties (if any) you can
         access from it, how do you do that?</p>
-<textarea class="question" id="question11-5" placeholder="input is required"></textarea>
+<textarea class="question" id="question12-5" placeholder="input is required"></textarea>
     <p>What happens if you try to compare two values that are of different types?</p>
-<textarea class="question" id="question11-6" placeholder="input is required"></textarea>
+<textarea class="question" id="question12-6" placeholder="input is required"></textarea>
     <p>If an 'if instruction' is given an 'else' clause, under what condition is that else clause executed?</p>
-<textarea class="question" id="question11-7" placeholder="input is required"></textarea>
+<textarea class="question" id="question12-7" placeholder="input is required"></textarea>
     <p>If you combine more than one operator within a condition, what must you be careful about?</p>
-<textarea class="question" id="question11-8" placeholder="input is required"></textarea>
+<textarea class="question" id="question12-8" placeholder="input is required"></textarea>
     <p>And what is the best way to ensure that you don't run into a problem when combining operators?</p>
-<textarea class="question" id="question11-9" placeholder="input is required"></textarea>
-<h4>Notes</h4><textarea class="notes" id="notes11" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done11">Step Completed</label><input class="step-complete" type="checkbox" id="done11"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-<div class="final" id="final12"><h1>Congratulations! You have finished this worksheet</h1>
+<textarea class="question" id="question12-9" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" id="notes12" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done12">Step Completed</label><input class="step-complete" type="checkbox" id="done12"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<div class="final" id="final13"><h1>Congratulations! You have finished this worksheet</h1>
     Answers to the questions in the previous step:
     <ul>
         <li><b>Q: What does defining a named value as a 'variable' allow you to then do?</b> 
