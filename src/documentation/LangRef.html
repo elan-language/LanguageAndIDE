@@ -1398,6 +1398,16 @@ This is just to visually reinforce the precedence.</p>
 <p>The <el-code>+</el-code> operator is also used for concatenating <el-type>String</el-type>s.  See <a href="LibRef.html#String">String</a>.</p>
 
 
+</pre>
+<p>Arithmetic operators follow the conventional rules for precedence i.e. 'BIDMAS' (or 'BODMAS').</p>
+<p>Note that <el-code>mod</el-code> is more of a remainder operator than a modulus operator -- the result takes the sign of the first argument.  If both arguments are positive, there is no difference.</p>
+The minus sign may also be used as a unary operator, and this takes precedence over binary operators so:
+<pre>
+    <el-code>2*&minus;3</el-code>           &#x27f6;  <el-code>&minus;6</el-code>
+</pre>
+<p>Note that the editor automatically puts spaces around the <el-code>+</el-code> and <el-code>&ndash;</el-code> binary operators, but not around <el-code>^</el-code>, <el-code>/</el-code> or <el-code>*</el-code>. This is just to visually reinforce the precedence.</p>
+<p>The <el-code>+</el-code> operator is also used for concatenating <el-type>String</el-type>s.  See <a href="LibRef.html#String">String</a>.</p>
+
 <div id="and"></div>
 <div id="not"></div>
 <div id="or"></div>
