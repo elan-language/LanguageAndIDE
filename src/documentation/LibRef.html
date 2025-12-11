@@ -1,17 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en-GB">
 <head>
-<link href="../ide/styles/colourScheme.css" rel="stylesheet">
-<link href="../ide/styles/documentation.css" rel="stylesheet">
-<link href="../ide/styles/elanStyle.css" rel="stylesheet">
-<link href="favicon.ico" rel="icon">
+<link rel="stylesheet" href="../ide/styles/colourScheme.css">
+<link rel="stylesheet" href="../ide/styles/documentation.css">
+<link rel="stylesheet" href="../ide/styles/elanStyle.css">
+<link rel="icon" href="favicon.ico">
 <title>Elan Library Reference</title>
 <script type="text/javascript" src="generated_toc.js"></script>
 </head>
 <body>
 <div class="docTitle">Elan Library Reference</div>
 <div class="docTOC">
-<div id="generated-toc" class="generate_from_h1 generate_for_page"></div></div>
+ <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
+</div>
 
 <h1 id="ValueTypes">Value Types, with their methods</h1>
 
@@ -2786,15 +2787,15 @@ Within a string delimited by <i>single quotes</i>, those literal characters can 
 <table class="tableColours">
 <tr><th>colour</th><th></th><th>decimal</th><th>decimal<br></th><th>hexadecimal</th></tr>
 <tr><th>name</th><th></th><th>integer</th><th style="font-family:monospace;">&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;&nbsp;G&nbsp;&nbsp;&nbsp;&nbsp;B</th><th style="font-family:monospace;">&nbsp;0xrrggbb</th></tr>
-    <tr><td><el-code><el-id>black</el-id></el-code></td><td style="color:#000000">&#x25fc;</td><td>0</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0x000000</el-code></td></tr>
-    <tr><td><el-code><el-id>white</el-id></el-code></td><td style="color:#ffffff">&#x25fc;</td><td>16777215</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;255</td><td><el-code>0xffffff</el-code></td></tr>
-    <tr><td><el-code><el-id>red</el-id></el-code></td><td style="color:#ff0000">&#x25fc;</td><td>16711680</td><td>&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0xff0000</el-code></td></tr>
-    <tr><td><el-code><el-id>green</el-id></el-code></td><td style="color:#008000">&#x25fc;</td><td>32768</td><td>&nbsp;&nbsp;0&nbsp;&nbsp;128&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0x008000</el-code></td></tr>
-    <tr><td><el-code><el-id>blue</el-id></el-code></td><td style="color:#0000ff">&#x25fc;</td><td>255</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;255</td><td><el-code>0x0000ff</el-code></td></tr>
-    <tr><td><el-code><el-id>yellow</el-id></el-code></td><td style="color:#ffff00">&#x25fc;</td><td>16776960</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0xffff00</el-code></td></tr>
-    <tr><td><el-code><el-id>brown</el-id></el-code></td><td style="color:#a52a2a">&#x25fc;</td><td>10824234</td><td>&nbsp;165&nbsp;&nbsp;&nbsp;42&nbsp;&nbsp;&nbsp;42</td><td><el-code>0xa52a2a</el-code></td></tr>
-    <tr><td><el-code><el-id>grey</el-id></el-code></td><td style="color:#808080">&#x25fc;</td><td>8421504</td><td>&nbsp;128&nbsp;&nbsp;128&nbsp;&nbsp;128</td><td><el-code>0x808080</el-code></td></tr>
-    <tr><td><el-code><el-id>transparent</el-id></el-code></td><td style="color:#000000">&#x25fb;</td><td>-1</td><td>n/a</td><td>n/a</td></tr>
+    <tr><td><el-id>black</el-id> </td><td style="color:#000000">&#x25fc;</td><td>0</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0x000000</el-code></td></tr>
+    <tr><td><el-id>white</el-id> </td><td style="color:#ffffff">&#x25fc;</td><td>16777215</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;255</td><td><el-code>0xffffff</el-code></td></tr>
+    <tr><td><el-id>red</el-id>   </td><td style="color:#ff0000">&#x25fc;</td><td>16711680</td><td>&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0xff0000</el-code></td></tr>
+    <tr><td><el-id>green</el-id> </td><td style="color:#008000">&#x25fc;</td><td>32768</td><td>&nbsp;&nbsp;0&nbsp;&nbsp;128&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0x008000</el-code></td></tr>
+    <tr><td><el-id>blue</el-id>  </td><td style="color:#0000ff">&#x25fc;</td><td>255</td><td>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;255</td><td><el-code>0x0000ff</el-code></td></tr>
+    <tr><td><el-id>yellow</el-id></td><td style="color:#ffff00">&#x25fc;</td><td>16776960</td><td>&nbsp;255&nbsp;&nbsp;255&nbsp;&nbsp;&nbsp;&nbsp;0</td><td><el-code>0xffff00</el-code></td></tr>
+    <tr><td><el-id>brown</el-id> </td><td style="color:#a52a2a">&#x25fc;</td><td>10824234</td><td>&nbsp;165&nbsp;&nbsp;&nbsp;42&nbsp;&nbsp;&nbsp;42</td><td><el-code>0xa52a2a</el-code></td></tr>
+    <tr><td><el-id>grey</el-id>  </td><td style="color:#808080">&#x25fc;</td><td>8421504</td><td>&nbsp;128&nbsp;&nbsp;128&nbsp;&nbsp;128</td><td><el-code>0x808080</el-code></td></tr>
+    <tr><td><el-id>transparent</el-id> </td><td style="color:#000000">&#x25fb;</td><td>-1</td><td>n/a</td><td>n/a</td></tr>
 </table>
 <p>A colour is specified as an <el-type>Int</el-type> value using one of these methods:</p>
 <ul>
@@ -2802,6 +2803,7 @@ Within a string delimited by <i>single quotes</i>, those literal characters can 
  <li>an integer in the decimal range 0 (<el-id>black</el-id>) to 2<sup>24-1</sup> (<el-id>white</el-id>).</li>
  <li>a six digit hexadecimal value in the range <el-code>0x000000</el-code> &ndash; <el-code>0xffffff</el-code>
     using the same 'RGB' format as used in Html style, for example <el-code>0xff0000</el-code> for red.</li>
+ <li><el-id>transparent</el-id> is only used for filling <a href="#VectorGraphics">vector graphics</a> shapes. 
 </ul>
 
 <div id="LibraryProcedures"></div>
@@ -2851,9 +2853,9 @@ Within a string delimited by <i>single quotes</i>, those literal characters can 
 <div id="round"></div>
 <div id="isNaN"></div>
 <div id="isInfinite"></div>
-<h2>floor, ceiling, round, isNaN, and isInfinite</h2>
+<h2><el-method>floor</el-method>, <el-method>ceiling</el-method>, <el-method>round</el-method>, <el-method>isNaN</el-method>, <el-method>isInfinite</el-method></h2>
 <p> All of these functions are called as 'dot methods' on a numeric value  of Type <el-type>Float</el-type> or <el-type>Int</el-type>.
-<el-code>NaN</el-code> is short for 'Not A (Real) Number' Their use is illustrated with the following tests:</p>
+<el-method>NaN</el-method> is short for 'Not A (Real) Number'. Their use is illustrated with the following tests:</p>
 <el-code-block source="test_floor.elan">
 <el-test class="ok multiline" id="test1" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="-1"><el-txt>&nbsp;</el-txt></el-field></el-top>
