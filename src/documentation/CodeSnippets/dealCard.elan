@@ -1,8 +1,8 @@
-# 848177b356809cdc1a005a6f226fa777c8456024d7518371c3a29353c174c475 Elan 1.8.0 guest default_profile valid
+# 928f2afc45401799a266a4acbf2fd9475df9743a4494305d7f3b03e8f1ae4206 Elan 1.8.0 guest default_profile valid
 
 function dealCard(random as Float) returns Card
   let number be (random*52).floor()
-  let rank be rankValue.keys()[number div 4]
+  let rank be rankValue.keys()[(number/4).floor()]
   let suit be number mod 4
   return new Card() with rank set to rank, suit set to suit
 end function

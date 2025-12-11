@@ -3,13 +3,11 @@ import { AbstractFrame } from "../abstract-frame";
 import { EnumValuesField } from "../fields/enum-values-field";
 import { TypeNameField } from "../fields/type-name-field";
 import { CodeSource } from "../frame-interfaces/code-source";
-import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
 
-export class Enum extends AbstractFrame implements GlobalFrame, Collapsible {
-  isCollapsible: boolean = true;
+export class Enum extends AbstractFrame implements GlobalFrame {
   isGlobal = true;
   name: TypeNameField;
   values: EnumValuesField;
@@ -38,7 +36,7 @@ export class Enum extends AbstractFrame implements GlobalFrame, Collapsible {
     return "enum";
   }
   renderAsHtml(): string {
-    return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>enum </el-kw>${this.name.renderAsHtml()}</el-top> ${this.isImported() ? "" : this.values.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-enum>`;
+    return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-kw>enum </el-kw>${this.name.renderAsHtml()} ${this.values.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top></el-enum>`;
   }
 
   indent(): string {

@@ -1,0 +1,108 @@
+<title>Blackjack 2</title>
+<version>1</version>
+
+<step><h1>Step STEPNUMBER: load the starting code</h1>
+    <p><load file="blackjack_2begin.elan">Load the starting code</load></p>
+    <p>Immediately <b>file > auto save</b> it to local file storage,
+    so that changes you make are preserved.</p>
+    <p>Move onto the next step before running the program.</p>
+</step>
+<step><h1>Step STEPNUMBER: exploring the code</h1>
+    <div style="position: relative; padding-bottom: 74.68879668049793%; height: 0;"><iframe src="https://www.loom.com/embed/0fadd714ba414db28f2da492d3bc0132" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <question>Briefly describe the meaning of 'abstraction' in programming:</question>
+</step>
+
+<step><h1>Step STEPNUMBER: automated players</h1>
+    <div style="position: relative; padding-bottom: 70.7732634338139%; height: 0;"><iframe src="https://www.loom.com/embed/4716ba4d7b254ab0aa737647ae854fa0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <question>Having run the program 3-4 times, which of the two players is operating the very 'high risk' strategy, and which the very 'cautious' strategy?</question>
+</step>
+
+<step><h1>Step STEPNUMBER: identifying the better of the strategies</h1>
+    <div style="position: relative; padding-bottom: 37.5751503006012%; height: 0;"><iframe src="https://www.loom.com/embed/1a14a79ab528414db3eb9ef5f8b7007f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <question>Having run the program to play 10 rounds automatically, how many points did the Dealer, and each of the players ended up with?</question>
+    <question>Run the program a second time, and record how many points ended up with this time</question>
+</step>
+<step><h1>Step STEPNUMBER: speeding up the program</h1>
+    <div style="position: relative; padding-bottom: 78.83211678832116%; height: 0;"><iframe src="https://www.loom.com/embed/432d4c0974f24685a85b66cf7e2c822e" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    Make sure that you have ghosted the <code>pause</code> (instruction 31) and all <i>five</i> occurrences of <code>call display(game)</code> within
+    the <el-method>playOneRound</el-method> procedure. Then run the program. You will see that both of the two players have lost points -
+    only the Dealer is ahead.
+    <question>Which of the two players has lost the least points?</question>
+    <question>Given that the result is from playing 100 rounds, and each participant started with 1000 points, calculate the <i>average</i> points lost or gained <i>per round</i> expressed as a percentage,
+    for the Dealer and each Player (where a loss is a negative percentage and a gain is positive). <i>Show how you worked this out</i>.</question>
+</step>
+
+<step><h1>Step STEPNUMBER: the default strategies</h1>
+    <div style="position: relative; padding-bottom: 73.46938775510203%; height: 0;"><iframe src="https://www.loom.com/embed/7707c7c908aa4d898bc749cef8ef93f4" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <question>What can you say that <i>every</i> function does? </question>
+</step>
+
+<step><h1>Step STEPNUMBER:implement a simple strategy with a decision</h1>
+    <div style="position: relative; padding-bottom: 53.98406374501992%; height: 0;"><iframe src="https://www.loom.com/embed/e214a039e34546cda0cdd6bb8db72805" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <question>With the changes, how many points does each have after running 100 games?</question>
+</step>
+
+<step><h1>Step STEPNUMBER: simulating 10,000 rounds</h1>
+    <div style="position: relative; padding-bottom: 73.77049180327869%; height: 0;"><iframe src="https://www.loom.com/embed/f74225ce446043ae89e61b2c7172cddf" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <question>After making the changes such that the display now only updated after the last round, approximately how long did it take to run 10,000 rounds of Blackjack?</question>
+    <question>How many points did the Dealer, and each Player end up with?</question>
+    <question>Given that Player B is mimicking the strategy of the Dealer,
+        why are they still losing points to the Dealer? (If you can't see why, say so.)
+    </question>
+</step>
+
+<step><h1>Step STEPNUMBER: making use of the soft ace</h1>
+    <div style="position: relative; padding-bottom: 73.07171853856563%; height: 0;"><iframe src="https://www.loom.com/embed/e70cc3e6e5ee4601886b0bf40516b64b" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <div style="position: relative; padding-bottom: 62.650602409638545%; height: 0;"><iframe src="https://www.loom.com/embed/f3e7072d93a24017aa26bdc14fbe61e5" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <question>After making the changes and running the new version, what were the points for Player A and Player B?</question>
+</step>
+<step><h1>Step STEPNUMBER: paying attention to the Dealer's 'face up card'</h1>
+    <div style="position: relative; padding-bottom: 67.32673267326732%; height: 0;"><iframe src="https://www.loom.com/embed/2ab8b82ff38f4eb6b8d9e6d04b357e15" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <div style="position: relative; padding-bottom: 62.44979919678715%; height: 0;"><iframe src="https://www.loom.com/embed/488a54f3d8684f0692f5acd7e2e39a66" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <question>After making the changes and running the new version, what were the points for Player A and Player B?</question>
+</step>
+<step><h1>Step STEPNUMBER: expanding the scope of the previous rule</h1>
+    <div style="position: relative; padding-bottom: 62.4%; height: 0;"><iframe src="https://www.loom.com/embed/c9365e4a549b4e19931d5dc270ce0072" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <question>After making the changes and running the new version, what were the points for Player A and Player B?</question>
+</step>
+<step><h1>Step STEPNUMBER: testing what you have learned</h1>
+    <question>What does defining a named value as a 'variable' allow you to then do?</question>
+    <question>When defining a variable, what two things must you specify?</question>
+    <question>What kind of instruction is used to change the value of a variable?</question>
+    <question>What must the code written into the 'condition' field of an 'if' instruction evaluate to?</question>
+    <question>Some types offer 'properties'. What is a property?</question>
+    <question>If you have a named value and you want to see what properties (if any) you can
+        access from it, how do you do that?</question>
+    <question>What happens if you try to compare two values that are of different types?</question>
+    <question>If an 'if instruction' is given an 'else' clause, under what condition is that else clause executed?</question>
+    <question>If you combine more than one operator within a condition, what must you be careful about?</question>
+    <question>And what is the best way to ensure that you don't run into a problem when combining operators?</question>
+</step>
+<final><h1>Congratulations! You have finished this worksheet</h1>
+    Answers to the questions in the previous step:
+    <ul>
+        <li><b>Q: What does defining a named value as a 'variable' allow you to then do?</b> 
+            A: It allows you to change the value subsequently.
+        </li>
+        <li><b>When defining a variable, what two things must you specify?</b>
+            You must specify the <i>name</i> for the variable and its initial value.
+        </li>
+        <li><b>What kind of instruction is used to change the value of a variable?</b>
+        A: a <code>set</code> instruction.</li>
+        <li><b>Q: What must the code written into the 'condition' field of an 'if' instruction evaluate to?</b>
+        A: It must evaluate to 'true' or 'false'</li>
+        <li><b>Q: Some types offer 'properties'. What is a property?</b>
+        A: a piece of information</li>
+        <li><b>Q: If you have a named value and you want to see what properties (if any) you can
+            access from it, how do you do that?</b>
+        A: by typing a dot after the named value and selecting an option from the pop-up list</li>
+        <li><b>Q: What happens if you try to compare two values that are of different types?</b>
+        A: You get a 'type incompatibility' error (like comparing apples and oranges)</li>
+        <li><b>Q: If you combine more than one operator within a condition, what must you be careful about?</b>
+        A: operator precedence</li>
+        <li><b>Q: And what is the best way to ensure that you don't run into a problem when combining operators?</b>
+        A: by using brackets to ensure that there is no ambiguity between which argument is applied to which operator.</li>
+    </ul>
+    If you are interested in taking this project further, watch this video first:
+    <div style="position: relative; padding-bottom: 75.5050505050505%; height: 0;"><iframe src="https://www.loom.com/embed/6b98b38000db4afe8f9851c5232477ae" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+</final>

@@ -164,7 +164,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 </p>
 <div id="Method"></div>
 <ul>
- <li><el-kw>main</el-kw>, <el-kw>procedure</el-kw> and <el-kw>function</el-kw> are described as <b>methods</b> and these are defined by one or more <a href="#statement">statements</a> within them.</li>
+ <li><el-kw>main</el-kw>, <el-kw>procedure</el-kw> and <el-kw>function</el-kw> are described as <b>methods</b> and these are defined by one or more <a href="#statement">statement insrtructions</a> within them.</li>
  <li><el-kw>test</el-kw> also contains statements, in particular the <a href="#assert"><el-kw>assert</el-kw></a> statement for testing functions during development of your program.</li>
  <li><el-kw>record</el-kw>, <el-kw>class</el-kw>, <el-kw>abstract</el-kw> (class), and <el-kw>interface</el-kw> define data structures and these always contain <a href="#Member">members</a>.</li>
  <li><el-kw>constant</el-kw> and <el-kw>enum</el-kw> do not contain any further instructions &ndash; only names and values.</li>
@@ -994,15 +994,15 @@ the correct Type must be provided. For example, if the class <el-type>Square</el
  <a href="#call"><el-kw>call</el-kw></a>,
  <a href="#each"><el-kw>each</el-kw></a>,
  <a href="#for"><el-kw>for</el-kw></a>,
- <a href="#if"><el-kw>if</el-kw>..<el-kw>then</el-kw>..<el-kw>else if</el-kw>..<el-kw>else</el-kw></a>,
- <a href="#let">let</a>,
- <a href="#print">print</a>,
- <a href="#repeat">repeat</a>,
- <a href="#set">set</a>,
- <a href="#throw">throw</a>,
- <a href="#try">try</a>,
- <a href="#variable">variable</a>,
- <a href="#while">while</a>.
+ <a href="#if"><el-kw>if</el-kw></a>,
+ <a href="#let"><el-kw>let</el-kw></a>,
+ <a href="#print"><el-kw>print</el-kw></a>,
+ <a href="#repeat"><el-kw>repeat</el-kw></a>,
+ <a href="#set"><el-kw>set</el-kw></a>,
+ <a href="#throw"><el-kw>throw</el-kw></a>,
+ <a href="#try"><el-kw>try</el-kw></a>,
+ <a href="#variable"><el-kw>variable</el-kw></a>,
+ <a href="#while"><el-kw>while</el-kw></a>.
 </p>
 
 <h2 id="assert"><el-kw>assert</el-kw> (test)</h2>
@@ -1344,43 +1344,15 @@ Writing a value to a specific index location is done through a method such as in
 <h2 id="Operators">Operators</h2>
 
 <h3 class="no-TOC" id="ArithmeticOperators">Arithmetic operators</h3>
-<p>Arithmetic operators can be applied to <el-type>Float</el-type> or <el-type>Int</el-type> arguments. The result may be a <el-type>Float</el-type> or an <el-type>Int</el-type> depending on the arguments.</p>
-<p>For operators <el-code> ^ + - * </el-code> the result is a <el-type>Float</el-type> if either of the arguments is a <el-type>Float</el-type>, and an <el-type>Int</el-type> if both arguments are <el-type>Int</el-type>.</p>
-<p>For <el-code> / </el-code> the result is always a <el-type>Float</el-type>. It can be converted to an <el-type>Int</el-type> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method></a>.</p>
-<p id="mod"><el-kw>mod</el-kw> operates only on <el-type>Int</el-type> arguments, and the result is <el-type>Int</el-type>.</p>
-<pre>
-    <el-code>2^3</el-code>             &#x27f6;  <el-code>8</el-code>
-    <el-code>2/3</el-code>             &#x27f6;  <el-code>0.666..</el-code>
-    <el-code>2*3</el-code>             &#x27f6;  <el-code>6</el-code>
-    <el-code>2 + 3</el-code>         &#x27f6;  <el-code>5</el-code>
-    <el-code>2 &minus; 3</el-code>         &#x27f6;  <el-code>&minus;1</el-code>
-    <el-code>11 mod 3</el-code>   &#x27f6;  <el-code>2</el-code> (integer remainder)
-    <el-code>11 div 3</el-code>   &#x27f6;  <el-code>3</el-code> (integer division) <b><i>deprecated</i></b> from v1.8.1
 </pre>
 <p>Arithmetic operators follow the conventional rules for precedence i.e. 'BIDMAS' (or 'BODMAS').</p>
-<p>When combining <el-code>mod</el-code> with any other operators within an expression, insert brackets to avoid ambiguity e.g.:</p>
-<pre>
-    <el-code>(5 + 6) mod 3</el-code>
-</pre>
-<p>Note that <el-code>mod</el-code> is more of a remainder operator than a modulus operator. The result takes the sign of the first argument.
- If both arguments are positive, there is no difference.</p>
-<p>The minus sign may also be used as a unary operator, and this takes precedence over binary operators so:</p>
+<p>Note that <el-code>mod</el-code> is more of a remainder operator than a modulus operator -- the result takes the sign of the first argument.  If both arguments are positive, there is no difference.</p>
+The minus sign may also be used as a unary operator, and this takes precedence over binary operators so:
 <pre>
     <el-code>2*&minus;3</el-code>           &#x27f6;  <el-code>&minus;6</el-code>
 </pre>
-
-<p>For integer division the operator <el-code>div</el-code> works but its use is <b><i>deprecated</i></b> and it will be removed in the future.
-The recommended alternative is to use standalone function <a href="LibRef.html#floor"><el-method>floor</el-method></a>.
-Note the result when given a negative argument:</p>
-<pre>
-    <el-code>(11/3).<el-method>floor</el-method>()</el-code>     &#x27f6;   <el-code>3</el-code>
-    <el-code>(-11/3).<el-method>floor</el-method>()</el-code>   &#x27f6; <el-code>&minus;4</el-code>
-</pre>
-
-<p>The editor automatically puts spaces around the <el-code>+</el-code> and <el-code>&minus;</el-code> binary operators, but not around <el-code>^</el-code>, <el-code>/</el-code> or <el-code>*</el-code>.
-This is just to visually reinforce the precedence.</p>
-
-<p>The <el-code>+</el-code> operator is also used for concatenating <a href="LibRef.html#String"><el-type>String</el-type></a> values.</p>
+<p>Note that the editor automatically puts spaces around the <el-code>+</el-code> and <el-code>&ndash;</el-code> binary operators, but not around <el-code>^</el-code>, <el-code>/</el-code> or <el-code>*</el-code>. This is just to visually reinforce the precedence.</p>
+<p>The <el-code>+</el-code> operator is also used for concatenating <el-type>String</el-type>s.  See <a href="LibRef.html#String">String</a>.</p>
 
 <div id="and"></div>
 <div id="not"></div>
@@ -1528,14 +1500,14 @@ Notes:<ul>
 be followed by a <el-kw>with</el-kw> clause in order to specify any property values. Example of this use:</p>
 
 <el-code-block source="dealCard.elan">
-<el-func class="ok multiline" id="func302" tabindex="-1">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident304" class="ok" tabindex="-1"><el-txt><el-method>dealCard</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params305" class="optional ok" tabindex="-1"><el-txt><el-id>random</el-id> <el-kw>as</el-kw> <el-type>Float</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type306" class="ok" tabindex="-1"><el-txt><el-type>Card</el-type></el-txt></el-field></el-top>
-<el-statement class="ok" id="let309" tabindex="-1"><el-kw>let </el-kw><el-field id="var310" class="ok" tabindex="-1"><el-txt><el-id>number</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr311" class="ok" tabindex="-1"><el-txt>(<el-id>random</el-id>*<el-lit>52</el-lit>).<el-method>floor</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let789" tabindex="-1"><el-kw>let </el-kw><el-field id="var790" class="ok" tabindex="-1"><el-txt><el-id>rank</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr791" class="ok" tabindex="-1"><el-txt><el-id>rankValue</el-id>.<el-method>keys</el-method>()[(<el-id>number</el-id>/<el-lit>4</el-lit>).<el-method>floor</el-method>()]</el-txt></el-field></el-statement>
-<el-statement class="ok" id="let315" tabindex="-1"><el-kw>let </el-kw><el-field id="var316" class="ok" tabindex="-1"><el-txt><el-id>suit</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr317" class="ok" tabindex="-1"><el-txt><el-id>number</el-id><el-kw> mod </el-kw><el-lit>4</el-lit></el-txt></el-field></el-statement>
-<el-statement class="ok" id="return307" tabindex="0"><el-kw>return </el-kw><el-field id="expr308" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Card</el-type>()<el-kw> with </el-kw><br><el-id>rank</el-id><el-kw> set to </el-kw><el-id>rank</el-id>, <br><el-id>suit</el-id><el-kw> set to </el-kw><el-id>suit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-kw>end function</el-kw>
-</el-func>
+<el-func id="func302" tabindex="0">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident304" class="ok" tabindex="0"><el-txt>dealCard</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params305" class="optional ok" tabindex="0"><el-txt><el-id>random</el-id> <el-kw>as</el-kw> <el-type>Float</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type306" class="ok" tabindex="0"><el-txt><el-type>Card</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
+  <el-statement class="ok" id="let309" tabindex="0"><el-kw>let </el-kw><el-field id="var310" class="ok" tabindex="0"><el-txt><el-id>number</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr311" class="ok" tabindex="0"><el-txt>(<el-id>random</el-id>*<el-lit>52</el-lit>).<el-method>floor</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+  <el-statement class="ok" id="let312" tabindex="0"><el-kw>let </el-kw><el-field id="var313" class="ok" tabindex="0"><el-txt><el-id>rank</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr314" class="ok" tabindex="0"><el-txt><el-id>rankValue</el-id>.<el-method>keys</el-method>()[(<el-id>number</el-id>/<el-lit>4</el-lit>).<el-method>floor</el-method>()]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+  <el-statement class="ok" id="let315" tabindex="0"><el-kw>let </el-kw><el-field id="var316" class="ok" tabindex="0"><el-txt><el-id>suit</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr317" class="ok" tabindex="0"><el-txt><el-id>number</el-id><el-kw> mod </el-kw><el-lit>4</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+  <el-statement class="ok" id="return307" tabindex="0"><el-kw>return </el-kw><el-field id="expr308" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Card</el-type>()<el-kw> with </el-kw><br><el-id>rank</el-id><el-kw> set to </el-kw><el-id>rank</el-id>, <br><el-id>suit</el-id><el-kw> set to </el-kw><el-id>suit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+  <el-kw>end function</el-kw>
+  </el-func>
 </el-code-block>
 
 <div id="copy"></div>
