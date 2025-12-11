@@ -656,16 +656,7 @@ constant styleSheet set to ':root {\n    background-color: darkgreen;\n    paddi
 <textarea class="question" id="question8-0" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes8" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done8">Step Completed</label><input class="step-complete" type="checkbox" id="done8"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="step" id="step9"><h1>Step 9: selecting simple and compound instructions</h1>
-  <p>Watch the next video:</p>
-  <div style="position: relative; padding-bottom: 60.60606060606061%; height: 0;"><iframe src="https://www.loom.com/embed/1ffb5403bde04fdda5eebce6174d7f32" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-   <p>List several different examples of compound instructions</p>
-<textarea class="question" id="question9-0" placeholder="input is required"></textarea>
-   <p>Can you select the 'header comment' (beginning '# Elan') at the top of the code?</p>
-<textarea class="question" id="question9-1" placeholder="input is required"></textarea>
-<h4>Notes</h4><textarea class="notes" id="notes9" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done9">Step Completed</label><input class="step-complete" type="checkbox" id="done9"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-
-<div class="step" id="step10"><h1>Step 10: adding a new instruction</h1>
+<div class="step" id="step9"><h1>Step 9: adding a new instruction</h1>
   <p>Watch the next video:</p>
   <div style="position: relative; padding-bottom: 64.67065868263472%; height: 0;"><iframe src="https://www.loom.com/embed/b7376d0f99cd421e810936d1841ba118" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
   <p>Your first task is to turn the program into a two-player game (not counting the dealer, played by the computer):</p>
@@ -688,28 +679,28 @@ constant styleSheet set to ':root {\n    background-color: darkgreen;\n    paddi
     and <b>Player B</b> (or, if you are pairing with another person, control one each).</li>
   </ul>
   <p>When does the dealer play, now ?</p>
-<textarea class="question" id="question10-0" placeholder="input is required"></textarea>
-<h4>Notes</h4><textarea class="notes" id="notes10" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done10">Step Completed</label><input class="step-complete" type="checkbox" id="done10"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<textarea class="question" id="question9-0" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" id="notes9" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done9">Step Completed</label><input class="step-complete" type="checkbox" id="done9"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="step" id="step11"><h1>Step 11: modifying an existing instruction</h1>
+<div class="step" id="step10"><h1>Step 10: modifying an existing instruction</h1>
   <ul>
     <li> Go back to the instruction that creates <b>Player A</b> and <i>above it</i>insert a <el-code><el-kw>let</el-kw></el-code> instruction
       and note that this features two editable fields.</li>
     <li>In the first field enter <el-code><el-id>name1</el-id></el-code> and in the second field type in the following code
     using the auto-completions to help <el-code><el-method>inputString</el-method>("<el-lit>Enter name for first player</el-lit>")</el-code>
     <p>What message do you see within the code editor?</p>
-<textarea class="question" id="question11-0" placeholder="input is required"></textarea>
+<textarea class="question" id="question10-0" placeholder="input is required"></textarea>
     <p>And what do you observe in the 'status panel' - at the top of the screen, just to the right of the code editor?</p>
-<textarea class="question" id="question11-1" placeholder="input is required"></textarea>
+<textarea class="question" id="question10-1" placeholder="input is required"></textarea>
     Then revert the field back to <el-code><el-id>name2</el-id></el-code>.</li>
     <li>Select the instruction below this - in other words the one that you added previously - and <b>Tab</b> to the second
     field. Edit the contents, replacing the literal string <el-code>"<el-lit>Player A</el-lit>"</el-code> with <el-code><el-id>name2</el-id></el-code> 
     (no quotation marks because this is an <i>identifier</i> that holds a string, not a literal string).</li>
     <li>Run the program. When asked, type in your own first name, finishing with the <b>Enter</b> key.
       <p>Has the name you entered made a difference?</p>
-<textarea class="question" id="question11-2" placeholder="input is required"></textarea>
+<textarea class="question" id="question10-2" placeholder="input is required"></textarea>
       <p>There is an unwanted 'side effect' on the screen - what is it?</p>
-<textarea class="question" id="question11-3" placeholder="input is required"></textarea>
+<textarea class="question" id="question10-3" placeholder="input is required"></textarea>
     </li>
     <li>To fix the unwanted side effect, insert the following new instruction immediately<i>after</i> the second player is created and added to the game:
     <el-code><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-method>clearPrintedText</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><span>(</span><el-field id="args6" class="empty optional ok" tabindex="-1"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><span>)</span><el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code></li>
@@ -720,13 +711,13 @@ constant styleSheet set to ':root {\n    background-color: darkgreen;\n    paddi
   
   <p>What would happen if you define the second identifier as name2, but in the next line
   you were to write name1? (If you need to check, run the program) </p>
-<textarea class="question" id="question11-4" placeholder="input is required"></textarea>
+<textarea class="question" id="question10-4" placeholder="input is required"></textarea>
   <p>And what if the the second identifier was still name2 but you used name3
   in the following instruction? This time, can you even run the program to try it?</p>
-<textarea class="question" id="question11-5" placeholder="input is required"></textarea>
-<h4>Notes</h4><textarea class="notes" id="notes11" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done11">Step Completed</label><input class="step-complete" type="checkbox" id="done11"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<textarea class="question" id="question10-5" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" id="notes10" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done10">Step Completed</label><input class="step-complete" type="checkbox" id="done10"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="final" id="final12"><h1>Congratulations! You have completed this worksheet</h1>
+<div class="final" id="final11"><h1>Congratulations! You have completed this worksheet</h1>
 
 <p>You have learned:
 </p><ul>
@@ -751,7 +742,7 @@ or immediately afterwards.</p>
 
   <div style="position: relative; padding-bottom: 57.26405090137858%; height: 0;"><iframe src="https://www.loom.com/embed/f9776ffce8c1484aada302e3e6b22e2d" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-<p>All the techniques for navigating and modifying instructions may be looked up in the <b>Help</b> tab. For example: <a class="help" href="IDENavigation.html#Navigation" id="help12-0">show in Help</a></p>
+<p>All the techniques for navigating and modifying instructions may be looked up in the <b>Help</b> tab. For example: <a class="help" href="IDENavigation.html#Navigation" id="help11-0">show in Help</a></p>
 </div>
 
   <div hidden="" id="hash"></div>
