@@ -1,4 +1,4 @@
-# b3645112e45ea7b75d366d90238ae44b28b6dd7864c6614e17bbe556681f075f Elan 1.6.3 guest default_profile valid
+# 7e40d00d1613fa074c97676e762fbd9da6ae7947dc52adcb8656758272c48277 Elan 1.7.1 guest default_profile valid
 
 main
   variable w set to words.split(" ")
@@ -18,11 +18,7 @@ main
 end main
 
 function sortLettersOfWord(word as String) returns String
-  return word.split("").sortBy(ref compareWords).join("")
-end function
-
-function compareWords(w1 as String, w2 as String) returns Int
-  return if w1.isAfter(w2) then 1 else if w1.isBefore(w2) then -1 else 0
+  return word.split("").orderBy(lambda w1 as String, w2 as String => w1.isAfter(w2)).join("")
 end function
 
 # todo single out single letter words

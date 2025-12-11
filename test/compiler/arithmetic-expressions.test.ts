@@ -279,42 +279,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "22");
   });
 
-  test("Pass_OperatorPrecedenceForDiv", async () => {
-    const code = `${testHeader}
-
-main
-  variable x set to 11 div 3
-  variable y set to (5 + 6) div 3
-  print x
-  print y
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let x = Math.floor(11 / 3);
-  let y = Math.floor((5 + 6) / 3);
-  await system.printLine(x);
-  await system.printLine(y);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "33");
-  });
-
   test("Fail_PlusIsNotUnary", async () => {
     const code = `${testHeader}
 

@@ -11,6 +11,7 @@ import {
   mostPreciseSymbol,
 } from "../../compiler/symbols/symbol-helpers";
 import {
+  adviseAgainstDiv,
   mustBeBooleanTypes,
   mustBeCoercibleType,
   mustBeIntegerType,
@@ -155,6 +156,10 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
 
     if (this.isLogicalOp(opSymbol)) {
       mustBeBooleanTypes(lst, rst, this.compileErrors, this.fieldId);
+    }
+
+    if (opSymbol === OperationSymbol.Div) {
+      adviseAgainstDiv(this.compileErrors, this.fieldId);
     }
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);

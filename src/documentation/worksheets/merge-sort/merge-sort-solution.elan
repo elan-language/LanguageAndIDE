@@ -4,7 +4,7 @@ function sort(li as List<of String>) returns List<of String>
   variable result set to li
   let len be li.length()
   if len > 1 then
-    let mid be len div 2
+    let mid be (len/2).floor()
     let frontHalf be sort(li[..mid])
     let backHalf be sort(li[mid..])
     set result to merge(frontHalf, backHalf)

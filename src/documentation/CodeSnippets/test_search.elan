@@ -1,4 +1,4 @@
-# 060bc4410842ac5bcdf7a065237378f5665aae3ad746f2e08ba10fffd5378c0e Elan 1.8.0 guest default_profile valid
+# 38b26bcf2180fb6ad6f7ded472ff76bf16708e2e997d45d61e4c29bddd8a523a Elan 1.8.0 guest default_profile valid
 
 main
   let fruit be example
@@ -9,7 +9,7 @@ end main
 function binarySearch(li as ListImmutable<of String>, item as String) returns Boolean
   variable result set to false
   if li.length() > 0 then
-    let mid be li.length() div 2
+    let mid be (li.length()/2).floor()
     let value be li[mid]
     if item is value then
       set result to true

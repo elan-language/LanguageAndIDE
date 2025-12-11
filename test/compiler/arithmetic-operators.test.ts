@@ -172,13 +172,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 7 div 2
+  print (7/2).floor()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine(Math.floor(7 / 2));
+  await system.printLine(_stdlib.floor((7 / 2)));
 }
 return [main, _tests];}`;
 

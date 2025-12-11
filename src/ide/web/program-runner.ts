@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
+import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
+import { File } from "../frames/frame-interfaces/file";
+import { RunStatus } from "../frames/status-enums";
+import { IIDEViewModel } from "./ui-helpers";
+import { encodeCode } from "./web-helpers";
+import { WebInputOutput } from "./web-input-output";
 import {
   WebWorkerBreakpointMessage,
   WebWorkerMessage,
@@ -7,57 +14,209 @@ import {
   WebWorkerStatusMessage,
   WebWorkerWriteMessage,
 } from "./web-worker-messages";
-import { File } from "../frames/frame-interfaces/file";
-import { RunStatus } from "../frames/status-enums";
-import { WebInputOutput } from "./web-input-output";
-import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
 
-export function readMsg(value: string | [string, string]) {
-  return { type: "read", value: value } as WebWorkerReadMessage;
-}
+export class ProgramRunner {
+  private singleStepping = false;
+  private processingSingleStep = false;
+  private debugMode = false;
+  private pendingBreakpoints: WebWorkerBreakpointMessage[] = [];
+  private runWorker: Worker | undefined;
 
-export function errorMsg(value: unknown) {
-  return { type: "status", status: "error", error: value } as WebWorkerStatusMessage;
-}
+  isDebugMode() {
+    return this.debugMode;
+  }
 
-export function clearPaused() {
-  const pausedAt = document.getElementsByClassName("paused-at");
+  async runDebug(file: File, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
+    vm.runDebug();
+    this.debugMode = true;
+    this.singleStepping = this.processingSingleStep = false;
+    await this.runProgram(file, vm, elanInputOutput);
+  }
 
-  for (const e of pausedAt) {
-    e.classList.remove("paused-at");
+  async run(file: File, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
+    await vm.run(file);
+    this.debugMode = this.singleStepping = this.processingSingleStep = false;
+    await this.runProgram(file, vm, elanInputOutput);
+  }
+
+  stop(file: File, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
+    this.debugMode = this.singleStepping = false;
+
+    this.handleRunWorkerFinished(file, vm, elanInputOutput);
+  }
+
+  pause() {
+    this.singleStepping = true;
+    this.runWorker?.postMessage({ type: "pause" } as WebWorkerMessage);
+  }
+
+  step(file: File, vm: IIDEViewModel) {
+    this.singleStepping = true;
+
+    if (this.pendingBreakpoints.length > 0) {
+      const next = this.pendingBreakpoints[0];
+      this.pendingBreakpoints = this.pendingBreakpoints.slice(1);
+      vm.focusInfoTab();
+
+      vm.printDebugInfo(this.getDebugSymbols(next));
+
+      vm.setPausedAtLocation(next.pausedAt);
+      return;
+    }
+
+    this.processingSingleStep = false;
+    if (file.readRunStatus() === RunStatus.paused && this.runWorker) {
+      this.pendingBreakpoints = [];
+      this.resumeProgram(file);
+      vm.updateDisplayValues();
+    }
+  }
+
+  private async runProgram(file: File, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
+    try {
+      if (file.readRunStatus() === RunStatus.paused && this.runWorker && this.debugMode) {
+        this.pendingBreakpoints = [];
+        this.resumeProgram(file);
+        vm.updateDisplayValues();
+        return;
+      }
+
+      await vm.clearDisplays();
+      file.setRunStatus(RunStatus.running);
+      vm.updateDisplayValues();
+      const path = `${document.location.origin}${document.location.pathname}`.replace(
+        "/index.html",
+        "",
+      );
+      const jsCode = file.compileAsWorker(path, this.debugMode, false);
+      const asUrl = encodeCode(jsCode);
+
+      this.runWorker = new Worker(asUrl, { type: "module" });
+
+      this.runWorker.onmessage = async (e: MessageEvent<WebWorkerMessage>) => {
+        const data = e.data;
+
+        switch (data.type) {
+          case "write":
+            await handleWorkerIO(file, data, this.runWorker, elanInputOutput, vm);
+            break;
+          case "breakpoint":
+            if (file.readRunStatus() === RunStatus.paused) {
+              this.pendingBreakpoints.push(data);
+            } else {
+              vm.focusInfoTab();
+
+              vm.printDebugInfo(this.getDebugSymbols(data));
+
+              vm.setPausedAtLocation(data.pausedAt);
+            }
+            break;
+          case "singlestep":
+            if (this.processingSingleStep) {
+              this.pendingBreakpoints.push(data);
+            } else {
+              this.processingSingleStep = true;
+              this.pendingBreakpoints = [];
+              if (this.singleStepping) {
+                vm.focusInfoTab();
+                vm.printDebugInfo(this.getDebugSymbols(data));
+                vm.setPausedAtLocation(data.pausedAt);
+              }
+            }
+            break;
+          case "status":
+            switch (data.status) {
+              case "finished":
+                this.handleRunWorkerFinished(file, vm, elanInputOutput);
+                break;
+              case "error":
+                await this.handleRunWorkerError(data, file, vm, elanInputOutput);
+                break;
+            }
+        }
+      };
+
+      this.runWorker.onerror = async (ev: ErrorEvent) => {
+        const err = new ElanRuntimeError(ev.message);
+        await vm.showError(err, file.fileName, false);
+        file.setRunStatus(RunStatus.error);
+        vm.updateDisplayValues();
+      };
+
+      this.runWorker.postMessage({ type: "start" } as WebWorkerMessage);
+    } catch (e) {
+      console.warn(e);
+      file.setRunStatus(RunStatus.error);
+      vm.updateDisplayValues();
+    }
+  }
+
+  private async handleRunWorkerError(
+    data: WebWorkerStatusMessage,
+    file: File,
+    vm: IIDEViewModel,
+    elanInputOutput: WebInputOutput,
+  ) {
+    vm.clickInfoTab();
+    this.runWorker?.terminate();
+    this.runWorker = undefined;
+    elanInputOutput.finished();
+    const e = data.error;
+    const err = e instanceof ElanRuntimeError ? e : new ElanRuntimeError(e as any);
+    await vm.showError(err, file.fileName, false);
+    file.setRunStatus(RunStatus.error);
+    clearPaused();
+    vm.updateDisplayValues();
+  }
+
+  private handleRunWorkerFinished(file: File, vm: IIDEViewModel, elanInputOutput: WebInputOutput) {
+    this.runWorker?.terminate();
+    this.runWorker = undefined;
+    elanInputOutput.finished();
+    console.info("elan program completed OK");
+    file.setRunStatus(RunStatus.default);
+    clearPaused();
+    vm.updateDisplayValues();
+  }
+
+  private getDebugSymbols(data: WebWorkerBreakpointMessage): DebugSymbol[] | string {
+    const variables = data.value;
+    if (variables.length > 0) {
+      return variables;
+    } else {
+      return `No values defined at this point - proceed to the next instruction`;
+    }
+  }
+  private resumeProgram(file: File) {
+    if (this.singleStepping) {
+      this.runWorker?.postMessage({ type: "pause" } as WebWorkerMessage);
+    }
+
+    this.runWorker?.postMessage({ type: "resume" } as WebWorkerMessage);
+
+    clearPaused();
+    file.setRunStatus(RunStatus.running);
   }
 }
 
-export function resumeProgram(file: File, singleStepping: boolean, runWorker: Worker) {
-  if (singleStepping) {
-    runWorker.postMessage({ type: "pause" } as WebWorkerMessage);
-  }
-
-  runWorker.postMessage({ type: "resume" } as WebWorkerMessage);
-
-  clearPaused();
-  file.setRunStatus(RunStatus.running);
-}
-
-export async function handleWorkerIO(
+async function handleWorkerIO(
   file: File,
   data: WebWorkerWriteMessage,
   runWorker: Worker | undefined,
   elanInputOutput: WebInputOutput,
-  setPauseButtonState: (b: boolean) => void,
-  togggleInputStatus: (rs: RunStatus) => void,
+  vm: IIDEViewModel,
 ) {
   switch (data.function) {
     case "readLine":
-      setPauseButtonState(true);
-      togggleInputStatus(RunStatus.input);
+      vm.setPauseButtonState(true);
+      vm.togggleInputStatus(RunStatus.input);
       const line = await elanInputOutput.readLine();
       // program may have been stopped so check state
       const rs = file.readRunStatus();
       if (rs === RunStatus.input) {
-        togggleInputStatus(RunStatus.running);
+        vm.togggleInputStatus(RunStatus.running);
       }
-      setPauseButtonState(false);
+      vm.setPauseButtonState(false);
       runWorker?.postMessage(readMsg(line));
       break;
     case "waitForAnyKey":
@@ -103,11 +262,32 @@ export async function handleWorkerIO(
   }
 }
 
+export function getDebugSymbol(s: DebugSymbol) {
+  const typeMap = JSON.parse(s.typeMap);
+  return getDebugSymbolHtml(s.name, "", s.value, typeMap);
+}
+
 export function getSummaryHtml(content: string) {
   return `<div class="summary" tabindex="0">${content}</div>`;
 }
 
-export function getDebugHtml(content1: string, content2: string) {
+function readMsg(value: string | [string, string]) {
+  return { type: "read", value: value } as WebWorkerReadMessage;
+}
+
+function errorMsg(value: unknown) {
+  return { type: "status", status: "error", error: value } as WebWorkerStatusMessage;
+}
+
+function clearPaused() {
+  const pausedAt = document.getElementsByClassName("paused-at");
+
+  for (const e of pausedAt) {
+    e.classList.remove("paused-at");
+  }
+}
+
+function getDebugHtml(content1: string, content2: string) {
   return `<div class="expandable">${getSummaryHtml(content1)}<div class="detail">${content2}</div></div>`;
 }
 
@@ -354,19 +534,5 @@ function getDebugSymbolHtml(
       return getDebugSymbolHtml(name, nameType, value, typeMap["Ids"][name as string], asIndex);
     default:
       return getDebugSymbolClass(name, nameType, value, typeMap, asIndex);
-  }
-}
-
-export function getDebugSymbol(s: DebugSymbol) {
-  const typeMap = JSON.parse(s.typeMap);
-  return getDebugSymbolHtml(s.name, "", s.value, typeMap);
-}
-
-export function handleRunWorkerPaused(data: WebWorkerBreakpointMessage): DebugSymbol[] | string {
-  const variables = data.value;
-  if (variables.length > 0) {
-    return variables;
-  } else {
-    return `No values defined at this point - proceed to the next instruction`;
   }
 }
