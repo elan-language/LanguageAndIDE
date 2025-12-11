@@ -1345,8 +1345,11 @@ Writing a value to a specific index location is done through a method such as in
 <p>Arithmetic operators can be applied to <el-code>Float</el-code> or <el-code>Int</el-code> arguments. The result may be a <el-code>Float</el-code> or an <el-code>Int</el-code> depending on the arguments.</p>
 <p>For <el-code>^ + - *</el-code>, the result is a <el-code>Float</el-code> if either of the arguments is a <el-code>Float</el-code>, and an <el-code>Int</el-code> if both arguments are <el-code>Int</el-code>.</p>
 <p>For <el-code>/</el-code>, the result is always a <el-code>Float</el-code>.  It can be converted to an <el-code>Int</el-code> using the <a href="LibRef.html#floor">floor()</a> function.</p>
-<div id="div"></div>
-<p id="mod"><el-code>mod</el-code> and <el-code>div</el-code> only operate on <el-code>Int</el-code> arguments, and the result is <el-code>Int</el-code>.</p>
+<div id="div">
+  The <code>div</code> operator is <i>deprecated</i> (as of v1.8.0). The recommended coding pattern for <i>integer</i> 
+  division is now to use regular division and the <el-method>floor</el-method> operator e.g. <code>(10/3).floor()</code>.
+</div>
+<p id="mod"><el-code>mod</el-code> operates on <el-code>Int</el-code> arguments, and the result is <el-code>Int</el-code>.</p>
 <pre>
     <el-code>2^3</el-code>             &#x27f6;  <el-code>8</el-code>
     <el-code>2/3</el-code>             &#x27f6;  <el-code>0.666..</el-code>
@@ -1354,23 +1357,14 @@ Writing a value to a specific index location is done through a method such as in
     <el-code>2 + 3</el-code>         &#x27f6;  <el-code>5</el-code>
     <el-code>2 - 3</el-code>         &#x27f6;  <el-code>-1</el-code>
     <el-code>11 mod 3</el-code>   &#x27f6;  <el-code>2</el-code> (integer remainder)
-    <el-code>11 div 3</el-code>   &#x27f6;  <el-code>3</el-code> (integer division)
 </pre>
 <p>Arithmetic operators follow the conventional rules for precedence i.e. 'BIDMAS' (or 'BODMAS').</p>
-<p>When combining <el-code>div</el-code> or <el-code>mod</el-code> with any other operators within an expression, insert brackets to avoid ambiguity e.g.:</p>
-<pre>
-    <el-code>(5 + 6) mod 3</el-code>
-</pre>
 <p>Note that <el-code>mod</el-code> is more of a remainder operator than a modulus operator -- the result takes the sign of the first argument.  If both arguments are positive, there is no difference.</p>
 The minus sign may also be used as a unary operator, and this takes precedence over binary operators so:
 <pre>
     <el-code>2*-3</el-code>           &#x27f6;  <el-code>-6</el-code>
 </pre>
 <p>Note that the editor automatically puts spaces around the <el-code>+</el-code> and <el-code>&ndash;</el-code> binary operators, but not around <el-code>^</el-code>, <el-code>/</el-code> or <el-code>*</el-code>. This is just to visually reinforce the precedence.</p>
-<p>The <el-code>div</el-code> operator rounds its result down, as if with the <el-method>floor</el-method> function.  This can give unexpected results with negative numbers, for example:</p>
-<pre>
-    <el-code>11 div -3</el-code>   &#x27f6;  <el-code>-4</el-code>
-</pre>
 <p>The <el-code>+</el-code> operator is also used for concatenating <el-type>String</el-type>s.  See <a href="LibRef.html#String">String</a>.</p>
 
 <div id="and"></div>
@@ -1522,7 +1516,7 @@ be followed by a <el-kw>with</el-kw> clause in order to specify any property val
 <el-func id="func302" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident304" class="ok" tabindex="0"><el-txt>dealCard</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params305" class="optional ok" tabindex="0"><el-txt><el-id>random</el-id> <el-kw>as</el-kw> <el-type>Float</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type306" class="ok" tabindex="0"><el-txt><el-type>Card</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
   <el-statement class="ok" id="let309" tabindex="0"><el-kw>let </el-kw><el-field id="var310" class="ok" tabindex="0"><el-txt><el-id>number</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr311" class="ok" tabindex="0"><el-txt>(<el-id>random</el-id>*<el-lit>52</el-lit>).<el-method>floor</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="let312" tabindex="0"><el-kw>let </el-kw><el-field id="var313" class="ok" tabindex="0"><el-txt><el-id>rank</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr314" class="ok" tabindex="0"><el-txt><el-id>rankValue</el-id>.<el-method>keys</el-method>()[<el-id>number</el-id><el-kw> div </el-kw><el-lit>4</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+  <el-statement class="ok" id="let312" tabindex="0"><el-kw>let </el-kw><el-field id="var313" class="ok" tabindex="0"><el-txt><el-id>rank</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr314" class="ok" tabindex="0"><el-txt><el-id>rankValue</el-id>.<el-method>keys</el-method>()[(<el-id>number</el-id>/<el-lit>4</el-lit>).<el-method>floor</el-method>()]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
   <el-statement class="ok" id="let315" tabindex="0"><el-kw>let </el-kw><el-field id="var316" class="ok" tabindex="0"><el-txt><el-id>suit</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr317" class="ok" tabindex="0"><el-txt><el-id>number</el-id><el-kw> mod </el-kw><el-lit>4</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
   <el-statement class="ok" id="return307" tabindex="0"><el-kw>return </el-kw><el-field id="expr308" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Card</el-type>()<el-kw> with </el-kw><br><el-id>rank</el-id><el-kw> set to </el-kw><el-id>rank</el-id>, <br><el-id>suit</el-id><el-kw> set to </el-kw><el-id>suit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
   <el-kw>end function</el-kw>
