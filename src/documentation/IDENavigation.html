@@ -110,20 +110,23 @@ cause the browser tab to be closed.</p>
 <p>Watch the video: <a href="videos/browse-code.html">Browse code</a></p>
 <p>The code shown in the editor has three types:</p>
 <ul>
- <li><b>Instructions</b> begin with a blue keyword as in:
-  <el-code>
-  <el-statement id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>name</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>"<el-lit>Alice</el-lit>"</el-txt></el-field></el-statement>
-  </el-code>
- <li><b>Comments</b> start with a hash # which is optionally followed by text:
+ <li><b>Instructions</b> begin with a <el-kw>blue</el-kw> keyword as in:
+<el-code>
+<el-statement id="let8" tabindex="0"><el-kw>let </el-kw><el-field id="var9" class="ok" tabindex="0"><el-txt><el-id>name</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr10" class="ok" tabindex="0"><el-txt>"<el-lit>Alice</el-lit>"</el-txt></el-field></el-statement>
+</el-code>
+ <li><b>Comments</b> are green and start with a hash <el-comment>#</el-comment> which is optionally followed by text:
 <el-code source="prompts.elan">
 <el-global><el-comment class="ok" id="com1" tabindex="0"><el-top># <el-field id="comment2" class="optional ok" tabindex="0"><el-txt>A program to investigate the Collatz Conjecture</el-txt></el-field></el-top></el-comment></el-global>
 </el-code>
-  The first comment in a file (which shows the Elan version) is automatically created
-  and cannot be edited, deleted or moved.</li>
- <li><b>'new code' prompts</b> look like this: <el-code>new code</el-code>,
-or like this when selected:
+The first comment in a file (which shows the Elan version) is automatically created and cannot be edited, deleted or moved.</li>
+ <li><b>'new code' prompts</b> look like either:
+<el-code>
+<el-global contenteditable="" spellcheck="false" class="ok empty" id="select0" tabindex="-1"><el-select><el-place>new code</el-place><div class="options"> procedure function test constant enum record class abstract interface #</div></el-select>
+</el-global>
+</el-code>
+or, when selected:
 <el-code source="prompts.elan">
-<el-statement class="selected focused ok empty" id="select12" tabindex="0"><el-select><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
+<el-statement contenteditable="" spellcheck="false" class="selected focused ok empty" id="select2" tabindex="-1"><el-select><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
 </el-code>
  though the specific keywords offered will depend upon the context.</ul>
 <p>Comments and <el-code>new code</el-code> prompts are <i>not</i> instructions. They do not alter the program's behaviour, though they are treated by the editor <i>like</i> instructions.</li></p>
@@ -144,7 +147,7 @@ or like this when selected:
     <tr><td>toggle outlining on an individual instruction</td><td>select the instruction then <b>Ctrl+o</b></td><td><b>double-click</b> on the initial keyword or instruction number</td><td></td></tr>
     <tr><td>toggle outlining for whole program</td><td><b>Ctrl+O</b> (same as <b>Ctrl+Shift+o</b>)</td><td><b>click</b> the <b>outline</b> button</td><td></td></tr>
   </table>
- </div></div>
+</div></div>
 
 <div class="accordion">
   <h2 class="acc-title" tabindex="0" id="CreateInstructions">Create new instructions</h2>
