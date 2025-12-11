@@ -1,4 +1,4 @@
-# e65d91b7bdd1e7e1432af073613409a9e4e6c4ca490b7511e725adbae4011e9b Elan 1.8.0 guest default_profile valid
+# 394af619b344a1e301e85a0f3e236db7479874923b37bec3a3959bad13f44bb6 Elan 1.8.1 guest default_profile valid
 
 main
   let file be createFileForWriting("squares.txt")
