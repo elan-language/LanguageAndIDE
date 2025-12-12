@@ -1,4 +1,4 @@
-# 536b057ad68adb148e11de7a0f0cebff6e8d6838e6823bea77e0ff288cb43a2d Elan 1.8.1 guest default_profile valid
+# a2747e02bf4830f57ad6348ca8633e57a5bca1b111e02c0e86240176f758028c Elan 1.8.2 guest default_profile valid
 
 test 
   let s1 be "hello"

@@ -1,4 +1,4 @@
-# c959340d111d7d01adb95d2ff81a661eef0d1774c9c5f026ba00048717f0c40c Elan 1.8.1 guest default_profile valid
+# a15f20d097542126cc9e83305716a364b9fb2c0c0fd30c28172424dfc2c14722 Elan 1.8.2 guest default_profile valid
 
 main
   let points be 1000
@@ -100,7 +100,7 @@ end function
 
 [imported] function dealCard(random as Float) returns Card
   let number be (random*52).floor()
-  let rank be rankValue.keys()[number div 4]
+  let rank be rankValue.keys()[(number/4).floor()]
   let suit be intAsSuit(number mod 4)
   return new Card(rank, suit)
 end function

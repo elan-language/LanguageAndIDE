@@ -1,4 +1,4 @@
-# 13329602cdff761d84414174efca4583053f26cde3de0e7a12d8a960d4b4dcae Elan 1.8.1 guest default_profile valid
+# 1686679f7229401e546fa7c6c39ac948f0895f84a7db86aebc8f8d94cc5b8cb9 Elan 1.8.2 guest default_profile valid
 
 function foo(a as Int, b as Int) returns Boolean
   return if (a^b) < (b^a) then true else false
