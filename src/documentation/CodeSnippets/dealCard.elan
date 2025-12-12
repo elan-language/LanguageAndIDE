@@ -1,4 +1,4 @@
-# d0a928dbce4fa859239e345d5427edb6fb9a75374f155b772423ae6851809606 Elan 1.8.1 guest default_profile valid
+# 17b6d1272ecb61442847d1a2cba3494219db5a1b3bc03054e7ff6e06383e2920 Elan 1.8.2 guest default_profile valid
 
 function dealCard(random as Float) returns Card
   let number be (random*52).floor()
