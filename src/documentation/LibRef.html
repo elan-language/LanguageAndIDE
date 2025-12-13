@@ -492,7 +492,7 @@ They are all <i>mutable</i>, meaning that their contents (referred to as items o
 <p>However, since procedure methods may be called only from within the <el-kw>main</el-kw> routine or a <el-kw>procedure</el-kw>,
 it is also possible to make changes via <el-kw>function</el-kw> dot methods,  which return a copy of the data structure
 with specified changes: that is why all such methods have names starting '<el-code>with</el-code>'.</p>
-<p>All four contain values (and keys in the case of a <el-type>Dictionary</el-type>) of only a single Type, that Type being specified either explicitly (as in
+<p id="of">All four contain values (and keys in the case of a <el-type>Dictionary</el-type>) of only a single Type, that Type being specified either explicitly (as in
 <el-code>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;</el-code>), or implicitly if the structure is created using a literal definition.</p>
 <p>This table summarises the creation and reference to these structures. Details of their methods follow.</p>
 <table class="tableStructure">
@@ -2803,7 +2803,7 @@ Within a string delimited by <i>single quotes</i>, those literal characters can 
  <li>an integer in the decimal range 0 (<el-id>black</el-id>) to 2<sup>24-1</sup> (<el-id>white</el-id>).</li>
  <li>a six digit hexadecimal value in the range <el-code>0x000000</el-code> &ndash; <el-code>0xffffff</el-code>
     using the same 'RGB' format as used in Html style, for example <el-code>0xff0000</el-code> for red.</li>
- <li><el-id>transparent</el-id> is only used for filling <a href="#VectorGraphics">vector graphics</a> shapes. 
+ <li id="transparent"><el-id>transparent</el-id> is only used for filling <a href="#VectorGraphics">vector graphics</a> shapes. 
 </ul>
 
 <div id="LibraryProcedures"></div>
