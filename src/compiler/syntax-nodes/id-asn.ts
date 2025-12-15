@@ -22,16 +22,8 @@ import {
   mustNotBeKeyword,
 } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { ClassAsn } from "./globals/class-asn";
 import { TupleAsn } from "./globals/tuple-asn";
-
-function isClass(s: Scope): s is ClassAsn {
-  return s instanceof ClassAsn;
-}
-
-function isTuple(s: Scope): s is TupleAsn {
-  return s instanceof TupleAsn;
-}
+import { isClass, isTuple } from "../../compiler/symbols/symbol-helpers";
 
 export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(

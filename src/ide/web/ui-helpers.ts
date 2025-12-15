@@ -1,9 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { AssertOutcome } from "../../compiler/assert-outcome";
 import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
-import { RunStatus } from "../frames/status-enums";
+import { TestStatus } from "../../compiler/test-status";
+import { CodeSource } from "../frames/frame-interfaces/code-source";
+import { editorEvent } from "../frames/frame-interfaces/editor-event";
+import { Frame } from "../frames/frame-interfaces/frame";
+import { Profile } from "../frames/frame-interfaces/profile";
+import { Selectable } from "../frames/frame-interfaces/selectable";
+import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
+import { FileManager } from "./file-manager";
+import { TestRunner } from "./test-runner";
 import { WebWorkerReadMessage, WebWorkerStatusMessage } from "./web-worker-messages";
-import { File } from "../frames/frame-interfaces/file";
+
+// well known ids
+export const lastDirId = "elan-files";
 
 // from https://stackoverflow.com/questions/4565112/how-to-find-out-if-the-user-browser-is-chrome
 export function checkIsChrome() {
@@ -60,21 +71,178 @@ export function errorMsg(value: unknown) {
   return { type: "status", status: "error", error: value } as WebWorkerStatusMessage;
 }
 
+export function warningOrError(tgt: HTMLDivElement): [boolean, string] {
+  if (tgt.classList.contains("warning")) {
+    return [true, "warning"];
+  }
+  if (tgt.classList.contains("error")) {
+    return [true, "error"];
+  }
+  if (tgt.classList.contains("advisory")) {
+    return [true, "advisory"];
+  }
+  return [false, ""];
+}
+
+export function parentId(e: Element): string {
+  if (e.parentElement) {
+    if (e.parentElement.id) {
+      return e.parentElement.id;
+    }
+    return parentId(e.parentElement);
+  }
+
+  return "";
+}
+
+export interface ICodeEditorViewModel {
+  fileName: string;
+
+  setRunStatus(s: RunStatus): void;
+
+  getRunStatusLabel(): string;
+
+  getRunStatusColour(): string;
+  readParseStatus(): ParseStatus;
+
+  readCompileStatus(): CompileStatus;
+
+  readRunStatus(): RunStatus;
+  readTestStatus(): TestStatus;
+
+  setTestStatus(ts: TestStatus): void;
+
+  getParseStatusColour(): string;
+  getParseStatusLabel(): string;
+  getCompileStatusColour(): string;
+  getCompileStatusLabel(): string;
+  getTestStatusColour(): string;
+  getTestStatusLabel(): string;
+
+  containsMain(): boolean;
+
+  renderAsHtml(): Promise<string>;
+
+  removeAllSelectorsThatCanBe(): void;
+
+  expandCollapseAll(): void;
+
+  getVersionString(): string;
+
+  refreshParseAndCompileStatuses(compileIfParsed: boolean): void;
+
+  hasTests: boolean;
+
+  renderAsSource(): Promise<string>;
+
+  parseFrom(source: CodeSource): Promise<void>;
+
+  parseError: string | undefined;
+
+  defaultFileName: string;
+
+  getCopiedSource(): string[];
+
+  getFieldBeingEdited(): boolean;
+
+  getFirstChild(): Frame;
+
+  recreateFile(profile: Profile, userName: string | undefined): void;
+
+  currentHash: string;
+
+  compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string;
+
+  compileAsTestWorker(base: string): string;
+
+  refreshTestStatuses(outcomes: [string, AssertOutcome[]][]): void;
+
+  getTestError(): Error | undefined;
+
+  getById(id: string): Selectable;
+
+  getMap(): Map<string, Selectable>;
+  processKey(e: editorEvent): boolean;
+
+  isRunningState(): boolean;
+
+  handleKey(e: editorEvent): boolean;
+
+  handleDblClick(e: editorEvent): boolean;
+
+  handleClick(e: editorEvent): boolean;
+
+  refreshAndDisplay(
+    vm: IIDEViewModel,
+    tr: TestRunner,
+    compileIfParsed: boolean,
+    editingField: boolean,
+  ): Promise<void>;
+
+  initialDisplay(fm: FileManager, vm: IIDEViewModel, tr: TestRunner, reset: boolean): Promise<void>;
+
+  isPausedState(): boolean;
+  isTestRunningState(): boolean;
+}
+
 export interface IIDEViewModel {
   focusInfoTab(): void;
-  updateDisplayValues(): void;
+  updateDisplayValues(cvm: ICodeEditorViewModel): void;
   setPauseButtonState(waitingForUserInput?: boolean): void;
-  togggleInputStatus(rs: RunStatus): void;
+  toggleInputStatus(rs: RunStatus): void;
   clearDisplays(): Promise<void>;
   showError(err: Error, fileName: string, reset: boolean): Promise<void>;
   printDebugInfo(info: DebugSymbol[] | string): void;
   setPausedAtLocation(location: string): void;
   clickInfoTab(): void;
-  run(file: File): Promise<void>;
+  run(cvm: ICodeEditorViewModel): Promise<void>;
   runDebug(): void;
   renderAsHtml(editingField: boolean): Promise<void>;
   systemInfoPrintSafe(text: string, scroll?: boolean): void;
   updateFileName(unsaved: string): void;
   updateFileAndCode(code: string): Promise<void>;
   disableUndoRedoButtons(msg: string): void;
+  postCodeResetToWorksheet(code: string): void;
+  updateNameAndSavedStatus(cvm: ICodeEditorViewModel, fm: FileManager): void;
 }
+
+export const delayMessage =
+  "Overly complex expressions - for example involving a sequence of open brackets - can result in very slow parsing. We strongly recommend that you simplify the contents of this field, for example by breaking out parts of it into separate 'let' statements. Otherwise it might become impossible to add more text.";
+
+export const cancelMsg = "You have unsaved changes - they will be lost unless you cancel";
+
+export const internalErrorMsg = `Sorry, an internal error has occurred. Please help us by reporting the bug, following these steps:
+<ol>
+<li>Click on this button:  <button id="bug-report">Copy bug report to your clipboard</button></li>
+<li>In your own email system create an email to bugs@elan-lang.org, with anything in the Subject line.</li>
+<li>Paste the copied bug report (it is plain text) from your clipboard into the body of the email.</li>
+<li><b>Above</b> the pasted-in report, please describe your action immediately prior to the error message appearing</li>
+</ol>
+Please note that the report includes your Elan code. We will use this <i<>only</i> to try to reproduce and fix the bug,
+and <i>won't</i> make it public.`;
+
+export const globalKeys = [
+  "b",
+  "B",
+  "d",
+  "D",
+  "e",
+  "E",
+  "g",
+  "G",
+  "h",
+  "H",
+  "i",
+  "I",
+  "k",
+  "K",
+  "r",
+  "R",
+  "s",
+  "S",
+  "u",
+  "U",
+  "+",
+  "-",
+  "=",
+];
