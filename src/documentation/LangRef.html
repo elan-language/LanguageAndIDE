@@ -1,17 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en-GB">
 <head>
-<link href="../ide/styles/colourScheme.css" rel="stylesheet">
-<link href="../ide/styles/documentation.css" rel="stylesheet">
-<link href="../ide/styles/elanStyle.css" rel="stylesheet">
-<link href="favicon.ico" rel="icon">
+<link rel="stylesheet" href="../ide/styles/colourScheme.css">
+<link rel="stylesheet" href="../ide/styles/documentation.css">
+<link rel="stylesheet" href="../ide/styles/elanStyle.css">
+<link rel="icon" href="favicon.ico">
 <title>Elan Language Reference</title>
 <script type="text/javascript" src="generated_toc.js"></script>
 </head>
 <body>
 <div class="docTitle">Elan Language Reference</div>
 <div id="docTOC">
-<div id="generated-toc" class="generate_from_h1 generate_for_page"></div></div>
+ <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
+</div>
 
 <h1 id="namedValue">Named values</h1>
 
@@ -142,7 +143,7 @@ with all the same property values except for specific changes that you want to m
 <p>'Scope' in the table above refers to where in your code a named value is accessible.
  <el-kw>constant</el-kw>s and <el-kw>enum</el-kw>s, being the only values having <i>global</i> scope, can be referenced from anywhere in your program.
  Every other kind of named value is <i>local</i> and restricted to the procedure or function within which it is defined.</p>
-<p>Local named values can have the same name as a <el-code>constant</el-code>, <el-code>function</el-code>, or <el-code>procedure</el-code> (which are all defined at global level or are in the standard library).
+<p>Local named values can have the same name as a <el-kw>constant</el-kw>, <el-code>function</el-code>, or <el-code>procedure</el-code> (which are all defined at global level or are in the standard library).
  In such cases, when the name is used within the same method, then it will refer to the local definition.
   If you have done this, but then need to access the <el-code>constant</el-code>, <el-code>function</el-code>, or <el-code>procedure</el-code> with the same name,
   then you prefix the name with a <i>dot qualifier</i> of either <el-kw>global</el-kw> or <el-kw>library</el-kw> as appropriate</p>
@@ -163,7 +164,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 </p>
 <div id="Method"></div>
 <ul>
- <li><el-kw>main</el-kw>, <el-kw>procedure</el-kw> and <el-kw>function</el-kw> are described as <b>methods</b> and these are defined by one or more <a href="#statement">statements</a> within them.</li>
+ <li><el-kw>main</el-kw>, <el-kw>procedure</el-kw> and <el-kw>function</el-kw> are described as <b>methods</b> and these are defined by one or more <a href="#statement">statement insrtructions</a> within them.</li>
  <li><el-kw>test</el-kw> also contains statements, in particular the <a href="#assert"><el-kw>assert</el-kw></a> statement for testing functions during development of your program.</li>
  <li><el-kw>record</el-kw>, <el-kw>class</el-kw>, <el-kw>abstract</el-kw> (class), and <el-kw>interface</el-kw> define data structures and these always contain <a href="#Member">members</a>.</li>
  <li><el-kw>constant</el-kw> and <el-kw>enum</el-kw> do not contain any further instructions &ndash; only names and values.</li>
@@ -647,7 +648,7 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
 <p>You may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> statement. For example:</p>
-<p><el-code>abstract function calculateDiscount() as Float</el-code></p>
+<p><el-code><el-kw>abstract function</el-kw> <el-method>calculateDiscount</el-method>() as <el-type>Float</el-type></el-code></p>
 <p>
 If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
 <ul>
@@ -927,8 +928,9 @@ Properties may be modified only from outside the class by means of a <a href="#p
 <li>A <el-code>function</el-code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
 <li>A <el-code>function</el-code> method may directly reference (read only) any <el-kw>property</el-kw> defined on the class as though it were a variable or parameter.</li>
 <li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
-<li>asString() method</li>
-<li>asString method. This is just a regular function method with a specific name, no parameters and returning a String. If defined for a class, then if an instance of the class is printed, the <el-code>asString</el-code> function method will automatically be used. Typically <el-code>asString</el-code> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
+<li><el-method>asString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns  a value of type <el-type>String</el-type>.
+ If defined for a class then, if an instance of the class is printed, function method <el-method>asString</el-method> will automatically be used.
+  Typically <el-method>asString</el-method> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
 </ul>
 
 <h2 id="procedure_method"><el-kw>procedure</el-kw> method</h2>
@@ -992,15 +994,15 @@ the correct Type must be provided. For example, if the class <el-type>Square</el
  <a href="#call"><el-kw>call</el-kw></a>,
  <a href="#each"><el-kw>each</el-kw></a>,
  <a href="#for"><el-kw>for</el-kw></a>,
- <a href="#if"><el-kw>if</el-kw>..<el-kw>then</el-kw>..<el-kw>else if</el-kw>..<el-kw>else</el-kw></a>,
- <a href="#let">let</a>,
- <a href="#print">print</a>,
- <a href="#repeat">repeat</a>,
- <a href="#set">set</a>,
- <a href="#throw">throw</a>,
- <a href="#try">try</a>,
- <a href="#variable">variable</a>,
- <a href="#while">while</a>.
+ <a href="#if"><el-kw>if</el-kw></a>,
+ <a href="#let"><el-kw>let</el-kw></a>,
+ <a href="#print"><el-kw>print</el-kw></a>,
+ <a href="#repeat"><el-kw>repeat</el-kw></a>,
+ <a href="#set"><el-kw>set</el-kw></a>,
+ <a href="#throw"><el-kw>throw</el-kw></a>,
+ <a href="#try"><el-kw>try</el-kw></a>,
+ <a href="#variable"><el-kw>variable</el-kw></a>,
+ <a href="#while"><el-kw>while</el-kw></a>.
 </p>
 
 <h2 id="assert"><el-kw>assert</el-kw> (test)</h2>
@@ -1009,7 +1011,7 @@ which is the mechanism for running unit tests during program development, not du
 <p>Some programming languages have a feature for making assertions while your program is running.
  In Elan, you can get equivalent functionality by throwing an <el-kw>exception</el-kw>, as described in <a href="#throw">throw</a> statement.</p>
 
-<h2 id="call"><el-kw>call</el-kw> (procedure)</h2>
+<h2 id="call"><el-kw>call</el-kw> procedure</h2>
 <p>A <el-kw>call</el-kw> statement is used when you want to run a <a href="#procedure">procedure</a>.</p>
 <p>The procedure may be:</p>
 <ul>
@@ -1342,42 +1344,49 @@ Writing a value to a specific index location is done through a method such as in
 <h2 id="Operators">Operators</h2>
 
 <h3 class="no-TOC" id="ArithmeticOperators">Arithmetic operators</h3>
-<p>Arithmetic operators can be applied to <el-code>Float</el-code> or <el-code>Int</el-code> arguments. The result may be a <el-code>Float</el-code> or an <el-code>Int</el-code> depending on the arguments.</p>
-<p>For <el-code>^ + - *</el-code>, the result is a <el-code>Float</el-code> if either of the arguments is a <el-code>Float</el-code>, and an <el-code>Int</el-code> if both arguments are <el-code>Int</el-code>.</p>
-<p>For <el-code>/</el-code>, the result is always a <el-code>Float</el-code>.  It can be converted to an <el-code>Int</el-code> using the <a href="LibRef.html#floor">floor()</a> function.</p>
-<div id="div"></div>
-<p id="mod"><el-code>mod</el-code> and <el-code>div</el-code> only operate on <el-code>Int</el-code> arguments, and the result is <el-code>Int</el-code>.</p>
+
+<p>Arithmetic operators can be applied to <el-type>Float</el-type> or <el-type>Int</el-type> arguments. The result may be a <el-type>Float</el-type> or an <el-type>Int</el-type> depending on the arguments.</p>
+<p>For the <el-code> ^ + &minus; * </el-code> operators, the result is a <el-type>Float</el-type> if either of the arguments is a <el-type>Float</el-type>, and an <el-type>Int</el-type> if both arguments are <el-type>Int</el-type>.</p>
+<p>For the <el-code> / </el-code> operator, the result is always a <el-type>Float</el-type>. It can be converted to an <el-type>Int</el-type> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method></a>.</p>
+<p id="mod"> The operator <el-kw>mod</el-kw> is applied  only to <el-type>Int</el-type> arguments, and the result is <el-type>Int</el-type>.</p>
+<p id="div">The operator <el-kw>div</el-kw> is <b><i>deprecated</i></b> (as of v1.8.0). The recommended coding pattern for <i>integer</i> 
+  division is to use regular division and the standalone function <a href="LibRef.html#floor"><el-method>floor</el-method></a>.</p>
 <pre>
     <el-code>2^3</el-code>             &#x27f6;  <el-code>8</el-code>
     <el-code>2/3</el-code>             &#x27f6;  <el-code>0.666..</el-code>
     <el-code>2*3</el-code>             &#x27f6;  <el-code>6</el-code>
     <el-code>2 + 3</el-code>         &#x27f6;  <el-code>5</el-code>
-    <el-code>2 - 3</el-code>         &#x27f6;  <el-code>-1</el-code>
+    <el-code>2 &minus; 3</el-code>         &#x27f6;  <el-code>&minus;6</el-code>
     <el-code>11 mod 3</el-code>   &#x27f6;  <el-code>2</el-code> (integer remainder)
-    <el-code>11 div 3</el-code>   &#x27f6;  <el-code>3</el-code> (integer division)
+    <el-code>11 div 3</el-code>   &#x27f6;  <el-code>3</el-code> (integer division) is <b><i>deprecated</i></b>, use instead:
+    <el-code>(11/3).floor()</el-code>    &#x27f6;  <el-code>3</el-code>, and note that rounding is always down:
+    <el-code>(-11/3).floor()</el-code>   &#x27f6; <el-code>&minus;4</el-code>
 </pre>
 <p>Arithmetic operators follow the conventional rules for precedence i.e. 'BIDMAS' (or 'BODMAS').</p>
-<p>When combining <el-code>div</el-code> or <el-code>mod</el-code> with any other operators within an expression, insert brackets to avoid ambiguity e.g.:</p>
+<p>When combining <el-kw>mod</el-kw> with other operators in an expression, insert brackets to avoid ambiguity e.g.:</p>
 <pre>
     <el-code>(5 + 6) mod 3</el-code>
 </pre>
-<p>Note that <el-code>mod</el-code> is more of a remainder operator than a modulus operator -- the result takes the sign of the first argument.  If both arguments are positive, there is no difference.</p>
-The minus sign may also be used as a unary operator, and this takes precedence over binary operators so:
+<p>Note that <el-kw>mod</el-kw> is more of a remainder operator than a modulus operator. The result takes the sign of the first argument.
+ If both arguments are positive, there is no difference.</p>
+<p>The minus sign may also be used as a unary operator, and this takes precedence over binary operators so:</p>
 <pre>
-    <el-code>2*-3</el-code>           &#x27f6;  <el-code>-6</el-code>
+    <el-code>2*&minus;3</el-code>           &#x27f6;  <el-code>&minus;6</el-code>
 </pre>
-<p>Note that the editor automatically puts spaces around the <el-code>+</el-code> and <el-code>&ndash;</el-code> binary operators, but not around <el-code>^</el-code>, <el-code>/</el-code> or <el-code>*</el-code>. This is just to visually reinforce the precedence.</p>
-<p>The <el-code>div</el-code> operator rounds its result down, as if with the <el-method>floor</el-method> function.  This can give unexpected results with negative numbers, for example:</p>
-<pre>
-    <el-code>11 div -3</el-code>   &#x27f6;  <el-code>-4</el-code>
-</pre>
+
+<p>The editor automatically puts spaces around the operators <el-code>+</el-code> and <el-code>&minus;</el-code>, but not around <el-code>^</el-code>, <el-code>/</el-code> or <el-code>*</el-code>.
+This is just to visually reinforce the precedence.</p>
+
+<p>The <el-code>+</el-code> operator is also used for concatenating <a href="LibRef.html#String"><el-type>String</el-type></a> values.</p>
+
+<p>The editor automatically inserts spaces around the <el-code>+</el-code> and <el-code>&ndash;</el-code> binary operators, but not around <el-code>^</el-code>, <el-code>/</el-code> or <el-code>*</el-code>. This is just to visually reinforce the precedence.</p>
 <p>The <el-code>+</el-code> operator is also used for concatenating <el-type>String</el-type>s.  See <a href="LibRef.html#String">String</a>.</p>
 
 <div id="and"></div>
 <div id="not"></div>
 <div id="or"></div>
 <h3 class="no-TOC" id="LogicalOperators">Logical operators</h3>
-<p>Logical operators are applied to <el-code>Boolean</el-code> arguments and return a <el-code>Boolean</el-code> result.</p>
+<p>Logical operators are applied to <el-code>Boolean</el-code> arguments and return a <el-type>Boolean</el-type> result.</p>
 <p><el-code>and</el-code> and <el-code>or</el-code> are binary operators<br>
 <el-code>not</el-code> is a unary operator. </p>
 <p>The operator precedence is <el-code>not</el-code> &rarr; <el-code>and</el-code> &rarr; <el-code>or</el-code>, so this
@@ -1393,7 +1402,7 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 <h3 class="no-TOC" id="EqualityTesting">Equality testing</h3>
 <p>Equality testing uses the <el-code>is</el-code> and <el-code>isnt</el-code> keywords with two arguments. The arguments may be of any Type.</p>
 <ul>
-<li><el-code> a is b</el-code> returns <el-kw><el-id>true</el-id></el-kw>, if <el-code>a</el-code> and <el-code>b</el-code> are both of the same Type and their values are equal. The only exception is that if one argument is of Type <el-code>Float</el-code> and the other is of Type <el-code>Int</el-code>, then <el-code>is</el-code> will return <el-code>true</el-code> if their values are the same, i.e. are the same whole number.</li>
+<li><el-code> a is b</el-code> returns <el-kw><el-id>true</el-id></el-kw>, if <el-code>a</el-code> and <el-code>b</el-code> are both of the same Type and their values are equal. The only exception is that if one argument is of Type <el-type>Float</el-type> and the other is of Type <el-type>Int</el-type>, then <el-code>is</el-code> will return <el-code>true</el-code> if their values are the same, i.e. are the same whole number.</li>
 <li><el-code>isnt</el-code> returns the opposite of <el-code>is</el-code>.</li>
 <li>Where a binary operator is expected, as soon as you type <el-code>is</el-code> the editor will automatically insert a space after it. To enter <el-code>isnt</el-code> you need to delete the space (using the Backspace key) and then type <el-code>nt</el-code>.</li>
 </ul>
@@ -1409,7 +1418,7 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
     <el-code>&gt;=</el-code>        for     greater than or equal to
     <el-code>&lt;=</el-code>        for     less than or equal to
 </pre>
-<p>Each is applied to two arguments of Type <el-code>Float</el-code>, but any named value or expression that evaluates to an <el-code>Int</el-code> may always be used where a <el-code>Float</el-code> is expected.</p>
+<p>Each is applied to two arguments of Type <el-type>Float</el-type>, but any named value or expression that evaluates to an <el-type>Int</el-type> may always be used where a <el-code>Float</el-code> is expected.</p>
 <h4 class="no-TOC">Notes</h4>
 <ul>
 <li>These operators cannot be applied to strings. Use the dot methods <el-code>isBefore</el-code> and <el-code>isAfter</el-code> to compare strings alphabetically.
@@ -1439,7 +1448,7 @@ An expression may simply be a reference to a  function, or it may include severa
 <ul>
 <li>The third example above is not strictly a function call, but is a 'system method' call.
 System methods may be used only within the <el-code>main</el-code> routine or a <el-code>procedure</el-code>, because they have external dependencies or side effects.</li>
-<li>In the fourth example, <el-code>upperCase</el-code> is a dot method that may be applied to any instance (variable or literal) of Type <el-code>String</el-code>.
+<li>In the fourth example, <el-code>upperCase</el-code> is a dot method that may be applied to any instance (variable or literal) of Type <el-type>String</el-type>.
 See <a href="LibRef.html#upperCase">Dot methods on a String</a>.</li>
 </ul>
 
@@ -1519,14 +1528,14 @@ Notes:<ul>
 be followed by a <el-kw>with</el-kw> clause in order to specify any property values. Example of this use:</p>
 
 <el-code-block source="dealCard.elan">
-<el-func id="func302" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident304" class="ok" tabindex="0"><el-txt>dealCard</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params305" class="optional ok" tabindex="0"><el-txt><el-id>random</el-id> <el-kw>as</el-kw> <el-type>Float</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type306" class="ok" tabindex="0"><el-txt><el-type>Card</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
-  <el-statement class="ok" id="let309" tabindex="0"><el-kw>let </el-kw><el-field id="var310" class="ok" tabindex="0"><el-txt><el-id>number</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr311" class="ok" tabindex="0"><el-txt>(<el-id>random</el-id>*<el-lit>52</el-lit>).<el-method>floor</el-method>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="let312" tabindex="0"><el-kw>let </el-kw><el-field id="var313" class="ok" tabindex="0"><el-txt><el-id>rank</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr314" class="ok" tabindex="0"><el-txt><el-id>rankValue</el-id>.<el-method>keys</el-method>()[<el-id>number</el-id><el-kw> div </el-kw><el-lit>4</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="let315" tabindex="0"><el-kw>let </el-kw><el-field id="var316" class="ok" tabindex="0"><el-txt><el-id>suit</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr317" class="ok" tabindex="0"><el-txt><el-id>number</el-id><el-kw> mod </el-kw><el-lit>4</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-statement class="ok" id="return307" tabindex="0"><el-kw>return </el-kw><el-field id="expr308" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Card</el-type>()<el-kw> with </el-kw><br><el-id>rank</el-id><el-kw> set to </el-kw><el-id>rank</el-id>, <br><el-id>suit</el-id><el-kw> set to </el-kw><el-id>suit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-  <el-kw>end function</el-kw>
-  </el-func>
+<el-func class="ok multiline" id="func302" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident304" class="ok" tabindex="-1"><el-txt><el-method>dealCard</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params305" class="optional ok" tabindex="-1"><el-txt><el-id>random</el-id> <el-kw>as</el-kw> <el-type>Float</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type306" class="ok" tabindex="-1"><el-txt><el-type>Card</el-type></el-txt></el-field></el-top>
+<el-statement class="ok" id="let309" tabindex="-1"><el-kw>let </el-kw><el-field id="var310" class="ok" tabindex="-1"><el-txt><el-id>number</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr311" class="ok" tabindex="-1"><el-txt>(<el-id>random</el-id>*<el-lit>52</el-lit>).<el-method>floor</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let789" tabindex="-1"><el-kw>let </el-kw><el-field id="var790" class="ok" tabindex="-1"><el-txt><el-id>rank</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr791" class="ok" tabindex="-1"><el-txt><el-id>rankValue</el-id>.<el-method>keys</el-method>()[(<el-id>number</el-id>/<el-lit>4</el-lit>).<el-method>floor</el-method>()]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let315" tabindex="-1"><el-kw>let </el-kw><el-field id="var316" class="ok" tabindex="-1"><el-txt><el-id>suit</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr317" class="ok" tabindex="-1"><el-txt><el-id>number</el-id><el-kw> mod </el-kw><el-lit>4</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="return307" tabindex="0"><el-kw>return </el-kw><el-field id="expr308" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Card</el-type>()<el-kw> with </el-kw><br><el-id>rank</el-id><el-kw> set to </el-kw><el-id>rank</el-id>, <br><el-id>suit</el-id><el-kw> set to </el-kw><el-id>suit</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-kw>end function</el-kw>
+</el-func>
 </el-code-block>
 
 <div id="copy"></div>
@@ -1771,7 +1780,7 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
 
 <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
  <p>An index into an array or list cannot have a negative value. If a negative is given in literal form e.g.
- <el-code><el-id>a</el-id>[-<el-lit>3</el-lit>]</el-code> then this will generate a compile error.
+ <el-code><el-id>a</el-id>[&minus;<el-lit>3</el-lit>]</el-code> then this will generate a compile error.
  If you use a named value for an index and it is negative, then this will cause a runtime error.</p>
 
 <h3 id="CannotCompareProcFunc" class="no-TOC">Cannot do equality operations on Procedures or Functions.</h3>
@@ -1907,6 +1916,12 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
  <a href="LibRef.html#deconstructListImmutable">ListImmutable</a>,
  <a href="LibRef.html#deconstructTuple">Tuple</a> or
  <a href="#deconstructRecord">Record</a>.</p>
+
+<h2>Advisory</h2>
+
+<h3 id="methodDeprecated" class="no-TOC">Code change suggested. Method was deprecated in v7.1.</h3>
+
+<h3 id="divDeprecated" class="no-TOC">'div' is deprecated. Recommended code for integer division is e.g. (10/3).floor()</h3>
 
 <h1 id="runtime_error">Runtime errors</h1>
 

@@ -55,7 +55,7 @@
 
       <div style="position: relative; padding-bottom: 72.67833109017496%; height: 0;"><iframe src="https://www.loom.com/embed/3dca2b1ec6384176aaf85e1b60f6ce1d" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-      Now <button class="load" id="load1-0" data-file="blackjack_1begin.elan">Load the starting code</button><div id="code-load1-0" hidden=""># 9a6bf9a75f10fe272f1e3837478b3432a0a6e570fcfde07386e7d0735907aebf Elan 1.7.0 guest default_profile valid
+      Now <button class="load" id="load1-0" data-file="blackjack_1begin.elan">Load the starting code</button><div id="code-load1-0" hidden=""># 9adc7517d8f32f866e01f725f503836bd8a405723d0e054f35bc2b020a5488aa Elan 1.8.1 guest default_profile valid
 
 main
   let game be new Game(1000)
@@ -151,12 +151,48 @@ function determinePlayerOutcome(dealer as Dealer, player as Player) returns Outc
   return playerOutcome
 end function
 
+test determinePlayerOutcome
+  let dbj be new Dealer(0) with status set to Status.blackjack
+  let d21 be new Dealer(0) with status set to Status.standing, handTotal set to 21
+  let d17 be new Dealer(0) with status set to Status.standing, handTotal set to 17
+  let dbu be new Dealer(0) with status set to Status.bust
+  let pbj be new HumanPlayer("", 0) with status set to Status.blackjack
+  let p21 be new HumanPlayer("", 0) with status set to Status.standing, handTotal set to 21
+  let p17 be new HumanPlayer("", 0) with status set to Status.standing, handTotal set to 17
+  let pbu be new HumanPlayer("", 0) with status set to Status.bust
+  assert determinePlayerOutcome(dbj, pbj) is Outcome.draw
+  assert determinePlayerOutcome(dbj, p21) is Outcome.lose
+  assert determinePlayerOutcome(dbj, pbu) is Outcome.lose
+  assert determinePlayerOutcome(d21, pbj) is Outcome.winDouble
+  assert determinePlayerOutcome(d21, p21) is Outcome.draw
+  assert determinePlayerOutcome(d21, p17) is Outcome.lose
+  assert determinePlayerOutcome(d21, pbu) is Outcome.lose
+  assert determinePlayerOutcome(dbu, pbj) is Outcome.winDouble
+  assert determinePlayerOutcome(dbu, p17) is Outcome.win
+  assert determinePlayerOutcome(dbu, pbu) is Outcome.lose
+end test
+
 function dealCard(random as Float) returns Card
   let number be (random*52).floor()
   let rank be rankValue.keys()[(number/4).floor()]
   let suit be number mod 4
   return new Card() with rank set to rank, suit set to intAsSuit(suit)
 end function
+
+test dealCard
+  let c1 be dealCard(0)
+  assert c1.rank is "2"
+  assert c1.suit is Suit.clubs
+  let c2 be dealCard(0.9999999)
+  assert c2.rank is "A"
+  assert c2.suit is Suit.spades
+  let c3 be dealCard(0.5)
+  assert c3.rank is "8"
+  assert c3.suit is Suit.hearts
+  let c4 be dealCard(0.24)
+  assert c4.rank is "5"
+  assert c4.suit is Suit.clubs
+end test
 
 function intAsSuit(n as Int) returns Suit
   variable suit set to Suit.clubs
@@ -170,6 +206,13 @@ function intAsSuit(n as Int) returns Suit
   return suit
 end function
 
+test intAsSuit
+  assert intAsSuit(0) is Suit.clubs
+  assert intAsSuit(1) is Suit.diamonds
+  assert intAsSuit(2) is Suit.hearts
+  assert intAsSuit(3) is Suit.spades
+end test
+
 function htmlForGame(game as Game) returns String
   variable html set to "&lt;div class='game'&gt;"
   set html to html + htmlForPlayer(game.dealer)
@@ -180,6 +223,15 @@ function htmlForGame(game as Game) returns String
   return html + "&lt;/div&gt;"
 end function
 
+test htmlForGame
+  let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
+  let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
+  let p be new HumanPlayer("fred", 10) with cards set to [c1, c2]
+  let players be (empty List&lt;of Player&gt;).withAppend(p)
+  let g2 be new Game(1) with players set to players
+  assert htmlForGame(g2) is "&lt;div class='game'&gt;&lt;div class='player'&gt;&lt;div class='details'&gt;Dealer - 1 points &lt;/div&gt;&lt;div class='hand'&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='player'&gt;&lt;div class='details'&gt;fred - 10 points - hand total: 0&lt;/div&gt;&lt;div class='hand'&gt;&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;&lt;div class='card reversed'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='message'&gt;&lt;/div&gt;&lt;/div&gt;"
+end test
+
 function htmlForPlayer(player as Player) returns String
   variable html set to "&lt;div class='player'&gt;"
   set html to html + "&lt;div class='details'&gt;{player.name} - {player.points} points {player.getMessage()}&lt;/div&gt;"
@@ -189,8 +241,15 @@ function htmlForPlayer(player as Player) returns String
     let rank be card.rank
     set html to html + htmlForCard(card)
   end each
-  return html + "&lt;/div&gt;"
+  return html + "&lt;/div&gt;&lt;/div&gt;"
 end function
+
+test htmlForPlayer
+  let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
+  let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
+  let p be new HumanPlayer("charlie", 10) with cards set to [c1, c2]
+  assert htmlForPlayer(p) is "&lt;div class='player'&gt;&lt;div class='details'&gt;charlie - 10 points - hand total: 0&lt;/div&gt;&lt;div class='hand'&gt;&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;&lt;div class='card reversed'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;"
+end test
 
 function htmlForCard(card as Card) returns String
   variable html set to ""
@@ -217,17 +276,21 @@ function htmlForCard(card as Card) returns String
   return html + "&lt;/div&gt;"
 end function
 
+test htmlForCard
+  let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
+  assert htmlForCard(c1) is "&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;"
+  let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
+  assert htmlForCard(c2) is "&lt;div class='card reversed'&gt;&lt;/div&gt;"
+end test
+
 function htmlForSpot(id as String, content as String) returns String
   return "&lt;div class='{id}'&gt;{content}&lt;/div&gt;"
 end function
 
-function strategyA(p as Player, dealerFaceUp as Card) returns Action
-  return Action.stand
-end function
-
-function strategyB(p as Player, dealerFaceUp as Card) returns Action
-  return Action.draw
-end function
+test htmlForSpot
+  assert htmlForSpot("c", "&amp;hearts;") is "&lt;div class='c'&gt;&amp;hearts;&lt;/div&gt;"
+  assert htmlForSpot("u", "10") is "&lt;div class='u'&gt;10&lt;/div&gt;"
+end test
 
 class Game
   constructor(dealerStartPoints as Int)
@@ -354,6 +417,8 @@ abstract class Player
   abstract procedure newHand()
 
   procedure newHandHelper()
+    set property.hasTurn to false
+    set property.softAce to false
     set property.cards to empty List&lt;of Card&gt;
     set property.handTotal to 0
     set property.status to Status.active
@@ -451,39 +516,11 @@ class HumanPlayer inherits Player
   end procedure
 
   function getMessage() returns String
-    variable msg set to statusAsString() + " - hand total: {property.handTotal}"
+    variable msg set to statusAsString() + "- hand total: {property.handTotal}"
     if property.hasTurn then
       set msg to msg + " - press 'd' to draw, 's' to stand"
     end if
     return msg
-  end function
-
-end class
-
-class AutomatedPlayer inherits Player
-  constructor(name as String, decisionFunc as Func&lt;of Player, Card =&gt; Action&gt;, startingPoints as Int)
-    set property.name to name
-    set property.decisionFunc to ref decisionFunc
-    set property.points to startingPoints
-  end constructor
-
-  property decisionFunc as Func&lt;of Player, Card =&gt; Action&gt;
-
-  procedure newHand()
-    call newHandHelper()
-  end procedure
-
-  procedure nextAction(dealerFaceCard as Card)
-    let act be decisionFunc(this, dealerFaceCard)
-    if act is Action.draw then
-      call draw()
-    else
-      call stand()
-    end if
-  end procedure
-
-  function getMessage() returns String
-    return statusAsString() + " - hand total: {property.handTotal}"
   end function
 
 end class
@@ -496,8 +533,6 @@ enum Status active, standing, blackjack, bust
 
 enum Suit clubs, diamonds, hearts, spades
 
-constant styleSheet set to ':root {\n    background-color: darkgreen;\n    padding-left: 5px;\n}\n\n.game {\n    padding: 5px;\n}\n\n.message, .details  {\n    color: white;\n    font-family: Arial, Helvetica, sans-serif;\n}\n\n.hand {\n        margin-top: 5px;\n        height: 150px;\n        padding-bottom: 10px;\n    }\n    \n.card {\n    position: relative;\n    float: left;\n    background-color: white;\n    width: 95px;\n    height:140px;\n    margin-right:10px;\n    padding: 5px;\n    border-radius: 5px;\n    font-family: Helvetica, sans-serif; \n}\n.royal,.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}\n\n/* Standard spots */ \n    .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}\n\n    /* columns */\n    .d,.n,.h,.p,.f {left: 18px }\n    .a,.b,.c,.l,.m,.s,.t {left: 43px;}\n    .e,.o,.i,.r,.g {left: 68px}\n\n    /* rows */\n    .d,.b,.e {top: 0px}\n    .s {top: 20px;}\n    .l {top: 28px;}\n    .n,.o {top: 37px;}\n    .h,.a,.i {top: 57px}\n    .p,.r {top: 75px;}\n    .m {top: 86px;}\n    .t {top: 93px;}\n    .f,.c,.g {top: 114px;}\n\n/* royals */\n    .royal {\n        position: absolute;\n        z-index: 1;\n        width: 95px;\n        height: 140px;\n        line-height: 140px;\n        font-size: 100px;\n    }\n\n/* corner summary */\n    .u {font-size: 15px; width: 15px; text-align: center; left: 0px; top: 2px;}\n    .v {font-size: 20px; width: 15px; text-align: center; left: 0px; top: 12px;}\n\n/* suit colors */\n    .red {color: red}\n    .black {color: black}\n\n/* back */\n    .card.reversed { background-color: rgba(0, 0, 255, 0.607);}'
-
 constant symbols set to {Suit.clubs:"&amp;clubs;", Suit.diamonds:"&amp;diams;", Suit.hearts:"&amp;hearts;", Suit.spades:"&amp;spades;"}
 
 constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
@@ -505,6 +540,8 @@ constant rankValue set to {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":
 constant gridByRank set to {"A":{"royal"}, "2":{"b", "c"}, "3":{"a", "b", "c"}, "4":{"d", "e", "f", "g"}, "5":{"a", "d", "e", "f", "g"}, "6":{"d", "e", "f", "g", "h", "i"}, "7":{"d", "e", "f", "g", "h", "i", "l"}, "8":{"d", "e", "f", "g", "h", "i", "l", "m"}, "9":{"a", "d", "e", "f", "g", "n", "o", "p", "r"}, "10":{"d", "e", "f", "g", "n", "o", "p", "r", "s", "t"}, "J":{"royal"}, "Q":{"royal"}, "K":{"royal"}}
 
 constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"red", Suit.spades:"black"}
+
+constant styleSheet set to ':root {\n    background-color: darkgreen;\n    padding-left: 5px;\n}\n\n.game {\n    padding: 5px;\n}\n\n.message, .details  {\n    color: white;\n    font-family: Arial, Helvetica, sans-serif;\n}\n\n.hand {\n        margin-top: 5px;\n        height: 150px;\n        padding-bottom: 10px;\n    }\n    \n.card {\n    position: relative;\n    float: left;\n    background-color: white;\n    width: 95px;\n    height:140px;\n    margin-right:10px;\n    padding: 5px;\n    border-radius: 5px;\n    font-family: Helvetica, sans-serif; \n}\n.royal,.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}\n\n/* Standard spots */ \n    .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}\n\n    /* columns */\n    .d,.n,.h,.p,.f {left: 18px }\n    .a,.b,.c,.l,.m,.s,.t {left: 43px;}\n    .e,.o,.i,.r,.g {left: 68px}\n\n    /* rows */\n    .d,.b,.e {top: 0px}\n    .s {top: 20px;}\n    .l {top: 28px;}\n    .n,.o {top: 37px;}\n    .h,.a,.i {top: 57px}\n    .p,.r {top: 75px;}\n    .m {top: 86px;}\n    .t {top: 93px;}\n    .f,.c,.g {top: 114px;}\n\n/* royals */\n    .royal {\n        position: absolute;\n        z-index: 1;\n        width: 95px;\n        height: 140px;\n        line-height: 140px;\n        font-size: 100px;\n    }\n\n/* corner summary */\n    .u {font-size: 15px; width: 15px; text-align: center; left: 0px; top: 2px;}\n    .v {font-size: 20px; width: 15px; text-align: center; left: 0px; top: 12px;}\n\n/* suit colors */\n    .red {color: red}\n    .black {color: black}\n\n/* back */\n    .card.reversed { background-color: rgba(0, 0, 255, 0.607);}'
 </div> and immediately use <b>file &gt; auto save</b> the
      <i>code</i> to your local file storage: because you will be making changes and want to ensure that your changes are saved.
     
@@ -619,22 +656,13 @@ constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"r
 <textarea class="question" id="question8-0" placeholder="input is required"></textarea>
 <h4>Notes</h4><textarea class="notes" id="notes8" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done8">Step Completed</label><input class="step-complete" type="checkbox" id="done8"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="step" id="step9"><h1>Step 9: selecting simple and compound instructions</h1>
-  <p>Watch the next video:</p>
-  <div style="position: relative; padding-bottom: 60.60606060606061%; height: 0;"><iframe src="https://www.loom.com/embed/1ffb5403bde04fdda5eebce6174d7f32" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
-   <p>List several different examples of compound instructions</p>
-<textarea class="question" id="question9-0" placeholder="input is required"></textarea>
-   <p>Can you select the 'header comment' (beginning '# Elan') at the top of the code?</p>
-<textarea class="question" id="question9-1" placeholder="input is required"></textarea>
-<h4>Notes</h4><textarea class="notes" id="notes9" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done9">Step Completed</label><input class="step-complete" type="checkbox" id="done9"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
-
-<div class="step" id="step10"><h1>Step 10: adding a new instruction</h1>
+<div class="step" id="step9"><h1>Step 9: adding a new instruction</h1>
   <p>Watch the next video:</p>
   <div style="position: relative; padding-bottom: 64.67065868263472%; height: 0;"><iframe src="https://www.loom.com/embed/b7376d0f99cd421e810936d1841ba118" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
   <p>Your first task is to turn the program into a two-player game (not counting the dealer, played by the computer):</p>
   <ul>
     <li>Near the top of <el-code><el-kw>main</el-kw></el-code>, find this instruction:
-    <el-code-block><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code-block>
+    <el-code-block><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-id>game</el-id>.<el-method><el-method>addPlayer</el-method></el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><span>(</span><el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>HumanPlayer</el-type>("<el-lit>Player A</el-lit>", <el-lit>1000</el-lit>)</el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><span>)</span><el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code-block>
     and immediately <i>below</i> it insert a new <el-code><el-kw>call</el-kw></el-code> instruction.</li>
     <li>Into the <i>two</i> editable fields type in the same code that you see in the instruction immediately above it,
     <i>except</i> that instead of <el-code>"<el-lit>Player A</el-lit>"</el-code>, write <el-code>"<el-lit>Player B</el-lit>"</el-code>. Note that:
@@ -651,31 +679,31 @@ constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"r
     and <b>Player B</b> (or, if you are pairing with another person, control one each).</li>
   </ul>
   <p>When does the dealer play, now ?</p>
-<textarea class="question" id="question10-0" placeholder="input is required"></textarea>
-<h4>Notes</h4><textarea class="notes" id="notes10" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done10">Step Completed</label><input class="step-complete" type="checkbox" id="done10"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<textarea class="question" id="question9-0" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" id="notes9" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done9">Step Completed</label><input class="step-complete" type="checkbox" id="done9"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="step" id="step11"><h1>Step 11: modifying an existing instruction</h1>
+<div class="step" id="step10"><h1>Step 10: modifying an existing instruction</h1>
   <ul>
     <li> Go back to the instruction that creates <b>Player A</b> and <i>above it</i>insert a <el-code><el-kw>let</el-kw></el-code> instruction
       and note that this features two editable fields.</li>
     <li>In the first field enter <el-code><el-id>name1</el-id></el-code> and in the second field type in the following code
     using the auto-completions to help <el-code><el-method>inputString</el-method>("<el-lit>Enter name for first player</el-lit>")</el-code>
     <p>What message do you see within the code editor?</p>
-<textarea class="question" id="question11-0" placeholder="input is required"></textarea>
+<textarea class="question" id="question10-0" placeholder="input is required"></textarea>
     <p>And what do you observe in the 'status panel' - at the top of the screen, just to the right of the code editor?</p>
-<textarea class="question" id="question11-1" placeholder="input is required"></textarea>
+<textarea class="question" id="question10-1" placeholder="input is required"></textarea>
     Then revert the field back to <el-code><el-id>name2</el-id></el-code>.</li>
     <li>Select the instruction below this - in other words the one that you added previously - and <b>Tab</b> to the second
     field. Edit the contents, replacing the literal string <el-code>"<el-lit>Player A</el-lit>"</el-code> with <el-code><el-id>name2</el-id></el-code> 
     (no quotation marks because this is an <i>identifier</i> that holds a string, not a literal string).</li>
     <li>Run the program. When asked, type in your own first name, finishing with the <b>Enter</b> key.
       <p>Has the name you entered made a difference?</p>
-<textarea class="question" id="question11-2" placeholder="input is required"></textarea>
+<textarea class="question" id="question10-2" placeholder="input is required"></textarea>
       <p>There is an unwanted 'side effect' on the screen - what is it?</p>
-<textarea class="question" id="question11-3" placeholder="input is required"></textarea>
+<textarea class="question" id="question10-3" placeholder="input is required"></textarea>
     </li>
     <li>To fix the unwanted side effect, insert the following new instruction immediately<i>after</i> the second player is created and added to the game:
-    <el-code><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-method>clearPrintedText</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="args6" class="empty optional ok" tabindex="-1"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)<el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code></li>
+    <el-code><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-method>clearPrintedText</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><span>(</span><el-field id="args6" class="empty optional ok" tabindex="-1"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><span>)</span><el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code></li>
     <li>Now change the program so that it asks the user to enter a name for the <i>second</i> player, this time using
       the identifier <el-code><el-id>name2</el-id></el-code>.</li>
     <li>Run the program again, and confirm that you can now name both players.</li>
@@ -683,13 +711,13 @@ constant colours set to {Suit.clubs:"black", Suit.diamonds:"red", Suit.hearts:"r
   
   <p>What would happen if you define the second identifier as name2, but in the next line
   you were to write name1? (If you need to check, run the program) </p>
-<textarea class="question" id="question11-4" placeholder="input is required"></textarea>
+<textarea class="question" id="question10-4" placeholder="input is required"></textarea>
   <p>And what if the the second identifier was still name2 but you used name3
   in the following instruction? This time, can you even run the program to try it?</p>
-<textarea class="question" id="question11-5" placeholder="input is required"></textarea>
-<h4>Notes</h4><textarea class="notes" id="notes11" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done11">Step Completed</label><input class="step-complete" type="checkbox" id="done11"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<textarea class="question" id="question10-5" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" id="notes10" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done10">Step Completed</label><input class="step-complete" type="checkbox" id="done10"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
-<div class="final" id="final12"><h1>Congratulations! You have completed this worksheet</h1>
+<div class="final" id="final11"><h1>Congratulations! You have completed this worksheet</h1>
 
 <p>You have learned:
 </p><ul>
@@ -714,7 +742,7 @@ or immediately afterwards.</p>
 
   <div style="position: relative; padding-bottom: 57.26405090137858%; height: 0;"><iframe src="https://www.loom.com/embed/f9776ffce8c1484aada302e3e6b22e2d" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-<p>All the techniques for navigating and modifying instructions may be looked up in the <b>Help</b> tab. For example: <a class="help" href="IDENavigation.html#Navigation" id="help12-0">show in Help</a></p>
+<p>All the techniques for navigating and modifying instructions may be looked up in the <b>Help</b> tab. For example: <a class="help" href="IDENavigation.html#Navigation" id="help11-0">show in Help</a></p>
 </div>
 
   <div hidden="" id="hash"></div>
