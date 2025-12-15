@@ -17,14 +17,24 @@ import { TestRunner } from "./test-runner";
 import {
   cancelMsg,
   checkIsChrome,
+  collapseAllMenus,
+  collapseMenu,
   confirmContinueOnNonChromeBrowser,
   delayMessage,
-  globalKeys,
+  handleClickDropDownButton,
+  handleKeyDropDownButton,
+  handleMenuArrowDown,
+  handleMenuArrowUp,
   ICodeEditorViewModel,
   IIDEViewModel,
   internalErrorMsg,
+  isDisabled,
+  isGlobalKeyboardEvent,
+  ITabViewModel,
   lastDirId,
   parentId,
+  removeFocussedClassFromAllTabs,
+  setTabToFocussedAndSelected,
   warningOrError,
 } from "./ui-helpers";
 import { fetchDefaultProfile, fetchProfile, fetchUserConfig, sanitiseHtml } from "./web-helpers";
@@ -108,14 +118,47 @@ let errorDOMEvent: Event | undefined;
 let errorEditorEvent: editorEvent | undefined;
 let errorStack: string | undefined;
 
-class IDEViewModel implements IIDEViewModel {
-  focusInfoTab() {
-    showInfoTab();
+class TabViewModel implements ITabViewModel {
+  showDisplayTab() {
+    const tabName = "display-tab";
+    setTabToFocussedAndSelected(tabName);
+    (document.querySelector("#printed-text input") as HTMLInputElement | undefined)?.focus();
+  }
+
+  showInfoTab() {
+    const tabName = "info-tab";
+    setTabToFocussedAndSelected(tabName);
+  }
+
+  showHelpTab() {
+    const tabName = "help-tab";
+    setTabToFocussedAndSelected(tabName);
+    helpIFrame.focus();
+    helpIFrame.contentWindow?.addEventListener("keydown", ideViewModel.globalHandler);
+  }
+
+  showWorksheetTab() {
+    const tabName = "worksheet-tab";
+    setTabToFocussedAndSelected(tabName);
+    if (worksheetLoaded) {
+      worksheetIFrame.focus();
+      worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
+    } else {
+      standardWorksheetButton.focus();
+    }
+  }
+
+  focusInfoTab(cvm: ICodeEditorViewModel) {
+    this.showInfoTab();
     systemInfoDiv.focus();
     systemInfoDiv.classList.add("focussed");
-    codeViewModel.setRunStatus(RunStatus.paused);
+    cvm.setRunStatus(RunStatus.paused);
     systemInfoDiv.innerHTML = "";
   }
+}
+
+class IDEViewModel implements IIDEViewModel {
+  constructor(public readonly tvm: ITabViewModel) {}
 
   updateNameAndSavedStatus(cvm: ICodeEditorViewModel, fm: FileManager) {
     const unsaved = fm.hasUnsavedChanges(cvm) ? " UNSAVED" : "";
@@ -373,12 +416,12 @@ class IDEViewModel implements IIDEViewModel {
     cvm.removeAllSelectorsThatCanBe();
     await this.renderAsHtml(false);
     runButton.focus();
-    showDisplayTab();
+    this.tvm.showDisplayTab();
   }
 
   runDebug() {
     runDebugButton.focus();
-    setTimeout(showDisplayTab);
+    setTimeout(this.tvm.showDisplayTab);
   }
 
   async renderAsHtml(editingField: boolean) {
@@ -432,11 +475,81 @@ class IDEViewModel implements IIDEViewModel {
       button.classList.remove("disabled");
     }
   }
+
+  globalHandler(kp: KeyboardEvent) {
+    // don't check kp instanceof keyboardEvent here or control keys on the help iframe are not picked up
+    if (kp.ctrlKey || kp.metaKey) {
+      switch (kp.key) {
+        case "b":
+        case "B":
+          removeFocussedClassFromAllTabs();
+          if (codeViewModel.isRunningState()) {
+            clearDisplayButton.focus();
+          } else {
+            demosButton.focus();
+          }
+          kp.preventDefault();
+          break;
+        case "d":
+        case "D":
+          displayTabLabel.click();
+          kp.preventDefault();
+          break;
+        case "e":
+        case "E":
+          codeContainer.click();
+          kp.preventDefault();
+          break;
+        case "g":
+        case "G":
+          runDebugButton.click();
+          kp.preventDefault();
+          break;
+        case "h":
+        case "H":
+          helpTabLabel.click();
+          kp.preventDefault();
+          break;
+        case "i":
+        case "I":
+          infoTabLabel.click();
+          kp.preventDefault();
+          break;
+        case "k":
+        case "K":
+          worksheetTabLabel.click();
+          kp.preventDefault();
+          break;
+        case "p":
+        case "P":
+          stepButton.click();
+          kp.preventDefault();
+          break;
+        case "r":
+        case "R":
+          runButton.click();
+          kp.preventDefault();
+          break;
+        case "s":
+        case "S":
+          stopButton.click();
+          kp.preventDefault();
+          break;
+        case "u":
+        case "U":
+          pauseButton.click();
+          kp.preventDefault();
+          break;
+      }
+    }
+  }
 }
 
 const codeViewModel = new CodeEditorViewModel();
 
-const ideViewModel = new IDEViewModel();
+const tabViewModel = new TabViewModel();
+
+const ideViewModel = new IDEViewModel(tabViewModel);
 
 const programRunner = new ProgramRunner();
 
@@ -576,64 +689,7 @@ preferencesButton.addEventListener("click", (event: Event) => {
   setTimeout(() => dialog.showModal(), 1);
 });
 
-function showDisplayTab() {
-  const tabName = "display-tab";
-  setTabToFocussedAndSelected(tabName);
-  (document.querySelector("#printed-text input") as HTMLInputElement | undefined)?.focus();
-}
-
-function showInfoTab() {
-  const tabName = "info-tab";
-  setTabToFocussedAndSelected(tabName);
-}
-
-function showHelpTab() {
-  const tabName = "help-tab";
-  setTabToFocussedAndSelected(tabName);
-  helpIFrame.focus();
-  helpIFrame.contentWindow?.addEventListener("keydown", globalHandler);
-}
-
-function showWorksheetTab() {
-  const tabName = "worksheet-tab";
-  setTabToFocussedAndSelected(tabName);
-  if (worksheetLoaded) {
-    worksheetIFrame.focus();
-    worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
-  } else {
-    standardWorksheetButton.focus();
-  }
-}
-
-function setTabToFocussedAndSelected(tabName: string) {
-  collapseAllMenus();
-  // Remove selected and focussed from other three tabs
-  const allTabElements = document.getElementsByClassName("tab-element");
-  for (const e of allTabElements) {
-    e.classList.remove("selected");
-    e.classList.remove("focussed");
-  }
-  // Add selected and focussed to the specified tab
-  const newTabElements = document.getElementsByClassName(tabName);
-  for (const e of newTabElements as HTMLCollectionOf<HTMLElement>) {
-    e.classList.add("selected");
-    e.classList.add("focussed");
-    e.focus();
-  }
-}
-
-function removeFocussedClassFromAllTabs() {
-  const allTabElements = document.getElementsByClassName("tab-element");
-  for (const e of allTabElements) {
-    e.classList.remove("focussed");
-  }
-  const allTabContent = document.getElementsByClassName("tab-content");
-  for (const e of allTabContent) {
-    e.classList.remove("focussed");
-  }
-}
-
-helpTabLabel.addEventListener("click", showHelpTab);
+helpTabLabel.addEventListener("click", tabViewModel.showHelpTab);
 
 helpHomeButton.addEventListener("click", () => {
   window.open("documentation/index.html", "help-iframe")?.focus();
@@ -647,15 +703,15 @@ helpForwardButton.addEventListener("click", () => {
   helpIFrame.contentWindow?.history.forward();
 });
 
-displayTabLabel.addEventListener("click", showDisplayTab);
-infoTabLabel.addEventListener("click", showInfoTab);
-worksheetTabLabel.addEventListener("click", showWorksheetTab);
+displayTabLabel.addEventListener("click", tabViewModel.showDisplayTab);
+infoTabLabel.addEventListener("click", tabViewModel.showInfoTab);
+worksheetTabLabel.addEventListener("click", tabViewModel.showWorksheetTab);
 
 let worksheetLoaded = false;
 
 worksheetIFrame.addEventListener("load", () => {
   worksheetLoaded = true;
-  worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
+  worksheetIFrame.contentWindow?.addEventListener("keydown", ideViewModel.globalHandler);
   worksheetIFrame.contentWindow?.addEventListener("click", () => {
     const newTabElements = document.getElementsByClassName("worksheet-tab");
     for (const e of newTabElements as HTMLCollectionOf<HTMLElement>) {
@@ -667,8 +723,8 @@ worksheetIFrame.addEventListener("load", () => {
 });
 
 helpIFrame.addEventListener("load", () => {
-  helpIFrame.contentWindow?.addEventListener("keydown", globalHandler);
-  helpIFrame.contentWindow?.addEventListener("click", () => showHelpTab());
+  helpIFrame.contentWindow?.addEventListener("keydown", ideViewModel.globalHandler);
+  helpIFrame.contentWindow?.addEventListener("click", () => tabViewModel.showHelpTab());
 });
 
 async function handleStatusClick(event: Event, tag: string, useParent: boolean) {
@@ -845,7 +901,7 @@ function systemInfoPrintUnsafe(text: string, scroll = true) {
     systemInfoDiv.scrollTop = systemInfoDiv.scrollHeight;
   }
   systemInfoDiv.focus();
-  showInfoTab();
+  tabViewModel.showInfoTab();
 }
 
 function getModKey(e: KeyboardEvent | MouseEvent) {
@@ -1680,15 +1736,6 @@ async function handleDownload(event: Event) {
   }
 }
 
-function isDisabled(evt: Event) {
-  if (evt.target instanceof HTMLDivElement && evt.target.classList.contains("disabled")) {
-    evt.preventDefault();
-    evt.stopPropagation();
-    return true;
-  }
-  return false;
-}
-
 async function handleChromeDownload(event: Event) {
   if (!isDisabled(event)) {
     try {
@@ -1725,170 +1772,15 @@ if (!isElanProduction) {
   document.querySelector("#worksheet-tab .dropdown-content")?.append(testLink);
 }
 
-function isGlobalKeyboardEvent(kp: Event) {
-  return kp instanceof KeyboardEvent && (kp.ctrlKey || kp.metaKey) && globalKeys.includes(kp.key);
-}
-
-function globalHandler(kp: KeyboardEvent) {
-  // don't check kp instanceof keyboardEvent here or control keys on the help iframe are not picked up
-  if (kp.ctrlKey || kp.metaKey) {
-    switch (kp.key) {
-      case "b":
-      case "B":
-        removeFocussedClassFromAllTabs();
-        if (codeViewModel.isRunningState()) {
-          clearDisplayButton.focus();
-        } else {
-          demosButton.focus();
-        }
-        kp.preventDefault();
-        break;
-      case "d":
-      case "D":
-        displayTabLabel.click();
-        kp.preventDefault();
-        break;
-      case "e":
-      case "E":
-        codeContainer.click();
-        kp.preventDefault();
-        break;
-      case "g":
-      case "G":
-        runDebugButton.click();
-        kp.preventDefault();
-        break;
-      case "h":
-      case "H":
-        helpTabLabel.click();
-        kp.preventDefault();
-        break;
-      case "i":
-      case "I":
-        infoTabLabel.click();
-        kp.preventDefault();
-        break;
-      case "k":
-      case "K":
-        worksheetTabLabel.click();
-        kp.preventDefault();
-        break;
-      case "p":
-      case "P":
-        stepButton.click();
-        kp.preventDefault();
-        break;
-      case "r":
-      case "R":
-        runButton.click();
-        kp.preventDefault();
-        break;
-      case "s":
-      case "S":
-        stopButton.click();
-        kp.preventDefault();
-        break;
-      case "u":
-      case "U":
-        pauseButton.click();
-        kp.preventDefault();
-        break;
-    }
-  }
-}
-
-window.addEventListener("keydown", globalHandler);
-
-function collapseMenu(button: HTMLElement, andFocus: boolean) {
-  if (andFocus) {
-    button.focus();
-  }
-  const menuId = button.getAttribute("aria-controls")!;
-  document.getElementById(menuId)!.hidden = true;
-  button.setAttribute("aria-expanded", "false");
-}
-
-function collapseAllMenus() {
-  const allDropDowns = document.querySelectorAll(
-    "button[aria-haspopup='true']",
-  ) as NodeListOf<HTMLElement>;
-
-  for (const e of allDropDowns) {
-    collapseMenu(e, false);
-  }
-}
-
-function handleClickDropDownButton(event: Event) {
-  removeFocussedClassFromAllTabs();
-  const button = event.target as HTMLButtonElement;
-  const isExpanded = button.getAttribute("aria-expanded") === "true";
-  const menuId = button.getAttribute("aria-controls")!;
-  const menu = document.getElementById(menuId)!;
-  button.setAttribute("aria-expanded", `${!isExpanded}`);
-  menu.hidden = isExpanded;
-
-  const allDropDowns = document.querySelectorAll(
-    "button[aria-haspopup='true']",
-  ) as NodeListOf<HTMLElement>;
-
-  for (const e of allDropDowns) {
-    if (e.id !== button.id) {
-      collapseMenu(e, false);
-    }
-  }
-
-  const firstitem = menu.querySelector(".menu-item") as HTMLElement;
-  firstitem.focus();
-
-  event.stopPropagation();
-}
+window.addEventListener("keydown", ideViewModel.globalHandler);
 
 demosButton.addEventListener("click", handleClickDropDownButton);
 fileButton.addEventListener("click", handleClickDropDownButton);
 standardWorksheetButton.addEventListener("click", handleClickDropDownButton);
 
-function handleKeyDropDownButton(event: KeyboardEvent) {
-  removeFocussedClassFromAllTabs();
-  const button = event.target as HTMLButtonElement;
-  const menuId = button.getAttribute("aria-controls")!;
-  const menu = document.getElementById(menuId)!;
-  if (event.key === "ArrowDown") {
-    const firstitem = menu.querySelector(".menu-item") as HTMLElement;
-    firstitem.focus();
-  } else if (event.key === "Escape") {
-    collapseMenu(button, true);
-  }
-}
-
 demosButton.addEventListener("keydown", handleKeyDropDownButton);
 fileButton.addEventListener("keydown", handleKeyDropDownButton);
 standardWorksheetButton.addEventListener("keydown", handleKeyDropDownButton);
-
-function handleMenuArrowUp() {
-  const focusedItem = document.activeElement as HTMLElement;
-
-  let previousItem = focusedItem;
-
-  do {
-    previousItem = previousItem?.previousElementSibling as HTMLElement;
-    if (previousItem) {
-      previousItem.focus();
-    }
-  } while (previousItem && (previousItem as any).disabled);
-}
-
-function handleMenuArrowDown() {
-  const focusedItem = document.activeElement as HTMLElement;
-
-  let nextItem: HTMLElement = focusedItem;
-
-  do {
-    nextItem = nextItem?.nextElementSibling as HTMLElement;
-    if (nextItem) {
-      nextItem.focus();
-    }
-  } while (nextItem && (nextItem as any).disabled);
-}
 
 async function handleMenuKey(event: KeyboardEvent) {
   removeFocussedClassFromAllTabs();
@@ -1919,12 +1811,12 @@ demosMenu.addEventListener("click", () => collapseMenu(demosButton, false));
 fileMenu.addEventListener("click", () => collapseMenu(fileButton, false));
 worksheetMenu.addEventListener("click", () => collapseMenu(standardWorksheetButton, false));
 
-displayTab?.addEventListener("click", () => showDisplayTab());
-infoTab?.addEventListener("click", () => showInfoTab());
-helpTab?.addEventListener("click", () => showHelpTab());
-worksheetTab?.addEventListener("click", () => showWorksheetTab());
-worksheetIFrame?.contentWindow?.addEventListener("click", () => showWorksheetTab());
-helpIFrame?.contentWindow?.addEventListener("click", () => showHelpTab());
+displayTab?.addEventListener("click", () => tabViewModel.showDisplayTab());
+infoTab?.addEventListener("click", () => tabViewModel.showInfoTab());
+helpTab?.addEventListener("click", () => tabViewModel.showHelpTab());
+worksheetTab?.addEventListener("click", () => tabViewModel.showWorksheetTab());
+worksheetIFrame?.contentWindow?.addEventListener("click", () => tabViewModel.showWorksheetTab());
+helpIFrame?.contentWindow?.addEventListener("click", () => tabViewModel.showHelpTab());
 
 window.addEventListener("click", () => {
   collapseContextMenu();

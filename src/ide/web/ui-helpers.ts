@@ -57,6 +57,15 @@ export function checkIsChrome() {
   }
 }
 
+export function isDisabled(evt: Event) {
+  if (evt.target instanceof HTMLDivElement && evt.target.classList.contains("disabled")) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    return true;
+  }
+  return false;
+}
+
 export function confirmContinueOnNonChromeBrowser() {
   return confirm(
     `Elan is compatible with the Chrome or Edge browser. It does not work correctly in Firefox or Safari.`,
@@ -185,8 +194,20 @@ export interface ICodeEditorViewModel {
   isTestRunningState(): boolean;
 }
 
+export interface ITabViewModel {
+  showDisplayTab(): void;
+
+  showInfoTab(): void;
+
+  showHelpTab(): void;
+
+  showWorksheetTab(): void;
+
+  focusInfoTab(cvm: ICodeEditorViewModel): void;
+}
+
 export interface IIDEViewModel {
-  focusInfoTab(): void;
+  tvm: ITabViewModel;
   updateDisplayValues(cvm: ICodeEditorViewModel): void;
   setPauseButtonState(waitingForUserInput?: boolean): void;
   toggleInputStatus(rs: RunStatus): void;
@@ -246,3 +267,118 @@ export const globalKeys = [
   "-",
   "=",
 ];
+
+export function isGlobalKeyboardEvent(kp: Event) {
+  return kp instanceof KeyboardEvent && (kp.ctrlKey || kp.metaKey) && globalKeys.includes(kp.key);
+}
+
+export function collapseMenu(button: HTMLElement, andFocus: boolean) {
+  if (andFocus) {
+    button.focus();
+  }
+  const menuId = button.getAttribute("aria-controls")!;
+  document.getElementById(menuId)!.hidden = true;
+  button.setAttribute("aria-expanded", "false");
+}
+
+export function collapseAllMenus() {
+  const allDropDowns = document.querySelectorAll(
+    "button[aria-haspopup='true']",
+  ) as NodeListOf<HTMLElement>;
+
+  for (const e of allDropDowns) {
+    collapseMenu(e, false);
+  }
+}
+
+export function setTabToFocussedAndSelected(tabName: string) {
+  collapseAllMenus();
+  // Remove selected and focussed from other three tabs
+  const allTabElements = document.getElementsByClassName("tab-element");
+  for (const e of allTabElements) {
+    e.classList.remove("selected");
+    e.classList.remove("focussed");
+  }
+  // Add selected and focussed to the specified tab
+  const newTabElements = document.getElementsByClassName(tabName);
+  for (const e of newTabElements as HTMLCollectionOf<HTMLElement>) {
+    e.classList.add("selected");
+    e.classList.add("focussed");
+    e.focus();
+  }
+}
+
+export function removeFocussedClassFromAllTabs() {
+  const allTabElements = document.getElementsByClassName("tab-element");
+  for (const e of allTabElements) {
+    e.classList.remove("focussed");
+  }
+  const allTabContent = document.getElementsByClassName("tab-content");
+  for (const e of allTabContent) {
+    e.classList.remove("focussed");
+  }
+}
+
+export function handleClickDropDownButton(event: Event) {
+  removeFocussedClassFromAllTabs();
+  const button = event.target as HTMLButtonElement;
+  const isExpanded = button.getAttribute("aria-expanded") === "true";
+  const menuId = button.getAttribute("aria-controls")!;
+  const menu = document.getElementById(menuId)!;
+  button.setAttribute("aria-expanded", `${!isExpanded}`);
+  menu.hidden = isExpanded;
+
+  const allDropDowns = document.querySelectorAll(
+    "button[aria-haspopup='true']",
+  ) as NodeListOf<HTMLElement>;
+
+  for (const e of allDropDowns) {
+    if (e.id !== button.id) {
+      collapseMenu(e, false);
+    }
+  }
+
+  const firstitem = menu.querySelector(".menu-item") as HTMLElement;
+  firstitem.focus();
+
+  event.stopPropagation();
+}
+
+export function handleKeyDropDownButton(event: KeyboardEvent) {
+  removeFocussedClassFromAllTabs();
+  const button = event.target as HTMLButtonElement;
+  const menuId = button.getAttribute("aria-controls")!;
+  const menu = document.getElementById(menuId)!;
+  if (event.key === "ArrowDown") {
+    const firstitem = menu.querySelector(".menu-item") as HTMLElement;
+    firstitem.focus();
+  } else if (event.key === "Escape") {
+    collapseMenu(button, true);
+  }
+}
+
+export function handleMenuArrowUp() {
+  const focusedItem = document.activeElement as HTMLElement;
+
+  let previousItem = focusedItem;
+
+  do {
+    previousItem = previousItem?.previousElementSibling as HTMLElement;
+    if (previousItem) {
+      previousItem.focus();
+    }
+  } while (previousItem && (previousItem as any).disabled);
+}
+
+export function handleMenuArrowDown() {
+  const focusedItem = document.activeElement as HTMLElement;
+
+  let nextItem: HTMLElement = focusedItem;
+
+  do {
+    nextItem = nextItem?.nextElementSibling as HTMLElement;
+    if (nextItem) {
+      nextItem.focus();
+    }
+  } while (nextItem && (nextItem as any).disabled);
+}

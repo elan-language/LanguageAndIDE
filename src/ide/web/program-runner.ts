@@ -55,7 +55,7 @@ export class ProgramRunner {
     if (this.pendingBreakpoints.length > 0) {
       const next = this.pendingBreakpoints[0];
       this.pendingBreakpoints = this.pendingBreakpoints.slice(1);
-      vm.focusInfoTab();
+      vm.tvm.focusInfoTab(cvm);
 
       vm.printDebugInfo(this.getDebugSymbols(next));
 
@@ -107,7 +107,7 @@ export class ProgramRunner {
             if (cvm.readRunStatus() === RunStatus.paused) {
               this.pendingBreakpoints.push(data);
             } else {
-              vm.focusInfoTab();
+              vm.tvm.focusInfoTab(cvm);
 
               vm.printDebugInfo(this.getDebugSymbols(data));
 
@@ -121,7 +121,7 @@ export class ProgramRunner {
               this.processingSingleStep = true;
               this.pendingBreakpoints = [];
               if (this.singleStepping) {
-                vm.focusInfoTab();
+                vm.tvm.focusInfoTab(cvm);
                 vm.printDebugInfo(this.getDebugSymbols(data));
                 vm.setPausedAtLocation(data.pausedAt);
               }
