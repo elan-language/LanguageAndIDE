@@ -17,8 +17,8 @@ function getDocs(sourceDir: string): string[] {
 }
 
 function updatePaths(contents: string) {
-  const repoUrl = `<link href="../ide/styles/`;
-  const prodUrl = `<link href="../styles/`;
+  const repoUrl = `href="../ide/styles/`;
+  const prodUrl = `href="../styles/`;
   const from = repoUrl;
   const to = prodUrl;
   const newContents = contents.replaceAll(from, to);

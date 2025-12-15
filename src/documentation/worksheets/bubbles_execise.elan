@@ -1,4 +1,4 @@
-# 627ac0953039c89f7e01ae795aa4d739f3261dee1d8a9288f5299b1fdb00eaab Elan 1.2.0 guest default_profile valid
+# 3e0430d0067f2519de95c69d4bc7853d4a38fff618c44992f7e09b2f64824abd Elan 1.8.3 guest default_profile valid
 
 # Exercise: use VectorGraphics to create an attractive simple animation
 # 1. Create a 'main' and within it add a 'let' statement to define a new List<of CircleVG>
