@@ -538,8 +538,8 @@ export async function createTestRunner() {
   return await getTestRunner(system, stdlib);
 }
 
-export async function testDemoProgram(program: string) {
-  const f = await loadFileAsModelNew(`${__dirname}\\..\\..\\src\\demo_programs\\${program}`);
+export async function testElanProgram(pathFromSrc: string) {
+  const f = await loadFileAsModelNew(`${__dirname}\\..\\..\\src\\${pathFromSrc}`);
   const runner = await createTestRunner();
   f.refreshParseAndCompileStatuses(false);
   assert.equal(f.readParseStatus(), ParseStatus.valid);
@@ -551,6 +551,8 @@ export async function testDemoProgram(program: string) {
     assert.equal(ts, TestStatus.pass);
   }
 }
+
+
 
 export function asDebugSymbol(name: string, value: any, typeMap : string) {
   return {
