@@ -175,6 +175,10 @@ export function isKnownType(s: SymbolType): boolean {
   return !(s instanceof UnknownType);
 }
 
+export function isTuple(s: Scope): s is TupleAsn {
+  return s instanceof TupleAsn;
+}
+
 export function isDefinitionScope(s: Scope): boolean {
   return s instanceof AbstractDefinitionAsn || s instanceof EachAsn || s instanceof ForAsn;
 }
