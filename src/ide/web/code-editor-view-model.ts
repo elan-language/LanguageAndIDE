@@ -18,6 +18,7 @@ import { TestRunner } from "./test-runner";
 import {
   collapseAllMenus,
   delayMessage,
+  getFocused,
   ICodeEditorViewModel,
   IIDEViewModel,
   removeFocussedClassFromAllTabs,
@@ -466,5 +467,17 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     this.fileName = fileName;
     fm.reset();
     await this.readAndParse(vm, fm, tr, rawCode, fileName, ParseMode.loadNew);
+  }
+
+  showCode() {
+    collapseAllMenus();
+    removeFocussedClassFromAllTabs();
+    const focused = getFocused();
+    if (focused) {
+      focused.focus();
+    } else {
+      this.getFirstChild().select();
+      getFocused()?.focus();
+    }
   }
 }

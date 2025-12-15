@@ -20,6 +20,7 @@ import {
   collapseAllMenus,
   collapseMenu,
   confirmContinueOnNonChromeBrowser,
+  getFocused,
   handleClickDropDownButton,
   handleKeyDropDownButton,
   handleMenuArrowDown,
@@ -1164,10 +1165,6 @@ async function handleEditorEvent(
   event.stopPropagation();
 }
 
-function getFocused() {
-  return document.querySelector(".focused") as HTMLUnknownElement | undefined;
-}
-
 /**
  * Render the document
  */
@@ -1237,7 +1234,7 @@ async function updateContent(text: string, editingField: boolean) {
       return;
     }
 
-    showCode();
+    codeViewModel.showCode();
   });
 
   codeContainer.addEventListener("mousedown", (event) => {
@@ -1411,18 +1408,6 @@ async function updateContent(text: string, editingField: boolean) {
   }
 
   cursorDefault();
-}
-
-function showCode() {
-  collapseAllMenus();
-  removeFocussedClassFromAllTabs();
-  const focused = getFocused();
-  if (focused) {
-    focused.focus();
-  } else {
-    codeViewModel.getFirstChild().select();
-    getFocused()?.focus();
-  }
 }
 
 function printDebugSymbol(s: DebugSymbol) {

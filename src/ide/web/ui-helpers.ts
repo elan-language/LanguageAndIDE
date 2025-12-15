@@ -382,3 +382,7 @@ export function handleMenuArrowDown() {
     }
   } while (nextItem && (nextItem as any).disabled);
 }
+
+export function getFocused() {
+  return document.querySelector(".focused") as HTMLUnknownElement | undefined;
+}
