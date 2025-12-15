@@ -1,70 +1,86 @@
-import { testDemoProgram } from "./testHelpers";
+import { testElanProgram } from "./testHelpers";
 
 suite("Demo compile", () => {
   test("test best-fit", async () => {
-    await testDemoProgram("best-fit.elan");
+    await testElanProgram("demo_programs\\best-fit.elan");
   });
   test("test binary-search", async () => {
-    await testDemoProgram("binary-search.elan");
+    await testElanProgram("demo_programs\\binary-search.elan");
   });
   test("test bubbles", async () => {
-    await testDemoProgram("bubbles.elan");
+    await testElanProgram("demo_programs\\bubbles.elan");
   });
   test("test burrow", async () => {
-    await testDemoProgram("burrow.elan");
+    await testElanProgram("demo_programs\\burrow.elan");
   });
   test("test collatz", async () => {
-    await testDemoProgram("collatz.elan");
+    await testElanProgram("demo_programs\\collatz.elan");
   });
   test("test fern", async () => {
-    await testDemoProgram("fern.elan");
+    await testElanProgram("demo_programs\\fern.elan");
   });
   test("test fern-params", async () => {
-    await testDemoProgram("fern-params.elan");
+    await testElanProgram("demo_programs\\fern-params.elan");
   });
   test("test in-place-ripple-sort", async () => {
-    await testDemoProgram("in-place-ripple-sort.elan");
+    await testElanProgram("demo_programs\\in-place-ripple-sort.elan");
   });
   test("test julia-set", async () => {
-    await testDemoProgram("julia-set.elan");
+    await testElanProgram("demo_programs\\julia-set.elan");
   });
   test("test kaleidoscope", async () => {
-    await testDemoProgram("kaleidoscope.elan");
+    await testElanProgram("demo_programs\\kaleidoscope.elan");
   });
   test("test life", async () => {
-    await testDemoProgram("life.elan");
+    await testElanProgram("demo_programs\\life.elan");
   });
   test("test maze-generator", async () => {
-    await testDemoProgram("maze-generator.elan");
+    await testElanProgram("demo_programs\\maze-generator.elan");
   });
   test("test password-generator", async () => {
-    await testDemoProgram("password-generator.elan");
+    await testElanProgram("demo_programs\\password-generator.elan");
   });
   test("test pathfinder", async () => {
-    await testDemoProgram("pathfinder.elan");
+    await testElanProgram("demo_programs\\pathfinder.elan");
   });
   test("test roman-numerals-turing-machine.elan", async () => {
-    await testDemoProgram("roman-numerals-turing-machine.elan");
+    await testElanProgram("demo_programs\\roman-numerals-turing-machine.elan");
   });
   test("test snake_FP", async () => {
-    await testDemoProgram("snake_FP.elan");
+    await testElanProgram("demo_programs\\snake_FP.elan");
   });
   test("test snake_OOP", async () => {
-    await testDemoProgram("snake_OOP.elan");
+    await testElanProgram("demo_programs\\snake_OOP.elan");
   });
   test("test snake_PP", async () => {
-    await testDemoProgram("snake_PP.elan");
+    await testElanProgram("demo_programs\\snake_PP.elan");
   });
   test("test turtle-snowflake", async () => {
-    await testDemoProgram("turtle-snowflake.elan");
+    await testElanProgram("demo_programs\\turtle-snowflake.elan");
   });
   test("test turtle-spiral", async () => {
-    await testDemoProgram("turtle-spiral.elan");
+    await testElanProgram("demo_programs\\turtle-spiral.elan");
   });
   test("test wordle-solver", async () => {
-    await testDemoProgram("wordle-solver.elan");
+    await testElanProgram("demo_programs\\wordle-solver.elan");
   });
   test("test wordle-demo", async () => {
-    await testDemoProgram("wordle-demo.elan");
+    await testElanProgram("demo_programs\\wordle-demo.elan");
+  });
+  //Worksheet loaded code
+  test("test blackjack 1", async () => {
+    await testElanProgram("documentation\\worksheets\\blackjack\\blackjack_1begin.elan");
+  });
+  test("test blackjack 2", async () => {
+    await testElanProgram("documentation\\worksheets\\blackjack\\blackjack_2begin.elan");
+  });
+  test("test wordle 1", async () => {
+    await testElanProgram("documentation\\worksheets\\wordle\\wordle_1begin.elan");
+  });
+  test("test wordle 2", async () => {
+    await testElanProgram("documentation\\worksheets\\wordle\\wordle_2begin.elan");
+  });
+  test("test wordle 3", async () => {
+    await testElanProgram("documentation\\worksheets\\wordle\\wordle_3begin.elan");
   });
 });
