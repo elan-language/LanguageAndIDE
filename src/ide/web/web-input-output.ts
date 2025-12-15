@@ -7,7 +7,7 @@ export class WebInputOutput implements ElanInputOutput {
   keyBuffer: KeyboardEvent[] = [];
 
   private display: HTMLElement;
-  private lastDirId = "elan-data";
+  private lastDataDirId = "elan-data";
 
   constructor() {
     this.display = document.getElementById("display") as HTMLElement;
@@ -60,7 +60,7 @@ export class WebInputOutput implements ElanInputOutput {
         try {
           [fileHandle] = await window.showOpenFilePicker({
             startIn: "documents",
-            id: this.lastDirId,
+            id: this.lastDataDirId,
           });
           const file = await fileHandle.getFile();
 
@@ -122,7 +122,7 @@ export class WebInputOutput implements ElanInputOutput {
       const fh = await self.showSaveFilePicker({
         suggestedName: fileName,
         startIn: "documents",
-        id: this.lastDirId,
+        id: this.lastDataDirId,
       });
       const writeable = await fh.createWritable();
       await writeable.write(data);
