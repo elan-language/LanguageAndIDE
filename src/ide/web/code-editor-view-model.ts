@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { AssertOutcome } from "../../compiler/assert-outcome";
 import { StdLib } from "../../compiler/standard-library/std-lib";
 import { TestStatus } from "../../compiler/test-status";
@@ -13,7 +15,13 @@ import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
 import { FileManager } from "./file-manager";
 import { TestRunner } from "./test-runner";
-import { ICodeEditorViewModel, IIDEViewModel } from "./ui-helpers";
+import {
+  collapseAllMenus,
+  delayMessage,
+  ICodeEditorViewModel,
+  IIDEViewModel,
+  removeFocussedClassFromAllTabs,
+} from "./ui-helpers";
 import { hash, transforms } from "./web-helpers";
 
 const stdlib = new StdLib(new StubInputOutput());
@@ -257,6 +265,92 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
       }
     }
     return false;
+  }
+
+  private readonly inactivityTimeout = 2000;
+  private inactivityTimer: any | undefined = undefined;
+  private purgingKeys = false;
+
+  async inactivityRefresh(vm: IIDEViewModel, tr: TestRunner) {
+    if (
+      this.readRunStatus() !== RunStatus.running &&
+      this.readParseStatus() === ParseStatus.valid &&
+      this.readCompileStatus() === CompileStatus.default
+    ) {
+      await this.refreshAndDisplay(vm, tr, true, false);
+    }
+
+    this.inactivityTimer = setTimeout(() => this.inactivityRefresh(vm, tr), this.inactivityTimeout);
+  }
+
+  async handleKeyAndRender(e: editorEvent, vm: IIDEViewModel, tr: TestRunner) {
+    if (this.readRunStatus() === RunStatus.running) {
+      // no change while running
+      return;
+    }
+
+    clearTimeout(this.inactivityTimer);
+
+    this.inactivityTimer = setTimeout(() => this.inactivityRefresh(vm, tr), this.inactivityTimeout);
+
+    try {
+      let codeChanged = false;
+      let isBeingEdited = false;
+      collapseAllMenus();
+      removeFocussedClassFromAllTabs();
+      switch (e.type) {
+        case "click":
+          isBeingEdited = this.getFieldBeingEdited(); //peek at value as may be changed
+          if (this.handleClick(e) && isBeingEdited) {
+            await this.refreshAndDisplay(vm, tr, false, false);
+          } else {
+            await vm.renderAsHtml(false);
+          }
+          return;
+        case "dblclick":
+          isBeingEdited = this.getFieldBeingEdited(); //peek at value as may be changed
+          if (this.handleDblClick(e) && isBeingEdited) {
+            await this.refreshAndDisplay(vm, tr, false, false);
+          } else {
+            await vm.renderAsHtml(false);
+          }
+          return;
+        case "paste":
+        case "key":
+          if (this.purgingKeys) {
+            return;
+          }
+          const before = Date.now();
+          codeChanged = this.handleKey(e);
+          const after = Date.now();
+          const delay = after - before;
+          if (codeChanged === true) {
+            if (delay >= 1000) {
+              alert(delayMessage);
+              e.key = "Backspace";
+              this.handleKey(e);
+              setTimeout(() => (this.purgingKeys = false), 500);
+              this.purgingKeys = true;
+            }
+            const singleKeyEdit = !(e.modKey.control || e.modKey.shift || e.modKey.alt);
+            await this.refreshAndDisplay(vm, tr, false, singleKeyEdit);
+          } else if (codeChanged === false) {
+            await vm.renderAsHtml(false);
+          }
+          // undefined just return
+          return;
+        case "contextmenu":
+          codeChanged = this.handleKey(e);
+          if (codeChanged) {
+            await this.refreshAndDisplay(vm, tr, true, false);
+          } else {
+            await vm.renderAsHtml(false);
+          }
+          return;
+      }
+    } catch (e) {
+      await vm.showError(e as Error, this.fileName, false);
+    }
   }
 
   async refreshAndDisplay(

@@ -20,7 +20,6 @@ import {
   collapseAllMenus,
   collapseMenu,
   confirmContinueOnNonChromeBrowser,
-  delayMessage,
   handleClickDropDownButton,
   handleKeyDropDownButton,
   handleMenuArrowDown,
@@ -103,14 +102,10 @@ const displayTab = document.getElementById("display-tab");
 const helpTab = document.getElementById("help-tab");
 const worksheetTab = document.getElementById("worksheet-tab");
 
-const inactivityTimeout = 2000;
-
 const elanInputOutput = new WebInputOutput();
 
 let profile: Profile;
 let userName: string | undefined;
-
-let inactivityTimer: any | undefined = undefined;
 
 let lastDOMEvent: Event | undefined;
 let lastEditorEvent: editorEvent | undefined;
@@ -1051,7 +1046,7 @@ async function collapseContextMenu() {
     const id = items[0].dataset.id;
     const mk = { control: false, shift: false, alt: false };
     const msg = getEditorMsg("key", "frame", id, "Escape", mk, undefined, undefined, undefined);
-    await handleKeyAndRender(msg);
+    await codeViewModel.handleKeyAndRender(msg, ideViewModel, testRunner);
   }
 }
 
@@ -1164,7 +1159,7 @@ async function handleEditorEvent(
     msg.selection = [start, end];
   }
 
-  handleKeyAndRender(msg);
+  codeViewModel.handleKeyAndRender(msg, ideViewModel, testRunner);
   event.preventDefault();
   event.stopPropagation();
 }
@@ -1416,90 +1411,6 @@ async function updateContent(text: string, editingField: boolean) {
   }
 
   cursorDefault();
-}
-
-async function inactivityRefresh() {
-  if (
-    codeViewModel.readRunStatus() !== RunStatus.running &&
-    codeViewModel.readParseStatus() === ParseStatus.valid &&
-    codeViewModel.readCompileStatus() === CompileStatus.default
-  ) {
-    await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, true, false);
-  }
-
-  inactivityTimer = setTimeout(inactivityRefresh, inactivityTimeout);
-}
-
-let purgingKeys = false;
-
-async function handleKeyAndRender(e: editorEvent) {
-  if (codeViewModel.readRunStatus() === RunStatus.running) {
-    // no change while running
-    return;
-  }
-
-  clearTimeout(inactivityTimer);
-
-  inactivityTimer = setTimeout(inactivityRefresh, inactivityTimeout);
-
-  try {
-    let codeChanged = false;
-    let isBeingEdited = false;
-    collapseAllMenus();
-    removeFocussedClassFromAllTabs();
-    switch (e.type) {
-      case "click":
-        isBeingEdited = codeViewModel.getFieldBeingEdited(); //peek at value as may be changed
-        if (codeViewModel.handleClick(e) && isBeingEdited) {
-          await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, false, false);
-        } else {
-          await ideViewModel.renderAsHtml(false);
-        }
-        return;
-      case "dblclick":
-        isBeingEdited = codeViewModel.getFieldBeingEdited(); //peek at value as may be changed
-        if (codeViewModel.handleDblClick(e) && isBeingEdited) {
-          await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, false, false);
-        } else {
-          await ideViewModel.renderAsHtml(false);
-        }
-        return;
-      case "paste":
-      case "key":
-        if (purgingKeys) {
-          return;
-        }
-        const before = Date.now();
-        codeChanged = codeViewModel.handleKey(e);
-        const after = Date.now();
-        const delay = after - before;
-        if (codeChanged === true) {
-          if (delay >= 1000) {
-            alert(delayMessage);
-            e.key = "Backspace";
-            codeViewModel.handleKey(e);
-            setTimeout(() => (purgingKeys = false), 500);
-            purgingKeys = true;
-          }
-          const singleKeyEdit = !(e.modKey.control || e.modKey.shift || e.modKey.alt);
-          await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, false, singleKeyEdit);
-        } else if (codeChanged === false) {
-          await ideViewModel.renderAsHtml(false);
-        }
-        // undefined just return
-        return;
-      case "contextmenu":
-        codeChanged = codeViewModel.handleKey(e);
-        if (codeChanged) {
-          await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, true, false);
-        } else {
-          await ideViewModel.renderAsHtml(false);
-        }
-        return;
-    }
-  } catch (e) {
-    await ideViewModel.showError(e as Error, codeViewModel.fileName, false);
-  }
 }
 
 function showCode() {
