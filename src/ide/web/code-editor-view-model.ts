@@ -357,4 +357,20 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   isPausedState() {
     return this.readRunStatus() === RunStatus.paused;
   }
+
+  async loadDemoFile(
+    fileName: string,
+    profile: Profile,
+    userName: string | undefined,
+    vm: IIDEViewModel,
+    fm: FileManager,
+    tr: TestRunner,
+  ) {
+    const f = await fetch(fileName, { mode: "same-origin" });
+    const rawCode = await f.text();
+    this.recreateFile(profile, userName);
+    this.fileName = fileName;
+    fm.reset();
+    await this.readAndParse(vm, fm, tr, rawCode, fileName, ParseMode.loadNew);
+  }
 }

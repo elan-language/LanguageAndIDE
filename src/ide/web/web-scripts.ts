@@ -23,6 +23,7 @@ import {
   ICodeEditorViewModel,
   IIDEViewModel,
   internalErrorMsg,
+  lastDirId,
   parentId,
   warningOrError,
 } from "./ui-helpers";
@@ -94,9 +95,6 @@ const worksheetTab = document.getElementById("worksheet-tab");
 
 const inactivityTimeout = 2000;
 
-// well known ids
-const lastDirId = "elan-files";
-
 const elanInputOutput = new WebInputOutput();
 
 let profile: Profile;
@@ -153,21 +151,21 @@ class IDEViewModel implements IIDEViewModel {
       codeContainer?.classList.add("running");
 
       if (isPaused) {
-        enable(runDebugButton, "Resume the program");
-        enable(stepButton, "Single step the program");
+        this.enable(runDebugButton, "Resume the program");
+        this.enable(stepButton, "Single step the program");
       } else {
-        disable(
+        this.disable(
           [runButton, runDebugButton, stepButton],
           isRunning ? "Program is already running" : "Tests are running",
         );
       }
 
-      enable(stopButton, isRunning ? "Stop the program" : "Stop the Tests");
+      this.enable(stopButton, isRunning ? "Stop the program" : "Stop the Tests");
 
       this.setPauseButtonState();
 
       const msg = isRunning ? "Program is running" : "Tests are running";
-      disable(
+      this.disable(
         [
           runButton,
           loadButton,
@@ -195,83 +193,86 @@ class IDEViewModel implements IIDEViewModel {
     } else {
       codeContainer?.classList.remove("running");
 
-      disable([stopButton, pauseButton, stepButton], "Program is not running");
+      this.disable([stopButton, pauseButton, stepButton], "Program is not running");
 
-      enable(fileButton, "File actions");
-      enable(loadButton, "Load code from a file");
-      enable(appendButton, "Append code from a file onto the end of the existing code");
-      enable(importButton, "Import code from a file");
-      enable(newButton, "Clear the current code and start afresh");
-      enable(demosButton, "Load a demonstration program");
-      enable(trimButton, "Remove all 'new code' prompts that can be removed (shortcut: Alt+t)");
-      enable(expandCollapseButton, "Expand / Collapse all code regions");
-      enable(preferencesButton, "Set preferences");
-      enable(clearDisplayButton, "Clear display");
+      this.enable(fileButton, "File actions");
+      this.enable(loadButton, "Load code from a file");
+      this.enable(appendButton, "Append code from a file onto the end of the existing code");
+      this.enable(importButton, "Import code from a file");
+      this.enable(newButton, "Clear the current code and start afresh");
+      this.enable(demosButton, "Load a demonstration program");
+      this.enable(
+        trimButton,
+        "Remove all 'new code' prompts that can be removed (shortcut: Alt+t)",
+      );
+      this.enable(expandCollapseButton, "Expand / Collapse all code regions");
+      this.enable(preferencesButton, "Set preferences");
+      this.enable(clearDisplayButton, "Clear display");
 
       for (const elem of demoFiles) {
         elem.removeAttribute("hidden");
       }
 
       if (isEmpty) {
-        disable([saveButton], "Some code must be added in order to save");
+        this.disable([saveButton], "Some code must be added in order to save");
       } else if (!(isParsing || isIncomplete)) {
-        disable([saveButton], "Invalid code cannot be saved");
+        this.disable([saveButton], "Invalid code cannot be saved");
       } else if (fileManager.isAutosaving()) {
-        disable([saveButton], "Autosave is enabled- cancel to manual save");
+        this.disable([saveButton], "Autosave is enabled- cancel to manual save");
       } else {
-        enable(saveButton, "Save the code into a file");
+        this.enable(saveButton, "Save the code into a file");
       }
 
       if (!cvm.containsMain()) {
-        disable(
+        this.disable(
           [runButton, runDebugButton, saveAsStandaloneButton],
           "Code must have a 'main' routine to be run",
         );
       } else if (!isCompiling) {
-        disable(
+        this.disable(
           [runButton, runDebugButton, saveAsStandaloneButton],
           "Program is not yet compiled. If you have just edited a field, press Enter or Tab to complete.",
         );
       } else {
-        enable(runButton, "Run the program");
-        enable(runDebugButton, "Debug the program");
-        enable(saveAsStandaloneButton, "Save the program as a standalone webpage");
+        this.enable(runButton, "Run the program");
+        this.enable(runDebugButton, "Debug the program");
+        this.enable(saveAsStandaloneButton, "Save the program as a standalone webpage");
       }
 
       if (fileManager.canUndo()) {
-        enable(undoButton, "Undo last change (Ctrl+z)");
+        this.enable(undoButton, "Undo last change (Ctrl+z)");
       } else {
-        disable([undoButton], "Nothing to undo");
+        this.disable([undoButton], "Nothing to undo");
       }
 
       if (fileManager.canRedo()) {
-        enable(redoButton, "Redo last change (Ctrl+y)");
+        this.enable(redoButton, "Redo last change (Ctrl+y)");
       } else {
-        disable([redoButton], "Nothing to redo");
+        this.disable([redoButton], "Nothing to redo");
       }
 
       if (fileManager.isAutosaving()) {
         autoSaveButton.innerText = "cancel auto save";
-        enable(autoSaveButton, "Click to turn auto-save off and resume manual saving.");
+        this.enable(autoSaveButton, "Click to turn auto-save off and resume manual saving.");
       } else {
         if (useChromeFileAPI()) {
           autoSaveButton.innerText = "auto save";
           if (isParsing || isIncomplete) {
-            enable(
+            this.enable(
               autoSaveButton,
               "Save to file now and then auto-save to same file whenever code is changed and is not invalid",
             );
           } else {
-            disable([autoSaveButton], "Invalid code cannot be saved");
+            this.disable([autoSaveButton], "Invalid code cannot be saved");
           }
         } else {
-          disable([autoSaveButton], "Only available on Chrome");
+          this.disable([autoSaveButton], "Only available on Chrome");
         }
       }
 
       if (userName) {
         logoutButton.removeAttribute("hidden");
-        enable(logoutButton, "Log out");
+        this.enable(logoutButton, "Log out");
       } else {
         logoutButton.setAttribute("hidden", "hidden");
       }
@@ -285,9 +286,9 @@ class IDEViewModel implements IIDEViewModel {
       !codeViewModel.isPausedState() &&
       !waitingForUserInput
     ) {
-      enable(pauseButton, "Pause the program");
+      ideViewModel.enable(pauseButton, "Pause the program");
     } else {
-      disable([pauseButton], "Can only pause a program running in Debug mode");
+      ideViewModel.disable([pauseButton], "Can only pause a program running in Debug mode");
     }
   }
 
@@ -406,12 +407,30 @@ class IDEViewModel implements IIDEViewModel {
   }
 
   disableUndoRedoButtons(msg: string) {
-    disable([undoButton, redoButton], msg);
+    this.disable([undoButton, redoButton], msg);
     cursorWait();
   }
 
   postCodeResetToWorksheet(code: string) {
     worksheetIFrame.contentWindow?.postMessage(`code:reset:${code}`, "*");
+  }
+
+  disable(buttons: HTMLElement[], msg = "") {
+    for (const button of buttons) {
+      button.setAttribute("disabled", "");
+      button.setAttribute("title", msg);
+      if (button instanceof HTMLDivElement) {
+        button.classList.add("disabled");
+      }
+    }
+  }
+
+  enable(button: HTMLElement, msg = "") {
+    button.removeAttribute("disabled");
+    button.setAttribute("title", msg);
+    if (button instanceof HTMLDivElement) {
+      button.classList.remove("disabled");
+    }
   }
 }
 
@@ -465,7 +484,7 @@ pauseButton?.addEventListener("click", () => {
 });
 
 stopButton?.addEventListener("click", () => {
-  disable([stopButton, pauseButton, stepButton], "Program is not running");
+  ideViewModel.disable([stopButton, pauseButton, stepButton], "Program is not running");
   // do rest on next event loop for responsivenesss
   setTimeout(() => {
     programRunner.stop(codeViewModel, ideViewModel, elanInputOutput);
@@ -482,20 +501,7 @@ clearInfoButton?.addEventListener("click", async () => {
 });
 
 loadExternalWorksheetButton?.addEventListener("click", async () => {
-  try {
-    const [fileHandle] = await window.showOpenFilePicker({
-      startIn: "documents",
-      types: [{ accept: { "text/html": ".html" } }],
-      id: lastDirId,
-    });
-    const codeFile = await fileHandle.getFile();
-
-    const url = URL.createObjectURL(codeFile);
-    window.open(url, "worksheet-iframe")?.focus();
-  } catch (_e) {
-    // user cancelled
-    return;
-  }
+  await fileManager.openWorksheet();
 });
 
 expandCollapseButton?.addEventListener("click", async () => {
@@ -524,22 +530,6 @@ saveButton.addEventListener("click", getDownloader());
 
 autoSaveButton.addEventListener("click", handleChromeAutoSave);
 
-async function loadDemoFile(fileName: string) {
-  const f = await fetch(fileName, { mode: "same-origin" });
-  const rawCode = await f.text();
-  codeViewModel.recreateFile(profile, userName);
-  codeViewModel.fileName = fileName;
-  fileManager.reset();
-  await codeViewModel.readAndParse(
-    ideViewModel,
-    fileManager,
-    testRunner,
-    rawCode,
-    fileName,
-    ParseMode.loadNew,
-  );
-}
-
 saveAsStandaloneButton.addEventListener("click", async (event: Event) => {
   if (!isDisabled(event)) {
     await fileManager.saveAsStandAlone(codeViewModel);
@@ -550,7 +540,14 @@ for (const elem of demoFiles) {
   elem.addEventListener("click", async () => {
     if (checkForUnsavedChanges(fileManager, cancelMsg)) {
       const fileName = `${elem.id}`;
-      await loadDemoFile(fileName);
+      await codeViewModel.loadDemoFile(
+        fileName,
+        profile,
+        userName,
+        ideViewModel,
+        fileManager,
+        testRunner,
+      );
     }
   });
 }
@@ -775,7 +772,7 @@ if (okToContinue) {
   });
 } else {
   const msg = "Require Chrome or Edge";
-  disable(
+  ideViewModel.disable(
     [
       runButton,
       runDebugButton,
@@ -866,24 +863,6 @@ function setStatus(html: HTMLDivElement, colour: string, label: string, showTool
   }
 
   html.innerText = label;
-}
-
-function disable(buttons: HTMLElement[], msg = "") {
-  for (const button of buttons) {
-    button.setAttribute("disabled", "");
-    button.setAttribute("title", msg);
-    if (button instanceof HTMLDivElement) {
-      button.classList.add("disabled");
-    }
-  }
-}
-
-function enable(button: HTMLElement, msg = "") {
-  button.removeAttribute("disabled");
-  button.setAttribute("title", msg);
-  if (button instanceof HTMLDivElement) {
-    button.classList.remove("disabled");
-  }
 }
 
 function getEditorMsg(

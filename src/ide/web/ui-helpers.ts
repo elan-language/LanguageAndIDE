@@ -13,6 +13,9 @@ import { FileManager } from "./file-manager";
 import { TestRunner } from "./test-runner";
 import { WebWorkerReadMessage, WebWorkerStatusMessage } from "./web-worker-messages";
 
+// well known ids
+export const lastDirId = "elan-files";
+
 // from https://stackoverflow.com/questions/4565112/how-to-find-out-if-the-user-browser-is-chrome
 export function checkIsChrome() {
   // please note,

@@ -1,5 +1,5 @@
 import { ParseStatus } from "../frames/status-enums";
-import { ICodeEditorViewModel, IIDEViewModel } from "./ui-helpers";
+import { ICodeEditorViewModel, IIDEViewModel, lastDirId } from "./ui-helpers";
 import { encodeCode } from "./web-helpers";
 
 export class FileManager {
@@ -117,7 +117,6 @@ export class FileManager {
   async chromeSave(cvm: ICodeEditorViewModel, code: string, updateName: boolean, newName?: string) {
     const name = newName ?? cvm.fileName;
     const html = name.endsWith(".html");
-    const lastDirId = "elan-files";
 
     const fh = await showSaveFilePicker({
       suggestedName: name,
@@ -251,6 +250,23 @@ export class FileManager {
       vm.disableUndoRedoButtons(msg);
       this.undoRedoing = true;
       await vm.updateFileAndCode(code);
+    }
+  }
+
+  async openWorksheet() {
+    try {
+      const [fileHandle] = await window.showOpenFilePicker({
+        startIn: "documents",
+        types: [{ accept: { "text/html": ".html" } }],
+        id: lastDirId,
+      });
+      const codeFile = await fileHandle.getFile();
+
+      const url = URL.createObjectURL(codeFile);
+      window.open(url, "worksheet-iframe")?.focus();
+    } catch (_e) {
+      // user cancelled
+      return;
     }
   }
 }
