@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { StdLib } from "../compiler/standard-library/std-lib";
 import { elanVersion } from "../environment";
 import { transform, transformMany } from "../ide/compile-api/ast-visitor";
@@ -11,10 +11,6 @@ import { StubInputOutput } from "../ide/stub-input-output";
 import { hash } from "../ide/util";
 
 const rootdir = `${__dirname}/../../..`;
-
-const demos = `${rootdir}/src/demo_programs/`;
-const snippets = `${rootdir}/src/documentation/CodeSnippets/`;
-const tests = `${rootdir}/test/files/`;
 
 function transforms(): Transforms {
   return {
@@ -64,14 +60,19 @@ async function updateDemoProgram(fileName: string) {
   updateTestFileNew(fileName, updatedContent);
 }
 
-for (const fn of getElanFiles(demos)) {
-  updateDemoProgram(`${demos}${fn}`);
+export function getElanFilesSubdir(sourceDir: string): string[] {
+  return readdirSync(sourceDir).filter((s) => statSync(sourceDir + "/" + s).isDirectory());
 }
 
-for (const fn of getElanFiles(snippets)) {
-  updateDemoProgram(`${snippets}${fn}`);
+export async function updateElanFilesInDirectory(dir: string) {
+  for (const fn of getElanFiles(dir)) {
+    await updateDemoProgram(`${dir}${fn}`);
+  }
+
+  for (const sd of getElanFilesSubdir(dir)) {
+    await updateElanFilesInDirectory(`${dir}${sd}/`);
+  }
 }
 
-for (const fn of getElanFiles(tests)) {
-  updateDemoProgram(`${tests}${fn}`);
-}
+updateElanFilesInDirectory(`${rootdir}/src/`);
+updateElanFilesInDirectory(`${rootdir}/test/`);
