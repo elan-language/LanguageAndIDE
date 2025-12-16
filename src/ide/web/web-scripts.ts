@@ -103,6 +103,10 @@ const displayTab = document.getElementById("display-tab");
 const helpTab = document.getElementById("help-tab");
 const worksheetTab = document.getElementById("worksheet-tab");
 
+const dialog = document.getElementById("preferences-dialog") as HTMLDialogElement;
+const closePreferencesDialogButton = document.getElementById("confirmBtn");
+const useCvdTickbox = document.getElementById("use-cvd") as HTMLInputElement;
+
 const elanInputOutput = new WebInputOutput();
 
 let profile: Profile;
@@ -697,27 +701,17 @@ for (const elem of demoFiles) {
 }
 
 preferencesButton.addEventListener("click", (event: Event) => {
-  if (isDisabled(event)) {
-    return;
+  if (!isDisabled(event)) {
+    // otherwise it can pick up click and close immediately
+    setTimeout(() => dialog.showModal(), 1);
   }
+});
 
-  const dialog = document.getElementById("preferences-dialog") as HTMLDialogElement;
-  const closeButton = document.getElementById("confirmBtn");
-
-  const cvd = document.getElementById("use-cvd") as HTMLInputElement;
-
-  closeButton?.addEventListener("click", () => {
-    if (cvd.checked) {
-      changeCss("cvd-colourScheme");
-    } else {
-      changeCss("colourScheme");
-    }
-
+closePreferencesDialogButton?.addEventListener("click", (event: Event) => {
+  if (!isDisabled(event)) {
+    changeCss(useCvdTickbox.checked ? "cvd-colourScheme" : "colourScheme");
     dialog.close();
-  });
-
-  // otherwise it can pick up click and close immediately
-  setTimeout(() => dialog.showModal(), 1);
+  }
 });
 
 helpTabLabel.addEventListener("click", tabViewModel.showHelpTab);
