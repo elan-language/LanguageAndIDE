@@ -171,8 +171,9 @@ and <a href=LangRef.html#function>Function <i class="fa fa-external-link"></i></
 <tr><td><a href=LibRef.html#ref><el-topic>Function reference</el-topic> <i class="fa fa-external-link"></i></a></td><td>topic</td><td><a href=LibRef.html#ref>Passing a function as a reference <i class="fa fa-external-link"></i></a></td></tr>
 <tr><td><a href=Functional_Programming.html#top><el-topic>Functional programming</el-topic> <i class="fa fa-external-link"></i></a></td><td>topic</td><td></td></tr>
 <tr id=G class="subhead"><td colspan="3">G &nbsp; &nbsp;<a href=#top>return to top <i class="fa fa-external-link"></i></a></td></tr>
-<tr><td><a href=LibRef.html#getKey><el-method>getKey</el-method> <i class="fa fa-external-link"></i></a></td><td>method</td><td><a href=LibRef.html#StandaloneProcedures>Standalone procedures <i class="fa fa-external-link"></i></a></td></tr>
+<tr><td><a href=LibRef.html#getKey><el-method>getKey</el-method> <i class="fa fa-external-link"></i></a></td><td>method</td><td><a href=LibRef.html#SystemMethods>System methods <i class="fa fa-external-link"></i></a></td></tr>
 <tr><td><a href=LibRef.html#getKeyWithModifier><el-method>getKeyWithModifier</el-method> <i class="fa fa-external-link"></i></a></td><td>method</td><td><a href=LibRef.html#SystemMethods>System methods <i class="fa fa-external-link"></i></a></td></tr>
+<tr><td><a href=LibRef.html#getNumericKey><el-method>getNumericKey</el-method> <i class="fa fa-external-link"></i></a></td><td>method</td><td><a href=LibRef.html#SystemMethods>System methods <i class="fa fa-external-link"></i></a></td></tr>
 <tr><td><a href=IDENavigation.html#EditInstructions><el-topic>Ghosting<el-topic> <i class="fa fa-external-link"></i></a></td><td>topic</td><td><a href=IDENavigation.html#EditInstructions>Edit instructions <i class="fa fa-external-link"></i></a></td></tr>
 <tr><td><a href=LangRef.html#global><el-kw>global</el-kw> <i class="fa fa-external-link"></i></a></td><td>keyword</td><td><a href=LangRef.html#Scope>Scope and name qualification <i class="fa fa-external-link"></i></a></td></tr>
 <tr><td><a href=LangRef.html#GlobalInstructions><el-topic>Global instructions</el-topic> <i class="fa fa-external-link"></i></a></td><td>topic</td><td></td></tr>
@@ -229,8 +230,8 @@ and <a href=LangRef.html#function>Function <i class="fa fa-external-link"></i></
 <tr><td><a href=LibRef.html#isNaN><el-method>isNaN</el-method> <i class="fa fa-external-link"></i></a></td><td>method</td><td><a href=LibRef.html#MathsFunctions>Maths functions <i class="fa fa-external-link"></i></a></td></tr>
 <tr><td><a href=LangRef.html#EqualityTesting><el-kw>isnt</el-kw> <i class="fa fa-external-link"></i></a></td><td>keyword</td><td></td></tr>
 <tr><td><a href=LibRef.html#isSubsetOf><el-method>isSubsetOf</el-method> <i class="fa fa-external-link"></i></a></td><td>method</td><td><a href=LibRef.html#SetType>Set (data structure) <i class="fa fa-external-link"></i></a></td></tr>
-<tr><td><a href=LibRef.html#isSupersetOf><el-method>isSupersetOf</el-method> <i class="fa fa-external-link"></i></a></td><td>method</td><td><a href=LibRef.html#Tuple>Set (data structure) <i class="fa fa-external-link"></i></a></td></tr>
-<tr><td><a href=LibRef.html#itemN><el-code>itemN</ed-code> <i class="fa fa-external-link"></i></a></td><td>property</td><td>i<el-code>tem0</el-code>, <el-code>item1</el-code>,... in <a href=LibRef.html#Tuple>Tuples <i class="fa fa-external-link"></i></a></td></tr>
+<tr><td><a href=LibRef.html#isSupersetOf><el-method>isSupersetOf</el-method> <i class="fa fa-external-link"></i></a></td><td>method</td><td><a href=LibRef.html#SetType>Set (data structure) <i class="fa fa-external-link"></i></a></td></tr>
+<tr><td><a href=LibRef.html#itemN><el-code>itemN</ed-code> <i class="fa fa-external-link"></i></a></td><td>property</td><td>i<el-code>tem0</el-code>, <el-code>item1</el-code>,... in <a href=LibRef.html#Tuple><el-code>Tuple</el-code> <i class="fa fa-external-link"></i></a></td></tr>
 <tr id=J class="subhead"><td colspan="3">J &nbsp; &nbsp;<a href=#top>return to top <i class="fa fa-external-link"></i></a></td></tr>
 <tr><td><a href=LibRef.html#join><el-method>join</el-method> <i class="fa fa-external-link"></i></a></td><td>method</td><td><a href=LibRef.html#SetType>Set (data structure) <i class="fa fa-external-link"></i></a></td></tr>
 <tr id=K class="subhead"><td colspan="3">K &nbsp; &nbsp;<a href=#top>return to top <i class="fa fa-external-link"></i></a></td></tr>
@@ -472,7 +473,7 @@ and <a href=LangRef.html#function>function</a> </td></tr>
  <tr><td>=&gt;</td><td>fat arrow</td><td>used in a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw> <i class="fa fa-external-link"></i></a> and in a <a href="LibRef.html#Func"><el-kw>Func</el-kw> <i class="fa fa-external-link"></i></a> definition to signify 'returns'</td></tr>
  <tr><td>_</td><td>underscore</td><td>the only punctuation symbol that may be used within a named value <a href="LangRef.html#Identifier">identifier <i class="fa fa-external-link"></i></a>
  or a <a href="LangRef.html#TypeName">Type name <i class="fa fa-external-link"></i></a>,<br>
-also used to 'discard' elements when deconstructing a <a href="LibRef.html#Tuple"><el-type>Tuple</el-type> <i class="fa fa-external-link"></i></a>
+also used to 'discard' elements when deconstructing a <a href="LibRef.html#Tuple"><el-code>Tuple</el-code> <i class="fa fa-external-link"></i></a>
  or a <a href="LibRef.html#ListImmutable"><el-type>ListImmutable</el-type> <i class="fa fa-external-link"></i></a></td></tr>
  <tr><td>'</td><td>single quote<br>apostrophe</td><td>delimiter for a literal <a href="LibRef.html#String"><el-type>String</el-type> <i class="fa fa-external-link"></i></a> that may contain double  quotes</td></tr>
  <tr><td>&quot;</td><td>double quotes</td><td>delimiter for a literal <a href="LibRef.html#String"><el-type>String</el-type> <i class="fa fa-external-link"></i></a> that may contain sengle quotes<br>See also the constant <a href="LibRef.html#quotes"><el-id>quotes</el-id> <i class="fa fa-external-link"></i></a></td></tr>
