@@ -1,4 +1,4 @@
-# 7c1dfd9836759f75385c19e0638fe842eef04691a2090f8ab71e004fc9b826d0 Elan 1.8.3 guest default_profile valid
+# f3063c2b30754dc2319dc1e7b32a130bb168b4d368d4d31745cfed2987c5926d Elan 1.9.0 guest default_profile valid
 
 main
   let point be tuple(3, 4)
