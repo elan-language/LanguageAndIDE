@@ -22,6 +22,8 @@ import {
   getFocused,
   ICodeEditorViewModel,
   IIDEViewModel,
+  isGlobalKeyboardEvent,
+  isSupportedKey,
   removeFocussedClassFromAllTabs,
 } from "./ui-helpers";
 import { hash, transforms } from "./web-helpers";
@@ -491,5 +493,173 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
       const msg = getEditorMsg("key", "frame", id, "Escape", mk, undefined, undefined, undefined);
       await this.handleKeyAndRender(msg, vm, tr);
     }
+  }
+
+  handlePaste(
+    vm: IIDEViewModel,
+    tr: TestRunner,
+    fm: FileManager,
+    event: Event,
+    target: HTMLElement,
+    msg: editorEvent,
+  ): boolean {
+    // outside of handler or selection is gone
+    const start = target instanceof HTMLInputElement ? (target.selectionStart ?? 0) : 0;
+    const end = target instanceof HTMLInputElement ? (target.selectionEnd ?? 0) : 0;
+    target.addEventListener("paste", async (event: ClipboardEvent) => {
+      const txt = await navigator.clipboard.readText();
+      if (start !== end) {
+        await this.handleEditorEvent(
+          vm,
+          tr,
+          fm,
+          event,
+          "key",
+          "frame",
+          { control: false, shift: false, alt: false },
+          msg.id,
+          "Delete",
+          [start, end],
+        );
+      }
+      await this.handleEditorEvent(
+        vm,
+        tr,
+        fm,
+        event,
+        "paste",
+        "frame",
+        { control: true, shift: false, alt: false },
+        msg.id,
+        "v",
+        undefined,
+        undefined,
+        `${txt.trim()}`,
+      );
+    });
+    event.stopPropagation();
+    return true;
+  }
+
+  handleCut(
+    vm: IIDEViewModel,
+    tr: TestRunner,
+    fm: FileManager,
+    event: Event,
+    target: HTMLInputElement,
+    msg: editorEvent,
+  ) {
+    // outside of handler or selection is gone
+    const start = target.selectionStart ?? 0;
+    const end = target.selectionEnd ?? 0;
+    target.addEventListener("cut", async (event: ClipboardEvent) => {
+      const txt = document.getSelection()?.toString() ?? "";
+      await navigator.clipboard.writeText(txt);
+      const mk = { control: false, shift: false, alt: false };
+      await this.handleEditorEvent(vm, tr, fm, event, "key", "frame", mk, msg.id, "Delete", [
+        start,
+        end,
+      ]);
+    });
+    event.stopPropagation();
+    return true;
+  }
+
+  handleCopy(event: Event, target: HTMLInputElement) {
+    target.addEventListener("copy", async (_event: ClipboardEvent) => {
+      const txt = document.getSelection()?.toString() ?? "";
+      await navigator.clipboard.writeText(txt);
+    });
+    event.stopPropagation();
+    return true;
+  }
+
+  handleCutAndPaste(
+    vm: IIDEViewModel,
+    tr: TestRunner,
+    fm: FileManager,
+    event: Event,
+    msg: editorEvent,
+  ) {
+    if (msg.type === "paste") {
+      return false;
+    }
+
+    if (msg.modKey.control && msg.key === "v") {
+      return this.handlePaste(vm, tr, fm, event, event.target as HTMLElement, msg);
+    }
+
+    if (event.target instanceof HTMLInputElement && msg.modKey.control) {
+      switch (msg.key) {
+        case "x":
+          return this.handleCut(vm, tr, fm, event, event.target, msg);
+        case "c":
+          return this.handleCopy(event, event.target);
+      }
+    }
+
+    return false;
+  }
+
+  async handleEditorEvent(
+    vm: IIDEViewModel,
+    tr: TestRunner,
+    fm: FileManager,
+    event: Event,
+    type: "key" | "click" | "dblclick" | "paste" | "contextmenu",
+    target: "frame",
+    modKey: { control: boolean; shift: boolean; alt: boolean },
+    id?: string | undefined,
+    key?: string | undefined,
+    selection?: [number, number] | undefined,
+    command?: string | undefined,
+    optionalData?: string | undefined,
+  ) {
+    if (this.isRunningState()) {
+      event?.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
+    if (isGlobalKeyboardEvent(event)) {
+      return;
+    }
+
+    // save last dom event for debug
+    //lastDOMEvent = event;
+
+    const msg = getEditorMsg(type, target, id, key, modKey, selection, command, optionalData);
+
+    // save last editor event for debug
+    //lastEditorEvent = msg;
+
+    if (!isSupportedKey(msg)) {
+      // discard
+      return;
+    }
+
+    if (this.isTestRunningState()) {
+      tr.end();
+      this.setTestStatus(TestStatus.default);
+      console.info("tests cancelled in handleEditorEvent");
+    }
+
+    if (
+      (await vm.handleEscape(msg, this, tr)) ||
+      this.handleCutAndPaste(vm, tr, fm, event, msg) ||
+      (await fm.handleUndoAndRedo(vm, event, msg))
+    ) {
+      return;
+    }
+
+    if (key === "Delete" && !selection && event.target instanceof HTMLInputElement) {
+      const start = event.target.selectionStart ?? 0;
+      const end = event.target.selectionEnd ?? 0;
+      msg.selection = [start, end];
+    }
+
+    this.handleKeyAndRender(msg, vm, tr);
+    event.preventDefault();
+    event.stopPropagation();
   }
 }

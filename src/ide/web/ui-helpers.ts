@@ -225,6 +225,7 @@ export interface IIDEViewModel {
   disableUndoRedoButtons(msg: string): void;
   postCodeResetToWorksheet(code: string): void;
   updateNameAndSavedStatus(cvm: ICodeEditorViewModel, fm: FileManager): void;
+  handleEscape(e: editorEvent, cvm: ICodeEditorViewModel, tr: TestRunner): Promise<boolean>;
 }
 
 export const delayMessage =

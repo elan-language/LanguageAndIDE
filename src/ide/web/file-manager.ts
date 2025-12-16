@@ -1,3 +1,4 @@
+import { editorEvent } from "../frames/frame-interfaces/editor-event";
 import { ParseStatus } from "../frames/status-enums";
 import { ICodeEditorViewModel, IIDEViewModel, lastDirId } from "./ui-helpers";
 import { encodeCode } from "./web-helpers";
@@ -268,5 +269,22 @@ export class FileManager {
       // user cancelled
       return;
     }
+  }
+
+  async handleUndoAndRedo(vm: IIDEViewModel, event: Event, msg: editorEvent) {
+    if (msg.modKey.control) {
+      switch (msg.key) {
+        case "z":
+          event.stopPropagation();
+          await this.undo(vm);
+          return true;
+        case "y":
+          event.stopPropagation();
+          await this.redo(vm);
+          return true;
+      }
+    }
+
+    return false;
   }
 }

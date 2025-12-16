@@ -20,7 +20,6 @@ import {
   collapseAllMenus,
   collapseMenu,
   confirmContinueOnNonChromeBrowser,
-  getEditorMsg,
   getFocused,
   handleClickDropDownButton,
   handleKeyDropDownButton,
@@ -30,8 +29,6 @@ import {
   IIDEViewModel,
   internalErrorMsg,
   isDisabled,
-  isGlobalKeyboardEvent,
-  isSupportedKey,
   ITabViewModel,
   lastDirId,
   parentId,
@@ -745,7 +742,16 @@ async function handleStatusClick(event: Event, tag: string, useParent: boolean) 
       if (element.classList.contains(cls) && (!useParent || element.textContent)) {
         const mk = { control: false, shift: false, alt: false };
         const id = useParent ? parentId(element) : element.id;
-        await handleEditorEvent(event, "click", "frame", mk, id);
+        await codeViewModel.handleEditorEvent(
+          ideViewModel,
+          testRunner,
+          fileManager,
+          event,
+          "click",
+          "frame",
+          mk,
+          id,
+        );
         return;
       }
     }
@@ -929,159 +935,6 @@ function setStatus(html: HTMLDivElement, colour: string, label: string, showTool
   html.innerText = label;
 }
 
-function handlePaste(event: Event, target: HTMLElement, msg: editorEvent): boolean {
-  // outside of handler or selection is gone
-  const start = target instanceof HTMLInputElement ? (target.selectionStart ?? 0) : 0;
-  const end = target instanceof HTMLInputElement ? (target.selectionEnd ?? 0) : 0;
-  target.addEventListener("paste", async (event: ClipboardEvent) => {
-    const txt = await navigator.clipboard.readText();
-    if (start !== end) {
-      await handleEditorEvent(
-        event,
-        "key",
-        "frame",
-        { control: false, shift: false, alt: false },
-        msg.id,
-        "Delete",
-        [start, end],
-      );
-    }
-    await handleEditorEvent(
-      event,
-      "paste",
-      "frame",
-      { control: true, shift: false, alt: false },
-      msg.id,
-      "v",
-      undefined,
-      undefined,
-      `${txt.trim()}`,
-    );
-  });
-  event.stopPropagation();
-  return true;
-}
-
-function handleCut(event: Event, target: HTMLInputElement, msg: editorEvent) {
-  // outside of handler or selection is gone
-  const start = target.selectionStart ?? 0;
-  const end = target.selectionEnd ?? 0;
-  target.addEventListener("cut", async (event: ClipboardEvent) => {
-    const txt = document.getSelection()?.toString() ?? "";
-    await navigator.clipboard.writeText(txt);
-    const mk = { control: false, shift: false, alt: false };
-    await handleEditorEvent(event, "key", "frame", mk, msg.id, "Delete", [start, end]);
-  });
-  event.stopPropagation();
-  return true;
-}
-
-function handleCopy(event: Event, target: HTMLInputElement) {
-  target.addEventListener("copy", async (_event: ClipboardEvent) => {
-    const txt = document.getSelection()?.toString() ?? "";
-    await navigator.clipboard.writeText(txt);
-  });
-  event.stopPropagation();
-  return true;
-}
-
-function handleCutAndPaste(event: Event, msg: editorEvent) {
-  if (msg.type === "paste") {
-    return false;
-  }
-
-  if (msg.modKey.control && msg.key === "v") {
-    return handlePaste(event, event.target as HTMLElement, msg);
-  }
-
-  if (event.target instanceof HTMLInputElement && msg.modKey.control) {
-    switch (msg.key) {
-      case "x":
-        return handleCut(event, event.target, msg);
-      case "c":
-        return handleCopy(event, event.target);
-    }
-  }
-
-  return false;
-}
-
-async function handleUndoAndRedo(event: Event, msg: editorEvent) {
-  if (msg.modKey.control) {
-    switch (msg.key) {
-      case "z":
-        event.stopPropagation();
-        await fileManager.undo(ideViewModel);
-        return true;
-      case "y":
-        event.stopPropagation();
-        await fileManager.redo(ideViewModel);
-        return true;
-    }
-  }
-
-  return false;
-}
-
-async function handleEditorEvent(
-  event: Event,
-  type: "key" | "click" | "dblclick" | "paste" | "contextmenu",
-  target: "frame",
-  modKey: { control: boolean; shift: boolean; alt: boolean },
-  id?: string | undefined,
-  key?: string | undefined,
-  selection?: [number, number] | undefined,
-  command?: string | undefined,
-  optionalData?: string | undefined,
-) {
-  if (codeViewModel.isRunningState()) {
-    event?.preventDefault();
-    event.stopPropagation();
-    return;
-  }
-
-  if (isGlobalKeyboardEvent(event)) {
-    return;
-  }
-
-  // save last dom event for debug
-  lastDOMEvent = event;
-
-  const msg = getEditorMsg(type, target, id, key, modKey, selection, command, optionalData);
-
-  // save last editor event for debug
-  lastEditorEvent = msg;
-
-  if (!isSupportedKey(msg)) {
-    // discard
-    return;
-  }
-
-  if (codeViewModel.isTestRunningState()) {
-    testRunner.end();
-    codeViewModel.setTestStatus(TestStatus.default);
-    console.info("tests cancelled in handleEditorEvent");
-  }
-
-  if (
-    (await ideViewModel.handleEscape(msg, codeViewModel, testRunner)) ||
-    handleCutAndPaste(event, msg) ||
-    (await handleUndoAndRedo(event, msg))
-  ) {
-    return;
-  }
-
-  if (key === "Delete" && !selection && event.target instanceof HTMLInputElement) {
-    const start = event.target.selectionStart ?? 0;
-    const end = event.target.selectionEnd ?? 0;
-    msg.selection = [start, end];
-  }
-
-  codeViewModel.handleKeyAndRender(msg, ideViewModel, testRunner);
-  event.preventDefault();
-  event.stopPropagation();
-}
-
 /**
  * Render the document
  */
@@ -1098,7 +951,17 @@ async function updateContent(text: string, editingField: boolean) {
 
     frame.addEventListener("keydown", (event: Event) => {
       const ke = event as KeyboardEvent;
-      handleEditorEvent(event, "key", "frame", getModKey(ke), id, ke.key);
+      codeViewModel.handleEditorEvent(
+        ideViewModel,
+        testRunner,
+        fileManager,
+        event,
+        "key",
+        "frame",
+        getModKey(ke),
+        id,
+        ke.key,
+      );
     });
 
     frame.addEventListener("click", (event) => {
@@ -1109,7 +972,18 @@ async function updateContent(text: string, editingField: boolean) {
       const selection: [number, number] | undefined =
         selectionStart === undefined ? undefined : [selectionStart, selectionEnd ?? selectionStart];
 
-      handleEditorEvent(event, "click", "frame", getModKey(pe), id, undefined, selection);
+      codeViewModel.handleEditorEvent(
+        ideViewModel,
+        testRunner,
+        fileManager,
+        event,
+        "click",
+        "frame",
+        getModKey(pe),
+        id,
+        undefined,
+        selection,
+      );
     });
 
     frame.addEventListener("mousedown", (event) => {
@@ -1117,7 +991,16 @@ async function updateContent(text: string, editingField: boolean) {
       const me = event as MouseEvent;
       if (me.button === 0 && me.shiftKey) {
         // left button only
-        handleEditorEvent(event, "click", "frame", getModKey(me), id);
+        codeViewModel.handleEditorEvent(
+          ideViewModel,
+          testRunner,
+          fileManager,
+          event,
+          "click",
+          "frame",
+          getModKey(me),
+          id,
+        );
       }
     });
 
@@ -1127,12 +1010,30 @@ async function updateContent(text: string, editingField: boolean) {
 
     frame.addEventListener("dblclick", (event) => {
       const ke = event as KeyboardEvent;
-      handleEditorEvent(event, "dblclick", "frame", getModKey(ke), id);
+      codeViewModel.handleEditorEvent(
+        ideViewModel,
+        testRunner,
+        fileManager,
+        event,
+        "dblclick",
+        "frame",
+        getModKey(ke),
+        id,
+      );
     });
 
     frame.addEventListener("contextmenu", (event) => {
       const mk = { control: false, shift: false, alt: false };
-      handleEditorEvent(event, "contextmenu", "frame", mk, id);
+      codeViewModel.handleEditorEvent(
+        ideViewModel,
+        testRunner,
+        fileManager,
+        event,
+        "contextmenu",
+        "frame",
+        mk,
+        id,
+      );
       event.preventDefault();
     });
   }
@@ -1178,7 +1079,11 @@ async function updateContent(text: string, editingField: boolean) {
         const id = tgt.dataset.id;
         const func = tgt.dataset.func;
         const txt = await navigator.clipboard.readText();
-        handleEditorEvent(
+        codeViewModel.handleEditorEvent(
+          ideViewModel,
+          testRunner,
+          fileManager,
+
           event,
           "contextmenu",
           "frame",
@@ -1251,7 +1156,10 @@ async function updateContent(text: string, editingField: boolean) {
         const tgt = ke.target as HTMLDivElement;
         const id = tgt.dataset.id;
 
-        handleEditorEvent(
+        codeViewModel.handleEditorEvent(
+          ideViewModel,
+          testRunner,
+          fileManager,
           event,
           "key",
           "frame",
@@ -1274,7 +1182,10 @@ async function updateContent(text: string, editingField: boolean) {
         const id = tgt.dataset.id;
         const selected = tgt.dataset.selected;
 
-        handleEditorEvent(
+        codeViewModel.handleEditorEvent(
+          ideViewModel,
+          testRunner,
+          fileManager,
           event,
           "key",
           "frame",
