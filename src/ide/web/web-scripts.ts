@@ -20,6 +20,7 @@ import {
   collapseAllMenus,
   collapseMenu,
   confirmContinueOnNonChromeBrowser,
+  getEditorMsg,
   getFocused,
   handleClickDropDownButton,
   handleKeyDropDownButton,
@@ -30,6 +31,7 @@ import {
   internalErrorMsg,
   isDisabled,
   isGlobalKeyboardEvent,
+  isSupportedKey,
   ITabViewModel,
   lastDirId,
   parentId,
@@ -539,6 +541,16 @@ class IDEViewModel implements IIDEViewModel {
       }
     }
   }
+
+  async handleEscape(e: editorEvent, cvm: CodeEditorViewModel, tr: TestRunner) {
+    if (e.key === "Escape") {
+      await cvm.collapseContextMenu(this, tr);
+      demosButton.focus();
+      return true;
+    }
+
+    return false;
+  }
 }
 
 const codeViewModel = new CodeEditorViewModel();
@@ -917,52 +929,6 @@ function setStatus(html: HTMLDivElement, colour: string, label: string, showTool
   html.innerText = label;
 }
 
-function getEditorMsg(
-  type: "key" | "click" | "dblclick" | "paste" | "contextmenu",
-  target: "frame",
-  id: string | undefined,
-  key: string | undefined,
-  modKey: { control: boolean; shift: boolean; alt: boolean },
-  selection: [number, number] | undefined,
-  command: string | undefined,
-  optionalData: string | undefined,
-): editorEvent {
-  switch (type) {
-    case "paste":
-    case "key":
-      return {
-        type: type,
-        target: target,
-        id: id,
-        key: key,
-        modKey: modKey,
-        selection: selection,
-        command: command,
-        optionalData: optionalData,
-      };
-    case "click":
-    case "dblclick":
-      return {
-        type: type,
-        target: target,
-        id: id,
-        modKey: modKey,
-        selection: selection,
-      };
-    case "contextmenu":
-      return {
-        type: type,
-        target: target,
-        key: "ContextMenu",
-        id: id,
-        modKey: modKey,
-        selection: selection,
-        command: command,
-        optionalData: optionalData,
-      };
-  }
-}
-
 function handlePaste(event: Event, target: HTMLElement, msg: editorEvent): boolean {
   // outside of handler or selection is gone
   const start = target instanceof HTMLInputElement ? (target.selectionStart ?? 0) : 0;
@@ -1040,27 +1006,6 @@ function handleCutAndPaste(event: Event, msg: editorEvent) {
   return false;
 }
 
-async function collapseContextMenu() {
-  const items = document.querySelectorAll(".context-menu-item") as NodeListOf<HTMLDivElement>;
-
-  if (items.length > 0) {
-    const id = items[0].dataset.id;
-    const mk = { control: false, shift: false, alt: false };
-    const msg = getEditorMsg("key", "frame", id, "Escape", mk, undefined, undefined, undefined);
-    await codeViewModel.handleKeyAndRender(msg, ideViewModel, testRunner);
-  }
-}
-
-async function handleEscape(e: editorEvent) {
-  if (e.key === "Escape") {
-    await collapseContextMenu();
-    demosButton.focus();
-    return true;
-  }
-
-  return false;
-}
-
 async function handleUndoAndRedo(event: Event, msg: editorEvent) {
   if (msg.modKey.control) {
     switch (msg.key) {
@@ -1076,30 +1021,6 @@ async function handleUndoAndRedo(event: Event, msg: editorEvent) {
   }
 
   return false;
-}
-
-function isSupportedKey(evt: editorEvent) {
-  if (evt.type === "paste") {
-    return true;
-  }
-
-  switch (evt.key) {
-    case "Home":
-    case "End":
-    case "Tab":
-    case "Enter":
-    case "ArrowLeft":
-    case "ArrowRight":
-    case "ArrowUp":
-    case "ArrowDown":
-    case "Backspace":
-    case "Delete":
-    case "Escape":
-    case "ContextMenu":
-      return true;
-    default:
-      return !evt.key || evt.key.length === 1;
-  }
 }
 
 async function handleEditorEvent(
@@ -1142,15 +1063,11 @@ async function handleEditorEvent(
     console.info("tests cancelled in handleEditorEvent");
   }
 
-  if (await handleEscape(msg)) {
-    return;
-  }
-
-  if (handleCutAndPaste(event, msg)) {
-    return;
-  }
-
-  if (await handleUndoAndRedo(event, msg)) {
+  if (
+    (await ideViewModel.handleEscape(msg, codeViewModel, testRunner)) ||
+    handleCutAndPaste(event, msg) ||
+    (await handleUndoAndRedo(event, msg))
+  ) {
     return;
   }
 
@@ -1688,7 +1605,7 @@ async function handleMenuKey(event: KeyboardEvent) {
   } else if (event.key === "ArrowDown") {
     handleMenuArrowDown();
   } else if (event.key === "Escape") {
-    await collapseContextMenu();
+    await codeViewModel.collapseContextMenu(ideViewModel, testRunner);
     collapseMenu(button, true);
   } else if (event.key === "Enter" || event.key === "Space") {
     const focusedItem = document.activeElement as HTMLElement;
@@ -1715,7 +1632,7 @@ worksheetIFrame?.contentWindow?.addEventListener("click", () => tabViewModel.sho
 helpIFrame?.contentWindow?.addEventListener("click", () => tabViewModel.showHelpTab());
 
 window.addEventListener("click", () => {
-  collapseContextMenu();
+  codeViewModel.collapseContextMenu(ideViewModel, testRunner);
   collapseAllMenus();
 });
 

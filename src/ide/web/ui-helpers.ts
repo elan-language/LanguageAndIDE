@@ -386,3 +386,73 @@ export function handleMenuArrowDown() {
 export function getFocused() {
   return document.querySelector(".focused") as HTMLUnknownElement | undefined;
 }
+
+export function getEditorMsg(
+  type: "key" | "click" | "dblclick" | "paste" | "contextmenu",
+  target: "frame",
+  id: string | undefined,
+  key: string | undefined,
+  modKey: { control: boolean; shift: boolean; alt: boolean },
+  selection: [number, number] | undefined,
+  command: string | undefined,
+  optionalData: string | undefined,
+): editorEvent {
+  switch (type) {
+    case "paste":
+    case "key":
+      return {
+        type: type,
+        target: target,
+        id: id,
+        key: key,
+        modKey: modKey,
+        selection: selection,
+        command: command,
+        optionalData: optionalData,
+      };
+    case "click":
+    case "dblclick":
+      return {
+        type: type,
+        target: target,
+        id: id,
+        modKey: modKey,
+        selection: selection,
+      };
+    case "contextmenu":
+      return {
+        type: type,
+        target: target,
+        key: "ContextMenu",
+        id: id,
+        modKey: modKey,
+        selection: selection,
+        command: command,
+        optionalData: optionalData,
+      };
+  }
+}
+
+export function isSupportedKey(evt: editorEvent) {
+  if (evt.type === "paste") {
+    return true;
+  }
+
+  switch (evt.key) {
+    case "Home":
+    case "End":
+    case "Tab":
+    case "Enter":
+    case "ArrowLeft":
+    case "ArrowRight":
+    case "ArrowUp":
+    case "ArrowDown":
+    case "Backspace":
+    case "Delete":
+    case "Escape":
+    case "ContextMenu":
+      return true;
+    default:
+      return !evt.key || evt.key.length === 1;
+  }
+}

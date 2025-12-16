@@ -18,6 +18,7 @@ import { TestRunner } from "./test-runner";
 import {
   collapseAllMenus,
   delayMessage,
+  getEditorMsg,
   getFocused,
   ICodeEditorViewModel,
   IIDEViewModel,
@@ -478,6 +479,17 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     } else {
       this.getFirstChild().select();
       getFocused()?.focus();
+    }
+  }
+
+  async collapseContextMenu(vm: IIDEViewModel, tr: TestRunner) {
+    const items = document.querySelectorAll(".context-menu-item") as NodeListOf<HTMLDivElement>;
+
+    if (items.length > 0) {
+      const id = items[0].dataset.id;
+      const mk = { control: false, shift: false, alt: false };
+      const msg = getEditorMsg("key", "frame", id, "Escape", mk, undefined, undefined, undefined);
+      await this.handleKeyAndRender(msg, vm, tr);
     }
   }
 }
