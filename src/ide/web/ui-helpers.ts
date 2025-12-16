@@ -192,6 +192,7 @@ export interface ICodeEditorViewModel {
 
   isPausedState(): boolean;
   isTestRunningState(): boolean;
+  collapseContextMenu(vm: IIDEViewModel, tr: TestRunner): Promise<void>;
 }
 
 export interface ITabViewModel {
@@ -455,5 +456,31 @@ export function isSupportedKey(evt: editorEvent) {
       return true;
     default:
       return !evt.key || evt.key.length === 1;
+  }
+}
+
+export async function handleMenuKey(
+  event: KeyboardEvent,
+  cvm: ICodeEditorViewModel,
+  vm: IIDEViewModel,
+  tr: TestRunner,
+) {
+  removeFocussedClassFromAllTabs();
+  const menuItem = event.target as HTMLElement;
+  const menu = menuItem.parentElement as HTMLDivElement;
+  const button = menu.previousElementSibling as HTMLButtonElement;
+  if (event.key === "ArrowUp") {
+    handleMenuArrowUp();
+  } else if (event.key === "ArrowDown") {
+    handleMenuArrowDown();
+  } else if (event.key === "Escape") {
+    await cvm.collapseContextMenu(vm, tr);
+    collapseMenu(button, true);
+  } else if (event.key === "Enter" || event.key === "Space") {
+    const focusedItem = document.activeElement as HTMLElement;
+    focusedItem?.click();
+    setTimeout(() => {
+      collapseMenu(button, false);
+    }, 1);
   }
 }

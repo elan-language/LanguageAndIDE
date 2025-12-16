@@ -35,6 +35,9 @@ system.stdlib = stdlib; // to allow injection
 export class CodeEditorViewModel implements ICodeEditorViewModel {
   private file?: File = undefined;
 
+  lastDOMEvent: Event | undefined;
+  lastEditorEvent: editorEvent | undefined;
+
   get fileName() {
     return this.file!.fileName;
   }
@@ -626,12 +629,12 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     }
 
     // save last dom event for debug
-    //lastDOMEvent = event;
+    this.lastDOMEvent = event;
 
     const msg = getEditorMsg(type, target, id, key, modKey, selection, command, optionalData);
 
     // save last editor event for debug
-    //lastEditorEvent = msg;
+    this.lastEditorEvent = msg;
 
     if (!isSupportedKey(msg)) {
       // discard

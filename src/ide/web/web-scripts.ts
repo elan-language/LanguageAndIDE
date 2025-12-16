@@ -25,6 +25,7 @@ import {
   handleKeyDropDownButton,
   handleMenuArrowDown,
   handleMenuArrowUp,
+  handleMenuKey,
   ICodeEditorViewModel,
   IIDEViewModel,
   internalErrorMsg,
@@ -107,8 +108,6 @@ const elanInputOutput = new WebInputOutput();
 let profile: Profile;
 let userName: string | undefined;
 
-let lastDOMEvent: Event | undefined;
-let lastEditorEvent: editorEvent | undefined;
 let errorDOMEvent: Event | undefined;
 let errorEditorEvent: editorEvent | undefined;
 let errorStack: string | undefined;
@@ -347,8 +346,8 @@ class IDEViewModel implements IIDEViewModel {
 
   async showError(err: Error, fileName: string, reset: boolean) {
     // because otherwise we will pick up any clicks or edits done after error
-    errorDOMEvent = lastDOMEvent;
-    errorEditorEvent = lastEditorEvent;
+    errorDOMEvent = codeViewModel.lastDOMEvent;
+    errorEditorEvent = codeViewModel.lastEditorEvent;
 
     clearSystemDisplay();
     if (reset) {
@@ -548,6 +547,33 @@ class IDEViewModel implements IIDEViewModel {
 
     return false;
   }
+  async handleStatusClick(event: Event, tag: string, useParent: boolean) {
+    const pe = event as PointerEvent;
+    const [goto, cls] = warningOrError(pe.target as HTMLDivElement);
+    if (goto) {
+      const elements = document.getElementsByTagName(tag);
+      for (const element of elements) {
+        // if we're using the parent id we expect text in el-msg
+        if (element.classList.contains(cls) && (!useParent || element.textContent)) {
+          const mk = { control: false, shift: false, alt: false };
+          const id = useParent ? parentId(element) : element.id;
+          await codeViewModel.handleEditorEvent(
+            this,
+            testRunner,
+            fileManager,
+            event,
+            "click",
+            "frame",
+            mk,
+            id,
+          );
+          return;
+        }
+      }
+    }
+    event.preventDefault();
+    event.stopPropagation();
+  }
 }
 
 const codeViewModel = new CodeEditorViewModel();
@@ -732,34 +758,6 @@ helpIFrame.addEventListener("load", () => {
   helpIFrame.contentWindow?.addEventListener("click", () => tabViewModel.showHelpTab());
 });
 
-async function handleStatusClick(event: Event, tag: string, useParent: boolean) {
-  const pe = event as PointerEvent;
-  const [goto, cls] = warningOrError(pe.target as HTMLDivElement);
-  if (goto) {
-    const elements = document.getElementsByTagName(tag);
-    for (const element of elements) {
-      // if we're using the parent id we expect text in el-msg
-      if (element.classList.contains(cls) && (!useParent || element.textContent)) {
-        const mk = { control: false, shift: false, alt: false };
-        const id = useParent ? parentId(element) : element.id;
-        await codeViewModel.handleEditorEvent(
-          ideViewModel,
-          testRunner,
-          fileManager,
-          event,
-          "click",
-          "frame",
-          mk,
-          id,
-        );
-        return;
-      }
-    }
-  }
-  event.preventDefault();
-  event.stopPropagation();
-}
-
 function changeCss(stylesheet: string) {
   console.log("css to: " + stylesheet);
   const links = document.getElementsByTagName("link");
@@ -774,32 +772,32 @@ function changeCss(stylesheet: string) {
 }
 
 parseStatus.addEventListener("click", async (event) => {
-  await handleStatusClick(event, "el-field", false);
+  await ideViewModel.handleStatusClick(event, "el-field", false);
 });
 
 parseStatus.addEventListener("keydown", async (event) => {
   if (event.key === "Enter" || event.code === "Space") {
-    await handleStatusClick(event, "el-field", false);
+    await ideViewModel.handleStatusClick(event, "el-field", false);
   }
 });
 
 compileStatus.addEventListener("click", async (event) => {
-  await handleStatusClick(event, "el-msg", true);
+  await ideViewModel.handleStatusClick(event, "el-msg", true);
 });
 
 compileStatus.addEventListener("keydown", async (event) => {
   if (event.key === "Enter" || event.code === "Space") {
-    await handleStatusClick(event, "el-msg", true);
+    await ideViewModel.handleStatusClick(event, "el-msg", true);
   }
 });
 
 testStatus.addEventListener("click", async (event) => {
-  await handleStatusClick(event, "el-msg", true);
+  await ideViewModel.handleStatusClick(event, "el-msg", true);
 });
 
 testStatus.addEventListener("keydown", async (event) => {
   if (event.key === "Enter" || event.code === "Space") {
-    await handleStatusClick(event, "el-msg", true);
+    await ideViewModel.handleStatusClick(event, "el-msg", true);
   }
 });
 
@@ -1506,30 +1504,15 @@ demosButton.addEventListener("keydown", handleKeyDropDownButton);
 fileButton.addEventListener("keydown", handleKeyDropDownButton);
 standardWorksheetButton.addEventListener("keydown", handleKeyDropDownButton);
 
-async function handleMenuKey(event: KeyboardEvent) {
-  removeFocussedClassFromAllTabs();
-  const menuItem = event.target as HTMLElement;
-  const menu = menuItem.parentElement as HTMLDivElement;
-  const button = menu.previousElementSibling as HTMLButtonElement;
-  if (event.key === "ArrowUp") {
-    handleMenuArrowUp();
-  } else if (event.key === "ArrowDown") {
-    handleMenuArrowDown();
-  } else if (event.key === "Escape") {
-    await codeViewModel.collapseContextMenu(ideViewModel, testRunner);
-    collapseMenu(button, true);
-  } else if (event.key === "Enter" || event.key === "Space") {
-    const focusedItem = document.activeElement as HTMLElement;
-    focusedItem?.click();
-    setTimeout(() => {
-      collapseMenu(button, false);
-    }, 1);
-  }
-}
-
-demosMenu.addEventListener("keydown", handleMenuKey);
-fileMenu.addEventListener("keydown", handleMenuKey);
-worksheetMenu.addEventListener("keydown", handleMenuKey);
+demosMenu.addEventListener("keydown", (e) =>
+  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
+);
+fileMenu.addEventListener("keydown", (e) =>
+  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
+);
+worksheetMenu.addEventListener("keydown", (e) =>
+  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
+);
 
 demosMenu.addEventListener("click", () => collapseMenu(demosButton, false));
 fileMenu.addEventListener("click", () => collapseMenu(fileButton, false));
