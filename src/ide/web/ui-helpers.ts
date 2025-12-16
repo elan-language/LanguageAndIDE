@@ -57,6 +57,15 @@ export function checkIsChrome() {
   }
 }
 
+export function isDisabled(evt: Event) {
+  if (evt.target instanceof HTMLDivElement && evt.target.classList.contains("disabled")) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    return true;
+  }
+  return false;
+}
+
 export function confirmContinueOnNonChromeBrowser() {
   return confirm(
     `Elan is compatible with the Chrome or Edge browser. It does not work correctly in Firefox or Safari.`,
@@ -183,10 +192,23 @@ export interface ICodeEditorViewModel {
 
   isPausedState(): boolean;
   isTestRunningState(): boolean;
+  collapseContextMenu(vm: IIDEViewModel, tr: TestRunner): Promise<void>;
+}
+
+export interface ITabViewModel {
+  showDisplayTab(): void;
+
+  showInfoTab(): void;
+
+  showHelpTab(): void;
+
+  showWorksheetTab(): void;
+
+  focusInfoTab(cvm: ICodeEditorViewModel): void;
 }
 
 export interface IIDEViewModel {
-  focusInfoTab(): void;
+  tvm: ITabViewModel;
   updateDisplayValues(cvm: ICodeEditorViewModel): void;
   setPauseButtonState(waitingForUserInput?: boolean): void;
   toggleInputStatus(rs: RunStatus): void;
@@ -204,6 +226,7 @@ export interface IIDEViewModel {
   disableUndoRedoButtons(msg: string): void;
   postCodeResetToWorksheet(code: string): void;
   updateNameAndSavedStatus(cvm: ICodeEditorViewModel, fm: FileManager): void;
+  handleEscape(e: editorEvent, cvm: ICodeEditorViewModel, tr: TestRunner): Promise<boolean>;
 }
 
 export const delayMessage =
@@ -246,3 +269,218 @@ export const globalKeys = [
   "-",
   "=",
 ];
+
+export function isGlobalKeyboardEvent(kp: Event) {
+  return kp instanceof KeyboardEvent && (kp.ctrlKey || kp.metaKey) && globalKeys.includes(kp.key);
+}
+
+export function collapseMenu(button: HTMLElement, andFocus: boolean) {
+  if (andFocus) {
+    button.focus();
+  }
+  const menuId = button.getAttribute("aria-controls")!;
+  document.getElementById(menuId)!.hidden = true;
+  button.setAttribute("aria-expanded", "false");
+}
+
+export function collapseAllMenus() {
+  const allDropDowns = document.querySelectorAll(
+    "button[aria-haspopup='true']",
+  ) as NodeListOf<HTMLElement>;
+
+  for (const e of allDropDowns) {
+    collapseMenu(e, false);
+  }
+}
+
+export function setTabToFocussedAndSelected(tabName: string) {
+  collapseAllMenus();
+  // Remove selected and focussed from other three tabs
+  const allTabElements = document.getElementsByClassName("tab-element");
+  for (const e of allTabElements) {
+    e.classList.remove("selected");
+    e.classList.remove("focussed");
+  }
+  // Add selected and focussed to the specified tab
+  const newTabElements = document.getElementsByClassName(tabName);
+  for (const e of newTabElements as HTMLCollectionOf<HTMLElement>) {
+    e.classList.add("selected");
+    e.classList.add("focussed");
+    e.focus();
+  }
+}
+
+export function removeFocussedClassFromAllTabs() {
+  const allTabElements = document.getElementsByClassName("tab-element");
+  for (const e of allTabElements) {
+    e.classList.remove("focussed");
+  }
+  const allTabContent = document.getElementsByClassName("tab-content");
+  for (const e of allTabContent) {
+    e.classList.remove("focussed");
+  }
+}
+
+export function handleClickDropDownButton(event: Event) {
+  removeFocussedClassFromAllTabs();
+  const button = event.target as HTMLButtonElement;
+  const isExpanded = button.getAttribute("aria-expanded") === "true";
+  const menuId = button.getAttribute("aria-controls")!;
+  const menu = document.getElementById(menuId)!;
+  button.setAttribute("aria-expanded", `${!isExpanded}`);
+  menu.hidden = isExpanded;
+
+  const allDropDowns = document.querySelectorAll(
+    "button[aria-haspopup='true']",
+  ) as NodeListOf<HTMLElement>;
+
+  for (const e of allDropDowns) {
+    if (e.id !== button.id) {
+      collapseMenu(e, false);
+    }
+  }
+
+  const firstitem = menu.querySelector(".menu-item") as HTMLElement;
+  firstitem.focus();
+
+  event.stopPropagation();
+}
+
+export function handleKeyDropDownButton(event: KeyboardEvent) {
+  removeFocussedClassFromAllTabs();
+  const button = event.target as HTMLButtonElement;
+  const menuId = button.getAttribute("aria-controls")!;
+  const menu = document.getElementById(menuId)!;
+  if (event.key === "ArrowDown") {
+    const firstitem = menu.querySelector(".menu-item") as HTMLElement;
+    firstitem.focus();
+  } else if (event.key === "Escape") {
+    collapseMenu(button, true);
+  }
+}
+
+export function handleMenuArrowUp() {
+  const focusedItem = document.activeElement as HTMLElement;
+
+  let previousItem = focusedItem;
+
+  do {
+    previousItem = previousItem?.previousElementSibling as HTMLElement;
+    if (previousItem) {
+      previousItem.focus();
+    }
+  } while (previousItem && (previousItem as any).disabled);
+}
+
+export function handleMenuArrowDown() {
+  const focusedItem = document.activeElement as HTMLElement;
+
+  let nextItem: HTMLElement = focusedItem;
+
+  do {
+    nextItem = nextItem?.nextElementSibling as HTMLElement;
+    if (nextItem) {
+      nextItem.focus();
+    }
+  } while (nextItem && (nextItem as any).disabled);
+}
+
+export function getFocused() {
+  return document.querySelector(".focused") as HTMLUnknownElement | undefined;
+}
+
+export function getEditorMsg(
+  type: "key" | "click" | "dblclick" | "paste" | "contextmenu",
+  target: "frame",
+  id: string | undefined,
+  key: string | undefined,
+  modKey: { control: boolean; shift: boolean; alt: boolean },
+  selection: [number, number] | undefined,
+  command: string | undefined,
+  optionalData: string | undefined,
+): editorEvent {
+  switch (type) {
+    case "paste":
+    case "key":
+      return {
+        type: type,
+        target: target,
+        id: id,
+        key: key,
+        modKey: modKey,
+        selection: selection,
+        command: command,
+        optionalData: optionalData,
+      };
+    case "click":
+    case "dblclick":
+      return {
+        type: type,
+        target: target,
+        id: id,
+        modKey: modKey,
+        selection: selection,
+      };
+    case "contextmenu":
+      return {
+        type: type,
+        target: target,
+        key: "ContextMenu",
+        id: id,
+        modKey: modKey,
+        selection: selection,
+        command: command,
+        optionalData: optionalData,
+      };
+  }
+}
+
+export function isSupportedKey(evt: editorEvent) {
+  if (evt.type === "paste") {
+    return true;
+  }
+
+  switch (evt.key) {
+    case "Home":
+    case "End":
+    case "Tab":
+    case "Enter":
+    case "ArrowLeft":
+    case "ArrowRight":
+    case "ArrowUp":
+    case "ArrowDown":
+    case "Backspace":
+    case "Delete":
+    case "Escape":
+    case "ContextMenu":
+      return true;
+    default:
+      return !evt.key || evt.key.length === 1;
+  }
+}
+
+export async function handleMenuKey(
+  event: KeyboardEvent,
+  cvm: ICodeEditorViewModel,
+  vm: IIDEViewModel,
+  tr: TestRunner,
+) {
+  removeFocussedClassFromAllTabs();
+  const menuItem = event.target as HTMLElement;
+  const menu = menuItem.parentElement as HTMLDivElement;
+  const button = menu.previousElementSibling as HTMLButtonElement;
+  if (event.key === "ArrowUp") {
+    handleMenuArrowUp();
+  } else if (event.key === "ArrowDown") {
+    handleMenuArrowDown();
+  } else if (event.key === "Escape") {
+    await cvm.collapseContextMenu(vm, tr);
+    collapseMenu(button, true);
+  } else if (event.key === "Enter" || event.key === "Space") {
+    const focusedItem = document.activeElement as HTMLElement;
+    focusedItem?.click();
+    setTimeout(() => {
+      collapseMenu(button, false);
+    }, 1);
+  }
+}

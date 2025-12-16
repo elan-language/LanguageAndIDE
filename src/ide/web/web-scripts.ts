@@ -17,14 +17,24 @@ import { TestRunner } from "./test-runner";
 import {
   cancelMsg,
   checkIsChrome,
+  collapseAllMenus,
+  collapseMenu,
   confirmContinueOnNonChromeBrowser,
-  delayMessage,
-  globalKeys,
+  getFocused,
+  handleClickDropDownButton,
+  handleKeyDropDownButton,
+  handleMenuArrowDown,
+  handleMenuArrowUp,
+  handleMenuKey,
   ICodeEditorViewModel,
   IIDEViewModel,
   internalErrorMsg,
+  isDisabled,
+  ITabViewModel,
   lastDirId,
   parentId,
+  removeFocussedClassFromAllTabs,
+  setTabToFocussedAndSelected,
   warningOrError,
 } from "./ui-helpers";
 import { fetchDefaultProfile, fetchProfile, fetchUserConfig, sanitiseHtml } from "./web-helpers";
@@ -93,29 +103,60 @@ const displayTab = document.getElementById("display-tab");
 const helpTab = document.getElementById("help-tab");
 const worksheetTab = document.getElementById("worksheet-tab");
 
-const inactivityTimeout = 2000;
+const dialog = document.getElementById("preferences-dialog") as HTMLDialogElement;
+const closePreferencesDialogButton = document.getElementById("confirmBtn");
+const useCvdTickbox = document.getElementById("use-cvd") as HTMLInputElement;
 
 const elanInputOutput = new WebInputOutput();
 
 let profile: Profile;
 let userName: string | undefined;
 
-let inactivityTimer: any | undefined = undefined;
-
-let lastDOMEvent: Event | undefined;
-let lastEditorEvent: editorEvent | undefined;
 let errorDOMEvent: Event | undefined;
 let errorEditorEvent: editorEvent | undefined;
 let errorStack: string | undefined;
 
-class IDEViewModel implements IIDEViewModel {
-  focusInfoTab() {
-    showInfoTab();
+class TabViewModel implements ITabViewModel {
+  showDisplayTab() {
+    const tabName = "display-tab";
+    setTabToFocussedAndSelected(tabName);
+    (document.querySelector("#printed-text input") as HTMLInputElement | undefined)?.focus();
+  }
+
+  showInfoTab() {
+    const tabName = "info-tab";
+    setTabToFocussedAndSelected(tabName);
+  }
+
+  showHelpTab() {
+    const tabName = "help-tab";
+    setTabToFocussedAndSelected(tabName);
+    helpIFrame.focus();
+    helpIFrame.contentWindow?.addEventListener("keydown", ideViewModel.globalHandler);
+  }
+
+  showWorksheetTab() {
+    const tabName = "worksheet-tab";
+    setTabToFocussedAndSelected(tabName);
+    if (worksheetLoaded) {
+      worksheetIFrame.focus();
+      worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
+    } else {
+      standardWorksheetButton.focus();
+    }
+  }
+
+  focusInfoTab(cvm: ICodeEditorViewModel) {
+    this.showInfoTab();
     systemInfoDiv.focus();
     systemInfoDiv.classList.add("focussed");
-    codeViewModel.setRunStatus(RunStatus.paused);
+    cvm.setRunStatus(RunStatus.paused);
     systemInfoDiv.innerHTML = "";
   }
+}
+
+class IDEViewModel implements IIDEViewModel {
+  constructor(public readonly tvm: ITabViewModel) {}
 
   updateNameAndSavedStatus(cvm: ICodeEditorViewModel, fm: FileManager) {
     const unsaved = fm.hasUnsavedChanges(cvm) ? " UNSAVED" : "";
@@ -309,8 +350,8 @@ class IDEViewModel implements IIDEViewModel {
 
   async showError(err: Error, fileName: string, reset: boolean) {
     // because otherwise we will pick up any clicks or edits done after error
-    errorDOMEvent = lastDOMEvent;
-    errorEditorEvent = lastEditorEvent;
+    errorDOMEvent = codeViewModel.lastDOMEvent;
+    errorEditorEvent = codeViewModel.lastEditorEvent;
 
     clearSystemDisplay();
     if (reset) {
@@ -373,12 +414,12 @@ class IDEViewModel implements IIDEViewModel {
     cvm.removeAllSelectorsThatCanBe();
     await this.renderAsHtml(false);
     runButton.focus();
-    showDisplayTab();
+    this.tvm.showDisplayTab();
   }
 
   runDebug() {
     runDebugButton.focus();
-    setTimeout(showDisplayTab);
+    setTimeout(this.tvm.showDisplayTab);
   }
 
   async renderAsHtml(editingField: boolean) {
@@ -432,11 +473,118 @@ class IDEViewModel implements IIDEViewModel {
       button.classList.remove("disabled");
     }
   }
+
+  globalHandler(kp: KeyboardEvent) {
+    // don't check kp instanceof keyboardEvent here or control keys on the help iframe are not picked up
+    if (kp.ctrlKey || kp.metaKey) {
+      switch (kp.key) {
+        case "b":
+        case "B":
+          removeFocussedClassFromAllTabs();
+          if (codeViewModel.isRunningState()) {
+            clearDisplayButton.focus();
+          } else {
+            demosButton.focus();
+          }
+          kp.preventDefault();
+          break;
+        case "d":
+        case "D":
+          displayTabLabel.click();
+          kp.preventDefault();
+          break;
+        case "e":
+        case "E":
+          codeContainer.click();
+          kp.preventDefault();
+          break;
+        case "g":
+        case "G":
+          runDebugButton.click();
+          kp.preventDefault();
+          break;
+        case "h":
+        case "H":
+          helpTabLabel.click();
+          kp.preventDefault();
+          break;
+        case "i":
+        case "I":
+          infoTabLabel.click();
+          kp.preventDefault();
+          break;
+        case "k":
+        case "K":
+          worksheetTabLabel.click();
+          kp.preventDefault();
+          break;
+        case "p":
+        case "P":
+          stepButton.click();
+          kp.preventDefault();
+          break;
+        case "r":
+        case "R":
+          runButton.click();
+          kp.preventDefault();
+          break;
+        case "s":
+        case "S":
+          stopButton.click();
+          kp.preventDefault();
+          break;
+        case "u":
+        case "U":
+          pauseButton.click();
+          kp.preventDefault();
+          break;
+      }
+    }
+  }
+
+  async handleEscape(e: editorEvent, cvm: CodeEditorViewModel, tr: TestRunner) {
+    if (e.key === "Escape") {
+      await cvm.collapseContextMenu(this, tr);
+      demosButton.focus();
+      return true;
+    }
+
+    return false;
+  }
+  async handleStatusClick(event: Event, tag: string, useParent: boolean) {
+    const pe = event as PointerEvent;
+    const [goto, cls] = warningOrError(pe.target as HTMLDivElement);
+    if (goto) {
+      const elements = document.getElementsByTagName(tag);
+      for (const element of elements) {
+        // if we're using the parent id we expect text in el-msg
+        if (element.classList.contains(cls) && (!useParent || element.textContent)) {
+          const mk = { control: false, shift: false, alt: false };
+          const id = useParent ? parentId(element) : element.id;
+          await codeViewModel.handleEditorEvent(
+            this,
+            testRunner,
+            fileManager,
+            event,
+            "click",
+            "frame",
+            mk,
+            id,
+          );
+          return;
+        }
+      }
+    }
+    event.preventDefault();
+    event.stopPropagation();
+  }
 }
 
 const codeViewModel = new CodeEditorViewModel();
 
-const ideViewModel = new IDEViewModel();
+const tabViewModel = new TabViewModel();
+
+const ideViewModel = new IDEViewModel(tabViewModel);
 
 const programRunner = new ProgramRunner();
 
@@ -553,87 +701,20 @@ for (const elem of demoFiles) {
 }
 
 preferencesButton.addEventListener("click", (event: Event) => {
-  if (isDisabled(event)) {
-    return;
+  if (!isDisabled(event)) {
+    // otherwise it can pick up click and close immediately
+    setTimeout(() => dialog.showModal(), 1);
   }
-
-  const dialog = document.getElementById("preferences-dialog") as HTMLDialogElement;
-  const closeButton = document.getElementById("confirmBtn");
-
-  const cvd = document.getElementById("use-cvd") as HTMLInputElement;
-
-  closeButton?.addEventListener("click", () => {
-    if (cvd.checked) {
-      changeCss("cvd-colourScheme");
-    } else {
-      changeCss("colourScheme");
-    }
-
-    dialog.close();
-  });
-
-  // otherwise it can pick up click and close immediately
-  setTimeout(() => dialog.showModal(), 1);
 });
 
-function showDisplayTab() {
-  const tabName = "display-tab";
-  setTabToFocussedAndSelected(tabName);
-  (document.querySelector("#printed-text input") as HTMLInputElement | undefined)?.focus();
-}
-
-function showInfoTab() {
-  const tabName = "info-tab";
-  setTabToFocussedAndSelected(tabName);
-}
-
-function showHelpTab() {
-  const tabName = "help-tab";
-  setTabToFocussedAndSelected(tabName);
-  helpIFrame.focus();
-  helpIFrame.contentWindow?.addEventListener("keydown", globalHandler);
-}
-
-function showWorksheetTab() {
-  const tabName = "worksheet-tab";
-  setTabToFocussedAndSelected(tabName);
-  if (worksheetLoaded) {
-    worksheetIFrame.focus();
-    worksheetIFrame.contentWindow?.postMessage("hasFocus", "*");
-  } else {
-    standardWorksheetButton.focus();
+closePreferencesDialogButton?.addEventListener("click", (event: Event) => {
+  if (!isDisabled(event)) {
+    changeCss(useCvdTickbox.checked ? "cvd-colourScheme" : "colourScheme");
+    dialog.close();
   }
-}
+});
 
-function setTabToFocussedAndSelected(tabName: string) {
-  collapseAllMenus();
-  // Remove selected and focussed from other three tabs
-  const allTabElements = document.getElementsByClassName("tab-element");
-  for (const e of allTabElements) {
-    e.classList.remove("selected");
-    e.classList.remove("focussed");
-  }
-  // Add selected and focussed to the specified tab
-  const newTabElements = document.getElementsByClassName(tabName);
-  for (const e of newTabElements as HTMLCollectionOf<HTMLElement>) {
-    e.classList.add("selected");
-    e.classList.add("focussed");
-    e.focus();
-  }
-}
-
-function removeFocussedClassFromAllTabs() {
-  const allTabElements = document.getElementsByClassName("tab-element");
-  for (const e of allTabElements) {
-    e.classList.remove("focussed");
-  }
-  const allTabContent = document.getElementsByClassName("tab-content");
-  for (const e of allTabContent) {
-    e.classList.remove("focussed");
-  }
-}
-
-helpTabLabel.addEventListener("click", showHelpTab);
+helpTabLabel.addEventListener("click", tabViewModel.showHelpTab);
 
 helpHomeButton.addEventListener("click", () => {
   window.open("documentation/index.html", "help-iframe")?.focus();
@@ -647,15 +728,15 @@ helpForwardButton.addEventListener("click", () => {
   helpIFrame.contentWindow?.history.forward();
 });
 
-displayTabLabel.addEventListener("click", showDisplayTab);
-infoTabLabel.addEventListener("click", showInfoTab);
-worksheetTabLabel.addEventListener("click", showWorksheetTab);
+displayTabLabel.addEventListener("click", tabViewModel.showDisplayTab);
+infoTabLabel.addEventListener("click", tabViewModel.showInfoTab);
+worksheetTabLabel.addEventListener("click", tabViewModel.showWorksheetTab);
 
 let worksheetLoaded = false;
 
 worksheetIFrame.addEventListener("load", () => {
   worksheetLoaded = true;
-  worksheetIFrame.contentWindow?.addEventListener("keydown", globalHandler);
+  worksheetIFrame.contentWindow?.addEventListener("keydown", ideViewModel.globalHandler);
   worksheetIFrame.contentWindow?.addEventListener("click", () => {
     const newTabElements = document.getElementsByClassName("worksheet-tab");
     for (const e of newTabElements as HTMLCollectionOf<HTMLElement>) {
@@ -667,28 +748,9 @@ worksheetIFrame.addEventListener("load", () => {
 });
 
 helpIFrame.addEventListener("load", () => {
-  helpIFrame.contentWindow?.addEventListener("keydown", globalHandler);
-  helpIFrame.contentWindow?.addEventListener("click", () => showHelpTab());
+  helpIFrame.contentWindow?.addEventListener("keydown", ideViewModel.globalHandler);
+  helpIFrame.contentWindow?.addEventListener("click", () => tabViewModel.showHelpTab());
 });
-
-async function handleStatusClick(event: Event, tag: string, useParent: boolean) {
-  const pe = event as PointerEvent;
-  const [goto, cls] = warningOrError(pe.target as HTMLDivElement);
-  if (goto) {
-    const elements = document.getElementsByTagName(tag);
-    for (const element of elements) {
-      // if we're using the parent id we expect text in el-msg
-      if (element.classList.contains(cls) && (!useParent || element.textContent)) {
-        const mk = { control: false, shift: false, alt: false };
-        const id = useParent ? parentId(element) : element.id;
-        await handleEditorEvent(event, "click", "frame", mk, id);
-        return;
-      }
-    }
-  }
-  event.preventDefault();
-  event.stopPropagation();
-}
 
 function changeCss(stylesheet: string) {
   console.log("css to: " + stylesheet);
@@ -704,32 +766,32 @@ function changeCss(stylesheet: string) {
 }
 
 parseStatus.addEventListener("click", async (event) => {
-  await handleStatusClick(event, "el-field", false);
+  await ideViewModel.handleStatusClick(event, "el-field", false);
 });
 
 parseStatus.addEventListener("keydown", async (event) => {
   if (event.key === "Enter" || event.code === "Space") {
-    await handleStatusClick(event, "el-field", false);
+    await ideViewModel.handleStatusClick(event, "el-field", false);
   }
 });
 
 compileStatus.addEventListener("click", async (event) => {
-  await handleStatusClick(event, "el-msg", true);
+  await ideViewModel.handleStatusClick(event, "el-msg", true);
 });
 
 compileStatus.addEventListener("keydown", async (event) => {
   if (event.key === "Enter" || event.code === "Space") {
-    await handleStatusClick(event, "el-msg", true);
+    await ideViewModel.handleStatusClick(event, "el-msg", true);
   }
 });
 
 testStatus.addEventListener("click", async (event) => {
-  await handleStatusClick(event, "el-msg", true);
+  await ideViewModel.handleStatusClick(event, "el-msg", true);
 });
 
 testStatus.addEventListener("keydown", async (event) => {
   if (event.key === "Enter" || event.code === "Space") {
-    await handleStatusClick(event, "el-msg", true);
+    await ideViewModel.handleStatusClick(event, "el-msg", true);
   }
 });
 
@@ -845,7 +907,7 @@ function systemInfoPrintUnsafe(text: string, scroll = true) {
     systemInfoDiv.scrollTop = systemInfoDiv.scrollHeight;
   }
   systemInfoDiv.focus();
-  showInfoTab();
+  tabViewModel.showInfoTab();
 }
 
 function getModKey(e: KeyboardEvent | MouseEvent) {
@@ -865,258 +927,6 @@ function setStatus(html: HTMLDivElement, colour: string, label: string, showTool
   html.innerText = label;
 }
 
-function getEditorMsg(
-  type: "key" | "click" | "dblclick" | "paste" | "contextmenu",
-  target: "frame",
-  id: string | undefined,
-  key: string | undefined,
-  modKey: { control: boolean; shift: boolean; alt: boolean },
-  selection: [number, number] | undefined,
-  command: string | undefined,
-  optionalData: string | undefined,
-): editorEvent {
-  switch (type) {
-    case "paste":
-    case "key":
-      return {
-        type: type,
-        target: target,
-        id: id,
-        key: key,
-        modKey: modKey,
-        selection: selection,
-        command: command,
-        optionalData: optionalData,
-      };
-    case "click":
-    case "dblclick":
-      return {
-        type: type,
-        target: target,
-        id: id,
-        modKey: modKey,
-        selection: selection,
-      };
-    case "contextmenu":
-      return {
-        type: type,
-        target: target,
-        key: "ContextMenu",
-        id: id,
-        modKey: modKey,
-        selection: selection,
-        command: command,
-        optionalData: optionalData,
-      };
-  }
-}
-
-function handlePaste(event: Event, target: HTMLElement, msg: editorEvent): boolean {
-  // outside of handler or selection is gone
-  const start = target instanceof HTMLInputElement ? (target.selectionStart ?? 0) : 0;
-  const end = target instanceof HTMLInputElement ? (target.selectionEnd ?? 0) : 0;
-  target.addEventListener("paste", async (event: ClipboardEvent) => {
-    const txt = await navigator.clipboard.readText();
-    if (start !== end) {
-      await handleEditorEvent(
-        event,
-        "key",
-        "frame",
-        { control: false, shift: false, alt: false },
-        msg.id,
-        "Delete",
-        [start, end],
-      );
-    }
-    await handleEditorEvent(
-      event,
-      "paste",
-      "frame",
-      { control: true, shift: false, alt: false },
-      msg.id,
-      "v",
-      undefined,
-      undefined,
-      `${txt.trim()}`,
-    );
-  });
-  event.stopPropagation();
-  return true;
-}
-
-function handleCut(event: Event, target: HTMLInputElement, msg: editorEvent) {
-  // outside of handler or selection is gone
-  const start = target.selectionStart ?? 0;
-  const end = target.selectionEnd ?? 0;
-  target.addEventListener("cut", async (event: ClipboardEvent) => {
-    const txt = document.getSelection()?.toString() ?? "";
-    await navigator.clipboard.writeText(txt);
-    const mk = { control: false, shift: false, alt: false };
-    await handleEditorEvent(event, "key", "frame", mk, msg.id, "Delete", [start, end]);
-  });
-  event.stopPropagation();
-  return true;
-}
-
-function handleCopy(event: Event, target: HTMLInputElement) {
-  target.addEventListener("copy", async (_event: ClipboardEvent) => {
-    const txt = document.getSelection()?.toString() ?? "";
-    await navigator.clipboard.writeText(txt);
-  });
-  event.stopPropagation();
-  return true;
-}
-
-function handleCutAndPaste(event: Event, msg: editorEvent) {
-  if (msg.type === "paste") {
-    return false;
-  }
-
-  if (msg.modKey.control && msg.key === "v") {
-    return handlePaste(event, event.target as HTMLElement, msg);
-  }
-
-  if (event.target instanceof HTMLInputElement && msg.modKey.control) {
-    switch (msg.key) {
-      case "x":
-        return handleCut(event, event.target, msg);
-      case "c":
-        return handleCopy(event, event.target);
-    }
-  }
-
-  return false;
-}
-
-async function collapseContextMenu() {
-  const items = document.querySelectorAll(".context-menu-item") as NodeListOf<HTMLDivElement>;
-
-  if (items.length > 0) {
-    const id = items[0].dataset.id;
-    const mk = { control: false, shift: false, alt: false };
-    const msg = getEditorMsg("key", "frame", id, "Escape", mk, undefined, undefined, undefined);
-    await handleKeyAndRender(msg);
-  }
-}
-
-async function handleEscape(e: editorEvent) {
-  if (e.key === "Escape") {
-    await collapseContextMenu();
-    demosButton.focus();
-    return true;
-  }
-
-  return false;
-}
-
-async function handleUndoAndRedo(event: Event, msg: editorEvent) {
-  if (msg.modKey.control) {
-    switch (msg.key) {
-      case "z":
-        event.stopPropagation();
-        await fileManager.undo(ideViewModel);
-        return true;
-      case "y":
-        event.stopPropagation();
-        await fileManager.redo(ideViewModel);
-        return true;
-    }
-  }
-
-  return false;
-}
-
-function isSupportedKey(evt: editorEvent) {
-  if (evt.type === "paste") {
-    return true;
-  }
-
-  switch (evt.key) {
-    case "Home":
-    case "End":
-    case "Tab":
-    case "Enter":
-    case "ArrowLeft":
-    case "ArrowRight":
-    case "ArrowUp":
-    case "ArrowDown":
-    case "Backspace":
-    case "Delete":
-    case "Escape":
-    case "ContextMenu":
-      return true;
-    default:
-      return !evt.key || evt.key.length === 1;
-  }
-}
-
-async function handleEditorEvent(
-  event: Event,
-  type: "key" | "click" | "dblclick" | "paste" | "contextmenu",
-  target: "frame",
-  modKey: { control: boolean; shift: boolean; alt: boolean },
-  id?: string | undefined,
-  key?: string | undefined,
-  selection?: [number, number] | undefined,
-  command?: string | undefined,
-  optionalData?: string | undefined,
-) {
-  if (codeViewModel.isRunningState()) {
-    event?.preventDefault();
-    event.stopPropagation();
-    return;
-  }
-
-  if (isGlobalKeyboardEvent(event)) {
-    return;
-  }
-
-  // save last dom event for debug
-  lastDOMEvent = event;
-
-  const msg = getEditorMsg(type, target, id, key, modKey, selection, command, optionalData);
-
-  // save last editor event for debug
-  lastEditorEvent = msg;
-
-  if (!isSupportedKey(msg)) {
-    // discard
-    return;
-  }
-
-  if (codeViewModel.isTestRunningState()) {
-    testRunner.end();
-    codeViewModel.setTestStatus(TestStatus.default);
-    console.info("tests cancelled in handleEditorEvent");
-  }
-
-  if (await handleEscape(msg)) {
-    return;
-  }
-
-  if (handleCutAndPaste(event, msg)) {
-    return;
-  }
-
-  if (await handleUndoAndRedo(event, msg)) {
-    return;
-  }
-
-  if (key === "Delete" && !selection && event.target instanceof HTMLInputElement) {
-    const start = event.target.selectionStart ?? 0;
-    const end = event.target.selectionEnd ?? 0;
-    msg.selection = [start, end];
-  }
-
-  handleKeyAndRender(msg);
-  event.preventDefault();
-  event.stopPropagation();
-}
-
-function getFocused() {
-  return document.querySelector(".focused") as HTMLUnknownElement | undefined;
-}
-
 /**
  * Render the document
  */
@@ -1133,7 +943,17 @@ async function updateContent(text: string, editingField: boolean) {
 
     frame.addEventListener("keydown", (event: Event) => {
       const ke = event as KeyboardEvent;
-      handleEditorEvent(event, "key", "frame", getModKey(ke), id, ke.key);
+      codeViewModel.handleEditorEvent(
+        ideViewModel,
+        testRunner,
+        fileManager,
+        event,
+        "key",
+        "frame",
+        getModKey(ke),
+        id,
+        ke.key,
+      );
     });
 
     frame.addEventListener("click", (event) => {
@@ -1144,7 +964,18 @@ async function updateContent(text: string, editingField: boolean) {
       const selection: [number, number] | undefined =
         selectionStart === undefined ? undefined : [selectionStart, selectionEnd ?? selectionStart];
 
-      handleEditorEvent(event, "click", "frame", getModKey(pe), id, undefined, selection);
+      codeViewModel.handleEditorEvent(
+        ideViewModel,
+        testRunner,
+        fileManager,
+        event,
+        "click",
+        "frame",
+        getModKey(pe),
+        id,
+        undefined,
+        selection,
+      );
     });
 
     frame.addEventListener("mousedown", (event) => {
@@ -1152,7 +983,16 @@ async function updateContent(text: string, editingField: boolean) {
       const me = event as MouseEvent;
       if (me.button === 0 && me.shiftKey) {
         // left button only
-        handleEditorEvent(event, "click", "frame", getModKey(me), id);
+        codeViewModel.handleEditorEvent(
+          ideViewModel,
+          testRunner,
+          fileManager,
+          event,
+          "click",
+          "frame",
+          getModKey(me),
+          id,
+        );
       }
     });
 
@@ -1162,12 +1002,30 @@ async function updateContent(text: string, editingField: boolean) {
 
     frame.addEventListener("dblclick", (event) => {
       const ke = event as KeyboardEvent;
-      handleEditorEvent(event, "dblclick", "frame", getModKey(ke), id);
+      codeViewModel.handleEditorEvent(
+        ideViewModel,
+        testRunner,
+        fileManager,
+        event,
+        "dblclick",
+        "frame",
+        getModKey(ke),
+        id,
+      );
     });
 
     frame.addEventListener("contextmenu", (event) => {
       const mk = { control: false, shift: false, alt: false };
-      handleEditorEvent(event, "contextmenu", "frame", mk, id);
+      codeViewModel.handleEditorEvent(
+        ideViewModel,
+        testRunner,
+        fileManager,
+        event,
+        "contextmenu",
+        "frame",
+        mk,
+        id,
+      );
       event.preventDefault();
     });
   }
@@ -1186,7 +1044,7 @@ async function updateContent(text: string, editingField: boolean) {
       return;
     }
 
-    showCode();
+    codeViewModel.showCode();
   });
 
   codeContainer.addEventListener("mousedown", (event) => {
@@ -1213,7 +1071,11 @@ async function updateContent(text: string, editingField: boolean) {
         const id = tgt.dataset.id;
         const func = tgt.dataset.func;
         const txt = await navigator.clipboard.readText();
-        handleEditorEvent(
+        codeViewModel.handleEditorEvent(
+          ideViewModel,
+          testRunner,
+          fileManager,
+
           event,
           "contextmenu",
           "frame",
@@ -1286,7 +1148,10 @@ async function updateContent(text: string, editingField: boolean) {
         const tgt = ke.target as HTMLDivElement;
         const id = tgt.dataset.id;
 
-        handleEditorEvent(
+        codeViewModel.handleEditorEvent(
+          ideViewModel,
+          testRunner,
+          fileManager,
           event,
           "key",
           "frame",
@@ -1309,7 +1174,10 @@ async function updateContent(text: string, editingField: boolean) {
         const id = tgt.dataset.id;
         const selected = tgt.dataset.selected;
 
-        handleEditorEvent(
+        codeViewModel.handleEditorEvent(
+          ideViewModel,
+          testRunner,
+          fileManager,
           event,
           "key",
           "frame",
@@ -1360,102 +1228,6 @@ async function updateContent(text: string, editingField: boolean) {
   }
 
   cursorDefault();
-}
-
-async function inactivityRefresh() {
-  if (
-    codeViewModel.readRunStatus() !== RunStatus.running &&
-    codeViewModel.readParseStatus() === ParseStatus.valid &&
-    codeViewModel.readCompileStatus() === CompileStatus.default
-  ) {
-    await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, true, false);
-  }
-
-  inactivityTimer = setTimeout(inactivityRefresh, inactivityTimeout);
-}
-
-let purgingKeys = false;
-
-async function handleKeyAndRender(e: editorEvent) {
-  if (codeViewModel.readRunStatus() === RunStatus.running) {
-    // no change while running
-    return;
-  }
-
-  clearTimeout(inactivityTimer);
-
-  inactivityTimer = setTimeout(inactivityRefresh, inactivityTimeout);
-
-  try {
-    let codeChanged = false;
-    let isBeingEdited = false;
-    collapseAllMenus();
-    removeFocussedClassFromAllTabs();
-    switch (e.type) {
-      case "click":
-        isBeingEdited = codeViewModel.getFieldBeingEdited(); //peek at value as may be changed
-        if (codeViewModel.handleClick(e) && isBeingEdited) {
-          await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, false, false);
-        } else {
-          await ideViewModel.renderAsHtml(false);
-        }
-        return;
-      case "dblclick":
-        isBeingEdited = codeViewModel.getFieldBeingEdited(); //peek at value as may be changed
-        if (codeViewModel.handleDblClick(e) && isBeingEdited) {
-          await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, false, false);
-        } else {
-          await ideViewModel.renderAsHtml(false);
-        }
-        return;
-      case "paste":
-      case "key":
-        if (purgingKeys) {
-          return;
-        }
-        const before = Date.now();
-        codeChanged = codeViewModel.handleKey(e);
-        const after = Date.now();
-        const delay = after - before;
-        if (codeChanged === true) {
-          if (delay >= 1000) {
-            alert(delayMessage);
-            e.key = "Backspace";
-            codeViewModel.handleKey(e);
-            setTimeout(() => (purgingKeys = false), 500);
-            purgingKeys = true;
-          }
-          const singleKeyEdit = !(e.modKey.control || e.modKey.shift || e.modKey.alt);
-          await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, false, singleKeyEdit);
-        } else if (codeChanged === false) {
-          await ideViewModel.renderAsHtml(false);
-        }
-        // undefined just return
-        return;
-      case "contextmenu":
-        codeChanged = codeViewModel.handleKey(e);
-        if (codeChanged) {
-          await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, true, false);
-        } else {
-          await ideViewModel.renderAsHtml(false);
-        }
-        return;
-    }
-  } catch (e) {
-    await ideViewModel.showError(e as Error, codeViewModel.fileName, false);
-  }
-}
-
-function showCode() {
-  collapseAllMenus();
-  removeFocussedClassFromAllTabs();
-  const focused = getFocused();
-  if (focused) {
-    focused.focus();
-  } else {
-    codeViewModel.getFirstChild().select();
-    getFocused()?.focus();
-  }
 }
 
 function printDebugSymbol(s: DebugSymbol) {
@@ -1680,15 +1452,6 @@ async function handleDownload(event: Event) {
   }
 }
 
-function isDisabled(evt: Event) {
-  if (evt.target instanceof HTMLDivElement && evt.target.classList.contains("disabled")) {
-    evt.preventDefault();
-    evt.stopPropagation();
-    return true;
-  }
-  return false;
-}
-
 async function handleChromeDownload(event: Event) {
   if (!isDisabled(event)) {
     try {
@@ -1725,209 +1488,39 @@ if (!isElanProduction) {
   document.querySelector("#worksheet-tab .dropdown-content")?.append(testLink);
 }
 
-function isGlobalKeyboardEvent(kp: Event) {
-  return kp instanceof KeyboardEvent && (kp.ctrlKey || kp.metaKey) && globalKeys.includes(kp.key);
-}
-
-function globalHandler(kp: KeyboardEvent) {
-  // don't check kp instanceof keyboardEvent here or control keys on the help iframe are not picked up
-  if (kp.ctrlKey || kp.metaKey) {
-    switch (kp.key) {
-      case "b":
-      case "B":
-        removeFocussedClassFromAllTabs();
-        if (codeViewModel.isRunningState()) {
-          clearDisplayButton.focus();
-        } else {
-          demosButton.focus();
-        }
-        kp.preventDefault();
-        break;
-      case "d":
-      case "D":
-        displayTabLabel.click();
-        kp.preventDefault();
-        break;
-      case "e":
-      case "E":
-        codeContainer.click();
-        kp.preventDefault();
-        break;
-      case "g":
-      case "G":
-        runDebugButton.click();
-        kp.preventDefault();
-        break;
-      case "h":
-      case "H":
-        helpTabLabel.click();
-        kp.preventDefault();
-        break;
-      case "i":
-      case "I":
-        infoTabLabel.click();
-        kp.preventDefault();
-        break;
-      case "k":
-      case "K":
-        worksheetTabLabel.click();
-        kp.preventDefault();
-        break;
-      case "p":
-      case "P":
-        stepButton.click();
-        kp.preventDefault();
-        break;
-      case "r":
-      case "R":
-        runButton.click();
-        kp.preventDefault();
-        break;
-      case "s":
-      case "S":
-        stopButton.click();
-        kp.preventDefault();
-        break;
-      case "u":
-      case "U":
-        pauseButton.click();
-        kp.preventDefault();
-        break;
-    }
-  }
-}
-
-window.addEventListener("keydown", globalHandler);
-
-function collapseMenu(button: HTMLElement, andFocus: boolean) {
-  if (andFocus) {
-    button.focus();
-  }
-  const menuId = button.getAttribute("aria-controls")!;
-  document.getElementById(menuId)!.hidden = true;
-  button.setAttribute("aria-expanded", "false");
-}
-
-function collapseAllMenus() {
-  const allDropDowns = document.querySelectorAll(
-    "button[aria-haspopup='true']",
-  ) as NodeListOf<HTMLElement>;
-
-  for (const e of allDropDowns) {
-    collapseMenu(e, false);
-  }
-}
-
-function handleClickDropDownButton(event: Event) {
-  removeFocussedClassFromAllTabs();
-  const button = event.target as HTMLButtonElement;
-  const isExpanded = button.getAttribute("aria-expanded") === "true";
-  const menuId = button.getAttribute("aria-controls")!;
-  const menu = document.getElementById(menuId)!;
-  button.setAttribute("aria-expanded", `${!isExpanded}`);
-  menu.hidden = isExpanded;
-
-  const allDropDowns = document.querySelectorAll(
-    "button[aria-haspopup='true']",
-  ) as NodeListOf<HTMLElement>;
-
-  for (const e of allDropDowns) {
-    if (e.id !== button.id) {
-      collapseMenu(e, false);
-    }
-  }
-
-  const firstitem = menu.querySelector(".menu-item") as HTMLElement;
-  firstitem.focus();
-
-  event.stopPropagation();
-}
+window.addEventListener("keydown", ideViewModel.globalHandler);
 
 demosButton.addEventListener("click", handleClickDropDownButton);
 fileButton.addEventListener("click", handleClickDropDownButton);
 standardWorksheetButton.addEventListener("click", handleClickDropDownButton);
 
-function handleKeyDropDownButton(event: KeyboardEvent) {
-  removeFocussedClassFromAllTabs();
-  const button = event.target as HTMLButtonElement;
-  const menuId = button.getAttribute("aria-controls")!;
-  const menu = document.getElementById(menuId)!;
-  if (event.key === "ArrowDown") {
-    const firstitem = menu.querySelector(".menu-item") as HTMLElement;
-    firstitem.focus();
-  } else if (event.key === "Escape") {
-    collapseMenu(button, true);
-  }
-}
-
 demosButton.addEventListener("keydown", handleKeyDropDownButton);
 fileButton.addEventListener("keydown", handleKeyDropDownButton);
 standardWorksheetButton.addEventListener("keydown", handleKeyDropDownButton);
 
-function handleMenuArrowUp() {
-  const focusedItem = document.activeElement as HTMLElement;
-
-  let previousItem = focusedItem;
-
-  do {
-    previousItem = previousItem?.previousElementSibling as HTMLElement;
-    if (previousItem) {
-      previousItem.focus();
-    }
-  } while (previousItem && (previousItem as any).disabled);
-}
-
-function handleMenuArrowDown() {
-  const focusedItem = document.activeElement as HTMLElement;
-
-  let nextItem: HTMLElement = focusedItem;
-
-  do {
-    nextItem = nextItem?.nextElementSibling as HTMLElement;
-    if (nextItem) {
-      nextItem.focus();
-    }
-  } while (nextItem && (nextItem as any).disabled);
-}
-
-async function handleMenuKey(event: KeyboardEvent) {
-  removeFocussedClassFromAllTabs();
-  const menuItem = event.target as HTMLElement;
-  const menu = menuItem.parentElement as HTMLDivElement;
-  const button = menu.previousElementSibling as HTMLButtonElement;
-  if (event.key === "ArrowUp") {
-    handleMenuArrowUp();
-  } else if (event.key === "ArrowDown") {
-    handleMenuArrowDown();
-  } else if (event.key === "Escape") {
-    await collapseContextMenu();
-    collapseMenu(button, true);
-  } else if (event.key === "Enter" || event.key === "Space") {
-    const focusedItem = document.activeElement as HTMLElement;
-    focusedItem?.click();
-    setTimeout(() => {
-      collapseMenu(button, false);
-    }, 1);
-  }
-}
-
-demosMenu.addEventListener("keydown", handleMenuKey);
-fileMenu.addEventListener("keydown", handleMenuKey);
-worksheetMenu.addEventListener("keydown", handleMenuKey);
+demosMenu.addEventListener("keydown", (e) =>
+  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
+);
+fileMenu.addEventListener("keydown", (e) =>
+  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
+);
+worksheetMenu.addEventListener("keydown", (e) =>
+  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
+);
 
 demosMenu.addEventListener("click", () => collapseMenu(demosButton, false));
 fileMenu.addEventListener("click", () => collapseMenu(fileButton, false));
 worksheetMenu.addEventListener("click", () => collapseMenu(standardWorksheetButton, false));
 
-displayTab?.addEventListener("click", () => showDisplayTab());
-infoTab?.addEventListener("click", () => showInfoTab());
-helpTab?.addEventListener("click", () => showHelpTab());
-worksheetTab?.addEventListener("click", () => showWorksheetTab());
-worksheetIFrame?.contentWindow?.addEventListener("click", () => showWorksheetTab());
-helpIFrame?.contentWindow?.addEventListener("click", () => showHelpTab());
+displayTab?.addEventListener("click", () => tabViewModel.showDisplayTab());
+infoTab?.addEventListener("click", () => tabViewModel.showInfoTab());
+helpTab?.addEventListener("click", () => tabViewModel.showHelpTab());
+worksheetTab?.addEventListener("click", () => tabViewModel.showWorksheetTab());
+worksheetIFrame?.contentWindow?.addEventListener("click", () => tabViewModel.showWorksheetTab());
+helpIFrame?.contentWindow?.addEventListener("click", () => tabViewModel.showHelpTab());
 
 window.addEventListener("click", () => {
-  collapseContextMenu();
+  codeViewModel.collapseContextMenu(ideViewModel, testRunner);
   collapseAllMenus();
 });
 
