@@ -1,10 +1,10 @@
-# 70a24e597355defb002f43da2f77d39db4445a00293dd4c7de31b5b7af8c2676 Elan 1.9.0 guest default_profile valid
+# 09a791ce151904bb160a2b005f445065683db78fa861479a2db814311d55f582 Elan 1.9.0 guest default_profile valid
 
 main
   variable score set to 0
   while true
     variable holes set to new Array<of Hole>(10, Hole.vacant)
-    for i from 1 to randomInt(1, 3) step 1
+    for i from 1 to 3 step 1
       let holeNumber be randomInt(0, 9)
       call holes.put(holeNumber, Hole.mole)
     end for
@@ -17,7 +17,7 @@ main
   end while
 end main
 
-procedure processKey(holes as Array<of Hole>, out score as Int)
+procedure processKey(out holes as Array<of Hole>, out score as Int)
   let n be getNumericKey()
   if n isnt -1 then
     if holes[n] is Hole.mole then

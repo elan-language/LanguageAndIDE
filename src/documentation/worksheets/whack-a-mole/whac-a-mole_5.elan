@@ -1,23 +1,26 @@
-# 70a24e597355defb002f43da2f77d39db4445a00293dd4c7de31b5b7af8c2676 Elan 1.9.0 guest default_profile valid
+# 036f2c77aac2a514dc789a0353cc5cc3d08256554824a987207725151b90d0d4 Elan 1.9.0 guest default_profile valid
 
 main
   variable score set to 0
+  let level be inputIntBetween("Enter level (1 to 5):", 1, 5)
+  call clearPrintedText()
   while true
     variable holes set to new Array<of Hole>(10, Hole.vacant)
-    for i from 1 to randomInt(1, 3) step 1
+    for i from 1 to 3 step 1
       let holeNumber be randomInt(0, 9)
       call holes.put(holeNumber, Hole.mole)
     end for
     let html be htmlForFullGame(holes, score)
     call displayHtml(html)
-    let stop be clock() + 2000
+    let time be 1000 + (6 - level)*200
+    let stop be clock() + time
     while clock() < stop
       call processKey(holes, score)
     end while
   end while
 end main
 
-procedure processKey(holes as Array<of Hole>, out score as Int)
+procedure processKey(out holes as Array<of Hole>, out score as Int)
   let n be getNumericKey()
   if n isnt -1 then
     if holes[n] is Hole.mole then

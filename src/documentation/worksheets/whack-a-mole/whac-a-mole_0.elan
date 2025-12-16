@@ -1,4 +1,4 @@
-# 48219c22fe23e4b6aba3951545e0b3be53a331412414c5a2c9303fdeebea3568 Elan 1.9.0 guest default_profile valid
+# 7cc0965e404e503e4efa182289d9f57ee60bc170569ad13bd76ab5e91cae23eb Elan 1.9.0 guest default_profile valid
 
 main
   variable score set to 0
@@ -7,7 +7,7 @@ main
     if random() > 0.5 then
       set hole to Hole.mole
     end if
-    let html be htmlForGame(hole, score)
+    let html be htmlForSimpleGame(hole, score)
     call displayHtml(html)
     let stop be clock() + 1000
     while clock() < stop
@@ -17,8 +17,8 @@ main
 end main
 
 procedure processKey(out hole as Hole, out score as Int)
-  let k be getNumericKey()
-  if k isnt -1 then
+  let n be getNumericKey()
+  if n isnt -1 then
     if hole is Hole.mole then
       set hole to Hole.hit
       set score to score + 1
@@ -26,28 +26,28 @@ procedure processKey(out hole as Hole, out score as Int)
       set hole to Hole.miss
       set score to score - 1
     end if
-    let html be htmlForGame(hole, score)
+    let html be htmlForSimpleGame(hole, score)
     call displayHtml(html)
   end if
 end procedure
 
-function htmlForGame(hole as Hole, score as Int) returns String
-  return "<style>{styleSheet}</style>{htmlForHole(hole, "hole")}<div class='score'>Score: {score}</score>"
+function htmlForSimpleGame(hole as Hole, score as Int) returns String
+  let core be htmlForHole(hole, "hole")
+  return "<style>{styleSheet}</style><div class='game'>{core}</div><div class='score'>Score: {score}</score>"
 end function
 
-# TODO test for htmlForGame 
-# TODO ghosted tests for htmlForGame (using Array)
+function htmlForFullGame(holes as Array<of Hole>, score as Int) returns String
+  variable core set to ""
+  for i from 0 to holes.length() - 1 step 1
+    set core to core + htmlForHole(holes[i], i.asString())
+  end for
+  return "<style>{styleSheet}</style><div class='game'>{core}</div><div class='score'>Score: {score}</score>"
+end function
+
 function htmlForHole(hole as Hole, label as String) returns String
   let img be imageForStatus[hole]
   return "<div class='hole'><img src='{img}'><div class='label'>{label}</div></div>"
 end function
-
-test htmlForHole
-  assert htmlForHole(Hole.vacant, "a") is "<div class='hole'><img src='https://elan-lang.org/documentation/worksheets/whack-a-mole/vacant.png'><div class='label'>a</div></div>"
-  assert htmlForHole(Hole.mole, "b") is "<div class='hole'><img src='https://elan-lang.org/documentation/worksheets/whack-a-mole/mole.png'><div class='label'>b</div></div>"
-  assert htmlForHole(Hole.hit, "c") is "<div class='hole'><img src='https://elan-lang.org/documentation/worksheets/whack-a-mole/hit.png'><div class='label'>c</div></div>"
-  assert htmlForHole(Hole.miss, "d") is "<div class='hole'><img src='https://elan-lang.org/documentation/worksheets/whack-a-mole/miss.png'><div class='label'>d</div></div>"
-end test
 
 enum Hole vacant, mole, hit, miss
 
