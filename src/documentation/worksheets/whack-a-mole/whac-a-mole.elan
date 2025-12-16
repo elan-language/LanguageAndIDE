@@ -1,25 +1,74 @@
-# a0c8642340a5734a8ee32e3487d21f2e650fbf014217cc7f7e8e4c130aaea2f7 Elan 1.8.3 guest default_profile valid
+# 1f98b8d2b8ba69b70f175c3ab8cc90db7489354b5dfb9e14737c3b0b0b086b59 Elan 1.9.0 guest default_profile valid
 
 main
-  let holes be new Array<of String>(10, " ")
   variable score set to 0
   while true
-    let molePosition be randomInt(0, 9)
-    call holes.put(molePosition, "*")
-    print "Score: {score}"
-    print "0  1  2  3  4  5  6  7  8  9"
-    each hole in holes
-      call printNoLine("{hole}  ")
-    end each
+    variable holes set to new Array<of Hole>(10, Hole.vacant)
+    for i from 1 to randomInt(1, 3) step 1
+      let holeNumber be randomInt(0, 9)
+      call holes.put(holeNumber, Hole.mole)
+    end for
+    let html be htmlForGame(holes, score)
+    call displayHtml(html)
     let stop be clock() + 2000
     while clock() < stop
-      let k be getKey()
-      if k is molePosition.asString() then
-        print "Hit!"
-        set score to score + 1
-      end if
+      call processKey(holes, score)
     end while
-    call clearPrintedText()
-    call holes.put(molePosition, " ")
   end while
 end main
+
+procedure processKey(out holes as Array<of Hole>, out score as Int)
+  let k be getNumericKey()
+  if k isnt -1 then
+    if holes[k] is Hole.mole then
+      call holes.put(k, Hole.hit)
+      set score to score + 1
+    else
+      call holes.put(k, Hole.miss)
+      set score to score - 1
+    end if
+    let html be htmlForGame(holes, score)
+    call displayHtml(html)
+  end if
+end procedure
+
+function htmlForGame(holes as Array<of Hole>, score as Int) returns String
+  return "<style>{styleSheet}</style>{htmlForHoles(holes)}<div class='score'>Score: {score}</score>"
+end function
+
+# TODO tests for htmlForGame (using Array)
+function htmlForHoles(holes as Array<of Hole>) returns String
+  variable html set to ""
+  for i from 0 to holes.length() - 1 step 1
+    set html to html + htmlForHole(holes[i], i.asString())
+  end for
+  return "<div class='game'>{html}</div>"
+end function
+
+# TODO tess for htmlForHoles
+function htmlForHole(hole as Hole, label as String) returns String
+  let img be imageForStatus[hole]
+  return "<div class='hole'><img src='{img}'><div class='label'>{label}</div></div>"
+end function
+
+test htmlForHole
+  assert htmlForHole(Hole.vacant, "a") is "<div class='hole'><img src='https://elan-lang.org/documentation/worksheets/whack-a-mole/vacant.png'><div class='label'>a</div></div>"
+  assert htmlForHole(Hole.mole, "b") is "<div class='hole'><img src='https://elan-lang.org/documentation/worksheets/whack-a-mole/mole.png'><div class='label'>b</div></div>"
+  assert htmlForHole(Hole.hit, "c") is "<div class='hole'><img src='https://elan-lang.org/documentation/worksheets/whack-a-mole/hit.png'><div class='label'>c</div></div>"
+  assert htmlForHole(Hole.miss, "d") is "<div class='hole'><img src='https://elan-lang.org/documentation/worksheets/whack-a-mole/miss.png'><div class='label'>d</div></div>"
+end test
+
+enum Hole vacant, mole, hit, miss
+
+# Acknowledgement:  mole icon source https://www.flaticon.com/
+constant vacantImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/vacant.png"
+
+constant moleImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/mole.png"
+
+constant hitImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/hit.png"
+
+constant missImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/miss.png"
+
+constant imageForStatus set to {Hole.vacant:vacantImg, Hole.mole:moleImg, Hole.hit:hitImg, Hole.miss:missImg}
+
+constant styleSheet set to '\n.game { display: flex; flex-direction: row; }\n.hole { display: flex; flex-direction: column; width: 50px; height: 50px; border: 10px solid white;}\n.label {width: 40px; text-align: center;}\n.hole img {height: 40px; width: 40px}\n.score{ margin-top: 20px;}'
