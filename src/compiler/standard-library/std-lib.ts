@@ -753,6 +753,13 @@ export class StdLib {
     return await this.system!.elanInputOutput.getKey();
   }
 
+  // If any key 0-9 is pressed, returns that integer. If no key, or any other key, is pressed, returns -1
+  @elanFunction([], FunctionOptions.impureAsync, ElanInt)
+  async getNumericKey(): Promise<number> {
+    const key = await this.getKey();
+    return key === "" ? -1 : "0123456789".indexOf(key);
+  }
+
   @elanFunction([], FunctionOptions.impureAsync, ElanTuple([ElanString, ElanString]))
   async getKeyWithModifier(): Promise<[string, string]> {
     return await this.system!.elanInputOutput.getKeyWithModifier();

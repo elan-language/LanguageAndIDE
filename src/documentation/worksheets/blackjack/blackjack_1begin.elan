@@ -1,4 +1,4 @@
-# 9f4efc48dd2001374a6492dad9cfae9e8c98b782181554f9c74257ad670da73b Elan 1.8.3 guest default_profile valid
+# 75e134b020470a8b4d71ab54439b7ddb5a1af643477be1e43994128bc6b649b9 Elan 1.9.0 guest default_profile valid
 
 main
   let game be new Game(1000)

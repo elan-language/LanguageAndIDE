@@ -1,4 +1,4 @@
-# bd2464953f3b4f0741bc7b083e9fe765e0a73aeb28b307859641de6cb58cc479 Elan 1.8.3 guest default_profile valid
+# d4dfa5b047138e7dd68c42b9beb025316746f8424eedc0fb38996d9bcb36de51 Elan 1.9.0 guest default_profile valid
 
 # This code is the start-point for Worksheet 'Merge sort' where the task is to implement the 'sort' function properly, and hence get all tests passing.
 function sort(li as List<of String>) returns List<of String>
