@@ -1,0 +1,75 @@
+<title>Blackjack 1</title>
+<version>1</version>
+<step><h1>Step STEPNUMBER: Exploring the starting code </h1>
+  This brief video explains what we are going to develop in this worksheet:
+  <div style="position: relative; padding-bottom: 74.64454976303318%; height: 0;"><iframe src="https://www.loom.com/embed/54aa386c6acb44bb83a5a3bb4066a52f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+<br>
+Then <load file="whac-a-mole_begin.elan">load the starting code</load>, 
+watch the following video, exploring the code alongside the video:
+<div style="position: relative; padding-bottom: 79.2156862745098%; height: 0;"><iframe src="https://www.loom.com/embed/1cc0c1b2fac74ee19468d5e476105efc" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<question>What is an 'enum' ?</question>
+<question>What is the largest and smallest result returned by the random() method?</question>
+</step>
+
+<step><h1>Step STEPNUMBER: creating an Array</h1>
+  <div style="position: relative; padding-bottom: 52.156862745098046%; height: 0;"><iframe src="https://www.loom.com/embed/6cf124d7d838492b9e3de43a0150c7cf" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+  <question>Having made the changes shown in the video and run the program, describe what the display shows?</question>
+  <question>Do any moles appear?</question>
+  <question>What does 'DRY' stand for in 'the DRY principle'?</question>
+</step>
+
+<step><h1>Step STEPNUMBER: making moles appear again</h1>
+  <div style="position: relative; padding-bottom: 45.75936883629191%; height: 0;"><iframe src="https://www.loom.com/embed/c2c6219d1a444849886bbe161b4db3f5" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+  <question>Does the game respond to keyboard input?</question>
+  </step>
+
+<step><h1>Step STEPNUMBER: responding to the keyboard input</h1>
+  <div style="position: relative; padding-bottom: 75.83497053045186%; height: 0;"><iframe src="https://www.loom.com/embed/87535d5e3a5b42b597e1f96977a09181" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+  Make the changes shown in the video and then run the program - to show that you can now hit (and also miss!) the moles.
+  If you find that the moles change too quickly to hit, change the speed by editing this line:
+
+  <codeblock>let stop be clock() + 1000</codeblock>
+
+  changing the value to 2000 (milliseconds), for example.
+  <question>What is the main difference between how this game works and the one shown in the introductory video at the start of this worksheet?</question>
+</step>
+
+<step><h1>Step STEPNUMBER: making multiple moles appear</h1>
+
+  <question>When should you use a 'for' loop?</question>
+  <question>How can you select multiple instructions in the Elan editor?</question>
+  <question>What is 'dead code' within a program?</question>
+</step>
+
+<step><h1>Step STEPNUMBER: review what we have learned</h1>
+  <div style="position: relative; padding-bottom: 64.90196078431373%; height: 0;"><iframe src="https://www.loom.com/embed/31735b55a5c0494db786a6a2ee57976f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+  <question>What, in general terms, does an Array allow you to do?</question>
+  <question>An Array is a simple example of a more general concept, called what?</question>
+  <question>What pieces of information must you specify when defining an Array?</question>
+  <question>If you created an array of just five elements, what would be the element numbers of the first, and last, elements?</question>
+  <question>What would be the syntax for reading the first element of an array named 'players'?</question>
+  <question>What instruction is used to change a specific element within an existing array?</question>
+</step>
+
+<final><h1>Congratulations! You have completed this worksheet</h1>
+  If you have time available, there are two optional activities:
+
+  <b>Continue to refine the game</b>
+  <p>Here are some ways that you might like to refine the game</p>
+
+  <ul>
+    <li>At the start of the program allow the user to select a level of play - say as a number in the range 1-5. 
+      (Look up the library method <el-method>inputIntBetween</el-method> in the <b>Help</b> tab <help>LibRef.html#inputIntBetween</help>.)
+      Use this number in a formula to alter the time specified in this instruction: <code>let stop be clock() + 1000</code>
+    </li>
+    <li>Keep track of how many moles have actually appeared, and display this as well as the score.</li>
+    <li>Award a bonus point if, whenever three moles are shown at once, you hit all three before they disappear.</li>
+  </ul>
+
+  <b>Explore the source code in more depth</b>
+  <p><load file="whac-a-mole_begin.elan">load the source code</load> and then watch the following video.
+    <i></i>Warning:</i> this does mention a couple of fairly advanced technical concepts that you certainly don't <i>need</i>
+   to understand at this stage, but are included for those who might <i>want</i> to go deeper.</p>
+   <div style="position: relative; padding-bottom: 83.33333333333334%; height: 0;"><iframe src="https://www.loom.com/embed/a25fe4443e8f48d2a126407aaeaf3c49" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+</final>
