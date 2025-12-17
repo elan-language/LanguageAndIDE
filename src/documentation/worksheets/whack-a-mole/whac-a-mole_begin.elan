@@ -1,4 +1,4 @@
-# 7cc0965e404e503e4efa182289d9f57ee60bc170569ad13bd76ab5e91cae23eb Elan 1.9.0 guest default_profile valid
+# 60b25b7ed9e70a6dea604bfd2a02063f278d0305f0160215b4ee11cc256d6f05 Elan 1.9.0 guest default_profile valid
 
 main
   variable score set to 0
@@ -22,7 +22,7 @@ procedure processKey(out hole as Hole, out score as Int)
     if hole is Hole.mole then
       set hole to Hole.hit
       set score to score + 1
-    else
+    else if hole is Hole.vacant then
       set hole to Hole.miss
       set score to score - 1
     end if
@@ -31,12 +31,14 @@ procedure processKey(out hole as Hole, out score as Int)
   end if
 end procedure
 
-function htmlForSimpleGame(hole as Hole, score as Int) returns String
+[imported] enum Hole vacant, mole, hit, miss
+
+[imported] function htmlForSimpleGame(hole as Hole, score as Int) returns String
   let core be htmlForHole(hole, "hole")
   return "<style>{styleSheet}</style><div class='game'>{core}</div><div class='score'>Score: {score}</score>"
 end function
 
-function htmlForFullGame(holes as Array<of Hole>, score as Int) returns String
+[imported] function htmlForFullGame(holes as Array<of Hole>, score as Int) returns String
   variable core set to ""
   for i from 0 to holes.length() - 1 step 1
     set core to core + htmlForHole(holes[i], i.asString())
@@ -44,22 +46,20 @@ function htmlForFullGame(holes as Array<of Hole>, score as Int) returns String
   return "<style>{styleSheet}</style><div class='game'>{core}</div><div class='score'>Score: {score}</score>"
 end function
 
-function htmlForHole(hole as Hole, label as String) returns String
+[imported] function htmlForHole(hole as Hole, label as String) returns String
   let img be imageForStatus[hole]
   return "<div class='hole'><img src='{img}'><div class='label'>{label}</div></div>"
 end function
 
-enum Hole vacant, mole, hit, miss
-
 # Acknowledgement:  mole icon source https://www.flaticon.com/
-constant vacantImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/vacant.png"
+[imported] constant vacantImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/vacant.png"
 
-constant moleImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/mole.png"
+[imported] constant moleImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/mole.png"
 
-constant hitImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/hit.png"
+[imported] constant hitImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/hit.png"
 
-constant missImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/miss.png"
+[imported] constant missImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/miss.png"
 
-constant imageForStatus set to {Hole.vacant:vacantImg, Hole.mole:moleImg, Hole.hit:hitImg, Hole.miss:missImg}
+[imported] constant imageForStatus set to {Hole.vacant:vacantImg, Hole.mole:moleImg, Hole.hit:hitImg, Hole.miss:missImg}
 
-constant styleSheet set to '\n.game { display: flex; flex-direction: row; }\n.hole { display: flex; flex-direction: column; width: 50px; height: 50px; border: 10px solid white;}\n.label {width: 40px; text-align: center;}\n.hole img {height: 40px; width: 40px}\n.score{ margin-top: 20px;}'
+[imported] constant styleSheet set to '\n.game { display: flex; flex-direction: row; }\n.hole { display: flex; flex-direction: column; width: 50px; height: 50px; border: 10px solid white;}\n.label {width: 40px; text-align: center;}\n.hole img {height: 40px; width: 40px}\n.score{ margin-top: 20px;}'

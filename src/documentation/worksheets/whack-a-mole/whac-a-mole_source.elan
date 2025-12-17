@@ -1,16 +1,18 @@
-# 09a791ce151904bb160a2b005f445065683db78fa861479a2db814311d55f582 Elan 1.9.0 guest default_profile valid
+# d5463691b9a02ba35cdc7691e0b2e442fcf97aecb8c74189ab7eacf5ee1f43f1 Elan 1.9.0 guest default_profile valid
 
 main
   variable score set to 0
   while true
     variable holes set to new Array<of Hole>(10, Hole.vacant)
-    for i from 1 to 3 step 1
+    variable hole set to Hole.vacant
+    let numberOfMoles be randomInt(1, 3)
+    for count from 1 to numberOfMoles step 1
       let holeNumber be randomInt(0, 9)
       call holes.put(holeNumber, Hole.mole)
     end for
     let html be htmlForFullGame(holes, score)
     call displayHtml(html)
-    let stop be clock() + 2000
+    let stop be clock() + 1000
     while clock() < stop
       call processKey(holes, score)
     end while
@@ -23,7 +25,7 @@ procedure processKey(out holes as Array<of Hole>, out score as Int)
     if holes[n] is Hole.mole then
       call holes.put(n, Hole.hit)
       set score to score + 1
-    else
+    else if holes[n] is Hole.vacant then
       call holes.put(n, Hole.miss)
       set score to score - 1
     end if
@@ -31,6 +33,8 @@ procedure processKey(out holes as Array<of Hole>, out score as Int)
     call displayHtml(html)
   end if
 end procedure
+
+enum Hole vacant, mole, hit, miss
 
 function htmlForSimpleGame(hole as Hole, score as Int) returns String
   let core be htmlForHole(hole, "hole")
@@ -49,8 +53,6 @@ function htmlForHole(hole as Hole, label as String) returns String
   let img be imageForStatus[hole]
   return "<div class='hole'><img src='{img}'><div class='label'>{label}</div></div>"
 end function
-
-enum Hole vacant, mole, hit, miss
 
 # Acknowledgement:  mole icon source https://www.flaticon.com/
 constant vacantImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/vacant.png"

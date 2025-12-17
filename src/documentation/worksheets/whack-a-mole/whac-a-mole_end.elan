@@ -1,12 +1,15 @@
-# 347104ba992b02fcb1cc626b93d5b4b2973f21b18785e12455d05a981a357a76 Elan 1.9.0 guest default_profile valid
+# d5463691b9a02ba35cdc7691e0b2e442fcf97aecb8c74189ab7eacf5ee1f43f1 Elan 1.9.0 guest default_profile valid
 
 main
   variable score set to 0
   while true
     variable holes set to new Array<of Hole>(10, Hole.vacant)
     variable hole set to Hole.vacant
-    let holeNumber be randomInt(0, 9)
-    call holes.put(holeNumber, Hole.mole)
+    let numberOfMoles be randomInt(1, 3)
+    for count from 1 to numberOfMoles step 1
+      let holeNumber be randomInt(0, 9)
+      call holes.put(holeNumber, Hole.mole)
+    end for
     let html be htmlForFullGame(holes, score)
     call displayHtml(html)
     let stop be clock() + 1000
