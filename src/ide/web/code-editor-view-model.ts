@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { AssertOutcome } from "../../compiler/assert-outcome";
 import { StdLib } from "../../compiler/standard-library/std-lib";
 import { TestStatus } from "../../compiler/test-status";
@@ -13,7 +15,17 @@ import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
 import { FileManager } from "./file-manager";
 import { TestRunner } from "./test-runner";
-import { ICodeEditorViewModel, IIDEViewModel } from "./ui-helpers";
+import {
+  collapseAllMenus,
+  delayMessage,
+  getEditorMsg,
+  getFocused,
+  ICodeEditorViewModel,
+  IIDEViewModel,
+  isGlobalKeyboardEvent,
+  isSupportedKey,
+  removeFocussedClassFromAllTabs,
+} from "./ui-helpers";
 import { hash, transforms } from "./web-helpers";
 
 const stdlib = new StdLib(new StubInputOutput());
@@ -22,6 +34,9 @@ system.stdlib = stdlib; // to allow injection
 
 export class CodeEditorViewModel implements ICodeEditorViewModel {
   private file?: File = undefined;
+
+  lastDOMEvent: Event | undefined;
+  lastEditorEvent: editorEvent | undefined;
 
   get fileName() {
     return this.file!.fileName;
@@ -259,6 +274,92 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     return false;
   }
 
+  private readonly inactivityTimeout = 2000;
+  private inactivityTimer: any | undefined = undefined;
+  private purgingKeys = false;
+
+  async inactivityRefresh(vm: IIDEViewModel, tr: TestRunner) {
+    if (
+      this.readRunStatus() !== RunStatus.running &&
+      this.readParseStatus() === ParseStatus.valid &&
+      this.readCompileStatus() === CompileStatus.default
+    ) {
+      await this.refreshAndDisplay(vm, tr, true, false);
+    }
+
+    this.inactivityTimer = setTimeout(() => this.inactivityRefresh(vm, tr), this.inactivityTimeout);
+  }
+
+  async handleKeyAndRender(e: editorEvent, vm: IIDEViewModel, tr: TestRunner) {
+    if (this.readRunStatus() === RunStatus.running) {
+      // no change while running
+      return;
+    }
+
+    clearTimeout(this.inactivityTimer);
+
+    this.inactivityTimer = setTimeout(() => this.inactivityRefresh(vm, tr), this.inactivityTimeout);
+
+    try {
+      let codeChanged = false;
+      let isBeingEdited = false;
+      collapseAllMenus();
+      removeFocussedClassFromAllTabs();
+      switch (e.type) {
+        case "click":
+          isBeingEdited = this.getFieldBeingEdited(); //peek at value as may be changed
+          if (this.handleClick(e) && isBeingEdited) {
+            await this.refreshAndDisplay(vm, tr, false, false);
+          } else {
+            await vm.renderAsHtml(false);
+          }
+          return;
+        case "dblclick":
+          isBeingEdited = this.getFieldBeingEdited(); //peek at value as may be changed
+          if (this.handleDblClick(e) && isBeingEdited) {
+            await this.refreshAndDisplay(vm, tr, false, false);
+          } else {
+            await vm.renderAsHtml(false);
+          }
+          return;
+        case "paste":
+        case "key":
+          if (this.purgingKeys) {
+            return;
+          }
+          const before = Date.now();
+          codeChanged = this.handleKey(e);
+          const after = Date.now();
+          const delay = after - before;
+          if (codeChanged === true) {
+            if (delay >= 1000) {
+              alert(delayMessage);
+              e.key = "Backspace";
+              this.handleKey(e);
+              setTimeout(() => (this.purgingKeys = false), 500);
+              this.purgingKeys = true;
+            }
+            const singleKeyEdit = !(e.modKey.control || e.modKey.shift || e.modKey.alt);
+            await this.refreshAndDisplay(vm, tr, false, singleKeyEdit);
+          } else if (codeChanged === false) {
+            await vm.renderAsHtml(false);
+          }
+          // undefined just return
+          return;
+        case "contextmenu":
+          codeChanged = this.handleKey(e);
+          if (codeChanged) {
+            await this.refreshAndDisplay(vm, tr, true, false);
+          } else {
+            await vm.renderAsHtml(false);
+          }
+          return;
+      }
+    } catch (e) {
+      await vm.showError(e as Error, this.fileName, false);
+    }
+  }
+
   async refreshAndDisplay(
     vm: IIDEViewModel,
     tr: TestRunner,
@@ -372,5 +473,196 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     this.fileName = fileName;
     fm.reset();
     await this.readAndParse(vm, fm, tr, rawCode, fileName, ParseMode.loadNew);
+  }
+
+  showCode() {
+    collapseAllMenus();
+    removeFocussedClassFromAllTabs();
+    const focused = getFocused();
+    if (focused) {
+      focused.focus();
+    } else {
+      this.getFirstChild().select();
+      getFocused()?.focus();
+    }
+  }
+
+  async collapseContextMenu(vm: IIDEViewModel, tr: TestRunner) {
+    const items = document.querySelectorAll(".context-menu-item") as NodeListOf<HTMLDivElement>;
+
+    if (items.length > 0) {
+      const id = items[0].dataset.id;
+      const mk = { control: false, shift: false, alt: false };
+      const msg = getEditorMsg("key", "frame", id, "Escape", mk, undefined, undefined, undefined);
+      await this.handleKeyAndRender(msg, vm, tr);
+    }
+  }
+
+  handlePaste(
+    vm: IIDEViewModel,
+    tr: TestRunner,
+    fm: FileManager,
+    event: Event,
+    target: HTMLElement,
+    msg: editorEvent,
+  ): boolean {
+    // outside of handler or selection is gone
+    const start = target instanceof HTMLInputElement ? (target.selectionStart ?? 0) : 0;
+    const end = target instanceof HTMLInputElement ? (target.selectionEnd ?? 0) : 0;
+    target.addEventListener("paste", async (event: ClipboardEvent) => {
+      const txt = await navigator.clipboard.readText();
+      if (start !== end) {
+        await this.handleEditorEvent(
+          vm,
+          tr,
+          fm,
+          event,
+          "key",
+          "frame",
+          { control: false, shift: false, alt: false },
+          msg.id,
+          "Delete",
+          [start, end],
+        );
+      }
+      await this.handleEditorEvent(
+        vm,
+        tr,
+        fm,
+        event,
+        "paste",
+        "frame",
+        { control: true, shift: false, alt: false },
+        msg.id,
+        "v",
+        undefined,
+        undefined,
+        `${txt.trim()}`,
+      );
+    });
+    event.stopPropagation();
+    return true;
+  }
+
+  handleCut(
+    vm: IIDEViewModel,
+    tr: TestRunner,
+    fm: FileManager,
+    event: Event,
+    target: HTMLInputElement,
+    msg: editorEvent,
+  ) {
+    // outside of handler or selection is gone
+    const start = target.selectionStart ?? 0;
+    const end = target.selectionEnd ?? 0;
+    target.addEventListener("cut", async (event: ClipboardEvent) => {
+      const txt = document.getSelection()?.toString() ?? "";
+      await navigator.clipboard.writeText(txt);
+      const mk = { control: false, shift: false, alt: false };
+      await this.handleEditorEvent(vm, tr, fm, event, "key", "frame", mk, msg.id, "Delete", [
+        start,
+        end,
+      ]);
+    });
+    event.stopPropagation();
+    return true;
+  }
+
+  handleCopy(event: Event, target: HTMLInputElement) {
+    target.addEventListener("copy", async (_event: ClipboardEvent) => {
+      const txt = document.getSelection()?.toString() ?? "";
+      await navigator.clipboard.writeText(txt);
+    });
+    event.stopPropagation();
+    return true;
+  }
+
+  handleCutAndPaste(
+    vm: IIDEViewModel,
+    tr: TestRunner,
+    fm: FileManager,
+    event: Event,
+    msg: editorEvent,
+  ) {
+    if (msg.type === "paste") {
+      return false;
+    }
+
+    if (msg.modKey.control && msg.key === "v") {
+      return this.handlePaste(vm, tr, fm, event, event.target as HTMLElement, msg);
+    }
+
+    if (event.target instanceof HTMLInputElement && msg.modKey.control) {
+      switch (msg.key) {
+        case "x":
+          return this.handleCut(vm, tr, fm, event, event.target, msg);
+        case "c":
+          return this.handleCopy(event, event.target);
+      }
+    }
+
+    return false;
+  }
+
+  async handleEditorEvent(
+    vm: IIDEViewModel,
+    tr: TestRunner,
+    fm: FileManager,
+    event: Event,
+    type: "key" | "click" | "dblclick" | "paste" | "contextmenu",
+    target: "frame",
+    modKey: { control: boolean; shift: boolean; alt: boolean },
+    id?: string | undefined,
+    key?: string | undefined,
+    selection?: [number, number] | undefined,
+    command?: string | undefined,
+    optionalData?: string | undefined,
+  ) {
+    if (this.isRunningState()) {
+      event?.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
+    if (isGlobalKeyboardEvent(event)) {
+      return;
+    }
+
+    // save last dom event for debug
+    this.lastDOMEvent = event;
+
+    const msg = getEditorMsg(type, target, id, key, modKey, selection, command, optionalData);
+
+    // save last editor event for debug
+    this.lastEditorEvent = msg;
+
+    if (!isSupportedKey(msg)) {
+      // discard
+      return;
+    }
+
+    if (this.isTestRunningState()) {
+      tr.end();
+      this.setTestStatus(TestStatus.default);
+      console.info("tests cancelled in handleEditorEvent");
+    }
+
+    if (
+      (await vm.handleEscape(msg, this, tr)) ||
+      this.handleCutAndPaste(vm, tr, fm, event, msg) ||
+      (await fm.handleUndoAndRedo(vm, event, msg))
+    ) {
+      return;
+    }
+
+    if (key === "Delete" && !selection && event.target instanceof HTMLInputElement) {
+      const start = event.target.selectionStart ?? 0;
+      const end = event.target.selectionEnd ?? 0;
+      msg.selection = [start, end];
+    }
+
+    this.handleKeyAndRender(msg, vm, tr);
+    event.preventDefault();
+    event.stopPropagation();
   }
 }

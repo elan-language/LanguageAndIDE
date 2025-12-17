@@ -55,7 +55,6 @@
     "diffable-html": "^6.0.1",
     "esbuild": "^0.25.0",
     "eslint": "^9.38.0",
-    "html-validate": "^10.0.0",
     "jsdom": "^25.0.0",
     "mocha": "^11.7.0",
     "nyc": "^17.1.0",

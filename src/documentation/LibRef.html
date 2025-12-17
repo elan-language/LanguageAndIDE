@@ -2340,21 +2340,26 @@ Later shapes are positioned over earlier ones.</p>
 
 <h2>Reading keys 'on the fly'</h2>
 <p>In some applications &ndash; especially in games, for example &ndash; you want the program to react to a key pressed by the user, but without holding up the program to wait for value to be input. </p>
-<p>Whether your application makes use of graphics, or uses the Display  just for text, reading keystrokes 'on the fly' is done via one of two methods:</p>
+<p>Whether your application makes use of graphics, or uses the Display  just for text, reading keystrokes 'on the fly' is done via one of three methods:</p>
 <el-code-block>
 <el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKey</el-method>()</el-txt></el-field></el-statement>
-<el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key2</el-id>, <el-id>modifier</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKeyWithModifier</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key2</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getNumericKey</el-method>()</el-txt></el-field></el-statement>
+<el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key3</el-id>, <el-id>modifier</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKeyWithModifier</el-method>()</el-txt></el-field></el-statement>
 </el-code-block>
 <ul>
- <li>When the <el-method>getKey</el-method> function is called, the system <i>does not wait for a response</i>. If a key has been pressed then that will be returned as a <el-type>String</el-type> e.g. <el-code>"a"</el-code>.</li>
- <li>Non-printable keys will be returned as strings, e.g. <el-code>"Home"</el-code>, <el-code>"End"</el-code>, <el-code>"Delete"</el-code>, <el-code>"Tab"</el-code>,
- <el-code>"Backspace"</el-code>, <el-code>"Enter"</el-code>, <el-code>"Escape"</el-code>,<br>
+ <li>When any of these functions is called, the system <i>does not wait for a response</i>, but immediately returns a <el-type>String</el-type>.</li>
+ <li><el-method>getKey</el-method> returns a string containing the keyboard character last pressed, possibly shifted, e.g. <el-code>"z"</el-code> or <el-code>"@"</el-code></li> 
+ <li><el-method>getNumericKey</el-method> returns a string containing either a digit (<el-code>"0".."9"</el-code>) or, if the last key pressed was not numeric, then <el-code>"-1"</el-code>.
+ A digit will be returned if the key pressed was either from the main keyboard, or from the numeric keypad when <b>NumLock</b> is on.</li>
+ <li><el-method>getKeyWithModifier</el-method> returns a Tuple of two strings: the key last pressed and the name of <i>one</i> modifier key <el-code>"Shift"</el-code>,
+  <el-code>"Ctrl"</el-code> or <el-code>"Alt"</el-code> if simultaneously pressed.
+  If no modifier had been pressed, the Tuple's second item will be the empty string.  A few such modified keys will be acted on by the browser and may not then be passed to your program.</li>
+ <li>Non-printable keys will also be returned as strings, e.g. <el-code>"Home"</el-code>, <el-code>"End"</el-code>, <el-code>"Delete"</el-code>, <el-code>"Tab"</el-code>,
+ <el-code>"Backspace"</el-code>, <el-code>"Enter"</el-code>, <el-code>"Escape"</el-code>,
  <el-code>"ArrowUp"</el-code> etc., function key <el-code>"Fn"</el-code>, <el-code>"AltGraph"</el-code>, <el-code>"Meta"</el-code>, <el-code>"ContextMenu"</el-code>, as well as most others.</li>
  <li>Pressing <i>just</i> control keys <b>Shift</b>, <b>Ctrl</b> (<b>&#x2318; Command</b> under macOS) or <b>Alt</b> keys will not be detected by <el-method>getKey</el-method>.</li>
- <li>To read a control key when combined with an ordinary key, use method <el-method>getKeyWithModifier</el-method>. It returns a 2-tuple containing the ordinary key pressed plus the name of <i>one</i> modifier key as <el-code>"Shift"</el-code>, <el-code>"Ctrl"</el-code>, or <el-code>"Alt"</el-code> (or the empty string if no modifier key was pressed).
- A few such modified keys will be acted on by the browser and may not then be passed to your program.</li>
- <li>If no key has been pressed (since the last time the method was called), it will return the empty string <el-code>""</el-code>. </li>
- <li>Both of these <el-method>getKey</el-method> methods are System methods because they have a dependency on the system and so may only be used within a <el-code>procedure</el-code> or in <el-code>main</el-code>.</li>
+ <li>If no key has been pressed (since the last time the method was called), it will return the empty string.</li>
+ <li>All these  methods are System methods because they have a dependency on the system and so may only be used within a <el-kw>procedure</el-kw> or in <el-kw>main</el-kw>.</li>
  <li>Use the procedure method <el-method>clearKeyBuffer</el-method> if you want to enforce that the user cannot get too far ahead of the program by hitting keys in rapid succession.</li>
  <li>Method <el-method>waitForKey</el-method> waits for a key to be pressed, and returns it.</li>
  <li>Method<el-method>pressAnyKeyToContinue</el-method> gives an optional prompt and is used when you don't need to know which key was pressed.</li>
@@ -3198,12 +3203,18 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
   <td><el-method>getKey</el-method></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
-  <td>returns the last character pressed on the keyboard during program execution</td>
+  <td>returns the last character last pressed on the keyboard during program execution</td>
  </tr><tr id="getKeyWithModifier">
   <td><el-method>getKeyWithModifier</el-method></td>
   <td>(none)</td>
-  <td>2-tuple:<br>(<el-type>String</el-type>, <el-type>String</el-type>)</td>
-  <td>returns both the character of the keyboard key pressed<br>and the modifier key's name if also pressed</td>
+  <td>2-Tuple:<br>(<el-type>String</el-type>, <el-type>String</el-type>)</td>
+  <td>returns the last key combination pressed on the keyboard:<br>
+      the key pressed and the modifier key's name (if also pressed)</td>
+ </tr><tr id="getNumericKey">
+  <td><el-method>getNumericKey</el-method></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>returns either the numeric key last pressed or, if the last pressed key was not numeric, then <el-code>"-1"</el-code></td>
  </tr><tr id="inputString">
   <td><el-method>inputString</el-method></td>
   <td><el-type>String</el-type></td>
@@ -3395,7 +3406,7 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
   be a data structure, for example to:
 
   <ul>
-    <li>Generate a <a href="#tuple">tuple</a> of the sum, sum-of-squares, and count of numerical elements.</li>
+    <li>Generate a <a href="#Tuple">tuple</a> of the sum, sum-of-squares, and count of numerical elements.</li>
     <li>Generate a dictionary of all the unique words in a list, with the number of times each word appears in the input list.</li>
   </ul>
 
