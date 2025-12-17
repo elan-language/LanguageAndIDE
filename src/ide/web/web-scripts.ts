@@ -21,22 +21,22 @@ import {
   collapseAllMenus,
   collapseMenu,
   confirmContinueOnNonChromeBrowser,
-  getFocused,
+  cursorWait,
+  domEventType,
   handleClickDropDownButton,
   handleKeyDropDownButton,
-  handleMenuArrowDown,
-  handleMenuArrowUp,
   handleMenuKey,
   ICodeEditorViewModel,
   IIDEViewModel,
   internalErrorMsg,
   isDisabled,
   ITabViewModel,
-  lastDirId,
   parentId,
   removeFocussedClassFromAllTabs,
+  setStatus,
   setTabToFocussedAndSelected,
   warningOrError,
+  wrapEventHandler,
 } from "./ui-helpers";
 import { fetchDefaultProfile, sanitiseHtml } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
@@ -333,9 +333,27 @@ class IDEViewModel implements IIDEViewModel {
     );
   }
 
+  private clearSystemDisplay() {
+    systemInfoDiv.innerHTML = "";
+  }
+
   async clearDisplays() {
-    clearSystemDisplay();
+    this.clearSystemDisplay();
     await elanInputOutput.clearDisplay();
+  }
+
+  async gatherDebugInfo(fm: FileManager) {
+    const elanVersion = codeViewModel.getVersionString();
+    const now = new Date().toLocaleString();
+    const body = document.getElementsByTagName("body")[0].innerHTML;
+    const code = fm.getLastCodeVersion();
+    const lde = domEventType(errorDOMEvent);
+    const lee = toDebugString(errorEditorEvent);
+    const es = errorStack ?? "no stack recorded";
+
+    const all = `${elanVersion}\n${now}\n${body}\n${code}\n${lde}\n${lee}\n${es}`;
+
+    await navigator.clipboard.writeText(all);
   }
 
   async showError(err: Error, fileName: string, reset: boolean) {
@@ -343,7 +361,7 @@ class IDEViewModel implements IIDEViewModel {
     errorDOMEvent = codeViewModel.lastDOMEvent;
     errorEditorEvent = codeViewModel.lastEditorEvent;
 
-    clearSystemDisplay();
+    this.clearSystemDisplay();
     if (reset) {
       await codeViewModel.resetFile(fileManager, this, testRunner);
     }
@@ -364,11 +382,11 @@ class IDEViewModel implements IIDEViewModel {
         this.systemInfoPrintSafe(stack);
       } else {
         // our message
-        systemInfoPrintUnsafe(internalErrorMsg, false);
+        this.systemInfoPrintUnsafe(internalErrorMsg, false);
         errorStack = err.stack;
         document
           .getElementById("bug-report")
-          ?.addEventListener("click", () => gatherDebugInfo(fileManager));
+          ?.addEventListener("click", async () => await this.gatherDebugInfo(fileManager));
       }
     } else {
       this.systemInfoPrintSafe(err.message ?? "Unknown error parsing file");
@@ -376,16 +394,59 @@ class IDEViewModel implements IIDEViewModel {
     this.updateDisplayValues(codeViewModel);
   }
 
+  private systemInfoPrintUnsafe(text: string, scroll = true) {
+    systemInfoDiv.innerHTML = systemInfoDiv.innerHTML + text + "\n";
+    if (scroll) {
+      systemInfoDiv.scrollTop = systemInfoDiv.scrollHeight;
+    }
+    systemInfoDiv.focus();
+    tabViewModel.showInfoTab();
+  }
+
+  private addDebugListeners() {
+    const expandable = systemInfoDiv.querySelectorAll(".expandable") as NodeListOf<HTMLDivElement>;
+
+    for (const d of expandable) {
+      d.addEventListener("click", (e) => {
+        d.classList.toggle("expanded");
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
+      d.addEventListener("keydown", (e: KeyboardEvent) => {
+        if ((e.ctrlKey || e.metaKey) && (e.key === "o" || e.key === "O")) {
+          d.classList.toggle("expanded");
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+    }
+
+    const summaries = systemInfoDiv.querySelectorAll(".summary") as NodeListOf<HTMLDivElement>;
+    for (const s of summaries) {
+      s.addEventListener("keydown", (event) => {
+        if (s.parentElement && event.key === "Enter") {
+          s.parentElement!.classList.toggle("expanded");
+        }
+      });
+    }
+  }
+
+  private printDebugSymbol(s: DebugSymbol) {
+    const display = getDebugSymbol(s);
+    this.systemInfoPrintUnsafe(display);
+  }
+
   printDebugInfo(info: DebugSymbol[] | string) {
     if (typeof info === "string") {
-      systemInfoPrintUnsafe(
+      this.systemInfoPrintUnsafe(
         getSummaryHtml(`No values defined at this point - proceed to the next instruction`),
       );
     } else {
       for (const v of info) {
-        printDebugSymbol(v);
+        this.printDebugSymbol(v);
       }
-      addDebugListeners();
+      this.addDebugListeners();
     }
   }
 
@@ -398,6 +459,10 @@ class IDEViewModel implements IIDEViewModel {
 
   clickInfoTab() {
     infoTabLabel.click();
+  }
+
+  clickHelpTab() {
+    helpTabLabel.click();
   }
 
   async run(cvm: ICodeEditorViewModel) {
@@ -415,7 +480,13 @@ class IDEViewModel implements IIDEViewModel {
   async renderAsHtml(editingField: boolean) {
     const content = await codeViewModel.renderAsHtml();
     try {
-      await updateContent(content, editingField);
+      await codeViewModel.updateContent(
+        content,
+        editingField,
+        ideViewModel,
+        fileManager,
+        testRunner,
+      );
     } catch (e) {
       await this.showError(e as Error, codeViewModel.fileName, false);
     }
@@ -424,7 +495,7 @@ class IDEViewModel implements IIDEViewModel {
   systemInfoPrintSafe(text: string, scroll = true) {
     // sanitise the text
     text = sanitiseHtml(text);
-    systemInfoPrintUnsafe(text, scroll);
+    this.systemInfoPrintUnsafe(text, scroll);
   }
 
   updateFileName(unsaved: string) {
@@ -567,6 +638,43 @@ class IDEViewModel implements IIDEViewModel {
     }
     event.preventDefault();
     event.stopPropagation();
+  }
+
+  async messageHandler(
+    m: MessageEvent<any>,
+    cvm: CodeEditorViewModel,
+    fm: FileManager,
+    tr: TestRunner,
+  ) {
+    if (m.data && typeof m.data === "string") {
+      if (m.data.startsWith("code:")) {
+        const code = m.data.slice(5);
+        cvm.recreateFile();
+        fm.reset();
+        await cvm.readAndParse(this, fm, tr, code, cvm.fileName, ParseMode.loadNew);
+      }
+
+      if (m.data.startsWith("help:")) {
+        const link = m.data.slice(5);
+        const helpLink = document.createElement("a");
+        helpLink.href = `documentation/${link}`;
+        helpLink.target = "help-iframe";
+        helpLink.click();
+        helpTab?.click();
+      }
+
+      if (m.data.startsWith("snapshot:")) {
+        const id = m.data.slice(9);
+        const code = await cvm.renderAsSource();
+        worksheetIFrame.contentWindow?.postMessage(`code:${id}:${code}`, "*");
+      }
+
+      if (m.data.startsWith("filename:")) {
+        const name = m.data.slice(9);
+        cvm.fileName = name;
+        this.updateNameAndSavedStatus(cvm, fm);
+      }
+    }
   }
 }
 
@@ -809,395 +917,6 @@ async function setup(p: Profile) {
   await codeViewModel.displayFile(fileManager, ideViewModel, testRunner);
 }
 
-function clearSystemDisplay() {
-  systemInfoDiv.innerHTML = "";
-}
-
-function domEventType(evt: Event | undefined) {
-  return evt
-    ? `DOMEvent: {
-type: ${evt.type},
-}`
-    : "no DOM event recorded";
-}
-
-async function gatherDebugInfo(fm: FileManager) {
-  const elanVersion = codeViewModel.getVersionString();
-  const now = new Date().toLocaleString();
-  const body = document.getElementsByTagName("body")[0].innerHTML;
-  const code = fm.getLastCodeVersion();
-  const lde = domEventType(errorDOMEvent);
-  const lee = toDebugString(errorEditorEvent);
-  const es = errorStack ?? "no stack recorded";
-
-  const all = `${elanVersion}\n${now}\n${body}\n${code}\n${lde}\n${lee}\n${es}`;
-
-  await navigator.clipboard.writeText(all);
-}
-
-function systemInfoPrintUnsafe(text: string, scroll = true) {
-  systemInfoDiv.innerHTML = systemInfoDiv.innerHTML + text + "\n";
-  if (scroll) {
-    systemInfoDiv.scrollTop = systemInfoDiv.scrollHeight;
-  }
-  systemInfoDiv.focus();
-  tabViewModel.showInfoTab();
-}
-
-function getModKey(e: KeyboardEvent | MouseEvent) {
-  return { control: e.ctrlKey || e.metaKey, shift: e.shiftKey, alt: e.altKey };
-}
-
-function setStatus(html: HTMLDivElement, colour: string, label: string, showTooltip = true): void {
-  html.setAttribute("class", colour);
-  if (showTooltip && (colour === "error" || colour === "warning")) {
-    html.tabIndex = 0;
-    html.setAttribute("title", "Click to navigate to first issue in (expanded) code");
-  } else {
-    html.tabIndex = -1;
-    html.setAttribute("title", "");
-  }
-
-  html.innerText = label;
-}
-
-/**
- * Render the document
- */
-async function updateContent(text: string, editingField: boolean) {
-  codeViewModel.setRunStatus(RunStatus.default);
-  collapseAllMenus();
-
-  codeContainer!.innerHTML = text;
-
-  const frames = document.querySelectorAll(".elan-code [id]");
-
-  for (const frame of frames) {
-    const id = frame.id;
-
-    frame.addEventListener("keydown", (event: Event) => {
-      const ke = event as KeyboardEvent;
-      codeViewModel.handleEditorEvent(
-        ideViewModel,
-        testRunner,
-        fileManager,
-        event,
-        "key",
-        "frame",
-        getModKey(ke),
-        id,
-        ke.key,
-      );
-    });
-
-    frame.addEventListener("click", (event) => {
-      const pe = event as PointerEvent;
-      const selectionStart = (event.target as HTMLInputElement).selectionStart ?? undefined;
-      const selectionEnd = (event.target as HTMLInputElement).selectionEnd ?? undefined;
-
-      const selection: [number, number] | undefined =
-        selectionStart === undefined ? undefined : [selectionStart, selectionEnd ?? selectionStart];
-
-      codeViewModel.handleEditorEvent(
-        ideViewModel,
-        testRunner,
-        fileManager,
-        event,
-        "click",
-        "frame",
-        getModKey(pe),
-        id,
-        undefined,
-        selection,
-      );
-    });
-
-    frame.addEventListener("mousedown", (event) => {
-      // mousedown rather than click as click does not seem to pick up shift/ctrl click
-      const me = event as MouseEvent;
-      if (me.button === 0 && me.shiftKey) {
-        // left button only
-        codeViewModel.handleEditorEvent(
-          ideViewModel,
-          testRunner,
-          fileManager,
-          event,
-          "click",
-          "frame",
-          getModKey(me),
-          id,
-        );
-      }
-    });
-
-    frame.addEventListener("mousemove", (event) => {
-      event.preventDefault();
-    });
-
-    frame.addEventListener("dblclick", (event) => {
-      const ke = event as KeyboardEvent;
-      codeViewModel.handleEditorEvent(
-        ideViewModel,
-        testRunner,
-        fileManager,
-        event,
-        "dblclick",
-        "frame",
-        getModKey(ke),
-        id,
-      );
-    });
-
-    frame.addEventListener("contextmenu", (event) => {
-      const mk = { control: false, shift: false, alt: false };
-      codeViewModel.handleEditorEvent(
-        ideViewModel,
-        testRunner,
-        fileManager,
-        event,
-        "contextmenu",
-        "frame",
-        mk,
-        id,
-      );
-      event.preventDefault();
-    });
-  }
-
-  function getInput() {
-    return document.querySelector(".focused input") as HTMLInputElement;
-  }
-
-  const input = getInput();
-  const focused = getFocused();
-
-  codeContainer?.addEventListener("click", (event) => {
-    if (codeViewModel.isRunningState()) {
-      event.preventDefault();
-      event.stopPropagation();
-      return;
-    }
-
-    codeViewModel.showCode();
-  });
-
-  codeContainer.addEventListener("mousedown", (event) => {
-    // to prevent codeContainer taking focus on a click
-    if (codeViewModel.isRunningState()) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  });
-
-  let firstContextItem: HTMLDivElement | undefined;
-
-  if (document.querySelector(".context-menu")) {
-    const items = document.querySelectorAll(".context-menu-item") as NodeListOf<HTMLDivElement>;
-
-    firstContextItem = items[0];
-
-    for (const item of items) {
-      item.addEventListener("click", async (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        const ke = event as PointerEvent | KeyboardEvent;
-        const tgt = ke.target as HTMLDivElement;
-        const id = tgt.dataset.id;
-        const func = tgt.dataset.func;
-        const txt = await navigator.clipboard.readText();
-        codeViewModel.handleEditorEvent(
-          ideViewModel,
-          testRunner,
-          fileManager,
-
-          event,
-          "contextmenu",
-          "frame",
-          getModKey(ke),
-          id,
-          "ContextMenu",
-          undefined,
-          func,
-          `${txt.trim()}`,
-        );
-      });
-
-      item.addEventListener("keydown", (event) => {
-        if (event.key === "ArrowUp") {
-          handleMenuArrowUp();
-          event.preventDefault();
-          event.stopPropagation();
-        } else if (event.key === "ArrowDown") {
-          handleMenuArrowDown();
-          event.preventDefault();
-          event.stopPropagation();
-        } else if (event.key === "Enter" || event.key === "Space") {
-          const focusedItem = document.activeElement as HTMLElement;
-          focusedItem?.click();
-          event.preventDefault();
-          event.stopPropagation();
-        }
-      });
-    }
-  }
-
-  const helpLinks = document.querySelectorAll("el-help a");
-
-  for (const item of helpLinks) {
-    item.addEventListener("click", (event) => {
-      if ((event.target as any).target === "help-iframe") {
-        // can't use the load event as if the page is already loaded with url it doesn#t fore agaon so
-        // no focus
-        helpTabLabel.click();
-      }
-
-      event.stopPropagation();
-    });
-  }
-
-  if (firstContextItem) {
-    firstContextItem.focus();
-  } else if (input) {
-    const cursorStart = input.dataset.cursorstart as string;
-    const cursorEnd = input.dataset.cursorend as string;
-    const startIndex = parseInt(cursorStart) as number;
-    const endIndex = parseInt(cursorEnd) as number;
-    const cursorIndex1 = Number.isNaN(startIndex) ? input.value.length : startIndex;
-    const cursorIndex2 = Number.isNaN(endIndex) ? input.value.length : endIndex;
-
-    input.setSelectionRange(cursorIndex1, cursorIndex2);
-    input.focus();
-  } else if (focused) {
-    focused.focus();
-  } else {
-    codeContainer.focus();
-  }
-
-  if (document.querySelector(".autocomplete-popup")) {
-    const items = document.querySelectorAll(".autocomplete-item");
-
-    for (const item of items) {
-      item.addEventListener("click", (event) => {
-        const ke = event as PointerEvent;
-        const tgt = ke.target as HTMLDivElement;
-        const id = tgt.dataset.id;
-
-        codeViewModel.handleEditorEvent(
-          ideViewModel,
-          testRunner,
-          fileManager,
-          event,
-          "key",
-          "frame",
-          getModKey(ke),
-          id,
-          "Enter",
-          undefined,
-          undefined,
-          tgt.innerText,
-        );
-      });
-    }
-
-    const ellipsis = document.querySelectorAll(".autocomplete-ellipsis");
-
-    if (ellipsis.length === 1) {
-      ellipsis[0].addEventListener("click", (event) => {
-        const ke = event as PointerEvent;
-        const tgt = ke.target as HTMLDivElement;
-        const id = tgt.dataset.id;
-        const selected = tgt.dataset.selected;
-
-        codeViewModel.handleEditorEvent(
-          ideViewModel,
-          testRunner,
-          fileManager,
-          event,
-          "key",
-          "frame",
-          getModKey(ke),
-          id,
-          "ArrowDown",
-          undefined,
-          undefined,
-          selected,
-        );
-      });
-    }
-  }
-
-  const activeHelp = document.querySelector("a.active") as HTMLLinkElement | undefined;
-
-  if (activeHelp) {
-    activeHelp.click();
-  }
-
-  const copiedSource = codeViewModel.getCopiedSource();
-
-  if (copiedSource.length > 0) {
-    let allCode = "";
-
-    for (const code of copiedSource) {
-      if (allCode) {
-        allCode = allCode + "\n" + code;
-      } else {
-        allCode = code;
-      }
-    }
-
-    await navigator.clipboard.writeText(allCode);
-  }
-
-  await fileManager.save(codeViewModel, focused, editingField, ideViewModel);
-  ideViewModel.updateDisplayValues(codeViewModel);
-
-  if (!isElanProduction) {
-    const dbgFocused = document.querySelectorAll(".focused");
-    //debug check
-    if (dbgFocused.length > 1) {
-      let msg = "multiple focused ";
-      dbgFocused.forEach((n) => (msg = `${msg}, Node: ${(n.nodeName, n.id)} `));
-      await ideViewModel.showError(new Error(msg), codeViewModel.fileName, false);
-    }
-  }
-
-  cursorDefault();
-}
-
-function printDebugSymbol(s: DebugSymbol) {
-  const display = getDebugSymbol(s);
-  systemInfoPrintUnsafe(display);
-}
-
-function addDebugListeners() {
-  const expandable = systemInfoDiv.querySelectorAll(".expandable") as NodeListOf<HTMLDivElement>;
-
-  for (const d of expandable) {
-    d.addEventListener("click", (e) => {
-      d.classList.toggle("expanded");
-      e.preventDefault();
-      e.stopPropagation();
-    });
-
-    d.addEventListener("keydown", (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && (e.key === "o" || e.key === "O")) {
-        d.classList.toggle("expanded");
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    });
-  }
-
-  const summaries = systemInfoDiv.querySelectorAll(".summary") as NodeListOf<HTMLDivElement>;
-  for (const s of summaries) {
-    s.addEventListener("keydown", (event) => {
-      if (s.parentElement && event.key === "Enter") {
-        s.parentElement!.classList.toggle("expanded");
-      }
-    });
-  }
-}
-
 function chooser(uploader: (event: Event) => void, noCheck: boolean) {
   return () => {
     if (noCheck || checkForUnsavedChanges(fileManager, cancelMsg)) {
@@ -1244,172 +963,103 @@ function getImporter() {
   return useChromeFileAPI() ? handleChromeImport : handleImport;
 }
 
-async function handleChromeUploadOrAppend(mode: ParseMode) {
-  try {
-    const [fileHandle] = await window.showOpenFilePicker({
-      startIn: "documents",
-      types: [{ accept: { "text/elan": ".elan" } }],
-      id: lastDirId,
-    });
-    const codeFile = await fileHandle.getFile();
-    const fileName = mode === ParseMode.loadNew ? codeFile.name : codeViewModel.fileName;
-    const rawCode = await codeFile.text();
-    if (mode === ParseMode.loadNew) {
-      codeViewModel.recreateFile();
-      fileManager.reset();
-    }
-    await codeViewModel.readAndParse(
-      ideViewModel,
-      fileManager,
-      testRunner,
-      rawCode,
-      fileName,
-      mode,
-    );
-  } catch (_e) {
-    // user cancelled
-    return;
-  }
-}
-
 async function handleChromeUpload(event: Event) {
-  if (!isDisabled(event)) {
-    await handleChromeUploadOrAppend(ParseMode.loadNew);
-  }
+  await wrapEventHandler(
+    event,
+    async () =>
+      await fileManager.handleChromeUploadOrAppend(
+        ParseMode.loadNew,
+        codeViewModel,
+        ideViewModel,
+        testRunner,
+      ),
+  );
 }
 
 async function handleChromeAppend(event: Event) {
-  if (!isDisabled(event)) {
-    await handleChromeUploadOrAppend(ParseMode.append);
-  }
+  await wrapEventHandler(
+    event,
+    async () =>
+      await fileManager.handleChromeUploadOrAppend(
+        ParseMode.append,
+        codeViewModel,
+        ideViewModel,
+        testRunner,
+      ),
+  );
 }
 
 async function handleChromeImport(event: Event) {
-  if (!isDisabled(event)) {
-    await handleChromeUploadOrAppend(ParseMode.import);
-  }
-}
-
-function cursorWait() {
-  document.body.style.cursor = "wait";
-}
-
-function cursorDefault() {
-  document.body.style.cursor = "default";
-}
-
-async function handleUploadOrAppend(event: Event, mode: ParseMode) {
-  const elanFile = (event.target as any).files?.[0] as any;
-
-  if (elanFile) {
-    const fileName = mode === ParseMode.loadNew ? elanFile.name : codeViewModel.fileName;
-    cursorWait();
-    await ideViewModel.clearDisplays();
-    const reader = new FileReader();
-    reader.addEventListener("load", async (event: any) => {
-      const rawCode = event.target.result;
-      if ((mode = ParseMode.loadNew)) {
-        codeViewModel.recreateFile();
-        fileManager.reset();
-      }
-      await codeViewModel.readAndParse(
+  await wrapEventHandler(
+    event,
+    async () =>
+      await fileManager.handleChromeUploadOrAppend(
+        ParseMode.import,
+        codeViewModel,
         ideViewModel,
-        fileManager,
         testRunner,
-        rawCode,
-        fileName,
-        mode,
-      );
-    });
-    reader.readAsText(elanFile);
-  }
-
-  event.preventDefault();
+      ),
+  );
 }
 
 async function handleUpload(event: Event) {
-  if (!isDisabled(event)) {
-    await handleUploadOrAppend(event, ParseMode.loadNew);
-  }
+  await wrapEventHandler(
+    event,
+    async () =>
+      await fileManager.handleUploadOrAppend(
+        event,
+        ParseMode.loadNew,
+        codeViewModel,
+        ideViewModel,
+        testRunner,
+      ),
+  );
 }
 
 async function handleAppend(event: Event) {
-  if (!isDisabled(event)) {
-    await handleUploadOrAppend(event, ParseMode.append);
-  }
+  await wrapEventHandler(
+    event,
+    async () =>
+      await fileManager.handleUploadOrAppend(
+        event,
+        ParseMode.append,
+        codeViewModel,
+        ideViewModel,
+        testRunner,
+      ),
+  );
 }
 
 async function handleImport(event: Event) {
-  if (!isDisabled(event)) {
-    await handleUploadOrAppend(event, ParseMode.import);
-  }
-}
-
-function updateFileName() {
-  let fileName = prompt("Please enter your file name", codeViewModel.fileName);
-
-  if (fileName === null) {
-    // cancelled
-    return;
-  }
-
-  if (!fileName) {
-    fileName = codeViewModel.defaultFileName;
-  }
-
-  if (!fileName.endsWith(".elan")) {
-    fileName = fileName + ".elan";
-  }
-
-  codeViewModel.fileName = fileName;
+  await wrapEventHandler(
+    event,
+    async () =>
+      await fileManager.handleUploadOrAppend(
+        event,
+        ParseMode.import,
+        codeViewModel,
+        ideViewModel,
+        testRunner,
+      ),
+  );
 }
 
 async function handleDownload(event: Event) {
-  if (!isDisabled(event)) {
-    updateFileName();
-
-    const code = await codeViewModel.renderAsSource();
-
-    const blob = new Blob([code], { type: "plain/text" });
-
-    const aElement = document.createElement("a");
-    aElement.setAttribute("download", codeViewModel.fileName!);
-    const href = URL.createObjectURL(blob);
-    aElement.href = href;
-    aElement.setAttribute("target", "_blank");
-    aElement.click();
-    URL.revokeObjectURL(href);
-    saveButton.classList.remove("unsaved");
-    fileManager.resetHash(codeViewModel);
-    event.preventDefault();
-    await ideViewModel.renderAsHtml(false);
-  }
+  await wrapEventHandler(
+    event,
+    async () => await fileManager.doGenericDownload(codeViewModel, ideViewModel, fileManager),
+  );
 }
 
 async function handleChromeDownload(event: Event) {
-  if (!isDisabled(event)) {
-    try {
-      await fileManager.doDownLoad(codeViewModel, ideViewModel);
-    } catch (_e) {
-      // user cancelled
-      return;
-    } finally {
-      event.preventDefault();
-    }
-  }
+  await wrapEventHandler(event, async () => fileManager.doDownLoad(codeViewModel, ideViewModel));
 }
 
 async function handleChromeAutoSave(event: Event) {
-  if (!isDisabled(event)) {
-    try {
-      await fileManager.doAutoSave(codeViewModel, ideViewModel);
-    } catch (_e) {
-      // user cancelled
-      return;
-    } finally {
-      event.preventDefault();
-    }
-  }
+  await wrapEventHandler(
+    event,
+    async () => await fileManager.doAutoSave(codeViewModel, ideViewModel),
+  );
 }
 
 if (!isElanProduction) {
@@ -1459,40 +1109,5 @@ window.addEventListener("click", () => {
 });
 
 window.addEventListener("message", async (m) => {
-  if (m.data && typeof m.data === "string") {
-    if (m.data.startsWith("code:")) {
-      const code = m.data.slice(5);
-      codeViewModel.recreateFile();
-      fileManager.reset();
-      await codeViewModel.readAndParse(
-        ideViewModel,
-        fileManager,
-        testRunner,
-        code,
-        codeViewModel.fileName,
-        ParseMode.loadNew,
-      );
-    }
-
-    if (m.data.startsWith("help:")) {
-      const link = m.data.slice(5);
-      const helpLink = document.createElement("a");
-      helpLink.href = `documentation/${link}`;
-      helpLink.target = "help-iframe";
-      helpLink.click();
-      helpTab?.click();
-    }
-
-    if (m.data.startsWith("snapshot:")) {
-      const id = m.data.slice(9);
-      const code = await codeViewModel.renderAsSource();
-      worksheetIFrame.contentWindow?.postMessage(`code:${id}:${code}`, "*");
-    }
-
-    if (m.data.startsWith("filename:")) {
-      const name = m.data.slice(9);
-      codeViewModel.fileName = name;
-      ideViewModel.updateNameAndSavedStatus(codeViewModel, fileManager);
-    }
-  }
+  await ideViewModel.messageHandler(m, codeViewModel, fileManager, testRunner);
 });

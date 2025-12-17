@@ -5,8 +5,8 @@ import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
 import { TestStatus } from "../../compiler/test-status";
 import { CodeSource } from "../frames/frame-interfaces/code-source";
 import { editorEvent } from "../frames/frame-interfaces/editor-event";
+import { ParseMode } from "../frames/frame-interfaces/file";
 import { Frame } from "../frames/frame-interfaces/frame";
-import { Profile } from "../frames/frame-interfaces/profile";
 import { Selectable } from "../frames/frame-interfaces/selectable";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { FileManager } from "./file-manager";
@@ -156,7 +156,7 @@ export interface ICodeEditorViewModel {
 
   getFirstChild(): Frame;
 
-  recreateFile(profile: Profile, userName: string | undefined): void;
+  recreateFile(): void;
 
   currentHash: string;
 
@@ -193,6 +193,33 @@ export interface ICodeEditorViewModel {
   isPausedState(): boolean;
   isTestRunningState(): boolean;
   collapseContextMenu(vm: IIDEViewModel, tr: TestRunner): Promise<void>;
+  updateFileName(): void;
+
+  readAndParse(
+    vm: IIDEViewModel,
+    fm: FileManager,
+    tr: TestRunner,
+    rawCode: string,
+    fileName: string,
+    mode: ParseMode,
+  ): Promise<void>;
+
+  handleEditorEvent(
+    vm: IIDEViewModel,
+    tr: TestRunner,
+    fm: FileManager,
+    event: Event,
+    type: "key" | "click" | "dblclick" | "paste" | "contextmenu",
+    target: "frame",
+    modKey: { control: boolean; shift: boolean; alt: boolean },
+    id?: string | undefined,
+    key?: string | undefined,
+    selection?: [number, number] | undefined,
+    command?: string | undefined,
+    optionalData?: string | undefined,
+  ): Promise<void>;
+
+  showCode(): void;
 }
 
 export interface ITabViewModel {
@@ -217,6 +244,7 @@ export interface IIDEViewModel {
   printDebugInfo(info: DebugSymbol[] | string): void;
   setPausedAtLocation(location: string): void;
   clickInfoTab(): void;
+  clickHelpTab(): void;
   run(cvm: ICodeEditorViewModel): Promise<void>;
   runDebug(): void;
   renderAsHtml(editingField: boolean): Promise<void>;
@@ -496,4 +524,55 @@ export function changeCss(stylesheet: string) {
       link.href = newHref;
     }
   }
+}
+
+export function cursorWait() {
+  document.body.style.cursor = "wait";
+}
+
+export function cursorDefault() {
+  document.body.style.cursor = "default";
+}
+
+export async function wrapEventHandler(event: Event, handler: () => Promise<void>) {
+  if (!isDisabled(event)) {
+    try {
+      await handler();
+    } catch (_e) {
+      // user cancelled
+      return;
+    } finally {
+      event.preventDefault();
+    }
+  }
+}
+
+export function setStatus(
+  html: HTMLDivElement,
+  colour: string,
+  label: string,
+  showTooltip = true,
+): void {
+  html.setAttribute("class", colour);
+  if (showTooltip && (colour === "error" || colour === "warning")) {
+    html.tabIndex = 0;
+    html.setAttribute("title", "Click to navigate to first issue in (expanded) code");
+  } else {
+    html.tabIndex = -1;
+    html.setAttribute("title", "");
+  }
+
+  html.innerText = label;
+}
+
+export function domEventType(evt: Event | undefined) {
+  return evt
+    ? `DOMEvent: {
+type: ${evt.type},
+}`
+    : "no DOM event recorded";
+}
+
+export function getModKey(e: KeyboardEvent | MouseEvent) {
+  return { control: e.ctrlKey || e.metaKey, shift: e.shiftKey, alt: e.altKey };
 }
