@@ -484,3 +484,16 @@ export async function handleMenuKey(
     }, 1);
   }
 }
+
+export function changeCss(stylesheet: string) {
+  console.log("css to: " + stylesheet);
+  const links = document.getElementsByTagName("link");
+  for (const link of links) {
+    if (link.rel === "stylesheet" && link.href.includes("colourScheme")) {
+      const tokens = link.href.split("/");
+      tokens[tokens.length - 1] = `${stylesheet}.css`;
+      const newHref = tokens.join("/");
+      link.href = newHref;
+    }
+  }
+}

@@ -34,12 +34,17 @@ system.stdlib = stdlib; // to allow injection
 
 export class CodeEditorViewModel implements ICodeEditorViewModel {
   private file?: File = undefined;
+  private profile?: Profile = undefined;
 
   lastDOMEvent: Event | undefined;
   lastEditorEvent: editorEvent | undefined;
 
   get fileName() {
     return this.file!.fileName;
+  }
+
+  setProfile(p: Profile) {
+    this.profile = p;
   }
 
   set fileName(fn: string) {
@@ -148,8 +153,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     return this.file!.getFirstChild();
   }
 
-  recreateFile(profile: Profile, userName: string | undefined) {
-    this.file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+  recreateFile() {
+    this.file = new FileImpl(hash, this.profile!, undefined, transforms(), stdlib);
   }
 
   get currentHash() {
@@ -401,14 +406,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     }
   }
 
-  async resetFile(
-    fm: FileManager,
-    vm: IIDEViewModel,
-    tr: TestRunner,
-    profile: Profile,
-    userName: string | undefined,
-  ) {
-    this.recreateFile(profile, userName);
+  async resetFile(fm: FileManager, vm: IIDEViewModel, tr: TestRunner) {
+    this.recreateFile();
     await this.initialDisplay(fm, vm, tr, false);
   }
 
@@ -459,17 +458,10 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     return this.readRunStatus() === RunStatus.paused;
   }
 
-  async loadDemoFile(
-    fileName: string,
-    profile: Profile,
-    userName: string | undefined,
-    vm: IIDEViewModel,
-    fm: FileManager,
-    tr: TestRunner,
-  ) {
+  async loadDemoFile(fileName: string, vm: IIDEViewModel, fm: FileManager, tr: TestRunner) {
     const f = await fetch(fileName, { mode: "same-origin" });
     const rawCode = await f.text();
-    this.recreateFile(profile, userName);
+    this.recreateFile();
     this.fileName = fileName;
     fm.reset();
     await this.readAndParse(vm, fm, tr, rawCode, fileName, ParseMode.loadNew);

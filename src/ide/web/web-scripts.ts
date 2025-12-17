@@ -4,11 +4,11 @@ import { DebugSymbol } from "../../compiler/compiler-interfaces/debug-symbol";
 import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
 import { TestStatus } from "../../compiler/test-status";
 import { isElanProduction } from "../../environment";
+import { DefaultProfile } from "../frames/default-profile";
 import { cannotLoadUnparseableFile, fileErrorPrefix, parseErrorPrefix } from "../frames/file-impl";
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { ParseMode } from "../frames/frame-interfaces/file";
 import { Profile } from "../frames/frame-interfaces/profile";
-import { Group, Individual } from "../frames/frame-interfaces/user-config";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { CodeEditorViewModel } from "./code-editor-view-model";
 import { FileManager } from "./file-manager";
@@ -16,6 +16,7 @@ import { getDebugSymbol, getSummaryHtml, ProgramRunner } from "./program-runner"
 import { TestRunner } from "./test-runner";
 import {
   cancelMsg,
+  changeCss,
   checkIsChrome,
   collapseAllMenus,
   collapseMenu,
@@ -37,7 +38,7 @@ import {
   setTabToFocussedAndSelected,
   warningOrError,
 } from "./ui-helpers";
-import { fetchDefaultProfile, fetchProfile, fetchUserConfig, sanitiseHtml } from "./web-helpers";
+import { fetchDefaultProfile, sanitiseHtml } from "./web-helpers";
 import { WebInputOutput } from "./web-input-output";
 
 // static html elements
@@ -60,7 +61,6 @@ const autoSaveButton = document.getElementById("auto-save") as HTMLDivElement;
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
 const fileButton = document.getElementById("file") as HTMLButtonElement;
-const logoutButton = document.getElementById("logout") as HTMLButtonElement;
 const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLDivElement;
 const preferencesButton = document.getElementById("preferences") as HTMLDivElement;
 
@@ -108,9 +108,6 @@ const closePreferencesDialogButton = document.getElementById("confirmBtn");
 const useCvdTickbox = document.getElementById("use-cvd") as HTMLInputElement;
 
 const elanInputOutput = new WebInputOutput();
-
-let profile: Profile;
-let userName: string | undefined;
 
 let errorDOMEvent: Event | undefined;
 let errorEditorEvent: editorEvent | undefined;
@@ -310,13 +307,6 @@ class IDEViewModel implements IIDEViewModel {
           this.disable([autoSaveButton], "Only available on Chrome");
         }
       }
-
-      if (userName) {
-        logoutButton.removeAttribute("hidden");
-        this.enable(logoutButton, "Log out");
-      } else {
-        logoutButton.setAttribute("hidden", "hidden");
-      }
     }
   }
 
@@ -355,7 +345,7 @@ class IDEViewModel implements IIDEViewModel {
 
     clearSystemDisplay();
     if (reset) {
-      await codeViewModel.resetFile(fileManager, this, testRunner, profile, userName);
+      await codeViewModel.resetFile(fileManager, this, testRunner);
     }
 
     codeViewModel.fileName = fileName;
@@ -443,7 +433,7 @@ class IDEViewModel implements IIDEViewModel {
 
   async updateFileAndCode(code: string) {
     const fn = codeViewModel.fileName;
-    codeViewModel.recreateFile(profile, userName);
+    codeViewModel.recreateFile();
     await codeViewModel.displayCode(this, testRunner, code, fn);
   }
 
@@ -607,10 +597,6 @@ trimButton.addEventListener("click", async () => {
   await ideViewModel.renderAsHtml(false);
 });
 
-logoutButton.addEventListener("click", async () => {
-  window.location.reload();
-});
-
 addEventListener("beforeunload", (event) => {
   event.preventDefault();
 });
@@ -662,7 +648,7 @@ newButton?.addEventListener("click", async (event: Event) => {
     if (checkForUnsavedChanges(fileManager, cancelMsg)) {
       await ideViewModel.clearDisplays();
       fileManager.reset();
-      codeViewModel.recreateFile(profile, userName);
+      codeViewModel.recreateFile();
       await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, false);
     }
   }
@@ -688,14 +674,7 @@ for (const elem of demoFiles) {
   elem.addEventListener("click", async () => {
     if (checkForUnsavedChanges(fileManager, cancelMsg)) {
       const fileName = `${elem.id}`;
-      await codeViewModel.loadDemoFile(
-        fileName,
-        profile,
-        userName,
-        ideViewModel,
-        fileManager,
-        testRunner,
-      );
+      await codeViewModel.loadDemoFile(fileName, ideViewModel, fileManager, testRunner);
     }
   });
 }
@@ -752,19 +731,6 @@ helpIFrame.addEventListener("load", () => {
   helpIFrame.contentWindow?.addEventListener("click", () => tabViewModel.showHelpTab());
 });
 
-function changeCss(stylesheet: string) {
-  console.log("css to: " + stylesheet);
-  const links = document.getElementsByTagName("link");
-  for (const link of links) {
-    if (link.rel === "stylesheet" && link.href.includes("colourScheme")) {
-      const tokens = link.href.split("/");
-      tokens[tokens.length - 1] = `${stylesheet}.css`;
-      const newHref = tokens.join("/");
-      link.href = newHref;
-    }
-  }
-}
-
 parseStatus.addEventListener("click", async (event) => {
   await ideViewModel.handleStatusClick(event, "el-field", false);
 });
@@ -795,43 +761,12 @@ testStatus.addEventListener("keydown", async (event) => {
   }
 });
 
-const isChrome = checkIsChrome();
-const okToContinue = isChrome || confirmContinueOnNonChromeBrowser();
-
-if (okToContinue) {
-  // fetch userConfig triggers page display
-  fetchUserConfig().then(async (userConfig) => {
-    const defaultProfile = await fetchDefaultProfile();
-    let profile = defaultProfile;
-
-    if (defaultProfile.require_log_on) {
-      while (!userName) {
-        userName = prompt("You must login with a valid user id")?.trim();
-      }
-
-      const ucUserName = userName.toUpperCase();
-
-      let userOrGroup: Individual | Group | undefined = userConfig.students.find(
-        (u) => u.userName.toUpperCase() === ucUserName,
-      );
-      if (!userOrGroup) {
-        userOrGroup = userConfig.groups.find((g) =>
-          g.members.map((m) => m.toUpperCase()).includes(ucUserName),
-        );
-      } else {
-        const colourScheme = userOrGroup?.colourScheme;
-        if (colourScheme) {
-          changeCss(colourScheme);
-        }
-      }
-
-      const profileName = userOrGroup?.profileName;
-
-      profile = profileName ? await fetchProfile(profileName) : defaultProfile;
-    }
-
-    await setup(profile);
-  });
+if (checkIsChrome() || confirmContinueOnNonChromeBrowser()) {
+  // fetch triggers page display
+  fetchDefaultProfile().then(
+    async (defaultProfile) => await setup(defaultProfile),
+    async () => await setup(new DefaultProfile()),
+  );
 } else {
   const msg = "Require Chrome or Edge";
   ideViewModel.disable(
@@ -869,9 +804,8 @@ function checkForUnsavedChanges(fm: FileManager, msg: string): boolean {
 
 async function setup(p: Profile) {
   fileManager.reset();
-  profile = p;
-
-  codeViewModel.recreateFile(profile, userName);
+  codeViewModel.setProfile(p);
+  codeViewModel.recreateFile();
   await codeViewModel.displayFile(fileManager, ideViewModel, testRunner);
 }
 
@@ -1321,7 +1255,7 @@ async function handleChromeUploadOrAppend(mode: ParseMode) {
     const fileName = mode === ParseMode.loadNew ? codeFile.name : codeViewModel.fileName;
     const rawCode = await codeFile.text();
     if (mode === ParseMode.loadNew) {
-      codeViewModel.recreateFile(profile, userName);
+      codeViewModel.recreateFile();
       fileManager.reset();
     }
     await codeViewModel.readAndParse(
@@ -1375,7 +1309,7 @@ async function handleUploadOrAppend(event: Event, mode: ParseMode) {
     reader.addEventListener("load", async (event: any) => {
       const rawCode = event.target.result;
       if ((mode = ParseMode.loadNew)) {
-        codeViewModel.recreateFile(profile, userName);
+        codeViewModel.recreateFile();
         fileManager.reset();
       }
       await codeViewModel.readAndParse(
@@ -1528,7 +1462,7 @@ window.addEventListener("message", async (m) => {
   if (m.data && typeof m.data === "string") {
     if (m.data.startsWith("code:")) {
       const code = m.data.slice(5);
-      codeViewModel.recreateFile(profile, userName);
+      codeViewModel.recreateFile();
       fileManager.reset();
       await codeViewModel.readAndParse(
         ideViewModel,
