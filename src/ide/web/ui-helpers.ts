@@ -576,3 +576,15 @@ type: ${evt.type},
 export function getModKey(e: KeyboardEvent | MouseEvent) {
   return { control: e.ctrlKey || e.metaKey, shift: e.shiftKey, alt: e.altKey };
 }
+
+export function checkForUnsavedChanges(
+  fm: FileManager,
+  cvm: ICodeEditorViewModel,
+  msg: string,
+): boolean {
+  return fm.hasUnsavedChanges(cvm) ? confirm(msg) : true;
+}
+
+export function useChromeFileAPI() {
+  return "showOpenFilePicker" in self;
+}

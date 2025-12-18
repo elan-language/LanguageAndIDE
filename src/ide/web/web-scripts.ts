@@ -17,6 +17,7 @@ import { TestRunner } from "./test-runner";
 import {
   cancelMsg,
   changeCss,
+  checkForUnsavedChanges,
   checkIsChrome,
   collapseAllMenus,
   collapseMenu,
@@ -35,6 +36,7 @@ import {
   removeFocussedClassFromAllTabs,
   setStatus,
   setTabToFocussedAndSelected,
+  useChromeFileAPI,
   warningOrError,
   wrapEventHandler,
 } from "./ui-helpers";
@@ -109,10 +111,6 @@ const useCvdTickbox = document.getElementById("use-cvd") as HTMLInputElement;
 
 const elanInputOutput = new WebInputOutput();
 
-let errorDOMEvent: Event | undefined;
-let errorEditorEvent: editorEvent | undefined;
-let errorStack: string | undefined;
-
 class TabViewModel implements ITabViewModel {
   showDisplayTab() {
     const tabName = "display-tab";
@@ -153,6 +151,10 @@ class TabViewModel implements ITabViewModel {
 }
 
 class IDEViewModel implements IIDEViewModel {
+  private errorDOMEvent: Event | undefined;
+  private errorEditorEvent: editorEvent | undefined;
+  private errorStack: string | undefined;
+
   constructor(public readonly tvm: ITabViewModel) {}
 
   updateNameAndSavedStatus(cvm: ICodeEditorViewModel, fm: FileManager) {
@@ -347,9 +349,9 @@ class IDEViewModel implements IIDEViewModel {
     const now = new Date().toLocaleString();
     const body = document.getElementsByTagName("body")[0].innerHTML;
     const code = fm.getLastCodeVersion();
-    const lde = domEventType(errorDOMEvent);
-    const lee = toDebugString(errorEditorEvent);
-    const es = errorStack ?? "no stack recorded";
+    const lde = domEventType(this.errorDOMEvent);
+    const lee = toDebugString(this.errorEditorEvent);
+    const es = this.errorStack ?? "no stack recorded";
 
     const all = `${elanVersion}\n${now}\n${body}\n${code}\n${lde}\n${lee}\n${es}`;
 
@@ -358,8 +360,8 @@ class IDEViewModel implements IIDEViewModel {
 
   async showError(err: Error, fileName: string, reset: boolean) {
     // because otherwise we will pick up any clicks or edits done after error
-    errorDOMEvent = codeViewModel.lastDOMEvent;
-    errorEditorEvent = codeViewModel.lastEditorEvent;
+    this.errorDOMEvent = codeViewModel.lastDOMEvent;
+    this.errorEditorEvent = codeViewModel.lastEditorEvent;
 
     this.clearSystemDisplay();
     if (reset) {
@@ -383,7 +385,7 @@ class IDEViewModel implements IIDEViewModel {
       } else {
         // our message
         this.systemInfoPrintUnsafe(internalErrorMsg, false);
-        errorStack = err.stack;
+        this.errorStack = err.stack;
         document
           .getElementById("bug-report")
           ?.addEventListener("click", async () => await this.gatherDebugInfo(fileManager));
@@ -753,7 +755,7 @@ expandCollapseButton?.addEventListener("click", async () => {
 
 newButton?.addEventListener("click", async (event: Event) => {
   if (!isDisabled(event)) {
-    if (checkForUnsavedChanges(fileManager, cancelMsg)) {
+    if (checkForUnsavedChanges(fileManager, codeViewModel, cancelMsg)) {
       await ideViewModel.clearDisplays();
       fileManager.reset();
       codeViewModel.recreateFile();
@@ -780,7 +782,7 @@ saveAsStandaloneButton.addEventListener("click", async (event: Event) => {
 
 for (const elem of demoFiles) {
   elem.addEventListener("click", async () => {
-    if (checkForUnsavedChanges(fileManager, cancelMsg)) {
+    if (checkForUnsavedChanges(fileManager, codeViewModel, cancelMsg)) {
       const fileName = `${elem.id}`;
       await codeViewModel.loadDemoFile(fileName, ideViewModel, fileManager, testRunner);
     }
@@ -869,6 +871,46 @@ testStatus.addEventListener("keydown", async (event) => {
   }
 });
 
+window.addEventListener("keydown", ideViewModel.globalHandler);
+
+demosButton.addEventListener("click", handleClickDropDownButton);
+fileButton.addEventListener("click", handleClickDropDownButton);
+standardWorksheetButton.addEventListener("click", handleClickDropDownButton);
+
+demosButton.addEventListener("keydown", handleKeyDropDownButton);
+fileButton.addEventListener("keydown", handleKeyDropDownButton);
+standardWorksheetButton.addEventListener("keydown", handleKeyDropDownButton);
+
+demosMenu.addEventListener("keydown", (e) =>
+  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
+);
+fileMenu.addEventListener("keydown", (e) =>
+  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
+);
+worksheetMenu.addEventListener("keydown", (e) =>
+  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
+);
+
+demosMenu.addEventListener("click", () => collapseMenu(demosButton, false));
+fileMenu.addEventListener("click", () => collapseMenu(fileButton, false));
+worksheetMenu.addEventListener("click", () => collapseMenu(standardWorksheetButton, false));
+
+displayTab?.addEventListener("click", () => tabViewModel.showDisplayTab());
+infoTab?.addEventListener("click", () => tabViewModel.showInfoTab());
+helpTab?.addEventListener("click", () => tabViewModel.showHelpTab());
+worksheetTab?.addEventListener("click", () => tabViewModel.showWorksheetTab());
+worksheetIFrame?.contentWindow?.addEventListener("click", () => tabViewModel.showWorksheetTab());
+helpIFrame?.contentWindow?.addEventListener("click", () => tabViewModel.showHelpTab());
+
+window.addEventListener("click", () => {
+  codeViewModel.collapseContextMenu(ideViewModel, testRunner);
+  collapseAllMenus();
+});
+
+window.addEventListener("message", async (m) => {
+  await ideViewModel.messageHandler(m, codeViewModel, fileManager, testRunner);
+});
+
 if (checkIsChrome() || confirmContinueOnNonChromeBrowser()) {
   // fetch triggers page display
   fetchDefaultProfile().then(
@@ -906,10 +948,6 @@ if (checkIsChrome() || confirmContinueOnNonChromeBrowser()) {
   }
 }
 
-function checkForUnsavedChanges(fm: FileManager, msg: string): boolean {
-  return fm.hasUnsavedChanges(codeViewModel) ? confirm(msg) : true;
-}
-
 async function setup(p: Profile) {
   fileManager.reset();
   codeViewModel.setProfile(p);
@@ -919,7 +957,7 @@ async function setup(p: Profile) {
 
 function chooser(uploader: (event: Event) => void, noCheck: boolean) {
   return () => {
-    if (noCheck || checkForUnsavedChanges(fileManager, cancelMsg)) {
+    if (noCheck || checkForUnsavedChanges(fileManager, codeViewModel, cancelMsg)) {
       const f = document.createElement("input");
       f.style.display = "none";
 
@@ -937,10 +975,6 @@ function chooser(uploader: (event: Event) => void, noCheck: boolean) {
       codeControls.removeChild(f);
     }
   };
-}
-
-function useChromeFileAPI() {
-  return "showOpenFilePicker" in self;
 }
 
 function getUploader() {
@@ -1071,43 +1105,3 @@ if (!isElanProduction) {
 
   document.querySelector("#worksheet-tab .dropdown-content")?.append(testLink);
 }
-
-window.addEventListener("keydown", ideViewModel.globalHandler);
-
-demosButton.addEventListener("click", handleClickDropDownButton);
-fileButton.addEventListener("click", handleClickDropDownButton);
-standardWorksheetButton.addEventListener("click", handleClickDropDownButton);
-
-demosButton.addEventListener("keydown", handleKeyDropDownButton);
-fileButton.addEventListener("keydown", handleKeyDropDownButton);
-standardWorksheetButton.addEventListener("keydown", handleKeyDropDownButton);
-
-demosMenu.addEventListener("keydown", (e) =>
-  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
-);
-fileMenu.addEventListener("keydown", (e) =>
-  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
-);
-worksheetMenu.addEventListener("keydown", (e) =>
-  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
-);
-
-demosMenu.addEventListener("click", () => collapseMenu(demosButton, false));
-fileMenu.addEventListener("click", () => collapseMenu(fileButton, false));
-worksheetMenu.addEventListener("click", () => collapseMenu(standardWorksheetButton, false));
-
-displayTab?.addEventListener("click", () => tabViewModel.showDisplayTab());
-infoTab?.addEventListener("click", () => tabViewModel.showInfoTab());
-helpTab?.addEventListener("click", () => tabViewModel.showHelpTab());
-worksheetTab?.addEventListener("click", () => tabViewModel.showWorksheetTab());
-worksheetIFrame?.contentWindow?.addEventListener("click", () => tabViewModel.showWorksheetTab());
-helpIFrame?.contentWindow?.addEventListener("click", () => tabViewModel.showHelpTab());
-
-window.addEventListener("click", () => {
-  codeViewModel.collapseContextMenu(ideViewModel, testRunner);
-  collapseAllMenus();
-});
-
-window.addEventListener("message", async (m) => {
-  await ideViewModel.messageHandler(m, codeViewModel, fileManager, testRunner);
-});
