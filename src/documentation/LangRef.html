@@ -23,7 +23,8 @@
  <li><b>immutable named values</b> whose content is assigned, e.g. with a <el-kw>let</el-kw> instruction, and then cannot be re-assigned.</li>
 </ul>
 <p>This distinction applies both to single values and to data structures (which contain multiple values) and, while it is most pertinent in functional programming, it provides a useful discipline in any code. Preferring immutable named values can help avoid duplication and assist in the modularisation of code.</p>
-<p>Both kinds of named value may be initialised with either literals or expressions.</p>
+<p>Both kinds of named value must be initialised with either literals or expressions.</p>
+<p>Loop counter variables, however, may be defined implicitly in <a href="#each"><el-kw>each</el-kw></a> and <a href="#for"><el-kw>for</el-kw></a> instructions.</p>
 
 <h2 id="Type">Named value Types</h2>
 <p>The Types used in the language are here listed, each linking to its definition and further details:</p>
@@ -1036,7 +1037,8 @@ which is the mechanism for running unit tests during program development, not du
 
 <h2 id="each"><el-kw>each</el-kw> (loop)</h2>
 <p>The <el-kw>each.</el-kw>..<el-kw>in</el-kw>.. construct specifies looping sequentially over the items in a <el-type>List</el-type> or an <el-type>Array</el-type>, or over the characters in a <el-type>String</el-type>.</p>
-<p>The <el-kw>each</el-kw> loop counter variable is of the same Type as the items in the List or Array, or is of Type <el-type>String</el-type> if looping over the characters in a String. The variable does not have to have been previously defined.</p>
+<p>The <el-kw>each</el-kw> loop counter variable is of the same Type as the items in the List or Array, or is of Type <el-type>String</el-type> if looping over the characters in a String.</p>
+<p>The loop counter variable does not have to have been previously declared or initialised.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-code>each</el-code></h4>
@@ -1044,13 +1046,14 @@ which is the mechanism for running unit tests during program development, not du
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To print a <el-type>List</el-type> and then each item in it</p>
 <el-code-block source="each.elan">
-<el-statement class="ok" id="var16" tabindex="0"><el-kw>variable </el-kw><el-field id="var17" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr18" class="ok" tabindex="0"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="print30" tabindex="0"><el-kw>print </el-kw><el-field id="expr31" class="optional ok" tabindex="0"><el-txt><el-id>names</el-id>[<el-lit>0</el-lit>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok multiline" id="each19" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident21" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> in </el-kw><el-field id="expr22" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt><el-place><i>source</i></el-place></el-field></el-top>
-<el-statement class="ok" id="print23" tabindex="0"><el-kw>print </el-kw><el-field id="expr24" class="optional ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="let34" tabindex="-1"><el-kw>let </el-kw><el-field id="var35" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr36" class="ok" tabindex="-1"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="print6" tabindex="-1"><el-kw>print </el-kw><el-field id="expr7" class="optional ok" tabindex="-1"><el-txt><el-id>names</el-id>[<el-lit>0</el-lit>]</el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="each8" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>each </el-kw><el-field id="ident10" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> in </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-id>names</el-id></el-txt></el-field></el-top>
+<el-statement class="ok" id="print12" tabindex="-1"><el-kw>print </el-kw><el-field id="expr13" class="optional ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field></el-statement>
 <el-kw>end each</el-kw>
 </el-statement>
+<el-statement class="ok" id="print14" tabindex="-1"><el-kw>print </el-kw><el-field id="expr15" class="optional ok" tabindex="-1"><el-txt><el-method>reverse</el-method>("<el-lit>Harriet</el-lit>")</el-txt></el-field></el-statement>
 </el-code-block>
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Function to reverse a <el-type>String</el-type></p>
@@ -1079,13 +1082,15 @@ So even if the subject value is changed in any way within the <el-kw>each</el-kw
 
 <h2 id="for"><el-kw>for</el-kw> (loop)</h2>
 <div id="step"></div>
-<p>The <el-code>for..from..to..step..</el-code> construct specifies looping through a sequence of integer values with a given increment.</p>
-<p>The <el-code>for</el-code> loop counter <el-kw>variable</el-kw> (which counts from 0) is of Type <el-type>Int</el-type> and does not have to have been defined in a <el-code>variable</el-code> statement.</p>
-<p>The three defining values, <el-code>from</el-code>, <el-code>to</el-code>, and <el-code>step</el-code>, must all be of Type <el-type>Int</el-type>, positive or negative.
+<p>The <el-kw>for..from..to..step..</el-kw> construct specifies looping through a sequence of integer values with a given increment.</p>
+<p>The loop counter variable (which counts from 0) is of Type <el-type>Int</el-type>.</p>
+<p>The loop counter variable does not have to have been previously declared or initialised.</p>
+<p>The three defining values that follow <el-kw>from</el-kw>, <el-kw>to</el-kw>, and <el-kw>step</el-kw>, must all be of Type <el-type>Int</el-type>, positive or negative.
 and may be defined by literals, <el-kw>variable</el-kw>s or expressions that evaluate to integers.</p>
-<p>Note that, if you require a negative step value, then the literal, <el-kw>variable</el-kw>, or expression must start with a negative sign.
+<p>Note that, if you require a negative step value, then the literal, variable or expression must start with a negative sign.
 This is needed at compile time to determine the nature of the exit condition.
 So if you have a <el-kw>variable</el-kw> <el-code>s</el-code> that holds a negative value to be used to step in reverse order, then you would write:</p>
+
 <el-code-block source="forStepNeg.elan">
 <el-statement class="ok" id="var16" tabindex="0"><el-kw>variable </el-kw><el-field id="var17" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr18" class="ok" tabindex="0"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 <el-statement class="ok" id="var40" tabindex="0"><el-kw>variable </el-kw><el-field id="var41" class="ok" tabindex="0"><el-txt><el-id>s</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr42" class="ok" tabindex="0"><el-txt>-<el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
