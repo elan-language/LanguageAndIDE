@@ -1,9 +1,9 @@
-# 8caf52d31575588f79974b145f246d53e8ee90f29f201823d61bde710768a278 Elan 1.9.0 guest default_profile valid
+# 366644cc5cf059a85b00906333d1c3ae6aa1de4140a11cec71c899848a0920da Elan 1.9.0 guest default_profile valid
 
 main
-  variable names set to ["Tom", "Dick", "Harriet"]
-  variable s set to -1
-  for n from 2 to 0 step -(-s)
-    print names[n]
+  let numbers be ["One", "Two", "Three", "Four", "Five", "Six"]
+  let s be 2
+  for i from numbers.length() - 1 to 0 step -s
+    print numbers[i]
   end for
 end main

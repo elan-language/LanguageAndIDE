@@ -550,7 +550,7 @@ Having defined a record's Type, such as <el-code>Game</el-code> above, you can c
 </el-code-block>
 
 <h3 class="no-TOC" id="deconstructRecord">Deconstructing a Record</h3>
-<p>A record may be deconstructed, meaning that its properties are read into separate <el-kw>variable</el-kw>s using the same syntax as for deconstructing a Tuple. For example, assuming that Square is a record defined as in the example above, then this code:</p>
+<p>A record may be deconstructed, meaning that its properties are read into separate variables using the same syntax as for deconstructing a Tuple. For example, assuming that Square is a record defined as in the example above, then this code:</p>
 <el-code-block>
   <el-statement class="" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>x</el-id>, <el-id>y</el-id>, <el-id>size</el-id>, <el-id>colour</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="" tabindex="0"><el-txt><el-id>mySquare</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
 </el-code-block>
@@ -1030,7 +1030,7 @@ which is the mechanism for running unit tests during program development, not du
   <el-statement><el-kw>call</el-kw> <el-kw>property</el-kw>.<el-id>cards</el-id>.<el-method>append</el-method>(<el-id>card</el-id>)</el-statement>
 </ul>
 <p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
-<p>For procedures that you define yourself, <el-kw>out</el-kw> parameters are allowed.  In this case the corresponding argument must be the name of a <el-kw>variable</el-kw> whose value gets updated by the procedure.</p>
+<p>For procedures that you define yourself, <el-kw>out</el-kw> parameters are allowed.  In this case the corresponding argument must be the name of a mutable named value that gets updated by the procedure.</p>
 <p>If the parameter is not an <el-kw>out</el-kw> parameter, any expression of the correct Type can be used as an argument.</p>
 <p>Procedures may have side effects, for example input/output or changing a data value in an object. They can change the contents of any mutable object passed in as an argument.  For this reason, procedures cannot be called from functions, which are not allowed to have side-effects.  <el-kw>call</el-kw> statements are simply not allowed in functions, to enforce this.</p>
 <p>There is a limit to the complexity of a <el-kw>call</el-kw> statement.  Only one dot is allowed in the <el-code>procedure name</el-code> field, or two dots if the first word is <el-kw>property</el-kw>.  If you need anything more complicated, use a <el-kw>let</el-kw> statement on the line above.  See the error message explanation for <a href="#ProcRefField">'procedureName' in a call statement</a>.</p>
@@ -1085,18 +1085,17 @@ So even if the subject value is changed in any way within the <el-kw>each</el-kw
 <p>The <el-kw>for..from..to..step..</el-kw> construct specifies looping through a sequence of integer values with a given increment.</p>
 <p>The loop counter variable (which counts from 0) is of Type <el-type>Int</el-type>.</p>
 <p>The loop counter variable does not have to have been previously declared or initialised.</p>
-<p>The three defining values that follow <el-kw>from</el-kw>, <el-kw>to</el-kw>, and <el-kw>step</el-kw>, must all be of Type <el-type>Int</el-type>, positive or negative.
-and may be defined by literals, <el-kw>variable</el-kw>s or expressions that evaluate to integers.</p>
-<p>Note that, if you require a negative step value, then the literal, variable or expression must start with a negative sign.
-This is needed at compile time to determine the nature of the exit condition.
-So if you have a <el-kw>variable</el-kw> <el-code>s</el-code> that holds a negative value to be used to step in reverse order, then you would write:</p>
+<p>The three defining values that follow <el-kw>from</el-kw>, <el-kw>to</el-kw>, and <el-kw>step</el-kw>, must all be of Type <el-type>Int</el-type>, positive or negative,
+and may be defined by literals, integer named values or expressions that evaluate to integer values.</p>
+<p>Note that, if you require a negative step value, then the literal, named value or expression must be positive and prefixed with a negative sign.
+This is needed at compile time to determine the nature of the exit condition. For example, to step in descending sequence you might write:</p>
 
 <el-code-block source="forStepNeg.elan">
-<el-statement class="ok" id="var16" tabindex="0"><el-kw>variable </el-kw><el-field id="var17" class="ok" tabindex="0"><el-txt><el-id>names</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr18" class="ok" tabindex="0"><el-txt>["<el-lit>Tom</el-lit>", "<el-lit>Dick</el-lit>", "<el-lit>Harriet</el-lit>"]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok" id="var40" tabindex="0"><el-kw>variable </el-kw><el-field id="var41" class="ok" tabindex="0"><el-txt><el-id>s</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr42" class="ok" tabindex="0"><el-txt>-<el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-<el-statement class="ok multiline" id="for34" tabindex="0">
-<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident36" class="ok" tabindex="0"><el-txt><el-id>n</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr37" class="ok" tabindex="0"><el-txt><el-lit>2</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr38" class="ok" tabindex="0"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr39" class="ok" tabindex="0"><el-txt>-(-<el-id>s</el-id>)</el-txt><el-place><i>expression</i></el-place></el-field></el-top>
-<el-statement class="ok" id="print43" tabindex="0"><el-kw>print </el-kw><el-field id="expr44" class="optional ok" tabindex="0"><el-txt><el-id>names</el-id>[<el-id>n</el-id>]</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt>["<el-lit>One</el-lit>", "<el-lit>Two</el-lit>", "<el-lit>Three</el-lit>", "<el-lit>Four</el-lit>", "<el-lit>Five</el-lit>", "<el-lit>Six</el-lit>"]</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let21" tabindex="-1"><el-kw>let </el-kw><el-field id="var22" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr23" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok multiline" id="for9" tabindex="-1">
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident11" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt></el-field><el-kw> from </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-id>numbers</el-id>.<el-method>length</el-method>() - <el-lit>1</el-lit></el-txt></el-field><el-kw> to </el-kw><el-field id="expr13" class="ok" tabindex="-1"><el-txt><el-lit>0</el-lit></el-txt></el-field><el-kw> step </el-kw><el-field id="expr14" class="ok" tabindex="-1"><el-txt>-<el-id>s</el-id></el-txt></el-field></el-top>
+<el-statement class="ok" id="print15" tabindex="-1"><el-kw>print </el-kw><el-field id="expr16" class="optional ok" tabindex="-1"><el-txt><el-id>numbers</el-id>[<el-id>i</el-id>]</el-txt></el-field></el-statement>
 <el-kw>end for</el-kw>
 </el-statement>
 </el-code-block>
@@ -1155,11 +1154,18 @@ So if you have a <el-kw>variable</el-kw> <el-code>s</el-code> that holds a negat
 </div></div>
 
 <h2 id="let"><el-kw>let</el-kw></h2>
-<p>The <el-kw>let</el-kw> statement may be thought of as being between a <el-kw>constant</el-kw> definition and a <el-kw>variable</el-kw>'s <el-kw>set</el-kw> statement..
-Like a <el-kw>variable set</el-kw> a <el-kw>let</el-kw> may be used only within a routine, but unlike a variable its value may not be changed with a <el-kw>set</el-kw>.
-It is recommended that you always use a <el-kw>let</el-kw> in preference to a <el-kw>variable</el-kw> unless you need to be able to assign a new value to it.
+<p>The <el-kw>let</el-kw><el-code>..</el-code><el-kw>be</el-kw><el-code>..</el-code> statement declares and initalises an immutable named valued. The name defined must be a valid <a href="#Identifier">identifier</a>.</p>
+<p>The initial value is given by a following expression. For example:</p>
+
+<el-code-block>
+<el-statement id="let37" tabindex="-1"><el-kw>let </el-kw><el-field id="var38" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr39" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit>*<el-id>x</el-id></el-txt></el-field></el-statement>
+</el-code-block>
+
+<p>It may be thought of as defining a name between a <el-kw>constant</el-kw> definition and a variable's <el-kw>set</el-kw> statement.</p>
+<p>Like a <el-kw>variable</el-kw><el-code>..</el-code><el-kw>set to</el-kw><el-code>..</el-code>, a <el-kw>let</el-kw> may be used only within a routine, but unlike a variable its value may not be changed with a <el-kw>set</el-kw>.</p>
+<p>It is recommended that you always use <el-kw>let</el-kw><el-code>..</el-code><el-kw>be</el-kw><el-code>..</el-code> in preference to <el-kw>variable</el-kw><el-code>..</el-code><el-kw>set to</el-kw><el-code>..</el-code>, unless you need to be able to re-assign its value.
 </p>
-<p>You can put a <el-kw>let</el-kw> in a loop, so the variable gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
+<p>You can put a <el-kw>let</el-kw> in a loop, so the named value gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
 
 <h2 id="print"><el-kw>print</el-kw></h2>
 <p>The <el-kw>print</el-kw> instruction sends text strings to the Display pane. For example:</p>
@@ -1182,7 +1188,7 @@ It is recommended that you always use a <el-kw>let</el-kw> in preference to a <e
 
 <div id="when">
 <h2 id="repeat"><el-kw>repeat</el-kw> (loop)</h2>
-<p>The <el-kw>repeat..end repeat when</el-kw> <el-code>condition</el-code> loop is used when you want at least one execution of the enclosed statements followed by a test that chooses either to execute them again or to exit from the loop.</p>
+<p>The <el-kw>repeat..end repeat when</el-kw> <el-code>condition</el-code> construct provides a <i>conditional</i> loop, used when you want at least one execution of the enclosed statements followed by a test that chooses either to execute them again or to exit from the loop.</p>
 <p><el-code>condition</el-code> is either a <el-type>Boolean</el-type> variable or an expression that evaluates to a Boolean value.</p>
 <p>If <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code> then the loop ends, if <el-code><el-id>false</el-id></el-code> it resumes. For example:</p>
 
@@ -1196,10 +1202,9 @@ It is recommended that you always use a <el-kw>let</el-kw> in preference to a <e
 </el-code-block>
 
 <h2 id="set"><el-kw>set</el-kw></h2>
-<p>
-The <el-kw>set</el-kw> statement is used to assign a new value to an existing <el-kw>variable</el-kw>.
-The new value must be of the same Type as (or a Type compatible with) that of the <el-kw>variable</el-kw>.
-A <el-kw>set</el-kw> statement may not assign a new value to a parameter within a procedure unless it the parameter is preceded by <el-kw>out</el-kw> in the parameter list.</p>
+<p>The <el-kw>set</el-kw><el-code>..</el-code><el-kw>to</el-kw><el-code>..</el-code> statement assigns a new value to an existing <el-kw>variable</el-kw> (mutable) named value.</p>
+<p>The new value must be of the same Type as (or a Type compatible with) that of the variable.</p>
+<p>A <el-kw>set</el-kw> statement may not assign a new value to a parameter within a procedure unless the parameter is preceded by <el-kw>out</el-kw> in the parameter list.</p>
 
 <h2 id="throw"><el-kw>throw</el-kw> (exception)</h2>
 <p>You can deliberately generate, or 'throw', an exception when a specific circumstance is identified, using a <el-kw>throw</el-kw> statement
@@ -1247,7 +1252,7 @@ where you can <el-kw>catch</el-kw> (i.e. receive) the exception message string, 
 <el-kw>end try</el-kw>
 </el-statement>
 </el-code-block>
-The variable holding the exception (by default named <el-code>e</el-code>, but this may be changed by you) is of Type <el-type>String</el-type>. You can compare the exception message to one or more expected messages and, if the message does not match an expected exception, you may choose to throw the exception 'up', as in this example:
+The variable holding the exception (by default iys name is <el-code>e</el-code>, but this may be changed by you) is of Type <el-type>String</el-type>. You can compare the exception message to one or more expected messages and, if the message does not match an expected exception, you may choose to throw the exception 'up', as in this example:
 <el-code-block source="tryCatch.elan">
 <el-statement class="ok multiline" id="try141" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>try </el-kw></el-top>
@@ -1265,15 +1270,16 @@ The variable holding the exception (by default named <el-code>e</el-code>, but t
 </el-code-block>
 
 <h2 id="variable"><el-kw>variable</el-kw></h2>
-<p>The <el-kw>variable</el-kw> statement defines the name to be used to store mutable (i.e. changeable) data. The name defined must be a valid <a href="#Identifier">identifier</a>,
-and the initial value is given by a following expression. For example:</p>
+<p>The <el-kw>variable</el-kw><el-code>..</el-code><el-kw>set to</el-kw><el-code>..</el-code>
+statement declares and initalises a mutable named valued. The name defined must be a valid <a href="#Identifier">identifier</a>.>/p>
+<p>The initial value is given by a following expression. For example:</p>
 
 <el-code-block>
 <el-statement class="ok" id="var40" tabindex="0"><el-kw>variable </el-kw><el-field id="var41" class="ok" tabindex="0"><el-txt><el-id>note</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr42" class="ok" tabindex="0"><el-txt><el-lit>440</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
 </el-code-block>
 
 <h2 id="while"><el-kw>while</el-kw> (loop)</h2>
-<p>The <el-kw>while condition..end while</el-kw> loop is used when you want execution of the enclosed statements to begin
+<p>The <el-kw>while <el-code>condition</el-code>..end while</el-kw> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed statements to begin
  only if <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code>.</p>
 <p><el-code>condition</el-code> is either a <el-type>Boolean</el-type> <el-kw>variable</el-kw> or an expression that evaluates to a Boolean value.</p>
 <p>When <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code> the enclosed code is executed;
@@ -1319,11 +1325,11 @@ For more about ListImmutable and DictionaryImmutable literals see the <a href="L
 <h2 id="IndexedValue">Indexed values</h2>
 <p>If a variable is of an indexable Type, then an index or index range may be applied to the variable within an expression. For example:</p>
 <pre>
-    <el-code>variable a set to "Hello World!"</el-code>
-    <el-code>print a[4]</el-code>        &#x27f6; <el-code>o</el-code>
-    <el-code>print a[4..]</el-code>    &#x27f6; <el-code>o World!</el-code>
-    <el-code>print a[..7]</el-code>    &#x27f6; <el-code>Hello W</el-code>   (since the upper bound of a range is <em>exclusive</em>)
-    <el-code>print a[0..4]</el-code>  &#x27f6; <el-code>Hell</el-code>         (for the same reason)
+<el-kw>variable<el-kw> <el-code>a</el-code> <el-kw>set to</el-kw> <el-code>"Hello World!"</el-code><br>
+<el-kw>print</el-kw><el-code> a[4]</el-code>     &#x27f6; <el-code>o</el-code><br>
+<el-kw>print</el-kw><el-code> a[4..]</el-code>   &#x27f6; <el-code>o World!</el-code><br>
+<el-kw>print</el-kw><el-code> a[..7]</el-code>   &#x27f6; <el-code>Hello W</el-code>  <el-code>(since the upper bound of a range is <i>exclusive</i>)</el-code><br>
+<el-kw>print</el-kw><el-code> a[0..4]</el-code>  &#x27f6; <el-code>Hell</el-code>     <el-code>(for the same reason)</el-code>
 </pre>
 
 <p>In the examples above, the result is of Type <el-type>String</el-type> in all cases.</p>
