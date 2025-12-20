@@ -244,7 +244,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     if (this.isGhosted()) {
       this.delete();
     } else {
-      for (const child of this._children) {
+      const children = this._children.slice();
+      for (const child of children) {
         child.deleteAllGhosted();
       }
     }
