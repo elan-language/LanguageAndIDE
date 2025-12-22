@@ -1,30 +1,35 @@
-# 4292a7fe264e9213a76435d20e447ef059234f87c667ca361d6dadc94c375cc6 Elan 1.9.0 guest default_profile valid
+# e6ccb3e0e312d9f8d8c56113b200f6a369f4facc7e31de6f1db40159c07d71c8 Elan 1.9.0 guest default_profile valid
 
+# 
+# 
+# 
+# 
+# 
+# Elan 1.9.0
 main
   let t be new Turtle()
-  let radius be 50
-  let pace be 5
+  variable paces set to 0
   call t.hide()
-  let segment be 2*radius*pi/360
-  call t.placeAt(-50, 0)
-  for i from 1 to 360 step 1
+  call circle(t, 50)
+  for count from 1 to 20 step 1
+    call t.placeAt(0, 0)
+    let colour be randomInt(red, blue)
+    call t.penColour(colour)
+    while sqrt(t.x^2 + t.y^2) < 50
+      let angle be randomInt(-90, 90)
+      call t.turn(angle)
+      call t.move(5)
+      set paces to paces + 1
+    end while
+  end for
+  print "Average number of paces: {paces/20}"
+end main
+
+procedure circle(t as Turtle, radius as Int)
+  let segment be radius*pi*2/360
+  call t.placeAt(-radius, 0)
+  for count from 1 to 360 step 1
     call t.move(segment)
     call t.turn(1)
   end for
-  variable totalPaces set to 0
-  let numberOfWalks be 100
-  for i from 1 to numberOfWalks step 1
-    call t.placeAt(0, 0)
-    call t.penColour(randomInt(black, white))
-    variable pacesThisAttempt set to 0
-    while sqrt(t.x^2 + t.y^2) < radius
-      call t.move(pace)
-      set pacesThisAttempt to pacesThisAttempt + 1
-      let randomTurn be randomInt(-90, 90)
-      call t.turn(randomTurn)
-    end while
-    set totalPaces to totalPaces + pacesThisAttempt
-  end for
-  let average be (totalPaces/numberOfWalks).round(2)
-  print "Over {numberOfWalks} attempts, the average no. of paces to edge was {average}"
-end main
+end procedure

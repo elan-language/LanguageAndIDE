@@ -1,0 +1,139 @@
+<title>Simulating a Random Walk</title>
+<version>1</version>
+
+<step><h1>Step STEPNUMBER: Introduction</h1>
+    <div style="position: relative; padding-bottom: 79.39189189189189%; height: 0;"><iframe src="https://www.loom.com/embed/94acd2e1a112481eac5d4fd95f781770" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>  
+</step>
+
+<step><h1>Step STEPNUMBER: Using Turtle graphics</h1>
+    <div style="position: relative; padding-bottom: 67.81609195402298%; height: 0;"><iframe src="https://www.loom.com/embed/63a2dd310e944153ab7a2aba99261f53" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>Copy the code shown at the end of the video into the code editor. 
+        Then modify such that it will draw an octagon with a side of length 20.</p>
+    <p>Make sure your code is working correctly before completing the step. Use the hints available only if you need to.</p>
+    <hint>Hint HINTNUMBER: changes needed</hint>
+    <content>
+        <ul>
+            <li>Change the signature of the <code>for</code> such that it will execute 8 times instead of 4</li>
+            <li>Change the value provide as an argument to the <el-method>turn</code> such that 8 repetitions will add up to 360 degrees</li>
+        </ul>
+    </content>
+    <hint>Hint HINTNUMBER: the complete code</hint>
+    <content>
+        <codeblock>
+            main
+            let t be new Turtle()
+            call t.placeAt(0, 0)
+            for count from 1 to 8 step 1
+                call t.move(20)
+                call t.turn(45)
+            end for
+            end main
+        </codeblock>
+    </content>
+</step>
+<step><h1>Step STEPNUMBER: Draw a circle, centred on the display</h1>
+    <p>(There is no video for this step.)</p>
+    <p>Change the code again so that it draws a circle that fits within the display and is centred within in.</p>
+    <p>Make sure your code is working correctly before completing the step. Use the hints available only if you need to.</p>
+    <hint>Hint HINTNUMBER: changes needed</hint>
+    <content>
+        <ul>
+            <li>Change the <code>for</code>loop to repeat 360 times</li>
+            <li>Change the  values passed into the  <el-method>move</code> and <el-method>turn</code> methods to 1 in each case.</li>
+            <li>Change first value (the 'x' coordinate) such that the circle is <i>approximately</i> centred within the display,
+                remembering that numeric values can be negative.</li>
+        </ul>
+    </content>
+    <hint>Hint HINTNUMBER: the complete code</hint>
+    <content>
+        <codeblock>
+            main
+            let t be new Turtle()
+            call t.placeAt(-50, 0)
+            for count from 1 to 360 step 1
+                call t.move(1)
+                call t.turn(1)
+            end for
+            end main
+        </codeblock>
+    </content>
+</step>
+
+<step><h1>Step STEPNUMBER: create a circle procedure</h1>
+    <div style="position: relative; padding-bottom: 40.38128249566724%; height: 0;"><iframe src="https://www.loom.com/embed/07ade479731648b4bed020efb917002d" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>Get your code to the same state as that shown at the end of the video (if necessary replaying the video and pausing),
+        and test that it draws two concentric circles of different radius. Then:
+
+        <ul>    
+            <li>Delete the second <code>call</code> to <el-method>circle</el-method> - as the random walk simulation needs only one.</li>
+            <li>Insert, immediately after the definition of <code>t</code> within <code>main</code> the instruction:
+            <code>call circle(t, 50)</code></li>
+        </ul>
+
+        and run the program again.
+    </p>
+    <question>Does hiding the Turtle affect what it draws?</question>
+    
+    <hint>Hint HINTNUMBER: the complete code</hint>
+    <content>
+        <codeblock>
+            main
+                let t be new Turtle()
+                call t.hide()
+                call circle(t, 50)
+            end main
+
+            procedure circle(t as Turtle, radius as Int)
+                let segment be radius*pi*2/360
+                call t.placeAt(-radius, 0)
+                for count from 1 to 360 step 1
+                    call t.move(segment)
+                    call t.turn(1)
+                end for
+            end procedure
+        </codeblock>
+    </content>
+</step>
+
+<step><h1>Step STEPNUMBER: draw a random walk</h1>
+    <div style="position: relative; padding-bottom: 40.38128249566724%; height: 0;"><iframe src="https://www.loom.com/embed/d95662acb90348d48d5e6041b4e607e2" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+</step>
+
+<step><h1>Step STEPNUMBER: count the paces</h1>
+    <div style="position: relative; padding-bottom: 39.89637305699482%; height: 0;"><iframe src="https://www.loom.com/embed/d9d30ae058714cda9e327c1f97fc8508" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>Get your code to the same state as that shown at the end of the video (if necessary replaying the video and pausing),
+        and test that it works correctly.
+    <question>Run the program 10 times, and record here the smallest, and the largest, number of paces taken to reach the edge
+        of the circle.</question>
+</step>
+
+<step><h1>Step STEPNUMBER: simulate multiple walks</h1>
+    <div style="position: relative; padding-bottom: 38.31615120274915%; height: 0;"><iframe src="https://www.loom.com/embed/3f0f595ecd304af6b0e6215fa8d45a02" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>Get your code to the same state as that shown at the end of the video (if necessary replaying the video and pausing),
+        and test that it works correctly.</p>
+    <question>What value did you get for the average number of paces?</question>
+    <p>Try increasing the number of walks from 20 to 100, noting that you will have to change 20 to 100 in two separate places.</p>
+    <question>What value did you get for the average number of paces after 100 walks?</question>
+    <question>The fact that we had to change the 20 to 100 in <i>two</i> locations is an example of breaking what
+    principle of good programming?</question>
+    <question>What would be a simple way to improve the code so that you could change the number of walks 
+        required in just one place?</question>
+</step>
+
+<final><h1>Congratulations! You have completed this worksheet</h1>
+    <p>If you have time, try any of the following:
+    <ul>
+        <li>Simulate a larger number of walks e.g. 100. This will give a more accurate figure for the average number of paces.</li>
+        <li>Make the <el-id>pace</el-id> smaller but keep the circle's <el-id>radius</el-id> the same size as now.
+            The average number of paces to reach the edge will be larger. But does it increase in proportion? Try
+            three different values and plot the average against pace size.
+        </li>
+        <li>Go back to the original values, but make a small change to the range of possible turn-angles between paces:
+            -60 to + 60 degrees, or -120 to + 120, say.
+            How does this change the average number of paces? Is the relationship linear?</li>
+        <li>Read more about the nature and application of Random Walks on <a href="https://en.wikipedia.org/wiki/Random_walk" target="_blank">Wikipedia</a>.</li>
+    </ul>
+</final>
+<script src="../../../out/website/worksheet-scripts.js"></script>
+</body>
+</html>

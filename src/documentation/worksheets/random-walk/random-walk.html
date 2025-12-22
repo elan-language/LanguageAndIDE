@@ -1,453 +1,190 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en-GB">
 
-<head>
-    <meta http-equiv="Cache-Control" content="no-store" />
-    <link href="../../../out/website//styles/colourScheme.css" rel="stylesheet" />
-    <link href="../../../out/website//styles/elanStyle.css" rel="stylesheet" />
-    <link href="../../../out/website//styles/documentation.css" rel="stylesheet" />
-    <link href="../../../out/website/styles/worksheet.css" rel="stylesheet" />
-</head>
-<body>
-<div id="worksheet">
+  <head>
+      <meta http-equiv="Cache-Control" content="no-store" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
+      <title>Simulating a Random Walk</title>
+  </head>
+
+  <body>
+    <div id="worksheet">
     <div class="docTitle">Simulating a Random Walk</div>
+    <div class="version" hidden="">1</div>
 
-    <button id="auto-save">Auto-save to file</button><span> to continue. (After that any entries made into the worksheet will be automatically saved, and you can re-load the partially-completed worksheet in future - at which point you will be asked to auto-save it again).</span>
+    <div class="transient">
+      <p>First, set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</p>
 
-    <div class="step" id="step0">
-        <label for="username">Enter your name: </label>
-        <input type="text" class="question" id="username" />
-        <h3>Preliminaries</h3>
-        <ul>
-          <li>Set the browser to Full Screen view, to give this worksheet, and your code, as much space as possible.</li>
-          <li>Select <b>File > New</b> to start a new program,
-            then select <b>File > Auto Save</b> and complete the dialog to ensure that your <i>code</i> is always saved.
-            Remember that you can use the <b>Undo</b> button (or <b>Ctrl+z</b>) to undo recent changes.</li>
-          <li>Remember that if the code editor has a tinted background it does not have focus and will not respond
-              to edits. To give it focus click within the editor. (If a program is running, you will need to stop it first.)
-          </li>
-          <li>Use the auto-completion options as much as possible, because this reduces errors.</li>
-          <li>Use the <i>Hints</i> only when you <i>need</i> them - as all use of hints is recorded. Use of <b>Help</b> is encouraged and not recorded.</li>
-          <li>Use the <b>Trim</b> button periodically to remove leftover <el-code>new code</el-code> prompts.</li>
-        </ul>
-        <label class="done" for="done0">Preliminaries completed</label>
-        <input type="checkbox" class="step-complete" id="done0" />
-<span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
-</div>
 
-    <div class="step" id="step1">
-    <h3>Iteration 1: Draw a shape with 'turtle graphics'</h3>
-    <h3>Purpose of this worksheet</h3>
-    <p>Our objective is to investigate the mathematical idea of a 'random walk'.
-    Imagine that you are standing in the centre of a circle with a radius of 10 paces.
-    But instead of walking straight to the edge, with each pace you make a random turn
-    - of <i>up to</i> to 90 degrees left or right. How many paces will it take to reach the edge?
-    If the turning is truly random then each attempt will take a different number: the picture below shows
-    three such paths taken:</p>
+      <p class="transient">Then choose <i>either one</i> of the two options below:</p>
 
-    <img src="../../../out/website/documentation/images/random-walk.png" width="50%">
+      <p><b>Option 1: Start this worksheet from scratch</b></p>
 
-    <p>Can we determine the <i>average</i> number of paces to reach the edge? Yes,
-    if we could perform the experiment many times.
-    And it turns out that being able to predict the average length of a different kinds of
-    random walk has significant applications in many different fields of study:
-    physics, biology, ecology, economics ..., even computer science. So we are going to build just such a simulation.</p>
-    <ul>
-        <li>Make sure the code editor has focus  i.e. has a white background.</li>
-        <li>From the new code options, press <b>m</b> to create an empty <el-kw>main</el-kw> routine.</li>
-        <li>Within the main routine add a <el-kw>let</el-kw> instruction, and edit its two fields to look like the following, making as much
-            use as possible of the options offered in the drop-down list (by cursoring down to the chosen item and pressing <b>Enter</b>)
-            because this reduces errors:
+      <ul>
+        <li>First <label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
+        <li>Then <button id="auto-save" disabled="">Create and save a new answers file</button>.
+        <li>All answers that you subsequently enter/edit will be auto-saved to this sheet.</li>
+      </ul>
 
-            <el-code-block>
-                <el-statement class="ok" id="let3"><el-kw>let </el-kw><el-field id="var4" class="ok"><el-txt><el-id>t</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok"><el-txt><el-kw>new</el-kw> <el-type>Turtle</el-type>()</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            </el-code-block>
+      <p><b>Option 2: Continue, or view, previous work</b></p>
 
-            <ul>
-                <li>This instruction creates a new 'Turtle' which we will be commanding to move around the Display holding a 'pen' that shows the path it has taken.</li>
-                <li><el-type>Turtle</el-type> is a 'type' of thing and type names always begin with a capital letter</li>
-                <li>We have named this turtle <el-id>t</el-id> - picking a short name because we will be referring to it often and isn't likely
-                to be confused with anything else. We could have given it a longer name, and we will use longer names shortly. Names (also called 'identifiers') that we give
-                to things always begin with a lower-case letter. You'll also note that identifiers and types are shown in different colours in the editor.
-                </li>
-                <li>The 'empty' brackets after <el-type>Turtle</el-type> are necessary, but don't worry about why they are needed just now
-                that will gradually become clearer. Note also that if you selected <el-type>Turtle</el-type> from the drop-down options you
-                will have seen a prompt (white characters) telling you that brackets were needed, like this:
-                <el-code-block>
-                    <el-statement class="warning" id="let5"><el-kw>let </el-kw><el-field id="var6" class="ok"><el-txt><el-id>t</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr7" class="selected focused warning"><el-txt><input spellcheck="false" data-cursorstart="10" data-cursorend="10" size="9" style="width: 10ch" value="new Turtle"></el-txt><el-place><i>expression</i></el-place><el-compl>()</el-compl></el-field></el-statement>
-                </el-code-block>
-                at which point just pressing <b>Tab</b> will insert the prompted characters.</li>
-                <li>Whenever you see a question mark next to a field or instruction, clicking it will open the <b>Help</b> tab.
-                    This may be useful when you start to write your own programs, but shouldn't be necessary in this worksheet.</li>
-            </ul>
-        </li>
-        <li>Follow this by adding this <el-kw>call</el-kw> instruction:
-
-            <el-code-block>
-                <el-statement class="selected focused ok" id="call8"><el-top><el-kw>call </el-kw><el-field id="ident9" class="ok"><el-txt><el-id>t</el-id>.<el-method>show</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args10" class="empty optional ok"><el-txt></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-            </el-code-block>
-
-            Noting that:
-
-            <ul>
-                <li>This instruction can be verbalised as 'call the <el-method>show</el-method> procedure on the turtle t'.</li>
-                <li>A procedure is a named piece of a code that makes a change to the system. This may also be referred to as a 'method' -
-                    a procedure being a particular type of method.</li>
-                <li>This syntax - which takes the form of <i>nameOfThing.methodName</i> is known as a 'dotted method'. You'll be calling a
-                lot of dotted methods on the turtle <el-id>t</el-id>.</li>
-                <li>Methods are rendered in a different colour to identifiers and types.</li>
-            </ul>
-        </li>
-        <li>Run the program, noting that:
-            <ul>
-                <li>the <b>Display</b> shows the turtle as a small green circle. When first created it is located in
-                    the centre of the <b>Display</b>, with the 'x,y' coordinates of 0,0.</li>
-                <li>In turtle terms the <b>Display</b> measures 200 turtle units wide, and 150 turtle units deep.</li>
-                <li>The short black line on the turtle shows that it is currently heading North.</li>
-                <li>Having shown the turtle this program stops, so you can click on the code editor to give it focus
-                    and resume editing the code.
-                </li>
-            </ul>
-        <li>Add three more instructions below the <el-kw>call</el-kw>:
-            <el-code-block>
-                <el-statement class="ok" id="call17"><el-top><el-kw>call </el-kw><el-field id="ident18" class="ok"><el-txt><el-id>t</el-id>.<el-method>move</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args19" class="optional ok"><el-txt><el-lit>10</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-                <el-statement class="ok" id="call28"><el-top><el-kw>call </el-kw><el-field id="ident29" class="ok"><el-txt><el-id>t</el-id>.<el-method>turn</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args30" class="optional ok"><el-txt><el-lit>45</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-                <el-statement class="ok" id="call37"><el-top><el-kw>call </el-kw><el-field id="ident38" class="ok"><el-txt><el-id>t</el-id>.<el-method>move</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args39" class="optional ok"><el-txt><el-lit>10</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-            </el-code-block>
-            <ul>
-                <li>Here we again calling two different procedure methods on the turtle, their names suggesting what the turtle will do.</li>
-                <li>Both of these methods require you to specify a value (representing the distance to move, and the angle - in degrees - to turn, respectively)
-                    which is placed within the brackets. That's what the brackets are for when using a method.</li>
-                <li>A value given to a method (within the brackets) is known as an 'argument' (the same term is used in Mathematics).
-                    Later we will encounter methods that require more than one argument. Some methods - <el-method>show</el-method> for example -
-                    don't require any arguments, but they still need the brackets.
-                </li>
-            </ul>
-
-            then run the program again and make sure that you understand how the trail left by the turtle's pen corresponds to the three instructions that you added.
-        </li>
-        <li>Delete the last <kw>call</kw> instruction by selecting the instruction and pressing <b>Ctrl+Delete</b> (or <b>Ctrl+d</b>.
-            In its place, add a <el-kw>for</el-kw> instruction and edit its fields to read this:
-            <el-code-block>
-                <el-statement class="ok multiline" id="for60">
-                    <el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="ident62" class="ok"><el-txt><el-id>n</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> from </el-kw><el-field id="expr63" class="ok"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr64" class="ok"><el-txt><el-lit>8</el-lit></el-txt><el-place><i>expression</i></el-place></el-field><el-kw> step </el-kw><el-field id="expr65" class="ok"><el-txt><el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-top>
-                    <el-statement class="ok empty" id="select61"><el-select><el-txt></el-txt><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
-                    <el-kw>end for</el-kw>
-                </el-statement>
-            </el-code-block>
-            <ul>
-                <li>A <el-kw>for</el-kw> instruction is a kind of 'loop' which will execute the instructions placed inside it a fixed number of times.
-                In this case it will execute them 8 times - counting from 1 to 8 <i>inclusive</i>.</li>
-                <li>We have to give a name to the 'counter' - in this case we have named it <el-id>n</el-id>.
-                    Sometimes this counter will be used within the loop - if we need to know where we are in the counting. In this case, we are not going
-                    to use it, though.
-                </li>
-                <li>This looping activity is formally known in Computer Science as 'iteration'.</li>
-            </ul>
-        </li>
-        <li>Move the two <el-kw>call</el-kw> instructions that <el-method>move</el-method> and <el-method>turn</el-method> the turtle <i>inside</i> the loop.
-            You may do this one at a time, or both together:</li>
-            <ul>
-                <li>Select the instruction(s) to move</li>
-                <li>Press <b>Ctrl+x</b> to cut the instruction(s) to the clipboard</li>
-                <li>Select the <el-code>new code</el-code> prompt where you want to locate the cut instructions</li>
-                <li>Press <b>Ctrl+v</b> to paste the instructions</li>
-            </ul>
-            You should now have two <kw>call</kw> instructions inside the <el-kw>for</el-kw> loop, which will execute the pair of them 8 times.
-            <i>Before</i> you run the program, try to predict what you will see on the display. Then run the program.
-        </li>
-
-        <li>Now modify the code to draw a 12-sided regular polygon.The <i>loop</i> will need to execute 12 times, and each turn will need to
-            be 1/12<sup>th</sup> of 360 degrees. You <i>could</i> work that one out for yourself,
-            but you can also just specify the turn instruction like this:
-
-            <el-code-block>
-                <el-statement class="ok" id="call28"><el-top><el-kw>call </el-kw><el-field id="ident29" class="ok"><el-txt><el-id>t</el-id>.<el-method>turn</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args30" class="optional ok"><el-txt><el-lit>360</el-lit>/<el-lit>12</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-            </el-code-block>
-
-            In most places in code where a value can be specified, it is possible to specify an expression - such as <el-lit>360</el-lit>/<el-lit>12</el-lit>,
-            or a far more complex expression - and that expression will be evaluated automatically and the result passed as the argument to the method.
-            Run the program and check that it draws what you expect.
-        </li>
-    </ul>
-    <label class="done" for="done1">Iteration completed</label>
-    <input type="checkbox" class="step-complete" id="done1" />
-<span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
-</div>
-
-    <div class="step" id="step2">
-    <h3>Iteration 2 - Draw the circle with a radius of 10 paces</h3>
-
-    <p>Returning to our problem we defined the specific random walk to be simulated as getting from the centre to the edge of a circle with a
-        radius of 10 paces. We now know how to draw a regular polygon and a circle may be described as a regular polygon with an infinite number of sides.
-        But since the display's resolution is not infinite we can get away with less than that! 360 sides, turning 1 degree each time should suffice.</p>
-
-    <ul>
-        <li>Modify the <el-kw>for</el-kw> loop so that it executes 360 times.</li>
-        <li>Set the argument passed to the <el-method>turn</el-method> method to <el-lit>1</el-lit>.</li>
-        <li>Now we need to calculate the length of the 'side' used for each of the 360 steps, we can use the following code, which reads very
-            like the way we would read out the calculation in mathematics:
-
-            <el-code-block>
-                <el-statement class="ok" id="let86"><el-kw>let </el-kw><el-field id="var87" class="ok"><el-txt><el-id>pace</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr88" class="ok"><el-txt><el-lit>5</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-                <el-statement class="ok" id="let111"><el-kw>let </el-kw><el-field id="var112" class="ok"><el-txt><el-id>radius</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr113" class="ok"><el-txt><el-lit>10</el-lit>*<el-id>pace</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-                <el-statement class="ok" id="let95"><el-kw>let </el-kw><el-field id="var96" class="ok"><el-txt><el-id>side</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr97" class="ok"><el-txt><el-lit>2</el-lit>*<el-id>radius</el-id>*<el-id>pi</el-id>/<el-lit>360</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-            </el-code-block>
-
-        We need to calculate these values <i>before</i> we use them, so add these three new instructions <i>at the top</i> of the main.
-        </li>
-        <li>Now change the argument passed into the <el-method>move</el-method> from <el-lit>10</el-lit> to <el-id>side.</el-id></li>
-        <li>We'd also like get the circle centred on the display. To do this we need to <i>start</i> the turtle
-            by the circle's radius to the left of the centre, meaning that the x-coordinate will be <el-code>-<el-id>radius</el-id></el-code>, still facing North.
-            The <el-method>placeAt</el-method> procedure method on the turtle
-        allows the turtle to be placed ar specific x,y coordinates <i>without</i> drawing a line from where it was before.
-        So <i>above the <el-kw>for</el-kw> instruction, insert:</i>
-        <el-code-block>
-            <el-statement class="ok" id="call145"><el-top><el-kw>call </el-kw><el-field id="ident146" class="ok"><el-txt><el-id>t</el-id>.<el-method>placeAt</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args147" class="optional ok"><el-txt>-<el-id>radius</el-id>, <el-lit>0</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-        </el-code-block>
-        noting that the <el-method>placeAt</el-method> requires <i>two</i> arguments, and these are separated by a comma)
-        </li>
-        <li>Run the program and check that it draws a large circle that fits within the display. Note where the turtle finishes.</li>
-    </ul>
-    <label class="done" for="done2">Iteration completed</label>
-    <input type="checkbox" class="step-complete" id="done2" />
-<span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
-</div>
-
-    <div class="step" id="step3">
-    <h3>Iteration 3 - Draw a random walk</h3>
-    <p>To simulate the random walk we need to repeatedly move the turtle one pace, and turn though a random angle of up to 90 degrees in
-        either direction (to turn to the left, just make the angle negative). The method <el-method>random</el-method><el-code>()</el-code>
-        will generate a fractional number in the range 0 to 1, but there is also <el-method>randomInt</el-method>
-        ('Int' being short for integer) that will generate a random whole number within a range specified by two integer arguments. </p>
-
-        <p>We could use another <el-kw>for</el-kw> for repetition, but the problem is that we don't know how many steps it will take
-        to get from the centre to the edge. What we need is a loop that executes as many times as is needed - until something decides
-        that it is time to stop. There are two such forms of loop: a <el-kw>while</el-kw> loop and a <el-kw>repeat</el-kw> loop, each
-        one optimised toward slightly different circumstances, but for this particular challenge they would work equally well,
-        so we'll just pick the first one.</p>
-    <ul>
-        <li>After the last instruction within the main, add an instruction to place the turtle back in the centre of the circle.</li>
-        <li>Then add a <el-kw>while</el-kw> instruction, and notice that it has just one field
-            - to specify the condition for continuing:
-
-        <el-code-block>
-            <el-statement class="warning multiline" id="while220">
-                <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr222" class="selected focused empty warning"><el-txt><input spellcheck="false" data-cursorstart="0" data-cursorend="0" size="1" style="width: 2px" value=""></el-txt><el-place><i>condition</i></el-place><el-compl><i>expression</i></el-compl></el-field></el-top>
-                <el-statement class="ok empty" id="select221"><el-select><el-txt></el-txt><el-place>new code</el-place><div class="options"> call each for if let print repeat set throw try variable while #</div></el-select></el-statement>
-                <el-kw>end while</el-kw>
-            </el-statement>
-        </el-code-block>
-
-        This condition needs to be a 'logical' expression that evaluates to <el-id>true</el-id> (in which case the loop runs again)
-        or <el-id>false</el-id> (in which case the loop terminates) and the program moves on to the next instruction after the
-        <el-kw>end loop</el-kw>. We'll work out the proper expression for the condition. For the meantime just enter <el-id>true</el-id>,
-        which is a constant value defined in the Elan library (like <el-id>pi</el-id>). Because this expression will <i>always</i>
-        be true the loop is never going to exit - this is known as an 'infinite loop'.</li>
-        <li>Within the <el-kw>while</el-kw> loop, add these two instructions:
-
-        <el-code-block>
-            <el-statement class="ok" id="call269"><el-top><el-kw>call </el-kw><el-field id="ident270" class="ok"><el-txt><el-id>t</el-id>.<el-method>move</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args271" class="optional ok"><el-txt><el-id>pace</el-id></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-            <el-statement class="ok" id="call290"><el-top><el-kw>call </el-kw><el-field id="ident291" class="ok"><el-txt><el-id>t</el-id>.<el-method>turn</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args292" class="optional ok"><el-txt><el-method>randomInt</el-method>(-<el-lit>90</el-lit>, <el-lit>90</el-lit>)</el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-        </el-code-block>
-
-        Then run the program and observe the random walk. When it heads outside the visible display area press the <b>Stop</b> button.</li>
-        <li>What we want is for the random walk to continue only 'while' its distance from the centre is less than one radius.
-            If we know the x and y coordinates of the turtle at every point we could calculate the distance from the centre of the screen
-            using Pythagoras' theorem. The following tips will be useful:
-            <ul>
-                <li>We can read the current coordinates of the turtle by <el-id>t</el-id>.<el-id>x</el-id> and <el-id>t</el-id>.<el-id>y</el-id></li>
-                <li>We can square a value using <el-code><el-id>n</el-id>^</el-code><el-lit></el-lit> - 'n raised to the power of 2'.</li>
-                <li>The method <el-method>sqrt</el-method> calculates the square root of its argument.</li>
-            </ul>
-
-            So, edit the condition field of the <el-kw>while</el-kw> loop to read:
-
-            <el-code-block>
-            <el-method>sqrt</el-method>(<el-id>t</el-id>.<el-id>x</el-id>^<el-lit>2</el-lit> + <el-id>t</el-id>.<el-id>y</el-id>^<el-lit>2</el-lit>) &lt; <el-id>radius</el-id>
-            </el-code-block>
-
-            Noting that:
-            <ul>
-                <li>Precedence for the arithmetic operators follows the same rules as in maths - which you might have learned as 'BIDMAS' or 'BODMAS'.</li>
-                <li><el-code>&lt</el-code> is another operator which always evaluates to either <el-id>true</el-id> or <el-id>false</el-id>.</li>
-            </ul>
-
-            Run the program - more than once - checking that the random walk is different in each case, but halts when it reaches (or steps over)
-            the line of the circle.
-        </li>
-        <li>Improve the program slightly with the following  three 'tweaks', running the program between each one to check the changed output:
-            <ul>
-                <li>Just before the <el-kw>while</el-kw> loop add this instruction:
-
-                    <el-code-block>
-                        <el-statement class="ok" id="call545"><el-top><el-kw>call </el-kw><el-field id="ident546" class="ok"><el-txt><el-id>t</el-id>.<el-method>penColour</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args547" class="optional ok"><el-txt><el-id>red</el-id></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-                    </el-code-block>
-                You should be able to predict how this will change the output.</li>
-                <li>Slow down the random walk a little to make the movement more visible. After the last instruction within the <el-kw>while</el-kw> loop
-                    add the instruction:
-                    <el-code-block>
-                        <el-statement class="ok" id="call420"><el-top><el-kw>call </el-kw><el-field id="ident421" class="ok"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args422" class="optional ok"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>milliseconds</i></el-place></el-field>)</el-top></el-statement>
-                    </el-code-block>
-                    which puts in a 100 millisecond pause - not very long but just enough to make the walk more obvious. Note that this instruction
-                    does <i>not</i> say <el-id>t</el-id>.<el-method>pause</el-method>, because <el-method>pause</el-method> is not a procedure belonging
-                    to a turtle - it is a 'freestanding' procedure, and can be used whether or not you are using turtle graphics.</li>
-                <li>
-                    Change the instruction that calls the <el-method>show</el-method> method on the turtle to calling its <el-method>hide</el-method>
-                    method instead. You will find that it still produces the same set of marks, but no longer shows you the green turtle itself.
-                </li>
-                <li>If you prefer to see the turtle, you can revert to <el-method>show</el-method>, and you may also adjust the argument
-                of the <el-method>pause</el-method> method to speed up, or slow down the movement.</li>
-            </li>
-            </ul>
-
-        </li>
-    </ul>
-    <label class="done" for="done3">Iteration completed</label>
-    <input type="checkbox" class="step-complete" id="done3" />
-<span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
-</div>
-
-    <div class="step" id="step4">
-    <h3>Iteration 4 - simulate multiple walks</h3>
-    <p>Our goal is to determine the <i>average</i> number of paces for a random walk to reach the edge of the circle.
-    So the next step is to perform multiple walks.</p>
-    <ul>
-        <li>After the <el-kw>while</el-kw> loop add:
-        <el-code-block>
-            <el-statement class="ok" id="let629"><el-kw>let </el-kw><el-field id="var630" class="ok"><el-txt><el-id>numberOfWalks</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr631" class="ok"><el-txt><el-lit>3</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        </el-code-block>
-        then after that add a new <el-kw>for</el-kw> loop that counts from 1 to <el-id>numberOfWalks</el-id>. The counter may again be defined
-            as <el-id>n</el-id> because the loop that we used <el-id>n</el-id> in previously, has terminated by this point in the program.
-        </el-id>.
-        </li>
-        <li>Using <b>Shift+&#x2191;</b> multi-select these three instructions:
-            <el-code-block>
-                    <el-statement class="selected ok" id="call236"><el-top><el-kw>call </el-kw><el-field id="ident237" class="ok"><el-txt><el-id>t</el-id>.<el-method>placeAt</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args238" class="optional ok"><el-txt><el-lit>0</el-lit>, <el-lit>0</el-lit></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-                    <el-statement class="selected ok" id="call545"><el-top><el-kw>call </el-kw><el-field id="ident546" class="ok"><el-txt><el-id>t</el-id>.<el-method>penColour</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args547" class="optional ok"><el-txt><el-id>red</el-id></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-                    <el-statement class="selected focused ok multiline" id="while220">
-                    <el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="expr222" class="ok"><el-txt><el-method>sqrt</el-method>(<el-id>t</el-id>.<el-id>x</el-id>^<el-lit>2</el-lit> + <el-id>t</el-id>.<el-id>y</el-id>^<el-lit>2</el-lit>) &lt; <el-id>radius</el-id></el-txt><el-place><i>condition</i></el-place></el-field></el-top>
-                    <el-statement class="ok" id="call269"><el-top><el-kw>call </el-kw><el-field id="ident270" class="ok"><el-txt><el-id>t</el-id>.<el-method>move</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args271" class="optional ok"><el-txt><el-id>pace</el-id></el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-                    <el-statement class="ok" id="call290"><el-top><el-kw>call </el-kw><el-field id="ident291" class="ok"><el-txt><el-id>t</el-id>.<el-method>turn</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args292" class="optional ok"><el-txt><el-method>randomInt</el-method>(-<el-lit>90</el-lit>, <el-lit>90</el-lit>)</el-txt><el-place><i><i>arguments</i></i></el-place></el-field>)</el-top></el-statement>
-                    <el-statement class="ok" id="call420"><el-top><el-kw>call </el-kw><el-field id="ident421" class="ok"><el-txt><el-method>pause</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args422" class="optional ok"><el-txt><el-lit>100</el-lit></el-txt><el-place><i>milliseconds</i></el-place></el-field>)</el-top></el-statement>
-                    <el-kw>end while</el-kw>
-                    </el-statement>
-            </el-code-block>
-        Then cut them and paste them <i>inside</i> the new <el-kw>for</el-kw> loop that you just created. Run the program and check that
-        it 'walks' from the centre to the edge three times.</li>
-        <li>Make the following tweaks:
-        <ul>
-            <li>Increase the number of attempts to 20.</li>
-            <li>Remove the instruction that pauses the program - as otherwise it will now run too slowly</li>
-            <li>Change the instruction that specifies the <el-method>penColour</el-method> changing <el-id>red</el-id>
-            to <el-code><el-method>randomInt</el-method>(<el-id>black</el-id>, <el-id>white</el-id>)</el-code>
-        </li>
-        </ul>
-        <i>Before running the program, what do you think will happen to the colours of the walks?</i> Run the program and see.</li>
-        <li>If you thought that <el-code><el-method>randomInt</el-method>(<el-id>black</el-id>, <el-id>white</el-id>)</el-code> would result
-            in a random mix of black or white, or of many shades of grey, don't feel bad - both would seem quite logical! But why has it actually
-            produced a range of <i>colours</i>? The answer
-            is that each of the named (constant) colours (e.g. <el-id>red</el-id>) just holds an integer value in the range
-            0 (black) to 16,777,215 (white) - so it is possible to display 16+ million different colours. These are created from all the permutations of
-            mixing 256 shades of red, 256 shades of blue, and 256 shades of green.
-            This is known as the '24-bit RGB colour scheme' and is used throughout the web.
-            So our <el-code><el-method>randomInt</el-method>(<el-id>black</el-id>, <el-id>white</el-id>)</el-code> has the same effect
-            as writing <el-code><el-method>randomInt</el-method>(<el-lit>0</el-lit>, <el-lit>16777215</el-lit>)</el-code></li>.
-            Writing it as we did is easier to remember, and, arguably, makes the <i>intention</i> clearer.
-        </ul>
-    <label class="done" for="done4">Iteration completed</label>
-    <input type="checkbox" class="step-complete" id="done4" />
-<span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
-</div>
-
-    <div class="step" id="step5">
-    <h3>Iteration 5 - Calculating the average number of paces</h3>
-    <ul>
-        <li>The first step to calculating the average is to count how many paces each walk takes. </i>Immediately above</i>
-        the <el-kw>while</el-kw> loop insert a new instruction:
-
-        <el-code-block>
-            <el-statement class="ok" id="var51"><el-kw>variable </el-kw><el-field id="var52" class="ok"><el-txt><el-id>pacesThisWalk</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> set to </el-kw><el-field id="expr53" class="ok"><el-txt><el-lit>0</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        </el-code-block>
-
-        What is the difference between writing this and using the <el-kw>let</el-kw> instruction that we have been doing thus far?
-        The answer is that a <el-kw>variable</el-kw> is intended to <i>change</i> in value - a <el-kw>let</el-kw> doesn't change.
-        We need <el-id>pacesThisWalk</el-id> to change because we will add 1 to it with each pace taken. So, now do that by adding
-        <i>as the first instruction inside</i> the <el-kw>while</el-kw> loop:
-
-        <el-code-block>
-            <el-statement class="ok" id="set837"><el-kw>set </el-kw><el-field id="ident838" class="ok"><el-txt><el-id>pacesThisWalk</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr839" class="ok"><el-txt><el-id>pacesThisWalk</el-id> + <el-lit>1</el-lit></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        </el-code-block>
-
-        After the <el-kw>end while</el-kw> add, <i>as a temporary check</i>:
-
-        <el-code-block>
-            <el-statement class="ok" id="print869"><el-kw>print </el-kw><el-field id="expr870" class="optional ok"><el-txt><el-id>pacesThisWalk</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        </el-code-block>
-
-        and run the program. As each walk reaches the circle you should see the number of paces printed on the left-hand side of the display.
-        After this trial run, delete the <el-kw>print</el-kw> instruction</li>
-        <li>Now we need to calculate the total paces across all the attempts. So just <i>above</i> the start of the <el-kw>for</el-kw> loop
-        that executes the number of walks, define a new <el-kw>variable</el-kw> named <el-id>totalPaces</el-id>, also initially set to 0.
-        And <i>inside</i> the <el-kw>for</el-kw> loop, at the very end (after the <el-kw>end while</el-kw>) add:
-
-        <el-code-block>
-            <el-statement class="ok" id="set951"><el-kw>set </el-kw><el-field id="ident952" class="ok"><el-txt><el-id>totalPaces</el-id></el-txt><el-place><i>variableName</i></el-place></el-field><el-kw> to </el-kw><el-field id="expr953" class="ok"><el-txt><el-id>totalPaces</el-id> + <el-id>pacesThisWalk</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        </el-code-block>
-    </li>
-
-    </li>We need to calculate the average and present it on the display. This could be done with a single instruction
-    but using two instructions is a bit clearer. First calculate the average by adding these two instructions as final instructions in the main routine:
-
-    <el-code-block>
-        <el-statement class="ok" id="let72"><el-kw>let </el-kw><el-field id="var73" class="ok"><el-txt><el-id>average</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr74" class="ok"><el-txt><el-id>totalPaces</el-id>/<el-id>numberOfWalks</el-id></el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-        <el-statement class="ok" id="print75"><el-kw>print </el-kw><el-field id="expr76" class="optional ok"><el-txt>"<el-lit>Average: </el-lit>{<el-id>average</el-id>}<el-lit></el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
-    </el-code-block>
-
-    <li>Finally, for the small number of walks simulated it is inappropriate to quote the average number of paces to
-        so many decimal places. Edit the expression for calculating the average to the following, to round the result to just one decimal place:
-
-        <el-code-block>
-            (<el-id>totalPaces</el-id>/<el-id>numberOfWalks</el-id>).<el-method>round</el-method>(<el-lit>1</el-lit>)
-        </el-code-block>
-        </li>
-    </ul>
-    <label class="done" for="done5">Iteration completed</label>
-    <input type="checkbox" class="step-complete" id="done5" />
-<span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span>
-</div>
-
-    <div class="step" id="step6">
-        <p>Well done - you've now completed the worksheet.</p>
-
-        <p>If you have time left, try any of the following:
-
-        <ul>
-            <li>Simulate a larger number of walks e.g. 100. This will give a more accurate figure for the average number of paces.</li>
-            <li>Make the <el-id>pace</el-id> smaller but keep the circle's <el-id>radius</el-id> the same size as now.
-                The average number of paces to reach the edge will be larger. But does it increase in proportion? Try
-                three different values and plot the average against pace size.
-            </li>
-            <li>Go back to the original values, but make a small change to the range of possible turn-angles between paces:
-                -60 to + 60 degrees, or -120 to + 120, say.
-                How does this change the average number of paces? Is the relationship linear?</li>
-            <li>Read more about the nature and application of Random Walks on <a href="https://en.wikipedia.org/wiki/Random_walk" target="_blank">Wikipedia</a>.</li>
-        </ul>
-
-        <div class="license">
-            <div class="license">
-                <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
-                This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
-                    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
-                If you copy and <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
-                Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
-            </div>
-        </div>
-
-        <div hidden="" id="hash"></div>
-        <div hidden="" id="changes"></div>
+      <ul>
+        <li><button id="load-answers">Load a previously-saved answers file</button></li>
+        <li>All answers that you subsequently enter/edit will be auto-saved to this sheet.</li>
+        <li>The first time you re-load an answers sheet - within a single session on Elan -
+        you will be asked to confirm that you understand this.</li>
+      </ul>
     </div>
+
+    <input class="question" type="text" id="postsave-username" disabled=""/>
+
+    <div class="license">
+      <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+      This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
+          <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+        You may freely make and distribute copies of this worksheet <i>as is</i>, but if you <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+        Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
+    </div> 
+      
+
+
+<div class="step" id="step1"><h1>Step 1: Introduction</h1>
+    <div style="position: relative; padding-bottom: 79.39189189189189%; height: 0;"><iframe src="https://www.loom.com/embed/94acd2e1a112481eac5d4fd95f781770" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>  
+<h4>Notes</h4><textarea class="notes" id="notes1" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step2"><h1>Step 2: Using Turtle graphics</h1>
+    <div style="position: relative; padding-bottom: 67.81609195402298%; height: 0;"><iframe src="https://www.loom.com/embed/63a2dd310e944153ab7a2aba99261f53" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>Copy the code shown at the end of the video into the code editor. 
+        Then modify such that it will draw an octagon with a side of length 20.</p>
+    <p>Make sure your code is working correctly before completing the step. Use the hints available only if you need to.</p>
+    <div class="hint" id="hint2-1" data-hint="CiAgICAgICAgPHVsPgogICAgICAgICAgICA8bGk+Q2hhbmdlIHRoZSBzaWduYXR1cmUgb2YgdGhlIDxlbC1jb2RlPjxlbC1rdz5mb3I8L2VsLWt3PjwvZWwtY29kZT4gc3VjaCB0aGF0IGl0IHdpbGwgZXhlY3V0ZSA4IHRpbWVzIGluc3RlYWQgb2YgNDwvbGk+CiAgICAgICAgICAgIDxsaT5DaGFuZ2UgdGhlIHZhbHVlIHByb3ZpZGUgYXMgYW4gYXJndW1lbnQgdG8gdGhlIDxlbC1tZXRob2Q+dHVybiBzdWNoIHRoYXQgOCByZXBldGl0aW9ucyB3aWxsIGFkZCB1cCB0byAzNjAgZGVncmVlczwvZWwtbWV0aG9kPjwvbGk+CiAgICAgICAgPC91bD4KICAgIA==">Hint 2-1: changes needed</div>
+<div class="content" id="hint2-1content"></div>
+    <div class="hint" id="hint2-2" data-hint="CiAgICAgICAgPGVsLWNvZGUtYmxvY2s+PG1haW4gY2xhc3M9Im9rIG11bHRpbGluZSIgaWQ9Im1haW4xIiB0YWJpbmRleD0iLTEiPgo8ZWwtdG9wPjxlbC1leHBhbmQ+KzwvZWwtZXhwYW5kPjxlbC1rdz5tYWluPC9lbC1rdz48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj4xPC9lbC1mcj48L2VsLXRvcD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2siIGlkPSJsZXQzIiB0YWJpbmRleD0iLTEiPjxlbC1rdz5sZXQgPC9lbC1rdz48ZWwtZmllbGQgaWQ9InZhcjQiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD50PC9lbC1pZD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+bmFtZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjVmFsdWVEZWZGaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1rdz4gYmUgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHI1IiBjbGFzcz0ib2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwta3c+bmV3PC9lbC1rdz4gPGVsLXR5cGU+VHVydGxlPC9lbC10eXBlPigpPC9lbC10eHQ+PGVsLXBsYWNlPjxpPnZhbHVlIG9yIGV4cHJlc3Npb248L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI0V4cHJlc3Npb25GaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjI8L2VsLWZyPjwvZWwtc3RhdGVtZW50Pgo8ZWwtc3RhdGVtZW50IGNsYXNzPSJvayIgaWQ9ImNhbGw2IiB0YWJpbmRleD0iLTEiPjxlbC10b3A+PGVsLWt3PmNhbGwgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImlkZW50NyIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPnQ8L2VsLWlkPi48ZWwtbWV0aG9kPjxlbC1tZXRob2Q+cGxhY2VBdDwvZWwtbWV0aG9kPjwvZWwtbWV0aG9kPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5wcm9jZWR1cmVOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNQcm9jUmVmRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4oPC9zcGFuPjxlbC1maWVsZCBpZD0iYXJnczgiIGNsYXNzPSJvcHRpb25hbCBvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1saXQ+MDwvZWwtbGl0PiwgPGVsLWxpdD4wPC9lbC1saXQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmFyZ3VtZW50czwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjQXJnTGlzdEZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PHNwYW4+KTwvc3Bhbj48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj4zPC9lbC1mcj48L2VsLXRvcD48L2VsLXN0YXRlbWVudD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2sgbXVsdGlsaW5lIiBpZD0iZm9yOSIgdGFiaW5kZXg9Ii0xIj4KPGVsLXRvcD48ZWwtZXhwYW5kPis8L2VsLWV4cGFuZD48ZWwta3c+Zm9yIDwvZWwta3c+PGVsLWZpZWxkIGlkPSJpZGVudDExIiBjbGFzcz0ib2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtaWQ+Y291bnQ8L2VsLWlkPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5jb3VudGVyTmFtZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjSWRlbnRpZmllckZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PGVsLWt3PiBmcm9tIDwvZWwta3c+PGVsLWZpZWxkIGlkPSJleHByMTIiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1saXQ+MTwvZWwtbGl0PjwvZWwtdHh0PjxlbC1wbGFjZT48aT5maXJzdFZhbHVlPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNFeHByZXNzaW9uRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48ZWwta3c+IHRvIDwvZWwta3c+PGVsLWZpZWxkIGlkPSJleHByMTMiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1saXQ+ODwvZWwtbGl0PjwvZWwtdHh0PjxlbC1wbGFjZT48aT5sYXN0VmFsdWU8L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI0V4cHJlc3Npb25GaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1rdz4gc3RlcCA8L2VsLWt3PjxlbC1maWVsZCBpZD0iZXhwcjE0IiBjbGFzcz0ib2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtbGl0PjE8L2VsLWxpdD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+c3RlcFZhbHVlPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNFeHByZXNzaW9uRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj40PC9lbC1mcj48L2VsLXRvcD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2siIGlkPSJjYWxsMTUiIHRhYmluZGV4PSItMSI+PGVsLXRvcD48ZWwta3c+Y2FsbCA8L2VsLWt3PjxlbC1maWVsZCBpZD0iaWRlbnQxNiIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPnQ8L2VsLWlkPi48ZWwtbWV0aG9kPjxlbC1tZXRob2Q+bW92ZTwvZWwtbWV0aG9kPjwvZWwtbWV0aG9kPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5wcm9jZWR1cmVOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNQcm9jUmVmRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4oPC9zcGFuPjxlbC1maWVsZCBpZD0iYXJnczE3IiBjbGFzcz0ib3B0aW9uYWwgb2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtbGl0PjIwPC9lbC1saXQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmFyZ3VtZW50czwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjQXJnTGlzdEZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PHNwYW4+KTwvc3Bhbj48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj41PC9lbC1mcj48L2VsLXRvcD48L2VsLXN0YXRlbWVudD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2siIGlkPSJjYWxsMTgiIHRhYmluZGV4PSItMSI+PGVsLXRvcD48ZWwta3c+Y2FsbCA8L2VsLWt3PjxlbC1maWVsZCBpZD0iaWRlbnQxOSIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPnQ8L2VsLWlkPi48ZWwtbWV0aG9kPjxlbC1tZXRob2Q+dHVybjwvZWwtbWV0aG9kPjwvZWwtbWV0aG9kPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5wcm9jZWR1cmVOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNQcm9jUmVmRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4oPC9zcGFuPjxlbC1maWVsZCBpZD0iYXJnczIwIiBjbGFzcz0ib3B0aW9uYWwgb2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtbGl0PjQ1PC9lbC1saXQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmFyZ3VtZW50czwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjQXJnTGlzdEZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PHNwYW4+KTwvc3Bhbj48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj42PC9lbC1mcj48L2VsLXRvcD48L2VsLXN0YXRlbWVudD4KPGVsLWt3PmVuZCBmb3I8L2VsLWt3Pgo8L2VsLXN0YXRlbWVudD4KPGVsLWt3PmVuZCBtYWluPC9lbC1rdz4KPC9tYWluPjwvZWwtY29kZS1ibG9jaz4KICAgIA==">Hint 2-2: the complete code</div>
+<div class="content" id="hint2-2content"></div>
+<h4>Notes</h4><textarea class="notes" id="notes2" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done2">Step Completed</label><input class="step-complete" type="checkbox" id="done2"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<div class="step" id="step3"><h1>Step 3: Draw a circle, centred on the display</h1>
+    <p>(There is no video for this step.)</p>
+    <p>Change the code again so that it draws a circle that fits within the display and is centred within in.</p>
+    <p>Make sure your code is working correctly before completing the step. Use the hints available only if you need to.</p>
+    <div class="hint" id="hint3-1" data-hint="CiAgICAgICAgPHVsPgogICAgICAgICAgICA8bGk+Q2hhbmdlIHRoZSA8ZWwtY29kZT48ZWwtZ2xvYmFsIGNvbnRlbnRlZGl0YWJsZT0iIiBzcGVsbGNoZWNrPSJmYWxzZSIgY2xhc3M9Im9rIGVtcHR5IiBpZD0ic2VsZWN0MCIgdGFiaW5kZXg9Ii0xIj48ZWwtc2VsZWN0PjxlbC10eHQ+PC9lbC10eHQ+PGVsLXBsYWNlPm5ldyBjb2RlPC9lbC1wbGFjZT48ZGl2IGNsYXNzPSJvcHRpb25zIj4gbWFpbiBwcm9jZWR1cmUgZnVuY3Rpb24gdGVzdCBjb25zdGFudCBlbnVtIHJlY29yZCBjbGFzcyBhYnN0cmFjdCBpbnRlcmZhY2UgIzwvZGl2PjwvZWwtc2VsZWN0PjwvZWwtZ2xvYmFsPjwvZWwtY29kZT4gc3VjaCB0aGF0IDggcmVwZXRpdGlvbnMgd2lsbCBhZGQgdXAgdG8gMzYwIGRlZ3JlZXM8L2xpPgogICAgICAgIDwvdWw+CiAgICA=">Hint 3-1: changes needed</div>
+<div class="content" id="hint3-1content"></div>
+    <div class="hint" id="hint3-2" data-hint="CiAgICAgICAgPGVsLWNvZGUtYmxvY2s+PG1haW4gY2xhc3M9Im9rIG11bHRpbGluZSIgaWQ9Im1haW4xIiB0YWJpbmRleD0iLTEiPgo8ZWwtdG9wPjxlbC1leHBhbmQ+KzwvZWwtZXhwYW5kPjxlbC1rdz5tYWluPC9lbC1rdz48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj4xPC9lbC1mcj48L2VsLXRvcD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2siIGlkPSJsZXQzIiB0YWJpbmRleD0iLTEiPjxlbC1rdz5sZXQgPC9lbC1rdz48ZWwtZmllbGQgaWQ9InZhcjQiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD50PC9lbC1pZD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+bmFtZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjVmFsdWVEZWZGaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1rdz4gYmUgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHI1IiBjbGFzcz0ib2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwta3c+bmV3PC9lbC1rdz4gPGVsLXR5cGU+VHVydGxlPC9lbC10eXBlPigpPC9lbC10eHQ+PGVsLXBsYWNlPjxpPnZhbHVlIG9yIGV4cHJlc3Npb248L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI0V4cHJlc3Npb25GaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjI8L2VsLWZyPjwvZWwtc3RhdGVtZW50Pgo8ZWwtc3RhdGVtZW50IGNsYXNzPSJvayIgaWQ9ImNhbGw2IiB0YWJpbmRleD0iLTEiPjxlbC10b3A+PGVsLWt3PmNhbGwgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImlkZW50NyIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPnQ8L2VsLWlkPi48ZWwtbWV0aG9kPjxlbC1tZXRob2Q+cGxhY2VBdDwvZWwtbWV0aG9kPjwvZWwtbWV0aG9kPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5wcm9jZWR1cmVOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNQcm9jUmVmRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4oPC9zcGFuPjxlbC1maWVsZCBpZD0iYXJnczgiIGNsYXNzPSJvcHRpb25hbCBvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1saXQ+MDwvZWwtbGl0PiwgPGVsLWxpdD4wPC9lbC1saXQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmFyZ3VtZW50czwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjQXJnTGlzdEZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PHNwYW4+KTwvc3Bhbj48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj4zPC9lbC1mcj48L2VsLXRvcD48L2VsLXN0YXRlbWVudD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2sgbXVsdGlsaW5lIiBpZD0iZm9yOSIgdGFiaW5kZXg9Ii0xIj4KPGVsLXRvcD48ZWwtZXhwYW5kPis8L2VsLWV4cGFuZD48ZWwta3c+Zm9yIDwvZWwta3c+PGVsLWZpZWxkIGlkPSJpZGVudDExIiBjbGFzcz0ib2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtaWQ+Y291bnQ8L2VsLWlkPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5jb3VudGVyTmFtZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjSWRlbnRpZmllckZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PGVsLWt3PiBmcm9tIDwvZWwta3c+PGVsLWZpZWxkIGlkPSJleHByMTIiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1saXQ+MTwvZWwtbGl0PjwvZWwtdHh0PjxlbC1wbGFjZT48aT5maXJzdFZhbHVlPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNFeHByZXNzaW9uRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48ZWwta3c+IHRvIDwvZWwta3c+PGVsLWZpZWxkIGlkPSJleHByMTMiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1saXQ+ODwvZWwtbGl0PjwvZWwtdHh0PjxlbC1wbGFjZT48aT5sYXN0VmFsdWU8L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI0V4cHJlc3Npb25GaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1rdz4gc3RlcCA8L2VsLWt3PjxlbC1maWVsZCBpZD0iZXhwcjE0IiBjbGFzcz0ib2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtbGl0PjE8L2VsLWxpdD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+c3RlcFZhbHVlPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNFeHByZXNzaW9uRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj40PC9lbC1mcj48L2VsLXRvcD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2siIGlkPSJjYWxsMTUiIHRhYmluZGV4PSItMSI+PGVsLXRvcD48ZWwta3c+Y2FsbCA8L2VsLWt3PjxlbC1maWVsZCBpZD0iaWRlbnQxNiIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPnQ8L2VsLWlkPi48ZWwtbWV0aG9kPjxlbC1tZXRob2Q+bW92ZTwvZWwtbWV0aG9kPjwvZWwtbWV0aG9kPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5wcm9jZWR1cmVOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNQcm9jUmVmRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4oPC9zcGFuPjxlbC1maWVsZCBpZD0iYXJnczE3IiBjbGFzcz0ib3B0aW9uYWwgb2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtbGl0PjIwPC9lbC1saXQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmFyZ3VtZW50czwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjQXJnTGlzdEZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PHNwYW4+KTwvc3Bhbj48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj41PC9lbC1mcj48L2VsLXRvcD48L2VsLXN0YXRlbWVudD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2siIGlkPSJjYWxsMTgiIHRhYmluZGV4PSItMSI+PGVsLXRvcD48ZWwta3c+Y2FsbCA8L2VsLWt3PjxlbC1maWVsZCBpZD0iaWRlbnQxOSIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPnQ8L2VsLWlkPi48ZWwtbWV0aG9kPjxlbC1tZXRob2Q+dHVybjwvZWwtbWV0aG9kPjwvZWwtbWV0aG9kPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5wcm9jZWR1cmVOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNQcm9jUmVmRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4oPC9zcGFuPjxlbC1maWVsZCBpZD0iYXJnczIwIiBjbGFzcz0ib3B0aW9uYWwgb2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtbGl0PjQ1PC9lbC1saXQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmFyZ3VtZW50czwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjQXJnTGlzdEZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PHNwYW4+KTwvc3Bhbj48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj42PC9lbC1mcj48L2VsLXRvcD48L2VsLXN0YXRlbWVudD4KPGVsLWt3PmVuZCBmb3I8L2VsLWt3Pgo8L2VsLXN0YXRlbWVudD4KPGVsLWt3PmVuZCBtYWluPC9lbC1rdz4KPC9tYWluPjwvZWwtY29kZS1ibG9jaz4KICAgIA==">Hint 3-2: the complete code</div>
+<div class="content" id="hint3-2content"></div>
+<h4>Notes</h4><textarea class="notes" id="notes3" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done3">Step Completed</label><input class="step-complete" type="checkbox" id="done3"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+<div class="step" id="step4"><h1>Step 4: Draw a circle, centred on the display</h1>
+    <p>(There is no video for this step.)</p>
+    <p>Change the code again so that it draws a circle that fits within the display and is centred within in.</p>
+    <p>Make sure your code is working correctly before completing the step. Use the hints available only if you need to.</p>
+    <div class="hint" id="hint4-1" data-hint="CiAgICAgICAgPHVsPgogICAgICAgICAgICA8bGk+Q2hhbmdlIHRoZSA8ZWwtY29kZT48ZWwta3c+Zm9yPC9lbC1rdz48L2VsLWNvZGU+bG9vcCB0byByZXBlYXQgMzYwIHRpbWVzPC9saT4KICAgICAgICAgICAgPGxpPkNoYW5nZSB0aGUgIHZhbHVlcyBwYXNzZWQgaW50byB0aGUgIDxlbC1tZXRob2Q+bW92ZSBhbmQgPGVsLW1ldGhvZD50dXJuIG1ldGhvZHMgdG8gMSBpbiBlYWNoIGNhc2UuPC9lbC1tZXRob2Q+PC9lbC1tZXRob2Q+PC9saT4KICAgICAgICAgICAgPGxpPkNoYW5nZSBmaXJzdCB2YWx1ZSAodGhlICd4JyBjb29yZGluYXRlKSBzdWNoIHRoYXQgdGhlIGNpcmNsZSBpcyA8aT5hcHByb3hpbWF0ZWx5PC9pPiBjZW50cmVkIHdpdGhpbiB0aGUgZGlzcGxheSwKICAgICAgICAgICAgICAgIHJlbWVtYmVyaW5nIHRoYXQgbnVtZXJpYyB2YWx1ZXMgY2FuIGJlIG5lZ2F0aXZlLjwvbGk+CiAgICAgICAgPC91bD4KICAgIA==">Hint 4-1: changes needed</div>
+<div class="content" id="hint4-1content"></div>
+    <div class="hint" id="hint4-2" data-hint="CiAgICAgICAgPGVsLWNvZGUtYmxvY2s+PG1haW4gY2xhc3M9Im9rIG11bHRpbGluZSIgaWQ9Im1haW4xIiB0YWJpbmRleD0iLTEiPgo8ZWwtdG9wPjxlbC1leHBhbmQ+KzwvZWwtZXhwYW5kPjxlbC1rdz5tYWluPC9lbC1rdz48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj4xPC9lbC1mcj48L2VsLXRvcD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2siIGlkPSJsZXQzIiB0YWJpbmRleD0iLTEiPjxlbC1rdz5sZXQgPC9lbC1rdz48ZWwtZmllbGQgaWQ9InZhcjQiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD50PC9lbC1pZD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+bmFtZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjVmFsdWVEZWZGaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1rdz4gYmUgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHI1IiBjbGFzcz0ib2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwta3c+bmV3PC9lbC1rdz4gPGVsLXR5cGU+VHVydGxlPC9lbC10eXBlPigpPC9lbC10eHQ+PGVsLXBsYWNlPjxpPnZhbHVlIG9yIGV4cHJlc3Npb248L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI0V4cHJlc3Npb25GaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjI8L2VsLWZyPjwvZWwtc3RhdGVtZW50Pgo8ZWwtc3RhdGVtZW50IGNsYXNzPSJvayIgaWQ9ImNhbGw2IiB0YWJpbmRleD0iLTEiPjxlbC10b3A+PGVsLWt3PmNhbGwgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImlkZW50NyIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPnQ8L2VsLWlkPi48ZWwtbWV0aG9kPjxlbC1tZXRob2Q+cGxhY2VBdDwvZWwtbWV0aG9kPjwvZWwtbWV0aG9kPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5wcm9jZWR1cmVOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNQcm9jUmVmRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4oPC9zcGFuPjxlbC1maWVsZCBpZD0iYXJnczgiIGNsYXNzPSJvcHRpb25hbCBvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0Pi08ZWwtbGl0PjUwPC9lbC1saXQ+LCA8ZWwtbGl0PjA8L2VsLWxpdD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+YXJndW1lbnRzPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNBcmdMaXN0RmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4pPC9zcGFuPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjM8L2VsLWZyPjwvZWwtdG9wPjwvZWwtc3RhdGVtZW50Pgo8ZWwtc3RhdGVtZW50IGNsYXNzPSJvayBtdWx0aWxpbmUiIGlkPSJmb3I5IiB0YWJpbmRleD0iLTEiPgo8ZWwtdG9wPjxlbC1leHBhbmQ+KzwvZWwtZXhwYW5kPjxlbC1rdz5mb3IgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImlkZW50MTEiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD5jb3VudDwvZWwtaWQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmNvdW50ZXJOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNJZGVudGlmaWVyRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48ZWwta3c+IGZyb20gPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHIxMiIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWxpdD4xPC9lbC1saXQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmZpcnN0VmFsdWU8L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI0V4cHJlc3Npb25GaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1rdz4gdG8gPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHIxMyIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWxpdD4zNjA8L2VsLWxpdD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+bGFzdFZhbHVlPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNFeHByZXNzaW9uRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48ZWwta3c+IHN0ZXAgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHIxNCIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWxpdD4xPC9lbC1saXQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPnN0ZXBWYWx1ZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjRXhwcmVzc2lvbkZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PGVsLW1zZz48L2VsLW1zZz48ZWwtZnI+NDwvZWwtZnI+PC9lbC10b3A+CjxlbC1zdGF0ZW1lbnQgY2xhc3M9Im9rIiBpZD0iY2FsbDE1IiB0YWJpbmRleD0iLTEiPjxlbC10b3A+PGVsLWt3PmNhbGwgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImlkZW50MTYiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD50PC9lbC1pZD4uPGVsLW1ldGhvZD48ZWwtbWV0aG9kPm1vdmU8L2VsLW1ldGhvZD48L2VsLW1ldGhvZD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+cHJvY2VkdXJlTmFtZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjUHJvY1JlZkZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PHNwYW4+KDwvc3Bhbj48ZWwtZmllbGQgaWQ9ImFyZ3MxNyIgY2xhc3M9Im9wdGlvbmFsIG9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWxpdD4xPC9lbC1saXQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmFyZ3VtZW50czwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjQXJnTGlzdEZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PHNwYW4+KTwvc3Bhbj48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj41PC9lbC1mcj48L2VsLXRvcD48L2VsLXN0YXRlbWVudD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2siIGlkPSJjYWxsMTgiIHRhYmluZGV4PSItMSI+PGVsLXRvcD48ZWwta3c+Y2FsbCA8L2VsLWt3PjxlbC1maWVsZCBpZD0iaWRlbnQxOSIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPnQ8L2VsLWlkPi48ZWwtbWV0aG9kPjxlbC1tZXRob2Q+dHVybjwvZWwtbWV0aG9kPjwvZWwtbWV0aG9kPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5wcm9jZWR1cmVOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNQcm9jUmVmRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4oPC9zcGFuPjxlbC1maWVsZCBpZD0iYXJnczIwIiBjbGFzcz0ib3B0aW9uYWwgb2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtbGl0PjE8L2VsLWxpdD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+YXJndW1lbnRzPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNBcmdMaXN0RmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4pPC9zcGFuPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjY8L2VsLWZyPjwvZWwtdG9wPjwvZWwtc3RhdGVtZW50Pgo8ZWwta3c+ZW5kIGZvcjwvZWwta3c+CjwvZWwtc3RhdGVtZW50Pgo8ZWwta3c+ZW5kIG1haW48L2VsLWt3Pgo8L21haW4+PC9lbC1jb2RlLWJsb2NrPgogICAg">Hint 4-2: the complete code</div>
+<div class="content" id="hint4-2content"></div>
+<h4>Notes</h4><textarea class="notes" id="notes4" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done4">Step Completed</label><input class="step-complete" type="checkbox" id="done4"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step5"><h1>Step 5: create a circle procedure</h1>
+    <div style="position: relative; padding-bottom: 40.38128249566724%; height: 0;"><iframe src="https://www.loom.com/embed/07ade479731648b4bed020efb917002d" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>Get your code to the same state as that shown at the end of the video (if necessary replaying the video and pausing),
+        and test that it draws two concentric circles of different radius. Then:
+
+        </p><ul>    
+            <li>Delete the second <el-code><el-global contenteditable="" spellcheck="false" class="ok empty" id="select0" tabindex="-1"><el-select><el-txt></el-txt><el-place>new code</el-place><div class="options"> main procedure function test constant enum record class abstract interface #</div></el-select></el-global></el-code> and <el-method>turn methods to 1 in each case.</el-method></li>
+            <li>Change first value (the 'x' coordinate) such that the circle is <i>approximately</i> centred within the display,
+                remembering that numeric values can be negative.</li>
+        </ul>
+    
+    <div class="hint" id="hint5-1" data-hint="CiAgICAgICAgPGVsLWNvZGUtYmxvY2s+PG1haW4gY2xhc3M9Im9rIG11bHRpbGluZSIgaWQ9Im1haW4xIiB0YWJpbmRleD0iLTEiPgo8ZWwtdG9wPjxlbC1leHBhbmQ+KzwvZWwtZXhwYW5kPjxlbC1rdz5tYWluPC9lbC1rdz48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj4xPC9lbC1mcj48L2VsLXRvcD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2siIGlkPSJsZXQzIiB0YWJpbmRleD0iLTEiPjxlbC1rdz5sZXQgPC9lbC1rdz48ZWwtZmllbGQgaWQ9InZhcjQiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD50PC9lbC1pZD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+bmFtZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjVmFsdWVEZWZGaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1rdz4gYmUgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHI1IiBjbGFzcz0ib2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwta3c+bmV3PC9lbC1rdz4gPGVsLXR5cGU+VHVydGxlPC9lbC10eXBlPigpPC9lbC10eHQ+PGVsLXBsYWNlPjxpPnZhbHVlIG9yIGV4cHJlc3Npb248L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI0V4cHJlc3Npb25GaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjI8L2VsLWZyPjwvZWwtc3RhdGVtZW50Pgo8ZWwtc3RhdGVtZW50IGNsYXNzPSJvayIgaWQ9ImNhbGw2IiB0YWJpbmRleD0iLTEiPjxlbC10b3A+PGVsLWt3PmNhbGwgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImlkZW50NyIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPnQ8L2VsLWlkPi48ZWwtbWV0aG9kPjxlbC1tZXRob2Q+cGxhY2VBdDwvZWwtbWV0aG9kPjwvZWwtbWV0aG9kPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5wcm9jZWR1cmVOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNQcm9jUmVmRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4oPC9zcGFuPjxlbC1maWVsZCBpZD0iYXJnczgiIGNsYXNzPSJvcHRpb25hbCBvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0Pi08ZWwtbGl0PjUwPC9lbC1saXQ+LCA8ZWwtbGl0PjA8L2VsLWxpdD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+YXJndW1lbnRzPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNBcmdMaXN0RmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4pPC9zcGFuPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjM8L2VsLWZyPjwvZWwtdG9wPjwvZWwtc3RhdGVtZW50Pgo8ZWwtc3RhdGVtZW50IGNsYXNzPSJvayBtdWx0aWxpbmUiIGlkPSJmb3I5IiB0YWJpbmRleD0iLTEiPgo8ZWwtdG9wPjxlbC1leHBhbmQ+KzwvZWwtZXhwYW5kPjxlbC1rdz5mb3IgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImlkZW50MTEiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD5jb3VudDwvZWwtaWQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmNvdW50ZXJOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNJZGVudGlmaWVyRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48ZWwta3c+IGZyb20gPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHIxMiIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWxpdD4xPC9lbC1saXQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmZpcnN0VmFsdWU8L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI0V4cHJlc3Npb25GaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1rdz4gdG8gPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHIxMyIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWxpdD4zNjA8L2VsLWxpdD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+bGFzdFZhbHVlPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNFeHByZXNzaW9uRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48ZWwta3c+IHN0ZXAgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHIxNCIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWxpdD4xPC9lbC1saXQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPnN0ZXBWYWx1ZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjRXhwcmVzc2lvbkZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PGVsLW1zZz48L2VsLW1zZz48ZWwtZnI+NDwvZWwtZnI+PC9lbC10b3A+CjxlbC1zdGF0ZW1lbnQgY2xhc3M9Im9rIiBpZD0iY2FsbDE1IiB0YWJpbmRleD0iLTEiPjxlbC10b3A+PGVsLWt3PmNhbGwgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImlkZW50MTYiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD50PC9lbC1pZD4uPGVsLW1ldGhvZD48ZWwtbWV0aG9kPm1vdmU8L2VsLW1ldGhvZD48L2VsLW1ldGhvZD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+cHJvY2VkdXJlTmFtZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjUHJvY1JlZkZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PHNwYW4+KDwvc3Bhbj48ZWwtZmllbGQgaWQ9ImFyZ3MxNyIgY2xhc3M9Im9wdGlvbmFsIG9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWxpdD4xPC9lbC1saXQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmFyZ3VtZW50czwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjQXJnTGlzdEZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PHNwYW4+KTwvc3Bhbj48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj41PC9lbC1mcj48L2VsLXRvcD48L2VsLXN0YXRlbWVudD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2siIGlkPSJjYWxsMTgiIHRhYmluZGV4PSItMSI+PGVsLXRvcD48ZWwta3c+Y2FsbCA8L2VsLWt3PjxlbC1maWVsZCBpZD0iaWRlbnQxOSIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPnQ8L2VsLWlkPi48ZWwtbWV0aG9kPjxlbC1tZXRob2Q+dHVybjwvZWwtbWV0aG9kPjwvZWwtbWV0aG9kPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5wcm9jZWR1cmVOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNQcm9jUmVmRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4oPC9zcGFuPjxlbC1maWVsZCBpZD0iYXJnczIwIiBjbGFzcz0ib3B0aW9uYWwgb2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtbGl0PjE8L2VsLWxpdD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+YXJndW1lbnRzPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNBcmdMaXN0RmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4pPC9zcGFuPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjY8L2VsLWZyPjwvZWwtdG9wPjwvZWwtc3RhdGVtZW50Pgo8ZWwta3c+ZW5kIGZvcjwvZWwta3c+CjwvZWwtc3RhdGVtZW50Pgo8ZWwta3c+ZW5kIG1haW48L2VsLWt3Pgo8L21haW4+PC9lbC1jb2RlLWJsb2NrPgogICAg">Hint 5-1: the complete code</div>
+<div class="content" id="hint5-1content"></div>
+<h4>Notes</h4><textarea class="notes" id="notes5" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done5">Step Completed</label><input class="step-complete" type="checkbox" id="done5"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step6"><h1>Step 6: create a circle procedure</h1>
+    <div style="position: relative; padding-bottom: 40.38128249566724%; height: 0;"><iframe src="https://www.loom.com/embed/07ade479731648b4bed020efb917002d" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>Get your code to the same state as that shown at the end of the video (if necessary replaying the video and pausing),
+        and test that it draws two concentric circles of different radius. Then:
+
+        </p><ul>    
+            <li>Delete the second <el-code><el-global contenteditable="" spellcheck="false" class="ok empty" id="select0" tabindex="-1"><el-select><el-txt></el-txt><el-place>new code</el-place><div class="options"> main procedure function test constant enum record class abstract interface #</div></el-select></el-global></el-code> methods to 1 in each case.</li>
+            <li>Change first value (the 'x' coordinate) such that the circle is <i>approximately</i> centred within the display,
+                remembering that numeric values can be negative.</li>
+        </ul>
+    
+    <div class="hint" id="hint6-1" data-hint="CiAgICAgICAgPGVsLWNvZGUtYmxvY2s+PG1haW4gY2xhc3M9Im9rIG11bHRpbGluZSIgaWQ9Im1haW4xIiB0YWJpbmRleD0iLTEiPgo8ZWwtdG9wPjxlbC1leHBhbmQ+KzwvZWwtZXhwYW5kPjxlbC1rdz5tYWluPC9lbC1rdz48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj4xPC9lbC1mcj48L2VsLXRvcD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2siIGlkPSJsZXQzIiB0YWJpbmRleD0iLTEiPjxlbC1rdz5sZXQgPC9lbC1rdz48ZWwtZmllbGQgaWQ9InZhcjQiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD50PC9lbC1pZD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+bmFtZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjVmFsdWVEZWZGaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1rdz4gYmUgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHI1IiBjbGFzcz0ib2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwta3c+bmV3PC9lbC1rdz4gPGVsLXR5cGU+VHVydGxlPC9lbC10eXBlPigpPC9lbC10eHQ+PGVsLXBsYWNlPjxpPnZhbHVlIG9yIGV4cHJlc3Npb248L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI0V4cHJlc3Npb25GaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjI8L2VsLWZyPjwvZWwtc3RhdGVtZW50Pgo8ZWwtc3RhdGVtZW50IGNsYXNzPSJvayIgaWQ9ImNhbGw2IiB0YWJpbmRleD0iLTEiPjxlbC10b3A+PGVsLWt3PmNhbGwgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImlkZW50NyIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPnQ8L2VsLWlkPi48ZWwtbWV0aG9kPjxlbC1tZXRob2Q+cGxhY2VBdDwvZWwtbWV0aG9kPjwvZWwtbWV0aG9kPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5wcm9jZWR1cmVOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNQcm9jUmVmRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4oPC9zcGFuPjxlbC1maWVsZCBpZD0iYXJnczgiIGNsYXNzPSJvcHRpb25hbCBvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0Pi08ZWwtbGl0PjUwPC9lbC1saXQ+LCA8ZWwtbGl0PjA8L2VsLWxpdD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+YXJndW1lbnRzPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNBcmdMaXN0RmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4pPC9zcGFuPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjM8L2VsLWZyPjwvZWwtdG9wPjwvZWwtc3RhdGVtZW50Pgo8ZWwtc3RhdGVtZW50IGNsYXNzPSJvayBtdWx0aWxpbmUiIGlkPSJmb3I5IiB0YWJpbmRleD0iLTEiPgo8ZWwtdG9wPjxlbC1leHBhbmQ+KzwvZWwtZXhwYW5kPjxlbC1rdz5mb3IgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImlkZW50MTEiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD5jb3VudDwvZWwtaWQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmNvdW50ZXJOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNJZGVudGlmaWVyRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48ZWwta3c+IGZyb20gPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHIxMiIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWxpdD4xPC9lbC1saXQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmZpcnN0VmFsdWU8L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI0V4cHJlc3Npb25GaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1rdz4gdG8gPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHIxMyIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWxpdD4zNjA8L2VsLWxpdD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+bGFzdFZhbHVlPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNFeHByZXNzaW9uRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48ZWwta3c+IHN0ZXAgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHIxNCIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWxpdD4xPC9lbC1saXQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPnN0ZXBWYWx1ZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjRXhwcmVzc2lvbkZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PGVsLW1zZz48L2VsLW1zZz48ZWwtZnI+NDwvZWwtZnI+PC9lbC10b3A+CjxlbC1zdGF0ZW1lbnQgY2xhc3M9Im9rIiBpZD0iY2FsbDE1IiB0YWJpbmRleD0iLTEiPjxlbC10b3A+PGVsLWt3PmNhbGwgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImlkZW50MTYiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD50PC9lbC1pZD4uPGVsLW1ldGhvZD48ZWwtbWV0aG9kPm1vdmU8L2VsLW1ldGhvZD48L2VsLW1ldGhvZD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+cHJvY2VkdXJlTmFtZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjUHJvY1JlZkZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PHNwYW4+KDwvc3Bhbj48ZWwtZmllbGQgaWQ9ImFyZ3MxNyIgY2xhc3M9Im9wdGlvbmFsIG9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWxpdD4xPC9lbC1saXQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmFyZ3VtZW50czwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjQXJnTGlzdEZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PHNwYW4+KTwvc3Bhbj48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj41PC9lbC1mcj48L2VsLXRvcD48L2VsLXN0YXRlbWVudD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2siIGlkPSJjYWxsMTgiIHRhYmluZGV4PSItMSI+PGVsLXRvcD48ZWwta3c+Y2FsbCA8L2VsLWt3PjxlbC1maWVsZCBpZD0iaWRlbnQxOSIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPnQ8L2VsLWlkPi48ZWwtbWV0aG9kPjxlbC1tZXRob2Q+dHVybjwvZWwtbWV0aG9kPjwvZWwtbWV0aG9kPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5wcm9jZWR1cmVOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNQcm9jUmVmRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4oPC9zcGFuPjxlbC1maWVsZCBpZD0iYXJnczIwIiBjbGFzcz0ib3B0aW9uYWwgb2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtbGl0PjE8L2VsLWxpdD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+YXJndW1lbnRzPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNBcmdMaXN0RmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4pPC9zcGFuPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjY8L2VsLWZyPjwvZWwtdG9wPjwvZWwtc3RhdGVtZW50Pgo8ZWwta3c+ZW5kIGZvcjwvZWwta3c+CjwvZWwtc3RhdGVtZW50Pgo8ZWwta3c+ZW5kIG1haW48L2VsLWt3Pgo8L21haW4+PC9lbC1jb2RlLWJsb2NrPgogICAg">Hint 6-1: the complete code</div>
+<div class="content" id="hint6-1content"></div>
+<h4>Notes</h4><textarea class="notes" id="notes6" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done6">Step Completed</label><input class="step-complete" type="checkbox" id="done6"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step7"><h1>Step 7: create a circle procedure</h1>
+    <div style="position: relative; padding-bottom: 40.38128249566724%; height: 0;"><iframe src="https://www.loom.com/embed/07ade479731648b4bed020efb917002d" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>Get your code to the same state as that shown at the end of the video (if necessary replaying the video and pausing),
+        and test that it draws two concentric circles of different radius. Then:
+
+        </p><ul>    
+            <li>Delete the second <el-code><el-kw>call</el-kw></el-code> to <el-method>circle</el-method> - as the random walk simulation needs only one.</li>
+            <li>Insert, immediately after the definition of <el-code><el-id>t</el-id></el-code> within <el-code><el-kw>main</el-kw></el-code> the instruction:
+            <el-code><el-statement class="none" id="call4" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident5" class="ok" tabindex="-1"><el-txt><el-method>circle</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><span>(</span><el-field id="args6" class="optional ok" tabindex="-1"><el-txt><el-id>t</el-id>, <el-lit>50</el-lit></el-txt><el-place><i>arguments</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><span>)</span><el-msg></el-msg><el-fr>0</el-fr></el-top></el-statement></el-code></li>
+        </ul>
+
+        and run the program again.
+    <p></p>
+    <p>Does hiding the Turtle affect what it draws?</p>
+<textarea class="question" id="question7-0" placeholder="input is required"></textarea>
+    
+    <div class="hint" id="hint7-1" data-hint="CiAgICAgICAgPGVsLWNvZGUtYmxvY2s+PG1haW4gY2xhc3M9Im9rIG11bHRpbGluZSIgaWQ9Im1haW4xIiB0YWJpbmRleD0iLTEiPgo8ZWwtdG9wPjxlbC1leHBhbmQ+KzwvZWwtZXhwYW5kPjxlbC1rdz5tYWluPC9lbC1rdz48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj4xPC9lbC1mcj48L2VsLXRvcD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2siIGlkPSJsZXQzIiB0YWJpbmRleD0iLTEiPjxlbC1rdz5sZXQgPC9lbC1rdz48ZWwtZmllbGQgaWQ9InZhcjQiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD50PC9lbC1pZD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+bmFtZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjVmFsdWVEZWZGaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1rdz4gYmUgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImV4cHI1IiBjbGFzcz0ib2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwta3c+bmV3PC9lbC1rdz4gPGVsLXR5cGU+VHVydGxlPC9lbC10eXBlPigpPC9lbC10eHQ+PGVsLXBsYWNlPjxpPnZhbHVlIG9yIGV4cHJlc3Npb248L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI0V4cHJlc3Npb25GaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjI8L2VsLWZyPjwvZWwtc3RhdGVtZW50Pgo8ZWwtc3RhdGVtZW50IGNsYXNzPSJvayIgaWQ9ImNhbGw2IiB0YWJpbmRleD0iLTEiPjxlbC10b3A+PGVsLWt3PmNhbGwgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImlkZW50NyIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPnQ8L2VsLWlkPi48ZWwtbWV0aG9kPjxlbC1tZXRob2Q+aGlkZTwvZWwtbWV0aG9kPjwvZWwtbWV0aG9kPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5wcm9jZWR1cmVOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNQcm9jUmVmRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4oPC9zcGFuPjxlbC1maWVsZCBpZD0iYXJnczgiIGNsYXNzPSJlbXB0eSBvcHRpb25hbCBvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjwvZWwtdHh0PjxlbC1wbGFjZT48aT48aT5hcmd1bWVudHM8L2k+PC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNBcmdMaXN0RmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4pPC9zcGFuPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjM8L2VsLWZyPjwvZWwtdG9wPjwvZWwtc3RhdGVtZW50Pgo8ZWwtc3RhdGVtZW50IGNsYXNzPSJvayIgaWQ9ImNhbGw5IiB0YWJpbmRleD0iLTEiPjxlbC10b3A+PGVsLWt3PmNhbGwgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImlkZW50MTAiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1tZXRob2Q+Y2lyY2xlPC9lbC1tZXRob2Q+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPnByb2NlZHVyZU5hbWU8L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI1Byb2NSZWZGaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxzcGFuPig8L3NwYW4+PGVsLWZpZWxkIGlkPSJhcmdzMTEiIGNsYXNzPSJvcHRpb25hbCBvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD50PC9lbC1pZD4sIDxlbC1saXQ+NTA8L2VsLWxpdD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+YXJndW1lbnRzPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNBcmdMaXN0RmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4pPC9zcGFuPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjQ8L2VsLWZyPjwvZWwtdG9wPjwvZWwtc3RhdGVtZW50Pgo8ZWwta3c+ZW5kIG1haW48L2VsLWt3Pgo8L21haW4+CjxlbC1wcm9jIGNsYXNzPSJvayBtdWx0aWxpbmUiIGlkPSJwcm9jMTIiIHRhYmluZGV4PSItMSI+CjxlbC10b3A+PGVsLWV4cGFuZD4rPC9lbC1leHBhbmQ+PGVsLWt3PnByb2NlZHVyZSA8L2VsLWt3PjxlbC1maWVsZCBpZD0iaWRlbnQxNCIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLW1ldGhvZD5jaXJjbGU8L2VsLW1ldGhvZD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+bmFtZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjTWV0aG9kTmFtZUZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PGVsLXB1bmM+KDwvZWwtcHVuYz48ZWwtZmllbGQgaWQ9InBhcmFtczE1IiBjbGFzcz0ib3B0aW9uYWwgb2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtaWQ+dDwvZWwtaWQ+IDxlbC1rdz5hczwvZWwta3c+IDxlbC10eXBlPlR1cnRsZTwvZWwtdHlwZT4sIDxlbC1pZD5yYWRpdXM8L2VsLWlkPiA8ZWwta3c+YXM8L2VsLWt3PiA8ZWwtdHlwZT5JbnQ8L2VsLXR5cGU+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPnBhcmFtZXRlciBkZWZpbml0aW9uczwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjUGFyYW1MaXN0RmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48ZWwtcHVuYz4pPC9lbC1wdW5jPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjU8L2VsLWZyPjwvZWwtdG9wPgo8ZWwtc3RhdGVtZW50IGNsYXNzPSJvayIgaWQ9ImxldDE2IiB0YWJpbmRleD0iLTEiPjxlbC1rdz5sZXQgPC9lbC1rdz48ZWwtZmllbGQgaWQ9InZhcjE3IiBjbGFzcz0ib2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtaWQ+c2VnbWVudDwvZWwtaWQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPm5hbWU8L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI1ZhbHVlRGVmRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48ZWwta3c+IGJlIDwvZWwta3c+PGVsLWZpZWxkIGlkPSJleHByMTgiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD5yYWRpdXM8L2VsLWlkPio8ZWwtaWQ+cGk8L2VsLWlkPio8ZWwtbGl0PjI8L2VsLWxpdD4vPGVsLWxpdD4zNjA8L2VsLWxpdD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+dmFsdWUgb3IgZXhwcmVzc2lvbjwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjRXhwcmVzc2lvbkZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PGVsLW1zZz48L2VsLW1zZz48ZWwtZnI+NjwvZWwtZnI+PC9lbC1zdGF0ZW1lbnQ+CjxlbC1zdGF0ZW1lbnQgY2xhc3M9Im9rIiBpZD0iY2FsbDE5IiB0YWJpbmRleD0iLTEiPjxlbC10b3A+PGVsLWt3PmNhbGwgPC9lbC1rdz48ZWwtZmllbGQgaWQ9ImlkZW50MjAiIGNsYXNzPSJvayIgdGFiaW5kZXg9Ii0xIj48ZWwtdHh0PjxlbC1pZD50PC9lbC1pZD4uPGVsLW1ldGhvZD48ZWwtbWV0aG9kPnBsYWNlQXQ8L2VsLW1ldGhvZD48L2VsLW1ldGhvZD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+cHJvY2VkdXJlTmFtZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjUHJvY1JlZkZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PHNwYW4+KDwvc3Bhbj48ZWwtZmllbGQgaWQ9ImFyZ3MyMSIgY2xhc3M9Im9wdGlvbmFsIG9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+LTxlbC1pZD5yYWRpdXM8L2VsLWlkPiwgPGVsLWxpdD4wPC9lbC1saXQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmFyZ3VtZW50czwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjQXJnTGlzdEZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PHNwYW4+KTwvc3Bhbj48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj43PC9lbC1mcj48L2VsLXRvcD48L2VsLXN0YXRlbWVudD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2sgbXVsdGlsaW5lIiBpZD0iZm9yMjIiIHRhYmluZGV4PSItMSI+CjxlbC10b3A+PGVsLWV4cGFuZD4rPC9lbC1leHBhbmQ+PGVsLWt3PmZvciA8L2VsLWt3PjxlbC1maWVsZCBpZD0iaWRlbnQyNCIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPmNvdW50PC9lbC1pZD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+Y291bnRlck5hbWU8L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI0lkZW50aWZpZXJGaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1rdz4gZnJvbSA8L2VsLWt3PjxlbC1maWVsZCBpZD0iZXhwcjI1IiBjbGFzcz0ib2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtbGl0PjE8L2VsLWxpdD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+Zmlyc3RWYWx1ZTwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjRXhwcmVzc2lvbkZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PGVsLWt3PiB0byA8L2VsLWt3PjxlbC1maWVsZCBpZD0iZXhwcjI2IiBjbGFzcz0ib2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtbGl0PjM2MDwvZWwtbGl0PjwvZWwtdHh0PjxlbC1wbGFjZT48aT5sYXN0VmFsdWU8L2k+PC9lbC1wbGFjZT48ZWwtY29tcGw+PC9lbC1jb21wbD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1oZWxwIHRpdGxlPSJDbGljayB0byBvcGVuIEhlbHAgZm9yIHRoaXMgZmllbGQiPjxhIGhyZWY9ImRvY3VtZW50YXRpb24vTGFuZ1JlZi5odG1sI0V4cHJlc3Npb25GaWVsZCIgdGFyZ2V0PSJoZWxwLWlmcmFtZSIgdGFiaW5kZXg9Ii0xIj4/PC9hPjwvZWwtaGVscD48L2VsLWZpZWxkPjxlbC1rdz4gc3RlcCA8L2VsLWt3PjxlbC1maWVsZCBpZD0iZXhwcjI3IiBjbGFzcz0ib2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtbGl0PjE8L2VsLWxpdD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+c3RlcFZhbHVlPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNFeHByZXNzaW9uRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj44PC9lbC1mcj48L2VsLXRvcD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2siIGlkPSJjYWxsMjgiIHRhYmluZGV4PSItMSI+PGVsLXRvcD48ZWwta3c+Y2FsbCA8L2VsLWt3PjxlbC1maWVsZCBpZD0iaWRlbnQyOSIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPnQ8L2VsLWlkPi48ZWwtbWV0aG9kPjxlbC1tZXRob2Q+bW92ZTwvZWwtbWV0aG9kPjwvZWwtbWV0aG9kPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5wcm9jZWR1cmVOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNQcm9jUmVmRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4oPC9zcGFuPjxlbC1maWVsZCBpZD0iYXJnczMwIiBjbGFzcz0ib3B0aW9uYWwgb2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtaWQ+c2VnbWVudDwvZWwtaWQ+PC9lbC10eHQ+PGVsLXBsYWNlPjxpPmFyZ3VtZW50czwvaT48L2VsLXBsYWNlPjxlbC1jb21wbD48L2VsLWNvbXBsPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWhlbHAgdGl0bGU9IkNsaWNrIHRvIG9wZW4gSGVscCBmb3IgdGhpcyBmaWVsZCI+PGEgaHJlZj0iZG9jdW1lbnRhdGlvbi9MYW5nUmVmLmh0bWwjQXJnTGlzdEZpZWxkIiB0YXJnZXQ9ImhlbHAtaWZyYW1lIiB0YWJpbmRleD0iLTEiPj88L2E+PC9lbC1oZWxwPjwvZWwtZmllbGQ+PHNwYW4+KTwvc3Bhbj48ZWwtbXNnPjwvZWwtbXNnPjxlbC1mcj45PC9lbC1mcj48L2VsLXRvcD48L2VsLXN0YXRlbWVudD4KPGVsLXN0YXRlbWVudCBjbGFzcz0ib2siIGlkPSJjYWxsMzEiIHRhYmluZGV4PSItMSI+PGVsLXRvcD48ZWwta3c+Y2FsbCA8L2VsLWt3PjxlbC1maWVsZCBpZD0iaWRlbnQzMiIgY2xhc3M9Im9rIiB0YWJpbmRleD0iLTEiPjxlbC10eHQ+PGVsLWlkPnQ8L2VsLWlkPi48ZWwtbWV0aG9kPjxlbC1tZXRob2Q+dHVybjwvZWwtbWV0aG9kPjwvZWwtbWV0aG9kPjwvZWwtdHh0PjxlbC1wbGFjZT48aT5wcm9jZWR1cmVOYW1lPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNQcm9jUmVmRmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4oPC9zcGFuPjxlbC1maWVsZCBpZD0iYXJnczMzIiBjbGFzcz0ib3B0aW9uYWwgb2siIHRhYmluZGV4PSItMSI+PGVsLXR4dD48ZWwtbGl0PjE8L2VsLWxpdD48L2VsLXR4dD48ZWwtcGxhY2U+PGk+YXJndW1lbnRzPC9pPjwvZWwtcGxhY2U+PGVsLWNvbXBsPjwvZWwtY29tcGw+PGVsLW1zZz48L2VsLW1zZz48ZWwtaGVscCB0aXRsZT0iQ2xpY2sgdG8gb3BlbiBIZWxwIGZvciB0aGlzIGZpZWxkIj48YSBocmVmPSJkb2N1bWVudGF0aW9uL0xhbmdSZWYuaHRtbCNBcmdMaXN0RmllbGQiIHRhcmdldD0iaGVscC1pZnJhbWUiIHRhYmluZGV4PSItMSI+PzwvYT48L2VsLWhlbHA+PC9lbC1maWVsZD48c3Bhbj4pPC9zcGFuPjxlbC1tc2c+PC9lbC1tc2c+PGVsLWZyPjEwPC9lbC1mcj48L2VsLXRvcD48L2VsLXN0YXRlbWVudD4KPGVsLWt3PmVuZCBmb3I8L2VsLWt3Pgo8L2VsLXN0YXRlbWVudD4KPGVsLWt3PmVuZCBwcm9jZWR1cmU8L2VsLWt3Pgo8L2VsLXByb2M+PC9lbC1jb2RlLWJsb2NrPgogICAg">Hint 7-1: the complete code</div>
+<div class="content" id="hint7-1content"></div>
+<h4>Notes</h4><textarea class="notes" id="notes7" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done7">Step Completed</label><input class="step-complete" type="checkbox" id="done7"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step8"><h1>Step 8: draw a random walk</h1>
+    <div style="position: relative; padding-bottom: 40.38128249566724%; height: 0;"><iframe src="https://www.loom.com/embed/d95662acb90348d48d5e6041b4e607e2" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<h4>Notes</h4><textarea class="notes" id="notes8" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done8">Step Completed</label><input class="step-complete" type="checkbox" id="done8"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step9"><h1>Step 9: count the paces</h1>
+    <div style="position: relative; padding-bottom: 39.89637305699482%; height: 0;"><iframe src="https://www.loom.com/embed/d9d30ae058714cda9e327c1f97fc8508" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>Get your code to the same state as that shown at the end of the video (if necessary replaying the video and pausing),
+        and test that it works correctly.
+    </p><p>Run the program 10 times, and record here the smallest, and the largest, number of paces taken to reach the edge
+        of the circle.</p>
+<textarea class="question" id="question9-0" placeholder="input is required"></textarea>
+<p></p><h4>Notes</h4><textarea class="notes" id="notes9" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done9">Step Completed</label><input class="step-complete" type="checkbox" id="done9"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="step" id="step10"><h1>Step 10: simulate multiple walks</h1>
+    <div style="position: relative; padding-bottom: 38.31615120274915%; height: 0;"><iframe src="https://www.loom.com/embed/3f0f595ecd304af6b0e6215fa8d45a02" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+    <p>Get your code to the same state as that shown at the end of the video (if necessary replaying the video and pausing),
+        and test that it works correctly.</p>
+    <p>What value did you get for the average number of paces?</p>
+<textarea class="question" id="question10-0" placeholder="input is required"></textarea>
+    <p>Try increasing the number of walks from 20 to 100, noting that you will have to change 20 to 100 in two separate places.</p>
+    <p>What value did you get for the average number of paces after 100 walks?</p>
+<textarea class="question" id="question10-1" placeholder="input is required"></textarea>
+    <p>The fact that we had to change the 20 to 100 in two locations is an example of breaking what
+    principle of good programming?</p>
+<textarea class="question" id="question10-2" placeholder="input is required"></textarea>
+    <p>What would be a simple way to improve the code so that you could change the number of walks 
+        required in just one place?</p>
+<textarea class="question" id="question10-3" placeholder="input is required"></textarea>
+<h4>Notes</h4><textarea class="notes" id="notes10" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done10">Step Completed</label><input class="step-complete" type="checkbox" id="done10"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
+
+<div class="final" id="final11"><h1>Congratulations! You have completed this worksheet</h1>
+    <p>If you have time, try any of the following:
+    </p><ul>
+        <li>Simulate a larger number of walks e.g. 100. This will give a more accurate figure for the average number of paces.</li>
+        <li>Make the <el-id>pace</el-id> smaller but keep the circle's <el-id>radius</el-id> the same size as now.
+            The average number of paces to reach the edge will be larger. But does it increase in proportion? Try
+            three different values and plot the average against pace size.
+        </li>
+        <li>Go back to the original values, but make a small change to the range of possible turn-angles between paces:
+            -60 to + 60 degrees, or -120 to + 120, say.
+            How does this change the average number of paces? Is the relationship linear?</li>
+        <li>Read more about the nature and application of Random Walks on <a href="https://en.wikipedia.org/wiki/Random_walk" target="_blank">Wikipedia</a>.</li>
+    </ul>
 </div>
 <script src="../../../out/website/worksheet-scripts.js"></script>
 </body>
+</html>
+  <div hidden="" id="hash"></div>
+  <div hidden="" id="changes"></div>
+
+    <script src="https://elan-language.github.io/LanguageAndIDE/diff.js"></script>
+    <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-model-scripts.js"></script>
+  </body>
 </html>
