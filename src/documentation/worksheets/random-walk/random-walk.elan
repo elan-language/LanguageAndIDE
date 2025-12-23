@@ -1,11 +1,5 @@
-# e6ccb3e0e312d9f8d8c56113b200f6a369f4facc7e31de6f1db40159c07d71c8 Elan 1.9.0 guest default_profile valid
+# ff4ee8b32b690b83f365bdf02a2dcaf7f05014d74067cf9fa6a2908611e063c9 Elan 1.9.0 guest default_profile valid
 
-# 
-# 
-# 
-# 
-# 
-# Elan 1.9.0
 main
   let t be new Turtle()
   variable paces set to 0
