@@ -2336,9 +2336,92 @@ Later shapes are positioned over earlier ones.</p>
 <p>So some care is needed to manage the layout in the Display.</p>
 <p>Note that, while vector graphics are being drawn, printed text that exceeds the height of the Display does not scroll until the graphic completes.</p>
 
-<h1 id="Input/output">Input/output</h1>
+<h1 id="InputOutput">Input/output</h1>
 
-<h2>Reading keys 'on the fly'</h2>
+<h2 id="KeyboardInput">Keyboard input</h2>
+<p>The following system methods are provided for soliciting and retrieving keyboard input. </p>
+<table class="tableMethod">
+ <tr>
+  <th>system<br>method</th>
+  <th>argument<br>Types</th>
+  <th>return<br>Types</th>
+  <th>action</th>
+ </tr><tr id="getKey">
+  <td><el-method>getKey</el-method></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>returns the last character last pressed on the keyboard during program execution</td>
+ </tr><tr id="getKeyWithModifier">
+  <td><el-method>getKeyWithModifier</el-method></td>
+  <td>(none)</td>
+  <td>2-Tuple:<br>(<el-type>String</el-type>, <el-type>String</el-type>)</td>
+  <td>returns the last key combination pressed on the keyboard:<br>
+      the key pressed and the modifier key's name (if also pressed)</td>
+ </tr><tr id="getNumericKey">
+  <td><el-method>getNumericKey</el-method></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>returns either the numeric key last pressed or, if the last pressed key was not numeric, then <el-code>"-1"</el-code></td>
+ </tr><tr id="inputString">
+  <td><el-method>inputString</el-method></td>
+  <td><el-type>String</el-type></td>
+  <td><el-type>String</el-type></td>
+  <td>prints the string as a prompt, and returns the typed input when Enter is pressed</td>
+ </tr><tr id="inputStringWithLimits">
+  <td><el-method>inputStringWithLimits</el-method></td>
+  <td><el-type>String</el-type>, <el-type>Int</el-type>, <el-type>Int</el-type></td>
+  <td><el-type>String</el-type></td>
+  <td>prints the string as a prompt and returns the typed input when Enter is pressed<br>
+  provided the length of the response is within the minimum and maximum limits specified.<br>
+  If it is not, the prompt is repeated with the relevant limit displayed</td>
+ </tr><tr id="inputStringFromOptions">
+  <td><el-method>inputStringFromOptions</el-method></td>
+  <td><el-type>String</el-type>, <el-type>List&lt;of String&gt;</el-type></td>
+  <td><el-type>String</el-type></td>
+  <td>prints the string as a prompt and returns the typed input when Enter is pressed<br>
+  provided it is one of the options in the list.<br>
+  If it is not, the prompt is repeated with the options displayed</td>
+ </tr><tr id="inputInt">
+  <td><el-method>inputInt</el-method></td>
+  <td><el-type>String</el-type></td>
+  <td><el-type>Int</el-type></td>
+  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
+  provided that it is an integer.<br> If it is not, the prompt is repeated with an error message</td>
+ </tr><tr id="inputIntBetween">
+  <td><el-method>inputIntBetween</el-method></td>
+  <td><el-type>String</el-type>, <el-type>Int</el-type>, <el-type>Int</el-type></td>
+  <td><el-type>Int</el-type></td>
+  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
+  provided that it is an integer with a value in the (inclusive) range.<br> The first range value must be less than or equal to the second</td>
+ </tr><tr id="inputFloat">
+  <td><el-method>inputFloat</el-method></td>
+  <td><el-type>String</el-type></td>
+  <td><el-type>Float</el-type></td>
+  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
+  provided that it is a number.<br> If it is not, the prompt is repeated with an error message</td>
+ </tr><tr id="inputFloatBetween">
+  <td><el-method>inputFloatBetween</el-method></td>
+  <td><el-type>String</el-type>, <el-type>Int</el-type>, <el-type>Int</el-type></td>
+  <td><el-type>Float</el-type></td>
+  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
+  provided that it is a number with a value in the (inclusive) range.<br> The first range value must be less than or equal to the second</td>
+ </tr><tr>
+  <td><el-method>waitForAnyKey</el-method></td>
+  <td></td>
+  <td></td>
+  <td><b><i>deprecated</i></b> see methods <a href="#waitForKey"><el-method>waitForKey</el-method></a>,
+   <a href="#getKey"><el-method>getKey</el-method></a> and
+   <a href="#pressAnyKeyToContinue"><el-method>pressAnyKeyToContinue</el-method></a></td>
+ </tr><tr id="waitForKey">
+  <td><el-method>waitForKey</el-method></td>
+  <td>(none)</td>
+  <td><el-type>String</el-type></td>
+  <td>pauses execution of the program until a key is pressed on the keyboard,<br>
+  and returns either a character or the name of a non-character key</td>
+ </tr>
+</table>
+
+<h3 class="no-TOC"> Reading keys 'on the fly'</h3>
 <p>In some applications &ndash; especially in games, for example &ndash; you want the program to react to a key pressed by the user, but without holding up the program to wait for value to be input. </p>
 <p>Whether your application makes use of graphics, or uses the Display  just for text, reading keystrokes 'on the fly' is done via one of three methods:</p>
 <el-code-block>
@@ -2371,36 +2454,56 @@ Later shapes are positioned over earlier ones.</p>
 <el-statement class="ok"><el-kw>print </el-kw><el-field class="optional ok"><el-txt>"<el-lit>That was </el-lit>{<el-id>mykey</el-id>}"</el-txt></el-field></el-statement>
 </el-code-block>
 
-<h2 id="TextFileReader">Reading text files</h2>
-<p>The <el-type>TextFileReader</el-type> class is used to read textual data from a file.</p>
-<p>An instance is created by the standalone system method <el-method>openFileForReading</el-method>.</p>
+<h2 id="FileInputOutput">Text file input/output</h2>
+<p>Reading or writing a text file requires that you <b>open</b> (for reading) or <b>create</b> (for writing) a file using these system methods:</p> 
+<table class="tableMethod">
+ <tr>
+  <th>system<br>method</th>
+  <th>argument<br>Types</th>
+  <th>return<br>Class</th>
+  <th>action</th>
+ </tr><tr id="openFileForReading">
+  <td><el-method>openFileForReading</el-method></td>
+  <td>(none)</td>
+  <td><el-type>TextFileReader</el-type></td>
+  <td>opens a file system dialog to choose the filename of filetype <el-code>.txt</el-code>  to be read,
+  and returns a file handle<br>
+  see <a href="#TextFileReader">Reading text files</a></td>
+ </tr><tr id="createFileForWriting">
+  <td><el-method>createFileForWriting</el-method></td>
+  <td>(none)</td>
+  <td><el-type>TextFileWriter</el-type></td>
+  <td>sets up a buffer for the data to be output, and specifies a filename (or the empty string)
+  with or without the default filetype of <el-code>.txt</el-code>, and returns a file handle<br>
+  see <a href="#TextFileWriter">Writing text files</a></td>
+ </tr>
+</table>
+
+<h3 class="no-TOC" id="TextFileReader">Reading text files</h3>
+<p>The <el-type>TextFileReader</el-type> class is used to read text data from a file.</p>
+<p>An instance is created by the system method <el-method>openFileForReading</el-method>.</p>
 <p>The available procedure methods are:</p>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
   <th>argument<br>Type</th>
   <th>action</th>
- </tr><tr id="openFileForReading">
-  <td><el-method>openFileForReading</el-method></td>
-  <td><el-type>(none)</el-type></td>
-  <td>opens a file system dialog to choose the filename to be read, which must have the filetype .txt<br>
-  and returns a file handle</td>
  </tr><tr id="readLine">
   <td><el-method>readLine</el-method></td>
-  <td><el-type>(none)</el-type></td>
+  <td>(none)</td>
   <td>reads the next substring from the file that is terminated with a newline</td>
  </tr><tr id="readWholeFile">
   <td><el-method>readWholeFile</el-method></td>
-  <td><el-type>(none)</el-type></td>
+  <td>(none)</td>
   <td>reads the whole file and closes the file</td>
  </tr><tr id="endOfFile">
   <td><el-method>endOfFile</el-method></td>
-  <td><el-type>(none)</el-type></td>
+  <td>(none)</td>
   <td>returns <el-code><el-id>true</el-id></el-code> after the last line has been read<br>
   &ndash; otherwise <el-id>false</el-id></td>
  </tr><tr id="close">
   <td><el-method>close</el-method></td>
-  <td><el-type>(none)</el-type></td>
+  <td>(none)</td>
   <td>closes the file</td>
  </tr>
 </table>
@@ -2432,9 +2535,9 @@ Later shapes are positioned over earlier ones.</p>
 <li>Calling any method on a file that is already closed will result in a runtime error.</li>
 </ul>
 
-<h2 id="TextFileWriter">Writing text files</h2>
+<h3 class="no-TOC" id="TextFileWriter">Writing text files</h3>
 <p>The <el-type>TextFileWriter</el-type> class is used to write textual data to a file.</p>
-<p>An instance is created by the standalone system method <el-method>createFileForWriting</el-method>.</p>
+<p>An instance is created by the system method <el-method>createFileForWriting</el-method>.</p>
 <p>The available procedure methods are:</p>
 <table class="tableMethod">
  <tr>
@@ -2461,6 +2564,7 @@ Later shapes are positioned over earlier ones.</p>
   <td>writes the buffer to the file system</td>
  </tr>
 </table>
+
 <p>These methods may be used to write a whole file in one go:</p>
 <el-code-block source="TextFileWriter_1.elan">
     <el-statement class="ok" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>f</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="0"><el-txt><el-method>createFileForWriting</el-method>("<el-lit>myFile.txt</el-lit>")</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -2600,7 +2704,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
  </li>
 </ul>
 
-<h2 id="tone">Sound</h2>
+<h2 id="tone">Sound output</h2>
 
 <p>The <el-method>tone</el-method> procedure allows the generation of a simple tone. It requires three arguments to be provided:</p>
 <ul>
@@ -2659,7 +2763,7 @@ If you need another random value, you use the returned <el-type>Random</el-type>
   <th>action</th>
  </tr><tr id="initialiseFromClock">
   <td><el-method>initialiseFromClock</el-method></td>
-  <td><el-type>(none)</el-type></td>
+  <td>(none)</td>
   <td>uses the system clock to provide a seed<br>from which to generate fresh random values</td>
  </tr>
 </table>
@@ -3160,9 +3264,8 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
 </el-code-block>
 
 <h1 id="SystemMethods">System methods</h1>
-<h2></h2>
 
-<p>System methods appear to work like <el-code>functions</el-code>, because:</p>
+<p>System methods appear to work like functions, because:</p>
 <ul>
  <li>they may require one or more arguments to be provided.</li>
  <li>they always return a value.</li>
@@ -3173,16 +3276,17 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
  <li>They may have a dependency on data that is not provided as an argument.</li>
  <li>They may generate side effects, such as changing the screen display or writing to a file.</li>
 </ul>
-<p>Because of these properties, system methods may be used only within the <el-code>main</el-code> routine or within a <el-code>procedure</el-code>.
- They may not be used inside a <el-code>function</el-code> that you have defined, because to do so would mean that your <el-code>function</el-code> would not be pure.</p>
-<p>System methods are all defined within the standard library: you cannot write a system method yourself.</p>
-<p>System methods are commonly associated with <a href="#Input/output">Input/output</a>, but note that:</p>
-<ul>
- <li>Input/output may be performed in  procedures as well as in <el-code>main</el-code>.</li>
- <li>Some system methods are not concerned with input/output, e.g. some generate random numbers.</li>
-</ul>
-<p>The reason those are system methods is that they have a dependency on data that is not passed into them as arguments.</p>
+<p>Because of these properties, system methods may be used only within <el-kw>main</el-kw> or within a <el-kw>procedure</el-kw>.
+ They may not be used inside a <el-kw>function</el-kw> that you have defined, because to do so would mean that your function would not be pure.</p>
+<p>System methods are defined only within Elan's standard library: you cannot write a system method yourself.</p>
 
+<h2 id="IOMethods">Input/output methods</h2>
+<ul>
+ <li>Keyboard input: see <a href="#KeyboardInput">Keyboard input</a>.</li>
+ <li>File input/output: see <a href="#FileInputOutput">Text file input/output</a>.</li>
+</ul>
+ 
+<h2 id="MiscMethods">Miscellaneous methods</h2> 
 <table class="tableMethod">
  <tr>
   <th>system<br>method</th>
@@ -3194,75 +3298,6 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
   <td>(none)</td>
   <td><el-type>Int</el-type></td>
   <td>returns the current value (in  milliseconds) of a system clock.<br>Useful for measuring elapsed time by comparing the values returned by two calls</td>
- </tr><tr id="createFileForWriting_system">
-  <td><el-method>createFileForWriting</el-method></td>
-  <td>(none)</td>
-  <td><el-type>TextFileWriter</el-type></td>
-  <td>see <a href="#TextFileWriter">Writing text files</a></td>
- </tr><tr id="getKey">
-  <td><el-method>getKey</el-method></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>returns the last character last pressed on the keyboard during program execution</td>
- </tr><tr id="getKeyWithModifier">
-  <td><el-method>getKeyWithModifier</el-method></td>
-  <td>(none)</td>
-  <td>2-Tuple:<br>(<el-type>String</el-type>, <el-type>String</el-type>)</td>
-  <td>returns the last key combination pressed on the keyboard:<br>
-      the key pressed and the modifier key's name (if also pressed)</td>
- </tr><tr id="getNumericKey">
-  <td><el-method>getNumericKey</el-method></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>returns either the numeric key last pressed or, if the last pressed key was not numeric, then <el-code>"-1"</el-code></td>
- </tr><tr id="inputString">
-  <td><el-method>inputString</el-method></td>
-  <td><el-type>String</el-type></td>
-  <td><el-type>String</el-type></td>
-  <td>prints the string as a prompt, and returns the typed input when Enter is pressed</td>
- </tr><tr id="inputStringWithLimits">
-  <td><el-method>inputStringWithLimits</el-method></td>
-  <td><el-type>String</el-type>, <el-type>Int</el-type>, <el-type>Int</el-type></td>
-  <td><el-type>String</el-type></td>
-  <td>prints the string as a prompt and returns the typed input when Enter is pressed<br>
-  provided the length of the response is within the minimum and maximum limits specified.<br>
-  If it is not, the prompt is repeated with the relevant limit displayed</td>
- </tr><tr id="inputStringFromOptions">
-  <td><el-method>inputStringFromOptions</el-method></td>
-  <td><el-type>String</el-type>, <el-type>List&lt;of String&gt;</el-type></td>
-  <td><el-type>String</el-type></td>
-  <td>prints the string as a prompt and returns the typed input when Enter is pressed<br>
-  provided it is one of the options in the list.<br>
-  If it is not, the prompt is repeated with the options displayed</td>
- </tr><tr id="inputInt">
-  <td><el-method>inputInt</el-method></td>
-  <td><el-type>String</el-type></td>
-  <td><el-type>Int</el-type></td>
-  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
-  provided that it is an integer.<br> If it is not, the prompt is repeated with an error message</td>
- </tr><tr id="inputIntBetween">
-  <td><el-method>inputIntBetween</el-method></td>
-  <td><el-type>String</el-type>, <el-type>Int</el-type>, <el-type>Int</el-type></td>
-  <td><el-type>Int</el-type></td>
-  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
-  provided that it is an integer with a value in the (inclusive) range.<br> The first range value must be less than or equal to the second</td>
- </tr><tr id="inputFloat">
-  <td><el-method>inputFloat</el-method></td>
-  <td><el-type>String</el-type></td>
-  <td><el-type>Float</el-type></td>
-  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
-  provided that it is a number.<br> If it is not, the prompt is repeated with an error message</td>
- </tr><tr id="inputFloatBetween">
-  <td><el-method>inputFloatBetween</el-method></td>
-  <td><el-type>String</el-type>, <el-type>Int</el-type>, <el-type>Int</el-type></td>
-  <td><el-type>Float</el-type></td>
-  <td>prints the string as a prompt and returns the value of the typed input when Enter is pressed
-  provided that it is a number with a value in the (inclusive) range.<br> The first range value must be less than or equal to the second</td>
- </tr><tr id="openFileForReading_system">
-  <td><el-method>openFileForReading</el-method></td>
-  <td>(none)</td>
-  <td><el-type>TextFileReader</el-type></td>
-  <td>see <a href="#TextFileReader">Reading text files</a></td>
  </tr><tr id="random">
   <td><el-method>random</el-method></td>
   <td>(none)</td>
@@ -3273,19 +3308,6 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
   <td><el-type>Int</el-type>, <el-type>Int</el-type></td>
   <td><el-type>Int</el-type></td>
   <td>returns a random number in the (inclusive) range between the two arguments<br>Not usable from a function: see note</td>
- </tr><tr>
-  <td><el-method>waitForAnyKey</el-method></td>
-  <td></td>
-  <td></td>
-  <td><b><i>deprecated</i></b> see methods <a href="#waitForKey"><el-method>waitForKey</el-method></a>,
-   <a href="#getKey"><el-method>getKey</el-method></a> and
-   <a href="#pressAnyKeyToContinue"><el-method>pressAnyKeyToContinue</el-method></a></td>
- </tr><tr id="waitForKey">
-  <td><el-method>waitForKey</el-method></td>
-  <td>(none)</td>
-  <td><el-type>String</el-type></td>
-  <td>pauses execution of the program until a key is pressed on the keyboard,<br>
-  and returns either a character or the name of a non-character key</td>
  </tr>
 </table>
 
