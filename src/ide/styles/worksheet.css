@@ -53,7 +53,7 @@
     }
 
     /* First hint of active step will be shown */
-    #worksheet.saved .step.active .hint:first-of-type
+    #worksheet.saved .step.active :nth-child(1 of .hint)
     {
         display: block;
     }
