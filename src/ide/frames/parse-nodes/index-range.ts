@@ -19,4 +19,8 @@ export class IndexRange extends AbstractSequence {
       return super.parseText(text);
     }
   }
+
+  override renderAsHtml(): string {
+    return `${this.fromIndex?.renderAsHtml()}:${this.toIndex?.renderAsHtml()}`;
+  }
 }

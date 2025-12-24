@@ -19,4 +19,10 @@ export class Qualifier extends AbstractAlternatives {
       super.parseText(text);
     }
   }
+
+  override renderAsHtml(): string {
+    return this.matchedText.startsWith(propertyKeyword)
+      ? `<el-kw>self</el-kw>`
+      : super.renderAsHtml();
+  }
 }

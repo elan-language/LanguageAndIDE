@@ -126,7 +126,15 @@ export class BinaryOperation extends AbstractParseNode {
   renderAsHtml(): string {
     const open = this.keyword ? "<el-kw>" : "";
     const close = this.keyword ? "</el-kw>" : "";
-    return `${open}${this.renderAsSource()}${close}`;
+    let text = this.matchedText.trim();
+    if (text === isKeyword) {
+      text = " == ";
+    } else if (text === isntKeyword) {
+      text = " != ";
+    } else {
+      text = this.renderAsSource();
+    }
+    return `${open}${text}${close}`;
   }
 
   renderAsSource(): string {

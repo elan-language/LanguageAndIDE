@@ -40,4 +40,8 @@ export class NewInstance extends AbstractSequence {
       ? new Set<KeywordCompletion>([KeywordCompletion.create(newKeyword)])
       : super.symbolCompletion_keywords();
   }
+
+  override renderAsHtml(): string {
+    return super.renderAsHtml().substring(18);
+  }
 }

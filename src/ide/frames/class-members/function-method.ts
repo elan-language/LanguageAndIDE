@@ -25,7 +25,7 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
   }
 
   private modifierAsHtml(): string {
-    return this.private ? `<el-kw>private </el-kw>` : "";
+    return this.private ? `[private]` : "";
   }
 
   private modifierAsSource(): string {
@@ -44,7 +44,7 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
   }
   public renderAsHtml(): string {
     return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.modifierAsHtml()}<el-kw>${functionKeyword} </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>self</el-kw>: TODO, ${this.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-comment># [function]${this.modifierAsHtml()}</el-comment><br><el-kw>def </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>self</el-kw>: TODO, ${this.params.renderAsHtml()}<el-punc>) -> </el-punc>${this.returnType.renderAsHtml()}:${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 </el-func>`;
   }

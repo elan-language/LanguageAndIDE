@@ -37,9 +37,15 @@ export class For extends FrameWithStatements implements Statement {
   getIdPrefix(): string {
     return "for";
   }
+
+  stepAsHtml(): string {
+    const stepValue = this.step.text;
+    return stepValue === `1` ? `` : `, ${this.step.renderAsHtml()}`;
+  }
+
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>for </el-kw>${this.variable.renderAsHtml()}<el-kw> in </el-kw><el-method>range</el-method>(${this.from.renderAsHtml()}, ${this.to.renderAsHtml()}, ${this.step.renderAsHtml()}):${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>for </el-kw>${this.variable.renderAsHtml()}<el-kw> in </el-kw><el-method>range</el-method>(${this.from.renderAsHtml()}, ${this.to.renderAsHtml()}${this.stepAsHtml()}):${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 </el-statement>`;
   }

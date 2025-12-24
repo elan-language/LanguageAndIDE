@@ -1,5 +1,5 @@
 import { TokenType } from "../symbol-completion-helpers";
-import { OPEN_BRACKET, CLOSE_BRACKET } from "../symbols";
+import { CLOSE_BRACKET, OPEN_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { CSV } from "./csv";
 import { PunctuationNode } from "./punctuation-node";
@@ -26,5 +26,8 @@ export class TypeTupleNode extends AbstractSequence {
       this.addElement(new PunctuationNode(CLOSE_BRACKET));
       super.parseText(text);
     }
+  }
+  override renderAsHtml(): string {
+    return `<el-type>Tuple</el-type>[${this.types?.renderAsHtml()}]`;
   }
 }
