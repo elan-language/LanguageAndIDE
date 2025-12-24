@@ -40,4 +40,8 @@ export class CopyWith extends AbstractSequence {
       ? new Set<KeywordCompletion>([KeywordCompletion.create(copyKeyword)])
       : super.symbolCompletion_keywords();
   }
+
+  override renderAsHtml(): string {
+    return this.original.renderAsHtml();
+  }
 }

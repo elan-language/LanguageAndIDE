@@ -38,14 +38,14 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember {
     return "prop";
   }
   private modifierAsHtml(): string {
-    return this.private ? `<el-kw>private </el-kw>` : "";
+    return this.private ? `<el-comment> # [private]</el-comment><br>` : "";
   }
   private modifierAsSource(): string {
     return this.private ? `private ` : "";
   }
 
   renderAsHtml(): string {
-    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.modifierAsHtml()}<el-kw>${propertyKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${asKeyword} </el-kw>${this.type.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
+    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.modifierAsHtml()}${this.name.renderAsHtml()}: ${this.type.renderAsHtml()} = <el-kw>none</el-kw>${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
   }
 
   renderAsSource(): string {

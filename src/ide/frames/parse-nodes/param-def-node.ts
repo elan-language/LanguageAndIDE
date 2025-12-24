@@ -55,4 +55,8 @@ export class ParamDefNode extends AbstractSequence {
         : new Set<KeywordCompletion>([])
       : super.symbolCompletion_keywords();
   }
+
+  renderAsHtml(): string {
+    return this.name?.renderAsHtml() + ": " + this.type?.renderAsHtml();
+  }
 }

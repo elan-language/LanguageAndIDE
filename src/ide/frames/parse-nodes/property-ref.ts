@@ -18,4 +18,8 @@ export class PropertyRef extends AbstractSequence {
     this.name = new IdentifierNode(new Set([TokenType.id_property]));
     this.addElement(this.name);
   }
+
+  override renderAsHtml(): string {
+    return `<el-kw>self</el-kw>.${this.name.renderAsHtml()}`;
+  }
 }

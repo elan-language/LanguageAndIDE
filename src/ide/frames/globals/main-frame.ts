@@ -32,9 +32,8 @@ export class MainFrame extends FrameWithStatements implements GlobalFrame {
 
   public renderAsHtml(): string {
     return `<main class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>main</el-kw>${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>def </el-kw><el-method>main</el-method>(): <el-kw>none</el-kw>${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
-<el-kw>end main</el-kw>
 </main>`;
   }
 

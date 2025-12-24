@@ -20,7 +20,10 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
   }
 
   private modifierAsHtml(): string {
-    return this.private ? `<el-kw>private </el-kw>` : "";
+    return this.private
+      ? `<el-comment># [private]</el-comment>
+    `
+      : "";
   }
 
   private modifierAsSource(): string {
@@ -40,9 +43,8 @@ ${this.indent()}end procedure\r
 
   public renderAsHtml(): string {
     return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.modifierAsHtml()}<el-kw>procedure </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc>${this.params.renderAsHtml()}<el-punc>)</el-punc>${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.modifierAsHtml()}<el-kw>procedure </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>self</el-kw>: TODO, ${this.params.renderAsHtml()}<el-punc>)</el-punc>${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
-<el-kw>end procedure</el-kw>
 </el-proc>`;
   }
 

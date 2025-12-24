@@ -36,7 +36,7 @@ export class Enum extends AbstractFrame implements GlobalFrame {
     return "enum";
   }
   renderAsHtml(): string {
-    return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-kw>enum </el-kw>${this.name.renderAsHtml()} ${this.values.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top></el-enum>`;
+    return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-comment>TODO: enum ${this.name.renderAsSource()} ${this.values.renderAsSource()}</el-comment>${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top></el-enum>`;
   }
 
   indent(): string {

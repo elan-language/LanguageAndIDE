@@ -42,8 +42,8 @@ export class Else extends AbstractFrame implements Statement {
   }
   private ifClauseAsHtml(): string {
     return this.hasIf
-      ? `<el-kw>if </el-kw>${this.condition.renderAsHtml()}`
-      : `${this.selectIfClause.renderAsHtml()}`;
+      ? `<el-kw>elif </el-kw>${this.condition.renderAsHtml()}`
+      : `<el-kw>${elseKeyword} </el-kw> ${this.selectIfClause.renderAsHtml()}`;
   }
 
   private ifClauseAsSource(): string {
@@ -56,7 +56,7 @@ export class Else extends AbstractFrame implements Statement {
 
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}
-    <el-kw>${elseKeyword} </el-kw>${this.ifClauseAsHtml()}${this.hasIf ? "<el-kw> " + thenKeyword + "</el-kw>" : ""}${this.helpAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
+    ${this.ifClauseAsHtml()}:${this.helpAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsSource(): string {

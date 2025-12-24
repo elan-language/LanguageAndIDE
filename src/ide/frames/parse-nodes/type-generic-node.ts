@@ -1,4 +1,5 @@
 import { ofKeyword } from "../../../compiler/keywords";
+import { ParseNode } from "../frame-interfaces/parse-node";
 import { TokenType } from "../symbol-completion-helpers";
 import { GT, LT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
@@ -17,6 +18,7 @@ export class TypeGenericNode extends AbstractSequence {
   generic: Sequence | undefined;
   tokenTypes: Set<TokenType> = new Set<TokenType>();
   concreteAndAbstract = new Set<TokenType>(concreteAndAbstractTypes);
+  private firstType: (() => ParseNode) | undefined;
 
   constructor(tokenTypes: Set<TokenType>) {
     super();
@@ -48,5 +50,11 @@ export class TypeGenericNode extends AbstractSequence {
     } else {
       return super.symbolCompletion_tokenTypes();
     }
+  }
+
+  renderAsHtml(): string {
+    const generics = this.generic?.renderAsHtml();
+    const chopped = generics?.substring(22, generics.length - 4);
+    return this.simpleType?.renderAsHtml() + `[<el-type>${chopped}</el-type>]`;
   }
 }
