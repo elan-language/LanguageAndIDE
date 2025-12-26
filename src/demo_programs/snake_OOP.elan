@@ -1,4 +1,4 @@
-# ac09ec5afed01a49c24dfad5916a8156dc4e2d23b746429cf2998fdc375f00cb Elan 1.9.0 guest default_profile valid
+# b915b746fc6629be6a684ec0b7a2e5c2ee25adc2b2445286978fb102da80409c Elan 1.9.0 guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -88,11 +88,15 @@ class Apple
   property location as Square
 
   procedure newRandomPosition(snake as Snake)
-    repeat
+    variable changePosition set to true
+    while changePosition
       let ranX be randomInt(0, 39)
       let ranY be randomInt(0, 29)
       set property.location to new Square(ranX, ranY)
-    end repeat when not snake.bodyCovers(property.location)
+      if not snake.bodyCovers(property.location) then
+        set changePosition to false
+      end if
+    end while
   end procedure
 
   procedure updateBlocks(blocks as Array2D<of Int>)

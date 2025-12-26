@@ -2,6 +2,7 @@ import { constantKeyword } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { ConstantValueField } from "../fields/constant-value-field";
 import { IdentifierField } from "../fields/identifier-field";
+import { pyNote } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
@@ -46,7 +47,10 @@ export class Constant extends AbstractFrame implements GlobalFrame, Collapsible 
     return "const";
   }
   renderAsHtml(): string {
-    return `<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-comment># [constant]</el-comment><br>${this.name.renderAsHtml()}</el-top> = ${this.isImported() ? "" : this.value.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-const><br>`;
+    return `<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
+    <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.name.renderAsHtml()}</el-top>
+     = ${this.isImported() ? "" : this.value.renderAsHtml()}
+     ${this.helpAsHtml()}${this.compileMsgAsHtml()}${pyNote("comment")}${this.getFrNo()}</el-const><br>`;
   }
 
   indent(): string {

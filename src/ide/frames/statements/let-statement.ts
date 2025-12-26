@@ -1,4 +1,5 @@
-import { beKeyword, letKeyword } from "../../../compiler/keywords";
+import { beKeyword, letKeyword, variableKeyword } from "../../../compiler/keywords";
+import { pyNote } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
@@ -30,7 +31,9 @@ export class LetStatement extends AbstractDefinitionStatement implements Stateme
   }
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}${this.name.renderAsHtml()}<el-kw> = </el-kw>${this.expr.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}
+    ${this.name.renderAsHtml()}<el-kw> = </el-kw>${this.expr.renderAsHtml()}
+    ${this.helpAsHtml()}${this.compileMsgAsHtml()}${pyNote(variableKeyword)}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsSource(): string {

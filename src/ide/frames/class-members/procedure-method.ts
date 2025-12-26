@@ -1,5 +1,13 @@
-import { privateKeyword } from "../../../compiler/keywords";
-import { addPrivateToggleToContextMenu, singleIndent, togglePrivatePublic } from "../frame-helpers";
+import { privateKeyword, procedureKeyword } from "../../../compiler/keywords";
+import {
+  addPrivateToggleToContextMenu,
+  modifierAsSource,
+  modifierForPyNote,
+  pyNote,
+  selfType,
+  singleIndent,
+  togglePrivatePublic,
+} from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
 import { Parent } from "../frame-interfaces/parent";
@@ -19,28 +27,23 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
     return "procedure_method";
   }
 
-  private modifierAsHtml(): string {
-    return this.private ? `[private]` : "";
-  }
-
-  private modifierAsSource(): string {
-    return this.private ? `private ` : "";
-  }
-
   public override indent(): string {
     return singleIndent();
   }
 
   public override renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${this.modifierAsSource()}procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
+    return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end procedure\r
 `;
   }
 
   public renderAsHtml(): string {
+    const note = pyNote(procedureKeyword + " method" + modifierForPyNote(this));
     return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-comment># [procedure]${this.modifierAsHtml()}</el-comment><br><el-kw>def </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>self</el-kw>: TODO, ${this.params.renderAsHtml()}<el-punc>):</el-punc>${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>
+<el-kw>def </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>self</el-kw>: ${selfType(this)}, ${this.params.renderAsHtml()}<el-punc>):</el-punc>
+${this.helpAsHtml()}${this.compileMsgAsHtml()}${note}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 </el-proc>`;
   }

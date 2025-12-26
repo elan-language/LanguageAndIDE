@@ -1,5 +1,6 @@
 import { constructorKeyword } from "../../../compiler/keywords";
 import { ParamListField } from "../fields/param-list-field";
+import { pyNote, selfType } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -30,7 +31,9 @@ export class Constructor extends FrameWithStatements {
 
   public renderAsHtml(): string {
     return `<el-constructor class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>def </el-kw><el-punc>(</el-punc><el-kw>self</el-kw>: TODO, ${this.params.renderAsHtml()}<el-punc>):</el-punc> <el-kw>none</el-kw>${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>
+<el-kw>def </el-kw><el-punc>(</el-punc><el-kw>self</el-kw>: ${selfType(this)},${this.params.renderAsHtml()}<el-punc>):</el-punc> <el-kw>none</el-kw>
+${this.helpAsHtml()}${this.compileMsgAsHtml()}${pyNote(constructorKeyword)}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 </el-constructor>`;
   }

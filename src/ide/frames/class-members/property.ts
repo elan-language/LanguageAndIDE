@@ -4,7 +4,13 @@ import { ClassType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
-import { addPrivateToggleToContextMenu, togglePrivatePublic } from "../frame-helpers";
+import {
+  addPrivateToggleToContextMenu,
+  modifierAsSource,
+  modifierForPyNote,
+  pyNote,
+  togglePrivatePublic,
+} from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
 import { Field } from "../frame-interfaces/field";
@@ -37,19 +43,15 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember {
   getIdPrefix(): string {
     return "prop";
   }
-  private modifierAsHtml(): string {
-    return this.private ? `<el-comment> # [private]</el-comment><br>` : "";
-  }
-  private modifierAsSource(): string {
-    return this.private ? `private ` : "";
-  }
 
   renderAsHtml(): string {
-    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.modifierAsHtml()}${this.name.renderAsHtml()}: ${this.type.renderAsHtml()} = <el-kw>none</el-kw>${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
+    const note = pyNote(propertyKeyword + modifierForPyNote(this));
+    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.name.renderAsHtml()}: ${this.type.renderAsHtml()} = <el-kw>none</el-kw>
+    ${this.helpAsHtml()}${this.compileMsgAsHtml()}${note}${this.getFrNo()}</el-prop>`;
   }
 
   renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${this.modifierAsSource()}${propertyKeyword} ${this.name.renderAsSource()} ${asKeyword} ${this.type.renderAsSource()}\r\n`;
+    return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}${propertyKeyword} ${this.name.renderAsSource()} ${asKeyword} ${this.type.renderAsSource()}\r\n`;
   }
 
   isGlobalClass(st: SymbolType) {

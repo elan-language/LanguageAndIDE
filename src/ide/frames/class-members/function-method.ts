@@ -4,7 +4,15 @@ import {
   privateKeyword,
   returnsKeyword,
 } from "../../../compiler/keywords";
-import { addPrivateToggleToContextMenu, singleIndent, togglePrivatePublic } from "../frame-helpers";
+import {
+  addPrivateToggleToContextMenu,
+  modifierAsSource,
+  modifierForPyNote,
+  pyNote,
+  selfType,
+  singleIndent,
+  togglePrivatePublic,
+} from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
 import { Parent } from "../frame-interfaces/parent";
@@ -24,27 +32,22 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
     return "function_method";
   }
 
-  private modifierAsHtml(): string {
-    return this.private ? `[private]` : "";
-  }
-
-  private modifierAsSource(): string {
-    return this.private ? `private ` : "";
-  }
-
   public override indent(): string {
     return singleIndent();
   }
 
   public override renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${this.modifierAsSource()}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnsKeyword} ${this.returnType.renderAsSource()}\r
+    return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnsKeyword} ${this.returnType.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
   }
   public renderAsHtml(): string {
+    const note = pyNote(functionKeyword + " method" + modifierForPyNote(this));
     return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-comment># [function]${this.modifierAsHtml()}</el-comment><br><el-kw>def </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>self</el-kw>: TODO, ${this.params.renderAsHtml()}<el-punc>) -> </el-punc>${this.returnType.renderAsHtml()}:${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>
+<el-kw>def </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>self</el-kw>: ${selfType(this)}, ${this.params.renderAsHtml()}<el-punc>) -> </el-punc>${this.returnType.renderAsHtml()}:
+${this.helpAsHtml()}${this.compileMsgAsHtml()}${note}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 </el-func>`;
   }

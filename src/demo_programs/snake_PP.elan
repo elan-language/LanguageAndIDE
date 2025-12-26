@@ -1,4 +1,4 @@
-# ef1c3f6d4fbb099bb91b20924f0158a7b8ce3b3e6852381135adf1ef14286378 Elan 1.9.0 guest default_profile valid
+# cbc5e619e47574e7a4c7d056389260d0f431b4738267c5abe52c85553b16540a Elan 1.9.0 guest default_profile valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -40,10 +40,14 @@ procedure updateDisplay(blocks as Array2D<of Int>, head as List<of Int>, tail as
 end procedure
 
 procedure setAppleToRandomPosition(apple as List<of Int>, body as List<of List<of Int>>)
-  repeat
+  variable changePosition set to true
+  while changePosition
     call apple.put(0, randomInt(0, 39))
     call apple.put(1, randomInt(0, 29))
-  end repeat when not body.contains(apple)
+    if not body.contains(apple) then
+      set changePosition to false
+    end if
+  end while
 end procedure
 
 function getTailColour(tail as List<of Int>, body as List<of List<of Int>>) returns Int
