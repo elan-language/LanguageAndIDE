@@ -59,4 +59,8 @@ export class ParamDefNode extends AbstractSequence {
   renderAsHtml(): string {
     return this.name?.renderAsHtml() + ": " + this.type?.renderAsHtml();
   }
+
+  renderAsSource(): string {
+    return this.name?.renderAsSource() + ": " + this.type?.renderAsSource();
+  }
 }

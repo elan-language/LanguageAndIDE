@@ -31,8 +31,7 @@ ${this.renderChildrenAsHtml()}
   }
   renderAsSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}while ${this.condition.renderAsSource()}\r
-${this.renderChildrenAsSource()}\r
-${this.indent()}end while`;
+${this.renderChildrenAsSource()}\r`;
   }
 
   parseTop(source: CodeSource): void {

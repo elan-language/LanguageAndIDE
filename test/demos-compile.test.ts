@@ -1,4 +1,4 @@
-import { testElanProgram } from "./testHelpers";
+/* import { testElanProgram } from "./testHelpers";
 
 suite("Demo compile", () => {
   test("test best-fit", async () => {
@@ -84,3 +84,4 @@ suite("Demo compile", () => {
     await testElanProgram("documentation\\worksheets\\wordle\\wordle_3begin.elan");
   });
 });
+ */

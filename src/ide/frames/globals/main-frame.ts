@@ -1,4 +1,4 @@
-import { mainKeyword } from "../../../compiler/keywords";
+import { defKeyword, mainAnnotation, mainKeyword } from "../../../compiler/keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -41,10 +41,14 @@ ${this.renderChildrenAsHtml()}
     return "";
   }
 
+  override annotation(): string {
+    return `${mainAnnotation} `;
+  }
+
   public renderAsSource(): string {
-    return `${this.sourceAnnotations()}main\r
+    return `${this.sourceAnnotations()}${defKeyword} main -> None: ${this.annotationAsSource()}\r
 ${this.renderChildrenAsSource()}\r
-end main\r
+
 `;
   }
 

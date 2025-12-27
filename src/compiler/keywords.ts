@@ -63,11 +63,12 @@ export const whileKeyword = "while";
 export const withKeyword = "with";
 
 //Python keywords
+export const defKeyword = "def";
 export const elifKeyword = "elif";
 
 //Python for Elan annotations
 export const assertAnnotation = "assert";
-export const assignmentAnnotation = "assignment";
+export const assignAnnotation = "assign";
 export const callAnnotation = "call";
 export const constantAnnotation = "constant";
 export const constructorAnnotation = "constructor";
@@ -75,6 +76,8 @@ export const definitionAnnotation = "definition";
 export const eachAnnotation = "each";
 export const enumAnnotation = "enum";
 export const functionAnnotation = "function";
+export const loopAnnotation = "loop";
+export const mainAnnotation = "main";
 export const methodAnnotation = "method";
 export const privateAnnotation = "private";
 export const procedureAnnotation = "procedure";

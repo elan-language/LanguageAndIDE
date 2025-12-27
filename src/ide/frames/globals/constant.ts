@@ -6,7 +6,6 @@ import {
 import { AbstractFrame } from "../abstract-frame";
 import { ConstantValueField } from "../fields/constant-value-field";
 import { IdentifierField } from "../fields/identifier-field";
-import { inlineComment } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
@@ -50,19 +49,22 @@ export class Constant extends AbstractFrame implements GlobalFrame, Collapsible 
   getIdPrefix(): string {
     return "const";
   }
+
+  override annotation(): string {
+    return `${constantAnnotation} ${definitionAnnotation} `;
+  }
   renderAsHtml(): string {
-    const note = inlineComment(`${constantAnnotation} ${definitionAnnotation}`);
     return `<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
     <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.name.renderAsHtml()}</el-top>
      = ${this.isImported() ? "" : this.value.renderAsHtml()}
-     ${this.helpAsHtml()}${this.compileMsgAsHtml()}${note}${this.getFrNo()}</el-const>`;
+     ${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-const>`;
   }
 
   indent(): string {
     return "";
   }
   renderAsSource(): string {
-    return `${this.sourceAnnotations()}constant ${this.name.renderAsSource()} set to ${this.value.renderAsSource()}\r
+    return `${this.sourceAnnotations()}${this.name.renderAsSource()} = ${this.value.renderAsSource()}\r
 `;
   }
 

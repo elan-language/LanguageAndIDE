@@ -1,13 +1,14 @@
-# 146b941e8d102868a21d98404459aa5ecb7121dbb769b4f71f6377fd5a7cd70c Elan 1.9.0 guest default_profile valid
+# 23fcc4e58d822c4610c776d43bffc2bf8d6c6fed28fc30ee3f5564a0a55a7970 Elan 1.9.0 guest default_profile valid
 
-main
-  variable a set to 13
-  variable b set to 30
-  variable anb set to bitAnd(a, b)
-  variable aob set to bitOr(a, b)
-  variable axb set to bitXor(a, b)
-  variable nota set to bitNot(a)
-  variable aL set to bitShiftL(a, 2)
-  variable aR set to bitShiftR(a, 2)
+def main -> None:  # [main ]
+  a = 13 # [variable definition ]
+  b = 30 # [variable definition ]
+  anb = bitAnd(a, b) # [variable definition ]
+  aob = bitOr(a, b) # [variable definition ]
+  axb = bitXor(a, b) # [variable definition ]
+  nota = bitNot(a) # [variable definition ]
+  aL = bitShiftL(a, 2) # [variable definition ]
+  aR = bitShiftR(a, 2) # [variable definition ]
   print "{a.asBinary()} {b.asBinary()} {anb.asBinary()} {aob.asBinary()} {axb.asBinary()} {nota.asBinary()} {aL.asBinary()} {aR.asBinary()}"
-end main
+
+

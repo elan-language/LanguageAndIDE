@@ -1,12 +1,11 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { BreakpointStatus } from "../../../compiler/debugging/breakpoint-status";
-import { ignoreKeyword, testAnnotation, testKeyword } from "../../../compiler/keywords";
+import { defKeyword, ignoreKeyword, testAnnotation, testKeyword } from "../../../compiler/keywords";
 import { TestStatus } from "../../../compiler/test-status";
 import { CommentField } from "../fields/comment-field";
 import {
   helper_CompileOrParseAsDisplayStatus,
   helper_testStatusAsDisplayStatus,
-  inlineComment,
 } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
@@ -73,11 +72,16 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   getIdPrefix(): string {
     return "test";
   }
+
+  override annotation(): string {
+    return `${testAnnotation} `;
+  }
+
   public renderAsHtml(): string {
     return `<el-test class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
 <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>
 <el-kw>def </el-kw> <el-method>test_${this.testDescription.renderAsSource()}</el-method>(): <el-kw>none</el-kw>
-${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${inlineComment(testAnnotation)}${this.getFrNo()}</el-top>
+${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 </el-test>`;
   }
@@ -85,9 +89,9 @@ ${this.renderChildrenAsHtml()}
     return "";
   }
   public renderAsSource(): string {
-    return `${this.sourceAnnotations()}test ${this.testDescription.renderAsSource()}\r
+    return `${this.sourceAnnotations()}${defKeyword} test_${this.testDescription.renderAsSource()}() -> None: ${this.annotationAsSource()}\r
 ${this.renderChildrenAsSource()}\r
-end test\r
+
 `;
   }
   parseTop(source: CodeSource): void {

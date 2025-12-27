@@ -1,5 +1,6 @@
-# f9c54c5de298e74fcd77ec4c9b015af1a4544d9f6ab233061ae98d39070291c2 Elan 1.9.0 guest default_profile valid
+# e9a27d93a565bd2a474a4c98f64c4ce74d769658cedaa6abe549aa2950e30fc8 Elan 1.9.0 guest default_profile valid
 
-main
-  variable a set to 1
-end main
+def main -> None:  # [main ]
+  a = 1 # [variable definition ]
+
+

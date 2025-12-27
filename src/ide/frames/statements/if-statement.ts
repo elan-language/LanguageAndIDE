@@ -1,4 +1,4 @@
-import { endKeyword, ifKeyword, thenKeyword } from "../../../compiler/keywords";
+import { ifKeyword, thenKeyword } from "../../../compiler/keywords";
 import { CodeSourceFromString } from "../code-source-from-string";
 import { ExpressionField } from "../fields/expression-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -35,8 +35,7 @@ ${this.renderChildrenAsHtml()}
   }
   renderAsSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}${ifKeyword} ${this.condition.renderAsSource()} ${thenKeyword}\r
-${this.renderChildrenAsSource()}\r
-${this.indent()}${endKeyword} ${ifKeyword}`;
+${this.renderChildrenAsSource()}\r`;
   }
 
   parseTop(source: CodeSource): void {

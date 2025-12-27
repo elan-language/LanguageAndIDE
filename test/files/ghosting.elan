@@ -1,15 +1,16 @@
-# 0a17f4e13edf1bed74d29a2355b5a436ef533d13ab4de66f2b3f70ff1b39c380 Elan 1.9.0 guest default_profile valid
+# d0f54034c991d4ad1c57d447c32ee4bcedbea34814ada081a9c87312ecd51b7e Elan 1.9.0 guest default_profile valid
 
-main
+def main -> None:  # [main ]
   print 1
   # [ghosted]
   print 2
   print 3
-  call foo()
-end main
+  foo() # [call procedure ]}
 
-procedure foo()
+
+procedure foo() -> None:  # [procedure ]}
   print 4
   print 5
   print 6
-end procedure
+
+

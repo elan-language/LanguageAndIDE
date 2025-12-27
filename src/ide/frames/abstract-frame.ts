@@ -876,4 +876,16 @@ export abstract class AbstractFrame implements Frame {
       this.delete();
     }
   }
+
+  annotation(): string {
+    return ``;
+  }
+
+  annotationAsHtml() {
+    return `<el-comment>${this.annotationAsSource().trim()}</el-comment>`;
+  }
+
+  annotationAsSource() {
+    return ` # [${this.annotation().trim()}]`;
+  }
 }

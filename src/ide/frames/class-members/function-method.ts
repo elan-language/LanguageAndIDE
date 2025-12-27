@@ -8,7 +8,6 @@ import {
 } from "../../../compiler/keywords";
 import {
   addPrivateToggleToContextMenu,
-  inlineComment,
   modifierAsSource,
   privateAnnotationIfPresent,
   selfType,
@@ -44,14 +43,16 @@ ${this.renderChildrenAsSource()}\r
 ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
   }
+
+  override annotation(): string {
+    return `${functionAnnotation} ${methodAnnotation} ${privateAnnotationIfPresent(this)} `;
+  }
+
   public renderAsHtml(): string {
-    const note = inlineComment(
-      functionAnnotation + " " + methodAnnotation + privateAnnotationIfPresent(this),
-    );
     return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
 <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>
 <el-kw>def </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>self</el-kw>: ${selfType(this)}, ${this.params.renderAsHtml()}<el-punc>) -> </el-punc>${this.returnType.renderAsHtml()}:
-${this.helpAsHtml()}${this.compileMsgAsHtml()}${note}${this.getFrNo()}</el-top>
+${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 </el-func>`;
   }

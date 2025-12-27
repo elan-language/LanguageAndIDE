@@ -1,4 +1,4 @@
-import { endKeyword, functionKeyword, returnsKeyword } from "../../../compiler/keywords";
+import { defKeyword, functionAnnotation } from "../../../compiler/keywords";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { Parent } from "../frame-interfaces/parent";
 import { FunctionFrame } from "./function-frame";
@@ -13,10 +13,13 @@ export class GlobalFunction extends FunctionFrame implements GlobalFrame {
     return "";
   }
 
+  override annotation(): string {
+    return `${functionAnnotation} `;
+  }
   public renderAsSource(): string {
-    return `${this.sourceAnnotations()}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnsKeyword} ${this.returnType.renderAsSource()}\r
+    return `${this.sourceAnnotations()}${defKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) -> ${this.returnType.renderAsSource()}: ${this.annotationAsSource()}\r
 ${this.renderChildrenAsSource()}\r
-${endKeyword} ${functionKeyword}\r
+
 `;
   }
 }
