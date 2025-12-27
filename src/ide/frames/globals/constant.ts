@@ -55,7 +55,7 @@ export class Constant extends AbstractFrame implements GlobalFrame, Collapsible 
     return `<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
     <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.name.renderAsHtml()}</el-top>
      = ${this.isImported() ? "" : this.value.renderAsHtml()}
-     ${this.helpAsHtml()}${this.compileMsgAsHtml()}${note}${this.getFrNo()}</el-const><br>`;
+     ${this.helpAsHtml()}${this.compileMsgAsHtml()}${note}${this.getFrNo()}</el-const>`;
   }
 
   indent(): string {
