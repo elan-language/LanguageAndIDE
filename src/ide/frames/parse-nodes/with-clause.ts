@@ -35,6 +35,6 @@ export class WithClause extends AbstractSequence {
   }
 
   override renderAsHtml(): string {
-    return `<el-comment> # TODO: copy with </el-comment>${this.toClauses?.renderAsHtml()}`;
+    return ` <el-comment># TODO: with ${this.toClauses?.renderAsSource()}</el-comment>`;
   }
 }

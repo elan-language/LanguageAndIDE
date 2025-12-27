@@ -1,14 +1,16 @@
 import {
   endKeyword,
+  functionAnnotation,
   functionKeyword,
+  methodAnnotation,
   privateKeyword,
   returnsKeyword,
 } from "../../../compiler/keywords";
 import {
   addPrivateToggleToContextMenu,
+  inlineComment,
   modifierAsSource,
-  modifierForPyNote,
-  pyNote,
+  privateAnnotationIfPresent,
   selfType,
   singleIndent,
   togglePrivatePublic,
@@ -43,7 +45,9 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
   }
   public renderAsHtml(): string {
-    const note = pyNote(functionKeyword + " method" + modifierForPyNote(this));
+    const note = inlineComment(
+      functionAnnotation + " " + methodAnnotation + privateAnnotationIfPresent(this),
+    );
     return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
 <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>
 <el-kw>def </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>self</el-kw>: ${selfType(this)}, ${this.params.renderAsHtml()}<el-punc>) -> </el-punc>${this.returnType.renderAsHtml()}:

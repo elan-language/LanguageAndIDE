@@ -1,8 +1,8 @@
-import { callKeyword } from "../../../compiler/keywords";
+import { callAnnotation, callKeyword, procedureAnnotation } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcRefField } from "../fields/proc-ref-field";
-import { pyNote } from "../frame-helpers";
+import { inlineComment } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -42,9 +42,10 @@ export class CallStatement extends AbstractFrame implements Statement {
   }
 
   renderAsHtml(): string {
+    const note = inlineComment(`${callAnnotation} ${procedureAnnotation}`);
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}<el-top>
     ${this.proc.renderAsHtml()}<span>(</span>${this.args.renderAsHtml()}<span>)</span>
-    ${this.helpAsHtml()}${this.compileMsgAsHtml()}${pyNote(callKeyword)}${this.getFrNo()}</el-top></el-statement>`;
+    ${this.helpAsHtml()}${this.compileMsgAsHtml()}${note}${this.getFrNo()}</el-top></el-statement>`;
   }
 
   renderAsSource(): string {

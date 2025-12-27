@@ -1,5 +1,6 @@
 import {
   endKeyword,
+  functionAnnotation,
   functionKeyword,
   returnKeyword,
   returnsKeyword,
@@ -7,7 +8,7 @@ import {
 import { MethodNameField } from "../fields/method-name-field";
 import { ParamListField } from "../fields/param-list-field";
 import { TypeField } from "../fields/type-field";
-import { isReturnStatement, pyNote } from "../frame-helpers";
+import { inlineComment, isReturnStatement } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -54,7 +55,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
     return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
 <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>
 <el-kw>def </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc>${this.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> -> </el-kw>${this.returnType.renderAsHtml()}:
-${this.helpAsHtml()}${this.compileMsgAsHtml()}${pyNote(functionKeyword)}${this.getFrNo()}</el-top>
+${this.helpAsHtml()}${this.compileMsgAsHtml()}${inlineComment(functionAnnotation)}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 </el-func>`;
   }

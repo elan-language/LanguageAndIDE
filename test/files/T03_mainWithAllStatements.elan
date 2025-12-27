@@ -1,4 +1,4 @@
-# 1ee64aa26b7af5f7122eff5a7fcc92f17631300c3952eacbcf9b2b6fb817f50e Elan 1.9.0 guest default_profile valid
+# 08cf2d7c64e7b48302ac8dbbe91333465302dfecf899ec11b2a45f13bb4b2b1f Elan 1.9.0 guest default_profile valid
 
 main
   variable a set to 3
@@ -9,9 +9,6 @@ main
   while newGame
 
   end while
-  repeat
-
-  end repeat when score > 20
   for i from 1 to 10 step 1
 
   end for

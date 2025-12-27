@@ -1,8 +1,8 @@
-import { setKeyword, toKeyword } from "../../../compiler/keywords";
+import { setKeyword, toKeyword, variableAnnotation } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";
-import { pyNote } from "../frame-helpers";
+import { inlineComment } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -37,9 +37,10 @@ export class SetStatement extends AbstractFrame implements Statement {
     return "set";
   }
   renderAsHtml(): string {
+    const note = inlineComment(`assign ${variableAnnotation}`);
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}
     ${this.assignable.renderAsHtml()}<el-kw> = </el-kw>${this.expr.renderAsHtml()}
-    ${this.helpAsHtml()}${this.compileMsgAsHtml()}${pyNote("assign")}${this.getFrNo()}</el-statement>`;
+    ${this.helpAsHtml()}${this.compileMsgAsHtml()}${note}${this.getFrNo()}</el-statement>`;
   }
   renderAsSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}${setKeyword} ${this.assignable.renderAsSource()} ${toKeyword} ${this.expr.renderAsSource()}`;

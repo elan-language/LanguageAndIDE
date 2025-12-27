@@ -1,7 +1,7 @@
-import { procedureKeyword } from "../../../compiler/keywords";
+import { procedureAnnotation, procedureKeyword } from "../../../compiler/keywords";
 import { MethodNameField } from "../fields/method-name-field";
 import { ParamListField } from "../fields/param-list-field";
-import { pyNote } from "../frame-helpers";
+import { inlineComment } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -38,7 +38,7 @@ export abstract class ProcedureFrame extends FrameWithStatements {
     return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
 <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>
 <el-kw>def </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc>${this.params.renderAsHtml()}<el-punc>)</el-punc> -> <el-kw>none</el-kw>:
-${this.helpAsHtml()}${this.compileMsgAsHtml()}${pyNote(procedureKeyword)}${this.getFrNo()}</el-top>
+${this.helpAsHtml()}${this.compileMsgAsHtml()}${inlineComment(procedureAnnotation)}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 </el-proc>`;
   }

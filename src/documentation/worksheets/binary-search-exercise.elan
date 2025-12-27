@@ -1,4 +1,4 @@
-# ee10c1d0a4ac35a56fa738475785cc69e220e737fd48d81dfa4d8a5a57761d3d Elan 1.9.0 guest default_profile valid
+# 80dc2c4891d066d9e4aeb1c0dc56a330c08b0af5aba4cca58cee41ed0d115f5b Elan 1.9.0 guest default_profile valid
 
 # Exercise: implement a function to search for an item in a sorted list, 
 # using the 'binary search' algorithm
@@ -27,7 +27,7 @@ end function
 main
   let fruit be ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
   variable exit set to false
-  repeat
+  while exit is false
     let wanted be inputString("What type of fruit do you want ('x' to exit)? ")
     if wanted isnt "x" then
       let result be binarySearch(fruit, wanted)
@@ -39,7 +39,7 @@ main
     else
       set exit to true
     end if
-  end repeat when exit
+  end while
 end main
 
 test 

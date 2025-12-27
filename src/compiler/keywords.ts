@@ -1,3 +1,4 @@
+// Elan keywords
 export const abstractKeyword = "abstract";
 export const andKeyword = "and";
 export const asKeyword = "as";
@@ -21,7 +22,7 @@ export const fromKeyword = "from";
 export const functionKeyword = "function";
 export const globalKeyword = "global";
 export const ifKeyword = "if";
-export const ignoreKeyword = "ignore"; // Not actively used since v1.7.0, Rretained pro tem, for backwards Elan code compatibility - now has the effect of ghosting
+export const ignoreKeyword = "ignore"; // Not actively used since v1.7.0, retained pro tem, for backwards Elan code compatibility - now has the effect of ghosting
 export const imageKeyword = "image";
 export const importKeyword = "import";
 export const inKeyword = "in";
@@ -61,6 +62,27 @@ export const variableKeyword = "variable";
 export const whileKeyword = "while";
 export const withKeyword = "with";
 
+//Python keywords
+export const elifKeyword = "elif";
+
+//Python for Elan annotations
+export const assertAnnotation = "assert";
+export const assignmentAnnotation = "assignment";
+export const callAnnotation = "call";
+export const constantAnnotation = "constant";
+export const constructorAnnotation = "constructor";
+export const definitionAnnotation = "definition";
+export const eachAnnotation = "each";
+export const enumAnnotation = "enum";
+export const functionAnnotation = "function";
+export const methodAnnotation = "method";
+export const privateAnnotation = "private";
+export const procedureAnnotation = "procedure";
+export const propertyAnnotation = "property";
+export const systemAnnotation = "system";
+export const testAnnotation = "test";
+export const variableAnnotation = "variable";
+
 //Not added to allKeywords
 export const abstractPropertyKeywords = abstractKeyword + " " + propertyKeyword;
 export const abstractProcedureKeywords = abstractKeyword + " " + procedureKeyword;
@@ -81,11 +103,12 @@ export const allKeywords = [
   callKeyword,
   catchKeyword,
   classKeyword,
-  constantKeyword,
+  constantAnnotation,
   constructorKeyword,
   copyKeyword,
   divKeyword,
   eachKeyword,
+  elifKeyword,
   elseKeyword,
   emptyKeyword,
   endKeyword,

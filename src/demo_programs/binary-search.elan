@@ -1,9 +1,9 @@
-# 8f33266272989cdc18588e084ac2aec1b37d6705ea51afdd32e60e00640033fc Elan 1.9.0 guest default_profile valid
+# 57101bf183b3209149ae1080136079ac52ae1fef28b30302784fe6d1d04bbf05 Elan 1.9.0 guest default_profile valid
 
 main
   let fruit be ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
   variable exit set to false
-  repeat
+  while not exit
     let wanted be inputString("What type of fruit do you want ('x' to exit)? ")
     if wanted is "x" then
       set exit to true
@@ -15,7 +15,7 @@ main
         print "Sorry, we cannot supply a {wanted}"
       end if
     end if
-  end repeat when exit
+  end while
 end main
 
 function binarySearch(li as List<of String>, item as String) returns Boolean

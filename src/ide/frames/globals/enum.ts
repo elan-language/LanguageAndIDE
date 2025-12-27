@@ -1,8 +1,8 @@
-import { enumKeyword } from "../../../compiler/keywords";
+import { enumAnnotation, enumKeyword } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { EnumValuesField } from "../fields/enum-values-field";
 import { TypeNameField } from "../fields/type-name-field";
-import { pyNote } from "../frame-helpers";
+import { inlineComment } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -40,7 +40,7 @@ export class Enum extends AbstractFrame implements GlobalFrame {
   renderAsHtml(): string {
     return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}
     ${this.name.renderAsHtml()} = <el-type>Enum</el-type>('${this.name.renderAsHtml()}', '${this.values.renderAsHtml()}')
-    ${this.helpAsHtml()}${this.compileMsgAsHtml()}${pyNote(enumKeyword)}${this.getFrNo()}</el-top></el-enum><br>`;
+    ${this.helpAsHtml()}${this.compileMsgAsHtml()}${inlineComment(enumAnnotation)}${this.getFrNo()}</el-top></el-enum><br>`;
   }
 
   indent(): string {

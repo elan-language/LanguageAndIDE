@@ -323,7 +323,7 @@ export function selfType(member: MemberFrame) {
   return (member.getParent() as ClassFrame).name.textAsHtml();
 }
 
-export function pyNote(content: string) {
+export function inlineComment(content: string) {
   return `<el-comment> # [${content}]</el-comment>`;
 }
 
@@ -334,6 +334,6 @@ export function modifierAsSource(member: MemberFrame): string {
   return member.private ? `${privateKeyword} ` : "";
 }
 
-export function modifierForPyNote(member: MemberFrame): string {
+export function privateAnnotationIfPresent(member: MemberFrame): string {
   return member.private ? ` ${privateKeyword}` : "";
 }

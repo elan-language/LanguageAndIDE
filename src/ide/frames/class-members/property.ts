@@ -1,14 +1,19 @@
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
-import { asKeyword, privateKeyword, propertyKeyword } from "../../../compiler/keywords";
+import {
+  asKeyword,
+  privateKeyword,
+  propertyAnnotation,
+  propertyKeyword,
+} from "../../../compiler/keywords";
 import { ClassType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
 import {
   addPrivateToggleToContextMenu,
+  inlineComment,
   modifierAsSource,
-  modifierForPyNote,
-  pyNote,
+  privateAnnotationIfPresent,
   togglePrivatePublic,
 } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -45,7 +50,7 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember {
   }
 
   renderAsHtml(): string {
-    const note = pyNote(propertyKeyword + modifierForPyNote(this));
+    const note = inlineComment(propertyAnnotation + privateAnnotationIfPresent(this));
     return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.name.renderAsHtml()}: ${this.type.renderAsHtml()} = <el-kw>none</el-kw>
     ${this.helpAsHtml()}${this.compileMsgAsHtml()}${note}${this.getFrNo()}</el-prop>`;
   }

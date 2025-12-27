@@ -1,9 +1,9 @@
-import { privateKeyword, procedureKeyword } from "../../../compiler/keywords";
+import { methodAnnotation, privateKeyword, procedureAnnotation } from "../../../compiler/keywords";
 import {
   addPrivateToggleToContextMenu,
+  inlineComment,
   modifierAsSource,
-  modifierForPyNote,
-  pyNote,
+  privateAnnotationIfPresent,
   selfType,
   singleIndent,
   togglePrivatePublic,
@@ -39,7 +39,9 @@ ${this.indent()}end procedure\r
   }
 
   public renderAsHtml(): string {
-    const note = pyNote(procedureKeyword + " method" + modifierForPyNote(this));
+    const note = inlineComment(
+      procedureAnnotation + " " + methodAnnotation + privateAnnotationIfPresent(this),
+    );
     return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
 <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>
 <el-kw>def </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>self</el-kw>: ${selfType(this)}, ${this.params.renderAsHtml()}<el-punc>):</el-punc>

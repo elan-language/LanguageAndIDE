@@ -1,6 +1,7 @@
 import { forKeyword } from "../../../compiler/keywords";
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
+import { inlineComment } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -38,14 +39,11 @@ export class For extends FrameWithStatements implements Statement {
     return "for";
   }
 
-  stepAsHtml(): string {
-    const stepValue = this.step.text;
-    return stepValue === `1` ? `` : `, ${this.step.renderAsHtml()}`;
-  }
-
   renderAsHtml(): string {
+    const note = inlineComment(`${forKeyword} loop`);
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>for </el-kw>${this.variable.renderAsHtml()}<el-kw> in </el-kw><el-method>range</el-method>(${this.from.renderAsHtml()}, ${this.to.renderAsHtml()}${this.stepAsHtml()}):${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>for </el-kw>${this.variable.renderAsHtml()}<el-kw> in </el-kw><el-method>range</el-method>(${this.from.renderAsHtml()}, ${this.to.renderAsHtml()}, ${this.step.renderAsHtml()}):
+${this.helpAsHtml()}${this.compileMsgAsHtml()}${note}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 </el-statement>`;
   }
