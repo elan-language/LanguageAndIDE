@@ -1,10 +1,4 @@
-import {
-  beKeyword,
-  definitionAnnotation,
-  letKeyword,
-  variableAnnotation,
-} from "../../../compiler/keywords";
-import { inlineComment } from "../frame-helpers";
+import { beKeyword, letKeyword } from "../../../compiler/keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
@@ -36,10 +30,10 @@ export class LetStatement extends AbstractDefinitionStatement implements Stateme
   }
 
   renderAsHtml(): string {
-    const note = inlineComment(`${variableAnnotation} ${definitionAnnotation}`);
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}
     ${this.name.renderAsHtml()}<el-kw> = </el-kw>${this.expr.renderAsHtml()}
-    ${this.helpAsHtml()}${this.compileMsgAsHtml()}${note}${this.getFrNo()}</el-statement>`;
+    ${this.name.renderAsHtml()}<el-kw> = </el-kw>${this.expr.renderAsHtml()}
+    ${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsSource(): string {

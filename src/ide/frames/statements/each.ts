@@ -1,7 +1,6 @@
-import { eachAnnotation, eachKeyword } from "../../../compiler/keywords";
+import { eachAnnotation, eachKeyword, loopAnnotation } from "../../../compiler/keywords";
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
-import { inlineComment } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -31,11 +30,15 @@ export class Each extends FrameWithStatements implements Statement {
   getIdPrefix(): string {
     return "each";
   }
+
+  override annotation(): string {
+    return `${eachAnnotation} ${loopAnnotation} `;
+  }
+
   renderAsHtml(): string {
-    const note = inlineComment(`${eachAnnotation} loop`);
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
 <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>for </el-kw>${this.variable.renderAsHtml()}<el-kw> in </el-kw>${this.iter.renderAsHtml()}:
-${this.helpAsHtml()}${this.compileMsgAsHtml()}${note}${this.getFrNo()}</el-top>
+${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 </el-statement>`;
   }

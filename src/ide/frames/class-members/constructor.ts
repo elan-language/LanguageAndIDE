@@ -1,6 +1,6 @@
 import { constructorAnnotation, constructorKeyword } from "../../../compiler/keywords";
 import { ParamListField } from "../fields/param-list-field";
-import { inlineComment, selfType } from "../frame-helpers";
+import { selfType } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -29,11 +29,15 @@ export class Constructor extends FrameWithStatements {
     return "constructor";
   }
 
+  override annotation(): string {
+    return constructorAnnotation;
+  }
+
   public renderAsHtml(): string {
     return `<el-constructor class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
 <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>
 <el-kw>def </el-kw><el-punc>(</el-punc><el-kw>self</el-kw>: ${selfType(this)},${this.params.renderAsHtml()}<el-punc>):</el-punc> <el-kw>none</el-kw>
-${this.helpAsHtml()}${this.compileMsgAsHtml()}${inlineComment(constructorAnnotation)}${this.getFrNo()}</el-top>
+${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 </el-constructor>`;
   }

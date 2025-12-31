@@ -1,6 +1,5 @@
 import {
   endKeyword,
-  functionAnnotation,
   functionKeyword,
   methodAnnotation,
   privateKeyword,
@@ -8,7 +7,6 @@ import {
 } from "../../../compiler/keywords";
 import {
   addPrivateToggleToContextMenu,
-  inlineComment,
   modifierAsSource,
   privateAnnotationIfPresent,
   selfType,
@@ -38,22 +36,24 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
     return singleIndent();
   }
 
+  override annotation(): string {
+    return super.annotation() + methodAnnotation + privateAnnotationIfPresent(this);
+  }
+
+  public renderAsHtml(): string {
+    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>
+<el-kw>def </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>self</el-kw>: ${selfType(this)}, ${this.params.renderAsHtml()}<el-punc>) -> </el-punc>${this.returnType.renderAsHtml()}:
+${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
+${this.renderChildrenAsHtml()}
+</el-func>`;
+  }
+
   public override renderAsSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnsKeyword} ${this.returnType.renderAsSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
-  }
-  public renderAsHtml(): string {
-    const note = inlineComment(
-      functionAnnotation + " " + methodAnnotation + privateAnnotationIfPresent(this),
-    );
-    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>
-<el-kw>def </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>self</el-kw>: ${selfType(this)}, ${this.params.renderAsHtml()}<el-punc>) -> </el-punc>${this.returnType.renderAsHtml()}:
-${this.helpAsHtml()}${this.compileMsgAsHtml()}${note}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-</el-func>`;
   }
 
   parseTop(source: CodeSource): void {

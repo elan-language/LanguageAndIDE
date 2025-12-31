@@ -66,22 +66,24 @@ export const withKeyword = "with";
 export const elifKeyword = "elif";
 
 //Python for Elan annotations
-export const assertAnnotation = "assert";
-export const assignmentAnnotation = "assignment";
-export const callAnnotation = "call";
-export const constantAnnotation = "constant";
-export const constructorAnnotation = "constructor";
-export const definitionAnnotation = "definition";
-export const eachAnnotation = "each";
-export const enumAnnotation = "enum";
-export const functionAnnotation = "function";
-export const methodAnnotation = "method";
-export const privateAnnotation = "private";
-export const procedureAnnotation = "procedure";
-export const propertyAnnotation = "property";
-export const systemAnnotation = "system";
-export const testAnnotation = "test";
-export const variableAnnotation = "variable";
+export const assertAnnotation = "assert ";
+export const setAnnotation = "set ";
+export const callAnnotation = "call ";
+export const constantAnnotation = "constant ";
+export const constructorAnnotation = "constructor ";
+export const definitionAnnotation = "definition ";
+export const eachAnnotation = "each ";
+export const enumAnnotation = "enum ";
+export const functionAnnotation = "function ";
+export const loopAnnotation = "loop ";
+export const mainAnnotation = "main ";
+export const methodAnnotation = "method ";
+export const privateAnnotation = "private ";
+export const procedureAnnotation = "procedure ";
+export const propertyAnnotation = "property ";
+export const systemAnnotation = "system ";
+export const testAnnotation = "test ";
+export const variableAnnotation = "variable ";
 
 //Not added to allKeywords
 export const abstractPropertyKeywords = abstractKeyword + " " + propertyKeyword;

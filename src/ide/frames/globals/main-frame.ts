@@ -1,4 +1,4 @@
-import { mainKeyword } from "../../../compiler/keywords";
+import { mainAnnotation, mainKeyword } from "../../../compiler/keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -30,9 +30,13 @@ export class MainFrame extends FrameWithStatements implements GlobalFrame {
     return "__main";
   }
 
+  override annotation(): string {
+    return mainAnnotation;
+  }
+
   public renderAsHtml(): string {
     return `<main class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>def </el-kw><el-method>main</el-method>(): <el-kw>none</el-kw>${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>def </el-kw><el-method>main</el-method>(): <el-kw>none</el-kw>${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 </main>`;
   }

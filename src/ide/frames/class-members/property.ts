@@ -11,7 +11,6 @@ import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
 import {
   addPrivateToggleToContextMenu,
-  inlineComment,
   modifierAsSource,
   privateAnnotationIfPresent,
   togglePrivatePublic,
@@ -49,10 +48,13 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember {
     return "prop";
   }
 
+  override annotation(): string {
+    return propertyAnnotation + privateAnnotationIfPresent(this);
+  }
+
   renderAsHtml(): string {
-    const note = inlineComment(propertyAnnotation + privateAnnotationIfPresent(this));
     return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.name.renderAsHtml()}: ${this.type.renderAsHtml()} = <el-kw>none</el-kw>
-    ${this.helpAsHtml()}${this.compileMsgAsHtml()}${note}${this.getFrNo()}</el-prop>`;
+    ${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-prop>`;
   }
 
   renderAsSource(): string {

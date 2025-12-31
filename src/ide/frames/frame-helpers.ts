@@ -323,10 +323,6 @@ export function selfType(member: MemberFrame) {
   return (member.getParent() as ClassFrame).name.textAsHtml();
 }
 
-export function inlineComment(content: string) {
-  return `<el-comment> # [${content}]</el-comment>`;
-}
-
 export function modifierAsHtml(member: MemberFrame): string {
   return member.private ? `<el-comment>[${privateKeyword}]</el-comment>` : "";
 }
@@ -335,5 +331,5 @@ export function modifierAsSource(member: MemberFrame): string {
 }
 
 export function privateAnnotationIfPresent(member: MemberFrame): string {
-  return member.private ? ` ${privateKeyword}` : "";
+  return member.private ? privateKeyword : "";
 }

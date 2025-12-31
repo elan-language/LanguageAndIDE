@@ -1,5 +1,5 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
-import { assertKeyword } from "../../../compiler/keywords";
+import { assertAnnotation, assertKeyword } from "../../../compiler/keywords";
 import { TestStatus } from "../../../compiler/test-status";
 import { AbstractFrame } from "../abstract-frame";
 import { AssertActualField } from "../fields/assert-actual-field";
@@ -43,9 +43,13 @@ export class AssertStatement extends AbstractFrame implements Statement {
     return "assert";
   }
 
+  override annotation(): string {
+    return assertAnnotation;
+  }
+
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}<el-method>assertEqual</el-method>(${this.actual.renderAsHtml()}, ${this.expected.renderAsHtml()})
-    ${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</el-statement>`;
+    ${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsSource(): string {

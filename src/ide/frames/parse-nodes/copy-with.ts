@@ -1,5 +1,4 @@
 import { copyKeyword } from "../../../compiler/keywords";
-import { inlineComment } from "../frame-helpers";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { IdentifierOrThis } from "./identiferOrThis";
@@ -43,7 +42,9 @@ export class CopyWith extends AbstractSequence {
   }
 
   override renderAsHtml(): string {
-    const inline = inlineComment(`TODO: ${this.withClause?.renderAsSource()}`);
-    return this.original.renderAsHtml() + inline;
+    return (
+      this.original.renderAsHtml() +
+      `<el-comment> # TODO: ${this.withClause?.renderAsSource()}</el-comment>`
+    );
   }
 }
