@@ -10,6 +10,7 @@ import { Transforms } from "../compile-api/transforms";
 import { ElanFileError } from "../elan-file-error";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSourceFromString } from "./code-source-from-string";
+import { ElanLanguage } from "./ElanLanguage";
 import { Regexes } from "./fields/regexes";
 import {
   expandCollapseAll,
@@ -27,6 +28,7 @@ import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
 import { defaultUsername, Profile } from "./frame-interfaces/profile";
 import { Selectable } from "./frame-interfaces/selectable";
+import { SourceLanguage } from "./frame-interfaces/source-language";
 import { StatementFactory } from "./frame-interfaces/statement-factory";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
@@ -833,5 +835,13 @@ export class FileImpl implements File {
     for (const frame of this._children) {
       frame.deleteAllGhosted();
     }
+  }
+
+  annotation(): string {
+    return "";
+  }
+
+  getLanguage(): SourceLanguage {
+    return new ElanLanguage();
   }
 }

@@ -20,6 +20,7 @@ import { File } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
 import { Selectable } from "./frame-interfaces/selectable";
+import { SourceLanguage } from "./frame-interfaces/source-language";
 import {
   parentHelper_copySelectedChildren,
   parentHelper_getAllSelectedChildren,
@@ -889,5 +890,9 @@ export abstract class AbstractFrame implements Frame {
   annotationAsSource() {
     const annotation = this.annotation().trim();
     return annotation.length > 0 ? ` # [${annotation}]` : ``;
+  }
+
+  getLanguage(): SourceLanguage {
+    return this._parent.getLanguage();
   }
 }

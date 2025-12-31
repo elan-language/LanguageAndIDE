@@ -1,4 +1,9 @@
-import { beKeyword, letKeyword } from "../../../compiler/keywords";
+import {
+  beKeyword,
+  constantAnnotation,
+  definitionAnnotation,
+  letKeyword,
+} from "../../../compiler/keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
@@ -27,6 +32,10 @@ export class LetStatement extends AbstractDefinitionStatement implements Stateme
 
   getIdPrefix(): string {
     return "let";
+  }
+
+  override annotation(): string {
+    return constantAnnotation + definitionAnnotation;
   }
 
   renderAsHtml(): string {

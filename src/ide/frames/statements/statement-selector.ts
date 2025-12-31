@@ -2,10 +2,12 @@ import {
   assertKeyword,
   callKeyword,
   commentMarker,
+  constantAnnotation,
   eachKeyword,
   elifKeyword,
   elseKeyword,
   forKeyword,
+  functionAnnotation,
   ifKeyword,
   letKeyword,
   printKeyword,
@@ -44,7 +46,6 @@ export class StatementSelector extends AbstractSelector {
       [forKeyword, (parent: Parent) => this.factory.newFor(parent)],
       [ifKeyword, (parent: Parent) => this.factory.newIf(parent)],
       [letKeyword, (parent: Parent) => this.factory.newLet(parent)],
-      /* [assignmentAnnotation, (parent: Parent) => this.factory.newLet(parent)],*/
       [printKeyword, (parent: Parent) => this.factory.newPrint(parent)],
       [repeatKeyword, (parent: Parent) => this.factory.newRepeat(parent)],
       [setKeyword, (parent: Parent) => this.factory.newSet(parent)],
@@ -57,30 +58,34 @@ export class StatementSelector extends AbstractSelector {
   }
 
   profileAllows(keyword: string): boolean {
-    return this.profile.statements.includes(keyword);
+    return keyword.length > 0;
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = false;
-    if (keyword === elseKeyword) {
+    if (keyword === constantAnnotation) {
+      result = this.isWithinAFunction(parent);
+    } else if (keyword === elseKeyword || keyword === elifKeyword) {
       result = parent.getIdPrefix() === ifKeyword;
-    } else if (keyword === assertKeyword) {
-      return this.isDirectlyWithinATest();
     } else if (keyword === printKeyword || keyword === callKeyword) {
       result = !(
-        this.isWithinAFunction() ||
+        this.isWithinAFunction(parent) ||
         this.isDirectlyWithinATest() ||
         this.isWithinAConstructor()
       );
+    } else if (keyword === assertKeyword) {
+      return this.isDirectlyWithinATest();
     } else {
       result = true;
     }
     return result;
   }
 
-  private isWithinAFunction(): boolean {
-    return this.isWithinContext(this.getParent(), "func");
+  private isWithinAFunction(parent: Parent): boolean {
+    return parent.annotation().startsWith(functionAnnotation)
+      ? true
+      : parent.hasParent() && this.isWithinAFunction(parent.getParent());
   }
 
   private isDirectlyWithinATest(): boolean {

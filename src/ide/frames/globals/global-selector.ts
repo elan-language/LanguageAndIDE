@@ -5,7 +5,6 @@ import {
   constantAnnotation,
   enumKeyword,
   functionKeyword,
-  ignoreKeyword,
   interfaceKeyword,
   mainKeyword,
   procedureKeyword,
@@ -46,7 +45,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
       [abstractKeyword, (_parent: Parent) => this.file.createAbstractClass()],
       [interfaceKeyword, (_parent: Parent) => this.file.createInterface()],
       [commentMarker, (_parent: Parent) => this.file.createGlobalComment()],
-      [ignoreKeyword, (_parent: Parent) => this.file.createTest()],
+      // [ignoreKeyword, (_parent: Parent) => this.file.createTest()],
     ];
   }
 
