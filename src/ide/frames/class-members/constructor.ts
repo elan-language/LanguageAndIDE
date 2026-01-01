@@ -30,7 +30,7 @@ export class Constructor extends FrameWithStatements {
   }
 
   override annotation(): string {
-    return constructorAnnotation;
+    return constructorAnnotation + super.annotation();
   }
 
   public renderAsHtml(): string {

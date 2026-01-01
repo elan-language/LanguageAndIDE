@@ -879,7 +879,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   annotation(): string {
-    return ``;
+    return this.isGhosted() ? `ghosted ` : ``;
   }
 
   annotationAsHtml() {
@@ -889,7 +889,7 @@ export abstract class AbstractFrame implements Frame {
 
   annotationAsSource() {
     const annotation = this.annotation().trim();
-    return annotation.length > 0 ? ` # [${annotation}]` : ``;
+    return annotation.length > 0 ? ` ${this.getLanguage().commentMarker()} ${annotation}` : ``;
   }
 
   getLanguage(): SourceLanguage {

@@ -1,4 +1,4 @@
-// Elan keywords
+// Elan source keywords
 export const abstractKeyword = "abstract";
 export const andKeyword = "and";
 export const asKeyword = "as";
@@ -65,25 +65,26 @@ export const withKeyword = "with";
 //Python keywords
 export const elifKeyword = "elif";
 
-//Python for Elan annotations
-export const assertAnnotation = "assert ";
-export const setAnnotation = "set ";
-export const callAnnotation = "call ";
-export const constantAnnotation = "constant ";
-export const constructorAnnotation = "constructor ";
-export const definitionAnnotation = "definition ";
-export const eachAnnotation = "each ";
-export const enumAnnotation = "enum ";
-export const functionAnnotation = "function ";
-export const loopAnnotation = "loop ";
-export const mainAnnotation = "main ";
-export const methodAnnotation = "method ";
-export const privateAnnotation = "private ";
-export const procedureAnnotation = "procedure ";
-export const propertyAnnotation = "property ";
-export const systemAnnotation = "system ";
-export const testAnnotation = "test ";
-export const variableAnnotation = "variable ";
+// Universal annotations
+export const assertAnnotation = "assert";
+export const callAnnotation = "call";
+export const constantAnnotation = "constant";
+export const constructorAnnotation = "constructor";
+export const definitionAnnotation = "definition";
+export const eachAnnotation = "each";
+export const enumAnnotation = "enum";
+export const functionAnnotation = "function";
+export const loopAnnotation = "loop";
+export const mainAnnotation = "main";
+export const methodAnnotation = "method";
+export const privateAnnotation = "private";
+export const procedureAnnotation = "procedure";
+export const propertyAnnotation = "property";
+export const recordAnnotation = "record";
+export const setAnnotation= "set";
+export const systemAnnotation = "system";
+export const testAnnotation = "test";
+export const variableAnnotation = "variable";
 
 //Not added to allKeywords
 export const abstractPropertyKeywords = abstractKeyword + " " + propertyKeyword;
