@@ -10,6 +10,16 @@
     --defaultText: black;
     --reverseText: white;
 
+    /* documentation */
+    --docHeading: rgb(15,71,97);
+    --docHeadingBG: rgb(226, 226, 226);
+    --docToc0: rgb(226, 226, 226);
+    --docToc1: rgb(196, 196, 196);
+    --docTable0: rgb(226, 226, 226);
+    --docTable1: rgb(196, 196, 196);
+    --docAccord0: rgb(226, 226, 226);
+    --docAccord1: rgb(196, 196, 196);
+
     /* Code colours */
     --keyword: rgb(56,0,255);
     --method: rgb(152, 118, 49);
