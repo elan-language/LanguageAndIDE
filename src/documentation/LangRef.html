@@ -8,7 +8,7 @@
 <title>Elan Language Reference</title>
 <script type="text/javascript" src="generated_toc.js"></script>
 </head>
-<body>
+<body id="top">
 <div class="docTitle">Elan Language Reference</div>
 <div id="docTOC">
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
@@ -48,7 +48,7 @@
   <td>Immutable<br> data structures</td>
   <td><a href="LibRef.html#ListImmutable"><el-topic>Immutable list</el-topic><br><el-type>ListImmutable</el-type></a></td>
   <td><a href="LibRef.html#DictionaryImmutable"><el-topic>Immutable look-up dictionary</el-topic><br><el-type>DictionaryImmutable</el-type></a></td>
-  <td><a href="LibRef.html#Settopic"><el-topic>Set</el-type><br><el-type>Set</el-topic></a></td>
+  <td><a href="LibRef.html#Set"><el-topic>Set</el-type><br><el-type>Set</el-topic></a></td>
  <td><a href="LibRef.html#Stack"><el-topic>LIFO stack</el-type><br><el-type>Stack</el-topic></a></td>
  <td><a href="LibRef.html#Queue"><el-topic>FIFO queue</el-type><br><el-type>Queue</el-topic></a></td>
  </tr><tr>
@@ -560,7 +560,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 
 <h2 id="class"><el-kw>class</el-kw></h2>
 
-<p>A <el-kw>class</el-kw> is a user-defined Type offering richer capability than an <a href="enum"><el-kw>enum</el-kw></a>
+<p>A <el-kw>class</el-kw> is a user-defined Type offering richer capability than an <a href="#enum"><el-kw>enum</el-kw></a>
  or a <a href="#record"><el-kw>record</el-kw></a>.</p>
 <p>Unlike a <el-kw>record</el-kw>, a class may have a constructor and procedure methods.</p>
 <p>Like any other Type its name must begin with an uppercase letter.</p>
@@ -663,7 +663,6 @@ If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that 
 <p>An <el-code>interface</el-code> is similar to an <el-code>abstract class</el-code>, with the difference that it may define only abstract members. The advantage of using an <el-code>interface</el-code> instead of an <el-code>abstract class</el-code> is that a concrete<el-code> class</el-code> can inherit from multiple <el-code>interface</el-code>s.</p>
 <p>An <el-code>interface</el-code> may inherit only from other <el-code>interface</el-code>s.</p>
 <p>Important: An <el-code>interface</el-code> must not redeclare abstract interfaces that are defined in any <el-code>interface</el-code> it inherits from, directly or indirectly.</p>
-<p>See also: <a href="#Inheritance">Inheritance</a>.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-kw>interface</el-kw></h4>
@@ -1082,6 +1081,7 @@ So even if the subject value is changed in any way within the <el-kw>each</el-kw
 <hr>
 
 <h2 id="for"><el-kw>for</el-kw> (loop)</h2>
+<div id="to"></div>
 <div id="step"></div>
 <p>The <el-kw>for..from..to..step..</el-kw> construct specifies looping through a sequence of integer values with a given increment.</p>
 <p>The loop counter variable (which counts from 0) is of Type <el-type>Int</el-type>.</p>
@@ -1349,7 +1349,7 @@ Writing a value to a specific index location is done through a method such as in
     <a href="LibRef.html#put_List"><el-method>put</el-method></a>           on a   <el-type>List</el-type>
     <a href="LibRef.html#withPut_ListImmutable"><el-method>withPut</el-method></a>   on a    <el-type>ListImmutable</el-type>
     <a href="LibRef.html#put_Dictionary"><el-method>put</el-method></a>           on a    <el-type>Dictionary</el-type>
-    <a href="lIBrEF.HTML#withPut_DictionaryImmutable"><el-method>withPut</el-method></a>   on a    <el-type>DictionaryImmutable</el-type>
+    <a href="libRef.html#withPut_DictionaryImmutable"><el-method>withPut</el-method></a>   on a    <el-type>DictionaryImmutable</el-type>
 </pre>
 
 <div id="operator"></div>
@@ -1898,7 +1898,7 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
  <p>Each parameter definition takes the form:</p>
  <el-code><el-id>name</el-id> <el-kw>as</el-kw> <el-type>Type</el-type></el-code>
  <p>The name must follow the rules for an <a href="#Identifier">identifier</a>.</p>
- <p>The Type must follow the rules for a <a href="#parse_type">Type</a>.</p>
+ <p>The Type must follow the rules for a <a href="#TypeName">Type</a>.</p>
  <p>If more than one parameter is defined, the definitions must be separated by commas.</p>
 
 <h3 id="ProcRefField" class="no-TOC">'procedureName' in a call statement</h3>

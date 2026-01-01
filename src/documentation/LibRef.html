@@ -8,7 +8,7 @@
 <title>Elan Library Reference</title>
 <script type="text/javascript" src="generated_toc.js"></script>
 </head>
-<body>
+<body id="top">
 <div class="docTitle">Elan Library Reference</div>
 <div class="docTOC">
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
@@ -2212,8 +2212,8 @@ together with the procedure and function methods provided to alter their values 
   <td></td>
   <td>radius of circle</td>
   <td>10</td>
-  <td><el-method>setRadius</el-method></td>
-  <td><el-method>withRadius</el-method></td>
+  <td id-"setRadius"><el-method>setRadius</el-method></td>
+  <td id="withRadius"><el-method>withRadius</el-method></td>
  </tr><tr>
   <td id="strokeColour"><el-id>strokeColour</el-id></td>
   <td><el-type>Int</el-type></td>
@@ -2332,7 +2332,7 @@ together with the procedure and function methods provided to alter their values 
 By this means features such as simple SVG animation can be defined.</p>
 <ul>
  <li>The raw SVG content should be enclosed in single quotes, since it will usually contain double quote &quot; characters around the SVG attribute values.</li>
- <li>If you want to include <a href="#InterpolatedStrings">interpolated</a> values, you will have to reverse this convention, enclosing the SVG attribute values
+ <li>If you want to include <a href="#InterpolatedString">interpolated</a> values, you will have to reverse this convention, enclosing the SVG attribute values
  in single quotes and the whole SVG content string in double quotes, so that the references to named values can be enclosed in curly braces.</li>
  <li>The raw SVG may define multiple shapes.</li>
  <li>Multiple instances of <el-type>RawVG</el-type> may be added to the collection to be displayed, along with instances of other SVG Types;
@@ -2879,7 +2879,7 @@ just as you would specify the Type of every parameter and the return Type for th
 
 <h1 id="Constants">System constants</h1>
 
-<p>System constants are unlike values that you define in your <a href="#constant">program <el-kw>constant</el-kw></a>s,
+<p>System constants are unlike values that you define in your <a href="LangRef.html#constant">program <el-kw>constant</el-kw></a>s,
  in that they are mutable named values &mdash; though it would be poor practice to change them.</p>
 
 <h2 id="StringConstants">String constants</h2>
