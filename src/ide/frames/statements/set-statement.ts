@@ -1,4 +1,9 @@
-import { setAnnotation, setKeyword, variableAnnotation } from "../../../compiler/keywords";
+import {
+  setAnnotation,
+  setKeyword,
+  toKeyword,
+  variableAnnotation,
+} from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";

@@ -1,5 +1,3 @@
 export interface SourceLanguage {
-
-commentMarker(): string; //e.g. `#`
-
+  commentMarker(): string; //e.g. `#`
 }

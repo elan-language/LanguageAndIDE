@@ -10,7 +10,7 @@ import { Transforms } from "../compile-api/transforms";
 import { ElanFileError } from "../elan-file-error";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSourceFromString } from "./code-source-from-string";
-import { ElanLanguage } from "./ElanLanguage";
+import { ElanLanguage } from "./elan-language";
 import { Regexes } from "./fields/regexes";
 import {
   expandCollapseAll,
