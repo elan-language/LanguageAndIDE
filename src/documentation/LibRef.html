@@ -302,7 +302,7 @@ in the range:</li>
 
 <p>Strings that are enclosed by ' (single quotes) cannot include interpolated fields.</p>
 
-<h3 class="no-TOC">Dot methods on a <el-type>String</el-type></h3>
+<h3 class="no-TOC" id="DotMethods_String">Dot methods on a <el-type>String</el-type></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -414,7 +414,7 @@ in the range:</li>
 <h2 id="Tuple">Tuple</h2>
 <p>A <el-code>Tuple</el-code> is a way of holding a small number of values of differing Types together as a single reference.
 It may be considered a lightweight alternative to defining a specific class for some purposes.
-Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold.
+Tuples are referred to as 2-Tuples, 3-Tuples, etc. according to the number of values they hold.
 Common uses include:</p>
 <ul>
  <li>Holding a pair of x,y coordinates (each of Type <el-type>Float</el-type>) as a single unit.</li>
@@ -427,7 +427,7 @@ A Tuple differs from a List in that:
  <li>A Tuple is <i>immutable</i> &ndash; you may read, but not modify, the values that it contains.</li>
 </ul>
 
-<h3 class="no-TOC">Defining a Tuple</h3>
+<h3 class="no-TOC">Defining a <el-code>Tuple</el-code></h3>
 <p>A new Tuple is defined using this syntax:</p>
 
 <elan-code>
@@ -436,7 +436,7 @@ A Tuple differs from a List in that:
 
 <p>Note that the elements may be literal or named values. An element within a Tuple may even be another Tuple.</p>
 
-<h3 class="no-TOC">Passing a Tuple to or from a function</h3>
+<h3 class="no-TOC">Passing a <el-code>Tuple</el-code> to or from a function</h3>
 <p>You may pass a Tuple into a function, or return one from a function. The Type of a Tuple is specified
   in round brackets, containing the comma-separated Types for each element in order, for example:</p>
 
@@ -444,7 +444,7 @@ A Tuple differs from a List in that:
 <el-kw>function </el-kw><el-method><el-field id="ident19" class="ok" tabindex="-1"><el-txt>distanceBetween</el-txt></el-field></el-method>(<el-field id="params20" class="optional ok" tabindex="-1"><el-txt><el-id>p1</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>), <el-id>p2</el-id> <el-kw>as</el-kw> (<el-type>Float</el-type>, <el-type>Float</el-type>)</el-txt></el-field>)<el-kw> returns </el-kw><el-field id="type21" class="ok" tabindex="-1"><el-txt><el-type>Float</el-type></el-txt></el-field>
 </el-code>
 
-<h3 class="no-TOC" id="deconstructTuple">Deconstructing a Tuple</h3>
+<h3 class="no-TOC" id="deconstructTuple">Deconstructing a <el-code>Tuple</el-code></h3>
 
 <p>The Tuple <el-code>point</el-code> defined by:</p>
 <el-code-block source="tuples1.elan">
@@ -1174,7 +1174,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 </ul>
 
 <h3 class="no-TOC">Creating a ListImmutable</h3>
-<p>A <el-code>ListImmutable</el-code> may be defined in 'literal' form, delimited by curly brace with all the required elements separated by commas. The elements may be literal values but must all be of the same Type, for example:</p>
+<p>A <el-code>ListImmutable</el-code> may be defined in 'literal' form, delimited by curly braces with all the required elements separated by commas. The elements may be literal values but must all be of the same Type, for example:</p>
 <el-code>variable fruit set to {"apple", "orange", "pear"} </el-code>
 
 <h3 class="no-TOC" id="deconstructListImmutable">Deconstructing a ListImmutable</h3>
@@ -1207,7 +1207,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>ListImmutable</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
-  <td>a string that is a comma+space-separated list of the List's elements, enclosed in braces</td>
+  <td>a string that is a comma+space-separated list of the List's elements, enclosed in curly braces</td>
  </tr><tr id="contains_ListImmutable">
   <td><el-method>contains</el-method></td>
   <td><el-type>ListImmutable</el-type></td>
@@ -1336,7 +1336,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>DictionaryImmutable</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
-  <td>a string that is a comma+space-separated list of the DictionaryImmutable's <i>key:value</i> pairs, enclosed in braces</td>
+  <td>a string that is a comma+space-separated list of the DictionaryImmutable's <i>key:value</i> pairs, enclosed in curly braces</td>
 </tr><tr id="hasKey_DictionaryImmutable">
   <td><el-method>hasKey</el-method></td>
   <td><el-type>DictionaryImmutable</el-type></td>
@@ -1426,7 +1426,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
   <td><el-type>Set</el-type></td>
   <td>(none)</td>
   <td><el-type>String</el-type></td>
-  <td>a string that is a comma+space-separated list of the Set's elements, enclosed in braces</td>
+  <td>a string that is a comma+space-separated list of the Set's elements, enclosed in curly braces</td>
  </tr><tr id="contains_Set">
   <td><el-method>contains</el-method></td>
   <td><el-type>Set</el-type></td>
@@ -1844,7 +1844,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 <h4 class="no-TOC">Notes</h4>
 <ul>
  <li>The method <el-method>asString</el-method> is so widely applicable because it enables you to print
- most variables and data structures to the IDE's Display pane for debugging purposes.</li>
+ most variables and data structures to the IDE's display pane for debugging purposes.</li>
  <li>The length of a <el-type>Dictionary</el-type> or <el-type>DictionaryImmutable</el-type> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:</li>
   <p><el-code>print dict.keys().length()</el-code> &#x27f6; 15</p>
  <li>Checking whether an item is contained in a <el-type>Dictionary</el-type> or <el-type>DictionaryImmutable</el-type> can be
@@ -1885,7 +1885,7 @@ You can still insert, delete or change elements in a <el-code>ListImmutable</el-
 </ul>
 
 <h2 id="TurtleGraphics">Turtle graphics</h2>
-<p>Turtle graphics are implemented with output to the IDE's Display pane, i.e. the 'paper' on which the turtle draws.</p>
+<p>Turtle graphics are implemented with output to the IDE's display pane, i.e. the 'paper' on which the turtle draws.</p>
 <p>The area is 200 turtle units wide by 150 turtle units high, and both integer and floating point values of turtle units can be used.
  If a turtle is placed or moved outside the 200 &times; 150 area boundary, it will not cause an error,
  but the turtle and any lines drawn outside the boundary will not be visible.</p>
@@ -1964,10 +1964,10 @@ So the top left corner of the display is at (-100,75).</p>
   <td>turns the turtle to face in the direction specified in degrees<br>where 0 is upward and increasing values go clockwise from there</td>
  </tr>
 </table>
-<h3 class="no-TOC" id="Properties_Turtle">Properties of a Turtle</h3>
+<h3 class="no-TOC" id="Turtle_properties">Properties of a Turtle</h3>
 <p>The current location and heading of the turtle may be read using the properties
   <el-id>x</el-id>, <el-id>y</el-id>, and <el-id>heading</el-id>.</p>
-<table class="tableMethod" id="properties_Turtle">
+<table class="tableMethod">
  <tr>
   <th colspan="2">Property</th>
   <th colspan="2"></th>
@@ -1980,7 +1980,7 @@ So the top left corner of the display is at (-100,75).</p>
   <td><el-id>heading</el-id></td>
   <td><el-type>Float</el-type></td>
   <td>the direction in which the turtle is pointing<br>in degrees clockwise from North</td>
-  <td>0.0 degrees,<br>i.e. upward in the Display</td>
+  <td>0.0 degrees,<br>i.e. upward in the display</td>
  </tr><tr id="xy_Turtle">
   <td><el-id>x</el-id>, <el-id>y</el-id></td>
   <td><el-type>Float</el-type>, <el-type>Float</el-type></td>
@@ -2049,7 +2049,7 @@ So the top left corner of the display is at (-100,75).</p>
 </div></div>
 
 <h2 id="VectorGraphics">Vector graphics</h2>
-<p>Vector graphics are implemented using the SVG (Scalable Vector Graphics) Html tag &lt;svg&gt;, and are output to the Display pane in the user interface.</p>
+<p>Vector graphics are implemented using the SVG (Scalable Vector Graphics) Html tag &lt;svg&gt;, and are output to the display pane in the user interface.</p>
 <p>The area is 100 units wide by 75 units high, and both integer and floating point values of the units can be used.</p>
 <p>The origin of the units (0,0) is at the top left corner of the display: positive <i>x</i> rightwards, positive <i>y</i> downwards.
 So for example the centre of the display is at (50, 37.5).</p>
@@ -2063,6 +2063,8 @@ So for example the centre of the display is at (50, 37.5).</p>
 <p>The properties of these shapes reflect the names of the attributes used in the SVG tags but some names differ. For example, SVG's <el-id>stroke-width</el-id>
  is set with property <el-id>strokeWidth</el-id>, to make it a valid <a href="LangRef.html#Identifier">identifier</a>.
 Also <el-code>stroke</el-code> and <el-code>fill</el-code> are set by the properties <el-id>strokeColour</el-id> and <el-id>fillColour</el-id>.</p>
+
+<p>In addition, graphics may be displayed from any valid string of SVG tags, as described in <a href="#RawVG"><el-type>RawVG</el-type></a>.</p> 
 
 <h3 class="no-TOC" id="VectorGraphic">Defining Vector graphic shapes</h3>
 <p>A set of SVG shapes is defined in either a <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>VectorGraphic</el-type>&gt; or a <el-type>List</el-type> of any specific Type of <el-type>VectorGraphic</el-type> (e.g. <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>CircleVG</el-type>&gt;) by using the <el-type>List</el-type> <el-method>append</el-method> method.</p>
@@ -2126,7 +2128,9 @@ Later shapes are positioned over earlier ones.</p>
  </tr>
 </table>
 
-<h3 class="no-TOC" id="Properties_VG">Properties of Vector graphic shapes</h3>
+<h3 class="no-TOC" id="VG_properties">Properties of Vector graphic shapes</h3>
+<p>This table lists the properties of each Vector graphic shape and their default values,
+together with the procedure and function methods provided to alter their values in a given instance.</p>
 <table class="tableProperty">
  <tr>
   <th colspan="2">Property</th>
@@ -2291,7 +2295,7 @@ Later shapes are positioned over earlier ones.</p>
 </table>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples using SVG graphics</h4>
+<h4 class="no-TOC acc-title" tabindex="0">Examples using simple SVG graphics</h4>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To draw a circle with a coloured circumference:</p>
@@ -2323,18 +2327,46 @@ Later shapes are positioned over earlier ones.</p>
 <hr>
 </div></div>
 
+<h3 class="no-TOC" id="RawVG"><el-type>RawVG</el-type></h3>
+<p>Strings containing raw SVG tags may be assembled and plotted directly using class <el-type>RawVG</el-type>.
+By this means features such as simple SVG animation can be defined.</p>
+<ul>
+ <li>The raw SVG content should be enclosed in single quotes, since it will usually contain double quote &quot; characters around the SVG attribute values.</li>
+ <li>If you want to include <a href="#InterpolatedStrings">interpolated</a> values, you will have to reverse this convention, enclosing the SVG attribute values
+ in single quotes and the whole SVG content string in double quotes, so that the references to named values can be enclosed in curly braces.</li>
+ <li>The raw SVG may define multiple shapes.</li>
+ <li>Multiple instances of <el-type>RawVG</el-type> may be added to the collection to be displayed, along with instances of other SVG Types;
+ hence the need for list-defining square brackets in the parameter of method <el-method>displayVectorGraphics</el-method>.</li>
+ <li><el-id>rawSVGcontent</el-id> is the property of class <el-type>RawVG</el-type> that must contain the SVG string.</li> 
+ <li>The example is of a simple animation in which the repetition defined in the SVG continues after the program has stopped,
+  so you would then use the Clear button to blank the display.</li> 
+</ul>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Example using <el-type>RawVG</el-type></h4>
+<div class="acc-body">
+
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; To display a repeating movement of a circle:</p>
+<el-code-block source="VG_circle.elan">
+<el-statement class="ok" id="let19" tabindex="-1"><el-kw>let </el-kw><el-field id="var20" class="ok" tabindex="-1"><el-txt><el-id>movingCircle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt>'<el-lit>&lt;circle cx="50" cy="50" r="50" style="fill:red;"&gt;<br>&lt;animate attributeName="cx" begin="0s" dur="2s" from="50" to="90%" repeatCount="indefinite" /&gt;&lt;/circle&gt;</el-lit>'</el-txt></el-field></el-statement>
+<el-statement class="ok" id="let3" tabindex="-1"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="-1"><el-txt><el-id>raw</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr5" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>RawVG</el-type>()<el-kw> with </el-kw><br><el-id>rawSVGcontent</el-id><el-kw> set to </el-kw><el-id>movingCircle</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="call12" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident13" class="ok" tabindex="-1"><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field><span>(</span><el-field id="args14" class="optional ok" tabindex="-1"><el-txt>[<el-id>raw</el-id>]</el-txt></el-field><span>)</span></el-top></el-statement>
+</el-code-block>
+<hr>
+</div></div>
+
 <h2 id="CombiningGraphics">Combining graphic outputs</h2>
-<p>Program outputs, whether text or graphical, can be combined in the Display. In particular, Block graphics and text or Html printing can share the Display
+<p>Program outputs, whether text or graphical, can be combined in the display. In particular, Block graphics and text or Html printing can share the display
  along with <i>either</i> Vector graphics <i>or</i> Turtle graphics (but not both).</p>
-<p>If you want to share the Display in this way, remember that both text and Html print outputs appear sequentially down the Display (which can be scrolled), whereas the graphic outputs are positioned in the Display using their own absolute coordinate systems.</p>
+<p>If you want to share the display in this way, remember that both text and Html print outputs appear sequentially down the display (which can be scrolled), whereas the graphic outputs are positioned in the display using their own absolute coordinate systems.</p>
 <p>The order in which the outputs are displayed (and therefore overwrite) is:</p>
 <ol>
  <li>Block graphics</li>
  <li>Vector <i>or</i> Turtle graphics</li>
  <li>Printed text <i>or</i> Html</li>
 </ol>
-<p>So some care is needed to manage the layout in the Display.</p>
-<p>Note that, while vector graphics are being drawn, printed text that exceeds the height of the Display does not scroll until the graphic completes.</p>
+<p>So some care is needed to manage the layout in the display.</p>
+<p>Note that, while vector graphics are being drawn, printed text that exceeds the height of the display does not scroll until the graphic completes.</p>
 
 <h1 id="InputOutput">Input/output</h1>
 
@@ -2423,7 +2455,7 @@ Later shapes are positioned over earlier ones.</p>
 
 <h3 class="no-TOC"> Reading keys 'on the fly'</h3>
 <p>In some applications &ndash; especially in games, for example &ndash; you want the program to react to a key pressed by the user, but without holding up the program to wait for value to be input. </p>
-<p>Whether your application makes use of graphics, or uses the Display  just for text, reading keystrokes 'on the fly' is done via one of three methods:</p>
+<p>Whether your application makes use of graphics, or uses the display  just for text, reading keystrokes 'on the fly' is done via one of three methods:</p>
 <el-code-block>
 <el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key1</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getKey</el-method>()</el-txt></el-field></el-statement>
 <el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>key2</el-id></el-txt></el-field><el-kw> be </el-kw><el-field class="ok"><el-txt><el-method>getNumericKey</el-method>()</el-txt></el-field></el-statement>
@@ -2602,9 +2634,9 @@ Later shapes are positioned over earlier ones.</p>
 <p>or you could make the code offer the user options: to save again, or to continue without saving.</p>
 </ul>
 
-<h2 id="RenderHtml">Rendering Html in the Display</h2>
+<h2 id="RenderHtml">Rendering Html in the display</h2>
 <p>If you embed Html code in a string and then attempt to print it, you will see the string displayed literally: the Html tags
-    will not be recognised. This is for security reasons. However, it <i>is</i> possible to display formatted Html in the <b>Display</b>.
+    will not be recognised. This is for security reasons. However, it <i>is</i> possible to display formatted Html in the <b>display</b>.
     The following code:</p>
 
 <el-code-block source="Html_1.elan">
@@ -2614,7 +2646,7 @@ Later shapes are positioned over earlier ones.</p>
 <p>will produce:</p>
 <img src="images/Html_1.png" width="250" height="200">
 
-<p>This Html forms another 'layer' in the IDE's Display pane. Any plain text that you print
+<p>This Html forms another 'layer' in the IDE's display pane. Any plain text that you print
     (using <el-kw>print</el-kw> or any of the <el-method>print..</el-method> procedures)
     will be overlaid on top of this.</p>
 
@@ -2622,7 +2654,7 @@ Later shapes are positioned over earlier ones.</p>
 
 <p>For specifying style or other attributes within Html tags, the attribute values should be enclosed in single quotation marks ' as shown above.
     Html will recognise single or double quotation marks, but entering double quotation marks would terminate the Elan string.
-    Alternatively, you could use the constant <el-code><el-id>quotes</el-id></el-code> within braces as an interpolated field.</p>
+    Alternatively, you could use the constant <el-code><el-id>quotes</el-id></el-code> within curly braces as an interpolated field.</p>
 
 <h3 class="no-TOC">Using an embedded CSS stylesheet</h3>
 <p>You can also specify a &lt;style&gt; tag at the start of your Html string, to apply to the whole Html being displayed. In this case you would put
@@ -2652,7 +2684,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
 
 <h2 id="displayImageURL">Displaying images from URLs</h2>
 
-<p>An image that can be retrieved with an http or https URL may be sent to the Display, though note that other URI schemes, such as in <el-code>file://host/path</el-code> to access an image from your local file system, are not supported. Here are three techniques:
+<p>An image that can be retrieved with an http or https URL may be sent to the display, though note that other URI schemes, such as in <el-code>file://host/path</el-code> to access an image from your local file system, are not supported. Here are three techniques:
 
 <ul>
  <li>put the Html <el-lit>&lt;img&gt;</el-lit> tag into a string and then call the <el-method>displayHtml</el-method> method on it, thus:
@@ -2704,6 +2736,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
  </li>
 </ul>
 
+<div id="Sound"></div>
 <h2 id="tone">Sound output</h2>
 
 <p>The <el-method>tone</el-method> procedure allows the generation of a simple tone. It requires three arguments to be provided:</p>
@@ -2739,7 +2772,7 @@ the style definition into a named value as a literal but enclosed in <i>single</
 
 <h1>Other Types</h1>
 
-<h2 id="Random">Random</h2>
+<h2 id="Random"><el-type>Random</el-type></h2>
 <h3 class="no-TOC">Generating random numbers within a function</h3>
 <p>It is <i>not</i> possible to use the system methods <el-method>random()</el-method> or <el-method>randomInt()</el-method> within a function because they create unseen side effects. You <i>may</i> use those system methods outside the function and pass the resulting random number (as an <el-type>Int</el-type> or a <el-type>Float</el-type>) as an argument <i>into </i>a function.</p>
 <p>It is, however, possible to create and use random numbers within a function, but it requires a different approach and is a little more complex. You use the special Type <el-type>Random</el-type>. (Note the upper case <el-code>R</el-code> required for a Type name).</p>
@@ -2752,10 +2785,10 @@ the style definition into a named value as a literal but enclosed in <i>single</
 
 <p>Then, in a function, you apply the dot method <el-method>next</el-method> or <el-method>nextInt</el-method> to the <el-type>Random</el-type> passed in, which returns a 2-Tuple containing both a new random value and a new instance of Type <el-type>Random</el-type>.
 If you need another random value, you use the returned <el-type>Random</el-type> on which to apply the dot method again.</p>
-<p>Avoid applying next or nextInt more than once on the same Random because they will return the same values.</p>
-<p>If the <el-method>initialiseFromClock</el-method> call is absent, the program will still generate a sequence of random values, <i>but the sequence will be exactly the same each time you run the program.</i> Initialising from the clock ensures that you get a different sequence each run. Using Random <i>without</i> so initialising, however, can be extremely useful for testing purposes since the results are repeatable.</p>
+<p>Avoid applying <el-method>next</el-method> or <el-method>nextInt</el-method> more than once on the same <el-type>Random</el-type> because they will return the same values.</p>
+<p>If the <el-method>initialiseFromClock</el-method> call is absent, the program will still generate a sequence of random values, <i>but the sequence will be exactly the same each time you run the program.</i> Initialising from the clock ensures that you get a different sequence each run. Using <el-code><el-ty</el-code>pe>Random</el-type> <i>without</i> so initialising, however, can be extremely useful for testing purposes since the results are repeatable.</p>
 
-<p>The initialising procedure method is:</p>
+<h3 class="no-TOC" id="Random_procedures">Procedure method for random seed</h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -2768,7 +2801,7 @@ If you need another random value, you use the returned <el-type>Random</el-type>
  </tr>
 </table>
 
-<p>The function dot methods on a <el-type>Random</el-type> are:</p>
+<h3 class="no-TOC" id="Random_functions">Function dot methods on a <el-type>Random</el-type></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -2780,19 +2813,19 @@ If you need another random value, you use the returned <el-type>Random</el-type>
   <td><el-method>next</el-method></td>
   <td><el-type>Random</el-type></td>
   <td><el-type>Float, Float</el-type></td>
-  <td><el-type>tuple</el-type>(<el-type>Float, Random</el-type>)</td>
+  <td><el-code>Tuple</el-code> (<el-type>Float, Random</el-type>)</td>
   <td>random <el-type>Float</el-type> value in the range of the arguments, and<br>new instance of <el-type>Random</el-type> for subsequent use</td>
  </tr><tr id="nextInt">
   <td><el-method>nextInt</el-method></td>
   <td><el-type>Random</el-type></td>
   <td><el-type>Int, Int</el-type></td>
-  <td><el-type>tuple</el-type>(<el-type>Int, Random</el-type>)</td>
+  <td><el-code>tuple</el-code>(<el-type>Int, Random</el-type>)</td>
   <td>random <el-type>Int</el-type> value in the range of the arguments, and<br>new instance of <el-type>Random</el-type> for subsequent use</td>
  </tr>
 </table>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Example using Type <el-type>Random</el-type></h4>
+<h4 class="no-TOC acc-title" tabindex="0">Example using <el-type>Random</el-type></h4>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; To roll a dice in a function:</p>
@@ -2844,7 +2877,10 @@ just as you would specify the Type of every parameter and the return Type for th
 </el-func>
 </el-code-block>
 
-<h1 id="Constants">Constants</h1>
+<h1 id="Constants">System constants</h1>
+
+<p>System constants are unlike values that you define in your <a href="#constant">program <el-kw>constant</el-kw></a>s,
+ in that they are mutable named values &mdash; though it would be poor practice to change them.</p>
 
 <h2 id="StringConstants">String constants</h2>
 <p>These constants are of use when the characters { } and " are required in a string delimited by <i>double quotes</i>.
@@ -2892,7 +2928,7 @@ Within a string delimited by <i>single quotes</i>, those literal characters can 
  </tr>
 </table>
 
-<h2 id="Colours">Colours</h2>
+<h2 id="Colours">Colour constants</h2>
 <table class="tableColours">
 <tr><th>colour</th><th></th><th>decimal</th><th>decimal<br></th><th>hexadecimal</th></tr>
 <tr><th>name</th><th></th><th>integer</th><th style="font-family:monospace;">&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;&nbsp;G&nbsp;&nbsp;&nbsp;&nbsp;B</th><th style="font-family:monospace;">&nbsp;0xrrggbb</th></tr>
@@ -2917,7 +2953,7 @@ Within a string delimited by <i>single quotes</i>, those literal characters can 
 
 <div id="LibraryProcedures"></div>
 <h1 id="StandaloneFunctions">Standalone functions</h1>
-    <p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <el-kw>variable</el-kw> declaration or a <el-kw>set</el-kw> assignment, either on their own or within a more complex expression. All standalone library functions require at least one argument to be passed in brackets, corresponding to the parameters defined for that function.</p>
+    <p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <el-kw>variable</el-kw> declaration or a <el-kw>set</el-kw> assignment, either on their own or within a more complex expression. All standalone library functions require at least one argument to be passed in round brackets, corresponding to the parameters defined for that function.</p>
 
 <h2 id="unicode">unicode</h2>
 <p>Function <el-method>unicode</el-method> converts a Unicode (codepoint) value expressed as an integer value in decimal or hexadecimal notation, or as any expression evaluating to an <el-type>Int</el-type>, into a string of a single character. For example:</p>
@@ -2931,7 +2967,7 @@ Within a string delimited by <i>single quotes</i>, those literal characters can 
 
 <h2 id="parseAs">parseAsInt and parseAsFloat</h2>
 
-<p>Function <el-method>parseAsInt</el-method> attempts to parse the input <el-type>String</el-type> as an <el-type>Int</el-type>, and returns a <a href="#Tuple">2-tuple</a>, the first value of which is <el-type>Boolean</el-type>, with <el-code><el-id>true</el-id></el-code> indicating whether or not the parse has succeeded, and the second value being the resulting <el-type>Int</el-type>.
+<p>Function <el-method>parseAsInt</el-method> attempts to parse the input <el-type>String</el-type> as an <el-type>Int</el-type>, and returns a <a href="#Tuple">2-Tuple</a>, the first value of which is <el-type>Boolean</el-type>, with <el-code><el-id>true</el-id></el-code> indicating whether or not the parse has succeeded, and the second value being the resulting <el-type>Int</el-type>.
         <el-method>parseAsFloat</el-method> does the equivalent for floating point. Operation is illustrated by these tests: </p>
 <el-code-block source="test_parse.elan">
 <el-test class="ok multiline" id="test88" tabindex="0">
@@ -2965,18 +3001,24 @@ Within a string delimited by <i>single quotes</i>, those literal characters can 
 <h2><el-method>floor</el-method>, <el-method>ceiling</el-method>, <el-method>round</el-method>, <el-method>isNaN</el-method>, <el-method>isInfinite</el-method></h2>
 <p> All of these functions are called as 'dot methods' on a numeric value  of Type <el-type>Float</el-type> or <el-type>Int</el-type>.
 <el-method>NaN</el-method> is short for 'Not A (Real) Number'. Their use is illustrated with the following tests:</p>
+
 <el-code-block source="test_floor.elan">
 <el-test class="ok multiline" id="test1" tabindex="-1">
 <el-top><el-expand>+</el-expand><el-kw>test </el-kw><el-field id="comment3" class="empty optional ok" tabindex="-1"><el-txt>&nbsp;</el-txt></el-field></el-top>
-<el-statement class="ok" id="let4" tabindex="-1"><el-kw>let </el-kw><el-field id="var5" class="ok" tabindex="-1"><el-txt><el-id>n</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt><el-id>pi</el-id></el-txt></el-field></el-statement>
-<el-statement class="ok" id="assert7" tabindex="-1"><el-kw>assert </el-kw><el-field id="text8" class="ok" tabindex="-1"><el-txt><el-id>n</el-id>.<el-method>floor</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr9" class="ok" tabindex="-1"><el-txt><el-lit>3</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert10" tabindex="-1"><el-kw>assert </el-kw><el-field id="text11" class="ok" tabindex="-1"><el-txt><el-id>n</el-id>.<el-method>ceiling</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr12" class="ok" tabindex="-1"><el-txt><el-lit>4</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert13" tabindex="-1"><el-kw>assert </el-kw><el-field id="text14" class="ok" tabindex="-1"><el-txt><el-id>n</el-id>.<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr15" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>3</el-lit>.142</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="assert16" tabindex="-1"><el-kw>assert </el-kw><el-field id="text17" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(-<el-lit>1</el-lit>).<el-method>isNaN</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr18" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
-<el-statement class="ok" id="let19" tabindex="-1"><el-kw>let </el-kw><el-field id="var20" class="ok" tabindex="-1"><el-txt><el-id>x</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit>/<el-lit>0</el-lit></el-txt></el-field></el-statement>
-<el-statement class="ok" id="assert22" tabindex="-1"><el-kw>assert </el-kw><el-field id="text23" class="ok" tabindex="-1"><el-txt><el-id>x</el-id>.<el-method>isInfinite</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr24" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="let19" tabindex="-1"><el-kw>let </el-kw><el-field id="var20" class="ok" tabindex="-1"><el-txt><el-id>p</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr21" class="ok" tabindex="-1"><el-txt><el-id>pi</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="let11" tabindex="-1"><el-kw>let </el-kw><el-field id="var12" class="ok" tabindex="-1"><el-txt><el-id>mp</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr13" class="ok" tabindex="-1"><el-txt>-<el-id>pi</el-id></el-txt></el-field></el-statement>
+<el-statement class="ok" id="assert4" tabindex="-1"><el-kw>assert </el-kw><el-field id="text5" class="ok" tabindex="-1"><el-txt><el-id>p</el-id>.<el-method>floor</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr6" class="ok" tabindex="-1"><el-txt><el-lit>3</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert50" tabindex="-1"><el-kw>assert </el-kw><el-field id="text51" class="ok" tabindex="-1"><el-txt><el-id>mp</el-id>.<el-method>floor</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr52" class="ok" tabindex="-1"><el-txt>-<el-lit>4</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert41" tabindex="-1"><el-kw>assert </el-kw><el-field id="text42" class="ok" tabindex="-1"><el-txt><el-id>p</el-id>.<el-method>ceiling</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr43" class="ok" tabindex="-1"><el-txt><el-lit>4</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert45" tabindex="-1"><el-kw>assert </el-kw><el-field id="text46" class="ok" tabindex="-1"><el-txt><el-id>mp</el-id>.<el-method>ceiling</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr47" class="ok" tabindex="-1"><el-txt>-<el-lit>3</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert23" tabindex="-1"><el-kw>assert </el-kw><el-field id="text24" class="ok" tabindex="-1"><el-txt><el-id>p</el-id>.<el-method>round</el-method>(<el-lit>3</el-lit>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr25" class="ok" tabindex="-1"><el-txt><el-lit><el-lit>3</el-lit>.142</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert54" tabindex="-1"><el-kw>assert </el-kw><el-field id="text55" class="ok" tabindex="-1"><el-txt><el-id>mp</el-id>.<el-method>round</el-method>(<el-lit>2</el-lit>)</el-txt></el-field><el-kw> is </el-kw><el-field id="expr56" class="ok" tabindex="-1"><el-txt>-<el-lit><el-lit>3</el-lit>.14</el-lit></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="assert36" tabindex="-1"><el-kw>assert </el-kw><el-field id="text37" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(-<el-id>p</el-id>).<el-method>isNaN</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr38" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
+<el-statement class="ok" id="let26" tabindex="-1"><el-kw>let </el-kw><el-field id="var27" class="ok" tabindex="-1"><el-txt><el-id>q</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr28" class="ok" tabindex="-1"><el-txt><el-lit>1</el-lit>/<el-lit>0</el-lit></el-txt></el-field></el-statement>
+<el-statement class="ok" id="assert29" tabindex="-1"><el-kw>assert </el-kw><el-field id="text30" class="ok" tabindex="-1"><el-txt><el-id>q</el-id>.<el-method>isInfinite</el-method>()</el-txt></el-field><el-kw> is </el-kw><el-field id="expr31" class="ok" tabindex="-1"><el-txt><el-id>true</el-id></el-txt></el-field> <el-msg class="ok">pass</el-msg></el-statement>
 <el-kw>end test</el-kw>
 </el-test>
+
 </el-code-block>
 
 <h2 id="MathsFunctions">Maths functions</h2>
@@ -3152,7 +3194,7 @@ so the effect of <el-method>bitNot</el-method> is not just the simple bit revers
 <hr>
 </div></div>
 
-<h2 id="sequence">Sequence and SequenceWithStep</h2>
+<h2 id="sequence"><el-method>sequence</el-method> and <el-method>sequenceWithStep</el-method></h2>
 
 <p>The <el-method>sequence</el-method> function is used to create a <el-type>List</el-type> containing a sequence
 of integer values as defined by the two integer parameters: <el-code><el-id>start</el-id></el-code> and <el-code><el-id>end</el-id></el-code>
@@ -3180,27 +3222,27 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
   <td><el-method>clearPrintedText</el-method></td>
   <td>(none)</td>
   <td>(none)</td>
-  <td>clears the IDE's Display pane</td>
+  <td>clears the IDE's display pane</td>
  </tr><tr id="clearBlocks">
   <td><el-method>clearBlocks</el-method></td>
   <td>(none)</td>
   <td>(none)</td>
-  <td>clears the block graphics layer of the IDE's Display pane</td>
+  <td>clears the block graphics layer of the IDE's display pane</td>
  </tr><tr id="clearVG">
   <td><el-method>clearVectorGraphics</el-method></td>
   <td>(none)</td>
   <td>(none)</td>
-  <td>clears the vector graphics layer of the IDE's Display pane</td>
+  <td>clears the vector graphics layer of the IDE's display pane</td>
  </tr><tr id="clearHtml">
   <td><el-method>clearHtml</el-method></td>
   <td>(none)</td>
   <td>(none)</td>
-  <td>clears the Html layer of the IDE's Display pane</td>
+  <td>clears the Html layer of the IDE's display pane</td>
  </tr><tr id="clearAllDisplays">
   <td><el-method>clearAllDisplays</el-method></td>
   <td>(none)</td>
   <td>(none)</td>
-  <td>clears Display pane as well as the blocks, vector graphics and Html layers</td>
+  <td>clears display pane as well as the blocks, vector graphics and Html layers</td>
  </tr><tr id="clearKeyBuffer">
   <td><el-method>clearKeyBuffer</el-method></td>
   <td>(none)</td>
@@ -3217,25 +3259,25 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
   <td><el-method>printLine</el-method></td>
   <td><el-type>String</el-type></td>
   <td>(none)</td>
-  <td>prints the string to the Display followed by a newline.<br>
+  <td>prints the string to the display followed by a newline.<br>
   This method offers the means to do all printing via methods<br>
-  rather than coding a mixture of <el-code>call</el-code> and <el-code>print</el-code> statements</td>
+  rather than coding a mixture of <el-code>call</el-code> and <el-code>print</el-code> instructions</td>
  </tr><tr id="printNoLine">
   <td><el-method>printNoLine</el-method></td>
   <td><el-type>String</el-type></td>
   <td>(none)</td>
-  <td>prints the string to the Display without appending a newline so<br>
+  <td>prints the string to the display without appending a newline so<br>
   a following call will output on the same line.<br>
   You can put your own <el-lit>\n</el-lit> newlines in the argument string</td>
  </tr><tr id="printTab">
   <td><el-method>printTab</el-method></td>
   <td><el-type>Int, String</el-type></td>
   <td>(none)</td>
-  <td>prints the string to the Display starting at the tab position given (from 0)</td>
+  <td>prints the string to the display starting at the tab position given (from 0)</td>
  </tr>
 </table>
 
-<p>Method <el-method>printTab</el-method> helps in the layout of information printed to the Display, in particular, when printing columns of data.
+<p>Method <el-method>printTab</el-method> helps in the layout of information printed to the display, in particular, when printing columns of data.
  For example:</p>
 <el-code-block source="printTab.elan">
 <el-statement class="ok" id="call5" tabindex="0"><el-top><el-kw>call </el-kw><el-field id="ident6" class="ok" tabindex="0"><el-txt><el-method>printTab</el-method></el-txt><el-place><i>procedureName</i></el-place></el-field>(<el-field id="args7" class="optional ok" tabindex="0"><el-txt><el-lit>0</el-lit>, "<el-lit>Number</el-lit>"</el-txt><el-place><i>position, text</i></el-place></el-field>)</el-top></el-statement>
@@ -3280,13 +3322,13 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
  They may not be used inside a <el-kw>function</el-kw> that you have defined, because to do so would mean that your function would not be pure.</p>
 <p>System methods are defined only within Elan's standard library: you cannot write a system method yourself.</p>
 
-<h2 id="IOMethods">Input/output methods</h2>
+<h2 id="IOMethods">Input/output</h2>
 <ul>
  <li>Keyboard input: see <a href="#KeyboardInput">Keyboard input</a>.</li>
  <li>File input/output: see <a href="#FileInputOutput">Text file input/output</a>.</li>
 </ul>
  
-<h2 id="MiscMethods">Miscellaneous methods</h2> 
+<h2 id="MiscMethods">Miscellaneous</h2> 
 <table class="tableMethod">
  <tr>
   <th>system<br>method</th>
@@ -3333,7 +3375,7 @@ of integer values as defined by the two integer parameters: <el-code><el-id>star
  This can be either a <a href="LangRef.html#lambda"><el-kw>lambda</el-kw></a> or the name of a function.
  It is also possible to use references to functions not in the context of HoFs.</p>
 
-<p>On most occasions when you write the name of an existing function elsewhere in code your intent is to <i>evaluate</i> the function and, to do so, you write the name of the function followed by brackets containing such arguments as are required by the function. When passing a function, its name is not followed by brackets (or arguments), as in this example:
+<p>On most occasions when you write the name of an existing function elsewhere in code your intent is to <i>evaluate</i> the function and, to do so, you write the name of the function followed by round brackets containing such arguments as are required by the function. When passing a function, its name is not followed by round brackets (or arguments), as in this example:
 
 <el-code-block source="passFuncAsRef.elan">
 <el-class class="ok multiline" id="class1" tabindex="-1">
@@ -3428,7 +3470,7 @@ The function to be applied is usually specified as a <el-kw>lambda</el-kw> havin
   be a data structure, for example to:
 
   <ul>
-    <li>Generate a <a href="#Tuple">tuple</a> of the sum, sum-of-squares, and count of numerical elements.</li>
+    <li>Generate a <a href="#Tuple"><el-code>Tuple</el-code></a> of the sum, sum-of-squares, and count of numerical elements.</li>
     <li>Generate a dictionary of all the unique words in a list, with the number of times each word appears in the input list.</li>
   </ul>
 
