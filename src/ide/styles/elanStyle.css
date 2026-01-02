@@ -160,12 +160,13 @@ el-proc:has(+ el-kw), el-func:has(+ el-kw), el-prop:has(+ el-kw)
 .selected > el-top, 
 .selected > el-top *, 
 .selected > el-kw, 
+.selected > el-punc, 
 .selected > el-field, 
 .selected > el-field *, 
 .selected > el-txt, 
 .selected > el-place, 
 .selected > el-compl,
-.selected > .outdent el-top, .selected > .outdent el-top *
+.selected > .outdsuper.annotation().ent el-top, .selected > .outdent el-top *
 {
     background-color: var(--selection);
     border-right-color: var(--selection);

@@ -879,12 +879,12 @@ export abstract class AbstractFrame implements Frame {
   }
 
   annotation(): string {
-    return this.isGhosted() ? `ghosted ` : ``;
+    return this.isGhosted() ? ` ghosted ` : ``;
   }
 
   annotationAsHtml() {
     const source = this.annotationAsSource();
-    return source.length > 0 ? `<el-comment>${this.annotationAsSource().trim()}</el-comment>` : ``;
+    return source.length > 0 ? `<el-comment>${source}</el-comment>` : ``;
   }
 
   annotationAsSource() {

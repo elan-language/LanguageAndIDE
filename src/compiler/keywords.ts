@@ -70,7 +70,6 @@ export const assertAnnotation = "assert";
 export const callAnnotation = "call";
 export const constantAnnotation = "constant";
 export const constructorAnnotation = "constructor";
-export const definitionAnnotation = "definition";
 export const eachAnnotation = "each";
 export const enumAnnotation = "enum";
 export const functionAnnotation = "function";
@@ -83,7 +82,7 @@ export const propertyAnnotation = "property";
 export const recordAnnotation = "record";
 export const setAnnotation = "set";
 export const systemAnnotation = "system";
-export const testAnnotation = "test";
+export const testAnnotation = "test ";
 export const variableAnnotation = "variable";
 
 //Not added to allKeywords

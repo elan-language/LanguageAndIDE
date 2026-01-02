@@ -1,8 +1,4 @@
-import {
-  constantAnnotation,
-  constantKeyword,
-  definitionAnnotation,
-} from "../../../compiler/keywords";
+import { constantAnnotation, constantKeyword } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { ConstantValueField } from "../fields/constant-value-field";
 import { IdentifierField } from "../fields/identifier-field";
@@ -50,7 +46,7 @@ export class Constant extends AbstractFrame implements GlobalFrame, Collapsible 
     return "const";
   }
   override annotation(): string {
-    return constantAnnotation + definitionAnnotation;
+    return constantAnnotation;
   }
 
   renderAsHtml(): string {

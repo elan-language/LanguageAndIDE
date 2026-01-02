@@ -1,5 +1,4 @@
 import {
-  definitionAnnotation,
   setKeyword,
   toKeyword,
   variableAnnotation,
@@ -34,11 +33,11 @@ export class VariableStatement extends AbstractDefinitionStatement implements St
   }
 
   override annotation(): string {
-    return `${variableAnnotation} ${definitionAnnotation} `;
+    return `${variableAnnotation} `;
   }
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}
-    ${this.name.renderAsHtml()} = ${this.expr.renderAsHtml()}
+    ${this.name.renderAsHtml()}<el-punc> = </el-punc>${this.expr.renderAsHtml()}
     ${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 

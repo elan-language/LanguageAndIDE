@@ -1,9 +1,4 @@
-import {
-  beKeyword,
-  constantAnnotation,
-  definitionAnnotation,
-  letKeyword,
-} from "../../../compiler/keywords";
+import { beKeyword, constantAnnotation, letKeyword } from "../../../compiler/keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
@@ -35,13 +30,12 @@ export class LetStatement extends AbstractDefinitionStatement implements Stateme
   }
 
   override annotation(): string {
-    return constantAnnotation + definitionAnnotation;
+    return constantAnnotation + super.annotation();
   }
 
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}
-    ${this.name.renderAsHtml()}<el-kw> = </el-kw>${this.expr.renderAsHtml()}
-    ${this.name.renderAsHtml()}<el-kw> = </el-kw>${this.expr.renderAsHtml()}
+    ${this.name.renderAsHtml()}<el-punc> = </el-punc>${this.expr.renderAsHtml()}
     ${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 

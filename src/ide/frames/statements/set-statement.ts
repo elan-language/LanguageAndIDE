@@ -1,9 +1,4 @@
-import {
-  setAnnotation,
-  setKeyword,
-  toKeyword,
-  variableAnnotation,
-} from "../../../compiler/keywords";
+import { setAnnotation, setKeyword, toKeyword } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";
@@ -42,11 +37,11 @@ export class SetStatement extends AbstractFrame implements Statement {
   }
 
   override annotation(): string {
-    return setAnnotation + variableAnnotation + super.annotation();
+    return setAnnotation + super.annotation();
   }
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}
-    ${this.assignable.renderAsHtml()}<el-kw> = </el-kw>${this.expr.renderAsHtml()}
+    ${this.assignable.renderAsHtml()}<el-punc> = </el-punc>${this.expr.renderAsHtml()}
     ${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-statement>`;
   }
   renderAsSource(): string {

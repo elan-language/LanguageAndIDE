@@ -1,4 +1,4 @@
-import { callAnnotation, callKeyword, procedureAnnotation } from "../../../compiler/keywords";
+import { callAnnotation, callKeyword } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcRefField } from "../fields/proc-ref-field";
@@ -41,7 +41,7 @@ export class CallStatement extends AbstractFrame implements Statement {
   }
 
   override annotation(): string {
-    return `${callAnnotation} ${procedureAnnotation} `;
+    return callAnnotation + super.annotation();
   }
 
   renderAsHtml(): string {

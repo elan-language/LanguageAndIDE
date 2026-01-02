@@ -1,5 +1,5 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
-import { assertAnnotation, assertKeyword } from "../../../compiler/keywords";
+import { assertKeyword } from "../../../compiler/keywords";
 import { TestStatus } from "../../../compiler/test-status";
 import { AbstractFrame } from "../abstract-frame";
 import { AssertActualField } from "../fields/assert-actual-field";
@@ -41,10 +41,6 @@ export class AssertStatement extends AbstractFrame implements Statement {
 
   getIdPrefix(): string {
     return "assert";
-  }
-
-  override annotation(): string {
-    return assertAnnotation;
   }
 
   renderAsHtml(): string {

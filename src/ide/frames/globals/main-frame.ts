@@ -31,7 +31,7 @@ export class MainFrame extends FrameWithStatements implements GlobalFrame {
   }
 
   override annotation(): string {
-    return mainAnnotation;
+    return mainAnnotation + super.annotation();
   }
 
   public renderAsHtml(): string {
