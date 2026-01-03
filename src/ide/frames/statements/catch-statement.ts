@@ -51,7 +51,7 @@ export class CatchStatement extends AbstractFrame implements Statement {
   keywords = `${catchKeyword} ${exceptionKeyword} ${inKeyword} `;
 
   renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1"><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${this.keywords}</el-kw>${this.variable.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top></el-statement>`;
+    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1"><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.displayLanguage().renderAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top></el-statement>`;
   }
 
   renderAsSource(): string {

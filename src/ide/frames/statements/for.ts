@@ -1,4 +1,4 @@
-import { forKeyword, loopAnnotation } from "../../../compiler/keywords";
+import { forKeyword } from "../../../compiler/keywords";
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -38,13 +38,9 @@ export class For extends FrameWithStatements implements Statement {
     return "for";
   }
 
-  override annotation(): string {
-    return `${forKeyword} ${loopAnnotation} `;
-  }
-
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>for </el-kw>${this.variable.renderAsHtml()}<el-kw> in </el-kw><el-method>range</el-method>(${this.from.renderAsHtml()}, ${this.to.renderAsHtml()}, ${this.step.renderAsHtml()}):
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.displayLanguage().renderAsHtml(this)}
 ${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 </el-statement>`;

@@ -51,7 +51,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   getIdPrefix(): string {
     return "func";
   }
-  override annotation(): string {
+  frameSpecificAnnotation(): string {
     return functionAnnotation;
   }
 

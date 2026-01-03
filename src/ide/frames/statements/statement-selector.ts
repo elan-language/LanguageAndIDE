@@ -7,7 +7,6 @@ import {
   elifKeyword,
   elseKeyword,
   forKeyword,
-  functionAnnotation,
   ifKeyword,
   letKeyword,
   printKeyword,
@@ -41,7 +40,6 @@ export class StatementSelector extends AbstractSelector {
       [assertKeyword, (parent: Parent) => this.factory.newAssert(parent)],
       [callKeyword, (parent: Parent) => this.factory.newCall(parent)],
       [eachKeyword, (parent: Parent) => this.factory.newEach(parent)],
-      [elifKeyword, (parent: Parent) => this.factory.newElif(parent)],
       [elseKeyword, (parent: Parent) => this.factory.newElse(parent)],
       [forKeyword, (parent: Parent) => this.factory.newFor(parent)],
       [ifKeyword, (parent: Parent) => this.factory.newIf(parent)],
@@ -65,12 +63,12 @@ export class StatementSelector extends AbstractSelector {
     const parent = this.getParent();
     let result = false;
     if (keyword === constantAnnotation) {
-      result = this.isWithinAFunction(parent);
+      result = this.isWithinAFunction();
     } else if (keyword === elseKeyword || keyword === elifKeyword) {
       result = parent.getIdPrefix() === ifKeyword;
     } else if (keyword === printKeyword || keyword === callKeyword) {
       result = !(
-        this.isWithinAFunction(parent) ||
+        this.isWithinAFunction() ||
         this.isDirectlyWithinATest() ||
         this.isWithinAConstructor()
       );
@@ -82,10 +80,8 @@ export class StatementSelector extends AbstractSelector {
     return result;
   }
 
-  private isWithinAFunction(parent: Parent): boolean {
-    return parent.annotation().startsWith(functionAnnotation)
-      ? true
-      : parent.hasParent() && this.isWithinAFunction(parent.getParent());
+  private isWithinAFunction(): boolean {
+    return this.isWithinContext(this.getParent(), "func");
   }
 
   private isDirectlyWithinATest(): boolean {

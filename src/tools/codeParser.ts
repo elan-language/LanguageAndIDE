@@ -1,6 +1,7 @@
-import { hash } from "../ide/util";
 import { allKeywords } from "../compiler/keywords";
 import { StdLib } from "../compiler/standard-library/std-lib";
+import { transform, transformMany } from "../ide/compile-api/ast-visitor";
+import { Transforms } from "../ide/compile-api/transforms";
 import { MemberSelector } from "../ide/frames/class-members/member-selector";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
 import { DefaultProfile } from "../ide/frames/default-profile";
@@ -13,8 +14,7 @@ import { LetStatement } from "../ide/frames/statements/let-statement";
 import { StatementSelector } from "../ide/frames/statements/statement-selector";
 import { ParseStatus } from "../ide/frames/status-enums";
 import { StubInputOutput } from "../ide/stub-input-output";
-import { transform, transformMany } from "../ide/compile-api/ast-visitor";
-import { Transforms } from "../ide/compile-api/transforms";
+import { hash } from "../ide/util";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "./parserConstants";
 
 function transforms(): Transforms {

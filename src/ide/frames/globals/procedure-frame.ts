@@ -33,7 +33,7 @@ export abstract class ProcedureFrame extends FrameWithStatements {
     return "proc";
   }
 
-  override annotation(): string {
+  frameSpecificAnnotation(): string {
     return procedureAnnotation;
   }
 

@@ -32,7 +32,7 @@ export class VariableStatement extends AbstractDefinitionStatement implements St
     return "var";
   }
 
-  override annotation(): string {
+  frameSpecificAnnotation(): string {
     return `${variableAnnotation} `;
   }
   renderAsHtml(): string {

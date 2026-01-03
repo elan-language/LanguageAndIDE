@@ -1,14 +1,12 @@
 import {
   endKeyword,
   functionKeyword,
-  methodAnnotation,
   privateKeyword,
   returnsKeyword,
 } from "../../../compiler/keywords";
 import {
   addPrivateToggleToContextMenu,
   modifierAsSource,
-  privateAnnotationIfPresent,
   selfType,
   singleIndent,
   togglePrivatePublic,
@@ -34,10 +32,6 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
 
   public override indent(): string {
     return singleIndent();
-  }
-
-  override annotation(): string {
-    return super.annotation() + methodAnnotation + privateAnnotationIfPresent(this);
   }
 
   public renderAsHtml(): string {

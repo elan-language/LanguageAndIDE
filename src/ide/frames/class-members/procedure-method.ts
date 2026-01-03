@@ -1,8 +1,7 @@
-import { methodAnnotation, privateKeyword } from "../../../compiler/keywords";
+import { privateKeyword } from "../../../compiler/keywords";
 import {
   addPrivateToggleToContextMenu,
   modifierAsSource,
-  privateAnnotationIfPresent,
   selfType,
   singleIndent,
   togglePrivatePublic,
@@ -28,10 +27,6 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
 
   public override indent(): string {
     return singleIndent();
-  }
-
-  override annotation(): string {
-    return super.annotation() + methodAnnotation + privateAnnotationIfPresent(this);
   }
 
   public renderAsHtml(): string {

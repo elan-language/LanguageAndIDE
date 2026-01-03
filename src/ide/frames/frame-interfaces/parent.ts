@@ -2,7 +2,7 @@ import { AbstractSelector } from "../abstract-selector";
 import { Field } from "./field";
 import { File } from "./file";
 import { Frame } from "./frame";
-import { SourceLanguage } from "./source-language";
+import { Language } from "./language";
 import { StatementFactory } from "./statement-factory";
 
 export interface Parent {
@@ -51,6 +51,6 @@ export interface Parent {
   isWithinAnImportedFrame(): boolean;
   isImported(): boolean;
 
-  annotation(): string;
-  getLanguage(): SourceLanguage;
+  displayLanguage(): Language;
+  sourceLanguage(): Language;
 }

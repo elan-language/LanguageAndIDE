@@ -72,7 +72,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   getIdPrefix(): string {
     return "test";
   }
-  override annotation(): string {
+  frameSpecificAnnotation(): string {
     return testAnnotation;
   }
 

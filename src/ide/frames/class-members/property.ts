@@ -1,10 +1,5 @@
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
-import {
-  asKeyword,
-  privateKeyword,
-  propertyAnnotation,
-  propertyKeyword,
-} from "../../../compiler/keywords";
+import { asKeyword, privateKeyword, propertyKeyword } from "../../../compiler/keywords";
 import { ClassType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { IdentifierField } from "../fields/identifier-field";
@@ -12,7 +7,6 @@ import { TypeField } from "../fields/type-field";
 import {
   addPrivateToggleToContextMenu,
   modifierAsSource,
-  privateAnnotationIfPresent,
   togglePrivatePublic,
 } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -46,10 +40,6 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember {
 
   getIdPrefix(): string {
     return "prop";
-  }
-
-  override annotation(): string {
-    return propertyAnnotation + privateAnnotationIfPresent(this);
   }
 
   renderAsHtml(): string {

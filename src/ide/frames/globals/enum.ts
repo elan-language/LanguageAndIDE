@@ -36,7 +36,7 @@ export class Enum extends AbstractFrame implements GlobalFrame {
     return "enum";
   }
 
-  override annotation(): string {
+  frameSpecificAnnotation(): string {
     return enumAnnotation;
   }
 

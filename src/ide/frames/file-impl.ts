@@ -10,7 +10,6 @@ import { Transforms } from "../compile-api/transforms";
 import { ElanFileError } from "../elan-file-error";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSourceFromString } from "./code-source-from-string";
-import { ElanLanguage } from "./elan-language";
 import { Regexes } from "./fields/regexes";
 import {
   expandCollapseAll,
@@ -25,10 +24,10 @@ import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
 import { File, ParseMode } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
+import { Language } from "./frame-interfaces/language";
 import { Parent } from "./frame-interfaces/parent";
 import { defaultUsername, Profile } from "./frame-interfaces/profile";
 import { Selectable } from "./frame-interfaces/selectable";
-import { SourceLanguage } from "./frame-interfaces/source-language";
 import { StatementFactory } from "./frame-interfaces/statement-factory";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
@@ -42,6 +41,8 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
+import { LanguageElan } from "./language-elan";
+import { LanguagePython } from "./language-python";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -841,7 +842,17 @@ export class FileImpl implements File {
     return "";
   }
 
-  getLanguage(): SourceLanguage {
-    return new ElanLanguage();
+  displayLanguage(): Language {
+    //TODO: temporary hard-wired solution - eventually to be picked up from IDE
+    const elan = new LanguageElan();
+    const python = new LanguagePython();
+    return true ? elan : python;
+  }
+
+  sourceLanguage(): Language {
+    //TODO: temporary hard-wired solution - eventually to be picked up from IDE
+    const elan = new LanguageElan();
+    const python = new LanguagePython();
+    return true ? elan : python;
   }
 }

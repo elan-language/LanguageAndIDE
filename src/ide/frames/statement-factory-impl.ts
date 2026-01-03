@@ -6,7 +6,6 @@ import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
 import { Each } from "./statements/each";
-import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
@@ -31,9 +30,6 @@ export class StatementFactoryImpl implements StatementFactory {
   }
   public newEach(parent: Parent): Frame {
     return new Each(parent);
-  }
-  public newElif(parent: Parent): Frame {
-    return new Elif(parent);
   }
   public newElse(parent: Parent): Frame {
     return new Else(parent);

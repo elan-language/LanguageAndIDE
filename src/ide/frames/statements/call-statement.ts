@@ -1,4 +1,4 @@
-import { callAnnotation, callKeyword } from "../../../compiler/keywords";
+import { callKeyword } from "../../../compiler/keywords";
 import { AbstractFrame } from "../abstract-frame";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcRefField } from "../fields/proc-ref-field";
@@ -40,13 +40,9 @@ export class CallStatement extends AbstractFrame implements Statement {
     return "call";
   }
 
-  override annotation(): string {
-    return callAnnotation + super.annotation();
-  }
-
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}<el-top>
-    ${this.proc.renderAsHtml()}<span>(</span>${this.args.renderAsHtml()}<span>)</span>
+    ${this.displayLanguage().renderAsHtml(this)}
     ${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top></el-statement>`;
   }
 

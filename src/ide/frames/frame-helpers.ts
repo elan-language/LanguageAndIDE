@@ -329,7 +329,3 @@ export function modifierAsHtml(member: MemberFrame): string {
 export function modifierAsSource(member: MemberFrame): string {
   return member.private ? `${privateKeyword} ` : "";
 }
-
-export function privateAnnotationIfPresent(member: MemberFrame): string {
-  return member.private ? privateKeyword : "";
-}

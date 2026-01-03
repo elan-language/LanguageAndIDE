@@ -18,9 +18,9 @@ import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
 import { File } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
+import { Language } from "./frame-interfaces/language";
 import { Parent } from "./frame-interfaces/parent";
 import { Selectable } from "./frame-interfaces/selectable";
-import { SourceLanguage } from "./frame-interfaces/source-language";
 import {
   parentHelper_copySelectedChildren,
   parentHelper_getAllSelectedChildren,
@@ -878,21 +878,21 @@ export abstract class AbstractFrame implements Frame {
     }
   }
 
-  annotation(): string {
-    return this.isGhosted() ? ` ghosted ` : ``;
-  }
-
   annotationAsHtml() {
     const source = this.annotationAsSource();
     return source.length > 0 ? `<el-comment>${source}</el-comment>` : ``;
   }
 
   annotationAsSource() {
-    const annotation = this.annotation().trim();
-    return annotation.length > 0 ? ` ${this.getLanguage().commentMarker()} ${annotation}` : ``;
+    //const ghosted = this.isGhosted() ? ` ghosted ` : ``;  // Add this to the end when implementation of ghosted is changed
+    const annotation = this.displayLanguage().annotation(this).trim();
+    return annotation.length > 0 ? ` ${this.displayLanguage().commentMarker()} ${annotation}` : ``;
   }
 
-  getLanguage(): SourceLanguage {
-    return this._parent.getLanguage();
+  displayLanguage(): Language {
+    return this._parent.displayLanguage();
+  }
+  sourceLanguage(): Language {
+    return this._parent.sourceLanguage();
   }
 }

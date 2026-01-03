@@ -1,4 +1,4 @@
-import { constructorAnnotation, constructorKeyword } from "../../../compiler/keywords";
+import { constructorKeyword } from "../../../compiler/keywords";
 import { ParamListField } from "../fields/param-list-field";
 import { selfType } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -27,10 +27,6 @@ export class Constructor extends FrameWithStatements {
 
   getIdPrefix(): string {
     return "constructor";
-  }
-
-  override annotation(): string {
-    return constructorAnnotation + super.annotation();
   }
 
   public renderAsHtml(): string {
