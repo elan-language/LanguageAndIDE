@@ -378,7 +378,7 @@ Procedures and functions may be called or referenced recursively, as in this sim
  <li><el-kw>test</el-kw> instructions may be written anywhere in the code, provided they are at the global level. </li>
  <li>A <el-kw>test</el-kw> instruction may contain any number of <el-kw>assert</el-kw> instructions. The test runner is part of the IDE and it automatically attempts to run all <el-kw>assert</el-kw> instructions showing each one's pass or fail outcome alongside. However, if the test hits a runtime error (as distinct from an <el-kw>assert</el-kw> failure) then execution of the test will stop and remaining <el-kw>assert</el-kw>s will be shown as 'not run'.</li>
  <li>In addition to <el-kw>assert</el-kw> instructions, a <el-kw>test</el-kw> may contain any other instructions that may be added into a <el-kw>function</el-kw>.</li>
- <li>All <el-kw>assert</el-kw> statements should be at the top level within the <el-kw>test</el-kw> frame; none may be put into a loop structure.</li>
+ <li>All <el-kw>assert</el-kw> statements should be at the top level within the <el-kw>test</el-kw> instruction; none may be put into a loop structure.</li>
 </ul>
 
 <h3 class="no-TOC">Testing Float values</h3>
@@ -646,7 +646,7 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 <li>a <el-code>function</el-code></li>
 <li>a <el-code>procedure</el-code></li>
 </ul>
-<p>As with a concrete class, any of these members may be made <el-code>private</el-code>, after the corresponding frame has been added, by selecting that member frame and keying <b>Ctrl+p</b>.</p>
+<p>As with a concrete class, any of these members may be made <el-code>private</el-code>, after the corresponding instruction has been added, by selecting that member instruction and keying <b>Ctrl+p</b>.</p>
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
 <p>You may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> instruction. For example:</p>
@@ -928,7 +928,8 @@ Properties may be modified only from outside the class by means of a <a href="#p
 <ul>
 <li>A <el-code>function</el-code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
 <li>A <el-code>function</el-code> method may directly reference (read only) any <el-kw>property</el-kw> defined on the class as though it were a variable or parameter.</li>
-<li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
+<li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses.
+ This is done by selecting the <el-kw>property</el-kw> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 <li><el-method>asString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns  a value of type <el-type>String</el-type>.
  If defined for a class then, if an instance of the class is printed, function method <el-method>asString</el-method> will automatically be used.
   Typically <el-method>asString</el-method> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
@@ -939,12 +940,14 @@ Properties may be modified only from outside the class by means of a <a href="#p
 <ul>
 <li>A procedure method, like a function method, is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
 <li>A procedure method may read, or write to, any <el-kw>property</el-kw> defined on the class.</li>
-<li>A procedure method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
+<li>A procedure method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses.
+ This is done by selecting the <el-kw>property</el-kw> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 </ul>
 
 <h2 id="private"><el-kw>private</el-kw> (property, function, procedure)</h2>
 <p>A <el-kw>property</el-kw> may be marked <el-kw>private</el-kw>, in which case it is visible only to code within the class and,
-if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by using the context menu on the property frame or selecting it and keying <b>Ctrl+p</b>.
+if defined on an <el-code>abstract class</el-code>, within its subclasses.
+ This is done by using the context menu on the property instruction or selecting it and keying <b>Ctrl+p</b>.
 This action is a toggle used both to set and to remove the modifier <el-kw>private</el-kw>.</p>
 <ul>
  <li></li>
@@ -1465,19 +1468,24 @@ See <a href="LibRef.html#upperCase">Dot methods on a String</a>.</li>
 </ul>
 
 <h2 id="lambda"><el-kw>lambda</el-kw></h2>
-<p>A <el-kw>lambda</el-kw> is a lightweight means to define a function 'in line'. You typically define a <el-code>lambda</el-code>:</p>
+<p>A <el-code>lambda</el-code> is a lightweight means of defining a function 'inline' and without a name (i.e. an anonymous function).
+You would typically define a <el-code>lambda</el-code>:</p>
 <ul>
-<li>If the functionality it defines is needed in only one location: typically for a particular call to a <a href="LibRef.html#HoFs">Higher-order Function</a> (HoF).</li>
-<li>If you need to capture a local variable in the implementation. This is called 'closing around a variable'.</li>
+<li>when the functionality it defines is needed in only one location:
+   typically for a particular call to a <a href="LibRef.html#HoFs">Higher-order Function</a> (HoF).</li>
+<li>when you need to capture a local variable in the implementation: this is called 'closing around a variable'.</li>
 </ul>
-<p>The syntax for a <el-kw>lambda</el-kw> is as follows:</p>
+<p>The syntax for a <el-code>lambda</el-code> is as follows:</p>
 <ul>
 <li>Start with the keyword <el-kw>lambda</el-kw>.</li>
 <li>Parameter definitions, comma-separated, follow the same form as parameter definitions in a function or procedure, but without surrounding brackets.</li>
-<li>The <el-code>=&gt;</el-code> symbol, which is usually articulated as 'returns',  'yields' or even 'fat arrow'.</li>
+<li>The <el-code>=&gt;</el-code> symbol, which is usually articulated as 'returns', 'yields' or 'fat arrow'.</li>
 <li>An expression that makes use of the parameters, and may also make use of other variables that are in scope. </li>
 </ul>
-Example:
+<p>Although a <el-code>lambda</el-code> is commonly defined 'inline' it is also possible
+ to assign a <el-code>lambda</el-code> to a named value, so as to reuse it within the scope of that named value.</p>
+
+Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in an array of Booleans:
 <el-code-block source="liveNeighbours.elan">
 <el-func class="ok multiline" id="func3" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident5" class="ok" tabindex="0"><el-txt>liveNeighbours</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params6" class="optional ok" tabindex="0"><el-txt><el-id>cells</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Boolean</el-type>&gt;, <el-id>c</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="0"><el-txt><el-type>Int</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
@@ -1487,10 +1495,6 @@ Example:
 <el-kw>end function</el-kw> </el-func>
 </el-code-block>
 
-Notes:<ul>
-<li>Although a <el-kw>lambda</el-kw> is commonly defined 'inline' (as shown above) it is possible to assign a lambda to a variable and hence to reuse it within the scope of that variable.</li>
-</ul>
-
 <h2 id="if_expression"><el-kw>if</el-kw> expression</h2>
 
 <p>The <el-kw>if</el-kw> expression has a similar structure to the <a href="#if"><el-kw>if</el-kw> instruction</a>, but is an expression that returns a value.</p>
@@ -1499,7 +1503,7 @@ Notes:<ul>
  <li>It specifies which of several expressions is to be evaluated to give the returned value.</li>
  <li><el-kw>else if</el-kw> and <el-kw>else</el-kw> clauses are optional.</li>
  <li>You can add as many <el-kw>else if</el-kw> clauses as you wish, but only one unconditional <el-kw>else</el-kw> which, if present, must be last.</li>
- <li>Though structured like the <el-kw>if</el-kw> instruction, it is edited in one field rather than in separate frames.
+ <li>Though structured like the <el-kw>if</el-kw> instruction, it is edited in one field rather than in separate fields.
  On moving away from editing an <el-kw>if</el-kw> expression, it is automatically reformatted to be similar to an <el-kw>if</el-kw> instruction,
  though without indentation. This means that an <el-kw>if</el-kw> expression should usually be kept simple.</li>
  <li>An <el-kw>if</el-kw> expression may be used within an <el-kw>if</el-kw> expression but will be hard to read even if it is enclosed in brackets.</li>
