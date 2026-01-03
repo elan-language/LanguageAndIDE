@@ -126,6 +126,13 @@ export class BinaryOperation extends AbstractParseNode {
   renderAsHtml(): string {
     const open = this.keyword ? "<el-kw>" : "";
     const close = this.keyword ? "</el-kw>" : "";
+    return `${open}${this.renderAsSource()}${close}`;
+  }
+
+  //TODO: for Python
+  /*   renderAsHtml(): string {
+    const open = this.keyword ? "<el-kw>" : "";
+    const close = this.keyword ? "</el-kw>" : "";
     let text = this.matchedText.trim();
     if (text === isKeyword) {
       text = " == ";
@@ -135,7 +142,7 @@ export class BinaryOperation extends AbstractParseNode {
       text = this.renderAsSource();
     }
     return `${open}${text}${close}`;
-  }
+  } */
 
   renderAsSource(): string {
     let source = "";

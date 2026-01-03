@@ -31,7 +31,7 @@ export class LetStatement extends AbstractDefinitionStatement implements Stateme
 
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}
-    ${this.displayLanguage().renderAsHtml(this)}
+    ${this.displayLanguage().renderSingleLineAsHtml(this)}
     ${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 

@@ -5,11 +5,16 @@ import {
   mainAnnotation,
   privateAnnotation,
   setAnnotation,
+  variableAnnotation,
 } from "../../compiler/keywords";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
+import { ParseNode } from "./frame-interfaces/parse-node";
 import { MainFrame } from "./globals/main-frame";
+import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { ParamDefNode } from "./parse-nodes/param-def-node";
+import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
@@ -24,6 +29,7 @@ import { ReturnStatement } from "./statements/return-statement";
 import { SetStatement } from "./statements/set-statement";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
+import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 
 export class LanguagePython implements Language {
@@ -59,27 +65,26 @@ export class LanguagePython implements Language {
     } else if (frame instanceof Throw) {
       // TODO
     } else if (frame instanceof TryStatement) {
-      // TODO
+      a = "";
     } else if (frame instanceof While) {
       a = "";
+    } else if (frame instanceof VariableStatement) {
+      a = variableAnnotation;
     }
     return a;
+  }
+
+  commentMarker(): string {
+    return this.hash;
   }
 
   private privateAnnotationIfPresent(member: MemberFrame): string {
     return member.private ? " " + privateAnnotation : "";
   }
 
-  //TODO 1. How to handle the frame with statements.
-  // Probably best as two methods e.g. renderTopAsHtml and so same for renderAsSource, & parsing. By separating this and renderBottom...
-  // the latter can be implemented for Python as just retursing empty string?
-  // 2. Factor out all the repetition of generation of Html, with a common one for all frameWithStatements, and singleLineStatements,
-  // possibly introducing the latter as a new abstract frame class.
-  renderAsHtml(frame: Frame): string {
+  renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
-    if (frame instanceof MainFrame) {
-      html = `<el-kw>${this.defKeyword} </el-kw><el-method>main</el-method>(): <el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
-    } else if (frame instanceof AssertStatement) {
+    if (frame instanceof AssertStatement) {
       html = `<el-method>assertEqual</el-method>(${frame.actual.renderAsHtml()}, ${frame.expected.renderAsHtml()})`;
     } else if (frame instanceof CallStatement) {
       html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)</el-punc>`;
@@ -89,6 +94,29 @@ export class LanguagePython implements Language {
       html = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof LetStatement) {
       html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
+    } else if (frame instanceof Else) {
+      const elseOrElif = frame.hasIf
+        ? `<el-kw>${this.elifKeyword} </el-kw>${frame.condition.renderAsHtml()}`
+        : `<el-kw>${this.elseKeyword}</el-kw>`;
+      html = elseOrElif + `<el-punc>:</el-punc>`;
+    } else if (frame instanceof Print) {
+      html = `<el-method>print</el-method><el-punc>(</el-punc>${frame.expr.renderAsHtml()}<el-punc>)</el-punc>`;
+    } else if (frame instanceof ReturnStatement) {
+      html = `<el-kw>${this.returnKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
+    } else if (frame instanceof SetStatement) {
+      html = `${frame.assignable.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
+    } else if (frame instanceof Throw) {
+      html = `<el-kw>${this.raiseKeyword}</el-kw><el-punc>("</el-punc>${frame.text.renderAsHtml()}<el-punc>")</el-punc>`;
+    } else if (frame instanceof VariableStatement) {
+      html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
+    }
+    return html;
+  }
+
+  renderTopAsHtml(frame: Frame): string {
+    let html = `Html not specified for this frame`;
+    if (frame instanceof MainFrame) {
+      html = `<el-kw>${this.defKeyword} </el-kw><el-method>main</el-method>(): <el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof Each) {
       html = `<el-kw>${this.forKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.inKeyword} </el-kw>${frame.iter.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof Else) {
@@ -100,14 +128,6 @@ export class LanguagePython implements Language {
       html = `<el-kw>${this.forKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.inKeyword} </el-kw><el-method>range</el-method>(${frame.from.renderAsHtml()}, ${frame.to.renderAsHtml()}, ${frame.step.renderAsHtml()})<el-punc>:</el-punc>`;
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.ifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
-    } else if (frame instanceof Print) {
-      html = `<el-method>print</el-method><el-punc>(</el-punc>${frame.expr.renderAsHtml()}<el-punc>)</el-punc>`;
-    } else if (frame instanceof ReturnStatement) {
-      html = `<el-kw>${this.returnKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
-    } else if (frame instanceof SetStatement) {
-      html = `${frame.assignable.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
-    } else if (frame instanceof Throw) {
-      html = `<el-kw>${this.raiseKeyword}</el-kw><el-punc>("</el-punc>${frame.text.renderAsHtml()}<el-punc>")</el-punc>`;
     } else if (frame instanceof TryStatement) {
       html = `${this.tryKeyword}<el-punc>:</el-punc>`;
     } else if (frame instanceof While) {
@@ -116,8 +136,23 @@ export class LanguagePython implements Language {
     return html;
   }
 
-  commentMarker(): string {
-    return this.hash;
+  renderBottomAsHtml(frame: Frame): string {
+    return frame ? "" : ""; // Python blocks have no textual ending;
+  }
+
+  //TODO: Not currently being used
+  renderNodeAsHtml(node: ParseNode): string {
+    let html = "";
+    if (node instanceof TypeGenericNode) {
+      const generics = node.generic?.renderAsHtml();
+      const chopped = generics?.substring(22, generics.length - 4);
+      html = node.simpleType?.renderAsHtml() + `[<el-type>${chopped}</el-type>]`;
+    } else if (node instanceof ParamDefNode) {
+      return node.name?.renderAsHtml() + ": " + node.type?.renderAsHtml();
+    } else if (node instanceof BinaryOperation) {
+      // substitute == for is != for isnt
+    }
+    return html;
   }
 
   private defKeyword = "def";

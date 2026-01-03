@@ -35,6 +35,7 @@ export class Constructor extends FrameWithStatements {
 <el-kw>def </el-kw><el-punc>(</el-punc><el-kw>self</el-kw>: ${selfType(this)},${this.params.renderAsHtml()}<el-punc>):</el-punc> <el-kw>none</el-kw>
 ${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
+
 </el-constructor>`;
   }
 

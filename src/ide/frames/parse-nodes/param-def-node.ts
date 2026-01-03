@@ -56,7 +56,8 @@ export class ParamDefNode extends AbstractSequence {
       : super.symbolCompletion_keywords();
   }
 
-  renderAsHtml(): string {
+  //TODO: for Python
+  /*   renderAsHtml(): string {
     return this.name?.renderAsHtml() + ": " + this.type?.renderAsHtml();
-  }
+  } */
 }

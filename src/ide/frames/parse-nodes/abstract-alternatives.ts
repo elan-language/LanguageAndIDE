@@ -7,10 +7,6 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   alternatives: ParseNode[] = [];
   bestMatch?: ParseNode;
 
-  constructor() {
-    super();
-  }
-
   parseText(text: string): void {
     this.remainingText = text;
     if (this.remainingText.length > 0) {
