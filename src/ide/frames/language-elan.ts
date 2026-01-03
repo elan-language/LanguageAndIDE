@@ -2,6 +2,8 @@ import { AbstractFrame } from "./abstract-frame";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ParseNode } from "./frame-interfaces/parse-node";
+import { AbstractClass } from "./globals/abstract-class";
+import { ConcreteClass } from "./globals/concrete-class";
 import { MainFrame } from "./globals/main-frame";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { AssertStatement } from "./statements/assert-statement";
@@ -54,7 +56,7 @@ export class LanguageElan implements Language {
     } else if (frame instanceof Throw) {
       html = `<el-kw>${this.throwKeyword} ${this.exceptionKeyword} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof VariableStatement) {
-      html = `<el-kw>${this.variableKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw>${this.setKeyword} ${this.toKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.variableKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.setKeyword} ${this.toKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
     }
     return html;
   }
@@ -89,6 +91,10 @@ export class LanguageElan implements Language {
       html = this.end(this.tryKeyword);
     } else if (frame instanceof While) {
       html = this.end(this.whileKeyword);
+    } else if (frame instanceof ConcreteClass) {
+      html = this.end(this.classKeyword);
+    } else if (frame instanceof AbstractClass) {
+      html = this.end(this.classKeyword);
     }
     return html;
   }

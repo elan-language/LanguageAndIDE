@@ -27,7 +27,4 @@ export class TypeTupleNode extends AbstractSequence {
       super.parseText(text);
     }
   }
-  override renderAsHtml(): string {
-    return `<el-type>Tuple</el-type>[${this.types?.renderAsHtml()}]`;
-  }
 }

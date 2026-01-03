@@ -33,7 +33,7 @@ export class AbstractClass extends ClassFrame {
     return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
 <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>abstract class </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${parentHelper_renderChildrenAsHtml(this)}
-<el-kw>end class</el-kw>
+${this.displayLanguage().renderBottomAsHtml(this)}
 </el-class>`;
   }
 

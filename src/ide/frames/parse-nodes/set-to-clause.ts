@@ -49,6 +49,6 @@ export class SetToClause extends AbstractSequence {
   }
 
   override renderAsHtml(): string {
-    return `${this.property?.renderAsHtml()} = ${this.expr?.renderAsHtml()}`;
+    return `<br>${this.property?.renderAsHtml()}<el-kw> set to </el-kw>${this.expr?.renderAsHtml()}`;
   }
 }
