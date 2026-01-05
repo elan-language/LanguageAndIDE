@@ -7,10 +7,18 @@ import {
   setAnnotation,
   variableAnnotation,
 } from "../../compiler/keywords";
+import { Constructor } from "./class-members/constructor";
+import { FunctionMethod } from "./class-members/function-method";
+import { ProcedureMethod } from "./class-members/procedure-method";
+import { Property } from "./class-members/property";
+import { selfType } from "./frame-helpers";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
 import { ParseNode } from "./frame-interfaces/parse-node";
+import { Enum } from "./globals/enum";
+import { GlobalFunction } from "./globals/global-function";
+import { GlobalProcedure } from "./globals/global-procedure";
 import { MainFrame } from "./globals/main-frame";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -92,15 +100,27 @@ export class LanguagePython implements Language {
       html = `${this.exceptKeyword}<el-punc>:</el-punc>`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof LetStatement) {
-      html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Else) {
       const elseOrElif = frame.hasIf
         ? `<el-kw>${this.elifKeyword} </el-kw>${frame.condition.renderAsHtml()}`
         : `<el-kw>${this.elseKeyword}</el-kw>`;
       html = elseOrElif + `<el-punc>:</el-punc>`;
+    } else if (frame instanceof Enum) {
+      html = `${frame.name.renderAsHtml()} = <el-type>Enum</el-type>('${frame.name.renderAsHtml()}', '${frame.values.renderAsHtml()}')`;
+    } else if (frame instanceof FunctionMethod) {
+      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>${this.selfKeyword}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
+    } else if (frame instanceof GlobalFunction) {
+      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
+    } else if (frame instanceof GlobalProcedure) {
+      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(${frame.params.renderAsHtml()}<el-punc>) -> <el-kw>${this.noneKeyword}</el-kw></el-punc><el-punc>:</el-punc>`;
+    } else if (frame instanceof LetStatement) {
+      html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Print) {
       html = `<el-method>print</el-method><el-punc>(</el-punc>${frame.expr.renderAsHtml()}<el-punc>)</el-punc>`;
+    } else if (frame instanceof ProcedureMethod) {
+      html = `<el-kw>def </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>${this.selfKeyword}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}<el-punc>) -> </el-punc><el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
+    } else if (frame instanceof Property) {
+      html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()} = <el-kw>${this.noneKeyword}</el-kw>`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.returnKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof SetStatement) {
@@ -113,10 +133,13 @@ export class LanguagePython implements Language {
     return html;
   }
 
+  //Test: <el-kw>def </el-kw> <el-method>test_</el-method>{this.testDescription.renderAsHtml()}(): <el-kw>none</el-kw>
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof MainFrame) {
       html = `<el-kw>${this.defKeyword} </el-kw><el-method>main</el-method>(): <el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
+    } else if (frame instanceof Constructor) {
+      html = `<el-kw>${this.defKeyword} </el-kw><el-punc>(</el-punc><el-kw>${this.selfKeyword}</el-kw>: ${selfType(frame)},${frame.params.renderAsHtml()}<el-punc>):</el-punc> <el-kw>none</el-kw>`;
     } else if (frame instanceof Each) {
       html = `<el-kw>${this.forKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.inKeyword} </el-kw>${frame.iter.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof Else) {
@@ -165,6 +188,7 @@ export class LanguagePython implements Language {
   private noneKeyword = "none";
   private raiseKeyword = "raise";
   private returnKeyword = "return";
+  private selfKeyword = "self";
   private tryKeyword = "try";
   private whileKeyword = "while";
 

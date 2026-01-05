@@ -42,7 +42,7 @@ export class Enum extends AbstractFrame implements GlobalFrame {
 
   renderAsHtml(): string {
     return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}
-    ${this.name.renderAsHtml()} = <el-type>Enum</el-type>('${this.name.renderAsHtml()}', '${this.values.renderAsHtml()}')
+    <el-kw>enum </el-kw>${this.name.renderAsHtml()} ${this.values.renderAsHtml()}
     ${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top></el-enum>`;
   }
 

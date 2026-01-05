@@ -39,10 +39,9 @@ export abstract class ProcedureFrame extends FrameWithStatements {
 
   public renderAsHtml(): string {
     return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>
-<el-kw>def </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc>${this.params.renderAsHtml()}<el-punc>)</el-punc> -> <el-kw>none</el-kw>:
-${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
+${this.language().renderBottomAsHtml(this)}
 </el-proc>`;
   }
 

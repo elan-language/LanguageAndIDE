@@ -517,6 +517,7 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this.breakpointStatus !== BreakpointStatus.none, "breakpoint");
     this.pushClass(this.paused, "paused");
     this.pushClass(this.isGhosted(), ghostedAnnotation);
+    this.pushClass(this.isImported(), importedAnnotation);
     this._classes.push(DisplayColour[this.readDisplayStatus()]);
   }
 

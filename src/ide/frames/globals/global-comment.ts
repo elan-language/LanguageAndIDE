@@ -26,7 +26,7 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame {
     return "com";
   }
   renderAsHtml(): string {
-    return `<el-global>${this.contextMenu()}<el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-kw># </el-kw>${this.text.renderAsHtml()}</el-top></el-comment></el-global>`;
+    return `<el-global>${this.contextMenu()}<el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.bpAsHtml()}${this.language().renderSingleLineAsHtml(this)}</el-top></el-comment></el-global>`;
   }
 
   indent(): string {

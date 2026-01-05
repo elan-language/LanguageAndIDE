@@ -79,9 +79,10 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   public renderAsHtml(): string {
     return `<el-test class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
 <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>
-<el-kw>def </el-kw> <el-method>test_</el-method>{this.testDescription.renderAsHtml()}(): <el-kw>none</el-kw>
+${this.language().renderTopAsHtml(this)}
 ${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
+${this.language().renderBottomAsHtml(this)}
 </el-test>`;
   }
   indent(): string {

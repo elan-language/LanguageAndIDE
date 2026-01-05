@@ -7,7 +7,6 @@ import {
 import {
   addPrivateToggleToContextMenu,
   modifierAsSource,
-  selfType,
   singleIndent,
   togglePrivatePublic,
 } from "../frame-helpers";
@@ -32,15 +31,6 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
 
   public override indent(): string {
     return singleIndent();
-  }
-
-  public renderAsHtml(): string {
-    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>
-<el-kw>def </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>self</el-kw>: ${selfType(this)}, ${this.params.renderAsHtml()}<el-punc>) -> </el-punc>${this.returnType.renderAsHtml()}:
-${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-</el-func>`;
   }
 
   public override renderAsSource(): string {
