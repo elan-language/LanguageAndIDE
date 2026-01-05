@@ -51,6 +51,5 @@ export interface Parent {
   isWithinAnImportedFrame(): boolean;
   isImported(): boolean;
 
-  displayLanguage(): Language;
-  sourceLanguage(): Language;
+  language(): Language;
 }

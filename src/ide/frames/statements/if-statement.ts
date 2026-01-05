@@ -29,9 +29,9 @@ export class IfStatement extends FrameWithStatements implements Statement {
 
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.displayLanguage().renderTopAsHtml(this)}${this.helpAsHtml()}${this.getFrNo()}</el-top>${this.compileMsgAsHtml()}
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}${this.helpAsHtml()}${this.getFrNo()}</el-top>${this.compileMsgAsHtml()}
 ${this.renderChildrenAsHtml()}
-${this.displayLanguage().renderBottomAsHtml(this)}
+${this.language().renderBottomAsHtml(this)}
 </el-statement>`;
   }
   renderAsSource(): string {

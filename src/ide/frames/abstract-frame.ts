@@ -885,14 +885,11 @@ export abstract class AbstractFrame implements Frame {
 
   annotationAsSource() {
     //const ghosted = this.isGhosted() ? ` ghosted ` : ``;  // Add this to the end when implementation of ghosted is changed
-    const annotation = this.displayLanguage().annotation(this).trim();
-    return annotation.length > 0 ? ` ${this.displayLanguage().commentMarker()} ${annotation}` : ``;
+    const annotation = this.language().annotation(this).trim();
+    return annotation.length > 0 ? ` ${this.language().commentMarker()} ${annotation}` : ``;
   }
 
-  displayLanguage(): Language {
-    return this._parent.displayLanguage();
-  }
-  sourceLanguage(): Language {
-    return this._parent.sourceLanguage();
+  language(): Language {
+    return this._parent.language();
   }
 }

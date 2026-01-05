@@ -842,14 +842,7 @@ export class FileImpl implements File {
     return "";
   }
 
-  displayLanguage(): Language {
-    //TODO: temporary hard-wired solution - eventually to be picked up from IDE
-    const elan = new LanguageElan();
-    const python = new LanguagePython();
-    return true ? elan : python;
-  }
-
-  sourceLanguage(): Language {
+  language(): Language {
     //TODO: temporary hard-wired solution - eventually to be picked up from IDE
     const elan = new LanguageElan();
     const python = new LanguagePython();
