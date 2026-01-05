@@ -1,4 +1,4 @@
-# eb1b610dc42768a32bfa7a6aa2edc03d0451b7a94a6370b0aade67bdff921e6c Elan 1.9.0 guest default_profile valid
+# df92a309ae72c3cbdff29bb93e1b7129f27b7a77ff069455f508c15643818bfe Elan 1.9.0 guest default_profile valid
 
 main
   variable grid set to new Array2D<of Int>(40, 30, white)
@@ -13,16 +13,27 @@ end main
 procedure fillRandom(grid as Array2D<of Int>)
   for col from 0 to 39 step 1
     for row from 0 to 29 step 1
-      let cell be if random() > 0.5 then black else white
-      call grid.put(col, row, cell)
+      call grid.put(col, row, blackOrWhite(random()))
     end for
   end for
 end procedure
 
+function blackOrWhite(random as Float) returns Int
+  variable result set to black
+  if random > 0.5 then
+    set result to white
+  end if
+  return result
+end function
+
 function north(cell as (Int, Int)) returns (Int, Int)
-  let x, y be cell
-  let y2 be if y is 0 then 29 else y - 1
-  return tuple(x, y2)
+  variable x, y set to cell
+  if y is 0 then
+    set y to 29
+  else
+    set y to y - 1
+  end if
+  return tuple(x, y)
 end function
 
 function south(cell as (Int, Int)) returns (Int, Int)
@@ -43,33 +54,62 @@ function west(cell as (Int, Int)) returns (Int, Int)
   return tuple(x2, y)
 end function
 
+function northEast(cell as (Int, Int)) returns (Int, Int)
+  return north(east(cell))
+end function
+
+function northWest(cell as (Int, Int)) returns (Int, Int)
+  return north(west(cell))
+end function
+
+function southEast(cell as (Int, Int)) returns (Int, Int)
+  return south(east(cell))
+end function
+
+function southWest(cell as (Int, Int)) returns (Int, Int)
+  return south(west(cell))
+end function
+
 function neighbourCells(x as Int, y as Int) returns List<of (Int, Int)>
   let c be tuple(x, y)
-  return [north(west(c)), north(c), north(east(c)), west(c), east(c), south(west(c)), south(c), south(east(c))]
+  return [northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)]
 end function
 
 function liveNeighbours(grid as Array2D<of Int>, x as Int, y as Int) returns Int
   variable count set to 0
   each cell in neighbourCells(x, y)
     let cx, cy be cell
-    set count to if grid[cx, cy] is black then count + 1 else count
+    if grid[cx, cy] is black then
+      set count to count + 1
+    end if
   end each
   return count
 end function
 
 function willLive(cell as Int, liveNeighbours as Int) returns Boolean
-  return if cell is black then (liveNeighbours > 1) and (liveNeighbours < 4) else liveNeighbours is 3
+  variable result set to false
+  if cell is black then
+    set result to (liveNeighbours > 1) and (liveNeighbours < 4)
+  else
+    set result to liveNeighbours is 3
+  end if
+  return result
 end function
 
-function nextCellValue(grid as Array2D<of Int>, x as Int, y as Int) returns Boolean
-  return willLive(grid[x, y], liveNeighbours(grid, x, y))
+function nextCellValue(grid as Array2D<of Int>, x as Int, y as Int) returns Int
+  variable colour set to white
+  let live be willLive(grid[x, y], liveNeighbours(grid, x, y))
+  if live then
+    set colour to black
+  end if
+  return colour
 end function
 
 procedure nextGeneration(out grid as Array2D<of Int>)
   let next be new Array2D<of Int>(40, 30, white)
   for x from 0 to 39 step 1
     for y from 0 to 29 step 1
-      let colour be if nextCellValue(grid, x, y) then black else white
+      let colour be nextCellValue(grid, x, y)
       call next.put(x, y, colour)
     end for
   end for
@@ -97,50 +137,58 @@ test east
   assert east(tuple(39, 29)) is tuple(0, 29)
 end test
 
-test 
+test west
   assert west(tuple(3, 4)) is tuple(2, 4)
   assert west(tuple(39, 0)) is tuple(38, 0)
   assert west(tuple(0, 0)) is tuple(39, 0)
   assert west(tuple(0, 29)) is tuple(39, 29)
 end test
 
-test north_east
-  assert north(east(tuple(3, 4))) is tuple(4, 3)
-  assert north(east(tuple(0, 0))) is tuple(1, 29)
-  assert north(east(tuple(39, 0))) is tuple(0, 29)
-  assert north(east(tuple(0, 29))) is tuple(1, 28)
-  assert north(east(tuple(39, 29))) is tuple(0, 28)
+test north east
+  assert northEast(tuple(3, 4)) is tuple(4, 3)
+  assert northEast(tuple(0, 0)) is tuple(1, 29)
+  assert northEast(tuple(39, 0)) is tuple(0, 29)
+  assert northEast(tuple(0, 29)) is tuple(1, 28)
+  assert northEast(tuple(39, 29)) is tuple(0, 28)
 end test
 
-test 
-  assert south(east(tuple(3, 4))) is tuple(4, 5)
-  assert south(east(tuple(0, 0))) is tuple(1, 1)
-  assert south(east(tuple(39, 0))) is tuple(0, 1)
-  assert south(east(tuple(0, 29))) is tuple(1, 0)
-  assert south(east(tuple(39, 29))) is tuple(0, 0)
+test south east
+  assert southEast(tuple(3, 4)) is tuple(4, 5)
+  assert southEast(tuple(0, 0)) is tuple(1, 1)
+  assert southEast(tuple(39, 0)) is tuple(0, 1)
+  assert southEast(tuple(0, 29)) is tuple(1, 0)
+  assert southEast(tuple(39, 29)) is tuple(0, 0)
 end test
 
-test 
-  assert north(west(tuple(3, 4))) is tuple(2, 3)
-  assert north(west(tuple(0, 0))) is tuple(39, 29)
-  assert north(west(tuple(39, 0))) is tuple(38, 29)
-  assert north(west(tuple(0, 29))) is tuple(39, 28)
-  assert north(west(tuple(39, 29))) is tuple(38, 28)
+test north west
+  assert northWest(tuple(3, 4)) is tuple(2, 3)
+  assert northWest(tuple(0, 0)) is tuple(39, 29)
+  assert northWest(tuple(39, 0)) is tuple(38, 29)
+  assert northWest(tuple(0, 29)) is tuple(39, 28)
+  assert northWest(tuple(39, 29)) is tuple(38, 28)
 end test
 
-test 
-  assert south(west(tuple(3, 4))) is tuple(2, 5)
-  assert south(west(tuple(0, 0))) is tuple(39, 1)
-  assert south(west(tuple(39, 0))) is tuple(38, 1)
-  assert south(west(tuple(0, 29))) is tuple(39, 0)
-  assert south(west(tuple(39, 29))) is tuple(38, 0)
+test south west
+  assert southWest(tuple(3, 4)) is tuple(2, 5)
+  assert southWest(tuple(0, 0)) is tuple(39, 1)
+  assert southWest(tuple(39, 0)) is tuple(38, 1)
+  assert southWest(tuple(0, 29)) is tuple(39, 0)
+  assert southWest(tuple(39, 29)) is tuple(38, 0)
 end test
 
-test 
+test blackOrWhite
+  assert blackOrWhite(0) is black
+  assert blackOrWhite(0.499) is black
+  assert blackOrWhite(0.5) is black
+  assert blackOrWhite(0.501) is white
+  assert blackOrWhite(1) is white
+end test
+
+test neighbourCells
   assert neighbourCells(3, 4) is [tuple(2, 3), tuple(3, 3), tuple(4, 3), tuple(2, 4), tuple(4, 4), tuple(2, 5), tuple(3, 5), tuple(4, 5)]
 end test
 
-test 
+test willLive
   assert willLive(white, 0) is false
   assert willLive(white, 1) is false
   assert willLive(white, 2) is false

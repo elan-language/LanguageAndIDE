@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+
+  <head>
+      <meta http-equiv="Cache-Control" content="no-store" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
+      <link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
+      <title></title>
+  </head>
+
+  <body>
+    <div id="worksheet">
+    <div class="docTitle"></div>
+    <div class="version" hidden=""></div>
+
+    <div class="transient">
+      <p>First, set the browser to <b>Full Screen</b> view, to give this worksheet and your code as much space as possible.</p>
+
+
+      <p class="transient">Then choose <i>either one</i> of the two options below:</p>
+
+      <p><b>Option 1: Start this worksheet from scratch</b></p>
+
+      <ul>
+        <li>First <label for="username">Enter your name: </label><input class="question" type="text" id="username" /></li>
+        <li>Then <button id="auto-save" disabled="">Create and save a new answers file</button>.
+        <li>All answers that you subsequently enter/edit will be auto-saved to this sheet.</li>
+      </ul>
+
+      <p><b>Option 2: Continue, or view, previous work</b></p>
+
+      <ul>
+        <li><button id="load-answers">Load a previously-saved answers file</button></li>
+        <li>All answers that you subsequently enter/edit will be auto-saved to this sheet.</li>
+        <li>The first time you re-load an answers sheet - within a single session on Elan -
+        you will be asked to confirm that you understand this.</li>
+      </ul>
+    </div>
+
+    <input class="question" type="text" id="postsave-username" disabled=""/>
+
+    <div class="license">
+      <img decoding="async" loading="lazy" src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41">
+      This worksheet is copyright &copy; Richard Pawson 2025, and protected by the Creative Commons license:
+          <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+        You may freely make and distribute copies of this worksheet <i>as is</i>, but if you <i>modify</i> this worksheet you may not distribute your modified version (outside your own teaching institution) without the author's permission.
+        Please <a href="mailto:rpawson@nakedobjects.org" target="_blank">email the author</a> to report errors or suggest improvements.
+    </div> 
+      <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-GB">
+
+<head>
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <link href="https://elan-language.github.io/LanguageAndIDE/styles/colourScheme.css" rel="stylesheet" />
+  <link href="https://elan-language.github.io/LanguageAndIDE/styles/elanStyle.css" rel="stylesheet" />
+  <link href="https://elan-language.github.io/LanguageAndIDE/styles/documentation.css" rel="stylesheet" />
+  <link href="https://elan-language.github.io/LanguageAndIDE/styles/worksheet.css" rel="stylesheet" />
+</head>
+
+<body>
+<table>
+  <tr>
+    <th>Worksheet</th>
+    <th>Introduces</th>
+    <th>Extends</th>
+    <th>Practices</th>
+  </tr>
+  <tr>
+    <td>Blackjack 1 & 2</td>
+    <td><b>Instructions</b>: <el-code><el-kw>variable</el-kw></el-code>, <el-code><el-kw>set</el-kw></el-code>, <el-code><el-kw>if</el-kw></el-code>, <el-code><el-kw>else</el-kw></el-code><br>
+      <b>Expressions:</b> <el-code><el-kw>is</el-kw></el-code>, <el-code><el-kw>and</el-kw></el-code><br>
+      <b>Concepts</b>: running & stopping,
+      instruction, comment, keyword, identifier, method name, type, punctuation symbol
+      navigating code, editing field, inserting instruction, 
+      literals, named values, enums, comparison operators
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Random walk</td>
+    <td><b>Instructions</b>: <el-code><el-kw>call</el-kw></el-code>, <el-code><el-kw>for</el-kw></el-code>, <el-code><el-kw>while</el-kw></el-code>, <el-code><el-kw>procedure</el-kw></el-code>, <el-code><el-kw>let</el-kw></el-code><br>
+      <b>Types</b>: <el-code><el-type>Turtle</el-type></el-code>, <el-code><el-type>Int</el-type></el-code><br>
+      <b>Methods</b>: <el-method>hide</el-method>, <el-method>placeAt</el-method>, <el-method>move</el-method>, <el-method>turn</el-method> 
+        <el-method>penColour</el-method>, <el-method>randomInt</el-method><br>
+      <b>Concepts</b>: procedures, parameters (incl. <el-code><el-kw>out</el-kw></el-code>), types, Turtle graphics, extracting code into a procedure, generalisation of a method
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Whack-a-mole</td>
+    <td><b>Types</b>: <el-code><el-type>Array</el-type></el-code><br>
+      <b>Methods</b>: <el-method>displayHtml</el-method>, <el-method>clock</el-method>, <el-method>pause</el-method>, <el-method>getNumericKey</el-method><br>
+      <b>Concepts</b>: arrays, DRY principle
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Burrow</td>
+    <td><b>Types</b>: <el-code><el-type>Array2D</el-type></el-code><br>
+      <b>Methods</b>: <el-method>put</el-method>, <el-method>displayBlocks</el-method>, <el-method>maxInt</el-method>, <el-method>minInt</el-method><br>
+      <b>Concepts</b>: block graphics, out of range error, literal list
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Simon</td>
+    <td><b>Types</b>: <el-code><el-type>List</el-type></el-code>, <el-code><el-type>CircleVG</el-type></el-code><br>
+      <b>Methods</b>: <el-method>append</el-method>, <el-method>displayVectorGraphics</el-method>, <el-method>clearVectorGraphics</el-method>, 
+      <el-method>waitForKey</el-method>, <el-method>parseAsInt</el-method>, <el-method>tone</el-method><br>
+      <b>Concepts</b>: list management
+      TODO: change <el-code><el-kw>while</el-kw></el-code> loop in playersTurn to <el-code><el-kw>repeat</el-kw></el-code> - just so that is covered.
+      TODO: Create a list of VectorGraphic and append the Circle to it rather than rely on literal list (of type CircleVG)
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+    <td>Wordle 1 & 2</td>
+    <td><b>Instructions</b>: <el-code><el-kw>each</el-kw></el-code><br>
+        <b>Types</b>: <el-code><el-type>String</el-type></el-code><br>
+      <b>Methods</b>: <el-method>contains</el-method>, <el-method>indexOf</el-method>, <el-method>withAppend</el-method>, <el-method>length</el-method><br>
+      <b>Concepts</b>: index range, string concatenation
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Crossword solver's helper (TDD)</td>
+    <td><b>Instructions</b>: <el-code><el-kw>function</el-kw></el-code>, <el-code><el-kw>test</el-kw></el-code>, <el-code><el-kw>assert</el-kw></el-code><br>
+        <b>Types</b>: RegEx ?<br>
+      <b>Methods</b>: 
+      <b>Concepts</b>: test driven development, sorting algorithm, searching algorithm (find many)
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>TBD</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+</table>
+</body>
+
+  <div hidden="" id="hash"></div>
+  <div hidden="" id="changes"></div>
+
+    <script src="https://elan-language.github.io/LanguageAndIDE/diff.js"></script>
+    <script src="https://elan-language.github.io/LanguageAndIDE/worksheet-model-scripts.js"></script>
+  </body>
+</html>

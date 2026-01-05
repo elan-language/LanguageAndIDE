@@ -873,6 +873,7 @@ export abstract class AbstractFrame implements Frame {
 
   deleteAllGhosted(): void {
     if (this.isGhosted()) {
+      this.insertNewSelectorIfNecessary();
       this.delete();
     }
   }
