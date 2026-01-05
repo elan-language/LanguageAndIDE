@@ -2,9 +2,7 @@ import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-e
 import { transform, transformMany } from "../compile-api/ast-visitor";
 import { Transforms } from "../compile-api/transforms";
 import { DefaultProfile } from "../frames/default-profile";
-import { DefaultUserConfig } from "../frames/default-user-config";
 import { Profile } from "../frames/frame-interfaces/profile";
-import { UserConfig } from "../frames/frame-interfaces/user-config";
 
 export async function hash(toHash: string) {
   const msgUint8 = new TextEncoder().encode(toHash); // encode as (utf-8) Uint8Array
@@ -21,19 +19,6 @@ export function transforms() {
   } as Transforms;
 }
 
-export async function fetchUserConfig(): Promise<UserConfig> {
-  // for the moment no user config
-  // const jsonUserConfig = `userConfig.json`;
-  // try {
-  //   const f = await fetch(jsonUserConfig, { mode: "same-origin" });
-  //   const j = await f.json();
-  //   return j as UserConfig;
-  // } catch {
-  //   console.warn("user config not found");
-  return new DefaultUserConfig();
-  //}
-}
-
 export async function fetchDefaultProfile() {
   try {
     const jsonProfile = `./profiles/default.json`;
@@ -42,17 +27,6 @@ export async function fetchDefaultProfile() {
     return j as Profile;
   } catch {
     console.warn("default profile not found");
-    return new DefaultProfile();
-  }
-}
-
-export async function fetchProfile(name: string) {
-  try {
-    const f = await fetch(`./profiles/${name}.json`, { mode: "same-origin" });
-    const j = await f.json();
-    return j as Profile;
-  } catch {
-    console.warn(`${name} profile not found`);
     return new DefaultProfile();
   }
 }

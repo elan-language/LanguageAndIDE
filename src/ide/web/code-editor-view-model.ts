@@ -3,6 +3,7 @@
 import { AssertOutcome } from "../../compiler/assert-outcome";
 import { StdLib } from "../../compiler/standard-library/std-lib";
 import { TestStatus } from "../../compiler/test-status";
+import { isElanProduction } from "../../environment";
 import { CodeSourceFromString, FileImpl } from "../frames/file-impl";
 import { isCollapsible, isFrame } from "../frames/frame-helpers";
 import { CodeSource } from "../frames/frame-interfaces/code-source";
@@ -17,9 +18,13 @@ import { FileManager } from "./file-manager";
 import { TestRunner } from "./test-runner";
 import {
   collapseAllMenus,
+  cursorDefault,
   delayMessage,
   getEditorMsg,
   getFocused,
+  getModKey,
+  handleMenuArrowDown,
+  handleMenuArrowUp,
   ICodeEditorViewModel,
   IIDEViewModel,
   isGlobalKeyboardEvent,
@@ -34,12 +39,17 @@ system.stdlib = stdlib; // to allow injection
 
 export class CodeEditorViewModel implements ICodeEditorViewModel {
   private file?: File = undefined;
+  private profile?: Profile = undefined;
 
   lastDOMEvent: Event | undefined;
   lastEditorEvent: editorEvent | undefined;
 
   get fileName() {
     return this.file!.fileName;
+  }
+
+  setProfile(p: Profile) {
+    this.profile = p;
   }
 
   set fileName(fn: string) {
@@ -148,8 +158,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     return this.file!.getFirstChild();
   }
 
-  recreateFile(profile: Profile, userName: string | undefined) {
-    this.file = new FileImpl(hash, profile, userName, transforms(), stdlib);
+  recreateFile() {
+    this.file = new FileImpl(hash, this.profile!, undefined, transforms(), stdlib);
   }
 
   get currentHash() {
@@ -190,6 +200,25 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
       this.readRunStatus() === RunStatus.paused ||
       this.readRunStatus() === RunStatus.input
     );
+  }
+
+  updateFileName() {
+    let fileName = prompt("Please enter your file name", this.fileName);
+
+    if (fileName === null) {
+      // cancelled
+      return;
+    }
+
+    if (!fileName) {
+      fileName = this.defaultFileName;
+    }
+
+    if (!fileName.endsWith(".elan")) {
+      fileName = fileName + ".elan";
+    }
+
+    this.fileName = fileName;
   }
 
   handleKey(e: editorEvent) {
@@ -401,14 +430,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     }
   }
 
-  async resetFile(
-    fm: FileManager,
-    vm: IIDEViewModel,
-    tr: TestRunner,
-    profile: Profile,
-    userName: string | undefined,
-  ) {
-    this.recreateFile(profile, userName);
+  async resetFile(fm: FileManager, vm: IIDEViewModel, tr: TestRunner) {
+    this.recreateFile();
     await this.initialDisplay(fm, vm, tr, false);
   }
 
@@ -459,17 +482,10 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     return this.readRunStatus() === RunStatus.paused;
   }
 
-  async loadDemoFile(
-    fileName: string,
-    profile: Profile,
-    userName: string | undefined,
-    vm: IIDEViewModel,
-    fm: FileManager,
-    tr: TestRunner,
-  ) {
+  async loadDemoFile(fileName: string, vm: IIDEViewModel, fm: FileManager, tr: TestRunner) {
     const f = await fetch(fileName, { mode: "same-origin" });
     const rawCode = await f.text();
-    this.recreateFile(profile, userName);
+    this.recreateFile();
     this.fileName = fileName;
     fm.reset();
     await this.readAndParse(vm, fm, tr, rawCode, fileName, ParseMode.loadNew);
@@ -664,5 +680,277 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     this.handleKeyAndRender(msg, vm, tr);
     event.preventDefault();
     event.stopPropagation();
+  }
+
+  async updateContent(
+    text: string,
+    editingField: boolean,
+    vm: IIDEViewModel,
+    fm: FileManager,
+    tr: TestRunner,
+  ) {
+    this.setRunStatus(RunStatus.default);
+    collapseAllMenus();
+    const codeContainer = (document.querySelector(".elan-code") as HTMLDivElement)!;
+
+    codeContainer.innerHTML = text;
+
+    const frames = document.querySelectorAll(".elan-code [id]");
+
+    for (const frame of frames) {
+      const id = frame.id;
+
+      frame.addEventListener("keydown", (event: Event) => {
+        const ke = event as KeyboardEvent;
+        this.handleEditorEvent(vm, tr, fm, event, "key", "frame", getModKey(ke), id, ke.key);
+      });
+
+      frame.addEventListener("click", (event) => {
+        const pe = event as PointerEvent;
+        const selectionStart = (event.target as HTMLInputElement).selectionStart ?? undefined;
+        const selectionEnd = (event.target as HTMLInputElement).selectionEnd ?? undefined;
+
+        const selection: [number, number] | undefined =
+          selectionStart === undefined
+            ? undefined
+            : [selectionStart, selectionEnd ?? selectionStart];
+
+        this.handleEditorEvent(
+          vm,
+          tr,
+          fm,
+          event,
+          "click",
+          "frame",
+          getModKey(pe),
+          id,
+          undefined,
+          selection,
+        );
+      });
+
+      frame.addEventListener("mousedown", (event) => {
+        // mousedown rather than click as click does not seem to pick up shift/ctrl click
+        const me = event as MouseEvent;
+        if (me.button === 0 && me.shiftKey) {
+          // left button only
+          this.handleEditorEvent(vm, tr, fm, event, "click", "frame", getModKey(me), id);
+        }
+      });
+
+      frame.addEventListener("mousemove", (event) => {
+        event.preventDefault();
+      });
+
+      frame.addEventListener("dblclick", (event) => {
+        const ke = event as KeyboardEvent;
+        this.handleEditorEvent(vm, tr, fm, event, "dblclick", "frame", getModKey(ke), id);
+      });
+
+      frame.addEventListener("contextmenu", (event) => {
+        const mk = { control: false, shift: false, alt: false };
+        this.handleEditorEvent(vm, tr, fm, event, "contextmenu", "frame", mk, id);
+        event.preventDefault();
+      });
+    }
+
+    function getInput() {
+      return document.querySelector(".focused input") as HTMLInputElement;
+    }
+
+    const input = getInput();
+    const focused = getFocused();
+
+    codeContainer?.addEventListener("click", (event) => {
+      if (this.isRunningState()) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+
+      this.showCode();
+    });
+
+    codeContainer.addEventListener("mousedown", (event) => {
+      // to prevent codeContainer taking focus on a click
+      if (this.isRunningState()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    });
+
+    let firstContextItem: HTMLDivElement | undefined;
+
+    if (document.querySelector(".context-menu")) {
+      const items = document.querySelectorAll(".context-menu-item") as NodeListOf<HTMLDivElement>;
+
+      firstContextItem = items[0];
+
+      for (const item of items) {
+        item.addEventListener("click", async (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          const ke = event as PointerEvent | KeyboardEvent;
+          const tgt = ke.target as HTMLDivElement;
+          const id = tgt.dataset.id;
+          const func = tgt.dataset.func;
+          const txt = await navigator.clipboard.readText();
+          this.handleEditorEvent(
+            vm,
+            tr,
+            fm,
+
+            event,
+            "contextmenu",
+            "frame",
+            getModKey(ke),
+            id,
+            "ContextMenu",
+            undefined,
+            func,
+            `${txt.trim()}`,
+          );
+        });
+
+        item.addEventListener("keydown", (event) => {
+          if (event.key === "ArrowUp") {
+            handleMenuArrowUp();
+            event.preventDefault();
+            event.stopPropagation();
+          } else if (event.key === "ArrowDown") {
+            handleMenuArrowDown();
+            event.preventDefault();
+            event.stopPropagation();
+          } else if (event.key === "Enter" || event.key === "Space") {
+            const focusedItem = document.activeElement as HTMLElement;
+            focusedItem?.click();
+            event.preventDefault();
+            event.stopPropagation();
+          }
+        });
+      }
+    }
+
+    const helpLinks = document.querySelectorAll("el-help a");
+
+    for (const item of helpLinks) {
+      item.addEventListener("click", (event) => {
+        if ((event.target as any).target === "help-iframe") {
+          // can't use the load event as if the page is already loaded with url it doesn#t fore agaon so
+          // no focus
+          vm.clickHelpTab();
+        }
+
+        event.stopPropagation();
+      });
+    }
+
+    if (firstContextItem) {
+      firstContextItem.focus();
+    } else if (input) {
+      const cursorStart = input.dataset.cursorstart as string;
+      const cursorEnd = input.dataset.cursorend as string;
+      const startIndex = parseInt(cursorStart) as number;
+      const endIndex = parseInt(cursorEnd) as number;
+      const cursorIndex1 = Number.isNaN(startIndex) ? input.value.length : startIndex;
+      const cursorIndex2 = Number.isNaN(endIndex) ? input.value.length : endIndex;
+
+      input.setSelectionRange(cursorIndex1, cursorIndex2);
+      input.focus();
+    } else if (focused) {
+      focused.focus();
+    } else {
+      codeContainer.focus();
+    }
+
+    if (document.querySelector(".autocomplete-popup")) {
+      const items = document.querySelectorAll(".autocomplete-item");
+
+      for (const item of items) {
+        item.addEventListener("click", (event) => {
+          const ke = event as PointerEvent;
+          const tgt = ke.target as HTMLDivElement;
+          const id = tgt.dataset.id;
+
+          this.handleEditorEvent(
+            vm,
+            tr,
+            fm,
+            event,
+            "key",
+            "frame",
+            getModKey(ke),
+            id,
+            "Enter",
+            undefined,
+            undefined,
+            tgt.innerText,
+          );
+        });
+      }
+
+      const ellipsis = document.querySelectorAll(".autocomplete-ellipsis");
+
+      if (ellipsis.length === 1) {
+        ellipsis[0].addEventListener("click", (event) => {
+          const ke = event as PointerEvent;
+          const tgt = ke.target as HTMLDivElement;
+          const id = tgt.dataset.id;
+          const selected = tgt.dataset.selected;
+
+          this.handleEditorEvent(
+            vm,
+            tr,
+            fm,
+            event,
+            "key",
+            "frame",
+            getModKey(ke),
+            id,
+            "ArrowDown",
+            undefined,
+            undefined,
+            selected,
+          );
+        });
+      }
+    }
+
+    const activeHelp = document.querySelector("a.active") as HTMLLinkElement | undefined;
+
+    if (activeHelp) {
+      activeHelp.click();
+    }
+
+    const copiedSource = this.getCopiedSource();
+
+    if (copiedSource.length > 0) {
+      let allCode = "";
+
+      for (const code of copiedSource) {
+        if (allCode) {
+          allCode = allCode + "\n" + code;
+        } else {
+          allCode = code;
+        }
+      }
+
+      await navigator.clipboard.writeText(allCode);
+    }
+
+    await fm.save(this, focused, editingField, vm);
+    vm.updateDisplayValues(this);
+
+    if (!isElanProduction) {
+      const dbgFocused = document.querySelectorAll(".focused");
+      //debug check
+      if (dbgFocused.length > 1) {
+        let msg = "multiple focused ";
+        dbgFocused.forEach((n) => (msg = `${msg}, Node: ${(n.nodeName, n.id)} `));
+        await vm.showError(new Error(msg), this.fileName, false);
+      }
+    }
+
+    cursorDefault();
   }
 }
