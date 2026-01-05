@@ -9,6 +9,8 @@ import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-ev
 import { ParseMode } from "../frames/frame-interfaces/file";
 import { Profile } from "../frames/frame-interfaces/profile";
 import { Group, Individual } from "../frames/frame-interfaces/user-config";
+import { LanguageElan } from "../frames/language-elan";
+import { LanguagePython } from "../frames/language-python";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { CodeEditorViewModel } from "./code-editor-view-model";
 import { FileManager } from "./file-manager";
@@ -50,6 +52,9 @@ const demosButton = document.getElementById("demos") as HTMLButtonElement;
 const demosMenu = document.getElementById("demos-menu") as HTMLDivElement;
 const fileMenu = document.getElementById("file-menu") as HTMLDivElement;
 const worksheetMenu = document.getElementById("worksheet-menu") as HTMLDivElement;
+const languageMenu = document.getElementById("language-menu") as HTMLDivElement;
+const elanButton = document.getElementById("elan-language") as HTMLDivElement;
+const pythonButton = document.getElementById("python-language") as HTMLDivElement;
 
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const loadButton = document.getElementById("load") as HTMLDivElement;
@@ -60,6 +65,7 @@ const autoSaveButton = document.getElementById("auto-save") as HTMLDivElement;
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
 const fileButton = document.getElementById("file") as HTMLButtonElement;
+const languageButton = document.getElementById("language") as HTMLButtonElement;
 const logoutButton = document.getElementById("logout") as HTMLButtonElement;
 const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLDivElement;
 const preferencesButton = document.getElementById("preferences") as HTMLDivElement;
@@ -222,6 +228,7 @@ class IDEViewModel implements IIDEViewModel {
           redoButton,
           clearDisplayButton,
           fileButton,
+          languageButton,
           loadButton,
           saveAsStandaloneButton,
           preferencesButton,
@@ -237,6 +244,7 @@ class IDEViewModel implements IIDEViewModel {
       this.disable([stopButton, pauseButton, stepButton], "Program is not running");
 
       this.enable(fileButton, "File actions");
+      this.enable(languageButton, "Language");
       this.enable(loadButton, "Load code from a file");
       this.enable(appendButton, "Append code from a file onto the end of the existing code");
       this.enable(importButton, "Import code from a file");
@@ -666,6 +674,14 @@ newButton?.addEventListener("click", async (event: Event) => {
       await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, false);
     }
   }
+});
+
+elanButton?.addEventListener("click", async (_event: Event) => {
+  await codeViewModel.changeLanguage(new LanguageElan(), ideViewModel, testRunner);
+});
+
+pythonButton?.addEventListener("click", async (_event: Event) => {
+  await codeViewModel.changeLanguage(new LanguagePython(), ideViewModel, testRunner);
 });
 
 loadButton.addEventListener("click", chooser(getUploader(), false));
@@ -1493,10 +1509,12 @@ window.addEventListener("keydown", ideViewModel.globalHandler);
 demosButton.addEventListener("click", handleClickDropDownButton);
 fileButton.addEventListener("click", handleClickDropDownButton);
 standardWorksheetButton.addEventListener("click", handleClickDropDownButton);
+languageButton.addEventListener("click", handleClickDropDownButton);
 
 demosButton.addEventListener("keydown", handleKeyDropDownButton);
 fileButton.addEventListener("keydown", handleKeyDropDownButton);
 standardWorksheetButton.addEventListener("keydown", handleKeyDropDownButton);
+languageButton.addEventListener("keydown", handleKeyDropDownButton);
 
 demosMenu.addEventListener("keydown", (e) =>
   handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
@@ -1507,10 +1525,14 @@ fileMenu.addEventListener("keydown", (e) =>
 worksheetMenu.addEventListener("keydown", (e) =>
   handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
 );
+languageMenu.addEventListener("keydown", (e) =>
+  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
+);
 
 demosMenu.addEventListener("click", () => collapseMenu(demosButton, false));
 fileMenu.addEventListener("click", () => collapseMenu(fileButton, false));
 worksheetMenu.addEventListener("click", () => collapseMenu(standardWorksheetButton, false));
+languageMenu.addEventListener("click", () => collapseMenu(languageButton, false));
 
 displayTab?.addEventListener("click", () => tabViewModel.showDisplayTab());
 infoTab?.addEventListener("click", () => tabViewModel.showInfoTab());

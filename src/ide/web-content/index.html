@@ -51,6 +51,14 @@
                 <button id="undo" class="plain" tabindex="0">undo</button>
                 <button id="redo" class="plain" tabindex="0">redo</button>
 
+                <div class="dropdown">
+                    <button id="language" class="plain" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-controls="language-menu">language</button>
+                    <div id="language-menu" class="dropdown-content" hidden>
+                        <div class="plain menu-item" tabindex="-1" id="elan-language">elan</div>
+                        <div class="plain menu-item" tabindex="-1" id="python-language">python</div>
+                    </div>
+                </div>
+
                 <dialog id="preferences-dialog">
                     <form>
                         <div>

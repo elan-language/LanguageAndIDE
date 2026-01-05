@@ -9,6 +9,7 @@ import { CodeSource } from "../frames/frame-interfaces/code-source";
 import { editorEvent } from "../frames/frame-interfaces/editor-event";
 import { File, ParseMode } from "../frames/frame-interfaces/file";
 import { Frame } from "../frames/frame-interfaces/frame";
+import { Language } from "../frames/frame-interfaces/language";
 import { Profile } from "../frames/frame-interfaces/profile";
 import { Selectable } from "../frames/frame-interfaces/selectable";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
@@ -664,5 +665,10 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     this.handleKeyAndRender(msg, vm, tr);
     event.preventDefault();
     event.stopPropagation();
+  }
+
+  async changeLanguage(l: Language, vm: IIDEViewModel, tr: TestRunner) {
+    this.file?.setLanguage(l);
+    await this.refreshAndDisplay(vm, tr, true, false);
   }
 }

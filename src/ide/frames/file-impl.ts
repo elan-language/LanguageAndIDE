@@ -42,7 +42,6 @@ import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageElan } from "./language-elan";
-import { LanguagePython } from "./language-python";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -102,6 +101,7 @@ export class FileImpl implements File {
   private _testError?: Error;
   private _frNo: number = 0;
   private _showFrameNos: boolean = true;
+  private _language: Language = new LanguageElan();
   ast: RootAstNode | undefined;
 
   private copiedSource: string[] = [];
@@ -842,10 +842,11 @@ export class FileImpl implements File {
     return "";
   }
 
+  setLanguage(l: Language) {
+    this._language = l;
+  }
+
   language(): Language {
-    //TODO: temporary hard-wired solution - eventually to be picked up from IDE
-    const elan = new LanguageElan();
-    const python = new LanguagePython();
-    return true ? elan : python;
+    return this._language;
   }
 }
