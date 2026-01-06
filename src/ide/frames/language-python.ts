@@ -178,6 +178,26 @@ export class LanguagePython implements Language {
     return html;
   }
 
+  grammarForNode(node: ParseNode): string {
+    let grammar = "";
+    if (node instanceof ParamDefNode) {
+      grammar = "name COLON SPACE type";
+    } else if (node instanceof BinaryOperation) {
+      grammar = "EQ | NE | LT | GT | LE | GE | PLUS | MINUS "; // etc
+    } else if (node instanceof TypeGenericNode) {
+      grammar = "OPEN_SQ_BRACKET type CLOSE_SQ_BRACKET";
+    }
+    return grammar;
+  }
+
+  lexer(): string {
+    //Example only
+    return `
+EQ:           '==';
+NE:           '!=';
+`;
+  }
+
   private defKeyword = "def";
   private elifKeyword = "elif";
   private elseKeyword = "else";

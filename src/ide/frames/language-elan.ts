@@ -17,6 +17,8 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
+import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
@@ -168,6 +170,26 @@ export class LanguageElan implements Language {
 
   private end(kw: string) {
     return `<el-kw>${this.endKeyword} ${kw}</el-kw>`;
+  }
+
+  grammarForNode(node: ParseNode): string {
+    let grammar = "";
+    if (node instanceof ParamDefNode) {
+      grammar = "OUT? name SPACE AS SPACE type"; //We will be disallowing OUT shortly
+    } else if (node instanceof BinaryOperation) {
+      grammar = "IS | ISNT | PLUS | MINUS ..."; // etc
+    } else if (node instanceof TypeGenericNode) {
+      grammar = "LT OF SPACE type GT";
+    }
+    return grammar;
+  }
+
+  lexer(): string {
+    //Example only
+    return `
+IS:           'is';
+PLUS:         '+';
+`;
   }
 
   private abstractKeyword = "abstract";
