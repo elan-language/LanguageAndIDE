@@ -19,6 +19,7 @@ import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
 import { ParseNode } from "./frame-interfaces/parse-node";
 import { Enum } from "./globals/enum";
+import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { MainFrame } from "./globals/main-frame";
@@ -117,6 +118,8 @@ export class LanguagePython implements Language {
       html = elseOrElif + `<el-punc>:</el-punc>`;
     } else if (frame instanceof Enum) {
       html = `${frame.name.renderAsHtml()} = <el-type>Enum</el-type>('${frame.name.renderAsHtml()}', '${frame.values.renderAsHtml()}')`;
+    } else if (frame instanceof GlobalComment) {
+      html = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof LetStatement) {
       html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Print) {
