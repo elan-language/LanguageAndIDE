@@ -123,7 +123,6 @@ export class BinaryOperation extends AbstractParseNode {
     }
   }
 
-
   renderAsHtml(): string {
     const open = this.keyword ? "<el-kw>" : "";
     const close = this.keyword ? "</el-kw>" : "";
