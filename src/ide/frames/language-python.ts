@@ -17,6 +17,7 @@ import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
 import { ParseNode } from "./frame-interfaces/parse-node";
 import { Enum } from "./globals/enum";
+import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { MainFrame } from "./globals/main-frame";
@@ -53,6 +54,8 @@ export class LanguagePython implements Language {
     } else if (frame instanceof CatchStatement) {
       // TODO
     } else if (frame instanceof CommentStatement) {
+      a = "";
+    } else if (frame instanceof GlobalComment) {
       a = "";
     } else if (frame instanceof LetStatement) {
       a = letAnnotation;
@@ -109,6 +112,8 @@ export class LanguagePython implements Language {
       html = `${frame.name.renderAsHtml()} = <el-type>Enum</el-type>('${frame.name.renderAsHtml()}', '${frame.values.renderAsHtml()}')`;
     } else if (frame instanceof FunctionMethod) {
       html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>${this.selfKeyword}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
+    } else if (frame instanceof GlobalComment) {
+      html = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof GlobalProcedure) {
