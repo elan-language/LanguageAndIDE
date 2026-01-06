@@ -1,7 +1,6 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { assertKeyword } from "../../../compiler/keywords";
 import { TestStatus } from "../../../compiler/test-status";
-import { AbstractFrame } from "../abstract-frame";
 import { AssertActualField } from "../fields/assert-actual-field";
 import { ExpressionField } from "../fields/expression-field";
 import { escapeHtmlChars, helper_compileMsgAsHtmlNew } from "../frame-helpers";
@@ -9,9 +8,10 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { SingleLineStatement } from "../single-line-statement";
 import { CompileStatus, DisplayColour } from "../status-enums";
 
-export class AssertStatement extends AbstractFrame implements Statement {
+export class AssertStatement extends SingleLineStatement implements Statement {
   isStatement = true;
   actual: AssertActualField;
   expected: ExpressionField;
@@ -41,11 +41,6 @@ export class AssertStatement extends AbstractFrame implements Statement {
 
   getIdPrefix(): string {
     return "assert";
-  }
-
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.language().renderSingleLineAsHtml(this)}
-    ${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsElanSource(): string {

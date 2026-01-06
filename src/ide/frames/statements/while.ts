@@ -6,7 +6,7 @@ import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
 
 export class While extends FrameWithStatements {
-  isStatement = true;
+  isStatement = false;
   condition: ExpressionField;
   constructor(parent: Parent) {
     super(parent);

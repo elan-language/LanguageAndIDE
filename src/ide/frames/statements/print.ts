@@ -1,13 +1,12 @@
-import { AbstractFrame } from "../abstract-frame";
-
 import { printKeyword } from "../../../compiler/keywords";
 import { ExpressionField } from "../fields/expression-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { SingleLineStatement } from "../single-line-statement";
 
-export class Print extends AbstractFrame implements Statement {
+export class Print extends SingleLineStatement implements Statement {
   isStatement = true;
   expr: ExpressionField;
   constructor(parent: Parent) {
@@ -30,10 +29,6 @@ export class Print extends AbstractFrame implements Statement {
   }
   getIdPrefix(): string {
     return "print";
-  }
-
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsElanSource(): string {

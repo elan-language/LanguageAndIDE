@@ -1,5 +1,4 @@
 import { elseKeyword, thenKeyword } from "../../../compiler/keywords";
-import { AbstractFrame } from "../abstract-frame";
 import { CodeSourceFromString } from "../code-source-from-string";
 import { ExpressionField } from "../fields/expression-field";
 import { IfSelectorField } from "../fields/if-selector-field";
@@ -7,8 +6,9 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { SingleLineStatement } from "../single-line-statement";
 
-export class Else extends AbstractFrame implements Statement {
+export class Else extends SingleLineStatement implements Statement {
   isStatement: boolean = true;
   selectIfClause: IfSelectorField;
   hasIf: boolean = false;
@@ -47,11 +47,6 @@ export class Else extends AbstractFrame implements Statement {
 
   indent() {
     return this.getParent()!.indent(); //overrides the additional indent added for most child statements
-  }
-
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}
-    ${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsElanSource(): string {

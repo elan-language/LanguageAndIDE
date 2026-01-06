@@ -1,10 +1,9 @@
 import { beKeyword, letKeyword } from "../../../compiler/keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Parent } from "../frame-interfaces/parent";
-import { Statement } from "../frame-interfaces/statement";
 import { AbstractDefinitionStatement } from "./abstract-definition.statement";
 
-export class LetStatement extends AbstractDefinitionStatement implements Statement {
+export class LetStatement extends AbstractDefinitionStatement {
   isStatement = true;
   constructor(parent: Parent) {
     super(parent);
@@ -27,10 +26,6 @@ export class LetStatement extends AbstractDefinitionStatement implements Stateme
 
   getIdPrefix(): string {
     return "let";
-  }
-
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
   renderAsElanSource(): string {

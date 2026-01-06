@@ -1,12 +1,12 @@
 import { exceptionKeyword, throwKeyword } from "../../../compiler/keywords";
-import { AbstractFrame } from "../abstract-frame";
 import { ExceptionMessageField } from "../fields/exception-message-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { SingleLineStatement } from "../single-line-statement";
 
-export class Throw extends AbstractFrame implements Statement {
+export class Throw extends SingleLineStatement implements Statement {
   isStatement = true;
   text: ExceptionMessageField;
   constructor(parent: Parent) {
@@ -28,10 +28,6 @@ export class Throw extends AbstractFrame implements Statement {
   getIdPrefix(): string {
     return "throw";
   }
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
-  }
-
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}${throwKeyword} ${exceptionKeyword} ${this.text.renderAsElanSource()}`;
   }

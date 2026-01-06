@@ -37,7 +37,8 @@ export class CommentStatement extends AbstractFrame implements Statement {
   }
 
   renderAsHtml(): string {
-    return `<el-statement>${this.contextMenu()}${this.bpAsHtml()}<el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.bpAsHtml()}${this.language().renderSingleLineAsHtml(this)}</el-top></el-comment></el-statement>`;
+    //Special case - does not have many of the capabilities of instructions
+    return `<el-statement>${this.contextMenu()}<el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.language().renderSingleLineAsHtml(this)}</el-top></el-comment></el-statement>`;
   }
 
   renderAsElanSource(): string {

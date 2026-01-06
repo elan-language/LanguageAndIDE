@@ -1,13 +1,13 @@
 import { setKeyword, toKeyword } from "../../../compiler/keywords";
-import { AbstractFrame } from "../abstract-frame";
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { SingleLineStatement } from "../single-line-statement";
 
-export class SetStatement extends AbstractFrame implements Statement {
+export class SetStatement extends SingleLineStatement implements Statement {
   isStatement = true;
   assignable: AssignableField;
   expr: ExpressionField;
@@ -37,9 +37,6 @@ export class SetStatement extends AbstractFrame implements Statement {
     return "set";
   }
 
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-statement>`;
-  }
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}${setKeyword} ${this.assignable.renderAsElanSource()} ${toKeyword} ${this.expr.renderAsElanSource()}`;
   }

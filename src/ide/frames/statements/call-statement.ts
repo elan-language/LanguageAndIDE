@@ -1,13 +1,13 @@
 import { callKeyword } from "../../../compiler/keywords";
-import { AbstractFrame } from "../abstract-frame";
 import { ArgListField } from "../fields/arg-list-field";
 import { ProcRefField } from "../fields/proc-ref-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { SingleLineStatement } from "../single-line-statement";
 
-export class CallStatement extends AbstractFrame implements Statement {
+export class CallStatement extends SingleLineStatement implements Statement {
   isStatement = true;
   isCall = true;
   proc: ProcRefField;
@@ -38,10 +38,6 @@ export class CallStatement extends AbstractFrame implements Statement {
 
   getIdPrefix(): string {
     return "call";
-  }
-
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}<el-top>${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top></el-statement>`;
   }
 
   renderAsElanSource(): string {
