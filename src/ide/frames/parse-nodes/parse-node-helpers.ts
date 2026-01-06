@@ -10,6 +10,7 @@ import { ParseStatus } from "../status-enums";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { FixedTextNode } from "./fixed-text-node";
 import { SpaceNode } from "./space-node";
+import { File } from "../frame-interfaces/file";
 
 export function matchRegEx(text: string, regx: RegExp): [ParseStatus, string, string] {
   let status = ParseStatus.invalid;
@@ -28,14 +29,14 @@ export function isFixedText(f?: ParseNode): f is FixedTextNode {
   return !!f && "fixedText" in f;
 }
 
-export function spIgn(): () => ParseNode {
-  return () => new SpaceNode(Space.ignored);
+export function spIgn(file: File): () => ParseNode {
+  return () => new SpaceNode(file, Space.ignored);
 }
-export function spAdd(): () => ParseNode {
-  return () => new SpaceNode(Space.added);
+export function spAdd(file: File): () => ParseNode {
+  return () => new SpaceNode(file, Space.added);
 }
-export function spReq(): () => ParseNode {
-  return () => new SpaceNode(Space.required);
+export function spReq(file: File): () => ParseNode {
+  return () => new SpaceNode(file, Space.required);
 }
 
 export enum Space {

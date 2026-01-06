@@ -9,10 +9,10 @@ export class LitStringInterpolation extends AbstractSequence {
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      this.addElement(new PunctuationNode(OPEN_BRACE));
-      this.expr = new ExprNode();
+      this.addElement(new PunctuationNode(this.file, OPEN_BRACE));
+      this.expr = new ExprNode(this.file);
       this.addElement(this.expr);
-      this.addElement(new PunctuationNode(CLOSE_BRACE));
+      this.addElement(new PunctuationNode(this.file, CLOSE_BRACE));
       super.parseText(text);
     }
   }

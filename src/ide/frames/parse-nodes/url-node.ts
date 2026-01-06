@@ -1,9 +1,10 @@
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
+import { File } from "../frame-interfaces/file";
 
 export class UrlNode extends AbstractParseNode {
-  constructor() {
-    super();
+  constructor(file: File) {
+    super(file);
   }
 
   validateUrl(text: string) {

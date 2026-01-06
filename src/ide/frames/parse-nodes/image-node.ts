@@ -13,12 +13,12 @@ export class ImageNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      this.addElement(new KeywordNode(imageKeyword));
-      this.addElement(new SpaceNode(Space.added));
-      this.url = new UrlNode();
+      this.addElement(new KeywordNode(this.file, imageKeyword));
+      this.addElement(new SpaceNode(this.file, Space.added));
+      this.url = new UrlNode(this.file);
       this.url.completionWhenEmpty = "<i>url</i>";
       this.addElement(this.url);
-      this.withClause = new OptionalNode(new WithClause(() => "ImageVG"));
+      this.withClause = new OptionalNode(this.file, new WithClause(this.file, () => "ImageVG"));
       this.addElement(this.withClause);
       super.parseText(text);
     }

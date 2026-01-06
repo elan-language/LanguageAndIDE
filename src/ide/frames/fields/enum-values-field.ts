@@ -20,7 +20,7 @@ export class EnumValuesField extends AbstractField {
     return "enumVals";
   }
   initialiseRoot(): ParseNode {
-    this.rootNode = new EnumValuesNode();
+    this.rootNode = new EnumValuesNode(this.getFile());
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

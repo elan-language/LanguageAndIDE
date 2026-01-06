@@ -6,6 +6,7 @@ import { KeywordNode } from "./keyword-node";
 import { Space } from "./parse-node-helpers";
 import { SpaceNode } from "./space-node";
 import { WithClause } from "./with-clause";
+import { File } from "../frame-interfaces/file";
 
 export class CopyWith extends AbstractSequence {
   original: IdentifierOrThis;
@@ -19,17 +20,17 @@ export class CopyWith extends AbstractSequence {
     TokenType.id_variable,
   ]);
 
-  constructor() {
-    super();
-    this.original = new IdentifierOrThis();
+  constructor(file: File) {
+    super(file);
+    this.original = new IdentifierOrThis(file);
   }
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.addElement(new KeywordNode(copyKeyword));
-      this.addElement(new SpaceNode(Space.required));
+      this.addElement(new KeywordNode(this.file, copyKeyword));
+      this.addElement(new SpaceNode(this.file, Space.required));
       this.addElement(this.original);
-      this.withClause = new WithClause(() => this.original!.matchedText);
+      this.withClause = new WithClause(this.file, () => this.original!.matchedText);
       this.addElement(this.withClause);
       return super.parseText(text);
     }

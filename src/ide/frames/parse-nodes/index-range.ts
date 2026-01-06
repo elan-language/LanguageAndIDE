@@ -10,11 +10,11 @@ export class IndexRange extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      this.fromIndex = new OptionalNode(new ExprNode());
-      this.toIndex = new OptionalNode(new ExprNode());
+      this.fromIndex = new OptionalNode(this.file, new ExprNode(this.file));
+      this.toIndex = new OptionalNode(this.file, new ExprNode(this.file));
 
       this.addElement(this.fromIndex);
-      this.addElement(new PunctuationNode(DOUBLE_DOT));
+      this.addElement(new PunctuationNode(this.file, DOUBLE_DOT));
       this.addElement(this.toIndex);
       return super.parseText(text);
     }

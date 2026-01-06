@@ -1,10 +1,11 @@
 import { escapeHtmlChars } from "../frame-helpers";
 import { ParseStatus } from "../status-enums";
 import { FixedTextNode } from "./fixed-text-node";
+import { File } from "../frame-interfaces/file";
 
 export class PunctuationNode extends FixedTextNode {
-  constructor(symbol: string) {
-    super(symbol);
+  constructor(file: File, symbol: string) {
+    super(file, symbol);
   }
 
   parseText(text: string): void {

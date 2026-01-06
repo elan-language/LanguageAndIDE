@@ -5,12 +5,13 @@ import { TypeFuncNode } from "./type-func-node";
 import { TypeGenericNode } from "./type-generic-node";
 import { TypeNameNode } from "./type-name-node";
 import { TypeTupleNode } from "./type-tuple-node";
+import { File } from "../frame-interfaces/file";
 
 export class TypeNode extends AbstractAlternatives {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
 
-  constructor(tokenTypes: Set<TokenType> = new Set<TokenType>()) {
-    super();
+  constructor(file: File, tokenTypes: Set<TokenType> = new Set<TokenType>()) {
+    super(file);
     this.completionWhenEmpty = "<i>Type</i>";
     this.tokenTypes = tokenTypes;
   }
@@ -20,12 +21,12 @@ export class TypeNode extends AbstractAlternatives {
     if (text.length > 0) {
       if (text.trimStart().startsWith("Func")) {
         // tested first because 'Func' is *syntactically* valid simple type
-        this.alternatives.push(new TypeFuncNode());
+        this.alternatives.push(new TypeFuncNode(this.file));
       } else if (text.trimStart().startsWith(OPEN_BRACKET)) {
-        this.alternatives.push(new TypeTupleNode());
+        this.alternatives.push(new TypeTupleNode(this.file));
       } else {
-        this.alternatives.push(new TypeNameNode(this.tokenTypes));
-        this.alternatives.push(new TypeGenericNode(this.tokenTypes));
+        this.alternatives.push(new TypeNameNode(this.file, this.tokenTypes));
+        this.alternatives.push(new TypeGenericNode(this.file, this.tokenTypes));
       }
       super.parseText(text.trimStart());
     }

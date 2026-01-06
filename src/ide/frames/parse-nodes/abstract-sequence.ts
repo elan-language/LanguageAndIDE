@@ -1,9 +1,14 @@
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
+import { File } from "../frame-interfaces/file";
 
 export abstract class AbstractSequence extends AbstractParseNode {
   private elements: ParseNode[] = [];
+
+  constructor(file: File) {
+    super(file);
+  }
 
   protected addElement(node: ParseNode) {
     this.elements.push(node);

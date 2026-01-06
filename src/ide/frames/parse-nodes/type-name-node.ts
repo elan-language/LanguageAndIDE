@@ -5,6 +5,7 @@ import { DotAfter } from "./dot-after";
 import { KeywordNode } from "./keyword-node";
 import { OptionalNode } from "./optional-node";
 import { TypeSimpleName } from "./type-simple-name";
+import { File } from "../frame-interfaces/file";
 
 export class TypeNameNode extends AbstractSequence {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
@@ -12,6 +13,7 @@ export class TypeNameNode extends AbstractSequence {
   libraryQualifier: OptionalNode | undefined;
 
   constructor(
+    file: File,
     tokenTypes: Set<TokenType> = new Set<TokenType>([
       TokenType.type_abstract,
       TokenType.type_concrete,
@@ -19,7 +21,7 @@ export class TypeNameNode extends AbstractSequence {
       TokenType.type_enum,
     ]),
   ) {
-    super();
+    super(file);
     this.completionWhenEmpty = "<i>Type</i>";
     this.tokenTypes = tokenTypes;
   }
@@ -27,10 +29,11 @@ export class TypeNameNode extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       this.libraryQualifier = new OptionalNode(
-        new DotAfter(new KeywordNode(libraryKeyword, false, true)),
+        this.file,
+        new DotAfter(this.file, new KeywordNode(this.file, libraryKeyword, false, true)),
       );
       this.addElement(this.libraryQualifier);
-      this.name = new TypeSimpleName();
+      this.name = new TypeSimpleName(this.file);
       this.addElement(this.name);
       super.parseText(text);
     }

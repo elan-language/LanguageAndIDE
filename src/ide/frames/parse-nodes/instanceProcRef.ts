@@ -23,12 +23,13 @@ export class InstanceProcRef extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const qualifierDot = () => new DotAfter(new Qualifier());
-      const instance = new InstanceNode();
-      const instanceDot = () => new DotAfter(instance);
-      const propertyRef = () => new DotAfter(new PropertyRef());
-      this.prefix = new Alternatives([propertyRef, qualifierDot, instanceDot]);
+      const qualifierDot = () => new DotAfter(this.file, new Qualifier(this.file));
+      const instance = new InstanceNode(this.file);
+      const instanceDot = () => new DotAfter(this.file, instance);
+      const propertyRef = () => new DotAfter(this.file, new PropertyRef(this.file));
+      this.prefix = new Alternatives(this.file, [propertyRef, qualifierDot, instanceDot]);
       this.procName = new MethodNameNode(
+        this.file,
         new Set([TokenType.method_procedure]),
         () => instance.matchedText,
       );

@@ -11,9 +11,10 @@ export class EmptyOfTypeNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.addElement(new KeywordNode(emptyKeyword));
-      this.addElement(new SpaceNode(Space.required));
+      this.addElement(new KeywordNode(this.file, emptyKeyword));
+      this.addElement(new SpaceNode(this.file, Space.required));
       this.type = new TypeNode(
+        this.file,
         new Set<TokenType>([
           TokenType.type_concrete,
           TokenType.type_abstract,

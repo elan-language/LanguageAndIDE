@@ -18,7 +18,7 @@ export class ExceptionMessageField extends AbstractField {
     return "msg";
   }
   initialiseRoot(): ParseNode {
-    this.rootNode = new ExceptionMsgNode();
+    this.rootNode = new ExceptionMsgNode(this.getFile());
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

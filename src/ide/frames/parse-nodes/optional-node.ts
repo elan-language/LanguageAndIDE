@@ -2,13 +2,14 @@ import { ParseNode } from "../frame-interfaces/parse-node";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
+import { File } from "../frame-interfaces/file";
 
 export class OptionalNode extends AbstractParseNode {
   option: ParseNode;
   matchedNode?: ParseNode;
 
-  constructor(option: ParseNode) {
-    super();
+  constructor(file: File, option: ParseNode) {
+    super(file);
     this.option = option;
   }
 

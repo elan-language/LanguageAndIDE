@@ -18,18 +18,18 @@ export class Lambda extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.addElement(new KeywordNode(lambdaKeyword));
-      this.addElement(new SpaceNode(Space.required));
-      const paramList = () => new CSV(() => new ParamDefNode(false), 1);
-      const sp = () => new SpaceNode(Space.required);
-      const paramListSp = new Sequence([paramList, sp]);
-      this.params = new OptionalNode(paramListSp);
+      this.addElement(new KeywordNode(this.file, lambdaKeyword));
+      this.addElement(new SpaceNode(this.file, Space.required));
+      const paramList = () => new CSV(this.file, () => new ParamDefNode(this.file, false), 1);
+      const sp = () => new SpaceNode(this.file, Space.required);
+      const paramListSp = new Sequence(this.file, [paramList, sp]);
+      this.params = new OptionalNode(this.file, paramListSp);
       this.params.setSyntaxCompletionWhenEmpty("<i>name</i> as <i>Type</i>, ...");
       this.addElement(this.params);
-      const arrow = new PunctuationNode(ARROW);
+      const arrow = new PunctuationNode(this.file, ARROW);
       this.addElement(arrow);
-      this.addElement(new SpaceNode(Space.required));
-      this.expr = new ExprNode();
+      this.addElement(new SpaceNode(this.file, Space.required));
+      this.expr = new ExprNode(this.file);
       this.addElement(this.expr);
       super.parseText(text);
       if (!arrow.isEmpty()) {
