@@ -123,14 +123,8 @@ export class BinaryOperation extends AbstractParseNode {
     }
   }
 
-  renderAsHtml(): string {
-    const open = this.keyword ? "<el-kw>" : "";
-    const close = this.keyword ? "</el-kw>" : "";
-    return `${open}${this.renderAsElanSource()}${close}`;
-  }
 
-  //TODO: for Python
-  /*   renderAsHtml(): string {
+  renderAsHtml(): string {
     const open = this.keyword ? "<el-kw>" : "";
     const close = this.keyword ? "</el-kw>" : "";
     let text = this.matchedText.trim();
@@ -142,7 +136,7 @@ export class BinaryOperation extends AbstractParseNode {
       text = this.renderAsElanSource();
     }
     return `${open}${text}${close}`;
-  } */
+  }
 
   renderAsElanSource(): string {
     let source = "";

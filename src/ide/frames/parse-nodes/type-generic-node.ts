@@ -51,4 +51,10 @@ export class TypeGenericNode extends AbstractSequence {
       return super.symbolCompletion_tokenTypes();
     }
   }
+
+  override renderAsHtml(): string {
+    const generics = this.generic?.renderAsHtml();
+    const chopped = generics?.substring(22, generics.length - 4);
+    return this.simpleType?.renderAsHtml() + `[<el-type>${chopped}</el-type>]`;
+  }
 }
