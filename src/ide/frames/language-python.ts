@@ -1,9 +1,11 @@
 import {
   callAnnotation,
   eachAnnotation,
+  functionAnnotation,
   letAnnotation,
   mainAnnotation,
   privateAnnotation,
+  procedureAnnotation,
   setAnnotation,
   variableAnnotation,
 } from "../../compiler/keywords";
@@ -54,18 +56,26 @@ export class LanguagePython implements Language {
       // TODO
     } else if (frame instanceof CommentStatement) {
       a = "";
-    } else if (frame instanceof LetStatement) {
-      a = letAnnotation;
     } else if (frame instanceof Each) {
       a = eachAnnotation;
     } else if (frame instanceof Else) {
       a = "";
     } else if (frame instanceof For) {
       a = "";
+    } else if (frame instanceof FunctionMethod) {
+      a = functionAnnotation;
+    } else if (frame instanceof GlobalFunction) {
+      a = functionAnnotation;
+    } else if (frame instanceof GlobalProcedure) {
+      a = procedureAnnotation;
     } else if (frame instanceof IfStatement) {
       a = "";
+    } else if (frame instanceof LetStatement) {
+      a = letAnnotation;
     } else if (frame instanceof Print) {
       a = "";
+    } else if (frame instanceof ProcedureMethod) {
+      a = procedureAnnotation;
     } else if (frame instanceof ReturnStatement) {
       a = "";
     } else if (frame instanceof SetStatement) {
@@ -107,18 +117,10 @@ export class LanguagePython implements Language {
       html = elseOrElif + `<el-punc>:</el-punc>`;
     } else if (frame instanceof Enum) {
       html = `${frame.name.renderAsHtml()} = <el-type>Enum</el-type>('${frame.name.renderAsHtml()}', '${frame.values.renderAsHtml()}')`;
-    } else if (frame instanceof FunctionMethod) {
-      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>${this.selfKeyword}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
-    } else if (frame instanceof GlobalFunction) {
-      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
-    } else if (frame instanceof GlobalProcedure) {
-      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(${frame.params.renderAsHtml()}<el-punc>) -> <el-kw>${this.noneKeyword}</el-kw></el-punc><el-punc>:</el-punc>`;
     } else if (frame instanceof LetStatement) {
       html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Print) {
       html = `<el-method>print</el-method><el-punc>(</el-punc>${frame.expr.renderAsHtml()}<el-punc>)</el-punc>`;
-    } else if (frame instanceof ProcedureMethod) {
-      html = `<el-kw>def </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>${this.selfKeyword}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}<el-punc>) -> </el-punc><el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof Property) {
       html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()} = <el-kw>${this.noneKeyword}</el-kw>`;
     } else if (frame instanceof ReturnStatement) {
@@ -155,6 +157,14 @@ export class LanguagePython implements Language {
       html = `${this.tryKeyword}<el-punc>:</el-punc>`;
     } else if (frame instanceof While) {
       html = `<el-kw>${this.whileKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
+    } else if (frame instanceof FunctionMethod) {
+      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>${this.selfKeyword}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
+    } else if (frame instanceof GlobalFunction) {
+      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
+    } else if (frame instanceof GlobalProcedure) {
+      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(${frame.params.renderAsHtml()}<el-punc>) -> <el-kw>${this.noneKeyword}</el-kw></el-punc><el-punc>:</el-punc>`;
+    } else if (frame instanceof ProcedureMethod) {
+      html = `<el-kw>def </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>${this.selfKeyword}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}<el-punc>) -> </el-punc><el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
     }
     return html;
   }
