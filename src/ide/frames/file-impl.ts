@@ -279,7 +279,7 @@ export class FileImpl implements File {
     return `<el-profile class="${cls}">${profileName}</el-profile>`;
   }
 
-  async renderAsSource(): Promise<string> {
+  async renderAsElanSource(): Promise<string> {
     const content = this.renderHashableContent();
     this.currentHash = await this.getHash(content);
     return `# ${this.currentHash} ${content}`;

@@ -46,7 +46,7 @@ export class IfSelectorField extends AbstractField {
     return "";
   }
 
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     return ``;
   }
 

@@ -28,8 +28,8 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
     return singleIndent();
   }
 
-  public override renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
+  public override renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}procedure ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()})\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end procedure\r
 `;

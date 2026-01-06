@@ -42,7 +42,7 @@ ${this.language().renderBottomAsHtml(this)}
     return "";
   }
 
-  public renderAsSource(): string {
+  public renderAsElanSource(): string {
     return `${this.sourceAnnotations()}main\r
 ${this.renderChildrenAsSource()}\r
 end main\r

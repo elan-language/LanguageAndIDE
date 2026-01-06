@@ -1450,7 +1450,7 @@ async function handleDownload(event: Event) {
   if (!isDisabled(event)) {
     updateFileName();
 
-    const code = await codeViewModel.renderAsSource();
+    const code = await codeViewModel.renderAsElanSource();
 
     const blob = new Blob([code], { type: "plain/text" });
 
@@ -1573,7 +1573,7 @@ window.addEventListener("message", async (m) => {
 
     if (m.data.startsWith("snapshot:")) {
       const id = m.data.slice(9);
-      const code = await codeViewModel.renderAsSource();
+      const code = await codeViewModel.renderAsElanSource();
       worksheetIFrame.contentWindow?.postMessage(`code:${id}:${code}`, "*");
     }
 

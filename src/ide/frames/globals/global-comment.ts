@@ -32,8 +32,8 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame {
   indent(): string {
     return "";
   }
-  renderAsSource(): string {
-    return `${this.sourceAnnotations()}# ${this.text.renderAsSource()}`;
+  renderAsElanSource(): string {
+    return `${this.sourceAnnotations()}# ${this.text.renderAsElanSource()}`;
   }
 
   parseFrom(source: CodeSource): void {

@@ -30,8 +30,8 @@ ${this.renderChildrenAsHtml()}
 ${this.language().renderBottomAsHtml(this)}
 </el-statement>`;
   }
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}while ${this.condition.renderAsSource()}\r
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}while ${this.condition.renderAsElanSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end while`;
   }

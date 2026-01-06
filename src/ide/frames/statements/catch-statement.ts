@@ -54,8 +54,8 @@ export class CatchStatement extends AbstractFrame implements Statement {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1"><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top></el-statement>`;
   }
 
-  renderAsSource(): string {
-    return `${this.indent()}${this.keywords}${this.variable.renderAsSource()}`;
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.keywords}${this.variable.renderAsElanSource()}`;
   }
 
   parseFrom(source: CodeSource): void {

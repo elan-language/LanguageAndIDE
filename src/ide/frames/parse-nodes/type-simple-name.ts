@@ -18,7 +18,7 @@ export class TypeSimpleName extends RegExMatchNode {
     this.tokenTypes = tokenTypes;
   }
   renderAsHtml(): string {
-    return `<el-type>${this.renderAsSource()}</el-type>`;
+    return `<el-type>${this.renderAsElanSource()}</el-type>`;
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {

@@ -46,8 +46,8 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember {
     return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-prop>`;
   }
 
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}${propertyKeyword} ${this.name.renderAsSource()} ${asKeyword} ${this.type.renderAsSource()}\r\n`;
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}${propertyKeyword} ${this.name.renderAsElanSource()} ${asKeyword} ${this.type.renderAsElanSource()}\r\n`;
   }
 
   isGlobalClass(st: SymbolType) {

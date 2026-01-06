@@ -46,6 +46,6 @@ export class IdentifierNode extends AbstractParseNode {
   }
 
   override renderAsHtml(): string {
-    return `<el-id>${this.renderAsSource()}</el-id>`;
+    return `<el-id>${this.renderAsElanSource()}</el-id>`;
   }
 }

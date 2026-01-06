@@ -42,7 +42,7 @@ export class Else extends AbstractFrame implements Statement {
   }
 
   private ifClauseAsSource(): string {
-    return this.hasIf ? ` if ${this.condition.renderAsSource()}` : ``;
+    return this.hasIf ? ` if ${this.condition.renderAsElanSource()}` : ``;
   }
 
   indent() {
@@ -54,7 +54,7 @@ export class Else extends AbstractFrame implements Statement {
     ${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}${elseKeyword}${this.ifClauseAsSource()}${this.hasIf ? " " + thenKeyword : ""}`;
   }
 

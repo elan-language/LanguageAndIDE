@@ -44,7 +44,7 @@ export class CopyWith extends AbstractSequence {
   override renderAsHtml(): string {
     return (
       this.original.renderAsHtml() +
-      `<el-comment> # TODO: ${this.withClause?.renderAsSource()}</el-comment>`
+      `<el-comment> # TODO: ${this.withClause?.renderAsElanSource()}</el-comment>`
     );
   }
 }

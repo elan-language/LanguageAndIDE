@@ -53,7 +53,7 @@ export class CommentField extends AbstractField {
     } else {
       root.parseText(text);
       this.setParseStatus(root.status);
-      this.text = root.renderAsSource();
+      this.text = root.renderAsElanSource();
     }
   }
 }

@@ -35,10 +35,10 @@ export class SpaceNode extends AbstractParseNode {
   }
 
   renderAsHtml(): string {
-    return this.renderAsSource();
+    return this.renderAsElanSource();
   }
 
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     return this.type === Space.ignored || this.status === ParseStatus.empty ? "" : " ";
   }
 

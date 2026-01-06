@@ -11,7 +11,7 @@ export class LitInt extends RegExMatchNode {
     return `<el-lit>${super.renderAsHtml()}</el-lit>`;
   }
 
-  renderAsSource(): string {
-    return super.renderAsSource().trim();
+  renderAsElanSource(): string {
+    return super.renderAsElanSource().trim();
   }
 }

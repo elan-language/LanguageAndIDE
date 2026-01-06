@@ -39,7 +39,7 @@ export class VariableStatement extends AbstractDefinitionStatement implements St
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${variableKeyword} ${this.name.renderAsSource()} ${setKeyword} ${toKeyword} ${this.expr.renderAsSource()}`;
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}${variableKeyword} ${this.name.renderAsElanSource()} ${setKeyword} ${toKeyword} ${this.expr.renderAsElanSource()}`;
   }
 }

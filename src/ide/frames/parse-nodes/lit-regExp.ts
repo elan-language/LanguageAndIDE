@@ -30,7 +30,7 @@ export class LitRegExp extends AbstractSequence {
     }
   }
 
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     return `${this.open?.matchedText}${this.content?.matchedText}${this.close?.matchedText}${this.flags?.matchedText}`;
   }
 

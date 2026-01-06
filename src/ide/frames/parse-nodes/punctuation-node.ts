@@ -24,7 +24,7 @@ export class PunctuationNode extends FixedTextNode {
   }
 
   renderAsHtml(): string {
-    return escapeHtmlChars(this.renderAsSource());
+    return escapeHtmlChars(this.renderAsElanSource());
   }
 
   getSyntaxCompletionAsHtml(): string {

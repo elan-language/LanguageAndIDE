@@ -54,8 +54,8 @@ export class Constant extends AbstractFrame implements GlobalFrame, Collapsible 
   indent(): string {
     return "";
   }
-  renderAsSource(): string {
-    return `${this.sourceAnnotations()}constant ${this.name.renderAsSource()} set to ${this.value.renderAsSource()}\r
+  renderAsElanSource(): string {
+    return `${this.sourceAnnotations()}constant ${this.name.renderAsElanSource()} set to ${this.value.renderAsElanSource()}\r
 `;
   }
 

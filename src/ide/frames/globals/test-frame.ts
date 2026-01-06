@@ -88,8 +88,8 @@ ${this.language().renderBottomAsHtml(this)}
   indent(): string {
     return "";
   }
-  public renderAsSource(): string {
-    return `${this.sourceAnnotations()}test ${this.testDescription.renderAsSource()}\r
+  public renderAsElanSource(): string {
+    return `${this.sourceAnnotations()}test ${this.testDescription.renderAsElanSource()}\r
 ${this.renderChildrenAsSource()}\r
 end test\r
 `;

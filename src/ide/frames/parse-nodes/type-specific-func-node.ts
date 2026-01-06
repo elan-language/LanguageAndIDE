@@ -7,7 +7,7 @@ export class TypeSpecificFuncNode extends RegExMatchNode {
     this.completionWhenEmpty = "<i>Func</i>";
   }
   renderAsHtml(): string {
-    return `<el-type>${this.renderAsSource()}</el-type>`;
+    return `<el-type>${this.renderAsElanSource()}</el-type>`;
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {

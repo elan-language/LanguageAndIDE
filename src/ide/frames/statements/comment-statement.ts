@@ -40,8 +40,8 @@ export class CommentStatement extends AbstractFrame implements Statement {
     return `<el-statement>${this.contextMenu()}${this.bpAsHtml()}<el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.bpAsHtml()}${this.language().renderSingleLineAsHtml(this)}</el-top></el-comment></el-statement>`;
   }
 
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}# ${this.text.renderAsSource()}`;
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}# ${this.text.renderAsElanSource()}`;
   }
 
   override deleteIfPermissible(): void {

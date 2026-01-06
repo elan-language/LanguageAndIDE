@@ -36,8 +36,8 @@ ${this.renderChildrenAsHtml()}
 </el-constructor>`;
   }
 
-  public renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}constructor(${this.params.renderAsSource()})\r
+  public renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}constructor(${this.params.renderAsElanSource()})\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end constructor\r
 `;

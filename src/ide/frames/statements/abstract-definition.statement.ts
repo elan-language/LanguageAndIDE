@@ -24,7 +24,7 @@ export abstract class AbstractDefinitionStatement extends AbstractFrame implemen
 
   abstract renderAsHtml(): string;
 
-  abstract renderAsSource(): string;
+  abstract renderAsElanSource(): string;
 
   getFields(): Field[] {
     return [this.name, this.expr];

@@ -33,8 +33,8 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
     return singleIndent();
   }
 
-  public override renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnsKeyword} ${this.returnType.renderAsSource()}\r
+  public override renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}${functionKeyword} ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;

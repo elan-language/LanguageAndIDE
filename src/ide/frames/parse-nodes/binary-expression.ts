@@ -29,8 +29,8 @@ export class BinaryExpression extends AbstractSequence {
     return `${this.lhs?.renderAsHtml()}${this.op!.renderAsHtml()}${this.rhs?.renderAsHtml()}`;
   }
 
-  renderAsSource(): string {
-    return `${this.lhs?.renderAsSource()}${this.op!.renderAsSource()}${this.rhs?.renderAsSource()}`;
+  renderAsElanSource(): string {
+    return `${this.lhs?.renderAsElanSource()}${this.op!.renderAsElanSource()}${this.rhs?.renderAsElanSource()}`;
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {

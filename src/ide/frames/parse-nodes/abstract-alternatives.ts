@@ -52,8 +52,8 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
     return this.bestMatch ? this.bestMatch.renderAsHtml() : "";
   }
 
-  renderAsSource(): string {
-    return this.bestMatch ? this.bestMatch.renderAsSource() : "";
+  renderAsElanSource(): string {
+    return this.bestMatch ? this.bestMatch.renderAsElanSource() : "";
   }
 
   getSyntaxCompletionAsHtml(): string {

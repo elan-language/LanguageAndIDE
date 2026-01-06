@@ -41,8 +41,8 @@ export class AbstractProcedure extends AbstractFrame {
 `;
   }
 
-  public override renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}abstract procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
+  public override renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}abstract procedure ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()})\r
 `;
   }
 

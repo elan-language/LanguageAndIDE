@@ -37,7 +37,7 @@ suite("Parsing Frame Tests", async () => {
     const setTo = new SetStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsSource(), code);
+    assert.equal(setTo.renderAsElanSource(), code);
   });
 
   test("parse Frames - set statement 2", () => {
@@ -55,7 +55,7 @@ suite("Parsing Frame Tests", async () => {
     const setTo = new SetStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsSource(), code);
+    assert.equal(setTo.renderAsElanSource(), code);
   });
   test("parse Frames - set statement 3", () => {
     const code = "  set result to 3 + 4";
@@ -72,7 +72,7 @@ suite("Parsing Frame Tests", async () => {
     const setTo = new SetStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsSource(), code);
+    assert.equal(setTo.renderAsElanSource(), code);
   });
 
   test("parse Frames - let statement 1", () => {
@@ -90,7 +90,7 @@ suite("Parsing Frame Tests", async () => {
     const setTo = new LetStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsSource(), code);
+    assert.equal(setTo.renderAsElanSource(), code);
   });
 
   test("parse Frames - let statement 2", () => {
@@ -108,7 +108,7 @@ suite("Parsing Frame Tests", async () => {
     const setTo = new LetStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsSource(), code);
+    assert.equal(setTo.renderAsElanSource(), code);
   });
 
   test("parse Frames - assert statement 3", () => {
@@ -126,7 +126,7 @@ suite("Parsing Frame Tests", async () => {
     const ass = new AssertStatement(t);
     ass.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(ass.renderAsSource(), code);
+    assert.equal(ass.renderAsElanSource(), code);
   });
 
   test("parse Frames - variable", () => {
@@ -144,7 +144,7 @@ suite("Parsing Frame Tests", async () => {
     const v = new VariableStatement(m);
     v.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(v.renderAsSource(), code);
+    assert.equal(v.renderAsElanSource(), code);
   });
 
   test("parse Frames - print", () => {
@@ -162,7 +162,7 @@ suite("Parsing Frame Tests", async () => {
     const p = new Print(m);
     p.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(p.renderAsSource(), code);
+    assert.equal(p.renderAsElanSource(), code);
   });
   test("parse Frames - throw", () => {
     const code = `  throw exception "Failure"`;
@@ -179,7 +179,7 @@ suite("Parsing Frame Tests", async () => {
     const setTo = new Throw(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsSource(), code);
+    assert.equal(setTo.renderAsElanSource(), code);
   });
   test("parse Frames - throw with variable", () => {
     const code = `  throw exception message1`;
@@ -196,7 +196,7 @@ suite("Parsing Frame Tests", async () => {
     const setTo = new Throw(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsSource(), code);
+    assert.equal(setTo.renderAsElanSource(), code);
   });
   test("parse Frames - call", () => {
     const code = `  call foo()`;
@@ -213,7 +213,7 @@ suite("Parsing Frame Tests", async () => {
     const setTo = new CallStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsSource(), code);
+    assert.equal(setTo.renderAsElanSource(), code);
   });
   test("parse Frames - call with args", () => {
     const code = `  call foo(3, a, "hello")`;
@@ -230,7 +230,7 @@ suite("Parsing Frame Tests", async () => {
     const setTo = new CallStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsSource(), code);
+    assert.equal(setTo.renderAsElanSource(), code);
   });
   test("parse Frames - StatementSelector", () => {
     const code = "set fooBar to 3.141";
@@ -263,7 +263,7 @@ suite("Parsing Frame Tests", async () => {
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsSource();
+    const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -282,7 +282,7 @@ constant pi set to 3.142
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsSource();
+    const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -303,7 +303,7 @@ constant e set to 2.718
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsSource();
+    const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -324,7 +324,7 @@ end main
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsSource();
+    const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -350,7 +350,7 @@ end main
     if (fl.parseError) {
       throw new Error(fl.parseError);
     }
-    const elan = await fl.renderAsSource();
+    const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -375,7 +375,7 @@ end main
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsSource();
+    const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -408,7 +408,7 @@ enum Fruit apple, orange, pear
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsSource();
+    const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -442,7 +442,7 @@ end class
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsSource();
+    const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -464,7 +464,7 @@ end record
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsSource();
+    const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -492,7 +492,7 @@ end class
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsSource();
+    const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -516,7 +516,7 @@ end main
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsSource();
+    const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -678,7 +678,7 @@ end class
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsSource();
+    const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 });

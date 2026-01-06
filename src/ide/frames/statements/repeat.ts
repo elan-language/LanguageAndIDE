@@ -26,16 +26,16 @@ export class Repeat extends FrameWithStatements implements Statement {
   }
   renderAsHtml(): string {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-comment># TODO re-write 'repeat' loop for condition: '${this.condition.renderAsSource()}'</el-comment><br>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-comment># TODO re-write 'repeat' loop for condition: '${this.condition.renderAsElanSource()}'</el-comment><br>
 <el-comment>while</el-kw> <el-method>true</el-method>${this.helpAsHtml()}</el-top>${this.getFrNo()}
 ${this.renderChildrenAsHtml()}
 ${this.compileMsgAsHtml()}</el-statement>`;
   }
 
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}repeat\r
 ${this.renderChildrenAsSource()}\r
-${this.indent()}end repeat when ${this.condition.renderAsSource()}`;
+${this.indent()}end repeat when ${this.condition.renderAsElanSource()}`;
   }
 
   parseTop(source: CodeSource): void {

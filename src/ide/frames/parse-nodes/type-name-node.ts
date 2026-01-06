@@ -38,7 +38,7 @@ export class TypeNameNode extends AbstractSequence {
 
   renderAsHtml(): string {
     const qualifier = this.libraryQualifier?.matchedNode ? `<el-kw>${libraryKeyword}</el-kw>.` : ``;
-    return `${qualifier}<el-type>${this.name?.renderAsSource()}</el-type>`;
+    return `${qualifier}<el-type>${this.name?.renderAsElanSource()}</el-type>`;
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {

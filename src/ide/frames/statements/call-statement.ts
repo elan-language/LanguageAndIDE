@@ -44,7 +44,7 @@ export class CallStatement extends AbstractFrame implements Statement {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}<el-top>${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top></el-statement>`;
   }
 
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}call ${this.proc.renderAsSource()}(${this.args.renderAsSource()})`;
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}call ${this.proc.renderAsElanSource()}(${this.args.renderAsElanSource()})`;
   }
 }

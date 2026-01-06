@@ -9,7 +9,7 @@ export interface ParseNode {
   parseText(text: string): void;
 
   renderAsHtml(): string;
-  renderAsSource(): string;
+  renderAsElanSource(): string;
 
   getSyntaxCompletionAsHtml(): string;
   setSyntaxCompletionWhenEmpty(ph: string): void;

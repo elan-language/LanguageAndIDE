@@ -36,8 +36,8 @@ export class OptionalNode extends AbstractParseNode {
   renderAsHtml(): string {
     return this.matchedNode ? this.matchedNode.renderAsHtml() : "";
   }
-  renderAsSource(): string {
-    return this.matchedNode ? this.matchedNode.renderAsSource() : "";
+  renderAsElanSource(): string {
+    return this.matchedNode ? this.matchedNode.renderAsElanSource() : "";
   }
 
   getSyntaxCompletionAsHtml(): string {

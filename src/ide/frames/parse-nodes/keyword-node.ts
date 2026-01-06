@@ -49,9 +49,9 @@ export class KeywordNode extends FixedTextNode {
   }
 
   renderAsHtml(): string {
-    return `<el-kw>${this.renderAsSource()}</el-kw>`;
+    return `<el-kw>${this.renderAsElanSource()}</el-kw>`;
   }
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     return this.matchedText.trim();
   }
   compile(): string {

@@ -36,7 +36,7 @@ export class Print extends AbstractFrame implements Statement {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}print ${this.expr.renderAsSource()}`;
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}print ${this.expr.renderAsElanSource()}`;
   }
 }

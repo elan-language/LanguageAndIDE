@@ -126,7 +126,7 @@ export class BinaryOperation extends AbstractParseNode {
   renderAsHtml(): string {
     const open = this.keyword ? "<el-kw>" : "";
     const close = this.keyword ? "</el-kw>" : "";
-    return `${open}${this.renderAsSource()}${close}`;
+    return `${open}${this.renderAsElanSource()}${close}`;
   }
 
   //TODO: for Python
@@ -139,12 +139,12 @@ export class BinaryOperation extends AbstractParseNode {
     } else if (text === isntKeyword) {
       text = " != ";
     } else {
-      text = this.renderAsSource();
+      text = this.renderAsElanSource();
     }
     return `${open}${text}${close}`;
   } */
 
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     let source = "";
     if (this.status === ParseStatus.valid) {
       const space = this.closePacked ? "" : " ";

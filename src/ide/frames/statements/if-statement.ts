@@ -34,8 +34,8 @@ ${this.renderChildrenAsHtml()}
 ${this.language().renderBottomAsHtml(this)}
 </el-statement>`;
   }
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${ifKeyword} ${this.condition.renderAsSource()} ${thenKeyword}\r
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}${ifKeyword} ${this.condition.renderAsElanSource()} ${thenKeyword}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}${endKeyword} ${ifKeyword}`;
   }

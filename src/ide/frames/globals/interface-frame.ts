@@ -39,8 +39,8 @@ ${this.language().renderBottomAsHtml(this)}
 </el-class>`;
   }
 
-  public renderAsSource(): string {
-    return `${this.sourceAnnotations()}${interfaceKeyword} ${this.name.renderAsSource()}${this.inheritanceAsSource()}\r
+  public renderAsElanSource(): string {
+    return `${this.sourceAnnotations()}${interfaceKeyword} ${this.name.renderAsElanSource()}${this.inheritanceAsSource()}\r
 ${parentHelper_renderChildrenAsSource(this)}\r
 ${endKeyword} ${interfaceKeyword}\r\n`;
   }

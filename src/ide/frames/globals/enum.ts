@@ -49,8 +49,8 @@ export class Enum extends AbstractFrame implements GlobalFrame {
   indent(): string {
     return "";
   }
-  renderAsSource(): string {
-    return `${this.sourceAnnotations()}enum ${this.name.renderAsSource()} ${this.values.renderAsSource()}\r
+  renderAsElanSource(): string {
+    return `${this.sourceAnnotations()}enum ${this.name.renderAsElanSource()} ${this.values.renderAsElanSource()}\r
 `;
   }
 

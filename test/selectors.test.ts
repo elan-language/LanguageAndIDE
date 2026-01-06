@@ -1,9 +1,7 @@
 import assert from "assert";
 
-import { hash } from "../src/ide/util";
-import { transforms } from "./compiler/compiler-test-helpers";
-import { classWithConstructor, emptyMainOnly, T00_emptyFile } from "./model-generating-functions";
-import { key } from "./testHelpers";
+import { assertKeyword, functionKeyword, letKeyword, testKeyword } from "../src/compiler/keywords";
+import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { FunctionMethod } from "../src/ide/frames/class-members/function-method";
 import { MemberSelector } from "../src/ide/frames/class-members/member-selector";
 import { DefaultProfile } from "../src/ide/frames/default-profile";
@@ -20,9 +18,11 @@ import { TestFrame } from "../src/ide/frames/globals/test-frame";
 import { IfStatement } from "../src/ide/frames/statements/if-statement";
 import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
 import { While } from "../src/ide/frames/statements/while";
-import { assertKeyword, functionKeyword, letKeyword, testKeyword } from "../src/compiler/keywords";
-import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { StubInputOutput } from "../src/ide/stub-input-output";
+import { hash } from "../src/ide/util";
+import { transforms } from "./compiler/compiler-test-helpers";
+import { classWithConstructor, emptyMainOnly, T00_emptyFile } from "./model-generating-functions";
+import { key } from "./testHelpers";
 
 export class TestProfileSPJ implements Profile {
   name: string = "SPJ";
@@ -38,21 +38,21 @@ suite("Selector tests", () => {
   test("Statement Select - variable", () => {
     const file = emptyMainOnly();
     file.getById("select2").processKey(key("v"));
-    const v = file.getById("var3").renderAsSource();
+    const v = file.getById("var3").renderAsElanSource();
     assert.equal(v, "  variable  set to ");
   });
 
   test("Statement Select - case insensitive", () => {
     const file = emptyMainOnly();
     file.getById("select2").processKey(key("V"));
-    const v = file.getById("var3").renderAsSource();
+    const v = file.getById("var3").renderAsElanSource();
     assert.equal(v, "  variable  set to ");
   });
 
   test("Member Select - function", () => {
     const file = classWithConstructor();
     file.getById("select4").processKey(key("f"));
-    const v = file.getById("func8").renderAsSource();
+    const v = file.getById("func8").renderAsElanSource();
     assert.equal(v, "  function () returns \r\n" + "    return \r\n" + "  end function\r\n");
   });
 
@@ -62,7 +62,7 @@ suite("Selector tests", () => {
     sel.processKey(key("p"));
     sel.processKey(key("o"));
     sel.processKey(key("c"));
-    const v = file.getById("proc8").renderAsSource();
+    const v = file.getById("proc8").renderAsElanSource();
     assert.equal(v, "  procedure ()\r\n\r\n  end procedure\r\n");
   });
 
@@ -71,7 +71,7 @@ suite("Selector tests", () => {
     const sel = file.getById("select0");
     sel.processKey(key("c"));
     sel.processKey(key("o"));
-    const v = file.getById("const1").renderAsSource();
+    const v = file.getById("const1").renderAsElanSource();
     assert.equal(v, "constant  set to \r\n");
   });
 

@@ -16,7 +16,7 @@ export class RegExMatchNode extends AbstractParseNode {
     }
   }
 
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     return this.matchedText; // Overridden to avoid trimming
   }
 }

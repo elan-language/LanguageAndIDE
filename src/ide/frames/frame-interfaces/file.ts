@@ -24,7 +24,7 @@ export interface File extends Parent {
   isFile: boolean;
   getById(id: string): Selectable;
   renderAsHtml(): Promise<string>;
-  renderAsSource(): Promise<string>;
+  renderAsElanSource(): Promise<string>;
   compile(): string;
 
   compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string;

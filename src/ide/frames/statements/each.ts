@@ -40,8 +40,8 @@ ${this.language().renderBottomAsHtml(this)}
 </el-statement>`;
   }
 
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}each ${this.variable.renderAsSource()} in ${this.iter.renderAsSource()}\r
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}each ${this.variable.renderAsElanSource()} in ${this.iter.renderAsElanSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end each`;
   }

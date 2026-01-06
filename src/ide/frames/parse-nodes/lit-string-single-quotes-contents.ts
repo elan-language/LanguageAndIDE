@@ -11,7 +11,7 @@ export class LitStringSingleQuotesContents extends RegExMatchNode {
     return s.replaceAll("\r", "").replaceAll("\n", "\\n");
   }
 
-  override renderAsSource(): string {
+  override renderAsElanSource(): string {
     return this.sanitise(this.matchedText);
   }
 

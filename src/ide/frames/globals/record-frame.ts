@@ -34,8 +34,8 @@ ${this.language().renderBottomAsHtml(this)}
 </el-class>`;
   }
 
-  public renderAsSource(): string {
-    return `${this.sourceAnnotations()}record ${this.name.renderAsSource()}\r
+  public renderAsElanSource(): string {
+    return `${this.sourceAnnotations()}record ${this.name.renderAsElanSource()}\r
 ${parentHelper_renderChildrenAsSource(this)}\r
 end record\r\n`;
   }

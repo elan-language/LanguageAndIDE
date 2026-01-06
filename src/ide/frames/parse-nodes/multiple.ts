@@ -58,8 +58,8 @@ export class Multiple extends AbstractParseNode {
   renderAsHtml(): string {
     return this.elements.reduce((result, current) => result + current.renderAsHtml(), "");
   }
-  renderAsSource(): string {
-    return this.elements.reduce((result, current) => result + current.renderAsSource(), "");
+  renderAsElanSource(): string {
+    return this.elements.reduce((result, current) => result + current.renderAsElanSource(), "");
   }
 
   getSyntaxCompletionAsHtml(): string {

@@ -87,8 +87,8 @@ export abstract class AbstractSequence extends AbstractParseNode {
     return this.elements.reduce((result, current) => result + current.renderAsHtml(), "");
   }
 
-  renderAsSource(): string {
-    return this.elements.reduce((result, current) => result + current.renderAsSource(), "");
+  renderAsElanSource(): string {
+    return this.elements.reduce((result, current) => result + current.renderAsElanSource(), "");
   }
 
   getSyntaxCompletionAsHtml(): string {

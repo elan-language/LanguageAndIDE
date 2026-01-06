@@ -48,8 +48,8 @@ export class AssertStatement extends AbstractFrame implements Statement {
     ${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}assert ${this.actual.renderAsSource()} is ${this.expected.renderAsSource()}`;
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}assert ${this.actual.renderAsElanSource()} is ${this.expected.renderAsElanSource()}`;
   }
 
   setOutcome(outcome: AssertOutcome) {

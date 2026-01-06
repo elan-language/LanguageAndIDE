@@ -192,7 +192,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return ` ${this.inheritance.renderAsHtml()}`;
   }
   protected inheritanceAsSource(): string {
-    return this.doesInherit() ? ` ${this.inheritance.renderAsSource()}` : ``;
+    return this.doesInherit() ? ` ${this.inheritance.renderAsElanSource()}` : ``;
   }
 
   indent(): string {

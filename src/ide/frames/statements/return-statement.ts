@@ -36,8 +36,8 @@ export class ReturnStatement extends AbstractFrame implements Statement {
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
-  renderAsSource(): string {
-    return `${this.indent()}return ${this.expr.renderAsSource()}`;
+  renderAsElanSource(): string {
+    return `${this.indent()}return ${this.expr.renderAsElanSource()}`;
   }
 
   parseFrom(source: CodeSource): void {

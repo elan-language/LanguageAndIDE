@@ -22,12 +22,12 @@ export abstract class AbstractParseNode implements ParseNode {
     return this.matchedText === "" ? `${this.completionWhenEmpty}` : "";
   }
 
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     return this.matchedText.trim();
   }
 
   renderAsHtml(): string {
-    return this.renderAsSource();
+    return this.renderAsElanSource();
   }
 
   abstract parseText(text: string): void;

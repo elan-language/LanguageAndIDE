@@ -142,7 +142,7 @@ export interface ICodeEditorViewModel {
 
   hasTests: boolean;
 
-  renderAsSource(): Promise<string>;
+  renderAsElanSource(): Promise<string>;
 
   parseFrom(source: CodeSource): Promise<void>;
 

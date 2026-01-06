@@ -56,7 +56,7 @@ export class FileManager {
             localStorage.removeItem(id);
           }
         }
-        code = await cvm.renderAsSource();
+        code = await cvm.renderAsElanSource();
         const timestamp = Date.now();
         const overWriteLastEntry = newFieldId === this.currentFieldId;
         const id = overWriteLastEntry
@@ -84,7 +84,7 @@ export class FileManager {
       }
 
       // autosave if setup
-      code = code || (await cvm.renderAsSource());
+      code = code || (await cvm.renderAsElanSource());
       await this.autoSave(code, cvm, vm);
     }
 
@@ -141,7 +141,7 @@ export class FileManager {
       this.autoSaveFileHandle = undefined;
       vm.updateDisplayValues(cvm);
     } else {
-      const code = await cvm.renderAsSource();
+      const code = await cvm.renderAsElanSource();
       this.autoSaveFileHandle = await this.chromeSave(cvm, code, true);
       this.resetHash(cvm);
       await vm.renderAsHtml(false);
@@ -149,7 +149,7 @@ export class FileManager {
   }
 
   async doDownLoad(cvm: ICodeEditorViewModel, vm: IIDEViewModel) {
-    const code = await cvm.renderAsSource();
+    const code = await cvm.renderAsElanSource();
     await this.chromeSave(cvm, code, true);
     this.resetHash(cvm);
     await vm.renderAsHtml(false);

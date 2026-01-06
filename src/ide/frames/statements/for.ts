@@ -47,8 +47,8 @@ ${this.language().renderBottomAsHtml(this)}
 </el-statement>`;
   }
 
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}for ${this.variable.renderAsSource()} from ${this.from.renderAsSource()} to ${this.to.renderAsSource()} step ${this.step.renderAsSource()}\r
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}for ${this.variable.renderAsElanSource()} from ${this.from.renderAsElanSource()} to ${this.to.renderAsElanSource()} step ${this.step.renderAsElanSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end for`;
   }

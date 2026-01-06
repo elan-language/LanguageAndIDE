@@ -33,7 +33,7 @@ export class LetStatement extends AbstractDefinitionStatement implements Stateme
     return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-statement>`;
   }
 
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${letKeyword} ${this.name.renderAsSource()} ${beKeyword} ${this.expr.renderAsSource()}`;
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}${letKeyword} ${this.name.renderAsElanSource()} ${beKeyword} ${this.expr.renderAsElanSource()}`;
   }
 }

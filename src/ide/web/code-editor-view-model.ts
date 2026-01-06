@@ -121,8 +121,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     return this.file!.hasTests;
   }
 
-  renderAsSource() {
-    return this.file!.renderAsSource();
+  renderAsElanSource() {
+    return this.file!.renderAsElanSource();
   }
 
   parseFrom(source: CodeSource) {
@@ -393,7 +393,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
       fm.updateHash(this);
       vm.updateNameAndSavedStatus(this, fm);
       if (reset) {
-        const code = await this.renderAsSource();
+        const code = await this.renderAsElanSource();
         vm.postCodeResetToWorksheet(code);
       }
     } else {

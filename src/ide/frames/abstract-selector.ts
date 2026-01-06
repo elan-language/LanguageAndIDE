@@ -168,7 +168,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   textToDisplayAsHtml(): string {
     return `<el-select><el-txt>${this.text}</el-txt><el-place>${this.label}</el-place><div class="options">${this.getCompletion()}</div>${helper_pastePopUp(this)}${this.helpAsHtml()}</el-select>`;
   }
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     return `${this.indent()}`;
   }
 
