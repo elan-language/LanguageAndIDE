@@ -55,7 +55,7 @@
 
       <div style="position: relative; padding-bottom: 72.67833109017496%; height: 0;"><iframe src="https://www.loom.com/embed/3dca2b1ec6384176aaf85e1b60f6ce1d" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
-      Now <button class="load" id="load1-0" data-file="blackjack_1begin.elan">Load the starting code</button><div id="code-load1-0" hidden=""># 75e134b020470a8b4d71ab54439b7ddb5a1af643477be1e43994128bc6b649b9 Elan 1.9.0 guest default_profile valid
+      Now <button class="load" id="load1-0" data-file="blackjack_1begin.elan">Load the starting code</button><div id="code-load1-0" hidden=""># ae2a06801c7d55d50689cc81a83e0d60a0ab57636cb21143667e63f8818645c9 Elan 1.9.0 guest default_profile valid
 
 main
   let game be new Game(1000)
@@ -152,24 +152,24 @@ function determinePlayerOutcome(dealer as Dealer, player as Player) returns Outc
 end function
 
 test determinePlayerOutcome
-  let dbj be new Dealer(0) with status set to Status.blackjack
-  let d21 be new Dealer(0) with status set to Status.standing, handTotal set to 21
-  let d17 be new Dealer(0) with status set to Status.standing, handTotal set to 17
-  let dbu be new Dealer(0) with status set to Status.bust
-  let pbj be new HumanPlayer("", 0) with status set to Status.blackjack
-  let p21 be new HumanPlayer("", 0) with status set to Status.standing, handTotal set to 21
-  let p17 be new HumanPlayer("", 0) with status set to Status.standing, handTotal set to 17
-  let pbu be new HumanPlayer("", 0) with status set to Status.bust
-  assert determinePlayerOutcome(dbj, pbj) is Outcome.draw
-  assert determinePlayerOutcome(dbj, p21) is Outcome.lose
-  assert determinePlayerOutcome(dbj, pbu) is Outcome.lose
-  assert determinePlayerOutcome(d21, pbj) is Outcome.winDouble
-  assert determinePlayerOutcome(d21, p21) is Outcome.draw
-  assert determinePlayerOutcome(d21, p17) is Outcome.lose
-  assert determinePlayerOutcome(d21, pbu) is Outcome.lose
-  assert determinePlayerOutcome(dbu, pbj) is Outcome.winDouble
-  assert determinePlayerOutcome(dbu, p17) is Outcome.win
-  assert determinePlayerOutcome(dbu, pbu) is Outcome.lose
+    let dbj be new Dealer(0) with status set to Status.blackjack
+    let d21 be new Dealer(0) with status set to Status.standing, handTotal set to 21
+    let d17 be new Dealer(0) with status set to Status.standing, handTotal set to 17
+    let dbu be new Dealer(0) with status set to Status.bust
+    let pbj be new HumanPlayer("", 0) with status set to Status.blackjack
+    let p21 be new HumanPlayer("", 0) with status set to Status.standing, handTotal set to 21
+    let p17 be new HumanPlayer("", 0) with status set to Status.standing, handTotal set to 17
+    let pbu be new HumanPlayer("", 0) with status set to Status.bust
+    assert determinePlayerOutcome(dbj, pbj) is Outcome.draw
+    assert determinePlayerOutcome(dbj, p21) is Outcome.lose
+    assert determinePlayerOutcome(dbj, pbu) is Outcome.lose
+    assert determinePlayerOutcome(d21, pbj) is Outcome.winDouble
+    assert determinePlayerOutcome(d21, p21) is Outcome.draw
+    assert determinePlayerOutcome(d21, p17) is Outcome.lose
+    assert determinePlayerOutcome(d21, pbu) is Outcome.lose
+    assert determinePlayerOutcome(dbu, pbj) is Outcome.winDouble
+    assert determinePlayerOutcome(dbu, p17) is Outcome.win
+    assert determinePlayerOutcome(dbu, pbu) is Outcome.lose
 end test
 
 function dealCard(random as Float) returns Card
@@ -180,18 +180,18 @@ function dealCard(random as Float) returns Card
 end function
 
 test dealCard
-  let c1 be dealCard(0)
-  assert c1.rank is "2"
-  assert c1.suit is Suit.clubs
-  let c2 be dealCard(0.9999999)
-  assert c2.rank is "A"
-  assert c2.suit is Suit.spades
-  let c3 be dealCard(0.5)
-  assert c3.rank is "8"
-  assert c3.suit is Suit.hearts
-  let c4 be dealCard(0.24)
-  assert c4.rank is "5"
-  assert c4.suit is Suit.clubs
+    let c1 be dealCard(0)
+    assert c1.rank is "2"
+    assert c1.suit is Suit.clubs
+    let c2 be dealCard(0.9999999)
+    assert c2.rank is "A"
+    assert c2.suit is Suit.spades
+    let c3 be dealCard(0.5)
+    assert c3.rank is "8"
+    assert c3.suit is Suit.hearts
+    let c4 be dealCard(0.24)
+    assert c4.rank is "5"
+    assert c4.suit is Suit.clubs
 end test
 
 function intAsSuit(n as Int) returns Suit
@@ -207,10 +207,10 @@ function intAsSuit(n as Int) returns Suit
 end function
 
 test intAsSuit
-  assert intAsSuit(0) is Suit.clubs
-  assert intAsSuit(1) is Suit.diamonds
-  assert intAsSuit(2) is Suit.hearts
-  assert intAsSuit(3) is Suit.spades
+    assert intAsSuit(0) is Suit.clubs
+    assert intAsSuit(1) is Suit.diamonds
+    assert intAsSuit(2) is Suit.hearts
+    assert intAsSuit(3) is Suit.spades
 end test
 
 function htmlForGame(game as Game) returns String
@@ -224,12 +224,12 @@ function htmlForGame(game as Game) returns String
 end function
 
 test htmlForGame
-  let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
-  let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
-  let p be new HumanPlayer("fred", 10) with cards set to [c1, c2]
-  let players be (empty List&lt;of Player&gt;).withAppend(p)
-  let g2 be new Game(1) with players set to players
-  assert htmlForGame(g2) is "&lt;div class='game'&gt;&lt;div class='player'&gt;&lt;div class='details'&gt;Dealer - 1 points &lt;/div&gt;&lt;div class='hand'&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='player'&gt;&lt;div class='details'&gt;fred - 10 points - hand total: 0&lt;/div&gt;&lt;div class='hand'&gt;&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;&lt;div class='card reversed'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='message'&gt;&lt;/div&gt;&lt;/div&gt;"
+    let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
+    let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
+    let p be new HumanPlayer("fred", 10) with cards set to [c1, c2]
+    let players be (empty List&lt;of Player&gt;).withAppend(p)
+    let g2 be new Game(1) with players set to players
+    assert htmlForGame(g2) is "&lt;div class='game'&gt;&lt;div class='player'&gt;&lt;div class='details'&gt;Dealer - 1 points &lt;/div&gt;&lt;div class='hand'&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='player'&gt;&lt;div class='details'&gt;fred - 10 points - hand total: 0&lt;/div&gt;&lt;div class='hand'&gt;&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;&lt;div class='card reversed'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='message'&gt;&lt;/div&gt;&lt;/div&gt;"
 end test
 
 function htmlForPlayer(player as Player) returns String
@@ -245,10 +245,10 @@ function htmlForPlayer(player as Player) returns String
 end function
 
 test htmlForPlayer
-  let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
-  let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
-  let p be new HumanPlayer("charlie", 10) with cards set to [c1, c2]
-  assert htmlForPlayer(p) is "&lt;div class='player'&gt;&lt;div class='details'&gt;charlie - 10 points - hand total: 0&lt;/div&gt;&lt;div class='hand'&gt;&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;&lt;div class='card reversed'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;"
+    let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
+    let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
+    let p be new HumanPlayer("charlie", 10) with cards set to [c1, c2]
+    assert htmlForPlayer(p) is "&lt;div class='player'&gt;&lt;div class='details'&gt;charlie - 10 points - hand total: 0&lt;/div&gt;&lt;div class='hand'&gt;&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;&lt;div class='card reversed'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;"
 end test
 
 function htmlForCard(card as Card) returns String
@@ -277,10 +277,10 @@ function htmlForCard(card as Card) returns String
 end function
 
 test htmlForCard
-  let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
-  assert htmlForCard(c1) is "&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;"
-  let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
-  assert htmlForCard(c2) is "&lt;div class='card reversed'&gt;&lt;/div&gt;"
+    let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
+    assert htmlForCard(c1) is "&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;"
+    let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
+    assert htmlForCard(c2) is "&lt;div class='card reversed'&gt;&lt;/div&gt;"
 end test
 
 function htmlForSpot(id as String, content as String) returns String
@@ -288,8 +288,8 @@ function htmlForSpot(id as String, content as String) returns String
 end function
 
 test htmlForSpot
-  assert htmlForSpot("c", "&amp;hearts;") is "&lt;div class='c'&gt;&amp;hearts;&lt;/div&gt;"
-  assert htmlForSpot("u", "10") is "&lt;div class='u'&gt;10&lt;/div&gt;"
+    assert htmlForSpot("c", "&amp;hearts;") is "&lt;div class='c'&gt;&amp;hearts;&lt;/div&gt;"
+    assert htmlForSpot("u", "10") is "&lt;div class='u'&gt;10&lt;/div&gt;"
 end test
 
 class Game

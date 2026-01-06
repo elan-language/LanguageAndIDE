@@ -24,13 +24,8 @@ export class Repeat extends FrameWithStatements implements Statement {
   getIdPrefix(): string {
     return "repeat";
   }
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-comment># TODO re-write 'repeat' loop for condition: '${this.condition.renderAsElanSource()}'</el-comment><br>
-<el-comment>while</el-kw> <el-method>true</el-method>${this.helpAsHtml()}</el-top>${this.getFrNo()}
-${this.renderChildrenAsHtml()}
-${this.compileMsgAsHtml()}</el-statement>`;
-  }
+
+  outerHtmlTag: string = "el-statement";
 
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}repeat\r

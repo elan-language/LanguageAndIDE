@@ -1,13 +1,13 @@
-# cb67a586ee0f3858d2c62e225ec95c434c0eadb61cfc73ca33fc8710dea62c14 Elan 1.9.0 guest default_profile valid
+# 9887d57f47273cc4fe66fca40db498329b2d9de6e46196f1ad3a4de2dde03261 Elan 1.9.0 guest default_profile valid
 
 test 
-  let n be pi
-  assert n.floor() is 3
-  assert n.ceiling() is 4
-  assert n.round(3) is 3.142
-  assert sqrt(-1).isNaN() is true
-  let x be 1/0
-  assert x.isInfinite() is true
+    let n be pi
+    assert n.floor() is 3
+    assert n.ceiling() is 4
+    assert n.round(3) is 3.142
+    assert sqrt(-1).isNaN() is true
+    let x be 1/0
+    assert x.isInfinite() is true
 end test
 
 main

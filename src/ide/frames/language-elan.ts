@@ -1,4 +1,7 @@
 import { AbstractFrame } from "./abstract-frame";
+import { AbstractFunction } from "./class-members/abstract-function";
+import { AbstractProcedure } from "./class-members/abstract-procedure";
+import { AbstractProperty } from "./class-members/abstract-property";
 import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
@@ -80,6 +83,12 @@ export class LanguageElan implements Language {
       html = `<el-kw>${this.throwKeyword} ${this.exceptionKeyword} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.variableKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.setKeyword} ${this.toKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
+    } else if (frame instanceof AbstractFunction) {
+      html = `<el-kw>${this.abstractKeyword} ${this.functionKeyword} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.returnsKeyword} </el-kw>${frame.returnType.renderAsHtml()}`;
+    } else if (frame instanceof AbstractProcedure) {
+      html = `<el-kw>${this.abstractKeyword} ${this.procedureKeyword} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+    } else if (frame instanceof AbstractProperty) {
+      html = ``;
     }
     return html;
   }

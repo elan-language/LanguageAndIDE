@@ -4,9 +4,9 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
-import { SingleLineStatement } from "../single-line-statement";
+import { SingleLineFrame } from "../single-line-frame";
 
-export class CatchStatement extends SingleLineStatement implements Statement {
+export class CatchStatement extends SingleLineFrame implements Statement {
   isStatement = true;
   isCatch = true;
   variable: IdentifierField;

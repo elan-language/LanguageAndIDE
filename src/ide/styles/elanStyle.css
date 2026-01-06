@@ -124,7 +124,7 @@ el-statement:not(.multiline), el-const, el-enum{
 }
 
 /* Globals and members, generally, to have v. space after */
-el-header, main, el-proc, el-func, el-class, el-global, el-test {
+el-header, el-main, el-proc, el-func, el-class, el-global, el-test {
     display: block;
     padding-bottom: 2ch;
 }

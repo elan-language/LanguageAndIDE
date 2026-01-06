@@ -37,13 +37,7 @@ export abstract class ProcedureFrame extends FrameWithStatements {
     return procedureAnnotation;
   }
 
-  public renderAsHtml(): string {
-    return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-${this.language().renderBottomAsHtml(this)}
-</el-proc>`;
-  }
+  override outerHtmlTag: string = "el-proc";
 
   parseTop(source: CodeSource): void {
     source.remove("procedure ");

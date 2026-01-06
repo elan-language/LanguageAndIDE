@@ -55,13 +55,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
     return functionAnnotation;
   }
 
-  public renderAsHtml(): string {
-    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-${this.language().renderBottomAsHtml(this)}
-</el-func>`;
-  }
+  override outerHtmlTag: string = "el-func";
 
   parseTop(source: CodeSource): void {
     source.remove(`${functionKeyword} `);

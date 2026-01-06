@@ -38,14 +38,7 @@ export class For extends FrameWithStatements implements Statement {
     return "for";
   }
 
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}
-${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-${this.language().renderBottomAsHtml(this)}
-</el-statement>`;
-  }
+  outerHtmlTag: string = "el-statement";
 
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}for ${this.variable.renderAsElanSource()} from ${this.from.renderAsElanSource()} to ${this.to.renderAsElanSource()} step ${this.step.renderAsElanSource()}\r

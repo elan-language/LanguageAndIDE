@@ -23,13 +23,9 @@ export class While extends FrameWithStatements {
   getIdPrefix(): string {
     return "while";
   }
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-${this.language().renderBottomAsHtml(this)}
-</el-statement>`;
-  }
+
+  outerHtmlTag: string = "el-statement";
+
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}while ${this.condition.renderAsElanSource()}\r
 ${this.renderChildrenAsSource()}\r

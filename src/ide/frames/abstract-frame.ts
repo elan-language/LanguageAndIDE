@@ -101,6 +101,8 @@ export abstract class AbstractFrame implements Frame {
     return this.htmlId;
   }
 
+  abstract outerHtmlTag: string;
+
   getFrNo(): string {
     return this.isGhostedOrWithinAGhostedFrame() || this.isWithinAnImportedFrame()
       ? ""

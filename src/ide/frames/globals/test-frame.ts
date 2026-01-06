@@ -76,18 +76,8 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     return testAnnotation;
   }
 
-  public renderAsHtml(): string {
-    return `<el-test class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>
-${this.language().renderTopAsHtml(this)}
-${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-${this.language().renderBottomAsHtml(this)}
-</el-test>`;
-  }
-  indent(): string {
-    return "";
-  }
+  override outerHtmlTag: string = "el-test";
+
   public renderAsElanSource(): string {
     return `${this.sourceAnnotations()}test ${this.testDescription.renderAsElanSource()}\r
 ${this.renderChildrenAsSource()}\r

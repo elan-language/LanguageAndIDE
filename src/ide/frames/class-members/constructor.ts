@@ -28,13 +28,7 @@ export class Constructor extends FrameWithStatements {
     return "constructor";
   }
 
-  public renderAsHtml(): string {
-    return `<el-constructor class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-
-</el-constructor>`;
-  }
+  override outerHtmlTag: string = "el-constructor";
 
   public renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}constructor(${this.params.renderAsElanSource()})\r

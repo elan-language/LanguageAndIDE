@@ -98,7 +98,5 @@ export class StatementSelector extends AbstractSelector {
       : parent.hasParent() && this.isWithinContext(parent.getParent(), parentPrefix);
   }
 
-  renderAsHtml(): string {
-    return `<el-statement contenteditable spellcheck="false" class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}${this.textToDisplayAsHtml()}</el-statement>`;
-  }
+  outerHtmlTag: string = "el-statement";
 }

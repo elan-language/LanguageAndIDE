@@ -1,4 +1,5 @@
 import { eachKeyword } from "../../../compiler/keywords";
+
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -31,14 +32,7 @@ export class Each extends FrameWithStatements implements Statement {
     return "each";
   }
 
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}
-${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-${this.language().renderBottomAsHtml(this)}
-</el-statement>`;
-  }
+  outerHtmlTag: string = "el-statement";
 
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}each ${this.variable.renderAsElanSource()} in ${this.iter.renderAsElanSource()}\r

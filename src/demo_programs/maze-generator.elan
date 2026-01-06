@@ -1,4 +1,4 @@
-# 4cea04ea87211ad0c6d3f76f611d805160b8f60080dbc926eb8bb9b7103b880b Elan 1.9.0 guest default_profile valid
+# e35c2a8be70cb0bd56c209889818d735bd5048912ed9d772ea54270b0ae30512 Elan 1.9.0 guest default_profile valid
 
 main
   variable blocks set to new Array2D<of Int>(40, 30, black)
@@ -83,8 +83,8 @@ function flip01(v as Int) returns Int
 end function
 
 test flip01
-  assert flip01(0) is 1
-  assert flip01(1) is 0
+    assert flip01(0) is 1
+    assert flip01(1) is 0
 end test
 
 function isValidQuadrant(q as Int) returns Boolean
@@ -92,22 +92,22 @@ function isValidQuadrant(q as Int) returns Boolean
 end function
 
 test isValidQuadrant
-  assert isValidQuadrant(0) is false
-  assert isValidQuadrant(1) is true
-  assert isValidQuadrant(2) is true
-  assert isValidQuadrant(3) is true
-  assert isValidQuadrant(4) is true
-  assert isValidQuadrant(5) is false
-  assert isValidQuadrant(6) is true
-  assert isValidQuadrant(7) is true
-  assert isValidQuadrant(8) is true
-  assert isValidQuadrant(9) is true
-  assert isValidQuadrant(10) is false
-  assert isValidQuadrant(11) is true
-  assert isValidQuadrant(12) is true
-  assert isValidQuadrant(13) is true
-  assert isValidQuadrant(14) is true
-  assert isValidQuadrant(15) is false
+    assert isValidQuadrant(0) is false
+    assert isValidQuadrant(1) is true
+    assert isValidQuadrant(2) is true
+    assert isValidQuadrant(3) is true
+    assert isValidQuadrant(4) is true
+    assert isValidQuadrant(5) is false
+    assert isValidQuadrant(6) is true
+    assert isValidQuadrant(7) is true
+    assert isValidQuadrant(8) is true
+    assert isValidQuadrant(9) is true
+    assert isValidQuadrant(10) is false
+    assert isValidQuadrant(11) is true
+    assert isValidQuadrant(12) is true
+    assert isValidQuadrant(13) is true
+    assert isValidQuadrant(14) is true
+    assert isValidQuadrant(15) is false
 end test
 
 record Point
@@ -129,8 +129,8 @@ function newPoint(x as Int, y as Int) returns Point
 end function
 
 test neighbouringPoints
-  let p be newPoint(0, 0)
-  let n be p.neighbouringPoints()
-  let expected be [newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)]
-  assert n is expected
+    let p be newPoint(0, 0)
+    let n be p.neighbouringPoints()
+    let expected be [newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)]
+    assert n is expected
 end test

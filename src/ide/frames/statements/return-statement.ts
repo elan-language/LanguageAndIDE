@@ -4,9 +4,9 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
-import { SingleLineStatement } from "../single-line-statement";
+import { SingleLineFrame } from "../single-line-frame";
 
-export class ReturnStatement extends SingleLineStatement implements Statement {
+export class ReturnStatement extends SingleLineFrame implements Statement {
   isStatement = true;
   isReturnStatement = true;
   expr: ExpressionField;

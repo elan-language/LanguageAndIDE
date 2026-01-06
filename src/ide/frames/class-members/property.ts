@@ -1,7 +1,6 @@
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { asKeyword, privateKeyword, propertyKeyword } from "../../../compiler/keywords";
 import { ClassType } from "../../../compiler/symbols/class-type";
-import { AbstractFrame } from "../abstract-frame";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
 import {
@@ -14,8 +13,9 @@ import { editorEvent } from "../frame-interfaces/editor-event";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
+import { SingleLineFrame } from "../single-line-frame";
 
-export class Property extends AbstractFrame implements PossiblyPrivateMember {
+export class Property extends SingleLineFrame implements PossiblyPrivateMember {
   isMember = true;
   isProperty = true;
   isAbstract = false;
@@ -42,9 +42,7 @@ export class Property extends AbstractFrame implements PossiblyPrivateMember {
     return "prop";
   }
 
-  renderAsHtml(): string {
-    return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-prop>`;
-  }
+  override outerHtmlTag: string = "el-prop";
 
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}${propertyKeyword} ${this.name.renderAsElanSource()} ${asKeyword} ${this.type.renderAsElanSource()}\r\n`;

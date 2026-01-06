@@ -8,10 +8,10 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
-import { SingleLineStatement } from "../single-line-statement";
+import { SingleLineFrame } from "../single-line-frame";
 import { CompileStatus, DisplayColour } from "../status-enums";
 
-export class AssertStatement extends SingleLineStatement implements Statement {
+export class AssertStatement extends SingleLineFrame implements Statement {
   isStatement = true;
   actual: AssertActualField;
   expected: ExpressionField;
@@ -106,9 +106,16 @@ export class AssertStatement extends SingleLineStatement implements Statement {
     return "";
   }
 
+  override outerHtmlTag: string = "el-statement";
+
   testMsgAsHtml(): string {
     const cls = this.getCls(this.outcome);
     const msg = escapeHtmlChars(this.getMessage(this.outcome));
     return ` <el-msg class="${cls}">${msg}</el-msg>`;
+  }
+
+  renderAsHtml(): string {
+    // special case because of need to incorporate test message
+    return `<${this.outerHtmlTag} class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}<el-kw>assert </el-kw>${this.actual.renderAsHtml()}<el-kw> is </el-kw>${this.expected.renderAsHtml()}${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</${this.outerHtmlTag}>`;
   }
 }

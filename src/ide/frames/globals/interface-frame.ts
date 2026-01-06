@@ -1,10 +1,7 @@
 import { abstractClassKeywords, endKeyword, interfaceKeyword } from "../../../compiler/keywords";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
-import {
-  parentHelper_renderChildrenAsHtml,
-  parentHelper_renderChildrenAsSource,
-} from "../parent-helpers";
+import { parentHelper_renderChildrenAsSource } from "../parent-helpers";
 import { ClassFrame } from "./class-frame";
 
 export class InterfaceFrame extends ClassFrame {
@@ -29,14 +26,6 @@ export class InterfaceFrame extends ClassFrame {
 
   getIdPrefix(): string {
     return "class";
-  }
-
-  public renderAsHtml(): string {
-    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${interfaceKeyword} </el-kw>${this.name.renderAsHtml()}${this.inheritanceAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
-${parentHelper_renderChildrenAsHtml(this)}
-${this.language().renderBottomAsHtml(this)}
-</el-class>`;
   }
 
   public renderAsElanSource(): string {

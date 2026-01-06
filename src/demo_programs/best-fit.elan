@@ -1,4 +1,4 @@
-# d6d84b2302d6d5947181fe73cea5644c1402d6b19f8e26fa67e37c0f7e01efbf Elan 1.9.0 guest default_profile valid
+# 60bd31cc8977015f159834b837df9e256b6068aebcd8c6ca7baaa758ecd80217 Elan 1.9.0 guest default_profile valid
 
 function bestFitLine(points as List<of Point>) returns (Float, Float)
   let sumX be points.reduce(0.0, lambda s as Float, p as Point => s + p.x)
@@ -23,8 +23,8 @@ function newPoint(x as Float, y as Float) returns Point
 end function
 
 test 
-  let l1 be [newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)]
-  let first, second be bestFitLine(l1)
-  assert first.round(3) is 0.766
-  assert second.round(3) is 1.093
+    let l1 be [newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)]
+    let first, second be bestFitLine(l1)
+    assert first.round(3) is 0.766
+    assert second.round(3) is 1.093
 end test

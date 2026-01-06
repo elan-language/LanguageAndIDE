@@ -165,6 +165,11 @@ export abstract class AbstractSelector extends AbstractFrame {
     super.deselect();
     this.text = "";
   }
+
+  renderAsHtml(): string {
+    return `<${this.outerHtmlTag} contenteditable spellcheck="false" class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.textToDisplayAsHtml()}</${this.outerHtmlTag}>`;
+  }
+
   textToDisplayAsHtml(): string {
     return `<el-select><el-txt>${this.text}</el-txt><el-place>${this.label}</el-place><div class="options">${this.getCompletion()}</div>${helper_pastePopUp(this)}${this.helpAsHtml()}</el-select>`;
   }

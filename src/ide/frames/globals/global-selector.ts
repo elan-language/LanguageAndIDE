@@ -63,9 +63,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
     return result;
   }
 
-  renderAsHtml(): string {
-    return `<el-global contenteditable spellcheck="false" class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.textToDisplayAsHtml()}</el-global>`;
-  }
+  outerHtmlTag: string = "el-global";
 
   indent(): string {
     return "";

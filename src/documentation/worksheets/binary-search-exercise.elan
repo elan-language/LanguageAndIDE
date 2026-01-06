@@ -1,4 +1,4 @@
-# 80dc2c4891d066d9e4aeb1c0dc56a330c08b0af5aba4cca58cee41ed0d115f5b Elan 1.9.0 guest default_profile valid
+# 82ab046170a8bb56d12499bea8269a5a6e48ccc199f99b174a1e1666eae1707e Elan 1.9.0 guest default_profile valid
 
 # Exercise: implement a function to search for an item in a sorted list, 
 # using the 'binary search' algorithm
@@ -43,18 +43,18 @@ main
 end main
 
 test 
-  let li1 be ["lemon", "lime", "orange"]
-  assert binarySearch(li1, "lemon") is true
-  assert binarySearch(li1, "lime") is true
-  assert binarySearch(li1, "orange") is true
-  assert binarySearch(li1, "pear") is false
-  let li2 be ["lemon", "orange"]
-  assert binarySearch(li2, "lemon") is true
-  assert binarySearch(li2, "orange") is true
-  assert binarySearch(li2, "pear") is false
-  let li3 be ["lemon"]
-  assert binarySearch(li3, "lemon") is true
-  assert binarySearch(li3, "lime") is false
-  let li4 be empty List<of String>
-  assert binarySearch(li4, "pear") is false
+    let li1 be ["lemon", "lime", "orange"]
+    assert binarySearch(li1, "lemon") is true
+    assert binarySearch(li1, "lime") is true
+    assert binarySearch(li1, "orange") is true
+    assert binarySearch(li1, "pear") is false
+    let li2 be ["lemon", "orange"]
+    assert binarySearch(li2, "lemon") is true
+    assert binarySearch(li2, "orange") is true
+    assert binarySearch(li2, "pear") is false
+    let li3 be ["lemon"]
+    assert binarySearch(li3, "lemon") is true
+    assert binarySearch(li3, "lime") is false
+    let li4 be empty List<of String>
+    assert binarySearch(li4, "pear") is false
 end test

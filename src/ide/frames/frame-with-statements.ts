@@ -250,4 +250,13 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
       }
     }
   }
+
+  renderAsHtml(): string {
+    return `<${this.outerHtmlTag} class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}
+${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
+${this.renderChildrenAsHtml()}
+${this.language().renderBottomAsHtml(this)}
+</${this.outerHtmlTag}>`;
+  }
 }

@@ -1,13 +1,13 @@
 import { abstractProcedureKeywords } from "../../../compiler/keywords";
-import { AbstractFrame } from "../abstract-frame";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamListField } from "../fields/param-list-field";
 import { singleIndent } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
+import { SingleLineFrame } from "../single-line-frame";
 
-export class AbstractProcedure extends AbstractFrame {
+export class AbstractProcedure extends SingleLineFrame {
   isAbstract = true;
   isMember: boolean = true;
   private = false;
@@ -35,11 +35,7 @@ export class AbstractProcedure extends AbstractFrame {
     return singleIndent();
   }
 
-  renderAsHtml(): string {
-    return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-kw>abstract procedure </el-kw><el-method>${this.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${this.params.renderAsHtml()}<el-punc>)</el-punc>${this.helpAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-proc>
-`;
-  }
+  override outerHtmlTag: string = "el-proc";
 
   public override renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}abstract procedure ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()})\r
