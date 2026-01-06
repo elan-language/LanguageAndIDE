@@ -18,7 +18,7 @@ export class TypeNameField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.rootNode = new TypeNameNode(new Set<TokenType>());
+    this.rootNode = new TypeNameNode(this.getFile(), new Set<TokenType>());
     return this.rootNode;
   }
 

@@ -27,7 +27,7 @@ export class ExpressionField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.rootNode = new ExprNode();
+    this.rootNode = new ExprNode(this.getFile());
     return this.rootNode;
   }
 

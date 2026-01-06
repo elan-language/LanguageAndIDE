@@ -8,10 +8,10 @@ export class LitStringSingleQuotes extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      this.contents = new LitStringSingleQuotesContents();
-      this.addElement(new PunctuationNode(SINGLE_QUOTE));
+      this.contents = new LitStringSingleQuotesContents(this.file);
+      this.addElement(new PunctuationNode(this.file, SINGLE_QUOTE));
       this.addElement(this.contents);
-      this.addElement(new PunctuationNode(SINGLE_QUOTE));
+      this.addElement(new PunctuationNode(this.file, SINGLE_QUOTE));
       super.parseText(text);
     }
   }

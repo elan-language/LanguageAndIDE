@@ -13,12 +13,12 @@ export class TupleNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      this.addElement(new KeywordNode(tupleKeyword));
-      this.addElement(new PunctuationNode(OPEN_BRACKET));
-      this.csv = new CSV(() => new ExprNode(), 2);
+      this.addElement(new KeywordNode(this.file, tupleKeyword));
+      this.addElement(new PunctuationNode(this.file, OPEN_BRACKET));
+      this.csv = new CSV(this.file, () => new ExprNode(this.file), 2);
       this.addElement(this.csv);
-      this.addElement(new SpaceNode(Space.ignored));
-      this.addElement(new PunctuationNode(CLOSE_BRACKET));
+      this.addElement(new SpaceNode(this.file, Space.ignored));
+      this.addElement(new PunctuationNode(this.file, CLOSE_BRACKET));
       super.parseText(text);
     }
   }

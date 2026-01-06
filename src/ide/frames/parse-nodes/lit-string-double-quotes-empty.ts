@@ -5,8 +5,8 @@ import { PunctuationNode } from "./punctuation-node";
 export class LitStringDoubleQuotesEmpty extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
-      this.addElement(new PunctuationNode(DOUBLE_QUOTES));
-      this.addElement(new PunctuationNode(DOUBLE_QUOTES));
+      this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));
+      this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));
       super.parseText(text);
     }
   }

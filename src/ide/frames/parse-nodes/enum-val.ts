@@ -10,10 +10,11 @@ export class EnumVal extends AbstractSequence {
   val: IdentifierNode | undefined;
 
   parseText(text: string): void {
-    this.type = new TypeNameNode(new Set([TokenType.type_enum]));
+    this.type = new TypeNameNode(this.file, new Set([TokenType.type_enum]));
     this.addElement(this.type);
-    this.addElement(new PunctuationNode(DOT));
+    this.addElement(new PunctuationNode(this.file, DOT));
     this.val = new IdentifierNode(
+      this.file,
       new Set<TokenType>([TokenType.id_enumValue]),
       () => this.type!.matchedText,
     );

@@ -9,9 +9,9 @@ export class IndexValue extends AbstractAlternatives {
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      this.alternatives.push(new ExprNode());
-      this.alternatives.push(new IndexDouble());
-      this.alternatives.push(new IndexRange());
+      this.alternatives.push(new ExprNode(this.file));
+      this.alternatives.push(new IndexDouble(this.file));
+      this.alternatives.push(new IndexRange(this.file));
       super.parseText(text);
     }
   }

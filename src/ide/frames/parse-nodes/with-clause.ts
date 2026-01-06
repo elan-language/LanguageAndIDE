@@ -6,23 +6,24 @@ import { KeywordNode } from "./keyword-node";
 import { Space } from "./parse-node-helpers";
 import { SetToClause } from "./set-to-clause";
 import { SpaceNode } from "./space-node";
+import { File } from "../frame-interfaces/file";
 
 export class WithClause extends AbstractSequence {
   toClauses: CSV | undefined;
   private context: () => string;
 
-  constructor(context: () => string) {
-    super();
+  constructor(file: File, context: () => string) {
+    super(file);
     this.context = context;
     this.completionWhenEmpty = " with <i>name</i> set to <i>expression</i>";
   }
 
   parseText(text: string): void {
     if (text.length > 0) {
-      this.addElement(new SpaceNode(Space.added));
-      this.addElement(new KeywordNode(withKeyword));
-      this.addElement(new SpaceNode(Space.required));
-      this.toClauses = new CSV(() => new SetToClause(this.context), 1);
+      this.addElement(new SpaceNode(this.file, Space.added));
+      this.addElement(new KeywordNode(this.file, withKeyword));
+      this.addElement(new SpaceNode(this.file, Space.required));
+      this.toClauses = new CSV(this.file, () => new SetToClause(this.file, this.context), 1);
       this.addElement(this.toClauses);
       return super.parseText(text);
     }

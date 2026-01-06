@@ -16,7 +16,7 @@ export class MethodNameField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.rootNode = new MethodNameNode();
+    this.rootNode = new MethodNameNode(this.getFile());
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

@@ -2,6 +2,7 @@ import { ParseNode } from "../frame-interfaces/parse-node";
 import { COLON } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { PunctuationNode } from "./punctuation-node";
+import { File } from "../frame-interfaces/file";
 
 export class KVPnode extends AbstractSequence {
   key: ParseNode | undefined;
@@ -10,8 +11,8 @@ export class KVPnode extends AbstractSequence {
   private keyConstructor: () => ParseNode;
   private valueConstructor: () => ParseNode;
 
-  constructor(keyConstructor: () => ParseNode, valueConstructor: () => ParseNode) {
-    super();
+  constructor(file: File, keyConstructor: () => ParseNode, valueConstructor: () => ParseNode) {
+    super(file);
     this.keyConstructor = keyConstructor;
     this.valueConstructor = valueConstructor;
   }
@@ -21,7 +22,7 @@ export class KVPnode extends AbstractSequence {
       this.key = this.keyConstructor();
       this.value = this.valueConstructor();
       this.addElement(this.key);
-      this.addElement(new PunctuationNode(COLON));
+      this.addElement(new PunctuationNode(this.file, COLON));
       this.addElement(this.value);
       super.parseText(text);
     }

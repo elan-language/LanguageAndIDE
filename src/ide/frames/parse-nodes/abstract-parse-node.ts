@@ -1,3 +1,4 @@
+import { File } from "../frame-interfaces/file";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion, SymbolCompletionSpec, TokenType } from "../symbol-completion-helpers";
@@ -13,6 +14,8 @@ export abstract class AbstractParseNode implements ParseNode {
   //Most parse nodes are never 'done'. Only ones that can return true are:
   //SpaceNode and sub-classes of FixedTextNode or of AbstractSequence
   _done: boolean = false;
+
+  constructor(protected readonly file: File) {}
 
   setSyntaxCompletionWhenEmpty(ph: string) {
     this.completionWhenEmpty = ph;

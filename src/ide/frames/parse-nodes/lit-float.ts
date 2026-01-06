@@ -6,22 +6,24 @@ import { OptionalNode } from "./optional-node";
 import { PunctuationNode } from "./punctuation-node";
 import { RegExMatchNode } from "./regex-match-node";
 import { Sequence } from "./sequence";
+import { File } from "../frame-interfaces/file";
 
 export class LitFloat extends AbstractSequence {
-  constructor() {
-    super();
+  constructor(file: File) {
+    super(file);
   }
 
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      this.addElement(new LitInt());
-      this.addElement(new PunctuationNode(DOT));
-      this.addElement(new RegExMatchNode(Regexes.literalInt));
+      this.addElement(new LitInt(this.file));
+      this.addElement(new PunctuationNode(this.file, DOT));
+      this.addElement(new RegExMatchNode(this.file, Regexes.literalInt));
       const exponent = new OptionalNode(
-        new Sequence([
-          () => new RegExMatchNode(/e|E/),
-          () => new RegExMatchNode(Regexes.negatableLitInt),
+        this.file,
+        new Sequence(this.file, [
+          () => new RegExMatchNode(this.file, /e|E/),
+          () => new RegExMatchNode(this.file, Regexes.negatableLitInt),
         ]),
       );
       this.addElement(exponent);

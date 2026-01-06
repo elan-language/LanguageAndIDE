@@ -1,10 +1,11 @@
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { AbstractSequence } from "./abstract-sequence";
+import { File } from "../frame-interfaces/file";
 
 export class Sequence extends AbstractSequence {
   elementConstructors: (() => ParseNode)[];
-  constructor(elementConstructors: (() => ParseNode)[]) {
-    super();
+  constructor(file: File, elementConstructors: (() => ParseNode)[]) {
+    super(file);
     this.elementConstructors = elementConstructors;
   }
 

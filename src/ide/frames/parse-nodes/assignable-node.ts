@@ -4,6 +4,7 @@ import { DeconstructedList } from "./deconstructed-list";
 import { DeconstructedTuple } from "./deconstructed-tuple";
 import { IdentifierNode } from "./identifier-node";
 import { PropertyRef } from "./property-ref";
+import { File } from "../frame-interfaces/file";
 
 export class AssignableNode extends AbstractAlternatives {
   tokenTypes = new Set<TokenType>([
@@ -12,11 +13,11 @@ export class AssignableNode extends AbstractAlternatives {
     TokenType.id_variable,
   ]);
 
-  constructor() {
-    super();
-    this.alternatives.push(new IdentifierNode(this.tokenTypes));
-    this.alternatives.push(new PropertyRef());
-    this.alternatives.push(new DeconstructedTuple());
-    this.alternatives.push(new DeconstructedList());
+  constructor(file: File) {
+    super(file);
+    this.alternatives.push(new IdentifierNode(file, this.tokenTypes));
+    this.alternatives.push(new PropertyRef(file));
+    this.alternatives.push(new DeconstructedTuple(file));
+    this.alternatives.push(new DeconstructedList(file));
   }
 }

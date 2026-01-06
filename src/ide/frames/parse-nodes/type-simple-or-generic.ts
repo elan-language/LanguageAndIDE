@@ -2,20 +2,21 @@ import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { TypeGenericNode } from "./type-generic-node";
 import { TypeNameNode } from "./type-name-node";
+import { File } from "../frame-interfaces/file";
 
 export class TypeSimpleOrGeneric extends AbstractAlternatives {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
 
-  constructor(tokenTypes: Set<TokenType> = new Set<TokenType>()) {
-    super();
+  constructor(file: File, tokenTypes: Set<TokenType> = new Set<TokenType>()) {
+    super(file);
     this.completionWhenEmpty = "<i>Type</i>";
     this.tokenTypes = tokenTypes;
   }
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {
-      this.alternatives.push(new TypeNameNode(this.tokenTypes));
-      this.alternatives.push(new TypeGenericNode(this.tokenTypes));
+      this.alternatives.push(new TypeNameNode(this.file, this.tokenTypes));
+      this.alternatives.push(new TypeGenericNode(this.file, this.tokenTypes));
       super.parseText(text);
     }
   }

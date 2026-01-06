@@ -21,7 +21,7 @@ export class InheritsFromField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.rootNode = new InheritanceNode();
+    this.rootNode = new InheritanceNode(this.getFile());
     return this.rootNode;
   }
 

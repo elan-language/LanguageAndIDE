@@ -10,10 +10,11 @@ import { ParseStatus } from "../status-enums";
 import { KeywordCompletion } from "../symbol-completion-helpers";
 import { DIVIDE, GT, LT, MINUS, MULT, PLUS, POWER } from "../symbols";
 import { AbstractParseNode } from "./abstract-parse-node";
+import { File } from "../frame-interfaces/file";
 
 export class BinaryOperation extends AbstractParseNode {
-  constructor() {
-    super();
+  constructor(file: File) {
+    super(file);
     this.completionWhenEmpty = "<i>operator </i>";
   }
 

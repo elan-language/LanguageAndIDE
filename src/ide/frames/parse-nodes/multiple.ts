@@ -1,14 +1,15 @@
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
+import { File } from "../frame-interfaces/file";
 
 export class Multiple extends AbstractParseNode {
   elementConstructor: () => ParseNode;
   minimum: number;
   private elements: ParseNode[] = [];
 
-  constructor(elementConstructor: () => ParseNode, minimum: number) {
-    super();
+  constructor(file: File, elementConstructor: () => ParseNode, minimum: number) {
+    super(file);
     this.elementConstructor = elementConstructor;
     this.minimum = minimum;
   }
