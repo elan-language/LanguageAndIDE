@@ -55,4 +55,9 @@ export class TypeGenericNode extends AbstractSequence {
       return super.symbolCompletion_tokenTypes();
     }
   }
+
+  override renderAsHtml(): string {
+    const fromLanguage = this.file.language().renderNodeAsHtml(this);
+    return fromLanguage.length > 0 ? fromLanguage : super.renderAsHtml();
+  }
 }

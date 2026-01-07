@@ -65,7 +65,9 @@ el-id {
     color: var(--namedValue);
     white-space: pre;
 }
-
+el-punc {
+    color: var(--defaultText);
+}
 el-regex {
     color: var(--string);
 }

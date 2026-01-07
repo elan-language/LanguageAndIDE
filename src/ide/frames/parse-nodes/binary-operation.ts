@@ -124,26 +124,17 @@ export class BinaryOperation extends AbstractParseNode {
     }
   }
 
-  renderAsHtml(): string {
+  defaultHtml(): string {
     const open = this.keyword ? "<el-kw>" : "";
     const close = this.keyword ? "</el-kw>" : "";
+
     return `${open}${this.renderAsElanSource()}${close}`;
   }
 
-  //TODO: for Python
-  /*   renderAsHtml(): string {
-    const open = this.keyword ? "<el-kw>" : "";
-    const close = this.keyword ? "</el-kw>" : "";
-    let text = this.matchedText.trim();
-    if (text === isKeyword) {
-      text = " == ";
-    } else if (text === isntKeyword) {
-      text = " != ";
-    } else {
-      text = this.renderAsElanSource();
-    }
-    return `${open}${text}${close}`;
-  } */
+  override renderAsHtml(): string {
+    const fromLanguage = this.file.language().renderNodeAsHtml(this);
+    return fromLanguage.length > 0 ? fromLanguage : this.defaultHtml();
+  }
 
   renderAsElanSource(): string {
     let source = "";

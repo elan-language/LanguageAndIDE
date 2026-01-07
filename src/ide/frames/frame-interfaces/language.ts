@@ -2,6 +2,10 @@ import { Frame } from "./frame";
 import { ParseNode } from "./parse-node";
 
 export interface Language {
+/*   languageFullName: string;
+  defaultFileExtension: string;
+  defaultMimeType: string; */
+
   annotation(frame: Frame): string;
 
   commentMarker(): string; //e.g. `#`

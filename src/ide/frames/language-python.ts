@@ -1,14 +1,20 @@
 import {
   callAnnotation,
   eachAnnotation,
+  enumAnnotation,
   functionAnnotation,
   letAnnotation,
   mainAnnotation,
   privateAnnotation,
   procedureAnnotation,
+  recordAnnotation,
   setAnnotation,
+  testAnnotation,
   variableAnnotation,
 } from "../../compiler/keywords";
+import { AbstractFunction } from "./class-members/abstract-function";
+import { AbstractProcedure } from "./class-members/abstract-procedure";
+import { AbstractProperty } from "./class-members/abstract-property";
 import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
@@ -18,11 +24,17 @@ import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
 import { ParseNode } from "./frame-interfaces/parse-node";
+import { AbstractClass } from "./globals/abstract-class";
+import { ConcreteClass } from "./globals/concrete-class";
+import { Constant } from "./globals/constant";
 import { Enum } from "./globals/enum";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
+import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
+import { RecordFrame } from "./globals/record-frame";
+import { TestFrame } from "./globals/test-frame";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
@@ -46,11 +58,15 @@ import { While } from "./statements/while";
 export class LanguagePython implements Language {
   annotation(frame: Frame): string {
     //TODO: add 'private' as applicable
-    let a = `Python annotation not specified for ${frame}`;
-    if (frame instanceof MainFrame) {
-      a = mainAnnotation;
+    let a = `Python annotation not specified for ${typeof frame}`;
+    if (frame instanceof AbstractFunction) {
+      
+    } else if (frame instanceof AbstractProcedure) {
+      
+    } else if (frame instanceof AbstractProperty) {
+      
     } else if (frame instanceof AssertStatement) {
-      a = "";
+      
     } else if (frame instanceof CallStatement) {
       a = callAnnotation;
     } else if (frame instanceof CatchStatement) {
@@ -61,6 +77,8 @@ export class LanguagePython implements Language {
       a = eachAnnotation;
     } else if (frame instanceof Else) {
       a = "";
+    } else if (frame instanceof Enum) {
+      a = enumAnnotation;
     } else if (frame instanceof For) {
       a = "";
     } else if (frame instanceof FunctionMethod) {
@@ -73,14 +91,20 @@ export class LanguagePython implements Language {
       a = "";
     } else if (frame instanceof LetStatement) {
       a = letAnnotation;
+    } else if (frame instanceof MainFrame) {
+      a = mainAnnotation;
     } else if (frame instanceof Print) {
       a = "";
     } else if (frame instanceof ProcedureMethod) {
       a = procedureAnnotation;
+    } else if (frame instanceof RecordFrame) {
+      a = recordAnnotation;
     } else if (frame instanceof ReturnStatement) {
       a = "";
     } else if (frame instanceof SetStatement) {
       a = setAnnotation;
+    } else if (frame instanceof TestFrame) {
+      a = testAnnotation;
     } else if (frame instanceof Throw) {
       // TODO
     } else if (frame instanceof TryStatement) {
@@ -102,8 +126,14 @@ export class LanguagePython implements Language {
   }
 
   renderSingleLineAsHtml(frame: Frame): string {
-    let html = `Html not specified for this frame`;
-    if (frame instanceof AssertStatement) {
+    let html = `Html not specified for ${typeof frame}`;
+    if (frame instanceof AbstractFunction) {
+      html = `TBD`;
+    } else if (frame instanceof AbstractProcedure) {
+      html = `TBD`;
+    } else if (frame instanceof AbstractProperty) {
+      html = `TBD`;
+    } else if (frame instanceof AssertStatement) {
       html = `<el-method>assertEqual</el-method>(${frame.actual.renderAsHtml()}, ${frame.expected.renderAsHtml()})`;
     } else if (frame instanceof CallStatement) {
       html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)</el-punc>`;
@@ -138,15 +168,20 @@ export class LanguagePython implements Language {
     return html;
   }
 
-  //Test: <el-kw>def </el-kw> <el-method>test_</el-method>{this.testDescription.renderAsHtml()}(): <el-kw>none</el-kw>
   renderTopAsHtml(frame: Frame): string {
-    let html = `Html not specified for this frame`;
-    if (frame instanceof MainFrame) {
-      html = `<el-kw>${this.defKeyword} </el-kw><el-method>main</el-method>(): <el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
+    let html = `Html not specified for ${typeof frame}`;
+    if (frame instanceof AbstractClass) {
+      html = ``;
+    } else if (frame instanceof ConcreteClass) {
+      html = ``;
+    } else if (frame instanceof Constant) {
+      html = ``;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.defKeyword} </el-kw><el-punc>(</el-punc><el-kw>${this.selfKeyword}</el-kw>: ${selfType(frame)},${frame.params.renderAsHtml()}<el-punc>):</el-punc> <el-kw>none</el-kw>`;
     } else if (frame instanceof Each) {
       html = `<el-kw>${this.forKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.inKeyword} </el-kw>${frame.iter.renderAsHtml()}<el-punc>:</el-punc>`;
+    } else if (frame instanceof Enum) {
+      html = ``;
     } else if (frame instanceof Else) {
       const elseOrElif = frame.hasIf
         ? `<el-kw>${this.elifKeyword} </el-kw>${frame.condition.renderAsHtml()}`
@@ -154,21 +189,31 @@ export class LanguagePython implements Language {
       html = elseOrElif + `<el-punc>:</el-punc>`;
     } else if (frame instanceof For) {
       html = `<el-kw>${this.forKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.inKeyword} </el-kw><el-method>range</el-method>(${frame.from.renderAsHtml()}, ${frame.to.renderAsHtml()}, ${frame.step.renderAsHtml()})<el-punc>:</el-punc>`;
+    } else if (frame instanceof FunctionMethod) {
+      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${this.selfKeyword}<el-punc>: </el-punc>${selfType(frame)}<el-punc>, </el-punc>${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
+    } else if (frame instanceof GlobalFunction) {
+      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
+    } else if (frame instanceof GlobalProcedure) {
+      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) -> <el-punc><el-kw>${this.noneKeyword}</el-kw></el-punc><el-punc>:</el-punc>`;
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.ifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
+    } else if (frame instanceof InterfaceFrame) {
+      html = ``;
+    } else if (frame instanceof MainFrame) {
+      html = `<el-kw>${this.defKeyword} </el-kw><el-method>main</el-method>(): <el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
+    } else if (frame instanceof ProcedureMethod) {
+      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>${this.selfKeyword}</el-kw><el-punc>: </el-punc>${selfType(frame)}<el-punc>, </el-punc>${frame.params.renderAsHtml()}<el-punc>) -> </el-punc><el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
+    } else if (frame instanceof Property) {
+      html = ``;
+    } else if (frame instanceof RecordFrame) {
+      html = ``;
+    } else if (frame instanceof TestFrame) {
+      html = `<el-kw>${this.defKeyword} </el-kw> <el-method>test_${frame.testDescription.renderAsElanSource()}</el-method><el-punc>()-> </el-punc><el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof TryStatement) {
       html = `${this.tryKeyword}<el-punc>:</el-punc>`;
     } else if (frame instanceof While) {
       html = `<el-kw>${this.whileKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
-    } else if (frame instanceof FunctionMethod) {
-      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>${this.selfKeyword}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
-    } else if (frame instanceof GlobalFunction) {
-      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
-    } else if (frame instanceof GlobalProcedure) {
-      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(${frame.params.renderAsHtml()}<el-punc>) -> <el-kw>${this.noneKeyword}</el-kw></el-punc><el-punc>:</el-punc>`;
-    } else if (frame instanceof ProcedureMethod) {
-      html = `<el-kw>def </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>${this.selfKeyword}</el-kw>: ${selfType(frame)}, ${frame.params.renderAsHtml()}<el-punc>) -> </el-punc><el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
-    }
+    } 
     return html;
   }
 
@@ -176,17 +221,28 @@ export class LanguagePython implements Language {
     return frame ? "" : ""; // Python blocks have no textual ending;
   }
 
-  //TODO: Not currently being used
   renderNodeAsHtml(node: ParseNode): string {
     let html = "";
     if (node instanceof TypeGenericNode) {
       const generics = node.generic?.renderAsHtml();
       const chopped = generics?.substring(22, generics.length - 4);
-      html = node.simpleType?.renderAsHtml() + `[<el-type>${chopped}</el-type>]`;
+      html =
+        node.simpleType?.renderAsHtml() +
+        `<el-punc>[</el-punc><el-type>${chopped}</el-type><el-punc>]</el-punc>`;
     } else if (node instanceof ParamDefNode) {
       return node.name?.renderAsHtml() + ": " + node.type?.renderAsHtml();
     } else if (node instanceof BinaryOperation) {
-      // substitute == for is != for isnt
+      const open = node.keyword ? "<el-kw>" : "";
+      const close = node.keyword ? "</el-kw>" : "";
+      let text = node.matchedText.trim();
+      if (text === "is") {
+        text = " == ";
+      } else if (text === "isnt") {
+        text = " != ";
+      } else {
+        text = node.renderAsElanSource();
+      }
+      return `${open}${text}${close}`;
     }
     return html;
   }

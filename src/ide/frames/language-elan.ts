@@ -168,11 +168,10 @@ export class LanguageElan implements Language {
     return html;
   }
 
-  //TODO: not yet used
   renderNodeAsHtml(node: ParseNode): string {
     let html = "";
     if (node instanceof TypeGenericNode) {
-      html = `${node.simpleType?.renderAsHtml()}&lt;<el-kw>of</el-kw> ${node.generic?.renderAsHtml}&gt;`;
+      html = `${node.simpleType?.renderAsHtml()}${node.generic?.renderAsHtml()}`;
     }
     return html;
   }
