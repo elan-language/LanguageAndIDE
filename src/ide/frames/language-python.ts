@@ -60,13 +60,9 @@ export class LanguagePython implements Language {
     //TODO: add 'private' as applicable
     let a = `Python annotation not specified for ${typeof frame}`;
     if (frame instanceof AbstractFunction) {
-      
     } else if (frame instanceof AbstractProcedure) {
-      
     } else if (frame instanceof AbstractProperty) {
-      
     } else if (frame instanceof AssertStatement) {
-      
     } else if (frame instanceof CallStatement) {
       a = callAnnotation;
     } else if (frame instanceof CatchStatement) {
@@ -213,7 +209,7 @@ export class LanguagePython implements Language {
       html = `${this.tryKeyword}<el-punc>:</el-punc>`;
     } else if (frame instanceof While) {
       html = `<el-kw>${this.whileKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
-    } 
+    }
     return html;
   }
 

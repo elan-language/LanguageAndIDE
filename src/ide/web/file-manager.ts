@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { editorEvent } from "../frames/frame-interfaces/editor-event";
+import { ParseMode } from "../frames/frame-interfaces/file";
 import { ParseStatus } from "../frames/status-enums";
-import { ICodeEditorViewModel, IIDEViewModel, lastDirId } from "./ui-helpers";
+import { TestRunner } from "./test-runner";
+import { cursorWait, ICodeEditorViewModel, IIDEViewModel, lastDirId } from "./ui-helpers";
 import { encodeCode } from "./web-helpers";
 
 export class FileManager {
@@ -56,7 +60,7 @@ export class FileManager {
             localStorage.removeItem(id);
           }
         }
-        code = await cvm.renderAsElanSource();
+        code = await cvm.renderAsSource();
         const timestamp = Date.now();
         const overWriteLastEntry = newFieldId === this.currentFieldId;
         const id = overWriteLastEntry
@@ -84,7 +88,7 @@ export class FileManager {
       }
 
       // autosave if setup
-      code = code || (await cvm.renderAsElanSource());
+      code = code || (await cvm.renderAsSource());
       await this.autoSave(code, cvm, vm);
     }
 
@@ -141,7 +145,7 @@ export class FileManager {
       this.autoSaveFileHandle = undefined;
       vm.updateDisplayValues(cvm);
     } else {
-      const code = await cvm.renderAsElanSource();
+      const code = await cvm.renderAsSource();
       this.autoSaveFileHandle = await this.chromeSave(cvm, code, true);
       this.resetHash(cvm);
       await vm.renderAsHtml(false);
@@ -149,7 +153,7 @@ export class FileManager {
   }
 
   async doDownLoad(cvm: ICodeEditorViewModel, vm: IIDEViewModel) {
-    const code = await cvm.renderAsElanSource();
+    const code = await cvm.renderAsSource();
     await this.chromeSave(cvm, code, true);
     this.resetHash(cvm);
     await vm.renderAsHtml(false);
@@ -286,5 +290,73 @@ export class FileManager {
     }
 
     return false;
+  }
+
+  async doGenericDownload(cvm: ICodeEditorViewModel, vm: IIDEViewModel, fm: FileManager) {
+    cvm.updateFileName();
+    const code = await cvm.renderAsSource();
+    const blob = new Blob([code], { type: "plain/text" });
+    const aElement = document.createElement("a");
+    aElement.setAttribute("download", cvm.fileName!);
+    const href = URL.createObjectURL(blob);
+    aElement.href = href;
+    aElement.setAttribute("target", "_blank");
+    aElement.click();
+    URL.revokeObjectURL(href);
+    //saveButton.classList.remove("unsaved");
+    fm.resetHash(cvm);
+    await vm.renderAsHtml(false);
+  }
+
+  async handleChromeUploadOrAppend(
+    mode: ParseMode,
+    cvm: ICodeEditorViewModel,
+    vm: IIDEViewModel,
+    tr: TestRunner,
+  ) {
+    try {
+      const [fileHandle] = await window.showOpenFilePicker({
+        startIn: "documents",
+        types: [{ accept: { "text/elan": ".elan" } }],
+        id: lastDirId,
+      });
+      const codeFile = await fileHandle.getFile();
+      const fileName = mode === ParseMode.loadNew ? codeFile.name : cvm.fileName;
+      const rawCode = await codeFile.text();
+      if (mode === ParseMode.loadNew) {
+        cvm.recreateFile();
+        this.reset();
+      }
+      await cvm.readAndParse(vm, this, tr, rawCode, fileName, mode);
+    } catch (_e) {
+      // user cancelled
+      return;
+    }
+  }
+
+  async handleUploadOrAppend(
+    event: Event,
+    mode: ParseMode,
+    cvm: ICodeEditorViewModel,
+    vm: IIDEViewModel,
+    tr: TestRunner,
+  ) {
+    const elanFile = (event.target as any).files?.[0] as any;
+
+    if (elanFile) {
+      const fileName = mode === ParseMode.loadNew ? elanFile.name : cvm.fileName;
+      cursorWait();
+      await vm.clearDisplays();
+      const reader = new FileReader();
+      reader.addEventListener("load", async (event: any) => {
+        const rawCode = event.target.result;
+        if ((mode = ParseMode.loadNew)) {
+          cvm.recreateFile();
+          this.reset();
+        }
+        await cvm.readAndParse(vm, this, tr, rawCode, fileName, mode);
+      });
+      reader.readAsText(elanFile);
+    }
   }
 }
