@@ -1,4 +1,4 @@
-# 63093d91e9c6c71c8157fa57ae6d04773d2481b6087592577c36660bbc826d11 Elan 1.9.0 guest default_profile valid
+# 5c71dec2aad332b85e716cc67ea7d399e62009788ae853dfd3801269e86577ef Elan 1.9.0 guest default_profile valid
 
 main
   let start be newPoint(5, 5)
@@ -187,13 +187,13 @@ class Solver
     variable route set to {property.destination}
     variable length set to 0.0
     variable node set to getNodeFor(property.destination)
-    repeat
+    while node.point isnt property.start
       let previous be node.via
       let p be node.point
       set length to length + p.minDistTo(previous)
       set route to route.withInsert(0, previous)
       set node to getNodeFor(previous)
-    end repeat when node.point is property.start
+    end while
     return tuple(route, length)
   end function
 
@@ -280,8 +280,8 @@ constant lightBlue set to 0x80abff
 constant orange set to 0xe97132
 
 test point
-  let p be newPoint(0, 0)
-  let n be p.neighbouringPoints()
-  let expected be {newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)}
-  assert n is expected
+    let p be newPoint(0, 0)
+    let n be p.neighbouringPoints()
+    let expected be {newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)}
+    assert n is expected
 end test

@@ -5,16 +5,17 @@ import { AbstractAlternatives } from "./abstract-alternatives";
 import { allIdsAndMethods } from "./parse-node-helpers";
 import { TermChained } from "./term-chained";
 import { TermSimpleWithOptIndex } from "./term-simple-with-opt-index";
+import { File } from "../frame-interfaces/file";
 
 export class Term extends AbstractAlternatives {
-  constructor() {
-    super();
+  constructor(file: File) {
+    super(file);
     this.completionWhenEmpty = "<i>expression</i>";
   }
 
   parseText(text: string): void {
-    this.alternatives.push(new TermSimpleWithOptIndex());
-    this.alternatives.push(new TermChained());
+    this.alternatives.push(new TermSimpleWithOptIndex(this.file));
+    this.alternatives.push(new TermChained(this.file));
     super.parseText(text);
   }
 

@@ -8,6 +8,7 @@ import { Space } from "./parse-node-helpers";
 import { Sequence } from "./sequence";
 import { SpaceNode } from "./space-node";
 import { TypeNode } from "./type-node";
+import { File } from "../frame-interfaces/file";
 
 export class ParamDefNode extends AbstractSequence {
   name: IdentifierNode | undefined;
@@ -15,28 +16,29 @@ export class ParamDefNode extends AbstractSequence {
   out: OptionalNode | undefined;
   outPermitted: boolean;
 
-  constructor(outPermitted: boolean) {
-    super();
+  constructor(file: File, outPermitted: boolean) {
+    super(file);
     this.outPermitted = outPermitted;
     this.completionWhenEmpty = "<i>name</i> as <i>Type</i>";
   }
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      const outSpace = new Sequence([
-        () => new KeywordNode(outKeyword),
-        () => new SpaceNode(Space.required),
+      const outSpace = new Sequence(this.file, [
+        () => new KeywordNode(this.file, outKeyword),
+        () => new SpaceNode(this.file, Space.required),
       ]);
       if (this.outPermitted) {
-        this.out = new OptionalNode(outSpace);
+        this.out = new OptionalNode(this.file, outSpace);
         this.addElement(this.out);
       }
-      this.name = new IdentifierNode();
+      this.name = new IdentifierNode(this.file);
       this.addElement(this.name);
-      this.addElement(new SpaceNode(Space.required));
-      this.addElement(new KeywordNode(asKeyword));
-      this.addElement(new SpaceNode(Space.required));
+      this.addElement(new SpaceNode(this.file, Space.required));
+      this.addElement(new KeywordNode(this.file, asKeyword));
+      this.addElement(new SpaceNode(this.file, Space.required));
       this.type = new TypeNode(
+        this.file,
         new Set<TokenType>([
           TokenType.type_concrete,
           TokenType.type_abstract,
@@ -54,5 +56,10 @@ export class ParamDefNode extends AbstractSequence {
         ? new Set<KeywordCompletion>([KeywordCompletion.create(outKeyword)])
         : new Set<KeywordCompletion>([])
       : super.symbolCompletion_keywords();
+  }
+
+  override renderAsHtml(): string {
+    const fromLanguage = this.file.language().renderNodeAsHtml(this);
+    return fromLanguage.length > 0 ? fromLanguage : super.renderAsHtml();
   }
 }

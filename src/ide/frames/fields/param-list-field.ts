@@ -31,7 +31,7 @@ export class ParamListField extends AbstractField {
     }
   }
   initialiseRoot(): ParseNode {
-    this.rootNode = new ParamListNode(this.outPermitted);
+    this.rootNode = new ParamListNode(this.getFile(), this.outPermitted);
     return this.rootNode;
   }
 

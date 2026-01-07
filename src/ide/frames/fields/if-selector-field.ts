@@ -26,7 +26,7 @@ export class IfSelectorField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.rootNode = new OptionalNode(new KeywordNode(ifKeyword));
+    this.rootNode = new OptionalNode(this.getFile(), new KeywordNode(this.getFile(), ifKeyword));
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (_source: CodeSource) => "";
@@ -46,7 +46,7 @@ export class IfSelectorField extends AbstractField {
     return "";
   }
 
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     return ``;
   }
 

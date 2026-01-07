@@ -1,20 +1,20 @@
-# d78eb844cb6a7e7b8b28654727f1c06a40705faa2228d226a9b2891e1e00bc33 Elan 1.9.0 guest default_profile valid
+# d6a3e363ed4da8be047ce3d2a037578186ac4641194984959a6bbfe0c9591f65 Elan 1.9.0 guest default_profile valid
 
 test 
-  assert pi is 3.141592653589793
-  assert abs(-3.7) is 3.7
-  assert asin(0.5).round(3) is 0.524
-  assert acos(0.5).round(3) is 1.047
-  assert atan(1).round(2) is 0.79
-  assert sin(pi/6).round(2) is 0.5
-  assert cos(pi/4).round(3) is 0.707
-  assert tan(pi/4).round(2) is 1
-  assert exp(2).round(3) is 7.389
-  assert logE(7.389).round(2) is 2
-  assert log10(1000) is 3
-  assert log2(65536) is 16
-  assert log2(0x10000) is 16
-  assert sqrt(2).round(3) is 1.414
+    assert pi is 3.141592653589793
+    assert abs(-3.7) is 3.7
+    assert asin(0.5).round(3) is 0.524
+    assert acos(0.5).round(3) is 1.047
+    assert atan(1).round(2) is 0.79
+    assert sin(pi/6).round(2) is 0.5
+    assert cos(pi/4).round(3) is 0.707
+    assert tan(pi/4).round(2) is 1
+    assert exp(2).round(3) is 7.389
+    assert logE(7.389).round(2) is 2
+    assert log10(1000) is 3
+    assert log2(65536) is 16
+    assert log2(0x10000) is 16
+    assert sqrt(2).round(3) is 1.414
 end test
 
 main

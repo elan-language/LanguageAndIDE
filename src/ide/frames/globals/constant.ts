@@ -45,15 +45,19 @@ export class Constant extends AbstractFrame implements GlobalFrame, Collapsible 
   getIdPrefix(): string {
     return "const";
   }
+
+  override outerHtmlTag: string = "el-const";
+
   renderAsHtml(): string {
-    return `<el-const class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>constant </el-kw>${this.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${this.isImported() ? "" : this.value.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-const>`;
+    //In this special case </el-top> is provided by the language rendering
+    return `<${this.outerHtmlTag} class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}${this.outerHtmlTag}`;
   }
 
   indent(): string {
     return "";
   }
-  renderAsSource(): string {
-    return `${this.sourceAnnotations()}constant ${this.name.renderAsSource()} set to ${this.value.renderAsSource()}\r
+  renderAsElanSource(): string {
+    return `${this.sourceAnnotations()}constant ${this.name.renderAsElanSource()} set to ${this.value.renderAsElanSource()}\r
 `;
   }
 

@@ -13,20 +13,20 @@ export class IfExpr extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.addElement(new KeywordNode(ifKeyword));
-      this.addElement(new SpaceNode(Space.required));
-      this.condition = new ExprNode();
+      this.addElement(new KeywordNode(this.file, ifKeyword));
+      this.addElement(new SpaceNode(this.file, Space.required));
+      this.condition = new ExprNode(this.file);
       this.condition.setSyntaxCompletionWhenEmpty("<i>condition </i>");
       this.addElement(this.condition);
-      this.addElement(new SpaceNode(Space.required));
-      this.addElement(new KeywordNode(thenKeyword));
-      this.addElement(new SpaceNode(Space.required));
-      this.whenTrue = new ExprNode();
+      this.addElement(new SpaceNode(this.file, Space.required));
+      this.addElement(new KeywordNode(this.file, thenKeyword));
+      this.addElement(new SpaceNode(this.file, Space.required));
+      this.whenTrue = new ExprNode(this.file);
       this.addElement(this.whenTrue);
-      this.addElement(new SpaceNode(Space.required));
-      this.addElement(new KeywordNode(elseKeyword));
-      this.addElement(new SpaceNode(Space.required));
-      this.whenFalse = new ExprNode();
+      this.addElement(new SpaceNode(this.file, Space.required));
+      this.addElement(new KeywordNode(this.file, elseKeyword));
+      this.addElement(new SpaceNode(this.file, Space.required));
+      this.whenFalse = new ExprNode(this.file);
       this.addElement(this.whenFalse);
       super.parseText(text);
     }

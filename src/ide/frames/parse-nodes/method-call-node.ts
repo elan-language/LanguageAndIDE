@@ -6,6 +6,7 @@ import { MethodNameNode } from "./method-name-node";
 import { Space } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
 import { SpaceNode } from "./space-node";
+import { File } from "../frame-interfaces/file";
 
 export class MethodCallNode extends AbstractSequence {
   name: MethodNameNode | undefined;
@@ -13,25 +14,26 @@ export class MethodCallNode extends AbstractSequence {
   tokenTypes: Set<TokenType>;
 
   constructor(
+    file: File,
     tokenTypes: Set<TokenType> = new Set<TokenType>([
       TokenType.method_function,
       TokenType.method_system,
     ]),
   ) {
-    super();
+    super(file);
     this.tokenTypes = tokenTypes;
   }
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.name = new MethodNameNode(this.tokenTypes);
+      this.name = new MethodNameNode(this.file, this.tokenTypes);
       this.addElement(this.name);
-      this.addElement(new PunctuationNode(OPEN_BRACKET));
-      this.addElement(new SpaceNode(Space.ignored));
-      this.args = new ArgListNode(() => this.name!.matchedText);
+      this.addElement(new PunctuationNode(this.file, OPEN_BRACKET));
+      this.addElement(new SpaceNode(this.file, Space.ignored));
+      this.args = new ArgListNode(this.file, () => this.name!.matchedText);
       this.addElement(this.args);
-      this.addElement(new SpaceNode(Space.ignored));
-      this.addElement(new PunctuationNode(CLOSE_BRACKET));
+      this.addElement(new SpaceNode(this.file, Space.ignored));
+      this.addElement(new PunctuationNode(this.file, CLOSE_BRACKET));
       super.parseText(text);
     }
   }

@@ -2,7 +2,9 @@ import {
   assertKeyword,
   callKeyword,
   commentMarker,
+  constantAnnotation,
   eachKeyword,
+  elifKeyword,
   elseKeyword,
   forKeyword,
   ifKeyword,
@@ -54,22 +56,24 @@ export class StatementSelector extends AbstractSelector {
   }
 
   profileAllows(keyword: string): boolean {
-    return this.profile.statements.includes(keyword);
+    return keyword.length > 0;
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = false;
-    if (keyword === elseKeyword) {
+    if (keyword === constantAnnotation) {
+      result = this.isWithinAFunction();
+    } else if (keyword === elseKeyword || keyword === elifKeyword) {
       result = parent.getIdPrefix() === ifKeyword;
-    } else if (keyword === assertKeyword) {
-      return this.isDirectlyWithinATest();
     } else if (keyword === printKeyword || keyword === callKeyword) {
       result = !(
         this.isWithinAFunction() ||
         this.isDirectlyWithinATest() ||
         this.isWithinAConstructor()
       );
+    } else if (keyword === assertKeyword) {
+      return this.isDirectlyWithinATest();
     } else {
       result = true;
     }
@@ -94,7 +98,5 @@ export class StatementSelector extends AbstractSelector {
       : parent.hasParent() && this.isWithinContext(parent.getParent(), parentPrefix);
   }
 
-  renderAsHtml(): string {
-    return `<el-statement contenteditable spellcheck="false" class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}${this.textToDisplayAsHtml()}</el-statement>`;
-  }
+  outerHtmlTag: string = "el-statement";
 }

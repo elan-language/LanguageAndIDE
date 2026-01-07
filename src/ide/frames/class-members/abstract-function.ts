@@ -4,7 +4,6 @@ import {
   functionKeyword,
   returnsKeyword,
 } from "../../../compiler/keywords";
-import { AbstractFrame } from "../abstract-frame";
 import { IdentifierField } from "../fields/identifier-field";
 import { ParamListField } from "../fields/param-list-field";
 import { TypeField } from "../fields/type-field";
@@ -12,8 +11,9 @@ import { singleIndent } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
+import { SingleLineFrame } from "../single-line-frame";
 
-export class AbstractFunction extends AbstractFrame {
+export class AbstractFunction extends SingleLineFrame {
   isAbstract = true;
   isMember: boolean = true;
   private = false;
@@ -45,14 +45,10 @@ export class AbstractFunction extends AbstractFrame {
     return singleIndent();
   }
 
-  renderAsHtml(): string {
-    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-kw>${abstractKeyword} ${functionKeyword} </el-kw><el-method>${this.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${this.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.helpAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-func>
-`;
-  }
+  override outerHtmlTag: string = "el-func";
 
-  public override renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${abstractKeyword} ${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnsKeyword} ${this.returnType.renderAsSource()}\r
+  public override renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}${abstractKeyword} ${functionKeyword} ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
 `;
   }
 

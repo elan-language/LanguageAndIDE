@@ -28,14 +28,14 @@ export class RecordFrame extends ClassFrame {
 
   public renderAsHtml(): string {
     return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>record </el-kw>${this.name.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${parentHelper_renderChildrenAsHtml(this)}
-<el-kw>end record</el-kw>
+${this.language().renderBottomAsHtml(this)}
 </el-class>`;
   }
 
-  public renderAsSource(): string {
-    return `${this.sourceAnnotations()}record ${this.name.renderAsSource()}\r
+  public renderAsElanSource(): string {
+    return `${this.sourceAnnotations()}record ${this.name.renderAsElanSource()}\r
 ${parentHelper_renderChildrenAsSource(this)}\r
 end record\r\n`;
   }

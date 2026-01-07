@@ -13,8 +13,8 @@ export class GlobalFunction extends FunctionFrame implements GlobalFrame {
     return "";
   }
 
-  public renderAsSource(): string {
-    return `${this.sourceAnnotations()}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnsKeyword} ${this.returnType.renderAsSource()}\r
+  public renderAsElanSource(): string {
+    return `${this.sourceAnnotations()}${functionKeyword} ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${endKeyword} ${functionKeyword}\r
 `;

@@ -1,5 +1,6 @@
 import {
   endKeyword,
+  functionAnnotation,
   functionKeyword,
   returnKeyword,
   returnsKeyword,
@@ -50,13 +51,11 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   getIdPrefix(): string {
     return "func";
   }
-  public renderAsHtml(): string {
-    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${functionKeyword} </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc>${this.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-<el-kw>${endKeyword} ${functionKeyword}</el-kw>
-</el-func>`;
+  frameSpecificAnnotation(): string {
+    return functionAnnotation;
   }
+
+  override outerHtmlTag: string = "el-func";
 
   parseTop(source: CodeSource): void {
     source.remove(`${functionKeyword} `);

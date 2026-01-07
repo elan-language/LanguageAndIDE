@@ -2,12 +2,13 @@ import { Regexes } from "../fields/regexes";
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { Space } from "./parse-node-helpers";
+import { File } from "../frame-interfaces/file";
 
 export class SpaceNode extends AbstractParseNode {
   type: Space;
 
-  constructor(type: Space) {
-    super();
+  constructor(file: File, type: Space) {
+    super(file);
     this.type = type;
   }
 
@@ -35,10 +36,10 @@ export class SpaceNode extends AbstractParseNode {
   }
 
   renderAsHtml(): string {
-    return this.renderAsSource();
+    return this.renderAsElanSource();
   }
 
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     return this.type === Space.ignored || this.status === ParseStatus.empty ? "" : " ";
   }
 

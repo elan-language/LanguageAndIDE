@@ -1,6 +1,6 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { BreakpointStatus } from "../../../compiler/debugging/breakpoint-status";
-import { ignoreKeyword, testKeyword } from "../../../compiler/keywords";
+import { ignoreKeyword, testAnnotation, testKeyword } from "../../../compiler/keywords";
 import { TestStatus } from "../../../compiler/test-status";
 import { CommentField } from "../fields/comment-field";
 import {
@@ -72,18 +72,14 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   getIdPrefix(): string {
     return "test";
   }
-  public renderAsHtml(): string {
-    return `<el-test class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>test </el-kw>${this.testDescription.renderAsHtml()}${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-<el-kw>end test</el-kw>
-</el-test>`;
+  frameSpecificAnnotation(): string {
+    return testAnnotation;
   }
-  indent(): string {
-    return "";
-  }
-  public renderAsSource(): string {
-    return `${this.sourceAnnotations()}test ${this.testDescription.renderAsSource()}\r
+
+  override outerHtmlTag: string = "el-test";
+
+  public renderAsElanSource(): string {
+    return `${this.sourceAnnotations()}test ${this.testDescription.renderAsElanSource()}\r
 ${this.renderChildrenAsSource()}\r
 end test\r
 `;

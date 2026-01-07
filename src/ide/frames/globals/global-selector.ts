@@ -2,10 +2,9 @@ import {
   abstractKeyword,
   classKeyword,
   commentMarker,
-  constantKeyword,
+  constantAnnotation,
   enumKeyword,
   functionKeyword,
-  ignoreKeyword,
   interfaceKeyword,
   mainKeyword,
   procedureKeyword,
@@ -39,14 +38,14 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
       [procedureKeyword, (_parent: Parent) => this.file.createProcedure()],
       [functionKeyword, (_parent: Parent) => this.file.createFunction()],
       [testKeyword, (_parent: Parent) => this.file.createTest()],
-      [constantKeyword, (_parent: Parent) => this.file.createConstant()],
+      [constantAnnotation, (_parent: Parent) => this.file.createConstant()],
       [enumKeyword, (_parent: Parent) => this.file.createEnum()],
       [recordKeyword, (_parent: Parent) => this.file.createRecord()],
       [classKeyword, (_parent: Parent) => this.file.createConcreteClass()],
       [abstractKeyword, (_parent: Parent) => this.file.createAbstractClass()],
       [interfaceKeyword, (_parent: Parent) => this.file.createInterface()],
       [commentMarker, (_parent: Parent) => this.file.createGlobalComment()],
-      [ignoreKeyword, (_parent: Parent) => this.file.createTest()],
+      // [ignoreKeyword, (_parent: Parent) => this.file.createTest()],
     ];
   }
 
@@ -64,9 +63,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
     return result;
   }
 
-  renderAsHtml(): string {
-    return `<el-global contenteditable spellcheck="false" class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.textToDisplayAsHtml()}</el-global>`;
-  }
+  outerHtmlTag: string = "el-global";
 
   indent(): string {
     return "";

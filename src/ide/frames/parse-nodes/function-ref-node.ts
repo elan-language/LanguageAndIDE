@@ -12,9 +12,9 @@ export class FunctionRefNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.addElement(new KeywordNode(refKeyword));
-      this.addElement(new SpaceNode(Space.required));
-      this.name = new MethodNameNode(new Set<TokenType>([TokenType.method_function]));
+      this.addElement(new KeywordNode(this.file, refKeyword));
+      this.addElement(new SpaceNode(this.file, Space.required));
+      this.name = new MethodNameNode(this.file, new Set<TokenType>([TokenType.method_function]));
       this.addElement(this.name);
       super.parseText(text);
     }

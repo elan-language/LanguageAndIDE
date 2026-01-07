@@ -19,7 +19,7 @@ export class CommentField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.rootNode = new CommentNode();
+    this.rootNode = new CommentNode(this.getFile());
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
@@ -53,7 +53,7 @@ export class CommentField extends AbstractField {
     } else {
       root.parseText(text);
       this.setParseStatus(root.status);
-      this.text = root.renderAsSource();
+      this.text = root.renderAsElanSource();
     }
   }
 }

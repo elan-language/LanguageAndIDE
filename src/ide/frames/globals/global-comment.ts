@@ -25,15 +25,19 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame {
   getIdPrefix(): string {
     return "com";
   }
+
+  outerHtmlTag: string = "";
+
   renderAsHtml(): string {
-    return `<el-global>${this.contextMenu()}<el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.bpAsHtml()}<el-kw># </el-kw>${this.text.renderAsHtml()}</el-top></el-comment></el-global>`;
+    //Special case, as does not have functionality of an instuction
+    return `<el-global>${this.contextMenu()}<el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.language().renderSingleLineAsHtml(this)}</el-top></el-comment></el-global>`;
   }
 
   indent(): string {
     return "";
   }
-  renderAsSource(): string {
-    return `${this.sourceAnnotations()}# ${this.text.renderAsSource()}`;
+  renderAsElanSource(): string {
+    return `${this.sourceAnnotations()}# ${this.text.renderAsElanSource()}`;
   }
 
   parseFrom(source: CodeSource): void {

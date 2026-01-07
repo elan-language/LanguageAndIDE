@@ -1,4 +1,4 @@
-import { procedureKeyword } from "../../../compiler/keywords";
+import { procedureAnnotation, procedureKeyword } from "../../../compiler/keywords";
 import { MethodNameField } from "../fields/method-name-field";
 import { ParamListField } from "../fields/param-list-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -33,13 +33,11 @@ export abstract class ProcedureFrame extends FrameWithStatements {
     return "proc";
   }
 
-  public renderAsHtml(): string {
-    return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>procedure </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc>${this.params.renderAsHtml()}<el-punc>)</el-punc>${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-<el-kw>end procedure</el-kw>
-</el-proc>`;
+  frameSpecificAnnotation(): string {
+    return procedureAnnotation;
   }
+
+  override outerHtmlTag: string = "el-proc";
 
   parseTop(source: CodeSource): void {
     source.remove("procedure ");

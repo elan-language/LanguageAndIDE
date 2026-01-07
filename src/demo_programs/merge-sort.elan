@@ -1,4 +1,4 @@
-# f686576f4837390aec8d27f99eea8bde0e147ab37398efee45996e51a870ef59 Elan 1.9.0 guest default_profile valid
+# 190f9c5990fa73a0a18437ba3667807cd20f022fdcedc6e65d1b4f9486bbd957 Elan 1.9.0 guest default_profile valid
 
 function sort(li as List<of String>) returns List<of String>
   variable result set to li
@@ -7,23 +7,23 @@ function sort(li as List<of String>) returns List<of String>
 end function
 
 test sort
-  # 1. Edge case: empty
-  let l1 be empty List<of String>
-  assert sort(l1) is l1
-  # 2. Edge case: one item
-  let li2 be ["plum"]
-  assert sort(li2) is li2
-  # 3. Happy case: odd number of members
-  let li3 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
-  let sorted3 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"]
-  assert sort(li3) is sorted3
-  # 4. Happy case: even number of members
-  let li4 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"]
-  let sorted4 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"]
-  assert sort(li4) is sorted4
-  # 5. Edge case: already sorted
-  let li5 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"]
-  assert sort(li5) is li5
+    # 1. Edge case: empty
+    let l1 be empty List<of String>
+    assert sort(l1) is l1
+    # 2. Edge case: one item
+    let li2 be ["plum"]
+    assert sort(li2) is li2
+    # 3. Happy case: odd number of members
+    let li3 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
+    let sorted3 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"]
+    assert sort(li3) is sorted3
+    # 4. Happy case: even number of members
+    let li4 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"]
+    let sorted4 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"]
+    assert sort(li4) is sorted4
+    # 5. Edge case: already sorted
+    let li5 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"]
+    assert sort(li5) is li5
 end test
 
 # Merges two already-sorted lists (of potentially different lengths) into one sorted list
@@ -42,14 +42,14 @@ function merge(a as List<of String>, b as List<of String>) returns List<of Strin
 end function
 
 test merge
-  let le be empty List<of String>
-  let l1 be ["apple", "lime", "pear"]
-  let l2 be ["apricot", "lemon", "plum", "watermelon"]
-  assert merge(le, le) is le
-  assert merge(["orange"], ["melon"]) is ["melon", "orange"]
-  assert merge(l1, l2) is ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
-  assert merge(l2, l1) is ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
-  assert merge(l1, le) is l1
-  assert merge(le, l2) is l2
-  assert merge(l1, l1) is ["apple", "apple", "lime", "lime", "pear", "pear"]
+    let le be empty List<of String>
+    let l1 be ["apple", "lime", "pear"]
+    let l2 be ["apricot", "lemon", "plum", "watermelon"]
+    assert merge(le, le) is le
+    assert merge(["orange"], ["melon"]) is ["melon", "orange"]
+    assert merge(l1, l2) is ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
+    assert merge(l2, l1) is ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
+    assert merge(l1, le) is l1
+    assert merge(le, l2) is l2
+    assert merge(l1, l1) is ["apple", "apple", "lime", "lime", "pear", "pear"]
 end test

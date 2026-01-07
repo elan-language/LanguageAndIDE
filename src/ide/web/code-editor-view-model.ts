@@ -131,7 +131,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   renderAsSource() {
-    return this.file!.renderAsSource();
+    return this.file!.renderAsElanSource();
   }
 
   parseFrom(source: CodeSource) {

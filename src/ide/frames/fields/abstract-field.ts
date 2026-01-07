@@ -110,7 +110,7 @@ export abstract class AbstractField implements Selectable, Field {
         this.text = text.trimStart();
       } else {
         this.setParseStatus(root.status);
-        this.text = root.renderAsSource();
+        this.text = root.renderAsElanSource();
       }
     }
   }
@@ -708,7 +708,7 @@ export abstract class AbstractField implements Selectable, Field {
     return "";
   }
 
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     return this.textAsSource();
   }
 

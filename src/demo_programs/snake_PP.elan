@@ -1,4 +1,4 @@
-# ef1c3f6d4fbb099bb91b20924f0158a7b8ce3b3e6852381135adf1ef14286378 Elan 1.9.0 guest default_profile valid
+# 47298022db8bfb380f2711282d5ba65ca627b371f21be9eda21d0a339b91f7b6 Elan 1.9.0 guest default_profile valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -40,10 +40,14 @@ procedure updateDisplay(blocks as Array2D<of Int>, head as List<of Int>, tail as
 end procedure
 
 procedure setAppleToRandomPosition(apple as List<of Int>, body as List<of List<of Int>>)
-  repeat
+  variable changePosition set to true
+  while changePosition
     call apple.put(0, randomInt(0, 39))
     call apple.put(1, randomInt(0, 29))
-  end repeat when not body.contains(apple)
+    if not body.contains(apple) then
+      set changePosition to false
+    end if
+  end while
 end procedure
 
 function getTailColour(tail as List<of Int>, body as List<of List<of Int>>) returns Int
@@ -83,38 +87,38 @@ function directionByKey(current as String, key as String) returns String
 end function
 
 test getTailColour
-  assert getTailColour([3, 4], [[3, 4], [3, 5]]) is green
-  assert getTailColour([3, 4], [[3, 5], [3, 6]]) is white
+    assert getTailColour([3, 4], [[3, 4], [3, 5]]) is green
+    assert getTailColour([3, 4], [[3, 5], [3, 6]]) is white
 end test
 
 test hasHitEdge
-  assert hasHitEdge(0, 0) is false
-  assert hasHitEdge(0, 29) is false
-  assert hasHitEdge(39, 0) is false
-  assert hasHitEdge(29, 29) is false
-  assert hasHitEdge(-1, 5) is true
-  assert hasHitEdge(5, 30) is true
-  assert hasHitEdge(40, 5) is true
-  assert hasHitEdge(5, -1) is true
+    assert hasHitEdge(0, 0) is false
+    assert hasHitEdge(0, 29) is false
+    assert hasHitEdge(39, 0) is false
+    assert hasHitEdge(29, 29) is false
+    assert hasHitEdge(-1, 5) is true
+    assert hasHitEdge(5, 30) is true
+    assert hasHitEdge(40, 5) is true
+    assert hasHitEdge(5, -1) is true
 end test
 
 test getAdjacentSquare
-  let sq be [20, 15]
-  assert getAdjacentSquare(sq, "up") is [20, 14]
-  assert getAdjacentSquare(sq, "down") is [20, 16]
-  assert getAdjacentSquare(sq, "left") is [19, 15]
-  assert getAdjacentSquare(sq, "right") is [21, 15]
-  # boundary
-  assert getAdjacentSquare([0, 15], "left") is [-1, 15]
+    let sq be [20, 15]
+    assert getAdjacentSquare(sq, "up") is [20, 14]
+    assert getAdjacentSquare(sq, "down") is [20, 16]
+    assert getAdjacentSquare(sq, "left") is [19, 15]
+    assert getAdjacentSquare(sq, "right") is [21, 15]
+    # boundary
+    assert getAdjacentSquare([0, 15], "left") is [-1, 15]
 end test
 
 test directionByKey
-  let current be "up"
-  assert directionByKey(current, "") is "up"
-  assert directionByKey(current, "x") is "up"
-  assert directionByKey(current, "w") is "up"
-  assert directionByKey(current, "s") is "down"
-  assert directionByKey(current, "a") is "left"
-  assert directionByKey(current, "d") is "right"
-  assert directionByKey(current, "D") is "up"
+    let current be "up"
+    assert directionByKey(current, "") is "up"
+    assert directionByKey(current, "x") is "up"
+    assert directionByKey(current, "w") is "up"
+    assert directionByKey(current, "s") is "down"
+    assert directionByKey(current, "a") is "left"
+    assert directionByKey(current, "d") is "right"
+    assert directionByKey(current, "D") is "up"
 end test

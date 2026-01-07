@@ -34,7 +34,7 @@ export class ArgListField extends AbstractField {
     }
   }
   initialiseRoot(): ParseNode {
-    this.rootNode = new ArgListNode(() => "");
+    this.rootNode = new ArgListNode(this.getFile(), () => "");
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

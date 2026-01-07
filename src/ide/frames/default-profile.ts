@@ -67,7 +67,6 @@ export class DefaultProfile implements Profile {
     tryKeyword,
     variableKeyword,
     whileKeyword,
-    commentMarker,
   ];
   class_members: string[] = [
     constructorKeyword,

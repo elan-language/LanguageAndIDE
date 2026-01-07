@@ -18,6 +18,7 @@ import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
 import { File } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
+import { Language } from "./frame-interfaces/language";
 import { Parent } from "./frame-interfaces/parent";
 import { Selectable } from "./frame-interfaces/selectable";
 import {
@@ -99,6 +100,8 @@ export abstract class AbstractFrame implements Frame {
   getHtmlId(): string {
     return this.htmlId;
   }
+
+  abstract outerHtmlTag: string;
 
   getFrNo(): string {
     return this.isGhostedOrWithinAGhostedFrame() || this.isWithinAnImportedFrame()
@@ -539,7 +542,7 @@ export abstract class AbstractFrame implements Frame {
     }
   }
 
-  abstract renderAsSource(): string;
+  abstract renderAsElanSource(): string;
 
   isSelected(): boolean {
     return this._selected;
@@ -674,7 +677,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   copy = () => {
-    const source = this.renderAsSource();
+    const source = this.renderAsElanSource();
     this.getFile().addCopiedSource(source);
     return false;
   };
@@ -876,5 +879,20 @@ export abstract class AbstractFrame implements Frame {
       this.insertNewSelectorIfNecessary();
       this.delete();
     }
+  }
+
+  annotationAsHtml() {
+    const source = this.annotationAsSource();
+    return source.length > 0 ? `<el-comment>${source}</el-comment>` : ``;
+  }
+
+  annotationAsSource() {
+    //const ghosted = this.isGhosted() ? ` ghosted ` : ``;  // Add this to the end when implementation of ghosted is changed
+    const annotation = this.language().annotation(this).trim();
+    return annotation.length > 0 ? ` ${this.language().commentMarker()} ${annotation}` : ``;
+  }
+
+  language(): Language {
+    return this._parent.language();
   }
 }

@@ -1,12 +1,12 @@
-# bba25087811b0724473c9f91d2bbb5620193840c3ee0303e8c1d872c849c7ea4 Elan 1.9.0 guest default_profile valid
+# 003c33b8bb76e770a25d9b739c075ae5efbc83ca596f87843c7c331628f14af5 Elan 1.9.0 guest default_profile valid
 
 main
   let names be ["Abel", "Boole", "Cantor", "Descartes"]
   let file be createFileForWriting("Maths.txt")
   variable i set to 0
-  repeat
+  while i < names.length()
     call file.writeLine(names[i])
     set i to i + 1
-  end repeat when i is names.length()
+  end while
   call file.saveAndClose()
 end main

@@ -1,13 +1,13 @@
 import { setKeyword, toKeyword } from "../../../compiler/keywords";
-import { AbstractFrame } from "../abstract-frame";
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { SingleLineFrame } from "../single-line-frame";
 
-export class SetStatement extends AbstractFrame implements Statement {
+export class SetStatement extends SingleLineFrame implements Statement {
   isStatement = true;
   assignable: AssignableField;
   expr: ExpressionField;
@@ -32,13 +32,12 @@ export class SetStatement extends AbstractFrame implements Statement {
   getFields(): Field[] {
     return [this.assignable, this.expr];
   }
+
   getIdPrefix(): string {
     return "set";
   }
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.bpAsHtml()}<el-kw>${setKeyword} </el-kw>${this.assignable.renderAsHtml()}<el-kw> ${toKeyword} </el-kw>${this.expr.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-statement>`;
-  }
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${setKeyword} ${this.assignable.renderAsSource()} ${toKeyword} ${this.expr.renderAsSource()}`;
+
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}${setKeyword} ${this.assignable.renderAsElanSource()} ${toKeyword} ${this.expr.renderAsElanSource()}`;
   }
 }

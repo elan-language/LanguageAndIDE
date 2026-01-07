@@ -1,4 +1,5 @@
 import { CompileError, Severity } from "../../compiler/compile-error";
+import { privateKeyword } from "../../compiler/keywords";
 import { TestStatus } from "../../compiler/test-status";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
@@ -12,6 +13,7 @@ import { Parent } from "./frame-interfaces/parent";
 import { PossiblyPrivateMember } from "./frame-interfaces/possibly-private-member";
 import { Selectable } from "./frame-interfaces/selectable";
 import { Statement } from "./frame-interfaces/statement";
+import { ClassFrame } from "./globals/class-frame";
 import { MainFrame } from "./globals/main-frame";
 import { ReturnStatement } from "./statements/return-statement";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus } from "./status-enums";
@@ -315,4 +317,15 @@ export function togglePrivatePublic(member: PossiblyPrivateMember) {
   } else {
     return member.makePrivate();
   }
+}
+
+export function selfType(member: MemberFrame) {
+  return (member.getParent() as ClassFrame).name.textAsHtml();
+}
+
+export function modifierAsHtml(member: MemberFrame): string {
+  return member.private ? `<el-comment>[${privateKeyword}]</el-comment>` : "";
+}
+export function modifierAsSource(member: MemberFrame): string {
+  return member.private ? `${privateKeyword} ` : "";
 }

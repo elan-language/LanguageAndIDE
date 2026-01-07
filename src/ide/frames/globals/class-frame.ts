@@ -41,6 +41,7 @@ import {
   parentHelper_readWorstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
+  parentHelper_renderChildrenAsHtml,
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
 } from "../parent-helpers";
@@ -192,7 +193,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return ` ${this.inheritance.renderAsHtml()}`;
   }
   protected inheritanceAsSource(): string {
-    return this.doesInherit() ? ` ${this.inheritance.renderAsSource()}` : ``;
+    return this.doesInherit() ? ` ${this.inheritance.renderAsElanSource()}` : ``;
   }
 
   indent(): string {
@@ -297,5 +298,15 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
         child.deleteAllGhosted();
       }
     }
+  }
+
+  outerHtmlTag: string = "el-member";
+
+  public renderAsHtml(): string {
+    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
+${parentHelper_renderChildrenAsHtml(this)}
+${this.language().renderBottomAsHtml(this)}
+</el-class>`;
   }
 }

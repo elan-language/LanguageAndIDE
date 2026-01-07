@@ -1,4 +1,4 @@
-# 257093b77a45f32062dcb585772632f52bd2b1acfd2df20da519fe7fedc9b513 Elan 1.9.0 guest default_profile valid
+# fe6e7030064b9a6ace97dd2945ea43d720ad9247bb0a7b4a9cad99b84fb3a4f5 Elan 1.9.0 guest default_profile valid
 
 main
   let li be [1, 2, 3, 4, 5]
@@ -27,6 +27,6 @@ function reverseString(s as String) returns String
 end function
 
 test 
-  assert reverseString("abcdefg") is "gfedcba"
-  assert reverseStringsInList(["ab", "cde"]) is ["ba", "edc"]
+    assert reverseString("abcdefg") is "gfedcba"
+    assert reverseStringsInList(["ab", "cde"]) is ["ba", "edc"]
 end test

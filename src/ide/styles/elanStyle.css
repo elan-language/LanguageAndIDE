@@ -65,7 +65,9 @@ el-id {
     color: var(--namedValue);
     white-space: pre;
 }
-
+el-punc {
+    color: var(--defaultText);
+}
 el-regex {
     color: var(--string);
 }
@@ -124,10 +126,17 @@ el-statement:not(.multiline), el-const, el-enum{
 }
 
 /* Globals and members, generally, to have v. space after */
-el-header, main, el-proc, el-func, el-class, el-constructor, el-member, el-global, el-test {
+el-header, el-main, el-proc, el-func, el-class, el-global, el-test {
+    display: block;
+    padding-bottom: 2ch;
+}
+
+/* Globals and members, generally, to have v. space after */
+el-class el-proc, el-class el-func, el-class, el-class el-constructor, el-class el-member {
     display: block;
     padding-bottom: 1ch;
 }
+
 
 /* Only the last of consecutive properties, constants, enums, or imported globals, should have exta v. space */
 el-prop:has(+ :not(el-prop)), 
@@ -153,6 +162,7 @@ el-proc:has(+ el-kw), el-func:has(+ el-kw), el-prop:has(+ el-kw)
 .selected > el-top, 
 .selected > el-top *, 
 .selected > el-kw, 
+.selected > el-punc, 
 .selected > el-field, 
 .selected > el-field *, 
 .selected > el-txt, 

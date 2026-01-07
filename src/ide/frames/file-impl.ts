@@ -24,6 +24,7 @@ import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
 import { File, ParseMode } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
+import { Language } from "./frame-interfaces/language";
 import { Parent } from "./frame-interfaces/parent";
 import { defaultUsername, Profile } from "./frame-interfaces/profile";
 import { Selectable } from "./frame-interfaces/selectable";
@@ -40,6 +41,7 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
+import { LanguageElan } from "./language-elan";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -99,6 +101,7 @@ export class FileImpl implements File {
   private _testError?: Error;
   private _frNo: number = 0;
   private _showFrameNos: boolean = true;
+  private _language: Language = new LanguageElan();
   ast: RootAstNode | undefined;
 
   private copiedSource: string[] = [];
@@ -276,7 +279,7 @@ export class FileImpl implements File {
     return `<el-profile class="${cls}">${profileName}</el-profile>`;
   }
 
-  async renderAsSource(): Promise<string> {
+  async renderAsElanSource(): Promise<string> {
     const content = this.renderHashableContent();
     this.currentHash = await this.getHash(content);
     return `# ${this.currentHash} ${content}`;
@@ -833,5 +836,17 @@ export class FileImpl implements File {
     for (const frame of this._children) {
       frame.deleteAllGhosted();
     }
+  }
+
+  annotation(): string {
+    return "";
+  }
+
+  setLanguage(l: Language) {
+    this._language = l;
+  }
+
+  language(): Language {
+    return this._language;
   }
 }

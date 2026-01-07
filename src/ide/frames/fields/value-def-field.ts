@@ -19,7 +19,7 @@ export class ValueDefField extends AbstractField {
     return "var";
   }
   initialiseRoot(): ParseNode {
-    this.rootNode = new ValueDefNode();
+    this.rootNode = new ValueDefNode(this.getFile());
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

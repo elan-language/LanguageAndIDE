@@ -9,6 +9,7 @@ import { ListNode } from "./list-node";
 import { LitValueNode } from "./lit-value-node";
 import { ReferenceNode } from "./reference-node";
 import { UnaryExpression } from "./unary-expression";
+import { File } from "../frame-interfaces/file";
 
 export class TermSimple extends AbstractAlternatives {
   defaultTokenTypes = new Set([
@@ -23,31 +24,33 @@ export class TermSimple extends AbstractAlternatives {
     TokenType.method_system,
   ]);
 
-  constructor() {
-    super();
+  constructor(file: File) {
+    super(file);
     this.completionWhenEmpty = "<i>expression</i>";
   }
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.alternatives.push(new ListImmutableNode(() => new ExprNode()));
-      this.alternatives.push(new ListNode(() => new ExprNode()));
+      this.alternatives.push(new ListImmutableNode(this.file, () => new ExprNode(this.file)));
+      this.alternatives.push(new ListNode(this.file, () => new ExprNode(this.file)));
       this.alternatives.push(
         new DictionaryNode(
-          () => new ExprNode(),
-          () => new ExprNode(),
+          this.file,
+          () => new ExprNode(this.file),
+          () => new ExprNode(this.file),
         ),
       );
       this.alternatives.push(
         new DictionaryImmutableNode(
-          () => new ExprNode(),
-          () => new ExprNode(),
+          this.file,
+          () => new ExprNode(this.file),
+          () => new ExprNode(this.file),
         ),
       );
-      this.alternatives.push(new UnaryExpression());
-      this.alternatives.push(new BracketedExpression());
-      this.alternatives.push(new LitValueNode());
-      this.alternatives.push(new ReferenceNode());
+      this.alternatives.push(new UnaryExpression(this.file));
+      this.alternatives.push(new BracketedExpression(this.file));
+      this.alternatives.push(new LitValueNode(this.file));
+      this.alternatives.push(new ReferenceNode(this.file));
       super.parseText(text);
     }
   }

@@ -1,11 +1,12 @@
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
+import { File } from "../frame-interfaces/file";
 
 export class RegExMatchNode extends AbstractParseNode {
   regx: RegExp;
 
-  constructor(regx: RegExp) {
-    super();
+  constructor(file: File, regx: RegExp) {
+    super(file);
     this.regx = regx;
   }
 
@@ -16,7 +17,7 @@ export class RegExMatchNode extends AbstractParseNode {
     }
   }
 
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     return this.matchedText; // Overridden to avoid trimming
   }
 }

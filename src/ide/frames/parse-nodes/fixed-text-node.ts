@@ -1,11 +1,12 @@
 import { ParseStatus } from "../status-enums";
 import { AbstractParseNode } from "./abstract-parse-node";
+import { File } from "../frame-interfaces/file";
 
 export abstract class FixedTextNode extends AbstractParseNode {
   fixedText: string;
 
-  constructor(fixedText: string) {
-    super();
+  constructor(file: File, fixedText: string) {
+    super(file);
     this.fixedText = fixedText;
     this.completionWhenEmpty = fixedText;
   }

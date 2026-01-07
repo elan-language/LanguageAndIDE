@@ -108,7 +108,7 @@ export function parentHelper_renderChildrenAsSource(parent: Parent): string {
   if (parent.getChildren().length > 0) {
     const ss: Array<string> = [];
     for (const frame of parent.getChildren().filter(isNotSelectorFrame)) {
-      ss.push(frame.renderAsSource());
+      ss.push(frame.renderAsElanSource());
     }
     result = ss.join("\r\n");
   }

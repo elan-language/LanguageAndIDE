@@ -135,7 +135,7 @@ export function SelectMainById(f: FileImpl) {
 }
 
 export function SelectStatementById(f: FileImpl) {
-  f.getById("for22").select(true, false);
+  f.getById("for19").select(true, false);
 }
 
 export function ExpandAll(f: FileImpl) {
