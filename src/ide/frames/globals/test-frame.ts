@@ -78,6 +78,10 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
 
   override outerHtmlTag: string = "el-test";
 
+  indent(): string {
+    return "";
+  }
+  
   public renderAsElanSource(): string {
     return `${this.sourceAnnotations()}test ${this.testDescription.renderAsElanSource()}\r
 ${this.renderChildrenAsSource()}\r
