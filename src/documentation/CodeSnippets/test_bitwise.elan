@@ -1,22 +1,22 @@
-# d38f2be009bc3548170da1d187720d0be782c3e31ad57aeef2036e1820530fda Elan 1.9.0 guest default_profile valid
+# a38feb0395184b34896b7e703008906ae101fddfc2fecd08a49fc55f6e24fdd0 Elan 1.9.0 guest default_profile valid
 
 test bitwise
-    variable a set to 13
-    assert a is 0xd
-    assert a is 0b1101
-    assert a.asBinary() is "1101"
-    variable b set to 30
-    assert b is 0b11110
-    assert bitAnd(a, b) is 0b1100
-    variable aob set to bitOr(a, b)
-    assert aob is 0b11111
-    variable axb set to bitXor(a, b)
-    assert axb is 0b10011
-    variable nota set to bitNot(a)
-    assert nota is -14
-    variable aL set to bitShiftL(a, 2)
-    assert aL is 0b110100
-    assert bitShiftR(a, 2) is 0b11
+  variable a set to 13
+  assert a is 0xd
+  assert a is 0b1101
+  assert a.asBinary() is "1101"
+  variable b set to 30
+  assert b is 0b11110
+  assert bitAnd(a, b) is 0b1100
+  variable aob set to bitOr(a, b)
+  assert aob is 0b11111
+  variable axb set to bitXor(a, b)
+  assert axb is 0b10011
+  variable nota set to bitNot(a)
+  assert nota is -14
+  variable aL set to bitShiftL(a, 2)
+  assert aL is 0b110100
+  assert bitShiftR(a, 2) is 0b11
 end test
 
 main

@@ -1,11 +1,11 @@
-# c620f333d3a7eac3244bcb761a7556d619ac46beb4484123b689bfebe4b1548f Elan 1.9.0 guest default_profile valid
+# a94117b7a3f78127c570007e4c034c6a13b47e16b5e11a96abd77415c0c09d97 Elan 1.9.0 guest default_profile valid
 
 test 
-    assert parseAsInt("31") is tuple(true, 31)
-    assert parseAsInt("0") is tuple(true, 0)
-    assert parseAsInt("thirty one") is tuple(false, 0)
-    assert parseAsInt("3.1") is tuple(false, 0)
-    assert parseAsFloat("31") is tuple(true, 31)
-    assert parseAsFloat("0") is tuple(true, 0)
-    assert parseAsFloat("3.1") is tuple(true, 3.1)
+  assert parseAsInt("31") is tuple(true, 31)
+  assert parseAsInt("0") is tuple(true, 0)
+  assert parseAsInt("thirty one") is tuple(false, 0)
+  assert parseAsInt("3.1") is tuple(false, 0)
+  assert parseAsFloat("31") is tuple(true, 31)
+  assert parseAsFloat("0") is tuple(true, 0)
+  assert parseAsFloat("3.1") is tuple(true, 3.1)
 end test

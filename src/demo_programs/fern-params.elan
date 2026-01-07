@@ -1,4 +1,4 @@
-# 6779cb0c906c1edcc34355e82167bd16f3e46b3b0eba686d8c2f3b9309530f4a Elan 1.9.0 guest default_profile valid
+# 718fe30b4a97fbfea5f6d3db9e447a038096ac572312bb382bbed1869f097d94 Elan 1.9.0 guest default_profile valid
 
 # Program to extract the parameters for the Barnsley Fern from the Wikipedia page
 # https://en.wikipedia.org/wiki/Barnsley_fern
@@ -87,15 +87,15 @@ function last(l as List<of Int>) returns Int
 end function
 
 test strings
-    assert isnumberchar("5") is true
-    assert gettrailingnumber("abc123") is "123"
-    assert gettrailingnumber("abc") is ""
-    assert gettrailingnumber("3a-1.63") is "-1.63"
-    assert gettrailingnumber("") is ""
+  assert isnumberchar("5") is true
+  assert gettrailingnumber("abc123") is "123"
+  assert gettrailingnumber("abc") is ""
+  assert gettrailingnumber("3a-1.63") is "-1.63"
+  assert gettrailingnumber("") is ""
 end test
 
 test last
-    assert last([5, 6, 7]) is 7
+  assert last([5, 6, 7]) is 7
 end test
 
 constant numberChars set to "-.0123456789"

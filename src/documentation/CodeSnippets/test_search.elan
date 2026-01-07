@@ -1,4 +1,4 @@
-# 6fdba96a94fc1821eed0618c2f81f9aa0b27bd6e25a3f2a9db0348ab7ba43cec Elan 1.9.0 guest default_profile valid
+# 434195cfdb82e4e4b4b6e15db98944a0283ddc26af27717c79a81d5894f00ba8 Elan 1.9.0 guest default_profile valid
 
 main
   let fruit be example
@@ -23,20 +23,20 @@ function binarySearch(li as ListImmutable<of String>, item as String) returns Bo
 end function
 
 test 
-    let li1 be {"lemon", "lime", "orange"}
-    assert binarySearch(li1, "lemon") is true
-    assert binarySearch(li1, "lime") is true
-    assert binarySearch(li1, "orange") is true
-    assert binarySearch(li1, "pear") is false
-    let li2 be {"lemon", "orange"}
-    assert binarySearch(li2, "lemon") is true
-    assert binarySearch(li2, "orange") is true
-    assert binarySearch(li2, "pear") is false
-    let li3 be {"lemon"}
-    assert binarySearch(li3, "lemon") is true
-    assert binarySearch(li3, "lime") is false
-    let li4 be empty ListImmutable<of String>
-    assert binarySearch(li4, "pear") is false
+  let li1 be {"lemon", "lime", "orange"}
+  assert binarySearch(li1, "lemon") is true
+  assert binarySearch(li1, "lime") is true
+  assert binarySearch(li1, "orange") is true
+  assert binarySearch(li1, "pear") is false
+  let li2 be {"lemon", "orange"}
+  assert binarySearch(li2, "lemon") is true
+  assert binarySearch(li2, "orange") is true
+  assert binarySearch(li2, "pear") is false
+  let li3 be {"lemon"}
+  assert binarySearch(li3, "lemon") is true
+  assert binarySearch(li3, "lime") is false
+  let li4 be empty ListImmutable<of String>
+  assert binarySearch(li4, "pear") is false
 end test
 
 constant example set to {"apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"}

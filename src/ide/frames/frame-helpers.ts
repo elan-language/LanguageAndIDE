@@ -324,7 +324,7 @@ export function selfType(member: MemberFrame) {
 }
 
 export function modifierAsHtml(member: MemberFrame): string {
-  return member.private ? `<el-comment>[${privateKeyword}]</el-comment>` : "";
+  return member.private ? `<el-kw>private </el-kw>` : "";
 }
 export function modifierAsSource(member: MemberFrame): string {
   return member.private ? `${privateKeyword} ` : "";

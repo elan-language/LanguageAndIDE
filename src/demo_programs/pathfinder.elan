@@ -1,4 +1,4 @@
-# 5c71dec2aad332b85e716cc67ea7d399e62009788ae853dfd3801269e86577ef Elan 1.9.0 guest default_profile valid
+# 337b9f172c5e21caa159ee7893e7718273a50bfad52692df5be5eb3ee4ad8816 Elan 1.9.0 guest default_profile valid
 
 main
   let start be newPoint(5, 5)
@@ -280,8 +280,8 @@ constant lightBlue set to 0x80abff
 constant orange set to 0xe97132
 
 test point
-    let p be newPoint(0, 0)
-    let n be p.neighbouringPoints()
-    let expected be {newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)}
-    assert n is expected
+  let p be newPoint(0, 0)
+  let n be p.neighbouringPoints()
+  let expected be {newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)}
+  assert n is expected
 end test

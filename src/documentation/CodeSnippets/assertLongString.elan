@@ -1,4 +1,4 @@
-# f61f2b40b1239b4071c683e70e14f9b5b2b3873d786222b23055abf8d27d1ae1 Elan 1.9.0 guest default_profile valid
+# 9e1245977178e612055e708c85ec0127f75cf0f21f110cf5e66aaaa875ad449f Elan 1.9.0 guest default_profile valid
 
 constant sGW set to 'grid { display: flex; flex-direction: column; margin-top: 40px; width: 500px; } word { display: flex; flex-direction: row; margin: auto; }'
 
@@ -7,5 +7,5 @@ function setInStyle(s as String) returns String
 end function
 
 test 
-    assert setInStyle(sGW) is '<style>' + sGW + '</style>'
+  assert setInStyle(sGW) is '<style>' + sGW + '</style>'
 end test

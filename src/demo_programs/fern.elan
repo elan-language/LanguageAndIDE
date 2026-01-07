@@ -1,4 +1,4 @@
-# 9f16f27f866b45a6f52ae9d276862ebd0176638636914b376c4385f3e66b264e Elan 1.9.0 guest default_profile valid
+# 63c514873bd7e6f368c68ad7cb2143a40bf1800e09b224f08ffd06cb676f276b Elan 1.9.0 guest default_profile valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
@@ -59,8 +59,8 @@ function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
 end function
 
 test one
-    assert roundtuple2(onestep(0.0, 0.16, 0.5)) is {0.0064, 1.736}
-    assert roundtuple2(onestep(0.0, 0.16, 0.9)) is {-0.0416, 1.6352}
+  assert roundtuple2(onestep(0.0, 0.16, 0.5)) is {0.0064, 1.736}
+  assert roundtuple2(onestep(0.0, 0.16, 0.9)) is {-0.0416, 1.6352}
 end test
 
 # two approaches to rounding a tuple to N decimal places

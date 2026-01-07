@@ -81,7 +81,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   indent(): string {
     return "";
   }
-  
+
   public renderAsElanSource(): string {
     return `${this.sourceAnnotations()}test ${this.testDescription.renderAsElanSource()}\r
 ${this.renderChildrenAsSource()}\r
