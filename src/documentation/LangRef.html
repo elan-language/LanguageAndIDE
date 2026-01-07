@@ -8,7 +8,7 @@
 <title>Elan Language Reference</title>
 <script type="text/javascript" src="generated_toc.js"></script>
 </head>
-<body>
+<body id="top">
 <div class="docTitle">Elan Language Reference</div>
 <div id="docTOC">
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
@@ -27,55 +27,56 @@
 <p>Loop counter variables, however, may be defined implicitly in <a href="#each"><el-kw>each</el-kw></a> and <a href="#for"><el-kw>for</el-kw></a> instructions.</p>
 
 <h2 id="Type">Named value Types</h2>
-<p>The Types used in the language are here listed, each linking to its definition and further details:</p>
+<p>This table lists every <el-type>Type</el-type> used in the language, each linking to its definition and further details:</p>
 <table>
  <tr><th>Type group</th><th colspan="5">Types</th>
  </tr><tr>
   <td>Fundamental</td>
-  <td><a href="LibRef.html#Int">Integer<br><el-type>Int</el-type></a></td>
-  <td><a href="LibRef.html#Float">Floating point<br><el-type>Float</el-type></a></td>
-  <td><a href="LibRef.html#Boolean">Truth value<br><el-type>Boolean</el-type></a></td>
-  <td><a href="LibRef.html#String">Character string<br><el-type>String</el-type></a></td>
+  <td><a href="LibRef.html#Int"><el-topic>Integer</el-topic><br><el-type>Int</el-type></a></td>
+  <td><a href="LibRef.html#Float"><el-topic>Floating point</el-type><br><el-type>Float</el-topic></a></td>
+  <td><a href="LibRef.html#Boolean"><el-topic>Truth value</el-topic><br><el-type>Boolean</el-type></a></td>
+  <td><a href="LibRef.html#String"><el-topic>Character string</el-topic><br><el-type>String</el-type></a></td>
   <td></td>
  </tr><tr>
   <td>Mutable<br> data structures</td>
-  <td><a href="LibRef.html#List">List<br><el-type>List</el-type></a></td>
-  <td><a href="LibRef.html#Dictionary">Look-up dictionary<br><el-type>Dictionary</el-type></a></td>
-  <td><a href="LibRef.html#Array">Simple array<br><el-type>Array</el-type></a></td>
-  <td><a href="LibRef.html#Array2D">2-dimensional array<br><el-type>Array2D</el-type></a></td>
+  <td><a href="LibRef.html#List"><el-topic>List</el-topic><br><el-type>List</el-type></a></td>
+  <td><a href="LibRef.html#Dictionary"><el-topic>Look-up dictionary</el-topic><br><el-type>Dictionary</el-type></a></td>
+  <td><a href="LibRef.html#Array"><el-topic>Simple array</el-topic><br><el-type>Array</el-type></a></td>
+  <td><a href="LibRef.html#Array2D"><el-topic>2-dimensional array</el-topic><br><el-type>Array2D</el-type></a></td>
   <td></td>
  </tr><tr>
   <td>Immutable<br> data structures</td>
-  <td><a href="LibRef.html#ListImmutable">Immutable list<br><el-type>ListImmutable</el-type></a></td>
-  <td><a href="LibRef.html#DictionaryImmutable">Immutable look-up dictionary<br><el-type>DictionaryImmutable</el-type></a></td>
-  <td><a href="LibRef.html#SetType">Set<br><el-type>Set</el-type></a></td>
- <td><a href="LibRef.html#Stack">LIFO stack<br><el-type>Stack</el-type></a></td>
- <td><a href="LibRef.html#Queue">FIFO queue<br><el-type>Queue</el-type></a></td>
+  <td><a href="LibRef.html#ListImmutable"><el-topic>Immutable list</el-topic><br><el-type>ListImmutable</el-type></a></td>
+  <td><a href="LibRef.html#DictionaryImmutable"><el-topic>Immutable look-up dictionary</el-topic><br><el-type>DictionaryImmutable</el-type></a></td>
+  <td><a href="LibRef.html#Set"><el-topic>Set</el-type><br><el-type>Set</el-topic></a></td>
+ <td><a href="LibRef.html#Stack"><el-topic>LIFO stack</el-type><br><el-type>Stack</el-topic></a></td>
+ <td><a href="LibRef.html#Queue"><el-topic>FIFO queue</el-type><br><el-type>Queue</el-topic></a></td>
  </tr><tr>
   <td>Data I/O</td>
-  <td><a href="LibRef.html#TextFileReader">Text file input<br><el-type>TextFileReader</el-type></a></td>
-  <td><a href="LibRef.html#TextFileWriter">Text file output<br><el-type>TextFileWriter</el-type></a></td>
+  <td><a href="LibRef.html#TextFileReader"><el-topic>Text file input</el-topic><br><el-type>TextFileReader</el-type></a></td>
+  <td><a href="LibRef.html#TextFileWriter"><el-topic>Text file output</el-topic><br><el-type>TextFileWriter</el-type></a></td>
   <td></td>
   <td></td>
   <td></td>
  </tr><tr>
   <td>Graphics</td>
-  <td><a href="LibRef.html#TurtleGraphics">Turtle</a></td>
-  <td><a href="LibRef.html#VectorGraphics">SVG vector graphics</a></td>
+  <td><a href="LibRef.html#TurtleGraphics"><el-topic>Turtle graphics</el-topic><br><el-type>Turtle</el-type></a></td>
+  <td><a href="LibRef.html#VectorGraphics"><el-topic>SVG vector graphics</el-topic><br><el-type>CircleVG</el-type><br>
+  <el-type>ImageVG</el-type><br><el-type>LineVG</el-type><br><el-type>RawVG</el-type><br><el-type>RectangleVG</el-type></a></td>
   <td></td>
   <td></td>
   <td></td>
  </tr><tr>
   <td>User-defined</td>
-  <td><a href="#enum">Enumeration<br><el-kw>enum</el-kw> <el-type>Name</el-type></a></td>
-  <td><a href="#record">Record<br><el-kw>record</el-kw> <el-type>Name</el-type></a></td>
-  <td><a href="#class">Class<br><el-kw>class</el-kw> <el-type>Name</el-type></a></td>
-  <td><a href="#abstract_class">Abstract class<br><el-kw>abstract class</el-kw> <el-type>Name</el-type></a></td>
-  <td><a href="#interface">Interface<br><el-kw>interface</el-kw> <el-type>Name</el-type></a></td>
+  <td><a href="#enum"><el-topic>Enumeration</el-topic><br><el-kw>enum</el-kw> <el-type>Name</el-type></a></td>
+  <td><a href="#record"><el-topic>Record</el-topic><br><el-kw>record</el-kw> <el-type>Name</el-type></a></td>
+  <td><a href="#class"><el-topic>Class</el-topic><br><el-kw>class</el-kw> <el-type>Name</el-type></a></td>
+  <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br><el-kw>abstract class</el-kw> <el-type>Name</el-type></a></td>
+  <td><a href="#interface"><el-topic>Interface</el-topic><br><el-kw>interface</el-kw> <el-type>Name</el-type></a></td>
  </tr><tr>
   <td>Other</td>
-  <td><a href="LibRef.html#Random">Random number<br><el-type>Random</el-type></a></td>
-  <td><a href="LibRef.html#Func">Function reference<br><el-type>Func</el-type></a></td>
+  <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><el-type>Random</el-type></a></td>
+  <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br><el-type>Func</el-type></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -166,7 +167,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 <div id="Method"></div>
 <ul>
  <li><el-kw>main</el-kw>, <el-kw>procedure</el-kw> and <el-kw>function</el-kw> are described as <b>methods</b> and these are defined by one or more <a href="#statement">statement insrtructions</a> within them.</li>
- <li><el-kw>test</el-kw> also contains statements, in particular the <a href="#assert"><el-kw>assert</el-kw></a> statement for testing functions during development of your program.</li>
+ <li><el-kw>test</el-kw> also contains instructions, in particular the <a href="#assert"><el-kw>assert</el-kw></a> instruction for testing functions during development of your program.</li>
  <li><el-kw>record</el-kw>, <el-kw>class</el-kw>, <el-kw>abstract</el-kw> (class), and <el-kw>interface</el-kw> define data structures and these always contain <a href="#Member">members</a>.</li>
  <li><el-kw>constant</el-kw> and <el-kw>enum</el-kw> do not contain any further instructions &ndash; only names and values.</li>
  <li>The sequence of global instructions in your code is immaterial, with two exceptions:
@@ -199,16 +200,16 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 </div></div>
 
 <h2 id="procedure"><el-kw>procedure</el-kw></h2>
-<p id="Argument">A procedure is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> in a <el-kw>call</el-kw> statement.
+<p id="Argument">A procedure is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> in a <el-kw>call</el-kw> instruction.
  Its name must follow  the rules for an <a href="#Identifier">identifier</a>.</p>
 <p> Unlike a function:</p>
 <ul>
  <li>a procedure does not return a value (unless its parameters include an <el-kw>out</el-kw> value).</li>
  <li>a procedure can have side effects: indeed it <em>should</em> have side effects, otherwise there would be no point in calling it!</li>
 </ul>
-<p>Therefore the statements within a procedure can:</p>
+<p>Therefore the instructions within a procedure can:</p>
 <ul>
-<li>include <el-kw>print</el-kw> statements and methods.</li>
+<li>include <el-kw>print</el-kw> instructions and methods.</li>
 <li>include data input methods and other system methods (such as for random number generation).</li>
 <li><el-kw>call</el-kw> other procedures (or itself if <a href="#recursion">recursion</a> is required).</li>
 <li id="out">assign a value to a parameter, provided that the parameter definition is preceded by the keyword <el-kw>out</el-kw>.</li>
@@ -255,7 +256,7 @@ They are never indented from the left-hand edge, nor may they be located <em>wit
 </div></div>
 
 <h2 id="function"><el-kw>function</el-kw></h2>
-<p>A <el-kw>function</el-kw> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in a statement or expression. Its name must follow  the rules for an <a href="#Identifier">identifier</a>.</p>
+<p>A <el-kw>function</el-kw> is a named piece of code that can define <b>parameters</b> which are given inputs via <b>arguments</b> when reference to the function occurs in an instruction or expression. Its name must follow  the rules for an <a href="#Identifier">identifier</a>.</p>
 <p>Unlike a <a href="#procedure">procedure</a>:</p>
 <ul>
  <li>a function always returns a value.</li>
@@ -268,9 +269,9 @@ and the Type of the value that will be returned, for example:
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-field id="ident7" class="ok" tabindex="-1"><el-txt><el-method>factorial</el-method></el-txt></el-field><el-punc>(</el-punc><el-field id="params8" class="optional ok" tabindex="-1"><el-txt><el-id>n</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field><el-punc>)</el-punc><el-kw> returns </el-kw><el-field id="type9" class="ok" tabindex="-1"><el-txt><el-type>Int</el-type></el-txt></el-field></el-top>
 </el-code-block>
 </p>
-<p id="return">A <el-kw>return</el-kw> statement is automatically added as the last instruction of a function, since a function <i>must</i> return a value,
-and there can be only one <el-kw>return</el-kw> statement in a function.</p>
-<p>You follow the <el-kw>return</el-kw> statement with the value to be returned by the function. This may be an expression that will be evaluated before returning. for example:</p>
+<p id="return">A <el-kw>return</el-kw> instruction is automatically added as the last instruction of a function, since a function <i>must</i> return a value,
+and there can be only one <el-kw>return</el-kw> instruction in a function.</p>
+<p>You follow the <el-kw>return</el-kw> instruction with the value to be returned by the function. This may be an expression that will be evaluated before returning. for example:</p>
 <el-code-block source="returnExp.elan">
 <el-statement class="ok" id="return6" tabindex="-1"><el-kw>return </el-kw><el-field id="expr7" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw>(<el-id>a</el-id>^<el-id>b</el-id>) &lt; (<el-id>b</el-id>^<el-id>a</el-id>)<el-kw><br>then </el-kw><el-id>true</el-id><el-kw><br>else </el-kw><el-id>false</el-id></el-txt></el-field></el-statement>
 </el-code-block>
@@ -314,7 +315,7 @@ and there can be only one <el-kw>return</el-kw> statement in a function.</p>
 <el-statement class="ok" id="call8" tabindex="-1"><el-top><el-kw>call </el-kw><el-field id="ident9" class="ok" tabindex="-1"><el-txt><el-id>a4</el-id>.<el-method><el-method>put</el-method></el-method></el-txt></el-field>(<el-field id="args10" class="optional ok" tabindex="-1"><el-txt><el-lit>2</el-lit>, <el-lit>5</el-lit></el-txt></el-field>)</el-top></el-statement>
 </el-code-block>
 <p>The procedure called may be defined in a class or provided by the system.</li>
- <li>to <a href="LibRef.html#deconstructTuple">deconstruct a Tuple</a>.</li>
+ <li>to <a href="LibRef.html#deconstructTuple">deconstruct a <el-code>Tuple</el-code></a>.</li>
 </ul>
 <p>You cannot, however, use dot syntax with your user-defined procedures at the global level,<br>
 nor with some system provided functions (e.g. <el-method>abs</el-method>) and procedures (e.g. <el-method>clearPrintedText</el-method>).</p>
@@ -339,10 +340,10 @@ Procedures and functions may be called or referenced recursively, as in this sim
 
 <h2 id="test"><el-kw>test</el-kw></h2>
 <p>A <el-kw>test</el-kw> instruction is at the global level, and consists of a set of assertions about the outputs of functions.</p>
-<p>Without having to run your program, the <el-kw>assert</el-kw> statements show whether your assertions pass or fail.
+<p>Without having to run your program, the <el-kw>assert</el-kw> instructions show whether your assertions pass or fail.
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Example of a set of <el-kw>assert</el-kw> statements that test a function</h4>
+<h4 class="no-TOC acc-title" tabindex="0">Example of a set of <el-kw>assert</el-kw> instructions that test a function</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Test function <el-code>binarySearch</el-code> on three test lists</p>
 <el-code-block source="test_search.elan">
@@ -375,9 +376,9 @@ Procedures and functions may be called or referenced recursively, as in this sim
  <li>A test may optionally be given a name or description in free-form text, just like a comment, which plays no role in the execution of the test.
  You might give the test the same name as a function that it is testing, or you might describe a particular scenario that is being tested.</li>
  <li><el-kw>test</el-kw> instructions may be written anywhere in the code, provided they are at the global level. </li>
- <li>A <el-kw>test</el-kw> instruction may contain any number of <el-kw>assert</el-kw> statements. The test runner is part of the IDE and it automatically attempts to run all <el-kw>assert</el-kw> statements showing each one's pass or fail outcome alongside. However, if the test hits a runtime error (as distinct from an <el-kw>assert</el-kw> failure) then execution of the test will stop and remaining <el-kw>assert</el-kw>s will be shown as 'not run'.</li>
- <li>In addition to <el-kw>assert</el-kw> statements, a <el-kw>test</el-kw> may contain any other statements that may be added into a <el-kw>function</el-kw>.</li>
- <li>All <el-kw>assert</el-kw> statements should be at the top level within the <el-kw>test</el-kw> frame; none may be put into a loop structure.</li>
+ <li>A <el-kw>test</el-kw> instruction may contain any number of <el-kw>assert</el-kw> instructions. The test runner is part of the IDE and it automatically attempts to run all <el-kw>assert</el-kw> instructions showing each one's pass or fail outcome alongside. However, if the test hits a runtime error (as distinct from an <el-kw>assert</el-kw> failure) then execution of the test will stop and remaining <el-kw>assert</el-kw>s will be shown as 'not run'.</li>
+ <li>In addition to <el-kw>assert</el-kw> instructions, a <el-kw>test</el-kw> may contain any other instructions that may be added into a <el-kw>function</el-kw>.</li>
+ <li>All <el-kw>assert</el-kw> statements should be at the top level within the <el-kw>test</el-kw> instruction; none may be put into a loop structure.</li>
 </ul>
 
 <h3 class="no-TOC">Testing Float values</h3>
@@ -550,7 +551,7 @@ Having defined a record's Type, such as <el-code>Game</el-code> above, you can c
 </el-code-block>
 
 <h3 class="no-TOC" id="deconstructRecord">Deconstructing a Record</h3>
-<p>A record may be deconstructed, meaning that its properties are read into separate variables using the same syntax as for deconstructing a Tuple. For example, assuming that Square is a record defined as in the example above, then this code:</p>
+<p>A record may be deconstructed, meaning that its properties are read into separate variables using the same syntax as for deconstructing a <el-code><el-c</el-code>ode>Tuple</el-code>. For example, assuming that Square is a record defined as in the example above, then this code:</p>
 <el-code-block>
   <el-statement class="" id="let3" tabindex="0"><el-kw>let </el-kw><el-field id="var4" class="ok" tabindex="0"><el-txt><el-id>x</el-id>, <el-id>y</el-id>, <el-id>size</el-id>, <el-id>colour</el-id></el-txt><el-place><i>name</i></el-place></el-field><el-kw> be </el-kw><el-field id="expr5" class="" tabindex="0"><el-txt><el-id>mySquare</el-id></el-txt><el-place><i>expression</i></el-place></el-field> <el-msg class="warning"></el-msg></el-statement>
 </el-code-block>
@@ -559,7 +560,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 
 <h2 id="class"><el-kw>class</el-kw></h2>
 
-<p>A <el-kw>class</el-kw> is a user-defined Type offering richer capability than an <a href="enum"><el-kw>enum</el-kw></a>
+<p>A <el-kw>class</el-kw> is a user-defined Type offering richer capability than an <a href="#enum"><el-kw>enum</el-kw></a>
  or a <a href="#record"><el-kw>record</el-kw></a>.</p>
 <p>Unlike a <el-kw>record</el-kw>, a class may have a constructor and procedure methods.</p>
 <p>Like any other Type its name must begin with an uppercase letter.</p>
@@ -598,7 +599,7 @@ When deconstructing, the names of the values must match the names of the <el-cod
 </ul>
 
 <h3 class="no-TOC">Using a class</h3>
-<p>A <el-code>class</el-code> is instantiated using the keyword <el-code>new</el-code> followed by the class name and brackets, which should enclose the comma-separated arguments required to match the parameters (if any) defined on the constructor for that <el-code>class</el-code>. For example (also from demo program <el-code>snake_OOP.elan</el-code>):</p>
+<p>A <el-code>class</el-code> is instantiated using the keyword <el-code>new</el-code> followed by the class name and round brackets, which should enclose the comma-separated arguments required to match the parameters (if any) defined on the constructor for that <el-code>class</el-code>. For example (also from demo program <el-code>snake_OOP.elan</el-code>):</p>
 
 <el-code-block source="constructor.elan">
 <el-constructor class="ok multiline" id="constructor41" tabindex="0">
@@ -645,10 +646,10 @@ you can refer to this instance with the keyword <el-kw>this</el-kw>, as shown by
 <li>a <el-code>function</el-code></li>
 <li>a <el-code>procedure</el-code></li>
 </ul>
-<p>As with a concrete class, any of these members may be made <el-code>private</el-code>, after the corresponding frame has been added, by selecting that member frame and keying <b>Ctrl+p</b>.</p>
+<p>As with a concrete class, any of these members may be made <el-code>private</el-code>, after the corresponding instruction has been added, by selecting that member instruction and keying <b>Ctrl+p</b>.</p>
 <p>These concrete members are automatically inherited by any subclass, but they may not be overridden (re-defined) by the subclass. Therefore you should define concrete members only if they are intended to work identically on every subclass.</p>
 
-<p>You may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> statement. For example:</p>
+<p>You may also define abstract methods on an <el-code>abstract class</el-code>, i.e. <el-code>abstract property</el-code>, <el-code>abstract function</el-code>, <el-code>abstract procedure</el-code>. Such methods define only the signature of the method, not the implementation (body), therefore they have no <el-code>end</el-code> instruction. For example:</p>
 <p><el-code><el-kw>abstract function</el-kw> <el-method>calculateDiscount</el-method>() as <el-type>Float</el-type></el-code></p>
 <p>
 If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that share a common implementation for a method, but require that some of the subclasses can define a different implementation, then you should:</p>
@@ -662,7 +663,6 @@ If you wish to have several subclasses of an <el-kw>abstract class</el-kw> that 
 <p>An <el-code>interface</el-code> is similar to an <el-code>abstract class</el-code>, with the difference that it may define only abstract members. The advantage of using an <el-code>interface</el-code> instead of an <el-code>abstract class</el-code> is that a concrete<el-code> class</el-code> can inherit from multiple <el-code>interface</el-code>s.</p>
 <p>An <el-code>interface</el-code> may inherit only from other <el-code>interface</el-code>s.</p>
 <p>Important: An <el-code>interface</el-code> must not redeclare abstract interfaces that are defined in any <el-code>interface</el-code> it inherits from, directly or indirectly.</p>
-<p>See also: <a href="#Inheritance">Inheritance</a>.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-kw>interface</el-kw></h4>
@@ -928,7 +928,8 @@ Properties may be modified only from outside the class by means of a <a href="#p
 <ul>
 <li>A <el-code>function</el-code> method is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
 <li>A <el-code>function</el-code> method may directly reference (read only) any <el-kw>property</el-kw> defined on the class as though it were a variable or parameter.</li>
-<li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
+<li>A <el-code>function</el-code> method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses.
+ This is done by selecting the <el-kw>property</el-kw> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 <li><el-method>asString</el-method> method is just a regular function method with the specific name, takes no parameters and and returns  a value of type <el-type>String</el-type>.
  If defined for a class then, if an instance of the class is printed, function method <el-method>asString</el-method> will automatically be used.
   Typically <el-method>asString</el-method> will return a string made up of one or more of the property values, perhaps with additional text, or the results of function calls.</li>
@@ -939,12 +940,14 @@ Properties may be modified only from outside the class by means of a <a href="#p
 <ul>
 <li>A procedure method, like a function method, is always referenced (used) by code outside the class using <a href="#dotSyntax">dot syntax</a> on an instance.</li>
 <li>A procedure method may read, or write to, any <el-kw>property</el-kw> defined on the class.</li>
-<li>A procedure method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by selecting the property frame and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
+<li>A procedure method may be marked <el-code>private</el-code>, in which case it is visible only to code within the class and, if defined on an <el-code>abstract class</el-code>, within its subclasses.
+ This is done by selecting the <el-kw>property</el-kw> instruction and then keying <b>Ctrl+p</b>. (Pressing these keys again will remove the <el-code>private</el-code> modifier).</li>
 </ul>
 
 <h2 id="private"><el-kw>private</el-kw> (property, function, procedure)</h2>
 <p>A <el-kw>property</el-kw> may be marked <el-kw>private</el-kw>, in which case it is visible only to code within the class and,
-if defined on an <el-code>abstract class</el-code>, within its subclasses. This is done by using the context menu on the property frame or selecting it and keying <b>Ctrl+p</b>.
+if defined on an <el-code>abstract class</el-code>, within its subclasses.
+ This is done by using the context menu on the property instruction or selecting it and keying <b>Ctrl+p</b>.
 This action is a toggle used both to set and to remove the modifier <el-kw>private</el-kw>.</p>
 <ul>
  <li></li>
@@ -989,7 +992,7 @@ the correct Type must be provided. For example, if the class <el-type>Square</el
 
 <div id="statement"></div>
 <h1 id="StatementInstructions">Statement instructions</h1>
-<p>Statement instructions (also referred to simply as 'statements') are the imperative keywords used in the methods (procedural logic) of a program, and are:</p>
+<p>Statement instructions (sometimes referred to as 'statements') are the imperative keywords used in the methods (procedural logic) of a program, and are:</p>
 <p>
  <a href="#assert"><el-kw>assert</el-kw></a>,
  <a href="#call"><el-kw>call</el-kw></a>,
@@ -1007,13 +1010,13 @@ the correct Type must be provided. For example, if the class <el-type>Square</el
 </p>
 
 <h2 id="assert"><el-kw>assert</el-kw> (test)</h2>
-<p>The <el-kw>assert</el-kw> statement is used only within a <a href="#test"><el-kw>test</el-kw></a>,
+<p>The <el-kw>assert</el-kw> instruction is used only within a <a href="#test"><el-kw>test</el-kw></a>,
 which is the mechanism for running unit tests during program development, not during program execution.</p>
 <p>Some programming languages have a feature for making assertions while your program is running.
- In Elan, you can get equivalent functionality by throwing an <el-kw>exception</el-kw>, as described in <a href="#throw">throw</a> statement.</p>
+ In Elan, you can get equivalent functionality by throwing an <el-kw>exception</el-kw>, as described in <a href="#throw">throw</a> instruction.</p>
 
 <h2 id="call"><el-kw>call</el-kw> procedure</h2>
-<p>A <el-kw>call</el-kw> statement is used when you want to run a <a href="#procedure">procedure</a>.</p>
+<p>A <el-kw>call</el-kw> instruction is used when you want to run a <a href="#procedure">procedure</a>.</p>
 <p>The procedure may be:</p>
 <ul>
 <li>a procedure that you have defined at the global level</li>
@@ -1032,8 +1035,8 @@ which is the mechanism for running unit tests during program development, not du
 <p>The arguments provided must match the number and Type of the parameters specified in the definition of the procedure. If there are no parameters, leave the brackets empty.</p>
 <p>For procedures that you define yourself, <el-kw>out</el-kw> parameters are allowed.  In this case the corresponding argument must be the name of a mutable named value that gets updated by the procedure.</p>
 <p>If the parameter is not an <el-kw>out</el-kw> parameter, any expression of the correct Type can be used as an argument.</p>
-<p>Procedures may have side effects, for example input/output or changing a data value in an object. They can change the contents of any mutable object passed in as an argument.  For this reason, procedures cannot be called from functions, which are not allowed to have side-effects.  <el-kw>call</el-kw> statements are simply not allowed in functions, to enforce this.</p>
-<p>There is a limit to the complexity of a <el-kw>call</el-kw> statement.  Only one dot is allowed in the <el-code>procedure name</el-code> field, or two dots if the first word is <el-kw>property</el-kw>.  If you need anything more complicated, use a <el-kw>let</el-kw> statement on the line above.  See the error message explanation for <a href="#ProcRefField">'procedureName' in a call statement</a>.</p>
+<p>Procedures may have side effects, for example input/output or changing a data value in an object. They can change the contents of any mutable object passed in as an argument.  For this reason, procedures cannot be called from functions, which are not allowed to have side-effects.  <el-kw>call</el-kw> instructions are simply not allowed in functions, to enforce this.</p>
+<p>There is a limit to the complexity of a <el-kw>call</el-kw> instruction.  Only one dot is allowed in the <el-code>procedure name</el-code> field, or two dots if the first word is <el-kw>property</el-kw>.  If you need anything more complicated, use a <el-kw>let</el-kw> instruction on the line above.  See the error message explanation for <a href="#ProcRefField">'procedureName' in a call instruction</a>.</p>
 
 <h2 id="each"><el-kw>each</el-kw> (loop)</h2>
 <p>The <el-kw>each.</el-kw>..<el-kw>in</el-kw>.. construct specifies looping sequentially over the items in a <el-type>List</el-type> or an <el-type>Array</el-type>, or over the characters in a <el-type>String</el-type>.</p>
@@ -1081,6 +1084,7 @@ So even if the subject value is changed in any way within the <el-kw>each</el-kw
 <hr>
 
 <h2 id="for"><el-kw>for</el-kw> (loop)</h2>
+<div id="to"></div>
 <div id="step"></div>
 <p>The <el-kw>for..from..to..step..</el-kw> construct specifies looping through a sequence of integer values with a given increment.</p>
 <p>The loop counter variable (which counts from 0) is of Type <el-type>Int</el-type>.</p>
@@ -1105,15 +1109,15 @@ This is needed at compile time to determine the nature of the exit condition. Fo
 <div id="else"></div>
 <div id="elseif"></div>
 <h2 id="if_statement"><el-kw>if</el-kw></h2>
-<p>The <el-kw>if</el-kw> statement specifies which of several code sequences is to be executed next.</p>
+<p>The <el-kw>if</el-kw> instruction specifies which of several code sequences is to be executed next.</p>
 <ul>
  <li> It is structured like this:<br>
  <el-kw>if</el-kw> <el-code>condition</el-code> <el-kw>then</el-kw><br>
- &nbsp;&nbsp;<el-code>statements</el-code><br>
+ &nbsp;&nbsp;<el-code>instructions</el-code><br>
  <el-kw>else if</el-kw> <el-code>condition</el-code> <el-kw>then</el-kw><br>
- &nbsp;&nbsp;<el-code>statements</el-code><br>
+ &nbsp;&nbsp;<el-code>instructions</el-code><br>
  <el-kw>else</el-kw><br>
- &nbsp;&nbsp;<el-code>statements</el-code><br>
+ &nbsp;&nbsp;<el-code>instructions</el-code><br>
  <el-kw>end if</el-kw></li>
  <li>The conditions are Boolean values or expressions.</li>
  <li><el-kw>else if</el-kw> and <el-kw>else</el-kw> clauses are optional.</li>
@@ -1122,7 +1126,7 @@ This is needed at compile time to determine the nature of the exit condition. Fo
 <p>See also <a href="#if_expression"><el-kw>if</el-kw> expression</a> for using the related <el-kw>if</el-kw>  to return a value.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-kw>if</el-kw> statement</h4>
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-kw>if</el-kw> instruction</h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25b6; Simple choice between equality and inequality:</p>
 <el-code-block source="if_else">
@@ -1154,21 +1158,21 @@ This is needed at compile time to determine the nature of the exit condition. Fo
 </div></div>
 
 <h2 id="let"><el-kw>let</el-kw></h2>
-<p>The <el-kw>let</el-kw><el-code>..</el-code><el-kw>be</el-kw><el-code>..</el-code> statement declares and initalises an immutable named valued. The name defined must be a valid <a href="#Identifier">identifier</a>.</p>
+<p>The <el-kw>let</el-kw><el-code>..</el-code><el-kw>be</el-kw><el-code>..</el-code> instruction declares and initalises an immutable named valued. The name defined must be a valid <a href="#Identifier">identifier</a>.</p>
 <p>The initial value is given by a following expression. For example:</p>
 
 <el-code-block>
 <el-statement id="let37" tabindex="-1"><el-kw>let </el-kw><el-field id="var38" class="ok" tabindex="-1"><el-txt><el-id>s</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr39" class="ok" tabindex="-1"><el-txt><el-lit>2</el-lit>*<el-id>x</el-id></el-txt></el-field></el-statement>
 </el-code-block>
 
-<p>It may be thought of as defining a name between a <el-kw>constant</el-kw> definition and a variable's <el-kw>set</el-kw> statement.</p>
+<p>It may be thought of as defining a name between a <el-kw>constant</el-kw> definition and a variable's <el-kw>set</el-kw> instruction.</p>
 <p>Like a <el-kw>variable</el-kw><el-code>..</el-code><el-kw>set to</el-kw><el-code>..</el-code>, a <el-kw>let</el-kw> may be used only within a routine, but unlike a variable its value may not be changed with a <el-kw>set</el-kw>.</p>
 <p>It is recommended that you always use <el-kw>let</el-kw><el-code>..</el-code><el-kw>be</el-kw><el-code>..</el-code> in preference to <el-kw>variable</el-kw><el-code>..</el-code><el-kw>set to</el-kw><el-code>..</el-code>, unless you need to be able to re-assign its value.
 </p>
 <p>You can put a <el-kw>let</el-kw> in a loop, so the named value gets a new value each time it is executed, but the value of the variable cannot be changed any other way.</p>
 
 <h2 id="print"><el-kw>print</el-kw></h2>
-<p>The <el-kw>print</el-kw> instruction sends text strings to the Display pane. For example:</p>
+<p>The <el-kw>print</el-kw> instruction sends text strings to the display pane. For example:</p>
 <ul>
  <li><el-code>
     <el-statement class="ok" id="print5" tabindex="0"><el-kw>print </el-kw><el-field id="expr6" class="optional ok" tabindex="0"><el-txt>"<el-lit>Hello</el-lit>"</el-txt><el-place><i>expression</i></el-place></el-field></el-statement>
@@ -1188,7 +1192,7 @@ This is needed at compile time to determine the nature of the exit condition. Fo
 
 <div id="when">
 <h2 id="repeat"><el-kw>repeat</el-kw> (loop)</h2>
-<p>The <el-kw>repeat..end repeat when</el-kw> <el-code>condition</el-code> construct provides a <i>conditional</i> loop, used when you want at least one execution of the enclosed statements followed by a test that chooses either to execute them again or to exit from the loop.</p>
+<p>The <el-kw>repeat..end repeat when</el-kw> <el-code>condition</el-code> construct provides a <i>conditional</i> loop, used when you want at least one execution of the enclosed instructions followed by a test that chooses either to execute them again or to exit from the loop.</p>
 <p><el-code>condition</el-code> is either a <el-type>Boolean</el-type> variable or an expression that evaluates to a Boolean value.</p>
 <p>If <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code> then the loop ends, if <el-code><el-id>false</el-id></el-code> it resumes. For example:</p>
 
@@ -1202,12 +1206,12 @@ This is needed at compile time to determine the nature of the exit condition. Fo
 </el-code-block>
 
 <h2 id="set"><el-kw>set</el-kw></h2>
-<p>The <el-kw>set</el-kw><el-code>..</el-code><el-kw>to</el-kw><el-code>..</el-code> statement assigns a new value to an existing <el-kw>variable</el-kw> (mutable) named value.</p>
+<p>The <el-kw>set</el-kw><el-code>..</el-code><el-kw>to</el-kw><el-code>..</el-code> instruction assigns a new value to an existing <el-kw>variable</el-kw> (mutable) named value.</p>
 <p>The new value must be of the same Type as (or a Type compatible with) that of the variable.</p>
-<p>A <el-kw>set</el-kw> statement may not assign a new value to a parameter within a procedure unless the parameter is preceded by <el-kw>out</el-kw> in the parameter list.</p>
+<p>A <el-kw>set</el-kw> instruction may not assign a new value to a parameter within a procedure unless the parameter is preceded by <el-kw>out</el-kw> in the parameter list.</p>
 
 <h2 id="throw"><el-kw>throw</el-kw> (exception)</h2>
-<p>You can deliberately generate, or 'throw', an exception when a specific circumstance is identified, using a <el-kw>throw</el-kw> statement
+<p>You can deliberately generate, or 'throw', an exception when a specific circumstance is identified, using a <el-kw>throw</el-kw> instruction
  which defines an explanatory string. An example:</p>
 <el-code-block source="throw.elan">
 <el-statement class="ok multiline" id="if18" tabindex="-1">
@@ -1219,7 +1223,7 @@ This is needed at compile time to determine the nature of the exit condition. Fo
 <el-kw>end if</el-kw>
 </el-statement>
 </el-code-block>
-<p>At runtime, if the condition is met, execution will stop and the Display will show:</p>
+<p>At runtime, if the condition is met, execution will stop and the display will show:</p>
 <p>
 <el-code>A Runtime error occurred in the Elan code</el-code><br>
 <el-code>Error: proportion exceeds 100%</el-code>
@@ -1239,7 +1243,7 @@ where you can <el-kw>catch</el-kw> (i.e. receive) the exception message string, 
 <div id="catch"></div>
 <div id="exception"></div>
 <h2 id="try"><el-kw>try</el-kw> (test)</h2>
-<p>You can test whether another piece of code might throw an exception by wrapping it in a <el-code>try</el-code> statement. This might arise when calling a <a href="LibRef.html#SystemMethods">System method</a> that is dependent upon external conditions, for example:</p>
+<p>You can test whether another piece of code might throw an exception by wrapping it in a <el-code>try</el-code> instruction. This might arise when calling a <a href="LibRef.html#SystemMethods">System method</a> that is dependent upon external conditions, for example:</p>
 
 <el-code-block source="tryCatch.elan">
 <el-statement class="ok multiline" id="try18" tabindex="0">
@@ -1271,7 +1275,7 @@ The variable holding the exception (by default iys name is <el-code>e</el-code>,
 
 <h2 id="variable"><el-kw>variable</el-kw></h2>
 <p>The <el-kw>variable</el-kw><el-code>..</el-code><el-kw>set to</el-kw><el-code>..</el-code>
-statement declares and initalises a mutable named valued. The name defined must be a valid <a href="#Identifier">identifier</a>.>/p>
+instruction declares and initalises a mutable named valued. The name defined must be a valid <a href="#Identifier">identifier</a>.>/p>
 <p>The initial value is given by a following expression. For example:</p>
 
 <el-code-block>
@@ -1279,7 +1283,7 @@ statement declares and initalises a mutable named valued. The name defined must 
 </el-code-block>
 
 <h2 id="while"><el-kw>while</el-kw> (loop)</h2>
-<p>The <el-kw>while <el-code>condition</el-code>..end while</el-kw> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed statements to begin
+<p>The <el-kw>while <el-code>condition</el-code>..end while</el-kw> construct provides a <i>conditional</i> loop, used when you want execution of the enclosed instructions to begin
  only if <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code>.</p>
 <p><el-code>condition</el-code> is either a <el-type>Boolean</el-type> <el-kw>variable</el-kw> or an expression that evaluates to a Boolean value.</p>
 <p>When <el-code>condition</el-code> is <el-code><el-id>true</el-id></el-code> the enclosed code is executed;
@@ -1298,7 +1302,7 @@ statement declares and initalises a mutable named valued. The name defined must 
 <ul>
 <li><a href="#literalValue">Literal value</a></li>
 <li><a href="#namedValue">Named value</a></li>
-<li><a href="#operator">Operator</a> (including brackets)</li>
+<li><a href="#operator">Operator</a> (including round brackets)</li>
 <li><a href="#functionCall"><el-kw>function</el-kw> reference</a></li>
 <li><a href="#lambda"><el-kw>lambda</el-kw></a></li>
 </ul>
@@ -1348,7 +1352,7 @@ Writing a value to a specific index location is done through a method such as in
     <a href="LibRef.html#put_List"><el-method>put</el-method></a>           on a   <el-type>List</el-type>
     <a href="LibRef.html#withPut_ListImmutable"><el-method>withPut</el-method></a>   on a    <el-type>ListImmutable</el-type>
     <a href="LibRef.html#put_Dictionary"><el-method>put</el-method></a>           on a    <el-type>Dictionary</el-type>
-    <a href="lIBrEF.HTML#withPut_DictionaryImmutable"><el-method>withPut</el-method></a>   on a    <el-type>DictionaryImmutable</el-type>
+    <a href="libRef.html#withPut_DictionaryImmutable"><el-method>withPut</el-method></a>   on a    <el-type>DictionaryImmutable</el-type>
 </pre>
 
 <div id="operator"></div>
@@ -1374,7 +1378,7 @@ Writing a value to a specific index location is done through a method such as in
     <el-code>(-11/3).floor()</el-code>   &#x27f6; <el-code>&minus;4</el-code>
 </pre>
 <p>Arithmetic operators follow the conventional rules for precedence i.e. 'BIDMAS' (or 'BODMAS').</p>
-<p>When combining <el-kw>mod</el-kw> with other operators in an expression, insert brackets to avoid ambiguity e.g.:</p>
+<p>When combining <el-kw>mod</el-kw> with other operators in an expression, insert round brackets to avoid ambiguity e.g.:</p>
 <pre>
     <el-code>(5 + 6) mod 3</el-code>
 </pre>
@@ -1464,19 +1468,24 @@ See <a href="LibRef.html#upperCase">Dot methods on a String</a>.</li>
 </ul>
 
 <h2 id="lambda"><el-kw>lambda</el-kw></h2>
-<p>A <el-kw>lambda</el-kw> is a lightweight means to define a function 'in line'. You typically define a <el-code>lambda</el-code>:</p>
+<p>A <el-code>lambda</el-code> is a lightweight means of defining a function 'inline' and without a name (i.e. an anonymous function).
+You would typically define a <el-code>lambda</el-code>:</p>
 <ul>
-<li>If the functionality it defines is needed in only one location: typically for a particular call to a <a href="LibRef.html#HoFs">Higher-order Function</a> (HoF).</li>
-<li>If you need to capture a local variable in the implementation. This is called 'closing around a variable'.</li>
+<li>when the functionality it defines is needed in only one location:
+   typically for a particular call to a <a href="LibRef.html#HoFs">Higher-order Function</a> (HoF).</li>
+<li>when you need to capture a local variable in the implementation: this is called 'closing around a variable'.</li>
 </ul>
-<p>The syntax for a <el-kw>lambda</el-kw> is as follows:</p>
+<p>The syntax for a <el-code>lambda</el-code> is as follows:</p>
 <ul>
 <li>Start with the keyword <el-kw>lambda</el-kw>.</li>
 <li>Parameter definitions, comma-separated, follow the same form as parameter definitions in a function or procedure, but without surrounding brackets.</li>
-<li>The <el-code>=&gt;</el-code> symbol, which is usually articulated as 'returns',  'yields' or even 'fat arrow'.</li>
+<li>The <el-code>=&gt;</el-code> symbol, which is usually articulated as 'returns', 'yields' or 'fat arrow'.</li>
 <li>An expression that makes use of the parameters, and may also make use of other variables that are in scope. </li>
 </ul>
-Example:
+<p>Although a <el-code>lambda</el-code> is commonly defined 'inline' it is also possible
+ to assign a <el-code>lambda</el-code> to a named value, so as to reuse it within the scope of that named value.</p>
+
+Example using a <el-code>lambda</el-code> to look for <el-id>true</el-id> in an array of Booleans:
 <el-code-block source="liveNeighbours.elan">
 <el-func class="ok multiline" id="func3" tabindex="0">
 <el-top><el-expand>+</el-expand><el-kw>function </el-kw><el-method><el-field id="ident5" class="ok" tabindex="0"><el-txt>liveNeighbours</el-txt><el-place><i>name</i></el-place></el-field></el-method>(<el-field id="params6" class="optional ok" tabindex="0"><el-txt><el-id>cells</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Boolean</el-type>&gt;, <el-id>c</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt><el-place><i>parameter definitions</i></el-place></el-field>)<el-kw> returns </el-kw><el-field id="type7" class="ok" tabindex="0"><el-txt><el-type>Int</el-type></el-txt><el-place><i>Type</i></el-place></el-field></el-top>
@@ -1486,20 +1495,16 @@ Example:
 <el-kw>end function</el-kw> </el-func>
 </el-code-block>
 
-Notes:<ul>
-<li>Although a <el-kw>lambda</el-kw> is commonly defined 'inline' (as shown above) it is possible to assign a lambda to a variable and hence to reuse it within the scope of that variable.</li>
-</ul>
-
 <h2 id="if_expression"><el-kw>if</el-kw> expression</h2>
 
-<p>The <el-kw>if</el-kw> expression has a similar structure to the <a href="#if"><el-kw>if</el-kw> statement</a>, but is an expression that returns a value.</p>
+<p>The <el-kw>if</el-kw> expression has a similar structure to the <a href="#if"><el-kw>if</el-kw> instruction</a>, but is an expression that returns a value.</p>
 <ul>
  <li>The conditions are Boolean values or expressions.</li>
  <li>It specifies which of several expressions is to be evaluated to give the returned value.</li>
  <li><el-kw>else if</el-kw> and <el-kw>else</el-kw> clauses are optional.</li>
  <li>You can add as many <el-kw>else if</el-kw> clauses as you wish, but only one unconditional <el-kw>else</el-kw> which, if present, must be last.</li>
- <li>Though structured like the <el-kw>if</el-kw> statement, it is edited in one field rather than in separate frames.
- On moving away from editing an <el-kw>if</el-kw> expression, it is automatically reformatted to be similar to an <el-kw>if</el-kw> statement,
+ <li>Though structured like the <el-kw>if</el-kw> instruction, it is edited in one field rather than in separate fields.
+ On moving away from editing an <el-kw>if</el-kw> expression, it is automatically reformatted to be similar to an <el-kw>if</el-kw> instruction,
  though without indentation. This means that an <el-kw>if</el-kw> expression should usually be kept simple.</li>
  <li>An <el-kw>if</el-kw> expression may be used within an <el-kw>if</el-kw> expression but will be hard to read even if it is enclosed in brackets.</li>
 </ul>
@@ -1514,7 +1519,7 @@ Notes:<ul>
 <el-statement class="ok" id="let9" tabindex="-1"><el-kw>let </el-kw><el-field id="var10" class="ok" tabindex="-1"><el-txt><el-id>d</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr11" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-id>c</el-id> &lt; <el-lit>580</el-lit><el-kw><br>then </el-kw><el-id>c</el-id> - <el-lit>40</el-lit><el-kw><br>else </el-kw><el-id>c</el-id> + <el-lit>60</el-lit></el-txt></el-field></el-statement>
 </el-code-block>
 <hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice in a <el-kw>return</el-kw> statement:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25b6; Choice in a <el-kw>return</el-kw> instruction:</p>
 <el-code-block source="wordle.solver.elan">
 <el-statement class="ok" id="return16" tabindex="-1"><el-kw>return </el-kw><el-field id="expr17" class="ok" tabindex="-1"><el-txt><el-kw>if </el-kw><el-method>isGreen</el-method>(<el-id>attempt</el-id>, <el-id>target</el-id>, <el-id>n</el-id>)<el-kw><br>then </el-kw><el-method>setChar</el-method>(<el-id>attempt</el-id>, <el-id>n</el-id>, "<el-lit>*</el-lit>")<el-kw><br>else </el-kw><el-id>attempt</el-id></el-txt></el-field></el-statement>
 </el-code-block>
@@ -1573,7 +1578,7 @@ Example of use in this manner, taken from demo program <el-code>snake_FP.elan</e
   note that a <el-kw>with</el-kw> clause (following the same syntax as in a <el-kw>copy..with</el-kw> expression), may be used
   within a new instance expression to set up properties for the object not specified in the constructor.</p>
 
-<h2 id="empty"><el-kw>empty</el-kw></h2>
+<h2 id="empty"><el-kw>empty</el-kw> of <el-type>Type</el-type></h2>
 <p>An 'empty of Type' expression is used to make the default (empty) instance of any Type
   &ndash; usually only created for comparing to another instance to test whether that other instance is also empty or default.
   This may arise, for example, if a <a href="#class">class</a> or <a href="#record">record</a> is defined with a property that has never had a value assigned to it.
@@ -1764,7 +1769,7 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
 <h3 id="mustNotBeKeyword" class="no-TOC">... is a keyword, and may not be used as an identifier.</h3>
  <p>An Elan keyword cannot be used to as the name for a value, property, or method. Try shortening the name, lengthening it, or using a different name</p>
 <p>For reference, the complete list of keywords is:<br><el-code>#, abstract, and, as, assert, be, call, catch, class, constant, constructor, copy, div,
- each, else, empty, end, enum, exception, for, from, function, global, if, image, in, inherits, interface, is, isnt, lambda, let, library, main, mod,
+ each, else, empty, end, enum, exception, for, from, function, global, if, image, import, in, inherits, interface, is, isnt, lambda, let, library, main, mod,
  new, not, of, or, out, print, private, procedure, property, record, ref, repeat, return, returns, set, step, test, then, this, throw, to, try,
  variable, while, with </el-code></p>
 
@@ -1786,7 +1791,7 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
  </ul>
 <p>For reference, the complete list of reserved words is:<br><el-code>action, arguments, array, async, await, boolean, break, by, byte, case, char,
  const, continue, curry, debugger, default, delete, dictionary, do, double, eval, export, extends, final, finally, float, goto, ignore, implements,
- import, instanceof, int, into, list, long, match, namespace, native, null, on, optional, otherwise, package, partial, pattern, protected, public,
+ instanceof, int, into, list, long, match, namespace, native, null, on, optional, otherwise, package, partial, pattern, protected, public,
  short, static, string, super, switch, system, synchronized, throws, todo, transient, typeof, void, volatile, var, when, yield</el-code></p>
 
 <h3 id="mustNotBeNegativeIndex" class="no-TOC">Index cannot be negative.</h3>
@@ -1863,8 +1868,8 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
  It may, however, may also take the following forms:
  <ul>
   <li>Within a <el-kw>class</el-kw> it may take the form <el-kw>property</el-kw><el-code>.</el-code><el-id>name</el-id> to set the property <el-id>name</el-id></li>
-  <li>A tuple deconstruction. See <a href="LibRef.html#deconstructTuple">Tuple</a></li>
-  <li>A list deconstruction. See <a href="LibRef.html#deconstructList">List</a></li>
+  <li>A Tuple deconstruction. See <a href="LibRef.html#deconstructTuple">Tuple</a></li>
+  <li>A <el-type>list</el-type> deconstruction. See <a href="LibRef.html#deconstructList">List</a></li>
  </ul></p>
 
 <h3 id="CommentField" class="no-TOC">'comment' field</h3>
@@ -1897,7 +1902,7 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
  <p>Each parameter definition takes the form:</p>
  <el-code><el-id>name</el-id> <el-kw>as</el-kw> <el-type>Type</el-type></el-code>
  <p>The name must follow the rules for an <a href="#Identifier">identifier</a>.</p>
- <p>The Type must follow the rules for a <a href="#parse_type">Type</a>.</p>
+ <p>The Type must follow the rules for a <a href="#TypeName">Type</a>.</p>
  <p>If more than one parameter is defined, the definitions must be separated by commas.</p>
 
 <h3 id="ProcRefField" class="no-TOC">'procedureName' in a call statement</h3>
@@ -1921,12 +1926,12 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
  or underscore symbols. Nothing else.</p>
 
 <h3 id="ValueDefField" class="no-TOC">'name' field in a let or variable instruction</h3>
- <p>The definition for a variable or for a <el-kw>let</el-kw> statement is most commonly
+ <p>The definition for a variable or for a <el-kw>let</el-kw> instruction is most commonly
  a simple name. Less commonly, it may take the form of a dconstruction of a
- <a href="LibRef.html#deconstructList">List</a>,
- <a href="LibRef.html#deconstructListImmutable">ListImmutable</a>,
- <a href="LibRef.html#deconstructTuple">Tuple</a> or
- <a href="#deconstructRecord">Record</a>.</p>
+ <a href="LibRef.html#deconstructList"><el-type>List</el-type></a>,
+ <a href="LibRef.html#deconstructListImmutable"><el-type>ListImmutabl</el-type>e</a>,
+ <a href="LibRef.html#deconstructTuple"><el-code>Tuple</el-code></a> or
+ <a href="#deconstructRecord"><el-kw>Record</el-kw></a>.</p>
 
 <h2>Advisory</h2>
 
@@ -1944,7 +1949,7 @@ as well as from the <el-code>new code</el-code> prompt &ndash; every prompt prov
 <h3 id="complexityWarning" class="no-TOC">Overly complex expressions</h3>
 <p>Overly complex expressions &ndash; for example involving a sequence of open brackets &ndash; can result in
 very slow parsing. We strongly recommend that you you simplify the contents of this field, for example by
-breaking out parts of it into separate <el-kw>let</el-kw> statements; otherwise it might become impossible to add more text.</p>
+breaking out parts of it into separate <el-kw>let</el-kw> instructions; otherwise it might become impossible to add more text.</p>
 
 <h3 id="ReferenceError" class="no-TOC">ReferenceError: Cannot access '[name]' before initialization</h3>
 

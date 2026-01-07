@@ -3,15 +3,16 @@
 }
 p { margin-top:0; margin-bottom:0; line-height:inherit; }
 
+
 h1,h2,h3,h4
-   { color: rgb(15,71,97); margin-top:0; margin-bottom:0; line-height:inherit; font-size:inherit; font-weight:inherit; }
-h1 { font-size:20pt; font-weight:bold; text-indent:0pt; margin-top:20pt; margin-bottom:4pt; background-color:rgb(226, 226, 226); }
+   { color: var(--docHeading); margin-top:0; margin-bottom:0; line-height:inherit; font-size:inherit; font-weight:inherit; }
+h1 { font-size:20pt; font-weight:bold; text-indent:0pt; margin-top:20pt; margin-bottom:4pt; background-color:var(--docHeadingBG); }
 h2 { font-size:16pt; font-weight:bold; text-indent:0pt; margin-top:16pt; margin-bottom:4pt;  border-style:solid none none none; }
 h3 { font-size:14pt; font-weight:bold; text-indent:0pt; margin-top:14pt; margin-bottom:4pt; }
 h4 { font-size:12pt; font-weight:bold; text-indent:0pt; margin-top:6pt; margin-bottom:4pt; }
 h5 { font-size:10pt; font-weight:bold; text-indent:0pt; margin-top:0pt; margin-bottom:4pt; }
 
-body { font-size:10pt; margin-left:5px; text-decoration:none; font-weight:normal; font-style:normal; text-transform:none; color:rgb(0,0,0); text-align:left; line-height:1.33; }
+body { font-size:10pt; margin-left:5px; text-decoration:none; font-weight:normal; font-style:normal; text-transform:none; color:black; text-align:left; line-height:1.33; }
 .bold {
   font-weight: bold;
 }
@@ -30,25 +31,42 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
 .tableMenu th, td { padding-left:5px; padding-right:5px; }
 
 table
- th, th * {color: white; background-color: rgb(15,71,97)}
+ th, th * {color: white; background-color: var(--docHeading);}
  th { text-align:center; margin-top:4pt; margin-bottom:4pt; padding-left: 5px; padding-right: 5px; }
  tr { text-align:left; margin-top:4pt; margin-bottom:4pt; }
- tr:nth-child(even) td { background-color: rgb(226, 226, 226); }
- tr:nth-child(odd)  td { background-color: rgb(196, 196, 196); }
+ tr:nth-child(even) td { background-color: var(--docTable0); }
+ tr:nth-child(odd)  td { background-color: var(--docTable1); }
  td {padding-left: 5px; padding-right: 5px; vertical-align: top; }
  /* tr.subhead for ElanIndex head letters */
- tr.subhead td, tr.subhead td * { background-color: rgb(15,71,97); color: white; font-weight: bold; text-align:left; }
+ tr.subhead td, tr.subhead td * { background-color: var(--docHeading); color: white; font-weight: bold; text-align:left; }
+
+/* special tables */
+.tableAccordion {
+ tr:nth-child(even) td { background-color: var(--docAccord0); }
+ tr:nth-child(odd)  td { background-color: var(--docAccord1); }
+}
+
+.tableButtons tr {
+ height: 25px;
+ vertical-align: middle;
+}
 
 /* document title */
-.docTitle { color:rgb(15,71,97); font-size:24pt; font-weight:bold;  text-indent:0pt;}
+.docTitle { color:var(--docHeading); font-size:24pt; font-weight:bold;  text-indent:0pt;}
+
+/*index reference to h1 or h2 title in documentation */
+el-doc  { font-size:10pt;
+ font-weight:bold;
+ color: var(--docHeading);
+}
 
 /* document table of contents : display as table of h1 and h2*/
 #generated-toc {
  display: table;
 }
 #generated-toc > ul {
-  > li:nth-child(even) { background-color: rgb(226, 226, 226); }
-  > li:nth-child(odd)  { background-color: rgb(196, 196, 196); }
+  > li:nth-child(even) { background-color: var(--docToc0); }
+  > li:nth-child(odd)  { background-color: var(--docToc1); }
 }
 #generated-toc > ul {
   padding-left: 0px;
@@ -87,6 +105,13 @@ table
 /* Acknowledgement box */
 p.ack { font-size:8pt; box-sizing: content-box; padding: 5px; border: 3px double; }
 
+/* IDE buttons */
+.ibutton {
+ border-style: solid;
+ border-width: 1.5px;
+ padding: 1px;
+}
+
 /* code */
 el-code, el-code *, el-code-block, el-code-block * {font-family: Consolas, Courier, monospace;}
 el-code, el-code-block {color: black} /* This is default - used only when the code is plain text. Overridden when code is marked up with tags*/
@@ -97,31 +122,26 @@ el-code-block img {
   margin: 0;
 }
 
-/* special tables */
-.tableAccordion {
- tr:nth-child(even) td { background-color: rgb(255, 255, 255); }
- tr:nth-child(odd)  td { background-color: rgb(226, 226, 226); }
-}
-
 /* Links */
-a:visited, a:link, a:active {text-decoration: none}
-a:hover, a:focus {text-decoration: underline}
+a:visited, a:link, a:active {color: var(--docHeading); text-decoration: none; }
+a:hover, s {color: var(--docHeading); text-decoration: underline; }
 
 /* This avoids the need to have <el-code> around small snippets*/
- el-kw, el-type, el-id, el-method, el-lit, el-comment {
+el-kw, el-type, el-id, el-method, el-lit, el-comment {
   font-family: consolas, monospace;
   white-space: normal;
 }
 
- el-topic {
+el-topic {
   font-family:sans-serif;
   color:black;
-} 
+}
 
 /* Animated accordion and panel  */
 .acc-body {
   display: none;
 }
+
 .accordion.active > .acc-body {
   display: block;
 }
