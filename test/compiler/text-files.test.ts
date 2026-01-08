@@ -3,14 +3,14 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Text Files", () => {
@@ -59,7 +59,7 @@ const global = new class {};
 async function main() {
   let tf = (await _stdlib.openFileForReading());
   let txt = tf.readWholeFile();
-  await system.printLine(txt);
+  await system.print(txt);
 }
 return [main, _tests];}`;
 
@@ -129,7 +129,7 @@ const global = new class {};
 async function main() {
   let tf = (await _stdlib.openFileForReading());
   while (!tf.endOfFile()) {
-    await system.printLine(tf.readLine());
+    await system.print(tf.readLine());
   }
 }
 return [main, _tests];}`;

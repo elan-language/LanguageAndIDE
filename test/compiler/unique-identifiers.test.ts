@@ -3,14 +3,14 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Unique Identifiers", () => {
@@ -26,7 +26,7 @@ end main`;
 const global = new class {};
 async function main() {
   let bReak = 2;
-  await system.printLine(bReak);
+  await system.print(bReak);
 }
 return [main, _tests];}`;
 
@@ -66,7 +66,7 @@ end class`;
 const global = new class {};
 async function main() {
   let foo = system.initialise(await new Foo()._initialise());
-  await system.printLine(foo);
+  await system.print(foo);
 }
 
 class Foo {

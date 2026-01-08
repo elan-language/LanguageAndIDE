@@ -3,16 +3,16 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("ListImmutable", () => {
@@ -28,7 +28,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -60,7 +60,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.listImmutable([system.listImmutable([4, 5]), system.listImmutable([6, 7, 8])]);
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -98,7 +98,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let b = system.listImmutable([a]);
-  await system.printLine(b);
+  await system.print(b);
 }
 
 class Foo {
@@ -168,11 +168,11 @@ async function main() {
   let x = system.listImmutable([c]);
   let y = system.listImmutable([d]);
   let z = system.listImmutable([e]);
-  await system.printLine(v);
-  await system.printLine(w);
-  await system.printLine(x);
-  await system.printLine(y);
-  await system.printLine(z);
+  await system.print(v);
+  await system.print(w);
+  await system.print(x);
+  await system.print(y);
+  await system.print(z);
 }
 
 class Foo {
@@ -218,7 +218,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.listImmutable(["Foo", "Bar"]);
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -250,7 +250,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.listImmutable([4.1, 5, 6, 7, 8]);
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -282,7 +282,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
-  await system.printLine(a.length());
+  await system.print(a.length());
 }
 return [main, _tests];}`;
 
@@ -314,7 +314,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.ListImmutable()._initialise());
-  await system.printLine(a.length());
+  await system.print(a.length());
 }
 return [main, _tests];}`;
 
@@ -346,7 +346,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
-  await system.printLine(system.safeIndex(a, 2));
+  await system.print(system.safeIndex(a, 2));
 }
 return [main, _tests];}`;
 
@@ -383,8 +383,8 @@ async function main() {
   let a = system.listImmutable(["one", "two", "three"]);
   a = a.withPut(1, "TWO");
   let b = a.withPut(0, "ONE");
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -418,7 +418,7 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable(["one", "two", "three"]);
   let b = a.withPut(3, "THREE");
-  await system.printLine(b);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -455,8 +455,8 @@ async function main() {
   let a = system.listImmutable(["one", "two", "three"]);
   a = a.withInsert(1, "TWO");
   let b = a.withInsert(0, "ONE");
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -493,8 +493,8 @@ async function main() {
   let a = system.listImmutable(["one", "two", "three"]);
   a = a.withRemoveAt(1);
   let b = a.withRemoveAt(0);
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -528,7 +528,7 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable(["one", "two", "three", "one", "two", "three"]);
   a = a.withRemoveFirst("two");
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -562,7 +562,7 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable(["one", "two", "three", "one", "two", "three"]);
   a = a.withRemoveAll("two");
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -596,9 +596,9 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
-  await system.printLine(system.safeSlice(a, 2, 5));
-  await system.printLine(system.safeSlice(a, 1, 3));
-  await system.printLine(system.safeSlice(a, 0, 2));
+  await system.print(system.safeSlice(a, 2, 5));
+  await system.print(system.safeSlice(a, 1, 3));
+  await system.print(system.safeSlice(a, 0, 2));
 }
 return [main, _tests];}`;
 
@@ -633,8 +633,8 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
   let b = a.withAppend(9);
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -696,8 +696,8 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
   let b = system.concat(9, a);
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -790,7 +790,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a);
+  await system.print(global.a);
 }
 return [main, _tests];}`;
 
@@ -822,7 +822,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.ListImmutable()._initialise());
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -865,7 +865,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.printLine(f.it);
+  await system.print(f.it);
 }
 
 class Foo {
@@ -921,11 +921,11 @@ async function main() {
   let a = system.initialise(_stdlib.ListImmutable.emptyInstance());
   let b = system.initialise(_stdlib.ListImmutable.emptyInstance());
   b = a.withAppend(3);
-  await system.printLine(a);
-  await system.printLine(b);
-  await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
-  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await system.print(a);
+  await system.print(b);
+  await system.print(system.objectEquals(a, b));
+  await system.print(system.objectEquals(a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await system.print(system.objectEquals(b, system.initialise(_stdlib.ListImmutable.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -962,8 +962,8 @@ async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
   let b = system.listImmutable([1, 2, 3, 4, 5]);
   let c = a.withAppendList(b);
-  await system.printLine(a);
-  await system.printLine(c);
+  await system.print(a);
+  await system.print(c);
 }
 return [main, _tests];}`;
 
@@ -999,7 +999,7 @@ async function main() {
   let a = system.listImmutable(["one", "two", "three"]);
   let b = "";
   b = a.head();
-  await system.printLine(b);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -1035,7 +1035,7 @@ async function main() {
   let a = system.listImmutable(["one", "two", "three"]);
   let b = system.listImmutable([""]);
   b = a.tail();
-  await system.printLine(b);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -1070,8 +1070,8 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
   let b = a.withPrepend(9);
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -1108,8 +1108,8 @@ async function main() {
   let a = system.listImmutable([4, 5, 6, 7, 8]);
   let b = system.listImmutable([1, 2, 3, 4, 5]);
   let c = a.withPrependList(b);
-  await system.printLine(a);
-  await system.printLine(c);
+  await system.print(a);
+  await system.print(c);
 }
 return [main, _tests];}`;
 
@@ -1147,7 +1147,7 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([system.initialise(await new Point()._initialise())]);
   let b = (await a.map(async (p) => p));
-  await system.printLine(system.safeIndex(b, 0));
+  await system.print(system.safeIndex(b, 0));
 }
 
 class Point {
@@ -1190,7 +1190,7 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine((await global.ff(system.listImmutable(["s"]))));
+  await system.print((await global.ff(system.listImmutable(["s"]))));
 }
 
 async function ff(ll) {
@@ -1578,7 +1578,7 @@ end main
 const global = new class {};
 async function main() {
   let a = system.listImmutable([system.listImmutable([0, 0, 0, 0.16, 0, 0, 0.01]), system.listImmutable([0.85, 0.04, (-0.04), 0.85, 0, 1.6, 0.85]), system.listImmutable([0.2, (-0.26), 0.23, 0.22, 0, 1.6, 0.07]), system.listImmutable([(-0.15), 0.28, 0.26, 0.24, 0, 0.44, 0.07])]);
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -1638,10 +1638,10 @@ async function main() {
   bb = b;
   cc = c;
   dd = d;
-  await system.printLine(aa);
-  await system.printLine(bb);
-  await system.printLine(cc);
-  await system.printLine(dd);
+  await system.print(aa);
+  await system.print(bb);
+  await system.print(cc);
+  await system.print(dd);
 }
 return [main, _tests];}`;
 

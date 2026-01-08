@@ -3,16 +3,16 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Immutable Dictionary", () => {
@@ -30,7 +30,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a);
+  await system.print(global.a);
 }
 return [main, _tests];}`;
 
@@ -69,7 +69,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a);
+  await system.print(global.a);
 }
 return [main, _tests];}`;
 
@@ -101,7 +101,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionaryImmutable([["a", 1], ["b", 3], ["z", 10]]);
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -135,7 +135,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(system.safeIndex(global.a, "z"));
+  await system.print(system.safeIndex(global.a, "z"));
 }
 return [main, _tests];}`;
 
@@ -173,7 +173,7 @@ const global = new class {
 async function main() {
   let b = system.initialise(_stdlib.ListImmutable.emptyInstance());
   b = global.a.keys();
-  await system.printLine(b);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -224,9 +224,9 @@ async function main() {
   const r3 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
   a = a.withPut(r1, 1);
   a = a.withPut(r2, 2);
-  await system.printLine(system.safeIndex(a, r1));
-  await system.printLine(system.safeIndex(a, r2));
-  await system.printLine(system.safeIndex(a, r3));
+  await system.print(system.safeIndex(a, r1));
+  await system.print(system.safeIndex(a, r2));
+  await system.print(system.safeIndex(a, r3));
 }
 
 class Point {
@@ -270,8 +270,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a.hasKey("b"));
-  await system.printLine(global.a.hasKey("d"));
+  await system.print(global.a.hasKey("b"));
+  await system.print(global.a.hasKey("d"));
 }
 return [main, _tests];}`;
 
@@ -305,7 +305,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a.values());
+  await system.print(global.a.values());
 }
 return [main, _tests];}`;
 
@@ -344,8 +344,8 @@ const global = new class {
 async function main() {
   let b = global.a.withPut("b", 4);
   let c = b.withPut("d", 2);
-  await system.printLine(global.a);
-  await system.printLine(c);
+  await system.print(global.a);
+  await system.print(c);
 }
 return [main, _tests];}`;
 
@@ -382,8 +382,8 @@ const global = new class {
 };
 async function main() {
   let b = global.a.withRemoveAt("b");
-  await system.printLine(global.a);
-  await system.printLine(b);
+  await system.print(global.a);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -419,7 +419,7 @@ const global = new class {
 };
 async function main() {
   let b = global.a.withRemoveAt("c");
-  await system.printLine(b);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -459,9 +459,9 @@ async function main() {
   let b = a.withPut("Foo", 1);
   b = b.withPut("Bar", 3);
   let k = b.keys();
-  await system.printLine(k.length());
-  await system.printLine(system.safeIndex(b, "Foo"));
-  await system.printLine(system.safeIndex(b, "Bar"));
+  await system.print(k.length());
+  await system.print(system.safeIndex(b, "Foo"));
+  await system.print(system.safeIndex(b, "Bar"));
 }
 return [main, _tests];}`;
 
@@ -507,9 +507,9 @@ async function main() {
   let b = a.withPut(Fruit.apple, 1);
   b = b.withPut(Fruit.orange, 3);
   let k = b.keys();
-  await system.printLine(k.length());
-  await system.printLine(system.safeIndex(b, Fruit.apple));
-  await system.printLine(system.safeIndex(b, Fruit.orange));
+  await system.print(k.length());
+  await system.print(system.safeIndex(b, Fruit.apple));
+  await system.print(system.safeIndex(b, Fruit.orange));
 }
 return [main, _tests];}`;
 
@@ -549,11 +549,11 @@ async function main() {
   let a = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
   let b = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
   b = a.withPut("a", 1);
-  await system.printLine(a);
-  await system.printLine(b);
-  await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
-  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
+  await system.print(a);
+  await system.print(b);
+  await system.print(system.objectEquals(a, b));
+  await system.print(system.objectEquals(a, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
+  await system.print(system.objectEquals(b, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -605,10 +605,10 @@ async function main() {
   const r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
   a = a.withPut(r1, 1);
   a = a.withPut(r2, 2);
-  await system.printLine(system.safeIndex(a, r1));
-  await system.printLine(a.keys().length());
+  await system.print(system.safeIndex(a, r1));
+  await system.print(a.keys().length());
   a = a.withRemoveAt(r1);
-  await system.printLine(a.keys().length());
+  await system.print(a.keys().length());
 }
 
 class Point {
@@ -654,8 +654,8 @@ async function main() {
   const a = system.dictionaryImmutable([["a", 1], ["b", 3], ["z", 10]]);
   let b = system.initialise(_stdlib.Dictionary.emptyInstance());
   b = a.asDictionary();
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 return [main, _tests];}`;
 

@@ -7,13 +7,13 @@ main
   call pause(1000)
   call clearHtml()
   # 
-  # swap quotes: call printLine(works, displayHtml() doesn't)
+  # swap quotes: call print(works, displayHtml() doesn't)
   call displayHtml('<h1 style="color: blue;">A heading</h1><p>some text</p>')
   # 
   call pause(1000)
   call clearHtml()
   # 
   let s be '<h1 style="color: blue;">A heading</h1><p>some text</p>'
-  call printLine(s)
+  call print(s)
   call displayHtml(s)
 end main

@@ -2,15 +2,15 @@
 
 main
   variable st set to new Stack<of String>()
-  call printLine(st.length())
+  call print(st.length())
   set st to st.push("apple")
   set st to st.push("Pear")
-  call printLine(st.length())
-  call printLine(st.peek())
+  call print(st.length())
+  call print(st.peek())
   variable fruit set to ""
   set fruit, st to st.pop()
-  call printLine(fruit)
+  call print(fruit)
   set fruit, st to st.pop()
-  call printLine(fruit)
-  call printLine(st.length())
+  call print(fruit)
+  call print(st.length())
 end main

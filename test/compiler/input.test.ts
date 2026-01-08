@@ -3,14 +3,14 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Input", () => {
@@ -26,7 +26,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = (await _stdlib.inputString(""));
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -58,7 +58,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = (await _stdlib.inputString("Your name"));
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -92,7 +92,7 @@ const global = new class {};
 async function main() {
   let a = 0;
   a = (await _stdlib.inputInt(""));
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -126,7 +126,7 @@ const global = new class {};
 async function main() {
   let a = 0;
   a = (await _stdlib.inputFloat(""));
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -164,7 +164,7 @@ async function main() {
   let b = "value1";
   a = (await _stdlib.inputString(""));
   b = a;
-  await system.printLine(b);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -196,7 +196,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = (await _stdlib.inputStringWithLimits("aprompt", 3, 7));
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -228,7 +228,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = (await _stdlib.inputStringFromOptions("aprompt", system.list(["y", "n"])));
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -262,7 +262,7 @@ const global = new class {};
 async function main() {
   let a = 0;
   a = (await _stdlib.inputInt("aprompt"));
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -296,7 +296,7 @@ const global = new class {};
 async function main() {
   let a = 0;
   a = (await _stdlib.inputIntBetween("aprompt", 3, 7));
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -330,7 +330,7 @@ const global = new class {};
 async function main() {
   let a = 0;
   a = (await _stdlib.inputFloat("aprompt"));
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -364,7 +364,7 @@ const global = new class {};
 async function main() {
   let a = 0;
   a = (await _stdlib.inputFloatBetween("aprompt", 0, 1));
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -422,7 +422,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = "Hello " + (await _stdlib.inputString(""));
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 

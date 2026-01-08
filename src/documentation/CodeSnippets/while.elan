@@ -3,7 +3,7 @@
 main
   let file be openFileForReading()
   while not file.endOfFile()
-    call printLine(file.readLine())
+    call print(file.readLine())
   end while
   call file.close()
 end main

@@ -2,9 +2,9 @@
 
 main
   variable immD set to new DictionaryImmutable<of String, Int>()
-  call printLine(immD)
+  call print(immD)
   set immD to immD.withPut("a", 3)
-  call printLine(immD["a"])
+  call print(immD["a"])
   set immD to immD.withRemoveAt("a")
-  call printLine(immD)
+  call print(immD)
 end main

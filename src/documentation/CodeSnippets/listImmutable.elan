@@ -3,12 +3,12 @@
 main
   # reusing variable fruit for each new ListImmutable
   variable fruit set to empty ListImmutable<of String>
-  call printLine(fruit)
+  call print(fruit)
   set fruit to fruit.withAppend("apple")
   set fruit to fruit.withAppend("pear")
-  call printLine(fruit)
-  call printLine(fruit[1])
-  call printLine(fruit.length())
-  call printLine(fruit[fruit.length() - 2])
-  call printLine(fruit.contains("banana"))
+  call print(fruit)
+  call print(fruit[1])
+  call print(fruit.length())
+  call print(fruit[fruit.length() - 2])
+  call print(fruit.contains("banana"))
 end main

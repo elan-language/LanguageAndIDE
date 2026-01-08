@@ -6,7 +6,7 @@ end function
 
 main
   let g be new Game()
-  call printLine(score(g))
+  call print(score(g))
 end main
 
 class Game

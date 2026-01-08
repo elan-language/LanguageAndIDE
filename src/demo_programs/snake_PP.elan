@@ -21,7 +21,7 @@ main
     end if
     call pause(150)
   end while
-  call printLine("Game Over! Score: {body.length() - 1}")
+  call print("Game Over! Score: {body.length() - 1}")
 end main
 
 procedure updateSnake(out currentDir as String, out tail as List<of Int>, out head as List<of Int>, body as List<of List<of Int>>)

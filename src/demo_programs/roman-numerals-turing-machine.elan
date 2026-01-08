@@ -16,12 +16,12 @@ main
     call tm.singleStep()
     set steps to steps + 1
     call clearPrintedText()
-    call printLine(tm.tape)
+    call print(tm.tape)
     call printTab(tm.headPosition - 1, "^\n")
-    call printLine("Step: {steps}\nState: {tm.currentState}\nRule applied: {rule.asString()}")
+    call print("Step: {steps}\nState: {tm.currentState}\nRule applied: {rule.asString()}")
     call pause(40)
   end while
-  call printLine("\n\nThe roman numeral equivalent for {decimal} is {tm.tape.trim()}")
+  call print("\n\nThe roman numeral equivalent for {decimal} is {tm.tape.trim()}")
 end main
 
 constant initState set to "init"

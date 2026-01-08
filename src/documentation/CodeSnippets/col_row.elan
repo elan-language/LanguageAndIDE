@@ -4,7 +4,7 @@ main
   variable board set to new Array2D<of Int>(40, 30, 0)
   for col from 0 to 7 step 1
     for row from 0 to 7 step 1
-      call printLine(board[col, row])
+      call print(board[col, row])
     end for
   end for
 end main

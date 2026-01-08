@@ -1,9 +1,9 @@
 import { DebugSymbol } from "../compiler/compiler-interfaces/debug-symbol";
 import { ElanInputOutput } from "../compiler/compiler-interfaces/elan-input-output";
 import {
-  WebWorkerBreakpointMessage,
-  WebWorkerMessage,
-  WebWorkerWriteMessage,
+    WebWorkerBreakpointMessage,
+    WebWorkerMessage,
+    WebWorkerWriteMessage,
 } from "./web/web-worker-messages";
 
 export class StubInputOutput implements ElanInputOutput {
@@ -126,7 +126,7 @@ export class StubInputOutput implements ElanInputOutput {
     });
   }
 
-  printLine(text: string) {
+  print(text: string) {
     return new Promise<void>((rs, rj) => {
       onmessage = (e) => {
         const data = e.data as WebWorkerMessage;

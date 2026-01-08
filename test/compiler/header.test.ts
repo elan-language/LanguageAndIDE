@@ -4,12 +4,12 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
 import {
-  assertDoesNotParseWithMessage,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  transforms,
+    assertDoesNotParseWithMessage,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Header", () => {
@@ -25,7 +25,7 @@ end main`;
 const global = new class {};
 async function main() {
 
-  await system.printLine("Hello World!");
+  await system.print("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -58,7 +58,7 @@ end main`;
 const global = new class {};
 async function main() {
 
-  await system.printLine("Hello World!");
+  await system.print("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -91,7 +91,7 @@ end main`;
 const global = new class {};
 async function main() {
 
-  await system.printLine("Hello World!");
+  await system.print("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -124,7 +124,7 @@ end main`;
 const global = new class {};
 async function main() {
 
-  await system.printLine("Hello World!");
+  await system.print("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -157,7 +157,7 @@ end main`;
 const global = new class {};
 async function main() {
 
-  await system.printLine("Hello World!");
+  await system.print("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -190,7 +190,7 @@ end main`;
 const global = new class {};
 async function main() {
 
-  await system.printLine("Hello World!");
+  await system.print("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -298,7 +298,7 @@ end main`;
 const global = new class {};
 async function main() {
 
-  await system.printLine("Hello World!");
+  await system.print("Hello World!");
 }
 return [main, _tests];}`;
 

@@ -2,11 +2,11 @@
 
 main
   let names be ["Tom", "Dick", "Harriet"]
-  call printLine(names[0])
+  call print(names[0])
   each n in names
-    call printLine(n)
+    call print(n)
   end each
-  call printLine(reverse("Harriet"))
+  call print(reverse("Harriet"))
 end main
 
 function reverse(s as String) returns String

@@ -3,14 +3,14 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Equality", () => {
@@ -49,9 +49,9 @@ async function main() {
   let x = system.initialise(await new Foo()._initialise(7, "Apple"));
   let y = system.initialise(await new Foo()._initialise(7, "Orange"));
   let z = system.initialise(await new Foo()._initialise(7, "Orange"));
-  await system.printLine(system.objectEquals(x, x));
-  await system.printLine(system.objectEquals(x, y));
-  await system.printLine(system.objectEquals(y, z));
+  await system.print(system.objectEquals(x, x));
+  await system.print(system.objectEquals(x, y));
+  await system.print(system.objectEquals(y, z));
 }
 
 class Foo {
@@ -121,7 +121,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Foo()._initialise());
-  await system.printLine(system.objectEquals(x, Foo.emptyInstance()));
+  await system.print(system.objectEquals(x, Foo.emptyInstance()));
 }
 
 class Foo {
@@ -201,9 +201,9 @@ async function main() {
   let y = x;
   await y.setP1(3);
   let z = system.initialise(await new Foo()._initialise(8, "Orange"));
-  await system.printLine(system.objectEquals(x, x));
-  await system.printLine(system.objectEquals(x, y));
-  await system.printLine(system.objectEquals(x, z));
+  await system.print(system.objectEquals(x, x));
+  await system.print(system.objectEquals(x, y));
+  await system.print(system.objectEquals(x, z));
 }
 
 class Foo {
@@ -326,13 +326,13 @@ async function main() {
   let f2 = system.initialise(await new Foo()._initialise(2));
   const l1 = system.list([f1, f2]);
   const l2 = system.list([f1, f2]);
-  await system.printLine(system.objectEquals(l1, l2));
+  await system.print(system.objectEquals(l1, l2));
   const l3 = system.list([f2, f1]);
-  await system.printLine(system.objectEquals(l1, l3));
+  await system.print(system.objectEquals(l1, l3));
   const l4 = system.list([system.initialise(await new Foo()._initialise(1)), system.initialise(await new Foo()._initialise(2))]);
-  await system.printLine(system.objectEquals(l4, l1));
+  await system.print(system.objectEquals(l4, l1));
   await system.safeIndex(l4, 0).setP(3);
-  await system.printLine(system.objectEquals(l4, l1));
+  await system.print(system.objectEquals(l4, l1));
 }
 
 class Foo {
@@ -395,11 +395,11 @@ async function main() {
   let f2 = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})();
   const l1 = system.listImmutable([f1, f2]);
   const l2 = system.listImmutable([f1, f2]);
-  await system.printLine(system.objectEquals(l1, l2));
+  await system.print(system.objectEquals(l1, l2));
   const l3 = system.listImmutable([f2, f1]);
-  await system.printLine(system.objectEquals(l1, l3));
+  await system.print(system.objectEquals(l1, l3));
   const l4 = system.listImmutable([await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 1; return _a;})(), await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})()]);
-  await system.printLine(system.objectEquals(l4, l1));
+  await system.print(system.objectEquals(l4, l1));
 }
 
 class Foo {

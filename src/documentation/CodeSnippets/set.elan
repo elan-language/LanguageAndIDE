@@ -3,12 +3,12 @@
 main
   variable st set to new Set<of Int>()
   set st to st.addFromList([3, 5, 7])
-  call printLine(st.length())
+  call print(st.length())
   set st to st.add(7)
-  call printLine(st.length())
+  call print(st.length())
   set st to st.remove(3)
-  call printLine(st.length())
+  call print(st.length())
   set st to st.remove(3)
-  call printLine(st.length())
-  call printLine(st)
+  call print(st.length())
+  call print(st)
 end main

@@ -5,7 +5,7 @@ main
   set a to 3 + 4
   throw exception "error"
   call signIn(rwp, password)
-  call printLine("Hello World!")
+  call print("Hello World!")
   while newGame
 
   end while

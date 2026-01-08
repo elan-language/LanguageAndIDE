@@ -396,7 +396,7 @@ export class StdLib {
   }
 
   @elanProcedure(["text"], ProcedureOptions.async)
-  async printLine(s: string) {
+  async print(s: string) {
     await this.system.elanInputOutput.print(`${s}\n`);
   }
 
@@ -440,7 +440,7 @@ export class StdLib {
 
   //Input functions
   private async prompt(prompt: string) {
-    await this.printLine(prompt);
+    await this.print(prompt);
   }
 
   @elanFunction(["prompt"], FunctionOptions.impureAsync, ElanString)

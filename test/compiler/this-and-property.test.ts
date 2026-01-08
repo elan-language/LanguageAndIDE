@@ -3,15 +3,15 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("This and Property", () => {
@@ -40,7 +40,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Foo()._initialise(7));
-  await system.printLine(x.p1);
+  await system.print(x.p1);
 }
 
 class Foo {
@@ -109,7 +109,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.printLine((await f.bar()));
+  await system.print((await f.bar()));
 }
 
 async function doubled(f) {
@@ -179,7 +179,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.printLine((await f.bar()));
+  await system.print((await f.bar()));
 }
 
 class Foo {
@@ -241,7 +241,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
   async _initialise() { return this; }
   async bar() {
-    await system.printLine(this);
+    await system.print(this);
   }
 
 }

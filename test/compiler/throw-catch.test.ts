@@ -3,16 +3,16 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Throw Catch", () => {
@@ -170,10 +170,10 @@ const global = new class {};
 async function main() {
   try {
     await foo();
-    await system.printLine("not caught");
+    await system.print("not caught");
   } catch (_e) {
     let e = _e.message;
-    await system.printLine(e);
+    await system.print(e);
   }
 }
 
@@ -228,10 +228,10 @@ async function main() {
     let x = system.initialise(_stdlib.List.emptyInstance());
     let y = system.safeIndex(x, 1);
     let z = y.p1;
-    await system.printLine("not caught");
+    await system.print("not caught");
   } catch (_e) {
     let e = _e.message;
-    await system.printLine(e);
+    await system.print(e);
   }
 }
 
@@ -287,12 +287,12 @@ const global = new class {};
 async function main() {
   try {
     await foo();
-    await system.printLine("not caught");
+    await system.print("not caught");
   } catch (_e) {
     let e = _e.message;
     let s = "";
     s = e;
-    await system.printLine(s);
+    await system.print(s);
   }
 }
 
@@ -344,7 +344,7 @@ async function main() {
   } catch (_e) {
     let e = _e.message;
     let a = e;
-    await system.printLine(a);
+    await system.print(a);
   }
 }
 
@@ -394,7 +394,7 @@ async function main() {
     throw new Error("fail");
   } catch (_e) {
     let e = _e.message;
-    await system.printLine(a);
+    await system.print(a);
   }
 }
 

@@ -2,15 +2,15 @@
 
 main
   variable qu set to new Queue<of String>()
-  call printLine(qu.length())
+  call print(qu.length())
   set qu to qu.enqueue("apple")
   set qu to qu.enqueue("Pear")
-  call printLine(qu.length())
-  call printLine(qu.peek())
+  call print(qu.length())
+  call print(qu.peek())
   variable fruit set to ""
   set fruit, qu to qu.dequeue()
-  call printLine(fruit)
+  call print(fruit)
   set fruit, qu to qu.dequeue()
-  call printLine(fruit)
-  call printLine(qu.length())
+  call print(fruit)
+  call print(qu.length())
 end main

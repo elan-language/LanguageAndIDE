@@ -9,5 +9,5 @@ main
   variable nota set to bitNot(a)
   variable aL set to bitShiftL(a, 2)
   variable aR set to bitShiftR(a, 2)
-  call printLine("{a.asBinary()} {b.asBinary()} {anb.asBinary()} {aob.asBinary()} {axb.asBinary()} {nota.asBinary()} {aL.asBinary()} {aR.asBinary()}")
+  call print("{a.asBinary()} {b.asBinary()} {anb.asBinary()} {aob.asBinary()} {axb.asBinary()} {nota.asBinary()} {aL.asBinary()} {aR.asBinary()}")
 end main

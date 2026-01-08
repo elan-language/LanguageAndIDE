@@ -13,7 +13,7 @@ end class
 [ghosted] # ghosted comment
 [ghosted] main
   for i from 1 to 10 step 1
-    call printLine(i)
+    call print(i)
   end for
 end main
 

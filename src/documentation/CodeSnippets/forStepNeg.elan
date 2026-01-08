@@ -4,6 +4,6 @@ main
   let numbers be ["One", "Two", "Three", "Four", "Five", "Six"]
   let s be 2
   for i from numbers.length() - 1 to 0 step -s
-    call printLine(numbers[i])
+    call print(numbers[i])
   end for
 end main

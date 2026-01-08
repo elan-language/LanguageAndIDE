@@ -3,15 +3,15 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Tuple", () => {
@@ -30,10 +30,10 @@ end main`;
 const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
-  await system.printLine(x);
+  await system.print(x);
   const [f, s] = x;
-  await system.printLine(f);
-  await system.printLine(s);
+  await system.print(f);
+  await system.print(s);
 }
 return [main, _tests];}`;
 
@@ -69,11 +69,11 @@ end main`;
 const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
-  await system.printLine(x);
+  await system.print(x);
   const f = x[0];
   const s = x[1];
-  await system.printLine(f);
-  await system.printLine(s);
+  await system.print(f);
+  await system.print(s);
 }
 return [main, _tests];}`;
 
@@ -112,10 +112,10 @@ end function`;
 const global = new class {};
 async function main() {
   let x = (await global.f());
-  await system.printLine(x);
+  await system.print(x);
   const [fst, sec] = x;
-  await system.printLine(fst);
-  await system.printLine(sec);
+  await system.print(fst);
+  await system.print(sec);
 }
 
 async function f() {
@@ -160,11 +160,11 @@ end function`;
 const global = new class {};
 async function main() {
   let x = (await global.f());
-  await system.printLine(x);
+  await system.print(x);
   const fst = x[0];
   const snd = x[1];
-  await system.printLine(fst);
-  await system.printLine(snd);
+  await system.print(fst);
+  await system.print(snd);
 }
 
 async function f() {
@@ -207,7 +207,7 @@ const global = new class {};
 async function main() {
   let t = (await global.f());
   const [fst, ] = t;
-  await system.printLine(fst);
+  await system.print(fst);
 }
 
 async function f() {
@@ -250,7 +250,7 @@ const global = new class {};
 async function main() {
   let t = (await global.f());
   const fst = t[0];
-  await system.printLine(fst);
+  await system.print(fst);
 }
 
 async function f() {
@@ -293,7 +293,7 @@ const global = new class {
 async function main() {
   let t = (await global.a.reduce(system.tuple([1, 1]), async (i, j) => j));
   const [fst, ] = t;
-  await system.printLine(fst);
+  await system.print(fst);
 }
 return [main, _tests];}`;
 
@@ -331,7 +331,7 @@ const global = new class {
 async function main() {
   let t = (await global.a.reduce(system.tuple([1, 1]), async (i, j) => j));
   const fst = t[0];
-  await system.printLine(fst);
+  await system.print(fst);
 }
 return [main, _tests];}`;
 
@@ -370,7 +370,7 @@ const global = new class {};
 async function main() {
   let x = "one";
   let y = "two";
-  await system.printLine((await global.f(system.tuple([x, y]))));
+  await system.print((await global.f(system.tuple([x, y]))));
 }
 
 async function f(t) {
@@ -415,7 +415,7 @@ const global = new class {};
 async function main() {
   let x = "one";
   let y = "two";
-  await system.printLine((await global.f(system.tuple([x, y]))));
+  await system.print((await global.f(system.tuple([x, y]))));
 }
 
 async function f(t) {
@@ -456,7 +456,7 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   x = system.tuple([4, "Pear"]);
-  await system.printLine(x);
+  await system.print(x);
 }
 return [main, _tests];}`;
 
@@ -502,10 +502,10 @@ async function main() {
   const z = system.safeIndex(p, x[0]);
   const q = _stdlib.abs(x[1]);
   const s = _stdlib.abs(system.safeIndex(p, x[1]));
-  await system.printLine(y);
-  await system.printLine(z);
-  await system.printLine(q);
-  await system.printLine(s);
+  await system.print(y);
+  await system.print(z);
+  await system.print(q);
+  await system.print(s);
 }
 return [main, _tests];}`;
 

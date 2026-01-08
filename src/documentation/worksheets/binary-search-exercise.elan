@@ -32,9 +32,9 @@ main
     if wanted isnt "x" then
       let result be binarySearch(fruit, wanted)
       if result then
-        call printLine("We can supply a {wanted}")
+        call print("We can supply a {wanted}")
       else
-        call printLine("Sorry, we cannot supply a {wanted}")
+        call print("Sorry, we cannot supply a {wanted}")
       end if
     else
       set exit to true

@@ -6,7 +6,7 @@ main
   variable dice set to 0
   for i from 1 to 10 step 1
     set dice, rnd to rollDice(rnd)
-    call printLine(dice)
+    call print(dice)
   end for
 end main
 

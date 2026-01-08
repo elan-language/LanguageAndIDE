@@ -3,15 +3,15 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("If Statement", () => {
@@ -32,9 +32,9 @@ const global = new class {};
 async function main() {
   let a = _stdlib.true;
   if (a) {
-    await system.printLine("yes");
+    await system.print("yes");
   } else {
-    await system.printLine("no");
+    await system.print("no");
   }
 }
 return [main, _tests];}`;
@@ -72,9 +72,9 @@ const global = new class {};
 async function main() {
   let a = _stdlib.false;
   if (a) {
-    await system.printLine("yes");
+    await system.print("yes");
   } else {
-    await system.printLine("no");
+    await system.print("no");
   }
 }
 return [main, _tests];}`;
@@ -114,11 +114,11 @@ const global = new class {};
 async function main() {
   let a = 2;
   if (a === 1) {
-    await system.printLine("one");
+    await system.print("one");
   } else if (a === 2) {
-    await system.printLine("two");
+    await system.print("two");
   } else {
-    await system.printLine("neither");
+    await system.print("neither");
   }
 }
 return [main, _tests];}`;
@@ -158,11 +158,11 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.printLine("one");
+    await system.print("one");
   } else if (a === 2) {
-    await system.printLine("two");
+    await system.print("two");
   } else {
-    await system.printLine("neither");
+    await system.print("neither");
   }
 }
 return [main, _tests];}`;
@@ -198,7 +198,7 @@ const global = new class {};
 async function main() {
   let a = _stdlib.true;
   if (a) {
-    await system.printLine("yes");
+    await system.print("yes");
   }
 }
 return [main, _tests];}`;
@@ -240,13 +240,13 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.printLine("one");
+    await system.print("one");
   } else if (a === 2) {
-    await system.printLine("two");
+    await system.print("two");
   } else if (a === 3) {
-    await system.printLine("three");
+    await system.print("three");
   } else {
-    await system.printLine("neither");
+    await system.print("neither");
   }
 }
 return [main, _tests];}`;
@@ -286,11 +286,11 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.printLine("one");
+    await system.print("one");
   } else if (a === 2) {
-    await system.printLine("two");
+    await system.print("two");
   } else if (a === 3) {
-    await system.printLine("three");
+    await system.print("three");
   }
 }
 return [main, _tests];}`;
@@ -366,7 +366,7 @@ async function main() {
   if (a === 1) {
     let b = a;
     b = 2;
-    await system.printLine(b);
+    await system.print(b);
   }
 }
 return [main, _tests];}`;
@@ -404,7 +404,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.printLine("");
+    await system.print("");
   } else {
     a = 3;
   }
@@ -446,11 +446,11 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.printLine("");
+    await system.print("");
   } else {
     let b = a;
     b = 2;
-    await system.printLine(b);
+    await system.print(b);
   }
 }
 return [main, _tests];}`;
@@ -491,10 +491,10 @@ async function main() {
   let a = 3;
   if (a === 1) {
     const b = 1;
-    await system.printLine(b);
+    await system.print(b);
   } else {
     const b = a;
-    await system.printLine(b);
+    await system.print(b);
   }
 }
 return [main, _tests];}`;
@@ -532,7 +532,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.printLine("");
+    await system.print("");
   } else if (a === 2) {
     a = 3;
   }
@@ -574,11 +574,11 @@ const global = new class {};
 async function main() {
   let a = 2;
   if (a === 1) {
-    await system.printLine("");
+    await system.print("");
   } else if (a === 2) {
     let b = a;
     b = 2;
-    await system.printLine(b);
+    await system.print(b);
   }
 }
 return [main, _tests];}`;
@@ -616,7 +616,7 @@ const global = new class {};
 async function main() {
   let a = 2;
   if (a === 1) {
-    await system.printLine("");
+    await system.print("");
   } else {
 
   }
@@ -660,14 +660,14 @@ const global = new class {};
 async function main() {
   let a = 2;
   if (a === 1) {
-    await system.printLine("");
+    await system.print("");
   } else if (a === 2) {
     let b = a;
     const _tofor17 = 5;
     for (let i = 0; i <= _tofor17; i = i + 1) {
       b = b + i;
     }
-    await system.printLine(b);
+    await system.print(b);
   }
 }
 return [main, _tests];}`;

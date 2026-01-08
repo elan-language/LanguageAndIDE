@@ -153,9 +153,9 @@ export class System {
     this.safeListSet(toIndex[col], row, value);
   }
 
-  async printLine(s: any) {
+  async print(s: any) {
     const ss = await this._stdlib.asString(s);
-    await this.elanInputOutput.printLine(ss);
+    await this.elanInputOutput.print(ss);
   }
 
   async input() {

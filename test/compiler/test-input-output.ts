@@ -72,7 +72,7 @@ export class TestInputOutput implements ElanInputOutput {
     this.printed = this.printed + line;
     return Promise.resolve();
   }
-  printLine(line: string): Promise<void> {
+  print(line: string): Promise<void> {
     this.print(line); //Currently, newline is not added for testing purposes
     return Promise.resolve();
   }

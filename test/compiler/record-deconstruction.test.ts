@@ -3,14 +3,14 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Record Deconstruction", () => {
@@ -38,8 +38,8 @@ async function main() {
   let a = 0;
   let b = "";
   ({a, b} = x);
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 
 class Foo {
@@ -94,10 +94,10 @@ const global = new class {};
 async function main() {
   let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = 3; _a.fruit = "Apple"; _a.aBool = _stdlib.true; _a.aFloat = 1.1; return _a;})();
   const {a, fruit, aBool, aFloat} = x;
-  await system.printLine(a);
-  await system.printLine(fruit);
-  await system.printLine(aBool);
-  await system.printLine(aFloat);
+  await system.print(a);
+  await system.print(fruit);
+  await system.print(aBool);
+  await system.print(aFloat);
 }
 
 class Foo {
@@ -213,8 +213,8 @@ const global = new class {};
 async function main() {
   let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = 100; _a.b = "fred"; return _a;})();
   let {a, b} = x;
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 
 class Foo {
@@ -302,8 +302,8 @@ async function main() {
   let z = "";
   y = a;
   z = b;
-  await system.printLine(y);
-  await system.printLine(z);
+  await system.print(y);
+  await system.print(z);
 }
 
 class Foo {
@@ -360,8 +360,8 @@ async function main() {
   let z = "";
   y = a;
   z = b;
-  await system.printLine(y);
-  await system.printLine(z);
+  await system.print(y);
+  await system.print(z);
 }
 
 class Foo {
@@ -410,8 +410,8 @@ const global = new class {};
 async function main() {
   const x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
   const {a, b} = x;
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 
 class Foo {
@@ -460,8 +460,8 @@ const global = new class {};
 async function main() {
   let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
   const {a, b} = x;
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 
 class Foo {
@@ -517,8 +517,8 @@ async function main() {
   let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
   let y = await (async () => {const _a = {...system.initialise(await new Bar()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Bar()._initialise()))); _a.c = x; return _a;})();
   let {c, d} = y;
-  await system.printLine(c);
-  await system.printLine(d);
+  await system.print(c);
+  await system.print(d);
 }
 
 class Foo {
@@ -589,8 +589,8 @@ async function main() {
   const x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
   const y = await (async () => {const _a = {...system.initialise(await new Bar()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Bar()._initialise()))); _a.c = x; return _a;})();
   let {c, d} = y;
-  await system.printLine(c);
-  await system.printLine(d);
+  await system.print(c);
+  await system.print(d);
 }
 
 class Foo {
@@ -659,8 +659,8 @@ async function main() {
   let a = system.initialise(_stdlib.ListImmutable.emptyInstance());
   let b = "";
   ({a, b} = x);
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 
 class Foo {
@@ -720,8 +720,8 @@ async function main() {
   let c = Foo.emptyInstance();
   let d = "";
   ({c, d} = y);
-  await system.printLine(c);
-  await system.printLine(d);
+  await system.print(c);
+  await system.print(d);
 }
 
 class Foo {
@@ -796,8 +796,8 @@ async function main() {
   let c = Foo.emptyInstance();
   let d = "";
   ({c, d} = y);
-  await system.printLine(c);
-  await system.printLine(d);
+  await system.print(c);
+  await system.print(d);
 }
 
 class Foo {

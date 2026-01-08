@@ -7,6 +7,6 @@ main
   set x2, y2 to point
   variable x3, _ set to point
   variable _, y3 set to point
-  call printLine(point.item0)
-  call printLine(point.item1)
+  call print(point.item0)
+  call print(point.item1)
 end main

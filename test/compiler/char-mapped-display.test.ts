@@ -3,14 +3,14 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertGraphicsContains,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertGraphicsContains,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Char Mapped Display", () => {
@@ -128,7 +128,7 @@ const global = new class {};
 async function main() {
   let gr = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
   let a = (await _stdlib.getKey());
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -162,7 +162,7 @@ const global = new class {};
 async function main() {
   let a = 0;
   a = (await _stdlib.getNumericKey());
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -194,7 +194,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = (await _stdlib.waitForKey());
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -228,7 +228,7 @@ const global = new class {};
 async function main() {
   let gr = system.initialise(await new _stdlib.Array2D()._initialise(40, 30, _stdlib.white));
   let a = (await _stdlib.getKeyWithModifier());
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -331,7 +331,7 @@ const global = new class {};
 async function main() {
   let foo = system.initialise(await new Foo()._initialise());
   let a = foo.p;
-  await system.printLine(a);
+  await system.print(a);
 }
 
 class Foo {

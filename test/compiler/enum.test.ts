@@ -3,15 +3,15 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Enum", () => {
@@ -33,9 +33,9 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  await system.printLine(Fruit.apple);
-  await system.printLine(Fruit.orange);
-  await system.printLine(Fruit.pear);
+  await system.print(Fruit.apple);
+  await system.print(Fruit.orange);
+  await system.print(Fruit.pear);
 }
 return [main, _tests];}`;
 
@@ -73,7 +73,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let e = Fruit._default;
-  await system.printLine(e);
+  await system.print(e);
 }
 return [main, _tests];}`;
 
@@ -118,7 +118,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let foo = system.initialise(await new Foo()._initialise());
-  await system.printLine(foo.fruit);
+  await system.print(foo.fruit);
 }
 
 class Foo {
@@ -175,7 +175,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let foo = Foo.emptyInstance();
-  await system.printLine(foo.fruit);
+  await system.print(foo.fruit);
 }
 
 class Foo {
@@ -227,7 +227,7 @@ const global = new class {};
 async function main() {
   let x = Fruit.apple;
   x = Fruit.pear;
-  await system.printLine(x);
+  await system.print(x);
 }
 return [main, _tests];}`;
 
@@ -267,7 +267,7 @@ const global = new class {};
 async function main() {
   let x = Fruit.apple;
   let y = x;
-  await system.printLine(y);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -309,8 +309,8 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  await system.printLine((await global.isFavourite(Fruit.apple)));
-  await system.printLine((await global.isFavourite(Fruit.pear)));
+  await system.print((await global.isFavourite(Fruit.apple)));
+  await system.print((await global.isFavourite(Fruit.pear)));
 }
 
 async function isFavourite(f) {
@@ -356,7 +356,7 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  await system.printLine((await global.firstFruit()) === Fruit.apple);
+  await system.print((await global.firstFruit()) === Fruit.apple);
 }
 
 async function firstFruit() {
@@ -400,8 +400,8 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let x = Fruit.apple;
-  await system.printLine(x === Fruit.apple);
-  await system.printLine(x === Fruit.pear);
+  await system.print(x === Fruit.apple);
+  await system.print(x === Fruit.pear);
 }
 return [main, _tests];}`;
 
@@ -439,7 +439,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let a = \`Eat more \${await _stdlib.asString(Fruit.apple)}s!\`;
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 

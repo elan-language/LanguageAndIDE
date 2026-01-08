@@ -24,7 +24,7 @@ procedure playGame()
   end while
   call clearPrintedText()
   if solved then
-    call printLine("Well done!")
+    call print("Well done!")
   end if
 end procedure
 
@@ -46,7 +46,7 @@ procedure enterAttempt(attemptNo as Int, grid as Array2D<of String>, used as Dic
       if allValidAttemptWords.contains(word) then
         set chNo to chNo + 1
       else
-        call printLine("Invalid word")
+        call print("Invalid word")
       end if
     end if
     call displayHtml(drawGrid(grid) + drawKeyboard(used))
@@ -227,7 +227,7 @@ procedure playReverseGame(firstAttempt as String)
     if possible.length() > 0 then
       set attempt to possible[0]
     else
-      call printLine("No possible target matches marks so far")
+      call print("No possible target matches marks so far")
       set attemptNo to 6
     end if
   end while

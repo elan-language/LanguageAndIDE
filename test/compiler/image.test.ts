@@ -4,15 +4,15 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Image", () => {
@@ -28,7 +28,7 @@ end main`;
 const global = new class {};
 async function main() {
   let c = system.initialise(await new _stdlib.ImageVG()._initialise("http://website.image.png"));
-  await system.printLine(c.asHtml());
+  await system.print(c.asHtml());
 }
 return [main, _tests];}`;
 
@@ -63,7 +63,7 @@ end main`;
 const global = new class {};
 async function main() {
   let c = await (async () => {const _a = {...system.initialise(await new _stdlib.ImageVG()._initialise("http://website.image.png"))}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.ImageVG()._initialise("http://website.image.png")))); _a.width = 100; _a.height = 200; return _a;})();
-  await system.printLine(c.asHtml());
+  await system.print(c.asHtml());
 }
 return [main, _tests];}`;
 

@@ -3,16 +3,16 @@
 test 
   try
     call foo()
-    call printLine("not caught")
+    call print("not caught")
   catch exception in e
-    call printLine(e)
+    call print(e)
   end try
 end test
 
 test 
   try
     call foo()
-    call printLine("not caught")
+    call print("not caught")
   catch exception in e
     if e isnt "an expected message" then
       throw exception e

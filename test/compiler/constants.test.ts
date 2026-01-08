@@ -3,15 +3,15 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Constants", () => {
@@ -30,7 +30,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a);
+  await system.print(global.a);
 }
 return [main, _tests];}`;
 
@@ -66,7 +66,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a);
+  await system.print(global.a);
 }
 return [main, _tests];}`;
 
@@ -101,7 +101,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a);
+  await system.print(global.a);
 }
 return [main, _tests];}`;
 
@@ -136,7 +136,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a);
+  await system.print(global.a);
 }
 return [main, _tests];}`;
 
@@ -171,7 +171,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a);
+  await system.print(global.a);
 }
 return [main, _tests];}`;
 
@@ -207,8 +207,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a);
-  await system.printLine(global.a === "");
+  await system.print(global.a);
+  await system.print(global.a === "");
 }
 return [main, _tests];}`;
 
@@ -243,7 +243,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a);
+  await system.print(global.a);
 }
 return [main, _tests];}`;
 
@@ -278,7 +278,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a);
+  await system.print(global.a);
 }
 return [main, _tests];}`;
 
@@ -318,7 +318,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a);
+  await system.print(global.a);
 }
 return [main, _tests];}`;
 
@@ -353,7 +353,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a);
+  await system.print(global.a);
 }
 return [main, _tests];}`;
 
@@ -413,7 +413,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a);
+  await system.print(global.a);
 }
 return [main, _tests];}`;
 
@@ -447,7 +447,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a);
+  await system.print(global.a);
 }
 return [main, _tests];}`;
 
@@ -634,7 +634,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.b);
+  await system.print(global.b);
 }
 return [main, _tests];}`;
 
@@ -746,7 +746,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.a);
+  await system.print(global.a);
 }
 return [main, _tests];}`;
 

@@ -2,8 +2,8 @@
 
 main
   let fruit be example
-  call printLine(binarySearch(fruit, "lime"))
-  call printLine(binarySearch(fruit, "orange"))
+  call print(binarySearch(fruit, "lime"))
+  call print(binarySearch(fruit, "orange"))
 end main
 
 function binarySearch(li as ListImmutable<of String>, item as String) returns Boolean

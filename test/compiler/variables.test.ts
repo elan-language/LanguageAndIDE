@@ -3,15 +3,15 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Variables", () => {
@@ -27,7 +27,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = 3;
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -61,7 +61,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   let b = a;
-  await system.printLine(b);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -93,7 +93,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = 3 + 4;
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -127,7 +127,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   a = 4;
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -161,7 +161,7 @@ const global = new class {};
 async function main() {
   let a = 3.1;
   a = 4;
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -217,15 +217,15 @@ async function main() {
   let g = 3 !== 4;
   let h = !_stdlib.false;
   let k = 4 / 3;
-  await system.printLine(a);
-  await system.printLine(b);
-  await system.printLine(c);
-  await system.printLine(d);
-  await system.printLine(e);
-  await system.printLine(f);
-  await system.printLine(g);
-  await system.printLine(h);
-  await system.printLine(k);
+  await system.print(a);
+  await system.print(b);
+  await system.print(c);
+  await system.print(d);
+  await system.print(e);
+  await system.print(f);
+  await system.print(g);
+  await system.print(h);
+  await system.print(k);
 }
 return [main, _tests];}`;
 
@@ -261,7 +261,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let a = Fruit.apple;
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -300,7 +300,7 @@ const global = new class {
 async function main() {
   let b = (await global.a.map(async (x) => x));
   b = system.listImmutable([1, 2]);
-  await system.printLine(b);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -707,7 +707,7 @@ end main
 const global = new class {};
 async function main() {
   let a = ((((3))));
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 

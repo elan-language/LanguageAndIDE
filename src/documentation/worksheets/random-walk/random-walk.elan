@@ -22,7 +22,7 @@ main
       set paces to paces + 1
     end while
   end for
-  call printLine("Average number of paces: {paces/20}")
+  call print("Average number of paces: {paces/20}")
 end main
 
 procedure circle(t as Turtle, radius as Int)

@@ -2,5 +2,5 @@
 
 main
   # My first program
-  call printLine("Hello World!")
+  call print("Hello World!")
 end main

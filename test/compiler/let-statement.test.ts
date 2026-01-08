@@ -3,14 +3,14 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Let Statement", () => {
@@ -30,7 +30,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine((await global.add()));
+  await system.print((await global.add()));
 }
 
 async function add() {
@@ -86,7 +86,7 @@ async function foo() {
   const _tofor13 = 4;
   for (let i = 0; i <= _tofor13; i = i + 1) {
     const temp = system.safeIndex(global.li, i);
-    await system.printLine(temp);
+    await system.print(temp);
   }
 }
 global["foo"] = foo;
@@ -139,7 +139,7 @@ async function foo() {
     li = li.withPut(i, system.safeIndex(li, i + 1));
     li = li.withPut(i + 1, temp);
   }
-  await system.printLine(li);
+  await system.print(li);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -178,7 +178,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine((await global.foo()));
+  await system.print((await global.foo()));
 }
 
 async function foo() {

@@ -3,5 +3,5 @@
 main
   variable a4 set to new Array<of Int>(4, 0)
   call a4.put(2, 5)
-  call printLine(a4)
+  call print(a4)
 end main

@@ -3,16 +3,16 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertDoesNotParse,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParseIncomplete,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertDoesNotParse,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParseIncomplete,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Repeat Loop", () => {
@@ -34,7 +34,7 @@ async function main() {
   do {
     x = x + 1;
   } while (!(x >= 10));
-  await system.printLine(x);
+  await system.print(x);
 }
 return [main, _tests];}`;
 
@@ -84,7 +84,7 @@ async function main() {
     } while (!(y > 4));
     x = x + 1;
   } while (!(x > 3));
-  await system.printLine(t);
+  await system.print(t);
 }
 return [main, _tests];}`;
 

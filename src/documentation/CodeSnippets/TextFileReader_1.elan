@@ -3,5 +3,5 @@
 main
   let file be openFileForReading()
   let text be file.readWholeFile()
-  call printLine(text)
+  call print(text)
 end main

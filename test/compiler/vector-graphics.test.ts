@@ -3,15 +3,15 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Vector Graphics", () => {
@@ -55,7 +55,7 @@ async function main() {
   const vg = system.initialise(await new _stdlib.List()._initialise());
   const circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.red; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
   const vg2 = vg.withAppend(circ);
-  await system.printLine(_stdlib.vectorGraphicsAsHtml(vg2));
+  await system.print(_stdlib.vectorGraphicsAsHtml(vg2));
 }
 return [main, _tests];}`;
 
@@ -97,7 +97,7 @@ async function main() {
   const vg = system.initialise(await new _stdlib.List()._initialise());
   const circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.red; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
   vg.append(circ);
-  await system.printLine(_stdlib.vectorGraphicsAsHtml(vg));
+  await system.print(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 
@@ -185,7 +185,7 @@ async function main() {
   rect.setFillColour(_stdlib.green);
   rect.setStrokeColour(_stdlib.blue);
   rect.setStrokeWidth(3);
-  await system.printLine(_stdlib.vectorGraphicsAsHtml(vg));
+  await system.print(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 
@@ -275,7 +275,7 @@ async function main() {
   rect = rect.withStrokeColour(_stdlib.blue);
   rect = rect.withStrokeWidth(3);
   vg = vg.withAppend(rect);
-  await system.printLine(_stdlib.vectorGraphicsAsHtml(vg));
+  await system.print(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 
@@ -315,7 +315,7 @@ end main`;
 const global = new class {};
 async function main() {
   const circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.red; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
-  await system.printLine(circ.centreX);
+  await system.print(circ.centreX);
 }
 return [main, _tests];}`;
 
@@ -351,7 +351,7 @@ async function main() {
   const vg = system.initialise(await new _stdlib.List()._initialise());
   const circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.transparent; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
   const vg2 = vg.withAppend(circ);
-  await system.printLine(_stdlib.vectorGraphicsAsHtml(vg2));
+  await system.print(_stdlib.vectorGraphicsAsHtml(vg2));
 }
 return [main, _tests];}`;
 
@@ -393,7 +393,7 @@ async function main() {
   const vg = system.initialise(await new _stdlib.List()._initialise());
   const circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.transparent; _a.strokeColour = _stdlib.transparent; _a.strokeWidth = 1; return _a;})();
   vg.append(circ);
-  await system.printLine(_stdlib.vectorGraphicsAsHtml(vg));
+  await system.print(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 
@@ -432,7 +432,7 @@ async function main() {
   const vg = system.initialise(await new _stdlib.List()._initialise());
   const circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.white + 1; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
   vg.append(circ);
-  await system.printLine(_stdlib.vectorGraphicsAsHtml(vg));
+  await system.print(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 
@@ -470,7 +470,7 @@ async function main() {
   const vg = system.initialise(await new _stdlib.List()._initialise());
   const i = await (async () => {const _a = {...system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png"))}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")))); _a.x = 50; _a.y = 50; _a.width = 50; _a.height = 50; return _a;})();
   vg.append(i);
-  await system.printLine(_stdlib.vectorGraphicsAsHtml(vg));
+  await system.print(_stdlib.vectorGraphicsAsHtml(vg));
 }
 return [main, _tests];}`;
 
@@ -510,7 +510,7 @@ const global = new class {};
 async function main() {
   const c = system.initialise(await new _stdlib.CircleVG()._initialise());
   const x = c.centreX;
-  await system.printLine(x);
+  await system.print(x);
 }
 return [main, _tests];}`;
 

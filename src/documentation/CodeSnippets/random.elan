@@ -2,8 +2,8 @@
 
 main
   let probability be random()
-  call printLine(probability)
+  call print(probability)
   for i from 1 to 10 step 1
-    call printLine(randomInt(1, 6))
+    call print(randomInt(1, 6))
   end for
 end main

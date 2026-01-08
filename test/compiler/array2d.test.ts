@@ -3,15 +3,15 @@ import { DefaultProfile } from "../../src/ide/frames/default-profile";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-  assertDoesNotCompile,
-  assertObjectCodeDoesNotExecute,
-  assertObjectCodeExecutes,
-  assertObjectCodeIs,
-  assertParses,
-  assertStatusIsValid,
-  testHash,
-  testHeader,
-  transforms,
+    assertDoesNotCompile,
+    assertObjectCodeDoesNotExecute,
+    assertObjectCodeExecutes,
+    assertObjectCodeIs,
+    assertParses,
+    assertStatusIsValid,
+    testHash,
+    testHeader,
+    transforms,
 } from "./compiler-test-helpers";
 
 suite("Array2D", () => {
@@ -27,7 +27,7 @@ end main`;
 const global = new class {};
 async function main() {
   let c = system.initialise(await new _stdlib.Array2D()._initialise(1, 1, 0));
-  await system.printLine(c);
+  await system.print(c);
 }
 return [main, _tests];}`;
 
@@ -63,7 +63,7 @@ end function`;
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Array2D()._initialise(1, 1, 0));
-  await system.printLine((await global.bar(a)));
+  await system.print((await global.bar(a)));
 }
 
 async function bar(arr) {
@@ -128,7 +128,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.initialise(_stdlib.Array2D.emptyInstance());
-  await system.printLine(a.columns());
+  await system.print(a.columns());
 }
 return [main, _tests];}`;
 
@@ -169,8 +169,8 @@ async function main() {
   a.put(0, 1, "foo");
   a.put(2, 0, "yon");
   a.put(2, 1, "xan");
-  await system.printLine(system.safeIndex(a, 0, 1));
-  await system.printLine(system.safeIndex(a, 2, 0));
+  await system.print(system.safeIndex(a, 0, 1));
+  await system.print(system.safeIndex(a, 2, 0));
 }
 return [main, _tests];}`;
 
@@ -208,7 +208,7 @@ async function main() {
   a = system.initialise(await new _stdlib.Array2D()._initialise(3, 2, ""));
   a.put(0, 0, "bar");
   a.put(0, 1, "foo");
-  await system.printLine(system.safeIndex(a, 0, 1));
+  await system.print(system.safeIndex(a, 0, 1));
 }
 return [main, _tests];}`;
 
@@ -249,8 +249,8 @@ async function main() {
   a = a.withPut(0, 1, "foo");
   a = a.withPut(2, 0, "yon");
   a = a.withPut(2, 1, "xan");
-  await system.printLine(system.safeIndex(a, 0, 1));
-  await system.printLine(system.safeIndex(a, 2, 0));
+  await system.print(system.safeIndex(a, 0, 1));
+  await system.print(system.safeIndex(a, 2, 0));
 }
 return [main, _tests];}`;
 
@@ -288,7 +288,7 @@ async function main() {
   a = system.initialise(await new _stdlib.Array2D()._initialise(3, 2, ""));
   a = a.withPut(0, 0, "bar");
   a = a.withPut(0, 1, "foo");
-  await system.printLine(system.safeIndex(a, 0, 1));
+  await system.print(system.safeIndex(a, 0, 1));
 }
 return [main, _tests];}`;
 
@@ -326,11 +326,11 @@ const global = new class {};
 async function main() {
   let a = system.initialise(_stdlib.Array2D.emptyInstance());
   let b = system.initialise(_stdlib.Array2D.emptyInstance());
-  await system.printLine(a);
-  await system.printLine(b);
-  await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.Array2D.emptyInstance())));
-  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.Array2D.emptyInstance())));
+  await system.print(a);
+  await system.print(b);
+  await system.print(system.objectEquals(a, b));
+  await system.print(system.objectEquals(a, system.initialise(_stdlib.Array2D.emptyInstance())));
+  await system.print(system.objectEquals(b, system.initialise(_stdlib.Array2D.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -362,7 +362,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, 0));
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -394,7 +394,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, 1));
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -428,7 +428,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, ""));
   a.put(0, 1, "foo");
-  await system.printLine(a.contains("foo"));
+  await system.print(a.contains("foo"));
 }
 return [main, _tests];}`;
 
@@ -462,7 +462,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, ""));
   a.put(0, 1, "bar");
-  await system.printLine(a.contains("foo"));
+  await system.print(a.contains("foo"));
 }
 return [main, _tests];}`;
 
@@ -500,9 +500,9 @@ async function main() {
   let a = system.initialise(await new _stdlib.Array2D()._initialise(10, 10, ""));
   a.put(5, 7, "bar");
   a.put(8, 2, "foo");
-  await system.printLine(a.indexOf("bar"));
-  await system.printLine(a.indexOf("foo"));
-  await system.printLine(a.indexOf("yon"));
+  await system.print(a.indexOf("bar"));
+  await system.print(a.indexOf("foo"));
+  await system.print(a.indexOf("yon"));
 }
 return [main, _tests];}`;
 

@@ -7,6 +7,6 @@ main
     let line be file.readLine()
     call lines.append(line)
   end while
-  call printLine(lines)
+  call print(lines)
   call file.close()
 end main
