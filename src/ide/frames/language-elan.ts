@@ -1,4 +1,3 @@
-import { AbstractFrame } from "./abstract-frame";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -43,7 +42,7 @@ import { While } from "./statements/while";
 
 export class LanguageElan implements Language {
   annotation(frame: Frame): string {
-    return frame instanceof AbstractFrame ? "" : ""; //No *frame-specific* annotation needed for Elan
+    return frame ? "" : ""; //No *frame-specific* annotation needed for Elan (but must consume frame parameter!)
   }
   commentMarker(): string {
     return this.hash;
@@ -96,9 +95,9 @@ export class LanguageElan implements Language {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.abstractKeyword} ${this.classKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()}`;
+      html = `<el-kw>${this.abstractKeyword} ${this.classKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.classKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()}`;
+      html = `<el-kw>${this.classKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.constructorKeyword}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof Each) {
@@ -114,7 +113,7 @@ export class LanguageElan implements Language {
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.ifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.thenKeyword}</el-kw>`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.interfaceKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()}`;
+      html = `<el-kw>${this.interfaceKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.mainKeyword}</el-kw>`;
     } else if (frame instanceof ProcedureMethod) {
@@ -141,10 +140,6 @@ export class LanguageElan implements Language {
       html = `${node.simpleType?.renderAsHtml()}${node.generic?.renderAsHtml()}`;
     }
     return html;
-  }
-
-  private end(kw: string) {
-    return `<el-kw>${this.endKeyword} ${kw}</el-kw>`;
   }
 
   grammarForNode(node: ParseNode): string {

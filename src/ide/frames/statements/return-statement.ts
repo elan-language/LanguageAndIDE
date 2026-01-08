@@ -33,6 +33,10 @@ export class ReturnStatement extends SingleLineFrame implements Statement {
     return "return";
   }
 
+  frameSpecificAnnotation(): string {
+    return "";
+  }
+
   renderAsElanSource(): string {
     return `${this.indent()}return ${this.expr.renderAsElanSource()}`;
   }

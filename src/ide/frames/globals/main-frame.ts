@@ -26,6 +26,10 @@ export class MainFrame extends FrameWithStatements implements GlobalFrame {
     return "main";
   }
 
+  frameSpecificAnnotation(): string {
+    return "main";
+  }
+
   get symbolId() {
     return "__main";
   }

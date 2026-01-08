@@ -1,6 +1,6 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { BreakpointStatus } from "../../../compiler/debugging/breakpoint-status";
-import { ignoreKeyword, testAnnotation, testKeyword } from "../../../compiler/keywords";
+import { ignoreKeyword, testKeyword } from "../../../compiler/keywords";
 import { TestStatus } from "../../../compiler/test-status";
 import { CommentField } from "../fields/comment-field";
 import {
@@ -73,7 +73,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     return "test";
   }
   frameSpecificAnnotation(): string {
-    return testAnnotation;
+    return "test";
   }
 
   override outerHtmlTag: string = "el-test";

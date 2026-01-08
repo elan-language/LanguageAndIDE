@@ -30,6 +30,10 @@ export class TryStatement extends FrameWithStatements {
     return "try";
   }
 
+  frameSpecificAnnotation(): string {
+    return "try";
+  }
+
   outerHtmlTag: string = "el-statement";
 
   renderAsElanSource(): string {

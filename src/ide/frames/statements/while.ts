@@ -24,6 +24,10 @@ export class While extends FrameWithStatements {
     return "while";
   }
 
+  frameSpecificAnnotation(): string {
+    return "";
+  }
+
   outerHtmlTag: string = "el-statement";
 
   renderAsElanSource(): string {

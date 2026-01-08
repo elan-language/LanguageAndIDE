@@ -46,6 +46,10 @@ export class Constant extends AbstractFrame implements GlobalFrame, Collapsible 
     return "const";
   }
 
+  frameSpecificAnnotation(): string {
+    return "constant";
+  }
+
   override outerHtmlTag: string = "el-const";
 
   renderAsHtml(): string {

@@ -41,6 +41,10 @@ export class Else extends SingleLineFrame implements Statement {
     return "else";
   }
 
+  frameSpecificAnnotation(): string {
+    return "";
+  }
+
   private ifClauseAsSource(): string {
     return this.hasIf ? ` if ${this.condition.renderAsElanSource()}` : ``;
   }

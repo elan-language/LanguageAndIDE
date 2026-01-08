@@ -2,7 +2,7 @@ import {
   assertKeyword,
   callKeyword,
   commentMarker,
-  constantAnnotation,
+  constantKeyword,
   eachKeyword,
   elifKeyword,
   elseKeyword,
@@ -62,7 +62,7 @@ export class StatementSelector extends AbstractSelector {
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = false;
-    if (keyword === constantAnnotation) {
+    if (keyword === constantKeyword) {
       result = this.isWithinAFunction();
     } else if (keyword === elseKeyword || keyword === elifKeyword) {
       result = parent.getIdPrefix() === ifKeyword;

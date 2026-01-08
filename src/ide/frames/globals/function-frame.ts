@@ -1,6 +1,5 @@
 import {
   endKeyword,
-  functionAnnotation,
   functionKeyword,
   returnKeyword,
   returnsKeyword,
@@ -51,8 +50,9 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   getIdPrefix(): string {
     return "func";
   }
+
   frameSpecificAnnotation(): string {
-    return functionAnnotation;
+    return "function";
   }
 
   override outerHtmlTag: string = "el-func";

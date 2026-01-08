@@ -25,6 +25,10 @@ export class Repeat extends FrameWithStatements implements Statement {
     return "repeat";
   }
 
+  frameSpecificAnnotation(): string {
+    return "";
+  }
+
   outerHtmlTag: string = "el-statement";
 
   renderAsElanSource(): string {

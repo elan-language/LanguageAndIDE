@@ -41,6 +41,10 @@ export class AbstractFunction extends SingleLineFrame {
     return "func";
   }
 
+  frameSpecificAnnotation(): string {
+    return "abstract function";
+  }
+
   public override indent(): string {
     return singleIndent();
   }

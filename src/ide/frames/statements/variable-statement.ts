@@ -1,9 +1,4 @@
-import {
-  setKeyword,
-  toKeyword,
-  variableAnnotation,
-  variableKeyword,
-} from "../../../compiler/keywords";
+import { setKeyword, toKeyword, variableKeyword } from "../../../compiler/keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
@@ -33,7 +28,7 @@ export class VariableStatement extends AbstractDefinitionStatement implements St
   }
 
   frameSpecificAnnotation(): string {
-    return `${variableAnnotation} `;
+    return "variable";
   }
 
   renderAsElanSource(): string {

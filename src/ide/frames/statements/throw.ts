@@ -28,6 +28,11 @@ export class Throw extends SingleLineFrame implements Statement {
   getIdPrefix(): string {
     return "throw";
   }
+
+  frameSpecificAnnotation(): string {
+    return "throw";
+  }
+
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}${throwKeyword} ${exceptionKeyword} ${this.text.renderAsElanSource()}`;
   }

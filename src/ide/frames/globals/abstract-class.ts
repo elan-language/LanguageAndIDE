@@ -26,8 +26,12 @@ export class AbstractClass extends ClassFrame {
     return "class";
   }
 
+  frameSpecificAnnotation(): string {
+    return "abstract class";
+  }
+
   public renderAsElanSource(): string {
-    return `${this.sourceAnnotations()}abstract class ${this.name.renderAsElanSource()}${this.inheritanceAsSource()}\r
+    return `${this.sourceAnnotations()}abstract class ${this.name.renderAsElanSource()}${this.inheritanceAsElanSource()}\r
 ${parentHelper_renderChildrenAsSource(this)}\r
 end class\r\n`;
   }

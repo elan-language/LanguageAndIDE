@@ -28,6 +28,10 @@ export class Constructor extends FrameWithStatements {
     return "constructor";
   }
 
+  frameSpecificAnnotation(): string {
+    return "constructor";
+  }
+
   override outerHtmlTag: string = "el-constructor";
 
   public renderAsElanSource(): string {

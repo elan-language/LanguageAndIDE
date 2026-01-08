@@ -28,8 +28,12 @@ export class InterfaceFrame extends ClassFrame {
     return "class";
   }
 
+  frameSpecificAnnotation(): string {
+    return "interface";
+  }
+
   public renderAsElanSource(): string {
-    return `${this.sourceAnnotations()}${interfaceKeyword} ${this.name.renderAsElanSource()}${this.inheritanceAsSource()}\r
+    return `${this.sourceAnnotations()}${interfaceKeyword} ${this.name.renderAsElanSource()}${this.inheritanceAsElanSource()}\r
 ${parentHelper_renderChildrenAsSource(this)}\r
 ${endKeyword} ${interfaceKeyword}\r\n`;
   }

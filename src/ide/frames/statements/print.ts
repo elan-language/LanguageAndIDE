@@ -31,6 +31,10 @@ export class Print extends SingleLineFrame implements Statement {
     return "print";
   }
 
+  frameSpecificAnnotation(): string {
+    return "";
+  }
+
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}print ${this.expr.renderAsElanSource()}`;
   }

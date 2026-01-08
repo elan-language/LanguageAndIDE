@@ -31,6 +31,10 @@ export class AbstractProcedure extends SingleLineFrame {
     return "proc";
   }
 
+  frameSpecificAnnotation(): string {
+    return "abstract procedure";
+  }
+
   public override indent(): string {
     return singleIndent();
   }

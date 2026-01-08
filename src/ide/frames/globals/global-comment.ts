@@ -26,6 +26,10 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame {
     return "com";
   }
 
+  frameSpecificAnnotation(): string {
+    return "";
+  }
+
   outerHtmlTag: string = "";
 
   renderAsHtml(): string {

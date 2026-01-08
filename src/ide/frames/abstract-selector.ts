@@ -161,6 +161,11 @@ export abstract class AbstractSelector extends AbstractFrame {
   getIdPrefix(): string {
     return "select";
   }
+
+  frameSpecificAnnotation(): string {
+    return "";
+  }
+
   override deselect(): void {
     super.deselect();
     this.text = "";

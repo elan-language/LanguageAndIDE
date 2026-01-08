@@ -1,17 +1,4 @@
-import {
-  callAnnotation,
-  eachAnnotation,
-  enumAnnotation,
-  functionAnnotation,
-  letAnnotation,
-  mainAnnotation,
-  privateAnnotation,
-  procedureAnnotation,
-  recordAnnotation,
-  setAnnotation,
-  testAnnotation,
-  variableAnnotation,
-} from "../../compiler/keywords";
+import {} from "../../compiler/keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -22,7 +9,6 @@ import { Property } from "./class-members/property";
 import { selfType } from "./frame-helpers";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
-import { MemberFrame } from "./frame-interfaces/member-frame";
 import { ParseNode } from "./frame-interfaces/parse-node";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
@@ -36,6 +22,7 @@ import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { AssertStatement } from "./statements/assert-statement";
@@ -57,68 +44,11 @@ import { While } from "./statements/while";
 
 export class LanguagePython implements Language {
   annotation(frame: Frame): string {
-    //TODO: add 'private' as applicable
-    let a = `Python annotation not specified for ${typeof frame}`;
-    if (frame instanceof AbstractFunction) {
-    } else if (frame instanceof AbstractProcedure) {
-    } else if (frame instanceof AbstractProperty) {
-    } else if (frame instanceof AssertStatement) {
-    } else if (frame instanceof CallStatement) {
-      a = callAnnotation;
-    } else if (frame instanceof CatchStatement) {
-      // TODO
-    } else if (frame instanceof CommentStatement) {
-      a = "";
-    } else if (frame instanceof Each) {
-      a = eachAnnotation;
-    } else if (frame instanceof Else) {
-      a = "";
-    } else if (frame instanceof Enum) {
-      a = enumAnnotation;
-    } else if (frame instanceof For) {
-      a = "";
-    } else if (frame instanceof FunctionMethod) {
-      a = functionAnnotation;
-    } else if (frame instanceof GlobalFunction) {
-      a = functionAnnotation;
-    } else if (frame instanceof GlobalProcedure) {
-      a = procedureAnnotation;
-    } else if (frame instanceof IfStatement) {
-      a = "";
-    } else if (frame instanceof LetStatement) {
-      a = letAnnotation;
-    } else if (frame instanceof MainFrame) {
-      a = mainAnnotation;
-    } else if (frame instanceof Print) {
-      a = "";
-    } else if (frame instanceof ProcedureMethod) {
-      a = procedureAnnotation;
-    } else if (frame instanceof RecordFrame) {
-      a = recordAnnotation;
-    } else if (frame instanceof ReturnStatement) {
-      a = "";
-    } else if (frame instanceof SetStatement) {
-      a = setAnnotation;
-    } else if (frame instanceof TestFrame) {
-      a = testAnnotation;
-    } else if (frame instanceof Throw) {
-      // TODO
-    } else if (frame instanceof TryStatement) {
-      a = "";
-    } else if (frame instanceof While) {
-      a = "";
-    } else if (frame instanceof VariableStatement) {
-      a = variableAnnotation;
-    }
-    return a;
+    return frame.frameSpecificAnnotation();
   }
 
   commentMarker(): string {
     return this.hash;
-  }
-
-  private privateAnnotationIfPresent(member: MemberFrame): string {
-    return member.private ? " " + privateAnnotation : "";
   }
 
   renderSingleLineAsHtml(frame: Frame): string {
@@ -137,6 +67,8 @@ export class LanguagePython implements Language {
       html = `${this.exceptKeyword}<el-punc>:</el-punc>`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsHtml()}`;
+    } else if (frame instanceof Constant) {
+      html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Else) {
       const elseOrElif = frame.hasIf
         ? `<el-kw>${this.elifKeyword} </el-kw>${frame.condition.renderAsHtml()}`
@@ -167,11 +99,9 @@ export class LanguagePython implements Language {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for ${typeof frame}`;
     if (frame instanceof AbstractClass) {
-      html = ``;
+      html = `<el-kw>${this.classKeyword} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof ConcreteClass) {
-      html = ``;
-    } else if (frame instanceof Constant) {
-      html = ``;
+      html = `<el-kw>${this.classKeyword} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.defKeyword} </el-kw><el-punc>(</el-punc><el-kw>${this.selfKeyword}</el-kw>: ${selfType(frame)},${frame.params.renderAsHtml()}<el-punc>):</el-punc> <el-kw>none</el-kw>`;
     } else if (frame instanceof Each) {
@@ -194,7 +124,7 @@ export class LanguagePython implements Language {
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.ifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof InterfaceFrame) {
-      html = ``;
+      html = `<el-kw>${this.classKeyword} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.defKeyword} </el-kw><el-method>main</el-method>(): <el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof ProcedureMethod) {
@@ -202,7 +132,7 @@ export class LanguagePython implements Language {
     } else if (frame instanceof Property) {
       html = ``;
     } else if (frame instanceof RecordFrame) {
-      html = ``;
+      html = `<el-kw>${this.classKeyword} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>`;
     } else if (frame instanceof TestFrame) {
       html = `<el-kw>${this.defKeyword} </el-kw> <el-method>test_${frame.testDescription.renderAsElanSource()}</el-method><el-punc>()-> </el-punc><el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof TryStatement) {
@@ -226,7 +156,7 @@ export class LanguagePython implements Language {
         node.simpleType?.renderAsHtml() +
         `<el-punc>[</el-punc><el-type>${chopped}</el-type><el-punc>]</el-punc>`;
     } else if (node instanceof ParamDefNode) {
-      return node.name?.renderAsHtml() + ": " + node.type?.renderAsHtml();
+      html = node.name?.renderAsHtml() + ": " + node.type?.renderAsHtml();
     } else if (node instanceof BinaryOperation) {
       const open = node.keyword ? "<el-kw>" : "";
       const close = node.keyword ? "</el-kw>" : "";
@@ -238,7 +168,12 @@ export class LanguagePython implements Language {
       } else {
         text = node.renderAsElanSource();
       }
-      return `${open}${text}${close}`;
+      html = `${open}${text}${close}`;
+    } else if (node instanceof InheritanceNode) {
+      html =
+        node.matchedText.length > 0
+          ? `<el-punc>(</el-punc>${node.typeList?.renderAsHtml()}<el-punc>)</el-punc>`
+          : ``;
     }
     return html;
   }
@@ -264,6 +199,7 @@ NE:           '!=';
   }
 
   private defKeyword = "def";
+  private classKeyword = "class";
   private elifKeyword = "elif";
   private elseKeyword = "else";
   private exceptKeyword = "else";

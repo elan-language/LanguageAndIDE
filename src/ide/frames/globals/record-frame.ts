@@ -26,6 +26,10 @@ export class RecordFrame extends ClassFrame {
     return "class";
   }
 
+  frameSpecificAnnotation(): string {
+    return "record";
+  }
+
   public renderAsHtml(): string {
     return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
 <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>

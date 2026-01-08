@@ -26,8 +26,12 @@ export class ConcreteClass extends ClassFrame {
     return "class";
   }
 
+  frameSpecificAnnotation(): string {
+    return "class";
+  }
+
   public renderAsElanSource(): string {
-    return `${this.sourceAnnotations()}class ${this.name.renderAsElanSource()}${this.inheritanceAsSource()}\r
+    return `${this.sourceAnnotations()}class ${this.name.renderAsElanSource()}${this.inheritanceAsElanSource()}\r
 ${parentHelper_renderChildrenAsSource(this)}\r
 end class\r\n`;
   }
