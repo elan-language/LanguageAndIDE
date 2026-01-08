@@ -62,7 +62,6 @@ const pythonButton = document.getElementById("python-language") as HTMLDivElemen
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const loadButton = document.getElementById("load") as HTMLDivElement;
 const appendButton = document.getElementById("append") as HTMLDivElement;
-const importButton = document.getElementById("import") as HTMLDivElement;
 const saveButton = document.getElementById("save") as HTMLDivElement;
 const autoSaveButton = document.getElementById("auto-save") as HTMLDivElement;
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
@@ -216,7 +215,6 @@ class IDEViewModel implements IIDEViewModel {
           runButton,
           loadButton,
           appendButton,
-          importButton,
           saveButton,
           autoSaveButton,
           newButton,
@@ -246,7 +244,6 @@ class IDEViewModel implements IIDEViewModel {
       this.enable(languageButton, "Language");
       this.enable(loadButton, "Load code from a file");
       this.enable(appendButton, "Append code from a file onto the end of the existing code");
-      this.enable(importButton, "Import code from a file");
       this.enable(newButton, "Clear the current code and start afresh");
       this.enable(demosButton, "Load a demonstration program");
       this.enable(
@@ -784,8 +781,6 @@ loadButton.addEventListener("click", chooser(getUploader(), false));
 
 appendButton.addEventListener("click", chooser(getAppender(), true));
 
-importButton.addEventListener("click", chooser(getImporter(), true));
-
 saveButton.addEventListener("click", getDownloader());
 
 autoSaveButton.addEventListener("click", handleChromeAutoSave);
@@ -950,7 +945,6 @@ if (checkIsChrome() || confirmContinueOnNonChromeBrowser()) {
       stepButton,
       loadButton,
       appendButton,
-      importButton,
       saveButton,
       autoSaveButton,
       newButton,
@@ -1014,11 +1008,6 @@ function getAppender() {
   return useChromeFileAPI() ? handleChromeAppend : handleAppend;
 }
 
-function getImporter() {
-  // The `showOpenFilePicker()` method of the File System Access API is supported.
-  return useChromeFileAPI() ? handleChromeImport : handleImport;
-}
-
 async function handleChromeUpload(event: Event) {
   await wrapEventHandler(
     event,
@@ -1038,19 +1027,6 @@ async function handleChromeAppend(event: Event) {
     async () =>
       await fileManager.handleChromeUploadOrAppend(
         ParseMode.append,
-        codeViewModel,
-        ideViewModel,
-        testRunner,
-      ),
-  );
-}
-
-async function handleChromeImport(event: Event) {
-  await wrapEventHandler(
-    event,
-    async () =>
-      await fileManager.handleChromeUploadOrAppend(
-        ParseMode.import,
         codeViewModel,
         ideViewModel,
         testRunner,
@@ -1079,20 +1055,6 @@ async function handleAppend(event: Event) {
       await fileManager.handleUploadOrAppend(
         event,
         ParseMode.append,
-        codeViewModel,
-        ideViewModel,
-        testRunner,
-      ),
-  );
-}
-
-async function handleImport(event: Event) {
-  await wrapEventHandler(
-    event,
-    async () =>
-      await fileManager.handleUploadOrAppend(
-        event,
-        ParseMode.import,
         codeViewModel,
         ideViewModel,
         testRunner,

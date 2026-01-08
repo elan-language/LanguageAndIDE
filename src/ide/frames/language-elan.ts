@@ -142,6 +142,7 @@ export class LanguageElan implements Language {
     return html;
   }
 
+  // Not yet used - for illustration only
   grammarForNode(node: ParseNode): string {
     let grammar = "";
     if (node instanceof ParamDefNode) {
@@ -151,15 +152,16 @@ export class LanguageElan implements Language {
     } else if (node instanceof TypeGenericNode) {
       grammar = "LT OF SPACE type GT";
     }
+    // etc.
     return grammar;
   }
 
+    // Not yet used - for illustration only
   lexer(): string {
-    //Example only
     return `
 IS:           'is';
 PLUS:         '+';
-`;
+`; //etc.
   }
 
   private abstractKeyword = "abstract";

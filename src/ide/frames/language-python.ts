@@ -178,6 +178,7 @@ export class LanguagePython implements Language {
     return html;
   }
 
+  // Not yet used - for illustration only
   grammarForNode(node: ParseNode): string {
     let grammar = "";
     if (node instanceof ParamDefNode) {
@@ -187,15 +188,16 @@ export class LanguagePython implements Language {
     } else if (node instanceof TypeGenericNode) {
       grammar = "OPEN_SQ_BRACKET type CLOSE_SQ_BRACKET";
     }
+    // etc
     return grammar;
   }
 
+  // Not yet used - for illustration only
   lexer(): string {
-    //Example only
     return `
 EQ:           '==';
 NE:           '!=';
-`;
+`; //etc
   }
 
   private defKeyword = "def";
