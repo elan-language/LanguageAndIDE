@@ -1,6 +1,6 @@
 import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { BreakpointStatus } from "../../compiler/debugging/breakpoint-status";
-import { ghostedAnnotation, importedAnnotation } from "../../compiler/keywords";
+import { ghostedAnnotation } from "../../compiler/keywords";
 import {
   addDeleteToContextMenu,
   expandCollapseAll,
@@ -519,7 +519,6 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this.breakpointStatus !== BreakpointStatus.none, "breakpoint");
     this.pushClass(this.paused, "paused");
     this.pushClass(this.isGhosted(), ghostedAnnotation);
-    this.pushClass(this.isImported(), importedAnnotation);
     this._classes.push(DisplayColour[this.readDisplayStatus()]);
   }
 
@@ -802,11 +801,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   sourceAnnotations(): string {
-    return this.isImported()
-      ? `[${importedAnnotation}] `
-      : this.isGhosted()
-        ? `[${ghostedAnnotation}] `
-        : "";
+    return this.isGhosted() ? `[${ghostedAnnotation}] ` : "";
   }
 
   getContextMenuItems() {

@@ -55,7 +55,7 @@
 <h4>Notes</h4><textarea class="notes" id="notes1" placeholder="Student or teacher may optionally add notes here"></textarea><label class="done" for="done1">Step Completed</label><input class="step-complete" type="checkbox" id="done1"><span> Total hints used: <span class="hints-taken"></span>/<span class="hints-total"></span></span></div>
 
 <div class="step" id="step2"><h1>Step 2: Load and exploring the starting code </h1>
-<button class="load" id="load2-0" data-file="whac-a-mole_begin.elan">load the starting code</button><div id="code-load2-0" hidden=""># 60b25b7ed9e70a6dea604bfd2a02063f278d0305f0160215b4ee11cc256d6f05 Elan 1.9.0 guest default_profile valid
+<button class="load" id="load2-0" data-file="whac-a-mole_begin.elan">load the starting code</button><div id="code-load2-0" hidden=""># 41d45a026aa01dcbe6964e1ebe59217eba015c339c4f7186d3842d2e5f2c68c4 Elan 1.9.0 guest default_profile valid
 
 main
   variable score set to 0
@@ -88,14 +88,14 @@ procedure processKey(out hole as Hole, out score as Int)
   end if
 end procedure
 
-[imported] enum Hole vacant, mole, hit, miss
+enum Hole vacant, mole, hit, miss
 
-[imported] function htmlForSimpleGame(hole as Hole, score as Int) returns String
+function htmlForSimpleGame(hole as Hole, score as Int) returns String
   let core be htmlForHole(hole, "hole")
   return "&lt;style&gt;{styleSheet}&lt;/style&gt;&lt;div class='game'&gt;{core}&lt;/div&gt;&lt;div class='score'&gt;Score: {score}&lt;/score&gt;"
 end function
 
-[imported] function htmlForFullGame(holes as Array&lt;of Hole&gt;, score as Int) returns String
+function htmlForFullGame(holes as Array&lt;of Hole&gt;, score as Int) returns String
   variable core set to ""
   for i from 0 to holes.length() - 1 step 1
     set core to core + htmlForHole(holes[i], i.asString())
@@ -103,23 +103,23 @@ end function
   return "&lt;style&gt;{styleSheet}&lt;/style&gt;&lt;div class='game'&gt;{core}&lt;/div&gt;&lt;div class='score'&gt;Score: {score}&lt;/score&gt;"
 end function
 
-[imported] function htmlForHole(hole as Hole, label as String) returns String
+function htmlForHole(hole as Hole, label as String) returns String
   let img be imageForStatus[hole]
   return "&lt;div class='hole'&gt;&lt;img src='{img}'&gt;&lt;div class='label'&gt;{label}&lt;/div&gt;&lt;/div&gt;"
 end function
 
 # Acknowledgement:  mole icon source https://www.flaticon.com/
-[imported] constant vacantImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/vacant.png"
+constant vacantImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/vacant.png"
 
-[imported] constant moleImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/mole.png"
+constant moleImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/mole.png"
 
-[imported] constant hitImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/hit.png"
+constant hitImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/hit.png"
 
-[imported] constant missImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/miss.png"
+constant missImg set to "https://elan-lang.org/documentation/worksheets/whack-a-mole/miss.png"
 
-[imported] constant imageForStatus set to {Hole.vacant:vacantImg, Hole.mole:moleImg, Hole.hit:hitImg, Hole.miss:missImg}
+constant imageForStatus set to {Hole.vacant:vacantImg, Hole.mole:moleImg, Hole.hit:hitImg, Hole.miss:missImg}
 
-[imported] constant styleSheet set to '\n.game { display: flex; flex-direction: row; }\n.hole { display: flex; flex-direction: column; width: 50px; height: 50px; border: 10px solid white;}\n.label {width: 40px; text-align: center;}\n.hole img {height: 40px; width: 40px}\n.score{ margin-top: 20px;}'
+constant styleSheet set to '\n.game { display: flex; flex-direction: row; }\n.hole { display: flex; flex-direction: column; width: 50px; height: 50px; border: 10px solid white;}\n.label {width: 40px; text-align: center;}\n.hole img {height: 40px; width: 40px}\n.score{ margin-top: 20px;}'
 </div>, 
 watch the following video, exploring the code alongside the video:
 <div style="position: relative; padding-bottom: 79.2156862745098%; height: 0;"><iframe src="https://www.loom.com/embed/1cc0c1b2fac74ee19468d5e476105efc" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>

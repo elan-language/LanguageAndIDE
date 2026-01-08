@@ -1,19 +1,16 @@
-import { ghostedAnnotation, importedAnnotation } from "../../compiler/keywords";
+import { ghostedAnnotation } from "../../compiler/keywords";
 import { AbstractFrame } from "./abstract-frame";
 import { CodeSourceFromString } from "./code-source-from-string";
 import { Regexes } from "./fields/regexes";
 import {
   addDeleteToContextMenu,
   helper_pastePopUp,
-  isClass,
   isFrameWithStatements,
-  isGlobal,
   isSelector,
 } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
-import { ParseMode } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
 import { Profile } from "./frame-interfaces/profile";
@@ -68,8 +65,6 @@ export abstract class AbstractSelector extends AbstractFrame {
         .removeRegEx(Regexes.compilerDirective, false)
         .replace("[", "")
         .replace("] ", "");
-    } else if (source.mode === ParseMode.import) {
-      compilerDirective = importedAnnotation;
     }
 
     const options = this.optionsFilteredByContext(false).filter((o) => source.isMatch(o[0]));
@@ -85,9 +80,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   private processCompilerDirective(frame: Frame, compilerDirective: string) {
-    if (compilerDirective === importedAnnotation && (isGlobal(frame) || isClass(frame))) {
-      frame.setImported(true);
-    } else if (compilerDirective === ghostedAnnotation) {
+    if (compilerDirective === ghostedAnnotation) {
       frame.setGhosted(true);
     }
   }
