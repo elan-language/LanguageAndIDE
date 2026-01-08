@@ -56,7 +56,7 @@ export class StatementSelector extends AbstractSelector {
   }
 
   profileAllows(keyword: string): boolean {
-    return keyword.length > 0;
+    return keyword !== printKeyword;
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
