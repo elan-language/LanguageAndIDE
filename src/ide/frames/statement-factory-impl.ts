@@ -11,7 +11,6 @@ import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
 import { LetStatement } from "./statements/let-statement";
 import { Print } from "./statements/print";
-import { Repeat } from "./statements/repeat";
 import { SetStatement } from "./statements/set-statement";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
@@ -45,9 +44,6 @@ export class StatementFactoryImpl implements StatementFactory {
   }
   public newPrint(parent: Parent): Frame {
     return new Print(parent);
-  }
-  public newRepeat(parent: Parent): Frame {
-    return new Repeat(parent);
   }
   public newSet(parent: Parent): Frame {
     return new SetStatement(parent);

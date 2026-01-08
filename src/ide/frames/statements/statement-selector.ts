@@ -10,7 +10,6 @@ import {
   ifKeyword,
   letKeyword,
   printKeyword,
-  repeatKeyword,
   setKeyword,
   throwKeyword,
   tryKeyword,
@@ -55,7 +54,7 @@ export class StatementSelector extends AbstractSelector {
   }
 
   profileAllows(keyword: string): boolean {
-    return keyword !== printKeyword && keyword !== repeatKeyword;
+    return keyword !== printKeyword;
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {

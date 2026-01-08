@@ -46,7 +46,6 @@ export const procedureKeyword = "procedure";
 export const propertyKeyword = "property";
 export const recordKeyword = "record";
 export const refKeyword = "ref";
-export const repeatKeyword = "repeat";
 export const returnKeyword = "return";
 export const returnsKeyword = "returns";
 export const setKeyword = "set";
@@ -125,7 +124,6 @@ export const allKeywords = [
   propertyKeyword,
   recordKeyword,
   refKeyword,
-  repeatKeyword,
   returnKeyword,
   returnsKeyword,
   setKeyword,

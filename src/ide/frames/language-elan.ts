@@ -211,7 +211,6 @@ PLUS:         '+';
   private propertyKeyword = "property";
   private recordKeyword = "record";
   private refKeyword = "ref";
-  private repeatKeyword = "repeat";
   private returnKeyword = "return";
   private returnsKeyword = "returns";
   private setKeyword = "set";

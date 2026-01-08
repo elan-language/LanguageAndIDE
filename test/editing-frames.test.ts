@@ -37,9 +37,7 @@ import {
   loadFileAsModelNew,
   shift_down,
   shift_tab,
-  shift_up,
   tab,
-  up,
 } from "./testHelpers";
 
 suite("Editing Frames", () => {
@@ -163,60 +161,6 @@ suite("Editing Frames", () => {
     assert.equal(file.getLastChild(), sel0);
     assert.equal(file.getFirstChild(), phi);
   });
-  test("Multi-selection incl. reversal", () => {
-    const file = T03_mainWithAllStatements();
-    const print = file.getById("print14");
-    const whil = file.getById("while16");
-    const rep = file.getById("repeat19");
-    const fr = file.getById("for22");
-    whil.select(true, false);
-    whil.processKey(shift_down());
-    rep.processKey(shift_down());
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), true);
-    assert.equal(fr.isSelected(), true);
-    fr.processKey(shift_up());
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), true);
-    assert.equal(fr.isSelected(), false);
-    rep.processKey(shift_up());
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), false);
-    assert.equal(fr.isSelected(), false);
-    whil.processKey(shift_up());
-    assert.equal(print.isSelected(), true);
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), false);
-    assert.equal(fr.isSelected(), false);
-    print.processKey(shift_down());
-    assert.equal(print.isSelected(), false);
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), false);
-    assert.equal(fr.isSelected(), false);
-  });
-  test("Move multi-selection", () => {
-    const file = T03_mainWithAllStatements();
-    const whil = file.getById("while16");
-    const rep = file.getById("repeat19");
-    const fr = file.getById("for22");
-    whil.select(true, false);
-    whil.processKey(shift_down());
-    rep.processKey(shift_down());
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), true);
-    assert.equal(fr.isSelected(), true);
-    fr.processKey(ctrl_down());
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), true);
-    assert.equal(fr.isSelected(), true);
-    whil.select(true, false);
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), false);
-    assert.equal(fr.isSelected(), false);
-    whil.processKey(up());
-    const each = file.getById("each28");
-    assert.equal(each.isSelected(), true);
-  });
   test("Remove selector frame", () => {
     const file = emptyFunctionOnly();
     const fun = file.getById("func1") as GlobalFunction;
@@ -265,23 +209,6 @@ suite("Editing Frames", () => {
     assert.equal(cls.getChildren().length, 1);
     assert.equal(cls.getChildren()[0] instanceof MemberSelector, true);
   });
-  test("Delete multi-selection", () => {
-    const file = T03_mainWithAllStatements();
-    const main = file.getById("main1") as MainFrame;
-    assert.equal(main.getChildren().length, 14);
-    const whil = file.getById("while16");
-    const rep = file.getById("repeat19");
-    const fr = file.getById("for22");
-    whil.select(true, false);
-    whil.processKey(shift_down());
-    rep.processKey(shift_down());
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), true);
-    assert.equal(fr.isSelected(), true);
-    whil.processKey(ctrl_del());
-    assert.equal(main.getChildren().length, 11);
-  });
-
   test("#644 cutting statement when there is already a selector following", async () => {
     const file = await loadFileAsModelNew(`${__dirname}\\files\\test644.elan`);
     const runner = await createTestRunner();

@@ -195,7 +195,6 @@ import { For } from "../frames/statements/for";
 import { IfStatement } from "../frames/statements/if-statement";
 import { LetStatement } from "../frames/statements/let-statement";
 import { Print } from "../frames/statements/print";
-import { Repeat } from "../frames/statements/repeat";
 import { ReturnStatement } from "../frames/statements/return-statement";
 import { SetStatement } from "../frames/statements/set-statement";
 import { Throw } from "../frames/statements/throw";
@@ -589,20 +588,6 @@ export function transform(
       .map((f) => transform(f, f.getHtmlId(), whileAsn)) as AstNode[];
 
     return whileAsn;
-  }
-
-  if (node instanceof Repeat) {
-    const repeatAsn = new RepeatAsn(node.getHtmlId(), scope);
-    repeatAsn.breakpointStatus = node.breakpointStatus;
-    repeatAsn.condition =
-      transform(node.condition, node.getHtmlId(), repeatAsn) ?? EmptyAsn.Instance;
-
-    repeatAsn.children = node
-      .getChildren()
-      .filter((f) => !isSelector(f))
-      .map((f) => transform(f, f.getHtmlId(), repeatAsn)) as AstNode[];
-
-    return repeatAsn;
   }
 
   if (node instanceof IfStatement) {
