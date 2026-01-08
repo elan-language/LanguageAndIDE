@@ -156,7 +156,7 @@ export class LanguageElan implements Language {
     return grammar;
   }
 
-    // Not yet used - for illustration only
+  // Not yet used - for illustration only
   lexer(): string {
     return `
 IS:           'is';
