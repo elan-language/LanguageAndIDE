@@ -388,32 +388,6 @@ end main`;
     await assertDebugBreakPoint(fileImpl, "set21", expected);
   });
 
-  test("Pass_InRepeatLoop", async () => {
-    const code = `${testHeader}
-
-main
-  variable x set to 0
-  repeat
-    set x to x + 1
-  end repeat when x >= 10
-  print x
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [asDebugSymbol("x", 0, '{"Type":"Int"}')];
-
-    await assertDebugBreakPoint(fileImpl, "set9", expected);
-  });
-
   test("Pass_InTry", async () => {
     const code = `${testHeader}
 

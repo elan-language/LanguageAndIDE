@@ -45,7 +45,6 @@ export class StatementSelector extends AbstractSelector {
       [ifKeyword, (parent: Parent) => this.factory.newIf(parent)],
       [letKeyword, (parent: Parent) => this.factory.newLet(parent)],
       [printKeyword, (parent: Parent) => this.factory.newPrint(parent)],
-      [repeatKeyword, (parent: Parent) => this.factory.newRepeat(parent)],
       [setKeyword, (parent: Parent) => this.factory.newSet(parent)],
       [throwKeyword, (parent: Parent) => this.factory.newThrow(parent)],
       [tryKeyword, (parent: Parent) => this.factory.newTryCatch(parent)],
@@ -56,7 +55,7 @@ export class StatementSelector extends AbstractSelector {
   }
 
   profileAllows(keyword: string): boolean {
-    return (keyword !== printKeyword) && (keyword !== repeatKeyword);
+    return keyword !== printKeyword && keyword !== repeatKeyword;
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
