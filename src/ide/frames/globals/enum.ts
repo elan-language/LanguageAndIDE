@@ -55,8 +55,4 @@ export class Enum extends SingleLineFrame implements GlobalFrame {
     this.name.parseFrom(source);
     this.values.parseFrom(source);
   }
-
-  override isWithinAnImportedFrame(): boolean {
-    return false; // So that frame number is still added
-  }
 }

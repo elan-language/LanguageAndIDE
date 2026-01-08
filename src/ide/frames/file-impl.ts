@@ -332,11 +332,6 @@ export class FileImpl implements File {
   getFirstChild(): Frame {
     return parentHelper_getFirstChild(this);
   }
-  private getFirstNonImportedChild(): Frame {
-    const globals = this.getChildren();
-    const nonImported = globals.filter((g) => !g.isImported());
-    return nonImported.length > 0 ? nonImported[0] : this.getLastChild();
-  }
   getLastChild(): Frame {
     return parentHelper_getLastChild(this);
   }
@@ -588,11 +583,6 @@ export class FileImpl implements File {
       return isSelector(frame)
         ? (frame as GlobalSelector)
         : parentHelper_insertOrGotoChildSelector(this, true, frame);
-    } else if (mode === ParseMode.import) {
-      frame = this.getFirstNonImportedChild();
-      return isSelector(frame)
-        ? (frame as GlobalSelector)
-        : parentHelper_insertOrGotoChildSelector(this, false, frame);
     } else {
       return this.getFirstSelectorAsDirectChild();
     }
@@ -814,14 +804,6 @@ export class FileImpl implements File {
   }
 
   isGhostedOrWithinAGhostedFrame(): boolean {
-    return false;
-  }
-
-  isWithinAnImportedFrame(): boolean {
-    return false;
-  }
-
-  isImported(): boolean {
     return false;
   }
 

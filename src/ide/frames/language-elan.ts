@@ -59,7 +59,7 @@ export class LanguageElan implements Language {
       html = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof Constant) {
       // special case because the </el-top> needs to be placed part way through the line
-      html = `<el-kw>${this.constantKeyword} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.isImported() ? "" : frame.value.renderAsHtml()}`;
+      html = `<el-kw>${this.constantKeyword} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Else) {
       const ifClause = frame.hasIf
         ? `<el-kw> ${this.ifKeyword} </kw> ${frame.condition.renderAsHtml()}`

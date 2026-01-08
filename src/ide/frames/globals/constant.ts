@@ -64,8 +64,4 @@ export class Constant extends AbstractFrame implements GlobalFrame, Collapsible 
     return `${this.sourceAnnotations()}constant ${this.name.renderAsElanSource()} set to ${this.value.renderAsElanSource()}\r
 `;
   }
-
-  override isWithinAnImportedFrame(): boolean {
-    return false; // So that frame number is still added
-  }
 }

@@ -148,7 +148,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   }
 
   protected renderChildrenAsHtml(): string {
-    return this.isImported() ? "" : parentHelper_renderChildrenAsHtml(this);
+    return parentHelper_renderChildrenAsHtml(this);
   }
   protected renderChildrenAsSource(): string {
     return parentHelper_renderChildrenAsSource(this);

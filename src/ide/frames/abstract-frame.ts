@@ -51,7 +51,6 @@ export abstract class AbstractFrame implements Frame {
   private _movable: boolean = true;
   private _parseStatus: ParseStatus = ParseStatus.default;
   private _ghosted: boolean = false;
-  private _imported: boolean = false;
 
   constructor(parent: Parent) {
     this._parent = parent;
@@ -104,9 +103,7 @@ export abstract class AbstractFrame implements Frame {
   abstract outerHtmlTag: string;
 
   getFrNo(): string {
-    return this.isGhostedOrWithinAGhostedFrame() || this.isWithinAnImportedFrame()
-      ? ""
-      : this.getFile().getFrNo();
+    return this.isGhostedOrWithinAGhostedFrame() ? "" : this.getFile().getFrNo();
   }
 
   fieldUpdated(_field: Field): void {
@@ -778,14 +775,6 @@ export abstract class AbstractFrame implements Frame {
     return this._ghosted;
   }
 
-  isImported() {
-    return this._imported;
-  }
-
-  setImported(flag: boolean) {
-    this._imported = flag;
-  }
-
   isGhostedOrWithinAGhostedFrame(): boolean {
     return this.isGhosted() || this.getParent().isGhostedOrWithinAGhostedFrame();
   }
@@ -794,11 +783,6 @@ export abstract class AbstractFrame implements Frame {
     this.getFile().deleteAllGhosted();
     return true;
   };
-
-  isWithinAnImportedFrame(): boolean {
-    const parent = this.getParent();
-    return parent.isImported() || parent.isWithinAnImportedFrame();
-  }
 
   sourceAnnotations(): string {
     return this.isGhosted() ? `[${ghostedAnnotation}] ` : "";
