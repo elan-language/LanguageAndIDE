@@ -1,4 +1,4 @@
-# 79848667a8257b03d9f2d408e08c37e9dcf1afdbbfe4c69a9e6ddf69c9eaf6cb Elan 1.9.0 guest default_profile valid
+# cc3c1b5a9ce08cd40367701b33679c508d8740e46bfba394d1738a07851fbf2e Elan 1.9.0 guest default_profile valid
 
 [ghosted] constant k set to 3
 
@@ -13,7 +13,7 @@ end class
 [ghosted] # ghosted comment
 [ghosted] main
   for i from 1 to 10 step 1
-    print i
+    call printLine(i)
   end for
 end main
 

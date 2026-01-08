@@ -34,7 +34,7 @@ import { getTestRunner } from "./runner";
 
 
 // flag to update test file
-const updateTestFiles = false;
+const updateTestFiles = true;
 
 export async function assertEffectOfActionNew(
   sourceFile: string,

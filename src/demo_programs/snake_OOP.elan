@@ -13,7 +13,7 @@ main
     call pause(150)
     call snake.clockTick(getKey(), apple)
   end while
-  print "Game Over! Score: {snake.score()}"
+  call printLine("Game Over! Score: {snake.score()}")
 end main
 
 class Snake

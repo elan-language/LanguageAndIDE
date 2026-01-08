@@ -2,5 +2,5 @@
 
 main
   # example for Sequence function
-  print sequence(2, 30).filter(lambda n as Int => sequence(2, sqrt(n).floor()).reduce(true, lambda c as Boolean, m as Int => c and ((n mod m) isnt 0)))
+  call printLine(sequence(2, 30).filter(lambda n as Int => sequence(2, sqrt(n).floor()).reduce(true, lambda c as Boolean, m as Int => c and ((n mod m) isnt 0))))
 end main

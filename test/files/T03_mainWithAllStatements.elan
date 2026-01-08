@@ -1,11 +1,11 @@
-# 08cf2d7c64e7b48302ac8dbbe91333465302dfecf899ec11b2a45f13bb4b2b1f Elan 1.9.0 guest default_profile valid
+# 0453016160e9fd226d730e248d5a95fad8aa95de8571ea626e1cda4786ec7298 Elan 1.9.0 guest default_profile valid
 
 main
   variable a set to 3
   set a to 3 + 4
   throw exception "error"
   call signIn(rwp, password)
-  print "Hello World!"
+  call printLine("Hello World!")
   while newGame
 
   end while

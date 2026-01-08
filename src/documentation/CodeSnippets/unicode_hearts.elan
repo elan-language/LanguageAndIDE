@@ -5,5 +5,5 @@ function hearts() returns String
 end function
 
 main
-  print hearts()
+  call printLine(hearts())
 end main

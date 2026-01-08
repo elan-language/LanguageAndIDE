@@ -2,7 +2,7 @@
 
 main
   variable r set to new Rule("a", "b", "c", "d", Dir.left)
-  print r
+  call printLine(r)
 end main
 
 enum Dir left, right

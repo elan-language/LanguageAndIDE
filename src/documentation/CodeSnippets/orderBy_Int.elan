@@ -3,5 +3,5 @@
 main
   let numbers be [27, 2, 3, 5, 7, 31, 37, 11, 23, 13, 19, 23]
   let ordered be numbers.orderBy(lambda x as Int, y as Int => x > y)
-  print ordered
+  call printLine(ordered)
 end main

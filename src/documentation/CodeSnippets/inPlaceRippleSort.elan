@@ -3,7 +3,7 @@
 main
   variable li set to example.asList()
   call inPlaceRippleSort(li)
-  print li
+  call printLine(li)
 end main
 
 procedure inPlaceRippleSort(out arr as List<of Int>)

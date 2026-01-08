@@ -11,7 +11,7 @@ main
     call playersTurn(sequence, interval, ok)
     call clearVectorGraphics()
   end while
-  print "Game over. You scored: {sequence.length() - 1}"
+  call printLine("Game over. You scored: {sequence.length() - 1}")
 end main
 
 procedure simonsTurn(sequence as List<of Int>, interval as Int)

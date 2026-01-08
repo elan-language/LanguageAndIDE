@@ -3,11 +3,11 @@
 main
   let pic be "<img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg'\nwidth='400' height='200'\ntitle='shark' alt='shark'>"
   call displayHtml(pic)
-  print "\n\npic"
+  call printLine("\n\npic")
   call pause(2000)
   call clearHtml()
   # swap quotes: not working in 1.4.0
   let pic2 be '<img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg" \n width="400" height="200" \n title="shark" alt="shark">'
   call displayHtml(pic2)
-  print "pic2"
+  call printLine("pic2")
 end main

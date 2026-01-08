@@ -3,6 +3,6 @@
 main
   variable myString set to "1"
   variable success, parsedValue set to parseAsInt(myString)
-  print success
-  print parsedValue
+  call printLine(success)
+  call printLine(parsedValue)
 end main

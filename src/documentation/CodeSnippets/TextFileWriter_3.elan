@@ -8,6 +8,6 @@ main
   try
     call file.saveAndClose()
   catch exception in e
-    print "File save cancelled"
+    call printLine("File save cancelled")
   end try
 end main

@@ -2,5 +2,5 @@
 
 main
   let pic be image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg with alt set to "Shark"
-  print pic
+  call printLine(pic)
 end main

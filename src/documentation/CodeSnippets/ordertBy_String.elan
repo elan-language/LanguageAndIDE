@@ -2,5 +2,5 @@
 
 main
   let names be {"Simon", "Pauline", "Jason", "Zelda", "Edith", "Lance", "Alice", "Paul"}
-  print names.orderBy(lambda x as String, y as String => x.isBefore(y))
+  call printLine(names.orderBy(lambda x as String, y as String => x.isBefore(y)))
 end main

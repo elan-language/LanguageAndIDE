@@ -1,7 +1,7 @@
 # ff187815b2b4974e382f232dce538a15eb003871e593d98a0b62b7b3407fb369 Elan 1.9.0 guest default_profile valid
 
 main
-  print percent(11, 10)
+  call printLine(percent(11, 10))
 end main
 
 function percent(value as Float, maximum as Float) returns Float

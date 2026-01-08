@@ -21,7 +21,7 @@ main
     call printLine("Step: {steps}\nState: {tm.currentState}\nRule applied: {rule.asString()}")
     call pause(40)
   end while
-  print "\n\nThe roman numeral equivalent for {decimal} is {tm.tape.trim()}"
+  call printLine("\n\nThe roman numeral equivalent for {decimal} is {tm.tape.trim()}")
 end main
 
 constant initState set to "init"

@@ -19,7 +19,7 @@ main
     call displayVectorGraphics(vg)
     set count to count + 1
   end while
-  print "Finished"
+  call printLine("Finished")
 end main
 
 function onepoint(x as Float, y as Float, r as Random) returns (RectangleVG, Float, Float, Random)

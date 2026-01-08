@@ -3,7 +3,7 @@
 main
   let li be [3, 6, 1, 0, 99, 4, 67]
   call inPlaceRippleSort(li)
-  print li
+  call printLine(li)
 end main
 
 procedure inPlaceRippleSort(li as List<of Int>)

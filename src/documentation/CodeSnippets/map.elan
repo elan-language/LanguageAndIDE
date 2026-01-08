@@ -2,11 +2,11 @@
 
 main
   let li be [1, 2, 3, 4, 5]
-  print li.map(lambda n as Int => n^3)
+  call printLine(li.map(lambda n as Int => n^3))
   let names be ["Tom", "Dick", "Harriet"]
-  print names.map(lambda s as String => s.upperCase())
-  print names.map(lambda s as String => reverseString(s))
-  print reverseStringsInList(names)
+  call printLine(names.map(lambda s as String => s.upperCase()))
+  call printLine(names.map(lambda s as String => reverseString(s)))
+  call printLine(reverseStringsInList(names))
 end main
 
 function reverseStringsInList(l as List<of String>) returns List<of String>

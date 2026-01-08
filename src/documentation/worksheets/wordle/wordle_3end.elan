@@ -24,7 +24,7 @@ procedure playGame()
   end while
   call clearPrintedText()
   if solved then
-    print "Well done!"
+    call printLine("Well done!")
   end if
 end procedure
 
@@ -46,7 +46,7 @@ procedure enterAttempt(attemptNo as Int, grid as Array2D<of String>, used as Dic
       if allValidAttemptWords.contains(word) then
         set chNo to chNo + 1
       else
-        print "Invalid word"
+        call printLine("Invalid word")
       end if
     end if
     call displayHtml(drawGrid(grid) + drawKeyboard(used))
@@ -269,17 +269,17 @@ procedure playReverseGame(firstAttempt as String)
     if possible.length() > 0 then
       set attempt to possible[0]
     else
-      print "No possible target matches marks so far"
+      call printLine("No possible target matches marks so far")
       set attemptNo to 6
     end if
   end while
 end procedure
 
 main
-  print "Starting..."
+  call printLine("Starting...")
   let validTargets be allValidTargetWords.split(" ")
   let successPercent, average be analyseAlgorithm("ARISE", validTargets)
-  print "{successPercent}% of the puzzles solved within 6 attempts with an average of {average} attempts."
+  call printLine("{successPercent}% of the puzzles solved within 6 attempts with an average of {average} attempts.")
 end main
 
 function attemptsNeededToSolve(target as String, firstAttempt as String) returns Int

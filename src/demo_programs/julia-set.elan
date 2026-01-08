@@ -14,7 +14,7 @@ main
     let vg be allpoints(p)
     call displayVectorGraphics(vg)
     call p.checkkeys()
-    print "x = {p.jx} y = {p.jy}"
+    call printLine("x = {p.jx} y = {p.jy}")
   end while
 end main
 

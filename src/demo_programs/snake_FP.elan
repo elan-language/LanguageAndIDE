@@ -12,7 +12,7 @@ main
     call pause(150)
     set game to clockTick(game, getKey())
   end while
-  print "Game Over! Score: {score(game)}"
+  call printLine("Game Over! Score: {score(game)}")
 end main
 
 function clockTick(g as Game, k as String) returns Game
