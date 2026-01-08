@@ -3,8 +3,6 @@ import { DebugSymbol } from "./debug-symbol";
 export interface ElanInputOutput {
   print(text: string): Promise<void>;
 
-  print(text: string): Promise<void>;
-
   printTab(position: number, text: string): Promise<void>;
 
   readLine(): Promise<string>;

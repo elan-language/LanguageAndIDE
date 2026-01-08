@@ -1,9 +1,9 @@
 import { DebugSymbol } from "../compiler/compiler-interfaces/debug-symbol";
 import { ElanInputOutput } from "../compiler/compiler-interfaces/elan-input-output";
 import {
-    WebWorkerBreakpointMessage,
-    WebWorkerMessage,
-    WebWorkerWriteMessage,
+  WebWorkerBreakpointMessage,
+  WebWorkerMessage,
+  WebWorkerWriteMessage,
 } from "./web/web-worker-messages";
 
 export class StubInputOutput implements ElanInputOutput {
@@ -123,22 +123,6 @@ export class StubInputOutput implements ElanInputOutput {
         }
       };
       postMessage(this.writeMsg("clearAllGraphics"));
-    });
-  }
-
-  print(text: string) {
-    return new Promise<void>((rs, rj) => {
-      onmessage = (e) => {
-        const data = e.data as WebWorkerMessage;
-
-        if (data.type === "read") {
-          rs();
-        }
-        if (data.type === "status" && data.status === "error") {
-          rj(data.error as string);
-        }
-      };
-      postMessage(this.writeMsg("printLine", [text]));
     });
   }
 

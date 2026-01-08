@@ -72,10 +72,6 @@ export class TestInputOutput implements ElanInputOutput {
     this.printed = this.printed + line;
     return Promise.resolve();
   }
-  print(line: string): Promise<void> {
-    this.print(line); //Currently, newline is not added for testing purposes
-    return Promise.resolve();
-  }
   printTab(position: number, text: string): Promise<void> {
     const charsSinceNl = this.printed.length;
     const spaces =

@@ -202,13 +202,6 @@ export class WebInputOutput implements ElanInputOutput {
   currentInterval?: any;
 
   async print(text: string): Promise<void> {
-    await this.print(`${text}\n`);
-    const element = document.getElementById("printed-text")!;
-    element.scrollTop = element.scrollHeight;
-    return Promise.resolve();
-  }
-
-  async print(text: string): Promise<void> {
     this.printedText = `${this.printedText}${sanitiseHtml(text)}`;
     await this.renderPrintedText();
     return Promise.resolve();
