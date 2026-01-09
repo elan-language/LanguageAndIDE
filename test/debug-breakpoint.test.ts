@@ -521,7 +521,7 @@ main
   if a then
     variable b set to 1
     set b to 2
-  else if a is false then 
+  elif a is false then 
     variable c set to 1
     set c to 2
   end if
@@ -542,7 +542,7 @@ end main`;
       asDebugSymbol("c", 1, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set21", expected);
+    await assertDebugBreakPoint(fileImpl, "set20", expected);
   });
 
   test("Pass_AsyncBreakPoints", async () => {

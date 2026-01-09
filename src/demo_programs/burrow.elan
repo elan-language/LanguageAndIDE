@@ -1,4 +1,4 @@
-# 758c714b5697aadee0533746b966e09abc9017a84dc00dd912eb06a1feecce0c Elan 1.9.0 guest default_profile valid
+# 9c3bac26e60601f1d606468ac6b13e3b6b93a2d1d789e143fb6e5586b4d18b6c Elan 1.9.0 guest default_profile valid
 
 main
   let blocks be new Array2D<of Int>(40, 30, white)
@@ -11,11 +11,11 @@ main
     let direction be randomInt(0, 3)
     if direction is 0 then
       set x to minInt([x + 1, 39])
-    else if direction is 1 then
+    elif direction is 1 then
       set x to maxInt([x - 1, 0])
-    else if direction is 2 then
+    elif direction is 2 then
       set y to minInt([y + 1, 29])
-    else if direction is 3 then
+    elif direction is 3 then
       set y to maxInt([y - 1, 0])
     end if
   end while

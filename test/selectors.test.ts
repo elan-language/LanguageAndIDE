@@ -268,7 +268,7 @@ suite("Selector tests", () => {
     const if1 = new IfStatement(fm);
     const s = new StatementSelector(if1);
     const help = s.getCompletion();
-    assert.equal(help, " each else for if let set throw try variable while #"); //else, but no call
+    assert.equal(help, " each elif else for if let set throw try variable while #"); //else, but no call
   });
   test("Selection Context - in an IfThen", () => {
     const fl = new FileImpl(
@@ -282,7 +282,7 @@ suite("Selector tests", () => {
     const ifThen = new IfStatement(m);
     const s = new StatementSelector(ifThen);
     const help = s.getCompletion();
-    assert.equal(help, " call each else for if let set throw try variable while #");
+    assert.equal(help, " call each elif else for if let set throw try variable while #");
   });
   test("Selection Context - selector prevents more than one main", () => {
     const fl = new FileImpl(

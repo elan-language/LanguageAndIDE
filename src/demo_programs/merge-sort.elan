@@ -1,4 +1,4 @@
-# f686576f4837390aec8d27f99eea8bde0e147ab37398efee45996e51a870ef59 Elan 1.9.0 guest default_profile valid
+# 1772b4d35d3b77e51cbb53531d008159f6f0b67670a864079f18dde3c3a3b704 Elan 1.9.0 guest default_profile valid
 
 function sort(li as List<of String>) returns List<of String>
   variable result set to li
@@ -31,9 +31,9 @@ function merge(a as List<of String>, b as List<of String>) returns List<of Strin
   variable result set to empty List<of String>
   if a.length() is 0 then
     set result to b
-  else if b.length() is 0 then
+  elif b.length() is 0 then
     set result to a
-  else if a[0].isBefore(b[0]) then
+  elif a[0].isBefore(b[0]) then
     set result to [a[0]].withAppendList(merge(a[1..], b))
   else
     set result to [b[0]].withAppendList(merge(a, b[1..]))

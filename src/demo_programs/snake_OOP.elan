@@ -1,4 +1,4 @@
-# 657aca57061ad37213878f18570719c8e7dc2320c662ee9431af3a6c055b305e Elan 1.9.0 guest default_profile valid
+# 41439b738b0555b2debd0c544d7dd519d3128748901022d8b5de2766078262d2 Elan 1.9.0 guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -73,11 +73,11 @@ class Snake
   private procedure setDirection(key as String)
     if key is "w" then
       set property.currentDir to Direction.up
-    else if key is "s" then
+    elif key is "s" then
       set property.currentDir to Direction.down
-    else if key is "a" then
+    elif key is "a" then
       set property.currentDir to Direction.left
-    else if key is "d" then
+    elif key is "d" then
       set property.currentDir to Direction.right
     end if
   end procedure
@@ -120,11 +120,11 @@ class Square
     variable newY set to property.y
     if d is Direction.left then
       set newX to property.x - 1
-    else if d is Direction.right then
+    elif d is Direction.right then
       set newX to property.x + 1
-    else if d is Direction.up then
+    elif d is Direction.up then
       set newY to property.y - 1
-    else if d is Direction.down then
+    elif d is Direction.down then
       set newY to property.y + 1
     end if
     return new Square(newX, newY)

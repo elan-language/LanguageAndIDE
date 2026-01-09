@@ -1,4 +1,4 @@
-# 4e00ac114d83eb4dfe92925275ccd9cb51d7c4bba9b84827c57a52c21e5bab65 Elan 1.9.0 guest default_profile valid
+# b2d3ec2e78ee280100b7fa8a2830f8ff7e81d6af2a69178a7bd036153441a96b Elan 1.9.0 guest default_profile valid
 
 # REDO on basis that the computer player will be added using 'append' with small mods to your code 
 main
@@ -19,11 +19,11 @@ procedure move(out x as Int, out y as Int, out dir as String)
   end if
   if dir is "d" then
     set x to x + 1
-  else if dir is "s" then
+  elif dir is "s" then
     set y to y + 1
-  else if dir is "a" then
+  elif dir is "a" then
     set x to x - 1
-  else if dir is "w" then
+  elif dir is "w" then
     set y to y - 1
   end if
 end procedure

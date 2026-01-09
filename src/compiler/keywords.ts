@@ -12,6 +12,7 @@ export const constructorKeyword = "constructor";
 export const copyKeyword = "copy";
 export const divKeyword = "div";
 export const eachKeyword = "each";
+export const elifKeyword = "elif";
 export const elseKeyword = "else";
 export const emptyKeyword = "empty";
 export const endKeyword = "end";
@@ -60,9 +61,6 @@ export const tupleKeyword = "tuple";
 export const variableKeyword = "variable";
 export const whileKeyword = "while";
 export const withKeyword = "with";
-
-//Python keywords
-export const elifKeyword = "elif";
 
 //Not added to allKeywords
 export const abstractPropertyKeywords = abstractKeyword + " " + propertyKeyword;

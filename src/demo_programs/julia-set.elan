@@ -1,4 +1,4 @@
-# 3aca51cf4d682070394006b7d5f1577694aa08553513fbc2b5b8db52e58ca633 Elan 1.9.0 guest default_profile valid
+# f628585d10ba5a5a467ec6d22cd3d6c3d5487542938cb5f3d71628d69845bbf8 Elan 1.9.0 guest default_profile valid
 
 # After image is displayed, press: 
 # - z to zoom in, x to zoom out
@@ -85,23 +85,23 @@ class Coords
       while k isnt ""
         if k is "z" then
           set property.scale to property.scale*1.2
-        else if k is "x" then
+        elif k is "x" then
           set property.scale to property.scale/1.2
-        else if k is "ArrowUp" then
+        elif k is "ArrowUp" then
           set property.yoff to property.yoff + panstep
-        else if k is "ArrowDown" then
+        elif k is "ArrowDown" then
           set property.yoff to property.yoff - panstep
-        else if k is "ArrowLeft" then
+        elif k is "ArrowLeft" then
           set property.xoff to property.xoff + panstep
-        else if k is "ArrowRight" then
+        elif k is "ArrowRight" then
           set property.xoff to property.xoff - panstep
-        else if k is "g" then
+        elif k is "g" then
           set property.jx to property.jx + jstep
-        else if k is "j" then
+        elif k is "j" then
           set property.jx to property.jx - jstep
-        else if k is "y" then
+        elif k is "y" then
           set property.jy to property.jy + jstep
-        else if k is "h" then
+        elif k is "h" then
           set property.jy to property.jy - jstep
           # for autocomplete in the RHS expression, don't type "property"
         else

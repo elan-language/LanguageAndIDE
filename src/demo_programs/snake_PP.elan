@@ -1,4 +1,4 @@
-# cef4d9212b1bcfeabae02c00f69ff6ffb7f1919268b4ca2de639a5b15b822d64 Elan 1.9.0 guest default_profile valid
+# 82eff9f9f84aa1f33ab6c8e6fcd2e8f716823ffde4ef1beffdddf31a012c5aa6 Elan 1.9.0 guest default_profile valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -67,11 +67,11 @@ function getAdjacentSquare(sq as List<of Int>, dir as String) returns List<of In
   variable newY set to sq[1]
   if dir is "left" then
     set newX to newX - 1
-  else if dir is "right" then
+  elif dir is "right" then
     set newX to newX + 1
-  else if dir is "up" then
+  elif dir is "up" then
     set newY to newY - 1
-  else if dir is "down" then
+  elif dir is "down" then
     set newY to newY + 1
   end if
   return [newX, newY]

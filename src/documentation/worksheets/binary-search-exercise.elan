@@ -1,4 +1,4 @@
-# 09ae317baf5bcc37829f2ccac6c799bf97b33319785aece953e4f4f1ee0a2f04 Elan 1.9.0 guest default_profile valid
+# b374bd9edf3f523401bf261b2e6bb02bc49b2b8fd0c5ada53f10d7b73a74fde5 Elan 1.9.0 guest default_profile valid
 
 # Exercise: implement a function to search for an item in a sorted list, 
 # using the 'binary search' algorithm
@@ -15,7 +15,7 @@
 # - To extract the lists before and after the mid-point use the range indexes:
 #    'li[..mid]' and 'li[mid+1..]'
 # - You can implement the whole algorithm just by adding a new 'if' statement between the
-#   first and last lines, containing 'else if/else' clauses as needed. Each clause should
+#   first and last lines, containing 'elif/else' clauses as needed. Each clause should
 #   set the result.
 # - Use 'let' statements to calculate any sub-expression that will be used more than once
 #   in your logic and/or to improve readability.

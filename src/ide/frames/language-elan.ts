@@ -28,6 +28,7 @@ import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
 import { Each } from "./statements/each";
+import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
@@ -60,11 +61,10 @@ export class LanguageElan implements Language {
     } else if (frame instanceof Constant) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.constantKeyword} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;
+    } else if (frame instanceof Elif) {
+      html = `<el-kw>${this.elseKeyword} ${this.ifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.thenKeyword}`;
     } else if (frame instanceof Else) {
-      const ifClause = frame.hasIf
-        ? `<el-kw> ${this.ifKeyword} </kw> ${frame.condition.renderAsHtml()}`
-        : ``;
-      html = `<el-kw>${this.elseKeyword}</el-kw>${ifClause}`;
+      html = `<el-kw>${this.elseKeyword}`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.enumKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {

@@ -30,6 +30,7 @@ import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
 import { Each } from "./statements/each";
+import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
@@ -108,11 +109,10 @@ export class LanguagePython implements Language {
       html = `<el-kw>${this.forKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.inKeyword} </el-kw>${frame.iter.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof Enum) {
       html = ``;
+    } else if (frame instanceof Elif) {
+      html = `<el-kw>${this.elifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof Else) {
-      const elseOrElif = frame.hasIf
-        ? `<el-kw>${this.elifKeyword} </el-kw>${frame.condition.renderAsHtml()}`
-        : `<el-kw>${this.elseKeyword}</el-kw>`;
-      html = elseOrElif + `<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.elseKeyword}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof For) {
       html = `<el-kw>${this.forKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.inKeyword} </el-kw><el-method>range</el-method>(${frame.from.renderAsHtml()}, ${frame.to.renderAsHtml()}, ${frame.step.renderAsHtml()})<el-punc>:</el-punc>`;
     } else if (frame instanceof FunctionMethod) {

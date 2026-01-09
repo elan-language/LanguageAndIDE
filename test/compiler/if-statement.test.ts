@@ -102,7 +102,7 @@ main
   variable a set to 2
   if a is 1 then
     print "one"
-  else if a is 2 then
+  elif a is 2 then
     print "two"
   else
     print "neither"
@@ -146,7 +146,7 @@ main
   variable a set to 3
   if a is 1 then
     print "one"
-  else if a is 2 then
+  elif a is 2 then
     print "two"
   else
     print "neither"
@@ -226,9 +226,9 @@ main
   variable a set to 3
   if a is 1 then
     print "one"
-  else if a is 2 then
+  elif a is 2 then
     print "two"
-  else if a is 3 then
+  elif a is 3 then
     print "three"
   else
     print "neither"
@@ -274,9 +274,9 @@ main
   variable a set to 3
   if a is 1 then
     print "one"
-  else if a is 2 then
+  elif a is 2 then
     print "two"
-  else if a is 3 then
+  elif a is 3 then
     print "three"
   end if
 end main`;
@@ -522,7 +522,7 @@ main
   variable a set to 3
   if a is 1 then
     print ""
-  else if a is 2 then 
+  elif a is 2 then 
     set a to 3
   end if
 end main`;
@@ -562,7 +562,7 @@ main
   variable a set to 2
   if a is 1 then
     print ""
-  else if a is 2 then
+  elif a is 2 then
     variable b set to a
     set b to 2
     print b
@@ -646,7 +646,7 @@ main
   variable a set to 2
   if a is 1 then
     print ""
-  else if a is 2 then
+  elif a is 2 then
     variable b set to a
     for i from 0 to 5 step 1
       set b to b + i
@@ -663,8 +663,8 @@ async function main() {
     await system.print("");
   } else if (a === 2) {
     let b = a;
-    const _tofor17 = 5;
-    for (let i = 0; i <= _tofor17; i = i + 1) {
+    const _tofor16 = 5;
+    for (let i = 0; i <= _tofor16; i = i + 1) {
       b = b + i;
     }
     await system.print(b);
@@ -749,7 +749,7 @@ main
     print "one"
   else
     print "not one"
-  else if a is 2 then
+  elif a is 2 then
     print "two"
   end if
 end main`;
@@ -803,7 +803,7 @@ end main`;
     variable a set to 2
     if a is 1 then
       print "one"
-    else if a then
+    elif a then
       print "two"
     else
       print "neither"
@@ -831,7 +831,7 @@ end main`;
     variable a set to 2
     if a is 1 then
       variable a set to 3
-    else if a is 2 then
+    elif a is 2 then
       print "two"
     else
       print "neither"
@@ -854,14 +854,14 @@ end main`;
     ]);
   });
 
-  test("Fail_RedefineVariable in else if", async () => {
+  test("Fail_RedefineVariable in elif", async () => {
     const code = `${testHeader}
 
   main
     variable a set to 2
     if a is 1 then
       print "one"
-    else if a is 2 then
+    elif a is 2 then
       variable a set to 3
     else
       print "neither"
@@ -891,7 +891,7 @@ end main`;
     variable a set to 2
     if a is 1 then
       print "one"
-    else if a is 2 then
+    elif a is 2 then
       print "two"
     else
       variable a set to 3
@@ -921,7 +921,7 @@ end main`;
     variable a set to 2
     if a is 1 then
       variable b set to 2
-    else if a is 2 then
+    elif a is 2 then
       print b
     else
       variable c set to 2

@@ -501,7 +501,7 @@ end class
 
 main
   if true then
-  else if true then
+  elif true then
   else
   end if
 end main

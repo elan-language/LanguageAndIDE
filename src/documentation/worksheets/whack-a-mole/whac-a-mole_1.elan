@@ -1,4 +1,4 @@
-# d74b5fe8c8be0e7d7b3354d7c845f66d57cbd38db801ecdc67cb7aee5818c0e9 Elan 1.9.0 guest default_profile valid
+# f0928bec5469c53ab6c529b4f12620691b9d6539e1d1b52d3a58995122fc8f99 Elan 1.9.0 guest default_profile valid
 
 main
   variable score set to 0
@@ -23,7 +23,7 @@ procedure processKey(out hole as Hole, out score as Int)
     if hole is Hole.mole then
       set hole to Hole.hit
       set score to score + 1
-    else if hole is Hole.vacant then
+    elif hole is Hole.vacant then
       set hole to Hole.miss
       set score to score - 1
     end if

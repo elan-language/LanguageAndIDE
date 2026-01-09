@@ -52,7 +52,7 @@
 
 
 <div class="step" id="step1"><h1>Step 1: load the starting code</h1>
-    <p><button class="load" id="load1-0" data-file="blackjack_2begin.elan">Load the starting code</button></p><div id="code-load1-0" hidden=""># b64bb3a4378195455f999a0914c6e19e7753ca23efff60c3e16d0cc2b85d9f79 Elan 1.9.0 guest default_profile valid
+    <p><button class="load" id="load1-0" data-file="blackjack_2begin.elan">Load the starting code</button></p><div id="code-load1-0" hidden=""># caf30a59cf01cde9df4917e0c3c0bb51ecde503b7bd7bb024fbf018b6a1538d2 Elan 1.9.0 guest default_profile valid
 
 main
   let points be 1000
@@ -107,10 +107,10 @@ procedure updatePoints(dealer as Dealer, player as Player, playerOutcome as Outc
   if playerOutcome is Outcome.winDouble then
     call player.changePointsBy(2)
     call dealer.changePointsBy(-2)
-  else if playerOutcome is Outcome.win then
+  elif playerOutcome is Outcome.win then
     call player.changePointsBy(1)
     call dealer.changePointsBy(-1)
-  else if playerOutcome is Outcome.lose then
+  elif playerOutcome is Outcome.lose then
     call player.changePointsBy(-1)
     call dealer.changePointsBy(1)
   end if
@@ -131,19 +131,19 @@ function determinePlayerOutcome(dealer as Dealer, player as Player) returns Outc
   variable playerOutcome set to draw
   if p is bust then
     set playerOutcome to lose
-  else if (p is bj) and (d isnt bj) then
+  elif (p is bj) and (d isnt bj) then
     set playerOutcome to winDouble
-  else if d is bust then
+  elif d is bust then
     set playerOutcome to win
-  else if (d is bj) and (p is bj) then
+  elif (d is bj) and (p is bj) then
     set playerOutcome to draw
-  else if p is bj then
+  elif p is bj then
     set playerOutcome to winDouble
-  else if d is bj then
+  elif d is bj then
     set playerOutcome to lose
-  else if pTotal &gt; dTotal then
+  elif pTotal &gt; dTotal then
     set playerOutcome to win
-  else if pTotal &lt; dTotal then
+  elif pTotal &lt; dTotal then
     set playerOutcome to lose
   else
     # strictly, this 'else' clause is redundant - as the variable was initialised to 'draw' - but added for clarity
@@ -163,9 +163,9 @@ function intAsSuit(n as Int) returns Suit
   variable suit set to Suit.clubs
   if n is 1 then
     set suit to Suit.diamonds
-  else if n is 2 then
+  elif n is 2 then
     set suit to Suit.hearts
-  else if n is 3 then
+  elif n is 3 then
     set suit to Suit.spades
   end if
   return suit
@@ -306,12 +306,12 @@ abstract class Player
   procedure evaluateStatus(newCard as Card)
     if (cardCount() is 2) and (property.handTotal is 21) then
       set property.status to Status.blackjack
-    else if (property.handTotal &gt; 21) and (property.hasSoftAce) then
+    elif (property.handTotal &gt; 21) and (property.hasSoftAce) then
       set property.handTotal to property.handTotal - 10
       set property.hasSoftAce to false
-    else if property.handTotal &gt; 21 then
+    elif property.handTotal &gt; 21 then
       set property.status to Status.bust
-    else if property.handTotal is 21 then
+    elif property.handTotal is 21 then
       set property.status to Status.standing
     end if
     if property.status isnt Status.active then
@@ -371,11 +371,11 @@ abstract class Player
     let status be property.status
     if property.hasTurn then
       set msg to msg + " - PLAYING"
-    else if status is Status.standing then
+    elif status is Status.standing then
       set msg to msg + " - STANDING"
-    else if status is Status.blackjack then
+    elif status is Status.blackjack then
       set msg to msg + " - BLACKJACK"
-    else if status is Status.bust then
+    elif status is Status.bust then
       set msg to msg + " - BUST"
     end if
     return msg
@@ -445,7 +445,7 @@ class HumanPlayer inherits Player
       set key to waitForKey()
       if key is "d" then
         call draw()
-      else if key is "s" then
+      elif key is "s" then
         call stand()
       else
         set key to ""
