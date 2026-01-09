@@ -70,11 +70,10 @@ export class LanguagePython implements Language {
       html = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof Constant) {
       html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
+    } else if (frame instanceof Elif) {
+      html = `<el-kw>${this.elifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof Else) {
-      const elseOrElif = frame.hasIf
-        ? `<el-kw>${this.elifKeyword} </el-kw>${frame.condition.renderAsHtml()}`
-        : `<el-kw>${this.elseKeyword}</el-kw>`;
-      html = elseOrElif + `<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.elseKeyword}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof Enum) {
       html = `${frame.name.renderAsHtml()} = <el-type>Enum</el-type>('${frame.name.renderAsHtml()}', '${frame.values.renderAsHtml()}')`;
     } else if (frame instanceof GlobalComment) {
@@ -109,10 +108,6 @@ export class LanguagePython implements Language {
       html = `<el-kw>${this.forKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.inKeyword} </el-kw>${frame.iter.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof Enum) {
       html = ``;
-    } else if (frame instanceof Elif) {
-      html = `<el-kw>${this.elifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
-    } else if (frame instanceof Else) {
-      html = `<el-kw>${this.elseKeyword}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof For) {
       html = `<el-kw>${this.forKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.inKeyword} </el-kw><el-method>range</el-method>(${frame.from.renderAsHtml()}, ${frame.to.renderAsHtml()}, ${frame.step.renderAsHtml()})<el-punc>:</el-punc>`;
     } else if (frame instanceof FunctionMethod) {

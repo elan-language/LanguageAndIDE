@@ -16,6 +16,7 @@ import { TestFrame } from "../src/ide/frames/globals/test-frame";
 import { CallStatement } from "../src/ide/frames/statements/call-statement";
 import { CommentStatement } from "../src/ide/frames/statements/comment-statement";
 import { Each } from "../src/ide/frames/statements/each";
+import { Elif } from "../src/ide/frames/statements/elif";
 import { Else } from "../src/ide/frames/statements/else";
 import { For } from "../src/ide/frames/statements/for";
 import { IfStatement } from "../src/ide/frames/statements/if-statement";
@@ -112,7 +113,7 @@ export function T03_mainWithAllStatements(): FileImpl {
   m.addChildBefore(if3, ssm);
   const ss_if3 = if3.getFirstSelectorAsDirectChild();
   if3.condition.setFieldToKnownValidText("y > 4");
-  const el2 = new Else(if3);
+  const el2 = new Elif(if3);
   el2.hasIf = true;
   el2.condition.setFieldToKnownValidText("y > 10");
   if3.addChildBefore(el2, ss_if3);

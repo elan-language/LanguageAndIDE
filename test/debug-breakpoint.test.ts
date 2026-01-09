@@ -510,7 +510,7 @@ end main`;
       asDebugSymbol("c", 1, '{"Type":"Int"}'),
     ];
 
-    await assertDebugBreakPoint(fileImpl, "set21", expected);
+    await assertDebugBreakPoint(fileImpl, "set19", expected);
   });
 
   test("Pass_InElseIf", async () => {

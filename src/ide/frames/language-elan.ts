@@ -62,7 +62,7 @@ export class LanguageElan implements Language {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.constantKeyword} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
-      html = `<el-kw>${this.elseKeyword} ${this.ifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.thenKeyword}`;
+      html = `<el-kw>${this.elifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.thenKeyword}`;
     } else if (frame instanceof Else) {
       html = `<el-kw>${this.elseKeyword}`;
     } else if (frame instanceof Enum) {
@@ -177,6 +177,7 @@ PLUS:         '+';
   private copyKeyword = "copy";
   private divKeyword = "div";
   private eachKeyword = "each";
+  private elifKeyword = "elif";
   private elseKeyword = "else";
   private emptyKeyword = "empty";
   private endKeyword = "end";
