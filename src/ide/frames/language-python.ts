@@ -129,7 +129,7 @@ export class LanguagePython implements Language {
     } else if (frame instanceof RecordFrame) {
       html = `<el-kw>${this.classKeyword} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.defKeyword} </el-kw> <el-method>test_${frame.testDescription.renderAsElanSource()}</el-method><el-punc>()-> </el-punc><el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
+      html = `<el-kw>${this.defKeyword} </el-kw> <el-method>test_${frame.testName.renderAsElanSource()}</el-method><el-punc>()-> </el-punc><el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof TryStatement) {
       html = `${this.tryKeyword}<el-punc>:</el-punc>`;
     } else if (frame instanceof While) {

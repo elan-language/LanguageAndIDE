@@ -1,6 +1,6 @@
-# 5d875f87d4501e890bf2565d5bff684d7321301b58b269e6f929254ad53b4c6c Elan 1.9.0 guest default_profile valid
+# e1cbdf76d176d64308183390046b48013842f35ca48f8fa941001667053f350c Elan 1.9.0 guest default_profile valid
 
-test 
+test test_matchesRegExp
   let s1 be "hello"
   let s2 be "World"
   let r be "^[a-z]*$".asRegExp()

@@ -1,4 +1,4 @@
-# 5bb29853c1a8ac55c1c1ddf5bd25547613b84f140d64356cbcbd0d68f1b89267 Elan 1.9.0 guest default_profile valid
+# 491ea5bf3fa249b9ba108c8b7daf52eb2271d654497cb5cafc97f0e6ee7bdfb2 Elan 1.9.0 guest default_profile valid
 
 # Program to extract the parameters for the Barnsley Fern from the Wikipedia page
 # https://en.wikipedia.org/wiki/Barnsley_fern
@@ -86,7 +86,7 @@ function last(l as List<of Int>) returns Int
   return l[l.length() - 1]
 end function
 
-test strings
+test test_strings
   assert isnumberchar("5") is true
   assert gettrailingnumber("abc123") is "123"
   assert gettrailingnumber("abc") is ""
@@ -94,7 +94,7 @@ test strings
   assert gettrailingnumber("") is ""
 end test
 
-test last
+test test_last
   assert last([5, 6, 7]) is 7
 end test
 

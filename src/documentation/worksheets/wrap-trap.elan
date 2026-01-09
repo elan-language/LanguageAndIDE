@@ -1,4 +1,4 @@
-# b2d3ec2e78ee280100b7fa8a2830f8ff7e81d6af2a69178a7bd036153441a96b Elan 1.9.0 guest default_profile valid
+# d8870841e1b16413f466d2d4ffe77f87b7015338875c5936c79c6e7065ea6cf3 Elan 1.9.0 guest default_profile valid
 
 # REDO on basis that the computer player will be added using 'append' with small mods to your code 
 main
@@ -47,6 +47,6 @@ function newDirection(current as String, rnd as Float) returns String
   return directions[i]
 end function
 
-test newDirection
+test test_newDirection
 
 end test

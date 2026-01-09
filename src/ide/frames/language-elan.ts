@@ -121,7 +121,7 @@ export class LanguageElan implements Language {
     } else if (frame instanceof RecordFrame) {
       html = `<el-kw>${this.recordKeyword} </el-kw>${frame.name.renderAsHtml()}`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.testKeyword} </el-kw>${frame.testDescription.renderAsHtml()}`;
+      html = `<el-kw>${this.testKeyword} </el-kw>${frame.testName.renderAsHtml()}`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.tryKeyword} </el-kw>`;
     } else if (frame instanceof While) {

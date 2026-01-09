@@ -1,4 +1,4 @@
-# 1772b4d35d3b77e51cbb53531d008159f6f0b67670a864079f18dde3c3a3b704 Elan 1.9.0 guest default_profile valid
+# 137284744bf1bbdd6ec7352deafb751aec8c1ccb9318430b67a8f2073512c579 Elan 1.9.0 guest default_profile valid
 
 function sort(li as List<of String>) returns List<of String>
   variable result set to li
@@ -6,7 +6,7 @@ function sort(li as List<of String>) returns List<of String>
   return result
 end function
 
-test sort
+test test_sort
   # 1. Edge case: empty
   let l1 be empty List<of String>
   assert sort(l1) is l1
@@ -41,7 +41,7 @@ function merge(a as List<of String>, b as List<of String>) returns List<of Strin
   return result
 end function
 
-test merge
+test test_merge
   let le be empty List<of String>
   let l1 be ["apple", "lime", "pear"]
   let l2 be ["apricot", "lemon", "plum", "watermelon"]

@@ -1,4 +1,4 @@
-# 82eff9f9f84aa1f33ab6c8e6fcd2e8f716823ffde4ef1beffdddf31a012c5aa6 Elan 1.9.0 guest default_profile valid
+# 4c48c0145ac9109bd7769a8ce47330636310e669e732b1d794fc7e05d29597bd Elan 1.9.0 guest default_profile valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -86,12 +86,12 @@ function directionByKey(current as String, key as String) returns String
   return dir
 end function
 
-test getTailColour
+test test_getTailColour
   assert getTailColour([3, 4], [[3, 4], [3, 5]]) is green
   assert getTailColour([3, 4], [[3, 5], [3, 6]]) is white
 end test
 
-test hasHitEdge
+test test_hasHitEdge
   assert hasHitEdge(0, 0) is false
   assert hasHitEdge(0, 29) is false
   assert hasHitEdge(39, 0) is false
@@ -102,7 +102,7 @@ test hasHitEdge
   assert hasHitEdge(5, -1) is true
 end test
 
-test getAdjacentSquare
+test test_getAdjacentSquare
   let sq be [20, 15]
   assert getAdjacentSquare(sq, "up") is [20, 14]
   assert getAdjacentSquare(sq, "down") is [20, 16]
@@ -112,7 +112,7 @@ test getAdjacentSquare
   assert getAdjacentSquare([0, 15], "left") is [-1, 15]
 end test
 
-test directionByKey
+test test_directionByKey
   let current be "up"
   assert directionByKey(current, "") is "up"
   assert directionByKey(current, "x") is "up"

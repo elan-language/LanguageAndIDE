@@ -2,7 +2,7 @@ import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { BreakpointStatus } from "../../../compiler/debugging/breakpoint-status";
 import { testKeyword } from "../../../compiler/keywords";
 import { TestStatus } from "../../../compiler/test-status";
-import { CommentField } from "../fields/comment-field";
+import { IdentifierField } from "../fields/identifier-field";
 import {
   helper_CompileOrParseAsDisplayStatus,
   helper_testStatusAsDisplayStatus,
@@ -18,15 +18,15 @@ import { DisplayColour } from "../status-enums";
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
   isTest = true;
   isGlobal = true;
-  public testDescription: CommentField;
+  public testName: IdentifierField;
   file: File;
   private _testStatus: TestStatus;
   protected canHaveBreakPoint = false;
   constructor(parent: File) {
     super(parent);
     this.file = parent;
-    this.testDescription = new CommentField(this);
-    this.testDescription.setPlaceholder("<i>optional description</i>");
+    this.testName = new IdentifierField(this);
+    this.testName.text = "test_";
     const selector = this.getChildren().pop()!;
     this.getChildren().push(selector);
     this._testStatus = TestStatus.default;
@@ -66,7 +66,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     return testKeyword;
   }
   getFields(): Field[] {
-    return [this.testDescription];
+    return [this.testName];
   }
 
   getIdPrefix(): string {
@@ -83,14 +83,14 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   }
 
   public renderAsElanSource(): string {
-    return `${this.sourceAnnotations()}test ${this.testDescription.renderAsElanSource()}\r
+    return `${this.sourceAnnotations()}test ${this.testName.renderAsElanSource()}\r
 ${this.renderChildrenAsSource()}\r
 end test\r
 `;
   }
   parseTop(source: CodeSource): void {
     source.remove("test ");
-    this.testDescription.parseFrom(source);
+    this.testName.parseFrom(source);
   }
   parseBottom(source: CodeSource): boolean {
     return this.parseStandardEnding(source, "end test");

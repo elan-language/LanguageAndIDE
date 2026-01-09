@@ -1,6 +1,6 @@
-# a38feb0395184b34896b7e703008906ae101fddfc2fecd08a49fc55f6e24fdd0 Elan 1.9.0 guest default_profile valid
+# 0a5416b34c3c19655a790a071468d0785239f6a75818671a0b96a2f3cdc0f406 Elan 1.9.0 guest default_profile valid
 
-test bitwise
+test test_bitwise
   variable a set to 13
   assert a is 0xd
   assert a is 0b1101

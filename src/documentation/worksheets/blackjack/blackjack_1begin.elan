@@ -1,4 +1,4 @@
-# 5127872c857664d2170f464237686a34e54301742de662f7f7cd111fa2f2b68d Elan 1.9.0 guest default_profile valid
+# 6f71725ea42c3fb5dd689b2cbe3f569939424a3d63946dd52fc8836bff999691 Elan 1.9.0 guest default_profile valid
 
 main
   let game be new Game(1000)
@@ -94,7 +94,7 @@ function determinePlayerOutcome(dealer as Dealer, player as Player) returns Outc
   return playerOutcome
 end function
 
-test determinePlayerOutcome
+test test_determinePlayerOutcome
   let dbj be new Dealer(0) with status set to Status.blackjack
   let d21 be new Dealer(0) with status set to Status.standing, handTotal set to 21
   let d17 be new Dealer(0) with status set to Status.standing, handTotal set to 17
@@ -122,7 +122,7 @@ function dealCard(random as Float) returns Card
   return new Card() with rank set to rank, suit set to intAsSuit(suit)
 end function
 
-test dealCard
+test test_dealCard
   let c1 be dealCard(0)
   assert c1.rank is "2"
   assert c1.suit is Suit.clubs
@@ -149,7 +149,7 @@ function intAsSuit(n as Int) returns Suit
   return suit
 end function
 
-test intAsSuit
+test test_intAsSuit
   assert intAsSuit(0) is Suit.clubs
   assert intAsSuit(1) is Suit.diamonds
   assert intAsSuit(2) is Suit.hearts
@@ -166,7 +166,7 @@ function htmlForGame(game as Game) returns String
   return html + "</div>"
 end function
 
-test htmlForGame
+test test_htmlForGame
   let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
   let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
   let p be new HumanPlayer("fred", 10) with cards set to [c1, c2]
@@ -187,7 +187,7 @@ function htmlForPlayer(player as Player) returns String
   return html + "</div></div>"
 end function
 
-test htmlForPlayer
+test test_htmlForPlayer
   let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
   let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
   let p be new HumanPlayer("charlie", 10) with cards set to [c1, c2]
@@ -219,7 +219,7 @@ function htmlForCard(card as Card) returns String
   return html + "</div>"
 end function
 
-test htmlForCard
+test test_htmlForCard
   let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
   assert htmlForCard(c1) is "<div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div>"
   let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
@@ -230,7 +230,7 @@ function htmlForSpot(id as String, content as String) returns String
   return "<div class='{id}'>{content}</div>"
 end function
 
-test htmlForSpot
+test test_htmlForSpot
   assert htmlForSpot("c", "&hearts;") is "<div class='c'>&hearts;</div>"
   assert htmlForSpot("u", "10") is "<div class='u'>10</div>"
 end test

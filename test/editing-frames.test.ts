@@ -2,7 +2,6 @@ import assert from "assert";
 
 import { Constructor } from "../src/ide/frames/class-members/constructor";
 import { MemberSelector } from "../src/ide/frames/class-members/member-selector";
-import { CommentField } from "../src/ide/frames/fields/comment-field";
 import { ConstantValueField } from "../src/ide/frames/fields/constant-value-field";
 import { IdentifierField } from "../src/ide/frames/fields/identifier-field";
 import { InheritsFromField } from "../src/ide/frames/fields/inherits-from-field";
@@ -21,7 +20,6 @@ import {
   emptyMainOnly,
   oneConstant,
   T00_emptyFile,
-  T03_mainWithAllStatements,
   twoConstants,
 } from "./model-generating-functions";
 import {
@@ -35,7 +33,6 @@ import {
   enter,
   key,
   loadFileAsModelNew,
-  shift_down,
   shift_tab,
   tab,
 } from "./testHelpers";
@@ -209,6 +206,7 @@ suite("Editing Frames", () => {
     assert.equal(cls.getChildren().length, 1);
     assert.equal(cls.getChildren()[0] instanceof MemberSelector, true);
   });
+
   test("#644 cutting statement when there is already a selector following", async () => {
     const file = await loadFileAsModelNew(`${__dirname}\\files\\test644.elan`);
     const runner = await createTestRunner();
@@ -276,12 +274,10 @@ suite("Editing Frames", () => {
     const file = T00_emptyFile();
     const sel0 = file.getById("select0");
     sel0.processKey(key("t"));
-    const desc = file.getById("comment3") as CommentField;
-    assert.equal(true, desc.isOptional());
+    const desc = file.getById("ident3") as IdentifierField;
     desc.processKey(key("x"));
-    desc.processKey(key(" "));
     desc.processKey(key("y"));
     assert.equal(desc.readParseStatus(), ParseStatus.valid);
-    assert.equal(desc.renderAsElanSource(), "x y");
+    assert.equal(desc.renderAsElanSource(), "test_xy");
   });
 });

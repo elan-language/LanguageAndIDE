@@ -1,4 +1,4 @@
-# 873f5f3b6aae04bae8f40a62d98fe0607fb938dc8290fc762bc61a650499bbf7 Elan 1.9.0 guest default_profile valid
+# 743eccab49e3aa484cc5a4478d3785df1a4dc5c10c492ef476b3ab3f944ffa09 Elan 1.9.0 guest default_profile valid
 
 main
   call print(factorial(7))
@@ -8,6 +8,6 @@ function factorial(n as Int) returns Int
   return (if n > 1 then n*factorial(n - 1) else 1)
 end function
 
-test 
+test test_factorial
   assert factorial(3) is 6
 end test

@@ -1,4 +1,4 @@
-# 4cea04ea87211ad0c6d3f76f611d805160b8f60080dbc926eb8bb9b7103b880b Elan 1.9.0 guest default_profile valid
+# df351988a969ff022581103791022fc3d0f3a663ca505cc4cc2ed9191559284e Elan 1.9.0 guest default_profile valid
 
 main
   variable blocks set to new Array2D<of Int>(40, 30, black)
@@ -82,7 +82,7 @@ function flip01(v as Int) returns Int
   return if v is 0 then 1 else 0
 end function
 
-test flip01
+test test_flip01
   assert flip01(0) is 1
   assert flip01(1) is 0
 end test
@@ -91,7 +91,7 @@ function isValidQuadrant(q as Int) returns Boolean
   return (q mod 5) isnt 0
 end function
 
-test isValidQuadrant
+test test_isValidQuadrant
   assert isValidQuadrant(0) is false
   assert isValidQuadrant(1) is true
   assert isValidQuadrant(2) is true
@@ -128,7 +128,7 @@ function newPoint(x as Int, y as Int) returns Point
   return new Point() with x set to x, y set to y, isNotEmpty set to true
 end function
 
-test neighbouringPoints
+test test_neighbouringPoints
   let p be newPoint(0, 0)
   let n be p.neighbouringPoints()
   let expected be [newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)]

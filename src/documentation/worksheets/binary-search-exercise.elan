@@ -1,4 +1,4 @@
-# b374bd9edf3f523401bf261b2e6bb02bc49b2b8fd0c5ada53f10d7b73a74fde5 Elan 1.9.0 guest default_profile valid
+# 0046afed45d1c62b8133193f89814409bc1fe64a14999b1a68481043fc069bf8 Elan 1.9.0 guest default_profile valid
 
 # Exercise: implement a function to search for an item in a sorted list, 
 # using the 'binary search' algorithm
@@ -42,7 +42,7 @@ main
   end while
 end main
 
-test 
+test test_binarySearch
   let li1 be ["lemon", "lime", "orange"]
   assert binarySearch(li1, "lemon") is true
   assert binarySearch(li1, "lime") is true

@@ -1,4 +1,4 @@
-# 1f26939ebeb2dc02128978842312f4c2dddb39bf78a291b417b045a20ecdc955 Elan 1.9.0 guest default_profile valid
+# ac9d9e61788506797cda9d1652d270f8e4f7f48cfa6f0ae8714c3b15322ca868 Elan 1.9.0 guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -106,7 +106,7 @@ record Square
 
 end record
 
-test clockTick
+test test_clockTick
   let g1 be newGame(new Random())
   let g2 be newApple(g1)
   let g3 be clockTick(g2, "s")
@@ -124,7 +124,7 @@ test clockTick
   assert g7.isOn is false
 end test
 
-test updateGraphics
+test test_updateGraphics
   variable blocks set to new Array2D<of Int>(40, 30, white)
   let g1 be newGame(new Random())
   set blocks to updateGraphics(g1, blocks)
@@ -138,7 +138,7 @@ test updateGraphics
   assert blocks[23, 15] is green
 end test
 
-test newApple
+test test_newApple
   let g1 be newGame(new Random())
   assert g1.apple is newSquare(12, 15)
   let g2 be newApple(g1)
@@ -152,7 +152,7 @@ test newApple
   assert g6.apple is newSquare(28, 24)
 end test
 
-test score
+test test_score
   let g1 be newGame(new Random())
   assert score(g1) is 0
   let g2 be copy g1 with body set to {newSquare(4, 4), newSquare(5, 4)}
@@ -163,7 +163,7 @@ test score
   assert score(g4) is 2
 end test
 
-test moveSnake
+test test_moveSnake
   let g1 be newGame(new Random())
   let g2 be copy g1 with key set to "a"
   let g3 be moveSnake(g2)
@@ -179,7 +179,7 @@ test moveSnake
   assert g9.head is newSquare(22, 16)
 end test
 
-test eatAppleIfPoss
+test test_eatAppleIfPoss
   let g1 be newGame(new Random())
   assert g1.body.length() is 2
   # negative case
@@ -196,7 +196,7 @@ test eatAppleIfPoss
   assert g5.priorTail is g1.priorTail
 end test
 
-test overApple
+test test_overApple
   let g1 be newGame(new Random())
   let g2 be copy g1 with apple set to newSquare(23, 15)
   assert headOverApple(g2) is false
@@ -204,7 +204,7 @@ test overApple
   assert headOverApple(g3) is true
 end test
 
-test gameOver
+test test_gameOver
   let g1 be newGame(new Random())
   assert gameOver(g1) is false
   let g2 be copy g1 with head set to newSquare(0, 0)
@@ -215,7 +215,7 @@ test gameOver
   assert gameOver(g4) is true
 end test
 
-test headIsAtEdge
+test test_headIsAtEdge
   let g1 be newGame(new Random())
   assert hasHitEdge(g1) is false
   let g2 be copy g1 with head set to newSquare(40, 15)
@@ -228,17 +228,17 @@ test headIsAtEdge
   assert hasHitEdge(g5) is true
 end test
 
-test newSquare
+test test_newSquare
   let sq be newSquare(3, 4)
   assert sq.x is 3
   assert sq.y is 4
 end test
 
-test newGame
+test test_newGame
   let rnd be new Random()
   let game be newGame(rnd)
-  let toTest be game.rnd is rnd
-  assert toTest is false
+  let totest be game.rnd is rnd
+  assert totest is false
   assert game.head is newSquare(22, 15)
   let body be game.body
   assert body.length() is 2

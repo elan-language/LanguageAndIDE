@@ -1,4 +1,4 @@
-# 41439b738b0555b2debd0c544d7dd519d3128748901022d8b5de2766078262d2 Elan 1.9.0 guest default_profile valid
+# a461ab829b06c7f1322b43a52417c12b1477d136aa6d3cc299edf820152ae44a Elan 1.9.0 guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -138,21 +138,21 @@ end class
 
 enum Direction up, down, left, right
 
-test snake
+test test_snake
   let snake be new Snake()
   # bodyCovers
   assert snake.bodyCovers(new Square(20, 15)) is true
   assert snake.bodyCovers(new Square(21, 15)) is false
-  # gameOver, score - can only test for default - which is not thorough test
+  # gameOver, score - can only test test_for default - which is not thorough test
   assert snake.gameOver() is false
   assert snake.score() is 0
 end test
 
-test apple
+test test_apple
   # no tests
 end test
 
-test square
+test test_square
   # constructor - not testable as properties are private
   # getAdjacentSquare
   let sq1 be new Square(3, 4)

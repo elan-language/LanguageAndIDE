@@ -1,4 +1,4 @@
-# f628585d10ba5a5a467ec6d22cd3d6c3d5487542938cb5f3d71628d69845bbf8 Elan 1.9.0 guest default_profile valid
+# 9cc5961b03b83dc0f03641ff8e93deedcd7a324b862c57557dbc0e92cb5c385c Elan 1.9.0 guest default_profile valid
 
 # After image is displayed, press: 
 # - z to zoom in, x to zoom out
@@ -118,7 +118,7 @@ class Coords
 
 end class
 
-test one
+test test_one
   variable p set to new Coords()
   assert onepoint(0, 0, 100, p) is 100
   assert onepoint(0.5, 0.5, 100, p) is 3

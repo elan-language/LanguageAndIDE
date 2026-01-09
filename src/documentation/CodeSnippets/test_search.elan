@@ -1,4 +1,4 @@
-# 362c83e24ea0df75ff1c3adf8598e98fbfa457266be0f8c585f14a1f00d13185 Elan 1.9.0 guest default_profile valid
+# 92f9b1e348616b7e2477923b5c1cdc3ef85147f84dd932aeb3a66891c09539ca Elan 1.9.0 guest default_profile valid
 
 main
   let fruit be example
@@ -22,7 +22,7 @@ function binarySearch(li as ListImmutable<of String>, item as String) returns Bo
   return result
 end function
 
-test 
+test test_binarySearch
   let li1 be {"lemon", "lime", "orange"}
   assert binarySearch(li1, "lemon") is true
   assert binarySearch(li1, "lime") is true
