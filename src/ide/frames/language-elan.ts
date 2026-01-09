@@ -188,7 +188,6 @@ PLUS:         '+';
   private functionKeyword = "function";
   private globalKeyword = "global";
   private ifKeyword = "if";
-  private ignoreKeyword = "ignore"; // Not actively used since v1.7.0, retained pro tem, for backwards Elan code compatibility - now has the effect of ghosting
   private imageKeyword = "image";
   private importKeyword = "import";
   private inKeyword = "in";

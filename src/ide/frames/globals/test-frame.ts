@@ -1,6 +1,6 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { BreakpointStatus } from "../../../compiler/debugging/breakpoint-status";
-import { ignoreKeyword, testKeyword } from "../../../compiler/keywords";
+import { testKeyword } from "../../../compiler/keywords";
 import { TestStatus } from "../../../compiler/test-status";
 import { CommentField } from "../fields/comment-field";
 import {
@@ -89,10 +89,6 @@ end test\r
 `;
   }
   parseTop(source: CodeSource): void {
-    if (source.isMatch(`${ignoreKeyword} `)) {
-      source.remove(`${ignoreKeyword} `);
-      this.setGhosted(true);
-    }
     source.remove("test ");
     this.testDescription.parseFrom(source);
   }

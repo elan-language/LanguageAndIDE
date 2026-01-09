@@ -23,7 +23,6 @@ export const fromKeyword = "from";
 export const functionKeyword = "function";
 export const globalKeyword = "global";
 export const ifKeyword = "if";
-export const ignoreKeyword = "ignore"; // Not actively used since v1.7.0, retained pro tem, for backwards Elan code compatibility - now has the effect of ghosting
 export const imageKeyword = "image";
 export const importKeyword = "import";
 export const inKeyword = "in";
@@ -98,7 +97,6 @@ export const allKeywords = [
   functionKeyword,
   globalKeyword,
   ifKeyword,
-  ignoreKeyword,
   imageKeyword,
   importKeyword,
   inKeyword,
