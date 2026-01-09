@@ -25,6 +25,8 @@ export interface File extends Parent {
   getById(id: string): Selectable;
   renderAsHtml(): Promise<string>;
   renderAsElanSource(): Promise<string>;
+  renderAsExport(): Promise<string>;
+
   compile(): string;
 
   compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string;

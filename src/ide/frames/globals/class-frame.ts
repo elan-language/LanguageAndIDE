@@ -41,6 +41,7 @@ import {
   parentHelper_readWorstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
+  parentHelper_renderChildrenAsExport,
   parentHelper_renderChildrenAsHtml,
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
@@ -309,5 +310,11 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
 ${parentHelper_renderChildrenAsHtml(this)}
 ${this.language().renderBottomAsHtml(this)}
 </el-class>`;
+  }
+
+  public renderAsExport(): string {
+    return `${this.indent()}${this.sourceAnnotations()}${this.language().renderTopAsHtml(this)}${this.annotationAsSource()}
+${parentHelper_renderChildrenAsExport(this)}
+${this.language().renderBottomAsExport(this)}`;
   }
 }

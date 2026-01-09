@@ -29,6 +29,10 @@ export abstract class AbstractParseNode implements ParseNode {
     return this.matchedText.trim();
   }
 
+  renderAsExport(): string {
+    return this.matchedText.trim();
+  }
+
   renderAsHtml(): string {
     return this.renderAsElanSource();
   }

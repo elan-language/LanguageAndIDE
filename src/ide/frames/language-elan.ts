@@ -42,6 +42,8 @@ import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 
 export class LanguageElan implements Language {
+  languageFullName: string = "Elan";
+
   annotation(frame: Frame): string {
     return frame ? "" : ""; //No *frame-specific* annotation needed for Elan (but must consume frame parameter!)
   }
@@ -92,6 +94,11 @@ export class LanguageElan implements Language {
     }
     return html;
   }
+
+  renderSingleLineAsExport(frame: Frame): string {
+    return frame ? "" : ""; // At least for the time being, there is no reason to export a file being presented as Elan
+  }
+
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
@@ -130,8 +137,16 @@ export class LanguageElan implements Language {
     return html;
   }
 
+  renderTopAsExport(frame: Frame): string {
+    return frame ? "" : ""; // At least for the time being, there is no reason to export a file being presented as Elan
+  }
+
   renderBottomAsHtml(frame: Frame): string {
     return `<el-kw>${this.endKeyword} ${frame.initialKeywords()}</el-kw>`;
+  }
+
+  renderBottomAsExport(frame: Frame): string {
+    return frame ? "" : ""; // At least for the time being, there is no reason to export a file being presented as Elan
   }
 
   renderNodeAsHtml(node: ParseNode): string {

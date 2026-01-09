@@ -16,6 +16,7 @@ export interface Frame extends Selectable {
 
   renderAsHtml(): string;
   renderAsElanSource(): string;
+  renderAsExport(): string;
 
   indent(): string;
 

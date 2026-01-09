@@ -2,8 +2,8 @@ import { endKeyword, recordKeyword } from "../../../compiler/keywords";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import {
+  parentHelper_renderChildrenAsElanSource,
   parentHelper_renderChildrenAsHtml,
-  parentHelper_renderChildrenAsSource,
 } from "../parent-helpers";
 import { ClassFrame } from "./class-frame";
 
@@ -40,7 +40,7 @@ ${this.language().renderBottomAsHtml(this)}
 
   public renderAsElanSource(): string {
     return `${this.sourceAnnotations()}record ${this.name.renderAsElanSource()}\r
-${parentHelper_renderChildrenAsSource(this)}\r
+${parentHelper_renderChildrenAsElanSource(this)}\r
 end record\r\n`;
   }
 

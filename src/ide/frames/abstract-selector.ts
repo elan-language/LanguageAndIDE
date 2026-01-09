@@ -175,6 +175,10 @@ export abstract class AbstractSelector extends AbstractFrame {
     return `${this.indent()}`;
   }
 
+  renderAsExport(): string {
+    return `${this.indent()}`;
+  }
+
   private selectorControlKeys = ["d", "O", "v", "?"];
 
   processKey(e: editorEvent): boolean {

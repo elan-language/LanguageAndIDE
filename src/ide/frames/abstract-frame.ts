@@ -530,6 +530,8 @@ export abstract class AbstractFrame implements Frame {
 
   abstract renderAsHtml(): string;
 
+  abstract renderAsExport(): string;
+
   indent(): string {
     if (this.hasParent()) {
       return this.getParent().indent() + singleIndent();
