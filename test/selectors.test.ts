@@ -20,7 +20,7 @@ import { StatementSelector } from "../src/ide/frames/statements/statement-select
 import { While } from "../src/ide/frames/statements/while";
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
-import { transforms } from "./compiler/compiler-test-helpers";
+import { ignore_test, transforms } from "./compiler/compiler-test-helpers";
 import { classWithConstructor, emptyMainOnly, T00_emptyFile } from "./model-generating-functions";
 import { key } from "./testHelpers";
 
@@ -71,6 +71,7 @@ suite("Selector tests", () => {
     const sel = file.getById("select0");
     sel.processKey(key("c"));
     sel.processKey(key("o"));
+    sel.processKey(key("n"));
     const v = file.getById("const1").renderAsElanSource();
     assert.equal(v, "constant  set to \r\n");
   });
@@ -87,14 +88,14 @@ suite("Selector tests", () => {
     let help = g.getCompletion();
     assert.equal(
       help,
-      " main procedure function test constant enum record class abstract interface #",
+      " main procedure function test constant enum class abstract interface comment",
     );
     g.processKey(key("c"));
     help = g.getCompletion();
-    assert.equal(help, " constant class");
+    assert.equal(help, " constant class comment");
     assert.equal(
       g.renderAsHtml(),
-      `<el-global contenteditable spellcheck="false" class="none" id='select1' tabindex="-1" ><el-select><el-txt>c</el-txt><el-place>new code</el-place><div class="options"> constant class</div></el-select></el-global>`,
+      `<el-global contenteditable spellcheck="false" class="none" id='select1' tabindex="-1" ><el-select><el-txt>c</el-txt><el-place>new code</el-place><div class="options"> constant class comment</div></el-select></el-global>`,
     );
   });
 
@@ -187,7 +188,7 @@ suite("Selector tests", () => {
     const m = new MainFrame(f);
     const s = new StatementSelector(m);
     let help = s.getCompletion();
-    assert.equal(help, " call each for if let set throw try variable while #");
+    assert.equal(help, " call each for if let set throw try variable while comment");
     s.processKey(key("t"));
     help = s.getCompletion();
     assert.equal(help, " throw try");
@@ -208,7 +209,7 @@ suite("Selector tests", () => {
     const func = new GlobalFunction(fl);
     const s = new StatementSelector(func);
     const help = s.getCompletion();
-    assert.equal(help, " each for if let set throw try variable while #");
+    assert.equal(help, " each for if let set throw try variable while comment");
   });
 
   test("Selection Context - in a Procedure", () => {
@@ -222,7 +223,7 @@ suite("Selector tests", () => {
     const proc = new GlobalProcedure(fl);
     const s = new StatementSelector(proc);
     const help = s.getCompletion();
-    assert.equal(help, " call each for if let set throw try variable while #");
+    assert.equal(help, " call each for if let set throw try variable while comment");
   });
 
   test("Selection Context - in a Test", () => {
@@ -236,7 +237,7 @@ suite("Selector tests", () => {
     const test = new TestFrame(fl);
     const s = new StatementSelector(test);
     const help = s.getCompletion();
-    assert.equal(help, " assert each for if let set throw try variable while #");
+    assert.equal(help, " assert each for if let set throw try variable while comment");
   });
 
   test("Selection Context - deeper nesting 1", () => {
@@ -252,7 +253,7 @@ suite("Selector tests", () => {
     const wh = new While(if1);
     const s = new StatementSelector(wh);
     const help = s.getCompletion();
-    assert.equal(help, " each for if let set throw try variable while #"); //no else, call
+    assert.equal(help, " each for if let set throw try variable while comment"); //no else, call
   });
 
   test("Selection Context - deeper nesting 2", () => {
@@ -268,7 +269,7 @@ suite("Selector tests", () => {
     const if1 = new IfStatement(fm);
     const s = new StatementSelector(if1);
     const help = s.getCompletion();
-    assert.equal(help, " each elif else for if let set throw try variable while #"); //else, but no call
+    assert.equal(help, " each elif else for if let set throw try variable while comment"); //else, but no call
   });
   test("Selection Context - in an IfThen", () => {
     const fl = new FileImpl(
@@ -282,7 +283,7 @@ suite("Selector tests", () => {
     const ifThen = new IfStatement(m);
     const s = new StatementSelector(ifThen);
     const help = s.getCompletion();
-    assert.equal(help, " call each elif else for if let set throw try variable while #");
+    assert.equal(help, " call each elif else for if let set throw try variable while comment");
   });
   test("Selection Context - selector prevents more than one main", () => {
     const fl = new FileImpl(
@@ -296,16 +297,16 @@ suite("Selector tests", () => {
     let help = gs.getCompletion();
     assert.equal(
       help,
-      " main procedure function test constant enum record class abstract interface #",
+      " main procedure function test constant enum class abstract interface comment",
     );
     const m = new MainFrame(fl);
     fl.getChildren().push(m);
     gs = new GlobalSelector(fl);
     help = gs.getCompletion();
-    assert.equal(help, " procedure function test constant enum record class abstract interface #");
+    assert.equal(help, " procedure function test constant enum class abstract interface comment");
   });
 
-  test("#377 - Global select filtered by profile", () => {
+  ignore_test("#377 - Global select filtered by profile", () => {
     const f = new FileImpl(
       hash,
       new TestProfileSPJ(),

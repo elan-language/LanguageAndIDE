@@ -50,12 +50,13 @@ export class StatementSelector extends AbstractSelector {
       [tryKeyword, (parent: Parent) => this.factory.newTryCatch(parent)],
       [variableKeyword, (parent: Parent) => this.factory.newVar(parent)],
       [whileKeyword, (parent: Parent) => this.factory.newWhile(parent)],
+      ["comment", (parent: Parent) => this.factory.newComment(parent)],
       [commentMarker, (parent: Parent) => this.factory.newComment(parent)],
     ];
   }
 
   profileAllows(keyword: string): boolean {
-    return keyword !== printKeyword;
+    return keyword !== printKeyword && keyword !== commentMarker;
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {

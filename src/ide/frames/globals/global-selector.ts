@@ -44,12 +44,13 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
       [classKeyword, (_parent: Parent) => this.file.createConcreteClass()],
       [abstractKeyword, (_parent: Parent) => this.file.createAbstractClass()],
       [interfaceKeyword, (_parent: Parent) => this.file.createInterface()],
+      ["comment", (_parent: Parent) => this.file.createGlobalComment()],
       [commentMarker, (_parent: Parent) => this.file.createGlobalComment()],
     ];
   }
 
   profileAllows(keyword: string): boolean {
-    return this.profile.globals.includes(keyword);
+    return (keyword !== commentMarker) && (keyword !== recordKeyword);
   }
 
   validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
