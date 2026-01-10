@@ -50,7 +50,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
   }
 
   profileAllows(keyword: string): boolean {
-    return (keyword !== commentMarker) && (keyword !== recordKeyword);
+    return keyword !== commentMarker && keyword !== recordKeyword;
   }
 
   validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {

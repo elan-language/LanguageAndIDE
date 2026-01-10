@@ -9,8 +9,10 @@ import { cannotLoadUnparseableFile, fileErrorPrefix, parseErrorPrefix } from "..
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { ParseMode } from "../frames/frame-interfaces/file";
 import { Profile } from "../frames/frame-interfaces/profile";
+import { LanguageCS } from "../frames/language-cs";
 import { LanguageElan } from "../frames/language-elan";
 import { LanguagePython } from "../frames/language-python";
+import { LanguageVB } from "../frames/language-vb";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { CodeEditorViewModel } from "./code-editor-view-model";
 import { FileManager } from "./file-manager";
@@ -56,8 +58,10 @@ const demosMenu = document.getElementById("demos-menu") as HTMLDivElement;
 const fileMenu = document.getElementById("file-menu") as HTMLDivElement;
 const worksheetMenu = document.getElementById("worksheet-menu") as HTMLDivElement;
 const languageMenu = document.getElementById("language-menu") as HTMLDivElement;
-const elanButton = document.getElementById("elan-language") as HTMLDivElement;
 const pythonButton = document.getElementById("python-language") as HTMLDivElement;
+const vbButton = document.getElementById("vb-language") as HTMLDivElement;
+const csButton = document.getElementById("cs-language") as HTMLDivElement;
+const elanButton = document.getElementById("elan-language") as HTMLDivElement;
 
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const loadButton = document.getElementById("load") as HTMLDivElement;
@@ -769,12 +773,20 @@ newButton?.addEventListener("click", async (event: Event) => {
   }
 });
 
-elanButton?.addEventListener("click", async (_event: Event) => {
-  await codeViewModel.changeLanguage(new LanguageElan(), ideViewModel, testRunner);
-});
-
 pythonButton?.addEventListener("click", async (_event: Event) => {
   await codeViewModel.changeLanguage(new LanguagePython(), ideViewModel, testRunner);
+});
+
+vbButton?.addEventListener("click", async (_event: Event) => {
+  await codeViewModel.changeLanguage(new LanguageVB(), ideViewModel, testRunner);
+});
+
+csButton?.addEventListener("click", async (_event: Event) => {
+  await codeViewModel.changeLanguage(new LanguageCS(), ideViewModel, testRunner);
+});
+
+elanButton?.addEventListener("click", async (_event: Event) => {
+  await codeViewModel.changeLanguage(new LanguageElan(), ideViewModel, testRunner);
 });
 
 loadButton.addEventListener("click", chooser(getUploader(), false));

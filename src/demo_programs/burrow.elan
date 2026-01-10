@@ -1,14 +1,14 @@
-# 9c3bac26e60601f1d606468ac6b13e3b6b93a2d1d789e143fb6e5586b4d18b6c Elan 1.9.0 guest default_profile valid
+# 78c5b3208d27b045543c9fb1585221a1fd8bd5bb35b152a2470095839930a8e7 Elan 1.9.0 guest default_profile valid
 
 main
-  let blocks be new Array2D<of Int>(40, 30, white)
+  variable blocks set to new Array2D<of Int>(40, 30, white)
   variable x set to 20
   variable y set to 15
   while true
     call blocks.put(x, y, red)
     call displayBlocks(blocks)
     call blocks.put(x, y, black)
-    let direction be randomInt(0, 3)
+    variable direction set to randomInt(0, 3)
     if direction is 0 then
       set x to minInt([x + 1, 39])
     elif direction is 1 then

@@ -21,6 +21,7 @@ import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { AssertStatement } from "./statements/assert-statement";
@@ -41,50 +42,51 @@ import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 
-export class LanguageElan implements Language {
-  languageFullName: string = "Elan";
+export class LanguageVB implements Language {
+  languageFullName: string = "VB";
 
   annotation(frame: Frame): string {
-    return frame ? "" : ""; //No *frame-specific* annotation needed for Elan (but must consume frame parameter!)
+    return frame.frameSpecificAnnotation();
   }
+
   commentMarker(): string {
-    return this.hash;
+    return this.singleQuote;
   }
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
       html = `<el-kw>assert </el-kw>${frame.actual.renderAsHtml()}<el-kw> is </el-kw>${frame.expected.renderAsHtml()}`;
     } else if (frame instanceof CallStatement) {
-      html = `<el-kw>${this.callKeyword} </el-kw>${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)<el-punc>`;
     } else if (frame instanceof CatchStatement) {
       html = `<el-kw>${this.catchKeyword} ${this.exceptionKeyword} ${this.inKeyword} </el-kw>${frame.variable.renderAsHtml()}`;
     } else if (frame instanceof CommentStatement) {
-      html = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.singleQuote} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof Constant) {
       // special case because the </el-top> needs to be placed part way through the line
-      html = `<el-kw>${this.constantKeyword} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;
+      html = `<el-kw>${this.constKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.asKeyword} </el-kw><el-type>??? </el-type></el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
-      html = `<el-kw>${this.elifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.thenKeyword}`;
+      html = `<el-kw>${this.elseIfKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.thenKeyword}`;
     } else if (frame instanceof Else) {
       html = `<el-kw>${this.elseKeyword}`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.enumKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
-      html = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.singleQuote} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof LetStatement) {
-      html = `<el-kw>${this.letKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.beKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Print) {
-      html = `<el-kw>${this.printKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `TODO`;
     } else if (frame instanceof Property) {
       html = `${modifierAsHtml(frame)}<el-kw>${this.propertyKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.asKeyword} </el-kw>${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.returnKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof SetStatement) {
-      html = `<el-kw>${this.setKeyword} </el-kw>${frame.assignable.renderAsHtml()}<el-kw> ${this.toKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `${frame.assignable.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Throw) {
       html = `<el-kw>${this.throwKeyword} ${this.exceptionKeyword} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof VariableStatement) {
-      html = `<el-kw>${this.variableKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.setKeyword} ${this.toKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.dimKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof AbstractFunction) {
       html = `<el-kw>${this.abstractKeyword} ${this.functionKeyword} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.returnsKeyword} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof AbstractProcedure) {
@@ -106,7 +108,7 @@ export class LanguageElan implements Language {
     } else if (frame instanceof ConcreteClass) {
       html = `<el-kw>${this.classKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
-      html = `<el-kw>${this.constructorKeyword}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `<el-kw>${this.publicKeyword} ${this.subKeyword} ${this.newKeyword}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof Each) {
       html = `<el-kw>${this.eachKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.inKeyword} </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof For) {
@@ -116,17 +118,17 @@ export class LanguageElan implements Language {
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.functionKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.returnsKeyword} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalProcedure) {
-      html = `<el-kw>${this.procedureKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `<el-kw>${this.subKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.ifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.thenKeyword}</el-kw>`;
     } else if (frame instanceof InterfaceFrame) {
       html = `<el-kw>${this.interfaceKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof MainFrame) {
-      html = `<el-kw>${this.mainKeyword}</el-kw>`;
+      html = `<el-kw>${this.subKeyword}</el-kw> <el-method>main</el-method><el-punc>()</el-punc>`;
     } else if (frame instanceof ProcedureMethod) {
       html = `${modifierAsHtml(frame)}<el-kw>${this.procedureKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof RecordFrame) {
-      html = `<el-kw>${this.recordKeyword} </el-kw>${frame.name.renderAsHtml()}`;
+      html = `<el-kw>${this.classKeyword} </el-kw>${frame.name.renderAsHtml()}`;
     } else if (frame instanceof TestFrame) {
       html = `<el-kw>${this.testKeyword} </el-kw>${frame.testName.renderAsHtml()}`;
     } else if (frame instanceof TryStatement) {
@@ -142,7 +144,41 @@ export class LanguageElan implements Language {
   }
 
   renderBottomAsHtml(frame: Frame): string {
-    return `<el-kw>${this.endKeyword} ${frame.initialKeywords()}</el-kw>`;
+    let html = `Html not specified for this frame`;
+    if (frame instanceof AbstractClass) {
+      html = `<el-kw>${this.endKeyword} ${this.classKeyword}`;
+    } else if (frame instanceof ConcreteClass) {
+      html = `<el-kw>${this.endKeyword} ${this.classKeyword}`;
+    } else if (frame instanceof Constructor) {
+      html = `<el-kw>${this.endKeyword} ${this.subKeyword}`;
+    } else if (frame instanceof Each) {
+      html = `<el-kw>${this.endKeyword} ${this.nextKeyword}`;
+    } else if (frame instanceof For) {
+      html = `<el-kw>${this.endKeyword} ${this.nextKeyword}`;
+    } else if (frame instanceof FunctionMethod) {
+      html = `<el-kw>${this.endKeyword} ${this.functionKeyword}`;
+    } else if (frame instanceof GlobalFunction) {
+      html = `<el-kw>${this.endKeyword} ${this.functionKeyword}`;
+    } else if (frame instanceof GlobalProcedure) {
+      html = `<el-kw>${this.endKeyword} ${this.subKeyword}`;
+    } else if (frame instanceof IfStatement) {
+      html = `<el-kw>${this.endKeyword} ${this.ifKeyword}`;
+    } else if (frame instanceof InterfaceFrame) {
+      html = `<el-kw>${this.endKeyword} ${this.interfaceKeyword}`;
+    } else if (frame instanceof MainFrame) {
+      html = `<el-kw>${this.endKeyword} ${this.subKeyword}`;
+    } else if (frame instanceof ProcedureMethod) {
+      html = `<el-kw>${this.endKeyword} ${this.subKeyword}`;
+    } else if (frame instanceof RecordFrame) {
+      html = `<el-kw>${this.endKeyword} ${this.classKeyword}`;
+    } else if (frame instanceof TestFrame) {
+      html = `<el-kw>${this.endKeyword} ${this.subKeyword}`;
+    } else if (frame instanceof TryStatement) {
+      html = `<el-kw>${this.endKeyword} ${this.tryKeyword}`;
+    } else if (frame instanceof While) {
+      html = `<el-kw>${this.endKeyword} ${this.whileKeyword}`;
+    }
+    return html;
   }
 
   renderBottomAsExport(frame: Frame): string {
@@ -152,23 +188,37 @@ export class LanguageElan implements Language {
   renderNodeAsHtml(node: ParseNode): string {
     let html = ""; // If "" returned the node will use its own generic implementation
     if (node instanceof TypeGenericNode) {
-      html = `${node.simpleType?.renderAsHtml()}${node.generic?.renderAsHtml()}`;
+      const generics = node.generic?.renderAsHtml();
+      const chopped = generics?.substring(22, generics.length - 4);
+      html =
+        node.simpleType?.renderAsHtml() +
+        `<el-punc>[</el-punc><el-type>${chopped}</el-type><el-punc>]</el-punc>`;
+    } else if (node instanceof ParamDefNode) {
+      html = `${node.name?.renderAsHtml()}<el-kw> ${this.asKeyword} </el-kw>${node.type?.renderAsHtml()}`;
+    } else if (node instanceof BinaryOperation) {
+      const open = node.keyword ? "<el-kw>" : "";
+      const close = node.keyword ? "</el-kw>" : "";
+      let text = node.matchedText.trim();
+      if (text === "is") {
+        text = " == ";
+      } else if (text === "isnt") {
+        text = " != ";
+      } else {
+        text = node.renderAsElanSource();
+      }
+      html = `${open}${text}${close}`;
+    } else if (node instanceof InheritanceNode) {
+      html =
+        node.matchedText.length > 0
+          ? `<el-punc>(</el-punc>${node.typeList?.renderAsHtml()}<el-punc>)</el-punc>`
+          : ``;
     }
     return html;
   }
 
   // Not yet used - for illustration only
   grammarForNode(node: ParseNode): string {
-    let grammar = "";
-    if (node instanceof ParamDefNode) {
-      grammar = "OUT? name SPACE AS SPACE type"; //We will be disallowing OUT shortly
-    } else if (node instanceof BinaryOperation) {
-      grammar = "IS | ISNT | PLUS | MINUS ..."; // etc
-    } else if (node instanceof TypeGenericNode) {
-      grammar = "LT OF SPACE type GT";
-    }
-    // etc.
-    return grammar;
+    return node ? "" : "";
   }
 
   // Not yet used - for illustration only
@@ -181,65 +231,62 @@ PLUS:         '+';
 
   private abstractKeyword = "abstract";
   private andKeyword = "and";
-  private asKeyword = "as";
+  private asKeyword = "As";
   private assertKeyword = "assert";
   private beKeyword = "be";
-  private callKeyword = "call";
-  private catchKeyword = "catch";
-  private classKeyword = "class";
-  private constantKeyword = "constant";
+  private catchKeyword = "Catch";
+  private classKeyword = "Class";
+  private constKeyword = "Const";
   private constructorKeyword = "constructor";
   private copyKeyword = "copy";
-  private divKeyword = "div";
+  private dimKeyword = "Dim";
   private eachKeyword = "each";
-  private elifKeyword = "elif";
-  private elseKeyword = "else";
+  private elseIfKeyword = "ElseIf";
+  private elseKeyword = "Else";
   private emptyKeyword = "empty";
-  private endKeyword = "end";
+  private endKeyword = "End";
   private enumKeyword = "enum";
   private exceptionKeyword = "exception";
-  private forKeyword = "for";
+  private forKeyword = "For";
   private fromKeyword = "from";
-  private functionKeyword = "function";
+  private functionKeyword = "Function";
   private globalKeyword = "global";
-  private ifKeyword = "if";
+  private ifKeyword = "If";
   private imageKeyword = "image";
   private importKeyword = "import";
   private inKeyword = "in";
   private inheritsKeyword = "inherits";
-  private interfaceKeyword = "interface";
+  private interfaceKeyword = "Interface";
   private isKeyword = "is";
   private isntKeyword = "isnt";
   private lambdaKeyword = "lambda";
   private letKeyword = "let";
   private libraryKeyword = "library";
-  private mainKeyword = "main";
   private modKeyword = "mod";
-  private newKeyword = "new";
+  private newKeyword = "New";
+  private nextKeyword = "Next";
   private notKeyword = "not";
   private ofKeyword = "of";
   private orKeyword = "or";
   private outKeyword = "out";
-  private printKeyword = "print";
   private privateKeyword = "private";
   private procedureKeyword = "procedure";
   private propertyKeyword = "property";
-  private recordKeyword = "record";
-  private refKeyword = "ref";
+  private publicKeyword = "Public";
   private returnKeyword = "return";
   private returnsKeyword = "returns";
   private setKeyword = "set";
   private stepKeyword = "step";
+  private subKeyword = "Sub";
   private testKeyword = "test";
-  private thenKeyword = "then";
-  private thisKeyword = "this";
-  private throwKeyword = "throw";
-  private toKeyword = "to";
-  private tryKeyword = "try";
+  private thenKeyword = "Then";
+  private throwKeyword = "Throw";
+  private toKeyword = "To";
+  private tryKeyword = "Try";
   private tupleKeyword = "tuple";
   private variableKeyword = "variable";
-  private whileKeyword = "while";
+  private whileKeyword = "While";
   private withKeyword = "with";
 
-  private hash = "#";
+  private singleQuote = "'";
 }

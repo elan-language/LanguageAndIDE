@@ -20,8 +20,6 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
-import { BinaryOperation } from "./parse-nodes/binary-operation";
-import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
@@ -41,38 +39,39 @@ import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 
-export class LanguageElan implements Language {
-  languageFullName: string = "Elan";
+export class LanguageCS implements Language {
+  languageFullName: string = "C#";
 
   annotation(frame: Frame): string {
-    return frame ? "" : ""; //No *frame-specific* annotation needed for Elan (but must consume frame parameter!)
+    return frame.frameSpecificAnnotation();
   }
+
   commentMarker(): string {
-    return this.hash;
+    return this.doubleSlash;
   }
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
       html = `<el-kw>assert </el-kw>${frame.actual.renderAsHtml()}<el-kw> is </el-kw>${frame.expected.renderAsHtml()}`;
     } else if (frame instanceof CallStatement) {
-      html = `<el-kw>${this.callKeyword} </el-kw>${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>);</el-punc>`;
     } else if (frame instanceof CatchStatement) {
       html = `<el-kw>${this.catchKeyword} ${this.exceptionKeyword} ${this.inKeyword} </el-kw>${frame.variable.renderAsHtml()}`;
     } else if (frame instanceof CommentStatement) {
-      html = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.doubleSlash} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof Constant) {
       // special case because the </el-top> needs to be placed part way through the line
-      html = `<el-kw>${this.constantKeyword} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;
+      html = `<el-kw>${this.constKeyword} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
-      html = `<el-kw>${this.elifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.thenKeyword}`;
+      html = `<el-kw>${this.elseKeyword} ${this.ifKeyword} </el-kw><el-punc>(</el-punc>${frame.condition.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof Else) {
       html = `<el-kw>${this.elseKeyword}`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.enumKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
-      html = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.doubleSlash} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof LetStatement) {
-      html = `<el-kw>${this.letKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.beKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.varKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Print) {
       html = `<el-kw>${this.printKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Property) {
@@ -80,11 +79,11 @@ export class LanguageElan implements Language {
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.returnKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof SetStatement) {
-      html = `<el-kw>${this.setKeyword} </el-kw>${frame.assignable.renderAsHtml()}<el-kw> ${this.toKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `${frame.assignable.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Throw) {
       html = `<el-kw>${this.throwKeyword} ${this.exceptionKeyword} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof VariableStatement) {
-      html = `<el-kw>${this.variableKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.setKeyword} ${this.toKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.varKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof AbstractFunction) {
       html = `<el-kw>${this.abstractKeyword} ${this.functionKeyword} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.returnsKeyword} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof AbstractProcedure) {
@@ -118,11 +117,11 @@ export class LanguageElan implements Language {
     } else if (frame instanceof GlobalProcedure) {
       html = `<el-kw>${this.procedureKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof IfStatement) {
-      html = `<el-kw>${this.ifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.thenKeyword}</el-kw>`;
+      html = `<el-kw>${this.ifKeyword} </el-kw><el-punc>(</el-punc>${frame.condition.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof InterfaceFrame) {
       html = `<el-kw>${this.interfaceKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof MainFrame) {
-      html = `<el-kw>${this.mainKeyword}</el-kw>`;
+      html = `<el-kw>${this.voidKeyword}</el-kw> <el-method>main</el-method><el-punc>() {</el-punc>`;
     } else if (frame instanceof ProcedureMethod) {
       html = `${modifierAsHtml(frame)}<el-kw>${this.procedureKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof RecordFrame) {
@@ -142,7 +141,7 @@ export class LanguageElan implements Language {
   }
 
   renderBottomAsHtml(frame: Frame): string {
-    return `<el-kw>${this.endKeyword} ${frame.initialKeywords()}</el-kw>`;
+    return frame ? `<el-punc>}<el-punc>` : ``;
   }
 
   renderBottomAsExport(frame: Frame): string {
@@ -159,16 +158,7 @@ export class LanguageElan implements Language {
 
   // Not yet used - for illustration only
   grammarForNode(node: ParseNode): string {
-    let grammar = "";
-    if (node instanceof ParamDefNode) {
-      grammar = "OUT? name SPACE AS SPACE type"; //We will be disallowing OUT shortly
-    } else if (node instanceof BinaryOperation) {
-      grammar = "IS | ISNT | PLUS | MINUS ..."; // etc
-    } else if (node instanceof TypeGenericNode) {
-      grammar = "LT OF SPACE type GT";
-    }
-    // etc.
-    return grammar;
+    return node ? "" : "";
   }
 
   // Not yet used - for illustration only
@@ -187,7 +177,7 @@ PLUS:         '+';
   private callKeyword = "call";
   private catchKeyword = "catch";
   private classKeyword = "class";
-  private constantKeyword = "constant";
+  private constKeyword = "const";
   private constructorKeyword = "constructor";
   private copyKeyword = "copy";
   private divKeyword = "div";
@@ -229,6 +219,7 @@ PLUS:         '+';
   private returnKeyword = "return";
   private returnsKeyword = "returns";
   private setKeyword = "set";
+  private staticKeyword = "static";
   private stepKeyword = "step";
   private testKeyword = "test";
   private thenKeyword = "then";
@@ -237,9 +228,10 @@ PLUS:         '+';
   private toKeyword = "to";
   private tryKeyword = "try";
   private tupleKeyword = "tuple";
-  private variableKeyword = "variable";
+  private varKeyword = "var";
+  private voidKeyword = "void";
   private whileKeyword = "while";
   private withKeyword = "with";
 
-  private hash = "#";
+  private doubleSlash = "//";
 }
