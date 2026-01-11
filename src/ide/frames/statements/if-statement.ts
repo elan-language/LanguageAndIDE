@@ -27,6 +27,10 @@ export class IfStatement extends FrameWithStatements implements Statement {
     return "if";
   }
 
+  frameSpecificAnnotation(): string {
+    return "";
+  }
+
   outerHtmlTag: string = "el-statement";
 
   renderAsElanSource(): string {

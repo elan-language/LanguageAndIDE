@@ -25,7 +25,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine(_stdlib.pi);
+  await system.print(_stdlib.pi);
 }
 return [main, _tests];}`;
 
@@ -57,7 +57,7 @@ end main`;
 const global = new class {};
 async function main() {
   let x = _stdlib.sin(_stdlib.pi / 180 * 30);
-  await system.printLine(x);
+  await system.print(x);
 }
 return [main, _tests];}`;
 
@@ -91,7 +91,7 @@ const global = new class {};
 async function main() {
   let x = _stdlib.pi / 180 * 30;
   let y = _stdlib.sin(x);
-  await system.printLine(y);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -125,7 +125,7 @@ const global = new class {};
 async function main() {
   let x = _stdlib.pi / 180 * 30;
   let y = _stdlib.sin(x) + _stdlib.cos(x);
-  await system.printLine(y);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -159,7 +159,7 @@ const global = new class {};
 async function main() {
   let x = 0.7;
   let y = _stdlib.sin(x) ** 2 + _stdlib.cos(x) ** 2;
-  await system.printLine(y);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -191,7 +191,7 @@ end main`;
 const global = new class {};
 async function main() {
   let x = _stdlib.minFloat(system.list([3.1, 3]));
-  await system.printLine(x);
+  await system.print(x);
 }
 return [main, _tests];}`;
 
@@ -225,7 +225,7 @@ const global = new class {};
 async function main() {
   let i = system.list(["a", "b"]);
   let x = i.contains("b");
-  await system.printLine(x);
+  await system.print(x);
 }
 return [main, _tests];}`;
 

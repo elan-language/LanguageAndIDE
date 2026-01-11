@@ -1,23 +1,23 @@
-# a0ae4502d5a151c1eb207c577ff68bbbaae13b144c0a9a43a34affed011f8ee8 Elan 1.9.0 guest default_profile valid
+# dad86c31587cd8dd690d67e1af2a78a14515766c2ab0017863b7236aac83f577 Elan 1.9.0 guest default_profile valid
 
-test 
-    try
-      call foo()
-      print "not caught"
-    catch exception in e
-      print e
-    end try
+test test_try1
+  try
+    call foo()
+    call print("not caught")
+  catch exception in e
+    call print(e)
+  end try
 end test
 
-test 
-    try
-      call foo()
-      print "not caught"
-    catch exception in e
-      if e isnt "an expected message" then
-        throw exception e
-      end if
-    end try
+test test_try2
+  try
+    call foo()
+    call print("not caught")
+  catch exception in e
+    if e isnt "an expected message" then
+      throw exception e
+    end if
+  end try
 end test
 
 procedure foo()

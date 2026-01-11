@@ -9,6 +9,10 @@ import { cannotLoadUnparseableFile, fileErrorPrefix, parseErrorPrefix } from "..
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { ParseMode } from "../frames/frame-interfaces/file";
 import { Profile } from "../frames/frame-interfaces/profile";
+import { LanguageCS } from "../frames/language-cs";
+import { LanguageElan } from "../frames/language-elan";
+import { LanguagePython } from "../frames/language-python";
+import { LanguageVB } from "../frames/language-vb";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { CodeEditorViewModel } from "./code-editor-view-model";
 import { FileManager } from "./file-manager";
@@ -53,16 +57,21 @@ const demosButton = document.getElementById("demos") as HTMLButtonElement;
 const demosMenu = document.getElementById("demos-menu") as HTMLDivElement;
 const fileMenu = document.getElementById("file-menu") as HTMLDivElement;
 const worksheetMenu = document.getElementById("worksheet-menu") as HTMLDivElement;
+const languageMenu = document.getElementById("language-menu") as HTMLDivElement;
+const pythonButton = document.getElementById("python-language") as HTMLDivElement;
+const vbButton = document.getElementById("vb-language") as HTMLDivElement;
+const csButton = document.getElementById("cs-language") as HTMLDivElement;
+const elanButton = document.getElementById("elan-language") as HTMLDivElement;
 
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const loadButton = document.getElementById("load") as HTMLDivElement;
 const appendButton = document.getElementById("append") as HTMLDivElement;
-const importButton = document.getElementById("import") as HTMLDivElement;
 const saveButton = document.getElementById("save") as HTMLDivElement;
 const autoSaveButton = document.getElementById("auto-save") as HTMLDivElement;
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
 const fileButton = document.getElementById("file") as HTMLButtonElement;
+const languageButton = document.getElementById("language") as HTMLButtonElement;
 const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLDivElement;
 const preferencesButton = document.getElementById("preferences") as HTMLDivElement;
 
@@ -210,7 +219,6 @@ class IDEViewModel implements IIDEViewModel {
           runButton,
           loadButton,
           appendButton,
-          importButton,
           saveButton,
           autoSaveButton,
           newButton,
@@ -221,6 +229,7 @@ class IDEViewModel implements IIDEViewModel {
           redoButton,
           clearDisplayButton,
           fileButton,
+          languageButton,
           loadButton,
           saveAsStandaloneButton,
           preferencesButton,
@@ -236,9 +245,9 @@ class IDEViewModel implements IIDEViewModel {
       this.disable([stopButton, pauseButton, stepButton], "Program is not running");
 
       this.enable(fileButton, "File actions");
+      this.enable(languageButton, "Language");
       this.enable(loadButton, "Load code from a file");
       this.enable(appendButton, "Append code from a file onto the end of the existing code");
-      this.enable(importButton, "Import code from a file");
       this.enable(newButton, "Clear the current code and start afresh");
       this.enable(demosButton, "Load a demonstration program");
       this.enable(
@@ -764,11 +773,25 @@ newButton?.addEventListener("click", async (event: Event) => {
   }
 });
 
+pythonButton?.addEventListener("click", async (_event: Event) => {
+  await codeViewModel.changeLanguage(new LanguagePython(), ideViewModel, testRunner);
+});
+
+vbButton?.addEventListener("click", async (_event: Event) => {
+  await codeViewModel.changeLanguage(new LanguageVB(), ideViewModel, testRunner);
+});
+
+csButton?.addEventListener("click", async (_event: Event) => {
+  await codeViewModel.changeLanguage(new LanguageCS(), ideViewModel, testRunner);
+});
+
+elanButton?.addEventListener("click", async (_event: Event) => {
+  await codeViewModel.changeLanguage(new LanguageElan(), ideViewModel, testRunner);
+});
+
 loadButton.addEventListener("click", chooser(getUploader(), false));
 
 appendButton.addEventListener("click", chooser(getAppender(), true));
-
-importButton.addEventListener("click", chooser(getImporter(), true));
 
 saveButton.addEventListener("click", getDownloader());
 
@@ -876,10 +899,12 @@ window.addEventListener("keydown", ideViewModel.globalHandler);
 demosButton.addEventListener("click", handleClickDropDownButton);
 fileButton.addEventListener("click", handleClickDropDownButton);
 standardWorksheetButton.addEventListener("click", handleClickDropDownButton);
+languageButton.addEventListener("click", handleClickDropDownButton);
 
 demosButton.addEventListener("keydown", handleKeyDropDownButton);
 fileButton.addEventListener("keydown", handleKeyDropDownButton);
 standardWorksheetButton.addEventListener("keydown", handleKeyDropDownButton);
+languageButton.addEventListener("keydown", handleKeyDropDownButton);
 
 demosMenu.addEventListener("keydown", (e) =>
   handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
@@ -890,10 +915,14 @@ fileMenu.addEventListener("keydown", (e) =>
 worksheetMenu.addEventListener("keydown", (e) =>
   handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
 );
+languageMenu.addEventListener("keydown", (e) =>
+  handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
+);
 
 demosMenu.addEventListener("click", () => collapseMenu(demosButton, false));
 fileMenu.addEventListener("click", () => collapseMenu(fileButton, false));
 worksheetMenu.addEventListener("click", () => collapseMenu(standardWorksheetButton, false));
+languageMenu.addEventListener("click", () => collapseMenu(languageButton, false));
 
 displayTab?.addEventListener("click", () => tabViewModel.showDisplayTab());
 infoTab?.addEventListener("click", () => tabViewModel.showInfoTab());
@@ -928,7 +957,6 @@ if (checkIsChrome() || confirmContinueOnNonChromeBrowser()) {
       stepButton,
       loadButton,
       appendButton,
-      importButton,
       saveButton,
       autoSaveButton,
       newButton,
@@ -992,11 +1020,6 @@ function getAppender() {
   return useChromeFileAPI() ? handleChromeAppend : handleAppend;
 }
 
-function getImporter() {
-  // The `showOpenFilePicker()` method of the File System Access API is supported.
-  return useChromeFileAPI() ? handleChromeImport : handleImport;
-}
-
 async function handleChromeUpload(event: Event) {
   await wrapEventHandler(
     event,
@@ -1016,19 +1039,6 @@ async function handleChromeAppend(event: Event) {
     async () =>
       await fileManager.handleChromeUploadOrAppend(
         ParseMode.append,
-        codeViewModel,
-        ideViewModel,
-        testRunner,
-      ),
-  );
-}
-
-async function handleChromeImport(event: Event) {
-  await wrapEventHandler(
-    event,
-    async () =>
-      await fileManager.handleChromeUploadOrAppend(
-        ParseMode.import,
         codeViewModel,
         ideViewModel,
         testRunner,
@@ -1057,20 +1067,6 @@ async function handleAppend(event: Event) {
       await fileManager.handleUploadOrAppend(
         event,
         ParseMode.append,
-        codeViewModel,
-        ideViewModel,
-        testRunner,
-      ),
-  );
-}
-
-async function handleImport(event: Event) {
-  await wrapEventHandler(
-    event,
-    async () =>
-      await fileManager.handleUploadOrAppend(
-        event,
-        ParseMode.import,
         codeViewModel,
         ideViewModel,
         testRunner,

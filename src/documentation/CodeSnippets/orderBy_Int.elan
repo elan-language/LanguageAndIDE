@@ -1,7 +1,7 @@
-# b746886291471be25b41597259acc5676343522b9a1fd5878f54f61e9b7913ff Elan 1.9.0 guest default_profile valid
+# fe8a11e29886c99bd3a9b03577197255bdbe61b943e98cbaa8a40a4cb8509e0f Elan 1.9.0 guest default_profile valid
 
 main
   let numbers be [27, 2, 3, 5, 7, 31, 37, 11, 23, 13, 19, 23]
   let ordered be numbers.orderBy(lambda x as Int, y as Int => x > y)
-  print ordered
+  call print(ordered)
 end main

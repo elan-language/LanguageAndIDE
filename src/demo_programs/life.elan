@@ -1,4 +1,4 @@
-# 67d777a3dedb1f6c3ee4f3a4d8184844dbee8ca4bf0651f33f42231c7b89d189 Elan 1.9.0 guest default_profile valid
+# 8cbb0ed7f463deb4c22f98384fccfbb8608657e0a1b4f05f15269fc5a0d8decb Elan 1.9.0 guest default_profile valid
 
 main
   variable grid set to new Array2D<of Int>(40, 30, white)
@@ -116,95 +116,95 @@ procedure nextGeneration(out grid as Array2D<of Int>)
   set grid to next
 end procedure
 
-test north
-    assert north(tuple(3, 4)) is tuple(3, 3)
-    assert north(tuple(39, 0)) is tuple(39, 29)
-    assert north(tuple(0, 29)) is tuple(0, 28)
-    assert north(tuple(39, 29)) is tuple(39, 28)
+test test_north
+  assert north(tuple(3, 4)) is tuple(3, 3)
+  assert north(tuple(39, 0)) is tuple(39, 29)
+  assert north(tuple(0, 29)) is tuple(0, 28)
+  assert north(tuple(39, 29)) is tuple(39, 28)
 end test
 
-test south
-    assert south(tuple(3, 4)) is tuple(3, 5)
-    assert south(tuple(39, 0)) is tuple(39, 1)
-    assert south(tuple(0, 29)) is tuple(0, 0)
-    assert south(tuple(39, 29)) is tuple(39, 0)
+test test_south
+  assert south(tuple(3, 4)) is tuple(3, 5)
+  assert south(tuple(39, 0)) is tuple(39, 1)
+  assert south(tuple(0, 29)) is tuple(0, 0)
+  assert south(tuple(39, 29)) is tuple(39, 0)
 end test
 
-test east
-    assert east(tuple(10, 2)) is tuple(11, 2)
-    assert east(tuple(39, 0)) is tuple(0, 0)
-    assert east(tuple(0, 1)) is tuple(1, 1)
-    assert east(tuple(39, 29)) is tuple(0, 29)
+test test_east
+  assert east(tuple(10, 2)) is tuple(11, 2)
+  assert east(tuple(39, 0)) is tuple(0, 0)
+  assert east(tuple(0, 1)) is tuple(1, 1)
+  assert east(tuple(39, 29)) is tuple(0, 29)
 end test
 
-test west
-    assert west(tuple(3, 4)) is tuple(2, 4)
-    assert west(tuple(39, 0)) is tuple(38, 0)
-    assert west(tuple(0, 0)) is tuple(39, 0)
-    assert west(tuple(0, 29)) is tuple(39, 29)
+test test_west
+  assert west(tuple(3, 4)) is tuple(2, 4)
+  assert west(tuple(39, 0)) is tuple(38, 0)
+  assert west(tuple(0, 0)) is tuple(39, 0)
+  assert west(tuple(0, 29)) is tuple(39, 29)
 end test
 
-test north east
-    assert northEast(tuple(3, 4)) is tuple(4, 3)
-    assert northEast(tuple(0, 0)) is tuple(1, 29)
-    assert northEast(tuple(39, 0)) is tuple(0, 29)
-    assert northEast(tuple(0, 29)) is tuple(1, 28)
-    assert northEast(tuple(39, 29)) is tuple(0, 28)
+test test_northEast
+  assert northEast(tuple(3, 4)) is tuple(4, 3)
+  assert northEast(tuple(0, 0)) is tuple(1, 29)
+  assert northEast(tuple(39, 0)) is tuple(0, 29)
+  assert northEast(tuple(0, 29)) is tuple(1, 28)
+  assert northEast(tuple(39, 29)) is tuple(0, 28)
 end test
 
-test south east
-    assert southEast(tuple(3, 4)) is tuple(4, 5)
-    assert southEast(tuple(0, 0)) is tuple(1, 1)
-    assert southEast(tuple(39, 0)) is tuple(0, 1)
-    assert southEast(tuple(0, 29)) is tuple(1, 0)
-    assert southEast(tuple(39, 29)) is tuple(0, 0)
+test test_southEast
+  assert southEast(tuple(3, 4)) is tuple(4, 5)
+  assert southEast(tuple(0, 0)) is tuple(1, 1)
+  assert southEast(tuple(39, 0)) is tuple(0, 1)
+  assert southEast(tuple(0, 29)) is tuple(1, 0)
+  assert southEast(tuple(39, 29)) is tuple(0, 0)
 end test
 
-test north west
-    assert northWest(tuple(3, 4)) is tuple(2, 3)
-    assert northWest(tuple(0, 0)) is tuple(39, 29)
-    assert northWest(tuple(39, 0)) is tuple(38, 29)
-    assert northWest(tuple(0, 29)) is tuple(39, 28)
-    assert northWest(tuple(39, 29)) is tuple(38, 28)
+test test_northWest
+  assert northWest(tuple(3, 4)) is tuple(2, 3)
+  assert northWest(tuple(0, 0)) is tuple(39, 29)
+  assert northWest(tuple(39, 0)) is tuple(38, 29)
+  assert northWest(tuple(0, 29)) is tuple(39, 28)
+  assert northWest(tuple(39, 29)) is tuple(38, 28)
 end test
 
-test south west
-    assert southWest(tuple(3, 4)) is tuple(2, 5)
-    assert southWest(tuple(0, 0)) is tuple(39, 1)
-    assert southWest(tuple(39, 0)) is tuple(38, 1)
-    assert southWest(tuple(0, 29)) is tuple(39, 0)
-    assert southWest(tuple(39, 29)) is tuple(38, 0)
+test test_southWest
+  assert southWest(tuple(3, 4)) is tuple(2, 5)
+  assert southWest(tuple(0, 0)) is tuple(39, 1)
+  assert southWest(tuple(39, 0)) is tuple(38, 1)
+  assert southWest(tuple(0, 29)) is tuple(39, 0)
+  assert southWest(tuple(39, 29)) is tuple(38, 0)
 end test
 
-test blackOrWhite
-    assert blackOrWhite(0) is black
-    assert blackOrWhite(0.499) is black
-    assert blackOrWhite(0.5) is black
-    assert blackOrWhite(0.501) is white
-    assert blackOrWhite(1) is white
+test test_blackOrWhite
+  assert blackOrWhite(0) is black
+  assert blackOrWhite(0.499) is black
+  assert blackOrWhite(0.5) is black
+  assert blackOrWhite(0.501) is white
+  assert blackOrWhite(1) is white
 end test
 
-test neighbourCells
-    assert neighbourCells(3, 4) is [tuple(2, 3), tuple(3, 3), tuple(4, 3), tuple(2, 4), tuple(4, 4), tuple(2, 5), tuple(3, 5), tuple(4, 5)]
+test test_neighbourCells
+  assert neighbourCells(3, 4) is [tuple(2, 3), tuple(3, 3), tuple(4, 3), tuple(2, 4), tuple(4, 4), tuple(2, 5), tuple(3, 5), tuple(4, 5)]
 end test
 
-test willLive
-    assert willLive(white, 0) is false
-    assert willLive(white, 1) is false
-    assert willLive(white, 2) is false
-    assert willLive(white, 3) is true
-    assert willLive(white, 4) is false
-    assert willLive(white, 5) is false
-    assert willLive(white, 6) is false
-    assert willLive(white, 7) is false
-    assert willLive(white, 8) is false
-    assert willLive(black, 0) is false
-    assert willLive(black, 1) is false
-    assert willLive(black, 2) is true
-    assert willLive(black, 3) is true
-    assert willLive(black, 4) is false
-    assert willLive(black, 5) is false
-    assert willLive(black, 6) is false
-    assert willLive(black, 7) is false
-    assert willLive(black, 8) is false
+test test_willLive
+  assert willLive(white, 0) is false
+  assert willLive(white, 1) is false
+  assert willLive(white, 2) is false
+  assert willLive(white, 3) is true
+  assert willLive(white, 4) is false
+  assert willLive(white, 5) is false
+  assert willLive(white, 6) is false
+  assert willLive(white, 7) is false
+  assert willLive(white, 8) is false
+  assert willLive(black, 0) is false
+  assert willLive(black, 1) is false
+  assert willLive(black, 2) is true
+  assert willLive(black, 3) is true
+  assert willLive(black, 4) is false
+  assert willLive(black, 5) is false
+  assert willLive(black, 6) is false
+  assert willLive(black, 7) is false
+  assert willLive(black, 8) is false
 end test

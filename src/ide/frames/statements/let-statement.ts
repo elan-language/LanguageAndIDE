@@ -28,6 +28,10 @@ export class LetStatement extends AbstractDefinitionStatement {
     return "let";
   }
 
+  frameSpecificAnnotation(): string {
+    return "constant";
+  }
+
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}${letKeyword} ${this.name.renderAsElanSource()} ${beKeyword} ${this.expr.renderAsElanSource()}`;
   }

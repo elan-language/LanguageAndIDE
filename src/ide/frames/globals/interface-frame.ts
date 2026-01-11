@@ -1,7 +1,7 @@
 import { abstractClassKeywords, endKeyword, interfaceKeyword } from "../../../compiler/keywords";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
-import { parentHelper_renderChildrenAsSource } from "../parent-helpers";
+import { parentHelper_renderChildrenAsElanSource } from "../parent-helpers";
 import { ClassFrame } from "./class-frame";
 
 export class InterfaceFrame extends ClassFrame {
@@ -28,9 +28,13 @@ export class InterfaceFrame extends ClassFrame {
     return "class";
   }
 
+  frameSpecificAnnotation(): string {
+    return "interface";
+  }
+
   public renderAsElanSource(): string {
-    return `${this.sourceAnnotations()}${interfaceKeyword} ${this.name.renderAsElanSource()}${this.inheritanceAsSource()}\r
-${parentHelper_renderChildrenAsSource(this)}\r
+    return `${this.sourceAnnotations()}${interfaceKeyword} ${this.name.renderAsElanSource()}${this.inheritanceAsElanSource()}\r
+${parentHelper_renderChildrenAsElanSource(this)}\r
 ${endKeyword} ${interfaceKeyword}\r\n`;
   }
 

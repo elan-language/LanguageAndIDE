@@ -1,9 +1,9 @@
-# 53c07195c8ab2ec3ceb3580026ab28853f2c4e45ec68b2ac59ee3cc2ec0004b2 Elan 1.9.0 guest default_profile valid
+# 8c0f88949c60d7363be38c971f60dc98ae9da4fa4c4838474ee251634ae42e2f Elan 1.9.0 guest default_profile valid
 
 main
   variable li set to example.asList()
   call inPlaceRippleSort(li)
-  print li
+  call print(li)
 end main
 
 procedure inPlaceRippleSort(out arr as List<of Int>)

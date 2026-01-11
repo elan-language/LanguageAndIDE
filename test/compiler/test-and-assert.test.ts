@@ -933,7 +933,7 @@ return [main, _tests];}`;
   test("Pass_NonObviousDifferentTypes", async () => {
     const code = `${testHeader}
 
-test array content
+test arrayContent
   let a be new Array2D<of String>(2, 2, "*")
   assert a is [["*", "*"], ["*", "*"]]
 end test

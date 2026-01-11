@@ -1,11 +1,11 @@
-# b3e2fe6fb91909bba413b00244fac5fb1305183a2f996daab00bcb61f08de034 Elan 1.9.0 guest default_profile valid
+# e1cbdf76d176d64308183390046b48013842f35ca48f8fa941001667053f350c Elan 1.9.0 guest default_profile valid
 
-test 
-    let s1 be "hello"
-    let s2 be "World"
-    let r be "^[a-z]*$".asRegExp()
-    assert s1.matchesRegExp(r) is true
-    assert s2.matchesRegExp(r) is false
+test test_matchesRegExp
+  let s1 be "hello"
+  let s2 be "World"
+  let r be "^[a-z]*$".asRegExp()
+  assert s1.matchesRegExp(r) is true
+  assert s2.matchesRegExp(r) is false
 end test
 
 main

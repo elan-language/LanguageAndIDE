@@ -1,4 +1,4 @@
-# 83fd3840608eaa9ee4391dbf4ebd8d455e4aba688f52966d429e2e115eeee9f3 Elan 1.9.0 guest default_profile valid
+# a06f20560fa37a50d9b89e43deb3fdd812c353a27875b2f1a3833c6f6b086829 Elan 1.9.0 guest default_profile valid
 
 main
   variable ok set to true
@@ -11,7 +11,7 @@ main
     call playersTurn(sequence, interval, ok)
     call clearVectorGraphics()
   end while
-  print "Game over. You scored: {sequence.length() - 1}"
+  call print("Game over. You scored: {sequence.length() - 1}")
 end main
 
 procedure simonsTurn(sequence as List<of Int>, interval as Int)

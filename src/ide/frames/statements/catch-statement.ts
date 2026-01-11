@@ -40,6 +40,10 @@ export class CatchStatement extends SingleLineFrame implements Statement {
     return "catch";
   }
 
+  frameSpecificAnnotation(): string {
+    return "";
+  }
+
   indent() {
     return this.getParent()!.indent(); //overrides the additional indent added for most child statements
   }

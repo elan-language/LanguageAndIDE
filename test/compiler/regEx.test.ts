@@ -4,7 +4,6 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
-  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParseIncomplete,
@@ -30,9 +29,9 @@ end main`;
 const global = new class {};
 async function main() {
   let r = /a+/;
-  await system.printLine(r);
-  await system.printLine(_stdlib.matchesRegExp("aa", r));
-  await system.printLine(_stdlib.matchesRegExp("b", r));
+  await system.print(r);
+  await system.print(_stdlib.matchesRegExp("aa", r));
+  await system.print(_stdlib.matchesRegExp("b", r));
 }
 return [main, _tests];}`;
 
@@ -68,7 +67,7 @@ end function`;
 const global = new class {};
 async function main() {
   let r = /a+/;
-  await system.printLine((await global.testRegex(r)));
+  await system.print((await global.testRegex(r)));
 }
 
 async function testRegex(r) {
@@ -111,7 +110,7 @@ const global = new class {};
 async function main() {
   let r = system.emptyRegExp();
   r = (await global.testRegex());
-  await system.printLine(_stdlib.matchesRegExp("aa", r));
+  await system.print(_stdlib.matchesRegExp("aa", r));
 }
 
 async function testRegex() {
@@ -152,10 +151,10 @@ end main`;
 const global = new class {};
 async function main() {
   let r = /a\\/b/;
-  await system.printLine(_stdlib.matchesRegExp("a/b", r));
-  await system.printLine(_stdlib.matchesRegExp("a\\\\/b", r));
-  await system.printLine(_stdlib.matchesRegExp("a\\\\b", r));
-  await system.printLine(_stdlib.matchesRegExp("a\\\\\\\\/b", r));
+  await system.print(_stdlib.matchesRegExp("a/b", r));
+  await system.print(_stdlib.matchesRegExp("a\\\\/b", r));
+  await system.print(_stdlib.matchesRegExp("a\\\\b", r));
+  await system.print(_stdlib.matchesRegExp("a\\\\\\\\/b", r));
 }
 return [main, _tests];}`;
 

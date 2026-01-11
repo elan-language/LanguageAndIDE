@@ -1,6 +1,6 @@
 import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { BreakpointStatus } from "../../compiler/debugging/breakpoint-status";
-import { ghostedAnnotation, importedAnnotation } from "../../compiler/keywords";
+import { ghostedAnnotation } from "../../compiler/keywords";
 import {
   addDeleteToContextMenu,
   expandCollapseAll,
@@ -51,7 +51,6 @@ export abstract class AbstractFrame implements Frame {
   private _movable: boolean = true;
   private _parseStatus: ParseStatus = ParseStatus.default;
   private _ghosted: boolean = false;
-  private _imported: boolean = false;
 
   constructor(parent: Parent) {
     this._parent = parent;
@@ -104,9 +103,7 @@ export abstract class AbstractFrame implements Frame {
   abstract outerHtmlTag: string;
 
   getFrNo(): string {
-    return this.isGhostedOrWithinAGhostedFrame() || this.isWithinAnImportedFrame()
-      ? ""
-      : this.getFile().getFrNo();
+    return this.isGhostedOrWithinAGhostedFrame() ? "" : this.getFile().getFrNo();
   }
 
   fieldUpdated(_field: Field): void {
@@ -519,7 +516,6 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this.breakpointStatus !== BreakpointStatus.none, "breakpoint");
     this.pushClass(this.paused, "paused");
     this.pushClass(this.isGhosted(), ghostedAnnotation);
-    this.pushClass(this.isImported(), importedAnnotation);
     this._classes.push(DisplayColour[this.readDisplayStatus()]);
   }
 
@@ -533,6 +529,8 @@ export abstract class AbstractFrame implements Frame {
   }
 
   abstract renderAsHtml(): string;
+
+  abstract renderAsExport(): string;
 
   indent(): string {
     if (this.hasParent()) {
@@ -779,14 +777,6 @@ export abstract class AbstractFrame implements Frame {
     return this._ghosted;
   }
 
-  isImported() {
-    return this._imported;
-  }
-
-  setImported(flag: boolean) {
-    this._imported = flag;
-  }
-
   isGhostedOrWithinAGhostedFrame(): boolean {
     return this.isGhosted() || this.getParent().isGhostedOrWithinAGhostedFrame();
   }
@@ -796,17 +786,8 @@ export abstract class AbstractFrame implements Frame {
     return true;
   };
 
-  isWithinAnImportedFrame(): boolean {
-    const parent = this.getParent();
-    return parent.isImported() || parent.isWithinAnImportedFrame();
-  }
-
   sourceAnnotations(): string {
-    return this.isImported()
-      ? `[${importedAnnotation}] `
-      : this.isGhosted()
-        ? `[${ghostedAnnotation}] `
-        : "";
+    return this.isGhosted() ? `[${ghostedAnnotation}] ` : "";
   }
 
   getContextMenuItems() {
@@ -887,12 +868,14 @@ export abstract class AbstractFrame implements Frame {
   }
 
   annotationAsSource() {
-    //const ghosted = this.isGhosted() ? ` ghosted ` : ``;  // Add this to the end when implementation of ghosted is changed
-    const annotation = this.language().annotation(this).trim();
+    const ghosted = this.isGhosted() ? ` ghosted` : ``; // Add this to the end when implementation of ghosted is changed
+    const annotation = this.language().annotation(this).trim() + ghosted;
     return annotation.length > 0 ? ` ${this.language().commentMarker()} ${annotation}` : ``;
   }
 
   language(): Language {
     return this._parent.language();
   }
+
+  abstract frameSpecificAnnotation(): string;
 }

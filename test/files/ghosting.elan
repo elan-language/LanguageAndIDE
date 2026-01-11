@@ -1,15 +1,15 @@
-# 0a17f4e13edf1bed74d29a2355b5a436ef533d13ab4de66f2b3f70ff1b39c380 Elan 1.9.0 guest default_profile valid
+# 3e5aff26b68a496f609d03545fb110173ffe040acd2feaf9043c60c4d30d19d3 Elan 1.9.0 guest default_profile valid
 
 main
-  print 1
+  call print(1)
   # [ghosted]
-  print 2
-  print 3
+  call print(2)
+  call print(3)
   call foo()
 end main
 
 procedure foo()
-  print 4
-  print 5
-  print 6
+  call print(4)
+  call print(5)
+  call print(6)
 end procedure

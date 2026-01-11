@@ -24,7 +24,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine("");
+  await system.print("");
 }
 return [main, _tests];}`;
 
@@ -53,7 +53,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine("¬!£$%^&*()@~#|<>'");
+  await system.print("¬!£$%^&*()@~#|<>'");
 }
 return [main, _tests];}`;
 
@@ -83,7 +83,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine("\\\\b\\n");
+  await system.print("\\\\b\\n");
 }
 return [main, _tests];}`;
 
@@ -143,7 +143,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine("Foo");
+  await system.print("Foo");
   await _stdlib.clearPrintedText();
 }
 return [main, _tests];}`;
@@ -176,7 +176,7 @@ end main`;
 const global = new class {};
 async function main() {
   const i = await (async () => {const _a = {...system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png"))}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")))); _a.width = 50; _a.height = 50; _a.title = "foo"; _a.alt = "bar"; return _a;})();
-  await system.printLine(i);
+  await system.print(i);
 }
 return [main, _tests];}`;
 
@@ -208,10 +208,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine("<3");
-  await system.printLine("a < b ");
-  await system.printLine("c <d> ");
-  await system.printLine("e <f ");
+  await system.print("<3");
+  await system.print("a < b ");
+  await system.print("c <d> ");
+  await system.print("e <f ");
 }
 return [main, _tests];}`;
 

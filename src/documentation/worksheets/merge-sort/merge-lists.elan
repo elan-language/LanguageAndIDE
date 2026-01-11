@@ -1,19 +1,19 @@
-# f9b69fa69f3ead77255e3eaaaeac2660b17ce3a4b39f3dc81d976fa41dd9ffdf Elan 1.9.0 guest default_profile valid
+# 8c02de292c501bd48368edbf6328ca6ed435bafcfca0ec09aed29be930f23ce6 Elan 1.9.0 guest default_profile valid
 
 # This code is the start-point for Worksheet 'Merge lists' where the task is to implement the 'merge' function properly, and hence get all tests passing.
 function merge(a as List<of String>, b as List<of String>) returns List<of String>
   return ["x"]
 end function
 
-test merge
-    let emptyList be empty List<of String>
-    assert merge(emptyList, emptyList) is emptyList
-    assert merge(["orange"], ["melon"]) is ["melon", "orange"]
-    let l1 be ["apple", "lime", "pear"]
-    let l2 be ["apricot", "lemon", "plum"]
-    assert merge(l1, l2) is ["apple", "apricot", "lemon", "lime", "pear", "plum"]
-    assert merge(l2, l1) is ["apple", "apricot", "lemon", "lime", "pear", "plum"]
-    assert merge(l1, emptyList) is l1
-    assert merge(emptyList, l2) is l2
-    assert merge(l1, l1) is ["apple", "apple", "lime", "lime", "pear", "pear"]
+test test_merge
+  let emptyList be empty List<of String>
+  assert merge(emptyList, emptyList) is emptyList
+  assert merge(["orange"], ["melon"]) is ["melon", "orange"]
+  let l1 be ["apple", "lime", "pear"]
+  let l2 be ["apricot", "lemon", "plum"]
+  assert merge(l1, l2) is ["apple", "apricot", "lemon", "lime", "pear", "plum"]
+  assert merge(l2, l1) is ["apple", "apricot", "lemon", "lime", "pear", "plum"]
+  assert merge(l1, emptyList) is l1
+  assert merge(emptyList, l2) is l2
+  assert merge(l1, l1) is ["apple", "apple", "lime", "lime", "pear", "pear"]
 end test

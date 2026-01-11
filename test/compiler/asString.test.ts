@@ -25,7 +25,7 @@ end main`;
 const global = new class {};
 async function main() {
   let f = 1;
-  await system.printLine((await _stdlib.asString(f)));
+  await system.print((await _stdlib.asString(f)));
 }
 return [main, _tests];}`;
 
@@ -68,7 +68,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
   let s = (await _stdlib.asString(f));
-  await system.printLine(s);
+  await system.print(s);
 }
 
 class Foo {
@@ -123,7 +123,7 @@ async function main() {
   let f = system.initialise(await new Foo()._initialise());
   let p = f.p1;
   let s = (await _stdlib.asString(p));
-  await system.printLine(s);
+  await system.print(s);
 }
 
 class Foo {
@@ -192,8 +192,8 @@ async function main() {
   let s1 = (await f.asString());
   let p = f.p1;
   let s2 = (await p.asString());
-  await system.printLine(s1);
-  await system.printLine(s2);
+  await system.print(s1);
+  await system.print(s2);
 }
 
 class Foo {
@@ -265,7 +265,7 @@ const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
   let s = (await f.asString());
-  await system.printLine(s);
+  await system.print(s);
 }
 
 class Foo {
@@ -332,7 +332,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.printLine(f);
+  await system.print(f);
 }
 
 class Foo {
@@ -391,13 +391,13 @@ const global = new class {};
 async function main() {
   let l = system.listImmutable([1, 2, 3]);
   let sl = (await _stdlib.asString(l));
-  await system.printLine(sl);
+  await system.print(sl);
   let a = system.listImmutable([1, 2, 3]).asList();
   let sa = (await _stdlib.asString(a));
-  await system.printLine(sa);
+  await system.print(sa);
   let d = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   let sd = (await _stdlib.asString(d));
-  await system.printLine(sd);
+  await system.print(sd);
 }
 return [main, _tests];}`;
 

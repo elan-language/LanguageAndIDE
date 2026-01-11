@@ -27,9 +27,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine(3 < 4);
-  await system.printLine(3 < 2);
-  await system.printLine(3 < 3);
+  await system.print(3 < 4);
+  await system.print(3 < 2);
+  await system.print(3 < 3);
 }
 return [main, _tests];}`;
 
@@ -61,9 +61,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine(3 > 4);
-  await system.printLine(3 > 2);
-  await system.printLine(3 > 3);
+  await system.print(3 > 4);
+  await system.print(3 > 2);
+  await system.print(3 > 3);
 }
 return [main, _tests];}`;
 
@@ -95,9 +95,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine(3 <= 4);
-  await system.printLine(3 <= 2);
-  await system.printLine(3 <= 3);
+  await system.print(3 <= 4);
+  await system.print(3 <= 2);
+  await system.print(3 <= 3);
 }
 return [main, _tests];}`;
 
@@ -129,9 +129,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine(3 >= 4);
-  await system.printLine(3 >= 2);
-  await system.printLine(3 >= 3);
+  await system.print(3 >= 4);
+  await system.print(3 >= 2);
+  await system.print(3 >= 3);
 }
 return [main, _tests];}`;
 
@@ -163,9 +163,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine(3 !== 4);
-  await system.printLine(3 !== 2);
-  await system.printLine(3 !== 3);
+  await system.print(3 !== 4);
+  await system.print(3 !== 2);
+  await system.print(3 !== 3);
 }
 return [main, _tests];}`;
 
@@ -197,9 +197,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine(3 === 4);
-  await system.printLine(3 === 2);
-  await system.printLine(3 === 3);
+  await system.print(3 === 4);
+  await system.print(3 === 2);
+  await system.print(3 === 3);
 }
 return [main, _tests];}`;
 
@@ -238,16 +238,16 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine(3 < 3.1);
-  await system.printLine(3 <= 3.1);
-  await system.printLine(3 > 3.1);
-  await system.printLine(3 >= 3.1);
-  await system.printLine(3 === 3);
-  await system.printLine(3 !== 3);
-  await system.printLine(3.1 < 3);
-  await system.printLine(3.1 <= 3);
-  await system.printLine(3.1 > 3);
-  await system.printLine(3.1 >= 3);
+  await system.print(3 < 3.1);
+  await system.print(3 <= 3.1);
+  await system.print(3 > 3.1);
+  await system.print(3 >= 3.1);
+  await system.print(3 === 3);
+  await system.print(3 !== 3);
+  await system.print(3.1 < 3);
+  await system.print(3.1 <= 3);
+  await system.print(3.1 > 3);
+  await system.print(3.1 >= 3);
 }
 return [main, _tests];}`;
 
@@ -279,9 +279,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine((5 + 3) > (4 + 2));
-  await system.printLine((5 + 3) === (4 + 4));
-  await system.printLine((5 + 3) > (4 + 6));
+  await system.print((5 + 3) > (4 + 2));
+  await system.print((5 + 3) === (4 + 4));
+  await system.print((5 + 3) > (4 + 6));
 }
 return [main, _tests];}`;
 

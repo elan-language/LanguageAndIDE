@@ -48,8 +48,6 @@ export interface Parent {
   getFactory(): StatementFactory;
 
   isGhostedOrWithinAGhostedFrame(): boolean;
-  isWithinAnImportedFrame(): boolean;
-  isImported(): boolean;
 
   language(): Language;
 }

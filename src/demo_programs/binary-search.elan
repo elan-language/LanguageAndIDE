@@ -1,4 +1,4 @@
-# bd88075c5eeb8dfc3314ff19502fb9c7460f2768d53c19817510de1a97235e06 Elan 1.9.0 guest default_profile valid
+# 38be61528eab31e3cae812b2340e2612e613efab615704f5fc9984dda36259b9 Elan 1.9.0 guest default_profile valid
 
 main
   let fruit be ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
@@ -10,9 +10,9 @@ main
     else
       let result be binarySearch(fruit, wanted)
       if result then
-        print "We can supply a {wanted}"
+        call print("We can supply a {wanted}")
       else
-        print "Sorry, we cannot supply a {wanted}"
+        call print("Sorry, we cannot supply a {wanted}")
       end if
     end if
   end while
@@ -25,7 +25,7 @@ function binarySearch(li as List<of String>, item as String) returns Boolean
     let value be li[mid]
     if item is value then
       set result to true
-    else if item.isBefore(value) then
+    elif item.isBefore(value) then
       set result to binarySearch(li[..mid], item)
     else
       set result to binarySearch(li[mid + 1..], item)
@@ -34,19 +34,19 @@ function binarySearch(li as List<of String>, item as String) returns Boolean
   return result
 end function
 
-test 
-    let li1 be ["lemon", "lime", "orange"]
-    assert binarySearch(li1, "lemon") is true
-    assert binarySearch(li1, "lime") is true
-    assert binarySearch(li1, "orange") is true
-    assert binarySearch(li1, "pear") is false
-    let li2 be ["lemon", "orange"]
-    assert binarySearch(li2, "lemon") is true
-    assert binarySearch(li2, "orange") is true
-    assert binarySearch(li2, "pear") is false
-    let li3 be ["lemon"]
-    assert binarySearch(li3, "lemon") is true
-    assert binarySearch(li3, "lime") is false
-    let li4 be empty List<of String>
-    assert binarySearch(li4, "pear") is false
+test test_
+  let li1 be ["lemon", "lime", "orange"]
+  assert binarySearch(li1, "lemon") is true
+  assert binarySearch(li1, "lime") is true
+  assert binarySearch(li1, "orange") is true
+  assert binarySearch(li1, "pear") is false
+  let li2 be ["lemon", "orange"]
+  assert binarySearch(li2, "lemon") is true
+  assert binarySearch(li2, "orange") is true
+  assert binarySearch(li2, "pear") is false
+  let li3 be ["lemon"]
+  assert binarySearch(li3, "lemon") is true
+  assert binarySearch(li3, "lime") is false
+  let li4 be empty List<of String>
+  assert binarySearch(li4, "pear") is false
 end test

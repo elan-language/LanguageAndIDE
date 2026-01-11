@@ -1,4 +1,3 @@
-import { AbstractFrame } from "./abstract-frame";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -6,6 +5,7 @@ import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
+import { modifierAsHtml } from "./frame-helpers";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ParseNode } from "./frame-interfaces/parse-node";
@@ -28,6 +28,7 @@ import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
 import { Each } from "./statements/each";
+import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
@@ -41,8 +42,10 @@ import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 
 export class LanguageElan implements Language {
+  languageFullName: string = "Elan";
+
   annotation(frame: Frame): string {
-    return frame instanceof AbstractFrame ? "" : ""; //No *frame-specific* annotation needed for Elan
+    return frame ? "" : ""; //No *frame-specific* annotation needed for Elan (but must consume frame parameter!)
   }
   commentMarker(): string {
     return this.hash;
@@ -52,19 +55,18 @@ export class LanguageElan implements Language {
     if (frame instanceof AssertStatement) {
       html = `<el-kw>assert </el-kw>${frame.actual.renderAsHtml()}<el-kw> is </el-kw>${frame.expected.renderAsHtml()}`;
     } else if (frame instanceof CallStatement) {
-      html = `<el-kw>${this.callKeyword} </el-kw>${frame.proc.renderAsHtml()}<span>(</span>${frame.args.renderAsHtml()}<span>)</span>`;
+      html = `<el-kw>${this.callKeyword} </el-kw>${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof CatchStatement) {
       html = `<el-kw>${this.catchKeyword} ${this.exceptionKeyword} ${this.inKeyword} </el-kw>${frame.variable.renderAsHtml()}`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof Constant) {
       // special case because the </el-top> needs to be placed part way through the line
-      html = `<el-kw>${this.constantKeyword} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.isImported() ? "" : frame.value.renderAsHtml()}`;
+      html = `<el-kw>${this.constantKeyword} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;
+    } else if (frame instanceof Elif) {
+      html = `<el-kw>${this.elifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.thenKeyword}`;
     } else if (frame instanceof Else) {
-      const ifClause = frame.hasIf
-        ? `<el-kw> ${this.ifKeyword} </kw> ${frame.condition.renderAsHtml()}`
-        : ``;
-      html = `<el-kw>${this.elseKeyword}</el-kw>${ifClause}`;
+      html = `<el-kw>${this.elseKeyword}`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.enumKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
@@ -74,7 +76,7 @@ export class LanguageElan implements Language {
     } else if (frame instanceof Print) {
       html = `<el-kw>${this.printKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Property) {
-      html = `<el-kw>${this.propertyKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.asKeyword} </el-kw>${frame.type.renderAsHtml()}`;
+      html = `${modifierAsHtml(frame)}<el-kw>${this.propertyKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.asKeyword} </el-kw>${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.returnKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof SetStatement) {
@@ -92,12 +94,17 @@ export class LanguageElan implements Language {
     }
     return html;
   }
+
+  renderSingleLineAsExport(frame: Frame): string {
+    return frame ? "" : ""; // At least for the time being, there is no reason to export a file being presented as Elan
+  }
+
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.abstractKeyword} ${this.classKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()}`;
+      html = `<el-kw>${this.abstractKeyword} ${this.classKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.classKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()}`;
+      html = `<el-kw>${this.classKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.constructorKeyword}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof Each) {
@@ -105,7 +112,7 @@ export class LanguageElan implements Language {
     } else if (frame instanceof For) {
       html = `<el-kw>${this.forKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.fromKeyword} </el-kw>${frame.from.renderAsHtml()}<el-kw> ${this.toKeyword} </el-kw>${frame.to.renderAsHtml()}<el-kw> ${this.stepKeyword} </el-kw>${frame.step.renderAsHtml()}`;
     } else if (frame instanceof FunctionMethod) {
-      html = `<el-kw>${this.functionKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.returnsKeyword} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `${modifierAsHtml(frame)}<el-kw>${this.functionKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.returnsKeyword} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.functionKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.returnsKeyword} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalProcedure) {
@@ -113,15 +120,15 @@ export class LanguageElan implements Language {
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.ifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.thenKeyword}</el-kw>`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.interfaceKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()}`;
+      html = `<el-kw>${this.interfaceKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.mainKeyword}</el-kw>`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `<el-kw>${this.procedureKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `${modifierAsHtml(frame)}<el-kw>${this.procedureKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof RecordFrame) {
       html = `<el-kw>${this.recordKeyword} </el-kw>${frame.name.renderAsHtml()}`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.testKeyword} </el-kw>${frame.testDescription.renderAsHtml()}`;
+      html = `<el-kw>${this.testKeyword} </el-kw>${frame.testName.renderAsHtml()}`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.tryKeyword} </el-kw>`;
     } else if (frame instanceof While) {
@@ -130,56 +137,27 @@ export class LanguageElan implements Language {
     return html;
   }
 
+  renderTopAsExport(frame: Frame): string {
+    return frame ? "" : ""; // At least for the time being, there is no reason to export a file being presented as Elan
+  }
+
   renderBottomAsHtml(frame: Frame): string {
-    let html = `Html not specified for this frame`;
-    if (frame instanceof AbstractClass) {
-      html = this.end(this.classKeyword);
-    } else if (frame instanceof ConcreteClass) {
-      html = this.end(this.classKeyword);
-    } else if (frame instanceof Constructor) {
-      html = this.end(this.constructorKeyword);
-    } else if (frame instanceof Each) {
-      html = this.end(this.eachKeyword);
-    } else if (frame instanceof For) {
-      html = this.end(this.forKeyword);
-    } else if (frame instanceof FunctionMethod) {
-      html = this.end(this.functionKeyword);
-    } else if (frame instanceof GlobalFunction) {
-      html = this.end(this.functionKeyword);
-    } else if (frame instanceof GlobalProcedure) {
-      html = this.end(this.procedureKeyword);
-    } else if (frame instanceof IfStatement) {
-      html = this.end(this.ifKeyword);
-    } else if (frame instanceof InterfaceFrame) {
-      html = this.end(this.interfaceKeyword);
-    } else if (frame instanceof MainFrame) {
-      html = this.end(this.mainKeyword);
-    } else if (frame instanceof ProcedureMethod) {
-      html = this.end(this.procedureKeyword);
-    } else if (frame instanceof RecordFrame) {
-      html = this.end(this.recordKeyword);
-    } else if (frame instanceof TestFrame) {
-      html = this.end(this.testKeyword);
-    } else if (frame instanceof TryStatement) {
-      html = this.end(this.tryKeyword);
-    } else if (frame instanceof While) {
-      html = this.end(this.whileKeyword);
-    }
-    return html;
+    return `<el-kw>${this.endKeyword} ${frame.initialKeywords()}</el-kw>`;
+  }
+
+  renderBottomAsExport(frame: Frame): string {
+    return frame ? "" : ""; // At least for the time being, there is no reason to export a file being presented as Elan
   }
 
   renderNodeAsHtml(node: ParseNode): string {
-    let html = "";
+    let html = ""; // If "" returned the node will use its own generic implementation
     if (node instanceof TypeGenericNode) {
       html = `${node.simpleType?.renderAsHtml()}${node.generic?.renderAsHtml()}`;
     }
     return html;
   }
 
-  private end(kw: string) {
-    return `<el-kw>${this.endKeyword} ${kw}</el-kw>`;
-  }
-
+  // Not yet used - for illustration only
   grammarForNode(node: ParseNode): string {
     let grammar = "";
     if (node instanceof ParamDefNode) {
@@ -189,15 +167,16 @@ export class LanguageElan implements Language {
     } else if (node instanceof TypeGenericNode) {
       grammar = "LT OF SPACE type GT";
     }
+    // etc.
     return grammar;
   }
 
+  // Not yet used - for illustration only
   lexer(): string {
-    //Example only
     return `
 IS:           'is';
 PLUS:         '+';
-`;
+`; //etc.
   }
 
   private abstractKeyword = "abstract";
@@ -213,6 +192,7 @@ PLUS:         '+';
   private copyKeyword = "copy";
   private divKeyword = "div";
   private eachKeyword = "each";
+  private elifKeyword = "elif";
   private elseKeyword = "else";
   private emptyKeyword = "empty";
   private endKeyword = "end";
@@ -223,7 +203,6 @@ PLUS:         '+';
   private functionKeyword = "function";
   private globalKeyword = "global";
   private ifKeyword = "if";
-  private ignoreKeyword = "ignore"; // Not actively used since v1.7.0, retained pro tem, for backwards Elan code compatibility - now has the effect of ghosting
   private imageKeyword = "image";
   private importKeyword = "import";
   private inKeyword = "in";
@@ -247,7 +226,6 @@ PLUS:         '+';
   private propertyKeyword = "property";
   private recordKeyword = "record";
   private refKeyword = "ref";
-  private repeatKeyword = "repeat";
   private returnKeyword = "return";
   private returnsKeyword = "returns";
   private setKeyword = "set";

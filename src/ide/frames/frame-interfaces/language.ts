@@ -2,8 +2,8 @@ import { Frame } from "./frame";
 import { ParseNode } from "./parse-node";
 
 export interface Language {
-  /*   languageFullName: string;
-  defaultFileExtension: string;
+  languageFullName: string;
+  /* defaultFileExtension: string;
   defaultMimeType: string; */
 
   annotation(frame: Frame): string;
@@ -12,9 +12,15 @@ export interface Language {
 
   renderSingleLineAsHtml(frame: Frame): string;
 
+  renderSingleLineAsExport(frame: Frame): string;
+
   renderTopAsHtml(frame: Frame): string;
 
+  renderTopAsExport(frame: Frame): string;
+
   renderBottomAsHtml(frame: Frame): string;
+
+  renderBottomAsExport(frame: Frame): string;
 
   renderNodeAsHtml(node: ParseNode): string;
 

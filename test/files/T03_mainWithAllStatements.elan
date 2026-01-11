@@ -1,11 +1,11 @@
-# 08cf2d7c64e7b48302ac8dbbe91333465302dfecf899ec11b2a45f13bb4b2b1f Elan 1.9.0 guest default_profile valid
+# 842ea0895043c17abef9b741591211692ab79bd1def89bdfb9f3ae9ef25e50b1 Elan 1.9.0 guest default_profile valid
 
 main
   variable a set to 3
   set a to 3 + 4
   throw exception "error"
   call signIn(rwp, password)
-  print "Hello World!"
+  call print("Hello World!")
   while newGame
 
   end while
@@ -22,7 +22,7 @@ main
   else
   end if
   if y > 4 then
-  else if y > 10 then
+  elif y > 10 then
   else
   end if
   try

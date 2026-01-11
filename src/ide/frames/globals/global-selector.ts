@@ -2,7 +2,7 @@ import {
   abstractKeyword,
   classKeyword,
   commentMarker,
-  constantAnnotation,
+  constantKeyword,
   enumKeyword,
   functionKeyword,
   interfaceKeyword,
@@ -38,19 +38,19 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
       [procedureKeyword, (_parent: Parent) => this.file.createProcedure()],
       [functionKeyword, (_parent: Parent) => this.file.createFunction()],
       [testKeyword, (_parent: Parent) => this.file.createTest()],
-      [constantAnnotation, (_parent: Parent) => this.file.createConstant()],
+      [constantKeyword, (_parent: Parent) => this.file.createConstant()],
       [enumKeyword, (_parent: Parent) => this.file.createEnum()],
       [recordKeyword, (_parent: Parent) => this.file.createRecord()],
       [classKeyword, (_parent: Parent) => this.file.createConcreteClass()],
       [abstractKeyword, (_parent: Parent) => this.file.createAbstractClass()],
       [interfaceKeyword, (_parent: Parent) => this.file.createInterface()],
+      ["comment", (_parent: Parent) => this.file.createGlobalComment()],
       [commentMarker, (_parent: Parent) => this.file.createGlobalComment()],
-      // [ignoreKeyword, (_parent: Parent) => this.file.createTest()],
     ];
   }
 
   profileAllows(keyword: string): boolean {
-    return this.profile.globals.includes(keyword);
+    return keyword !== commentMarker && keyword !== recordKeyword;
   }
 
   validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {

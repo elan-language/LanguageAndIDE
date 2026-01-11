@@ -1,4 +1,4 @@
-# 84010fcd4b0d6ae76d247c4a5ff7647bd26f13d7386745fca209f1c50af14ab5 Elan 1.9.0 guest default_profile valid
+# c4ba256dfc8f42d38c901b9c0a8d7b8408d50f8484390c65055c6311f8ebdd4c Elan 1.9.0 guest default_profile valid
 
 main
   # original quotes
@@ -7,13 +7,13 @@ main
   call pause(1000)
   call clearHtml()
   # 
-  # swap quotes: print works, displayHtml() doesn't
+  # swap quotes: call print(works, displayHtml() doesn't)
   call displayHtml('<h1 style="color: blue;">A heading</h1><p>some text</p>')
   # 
   call pause(1000)
   call clearHtml()
   # 
   let s be '<h1 style="color: blue;">A heading</h1><p>some text</p>'
-  print s
+  call print(s)
   call displayHtml(s)
 end main

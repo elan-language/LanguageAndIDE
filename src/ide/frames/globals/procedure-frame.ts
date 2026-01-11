@@ -1,4 +1,4 @@
-import { procedureAnnotation, procedureKeyword } from "../../../compiler/keywords";
+import { procedureKeyword } from "../../../compiler/keywords";
 import { MethodNameField } from "../fields/method-name-field";
 import { ParamListField } from "../fields/param-list-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -34,7 +34,7 @@ export abstract class ProcedureFrame extends FrameWithStatements {
   }
 
   frameSpecificAnnotation(): string {
-    return procedureAnnotation;
+    return "procedure";
   }
 
   override outerHtmlTag: string = "el-proc";

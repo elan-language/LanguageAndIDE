@@ -36,10 +36,10 @@ async function main() {
   let b = _stdlib.false && _stdlib.true;
   let c = _stdlib.true && _stdlib.false;
   let d = _stdlib.true && _stdlib.true;
-  await system.printLine(a);
-  await system.printLine(b);
-  await system.printLine(c);
-  await system.printLine(d);
+  await system.print(a);
+  await system.print(b);
+  await system.print(c);
+  await system.print(d);
 }
 return [main, _tests];}`;
 
@@ -80,10 +80,10 @@ async function main() {
   let b = _stdlib.false || _stdlib.true;
   let c = _stdlib.true || _stdlib.false;
   let d = _stdlib.true || _stdlib.true;
-  await system.printLine(a);
-  await system.printLine(b);
-  await system.printLine(c);
-  await system.printLine(d);
+  await system.print(a);
+  await system.print(b);
+  await system.print(c);
+  await system.print(d);
 }
 return [main, _tests];}`;
 
@@ -118,8 +118,8 @@ const global = new class {};
 async function main() {
   let a = !_stdlib.false;
   let b = !_stdlib.true;
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -154,8 +154,8 @@ const global = new class {};
 async function main() {
   let a = !_stdlib.false && _stdlib.true;
   let b = !(_stdlib.false && _stdlib.true);
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -192,9 +192,9 @@ async function main() {
   let a = (4 > 3) && (6 > 5);
   let b = (3 > 4) || (6 === 6);
   let c = !(4 > 3);
-  await system.printLine(a);
-  await system.printLine(b);
-  await system.printLine(c);
+  await system.print(a);
+  await system.print(b);
+  await system.print(c);
 }
 return [main, _tests];}`;
 
@@ -225,7 +225,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = (_stdlib.true && _stdlib.false) === (_stdlib.true || _stdlib.false);
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -345,7 +345,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = _stdlib.true && _stdlib.false === _stdlib.true || _stdlib.false;
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 

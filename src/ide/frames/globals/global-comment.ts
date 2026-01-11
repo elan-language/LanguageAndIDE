@@ -1,12 +1,12 @@
 import { commentMarker } from "../../../compiler/keywords";
-import { AbstractFrame } from "../abstract-frame";
 import { CommentField } from "../fields/comment-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
+import { SingleLineFrame } from "../single-line-frame";
 
-export class GlobalComment extends AbstractFrame implements GlobalFrame {
+export class GlobalComment extends SingleLineFrame implements GlobalFrame {
   isGlobal = true;
   public text: CommentField;
   file: File;
@@ -24,6 +24,10 @@ export class GlobalComment extends AbstractFrame implements GlobalFrame {
 
   getIdPrefix(): string {
     return "com";
+  }
+
+  frameSpecificAnnotation(): string {
+    return "";
   }
 
   outerHtmlTag: string = "";

@@ -1,16 +1,16 @@
-# b80fa638206097e75593e954c35aa0dd306f19f9fdd4ec3f39bc3ccc8e191e68 Elan 1.9.0 guest default_profile valid
+# f8f4fec5f27c7c2c55b951f172a89756d19c17907232cd5f21bde6b12015802a Elan 1.9.0 guest default_profile valid
 
 main
   variable qu set to new Queue<of String>()
-  print qu.length()
+  call print(qu.length())
   set qu to qu.enqueue("apple")
   set qu to qu.enqueue("Pear")
-  print qu.length()
-  print qu.peek()
+  call print(qu.length())
+  call print(qu.peek())
   variable fruit set to ""
   set fruit, qu to qu.dequeue()
-  print fruit
+  call print(fruit)
   set fruit, qu to qu.dequeue()
-  print fruit
-  print qu.length()
+  call print(fruit)
+  call print(qu.length())
 end main

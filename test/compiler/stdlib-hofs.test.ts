@@ -31,9 +31,9 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await global.source.filter(async (x) => x > 20)));
-  await system.printLine((await global.source.filter(async (x) => x > 20)));
-  await system.printLine((await global.source.filter(async (x) => (x < 3) || (x > 35))));
+  await system.print((await global.source.filter(async (x) => x > 20)));
+  await system.print((await global.source.filter(async (x) => x > 20)));
+  await system.print((await global.source.filter(async (x) => (x < 3) || (x > 35))));
 }
 return [main, _tests];}`;
 
@@ -67,9 +67,9 @@ end main`;
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.printLine((await source.filter(async (x) => x > 20)));
-  await system.printLine((await source.filter(async (x) => x > 20)));
-  await system.printLine((await source.filter(async (x) => (x < 3) || (x > 35))));
+  await system.print((await source.filter(async (x) => x > 20)));
+  await system.print((await source.filter(async (x) => x > 20)));
+  await system.print((await source.filter(async (x) => (x < 3) || (x > 35))));
 }
 return [main, _tests];}`;
 
@@ -105,7 +105,7 @@ const global = new class {
 };
 async function main() {
   const li = _stdlib.split(global.source, "");
-  await system.printLine((await li.filter(async (x) => x === "o")));
+  await system.print((await li.filter(async (x) => x === "o")));
 }
 return [main, _tests];}`;
 
@@ -144,7 +144,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await global.filterIt(global.source)));
+  await system.print((await global.filterIt(global.source)));
 }
 
 async function filterIt(tofilter) {
@@ -184,8 +184,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await global.source.map(async (x) => x + 1)));
-  await system.printLine((await global.source.map(async (x) => (await _stdlib.asString(x)) + "*")));
+  await system.print((await global.source.map(async (x) => x + 1)));
+  await system.print((await global.source.map(async (x) => (await _stdlib.asString(x)) + "*")));
 }
 return [main, _tests];}`;
 
@@ -222,8 +222,8 @@ end main`;
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.printLine((await source.map(async (x) => x + 1)));
-  await system.printLine((await source.map(async (x) => (await _stdlib.asString(x)) + "*")));
+  await system.print((await source.map(async (x) => x + 1)));
+  await system.print((await source.map(async (x) => (await _stdlib.asString(x)) + "*")));
 }
 return [main, _tests];}`;
 
@@ -262,7 +262,7 @@ const global = new class {
 };
 async function main() {
   const li = _stdlib.split(global.source, "");
-  await system.printLine((await li.map(async (x) => x + "*")));
+  await system.print((await li.map(async (x) => x + "*")));
 }
 return [main, _tests];}`;
 
@@ -296,7 +296,7 @@ const global = new class {};
 async function main() {
   let source = system.listImmutable([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   source = (await source.map(async (x) => x + 1));
-  await system.printLine(source.asList());
+  await system.print(source.asList());
 }
 return [main, _tests];}`;
 
@@ -332,9 +332,9 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await global.source.reduce(0, async (s, x) => s + x)));
-  await system.printLine((await global.source.reduce(100, async (s, x) => s + x)));
-  await system.printLine((await global.source.reduce("Concat:", async (s, x) => s + (await _stdlib.asString(x)))));
+  await system.print((await global.source.reduce(0, async (s, x) => s + x)));
+  await system.print((await global.source.reduce(100, async (s, x) => s + x)));
+  await system.print((await global.source.reduce("Concat:", async (s, x) => s + (await _stdlib.asString(x)))));
 }
 return [main, _tests];}`;
 
@@ -369,9 +369,9 @@ end main`;
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.printLine((await source.reduce(0, async (s, x) => s + x)));
-  await system.printLine((await source.reduce(100, async (s, x) => s + x)));
-  await system.printLine((await source.reduce("Concat:", async (s, x) => s + (await _stdlib.asString(x)))));
+  await system.print((await source.reduce(0, async (s, x) => s + x)));
+  await system.print((await source.reduce(100, async (s, x) => s + x)));
+  await system.print((await source.reduce("Concat:", async (s, x) => s + (await _stdlib.asString(x)))));
 }
 return [main, _tests];}`;
 
@@ -407,7 +407,7 @@ const global = new class {
 };
 async function main() {
   const li = _stdlib.split(global.source, "");
-  await system.printLine((await li.reduce("Concat:", async (s, x) => s + "*" + x)));
+  await system.print((await li.reduce("Concat:", async (s, x) => s + "*" + x)));
 }
 return [main, _tests];}`;
 
@@ -445,7 +445,7 @@ const global = new class {
 async function main() {
   let ed = system.dictionaryImmutable([["one", 1], ["two", 2]]);
   ed = (await global.source.reduce(ed, async (d, x) => d.withPut(x, 1)));
-  await system.printLine(ed);
+  await system.print(ed);
 }
 return [main, _tests];}`;
 
@@ -503,7 +503,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await global.source.maxBy(async (x) => x % 5)));
+  await system.print((await global.source.maxBy(async (x) => x % 5)));
 }
 return [main, _tests];}`;
 
@@ -535,7 +535,7 @@ end main`;
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.printLine((await source.maxBy(async (x) => x % 5)));
+  await system.print((await source.maxBy(async (x) => x % 5)));
 }
 return [main, _tests];}`;
 
@@ -569,7 +569,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await global.source.maxBy(async (x) => x.length())));
+  await system.print((await global.source.maxBy(async (x) => x.length())));
 }
 return [main, _tests];}`;
 
@@ -603,7 +603,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await global.source.maxBy(async (t) => _stdlib.length(t))));
+  await system.print((await global.source.maxBy(async (t) => _stdlib.length(t))));
 }
 return [main, _tests];}`;
 
@@ -637,7 +637,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.source.length());
+  await system.print(global.source.length());
 }
 return [main, _tests];}`;
 
@@ -669,7 +669,7 @@ end main`;
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.printLine(source.length());
+  await system.print(source.length());
 }
 return [main, _tests];}`;
 
@@ -701,7 +701,7 @@ end main`;
 const global = new class {};
 async function main() {
   const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.printLine(_stdlib.minInt(source));
+  await system.print(_stdlib.minInt(source));
 }
 return [main, _tests];}`;
 
@@ -733,7 +733,7 @@ end main`;
 const global = new class {};
 async function main() {
   const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.printLine(_stdlib.minFloat(source));
+  await system.print(_stdlib.minFloat(source));
 }
 return [main, _tests];}`;
 
@@ -765,7 +765,7 @@ end main`;
 const global = new class {};
 async function main() {
   const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.printLine(_stdlib.maxInt(source));
+  await system.print(_stdlib.maxInt(source));
 }
 return [main, _tests];}`;
 
@@ -797,7 +797,7 @@ end main`;
 const global = new class {};
 async function main() {
   const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.printLine(_stdlib.maxFloat(source));
+  await system.print(_stdlib.maxFloat(source));
 }
 return [main, _tests];}`;
 
@@ -855,7 +855,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await global.source.minBy(async (x) => x % 5)));
+  await system.print((await global.source.minBy(async (x) => x % 5)));
 }
 return [main, _tests];}`;
 
@@ -887,7 +887,7 @@ end main`;
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.printLine((await source.minBy(async (x) => x % 5)));
+  await system.print((await source.minBy(async (x) => x % 5)));
 }
 return [main, _tests];}`;
 
@@ -923,8 +923,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await global.source.sortBy(async (x, y) => (x === y ? 0 : (x < y ? 1 : (-1))))));
-  await system.printLine(global.source);
+  await system.print((await global.source.sortBy(async (x, y) => (x === y ? 0 : (x < y ? 1 : (-1))))));
+  await system.print(global.source);
 }
 return [main, _tests];}`;
 
@@ -962,8 +962,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await global.source.orderBy(async (x, y) => x < y)));
-  await system.printLine(global.source);
+  await system.print((await global.source.orderBy(async (x, y) => x < y)));
+  await system.print(global.source);
 }
 return [main, _tests];}`;
 
@@ -1000,8 +1000,8 @@ end main`;
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.printLine((await source.sortBy(async (x, y) => (x === y ? 0 : (x < y ? 1 : (-1))))));
-  await system.printLine(source);
+  await system.print((await source.sortBy(async (x, y) => (x === y ? 0 : (x < y ? 1 : (-1))))));
+  await system.print(source);
 }
 return [main, _tests];}`;
 
@@ -1037,8 +1037,8 @@ end main`;
 const global = new class {};
 async function main() {
   let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
-  await system.printLine((await source.orderBy(async (x, y) => x < y)));
-  await system.printLine(source);
+  await system.print((await source.orderBy(async (x, y) => x < y)));
+  await system.print(source);
 }
 return [main, _tests];}`;
 
@@ -1076,8 +1076,8 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine(global.source.asSet());
-  await system.printLine(global.source.asList().asSet());
+  await system.print(global.source.asSet());
+  await system.print(global.source.asList().asSet());
 }
 return [main, _tests];}`;
 
@@ -1123,7 +1123,7 @@ const global = new class {
 
 };
 async function main() {
-  await system.printLine((await global.getTrailingNumber("aa1")));
+  await system.print((await global.getTrailingNumber("aa1")));
 }
 
 async function getTrailingNumber(s) {

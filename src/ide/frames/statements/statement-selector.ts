@@ -2,7 +2,7 @@ import {
   assertKeyword,
   callKeyword,
   commentMarker,
-  constantAnnotation,
+  constantKeyword,
   eachKeyword,
   elifKeyword,
   elseKeyword,
@@ -10,7 +10,6 @@ import {
   ifKeyword,
   letKeyword,
   printKeyword,
-  repeatKeyword,
   setKeyword,
   throwKeyword,
   tryKeyword,
@@ -40,29 +39,30 @@ export class StatementSelector extends AbstractSelector {
       [assertKeyword, (parent: Parent) => this.factory.newAssert(parent)],
       [callKeyword, (parent: Parent) => this.factory.newCall(parent)],
       [eachKeyword, (parent: Parent) => this.factory.newEach(parent)],
+      [elifKeyword, (parent: Parent) => this.factory.newElif(parent)],
       [elseKeyword, (parent: Parent) => this.factory.newElse(parent)],
       [forKeyword, (parent: Parent) => this.factory.newFor(parent)],
       [ifKeyword, (parent: Parent) => this.factory.newIf(parent)],
       [letKeyword, (parent: Parent) => this.factory.newLet(parent)],
       [printKeyword, (parent: Parent) => this.factory.newPrint(parent)],
-      [repeatKeyword, (parent: Parent) => this.factory.newRepeat(parent)],
       [setKeyword, (parent: Parent) => this.factory.newSet(parent)],
       [throwKeyword, (parent: Parent) => this.factory.newThrow(parent)],
       [tryKeyword, (parent: Parent) => this.factory.newTryCatch(parent)],
       [variableKeyword, (parent: Parent) => this.factory.newVar(parent)],
       [whileKeyword, (parent: Parent) => this.factory.newWhile(parent)],
+      ["comment", (parent: Parent) => this.factory.newComment(parent)],
       [commentMarker, (parent: Parent) => this.factory.newComment(parent)],
     ];
   }
 
   profileAllows(keyword: string): boolean {
-    return keyword.length > 0;
+    return keyword !== printKeyword && keyword !== commentMarker;
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = false;
-    if (keyword === constantAnnotation) {
+    if (keyword === constantKeyword) {
       result = this.isWithinAFunction();
     } else if (keyword === elseKeyword || keyword === elifKeyword) {
       result = parent.getIdPrefix() === ifKeyword;

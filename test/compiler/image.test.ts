@@ -28,7 +28,7 @@ end main`;
 const global = new class {};
 async function main() {
   let c = system.initialise(await new _stdlib.ImageVG()._initialise("http://website.image.png"));
-  await system.printLine(c.asHtml());
+  await system.print(c.asHtml());
 }
 return [main, _tests];}`;
 
@@ -63,7 +63,7 @@ end main`;
 const global = new class {};
 async function main() {
   let c = await (async () => {const _a = {...system.initialise(await new _stdlib.ImageVG()._initialise("http://website.image.png"))}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.ImageVG()._initialise("http://website.image.png")))); _a.width = 100; _a.height = 200; return _a;})();
-  await system.printLine(c.asHtml());
+  await system.print(c.asHtml());
 }
 return [main, _tests];}`;
 

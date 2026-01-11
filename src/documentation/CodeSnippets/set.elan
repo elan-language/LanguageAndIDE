@@ -1,14 +1,14 @@
-# 8ac6620ed4de45f273ae22dda26c003b388be35d0a172481256d2a9b05e40a7c Elan 1.9.0 guest default_profile valid
+# 4b1bf70174647012bc4258209c2674244cbdfbf46805463d6173545a636e7be2 Elan 1.9.0 guest default_profile valid
 
 main
   variable st set to new Set<of Int>()
   set st to st.addFromList([3, 5, 7])
-  print st.length()
+  call print(st.length())
   set st to st.add(7)
-  print st.length()
+  call print(st.length())
   set st to st.remove(3)
-  print st.length()
+  call print(st.length())
   set st to st.remove(3)
-  print st.length()
-  print st
+  call print(st.length())
+  call print(st)
 end main

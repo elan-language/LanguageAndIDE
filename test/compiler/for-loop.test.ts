@@ -34,7 +34,7 @@ async function main() {
   for (let i = 1; i <= _tofor6; i = i + 1) {
     tot = tot + i;
   }
-  await system.printLine(tot);
+  await system.print(tot);
 }
 return [main, _tests];}`;
 
@@ -75,7 +75,7 @@ async function main() {
   for (i = 1; i <= _tofor9; i = i + 1) {
     tot = tot + i;
   }
-  await system.printLine(tot);
+  await system.print(tot);
 }
 return [main, _tests];}`;
 
@@ -114,7 +114,7 @@ async function main() {
   for (let i = 1; i <= _tofor6; i = i + 2) {
     tot = tot + i;
   }
-  await system.printLine(tot);
+  await system.print(tot);
 }
 return [main, _tests];}`;
 
@@ -153,7 +153,7 @@ async function main() {
   for (let i = 10; i >= _tofor6; i = i - 1) {
     tot = tot + i;
   }
-  await system.printLine(tot);
+  await system.print(tot);
 }
 return [main, _tests];}`;
 
@@ -197,7 +197,7 @@ async function main() {
       tot = tot + 1;
     }
   }
-  await system.printLine(tot);
+  await system.print(tot);
 }
 return [main, _tests];}`;
     const fileImpl = new FileImpl(
@@ -239,7 +239,7 @@ async function main() {
   for (let i = lower; i <= _tofor12; i = i + 2) {
     tot = tot + i;
   }
-  await system.printLine(tot);
+  await system.print(tot);
 }
 return [main, _tests];}`;
     const fileImpl = new FileImpl(
@@ -287,7 +287,7 @@ async function foo(arr) {
   for (let i = 0; i <= _tofor13; i = i + 1) {
     arr[0].put(i, 1);
   }
-  await system.printLine(system.safeIndex(arr[0], 0));
+  await system.print(system.safeIndex(arr[0], 0));
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -324,7 +324,7 @@ async function main() {
   let limit = 10;
   const _tofor6 = limit;
   for (let i = 1; i <= _tofor6; i = i + 1) {
-    await system.printLine(\`\${await _stdlib.asString(i)}\`);
+    await system.print(\`\${await _stdlib.asString(i)}\`);
     limit = limit + 1;
   }
 }

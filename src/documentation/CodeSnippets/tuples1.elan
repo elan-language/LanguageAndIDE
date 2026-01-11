@@ -1,4 +1,4 @@
-# f3063c2b30754dc2319dc1e7b32a130bb168b4d368d4d31745cfed2987c5926d Elan 1.9.0 guest default_profile valid
+# a301666664ddf87999c114aaaf34b298764a3d96b2d77cbc37a0d42af35af500 Elan 1.9.0 guest default_profile valid
 
 main
   let point be tuple(3, 4)
@@ -7,6 +7,6 @@ main
   set x2, y2 to point
   variable x3, _ set to point
   variable _, y3 set to point
-  print point.item0
-  print point.item1
+  call print(point.item0)
+  call print(point.item1)
 end main

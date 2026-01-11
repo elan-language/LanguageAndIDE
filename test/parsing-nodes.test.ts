@@ -57,9 +57,9 @@ import { UnaryExpression } from "../src/ide/frames/parse-nodes/unary-expression"
 import { ParseStatus } from "../src/ide/frames/status-enums";
 import { DOT } from "../src/ide/frames/symbols";
 import { StubInputOutput } from "../src/ide/stub-input-output";
+import { hash } from "../src/ide/util";
 import { transforms } from "./compiler/compiler-test-helpers";
 import { testActiveNodeAndDone, testNodeParse } from "./testHelpers";
-import { hash } from "../src/ide/util";
 
 suite("Parsing Nodes", () => {
   const f = new FileImpl(

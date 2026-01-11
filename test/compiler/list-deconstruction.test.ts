@@ -36,8 +36,8 @@ async function main() {
   let x = 1;
   let y = system.initialise(_stdlib.List.emptyInstance());
   [x, y] = system.deconstructList(a);
-  await system.printLine(x);
-  await system.printLine(y);
+  await system.print(x);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -74,7 +74,7 @@ async function main() {
   let a = system.list([1, 2, 3]);
   let y = system.initialise(_stdlib.List.emptyInstance());
   [, y] = system.deconstructList(a);
-  await system.printLine(y);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -111,7 +111,7 @@ async function main() {
   let a = system.list([1, 2, 3]);
   let x = 1;
   [x, ] = system.deconstructList(a);
-  await system.printLine(x);
+  await system.print(x);
 }
 return [main, _tests];}`;
 
@@ -147,8 +147,8 @@ const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3]);
   let [x, y] = system.deconstructList(a);
-  await system.printLine(x);
-  await system.printLine(y);
+  await system.print(x);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -188,8 +188,8 @@ async function main() {
   let x = system.initialise(_stdlib.List.emptyInstance());
   let y = system.initialise(_stdlib.List.emptyInstance());
   [x, y] = system.deconstructList(a);
-  await system.printLine(x);
-  await system.printLine(y);
+  await system.print(x);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -225,8 +225,8 @@ const global = new class {};
 async function main() {
   let a = system.list([system.list([1, 2, 3]), system.list([4, 5, 6]), system.list([7, 8, 9])]);
   let [x, y] = system.deconstructList(a);
-  await system.printLine(x);
-  await system.printLine(y);
+  await system.print(x);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -262,8 +262,8 @@ const global = new class {};
 async function main() {
   let a = system.list([system.list([1, 2, 3]), system.list([4, 5, 6]), system.list([7, 8, 9])]);
   const [x, y] = system.deconstructList(a);
-  await system.printLine(x);
-  await system.printLine(y);
+  await system.print(x);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -303,8 +303,8 @@ async function main() {
   let x = 1;
   let y = system.initialise(_stdlib.List.emptyInstance());
   [x, y] = system.deconstructList(a);
-  await system.printLine(x);
-  await system.printLine(y);
+  await system.print(x);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -340,8 +340,8 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([1, 2, 3]);
   const [x, y] = system.deconstructList(a);
-  await system.printLine(x);
-  await system.printLine(y);
+  await system.print(x);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -376,7 +376,7 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([1, 2, 3]);
   const [x, ] = system.deconstructList(a);
-  await system.printLine(x);
+  await system.print(x);
 }
 return [main, _tests];}`;
 
@@ -411,7 +411,7 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([1, 2, 3]);
   const [, y] = system.deconstructList(a);
-  await system.printLine(y);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -447,8 +447,8 @@ const global = new class {};
 async function main() {
   let a = system.list([1]);
   let [x, y] = system.deconstructList(a);
-  await system.printLine(x);
-  await system.printLine(y);
+  await system.print(x);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -484,8 +484,8 @@ const global = new class {};
 async function main() {
   let a = system.list([1]);
   const [x, y] = system.deconstructList(a);
-  await system.printLine(x);
-  await system.printLine(y);
+  await system.print(x);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -521,8 +521,8 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([1, 2, 3]);
   let [x, y] = system.deconstructList(a);
-  await system.printLine(x);
-  await system.printLine(y);
+  await system.print(x);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -562,8 +562,8 @@ async function main() {
   let x = 1;
   let y = system.initialise(_stdlib.ListImmutable.emptyInstance());
   [x, y] = system.deconstructList(a);
-  await system.printLine(x);
-  await system.printLine(y);
+  await system.print(x);
+  await system.print(y);
 }
 return [main, _tests];}`;
 

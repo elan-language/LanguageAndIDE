@@ -1,24 +1,11 @@
-import { elseKeyword, thenKeyword } from "../../../compiler/keywords";
-import { CodeSourceFromString } from "../code-source-from-string";
-import { ExpressionField } from "../fields/expression-field";
-import { IfSelectorField } from "../fields/if-selector-field";
+import { elseKeyword } from "../../../compiler/keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
-import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class Else extends SingleLineFrame implements Statement {
   isStatement: boolean = true;
-  selectIfClause: IfSelectorField;
-  hasIf: boolean = false;
-  condition: ExpressionField;
-  constructor(parent: Parent) {
-    super(parent);
-    this.condition = new ExpressionField(this);
-    this.condition.setPlaceholder("<i>condition</i>");
-    this.selectIfClause = new IfSelectorField(this);
-  }
 
   protected setClasses() {
     super.setClasses();
@@ -30,19 +17,15 @@ export class Else extends SingleLineFrame implements Statement {
   }
 
   getFields(): Field[] {
-    return this.hasIf ? [this.condition] : [this.selectIfClause];
-  }
-
-  setIfExtension(to: boolean) {
-    this.hasIf = to;
+    return [];
   }
 
   getIdPrefix(): string {
     return "else";
   }
 
-  private ifClauseAsSource(): string {
-    return this.hasIf ? ` if ${this.condition.renderAsElanSource()}` : ``;
+  frameSpecificAnnotation(): string {
+    return "";
   }
 
   indent() {
@@ -50,17 +33,10 @@ export class Else extends SingleLineFrame implements Statement {
   }
 
   renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${elseKeyword}${this.ifClauseAsSource()}${this.hasIf ? " " + thenKeyword : ""}`;
+    return `${this.indent()}${this.sourceAnnotations()}${elseKeyword}`;
   }
 
   parseFrom(source: CodeSource): void {
     source.remove("else");
-    if (source.isMatch(" if ")) {
-      this.hasIf = true;
-      source.remove(" if ");
-      const condition = source.readUntil(/\sthen/);
-      this.condition.parseFrom(new CodeSourceFromString(condition));
-      source.remove(" then");
-    }
   }
 }

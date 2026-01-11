@@ -1,10 +1,10 @@
-# d99470116ef6c1af398643a64145012ae0c68885e49b5b526b28e4fd27c09308 Elan 1.9.0 guest default_profile valid
+# 7b7ba0ea87337eba907d85ba1e59ad7f712098ff6c10db71df0000ded9838087 Elan 1.9.0 guest default_profile valid
 
 main
   variable immD set to new DictionaryImmutable<of String, Int>()
-  print immD
+  call print(immD)
   set immD to immD.withPut("a", 3)
-  print immD["a"]
+  call print(immD["a"])
   set immD to immD.withRemoveAt("a")
-  print immD
+  call print(immD)
 end main

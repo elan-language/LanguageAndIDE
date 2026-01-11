@@ -41,6 +41,10 @@ export class AbstractProperty extends SingleLineFrame {
     return "prop";
   }
 
+  frameSpecificAnnotation(): string {
+    return "abstract property";
+  }
+
   override outerHtmlTag: string = "el-prop";
 
   renderAsHtml(): string {

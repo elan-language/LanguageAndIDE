@@ -32,6 +32,10 @@ export class Each extends FrameWithStatements implements Statement {
     return "each";
   }
 
+  frameSpecificAnnotation(): string {
+    return "each";
+  }
+
   outerHtmlTag: string = "el-statement";
 
   renderAsElanSource(): string {

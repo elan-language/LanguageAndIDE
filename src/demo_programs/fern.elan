@@ -1,4 +1,4 @@
-# 9f16f27f866b45a6f52ae9d276862ebd0176638636914b376c4385f3e66b264e Elan 1.9.0 guest default_profile valid
+# ea5e3ba5c3f259d1d0d35cb72e74f3c6fbe26204413d4a1bd1ee1bca4999ae5d Elan 1.9.0 guest default_profile valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
@@ -19,7 +19,7 @@ main
     call displayVectorGraphics(vg)
     set count to count + 1
   end while
-  print "Finished"
+  call print("Finished")
 end main
 
 function onepoint(x as Float, y as Float, r as Random) returns (RectangleVG, Float, Float, Random)
@@ -58,9 +58,9 @@ function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
   return tuple(nx, ny)
 end function
 
-test one
-    assert roundtuple2(onestep(0.0, 0.16, 0.5)) is {0.0064, 1.736}
-    assert roundtuple2(onestep(0.0, 0.16, 0.9)) is {-0.0416, 1.6352}
+test test_one
+  assert roundtuple2(onestep(0.0, 0.16, 0.5)) is {0.0064, 1.736}
+  assert roundtuple2(onestep(0.0, 0.16, 0.9)) is {-0.0416, 1.6352}
 end test
 
 # two approaches to rounding a tuple to N decimal places

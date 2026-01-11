@@ -38,6 +38,10 @@ export class For extends FrameWithStatements implements Statement {
     return "for";
   }
 
+  frameSpecificAnnotation(): string {
+    return "";
+  }
+
   outerHtmlTag: string = "el-statement";
 
   renderAsElanSource(): string {

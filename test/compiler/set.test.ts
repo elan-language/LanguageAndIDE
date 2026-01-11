@@ -35,14 +35,14 @@ const global = new class {};
 async function main() {
   let st = system.initialise(await new _stdlib.Set()._initialise());
   st = st.add(3).add(7).add(5);
-  await system.printLine(st.length());
+  await system.print(st.length());
   st = st.add(7);
-  await system.printLine(st.length());
+  await system.print(st.length());
   st = st.remove(3);
-  await system.printLine(st.length());
+  await system.print(st.length());
   st = st.remove(3);
-  await system.printLine(st.length());
-  await system.printLine(st);
+  await system.print(st.length());
+  await system.print(st);
 }
 return [main, _tests];}`;
 
@@ -82,7 +82,7 @@ async function main() {
   st1 = st1.add(2).add(4).add(6);
   st2 = st2.add(1).add(4).add(9);
   let st3 = st1.union(st2);
-  await system.printLine(st3);
+  await system.print(st3);
 }
 return [main, _tests];}`;
 
@@ -122,7 +122,7 @@ async function main() {
   st1 = st1.add(2).add(4).add(6).add(3);
   st2 = st2.add(3).add(1).add(4).add(9);
   let st3 = st1.intersection(st2);
-  await system.printLine(st3);
+  await system.print(st3);
 }
 return [main, _tests];}`;
 
@@ -162,7 +162,7 @@ async function main() {
   st1 = st1.add(2).add(4).add(6).add(3);
   st2 = st2.add(3).add(1).add(4).add(9);
   let st3 = st1.difference(st2);
-  await system.printLine(st3);
+  await system.print(st3);
 }
 return [main, _tests];}`;
 
@@ -202,9 +202,9 @@ async function main() {
   const st1 = st0.add(2).add(4).add(6).add(3);
   const st2 = st0.add(3).add(1).add(4).add(9);
   const st3 = st0.add(8).add(9);
-  await system.printLine(st1.isDisjointFrom(st2));
-  await system.printLine(st1.isDisjointFrom(st3));
-  await system.printLine(st2.isDisjointFrom(st3));
+  await system.print(st1.isDisjointFrom(st2));
+  await system.print(st1.isDisjointFrom(st3));
+  await system.print(st2.isDisjointFrom(st3));
 }
 return [main, _tests];}`;
 
@@ -247,12 +247,12 @@ async function main() {
   const st1 = st0.add(2).add(4).add(6).add(3);
   const st2 = st0.add(4).add(6);
   const st3 = st0.add(4).add(6).add(1);
-  await system.printLine(st2.isSubsetOf(st1));
-  await system.printLine(st2.isSupersetOf(st1));
-  await system.printLine(st1.isSupersetOf(st2));
-  await system.printLine(st1.isSupersetOf(st3));
-  await system.printLine(st3.isSupersetOf(st0));
-  await system.printLine(st0.isSubsetOf(st3));
+  await system.print(st2.isSubsetOf(st1));
+  await system.print(st2.isSupersetOf(st1));
+  await system.print(st1.isSupersetOf(st2));
+  await system.print(st1.isSupersetOf(st3));
+  await system.print(st3.isSupersetOf(st0));
+  await system.print(st0.isSubsetOf(st3));
 }
 return [main, _tests];}`;
 
@@ -287,9 +287,9 @@ const global = new class {};
 async function main() {
   const st0 = system.initialise(await new _stdlib.Set()._initialise());
   const st1 = st0.addFromList(system.list([2, 4, 6, 3]));
-  await system.printLine(st1);
+  await system.print(st1);
   const st2 = st1.addFromList(system.list([2, 5, 6]));
-  await system.printLine(st2);
+  await system.print(st2);
 }
 return [main, _tests];}`;
 
@@ -332,8 +332,8 @@ async function main() {
   let cc = system.initialise(_stdlib.List.emptyInstance());
   aa = a;
   cc = c;
-  await system.printLine(aa);
-  await system.printLine(cc);
+  await system.print(aa);
+  await system.print(cc);
 }
 return [main, _tests];}`;
 
@@ -367,7 +367,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Set()._initialise());
   a = a.add("foo");
-  await system.printLine(a.contains("foo"));
+  await system.print(a.contains("foo"));
 }
 return [main, _tests];}`;
 
@@ -401,7 +401,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Set()._initialise());
   a = a.add("bar");
-  await system.printLine(a.contains("foo"));
+  await system.print(a.contains("foo"));
 }
 return [main, _tests];}`;
 

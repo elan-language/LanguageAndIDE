@@ -34,8 +34,8 @@ async function main() {
   let y = 0;
   let z = "";
   [y, z] = x;
-  await system.printLine(y);
-  await system.printLine(z);
+  await system.print(y);
+  await system.print(z);
 }
 return [main, _tests];}`;
 
@@ -72,8 +72,8 @@ end function`;
 const global = new class {};
 async function main() {
   const [a, b] = (await global.foo());
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 
 async function foo() {
@@ -122,8 +122,8 @@ const global = new class {};
 async function main() {
   const foo = system.initialise(await new Foo()._initialise());
   const [a, b] = (await foo.bar());
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 
 class Foo {
@@ -174,8 +174,8 @@ end function`;
 const global = new class {};
 async function main() {
   const [a, b] = (await global.foo());
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 
 async function foo() {
@@ -220,14 +220,14 @@ end main
 const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple", _stdlib.true, 1.1]);
-  await system.printLine(x);
+  await system.print(x);
   const [a, b, c, d] = x;
-  await system.printLine(a);
-  await system.printLine(b);
-  await system.printLine(c);
-  await system.printLine(d);
+  await system.print(a);
+  await system.print(b);
+  await system.print(c);
+  await system.print(d);
   const [, , e, ] = x;
-  await system.printLine(e);
+  await system.print(e);
 }
 return [main, _tests];}`;
 
@@ -264,7 +264,7 @@ async function main() {
   let x = system.tuple([3, "Apple"]);
   let z = "";
   [, z] = x;
-  await system.printLine(z);
+  await system.print(z);
 }
 return [main, _tests];}`;
 
@@ -301,7 +301,7 @@ async function main() {
   let x = system.tuple([3, "Apple"]);
   let y = 0;
   [y, ] = x;
-  await system.printLine(y);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -338,7 +338,7 @@ async function main() {
   let x = system.tuple([3, "Apple", 4]);
   let z = "";
   [, z, ] = x;
-  await system.printLine(z);
+  await system.print(z);
 }
 return [main, _tests];}`;
 
@@ -375,7 +375,7 @@ async function main() {
   let x = system.tuple([3, "Apple", 4]);
   let y = 0;
   [, , y] = x;
-  await system.printLine(y);
+  await system.print(y);
 }
 return [main, _tests];}`;
 
@@ -411,8 +411,8 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   const [y, z] = x;
-  await system.printLine(y);
-  await system.printLine(z);
+  await system.print(y);
+  await system.print(z);
 }
 return [main, _tests];}`;
 
@@ -447,7 +447,7 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   const [, z] = x;
-  await system.printLine(z);
+  await system.print(z);
 }
 return [main, _tests];}`;
 
@@ -483,8 +483,8 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   let [y, z] = x;
-  await system.printLine(y);
-  await system.printLine(z);
+  await system.print(y);
+  await system.print(z);
 }
 return [main, _tests];}`;
 
@@ -519,7 +519,7 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   let [, z] = x;
-  await system.printLine(z);
+  await system.print(z);
 }
 return [main, _tests];}`;
 
@@ -555,8 +555,8 @@ const global = new class {};
 async function main() {
   let t = system.tuple([3, 4, "Apple"]);
   let [x, , z] = t;
-  await system.printLine(x);
-  await system.printLine(z);
+  await system.print(x);
+  await system.print(z);
 }
 return [main, _tests];}`;
 
@@ -600,8 +600,8 @@ async function main() {
   let b = "";
   a = y;
   b = z;
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -639,8 +639,8 @@ async function main() {
   let a = system.list([1, 2]);
   let x = system.tuple([3, a]);
   let [y, z] = x;
-  await system.printLine(y);
-  await system.printLine(z);
+  await system.print(y);
+  await system.print(z);
 }
 return [main, _tests];}`;
 
@@ -678,8 +678,8 @@ async function main() {
   let a = system.list([1, 2]);
   let x = system.tuple([3, a]);
   const [y, z] = x;
-  await system.printLine(y);
-  await system.printLine(z);
+  await system.print(y);
+  await system.print(z);
 }
 return [main, _tests];}`;
 
@@ -721,8 +721,8 @@ async function main() {
   let y = 0;
   let z = system.initialise(_stdlib.List.emptyInstance());
   [y, z] = x;
-  await system.printLine(y);
-  await system.printLine(z);
+  await system.print(y);
+  await system.print(z);
 }
 return [main, _tests];}`;
 
@@ -760,8 +760,8 @@ async function main() {
   let a = system.tuple([1, 2]);
   let x = system.tuple([3, a]);
   let [y, z] = x;
-  await system.printLine(y);
-  await system.printLine(z);
+  await system.print(y);
+  await system.print(z);
 }
 return [main, _tests];}`;
 
@@ -799,8 +799,8 @@ async function main() {
   let a = system.tuple([1, 2]);
   let x = system.tuple([3, a]);
   const [y, z] = x;
-  await system.printLine(y);
-  await system.printLine(z);
+  await system.print(y);
+  await system.print(z);
 }
 return [main, _tests];}`;
 
@@ -842,8 +842,8 @@ async function main() {
   let y = 0;
   let z = system.tuple([0, 0]);
   [y, z] = x;
-  await system.printLine(y);
-  await system.printLine(z);
+  await system.print(y);
+  await system.print(z);
 }
 return [main, _tests];}`;
 

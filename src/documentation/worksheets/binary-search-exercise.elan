@@ -1,4 +1,4 @@
-# 82ab046170a8bb56d12499bea8269a5a6e48ccc199f99b174a1e1666eae1707e Elan 1.9.0 guest default_profile valid
+# 0046afed45d1c62b8133193f89814409bc1fe64a14999b1a68481043fc069bf8 Elan 1.9.0 guest default_profile valid
 
 # Exercise: implement a function to search for an item in a sorted list, 
 # using the 'binary search' algorithm
@@ -15,7 +15,7 @@
 # - To extract the lists before and after the mid-point use the range indexes:
 #    'li[..mid]' and 'li[mid+1..]'
 # - You can implement the whole algorithm just by adding a new 'if' statement between the
-#   first and last lines, containing 'else if/else' clauses as needed. Each clause should
+#   first and last lines, containing 'elif/else' clauses as needed. Each clause should
 #   set the result.
 # - Use 'let' statements to calculate any sub-expression that will be used more than once
 #   in your logic and/or to improve readability.
@@ -32,9 +32,9 @@ main
     if wanted isnt "x" then
       let result be binarySearch(fruit, wanted)
       if result then
-        print "We can supply a {wanted}"
+        call print("We can supply a {wanted}")
       else
-        print "Sorry, we cannot supply a {wanted}"
+        call print("Sorry, we cannot supply a {wanted}")
       end if
     else
       set exit to true
@@ -42,19 +42,19 @@ main
   end while
 end main
 
-test 
-    let li1 be ["lemon", "lime", "orange"]
-    assert binarySearch(li1, "lemon") is true
-    assert binarySearch(li1, "lime") is true
-    assert binarySearch(li1, "orange") is true
-    assert binarySearch(li1, "pear") is false
-    let li2 be ["lemon", "orange"]
-    assert binarySearch(li2, "lemon") is true
-    assert binarySearch(li2, "orange") is true
-    assert binarySearch(li2, "pear") is false
-    let li3 be ["lemon"]
-    assert binarySearch(li3, "lemon") is true
-    assert binarySearch(li3, "lime") is false
-    let li4 be empty List<of String>
-    assert binarySearch(li4, "pear") is false
+test test_binarySearch
+  let li1 be ["lemon", "lime", "orange"]
+  assert binarySearch(li1, "lemon") is true
+  assert binarySearch(li1, "lime") is true
+  assert binarySearch(li1, "orange") is true
+  assert binarySearch(li1, "pear") is false
+  let li2 be ["lemon", "orange"]
+  assert binarySearch(li2, "lemon") is true
+  assert binarySearch(li2, "orange") is true
+  assert binarySearch(li2, "pear") is false
+  let li3 be ["lemon"]
+  assert binarySearch(li3, "lemon") is true
+  assert binarySearch(li3, "lime") is false
+  let li4 be empty List<of String>
+  assert binarySearch(li4, "pear") is false
 end test

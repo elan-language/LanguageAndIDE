@@ -1,5 +1,4 @@
 import { constantKeyword } from "../../../compiler/keywords";
-import { AbstractFrame } from "../abstract-frame";
 import { ConstantValueField } from "../fields/constant-value-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -7,8 +6,9 @@ import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
+import { SingleLineFrame } from "../single-line-frame";
 
-export class Constant extends AbstractFrame implements GlobalFrame, Collapsible {
+export class Constant extends SingleLineFrame implements GlobalFrame, Collapsible {
   isCollapsible: boolean = true;
   isGlobal = true;
   name: IdentifierField;
@@ -46,11 +46,15 @@ export class Constant extends AbstractFrame implements GlobalFrame, Collapsible 
     return "const";
   }
 
+  frameSpecificAnnotation(): string {
+    return "constant";
+  }
+
   override outerHtmlTag: string = "el-const";
 
   renderAsHtml(): string {
     //In this special case </el-top> is provided by the language rendering
-    return `<${this.outerHtmlTag} class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}${this.outerHtmlTag}`;
+    return `<${this.outerHtmlTag} class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderSingleLineAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</${this.outerHtmlTag}>`;
   }
 
   indent(): string {
@@ -59,9 +63,5 @@ export class Constant extends AbstractFrame implements GlobalFrame, Collapsible 
   renderAsElanSource(): string {
     return `${this.sourceAnnotations()}constant ${this.name.renderAsElanSource()} set to ${this.value.renderAsElanSource()}\r
 `;
-  }
-
-  override isWithinAnImportedFrame(): boolean {
-    return false; // So that frame number is still added
   }
 }

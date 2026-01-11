@@ -33,7 +33,7 @@ async function main() {
   while (x < 10) {
     x = x + 1;
   }
-  await system.printLine(x);
+  await system.print(x);
 }
 return [main, _tests];}`;
 
@@ -83,7 +83,7 @@ async function main() {
     }
     x = x + 1;
   }
-  await system.printLine(t);
+  await system.print(t);
 }
 return [main, _tests];}`;
 

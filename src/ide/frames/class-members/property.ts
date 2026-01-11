@@ -42,6 +42,10 @@ export class Property extends SingleLineFrame implements PossiblyPrivateMember {
     return "prop";
   }
 
+  frameSpecificAnnotation(): string {
+    return "property";
+  }
+
   override outerHtmlTag: string = "el-prop";
 
   renderAsElanSource(): string {

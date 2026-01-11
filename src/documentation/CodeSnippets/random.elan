@@ -1,9 +1,9 @@
-# 223641d42492e0a49a0a8cb5f378b868133a971e4a38ce9accf486a24f93e756 Elan 1.9.0 guest default_profile valid
+# a64d6ca425bccf232a658a7aa34ae84e8d2d225507780d3fc4d8a6c8fbbae991 Elan 1.9.0 guest default_profile valid
 
 main
   let probability be random()
-  print probability
+  call print(probability)
   for i from 1 to 10 step 1
-    print randomInt(1, 6)
+    call print(randomInt(1, 6))
   end for
 end main

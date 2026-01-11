@@ -1,14 +1,14 @@
-# bffd2d88f74c5f070c92b85830c4fe3107520e75e293bc03f85b654d20f10431 Elan 1.9.0 guest default_profile valid
+# faade2dd8af198d481e0f444b8e7e6b84255554eb57783367e6abafe757ea1d6 Elan 1.9.0 guest default_profile valid
 
 main
   # reusing variable fruit for each new ListImmutable
   variable fruit set to empty ListImmutable<of String>
-  print fruit
+  call print(fruit)
   set fruit to fruit.withAppend("apple")
   set fruit to fruit.withAppend("pear")
-  print fruit
-  print fruit[1]
-  print fruit.length()
-  print fruit[fruit.length() - 2]
-  print fruit.contains("banana")
+  call print(fruit)
+  call print(fruit[1])
+  call print(fruit.length())
+  call print(fruit[fruit.length() - 2])
+  call print(fruit.contains("banana"))
 end main

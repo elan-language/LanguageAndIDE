@@ -1,4 +1,4 @@
-import { enumAnnotation, enumKeyword } from "../../../compiler/keywords";
+import { enumKeyword } from "../../../compiler/keywords";
 import { EnumValuesField } from "../fields/enum-values-field";
 import { TypeNameField } from "../fields/type-name-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -37,7 +37,7 @@ export class Enum extends SingleLineFrame implements GlobalFrame {
   }
 
   frameSpecificAnnotation(): string {
-    return enumAnnotation;
+    return "enum";
   }
 
   override outerHtmlTag: string = "el-enum";
@@ -54,9 +54,5 @@ export class Enum extends SingleLineFrame implements GlobalFrame {
     source.remove("enum ");
     this.name.parseFrom(source);
     this.values.parseFrom(source);
-  }
-
-  override isWithinAnImportedFrame(): boolean {
-    return false; // So that frame number is still added
   }
 }

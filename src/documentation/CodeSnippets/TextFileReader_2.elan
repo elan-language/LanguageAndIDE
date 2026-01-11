@@ -1,4 +1,4 @@
-# 181409f4e55358dbedf687e1c51e4c1c4ade69bd185e0cc897a721366a87d52c Elan 1.9.0 guest default_profile valid
+# fbb543b9ee1044941af443d897202dae14cff979631869f2059271949d44dd90 Elan 1.9.0 guest default_profile valid
 
 main
   let file be openFileForReading()
@@ -7,6 +7,6 @@ main
     let line be file.readLine()
     call lines.append(line)
   end while
-  print lines
+  call print(lines)
   call file.close()
 end main

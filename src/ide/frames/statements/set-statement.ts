@@ -37,6 +37,10 @@ export class SetStatement extends SingleLineFrame implements Statement {
     return "set";
   }
 
+  frameSpecificAnnotation(): string {
+    return "set";
+  }
+
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}${setKeyword} ${this.assignable.renderAsElanSource()} ${toKeyword} ${this.expr.renderAsElanSource()}`;
   }

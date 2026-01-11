@@ -51,8 +51,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.printLine(x.prop);
-  await system.printLine((await x.func()));
+  await system.print(x.prop);
+  await system.print((await x.func()));
   await x.proc();
 }
 
@@ -86,7 +86,7 @@ class Bar extends Foo {
   }
 
   async proc() {
-    await system.printLine(2);
+    await system.print(2);
   }
 
   prop = 0;
@@ -142,8 +142,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.printLine(x.prop);
-  await system.printLine((await x.func()));
+  await system.print(x.prop);
+  await system.print((await x.func()));
   await x.proc();
 }
 
@@ -154,7 +154,7 @@ class Foo {
   }
 
   async proc() {
-    await system.printLine(2);
+    await system.print(2);
   }
 
   prop = 0;
@@ -228,7 +228,7 @@ class Foo {
   }
 
   async proc() {
-    await system.printLine((await this.func()));
+    await system.print((await this.func()));
   }
 
   prop = 0;
@@ -304,7 +304,7 @@ class Foo {
   }
 
   async proc() {
-    await system.printLine((await this.func()));
+    await system.print((await this.func()));
   }
 
   prop = 0;
@@ -384,8 +384,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.printLine(x.prop);
-  await system.printLine((await x.func()));
+  await system.print(x.prop);
+  await system.print((await x.func()));
   await x.proc();
 }
 
@@ -427,7 +427,7 @@ class Bar extends Foo2 {
   }
 
   async proc() {
-    await system.printLine(2);
+    await system.print(2);
   }
 
   prop = 0;
@@ -493,8 +493,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.printLine(x.prop);
-  await system.printLine((await x.func()));
+  await system.print(x.prop);
+  await system.print((await x.func()));
   await x.proc();
 }
 
@@ -536,7 +536,7 @@ class Bar extends Foo2 {
   }
 
   async proc() {
-    await system.printLine(2);
+    await system.print(2);
   }
 
   prop = 0;
@@ -603,8 +603,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.printLine((await global.func1(x)));
-  await system.printLine((await global.func2(x)));
+  await system.print((await global.func1(x)));
+  await system.print((await global.func2(x)));
 }
 
 async function func1(f) {
@@ -711,8 +711,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.printLine((await global.func1(x)));
-  await system.printLine((await global.func2(x)));
+  await system.print((await global.func1(x)));
+  await system.print((await global.func2(x)));
 }
 
 async function func1(f) {
@@ -805,8 +805,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Bar()._initialise());
-  await system.printLine(x.foo);
-  await system.printLine(x.foo.f);
+  await system.print(x.foo);
+  await system.print(x.foo.f);
 }
 
 class Foo {

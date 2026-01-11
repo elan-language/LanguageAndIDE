@@ -1,9 +1,9 @@
-# eb78512103d57cace2f6c51b42984a2551d1a785a40673b1ac6aedb3209a925c Elan 1.9.0 guest default_profile valid
+# 517c7adbe91cfc88f583ae84a31c4e0dcfa5ab5e4b5202eb0f74462211c922f2 Elan 1.9.0 guest default_profile valid
 
 main
   let file be openFileForReading()
   while not file.endOfFile()
-    print file.readLine()
+    call print(file.readLine())
   end while
   call file.close()
 end main

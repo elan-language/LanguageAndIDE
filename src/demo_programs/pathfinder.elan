@@ -1,4 +1,4 @@
-# 5c71dec2aad332b85e716cc67ea7d399e62009788ae853dfd3801269e86577ef Elan 1.9.0 guest default_profile valid
+# b572088b262dd05633f1208a3c1c48c0833430ac3a412e127096fbf890064e44 Elan 1.9.0 guest default_profile valid
 
 main
   let start be newPoint(5, 5)
@@ -44,9 +44,9 @@ procedure createRocksAndNodes(percentRocks as Int, out rocks as List<of Point>, 
       let p be newPoint(x, y)
       if p is start then
         call nodes.append(new Node(p, 0, p.minDistTo(dest)))
-      else if p is dest then
+      elif p is dest then
         call nodes.append(new Node(p, infinity, 0))
-      else if random() < percentRocks/100 then
+      elif random() < percentRocks/100 then
         call rocks.append(p)
       else
         call nodes.append(new Node(p, infinity, p.minDistTo(dest)))
@@ -175,9 +175,9 @@ class Solver
     let estToDest be node.estDistToDest
     if property.alg is Algorithm.dijkstra then
       set cost to fromStart
-    else if property.alg is Algorithm.aStar then
+    elif property.alg is Algorithm.aStar then
       set cost to fromStart + estToDest
-    else if property.alg is Algorithm.heuristic then
+    elif property.alg is Algorithm.heuristic then
       set cost to estToDest
     end if
     return cost
@@ -279,9 +279,9 @@ constant lightBlue set to 0x80abff
 
 constant orange set to 0xe97132
 
-test point
-    let p be newPoint(0, 0)
-    let n be p.neighbouringPoints()
-    let expected be {newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)}
-    assert n is expected
+test test_point
+  let p be newPoint(0, 0)
+  let n be p.neighbouringPoints()
+  let expected be {newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)}
+  assert n is expected
 end test

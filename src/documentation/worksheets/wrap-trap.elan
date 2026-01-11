@@ -1,4 +1,4 @@
-# 4e00ac114d83eb4dfe92925275ccd9cb51d7c4bba9b84827c57a52c21e5bab65 Elan 1.9.0 guest default_profile valid
+# d8870841e1b16413f466d2d4ffe77f87b7015338875c5936c79c6e7065ea6cf3 Elan 1.9.0 guest default_profile valid
 
 # REDO on basis that the computer player will be added using 'append' with small mods to your code 
 main
@@ -19,11 +19,11 @@ procedure move(out x as Int, out y as Int, out dir as String)
   end if
   if dir is "d" then
     set x to x + 1
-  else if dir is "s" then
+  elif dir is "s" then
     set y to y + 1
-  else if dir is "a" then
+  elif dir is "a" then
     set x to x - 1
-  else if dir is "w" then
+  elif dir is "w" then
     set y to y - 1
   end if
 end procedure
@@ -47,6 +47,6 @@ function newDirection(current as String, rnd as Float) returns String
   return directions[i]
 end function
 
-test newDirection
+test test_newDirection
 
 end test

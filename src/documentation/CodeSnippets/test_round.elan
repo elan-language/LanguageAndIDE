@@ -1,7 +1,5 @@
-# 958d35fa458f53c31bb7c17f9297bea0111f12dbbdabd36b8010bac165e48359 Elan 1.9.0 guest default_profile valid
+# 73429d8e512eab800d0086f5ce2d77e3df91f0fb846da11f86b6fcb60b1090af Elan 1.9.0 guest default_profile valid
 
-test round()
-    assert sqrt(2).round(3) is 1.414
+test test_round
+  assert sqrt(2).round(3) is 1.414
 end test
-
-# 

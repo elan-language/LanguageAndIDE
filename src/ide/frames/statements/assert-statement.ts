@@ -43,6 +43,10 @@ export class AssertStatement extends SingleLineFrame implements Statement {
     return "assert";
   }
 
+  frameSpecificAnnotation(): string {
+    return "assert";
+  }
+
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}assert ${this.actual.renderAsElanSource()} is ${this.expected.renderAsElanSource()}`;
   }

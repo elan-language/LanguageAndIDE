@@ -1,10 +1,10 @@
-# 564d779f5754247f901a5d86a880335bc25fd2a2782da18e4258a1f231d7fff1 Elan 1.9.0 guest default_profile valid
+# 128204cc210dc1f244822a95305f306085d6f921ca0554de4af8138af897d5fa Elan 1.9.0 guest default_profile valid
 
 main
   variable board set to new Array2D<of Int>(40, 30, 0)
   for col from 0 to 7 step 1
     for row from 0 to 7 step 1
-      print board[col, row]
+      call print(board[col, row])
     end for
   end for
 end main

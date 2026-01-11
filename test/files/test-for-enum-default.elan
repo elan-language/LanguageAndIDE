@@ -1,8 +1,8 @@
-# de4264ade7d6bd1f71d4c392bf31840f29f0ddc47cc2074ec6e50fad88cb4993 Elan 1.9.0 guest default_profile valid
+# 2d9a798fa7ca8c89c05f05cfadcf19a91e03c08150268321490a2ff686530f58 Elan 1.9.0 guest default_profile valid
 
 main
   variable r set to new Rule("a", "b", "c", "d", Dir.left)
-  print r
+  call print(r)
 end main
 
 enum Dir left, right

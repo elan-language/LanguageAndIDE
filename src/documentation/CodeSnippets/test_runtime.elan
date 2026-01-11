@@ -1,9 +1,9 @@
-# ac8e7bdc17e0b11d3d0b0ffdb947f2c8a401380b90b09c8521cc441ae07dbe9f Elan 1.9.0 guest default_profile valid
+# 0055bb4cdbb2e9b3826c5a56f002220118a2338581b8c26d2c89d319e97c92fc Elan 1.9.0 guest default_profile valid
 
-test 
-    let a be [5, 1, 7]
-    assert a[0] is 5
-    assert a[2] is 7
-    assert a[4] is 0
-    assert a[4] is "Out of range index: 4 size: 3"
+test test_matchesRegExp
+  let a be [5, 1, 7]
+  assert a[0] is 5
+  assert a[2] is 7
+  assert a[4] is 0
+  assert a[4] is "Out of range index: 4 size: 3"
 end test

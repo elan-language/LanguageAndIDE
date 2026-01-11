@@ -25,7 +25,7 @@ end main`;
 const global = new class {};
 async function main() {
 
-  await system.printLine("Hello World!");
+  await system.print("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -58,7 +58,7 @@ end main`;
 const global = new class {};
 async function main() {
 
-  await system.printLine("Hello World!");
+  await system.print("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -91,7 +91,7 @@ end main`;
 const global = new class {};
 async function main() {
 
-  await system.printLine("Hello World!");
+  await system.print("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -124,7 +124,7 @@ end main`;
 const global = new class {};
 async function main() {
 
-  await system.printLine("Hello World!");
+  await system.print("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -157,7 +157,7 @@ end main`;
 const global = new class {};
 async function main() {
 
-  await system.printLine("Hello World!");
+  await system.print("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -190,7 +190,7 @@ end main`;
 const global = new class {};
 async function main() {
 
-  await system.printLine("Hello World!");
+  await system.print("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -298,7 +298,7 @@ end main`;
 const global = new class {};
 async function main() {
 
-  await system.printLine("Hello World!");
+  await system.print("Hello World!");
 }
 return [main, _tests];}`;
 

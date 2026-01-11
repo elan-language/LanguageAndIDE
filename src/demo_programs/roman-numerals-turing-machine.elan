@@ -1,4 +1,4 @@
-# d2801da9218330d95002407ebbca9cb587dc16b0c707a311aff2af1512f63f68 Elan 1.9.0 guest default_profile valid
+# 4b9efa2e655b9e1c2c3cb247234db8f0758fc16fde1c847b4a5adaa448039f16 Elan 1.9.0 guest default_profile valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -16,12 +16,12 @@ main
     call tm.singleStep()
     set steps to steps + 1
     call clearPrintedText()
-    call printLine(tm.tape)
+    call print(tm.tape)
     call printTab(tm.headPosition - 1, "^\n")
-    call printLine("Step: {steps}\nState: {tm.currentState}\nRule applied: {rule.asString()}")
+    call print("Step: {steps}\nState: {tm.currentState}\nRule applied: {rule.asString()}")
     call pause(40)
   end while
-  print "\n\nThe roman numeral equivalent for {decimal} is {tm.tape.trim()}"
+  call print("\n\nThe roman numeral equivalent for {decimal} is {tm.tape.trim()}")
 end main
 
 constant initState set to "init"

@@ -40,6 +40,10 @@ export class CallStatement extends SingleLineFrame implements Statement {
     return "call";
   }
 
+  frameSpecificAnnotation(): string {
+    return "call";
+  }
+
   renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}call ${this.proc.renderAsElanSource()}(${this.args.renderAsElanSource()})`;
   }

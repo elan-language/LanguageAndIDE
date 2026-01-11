@@ -58,8 +58,8 @@ import {
   parentHelper_readWorstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
+  parentHelper_renderChildrenAsElanSource,
   parentHelper_renderChildrenAsHtml,
-  parentHelper_renderChildrenAsSource,
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
   worstParseStatus,
@@ -215,6 +215,18 @@ export class FileImpl implements File {
       : globals;
   }
 
+  async renderAsElanSource(): Promise<string> {
+    const content = this.renderHashableContent();
+    this.currentHash = await this.getHash(content);
+    return `# ${this.currentHash} ${content}`;
+  }
+
+  async renderAsExport(): Promise<string> {
+    const content = this.renderHashableContent();
+    this.currentHash = await this.getHash(content);
+    return `${this.language().commentMarker()} ${this.currentHash} ${content}`;
+  }
+
   public indent(): string {
     return "";
   }
@@ -236,7 +248,9 @@ export class FileImpl implements File {
   }
 
   getVersionString() {
-    return `Elan ${this.getSemverString()}`;
+    const lang = this.language().languageFullName;
+    const prefix = lang === "Elan" ? "" : `${lang} with `;
+    return `${prefix}Elan ${this.getSemverString()}`;
   }
 
   getVersionAsHtml() {
@@ -279,12 +293,6 @@ export class FileImpl implements File {
     return `<el-profile class="${cls}">${profileName}</el-profile>`;
   }
 
-  async renderAsElanSource(): Promise<string> {
-    const content = this.renderHashableContent();
-    this.currentHash = await this.getHash(content);
-    return `# ${this.currentHash} ${content}`;
-  }
-
   getAst(invalidate: boolean): RootAstNode | undefined {
     if (!this.ast || invalidate) {
       this.ast = this.transform.transform(this, "", undefined) as RootAstNode | undefined;
@@ -316,7 +324,7 @@ export class FileImpl implements File {
   }
 
   renderHashableContent(): string {
-    const globals = parentHelper_renderChildrenAsSource(this);
+    const globals = parentHelper_renderChildrenAsElanSource(this);
     const code = `${this.getVersionString()} ${this.getUserName()} ${this.getProfileName()} ${this.getParseStatusLabel()}\r\n\r\n${globals}`;
     return code.endsWith("\r\n") ? code : code + "\r\n"; // To accommodate possibility that last global is a global-comment
   }
@@ -331,11 +339,6 @@ export class FileImpl implements File {
 
   getFirstChild(): Frame {
     return parentHelper_getFirstChild(this);
-  }
-  private getFirstNonImportedChild(): Frame {
-    const globals = this.getChildren();
-    const nonImported = globals.filter((g) => !g.isImported());
-    return nonImported.length > 0 ? nonImported[0] : this.getLastChild();
   }
   getLastChild(): Frame {
     return parentHelper_getLastChild(this);
@@ -588,11 +591,6 @@ export class FileImpl implements File {
       return isSelector(frame)
         ? (frame as GlobalSelector)
         : parentHelper_insertOrGotoChildSelector(this, true, frame);
-    } else if (mode === ParseMode.import) {
-      frame = this.getFirstNonImportedChild();
-      return isSelector(frame)
-        ? (frame as GlobalSelector)
-        : parentHelper_insertOrGotoChildSelector(this, false, frame);
     } else {
       return this.getFirstSelectorAsDirectChild();
     }
@@ -814,14 +812,6 @@ export class FileImpl implements File {
   }
 
   isGhostedOrWithinAGhostedFrame(): boolean {
-    return false;
-  }
-
-  isWithinAnImportedFrame(): boolean {
-    return false;
-  }
-
-  isImported(): boolean {
     return false;
   }
 

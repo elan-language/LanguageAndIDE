@@ -1,9 +1,9 @@
-# f4b9a6a9c35ccdbfe300a10b2fc0e86b631bd27b5c906a31dd52f08b1487ad9e Elan 1.9.0 guest default_profile valid
+# e54af54dfd5788b7e5b0bddd10ce8a9852f99eddf971b293529ecd0dab18601a Elan 1.9.0 guest default_profile valid
 
 main
   let li be [3, 6, 1, 0, 99, 4, 67]
   call inPlaceRippleSort(li)
-  print li
+  call print(li.asString())
 end main
 
 procedure inPlaceRippleSort(li as List<of Int>)

@@ -1,4 +1,4 @@
-# fd06fc3b526c7236259c732c6a937f288498c07d4b8cffa396e45e1291d1cc58 Elan 1.9.0 guest default_profile valid
+# 0bf00fa46770b95346493922bb53a3183f9d175dbc56af38f80464d275da3c17 Elan 1.9.0 guest default_profile valid
 
 main
   let file be createFileForWriting("squares.txt")
@@ -8,6 +8,6 @@ main
   try
     call file.saveAndClose()
   catch exception in e
-    print "File save cancelled"
+    call print("File save cancelled")
   end try
 end main

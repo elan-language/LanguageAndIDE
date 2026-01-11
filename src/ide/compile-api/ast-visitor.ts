@@ -84,7 +84,6 @@ import { ForAsn } from "../../compiler/syntax-nodes/statements/for-asn";
 import { IfAsn } from "../../compiler/syntax-nodes/statements/if-asn";
 import { LetAsn } from "../../compiler/syntax-nodes/statements/let-asn";
 import { PrintAsn } from "../../compiler/syntax-nodes/statements/print-asn";
-import { RepeatAsn } from "../../compiler/syntax-nodes/statements/repeat-asn";
 import { ReturnAsn } from "../../compiler/syntax-nodes/statements/return-asn";
 import { SetAsn } from "../../compiler/syntax-nodes/statements/set-asn";
 import { ThrowAsn } from "../../compiler/syntax-nodes/statements/throw-asn";
@@ -190,12 +189,12 @@ import { CallStatement } from "../frames/statements/call-statement";
 import { CatchStatement } from "../frames/statements/catch-statement";
 import { CommentStatement } from "../frames/statements/comment-statement";
 import { Each } from "../frames/statements/each";
+import { Elif } from "../frames/statements/elif";
 import { Else } from "../frames/statements/else";
 import { For } from "../frames/statements/for";
 import { IfStatement } from "../frames/statements/if-statement";
 import { LetStatement } from "../frames/statements/let-statement";
 import { Print } from "../frames/statements/print";
-import { Repeat } from "../frames/statements/repeat";
 import { ReturnStatement } from "../frames/statements/return-statement";
 import { SetStatement } from "../frames/statements/set-statement";
 import { Throw } from "../frames/statements/throw";
@@ -591,20 +590,6 @@ export function transform(
     return whileAsn;
   }
 
-  if (node instanceof Repeat) {
-    const repeatAsn = new RepeatAsn(node.getHtmlId(), scope);
-    repeatAsn.breakpointStatus = node.breakpointStatus;
-    repeatAsn.condition =
-      transform(node.condition, node.getHtmlId(), repeatAsn) ?? EmptyAsn.Instance;
-
-    repeatAsn.children = node
-      .getChildren()
-      .filter((f) => !isSelector(f))
-      .map((f) => transform(f, f.getHtmlId(), repeatAsn)) as AstNode[];
-
-    return repeatAsn;
-  }
-
   if (node instanceof IfStatement) {
     const ifAsn = new IfAsn(node.getHtmlId(), scope);
     ifAsn.breakpointStatus = node.breakpointStatus;
@@ -618,11 +603,19 @@ export function transform(
     return ifAsn;
   }
 
-  if (node instanceof Else) {
+  if (node instanceof Elif) {
     const elseAsn = new ElseAsn(node.getHtmlId(), scope);
     elseAsn.breakpointStatus = node.breakpointStatus;
     elseAsn.condition = transform(node.condition, node.getHtmlId(), elseAsn) ?? EmptyAsn.Instance;
-    elseAsn.hasIf = node.hasIf;
+    elseAsn.hasIf = true;
+    return elseAsn;
+  }
+
+  if (node instanceof Else) {
+    const elseAsn = new ElseAsn(node.getHtmlId(), scope);
+    elseAsn.breakpointStatus = node.breakpointStatus;
+    elseAsn.condition = EmptyAsn.Instance;
+    elseAsn.hasIf = false;
     return elseAsn;
   }
 

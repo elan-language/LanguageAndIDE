@@ -28,12 +28,12 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine((_stdlib.true ? 1 : 2));
-  await system.printLine((_stdlib.false ? 3 : 4));
-  await system.printLine((_stdlib.true ? (_stdlib.true ? "A" : "B") : (_stdlib.true ? "C" : "D")));
-  await system.printLine((_stdlib.true ? (_stdlib.false ? "A" : "B") : (_stdlib.true ? "C" : "D")));
-  await system.printLine((_stdlib.false ? (_stdlib.true ? "A" : "B") : (_stdlib.true ? "C" : "D")));
-  await system.printLine((_stdlib.false ? (_stdlib.true ? "A" : "B") : (_stdlib.false ? "C" : "D")));
+  await system.print((_stdlib.true ? 1 : 2));
+  await system.print((_stdlib.false ? 3 : 4));
+  await system.print((_stdlib.true ? (_stdlib.true ? "A" : "B") : (_stdlib.true ? "C" : "D")));
+  await system.print((_stdlib.true ? (_stdlib.false ? "A" : "B") : (_stdlib.true ? "C" : "D")));
+  await system.print((_stdlib.false ? (_stdlib.true ? "A" : "B") : (_stdlib.true ? "C" : "D")));
+  await system.print((_stdlib.false ? (_stdlib.true ? "A" : "B") : (_stdlib.false ? "C" : "D")));
 }
 return [main, _tests];}`;
 

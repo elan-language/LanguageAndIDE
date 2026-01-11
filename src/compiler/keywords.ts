@@ -12,6 +12,7 @@ export const constructorKeyword = "constructor";
 export const copyKeyword = "copy";
 export const divKeyword = "div";
 export const eachKeyword = "each";
+export const elifKeyword = "elif";
 export const elseKeyword = "else";
 export const emptyKeyword = "empty";
 export const endKeyword = "end";
@@ -22,7 +23,6 @@ export const fromKeyword = "from";
 export const functionKeyword = "function";
 export const globalKeyword = "global";
 export const ifKeyword = "if";
-export const ignoreKeyword = "ignore"; // Not actively used since v1.7.0, retained pro tem, for backwards Elan code compatibility - now has the effect of ghosting
 export const imageKeyword = "image";
 export const importKeyword = "import";
 export const inKeyword = "in";
@@ -46,7 +46,6 @@ export const procedureKeyword = "procedure";
 export const propertyKeyword = "property";
 export const recordKeyword = "record";
 export const refKeyword = "ref";
-export const repeatKeyword = "repeat";
 export const returnKeyword = "return";
 export const returnsKeyword = "returns";
 export const setKeyword = "set";
@@ -61,29 +60,6 @@ export const tupleKeyword = "tuple";
 export const variableKeyword = "variable";
 export const whileKeyword = "while";
 export const withKeyword = "with";
-
-//Python keywords
-export const elifKeyword = "elif";
-
-// Universal annotations
-export const assertAnnotation = "assert";
-export const callAnnotation = "call";
-export const constantAnnotation = "constant";
-export const constructorAnnotation = "constructor";
-export const eachAnnotation = "each";
-export const enumAnnotation = "enum";
-export const functionAnnotation = "function";
-export const letAnnotation = "let";
-export const mainAnnotation = "main";
-export const methodAnnotation = "method";
-export const privateAnnotation = "private";
-export const procedureAnnotation = "procedure";
-export const propertyAnnotation = "property";
-export const recordAnnotation = "record";
-export const setAnnotation = "set";
-export const systemAnnotation = "system";
-export const testAnnotation = "test ";
-export const variableAnnotation = "variable";
 
 //Not added to allKeywords
 export const abstractPropertyKeywords = abstractKeyword + " " + propertyKeyword;
@@ -105,7 +81,7 @@ export const allKeywords = [
   callKeyword,
   catchKeyword,
   classKeyword,
-  constantAnnotation,
+  constantKeyword,
   constructorKeyword,
   copyKeyword,
   divKeyword,
@@ -121,7 +97,6 @@ export const allKeywords = [
   functionKeyword,
   globalKeyword,
   ifKeyword,
-  ignoreKeyword,
   imageKeyword,
   importKeyword,
   inKeyword,
@@ -145,7 +120,6 @@ export const allKeywords = [
   propertyKeyword,
   recordKeyword,
   refKeyword,
-  repeatKeyword,
   returnKeyword,
   returnsKeyword,
   setKeyword,
@@ -230,6 +204,5 @@ export const reservedWords = [
 ];
 
 export const ghostedAnnotation = "ghosted";
-export const importedAnnotation = "imported";
 
-export const sourceAnnotations = [ghostedAnnotation, importedAnnotation];
+export const sourceAnnotations = [ghostedAnnotation];

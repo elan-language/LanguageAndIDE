@@ -15,7 +15,7 @@ import { StatementSelector } from "../src/ide/frames/statements/statement-select
 import { Throw } from "../src/ide/frames/statements/throw";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 import { StubInputOutput } from "../src/ide/stub-input-output";
-import { ignore_test, testHeader, transforms } from "./compiler/compiler-test-helpers";
+import { testHeader, transforms } from "./compiler/compiler-test-helpers";
 
 function hash() {
   return Promise.resolve("FFFF");
@@ -111,7 +111,7 @@ suite("Parsing Frame Tests", async () => {
     assert.equal(setTo.renderAsElanSource(), code);
   });
 
-  ignore_test("parse Frames - assert statement 3", () => {
+  test("parse Frames - assert statement 3", () => {
     const code = "  assert foo is 7";
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
@@ -501,7 +501,7 @@ end class
 
 main
   if true then
-  else if true then
+  elif true then
   else
   end if
 end main

@@ -201,13 +201,6 @@ export class WebInputOutput implements ElanInputOutput {
   printedText: string = "";
   currentInterval?: any;
 
-  async printLine(text: string): Promise<void> {
-    await this.print(`${text}\n`);
-    const element = document.getElementById("printed-text")!;
-    element.scrollTop = element.scrollHeight;
-    return Promise.resolve();
-  }
-
   async print(text: string): Promise<void> {
     this.printedText = `${this.printedText}${sanitiseHtml(text)}`;
     await this.renderPrintedText();
@@ -262,7 +255,7 @@ export class WebInputOutput implements ElanInputOutput {
           const v = inp.value.replace(/</g, "&lt;");
 
           div.removeChild(inp);
-          await this.printLine(v);
+          await this.print(v);
         }
       }, 250);
     });
