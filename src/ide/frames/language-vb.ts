@@ -88,9 +88,9 @@ export class LanguageVB implements Language {
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.dimKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof AbstractFunction) {
-      html = `<el-kw>${this.abstractKeyword} ${this.functionKeyword} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.returnsKeyword} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `<el-kw>${this.abstractKeyword} ${this.functionKeyword} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.asKeyword} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof AbstractProcedure) {
-      html = `<el-kw>${this.abstractKeyword} ${this.procedureKeyword} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `<el-kw>${this.abstractKeyword} ${this.subKeyword} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof AbstractProperty) {
       html = ``;
     }
@@ -110,13 +110,13 @@ export class LanguageVB implements Language {
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.publicKeyword} ${this.subKeyword} ${this.newKeyword}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof Each) {
-      html = `<el-kw>${this.eachKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.inKeyword} </el-kw>${frame.iter.renderAsHtml()}`;
+      html = `<el-kw>${this.forKeyword} ${this.eachKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.inKeyword} </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof For) {
-      html = `<el-kw>${this.forKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.fromKeyword} </el-kw>${frame.from.renderAsHtml()}<el-kw> ${this.toKeyword} </el-kw>${frame.to.renderAsHtml()}<el-kw> ${this.stepKeyword} </el-kw>${frame.step.renderAsHtml()}`;
+      html = `<el-kw>${this.forKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-punc> = </el-punc>${frame.from.renderAsHtml()}<el-kw> ${this.toKeyword} </el-kw>${frame.to.renderAsHtml()}<el-kw> ${this.stepKeyword} </el-kw>${frame.step.renderAsHtml()}`;
     } else if (frame instanceof FunctionMethod) {
-      html = `${modifierAsHtml(frame)}<el-kw>${this.functionKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.returnsKeyword} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `${modifierAsHtml(frame)}<el-kw>${this.functionKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.asKeyword} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalFunction) {
-      html = `<el-kw>${this.functionKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.returnsKeyword} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `<el-kw>${this.functionKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.asKeyword} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalProcedure) {
       html = `<el-kw>${this.subKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof IfStatement) {
@@ -126,11 +126,11 @@ export class LanguageVB implements Language {
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.subKeyword}</el-kw> <el-method>main</el-method><el-punc>()</el-punc>`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `${modifierAsHtml(frame)}<el-kw>${this.procedureKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `${modifierAsHtml(frame)}<el-kw>${this.subKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof RecordFrame) {
       html = `<el-kw>${this.classKeyword} </el-kw>${frame.name.renderAsHtml()}`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.testKeyword} </el-kw>${frame.testName.renderAsHtml()}`;
+      html = `<el-kw>${this.subKeyword} </el-kw>${frame.testName.renderAsHtml()}`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.tryKeyword} </el-kw>`;
     } else if (frame instanceof While) {
@@ -140,7 +140,7 @@ export class LanguageVB implements Language {
   }
 
   renderTopAsExport(frame: Frame): string {
-    return frame ? "" : ""; // At least for the time being, there is no reason to export a file being presented as Elan
+    return frame ? "" : ""; // TODO
   }
 
   renderBottomAsHtml(frame: Frame): string {
@@ -240,7 +240,7 @@ PLUS:         '+';
   private constructorKeyword = "constructor";
   private copyKeyword = "copy";
   private dimKeyword = "Dim";
-  private eachKeyword = "each";
+  private eachKeyword = "Each";
   private elseIfKeyword = "ElseIf";
   private elseKeyword = "Else";
   private emptyKeyword = "empty";
@@ -254,7 +254,7 @@ PLUS:         '+';
   private ifKeyword = "If";
   private imageKeyword = "image";
   private importKeyword = "import";
-  private inKeyword = "in";
+  private inKeyword = "In";
   private inheritsKeyword = "inherits";
   private interfaceKeyword = "Interface";
   private isKeyword = "is";
@@ -269,22 +269,17 @@ PLUS:         '+';
   private ofKeyword = "of";
   private orKeyword = "or";
   private outKeyword = "out";
-  private privateKeyword = "private";
-  private procedureKeyword = "procedure";
+  private privateKeyword = "Private";
   private propertyKeyword = "property";
   private publicKeyword = "Public";
-  private returnKeyword = "return";
-  private returnsKeyword = "returns";
-  private setKeyword = "set";
-  private stepKeyword = "step";
+  private returnKeyword = "Return";
+  private stepKeyword = "Step";
   private subKeyword = "Sub";
-  private testKeyword = "test";
   private thenKeyword = "Then";
   private throwKeyword = "Throw";
   private toKeyword = "To";
   private tryKeyword = "Try";
   private tupleKeyword = "tuple";
-  private variableKeyword = "variable";
   private whileKeyword = "While";
   private withKeyword = "with";
 

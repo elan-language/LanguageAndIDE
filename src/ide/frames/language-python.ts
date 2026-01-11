@@ -1,4 +1,4 @@
-import {} from "../../compiler/keywords";
+import { } from "../../compiler/keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -214,6 +214,8 @@ export class LanguagePython implements Language {
         text = " == ";
       } else if (text === "isnt") {
         text = " != ";
+      } else if (text === "mod") {
+        text = " % ";
       } else {
         text = node.renderAsElanSource();
       }
