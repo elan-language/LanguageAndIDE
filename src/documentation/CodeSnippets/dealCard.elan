@@ -6,3 +6,12 @@ function dealCard(random as Float) returns Card
   let suit be number mod 4
   return new Card() with rank set to rank, suit set to suit
 end function
+
+class Card
+  property rank as Int
+
+  property suit as Int
+
+end class
+
+constant rankValue set to {0:0}

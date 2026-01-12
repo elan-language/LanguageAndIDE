@@ -1,7 +1,8 @@
 # 6b712300c108295b4135c65571a8d5b1f438fe00940c8d8d48189a69b1a0929a Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let li be [3, 6, 1, 0, 99, 4, 67]
+  variable li set to example.asList()
+  call print(li.asString())
   call inPlaceRippleSort(li)
   call print(li.asString())
 end main
@@ -12,11 +13,11 @@ procedure inPlaceRippleSort(li as List<of Int>)
   while hasChanged is true
     set hasChanged to false
     for i from 0 to lastComp step 1
-      if li[i] > li[i + 1] then
-        let temp be li[i]
-        call li.put(i, li[i + 1])
-        call li.put(i + 1, temp)
-        set hasChanged to true
+      if arr[i] > arr[i + 1] then
+        let temp be arr[i]
+        call arr.put(i, arr[i + 1])
+        call arr.put(i + 1, temp)
+        set change to true
       end if
     end for
     set lastComp to lastComp - 1

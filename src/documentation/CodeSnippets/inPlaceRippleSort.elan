@@ -2,25 +2,24 @@
 
 main
   variable li set to example.asList()
+  call print(li.asString())
   call inPlaceRippleSort(li)
   call print(li)
 end main
 
 procedure inPlaceRippleSort(out arr as List<of Int>)
-  variable changes set to true
+  variable change set to true
   variable lastComp set to arr.length() - 2
   while changes
     set changes to false
     for i from 0 to lastComp step 1
       if arr[i] > arr[i + 1] then
         let temp be arr[i]
-        call arr.putAt(i, arr[i + 1])
-        call arr.putAt(i + 1, temp)
-        set changes to true
+        call arr.put(i, arr[i + 1])
+        call arr.put(i + 1, temp)
+        set change to true
       end if
     end for
     set lastComp to lastComp - 1
   end while
 end procedure
-
-constant example set to {3, 6, 1, 0, 99, 4, 67}
