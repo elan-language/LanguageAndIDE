@@ -67,6 +67,15 @@ suite("Demo compile", () => {
   test("test wordle-demo", async () => {
     await testElanProgram("demo_programs\\wordle-demo.elan");
   });
+  test("test hodgepodge", async () => {
+    await testElanProgram("demo_programs\\hodgepodge.elan");
+  });
+  test("test turtle_dragon", async () => {
+    await testElanProgram("demo_programs\\turtle_dragon.elan");
+  });
+  test("test date-time", async () => {
+    await testElanProgram("demo_programs\\date-time.elan");
+  });
   //Worksheet loaded code
   test("test blackjack 1", async () => {
     await testElanProgram("documentation\\worksheets\\blackjack\\blackjack_1begin.elan");
