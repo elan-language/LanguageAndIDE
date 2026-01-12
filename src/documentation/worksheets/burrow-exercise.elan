@@ -1,4 +1,4 @@
-# 0f3d4ad06be8d91b399e1ed2096916630a8e1b7df6a7e366fbd03278404f3eea Elan 1.9.0 guest default_profile valid
+# 0b02066526a7b8c5c429b6599c8d6eb2e5fbd68581fcf0388d4ea6552db8628a Elan 2.0.0-alpha guest default_profile valid
 
 # Exercise: learn how to use simple Block Graphics, writing a program called 'burrow'
 # 1. Create a main routine and within that add a 'let' statement defining a value named
@@ -20,7 +20,7 @@
 #    (as soon as you start typing random you will see a suitable method for this)
 # 9. Add an 'if' statement that tests if the direction is zero and if so increments 
 #    the value of x by 1 using a 'set` instruction.
-# 10.Within the if statement add three 'else if' clauses such that all four of the
+# 10.Within the if statement add three 'elif' clauses such that all four of the
 #    possible values for direction are covered, and between them either increment or
 #    decrement x or y by one. It doesn't matter which variant
 #    goes in which clause as long as all four possible changes are handled.

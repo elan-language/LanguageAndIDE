@@ -8,6 +8,7 @@ import { CompileStatus, ParseStatus, RunStatus } from "../status-enums";
 import { CodeSource } from "./code-source";
 import { editorEvent } from "./editor-event";
 import { Frame } from "./frame";
+import { Language } from "./language";
 import { Parent } from "./parent";
 import { Profile } from "./profile";
 import { Selectable } from "./selectable";
@@ -23,7 +24,9 @@ export interface File extends Parent {
   isFile: boolean;
   getById(id: string): Selectable;
   renderAsHtml(): Promise<string>;
-  renderAsSource(): Promise<string>;
+  renderAsElanSource(): Promise<string>;
+  renderAsExport(): Promise<string>;
+
   compile(): string;
 
   compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string;
@@ -118,4 +121,7 @@ export interface File extends Parent {
   getCopiedSource(): string[];
 
   deleteAllGhosted(): void;
+
+  setLanguage(l: Language): void;
+  language(): Language;
 }

@@ -1,12 +1,12 @@
-# b47087699095174802b37a12370e87951b67e24f3196047e7bec2c3b70cc690b Elan 1.9.0 guest default_profile valid
+# c2817ece7e2e822c8e26a6cd901378143b5a8c93686dd84fab950be30388d422 Elan 2.0.0-alpha guest default_profile valid
 
 function merge(a as List<of String>, b as List<of String>) returns List<of String>
   variable result set to empty List<of String>
   if a.length() is 0 then
     set result to b
-  else if b.length() is 0 then
+  elif b.length() is 0 then
     set result to a
-  else if a[0].isBefore(b[0]) then
+  elif a[0].isBefore(b[0]) then
     set result to [a[0]].withAppendList(merge(a[1..], b))
   else
     set result to [b[0]].withAppendList(merge(a, b[1..]))

@@ -1,4 +1,4 @@
-# 731e937cf10e0e1099ebd4ad2e252ba514d910fa2c688fdbb194169fa808f195 Elan 1.9.0 guest default_profile valid
+# 48fdf3c95c1aa7d59005d985c3fe9b853e29c1788e4ff967bf66e20aad1da72d Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable c set to 1160

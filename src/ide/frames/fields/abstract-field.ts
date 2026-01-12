@@ -110,7 +110,7 @@ export abstract class AbstractField implements Selectable, Field {
         this.text = text.trimStart();
       } else {
         this.setParseStatus(root.status);
-        this.text = root.renderAsSource();
+        this.text = root.renderAsElanSource();
       }
     }
   }
@@ -594,7 +594,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   select(_withFocus?: boolean, _multiSelect?: boolean, selection?: [number, number]): void {
-    if (!this.isWithinAGhostedFrame() && !this.getHolder().isImported()) {
+    if (!this.isWithinAGhostedFrame()) {
       this.deselectAll();
       this.selected = true;
       this.focus();
@@ -640,6 +640,18 @@ export abstract class AbstractField implements Selectable, Field {
       }
     }
     return html;
+  }
+
+  public textAsExport(): string {
+    let exp = "";
+    if (this.selected) {
+      exp = this.fieldAsInput() + this.symbolCompletion();
+    } else {
+      if (this.rootNode && this._parseStatus === ParseStatus.valid) {
+        exp = this.rootNode.renderAsExport();
+      }
+    }
+    return exp;
   }
 
   protected fieldAsInput(): string {
@@ -704,11 +716,15 @@ export abstract class AbstractField implements Selectable, Field {
     return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${this.textAsHtml()}</el-txt><el-place>${this.placeholder}</el-place><el-compl>${this.getCompletion().replace("<of", "&lt;of")}</el-compl>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
   }
 
+  renderAsExport(): string {
+    return `${this.textAsHtml()}`;
+  }
+
   indent(): string {
     return "";
   }
 
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     return this.textAsSource();
   }
 

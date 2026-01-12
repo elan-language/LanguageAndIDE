@@ -1,7 +1,7 @@
-# 7484853aece25a3f7dd19c25be7f917edb2f86b27b86c4c325472a1f34b86cc7 Elan 1.9.0 guest default_profile valid
+# 2c296fb61e782105ec3d4784cafac6adfed8e2e27c1a7c218e0f9f7e5fc6a92a Elan 2.0.0-alpha guest default_profile valid
 
 main
-  print factorial(7)
+  call print(factorial(7))
 end main
 
 function factorial(n as Int) returns Int

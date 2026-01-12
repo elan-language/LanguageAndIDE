@@ -27,15 +27,14 @@ export class IfStatement extends FrameWithStatements implements Statement {
     return "if";
   }
 
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${ifKeyword} </el-kw>${this.condition.renderAsHtml()}<el-kw> ${thenKeyword}</el-kw>${this.helpAsHtml()}${this.getFrNo()}</el-top>${this.compileMsgAsHtml()}
-${this.renderChildrenAsHtml()}
-<el-kw>${endKeyword} ${ifKeyword}</el-kw>
-</el-statement>`;
+  frameSpecificAnnotation(): string {
+    return "";
   }
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${ifKeyword} ${this.condition.renderAsSource()} ${thenKeyword}\r
+
+  outerHtmlTag: string = "el-statement";
+
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}${ifKeyword} ${this.condition.renderAsElanSource()} ${thenKeyword}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}${endKeyword} ${ifKeyword}`;
   }

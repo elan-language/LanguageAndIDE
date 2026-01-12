@@ -1,6 +1,6 @@
-# d78eb844cb6a7e7b8b28654727f1c06a40705faa2228d226a9b2891e1e00bc33 Elan 1.9.0 guest default_profile valid
+# 6b63b0f52e2f58d64f8dea27376fb777d588b29999a02dc86ac8f7b959f1e705 Elan 2.0.0-alpha guest default_profile valid
 
-test 
+test test_maths
   assert pi is 3.141592653589793
   assert abs(-3.7) is 3.7
   assert asin(0.5).round(3) is 0.524

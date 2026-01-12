@@ -2,6 +2,7 @@ import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { IdentifierNode } from "./identifier-node";
 import { LitString } from "./lit-string";
+import { File } from "../frame-interfaces/file";
 
 export class ExceptionMsgNode extends AbstractAlternatives {
   tokenTypes: Set<TokenType> = new Set<TokenType>([
@@ -9,9 +10,9 @@ export class ExceptionMsgNode extends AbstractAlternatives {
     TokenType.id_let,
     TokenType.id_variable,
   ]);
-  constructor() {
-    super();
-    this.alternatives.push(new LitString());
-    this.alternatives.push(new IdentifierNode(this.tokenTypes));
+  constructor(file: File) {
+    super(file);
+    this.alternatives.push(new LitString(file));
+    this.alternatives.push(new IdentifierNode(file, this.tokenTypes));
   }
 }

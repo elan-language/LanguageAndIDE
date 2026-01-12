@@ -4,13 +4,18 @@ import { ParseStatus } from "../status-enums";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
+import { File } from "../frame-interfaces/file";
 
 export class IdentifierNode extends AbstractParseNode {
   private tokenTypes: Set<TokenType>;
   private contextGenerator: () => string;
 
-  constructor(tokenTypes: Set<TokenType> = new Set<TokenType>(), contextGenerator = () => "") {
-    super();
+  constructor(
+    file: File,
+    tokenTypes: Set<TokenType> = new Set<TokenType>(),
+    contextGenerator = () => "",
+  ) {
+    super(file);
     this.tokenTypes = tokenTypes;
     this.contextGenerator = contextGenerator;
     this.completionWhenEmpty = "<i>name</i>";
@@ -46,6 +51,6 @@ export class IdentifierNode extends AbstractParseNode {
   }
 
   override renderAsHtml(): string {
-    return `<el-id>${this.renderAsSource()}</el-id>`;
+    return `<el-id>${this.renderAsElanSource()}</el-id>`;
   }
 }

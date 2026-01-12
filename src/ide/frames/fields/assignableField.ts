@@ -18,7 +18,7 @@ export class AssignableField extends AbstractField {
     return "ident";
   }
   initialiseRoot(): ParseNode {
-    this.rootNode = new AssignableNode();
+    this.rootNode = new AssignableNode(this.getFile());
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

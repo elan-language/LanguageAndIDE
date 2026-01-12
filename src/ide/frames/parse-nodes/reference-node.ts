@@ -12,10 +12,10 @@ export class ReferenceNode extends AbstractAlternatives {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      this.alternatives.push(new KeywordNode(thisKeyword));
-      this.alternatives.push(new IdentifierNode(this.tokenTypes));
-      this.alternatives.push(new MethodCallNode());
-      this.alternatives.push(new FunctionRefNode());
+      this.alternatives.push(new KeywordNode(this.file, thisKeyword));
+      this.alternatives.push(new IdentifierNode(this.file, this.tokenTypes));
+      this.alternatives.push(new MethodCallNode(this.file));
+      this.alternatives.push(new FunctionRefNode(this.file));
       super.parseText(text);
     }
   }

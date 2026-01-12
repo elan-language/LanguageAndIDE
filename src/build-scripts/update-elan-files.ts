@@ -55,7 +55,7 @@ async function updateDemoProgram(fileName: string) {
 
   file.setVersion(elanVersion.major, elanVersion.minor, elanVersion.patch, elanVersion.preRelease);
 
-  const updatedContent = await file.renderAsSource();
+  const updatedContent = await file.renderAsElanSource();
 
   updateTestFileNew(fileName, updatedContent);
 }

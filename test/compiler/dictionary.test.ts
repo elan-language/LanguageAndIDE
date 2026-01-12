@@ -27,7 +27,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -59,7 +59,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", system.dictionary([["a", 1]])], ["b", system.dictionary([["b", 3], ["z", 10]])]]);
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -97,7 +97,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let a = system.dictionary([[Fruit.apple, 1], [Fruit.orange, 3], [Fruit.pear, 10]]);
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -129,7 +129,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  await system.printLine(system.safeIndex(a, "z"));
+  await system.print(system.safeIndex(a, "z"));
 }
 return [main, _tests];}`;
 
@@ -161,7 +161,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", system.dictionary([["a", 1]])], ["b", system.dictionary([["b", 3], ["z", 10]])]]);
-  await system.printLine(system.safeIndex(system.safeIndex(a, "b"), "z"));
+  await system.print(system.safeIndex(system.safeIndex(a, "b"), "z"));
 }
 return [main, _tests];}`;
 
@@ -197,7 +197,7 @@ async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   let b = system.initialise(_stdlib.List.emptyInstance());
   b = a.keys();
-  await system.printLine(b);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -230,8 +230,8 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  await system.printLine(a.hasKey("b"));
-  await system.printLine(a.hasKey("d"));
+  await system.print(a.hasKey("b"));
+  await system.print(a.hasKey("d"));
 }
 return [main, _tests];}`;
 
@@ -263,7 +263,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
-  await system.printLine(a.values());
+  await system.print(a.values());
 }
 return [main, _tests];}`;
 
@@ -299,7 +299,7 @@ async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   a.put("b", 4);
   a.put("d", 2);
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -335,7 +335,7 @@ async function main() {
   let a = system.dictionary([["a", system.dictionary([["a", 1]])], ["b", system.dictionary([["b", 3], ["z", 10]])]]);
   a.put("b", system.dictionary([["c", 4]]));
   system.safeIndex(a, "a").put("x", 2);
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -369,7 +369,7 @@ const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   a.removeAt("b");
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -403,7 +403,7 @@ const global = new class {};
 async function main() {
   let a = system.dictionary([["a", system.dictionary([["a", 1]])], ["b", system.dictionary([["b", 3], ["z", 10]])]]);
   system.safeIndex(a, "b").removeAt("b");
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -437,7 +437,7 @@ const global = new class {};
 async function main() {
   let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   a.removeAt("c");
-  await system.printLine(a);
+  await system.print(a);
 }
 return [main, _tests];}`;
 
@@ -477,9 +477,9 @@ async function main() {
   a.put("Foo", 1);
   a.put("Bar", 3);
   let k = a.keys();
-  await system.printLine(k.length());
-  await system.printLine(system.safeIndex(a, "Foo"));
-  await system.printLine(system.safeIndex(a, "Bar"));
+  await system.print(k.length());
+  await system.print(system.safeIndex(a, "Foo"));
+  await system.print(system.safeIndex(a, "Bar"));
 }
 return [main, _tests];}`;
 
@@ -521,9 +521,9 @@ async function main() {
   a.put("Bar", system.initialise(await new _stdlib.Dictionary()._initialise()));
   system.safeIndex(a, "Bar").put("bb", 3);
   let k = a.keys();
-  await system.printLine(k.length());
-  await system.printLine(system.safeIndex(a, "Foo"));
-  await system.printLine(system.safeIndex(a, "Bar"));
+  await system.print(k.length());
+  await system.print(system.safeIndex(a, "Foo"));
+  await system.print(system.safeIndex(a, "Bar"));
 }
 return [main, _tests];}`;
 
@@ -569,9 +569,9 @@ async function main() {
   a.put(Fruit.apple, 1);
   a.put(Fruit.orange, 3);
   let k = a.keys();
-  await system.printLine(k.length());
-  await system.printLine(system.safeIndex(a, Fruit.apple));
-  await system.printLine(system.safeIndex(a, Fruit.orange));
+  await system.print(k.length());
+  await system.print(system.safeIndex(a, Fruit.apple));
+  await system.print(system.safeIndex(a, Fruit.orange));
 }
 return [main, _tests];}`;
 
@@ -622,9 +622,9 @@ async function main() {
   const r3 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
   a.put(r1, 1);
   a.put(r2, 2);
-  await system.printLine(system.safeIndex(a, r1));
-  await system.printLine(system.safeIndex(a, r2));
-  await system.printLine(system.safeIndex(a, r3));
+  await system.print(system.safeIndex(a, r1));
+  await system.print(system.safeIndex(a, r2));
+  await system.print(system.safeIndex(a, r3));
 }
 
 class Point {
@@ -685,10 +685,10 @@ async function main() {
   const r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
   a.put(r1, 1);
   a.put(r2, 2);
-  await system.printLine(system.safeIndex(a, r1));
-  await system.printLine(a.keys().length());
+  await system.print(system.safeIndex(a, r1));
+  await system.print(a.keys().length());
   a.removeAt(r1);
-  await system.printLine(a.keys().length());
+  await system.print(a.keys().length());
 }
 
 class Point {
@@ -737,11 +737,11 @@ async function main() {
   let a = system.initialise(_stdlib.Dictionary.emptyInstance());
   let b = system.initialise(_stdlib.Dictionary.emptyInstance());
   a.put("a", 3);
-  await system.printLine(a);
-  await system.printLine(b);
-  await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
-  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.print(a);
+  await system.print(b);
+  await system.print(system.objectEquals(a, b));
+  await system.print(system.objectEquals(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.print(system.objectEquals(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -781,11 +781,11 @@ async function main() {
   let a = system.initialise(_stdlib.Dictionary.emptyInstance());
   let b = system.initialise(_stdlib.Dictionary.emptyInstance());
   a.put("a", system.dictionary([["a", 1]]));
-  await system.printLine(a);
-  await system.printLine(b);
-  await system.printLine(system.objectEquals(a, b));
-  await system.printLine(system.objectEquals(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
-  await system.printLine(system.objectEquals(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.print(a);
+  await system.print(b);
+  await system.print(system.objectEquals(a, b));
+  await system.print(system.objectEquals(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.print(system.objectEquals(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -968,8 +968,8 @@ async function main() {
   const a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   let b = a.withPut("b", 4);
   let c = b.withPut("d", 2);
-  await system.printLine(a);
-  await system.printLine(c);
+  await system.print(a);
+  await system.print(c);
 }
 return [main, _tests];}`;
 
@@ -1004,8 +1004,8 @@ const global = new class {};
 async function main() {
   const a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   let b = a.withRemoveAt("b");
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 return [main, _tests];}`;
 
@@ -1049,9 +1049,9 @@ async function main() {
   let s42 = "42";
   di.put(i42, 99);
   ds.put(s42, 98);
-  await system.printLine(\`\${await _stdlib.asString(di.hasKey(i42))} \${await _stdlib.asString(system.safeIndex(di, i42))} \${await _stdlib.asString(ds.hasKey(s42))} \${await _stdlib.asString(system.safeIndex(ds, s42))}\`);
-  await system.printLine(\`\${await _stdlib.asString(di)} \${await _stdlib.asString(ds)}\`);
-  await system.printLine(\`\${await _stdlib.asString(di.keys())} \${await _stdlib.asString(di.keys().contains(42))}\`);
+  await system.print(\`\${await _stdlib.asString(di.hasKey(i42))} \${await _stdlib.asString(system.safeIndex(di, i42))} \${await _stdlib.asString(ds.hasKey(s42))} \${await _stdlib.asString(system.safeIndex(ds, s42))}\`);
+  await system.print(\`\${await _stdlib.asString(di)} \${await _stdlib.asString(ds)}\`);
+  await system.print(\`\${await _stdlib.asString(di.keys())} \${await _stdlib.asString(di.keys().contains(42))}\`);
 }
 return [main, _tests];}`;
 
@@ -1086,8 +1086,8 @@ const global = new class {};
 async function main() {
   const a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
   const b = a.asDictionaryImmutable();
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 return [main, _tests];}`;
 

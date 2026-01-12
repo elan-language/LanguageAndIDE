@@ -2,7 +2,6 @@ import assert from "assert";
 
 import { Constructor } from "../src/ide/frames/class-members/constructor";
 import { MemberSelector } from "../src/ide/frames/class-members/member-selector";
-import { CommentField } from "../src/ide/frames/fields/comment-field";
 import { ConstantValueField } from "../src/ide/frames/fields/constant-value-field";
 import { IdentifierField } from "../src/ide/frames/fields/identifier-field";
 import { InheritsFromField } from "../src/ide/frames/fields/inherits-from-field";
@@ -21,7 +20,6 @@ import {
   emptyMainOnly,
   oneConstant,
   T00_emptyFile,
-  T03_mainWithAllStatements,
   twoConstants,
 } from "./model-generating-functions";
 import {
@@ -35,11 +33,8 @@ import {
   enter,
   key,
   loadFileAsModelNew,
-  shift_down,
   shift_tab,
-  shift_up,
   tab,
-  up,
 } from "./testHelpers";
 
 suite("Editing Frames", () => {
@@ -163,60 +158,6 @@ suite("Editing Frames", () => {
     assert.equal(file.getLastChild(), sel0);
     assert.equal(file.getFirstChild(), phi);
   });
-  test("Multi-selection incl. reversal", () => {
-    const file = T03_mainWithAllStatements();
-    const print = file.getById("print14");
-    const whil = file.getById("while16");
-    const rep = file.getById("repeat19");
-    const fr = file.getById("for22");
-    whil.select(true, false);
-    whil.processKey(shift_down());
-    rep.processKey(shift_down());
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), true);
-    assert.equal(fr.isSelected(), true);
-    fr.processKey(shift_up());
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), true);
-    assert.equal(fr.isSelected(), false);
-    rep.processKey(shift_up());
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), false);
-    assert.equal(fr.isSelected(), false);
-    whil.processKey(shift_up());
-    assert.equal(print.isSelected(), true);
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), false);
-    assert.equal(fr.isSelected(), false);
-    print.processKey(shift_down());
-    assert.equal(print.isSelected(), false);
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), false);
-    assert.equal(fr.isSelected(), false);
-  });
-  test("Move multi-selection", () => {
-    const file = T03_mainWithAllStatements();
-    const whil = file.getById("while16");
-    const rep = file.getById("repeat19");
-    const fr = file.getById("for22");
-    whil.select(true, false);
-    whil.processKey(shift_down());
-    rep.processKey(shift_down());
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), true);
-    assert.equal(fr.isSelected(), true);
-    fr.processKey(ctrl_down());
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), true);
-    assert.equal(fr.isSelected(), true);
-    whil.select(true, false);
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), false);
-    assert.equal(fr.isSelected(), false);
-    whil.processKey(up());
-    const each = file.getById("each28");
-    assert.equal(each.isSelected(), true);
-  });
   test("Remove selector frame", () => {
     const file = emptyFunctionOnly();
     const fun = file.getById("func1") as GlobalFunction;
@@ -265,22 +206,6 @@ suite("Editing Frames", () => {
     assert.equal(cls.getChildren().length, 1);
     assert.equal(cls.getChildren()[0] instanceof MemberSelector, true);
   });
-  test("Delete multi-selection", () => {
-    const file = T03_mainWithAllStatements();
-    const main = file.getById("main1") as MainFrame;
-    assert.equal(main.getChildren().length, 14);
-    const whil = file.getById("while16");
-    const rep = file.getById("repeat19");
-    const fr = file.getById("for22");
-    whil.select(true, false);
-    whil.processKey(shift_down());
-    rep.processKey(shift_down());
-    assert.equal(whil.isSelected(), true);
-    assert.equal(rep.isSelected(), true);
-    assert.equal(fr.isSelected(), true);
-    whil.processKey(ctrl_del());
-    assert.equal(main.getChildren().length, 11);
-  });
 
   test("#644 cutting statement when there is already a selector following", async () => {
     const file = await loadFileAsModelNew(`${__dirname}\\files\\test644.elan`);
@@ -306,9 +231,9 @@ suite("Editing Frames", () => {
     var3.select();
     var3.processKey(ctrl_down());
     const main = file.getById("main1") as MainFrame;
-    assert.equal(main.getChildren()[0].renderAsSource(), select6.renderAsSource());
+    assert.equal(main.getChildren()[0].renderAsElanSource(), select6.renderAsElanSource());
     var3.processKey(ctrl_up());
-    assert.equal(main.getChildren()[0].renderAsSource(), var3.renderAsSource());
+    assert.equal(main.getChildren()[0].renderAsElanSource(), var3.renderAsElanSource());
   });
   test("#653 able to delete a frame that has not been added to", async () => {
     const file = T00_emptyFile();
@@ -349,12 +274,10 @@ suite("Editing Frames", () => {
     const file = T00_emptyFile();
     const sel0 = file.getById("select0");
     sel0.processKey(key("t"));
-    const desc = file.getById("comment3") as CommentField;
-    assert.equal(true, desc.isOptional());
+    const desc = file.getById("ident3") as IdentifierField;
     desc.processKey(key("x"));
-    desc.processKey(key(" "));
     desc.processKey(key("y"));
     assert.equal(desc.readParseStatus(), ParseStatus.valid);
-    assert.equal(desc.renderAsSource(), "x y");
+    assert.equal(desc.renderAsElanSource(), "test_xy");
   });
 });

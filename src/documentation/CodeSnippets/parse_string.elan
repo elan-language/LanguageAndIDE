@@ -1,8 +1,8 @@
-# 46eca3dabf3d7e280dfa32ba6464cd80c8c4ccdd28aea7fc3a8b7722ea8d1a95 Elan 1.9.0 guest default_profile valid
+# 4795025306e7f066cc2f5768b3a414d080f304c84e51bf7913957efd7d4324e9 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable myString set to "1"
   variable success, parsedValue set to parseAsInt(myString)
-  print success
-  print parsedValue
+  call print(success)
+  call print(parsedValue)
 end main

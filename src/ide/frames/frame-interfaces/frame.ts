@@ -15,7 +15,8 @@ export interface Frame extends Selectable {
   getMap(): Map<string, Selectable>;
 
   renderAsHtml(): string;
-  renderAsSource(): string;
+  renderAsElanSource(): string;
+  renderAsExport(): string;
 
   indent(): string;
 
@@ -61,9 +62,8 @@ export interface Frame extends Selectable {
   setGhosted(flag: boolean): void;
   isGhostedOrWithinAGhostedFrame(): boolean;
 
-  setImported(flag: boolean): void;
-  isImported(): boolean;
-
   copy(): boolean;
   deleteAllGhosted(): void;
+
+  frameSpecificAnnotation(): string;
 }

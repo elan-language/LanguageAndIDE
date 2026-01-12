@@ -16,7 +16,7 @@ export class FileLoaderField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.rootNode = new CommentNode();
+    this.rootNode = new CommentNode(this.getFile());
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

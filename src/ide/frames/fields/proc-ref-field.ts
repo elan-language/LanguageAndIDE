@@ -24,7 +24,7 @@ export class ProcRefField extends AbstractField {
     return "ident";
   }
   initialiseRoot(): ParseNode {
-    this.rootNode = new ProcRefNode();
+    this.rootNode = new ProcRefNode(this.getFile());
     this.rootNode.setSyntaxCompletionWhenEmpty(this.placeholder); //Need to test proc first, otherwise valid proc would be treated as instance part of an incomplete qualProc
     return this.rootNode;
   }

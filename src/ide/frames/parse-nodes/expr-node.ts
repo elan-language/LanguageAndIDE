@@ -22,26 +22,27 @@ import { Lambda } from "./lambda";
 import { NewInstance } from "./new-instance";
 import { Term } from "./term";
 import { TupleNode } from "./tuple-node";
+import { File } from "../frame-interfaces/file";
 
 export class ExprNode extends AbstractAlternatives {
-  constructor() {
-    super();
+  constructor(file: File) {
+    super(file);
     this.completionWhenEmpty = "<i>value or expression</i>";
   }
 
   parseText(text: string): void {
     //evaluate options that start with a keyword, first
     if (text.trim().length > 0) {
-      this.alternatives.push(new NewInstance());
-      this.alternatives.push(new CopyWith());
-      this.alternatives.push(new IfExpr());
-      this.alternatives.push(new Lambda());
-      this.alternatives.push(new EmptyOfTypeNode());
-      this.alternatives.push(new TupleNode());
-      this.alternatives.push(new ImageNode());
+      this.alternatives.push(new NewInstance(this.file));
+      this.alternatives.push(new CopyWith(this.file));
+      this.alternatives.push(new IfExpr(this.file));
+      this.alternatives.push(new Lambda(this.file));
+      this.alternatives.push(new EmptyOfTypeNode(this.file));
+      this.alternatives.push(new TupleNode(this.file));
+      this.alternatives.push(new ImageNode(this.file));
       //then others
-      this.alternatives.push(new Term());
-      this.alternatives.push(new BinaryExpression());
+      this.alternatives.push(new Term(this.file));
+      this.alternatives.push(new BinaryExpression(this.file));
       super.parseText(text);
     }
   }

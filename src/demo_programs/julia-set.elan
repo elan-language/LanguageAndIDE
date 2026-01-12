@@ -1,4 +1,4 @@
-# cc70e92532a4ba94068db80d1d86c8b77fedbe97cbcf1fce7050568ae489d203 Elan 1.9.0 guest default_profile valid
+# fef4b816cd8a8a271887d33b48a256861bd056dcc5711665b92959e43bfd71ad Elan 2.0.0-alpha guest default_profile valid
 
 # After image is displayed, press: 
 # - z to zoom in, x to zoom out
@@ -14,7 +14,7 @@ main
     let vg be allpoints(p)
     call displayVectorGraphics(vg)
     call p.checkkeys()
-    print "x = {p.jx} y = {p.jy}"
+    call print("x = {p.jx} y = {p.jy}")
   end while
 end main
 
@@ -85,23 +85,23 @@ class Coords
       while k isnt ""
         if k is "z" then
           set property.scale to property.scale*1.2
-        else if k is "x" then
+        elif k is "x" then
           set property.scale to property.scale/1.2
-        else if k is "ArrowUp" then
+        elif k is "ArrowUp" then
           set property.yoff to property.yoff + panstep
-        else if k is "ArrowDown" then
+        elif k is "ArrowDown" then
           set property.yoff to property.yoff - panstep
-        else if k is "ArrowLeft" then
+        elif k is "ArrowLeft" then
           set property.xoff to property.xoff + panstep
-        else if k is "ArrowRight" then
+        elif k is "ArrowRight" then
           set property.xoff to property.xoff - panstep
-        else if k is "g" then
+        elif k is "g" then
           set property.jx to property.jx + jstep
-        else if k is "j" then
+        elif k is "j" then
           set property.jx to property.jx - jstep
-        else if k is "y" then
+        elif k is "y" then
           set property.jy to property.jy + jstep
-        else if k is "h" then
+        elif k is "h" then
           set property.jy to property.jy - jstep
           # for autocomplete in the RHS expression, don't type "property"
         else
@@ -118,7 +118,7 @@ class Coords
 
 end class
 
-test one
+test test_one
   variable p set to new Coords()
   assert onepoint(0, 0, 100, p) is 100
   assert onepoint(0.5, 0.5, 100, p) is 3

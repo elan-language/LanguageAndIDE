@@ -32,13 +32,13 @@ end procedure`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine(1);
+  await system.print(1);
   await foo();
-  await system.printLine(3);
+  await system.print(3);
 }
 
 async function foo() {
-  await system.printLine(2);
+  await system.print(2);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -87,10 +87,10 @@ async function main() {
 }
 
 async function foo(x, y, z, t) {
-  await system.printLine(x);
-  await system.printLine(y);
-  await system.printLine(z);
-  await system.printLine(t);
+  await system.print(x);
+  await system.print(y);
+  await system.print(z);
+  await system.print(t);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -123,7 +123,7 @@ end main`;
 const global = new class {};
 async function main() {
   await _stdlib.pause(1);
-  await system.printLine(1);
+  await system.print(1);
 }
 return [main, _tests];}`;
 
@@ -166,8 +166,8 @@ async function main() {
 }
 
 async function foo(a, b) {
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -208,7 +208,7 @@ async function main() {
   let _a0 = [a];
   await changeFirst(_a0);
   a = _a0[0];
-  await system.printLine(a);
+  await system.print(a);
 }
 
 async function changeFirst(a) {
@@ -254,8 +254,8 @@ async function main() {
 }
 
 async function foo(a, b) {
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -297,17 +297,17 @@ end procedure`;
 const global = new class {};
 async function main() {
   await foo();
-  await system.printLine(3);
+  await system.print(3);
 }
 
 async function foo() {
-  await system.printLine(1);
+  await system.print(1);
   await bar();
 }
 global["foo"] = foo;
 
 async function bar() {
-  await system.printLine(2);
+  await system.print(2);
 }
 global["bar"] = bar;
 return [main, _tests];}`;
@@ -348,7 +348,7 @@ async function main() {
 }
 
 async function square(x) {
-  await system.printLine(x * x);
+  await system.print(x * x);
 }
 global["square"] = square;
 return [main, _tests];}`;
@@ -392,7 +392,7 @@ async function main() {
 
 async function foo(a) {
   if (a > 0) {
-    await system.printLine(a);
+    await system.print(a);
     let b = a - 1;
     await foo(b);
   }
@@ -502,7 +502,7 @@ class Bar {
   p1 = 0;
 
   async length(plus) {
-    await system.printLine(this.p1 + plus);
+    await system.print(this.p1 + plus);
   }
 
   async asString() {
@@ -552,8 +552,8 @@ async function main() {
   let _a0 = [a]; let _b0 = [b];
   await foo(_a0, _b0);
   a = _a0[0]; b = _b0[0];
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 
 async function foo(x, y) {
@@ -604,8 +604,8 @@ async function main() {
   let _a0 = [a]; let _b0 = [b];
   await foo(_a0, _b0);
   a = _a0[0]; b = _b0[0];
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 
 async function foo(x, y) {
@@ -661,8 +661,8 @@ async function main() {
   let _a0 = [a]; let _b0 = [b];
   await foo(_a0, _b0);
   a = _a0[0]; b = _b0[0];
-  await system.printLine(a);
-  await system.printLine(b);
+  await system.print(a);
+  await system.print(b);
 }
 
 async function foo(a, b) {
@@ -727,7 +727,7 @@ async function main() {
   let _a0 = [a]; let _b0 = [b];
   await foo(_a0, _b0);
   a = _a0[0]; b = _b0[0];
-  await system.printLine(b);
+  await system.print(b);
 }
 
 async function foo(f, y) {
@@ -798,7 +798,7 @@ async function main() {
   let _a0 = [a]; let _b0 = [b];
   await foo(_a0, _b0);
   a = _a0[0]; b = _b0[0];
-  await system.printLine(b);
+  await system.print(b);
 }
 
 async function foo(f, y) {
@@ -857,11 +857,11 @@ async function main() {
   let _x0 = [x];
   await addOne(_x0);
   x = _x0[0];
-  await system.printLine(x);
+  await system.print(x);
   let _x1 = [x];
   await addOne(_x1);
   x = _x1[0];
-  await system.printLine(x);
+  await system.print(x);
 }
 
 async function addOne(n) {
@@ -908,7 +908,7 @@ async function main() {
 }
 
 async function printParameter(n) {
-  await system.printLine(n[0]);
+  await system.print(n[0]);
 }
 global["printParameter"] = printParameter;
 return [main, _tests];}`;

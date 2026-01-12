@@ -6,12 +6,12 @@ import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
 import { Each } from "./statements/each";
+import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
 import { LetStatement } from "./statements/let-statement";
 import { Print } from "./statements/print";
-import { Repeat } from "./statements/repeat";
 import { SetStatement } from "./statements/set-statement";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
@@ -31,6 +31,9 @@ export class StatementFactoryImpl implements StatementFactory {
   public newEach(parent: Parent): Frame {
     return new Each(parent);
   }
+  public newElif(parent: Parent): Frame {
+    return new Elif(parent);
+  }
   public newElse(parent: Parent): Frame {
     return new Else(parent);
   }
@@ -45,9 +48,6 @@ export class StatementFactoryImpl implements StatementFactory {
   }
   public newPrint(parent: Parent): Frame {
     return new Print(parent);
-  }
-  public newRepeat(parent: Parent): Frame {
-    return new Repeat(parent);
   }
   public newSet(parent: Parent): Frame {
     return new SetStatement(parent);

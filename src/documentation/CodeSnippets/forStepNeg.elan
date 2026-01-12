@@ -1,9 +1,9 @@
-# 366644cc5cf059a85b00906333d1c3ae6aa1de4140a11cec71c899848a0920da Elan 1.9.0 guest default_profile valid
+# 1de1bd3073821348937fdb9ac7d62f222b4d3be9e748e55b646bf2787b448d6b Elan 2.0.0-alpha guest default_profile valid
 
 main
   let numbers be ["One", "Two", "Three", "Four", "Five", "Six"]
   let s be 2
   for i from numbers.length() - 1 to 0 step -s
-    print numbers[i]
+    call print(numbers[i])
   end for
 end main

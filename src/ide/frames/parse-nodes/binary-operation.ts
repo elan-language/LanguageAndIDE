@@ -10,10 +10,11 @@ import { ParseStatus } from "../status-enums";
 import { KeywordCompletion } from "../symbol-completion-helpers";
 import { DIVIDE, GT, LT, MINUS, MULT, PLUS, POWER } from "../symbols";
 import { AbstractParseNode } from "./abstract-parse-node";
+import { File } from "../frame-interfaces/file";
 
 export class BinaryOperation extends AbstractParseNode {
-  constructor() {
-    super();
+  constructor(file: File) {
+    super(file);
     this.completionWhenEmpty = "<i>operator </i>";
   }
 
@@ -123,13 +124,19 @@ export class BinaryOperation extends AbstractParseNode {
     }
   }
 
-  renderAsHtml(): string {
+  defaultHtml(): string {
     const open = this.keyword ? "<el-kw>" : "";
     const close = this.keyword ? "</el-kw>" : "";
-    return `${open}${this.renderAsSource()}${close}`;
+
+    return `${open}${this.renderAsElanSource()}${close}`;
   }
 
-  renderAsSource(): string {
+  override renderAsHtml(): string {
+    const fromLanguage = this.file.language().renderNodeAsHtml(this);
+    return fromLanguage.length > 0 ? fromLanguage : this.defaultHtml();
+  }
+
+  renderAsElanSource(): string {
     let source = "";
     if (this.status === ParseStatus.valid) {
       const space = this.closePacked ? "" : " ";

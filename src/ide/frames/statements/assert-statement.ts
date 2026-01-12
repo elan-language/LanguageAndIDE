@@ -1,7 +1,6 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { assertKeyword } from "../../../compiler/keywords";
 import { TestStatus } from "../../../compiler/test-status";
-import { AbstractFrame } from "../abstract-frame";
 import { AssertActualField } from "../fields/assert-actual-field";
 import { ExpressionField } from "../fields/expression-field";
 import { escapeHtmlChars, helper_compileMsgAsHtmlNew } from "../frame-helpers";
@@ -9,9 +8,10 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { SingleLineFrame } from "../single-line-frame";
 import { CompileStatus, DisplayColour } from "../status-enums";
 
-export class AssertStatement extends AbstractFrame implements Statement {
+export class AssertStatement extends SingleLineFrame implements Statement {
   isStatement = true;
   actual: AssertActualField;
   expected: ExpressionField;
@@ -43,12 +43,12 @@ export class AssertStatement extends AbstractFrame implements Statement {
     return "assert";
   }
 
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}<el-kw>assert </el-kw>${this.actual.renderAsHtml()}<el-kw> is </el-kw>${this.expected.renderAsHtml()}${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</el-statement>`;
+  frameSpecificAnnotation(): string {
+    return "assert";
   }
 
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}assert ${this.actual.renderAsSource()} is ${this.expected.renderAsSource()}`;
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}assert ${this.actual.renderAsElanSource()} is ${this.expected.renderAsElanSource()}`;
   }
 
   setOutcome(outcome: AssertOutcome) {
@@ -110,9 +110,16 @@ export class AssertStatement extends AbstractFrame implements Statement {
     return "";
   }
 
+  override outerHtmlTag: string = "el-statement";
+
   testMsgAsHtml(): string {
     const cls = this.getCls(this.outcome);
     const msg = escapeHtmlChars(this.getMessage(this.outcome));
     return ` <el-msg class="${cls}">${msg}</el-msg>`;
+  }
+
+  renderAsHtml(): string {
+    // special case because of need to incorporate test message
+    return `<${this.outerHtmlTag} class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}<el-kw>assert </el-kw>${this.actual.renderAsHtml()}<el-kw> is </el-kw>${this.expected.renderAsHtml()}${this.helpAsHtml()}${this.compileOrTestMsgAsHtml()}${this.getFrNo()}</${this.outerHtmlTag}>`;
   }
 }

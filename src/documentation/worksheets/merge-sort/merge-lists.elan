@@ -1,11 +1,11 @@
-# f50699e3a5a89da0f248910b311b8eba9329bc37be76fc974a7e8fdf6b19d80c Elan 1.9.0 guest default_profile valid
+# 7f2b3817a82b52e99b1dcd739ec530d5a3146b74744ae78a72c25d1a2a497fb6 Elan 2.0.0-alpha guest default_profile valid
 
 # This code is the start-point for Worksheet 'Merge lists' where the task is to implement the 'merge' function properly, and hence get all tests passing.
 function merge(a as List<of String>, b as List<of String>) returns List<of String>
   return ["x"]
 end function
 
-test merge
+test test_merge
   let emptyList be empty List<of String>
   assert merge(emptyList, emptyList) is emptyList
   assert merge(["orange"], ["melon"]) is ["melon", "orange"]

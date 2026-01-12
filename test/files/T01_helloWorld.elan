@@ -1,6 +1,6 @@
-# c6b86109b0dabdd4aa59ad24a6f433fea4d6fdf5cd8b7577fd71c63a5be64de6 Elan 1.9.0 guest default_profile valid
+# 7cbcacda6cb955319cfc65348581511879483025634d5bc14e17880f2e28ddcb Elan 2.0.0-alpha guest default_profile valid
 
 main
   # My first program
-  print "Hello World!"
+  call print("Hello World!")
 end main

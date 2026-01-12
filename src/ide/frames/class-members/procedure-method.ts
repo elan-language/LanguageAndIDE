@@ -1,5 +1,10 @@
 import { privateKeyword } from "../../../compiler/keywords";
-import { addPrivateToggleToContextMenu, singleIndent, togglePrivatePublic } from "../frame-helpers";
+import {
+  addPrivateToggleToContextMenu,
+  modifierAsSource,
+  singleIndent,
+  togglePrivatePublic,
+} from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
 import { Parent } from "../frame-interfaces/parent";
@@ -19,31 +24,15 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
     return "procedure_method";
   }
 
-  private modifierAsHtml(): string {
-    return this.private ? `<el-kw>private </el-kw>` : "";
-  }
-
-  private modifierAsSource(): string {
-    return this.private ? `private ` : "";
-  }
-
   public override indent(): string {
     return singleIndent();
   }
 
-  public override renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${this.modifierAsSource()}procedure ${this.name.renderAsSource()}(${this.params.renderAsSource()})\r
+  public override renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}procedure ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()})\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end procedure\r
 `;
-  }
-
-  public renderAsHtml(): string {
-    return `<el-proc class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.modifierAsHtml()}<el-kw>procedure </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc>${this.params.renderAsHtml()}<el-punc>)</el-punc>${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-<el-kw>end procedure</el-kw>
-</el-proc>`;
   }
 
   parseTop(source: CodeSource): void {

@@ -36,7 +36,7 @@ async function main() {
   for (const x of _itereach9) {
     n = n + x;
   }
-  await system.printLine(n);
+  await system.print(n);
 }
 return [main, _tests];}`;
 
@@ -77,7 +77,7 @@ async function main() {
   for (const x of _itereach9) {
     n = n + x;
   }
-  await system.printLine(n);
+  await system.print(n);
 }
 return [main, _tests];}`;
 
@@ -113,7 +113,7 @@ async function main() {
   let a = "hello";
   const _itereach6 = [...a];
   for (const x of _itereach6) {
-    await system.printLine(x);
+    await system.print(x);
   }
 }
 return [main, _tests];}`;
@@ -152,7 +152,7 @@ async function main() {
   for (const x of _itereach3) {
     const _itereach7 = [..."34"];
     for (const y of _itereach7) {
-      await system.printLine(\`\${await _stdlib.asString(x)}\${await _stdlib.asString(y)}\`);
+      await system.print(\`\${await _stdlib.asString(x)}\${await _stdlib.asString(y)}\`);
     }
   }
 }
@@ -192,7 +192,7 @@ const global = new class {};
 async function main() {
   const _itereach3 = [...(await global.fruit())];
   for (const x of _itereach3) {
-    await system.printLine(x);
+    await system.print(x);
   }
 }
 
@@ -274,7 +274,7 @@ async function main() {
   const _itereach6 = [...a];
   for (const item of _itereach6) {
     a.append(item);
-    await system.printLine(item);
+    await system.print(item);
   }
 }
 return [main, _tests];}`;
@@ -508,7 +508,7 @@ async function main() {
   let s = "hello";
   const _itereach6 = [...s];
   for (const ch of _itereach6) {
-    await system.printLine(ch);
+    await system.print(ch);
     s = "fred";
   }
 }
@@ -549,7 +549,7 @@ async function main() {
   const _itereach6 = [...a];
   for (const x of _itereach6) {
     a = a.withAppend(x);
-    await system.printLine(x);
+    await system.print(x);
   }
 }
 return [main, _tests];}`;

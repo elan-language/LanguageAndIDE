@@ -1,4 +1,4 @@
-# 146b941e8d102868a21d98404459aa5ecb7121dbb769b4f71f6377fd5a7cd70c Elan 1.9.0 guest default_profile valid
+# 6510725169ac9f13ec38e454a399049be377e8c19bb621febddecdc99d5f4c13 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable a set to 13
@@ -9,5 +9,5 @@ main
   variable nota set to bitNot(a)
   variable aL set to bitShiftL(a, 2)
   variable aR set to bitShiftR(a, 2)
-  print "{a.asBinary()} {b.asBinary()} {anb.asBinary()} {aob.asBinary()} {axb.asBinary()} {nota.asBinary()} {aL.asBinary()} {aR.asBinary()}"
+  call print("{a.asBinary()} {b.asBinary()} {anb.asBinary()} {aob.asBinary()} {axb.asBinary()} {nota.asBinary()} {aL.asBinary()} {aR.asBinary()}")
 end main

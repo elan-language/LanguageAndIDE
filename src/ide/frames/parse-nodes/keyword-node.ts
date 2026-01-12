@@ -2,13 +2,14 @@ import { andKeyword, isKeyword, notKeyword, orKeyword } from "../../../compiler/
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion } from "../symbol-completion-helpers";
 import { FixedTextNode } from "./fixed-text-node";
+import { File } from "../frame-interfaces/file";
 
 export class KeywordNode extends FixedTextNode {
   spaceAfter: boolean;
   dotAfter: boolean;
 
-  constructor(keyword: string, spaceAfter = false, dotAfter = false) {
-    super(keyword);
+  constructor(file: File, keyword: string, spaceAfter = false, dotAfter = false) {
+    super(file, keyword);
     this.spaceAfter = spaceAfter;
     this.dotAfter = dotAfter;
     this.completionWhenEmpty = keyword;
@@ -49,9 +50,9 @@ export class KeywordNode extends FixedTextNode {
   }
 
   renderAsHtml(): string {
-    return `<el-kw>${this.renderAsSource()}</el-kw>`;
+    return `<el-kw>${this.renderAsElanSource()}</el-kw>`;
   }
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     return this.matchedText.trim();
   }
   compile(): string {

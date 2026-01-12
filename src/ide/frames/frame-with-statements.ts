@@ -26,8 +26,9 @@ import {
   parentHelper_readWorstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
+  parentHelper_renderChildrenAsElanSource,
+  parentHelper_renderChildrenAsExport,
   parentHelper_renderChildrenAsHtml,
-  parentHelper_renderChildrenAsSource,
   parentHelper_selectFirstChild,
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
@@ -148,10 +149,13 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   }
 
   protected renderChildrenAsHtml(): string {
-    return this.isImported() ? "" : parentHelper_renderChildrenAsHtml(this);
+    return parentHelper_renderChildrenAsHtml(this);
   }
   protected renderChildrenAsSource(): string {
-    return parentHelper_renderChildrenAsSource(this);
+    return parentHelper_renderChildrenAsElanSource(this);
+  }
+  protected renderChildrenAsExport(): string {
+    return parentHelper_renderChildrenAsExport(this);
   }
 
   selectFirstField(): boolean {
@@ -249,5 +253,20 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
         child.deleteAllGhosted();
       }
     }
+  }
+
+  renderAsHtml(): string {
+    return `<${this.outerHtmlTag} class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}
+${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
+${this.renderChildrenAsHtml()}
+${this.language().renderBottomAsHtml(this)}
+</${this.outerHtmlTag}>`;
+  }
+
+  renderAsExport(): string {
+    return `${this.indent()}${this.sourceAnnotations()}${this.language().renderTopAsExport(this)}${this.annotationAsSource()}
+    ${this.renderChildrenAsExport()}
+    ${this.language().renderBottomAsExport(this)}`;
   }
 }

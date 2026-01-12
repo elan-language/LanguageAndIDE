@@ -1,4 +1,4 @@
-# 75e134b020470a8b4d71ab54439b7ddb5a1af643477be1e43994128bc6b649b9 Elan 1.9.0 guest default_profile valid
+# 614c967c954d0f871c9202fbbe32990e9373506235a6bdf3d5f08c7c51463f9c Elan 2.0.0-alpha guest default_profile valid
 
 main
   let game be new Game(1000)
@@ -49,10 +49,10 @@ procedure updatePoints(dealer as Dealer, player as Player, playerOutcome as Outc
   if playerOutcome is Outcome.winDouble then
     call player.changePointsBy(2)
     call dealer.changePointsBy(-2)
-  else if playerOutcome is Outcome.win then
+  elif playerOutcome is Outcome.win then
     call player.changePointsBy(1)
     call dealer.changePointsBy(-1)
-  else if playerOutcome is Outcome.lose then
+  elif playerOutcome is Outcome.lose then
     call player.changePointsBy(-1)
     call dealer.changePointsBy(1)
   end if
@@ -73,19 +73,19 @@ function determinePlayerOutcome(dealer as Dealer, player as Player) returns Outc
   variable playerOutcome set to draw
   if p is bust then
     set playerOutcome to lose
-  else if (p is bj) and (d isnt bj) then
+  elif (p is bj) and (d isnt bj) then
     set playerOutcome to winDouble
-  else if d is bust then
+  elif d is bust then
     set playerOutcome to win
-  else if (d is bj) and (p is bj) then
+  elif (d is bj) and (p is bj) then
     set playerOutcome to draw
-  else if p is bj then
+  elif p is bj then
     set playerOutcome to winDouble
-  else if d is bj then
+  elif d is bj then
     set playerOutcome to lose
-  else if pTotal > dTotal then
+  elif pTotal > dTotal then
     set playerOutcome to win
-  else if pTotal < dTotal then
+  elif pTotal < dTotal then
     set playerOutcome to lose
   else
     # strictly, this 'else' clause is redundant - as the variable was initialised to 'draw' - but added for clarity
@@ -94,7 +94,7 @@ function determinePlayerOutcome(dealer as Dealer, player as Player) returns Outc
   return playerOutcome
 end function
 
-test determinePlayerOutcome
+test test_determinePlayerOutcome
   let dbj be new Dealer(0) with status set to Status.blackjack
   let d21 be new Dealer(0) with status set to Status.standing, handTotal set to 21
   let d17 be new Dealer(0) with status set to Status.standing, handTotal set to 17
@@ -122,7 +122,7 @@ function dealCard(random as Float) returns Card
   return new Card() with rank set to rank, suit set to intAsSuit(suit)
 end function
 
-test dealCard
+test test_dealCard
   let c1 be dealCard(0)
   assert c1.rank is "2"
   assert c1.suit is Suit.clubs
@@ -141,15 +141,15 @@ function intAsSuit(n as Int) returns Suit
   variable suit set to Suit.clubs
   if n is 1 then
     set suit to Suit.diamonds
-  else if n is 2 then
+  elif n is 2 then
     set suit to Suit.hearts
-  else if n is 3 then
+  elif n is 3 then
     set suit to Suit.spades
   end if
   return suit
 end function
 
-test intAsSuit
+test test_intAsSuit
   assert intAsSuit(0) is Suit.clubs
   assert intAsSuit(1) is Suit.diamonds
   assert intAsSuit(2) is Suit.hearts
@@ -166,7 +166,7 @@ function htmlForGame(game as Game) returns String
   return html + "</div>"
 end function
 
-test htmlForGame
+test test_htmlForGame
   let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
   let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
   let p be new HumanPlayer("fred", 10) with cards set to [c1, c2]
@@ -187,7 +187,7 @@ function htmlForPlayer(player as Player) returns String
   return html + "</div></div>"
 end function
 
-test htmlForPlayer
+test test_htmlForPlayer
   let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
   let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
   let p be new HumanPlayer("charlie", 10) with cards set to [c1, c2]
@@ -219,7 +219,7 @@ function htmlForCard(card as Card) returns String
   return html + "</div>"
 end function
 
-test htmlForCard
+test test_htmlForCard
   let c1 be new Card() with rank set to "3", suit set to Suit.clubs, faceDown set to false
   assert htmlForCard(c1) is "<div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div>"
   let c2 be new Card() with rank set to "K", suit set to Suit.spades, faceDown set to true
@@ -230,7 +230,7 @@ function htmlForSpot(id as String, content as String) returns String
   return "<div class='{id}'>{content}</div>"
 end function
 
-test htmlForSpot
+test test_htmlForSpot
   assert htmlForSpot("c", "&hearts;") is "<div class='c'>&hearts;</div>"
   assert htmlForSpot("u", "10") is "<div class='u'>10</div>"
 end test
@@ -311,12 +311,12 @@ abstract class Player
   procedure evaluateStatus(newCard as Card)
     if (cardCount() is 2) and (property.handTotal is 21) then
       set property.status to Status.blackjack
-    else if (property.handTotal > 21) and (property.softAce) then
+    elif (property.handTotal > 21) and (property.softAce) then
       set property.handTotal to property.handTotal - 10
       set property.softAce to false
-    else if property.handTotal > 21 then
+    elif property.handTotal > 21 then
       set property.status to Status.bust
-    else if property.handTotal is 21 then
+    elif property.handTotal is 21 then
       set property.status to Status.standing
     end if
     if property.status isnt Status.active then
@@ -376,11 +376,11 @@ abstract class Player
     let status be property.status
     if property.hasTurn then
       set msg to msg + " - PLAYING"
-    else if status is Status.standing then
+    elif status is Status.standing then
       set msg to msg + " - STANDING"
-    else if status is Status.blackjack then
+    elif status is Status.blackjack then
       set msg to msg + " - BLACKJACK"
-    else if status is Status.bust then
+    elif status is Status.bust then
       set msg to msg + " - BUST"
     end if
     return msg
@@ -450,7 +450,7 @@ class HumanPlayer inherits Player
       set key to waitForKey()
       if key is "d" then
         call draw()
-      else if key is "s" then
+      elif key is "s" then
         call stand()
       else
         set key to ""

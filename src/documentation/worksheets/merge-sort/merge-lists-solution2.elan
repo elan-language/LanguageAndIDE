@@ -1,10 +1,10 @@
-# fed311cf6ae0137b4ef7e00623befb27061cf50a505b0cad7d2583612c86cae6 Elan 1.9.0 guest default_profile valid
+# e9bb6e25afd1b4ab0c0314b70479de54ef0f8e7cfbe08ff97bff301fa2a57b9e Elan 2.0.0-alpha guest default_profile valid
 
 function merge(a as List<of String>, b as List<of String>) returns List<of String>
   variable result set to empty List<of String>
   if a.length() is 0 then
     set result to b
-  else if b.length() is 0 then
+  elif b.length() is 0 then
     set result to a
   else
     let head_a, tail_a be a

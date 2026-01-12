@@ -1,6 +1,7 @@
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
+import { File } from "../frame-interfaces/file";
 
 export class Alternatives extends AbstractAlternatives {
   elementConstructors: (() => ParseNode)[];
@@ -8,11 +9,12 @@ export class Alternatives extends AbstractAlternatives {
   context: () => string;
 
   constructor(
+    file: File,
     elementConstructors: (() => ParseNode)[],
     tokenTypes = new Set<TokenType>(),
     context = () => "",
   ) {
-    super();
+    super(file);
     this.elementConstructors = elementConstructors;
     this.tokenTypes = tokenTypes;
     this.context = context;

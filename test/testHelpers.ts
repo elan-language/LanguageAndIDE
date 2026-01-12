@@ -67,7 +67,7 @@ export async function assertGeneratesHtmlandSameSourceNew(sourceFile: string, ht
   const fl = await loadFileAsModelNew(sourceFile);
   const htm = loadFileAsHtmlNew(htmlFile);
 
-  const renderedSource = await fl.renderAsSource();
+  const renderedSource = await fl.renderAsElanSource();
   const actualSource = renderedSource.replaceAll("\r", "");
   const expectedSource = loadFileAsSourceNew(sourceFile).replaceAll("\r", "");
   const renderedHtml = await fl.renderAsHtml();
@@ -113,7 +113,7 @@ ${html}
 export async function assertFileParsesNew(sourceFile: string) {
   const fl = await loadFileAsModelNew(sourceFile);
 
-  const renderedSource = await fl.renderAsSource();
+  const renderedSource = await fl.renderAsElanSource();
   const actualSource = renderedSource.replaceAll("\r", "");
   const expectedSource = loadFileAsSourceNew(sourceFile).replaceAll("\r", "");
 
@@ -467,7 +467,7 @@ export function testNodeParse(
   }
   assert.equal(node.remainingText, remainingText);
   if (source !== "") {
-    assert.equal(node.renderAsSource(), source);
+    assert.equal(node.renderAsElanSource(), source);
   }
   if (html && html !== "") {
     assert.equal(node.renderAsHtml(), html);

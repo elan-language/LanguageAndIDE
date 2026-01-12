@@ -32,10 +32,10 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine((await global.grade(90)));
-  await system.printLine((await global.grade(70)));
-  await system.printLine((await global.grade(50)));
-  await system.printLine((await global.grade(30)));
+  await system.print((await global.grade(90)));
+  await system.print((await global.grade(70)));
+  await system.print((await global.grade(50)));
+  await system.print((await global.grade(30)));
 }
 
 async function grade(score) {
@@ -75,7 +75,7 @@ const global = new class {};
 async function main() {
   let score = 70;
   let grade = (score > 80 ? "Distinction" : (score > 60 ? "Merit" : (score > 40 ? "Pass" : "Fail")));
-  await system.printLine(grade);
+  await system.print(grade);
 }
 return [main, _tests];}`;
 
@@ -110,7 +110,7 @@ const global = new class {};
 async function main() {
   let score = 70;
   score = score + (score === 70 ? 1 : 2);
-  await system.printLine(score);
+  await system.print(score);
 }
 return [main, _tests];}`;
 
@@ -145,7 +145,7 @@ const global = new class {};
 async function main() {
   let score = 70.1;
   score = (_stdlib.true ? 60.1 : 60);
-  await system.printLine(score);
+  await system.print(score);
 }
 return [main, _tests];}`;
 
@@ -180,7 +180,7 @@ const global = new class {};
 async function main() {
   let score = 70.1;
   score = (_stdlib.false ? 60 : 60.1);
-  await system.printLine(score);
+  await system.print(score);
 }
 return [main, _tests];}`;
 
@@ -224,7 +224,7 @@ const global = new class {};
 async function main() {
   let score = (await global.cast(system.initialise(await new Bar()._initialise())));
   score = (_stdlib.false ? system.initialise(await new Bar()._initialise()) : (await global.cast(system.initialise(await new Bar()._initialise()))));
-  await system.printLine(score);
+  await system.print(score);
 }
 
 class Foo {
@@ -284,7 +284,7 @@ const global = new class {};
 async function main() {
   let score = (await global.cast(system.initialise(await new Bar()._initialise())));
   score = (_stdlib.false ? (await global.cast(system.initialise(await new Bar()._initialise()))) : system.initialise(await new Bar()._initialise()));
-  await system.printLine(score);
+  await system.print(score);
 }
 
 class Foo {

@@ -1,11 +1,11 @@
-# d4dfa5b047138e7dd68c42b9beb025316746f8424eedc0fb38996d9bcb36de51 Elan 1.9.0 guest default_profile valid
+# 5bb18dcbc875379531f4cea9f963dcfd8f41faea52c1fee303035fac6574cf6e Elan 2.0.0-alpha guest default_profile valid
 
 # This code is the start-point for Worksheet 'Merge sort' where the task is to implement the 'sort' function properly, and hence get all tests passing.
 function sort(li as List<of String>) returns List<of String>
   return ["x"]
 end function
 
-test sort
+test test_sort
   # Edge case: empty
   let emptyList be empty List<of String>
   assert sort(emptyList) is emptyList
@@ -29,9 +29,9 @@ function merge(a as List<of String>, b as List<of String>) returns List<of Strin
   variable result set to empty List<of String>
   if a.length() is 0 then
     set result to b
-  else if b.length() is 0 then
+  elif b.length() is 0 then
     set result to a
-  else if a[0].isBefore(b[0]) then
+  elif a[0].isBefore(b[0]) then
     set result to [a[0]].withAppendList(merge(a[1..], b))
   else
     set result to [b[0]].withAppendList(merge(a, b[1..]))
@@ -39,7 +39,7 @@ function merge(a as List<of String>, b as List<of String>) returns List<of Strin
   return result
 end function
 
-test merge
+test test_merge
   let emptyList be empty List<of String>
   assert merge(emptyList, emptyList) is emptyList
   assert merge(["orange"], ["melon"]) is ["melon", "orange"]

@@ -4,15 +4,15 @@ import {
   asKeyword,
   propertyKeyword,
 } from "../../../compiler/keywords";
-import { AbstractFrame } from "../abstract-frame";
 import { IdentifierField } from "../fields/identifier-field";
 import { TypeField } from "../fields/type-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { ConcreteClass } from "../globals/concrete-class";
+import { SingleLineFrame } from "../single-line-frame";
 
-export class AbstractProperty extends AbstractFrame {
+export class AbstractProperty extends SingleLineFrame {
   isAbstract = true;
   isMember = true;
   name: IdentifierField;
@@ -41,12 +41,18 @@ export class AbstractProperty extends AbstractFrame {
     return "prop";
   }
 
+  frameSpecificAnnotation(): string {
+    return "abstract property";
+  }
+
+  override outerHtmlTag: string = "el-prop";
+
   renderAsHtml(): string {
     return `<el-prop class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-kw>${abstractKeyword} ${propertyKeyword} </el-kw>${this.name.renderAsHtml()}<el-kw> ${asKeyword} </el-kw>${this.type.renderAsHtml()}${this.helpAsHtml()}</el-top>${this.compileMsgAsHtml()}${this.getFrNo()}</el-prop>`;
   }
 
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${abstractKeyword} ${propertyKeyword} ${this.name.renderAsSource()} ${asKeyword} ${this.type.renderAsSource()}\r\n`;
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}${abstractKeyword} ${propertyKeyword} ${this.name.renderAsElanSource()} ${asKeyword} ${this.type.renderAsElanSource()}\r\n`;
   }
 
   parseFrom(source: CodeSource): void {

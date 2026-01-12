@@ -32,9 +32,9 @@ const global = new class {};
 async function main() {
   let a = _stdlib.true;
   if (a) {
-    await system.printLine("yes");
+    await system.print("yes");
   } else {
-    await system.printLine("no");
+    await system.print("no");
   }
 }
 return [main, _tests];}`;
@@ -72,9 +72,9 @@ const global = new class {};
 async function main() {
   let a = _stdlib.false;
   if (a) {
-    await system.printLine("yes");
+    await system.print("yes");
   } else {
-    await system.printLine("no");
+    await system.print("no");
   }
 }
 return [main, _tests];}`;
@@ -102,7 +102,7 @@ main
   variable a set to 2
   if a is 1 then
     print "one"
-  else if a is 2 then
+  elif a is 2 then
     print "two"
   else
     print "neither"
@@ -114,11 +114,11 @@ const global = new class {};
 async function main() {
   let a = 2;
   if (a === 1) {
-    await system.printLine("one");
+    await system.print("one");
   } else if (a === 2) {
-    await system.printLine("two");
+    await system.print("two");
   } else {
-    await system.printLine("neither");
+    await system.print("neither");
   }
 }
 return [main, _tests];}`;
@@ -146,7 +146,7 @@ main
   variable a set to 3
   if a is 1 then
     print "one"
-  else if a is 2 then
+  elif a is 2 then
     print "two"
   else
     print "neither"
@@ -158,11 +158,11 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.printLine("one");
+    await system.print("one");
   } else if (a === 2) {
-    await system.printLine("two");
+    await system.print("two");
   } else {
-    await system.printLine("neither");
+    await system.print("neither");
   }
 }
 return [main, _tests];}`;
@@ -198,7 +198,7 @@ const global = new class {};
 async function main() {
   let a = _stdlib.true;
   if (a) {
-    await system.printLine("yes");
+    await system.print("yes");
   }
 }
 return [main, _tests];}`;
@@ -226,9 +226,9 @@ main
   variable a set to 3
   if a is 1 then
     print "one"
-  else if a is 2 then
+  elif a is 2 then
     print "two"
-  else if a is 3 then
+  elif a is 3 then
     print "three"
   else
     print "neither"
@@ -240,13 +240,13 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.printLine("one");
+    await system.print("one");
   } else if (a === 2) {
-    await system.printLine("two");
+    await system.print("two");
   } else if (a === 3) {
-    await system.printLine("three");
+    await system.print("three");
   } else {
-    await system.printLine("neither");
+    await system.print("neither");
   }
 }
 return [main, _tests];}`;
@@ -274,9 +274,9 @@ main
   variable a set to 3
   if a is 1 then
     print "one"
-  else if a is 2 then
+  elif a is 2 then
     print "two"
-  else if a is 3 then
+  elif a is 3 then
     print "three"
   end if
 end main`;
@@ -286,11 +286,11 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.printLine("one");
+    await system.print("one");
   } else if (a === 2) {
-    await system.printLine("two");
+    await system.print("two");
   } else if (a === 3) {
-    await system.printLine("three");
+    await system.print("three");
   }
 }
 return [main, _tests];}`;
@@ -366,7 +366,7 @@ async function main() {
   if (a === 1) {
     let b = a;
     b = 2;
-    await system.printLine(b);
+    await system.print(b);
   }
 }
 return [main, _tests];}`;
@@ -404,7 +404,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.printLine("");
+    await system.print("");
   } else {
     a = 3;
   }
@@ -446,11 +446,11 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.printLine("");
+    await system.print("");
   } else {
     let b = a;
     b = 2;
-    await system.printLine(b);
+    await system.print(b);
   }
 }
 return [main, _tests];}`;
@@ -491,10 +491,10 @@ async function main() {
   let a = 3;
   if (a === 1) {
     const b = 1;
-    await system.printLine(b);
+    await system.print(b);
   } else {
     const b = a;
-    await system.printLine(b);
+    await system.print(b);
   }
 }
 return [main, _tests];}`;
@@ -522,7 +522,7 @@ main
   variable a set to 3
   if a is 1 then
     print ""
-  else if a is 2 then 
+  elif a is 2 then 
     set a to 3
   end if
 end main`;
@@ -532,7 +532,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    await system.printLine("");
+    await system.print("");
   } else if (a === 2) {
     a = 3;
   }
@@ -562,7 +562,7 @@ main
   variable a set to 2
   if a is 1 then
     print ""
-  else if a is 2 then
+  elif a is 2 then
     variable b set to a
     set b to 2
     print b
@@ -574,11 +574,11 @@ const global = new class {};
 async function main() {
   let a = 2;
   if (a === 1) {
-    await system.printLine("");
+    await system.print("");
   } else if (a === 2) {
     let b = a;
     b = 2;
-    await system.printLine(b);
+    await system.print(b);
   }
 }
 return [main, _tests];}`;
@@ -616,7 +616,7 @@ const global = new class {};
 async function main() {
   let a = 2;
   if (a === 1) {
-    await system.printLine("");
+    await system.print("");
   } else {
 
   }
@@ -646,7 +646,7 @@ main
   variable a set to 2
   if a is 1 then
     print ""
-  else if a is 2 then
+  elif a is 2 then
     variable b set to a
     for i from 0 to 5 step 1
       set b to b + i
@@ -660,14 +660,14 @@ const global = new class {};
 async function main() {
   let a = 2;
   if (a === 1) {
-    await system.printLine("");
+    await system.print("");
   } else if (a === 2) {
     let b = a;
-    const _tofor17 = 5;
-    for (let i = 0; i <= _tofor17; i = i + 1) {
+    const _tofor16 = 5;
+    for (let i = 0; i <= _tofor16; i = i + 1) {
       b = b + i;
     }
-    await system.printLine(b);
+    await system.print(b);
   }
 }
 return [main, _tests];}`;
@@ -749,7 +749,7 @@ main
     print "one"
   else
     print "not one"
-  else if a is 2 then
+  elif a is 2 then
     print "two"
   end if
 end main`;
@@ -803,7 +803,7 @@ end main`;
     variable a set to 2
     if a is 1 then
       print "one"
-    else if a then
+    elif a then
       print "two"
     else
       print "neither"
@@ -831,7 +831,7 @@ end main`;
     variable a set to 2
     if a is 1 then
       variable a set to 3
-    else if a is 2 then
+    elif a is 2 then
       print "two"
     else
       print "neither"
@@ -854,14 +854,14 @@ end main`;
     ]);
   });
 
-  test("Fail_RedefineVariable in else if", async () => {
+  test("Fail_RedefineVariable in elif", async () => {
     const code = `${testHeader}
 
   main
     variable a set to 2
     if a is 1 then
       print "one"
-    else if a is 2 then
+    elif a is 2 then
       variable a set to 3
     else
       print "neither"
@@ -891,7 +891,7 @@ end main`;
     variable a set to 2
     if a is 1 then
       print "one"
-    else if a is 2 then
+    elif a is 2 then
       print "two"
     else
       variable a set to 3
@@ -921,7 +921,7 @@ end main`;
     variable a set to 2
     if a is 1 then
       variable b set to 2
-    else if a is 2 then
+    elif a is 2 then
       print b
     else
       variable c set to 2

@@ -7,10 +7,6 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
   alternatives: ParseNode[] = [];
   bestMatch?: ParseNode;
 
-  constructor() {
-    super();
-  }
-
   parseText(text: string): void {
     this.remainingText = text;
     if (this.remainingText.length > 0) {
@@ -56,8 +52,8 @@ export abstract class AbstractAlternatives extends AbstractParseNode {
     return this.bestMatch ? this.bestMatch.renderAsHtml() : "";
   }
 
-  renderAsSource(): string {
-    return this.bestMatch ? this.bestMatch.renderAsSource() : "";
+  renderAsElanSource(): string {
+    return this.bestMatch ? this.bestMatch.renderAsElanSource() : "";
   }
 
   getSyntaxCompletionAsHtml(): string {

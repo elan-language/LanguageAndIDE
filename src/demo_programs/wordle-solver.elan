@@ -1,4 +1,4 @@
-# c72fde384fc690a8c4e01752f7d95bdd02327ce263ecd42b0e6c543736935047 Elan 1.9.0 guest default_profile valid
+# 6a8ccc608887f4cf4ba6e72c22b705a31ff68001c6263d4d35debde4f6c60741 Elan 2.0.0-alpha guest default_profile valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Works only for the 2,309 words that may be set by the official online Wordle
@@ -23,7 +23,7 @@ function isGreen(attempt as String, target as String, n as Int) returns Boolean
   return target[n] is attempt[n]
 end function
 
-test isGreen
+test test_isGreen
   assert isGreen("ABCDE", "A____", 0) is true
   assert isGreen("ABCDE", "____E", 4) is true
   assert isGreen("ABCDE", "_A___", 1) is false
@@ -34,7 +34,7 @@ function setChar(word as String, n as Int, newChar as String) returns String
   return word[..n] + newChar + word[n + 1..]
 end function
 
-test setChar
+test test_setChar
   assert setChar("ABCDE", 0, "_") is "_BCDE"
   assert setChar("ABCDE", 4, "_") is "ABCD_"
 end test
@@ -43,7 +43,7 @@ function setAttemptIfGreen(attempt as String, target as String, n as Int) return
   return if isGreen(attempt, target, n) then setChar(attempt, n, "*") else attempt
 end function
 
-test setAttemptIfGreen
+test test_setAttemptIfGreen
   assert setAttemptIfGreen("ABCDE", "ABCDE", 0) is "*BCDE"
   assert setAttemptIfGreen("ABCDE", "ABCDE", 4) is "ABCD*"
   assert setAttemptIfGreen("BBCDE", "ABCDE", 0) is "BBCDE"
@@ -54,7 +54,7 @@ function setTargetIfGreen(attempt as String, target as String, n as Int) returns
   return if isGreen(attempt, target, n) then setChar(target, n, ".") else target
 end function
 
-test setTargetIfGreen
+test test_setTargetIfGreen
   assert setTargetIfGreen("ABCDE", "ABCDE", 0) is ".BCDE"
   assert setTargetIfGreen("ABCDE", "ABCDE", 4) is "ABCD."
   assert setTargetIfGreen("BBCDE", "ABCDE", 0) is "ABCDE"
@@ -65,7 +65,7 @@ function evaluateGreens(attempt as String, target as String) returns ListImmutab
   return letterPositions.reduce({attempt, target}, lambda a as ListImmutable<of String>, x as Int => {setAttemptIfGreen(a[0], a[1], x), setTargetIfGreen(a[0], a[1], x)})
 end function
 
-test evaluateGreens
+test test_evaluateGreens
   assert evaluateGreens("ABCDE", "AXXXX") is {"*BCDE", ".XXXX"}
   assert evaluateGreens("ABCDE", "XXXXE") is {"ABCD*", "XXXX."}
   assert evaluateGreens("ABCDE", "ABCDE") is {"*****", "....."}
@@ -77,7 +77,7 @@ function isYellow(attempt as String, target as String, n as Int) returns Boolean
   return target.contains(attempt[n])
 end function
 
-test isYellow
+test test_isYellow
   assert isYellow("ABCDE", "____A", 0) is true
   assert isYellow("ABCDE", "____A", 4) is false
   assert isYellow("ABCDE", "___AA", 0) is true
@@ -89,7 +89,7 @@ function setAttemptIfYellow(attempt as String, target as String, n as Int) retur
   return if attempt[n] is "*" then attempt else if isYellow(attempt, target, n) then setChar(attempt, n, "+") else setChar(attempt, n, "_")
 end function
 
-test setAttemptIfYellow
+test test_setAttemptIfYellow
   assert setAttemptIfYellow("ABCDE", "EABCD", 0) is "+BCDE"
   assert setAttemptIfYellow("ABCDE", "EABCD", 4) is "ABCD+"
   assert setAttemptIfYellow("ABCDE", "BAAAA", 0) is "+BCDE"
@@ -100,7 +100,7 @@ function isAlreadyMarkedGreen(attempt as String, n as Int) returns Boolean
   return attempt[n] is "*"
 end function
 
-test isAlreadyMarkedGreen
+test test_isAlreadyMarkedGreen
   assert isAlreadyMarkedGreen("AB*DE", 2) is true
   assert isAlreadyMarkedGreen("AB*DE", 0) is false
   assert isAlreadyMarkedGreen("AB*DE", 4) is false
@@ -113,7 +113,7 @@ function setTargetIfYellow(attempt as String, target as String, n as Int) return
   return if isAlreadyMarkedGreen(attempt, n) then target else if isYellow(attempt, target, n) then setChar(target, target.indexOf(attempt[n]), ".") else target
 end function
 
-test setTargetIfYellow
+test test_setTargetIfYellow
   assert setTargetIfYellow("ABCDE", "EABCD", 0) is "E.BCD"
   assert setTargetIfYellow("ABCDE", "EABCD", 4) is ".ABCD"
   assert setTargetIfYellow("ABCDE", "BAAAA", 0) is "B.AAA"
@@ -126,7 +126,7 @@ function evaluateYellows(attempt as String, target as String) returns ListImmuta
   return letterPositions.reduce({attempt, target}, lambda a as ListImmutable<of String>, x as Int => {setAttemptIfYellow(a[0], a[1], x), setTargetIfYellow(a[0], a[1], x)})
 end function
 
-test evaluateYellows
+test test_evaluateYellows
   assert evaluateYellows("ABCDE", "XAXXX") is {"+____", "X.XXX"}
   assert evaluateYellows("ABCDE", "XXXXA") is {"+____", "XXXX."}
   assert evaluateYellows("ABCDE", "XXXXE") is {"____+", "XXXX."}
@@ -141,7 +141,7 @@ function markAttempt(attempt as String, target as String) returns String
   return markedAttempt
 end function
 
-test markAttempt
+test test_markAttempt
   assert markAttempt("ABCDE", "XXXXX") is "_____"
   assert markAttempt("ABCDE", "BCDEA") is "+++++"
   assert markAttempt("ABCDE", "ABCDE") is "*****"
@@ -156,7 +156,7 @@ function possibleAnswersAfterAttempt(prior as ListImmutable<of String>, attempt 
   return prior.filter(lambda w as String => markAttempt(attempt, w) is mark)
 end function
 
-test possibleAnswersAfterAttempt
+test test_possibleAnswersAfterAttempt
   let prior be {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}
   assert possibleAnswersAfterAttempt(prior, "AAAAA", "*____") is {"ABCDE"}
   assert possibleAnswersAfterAttempt(prior, "AXXXX", "+____") is {"BCDEA", "CDEAB", "DEABC", "EABCD"}
@@ -178,7 +178,7 @@ function incrementCount(dd as DictionaryImmutable<of String, Int>, possAnswer as
   return dd2
 end function
 
-test maxWordCountRemainingAfterAttempt
+test test_maxWordCountRemainingAfterAttempt
   let prior be {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}
   let d be empty DictionaryImmutable<of String, Int>
   assert maxWordCountRemainingAfterAttempt(prior, "AAAAA") is 1
@@ -196,7 +196,7 @@ function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as ListImmutab
   return if isBetter or isEqualAndPossAnswer then wc2 else wc1
 end function
 
-test betterOf
+test test_betterOf
   let possAnswers be empty ListImmutable<of String>
   let b2 be newWordCount("B", 2)
   let a3 be newWordCount("A", 3)
@@ -218,7 +218,7 @@ function bestAttempt(possAnswers as ListImmutable<of String>) returns String
   return best.word
 end function
 
-test bestAttempt
+test test_bestAttempt
   let possAnswers be {"ABCDE", "ABBBB", "EDCBA"}
   assert bestAttempt(possAnswers) is "EDCBA"
   let possAnswers2 be {"ABCDE", "ABBBB", "BCDEA"}

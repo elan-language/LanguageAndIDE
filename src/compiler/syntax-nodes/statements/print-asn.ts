@@ -14,6 +14,6 @@ export class PrintAsn extends BreakpointAsn {
     this.compileErrors = [];
 
     const toPrint = this.expr.compile() || '""';
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}await system.printLine(${toPrint});`;
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}await system.print(${toPrint});`;
   }
 }

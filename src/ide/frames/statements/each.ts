@@ -1,4 +1,5 @@
 import { eachKeyword } from "../../../compiler/keywords";
+
 import { ExpressionField } from "../fields/expression-field";
 import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -30,16 +31,15 @@ export class Each extends FrameWithStatements implements Statement {
   getIdPrefix(): string {
     return "each";
   }
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>each </el-kw>${this.variable.renderAsHtml()}<el-kw> in </el-kw>${this.iter.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-<el-kw>end each</el-kw>
-</el-statement>`;
+
+  frameSpecificAnnotation(): string {
+    return "each";
   }
 
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}each ${this.variable.renderAsSource()} in ${this.iter.renderAsSource()}\r
+  outerHtmlTag: string = "el-statement";
+
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}each ${this.variable.renderAsElanSource()} in ${this.iter.renderAsElanSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end each`;
   }

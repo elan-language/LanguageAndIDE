@@ -33,11 +33,11 @@ async function main() {
   const t = system.initialise(await new _stdlib.Turtle()._initialise());
   await t.turn(30);
   await t.move(40);
-  await system.printLine(_stdlib.round(t.x, 2));
-  await system.printLine(" ");
-  await system.printLine(_stdlib.round(t.y, 2));
-  await system.printLine(" ");
-  await system.printLine(t.heading);
+  await system.print(_stdlib.round(t.x, 2));
+  await system.print(" ");
+  await system.print(_stdlib.round(t.y, 2));
+  await system.print(" ");
+  await system.print(t.heading);
 }
 return [main, _tests];}`;
 
@@ -74,7 +74,7 @@ async function main() {
   const t = system.initialise(await new _stdlib.Turtle()._initialise());
   await t.turn(90);
   await t.turn(1000);
-  await system.printLine(t.heading);
+  await system.print(t.heading);
 }
 return [main, _tests];}`;
 
@@ -109,7 +109,7 @@ async function main() {
   const t = system.initialise(await new _stdlib.Turtle()._initialise());
   await t.turn(90);
   await t.turn((-1000));
-  await system.printLine(t.heading);
+  await system.print(t.heading);
 }
 return [main, _tests];}`;
 
@@ -142,9 +142,9 @@ end main`;
 const global = new class {};
 async function main() {
   const t = system.initialise(await new _stdlib.Turtle()._initialise());
-  await system.printLine(t.x);
-  await system.printLine(t.y);
-  await system.printLine(t.heading);
+  await system.print(t.x);
+  await system.print(t.y);
+  await system.print(t.heading);
 }
 return [main, _tests];}`;
 
@@ -183,7 +183,7 @@ async function main() {
   t.penWidth(3);
   t.penColour(_stdlib.red);
   await t.move(10);
-  await system.printLine(t.asHtml());
+  await system.print(t.asHtml());
 }
 return [main, _tests];}`;
 
@@ -234,7 +234,7 @@ async function main() {
   await t.move(5);
   t.penDown();
   await t.move(10);
-  await system.printLine(t.asHtml());
+  await system.print(t.asHtml());
 }
 return [main, _tests];}`;
 
@@ -280,7 +280,7 @@ async function main() {
   await t.show();
   await t.turn(90);
   await t.move(10);
-  await system.printLine(t.asHtml());
+  await system.print(t.asHtml());
 }
 return [main, _tests];}`;
 
@@ -327,7 +327,7 @@ async function main() {
   await t.turn(90);
   await t.move(10);
   await t.hide();
-  await system.printLine(t.asHtml());
+  await system.print(t.asHtml());
 }
 return [main, _tests];}`;
 
@@ -368,7 +368,7 @@ async function main() {
   const t = system.initialise(await new _stdlib.Turtle()._initialise());
   await t.show();
   await t.placeAt(20, 30);
-  await system.printLine(t.asHtml());
+  await system.print(t.asHtml());
 }
 return [main, _tests];}`;
 
@@ -410,7 +410,7 @@ async function main() {
   const t = system.initialise(await new _stdlib.Turtle()._initialise());
   await t.show();
   await t.moveTo(20, 30);
-  await system.printLine(t.asHtml());
+  await system.print(t.asHtml());
 }
 return [main, _tests];}`;
 

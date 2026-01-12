@@ -7,22 +7,23 @@ import { CSV } from "./csv";
 import { IdentifierNode } from "./identifier-node";
 import { assignableIds, noTokenTypes } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
+import { File } from "../frame-interfaces/file";
 
 export class DeconstructedTuple extends AbstractSequence {
   csv: CSV | undefined;
   readonly: boolean;
 
-  constructor(readOnly = false) {
-    super();
+  constructor(file: File, readOnly = false) {
+    super(file);
     this.readonly = readOnly;
   }
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const id = () => new IdentifierNode();
-      const discard = () => new PunctuationNode(UNDERSCORE);
-      const element = () => new Alternatives([id, discard]);
-      this.csv = new CSV(element, 2);
+      const id = () => new IdentifierNode(this.file);
+      const discard = () => new PunctuationNode(this.file, UNDERSCORE);
+      const element = () => new Alternatives(this.file, [id, discard]);
+      this.csv = new CSV(this.file, element, 2);
       this.addElement(this.csv);
       super.parseText(text);
     }

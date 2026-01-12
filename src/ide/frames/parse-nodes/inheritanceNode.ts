@@ -13,10 +13,14 @@ export class InheritanceNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      this.inherits = new KeywordNode(inheritsKeyword);
+      this.inherits = new KeywordNode(this.file, inheritsKeyword);
       this.addElement(this.inherits);
-      this.addElement(new SpaceNode(Space.required));
-      this.typeList = new CSV(() => new TypeNode(new Set<TokenType>([TokenType.type_abstract])), 1);
+      this.addElement(new SpaceNode(this.file, Space.required));
+      this.typeList = new CSV(
+        this.file,
+        () => new TypeNode(this.file, new Set<TokenType>([TokenType.type_abstract])),
+        1,
+      );
       this.typeList.setSyntaxCompletionWhenEmpty("Type(s) - comma-separated");
       this.addElement(this.typeList);
       super.parseText(text);
@@ -27,5 +31,10 @@ export class InheritanceNode extends AbstractSequence {
     return this.getElements().length === 0
       ? new Set<KeywordCompletion>([KeywordCompletion.create(inheritsKeyword)])
       : super.symbolCompletion_keywords();
+  }
+
+  override renderAsHtml(): string {
+    const languageSpecific = this.file.language().renderNodeAsHtml(this);
+    return languageSpecific.length > 0 ? languageSpecific : super.renderAsHtml();
   }
 }

@@ -1,4 +1,4 @@
-# ee10c1d0a4ac35a56fa738475785cc69e220e737fd48d81dfa4d8a5a57761d3d Elan 1.9.0 guest default_profile valid
+# 481ceccfb7f6deb124268bf13242cb0ee387c6abaff165e921155fbf3845b3da Elan 2.0.0-alpha guest default_profile valid
 
 # Exercise: implement a function to search for an item in a sorted list, 
 # using the 'binary search' algorithm
@@ -15,7 +15,7 @@
 # - To extract the lists before and after the mid-point use the range indexes:
 #    'li[..mid]' and 'li[mid+1..]'
 # - You can implement the whole algorithm just by adding a new 'if' statement between the
-#   first and last lines, containing 'else if/else' clauses as needed. Each clause should
+#   first and last lines, containing 'elif/else' clauses as needed. Each clause should
 #   set the result.
 # - Use 'let' statements to calculate any sub-expression that will be used more than once
 #   in your logic and/or to improve readability.
@@ -27,22 +27,22 @@ end function
 main
   let fruit be ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
   variable exit set to false
-  repeat
+  while exit is false
     let wanted be inputString("What type of fruit do you want ('x' to exit)? ")
     if wanted isnt "x" then
       let result be binarySearch(fruit, wanted)
       if result then
-        print "We can supply a {wanted}"
+        call print("We can supply a {wanted}")
       else
-        print "Sorry, we cannot supply a {wanted}"
+        call print("Sorry, we cannot supply a {wanted}")
       end if
     else
       set exit to true
     end if
-  end repeat when exit
+  end while
 end main
 
-test 
+test test_binarySearch
   let li1 be ["lemon", "lime", "orange"]
   assert binarySearch(li1, "lemon") is true
   assert binarySearch(li1, "lime") is true

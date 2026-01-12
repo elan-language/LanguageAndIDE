@@ -1,6 +1,6 @@
-# fb72dd43b0c51df7570fc00d826cb24d822b3155c11a1e4ba16d8ff8e4fed4dc Elan 1.9.0 guest default_profile valid
+# 4726425e8654e0c7ce617fa790dfb9393326cbad9ce40605ee2b5381c8cb4bc1 Elan 2.0.0-alpha guest default_profile valid
 
-test test_floor_etc
+test test_floor
   let p be pi
   let mp be -pi
   assert p.floor() is 3

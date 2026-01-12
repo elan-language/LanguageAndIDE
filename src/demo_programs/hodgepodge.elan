@@ -1,0 +1,111 @@
+# 03b234c6109481ddc624a8c06f8e9afa575c3adf80cd0711398819ebfa3e778d Elan 2.0.0-alpha guest default_profile valid
+
+# Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
+# A Cellular Automaton Model of Excitable Media
+# 
+# gW, gH : grid width, height
+constant gW set to 40
+
+constant gH set to 30
+
+# iR : infection rate (1..20)
+constant iR set to 1
+
+# w1, w2 : weighting factors (low integers)
+constant w1 set to 5
+
+constant w2 set to 1
+
+# colours : cellColour.s in descending order of RGB value
+# state of a cell is colours.indexOf(cellColour)
+# colours[0] = healthy; colours[colours.length() - 1] = ill, otherwise infected
+constant healthy set to white
+
+constant ill set to black
+
+constant colours set to {healthy, 0xffe6ff, 0xffccff, 0xffb3ff, 0xff99ff, 0xff80ff, 0xff66ff, 0xff4dff, 0xff33ff, 0xff1aff, 0xff00ff, 0xe600e6, 0xcc00cc, 0xb300b3, 0x990099, 0x800080, 0x660066, 0x4d004d, 0x330033, 0x1a001a, ill}
+
+# vN : neighbourhood: von Neumann (4) true, Moore (8) false
+constant vN set to false
+
+main
+  # colour grids: hodge for display, podge for working
+  variable hodge set to new Array2D<of Int>(gW, gH, 0)
+  variable podge set to new Array2D<of Int>(gW, gH, 0)
+  # initial colours of grid
+  call updateGrid(hodge, podge, true)
+  while not uniform(hodge)
+    # successive updates to grid
+    call updateGrid(hodge, podge, false)
+  end while
+end main
+
+procedure updateGrid(out hodge as Array2D<of Int>, podge as Array2D<of Int>, initial as Boolean)
+  let nColours be colours.length()
+  for i from 0 to gW - 1 step 1
+    for j from 0 to gH - 1 step 1
+      if initial then
+        call podge.put(i, j, colours[randomInt(0, (nColours - 1))])
+      else
+        call podge.put(i, j, updateCell(hodge, i, j))
+      end if
+    end for
+  end for
+  set hodge to podge
+  call displayBlocks(hodge)
+  call pause(50)
+end procedure
+
+function uniform(grid as Array2D<of Int>) returns Boolean
+  let uniformGrid be new Array2D<of Int>(gW, gH, grid[0, 0])
+  return if grid is uniformGrid then true else false
+end function
+
+function updateCell(grid as Array2D<of Int>, i as Int, j as Int) returns Int
+  return infection(getNeighbourColours(grid, i, j), grid[i, j])
+end function
+
+function getNeighbourColours(grid as Array2D<of Int>, i as Int, j as Int) returns List<of Int>
+  # grid wraps around: all cells have the same number of neighbours
+  let sL be grid[(i + gW - 1) mod gW, j]
+  let sR be grid[(i + gW + 1) mod gW, j]
+  let sA be grid[i, (j + gH - 1) mod gH]
+  let sB be grid[i, (j + gH + 1) mod gH]
+  variable neighbourColours set to [sL, sR, sA, sB]
+  if vN is false then
+    let sLA be grid[(i + gW - 1) mod gW, (j + gH - 1) mod gH]
+    let sRA be grid[(i + gW + 1) mod gW, (j + gH - 1) mod gH]
+    let sLB be grid[(i + gW - 1) mod gW, (j + gH + 1) mod gH]
+    let sRB be grid[(i + gW + 1) mod gW, (j + gH + 1) mod gH]
+    set neighbourColours to [sL, sR, sA, sB, sLA, sRA, sLB, sRB]
+  end if
+  return neighbourColours
+end function
+
+function infection(neighbourColours as List<of Int>, nowColour as Int) returns Int
+  variable nInfected set to 0
+  variable nIll set to 0
+  variable stateSum set to colours.indexOf(nowColour)
+  each colour in neighbourColours
+    set stateSum to stateSum + colours.indexOf(colour)
+    if colour isnt healthy then
+      if colour is ill then
+        set nIll to nIll + 1
+      else
+        set nInfected to nInfected + 1
+      end if
+    end if
+  end each
+  return updateColour(nowColour, stateSum, nInfected, nIll)
+end function
+
+function updateColour(nowColour as Int, stateSum as Int, nInfected as Int, nIll as Int) returns Int
+  #  iColour : index into colours (i.e. state)
+  variable iColour set to 0
+  if nowColour is healthy then
+    set iColour to (nInfected/w1).floor() + (nIll/w2).floor()
+  elif nowColour > ill then
+    set iColour to (stateSum/(nInfected + 1)).floor() + iR
+  end if
+  return if iColour > (colours.length() - 1) then ill else colours[iColour]
+end function

@@ -24,11 +24,26 @@ import { ValueDefNode } from "../src/ide/frames/parse-nodes/value-def-node";
 import { ParseStatus } from "../src/ide/frames/status-enums";
 import { TokenType } from "../src/ide/frames/symbol-completion-helpers";
 import { testSymbolCompletionSpec } from "./testHelpers";
+import { hash } from "../src/ide/util";
+import { StdLib } from "../src/compiler/standard-library/std-lib";
+import { DefaultProfile } from "../src/ide/frames/default-profile";
+import { FileImpl } from "../src/ide/frames/file-impl";
+import { StubInputOutput } from "../src/ide/stub-input-output";
+import { transforms } from "./compiler/compiler-test-helpers";
 
 suite("Symbol Completion Spec", () => {
+  const f = new FileImpl(
+    hash,
+    new DefaultProfile(),
+    "",
+    transforms(),
+    new StdLib(new StubInputOutput()),
+    true,
+  );
+
   test("MethodCallNode", () => {
     testSymbolCompletionSpec(
-      new MethodCallNode(),
+      new MethodCallNode(f),
       "x",
       ParseStatus.incomplete,
       MethodNameNode.name,
@@ -39,7 +54,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("Reference1", () => {
     testSymbolCompletionSpec(
-      new ReferenceNode(),
+      new ReferenceNode(f),
       "r",
       ParseStatus.valid,
       ReferenceNode.name,
@@ -60,7 +75,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("Reference2", () => {
     testSymbolCompletionSpec(
-      new ReferenceNode(),
+      new ReferenceNode(f),
       "t",
       ParseStatus.valid,
       ReferenceNode.name,
@@ -81,7 +96,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("Expression1", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "t",
       ParseStatus.valid,
       ExprNode.name,
@@ -103,7 +118,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("Expression2", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "th",
       ParseStatus.valid,
       ReferenceNode.name, //because t could be start of literal boolean, or typeof  also
@@ -124,7 +139,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("TermSimple", () => {
     testSymbolCompletionSpec(
-      new TermSimple(),
+      new TermSimple(f),
       "t",
       ParseStatus.valid,
       ReferenceNode.name,
@@ -145,7 +160,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("Expression_Empty", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "",
       ParseStatus.empty,
       ExprNode.name,
@@ -167,7 +182,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("Expression3", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "Foo",
       ParseStatus.incomplete,
       TypeSimpleName.name,
@@ -183,7 +198,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("Expression4", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "empty List<of I",
       ParseStatus.incomplete,
       TypeNode.name,
@@ -199,7 +214,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("Assignable", () => {
     testSymbolCompletionSpec(
-      new AssignableNode(),
+      new AssignableNode(f),
       "property.f",
       ParseStatus.valid,
       IdentifierNode.name,
@@ -211,7 +226,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("InstanceProcRef", () => {
     testSymbolCompletionSpec(
-      new InstanceProcRef(),
+      new InstanceProcRef(f),
       "foo.",
       ParseStatus.incomplete,
       MethodNameNode.name,
@@ -223,7 +238,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("Expression_new", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "new ",
       ParseStatus.incomplete,
       TypeSimpleOrGeneric.name,
@@ -235,7 +250,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("Expression_functionDotCall", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "foo().",
       ParseStatus.incomplete,
       Alternatives.name,
@@ -246,7 +261,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("Expression_instanceDotCall", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "foo.",
       ParseStatus.incomplete,
       Alternatives.name,
@@ -257,7 +272,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("InstanceProcRef", () => {
     testSymbolCompletionSpec(
-      new InstanceProcRef(),
+      new InstanceProcRef(f),
       "foo.wi",
       ParseStatus.valid,
       MethodNameNode.name,
@@ -284,7 +299,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("BinaryExpression", () => {
     testSymbolCompletionSpec(
-      new BinaryExpression(),
+      new BinaryExpression(f),
       "a ",
       ParseStatus.incomplete,
       BinaryOperation.name,
@@ -296,7 +311,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("BinaryExpression", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "a i",
       ParseStatus.incomplete,
       BinaryOperation.name,
@@ -308,7 +323,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("Start of an expression", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "n",
       ParseStatus.valid,
       ExprNode.name,
@@ -331,7 +346,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("Bracketed expression", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "(",
       ParseStatus.incomplete,
       ExprNode.name,
@@ -354,7 +369,11 @@ suite("Symbol Completion Spec", () => {
   });
   test("CSV minimum 1", () => {
     testSymbolCompletionSpec(
-      new CSV(() => new IdentifierNode(new Set([TokenType.id_let, TokenType.id_variable])), 1),
+      new CSV(
+        f,
+        () => new IdentifierNode(f, new Set([TokenType.id_let, TokenType.id_variable])),
+        1,
+      ),
       "",
       ParseStatus.empty,
       IdentifierNode.name,
@@ -366,7 +385,11 @@ suite("Symbol Completion Spec", () => {
   });
   test("CSV minimum 0", () => {
     testSymbolCompletionSpec(
-      new CSV(() => new IdentifierNode(new Set([TokenType.id_let, TokenType.id_variable])), 0),
+      new CSV(
+        f,
+        () => new IdentifierNode(f, new Set([TokenType.id_let, TokenType.id_variable])),
+        0,
+      ),
       "",
       ParseStatus.valid,
       OptionalNode.name,
@@ -378,7 +401,11 @@ suite("Symbol Completion Spec", () => {
   });
   test("CSV in a valid entry", () => {
     testSymbolCompletionSpec(
-      new CSV(() => new IdentifierNode(new Set([TokenType.id_let, TokenType.id_variable])), 0),
+      new CSV(
+        f,
+        () => new IdentifierNode(f, new Set([TokenType.id_let, TokenType.id_variable])),
+        0,
+      ),
       "foo",
       ParseStatus.valid,
       IdentifierNode.name,
@@ -390,7 +417,11 @@ suite("Symbol Completion Spec", () => {
   });
   test("CSV after a comma & space", () => {
     testSymbolCompletionSpec(
-      new CSV(() => new IdentifierNode(new Set([TokenType.id_let, TokenType.id_variable])), 0),
+      new CSV(
+        f,
+        () => new IdentifierNode(f, new Set([TokenType.id_let, TokenType.id_variable])),
+        0,
+      ),
       "foo, ",
       ParseStatus.incomplete,
       IdentifierNode.name,
@@ -402,7 +433,11 @@ suite("Symbol Completion Spec", () => {
   });
   test("CSV after a comma only", () => {
     testSymbolCompletionSpec(
-      new CSV(() => new IdentifierNode(new Set([TokenType.id_let, TokenType.id_variable])), 0),
+      new CSV(
+        f,
+        () => new IdentifierNode(f, new Set([TokenType.id_let, TokenType.id_variable])),
+        0,
+      ),
       "foo,",
       ParseStatus.incomplete,
       IdentifierNode.name,
@@ -414,7 +449,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("new instance as a method argument #897", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "vg.add(new ",
       ParseStatus.incomplete,
       TypeSimpleOrGeneric.name,
@@ -426,7 +461,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("'to' clause #902 - 1", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "new CircleVG() with ",
       ParseStatus.incomplete,
       IdentifierNode.name,
@@ -438,7 +473,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("'to' clause #902 - 2", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "new CircleVG() with cx set to ",
       ParseStatus.incomplete,
       ExprNode.name,
@@ -461,7 +496,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("'to' clause #902 - 3", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "copy c with ",
       ParseStatus.incomplete,
       IdentifierNode.name,
@@ -473,7 +508,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("'to' clause #902 - 4", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "copy c with cx set to ",
       ParseStatus.incomplete,
       ExprNode.name,
@@ -496,7 +531,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("Enum values #924", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "Direction.",
       ParseStatus.incomplete,
       IdentifierNode.name,
@@ -508,7 +543,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("#909 Tuple 1", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "tuple(",
       ParseStatus.incomplete,
       ExprNode.name,
@@ -520,7 +555,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("#909 Tuple 2", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "(a",
       ParseStatus.incomplete,
       ReferenceNode.name,
@@ -532,7 +567,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("#909 Tuple 3", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "tuple(a, a",
       ParseStatus.incomplete,
       ReferenceNode.name,
@@ -544,7 +579,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("#909 List 1", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "[",
       ParseStatus.incomplete,
       TermSimple.name,
@@ -556,7 +591,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("#909 List 2", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "[a",
       ParseStatus.incomplete,
       TermSimple.name,
@@ -568,7 +603,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("#909 List 3", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "[a, a",
       ParseStatus.incomplete,
       ReferenceNode.name,
@@ -580,7 +615,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("#909 ImmutableList 1", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "{",
       ParseStatus.incomplete,
       TermSimple.name,
@@ -592,7 +627,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("#909 ImmutableList 2", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "{a",
       ParseStatus.incomplete,
       TermSimple.name,
@@ -604,7 +639,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("#909 ImmutableList 3", () => {
     testSymbolCompletionSpec(
-      new ExprNode(),
+      new ExprNode(f),
       "{a, a",
       ParseStatus.incomplete,
       ReferenceNode.name,
@@ -616,7 +651,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("#930 var def node", () => {
     testSymbolCompletionSpec(
-      new ValueDefNode(),
+      new ValueDefNode(f),
       "",
       ParseStatus.empty,
       ValueDefNode.name,
@@ -628,7 +663,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("#932 assert actual node", () => {
     testSymbolCompletionSpec(
-      new AssertActualNode(),
+      new AssertActualNode(f),
       "",
       ParseStatus.empty,
       AssertActualNode.name,
@@ -640,7 +675,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("Proc Ref", () => {
     testSymbolCompletionSpec(
-      new ProcRefNode(),
+      new ProcRefNode(f),
       "",
       ParseStatus.empty,
       ProcRefNode.name,
@@ -659,7 +694,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("ArgList", () => {
     testSymbolCompletionSpec(
-      new ArgListNode(() => ""),
+      new ArgListNode(f, () => ""),
       "",
       ParseStatus.valid,
       ArgListNode.name,

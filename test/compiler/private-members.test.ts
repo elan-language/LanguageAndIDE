@@ -42,7 +42,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Foo()._initialise());
-  await system.printLine(x);
+  await system.print(x);
 }
 
 class Foo {
@@ -111,7 +111,7 @@ const global = new class {};
 async function main() {
   let x = system.initialise(await new Foo()._initialise());
   await x.testSetP1(5);
-  await system.printLine(x.p1);
+  await system.print(x.p1);
 }
 
 class Foo {
@@ -177,7 +177,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.printLine((await f.testFf("test")));
+  await system.print((await f.testFf("test")));
 }
 
 class Foo {

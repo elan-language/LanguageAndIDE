@@ -1,4 +1,4 @@
-# e6ccb3e0e312d9f8d8c56113b200f6a369f4facc7e31de6f1db40159c07d71c8 Elan 1.9.0 guest default_profile valid
+# a53bf2ef06dd4c728ac799b037c45897667ca087c283f224f897fc2676e55e48 Elan 2.0.0-alpha guest default_profile valid
 
 # 
 # 
@@ -22,7 +22,7 @@ main
       set paces to paces + 1
     end while
   end for
-  print "Average number of paces: {paces/20}"
+  call print("Average number of paces: {paces/20}")
 end main
 
 procedure circle(t as Turtle, radius as Int)

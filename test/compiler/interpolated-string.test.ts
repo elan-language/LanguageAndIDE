@@ -25,8 +25,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.printLine("'Hello,' she said.");
-  await system.printLine('"Hello," she said.');
+  await system.print("'Hello,' she said.");
+  await system.print('"Hello," she said.');
 }
 return [main, _tests];}`;
 
@@ -62,8 +62,8 @@ async function main() {
   let a = 1;
   let b = "Apple";
   let c = system.listImmutable([1, 2, 3]);
-  await system.printLine(\`\${await _stdlib.asString(a)} \${await _stdlib.asString(b)} \${await _stdlib.asString(c)}\`);
-  await system.printLine('{a} {b} {c}');
+  await system.print(\`\${await _stdlib.asString(a)} \${await _stdlib.asString(b)} \${await _stdlib.asString(c)}\`);
+  await system.print('{a} {b} {c}');
 }
 return [main, _tests];}`;
 

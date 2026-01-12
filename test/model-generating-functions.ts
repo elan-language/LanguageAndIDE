@@ -16,11 +16,11 @@ import { TestFrame } from "../src/ide/frames/globals/test-frame";
 import { CallStatement } from "../src/ide/frames/statements/call-statement";
 import { CommentStatement } from "../src/ide/frames/statements/comment-statement";
 import { Each } from "../src/ide/frames/statements/each";
+import { Elif } from "../src/ide/frames/statements/elif";
 import { Else } from "../src/ide/frames/statements/else";
 import { For } from "../src/ide/frames/statements/for";
 import { IfStatement } from "../src/ide/frames/statements/if-statement";
 import { Print } from "../src/ide/frames/statements/print";
-import { Repeat } from "../src/ide/frames/statements/repeat";
 import { SetStatement } from "../src/ide/frames/statements/set-statement";
 import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
 import { Throw } from "../src/ide/frames/statements/throw";
@@ -86,15 +86,9 @@ export function T03_mainWithAllStatements(): FileImpl {
   ca.proc.setFieldToKnownValidText("signIn");
   ca.args.setFieldToKnownValidText(`rwp, password`);
   m.addChildBefore(ca, ssm);
-  const pr = new Print(m);
-  pr.expr.setFieldToKnownValidText(`"Hello World!"`);
-  m.addChildBefore(pr, ssm);
   const w = new While(m);
   w.condition.setFieldToKnownValidText("newGame");
   m.addChildBefore(w, ssm);
-  const r = new Repeat(m);
-  r.condition.setFieldToKnownValidText("score > 20");
-  m.addChildBefore(r, ssm);
   const for1 = new For(m);
   m.addChildBefore(for1, ssm);
   for1.variable.setFieldToKnownValidText("i");
@@ -119,7 +113,7 @@ export function T03_mainWithAllStatements(): FileImpl {
   m.addChildBefore(if3, ssm);
   const ss_if3 = if3.getFirstSelectorAsDirectChild();
   if3.condition.setFieldToKnownValidText("y > 4");
-  const el2 = new Else(if3);
+  const el2 = new Elif(if3);
   el2.hasIf = true;
   el2.condition.setFieldToKnownValidText("y > 10");
   if3.addChildBefore(el2, ss_if3);
@@ -135,7 +129,7 @@ export function SelectMainById(f: FileImpl) {
 }
 
 export function SelectStatementById(f: FileImpl) {
-  f.getById("for22").select(true, false);
+  f.getById("for20").select(true, false);
 }
 
 export function ExpandAll(f: FileImpl) {
@@ -168,7 +162,7 @@ export function T04_allGlobalsExceptClass(): FileImpl {
   enu.values.setFieldToKnownValidText("apple, orange, pear");
   f.addChildBefore(enu, gs);
   const test = new TestFrame(f);
-  test.testDescription.setFieldToKnownValidText("test1");
+  test.testName.setFieldToKnownValidText("test1");
   f.addChildBefore(test, gs);
   f.updateAllParseStatus();
   return f;

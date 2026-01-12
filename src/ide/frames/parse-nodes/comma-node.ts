@@ -1,5 +1,5 @@
-import { COMMA } from "../symbols";
 import { ParseStatus } from "../status-enums";
+import { COMMA } from "../symbols";
 import { AbstractParseNode } from "./abstract-parse-node";
 
 export class CommaNode extends AbstractParseNode {
@@ -20,7 +20,7 @@ export class CommaNode extends AbstractParseNode {
     }
   }
 
-  renderAsSource(): string {
+  renderAsElanSource(): string {
     return this.matchedText + " ";
   }
 }

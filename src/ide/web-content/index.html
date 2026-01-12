@@ -30,6 +30,9 @@
                         <div class="demo-file menu-item" tabindex="-1" id="demo/snake_FP.elan">Snake - functional</div>
                         <div class="demo-file menu-item" tabindex="-1" id="demo/turtle-spiral.elan">Turtle Spiral</div>
                         <div class="demo-file menu-item" tabindex="-1" id="demo/turtle-snowflake.elan">Turtle Snowflake</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/turtle_dragon.elan">Turtle Dragon</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/hodgepodge.elan">Hodgepodge</div>
+                        <div class="demo-file menu-item" tabindex="-1" id="demo/date-time.elan">Date Time</div>
                     </div>
                 </div>
                 <div class="dropdown">
@@ -38,7 +41,6 @@
                         <div class="plain menu-item" tabindex="-1" id="new">new</div>
                         <div class="plain menu-item" tabindex="-1" id="load">load</div>
                         <div class="plain menu-item" tabindex="-1" id="append">append</div>
-                        <div class="plain menu-item" tabindex="-1" id="import">import</div>
                         <div class="plain menu-item" tabindex="-1" id="auto-save">auto save</div>
                         <div class="plain menu-item" tabindex="-1" id="save">manual save</div>
                         <div class="plain menu-item" tabindex="-1" id="save-as-standalone">save as standalone</div>
@@ -50,6 +52,16 @@
                 <button id="expand-collapse" class="plain" tabindex="0">outline</button>
                 <button id="undo" class="plain" tabindex="0">undo</button>
                 <button id="redo" class="plain" tabindex="0">redo</button>
+
+                <div class="dropdown">
+                    <button id="language" class="plain" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-controls="language-menu">language</button>
+                    <div id="language-menu" class="dropdown-content" hidden>
+                        <div class="plain menu-item" tabindex="-1" id="python-language">python</div>
+                        <div class="plain menu-item" tabindex="-1" id="vb-language">vb</div>
+                        <div class="plain menu-item" tabindex="-1" id="cs-language">c#</div>
+                        <div class="plain menu-item" tabindex="-1" id="elan-language">elan</div>
+                    </div>
+                </div>
 
                 <dialog id="preferences-dialog">
                     <form>

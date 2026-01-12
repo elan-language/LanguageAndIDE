@@ -14,7 +14,7 @@ export interface Selectable {
   //returning true indicates that code has changed, and so status should be aggregated from the file down
   processKey(keyEvent: editorEvent): boolean;
   renderAsHtml(): string;
-  renderAsSource(): string;
+  renderAsElanSource(): string;
 
   readParseStatus(): ParseStatus;
 

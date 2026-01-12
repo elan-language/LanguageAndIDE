@@ -18,18 +18,21 @@ export class NewInstance extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.trim().length > 0) {
-      this.addElement(new KeywordNode(newKeyword));
-      this.addElement(new SpaceNode(Space.required));
-      this.type = new TypeSimpleOrGeneric(new Set<TokenType>([TokenType.type_concrete]));
+      this.addElement(new KeywordNode(this.file, newKeyword));
+      this.addElement(new SpaceNode(this.file, Space.required));
+      this.type = new TypeSimpleOrGeneric(this.file, new Set<TokenType>([TokenType.type_concrete]));
       this.addElement(this.type);
-      this.addElement(new SpaceNode(Space.ignored));
-      this.addElement(new PunctuationNode(OPEN_BRACKET));
-      this.addElement(new SpaceNode(Space.ignored));
-      this.args = new ArgListNode(() => this.type!.matchedText);
+      this.addElement(new SpaceNode(this.file, Space.ignored));
+      this.addElement(new PunctuationNode(this.file, OPEN_BRACKET));
+      this.addElement(new SpaceNode(this.file, Space.ignored));
+      this.args = new ArgListNode(this.file, () => this.type!.matchedText);
       this.addElement(this.args);
-      this.addElement(new SpaceNode(Space.ignored));
-      this.addElement(new PunctuationNode(CLOSE_BRACKET));
-      this.withClause = new OptionalNode(new WithClause(() => this.type!.matchedText));
+      this.addElement(new SpaceNode(this.file, Space.ignored));
+      this.addElement(new PunctuationNode(this.file, CLOSE_BRACKET));
+      this.withClause = new OptionalNode(
+        this.file,
+        new WithClause(this.file, () => this.type!.matchedText),
+      );
       this.addElement(this.withClause);
       super.parseText(text);
     }

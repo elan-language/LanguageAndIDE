@@ -5,7 +5,6 @@ import {
   constantKeyword,
   enumKeyword,
   functionKeyword,
-  ignoreKeyword,
   interfaceKeyword,
   mainKeyword,
   procedureKeyword,
@@ -45,13 +44,13 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
       [classKeyword, (_parent: Parent) => this.file.createConcreteClass()],
       [abstractKeyword, (_parent: Parent) => this.file.createAbstractClass()],
       [interfaceKeyword, (_parent: Parent) => this.file.createInterface()],
+      ["comment", (_parent: Parent) => this.file.createGlobalComment()],
       [commentMarker, (_parent: Parent) => this.file.createGlobalComment()],
-      [ignoreKeyword, (_parent: Parent) => this.file.createTest()],
     ];
   }
 
   profileAllows(keyword: string): boolean {
-    return this.profile.globals.includes(keyword);
+    return keyword !== commentMarker && keyword !== recordKeyword;
   }
 
   validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
@@ -64,9 +63,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
     return result;
   }
 
-  renderAsHtml(): string {
-    return `<el-global contenteditable spellcheck="false" class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}${this.textToDisplayAsHtml()}</el-global>`;
-  }
+  outerHtmlTag: string = "el-global";
 
   indent(): string {
     return "";

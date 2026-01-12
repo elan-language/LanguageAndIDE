@@ -1,6 +1,6 @@
-# db1890010cd8896df986ff49daeef00ced873e65439b01f6ae8ca315eca83910 Elan 1.9.0 guest default_profile valid
+# 7ceb6e5444a774bc3b46b6fe1928ab4f5a1c921681ad38779facd07793453af2 Elan 2.0.0-alpha guest default_profile valid
 
 main
   let pic be image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg with alt set to "Shark"
-  print pic
+  call print(pic)
 end main

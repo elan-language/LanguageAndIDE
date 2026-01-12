@@ -4,23 +4,24 @@ import { BinaryOperation } from "./binary-operation";
 import { ExprNode } from "./expr-node";
 import { allIdsAndMethods, allKeywordsThatCanStartAnExpression } from "./parse-node-helpers";
 import { Term } from "./term";
+import { File } from "../frame-interfaces/file";
 
 export class BinaryExpression extends AbstractSequence {
   lhs: Term | undefined;
   op: BinaryOperation | undefined;
   rhs: ExprNode | undefined;
 
-  constructor() {
-    super();
+  constructor(file: File) {
+    super(file);
     this.completionWhenEmpty = "<i>expression</i>";
   }
 
   parseText(text: string): void {
-    this.lhs = new Term();
+    this.lhs = new Term(this.file);
     this.addElement(this.lhs);
-    this.op = new BinaryOperation();
+    this.op = new BinaryOperation(this.file);
     this.addElement(this.op);
-    this.rhs = new ExprNode();
+    this.rhs = new ExprNode(this.file);
     this.addElement(this.rhs);
     return super.parseText(text);
   }
@@ -29,8 +30,8 @@ export class BinaryExpression extends AbstractSequence {
     return `${this.lhs?.renderAsHtml()}${this.op!.renderAsHtml()}${this.rhs?.renderAsHtml()}`;
   }
 
-  renderAsSource(): string {
-    return `${this.lhs?.renderAsSource()}${this.op!.renderAsSource()}${this.rhs?.renderAsSource()}`;
+  renderAsElanSource(): string {
+    return `${this.lhs?.renderAsElanSource()}${this.op!.renderAsElanSource()}${this.rhs?.renderAsElanSource()}`;
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {

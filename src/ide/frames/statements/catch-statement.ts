@@ -1,12 +1,12 @@
 import { catchKeyword, exceptionKeyword, inKeyword } from "../../../compiler/keywords";
-import { AbstractFrame } from "../abstract-frame";
 import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { SingleLineFrame } from "../single-line-frame";
 
-export class CatchStatement extends AbstractFrame implements Statement {
+export class CatchStatement extends SingleLineFrame implements Statement {
   isStatement = true;
   isCatch = true;
   variable: IdentifierField;
@@ -40,6 +40,10 @@ export class CatchStatement extends AbstractFrame implements Statement {
     return "catch";
   }
 
+  frameSpecificAnnotation(): string {
+    return "";
+  }
+
   indent() {
     return this.getParent()!.indent(); //overrides the additional indent added for most child statements
   }
@@ -50,12 +54,8 @@ export class CatchStatement extends AbstractFrame implements Statement {
 
   keywords = `${catchKeyword} ${exceptionKeyword} ${inKeyword} `;
 
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1"><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${this.keywords}</el-kw>${this.variable.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top></el-statement>`;
-  }
-
-  renderAsSource(): string {
-    return `${this.indent()}${this.keywords}${this.variable.renderAsSource()}`;
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.keywords}${this.variable.renderAsElanSource()}`;
   }
 
   parseFrom(source: CodeSource): void {

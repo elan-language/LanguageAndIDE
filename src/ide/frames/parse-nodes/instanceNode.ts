@@ -18,8 +18,8 @@ export class InstanceNode extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      this.variable = new IdentifierNode(this.tokenTypes);
-      this.index = new OptionalNode(new Index());
+      this.variable = new IdentifierNode(this.file, this.tokenTypes);
+      this.index = new OptionalNode(this.file, new Index(this.file));
       this.addElement(this.variable);
       this.addElement(this.index);
       super.parseText(text);

@@ -1,6 +1,4 @@
-# 12cd163381b6d2bed8cfba473b8a8d71fdcf8d8faa85df22e3028bd6a87b6f1b Elan 1.9.0 guest default_profile valid
-
-constant example set to {3, 6, 1, 0, -19, 99, 4, 67}
+# 6b712300c108295b4135c65571a8d5b1f438fe00940c8d8d48189a69b1a0929a Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable li set to example.asList()
@@ -9,11 +7,11 @@ main
   call print(li.asString())
 end main
 
-procedure inPlaceRippleSort(out arr as List<of Int>)
-  variable change set to true
-  variable lastComp set to arr.length() - 2
-  while change
-    set change to false
+procedure inPlaceRippleSort(li as List<of Int>)
+  variable hasChanged set to true
+  variable lastComp set to li.length() - 2
+  while hasChanged is true
+    set hasChanged to false
     for i from 0 to lastComp step 1
       if arr[i] > arr[i + 1] then
         let temp be arr[i]

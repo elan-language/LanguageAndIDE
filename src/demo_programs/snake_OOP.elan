@@ -1,4 +1,4 @@
-# ac09ec5afed01a49c24dfad5916a8156dc4e2d23b746429cf2998fdc375f00cb Elan 1.9.0 guest default_profile valid
+# 1cec164f8eff8ef496681480f3615c408d3ba7dcd4ea8c33148c178ab3cc4bc0 Elan 2.0.0-alpha guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -13,7 +13,7 @@ main
     call pause(150)
     call snake.clockTick(getKey(), apple)
   end while
-  print "Game Over! Score: {snake.score()}"
+  call print("Game Over! Score: {snake.score()}")
 end main
 
 class Snake
@@ -73,11 +73,11 @@ class Snake
   private procedure setDirection(key as String)
     if key is "w" then
       set property.currentDir to Direction.up
-    else if key is "s" then
+    elif key is "s" then
       set property.currentDir to Direction.down
-    else if key is "a" then
+    elif key is "a" then
       set property.currentDir to Direction.left
-    else if key is "d" then
+    elif key is "d" then
       set property.currentDir to Direction.right
     end if
   end procedure
@@ -88,11 +88,15 @@ class Apple
   property location as Square
 
   procedure newRandomPosition(snake as Snake)
-    repeat
+    variable changePosition set to true
+    while changePosition
       let ranX be randomInt(0, 39)
       let ranY be randomInt(0, 29)
       set property.location to new Square(ranX, ranY)
-    end repeat when not snake.bodyCovers(property.location)
+      if not snake.bodyCovers(property.location) then
+        set changePosition to false
+      end if
+    end while
   end procedure
 
   procedure updateBlocks(blocks as Array2D<of Int>)
@@ -116,11 +120,11 @@ class Square
     variable newY set to property.y
     if d is Direction.left then
       set newX to property.x - 1
-    else if d is Direction.right then
+    elif d is Direction.right then
       set newX to property.x + 1
-    else if d is Direction.up then
+    elif d is Direction.up then
       set newY to property.y - 1
-    else if d is Direction.down then
+    elif d is Direction.down then
       set newY to property.y + 1
     end if
     return new Square(newX, newY)
@@ -134,21 +138,21 @@ end class
 
 enum Direction up, down, left, right
 
-test snake
+test test_snake
   let snake be new Snake()
   # bodyCovers
   assert snake.bodyCovers(new Square(20, 15)) is true
   assert snake.bodyCovers(new Square(21, 15)) is false
-  # gameOver, score - can only test for default - which is not thorough test
+  # gameOver, score - can only test test_for default - which is not thorough test
   assert snake.gameOver() is false
   assert snake.score() is 0
 end test
 
-test apple
+test test_apple
   # no tests
 end test
 
-test square
+test test_square
   # constructor - not testable as properties are private
   # getAdjacentSquare
   let sq1 be new Square(3, 4)

@@ -4,7 +4,12 @@ import {
   privateKeyword,
   returnsKeyword,
 } from "../../../compiler/keywords";
-import { addPrivateToggleToContextMenu, singleIndent, togglePrivatePublic } from "../frame-helpers";
+import {
+  addPrivateToggleToContextMenu,
+  modifierAsSource,
+  singleIndent,
+  togglePrivatePublic,
+} from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
 import { Parent } from "../frame-interfaces/parent";
@@ -24,30 +29,15 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
     return "function_method";
   }
 
-  private modifierAsHtml(): string {
-    return this.private ? `<el-kw>private </el-kw>` : "";
-  }
-
-  private modifierAsSource(): string {
-    return this.private ? `private ` : "";
-  }
-
   public override indent(): string {
     return singleIndent();
   }
 
-  public override renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${this.modifierAsSource()}${functionKeyword} ${this.name.renderAsSource()}(${this.params.renderAsSource()}) ${returnsKeyword} ${this.returnType.renderAsSource()}\r
+  public override renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}${modifierAsSource(this)}${functionKeyword} ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
-  }
-  public renderAsHtml(): string {
-    return `<el-func class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.modifierAsHtml()}<el-kw>${functionKeyword} </el-kw>${this.name.renderAsHtml()}<el-punc>(</el-punc>${this.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${returnsKeyword} </el-kw>${this.returnType.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-<el-kw>${endKeyword} ${functionKeyword}</el-kw>
-</el-func>`;
   }
 
   parseTop(source: CodeSource): void {

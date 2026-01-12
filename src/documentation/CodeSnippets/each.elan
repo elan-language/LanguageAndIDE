@@ -1,12 +1,12 @@
-# 93d58f6c876a476b6992c9607fabe308ce4ba18dc0d4c58baae645447618f451 Elan 1.9.0 guest default_profile valid
+# 20c375f5eb4a76f30072657add6ec708a873d31e2fc2c961a84650efccf2f1bc Elan 2.0.0-alpha guest default_profile valid
 
 main
   let names be ["Tom", "Dick", "Harriet"]
-  print names[0]
+  call print(names[0])
   each n in names
-    print n
+    call print(n)
   end each
-  print reverse("Harriet")
+  call print(reverse("Harriet"))
 end main
 
 function reverse(s as String) returns String

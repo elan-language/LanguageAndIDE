@@ -1,4 +1,4 @@
-# 718fe30b4a97fbfea5f6d3db9e447a038096ac572312bb382bbed1869f097d94 Elan 1.9.0 guest default_profile valid
+# c67decab7e7ef74530a71eb63b97a336d7a808c99e8dd5a32cc189ae60475db9 Elan 2.0.0-alpha guest default_profile valid
 
 # Program to extract the parameters for the Barnsley Fern from the Wikipedia page
 # https://en.wikipedia.org/wiki/Barnsley_fern
@@ -28,7 +28,7 @@ main
     call processoneline(line, result, skipping)
   end while
   call file.close()
-  print result
+  call print(result)
 end main
 
 procedure processoneline(line as String, out result as String, out skipping as Boolean)
@@ -86,7 +86,7 @@ function last(l as List<of Int>) returns Int
   return l[l.length() - 1]
 end function
 
-test strings
+test test_strings
   assert isnumberchar("5") is true
   assert gettrailingnumber("abc123") is "123"
   assert gettrailingnumber("abc") is ""
@@ -94,7 +94,7 @@ test strings
   assert gettrailingnumber("") is ""
 end test
 
-test last
+test test_last
   assert last([5, 6, 7]) is 7
 end test
 

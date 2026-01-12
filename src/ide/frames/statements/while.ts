@@ -6,7 +6,7 @@ import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
 
 export class While extends FrameWithStatements {
-  isStatement = true;
+  isStatement = false;
   condition: ExpressionField;
   constructor(parent: Parent) {
     super(parent);
@@ -23,15 +23,15 @@ export class While extends FrameWithStatements {
   getIdPrefix(): string {
     return "while";
   }
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>while </el-kw>${this.condition.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-<el-kw>end while</el-kw>
-</el-statement>`;
+
+  frameSpecificAnnotation(): string {
+    return "";
   }
-  renderAsSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}while ${this.condition.renderAsSource()}\r
+
+  outerHtmlTag: string = "el-statement";
+
+  renderAsElanSource(): string {
+    return `${this.indent()}${this.sourceAnnotations()}while ${this.condition.renderAsElanSource()}\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}end while`;
   }

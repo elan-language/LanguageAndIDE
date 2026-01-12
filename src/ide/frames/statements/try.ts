@@ -30,14 +30,13 @@ export class TryStatement extends FrameWithStatements {
     return "try";
   }
 
-  renderAsHtml(): string {
-    return `<el-statement class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand><el-kw>${tryKeyword} </el-kw>${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
-${this.renderChildrenAsHtml()}
-<el-kw>end try</el-kw>
-</el-statement>`;
+  frameSpecificAnnotation(): string {
+    return "try";
   }
-  renderAsSource(): string {
+
+  outerHtmlTag: string = "el-statement";
+
+  renderAsElanSource(): string {
     return `${this.indent()}${this.sourceAnnotations()}try\r
 ${this.renderChildrenAsSource()}\r
 ${this.indent()}${endKeyword} ${tryKeyword}`;

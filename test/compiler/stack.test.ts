@@ -39,19 +39,19 @@ end main`;
 const global = new class {};
 async function main() {
   let st = system.initialise(await new _stdlib.Stack()._initialise());
-  await system.printLine(st.length());
+  await system.print(st.length());
   st = st.push("apple");
   st = st.push("pear");
-  await system.printLine(st);
-  await system.printLine(st.length());
-  await system.printLine(st.peek());
+  await system.print(st);
+  await system.print(st.length());
+  await system.print(st.peek());
   let fruit = "";
   [fruit, st] = st.pop();
-  await system.printLine(fruit);
+  await system.print(fruit);
   [fruit, st] = st.pop();
-  await system.printLine(fruit);
-  await system.printLine(st.length());
-  await system.printLine(st);
+  await system.print(fruit);
+  await system.print(st.length());
+  await system.print(st);
 }
 return [main, _tests];}`;
 
@@ -161,7 +161,7 @@ end main`;
 const global = new class {};
 async function main() {
   const st = system.initialise(await new _stdlib.Stack()._initialise());
-  await system.printLine(st.peek());
+  await system.print(st.peek());
 }
 return [main, _tests];}`;
 
@@ -196,7 +196,7 @@ end main`;
 const global = new class {};
 async function main() {
   const st = system.initialise(await new _stdlib.Stack()._initialise());
-  await system.printLine(st.pop());
+  await system.print(st.pop());
 }
 return [main, _tests];}`;
 

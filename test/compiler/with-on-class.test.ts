@@ -34,8 +34,8 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let b = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
-  await system.printLine(a.a);
-  await system.printLine(b.a);
+  await system.print(a.a);
+  await system.print(b.a);
 }
 
 class Foo {
@@ -80,7 +80,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   a = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
-  await system.printLine(a.a);
+  await system.print(a.a);
 }
 
 class Foo {
@@ -129,7 +129,7 @@ end class`;
 const global = new class {};
 async function main() {
   let a = (await global.foo());
-  await system.printLine(a.a);
+  await system.print(a.a);
 }
 
 async function foo() {
@@ -185,7 +185,7 @@ end class`;
 const global = new class {};
 async function main() {
   let a = (await global.foo());
-  await system.printLine(a.a);
+  await system.print(a.a);
 }
 
 async function foo() {
@@ -240,7 +240,7 @@ end class`;
 const global = new class {};
 async function main() {
   let a = (await global.foo());
-  await system.printLine(a.a);
+  await system.print(a.a);
 }
 
 async function foo() {
@@ -296,10 +296,10 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let b = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; _a.b = "fred"; return _a;})();
-  await system.printLine(a.a);
-  await system.printLine(a.b);
-  await system.printLine(b.a);
-  await system.printLine(b.b);
+  await system.print(a.a);
+  await system.print(a.b);
+  await system.print(b.a);
+  await system.print(b.b);
 }
 
 class Foo {
@@ -350,8 +350,8 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let b = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
-  await system.printLine(a.a);
-  await system.printLine(b.a);
+  await system.print(a.a);
+  await system.print(b.a);
 }
 
 class Foo {
@@ -399,8 +399,8 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let b = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2 + 2; return _a;})();
-  await system.printLine(a.a);
-  await system.printLine(b.a);
+  await system.print(a.a);
+  await system.print(b.a);
 }
 
 class Foo {
@@ -449,8 +449,8 @@ async function main() {
   let a = system.initialise(await new Foo()._initialise());
   let a1 = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.b = 1; return _a;})();
   let b = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = a1; return _a;})();
-  await system.printLine(a.a.b);
-  await system.printLine(b.a.b);
+  await system.print(a.a.b);
+  await system.print(b.a.b);
 }
 
 class Foo {
@@ -506,8 +506,8 @@ async function main() {
   let a = system.list([0, 2]);
   let b = system.initialise(await new Foo()._initialise());
   let c = await (async () => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 1); return _a;})();
-  await system.printLine(b.b);
-  await system.printLine(c.b);
+  await system.print(b.b);
+  await system.print(c.b);
 }
 
 class Foo {
@@ -558,9 +558,9 @@ async function main() {
   let a = system.list([0, 2]);
   let b = system.initialise(await new Foo()._initialise());
   let c = await (async () => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 0); _a.c = system.safeIndex(a, 1); _a.d = a.length(); return _a;})();
-  await system.printLine(c.b);
-  await system.printLine(c.c);
-  await system.printLine(c.d);
+  await system.print(c.b);
+  await system.print(c.c);
+  await system.print(c.d);
 }
 
 class Foo {
@@ -619,9 +619,9 @@ async function main() {
   let a = system.list([0, 2]);
   let b = system.initialise(await new Foo()._initialise());
   let c = await (async () => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = (await global.doIndex(a, 0)); _a.c = (await global.doIndex(a, 1)); _a.d = a.length(); return _a;})();
-  await system.printLine(c.b);
-  await system.printLine(c.c);
-  await system.printLine(c.d);
+  await system.print(c.b);
+  await system.print(c.c);
+  await system.print(c.d);
 }
 
 async function doIndex(arr, i) {
@@ -678,8 +678,8 @@ async function main() {
   let a = system.listImmutable([0, 2]);
   let b = system.initialise(await new Foo()._initialise());
   let c = await (async () => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = system.safeIndex(a, 1); return _a;})();
-  await system.printLine(b.b);
-  await system.printLine(c.b);
+  await system.print(b.b);
+  await system.print(c.b);
 }
 
 class Foo {
@@ -727,8 +727,8 @@ async function main() {
   let a = system.listImmutable([0, 2, 3]);
   let b = system.initialise(await new Foo()._initialise());
   let c = await (async () => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = a.length(); return _a;})();
-  await system.printLine(b.b);
-  await system.printLine(c.b);
+  await system.print(b.b);
+  await system.print(c.b);
 }
 
 class Foo {
@@ -781,10 +781,10 @@ const global = new class {};
 async function main() {
   let b = system.initialise(await new Foo()._initialise(2));
   let c = await (async () => {const _a = {...b}; Object.setPrototypeOf(_a, Object.getPrototypeOf(b)); _a.b = 10; return _a;})();
-  await system.printLine(b.a);
-  await system.printLine(b.b);
-  await system.printLine(c.a);
-  await system.printLine(c.b);
+  await system.print(b.a);
+  await system.print(b.b);
+  await system.print(c.a);
+  await system.print(c.b);
 }
 
 class Foo {
@@ -840,8 +840,8 @@ end class`;
 const global = new class {};
 async function main() {
   let c = await (async () => {const _a = {...system.initialise(await new Foo()._initialise(2))}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise(2)))); _a.b = 10; return _a;})();
-  await system.printLine(c.a);
-  await system.printLine(c.b);
+  await system.print(c.a);
+  await system.print(c.b);
 }
 
 class Foo {

@@ -126,22 +126,6 @@ export class StubInputOutput implements ElanInputOutput {
     });
   }
 
-  printLine(text: string) {
-    return new Promise<void>((rs, rj) => {
-      onmessage = (e) => {
-        const data = e.data as WebWorkerMessage;
-
-        if (data.type === "read") {
-          rs();
-        }
-        if (data.type === "status" && data.status === "error") {
-          rj(data.error as string);
-        }
-      };
-      postMessage(this.writeMsg("printLine", [text]));
-    });
-  }
-
   print(text: string) {
     return new Promise<void>((rs, rj) => {
       onmessage = (e) => {

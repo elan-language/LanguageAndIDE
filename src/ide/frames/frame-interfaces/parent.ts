@@ -2,6 +2,7 @@ import { AbstractSelector } from "../abstract-selector";
 import { Field } from "./field";
 import { File } from "./file";
 import { Frame } from "./frame";
+import { Language } from "./language";
 import { StatementFactory } from "./statement-factory";
 
 export interface Parent {
@@ -47,6 +48,6 @@ export interface Parent {
   getFactory(): StatementFactory;
 
   isGhostedOrWithinAGhostedFrame(): boolean;
-  isWithinAnImportedFrame(): boolean;
-  isImported(): boolean;
+
+  language(): Language;
 }

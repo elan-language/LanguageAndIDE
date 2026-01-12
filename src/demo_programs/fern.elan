@@ -1,4 +1,4 @@
-# 63c514873bd7e6f368c68ad7cb2143a40bf1800e09b224f08ffd06cb676f276b Elan 1.9.0 guest default_profile valid
+# 82f6ab8a1094961a4a3cc367046d1681e203aa00164b0050f0a1c1e92890325f Elan 2.0.0-alpha guest default_profile valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
@@ -19,7 +19,7 @@ main
     call displayVectorGraphics(vg)
     set count to count + 1
   end while
-  print "Finished"
+  call print("Finished")
 end main
 
 function onepoint(x as Float, y as Float, r as Random) returns (RectangleVG, Float, Float, Random)
@@ -58,7 +58,7 @@ function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
   return tuple(nx, ny)
 end function
 
-test one
+test test_one
   assert roundtuple2(onestep(0.0, 0.16, 0.5)) is {0.0064, 1.736}
   assert roundtuple2(onestep(0.0, 0.16, 0.9)) is {-0.0416, 1.6352}
 end test

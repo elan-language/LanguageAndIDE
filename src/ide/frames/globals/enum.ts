@@ -1,13 +1,13 @@
 import { enumKeyword } from "../../../compiler/keywords";
-import { AbstractFrame } from "../abstract-frame";
 import { EnumValuesField } from "../fields/enum-values-field";
 import { TypeNameField } from "../fields/type-name-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
+import { SingleLineFrame } from "../single-line-frame";
 
-export class Enum extends AbstractFrame implements GlobalFrame {
+export class Enum extends SingleLineFrame implements GlobalFrame {
   isGlobal = true;
   name: TypeNameField;
   values: EnumValuesField;
@@ -35,15 +35,18 @@ export class Enum extends AbstractFrame implements GlobalFrame {
   getIdPrefix(): string {
     return "enum";
   }
-  renderAsHtml(): string {
-    return `<el-enum class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.contextMenu()}${this.bpAsHtml()}<el-kw>enum </el-kw>${this.name.renderAsHtml()} ${this.values.renderAsHtml()}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top></el-enum>`;
+
+  frameSpecificAnnotation(): string {
+    return "enum";
   }
+
+  override outerHtmlTag: string = "el-enum";
 
   indent(): string {
     return "";
   }
-  renderAsSource(): string {
-    return `${this.sourceAnnotations()}enum ${this.name.renderAsSource()} ${this.values.renderAsSource()}\r
+  renderAsElanSource(): string {
+    return `${this.sourceAnnotations()}enum ${this.name.renderAsElanSource()} ${this.values.renderAsElanSource()}\r
 `;
   }
 
@@ -51,9 +54,5 @@ export class Enum extends AbstractFrame implements GlobalFrame {
     source.remove("enum ");
     this.name.parseFrom(source);
     this.values.parseFrom(source);
-  }
-
-  override isWithinAnImportedFrame(): boolean {
-    return false; // So that frame number is still added
   }
 }

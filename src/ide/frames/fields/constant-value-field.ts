@@ -17,7 +17,7 @@ export class ConstantValueField extends AbstractField {
   }
 
   initialiseRoot(): ParseNode {
-    this.rootNode = new ConstantValueNode();
+    this.rootNode = new ConstantValueNode(this.getFile());
     return this.rootNode;
   }
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>

@@ -1,16 +1,16 @@
-# 646d063821d8e85c4a126fcb10365a36a9490558373154d0a64c0e0411fa8c1f Elan 1.9.0 guest default_profile valid
+# 58752f13c6cc58b90fdbdf931286552ce2313ab3e57abcf6fcbe3d634e070500 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable st set to new Stack<of String>()
-  print st.length()
+  call print(st.length())
   set st to st.push("apple")
   set st to st.push("Pear")
-  print st.length()
-  print st.peek()
+  call print(st.length())
+  call print(st.peek())
   variable fruit set to ""
   set fruit, st to st.pop()
-  print fruit
+  call print(fruit)
   set fruit, st to st.pop()
-  print fruit
-  print st.length()
+  call print(fruit)
+  call print(st.length())
 end main

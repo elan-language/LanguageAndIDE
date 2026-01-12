@@ -59,9 +59,9 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(await new Game()._initialise());
-  await system.printLine(g.p2);
-  await system.printLine(g.p1);
-  await system.printLine(g.previousScores);
+  await system.print(g.p2);
+  await system.print(g.p1);
+  await system.print(g.previousScores);
 }
 
 class Game {
@@ -154,8 +154,8 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(await new Foo()._initialise());
-  await system.printLine(g.p1);
-  await system.printLine(g.p2);
+  await system.print(g.p1);
+  await system.print(g.p2);
 }
 
 class Foo {
@@ -234,17 +234,17 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(await new Game()._initialise());
-  await system.printLine(g.i);
-  await system.printLine(g.f);
-  await system.printLine(g.b);
-  await system.printLine(g.s);
-  await system.printLine(g.li);
-  await system.printLine(g.ds);
-  await system.printLine(g.dsi);
-  await system.printLine(g.ai);
-  await system.printLine(g.t);
-  await system.printLine((await g.ff("a", "b")));
-  await system.printLine(_stdlib.matchesRegExp("aa", g.r));
+  await system.print(g.i);
+  await system.print(g.f);
+  await system.print(g.b);
+  await system.print(g.s);
+  await system.print(g.li);
+  await system.print(g.ds);
+  await system.print(g.dsi);
+  await system.print(g.ai);
+  await system.print(g.t);
+  await system.print((await g.ff("a", "b")));
+  await system.print(_stdlib.matchesRegExp("aa", g.r));
 }
 
 class Game {
@@ -351,16 +351,16 @@ const global = new class {};
 async function main() {
   let p = system.initialise(await new Player()._initialise());
   let g = p.g;
-  await system.printLine(g.i);
-  await system.printLine(g.f);
-  await system.printLine(g.b);
-  await system.printLine(g.s);
-  await system.printLine(g.li);
-  await system.printLine(g.ds);
-  await system.printLine(g.dsi);
-  await system.printLine(g.ai);
-  await system.printLine(g.t);
-  await system.printLine(g.r);
+  await system.print(g.i);
+  await system.print(g.f);
+  await system.print(g.b);
+  await system.print(g.s);
+  await system.print(g.li);
+  await system.print(g.ds);
+  await system.print(g.dsi);
+  await system.print(g.ai);
+  await system.print(g.t);
+  await system.print(g.r);
 }
 
 class Player {
@@ -457,7 +457,7 @@ end class`;
 const global = new class {};
 async function main() {
   let g = Game.emptyInstance();
-  await system.printLine(g.i);
+  await system.print(g.i);
 }
 
 class Game {
@@ -532,8 +532,8 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(await new Game()._initialise());
-  await system.printLine(g.p1);
-  await system.printLine(g.previousGame);
+  await system.print(g.p1);
+  await system.print(g.previousGame);
 }
 
 class Game {
@@ -653,13 +653,13 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(await new Game()._initialise());
-  await system.printLine(system.objectEquals(g.p1, Player.emptyInstance()));
-  await system.printLine(system.objectEquals(g.p2, Player.emptyInstance()));
-  await system.printLine(system.objectEquals(g.previousGame, Game.emptyInstance()));
-  await system.printLine(system.objectEquals(g.previousScores, system.initialise(_stdlib.ListImmutable.emptyInstance())));
-  await system.printLine(g.score === 0);
-  await system.printLine(g.best === 0);
-  await system.printLine(g.r === system.emptyRegExp());
+  await system.print(system.objectEquals(g.p1, Player.emptyInstance()));
+  await system.print(system.objectEquals(g.p2, Player.emptyInstance()));
+  await system.print(system.objectEquals(g.previousGame, Game.emptyInstance()));
+  await system.print(system.objectEquals(g.previousScores, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await system.print(g.score === 0);
+  await system.print(g.best === 0);
+  await system.print(g.r === system.emptyRegExp());
 }
 
 class Game {
@@ -793,9 +793,9 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(await new Game()._initialise());
-  await system.printLine(g.score);
+  await system.print(g.score);
   await g.setScore(0);
-  await system.printLine(g.score);
+  await system.print(g.score);
 }
 
 class Game {
@@ -913,14 +913,14 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.printLine(f.a);
-  await system.printLine(f.b);
-  await system.printLine(f.c);
-  await system.printLine(f.d);
-  await system.printLine(system.objectEquals(f.a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
-  await system.printLine(f.b === "");
-  await system.printLine(system.objectEquals(f.c, system.initialise(_stdlib.Dictionary.emptyInstance())));
-  await system.printLine(system.objectEquals(f.d, system.initialise(_stdlib.List.emptyInstance())));
+  await system.print(f.a);
+  await system.print(f.b);
+  await system.print(f.c);
+  await system.print(f.d);
+  await system.print(system.objectEquals(f.a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await system.print(f.b === "");
+  await system.print(system.objectEquals(f.c, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.print(system.objectEquals(f.d, system.initialise(_stdlib.List.emptyInstance())));
 }
 
 class Foo {
@@ -994,7 +994,7 @@ const global = new class {};
 async function main() {
   let g = system.initialise(await new Game()._initialise());
   let p = g.p1;
-  await system.printLine((await p.ucName()));
+  await system.print((await p.ucName()));
 }
 
 class Game {
@@ -1101,7 +1101,7 @@ class Game {
   async something() {
     let a = 1;
     a = system.safeIndex(this.p1, 0);
-    await system.printLine(a);
+    await system.print(a);
   }
 
 }
@@ -1162,7 +1162,7 @@ class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
   async _initialise() { return this; }
   async pp() {
-    await system.printLine(1);
+    await system.print(1);
   }
 
 }
