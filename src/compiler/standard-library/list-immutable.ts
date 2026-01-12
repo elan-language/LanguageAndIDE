@@ -182,22 +182,6 @@ export class ListImmutable<T1> {
     return minByHelper(this.contents, predicate, this.system!);
   }
 
-  @elanDeprecated(
-    Deprecation.methodRemoved,
-    1,
-    7,
-    "LibRef.html#sortBy",
-    DeprecationSeverity.advisory,
-  )
-  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(ListImmutable))
-  async sortBy(
-    @elanFuncType([ElanT1, ElanT1], ElanInt)
-    predicate: (a: T1, b: T1) => Promise<number>,
-  ): Promise<ListImmutable<T1>> {
-    const arr = await sortByHelper(this.contents, predicate, this.system!);
-    return this.newList(arr);
-  }
-
   @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanClass(ListImmutable))
   async orderBy(
     @elanFuncType([ElanT1, ElanT1], ElanBoolean)

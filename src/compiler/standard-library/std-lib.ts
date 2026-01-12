@@ -727,13 +727,6 @@ export class StdLib {
   }
 
   // Graphics
-
-  @elanDeprecated(Deprecation.methodHidden, 1, 1, "")
-  @elanProcedure([], ProcedureOptions.async)
-  async waitForAnyKey() {
-    return await this.system.elanInputOutput.waitForAnyKey();
-  }
-
   @elanProcedure(["prompt"], ProcedureOptions.async)
   async pressAnyKeyToContinue(prompt: boolean) {
     if (prompt) {
