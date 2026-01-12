@@ -64,11 +64,11 @@ export class LanguageCS implements Language {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof Constant) {
       // special case because the </el-top> needs to be placed part way through the line
-      html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;
+      html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
-      html = `<el-kw>${this.ELSE} ${this.IF} </el-kw><el-punc>(</el-punc>${frame.condition.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `<el-punc>} </el-punc><el-kw>${this.ELSE} ${this.IF} </el-kw><el-punc>(</el-punc>${frame.condition.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof Else) {
-      html = `<el-kw>${this.ELSE}`;
+      html = `<el-punc>} </el-punc><el-kw>${this.ELSE}<el-punc> {</el-punc>`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
@@ -167,17 +167,17 @@ export class LanguageCS implements Language {
       const close = node.keyword ? "</el-kw>" : "";
       let text = node.matchedText.trim();
       if (text === "is") {
-        text = this.DOUBLE_EQUAL;
+        text = this.spaced(this.DOUBLE_EQUAL);
       } else if (text === "isnt") {
-        text = this.NOT_EQUAL;
+        text = this.spaced(this.NOT_EQUAL);
       } else if (text === "and") {
-        text = this.AND;
+        text = this.spaced(this.AND);
       } else if (text === "or") {
-        text = this.OR;
+        text = this.spaced(this.OR);
       } else if (text === "not") {
-        text = this.NOT;
+        text = this.spaced(this.NOT);
       } else if (text === "mod") {
-        text = this.MOD;
+        text = this.spaced(this.MOD);
       } else {
         text = node.renderAsElanSource();
       }
@@ -189,6 +189,10 @@ export class LanguageCS implements Language {
           : ``;
     }
     return html;
+  }
+
+  private spaced(text: string): string {
+    return ` ${text} `;
   }
 
   // Not yet used - for illustration only

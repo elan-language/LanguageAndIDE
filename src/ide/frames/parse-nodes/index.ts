@@ -1,4 +1,4 @@
-import { OPEN_SQ_BRACKET, CLOSE_SQ_BRACKET } from "../symbols";
+import { CLOSE_SQ_BRACKET, OPEN_SQ_BRACKET } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { IndexValue } from "./index-value";
 import { PunctuationNode } from "./punctuation-node";
@@ -15,5 +15,10 @@ export class Index extends AbstractSequence {
       this.addElement(new PunctuationNode(this.file, CLOSE_SQ_BRACKET));
       super.parseText(text);
     }
+  }
+
+  override renderAsHtml(): string {
+    const fromLanguage = this.file.language().renderNodeAsHtml(this);
+    return fromLanguage.length > 0 ? fromLanguage : super.renderAsHtml();
   }
 }
