@@ -22,7 +22,9 @@ import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { Index } from "./parse-nodes";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { IndexDouble } from "./parse-nodes/index-double";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
+import { ListNode } from "./parse-nodes/list-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { AssertStatement } from "./statements/assert-statement";
@@ -65,7 +67,7 @@ export class LanguageVB implements Language {
       html = `<el-kw>${this.SINGLE_QUOTE} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof Constant) {
       // special case because the </el-top> needs to be placed part way through the line
-      html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw><el-type>??? </el-type></el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
+      html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}<el-kw></el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
       html = `<el-kw>${this.ELSEIF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}`;
     } else if (frame instanceof Else) {
@@ -201,30 +203,35 @@ export class LanguageVB implements Language {
       const close = node.keyword ? "</el-kw>" : "";
       let text = node.matchedText.trim();
       if (text === "is") {
-        text = " = ";
+        text = this.spaced(this.EQUALS);
       } else if (text === "isnt") {
-        text = " <> ";
+        text = this.spaced(this.NOT_EQUALS);
       } else if (text === "and") {
-        text = ` ${this.AND} `;
+        text = this.spaced(this.AND);
       } else if (text === "or") {
-        text = ` ${this.OR} `;
+        text = this.spaced(this.OR);
       } else if (text === "not") {
-        text = ` ${this.NOT} `;
+        text = this.spaced(this.NOT);
       } else if (text === "mod") {
-        text = ` ${this.MOD} `;
+        text = this.spaced(this.MOD);
       } else {
         text = node.renderAsElanSource();
       }
       html = `${open}${text}${close}`;
     } else if (node instanceof Index) {
-      html = `<el-punc>(</el-punc>${node.contents}<el-punc>)</el-punc>`;
+      html = `<el-punc>(</el-punc>${node.contents?.renderAsHtml()}<el-punc>)</el-punc>`;
+    } else if (node instanceof IndexDouble) {
+      html = `<el-punc>(</el-punc>${node.index1?.renderAsHtml()}<el-punc>, </el-punc>${node.index2?.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (node instanceof InheritanceNode) {
-      html =
-        node.matchedText.length > 0
-          ? `<el-punc>(</el-punc>${node.typeList?.renderAsHtml()}<el-punc>)</el-punc>`
-          : ``;
+      html = `<el-punc>(</el-punc>${node.typeList?.renderAsHtml()}<el-punc>)</el-punc>`;
+    } else if (node instanceof ListNode) {
+      html = `<el-punc>{</el-punc>${node.csv?.renderAsHtml()}<el-punc>}</el-punc>`;
     }
     return html;
+  }
+
+  private spaced(text: string): string {
+    return ` ${text} `;
   }
 
   // Not yet used - for illustration only
@@ -278,4 +285,6 @@ PLUS:         '+';
   private WHILE = "While";
 
   private SINGLE_QUOTE = "'";
+  private EQUALS = "=";
+  private NOT_EQUALS = "<>";
 }

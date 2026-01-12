@@ -22,6 +22,7 @@ import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { IndexDouble } from "./parse-nodes/index-double";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
@@ -225,6 +226,8 @@ export class LanguagePython implements Language {
         node.matchedText.length > 0
           ? `<el-punc>(</el-punc>${node.typeList?.renderAsHtml()}<el-punc>)</el-punc>`
           : ``;
+    } else if (node instanceof IndexDouble) {
+      html = `<el-punc>[</el-punc>${node.index1?.renderAsHtml()}<el-punc>][</el-punc>${node.index2?.renderAsHtml()}<el-punc>]</el-punc>`;
     }
     return html;
   }

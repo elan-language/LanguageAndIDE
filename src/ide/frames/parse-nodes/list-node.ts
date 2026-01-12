@@ -26,4 +26,9 @@ export class ListNode extends AbstractSequence {
       super.parseText(text);
     }
   }
+
+  override renderAsHtml(): string {
+    const fromLanguage = this.file.language().renderNodeAsHtml(this);
+    return fromLanguage.length > 0 ? fromLanguage : super.renderAsHtml();
+  }
 }

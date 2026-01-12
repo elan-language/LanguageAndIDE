@@ -42,8 +42,8 @@ import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 
-export class LanguageCS implements Language {
-  languageFullName: string = "C#";
+export class LanguageJava implements Language {
+  languageFullName: string = "Java";
 
   annotation(frame: Frame): string {
     return frame.frameSpecificAnnotation();
