@@ -1,4 +1,4 @@
-# a4f88b8317a1a81cf80bce877d3faa0cc3e24b2487f7e10a7e84829b436256bb Elan 1.9.0 guest default_profile valid
+# 80adffa0354c8b66e0da09853a1b3670c5f3212500723cb5b35a96fc92664c55 Elan 1.9.0 guest default_profile valid
 
 main
   variable blocks set to new Array2D<of Int>(40, 30, white)
@@ -10,7 +10,3 @@ main
     call displayBlocks(blocks)
   end while
 end main
-
-test 
-
-end test

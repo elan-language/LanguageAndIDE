@@ -1,4 +1,4 @@
-# 011dc59f2a0287c72451de4e783180fbac037574f4e10c782988e2ecb089e7c2 Elan 1.9.0 guest default_profile valid
+# dc9f18cd49754b680ad4fd16026ab3d5c5946bb21a17b05b20a71226d2a86c0a Elan 1.9.0 guest default_profile valid
 
 function dealCard(random as Float) returns Card
   let number be (random*52).floor()
@@ -6,3 +6,12 @@ function dealCard(random as Float) returns Card
   let suit be number mod 4
   return new Card() with rank set to rank, suit set to suit
 end function
+
+class Card
+  property rank as Int
+
+  property suit as Int
+
+end class
+
+constant rankValue set to {0:0}
