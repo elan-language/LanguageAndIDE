@@ -1,4 +1,4 @@
-# 34c640f1cdf6deadcbdab24870658679404530f1f820d4f8cec0d6e158d3e92f Elan 1.9.0 guest default_profile valid
+# 931d23a2f33975c8ba8923b53d87561c03dffde764b6374245a454e116f9181a Elan 2.0.0-alpha guest default_profile valid
 
 function hearts() returns String
   return unicode(0x2665)

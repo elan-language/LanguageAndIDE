@@ -1,4 +1,4 @@
-# d78836bb5e51959d1010e9902ba64ed6b4c8a58f81d3f9366722bec8f0ffcd45 Elan 1.9.0 guest default_profile valid
+# 0dbe82d4aa346937bd5547732eabb98a416c299cd5f7ba7228e15fe09267e5b4 Elan 2.0.0-alpha guest default_profile valid
 
 main
   let pic be "<img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg'\nwidth='400' height='200'\ntitle='shark' alt='shark'>"
