@@ -1,4 +1,4 @@
-# ab6e56e528a487f982850bc6f75656bae96e33bdf3cbe9ee65d71acaaf0ee5d1 Elan 1.9.0 guest default_profile valid
+# 4726425e8654e0c7ce617fa790dfb9393326cbad9ce40605ee2b5381c8cb4bc1 Elan 2.0.0-alpha guest default_profile valid
 
 test test_floor
   let p be pi

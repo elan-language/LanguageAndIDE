@@ -48,47 +48,47 @@ export class LanguageElan implements Language {
     return frame ? "" : ""; //No *frame-specific* annotation needed for Elan (but must consume frame parameter!)
   }
   commentMarker(): string {
-    return this.hash;
+    return this.HASH;
   }
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
       html = `<el-kw>assert </el-kw>${frame.actual.renderAsHtml()}<el-kw> is </el-kw>${frame.expected.renderAsHtml()}`;
     } else if (frame instanceof CallStatement) {
-      html = `<el-kw>${this.callKeyword} </el-kw>${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `<el-kw>${this.CALL} </el-kw>${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof CatchStatement) {
-      html = `<el-kw>${this.catchKeyword} ${this.exceptionKeyword} ${this.inKeyword} </el-kw>${frame.variable.renderAsHtml()}`;
+      html = `<el-kw>${this.CATCH} ${this.EXCEPTION} ${this.IN} </el-kw>${frame.variable.renderAsHtml()}`;
     } else if (frame instanceof CommentStatement) {
-      html = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof Constant) {
       // special case because the </el-top> needs to be placed part way through the line
-      html = `<el-kw>${this.constantKeyword} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;
+      html = `<el-kw>${this.CONSTANT} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
-      html = `<el-kw>${this.elifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.thenKeyword}`;
+      html = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}`;
     } else if (frame instanceof Else) {
-      html = `<el-kw>${this.elseKeyword}`;
+      html = `<el-kw>${this.ELSE}`;
     } else if (frame instanceof Enum) {
-      html = `<el-kw>${this.enumKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
+      html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
-      html = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof LetStatement) {
-      html = `<el-kw>${this.letKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.beKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.letKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.BE} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Print) {
-      html = `<el-kw>${this.printKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.PRINT} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Property) {
-      html = `${modifierAsHtml(frame)}<el-kw>${this.propertyKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.asKeyword} </el-kw>${frame.type.renderAsHtml()}`;
+      html = `${modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
-      html = `<el-kw>${this.returnKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof SetStatement) {
-      html = `<el-kw>${this.setKeyword} </el-kw>${frame.assignable.renderAsHtml()}<el-kw> ${this.toKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.SET} </el-kw>${frame.assignable.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Throw) {
-      html = `<el-kw>${this.throwKeyword} ${this.exceptionKeyword} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.THROW} ${this.EXCEPTION} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof VariableStatement) {
-      html = `<el-kw>${this.variableKeyword} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.setKeyword} ${this.toKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.VARIABLE} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.SET} ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof AbstractFunction) {
-      html = `<el-kw>${this.abstractKeyword} ${this.functionKeyword} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.returnsKeyword} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `<el-kw>${this.ABSTRACT} ${this.FUNCTION} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof AbstractProcedure) {
-      html = `<el-kw>${this.abstractKeyword} ${this.procedureKeyword} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `<el-kw>${this.ABSTRACT} ${this.PROCEDURE} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof AbstractProperty) {
       html = ``;
     }
@@ -102,37 +102,37 @@ export class LanguageElan implements Language {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.abstractKeyword} ${this.classKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.classKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
-      html = `<el-kw>${this.constructorKeyword}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `<el-kw>${this.CONSTRUCTOR}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof Each) {
-      html = `<el-kw>${this.eachKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.inKeyword} </el-kw>${frame.iter.renderAsHtml()}`;
+      html = `<el-kw>${this.EACH} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof For) {
-      html = `<el-kw>${this.forKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.fromKeyword} </el-kw>${frame.from.renderAsHtml()}<el-kw> ${this.toKeyword} </el-kw>${frame.to.renderAsHtml()}<el-kw> ${this.stepKeyword} </el-kw>${frame.step.renderAsHtml()}`;
+      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.FROM} </el-kw>${frame.from.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.to.renderAsHtml()}<el-kw> ${this.STEP} </el-kw>${frame.step.renderAsHtml()}`;
     } else if (frame instanceof FunctionMethod) {
-      html = `${modifierAsHtml(frame)}<el-kw>${this.functionKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.returnsKeyword} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `${modifierAsHtml(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalFunction) {
-      html = `<el-kw>${this.functionKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.returnsKeyword} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalProcedure) {
-      html = `<el-kw>${this.procedureKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `<el-kw>${this.PROCEDURE} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof IfStatement) {
-      html = `<el-kw>${this.ifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.thenKeyword}</el-kw>`;
+      html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}</el-kw>`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.interfaceKeyword} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof MainFrame) {
-      html = `<el-kw>${this.mainKeyword}</el-kw>`;
+      html = `<el-kw>${this.MAIN}</el-kw>`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `${modifierAsHtml(frame)}<el-kw>${this.procedureKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `${modifierAsHtml(frame)}<el-kw>${this.PROCEDURE} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof RecordFrame) {
-      html = `<el-kw>${this.recordKeyword} </el-kw>${frame.name.renderAsHtml()}`;
+      html = `<el-kw>${this.RECORD} </el-kw>${frame.name.renderAsHtml()}`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.testKeyword} </el-kw>${frame.testName.renderAsHtml()}`;
+      html = `<el-kw>${this.TEST} </el-kw>${frame.testName.renderAsHtml()}`;
     } else if (frame instanceof TryStatement) {
-      html = `<el-kw>${this.tryKeyword} </el-kw>`;
+      html = `<el-kw>${this.TRY} </el-kw>`;
     } else if (frame instanceof While) {
-      html = `<el-kw>${this.whileKeyword} </el-kw>${frame.condition.renderAsHtml()}`;
+      html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}`;
     }
     return html;
   }
@@ -142,7 +142,7 @@ export class LanguageElan implements Language {
   }
 
   renderBottomAsHtml(frame: Frame): string {
-    return `<el-kw>${this.endKeyword} ${frame.initialKeywords()}</el-kw>`;
+    return `<el-kw>${this.END} ${frame.initialKeywords()}</el-kw>`;
   }
 
   renderBottomAsExport(frame: Frame): string {
@@ -179,67 +179,66 @@ PLUS:         '+';
 `; //etc.
   }
 
-  private abstractKeyword = "abstract";
-  private andKeyword = "and";
-  private asKeyword = "as";
-  private assertKeyword = "assert";
-  private beKeyword = "be";
-  private callKeyword = "call";
-  private catchKeyword = "catch";
-  private classKeyword = "class";
-  private constantKeyword = "constant";
-  private constructorKeyword = "constructor";
-  private copyKeyword = "copy";
-  private divKeyword = "div";
-  private eachKeyword = "each";
-  private elifKeyword = "elif";
-  private elseKeyword = "else";
-  private emptyKeyword = "empty";
-  private endKeyword = "end";
-  private enumKeyword = "enum";
-  private exceptionKeyword = "exception";
-  private forKeyword = "for";
-  private fromKeyword = "from";
-  private functionKeyword = "function";
-  private globalKeyword = "global";
-  private ifKeyword = "if";
-  private imageKeyword = "image";
-  private importKeyword = "import";
-  private inKeyword = "in";
-  private inheritsKeyword = "inherits";
-  private interfaceKeyword = "interface";
-  private isKeyword = "is";
-  private isntKeyword = "isnt";
+  private ABSTRACT = "abstract";
+  private AND = "and";
+  private AS = "as";
+  private ASSERT = "assert";
+  private BE = "be";
+  private CALL = "call";
+  private CATCH = "catch";
+  private CLASS = "class";
+  private CONSTANT = "constant";
+  private CONSTRUCTOR = "constructor";
+  private COPY = "copy";
+  private DIV = "div";
+  private EACH = "each";
+  private ELIF = "elif";
+  private ELSE = "else";
+  private EMPTY = "empty";
+  private END = "end";
+  private ENUM = "enum";
+  private EXCEPTION = "exception";
+  private FOR = "for";
+  private FROM = "from";
+  private FUNCTION = "function";
+  private GLOBAL = "global";
+  private IF = "if";
+  private IMAGE = "image";
+  private IMPORT = "import";
+  private IN = "in";
+  private INHERITS = "inherits";
+  private INTERFACE = "interface";
+  private IS = "is";
+  private ISNT = "isnt";
   private lambdaKeyword = "lambda";
   private letKeyword = "let";
-  private libraryKeyword = "library";
-  private mainKeyword = "main";
-  private modKeyword = "mod";
-  private newKeyword = "new";
-  private notKeyword = "not";
-  private ofKeyword = "of";
-  private orKeyword = "or";
-  private outKeyword = "out";
-  private printKeyword = "print";
-  private privateKeyword = "private";
-  private procedureKeyword = "procedure";
-  private propertyKeyword = "property";
-  private recordKeyword = "record";
-  private refKeyword = "ref";
-  private returnKeyword = "return";
-  private returnsKeyword = "returns";
-  private setKeyword = "set";
-  private stepKeyword = "step";
-  private testKeyword = "test";
-  private thenKeyword = "then";
-  private thisKeyword = "this";
-  private throwKeyword = "throw";
-  private toKeyword = "to";
-  private tryKeyword = "try";
-  private tupleKeyword = "tuple";
-  private variableKeyword = "variable";
-  private whileKeyword = "while";
-  private withKeyword = "with";
+  private LIBRARY = "library";
+  private MAIN = "main";
+  private MOD = "mod";
+  private NEW = "new";
+  private NOT = "not";
+  private OF = "of";
+  private OR = "or";
+  private OUT = "out";
+  private PRINT = "print";
+  private PRIVATE = "private";
+  private PROCEDURE = "procedure";
+  private PROPERTY = "property";
+  private RECORD = "record";
+  private RETURN = "return";
+  private RETURNS = "returns";
+  private SET = "set";
+  private STEP = "step";
+  private TEST = "test";
+  private THEN = "then";
+  private THIS = "this";
+  private THROW = "throw";
+  private TO = "to";
+  private TRY = "try";
+  private TUPLE = "tuple";
+  private VARIABLE = "variable";
+  private WHILE = "while";
+  private WITH = "with";
 
-  private hash = "#";
+  private HASH = "#";
 }

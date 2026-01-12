@@ -1,4 +1,4 @@
-# a53c5d8534e0c087ece545ea58dee763a0fe8ca0d8a468cc4d7e2a498daf530b Elan 1.9.0 guest default_profile valid
+# 725d72fa257782c5d183bd5ea1618bae5e56672bf8715472a51d508dab5f5502 Elan 2.0.0-alpha guest default_profile valid
 
 function foo() returns List<of Int>
   return [0]

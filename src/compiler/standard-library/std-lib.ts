@@ -1,6 +1,5 @@
 import "reflect-metadata";
 import { ElanInputOutput } from "../compiler-interfaces/elan-input-output";
-import { Deprecation } from "../compiler-interfaces/elan-type-interfaces";
 import { ElanCompilerError } from "../elan-compiler-error";
 import {
   ElanBoolean,
@@ -15,7 +14,6 @@ import {
   elanClassExport,
   elanClassType,
   elanConstant,
-  elanDeprecated,
   elanFloatType,
   elanFunction,
   elanGenericParamT1Type,
@@ -727,13 +725,6 @@ export class StdLib {
   }
 
   // Graphics
-
-  @elanDeprecated(Deprecation.methodHidden, 1, 1, "")
-  @elanProcedure([], ProcedureOptions.async)
-  async waitForAnyKey() {
-    return await this.system.elanInputOutput.waitForAnyKey();
-  }
-
   @elanProcedure(["prompt"], ProcedureOptions.async)
   async pressAnyKeyToContinue(prompt: boolean) {
     if (prompt) {

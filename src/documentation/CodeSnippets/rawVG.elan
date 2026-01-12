@@ -1,4 +1,4 @@
-# 2851e8a4039f968c25fdeb859673017bf90f58801d6b1173ef19d69d1f86e3d6 Elan 1.9.0 guest default_profile valid
+# 353719e76909dffff0f172b387b85be8bdc01e05642e2fecc54cc406fe5a81c9 Elan 2.0.0-alpha guest default_profile valid
 
 main
   let movingCircle be '<circle cx="50" cy="50" r="50" style="fill:red;">\n<animate attributeName="cx" begin="0s" dur="2s" from="50" to="90%" repeatCount="indefinite" /></circle>'

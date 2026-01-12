@@ -1,4 +1,4 @@
-# 3c1052cb91a3a92152e0036536b787016f269ee7b2e24a57ad4e42e39bb1c17f Elan 1.9.0 guest default_profile valid
+# a3a57eba364685e98553e98d4cfca46b8b84eca9f9a76783d7f9864ab9427f53 Elan 2.0.0-alpha guest default_profile valid
 
 class Pupil
   property mathsPercent as Int

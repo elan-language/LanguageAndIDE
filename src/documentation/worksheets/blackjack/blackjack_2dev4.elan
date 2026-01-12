@@ -1,4 +1,4 @@
-# 43bfd6f79b0458194e6d2785f0565f366dd456b569b3c7b3163b2691507b6753 Elan 1.9.0 guest default_profile valid
+# cfc97f808749bce718617988f27d939b52fe7244ff8563c1e7cf4dd7ceb6d1aa Elan 2.0.0-alpha guest default_profile valid
 
 main
   let points be 10000
