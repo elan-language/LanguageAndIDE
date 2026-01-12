@@ -51,7 +51,7 @@ export class LanguagePython implements Language {
   }
 
   commentMarker(): string {
-    return this.hash;
+    return this.HASH;
   }
 
   renderSingleLineAsHtml(frame: Frame): string {
@@ -67,31 +67,31 @@ export class LanguagePython implements Language {
     } else if (frame instanceof CallStatement) {
       html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof CatchStatement) {
-      html = `${this.exceptKeyword}<el-punc>:</el-punc>`;
+      html = `${this.EXCEPT}<el-punc>:</el-punc>`;
     } else if (frame instanceof CommentStatement) {
-      html = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof Constant) {
       html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
-      html = `<el-kw>${this.elifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof Else) {
-      html = `<el-kw>${this.elseKeyword}</el-kw><el-punc>:</el-punc>`;
+      html = `<el-kw>${this.ELSE}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof Enum) {
       html = `${frame.name.renderAsHtml()} = <el-type>Enum</el-type>('${frame.name.renderAsHtml()}', '${frame.values.renderAsHtml()}')`;
     } else if (frame instanceof GlobalComment) {
-      html = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof LetStatement) {
       html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Print) {
       html = `<el-method>print</el-method><el-punc>(</el-punc>${frame.expr.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (frame instanceof Property) {
-      html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()} = <el-kw>${this.noneKeyword}</el-kw>`;
+      html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()} = <el-kw>${this.NONE}</el-kw>`;
     } else if (frame instanceof ReturnStatement) {
-      html = `<el-kw>${this.returnKeyword} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof SetStatement) {
       html = `${frame.assignable.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Throw) {
-      html = `<el-kw>${this.raiseKeyword}</el-kw><el-punc>("</el-punc>${frame.text.renderAsHtml()}<el-punc>")</el-punc>`;
+      html = `<el-kw>${this.RAISE}</el-kw><el-punc>("</el-punc>${frame.text.renderAsHtml()}<el-punc>")</el-punc>`;
     } else if (frame instanceof VariableStatement) {
       html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     }
@@ -111,31 +111,31 @@ export class LanguagePython implements Language {
     } else if (frame instanceof CallStatement) {
       source = `${frame.proc.renderAsExport()}<el-punc>(</el-punc>${frame.args.renderAsExport()}<el-punc>)</el-punc>`;
     } else if (frame instanceof CatchStatement) {
-      source = `${this.exceptKeyword}<el-punc>:</el-punc>`;
+      source = `${this.EXCEPT}<el-punc>:</el-punc>`;
     } else if (frame instanceof CommentStatement) {
-      source = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsExport()}`;
+      source = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsExport()}`;
     } else if (frame instanceof Constant) {
       source = `${frame.name.renderAsExport()}<el-punc> = </el-punc>${frame.value.renderAsExport()}`;
     } else if (frame instanceof Elif) {
-      source = `<el-kw>${this.elifKeyword} </el-kw>${frame.condition.renderAsExport()}<el-punc>:</el-punc>`;
+      source = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsExport()}<el-punc>:</el-punc>`;
     } else if (frame instanceof Else) {
-      source = `<el-kw>${this.elseKeyword}</el-kw><el-punc>:</el-punc>`;
+      source = `<el-kw>${this.ELSE}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof Enum) {
       source = `${frame.name.renderAsExport()} = <el-type>Enum</el-type>('${frame.name.renderAsExport()}', '${frame.values.renderAsExport()}')`;
     } else if (frame instanceof GlobalComment) {
-      source = `<el-kw>${this.hash} </el-kw>${frame.text.renderAsExport()}`;
+      source = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsExport()}`;
     } else if (frame instanceof LetStatement) {
       source = `${frame.name.renderAsExport()}<el-punc> = </el-punc>${frame.expr.renderAsExport()}`;
     } else if (frame instanceof Print) {
       source = `<el-method>print</el-method><el-punc>(</el-punc>${frame.expr.renderAsExport()}<el-punc>)</el-punc>`;
     } else if (frame instanceof Property) {
-      source = `${frame.name.renderAsExport()}: ${frame.type.renderAsExport()} = <el-kw>${this.noneKeyword}</el-kw>`;
+      source = `${frame.name.renderAsExport()}: ${frame.type.renderAsExport()} = <el-kw>${this.NONE}</el-kw>`;
     } else if (frame instanceof ReturnStatement) {
-      source = `<el-kw>${this.returnKeyword} </el-kw>${frame.expr.renderAsExport()}`;
+      source = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsExport()}`;
     } else if (frame instanceof SetStatement) {
       source = `${frame.assignable.renderAsExport()}<el-punc> = </el-punc>${frame.expr.renderAsExport()}`;
     } else if (frame instanceof Throw) {
-      source = `<el-kw>${this.raiseKeyword}</el-kw><el-punc>("</el-punc>${frame.text.renderAsExport()}<el-punc>")</el-punc>`;
+      source = `<el-kw>${this.RAISE}</el-kw><el-punc>("</el-punc>${frame.text.renderAsExport()}<el-punc>")</el-punc>`;
     } else if (frame instanceof VariableStatement) {
       source = `${frame.name.renderAsExport()}<el-punc> = </el-punc>${frame.expr.renderAsExport()}`;
     }
@@ -145,41 +145,41 @@ export class LanguagePython implements Language {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for ${typeof frame}`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.classKeyword} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.classKeyword} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
-      html = `<el-kw>${this.defKeyword} </el-kw><el-punc>(</el-punc><el-kw>${this.selfKeyword}</el-kw>: ${selfType(frame)},${frame.params.renderAsHtml()}<el-punc>):</el-punc> <el-kw>none</el-kw>`;
+      html = `<el-kw>${this.DEF} </el-kw><el-punc>(</el-punc><el-kw>${this.SELF}</el-kw>: ${selfType(frame)},${frame.params.renderAsHtml()}<el-punc>):</el-punc> <el-kw>none</el-kw>`;
     } else if (frame instanceof Each) {
-      html = `<el-kw>${this.forKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.inKeyword} </el-kw>${frame.iter.renderAsHtml()}<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof Enum) {
       html = ``;
     } else if (frame instanceof For) {
-      html = `<el-kw>${this.forKeyword} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.inKeyword} </el-kw><el-method>range</el-method>(${frame.from.renderAsHtml()}, ${frame.to.renderAsHtml()}, ${frame.step.renderAsHtml()})<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw><el-method>range</el-method>(${frame.from.renderAsHtml()}, ${frame.to.renderAsHtml()}, ${frame.step.renderAsHtml()})<el-punc>:</el-punc>`;
     } else if (frame instanceof FunctionMethod) {
-      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${this.selfKeyword}<el-punc>: </el-punc>${selfType(frame)}<el-punc>, </el-punc>${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${this.SELF}<el-punc>: </el-punc>${selfType(frame)}<el-punc>, </el-punc>${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof GlobalFunction) {
-      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) -> </el-punc>${frame.returnType.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof GlobalProcedure) {
-      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) -> <el-punc><el-kw>${this.noneKeyword}</el-kw></el-punc><el-punc>:</el-punc>`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) -> <el-punc><el-kw>${this.NONE}</el-kw></el-punc><el-punc>:</el-punc>`;
     } else if (frame instanceof IfStatement) {
-      html = `<el-kw>${this.ifKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
     } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.classKeyword} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof MainFrame) {
-      html = `<el-kw>${this.defKeyword} </el-kw><el-method>main</el-method>(): <el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
+      html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>(): <el-kw>${this.NONE}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `<el-kw>${this.defKeyword} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>${this.selfKeyword}</el-kw><el-punc>: </el-punc>${selfType(frame)}<el-punc>, </el-punc>${frame.params.renderAsHtml()}<el-punc>) -> </el-punc><el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc><el-kw>${this.SELF}</el-kw><el-punc>: </el-punc>${selfType(frame)}<el-punc>, </el-punc>${frame.params.renderAsHtml()}<el-punc>) -> </el-punc><el-kw>${this.NONE}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof Property) {
       html = ``;
     } else if (frame instanceof RecordFrame) {
-      html = `<el-kw>${this.classKeyword} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>`;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.defKeyword} </el-kw> <el-method>test_${frame.testName.renderAsElanSource()}</el-method><el-punc>()-> </el-punc><el-kw>${this.noneKeyword}</el-kw><el-punc>:</el-punc>`;
+      html = `<el-kw>${this.DEF} </el-kw> <el-method>test_${frame.testName.renderAsElanSource()}</el-method><el-punc>()-> </el-punc><el-kw>${this.NONE}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof TryStatement) {
-      html = `${this.tryKeyword}<el-punc>:</el-punc>`;
+      html = `${this.TRY}<el-punc>:</el-punc>`;
     } else if (frame instanceof While) {
-      html = `<el-kw>${this.whileKeyword} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
+      html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
     }
     return html;
   }
@@ -251,20 +251,20 @@ NE:           '!=';
 `; //etc
   }
 
-  private defKeyword = "def";
-  private classKeyword = "class";
-  private elifKeyword = "elif";
-  private elseKeyword = "else";
-  private exceptKeyword = "else";
-  private forKeyword = "for";
-  private ifKeyword = "if";
-  private inKeyword = "in";
-  private noneKeyword = "none";
-  private raiseKeyword = "raise";
-  private returnKeyword = "return";
-  private selfKeyword = "self";
-  private tryKeyword = "try";
-  private whileKeyword = "while";
+  private DEF = "def";
+  private CLASS = "class";
+  private ELIF = "elif";
+  private ELSE = "else";
+  private EXCEPT = "EXCEPT";
+  private FOR = "for";
+  private IF = "if";
+  private IN = "in";
+  private NONE = "None";
+  private RAISE = "raise";
+  private RETURN = "return";
+  private SELF = "self";
+  private TRY = "try";
+  private WHILE = "while";
 
-  private hash = "#";
+  private HASH = "#";
 }
