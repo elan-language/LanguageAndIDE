@@ -1,4 +1,4 @@
-# c4d393fecdc669b8e06b4e1a4abae3f3ffc121c29ee294f975ea1038780ddfe8 Elan 2.0.0-alpha guest default_profile valid
+# 25bf64addaf8ad8ad910f251df0368c9d3d8dd42761cc751a1e0be609905bc5e Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable reply set to ""
@@ -22,7 +22,7 @@ procedure printDate(unixSecs as Int)
   let s be pad("L", z2, second.asString())
   let startDaysL be startDaysList(year, startDays)
   let month, day be monthDay(startDaysL, (days mod startDays[12]))
-  print weekdayNames[weekday] + cs + pad("L", z2, day.asString()) + s1 + monthNames[month - 1] + s1 + "{year}" + s1 + h + co + m + co + s + " UTC\n"
+  call print(weekdayNames[weekday] + cs + pad("L", z2, day.asString()) + s1 + monthNames[month - 1] + s1 + "{year}" + s1 + h + co + m + co + s + " UTC\n")
 end procedure
 
 function dateTime(unixSecs as Int) returns (Int, Int, Int, Int, Int, Int)

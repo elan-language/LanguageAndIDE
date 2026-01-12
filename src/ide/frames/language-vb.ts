@@ -20,6 +20,7 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
+import { Index } from "./parse-nodes";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
@@ -76,7 +77,7 @@ export class LanguageVB implements Language {
     } else if (frame instanceof LetStatement) {
       html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Print) {
-      html = `TODO`;
+      html = `<el-method>PRINT</el-method><el-punc>((</el-punc>${frame.expr.renderAsHtml()}<el-punc>).</el-punc><el-method>asString</el-method><el-punc>())</el-punc>`;
     } else if (frame instanceof Property) {
       html = `${modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
@@ -192,7 +193,7 @@ export class LanguageVB implements Language {
       const chopped = generics?.substring(22, generics.length - 4);
       html =
         node.simpleType?.renderAsHtml() +
-        `<el-punc>[</el-punc><el-type>${chopped}</el-type><el-punc>]</el-punc>`;
+        `<el-punc>(</el-punc><el-kw>${this.OF} </el-kw><el-type>${chopped}</el-type><el-punc>)</el-punc>`;
     } else if (node instanceof ParamDefNode) {
       html = `${node.name?.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${node.type?.renderAsHtml()}`;
     } else if (node instanceof BinaryOperation) {
@@ -200,13 +201,23 @@ export class LanguageVB implements Language {
       const close = node.keyword ? "</el-kw>" : "";
       let text = node.matchedText.trim();
       if (text === "is") {
-        text = " == ";
+        text = " = ";
       } else if (text === "isnt") {
-        text = " != ";
+        text = " <> ";
+      } else if (text === "and") {
+        text = ` ${this.AND} `;
+      } else if (text === "or") {
+        text = ` ${this.OR} `;
+      } else if (text === "not") {
+        text = ` ${this.NOT} `;
+      } else if (text === "mod") {
+        text = ` ${this.MOD} `;
       } else {
         text = node.renderAsElanSource();
       }
       html = `${open}${text}${close}`;
+    } else if (node instanceof Index) {
+      html = `<el-punc>(</el-punc>${node.contents}<el-punc>)</el-punc>`;
     } else if (node instanceof InheritanceNode) {
       html =
         node.matchedText.length > 0
@@ -252,6 +263,7 @@ PLUS:         '+';
   private NEW = "New";
   private NEXT = "Next";
   private NOT = "Not";
+  private OF = "Of";
   private OR = "Or";
   private PRIVATE = "Private";
   private PROPERTY = "Property";
