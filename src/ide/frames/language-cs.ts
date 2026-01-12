@@ -20,6 +20,9 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
+import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { InheritanceNode } from "./parse-nodes/inheritanceNode";
+import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
@@ -73,7 +76,7 @@ export class LanguageCS implements Language {
     } else if (frame instanceof LetStatement) {
       html = `<el-kw>${this.VAR} </el-kw>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Print) {
-      html = `TODO`;
+      html = `<el-method>print</el-method><el-punc>((</el-punc>${frame.expr.renderAsHtml()}<el-punc>).</el-punc><el-method>asString</el-method><el-punc>());</el-punc>`;
     } else if (frame instanceof Property) {
       html = `${modifierAsHtml(frame)} ${frame.type.renderAsHtml()} </el-kw>${frame.name.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof ReturnStatement) {
@@ -152,7 +155,38 @@ export class LanguageCS implements Language {
   renderNodeAsHtml(node: ParseNode): string {
     let html = ""; // If "" returned the node will use its own generic implementation
     if (node instanceof TypeGenericNode) {
-      html = `${node.simpleType?.renderAsHtml()}${node.generic?.renderAsHtml()}`;
+      const generics = node.generic?.renderAsHtml();
+      const chopped = generics?.substring(22, generics.length - 4);
+      html =
+        node.simpleType?.renderAsHtml() +
+        `<el-punc>&lt;</el-punc><el-type>${chopped}</el-type><el-punc>&gt;</el-punc>`;
+    } else if (node instanceof ParamDefNode) {
+      html = `${node.type?.renderAsHtml()} ${node.name?.renderAsHtml()}`;
+    } else if (node instanceof BinaryOperation) {
+      const open = node.keyword ? "<el-kw>" : "";
+      const close = node.keyword ? "</el-kw>" : "";
+      let text = node.matchedText.trim();
+      if (text === "is") {
+        text = this.DOUBLE_EQUAL;
+      } else if (text === "isnt") {
+        text = this.NOT_EQUAL;
+      } else if (text === "and") {
+        text = this.AND;
+      } else if (text === "or") {
+        text = this.OR;
+      } else if (text === "not") {
+        text = this.NOT;
+      } else if (text === "mod") {
+        text = this.MOD;
+      } else {
+        text = node.renderAsElanSource();
+      }
+      html = `${open}${text}${close}`;
+    } else if (node instanceof InheritanceNode) {
+      html =
+        node.matchedText.length > 0
+          ? `<el-kw>${this.INHERITS} ${node.typeList?.renderAsHtml()}`
+          : ``;
     }
     return html;
   }

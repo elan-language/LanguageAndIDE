@@ -1,9 +1,9 @@
-# 91e0f7cbcfe63e022781546112b59cdd7fdd66abaef09c06a2a47ac58b6833d0 Elan 2.0.0-alpha guest default_profile valid
+# 5d33a4a710bf8b1eea11a740ed686fc9a5556e15828851f7b3e48d027e553205 Elan 2.0.0-alpha guest default_profile valid
 
 main
   let order be inputIntBetween("Enter order of dragon [1..12]: ", 1, 12)
   call clearPrintedText()
-  print "Dragon of order {order}"
+  call print("Dragon of order {order}")
   let side be 75.0/(sqrt(2)^order)
   let corner be side/12.0/cos(45)
   variable turns set to left
