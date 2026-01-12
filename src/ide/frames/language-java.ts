@@ -20,11 +20,8 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
-import { Index } from "./parse-nodes";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
-import { IndexDouble } from "./parse-nodes/index-double";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
-import { ListNode } from "./parse-nodes/list-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { AssertStatement } from "./statements/assert-statement";
@@ -45,57 +42,57 @@ import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 
-export class LanguageVB implements Language {
-  languageFullName: string = "VB";
+export class LanguageJava implements Language {
+  languageFullName: string = "Java";
 
   annotation(frame: Frame): string {
     return frame.frameSpecificAnnotation();
   }
 
   commentMarker(): string {
-    return this.SINGLE_QUOTE;
+    return this.COMMENT_MARKER;
   }
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
       html = `<el-kw>assert </el-kw>${frame.actual.renderAsHtml()}<el-kw> is </el-kw>${frame.expected.renderAsHtml()}`;
     } else if (frame instanceof CallStatement) {
-      html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>)<el-punc>`;
+      html = `${frame.proc.renderAsHtml()}<el-punc>(</el-punc>${frame.args.renderAsHtml()}<el-punc>);</el-punc>`;
     } else if (frame instanceof CatchStatement) {
-      html = `<el-kw>${this.CATCH} <el-type>Exception</el-type> ${this.IN} </el-kw>${frame.variable.renderAsHtml()}`;
+      html = `<el-kw>${this.CATCH} <el-punc>(</el-punc><el-type>Exception</el-type>${frame.variable.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof CommentStatement) {
-      html = `<el-kw>${this.SINGLE_QUOTE} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof Constant) {
       // special case because the </el-top> needs to be placed part way through the line
-      html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}<el-kw></el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
+      html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
-      html = `<el-kw>${this.ELSEIF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}`;
+      html = `<el-punc>} </el-punc><el-kw>${this.ELSE} ${this.IF} </el-kw><el-punc>(</el-punc>${frame.condition.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof Else) {
-      html = `<el-kw>${this.ELSE}`;
+      html = `<el-punc>} </el-punc><el-kw>${this.ELSE}<el-punc> {</el-punc>`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
-      html = `<el-kw>${this.SINGLE_QUOTE} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof LetStatement) {
-      html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.VAR} </el-kw>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Print) {
-      html = `<el-method>PRINT</el-method><el-punc>((</el-punc>${frame.expr.renderAsHtml()}<el-punc>).</el-punc><el-method>asString</el-method><el-punc>())</el-punc>`;
+      html = `<el-method>print</el-method><el-punc>((</el-punc>${frame.expr.renderAsHtml()}<el-punc>).</el-punc><el-method>asString</el-method><el-punc>());</el-punc>`;
     } else if (frame instanceof Property) {
-      html = `${modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
+      html = `${modifierAsHtml(frame)} ${frame.type.renderAsHtml()} </el-kw>${frame.name.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof SetStatement) {
-      html = `${frame.assignable.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
+      html = `${frame.assignable.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof Throw) {
       html = `<el-kw>${this.THROW} <el-type>Exception</el-type> </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof VariableStatement) {
-      html = `<el-kw>${this.DIM} </el-kw>${frame.name.renderAsHtml()}<el-kw><el-punc> = </el-punc></el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.VAR} </el-kw>${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}<el-punc>;</el-punc>`;
     } else if (frame instanceof AbstractFunction) {
-      html = `<el-kw>${this.ABSTRACT} ${this.FUNCTION} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `<el-kw>${this.ABSTRACT} </el-kw>${frame.returnType.renderAsHtml()} <el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) ;</el-punc>`;
     } else if (frame instanceof AbstractProcedure) {
-      html = `<el-kw>${this.ABSTRACT} ${this.SUB} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `<el-kw>${this.ABSTRACT} ${this.VOID} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) ;</el-punc>`;
     } else if (frame instanceof AbstractProperty) {
-      html = ``;
+      html = `<el-kw>${this.ABSTRACT} </el-kw>${frame.type.renderAsHtml()} <el-id>${frame.name.renderAsHtml()}</el-id><el-punc>;</el-punc>`;
     }
     return html;
   }
@@ -111,33 +108,34 @@ export class LanguageVB implements Language {
     } else if (frame instanceof ConcreteClass) {
       html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof Constructor) {
-      html = `<el-kw>${this.PUBLIC} ${this.SUB} ${this.NEW}</el-kw><el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `TODO`;
     } else if (frame instanceof Each) {
-      html = `<el-kw>${this.FOR} ${this.EACH} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
+      html = `<el-kw>${this.FOREACH} </el-kw></el-kw><el-punc>(</el-punc>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}</el-kw><el-punc>) {</el-punc>`;
     } else if (frame instanceof For) {
-      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-punc> = </el-punc>${frame.from.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.to.renderAsHtml()}<el-kw> ${this.STEP} </el-kw>${frame.step.renderAsHtml()}`;
+      const v = frame.variable.renderAsHtml();
+      html = `<el-kw>${this.FOR} </el-kw><el-punc>(</el-punc>${v}<el-punc> = </el-punc>${frame.from.renderAsHtml()}<el-punc>; </el-punc>${v} <el-punc>&lt;=</el-punc>${frame.to.renderAsHtml()}<el-punc>; </el-punc>${v}<el-punc> = </el-punc>${v}<el-punc> + </el-punc>${frame.step.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof FunctionMethod) {
-      html = `${modifierAsHtml(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `${modifierAsHtml(frame)} ${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof GlobalFunction) {
-      html = `<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc><el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof GlobalProcedure) {
-      html = `<el-kw>${this.SUB} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `<el-kw>${this.VOID} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof IfStatement) {
-      html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}</el-kw>`;
+      html = `<el-kw>${this.IF} </el-kw><el-punc>(</el-punc>${frame.condition.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof InterfaceFrame) {
       html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritanceAsHtml()}`;
     } else if (frame instanceof MainFrame) {
-      html = `<el-kw>${this.SUB}</el-kw> <el-method>main</el-method><el-punc>()</el-punc>`;
+      html = `<el-kw>${this.VOID}</el-kw> <el-method>main</el-method><el-punc>() {</el-punc>`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `${modifierAsHtml(frame)}<el-kw>${this.SUB} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>)</el-punc>`;
+      html = `${modifierAsHtml(frame)}<el-kw>${this.VOID} </el-kw>${frame.name.renderAsHtml()}<el-punc>(</el-punc>${frame.params.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof RecordFrame) {
       html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.SUB} </el-kw>${frame.testName.renderAsHtml()}`;
+      html = `<el-kw>${this.VOID} </el-kw>${frame.testName.renderAsHtml()}<el-punc>() {</el-punc>`;
     } else if (frame instanceof TryStatement) {
-      html = `<el-kw>${this.TRY} </el-kw>`;
+      html = `<el-kw>${this.TRY}</el-kw><el-punc> {</el-punc>`;
     } else if (frame instanceof While) {
-      html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}`;
+      html = `<el-kw>${this.WHILE}<el-punc> (</el-punc></el-kw>${frame.condition.renderAsHtml()}<el-punc>) {</el-punc>`;
     }
     return html;
   }
@@ -147,41 +145,7 @@ export class LanguageVB implements Language {
   }
 
   renderBottomAsHtml(frame: Frame): string {
-    let html = `Html not specified for this frame`;
-    if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.EMPTY} ${this.CLASS}`;
-    } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.EMPTY} ${this.CLASS}`;
-    } else if (frame instanceof Constructor) {
-      html = `<el-kw>${this.EMPTY} ${this.SUB}`;
-    } else if (frame instanceof Each) {
-      html = `<el-kw>${this.EMPTY} ${this.NEXT}`;
-    } else if (frame instanceof For) {
-      html = `<el-kw>${this.EMPTY} ${this.NEXT}`;
-    } else if (frame instanceof FunctionMethod) {
-      html = `<el-kw>${this.EMPTY} ${this.FUNCTION}`;
-    } else if (frame instanceof GlobalFunction) {
-      html = `<el-kw>${this.EMPTY} ${this.FUNCTION}`;
-    } else if (frame instanceof GlobalProcedure) {
-      html = `<el-kw>${this.EMPTY} ${this.SUB}`;
-    } else if (frame instanceof IfStatement) {
-      html = `<el-kw>${this.EMPTY} ${this.IF}`;
-    } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.EMPTY} ${this.INTERFACE}`;
-    } else if (frame instanceof MainFrame) {
-      html = `<el-kw>${this.EMPTY} ${this.SUB}`;
-    } else if (frame instanceof ProcedureMethod) {
-      html = `<el-kw>${this.EMPTY} ${this.SUB}`;
-    } else if (frame instanceof RecordFrame) {
-      html = `<el-kw>${this.EMPTY} ${this.CLASS}`;
-    } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.EMPTY} ${this.SUB}`;
-    } else if (frame instanceof TryStatement) {
-      html = `<el-kw>${this.EMPTY} ${this.TRY}`;
-    } else if (frame instanceof While) {
-      html = `<el-kw>${this.EMPTY} ${this.WHILE}`;
-    }
-    return html;
+    return frame ? `<el-punc>}<el-punc>` : ``;
   }
 
   renderBottomAsExport(frame: Frame): string {
@@ -195,17 +159,17 @@ export class LanguageVB implements Language {
       const chopped = generics?.substring(22, generics.length - 4);
       html =
         node.simpleType?.renderAsHtml() +
-        `<el-punc>(</el-punc><el-kw>${this.OF} </el-kw><el-type>${chopped}</el-type><el-punc>)</el-punc>`;
+        `<el-punc>&lt;</el-punc><el-type>${chopped}</el-type><el-punc>&gt;</el-punc>`;
     } else if (node instanceof ParamDefNode) {
-      html = `${node.name?.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${node.type?.renderAsHtml()}`;
+      html = `${node.type?.renderAsHtml()} ${node.name?.renderAsHtml()}`;
     } else if (node instanceof BinaryOperation) {
       const open = node.keyword ? "<el-kw>" : "";
       const close = node.keyword ? "</el-kw>" : "";
       let text = node.matchedText.trim();
       if (text === "is") {
-        text = this.spaced(this.EQUALS);
+        text = this.spaced(this.DOUBLE_EQUAL);
       } else if (text === "isnt") {
-        text = this.spaced(this.NOT_EQUALS);
+        text = this.spaced(this.NOT_EQUAL);
       } else if (text === "and") {
         text = this.spaced(this.AND);
       } else if (text === "or") {
@@ -218,14 +182,11 @@ export class LanguageVB implements Language {
         text = node.renderAsElanSource();
       }
       html = `${open}${text}${close}`;
-    } else if (node instanceof Index) {
-      html = `<el-punc>(</el-punc>${node.contents?.renderAsHtml()}<el-punc>)</el-punc>`;
-    } else if (node instanceof IndexDouble) {
-      html = `<el-punc>(</el-punc>${node.index1?.renderAsHtml()}<el-punc>, </el-punc>${node.index2?.renderAsHtml()}<el-punc>)</el-punc>`;
     } else if (node instanceof InheritanceNode) {
-      html = `<el-punc>(</el-punc>${node.typeList?.renderAsHtml()}<el-punc>)</el-punc>`;
-    } else if (node instanceof ListNode) {
-      html = `<el-punc>{</el-punc>${node.csv?.renderAsHtml()}<el-punc>}</el-punc>`;
+      html =
+        node.matchedText.length > 0
+          ? `<el-kw>${this.INHERITS} ${node.typeList?.renderAsHtml()}`
+          : ``;
     }
     return html;
   }
@@ -248,43 +209,33 @@ PLUS:         '+';
   }
 
   private ABSTRACT = "abstract";
-  private AND = "And";
-  private AS = "As";
-  private CATCH = "Catch";
-  private CLASS = "Class";
-  private CONST = "Const";
-  private DIM = "Dim";
-  private EACH = "Each";
-  private ELSEIF = "ElseIf";
-  private ELSE = "Else";
-  private EMPTY = "End";
-  private ENUM = "Enum";
-  private FOR = "For";
-  private FUNCTION = "Function";
-  private IF = "If";
-  private IN = "In";
-  private INHERITS = "Inherits";
-  private INTERFACE = "Interface";
-  private IS = "Is";
-  private MOD = "Mod";
-  private NEW = "New";
-  private NEXT = "Next";
-  private NOT = "Not";
-  private OF = "Of";
-  private OR = "Or";
-  private PRIVATE = "Private";
-  private PROPERTY = "Property";
-  private PUBLIC = "Public";
-  private RETURN = "Return";
-  private STEP = "Step";
-  private SUB = "Sub";
-  private THEN = "Then";
-  private THROW = "Throw";
-  private TO = "To";
-  private TRY = "Try";
-  private WHILE = "While";
+  private CATCH = "catch";
+  private CLASS = "class";
+  private CONST = "const";
+  private FOREACH = "foreach";
+  private ELSE = "else";
+  private ENUM = "enum";
+  private FOR = "for";
+  private IF = "if";
+  private IN = "in";
+  private INHERITS = "inherits";
+  private INTERFACE = "interface";
+  private NEW = "new";
+  private PRIVATE = "private";
+  private RETURN = "return";
+  private STATIC = "static";
+  private thisKeyword = "this";
+  private THROW = "throw";
+  private TRY = "try";
+  private VAR = "var";
+  private VOID = "void";
+  private WHILE = "while";
 
-  private SINGLE_QUOTE = "'";
-  private EQUALS = "=";
-  private NOT_EQUALS = "<>";
+  private COMMENT_MARKER = "//";
+  private DOUBLE_EQUAL = "==";
+  private NOT_EQUAL = "!=";
+  private MOD = "%";
+  private NOT = "!";
+  private AND = "&&";
+  private OR = "||";
 }

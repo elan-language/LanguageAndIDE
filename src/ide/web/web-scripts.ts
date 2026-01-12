@@ -11,6 +11,7 @@ import { ParseMode } from "../frames/frame-interfaces/file";
 import { Profile } from "../frames/frame-interfaces/profile";
 import { LanguageCS } from "../frames/language-cs";
 import { LanguageElan } from "../frames/language-elan";
+import { LanguageJava } from "../frames/language-java";
 import { LanguagePython } from "../frames/language-python";
 import { LanguageVB } from "../frames/language-vb";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
@@ -61,6 +62,7 @@ const languageMenu = document.getElementById("language-menu") as HTMLDivElement;
 const pythonButton = document.getElementById("python-language") as HTMLDivElement;
 const vbButton = document.getElementById("vb-language") as HTMLDivElement;
 const csButton = document.getElementById("cs-language") as HTMLDivElement;
+const javaButton = document.getElementById("java-language") as HTMLDivElement;
 const elanButton = document.getElementById("elan-language") as HTMLDivElement;
 
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
@@ -783,6 +785,10 @@ vbButton?.addEventListener("click", async (_event: Event) => {
 
 csButton?.addEventListener("click", async (_event: Event) => {
   await codeViewModel.changeLanguage(new LanguageCS(), ideViewModel, testRunner);
+});
+
+javaButton?.addEventListener("click", async (_event: Event) => {
+  await codeViewModel.changeLanguage(new LanguageJava(), ideViewModel, testRunner);
 });
 
 elanButton?.addEventListener("click", async (_event: Event) => {
