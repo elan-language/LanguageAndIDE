@@ -43,6 +43,9 @@ import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 
 export class LanguageJava implements Language {
+  commentRegex(): RegExp {
+    return /\/\/ [^\r\n]*/;
+  }
   languageFullName: string = "Java";
 
   annotation(frame: Frame): string {

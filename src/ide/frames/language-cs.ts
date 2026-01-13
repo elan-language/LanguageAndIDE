@@ -43,6 +43,9 @@ import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 
 export class LanguageCS implements Language {
+  commentRegex(): RegExp {
+    return /\/\/ [^\r\n]*/;
+  }
   languageFullName: string = "C#";
 
   annotation(frame: Frame): string {
