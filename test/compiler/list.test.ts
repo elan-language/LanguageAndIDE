@@ -54,7 +54,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [4,5,6,7,8]
-  let b be [9,10,11]
+  variable b set to [9,10,11]
   call a.appendList(b)
   print a
 end main`;
@@ -63,7 +63,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([4, 5, 6, 7, 8]);
-  const b = system.list([9, 10, 11]);
+  let b = system.list([9, 10, 11]);
   a.appendList(b);
   await system.print(a);
 }
@@ -90,7 +90,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [4,5,6,7,8]
-  let b be 9
+  variable b set to 9
   call a.appendList(b)
   print a
 end main`;
@@ -116,7 +116,7 @@ end main`;
 
 main
   variable a set to [4,5,6,7,8]
-  let b be [9,10,11]
+  variable b set to [9,10,11]
   call a.prependList(b)
   print a
 end main`;
@@ -125,7 +125,7 @@ end main`;
 const global = new class {};
 async function main() {
   let a = system.list([4, 5, 6, 7, 8]);
-  const b = system.list([9, 10, 11]);
+  let b = system.list([9, 10, 11]);
   a.prependList(b);
   await system.print(a);
 }
@@ -1306,10 +1306,10 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let a be ["one", "two", "three"]
-  let b be a.asListImmutable()
-  let c be a.asArray()
-  let d be a.asSet()
+  variable a set to ["one", "two", "three"]
+  variable b set to a.asListImmutable()
+  variable c set to a.asArray()
+  variable d set to a.asSet()
   variable aa set to empty List<of String>
   variable bb set to empty ListImmutable<of String>
   variable cc set to empty Array<of String>
@@ -1327,10 +1327,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const a = system.list(["one", "two", "three"]);
-  const b = a.asListImmutable();
-  const c = a.asArray();
-  const d = a.asSet();
+  let a = system.list(["one", "two", "three"]);
+  let b = a.asListImmutable();
+  let c = a.asArray();
+  let d = a.asSet();
   let aa = system.initialise(_stdlib.List.emptyInstance());
   let bb = system.initialise(_stdlib.ListImmutable.emptyInstance());
   let cc = system.initialise(_stdlib.Array.emptyInstance());
@@ -2035,7 +2035,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let f be new Foo()
+  variable f set to new Foo()
   variable body set to [ref f.bar]
 end main
 

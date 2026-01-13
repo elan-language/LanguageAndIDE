@@ -1,23 +1,23 @@
-# 205cabd349c497f8ab2d4eedd4cfff8901f7b9cdb318478f55cb584661c88343 Elan 2.0.0-alpha guest default_profile valid
+# 52e9adf9b8b14da8bf2334390ce4b3f65a0cfe7ca6ea02bad6de8c30a7104ad1 Elan 2.0.0-alpha guest default_profile valid
 
 main
   #   sum the integers in a List
-  let li be [2, 3, 4, 7, 11]
+  variable li set to [2, 3, 4, 7, 11]
   call print(li.reduce(0, lambda isum as Int, item as Int => isum + item))
   #   sum the integers in a ListImmutable
-  let lim be {2, 3, 4, 7, 11}
+  variable lim set to {2, 3, 4, 7, 11}
   call print(lim.reduce(0, lambda isum as Int, item as Int => isum + item))
   #   sum the floats in a list
-  let lj be [0.1, 2.5, 2, 0.3, 5.7, 0.2]
+  variable lj set to [0.1, 2.5, 2, 0.3, 5.7, 0.2]
   call print(lj.reduce(0.0, lambda fsum as Float, item as Float => fsum + item).round(1))
   #   concatenate the strings in a list
-  let ls be ["Eeny", "Meeny", "Miny", "Mo"]
+  variable ls set to ["Eeny", "Meeny", "Miny", "Mo"]
   call print(ls.reduce(empty String, lambda concat as String, item as String => concat + item))
   #   find the longest string
   call print(ls.reduce(empty String, lambda longest as String, item as String => if item.length() > longest.length() then item else longest))
   #   reverse the order of a list
   call print(li.reduce(empty List<of Int>, lambda liR as List<of Int>, item as Int => liR.withPrepend(item)))
   #   reverse the order of a string
-  let s be "'Twas brillig and the slithy toves"
+  variable s set to "'Twas brillig and the slithy toves"
   call print(s.split(empty String).reduce(empty List<of String>, lambda sR as List<of String>, item as String => sR.withPrepend(item)).join(empty String))
 end main

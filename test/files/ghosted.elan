@@ -1,4 +1,4 @@
-# ca644a7854d09285e5c34e0a7c5f4edf72f499e4a36980591af9da81027d2f83 Elan 2.0.0-alpha guest default_profile valid
+# 0cf50ead2751fd1b14446b5f58d6a5a76c45bdaddbc80e64e32256cb9dbe78ab Elan 2.0.0-alpha guest default_profile valid
 
 [ghosted] constant k set to 3
 
@@ -18,6 +18,6 @@ end class
 end main
 
 function square(i as Int) returns Int
-  [ghosted] let result be i*i
+  [ghosted] constant result set to i*i
   return result
 end function

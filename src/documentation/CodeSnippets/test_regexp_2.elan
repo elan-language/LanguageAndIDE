@@ -1,9 +1,9 @@
-# ff8f83fd8fc3c4b05d34d8cf73bf3a349b78d60caaa36359e1cae2f4f5888855 Elan 2.0.0-alpha guest default_profile valid
+# 0842e7e43d411f08a693b246a855e9a5adaeafaa02e27868d133267f578c25c6 Elan 2.0.0-alpha guest default_profile valid
 
 test test_matchesRegExp
-  let s1 be "hello"
-  let s2 be "World"
-  let r be "^[a-z]*$".asRegExp()
+  variable s1 set to "hello"
+  variable s2 set to "World"
+  variable r set to "^[a-z]*$".asRegExp()
   assert s1.matchesRegExp(r) is true
   assert s2.matchesRegExp(r) is false
 end test

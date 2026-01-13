@@ -1,4 +1,4 @@
-# 03b234c6109481ddc624a8c06f8e9afa575c3adf80cd0711398819ebfa3e778d Elan 2.0.0-alpha guest default_profile valid
+# abfff555534599218e90cf5e615574abab60eaf71becf537b97550fa3171138f Elan 2.0.0-alpha guest default_profile valid
 
 # Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
 # A Cellular Automaton Model of Excitable Media
@@ -41,7 +41,7 @@ main
 end main
 
 procedure updateGrid(out hodge as Array2D<of Int>, podge as Array2D<of Int>, initial as Boolean)
-  let nColours be colours.length()
+  constant nColours set to colours.length()
   for i from 0 to gW - 1 step 1
     for j from 0 to gH - 1 step 1
       if initial then
@@ -57,7 +57,7 @@ procedure updateGrid(out hodge as Array2D<of Int>, podge as Array2D<of Int>, ini
 end procedure
 
 function uniform(grid as Array2D<of Int>) returns Boolean
-  let uniformGrid be new Array2D<of Int>(gW, gH, grid[0, 0])
+  constant uniformGrid set to new Array2D<of Int>(gW, gH, grid[0, 0])
   return if grid is uniformGrid then true else false
 end function
 
@@ -67,16 +67,16 @@ end function
 
 function getNeighbourColours(grid as Array2D<of Int>, i as Int, j as Int) returns List<of Int>
   # grid wraps around: all cells have the same number of neighbours
-  let sL be grid[(i + gW - 1) mod gW, j]
-  let sR be grid[(i + gW + 1) mod gW, j]
-  let sA be grid[i, (j + gH - 1) mod gH]
-  let sB be grid[i, (j + gH + 1) mod gH]
+  constant sL set to grid[(i + gW - 1) mod gW, j]
+  constant sR set to grid[(i + gW + 1) mod gW, j]
+  constant sA set to grid[i, (j + gH - 1) mod gH]
+  constant sB set to grid[i, (j + gH + 1) mod gH]
   variable neighbourColours set to [sL, sR, sA, sB]
   if vN is false then
-    let sLA be grid[(i + gW - 1) mod gW, (j + gH - 1) mod gH]
-    let sRA be grid[(i + gW + 1) mod gW, (j + gH - 1) mod gH]
-    let sLB be grid[(i + gW - 1) mod gW, (j + gH + 1) mod gH]
-    let sRB be grid[(i + gW + 1) mod gW, (j + gH + 1) mod gH]
+    constant sLA set to grid[(i + gW - 1) mod gW, (j + gH - 1) mod gH]
+    constant sRA set to grid[(i + gW + 1) mod gW, (j + gH - 1) mod gH]
+    constant sLB set to grid[(i + gW - 1) mod gW, (j + gH + 1) mod gH]
+    constant sRB set to grid[(i + gW + 1) mod gW, (j + gH + 1) mod gH]
     set neighbourColours to [sL, sR, sA, sB, sLA, sRA, sLB, sRB]
   end if
   return neighbourColours

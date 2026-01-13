@@ -1112,7 +1112,7 @@ function mapToPurpose(symbol: ElanSymbol) {
   }
 
   if (isLet(symbol)) {
-    return "'let'";
+    return "constant";
   }
 
   return "variable";

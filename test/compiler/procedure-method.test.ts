@@ -544,7 +544,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  let x be 3
+  variable x set to 3
   call x.clearPrintedText()
 end main`;
 
@@ -569,7 +569,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let x be 3
+  variable x set to 3
   call x.foo(x)
 end main
 

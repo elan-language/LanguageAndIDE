@@ -1,4 +1,4 @@
-# 79982cb74dbe8a173e98182543cd0dc39e5efaf9c2fa2532c0b9c1a9cd73e391 Elan 2.0.0-alpha guest default_profile valid
+# ed8091ff3bfe1eabc4b2b7991ce678be09d79f62038d25467dfc846fcb637fa5 Elan 2.0.0-alpha guest default_profile valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -8,11 +8,11 @@
 main
   variable tm set to new TuringMachine(initState, haltState)
   call addRulesForRomanNumeralsInto(tm)
-  let decimal be inputIntBetween("Enter a year:", 1, 3999)
+  constant decimal set to inputIntBetween("Enter a year:", 1, 3999)
   call tm.setTape(decimal.asString())
   variable steps set to 0
   while not tm.isHalted()
-    let rule be tm.findMatchingRule()
+    constant rule set to tm.findMatchingRule()
     call tm.singleStep()
     set steps to steps + 1
     call clearPrintedText()
@@ -58,7 +58,7 @@ class TuringMachine
   end procedure
 
   procedure singleStep()
-    let rule be findMatchingRule()
+    variable rule set to findMatchingRule()
     call execute(rule)
   end procedure
 
@@ -67,7 +67,7 @@ class TuringMachine
   end function
 
   function findMatchingRule() returns Rule
-    let matches be property.rules.filter(lambda r as Rule => (r.currentState is property.currentState) and (r.currentSymbol is property.tape[property.headPosition]))
+    variable matches set to property.rules.filter(lambda r as Rule => (r.currentState is property.currentState) and (r.currentSymbol is property.tape[property.headPosition]))
     if matches.length() is 0 then
       throw exception "No rule matching state {property.currentState} and symbol {property.tape[property.headPosition]}"
     end if
@@ -75,7 +75,7 @@ class TuringMachine
   end function
 
   procedure write(newSymbol as String)
-    let hp be property.headPosition
+    constant hp set to property.headPosition
     set property.tape to property.tape[..hp] + newSymbol + property.tape[hp + 1..]
   end procedure
 

@@ -63,7 +63,7 @@ main
 end main
 
 function first(t as (Int, Int)) returns Int
-    let a, _ be t
+    variable a, _ set to t
     return a
 end function
   
@@ -78,7 +78,7 @@ async function main() {
 }
 
 async function first(t) {
-  const [a, ] = t;
+  let [a, ] = t;
   return a;
 }
 global["first"] = first;
@@ -434,14 +434,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let l be lambda x as Func<of Int => Int> => x(2)
+  variable l set to lambda x as Func<of Int => Int> => x(2)
   print l(lambda x as Int => 2 * x)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const l = async (x) => (await x(2));
+  let l = async (x) => (await x(2));
   await system.print((await l(async (x) => 2 * x)));
 }
 return [main, _tests];}`;
@@ -672,7 +672,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  let aa be lambda x as Int => aa
+  variable aa set to lambda x as Int => aa
 end main`;
 
     const fileImpl = new FileImpl(
@@ -693,7 +693,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let l be lambda x as Int => if x is 1 then x else l(x-1)
+  variable l set to lambda x as Int => if x is 1 then x else l(x-1)
 end main`;
 
     const fileImpl = new FileImpl(

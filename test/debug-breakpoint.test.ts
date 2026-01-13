@@ -111,7 +111,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  let a be ff(3)
+  variable a set to ff(3)
 end main
 
 function ff(e as Int) returns Int
@@ -152,7 +152,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  let f be new Foo()
+  variable f set to new Foo()
   call f.pp(3)
 end main
 
@@ -199,8 +199,8 @@ end class`;
     const code = `${testHeader}
 
 main
-  let f be new Foo()
-  let a be f.ff(3)
+  variable f set to new Foo()
+  variable a set to f.ff(3)
 end main
 
 class Foo
@@ -247,7 +247,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  let f be new Foo(3)
+  variable f set to new Foo(3)
 end main
 
 class Foo
@@ -326,7 +326,7 @@ main
   variable a set to {7,8,9}
   variable n set to 0
   each x in a
-    let z be 101
+    variable z set to 101
     set n to n + x
   end each
   print n
@@ -703,7 +703,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let x, y be a
+  variable x, y set to a
   print x
 end main
 
@@ -739,7 +739,7 @@ constant a set to tuple(1, "fred")`;
     const code = `${testHeader}
 
 main
-  let x:y be a
+  variable x:y set to a
   print x
 end main
 
@@ -775,7 +775,7 @@ constant a set to {1, 2, 3}`;
     const code = `${testHeader}
 
 main
-  let x, y be new Foo() with x set to 1, y set to "fred"
+  variable x, y set to new Foo() with x set to 1, y set to "fred"
   print x
 end main
 
@@ -831,8 +831,8 @@ class Foo
 end class
 
 main
-  let a be new Foo(ref foo)
-  let b be a.df()
+  variable a set to new Foo(ref foo)
+  variable b set to a.df()
 end main`;
 
     const fileImpl = new FileImpl(

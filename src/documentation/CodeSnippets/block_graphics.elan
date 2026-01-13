@@ -1,11 +1,11 @@
-# 8945fdc44b60b4f9d858c99d2554383ba0722a9f8ff8e22b752e544525bfb9ac Elan 2.0.0-alpha guest default_profile valid
+# 736ac59abfda3fd269d9df8197a4a544ddd2cdb2d3b949032830fcbb473a581c Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable blocks set to new Array2D<of Int>(40, 30, white)
   while true
-    let x be randomInt(0, 39)
-    let y be randomInt(0, 29)
-    let colour be randomInt(0, white - 1)
+    variable x set to randomInt(0, 39)
+    variable y set to randomInt(0, 29)
+    variable colour set to randomInt(0, white - 1)
     call blocks.put(x, y, colour)
     call displayBlocks(blocks)
   end while

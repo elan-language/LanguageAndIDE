@@ -636,7 +636,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let f be new Foo()
+  variable f set to new Foo()
   call f.append()
 end main
 
@@ -652,7 +652,7 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const f = system.initialise(await new Foo()._initialise());
+  let f = system.initialise(await new Foo()._initialise());
   await f.append();
 }
 
@@ -1580,7 +1580,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  let f be new Foo()
+  variable f set to new Foo()
   call f.constructor()
 end main
 

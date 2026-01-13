@@ -187,7 +187,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let a be new List<of Foo>()
+  variable a set to new List<of Foo>()
 end main`;
 
     const fileImpl = new FileImpl(
@@ -209,7 +209,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let a be new List<of List<of Foo>>()
+  variable a set to new List<of List<of Foo>>()
 end main`;
 
     const fileImpl = new FileImpl(
@@ -231,8 +231,8 @@ end main`;
     const code = `${testHeader}
 
 main
-  let t be 1
-  let a be new List<of t>()
+  variable t set to 1
+  variable a set to new List<of t>()
 end main`;
 
     const fileImpl = new FileImpl(

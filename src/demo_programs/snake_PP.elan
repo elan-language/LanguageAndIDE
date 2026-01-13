@@ -1,11 +1,11 @@
-# 8d0687fae29da1df721b5a9f32bf0c25a7ac4619318f9f22c61f5e3d9176b2e6 Elan 2.0.0-alpha guest default_profile valid
+# b91652a440d6332be3ea6743fab9cb270f45a16d83976fff4419e98a5ef2c3f0 Elan 2.0.0-alpha guest default_profile valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
-  let blocks be new Array2D<of Int>(40, 30, white)
+  variable blocks set to new Array2D<of Int>(40, 30, white)
   variable head set to [20, 15]
   variable tail set to head
-  let body be [head]
+  variable body set to [head]
   variable currentDir set to "right"
   variable gameOn set to true
   variable apple set to [0, 0]
@@ -33,7 +33,7 @@ end procedure
 
 procedure updateDisplay(blocks as Array2D<of Int>, head as List<of Int>, tail as List<of Int>, body as List<of List<of Int>>, apple as List<of Int>)
   call blocks.put(head[0], head[1], green)
-  let tailColour be getTailColour(tail, body)
+  variable tailColour set to getTailColour(tail, body)
   call blocks.put(tail[0], tail[1], tailColour)
   call blocks.put(apple[0], apple[1], red)
   call displayBlocks(blocks)
@@ -79,7 +79,7 @@ end function
 
 function directionByKey(current as String, key as String) returns String
   variable dir set to current
-  let dict be ["w":"up", "s":"down", "a":"left", "d":"right"]
+  constant dict set to ["w":"up", "s":"down", "a":"left", "d":"right"]
   if dict.keys().contains(key) then
     set dir to dict[key]
   end if
@@ -103,7 +103,7 @@ test test_hasHitEdge
 end test
 
 test test_getAdjacentSquare
-  let sq be [20, 15]
+  constant sq set to [20, 15]
   assert getAdjacentSquare(sq, "up") is [20, 14]
   assert getAdjacentSquare(sq, "down") is [20, 16]
   assert getAdjacentSquare(sq, "left") is [19, 15]
@@ -113,7 +113,7 @@ test test_getAdjacentSquare
 end test
 
 test test_directionByKey
-  let current be "up"
+  constant current set to "up"
   assert directionByKey(current, "") is "up"
   assert directionByKey(current, "x") is "up"
   assert directionByKey(current, "w") is "up"

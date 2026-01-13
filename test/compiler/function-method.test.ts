@@ -1053,7 +1053,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  let f be new Foo()
+  variable f set to new Foo()
   print f.foo()
 end main
     
@@ -1093,7 +1093,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  let f be new Foo()
+  variable f set to new Foo()
   print f.foo()
 end main
     

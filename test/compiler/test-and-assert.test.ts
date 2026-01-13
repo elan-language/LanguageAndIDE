@@ -170,7 +170,7 @@ main
 end main
 
 test square
-  let t be tuple("one", "two")
+  constant t set to tuple("one", "two")
   assert t is tuple("one", "two")
 end test
 `;
@@ -258,8 +258,8 @@ main
 end main
 
 test square
-  let t1 be tuple("one", "two")
-  let t2 be tuple("one", "two")
+  variable t1 set to tuple("one", "two")
+  variable t2 set to tuple("one", "two")
   assert t1 is t2
 end test
 `;
@@ -271,8 +271,8 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  const t1 = system.tuple(["one", "two"]);
-  const t2 = system.tuple(["one", "two"]);
+  let t1 = system.tuple(["one", "two"]);
+  let t2 = system.tuple(["one", "two"]);
   _outcomes.push(await system.assert([async () => t1, "tuple(String, String)"], [t2, "tuple(String, String)"], "assert12", _stdlib, false));
 }]);
 return [main, _tests];}`;
@@ -305,8 +305,8 @@ main
 end main
 
 test square
-  let f be new Foo()
-  let t2 be 10
+  variable f set to new Foo()
+  variable t2 set to 10
   assert f.p1 is t2
 end test
 
@@ -326,8 +326,8 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  const f = system.initialise(await new Foo()._initialise());
-  const t2 = 10;
+  let f = system.initialise(await new Foo()._initialise());
+  let t2 = 10;
   _outcomes.push(await system.assert([async () => f.p1, "Int"], [t2, "Int"], "assert12", _stdlib, false));
 }]);
 
@@ -369,8 +369,8 @@ main
 end main
 
 test square
-  let f be new Foo()
-  let t2 be 10
+  variable f set to new Foo()
+  variable t2 set to 10
   assert t2 is f.p1
 end test
 
@@ -390,8 +390,8 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  const f = system.initialise(await new Foo()._initialise());
-  const t2 = 10;
+  let f = system.initialise(await new Foo()._initialise());
+  let t2 = 10;
   _outcomes.push(await system.assert([async () => t2, "Int"], [f.p1, "Int"], "assert12", _stdlib, false));
 }]);
 
@@ -934,7 +934,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 test arrayContent
-  let a be new Array2D<of String>(2, 2, "*")
+  variable a set to new Array2D<of String>(2, 2, "*")
   assert a is [["*", "*"], ["*", "*"]]
 end test
 `;
@@ -952,7 +952,7 @@ end test
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 _tests.push(["test1", async (_outcomes) => {
-  const a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, "*"));
+  let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, "*"));
   _outcomes.push(await system.assert([async () => a, "Array2D<of String>"], [system.list([system.list(["*", "*"]), system.list(["*", "*"])]), "List<of List<of String>>"], "assert7", _stdlib, false));
 }]);
 
@@ -1070,7 +1070,7 @@ main
 end main
 
 test square
-  let a be 1
+  variable a set to 1
   if true then
     assert a is 9
   end if
@@ -1098,7 +1098,7 @@ main
 end main
 
 test square
-  let a be 1
+  variable a set to 1
   while true
     assert a is 9
   end while
@@ -1124,8 +1124,8 @@ main
 end main
 
 test square
-  let actual be " 1  2   3    "
-  let expected be " 1  2   3    "
+  variable actual set to " 1  2   3    "
+  variable expected set to " 1  2   3    "
   assert actual is expected
 end test
 `;
@@ -1137,8 +1137,8 @@ async function main() {
 }
 
 _tests.push(["test3", async (_outcomes) => {
-  const actual = " 1  2   3    ";
-  const expected = " 1  2   3    ";
+  let actual = " 1  2   3    ";
+  let expected = " 1  2   3    ";
   _outcomes.push(await system.assert([async () => actual, "String"], [expected, "String"], "assert12", _stdlib, false));
 }]);
 return [main, _tests];}`;

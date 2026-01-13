@@ -1,21 +1,21 @@
-# c01101a1136b11f1757b627727238ccca9c59d5a65116ede6171ebb47c28d45b Elan 2.0.0-alpha guest default_profile valid
+# ec4eaf706177327d417ec577c6f371009ce5263d9845646824f82696ba61685b Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable blocks set to new Array2D<of Int>(40, 30, black)
   set blocks to createStart(blocks)
   for i from 0 to displayWidth step 1
-    let x be randomInt(0, 39)
-    let y be randomInt(0, 29)
-    let p be newPoint(x, y)
-    let existing be getValue(p, blocks)
-    let setTo be (random() + 0.7).floor()
+    constant x set to randomInt(0, 39)
+    constant y set to randomInt(0, 29)
+    constant p set to newPoint(x, y)
+    constant existing set to getValue(p, blocks)
+    constant setTo set to (random() + 0.7).floor()
     if okToSet(p, setTo, blocks) then
-      let colour be if setTo is 1 then white else black
+      constant colour set to if setTo is 1 then white else black
       set blocks to blocks.withPut(p.x, p.y, colour)
     end if
   end for
   call displayBlocks(blocks)
-  let name be inputString("File name to save: ")
+  constant name set to inputString("File name to save: ")
   if name isnt "x" then
     call saveAsFile(name, blocks)
   end if
@@ -24,12 +24,12 @@ end main
 constant displayWidth set to 150
 
 procedure saveAsFile(name as String, b as Array2D<of Int>)
-  let file be createFileForWriting(name)
+  variable file set to createFileForWriting(name)
   for row from 0 to 29 step 1
     variable line set to ""
     for col from 0 to 39 step 1
-      let colour be b[col, row]
-      let symbol be if colour is white then " " else "X"
+      constant colour set to b[col, row]
+      constant symbol set to if colour is white then " " else "X"
       set line to line + symbol
     end for
     call file.writeLine(line)
@@ -46,7 +46,7 @@ function createStart(b as Array2D<of Int>) returns Array2D<of Int>
 end function
 
 function addRectangle(b as Array2D<of Int>, startX as Int, startY as Int, width as Int, depth as Int) returns Array2D<of Int>
-  let paint be white
+  constant paint set to white
   variable b2 set to b
   for x from startX to startX + width step 1
     set b2 to b2.withPut(x, startY, paint)
@@ -61,18 +61,18 @@ end function
 
 # colour: 0 for black, 1 for white
 function okToSet(p as Point, colour as Int, g as Array2D<of Int>) returns Boolean
-  let n be p.neighbouringPoints().map(lambda p as Point => getValue(p, g))
-  let q1 be isValidQuadrant(n[0] + n[1]*2 + colour*4 + n[3]*8)
-  let q2 be isValidQuadrant(n[1] + n[2]*2 + n[4]*4 + colour*8)
-  let q3 be isValidQuadrant(colour + n[4]*2 + n[7]*4 + n[6]*8)
-  let q4 be isValidQuadrant(n[3] + colour*2 + n[6]*4 + n[5]*8)
+  constant n set to p.neighbouringPoints().map(lambda p as Point => getValue(p, g))
+  constant q1 set to isValidQuadrant(n[0] + n[1]*2 + colour*4 + n[3]*8)
+  constant q2 set to isValidQuadrant(n[1] + n[2]*2 + n[4]*4 + colour*8)
+  constant q3 set to isValidQuadrant(colour + n[4]*2 + n[7]*4 + n[6]*8)
+  constant q4 set to isValidQuadrant(n[3] + colour*2 + n[6]*4 + n[5]*8)
   return q1 and q2 and q3 and q4
 end function
 
 function getValue(p as Point, b as Array2D<of Int>) returns Int
   variable result set to 0
   if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30) then
-    let colour be b[p.x, p.y]
+    constant colour set to b[p.x, p.y]
     set result to if colour is black then 0 else 1
   end if
   return result
@@ -129,8 +129,8 @@ function newPoint(x as Int, y as Int) returns Point
 end function
 
 test test_neighbouringPoints
-  let p be newPoint(0, 0)
-  let n be p.neighbouringPoints()
-  let expected be [newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)]
+  constant p set to newPoint(0, 0)
+  constant n set to p.neighbouringPoints()
+  constant expected set to [newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)]
   assert n is expected
 end test

@@ -303,20 +303,20 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let a be  parseAsFloat("10.1e2")
-  let b be  parseAsFloat("10.1e+2")
-  let c be  parseAsFloat("10.1e-2")
-  let d be  parseAsFloat("0.12E2")
+  variable a set to  parseAsFloat("10.1e2")
+  variable b set to  parseAsFloat("10.1e+2")
+  variable c set to  parseAsFloat("10.1e-2")
+  variable d set to  parseAsFloat("0.12E2")
   print [a, b, c, d]
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const a = _stdlib.parseAsFloat("10.1e2");
-  const b = _stdlib.parseAsFloat("10.1e+2");
-  const c = _stdlib.parseAsFloat("10.1e-2");
-  const d = _stdlib.parseAsFloat("0.12E2");
+  let a = _stdlib.parseAsFloat("10.1e2");
+  let b = _stdlib.parseAsFloat("10.1e+2");
+  let c = _stdlib.parseAsFloat("10.1e-2");
+  let d = _stdlib.parseAsFloat("0.12E2");
   await system.print(system.list([a, b, c, d]));
 }
 return [main, _tests];}`;
@@ -964,9 +964,9 @@ return [main, _tests];}`;
 
 main
   variable oxoBoard set to new Array2D<of String>(3,3,"")
-  let ob2 be oxoBoard.withPut(0, 0, "o")
-  let ob3 be ob2.withPut(2, 1, "x")
-  let ob4 be ob3.withPut(1, 2, "o")
+  variable ob2 set to oxoBoard.withPut(0, 0, "o")
+  variable ob3 set to ob2.withPut(2, 1, "x")
+  variable ob4 set to ob3.withPut(1, 2, "o")
   print oxoBoard
   print ob2
   print ob3
@@ -977,9 +977,9 @@ end main`;
 const global = new class {};
 async function main() {
   let oxoBoard = system.initialise(await new _stdlib.Array2D()._initialise(3, 3, ""));
-  const ob2 = oxoBoard.withPut(0, 0, "o");
-  const ob3 = ob2.withPut(2, 1, "x");
-  const ob4 = ob3.withPut(1, 2, "o");
+  let ob2 = oxoBoard.withPut(0, 0, "o");
+  let ob3 = ob2.withPut(2, 1, "x");
+  let ob4 = ob3.withPut(1, 2, "o");
   await system.print(oxoBoard);
   await system.print(ob2);
   await system.print(ob3);
@@ -1238,16 +1238,16 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let s be "Now is the time..."
-  let words be s.split(" ")
+  variable s set to "Now is the time..."
+  variable words set to s.split(" ")
   print words
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const s = "Now is the time...";
-  const words = _stdlib.split(s, " ");
+  let s = "Now is the time...";
+  let words = _stdlib.split(s, " ");
   await system.print(words);
 }
 return [main, _tests];}`;
@@ -1271,16 +1271,16 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let words be ["Now", "is","the","time..."]
-  let s be words.join(".")
+  variable words set to ["Now", "is","the","time..."]
+  variable s set to words.join(".")
   print s
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const words = system.list(["Now", "is", "the", "time..."]);
-  const s = (await words.join("."));
+  let words = system.list(["Now", "is", "the", "time..."]);
+  let s = (await words.join("."));
   await system.print(s);
 }
 return [main, _tests];}`;
@@ -1304,16 +1304,16 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let words be {"Now", "is","the","time..."}
-  let s be words.join(".")
+  variable words set to {"Now", "is","the","time..."}
+  variable s set to words.join(".")
   print s
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const words = system.listImmutable(["Now", "is", "the", "time..."]);
-  const s = (await words.join("."));
+  let words = system.listImmutable(["Now", "is", "the", "time..."]);
+  let s = (await words.join("."));
   await system.print(s);
 }
 return [main, _tests];}`;
@@ -1338,16 +1338,16 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let words be {1,2,3,4}
-  let s be words.join("")
+  variable words set to {1,2,3,4}
+  variable s set to words.join("")
   print s
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const words = system.listImmutable([1, 2, 3, 4]);
-  const s = (await words.join(""));
+  let words = system.listImmutable([1, 2, 3, 4]);
+  let s = (await words.join(""));
   await system.print(s);
 }
 return [main, _tests];}`;
@@ -1372,8 +1372,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let words be {new Point(), new Point()}
-  let s be words.join(",")
+  variable words set to {new Point(), new Point()}
+  variable s set to words.join(",")
   print s
 end main
 
@@ -1383,8 +1383,8 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const words = system.listImmutable([system.initialise(await new Point()._initialise()), system.initialise(await new Point()._initialise())]);
-  const s = (await words.join(","));
+  let words = system.listImmutable([system.initialise(await new Point()._initialise()), system.initialise(await new Point()._initialise())]);
+  let s = (await words.join(","));
   await system.print(s);
 }
 
@@ -1415,8 +1415,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let words be [new Point(), new Point()]
-  let s be words.join(",")
+  variable words set to [new Point(), new Point()]
+  variable s set to words.join(",")
   print s
 end main
 
@@ -1426,8 +1426,8 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const words = system.list([system.initialise(await new Point()._initialise()), system.initialise(await new Point()._initialise())]);
-  const s = (await words.join(","));
+  let words = system.list([system.initialise(await new Point()._initialise()), system.initialise(await new Point()._initialise())]);
+  let s = (await words.join(","));
   await system.print(s);
 }
 
@@ -1458,8 +1458,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let words be ["Now", "is","the","time..."].asArray()
-  let s be words.join(".")
+  variable words set to ["Now", "is","the","time..."].asArray()
+  variable s set to words.join(".")
   print s
 end main`;
 
@@ -1483,8 +1483,8 @@ end main`;
     const code = `${testHeader}
 
 main
-  let s1 be "[a] [b]"
-  let s2 be s1.replace("[",unicode(123)).replace("]", unicode(125))
+  variable s1 set to "[a] [b]"
+  variable s2 set to s1.replace("[",unicode(123)).replace("]", unicode(125))
   print s1
   print s2
 end main`;
@@ -1492,8 +1492,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const s1 = "[a] [b]";
-  const s2 = _stdlib.replace(_stdlib.replace(s1, "[", _stdlib.unicode(123)), "]", _stdlib.unicode(125));
+  let s1 = "[a] [b]";
+  let s2 = _stdlib.replace(_stdlib.replace(s1, "[", _stdlib.unicode(123)), "]", _stdlib.unicode(125));
   await system.print(s1);
   await system.print(s2);
 }
@@ -1518,10 +1518,10 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let s1 be "cbababbc"
-  let s2 be "cbabdabbc"
-  let result1 be s1.matchesRegExp(/[a-c]*/)
-  let result2 be s2.matchesRegExp(/^[a-c]*$/)
+  variable s1 set to "cbababbc"
+  variable s2 set to "cbabdabbc"
+  variable result1 set to s1.matchesRegExp(/[a-c]*/)
+  variable result2 set to s2.matchesRegExp(/^[a-c]*$/)
   print result1
   print result2
 end main`;
@@ -1529,10 +1529,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const s1 = "cbababbc";
-  const s2 = "cbabdabbc";
-  const result1 = _stdlib.matchesRegExp(s1, /[a-c]*/);
-  const result2 = _stdlib.matchesRegExp(s2, /^[a-c]*$/);
+  let s1 = "cbababbc";
+  let s2 = "cbabdabbc";
+  let result1 = _stdlib.matchesRegExp(s1, /[a-c]*/);
+  let result2 = _stdlib.matchesRegExp(s2, /^[a-c]*$/);
   await system.print(result1);
   await system.print(result2);
 }
@@ -1557,14 +1557,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let r be "[a-c]*".asRegExp()
+  variable r set to "[a-c]*".asRegExp()
   print r
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const r = _stdlib.asRegExp("[a-c]*");
+  let r = _stdlib.asRegExp("[a-c]*");
   await system.print(r);
 }
 return [main, _tests];}`;
@@ -1588,9 +1588,9 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let a be [1, 3, 5, 7, 9]
-  let b be {2, 4, 6, 8}
-  let c be "Hello World!"
+  variable a set to [1, 3, 5, 7, 9]
+  variable b set to {2, 4, 6, 8}
+  variable c set to "Hello World!"
   print a.indexOf(9)
   print a.indexOf(5)
   print b.indexOf(2)
@@ -1605,9 +1605,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const a = system.list([1, 3, 5, 7, 9]);
-  const b = system.listImmutable([2, 4, 6, 8]);
-  const c = "Hello World!";
+  let a = system.list([1, 3, 5, 7, 9]);
+  let b = system.listImmutable([2, 4, 6, 8]);
+  let c = "Hello World!";
   await system.print(a.indexOf(9));
   await system.print(a.indexOf(5));
   await system.print(b.indexOf(2));
@@ -2188,14 +2188,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let b be ["2", "7"].asSet()
-  let c be ["7", "2"].asSet()
-  let d be ["8", "2"].asSet()
+  variable b set to ["2", "7"].asSet()
+  variable c set to ["7", "2"].asSet()
+  variable d set to ["8", "2"].asSet()
   print b is c
   print b is d
-  let b2 be [2, 7].asSet()
-  let c2 be [7, 2].asSet()
-  let d2 be [8, 2].asSet()
+  variable b2 set to [2, 7].asSet()
+  variable c2 set to [7, 2].asSet()
+  variable d2 set to [8, 2].asSet()
   print b2 is c2
   print b2 is d2
 end main
@@ -2204,14 +2204,14 @@ end main
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const b = system.list(["2", "7"]).asSet();
-  const c = system.list(["7", "2"]).asSet();
-  const d = system.list(["8", "2"]).asSet();
+  let b = system.list(["2", "7"]).asSet();
+  let c = system.list(["7", "2"]).asSet();
+  let d = system.list(["8", "2"]).asSet();
   await system.print(system.objectEquals(b, c));
   await system.print(system.objectEquals(b, d));
-  const b2 = system.list([2, 7]).asSet();
-  const c2 = system.list([7, 2]).asSet();
-  const d2 = system.list([8, 2]).asSet();
+  let b2 = system.list([2, 7]).asSet();
+  let c2 = system.list([7, 2]).asSet();
+  let d2 = system.list([8, 2]).asSet();
   await system.print(system.objectEquals(b2, c2));
   await system.print(system.objectEquals(b2, d2));
 }

@@ -188,7 +188,7 @@ suite("Selector tests", () => {
     const m = new MainFrame(f);
     const s = new StatementSelector(m);
     let help = s.getCompletion();
-    assert.equal(help, " call each for if let set throw try variable while comment");
+    assert.equal(help, " call each for if constant set throw try variable while comment");
     s.processKey(key("t"));
     help = s.getCompletion();
     assert.equal(help, " throw try");
@@ -209,7 +209,7 @@ suite("Selector tests", () => {
     const func = new GlobalFunction(fl);
     const s = new StatementSelector(func);
     const help = s.getCompletion();
-    assert.equal(help, " each for if let set throw try variable while comment");
+    assert.equal(help, " each for if constant set throw try variable while comment");
   });
 
   test("Selection Context - in a Procedure", () => {
@@ -223,7 +223,7 @@ suite("Selector tests", () => {
     const proc = new GlobalProcedure(fl);
     const s = new StatementSelector(proc);
     const help = s.getCompletion();
-    assert.equal(help, " call each for if let set throw try variable while comment");
+    assert.equal(help, " call each for if constant set throw try variable while comment");
   });
 
   test("Selection Context - in a Test", () => {
@@ -237,7 +237,7 @@ suite("Selector tests", () => {
     const test = new TestFrame(fl);
     const s = new StatementSelector(test);
     const help = s.getCompletion();
-    assert.equal(help, " assert each for if let set throw try variable while comment");
+    assert.equal(help, " assert each for if constant set throw try variable while comment");
   });
 
   test("Selection Context - deeper nesting 1", () => {
@@ -253,7 +253,7 @@ suite("Selector tests", () => {
     const wh = new While(if1);
     const s = new StatementSelector(wh);
     const help = s.getCompletion();
-    assert.equal(help, " each for if let set throw try variable while comment"); //no else, call
+    assert.equal(help, " each for if constant set throw try variable while comment"); //no else, call
   });
 
   test("Selection Context - deeper nesting 2", () => {
@@ -269,7 +269,7 @@ suite("Selector tests", () => {
     const if1 = new IfStatement(fm);
     const s = new StatementSelector(if1);
     const help = s.getCompletion();
-    assert.equal(help, " each elif else for if let set throw try variable while comment"); //else, but no call
+    assert.equal(help, " each elif else for if constant set throw try variable while comment"); //else, but no call
   });
   test("Selection Context - in an IfThen", () => {
     const fl = new FileImpl(
@@ -283,7 +283,7 @@ suite("Selector tests", () => {
     const ifThen = new IfStatement(m);
     const s = new StatementSelector(ifThen);
     const help = s.getCompletion();
-    assert.equal(help, " call each elif else for if let set throw try variable while comment");
+    assert.equal(help, " call each elif else for if constant set throw try variable while comment");
   });
   test("Selection Context - selector prevents more than one main", () => {
     const fl = new FileImpl(

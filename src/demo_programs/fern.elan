@@ -1,9 +1,9 @@
-# 82f6ab8a1094961a4a3cc367046d1681e203aa00164b0050f0a1c1e92890325f Elan 2.0.0-alpha guest default_profile valid
+# 6ad97c2c07c248fa1abab3fb6b1cd629dc72f19d8912c06c316e922c78875e74 Elan 2.0.0-alpha guest default_profile valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
 main
-  let vg be new List<of VectorGraphic>()
+  variable vg set to new List<of VectorGraphic>()
   # coordinates
   variable x set to 0.0
   variable y set to 0.16
@@ -24,9 +24,9 @@ end main
 
 function onepoint(x as Float, y as Float, r as Random) returns (RectangleVG, Float, Float, Random)
   # next pseudo-random number (Grogono parameters)
-  let rValue, rNext be r.next()
-  let nx, ny be onestep(x, y, rValue)
-  let rect be new RectangleVG() with x set to nx*scale + 50, y set to 75 - ny*scale, width set to 0.5, height set to 0.5, fillColour set to 0x408040, strokeColour set to 0x408040, strokeWidth set to 0.25
+  constant rValue, rNext set to r.next()
+  constant nx, ny set to onestep(x, y, rValue)
+  constant rect set to new RectangleVG() with x set to nx*scale + 50, y set to 75 - ny*scale, width set to 0.5, height set to 0.5, fillColour set to 0x408040, strokeColour set to 0x408040, strokeWidth set to 0.25
   return tuple(rect, nx, ny, rNext)
 end function
 
@@ -37,11 +37,11 @@ function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
   # Currently you can't make the params into one long line
   # as it makes the browser use 100% CPU
   # xx xy yx yy cx cy probablity
-  let p1 be {0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01}
-  let p2 be {0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85}
-  let p3 be {0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07}
-  let p4 be {-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07}
-  let params be {p1, p2, p3, p4}
+  constant p1 set to {0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01}
+  constant p2 set to {0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85}
+  constant p3 set to {0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07}
+  constant p4 set to {-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07}
+  constant params set to {p1, p2, p3, p4}
   # cumulative probabilty
   variable cumuprob set to 0.0
   variable done set to false
@@ -65,12 +65,12 @@ end test
 
 # two approaches to rounding a tuple to N decimal places
 function roundtuple1(n as (Float, Float)) returns (Float, Float)
-  let a, b be n
+  constant a, b set to n
   return tuple(a.round(8), b.round(8))
 end function
 
 function roundtuple2(n as (Float, Float)) returns ListImmutable<of Float>
-  let a, b be n
+  constant a, b set to n
   return {a, b}.map(lambda x as Float => x.round(8))
 end function
 

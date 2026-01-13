@@ -1,8 +1,8 @@
-# e1354b7dd85afce8fd3d2fbd506dfed0c90eaecc538cf8d7bc7ff7034a3f6443 Elan 2.0.0-alpha guest default_profile valid
+# 068de6e1817c45af8057a25206eb4810c72cf5944fc9c94e8fa0fca19fde06c3 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let point be tuple(3, 4)
-  let x1, y1 be point
+  variable point set to tuple(3, 4)
+  variable x1, y1 set to point
   variable x2, y2 set to point
   set x2, y2 to point
   variable x3, _ set to point

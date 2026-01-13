@@ -1,5 +1,5 @@
-# dce1fb675e7427547e9e733873beb2eb3a17eab8645e13b1dd9ee8583b048c2b Elan 2.0.0-alpha guest default_profile valid
+# da9b31f1a83287bb98383a49d310f43e390f49cdeebb4aeb87c4db82479b0e7d Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let style be '<style>\n h1 {\n  color: Red;\n  font-size: 24pt;\n }\n p {\n  font-family: Serif;\n }\n</style>'
+  variable style set to '<style>\n h1 {\n  color: Red;\n  font-size: 24pt;\n }\n p {\n  font-family: Serif;\n }\n</style>'
 end main

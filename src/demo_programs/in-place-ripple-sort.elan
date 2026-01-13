@@ -1,4 +1,4 @@
-# 61c3ccf446b099aebdfeff6b0d44b177b60247c5dc343dff2edab8ba9ee29273 Elan 2.0.0-alpha guest default_profile valid
+# b698caeda838f297df70b3a1e9afcc1cd758b3b7b71dfe7dec200b5ab051ccda Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable li set to example.asList()
@@ -14,7 +14,7 @@ procedure inPlaceRippleSort(li as List<of Int>)
     set hasChanged to false
     for i from 0 to lastComp step 1
       if arr[i] > arr[i + 1] then
-        let temp be arr[i]
+        variable temp set to arr[i]
         call arr.put(i, arr[i + 1])
         call arr.put(i + 1, temp)
         set change to true

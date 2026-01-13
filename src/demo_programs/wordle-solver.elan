@@ -1,4 +1,4 @@
-# 6a8ccc608887f4cf4ba6e72c22b705a31ff68001c6263d4d35debde4f6c60741 Elan 2.0.0-alpha guest default_profile valid
+# 44d2bcc794521da5ed3135ea54e212b8d70f40b22e30c87b5d52d50b10c28bcf Elan 2.0.0-alpha guest default_profile valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Works only for the 2,309 words that may be set by the official online Wordle
@@ -136,8 +136,8 @@ test test_evaluateYellows
 end test
 
 function markAttempt(attempt as String, target as String) returns String
-  let greens be evaluateGreens(attempt, target)
-  let markedAttempt:_ be evaluateYellows(greens[0], greens[1])
+  variable greens set to evaluateGreens(attempt, target)
+  variable markedAttempt:_ set to evaluateYellows(greens[0], greens[1])
   return markedAttempt
 end function
 
@@ -157,30 +157,30 @@ function possibleAnswersAfterAttempt(prior as ListImmutable<of String>, attempt 
 end function
 
 test test_possibleAnswersAfterAttempt
-  let prior be {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}
+  variable prior set to {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}
   assert possibleAnswersAfterAttempt(prior, "AAAAA", "*____") is {"ABCDE"}
   assert possibleAnswersAfterAttempt(prior, "AXXXX", "+____") is {"BCDEA", "CDEAB", "DEABC", "EABCD"}
   assert possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_") is {"BCDEA", "CDEAB", "EABCD"}
 end test
 
 function maxWordCountRemainingAfterAttempt(possAnswers as ListImmutable<of String>, attempt as String) returns Int
-  let d be empty DictionaryImmutable<of String, Int>
-  let d2 be possAnswers.reduce(d, lambda dd as DictionaryImmutable<of String, Int>, answer as String => incrementCount(dd, answer, attempt))
-  let keys be d2.keys()
+  variable d set to empty DictionaryImmutable<of String, Int>
+  variable d2 set to possAnswers.reduce(d, lambda dd as DictionaryImmutable<of String, Int>, answer as String => incrementCount(dd, answer, attempt))
+  variable keys set to d2.keys()
   return keys.reduce(0, lambda maxSoFar as Int, mark as String => if d2[mark] > maxSoFar then d2[mark] else maxSoFar)
 end function
 
 function incrementCount(dd as DictionaryImmutable<of String, Int>, possAnswer as String, attempt as String) returns DictionaryImmutable<of String, Int>
-  let mark be markAttempt(attempt, possAnswer)
-  let keys be dd.keys()
-  let count be if keys.contains(mark) then dd[mark] else 0
-  let dd2 be dd.withPut(mark, count + 1)
+  variable mark set to markAttempt(attempt, possAnswer)
+  variable keys set to dd.keys()
+  variable count set to if keys.contains(mark) then dd[mark] else 0
+  variable dd2 set to dd.withPut(mark, count + 1)
   return dd2
 end function
 
 test test_maxWordCountRemainingAfterAttempt
-  let prior be {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}
-  let d be empty DictionaryImmutable<of String, Int>
+  variable prior set to {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}
+  variable d set to empty DictionaryImmutable<of String, Int>
   assert maxWordCountRemainingAfterAttempt(prior, "AAAAA") is 1
   assert maxWordCountRemainingAfterAttempt(prior, "AXXXX") is 4
   assert maxWordCountRemainingAfterAttempt(prior, "XXXXX") is 5
@@ -191,37 +191,37 @@ function allRemainingWordCounts(possAnswers as ListImmutable<of String>) returns
 end function
 
 function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as ListImmutable<of String>) returns WordCount
-  let isBetter be wc2.count < wc1.count
-  let isEqualAndPossAnswer be (wc2.count is wc1.count) and possAnswers.contains(wc2.word)
+  variable isBetter set to wc2.count < wc1.count
+  variable isEqualAndPossAnswer set to (wc2.count is wc1.count) and possAnswers.contains(wc2.word)
   return if isBetter or isEqualAndPossAnswer then wc2 else wc1
 end function
 
 test test_betterOf
-  let possAnswers be empty ListImmutable<of String>
-  let b2 be newWordCount("B", 2)
-  let a3 be newWordCount("A", 3)
-  let a2 be newWordCount("A", 2)
+  variable possAnswers set to empty ListImmutable<of String>
+  variable b2 set to newWordCount("B", 2)
+  variable a3 set to newWordCount("A", 3)
+  variable a2 set to newWordCount("A", 2)
   assert betterOf(a3, b2, possAnswers) is b2
   assert betterOf(b2, a3, possAnswers) is b2
   assert betterOf(b2, a2, possAnswers) is b2
   assert betterOf(a2, b2, possAnswers) is a2
-  let possAnswers2 be {"B"}
+  variable possAnswers2 set to {"B"}
   assert betterOf(a2, b2, possAnswers2) is b2
-  let possAnswers3 be {"B", "A"}
+  variable possAnswers3 set to {"B", "A"}
   assert betterOf(a2, b2, possAnswers3) is b2
   assert betterOf(b2, a2, possAnswers3) is a2
 end test
 
 function bestAttempt(possAnswers as ListImmutable<of String>) returns String
-  let wordCounts be allRemainingWordCounts(possAnswers)
-  let best be wordCounts.reduce(wordCounts.head(), lambda bestSoFar as WordCount, newWord as WordCount => betterOf(bestSoFar, newWord, possAnswers))
+  variable wordCounts set to allRemainingWordCounts(possAnswers)
+  variable best set to wordCounts.reduce(wordCounts.head(), lambda bestSoFar as WordCount, newWord as WordCount => betterOf(bestSoFar, newWord, possAnswers))
   return best.word
 end function
 
 test test_bestAttempt
-  let possAnswers be {"ABCDE", "ABBBB", "EDCBA"}
+  variable possAnswers set to {"ABCDE", "ABBBB", "EDCBA"}
   assert bestAttempt(possAnswers) is "EDCBA"
-  let possAnswers2 be {"ABCDE", "ABBBB", "BCDEA"}
+  variable possAnswers2 set to {"ABCDE", "ABBBB", "BCDEA"}
   assert bestAttempt(possAnswers2) is "BCDEA"
 end test
 

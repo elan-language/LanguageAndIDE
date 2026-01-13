@@ -4,11 +4,12 @@ import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
 import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
+import { GlobalFunction } from "../src/ide/frames/globals/global-function";
 import { MainFrame } from "../src/ide/frames/globals/main-frame";
 import { TestFrame } from "../src/ide/frames/globals/test-frame";
 import { AssertStatement } from "../src/ide/frames/statements/assert-statement";
 import { CallStatement } from "../src/ide/frames/statements/call-statement";
-import { LetStatement } from "../src/ide/frames/statements/let-statement";
+import { ConstantStatement } from "../src/ide/frames/statements/constant-statement";
 import { Print } from "../src/ide/frames/statements/print";
 import { SetStatement } from "../src/ide/frames/statements/set-statement";
 import { StatementSelector } from "../src/ide/frames/statements/statement-selector";
@@ -75,8 +76,8 @@ suite("Parsing Frame Tests", async () => {
     assert.equal(setTo.renderAsElanSource(), code);
   });
 
-  test("parse Frames - let statement 1", () => {
-    const code = "  let result be 3 + 4";
+  test("parse Frames - constant statement 1", () => {
+    const code = "  constant result set to 3 + 4";
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
@@ -86,15 +87,16 @@ suite("Parsing Frame Tests", async () => {
       new StdLib(new StubInputOutput()),
       true,
     );
-    const m = new MainFrame(fl);
-    const setTo = new LetStatement(m);
+    const m = new GlobalFunction(fl);
+    const setTo = new ConstantStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);
   });
 
-  test("parse Frames - let statement 2", () => {
-    const code = "  let attemptAfterGreens, targetAfterGreens be evaluateGreens(attempt, target)";
+  test("parse Frames - constant statement 2", () => {
+    const code =
+      "  constant attemptAfterGreens, targetAfterGreens set to evaluateGreens(attempt, target)";
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
@@ -104,8 +106,8 @@ suite("Parsing Frame Tests", async () => {
       new StdLib(new StubInputOutput()),
       true,
     );
-    const m = new MainFrame(fl);
-    const setTo = new LetStatement(m);
+    const m = new GlobalFunction(fl);
+    const setTo = new ConstantStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);

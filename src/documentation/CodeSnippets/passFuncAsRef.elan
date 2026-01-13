@@ -1,4 +1,4 @@
-# a3a57eba364685e98553e98d4cfca46b8b84eca9f9a76783d7f9864ab9427f53 Elan 2.0.0-alpha guest default_profile valid
+# 44e5778cf3bacc2e85fdb9c726f7983041bc8435a9b55a034da6292192c6e0e3 Elan 2.0.0-alpha guest default_profile valid
 
 class Pupil
   property mathsPercent as Int
@@ -6,7 +6,7 @@ class Pupil
 end class
 
 main
-  let allPupils be new List<of Pupil>()
+  variable allPupils set to new List<of Pupil>()
   variable passes set to allPupils.filter(ref passedMathsTest)
 end main
 

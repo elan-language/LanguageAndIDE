@@ -1,15 +1,15 @@
-# 47511365a64b628306cf0804abc13731f1dc931fd2cae3d5ac172bbafed7f95d Elan 2.0.0-alpha guest default_profile valid
+# ef55a96913ad1776c32c626c0bbafd5261f74797e613a5138f28395d5e342989 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable score set to 0
   while true
     variable holes set to new Array<of Hole>(10, Hole.vacant)
     variable hole set to Hole.vacant
-    let holeNumber be randomInt(0, 9)
+    variable holeNumber set to randomInt(0, 9)
     call holes.put(holeNumber, Hole.mole)
-    let html be htmlForFullGame(holes, score)
+    variable html set to htmlForFullGame(holes, score)
     call displayHtml(html)
-    let stop be clock() + 1000
+    variable stop set to clock() + 1000
     while clock() < stop
       call processKey(hole, score)
     end while
@@ -17,7 +17,7 @@ main
 end main
 
 procedure processKey(out hole as Hole, out score as Int)
-  let n be getNumericKey()
+  variable n set to getNumericKey()
   if n isnt -1 then
     if hole is Hole.mole then
       set hole to Hole.hit
@@ -26,7 +26,7 @@ procedure processKey(out hole as Hole, out score as Int)
       set hole to Hole.miss
       set score to score - 1
     end if
-    let html be htmlForSimpleGame(hole, score)
+    variable html set to htmlForSimpleGame(hole, score)
     call displayHtml(html)
   end if
 end procedure
@@ -34,7 +34,7 @@ end procedure
 enum Hole vacant, mole, hit, miss
 
 function htmlForSimpleGame(hole as Hole, score as Int) returns String
-  let core be htmlForHole(hole, "hole")
+  variable core set to htmlForHole(hole, "hole")
   return "<style>{styleSheet}</style><div class='game'>{core}</div><div class='score'>Score: {score}</score>"
 end function
 
@@ -47,7 +47,7 @@ function htmlForFullGame(holes as Array<of Hole>, score as Int) returns String
 end function
 
 function htmlForHole(hole as Hole, label as String) returns String
-  let img be imageForStatus[hole]
+  variable img set to imageForStatus[hole]
   return "<div class='hole'><img src='{img}'><div class='label'>{label}</div></div>"
 end function
 

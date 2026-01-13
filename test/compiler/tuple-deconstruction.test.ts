@@ -59,7 +59,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let a, b be foo()
+  variable a, b set to foo()
   print a
   print b
 end main
@@ -71,7 +71,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const [a, b] = (await global.foo());
+  let [a, b] = (await global.foo());
   await system.print(a);
   await system.print(b);
 }
@@ -102,8 +102,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let foo be new Foo()
-  let a, b be foo.bar()
+  variable foo set to new Foo()
+  variable a, b set to foo.bar()
   print a
   print b
 end main
@@ -120,8 +120,8 @@ end class`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const foo = system.initialise(await new Foo()._initialise());
-  const [a, b] = (await foo.bar());
+  let foo = system.initialise(await new Foo()._initialise());
+  let [a, b] = (await foo.bar());
   await system.print(a);
   await system.print(b);
 }
@@ -161,7 +161,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let a, b be foo()
+  variable a, b set to foo()
   print a
   print b
 end main
@@ -173,7 +173,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const [a, b] = (await global.foo());
+  let [a, b] = (await global.foo());
   await system.print(a);
   await system.print(b);
 }
@@ -206,12 +206,12 @@ return [main, _tests];}`;
 main
   variable x set to tuple(3, "Apple", true, 1.1)
   print x
-  let a, b, c, d be x
+  variable a, b, c, d set to x
   print a
   print b
   print c
   print d
-  let _, _, e, _ be x
+  variable _, _, e, _ set to x
   print e
 end main
 `;
@@ -221,12 +221,12 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple", _stdlib.true, 1.1]);
   await system.print(x);
-  const [a, b, c, d] = x;
+  let [a, b, c, d] = x;
   await system.print(a);
   await system.print(b);
   await system.print(c);
   await system.print(d);
-  const [, , e, ] = x;
+  let [, , e, ] = x;
   await system.print(e);
 }
 return [main, _tests];}`;
@@ -400,7 +400,7 @@ return [main, _tests];}`;
 
 main
   variable x set to tuple(3, "Apple")
-  let y, z be x
+  variable y, z set to x
   print y
   print z
 end main
@@ -410,7 +410,7 @@ end main
 const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
-  const [y, z] = x;
+  let [y, z] = x;
   await system.print(y);
   await system.print(z);
 }
@@ -437,7 +437,7 @@ return [main, _tests];}`;
 
 main
   variable x set to tuple(3, "Apple")
-  let _, z be x
+  variable _, z set to x
   print z
 end main
 `;
@@ -446,7 +446,7 @@ end main
 const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
-  const [, z] = x;
+  let [, z] = x;
   await system.print(z);
 }
 return [main, _tests];}`;
@@ -666,7 +666,7 @@ return [main, _tests];}`;
 main
   variable a set to [1,2]
   variable x set to tuple(3, a)
-  let y, z be x
+  variable y, z set to x
   print y
   print z
 end main
@@ -677,7 +677,7 @@ const global = new class {};
 async function main() {
   let a = system.list([1, 2]);
   let x = system.tuple([3, a]);
-  const [y, z] = x;
+  let [y, z] = x;
   await system.print(y);
   await system.print(z);
 }
@@ -787,7 +787,7 @@ return [main, _tests];}`;
 main
   variable a set to tuple(1,2)
   variable x set to tuple(3, a)
-  let y, z be x
+  variable y, z set to x
   print y
   print z
 end main
@@ -798,7 +798,7 @@ const global = new class {};
 async function main() {
   let a = system.tuple([1, 2]);
   let x = system.tuple([3, a]);
-  const [y, z] = x;
+  let [y, z] = x;
   await system.print(y);
   await system.print(z);
 }
@@ -1022,8 +1022,8 @@ end main
 
 main
   variable x set to tuple(3, "Apple")
-  let y be 0
-  let z be ""
+  constant y set to 0
+  constant z set to ""
   set y, z to x
   print y
   print z
@@ -1043,8 +1043,8 @@ end main
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the 'let' 'y'.LangRef.html#compile_error",
-      "May not re-assign the 'let' 'z'.LangRef.html#compile_error",
+      "May not re-assign the constant 'y'.LangRef.html#compile_error",
+      "May not re-assign the constant 'z'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1079,7 +1079,7 @@ end main
 
 main
   variable a set to 1
-  let x, y be a
+  variable x, y set to a
 end main
 `;
 

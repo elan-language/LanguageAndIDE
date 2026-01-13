@@ -1,4 +1,4 @@
-# fef4b816cd8a8a271887d33b48a256861bd056dcc5711665b92959e43bfd71ad Elan 2.0.0-alpha guest default_profile valid
+# 5bdea9c7375303fa59fc902dda10fee708022387d0eab3a6e1c1706fb35a4e7d Elan 2.0.0-alpha guest default_profile valid
 
 # After image is displayed, press: 
 # - z to zoom in, x to zoom out
@@ -9,9 +9,9 @@
 # https://mathworld.wolfram.com/JuliaSet.html
 # Implemented in Elan by Charles Wicksteed
 main
-  let p be new Coords()
+  variable p set to new Coords()
   while true
-    let vg be allpoints(p)
+    variable vg set to allpoints(p)
     call displayVectorGraphics(vg)
     call p.checkkeys()
     call print("x = {p.jx} y = {p.jy}")
@@ -23,10 +23,10 @@ function allpoints(p as Coords) returns List<of VectorGraphic>
   for xp from 0 to width step 1
     for yp from 0 to height step 1
       # scale and centre
-      let n be onepoint((xp - width/2)/p.scale - p.xoff, (yp - height/2)/p.scale - p.yoff, nmax, p)
+      constant n set to onepoint((xp - width/2)/p.scale - p.xoff, (yp - height/2)/p.scale - p.yoff, nmax, p)
       # colour depends on how many iterations were done for that point
-      let col be if n is nmax then 0xffffff else ((n*0x010201) mod 0xffffff)
-      variable rect set to new RectangleVG() with x set to xp/2, y set to yp/2, width set to 0.5, height set to 0.5, fillColour set to col, strokeColour set to col, strokeWidth set to 0.25
+      constant col set to if n is nmax then 0xffffff else ((n*0x010201) mod 0xffffff)
+      constant rect set to new RectangleVG() with x set to xp/2, y set to yp/2, width set to 0.5, height set to 0.5, fillColour set to col, strokeColour set to col, strokeWidth set to 0.25
       set vg2 to vg2.withAppend(rect)
     end for
   end for
@@ -39,7 +39,7 @@ function onepoint(x as Float, y as Float, maxnum as Int, p as Coords) returns In
   variable b set to y
   variable i set to 0
   while not done
-    variable c set to 2*a*b
+    constant c set to 2*a*b
     set a to (a*a - b*b) + p.jx
     set b to c + p.jy
     set i to i + 1
@@ -75,8 +75,8 @@ class Coords
   # Arrow keys move the virtual camera
   # eg Arrow Up moves the image down
   procedure checkkeys()
-    let panstep be 10/property.scale
-    let jstep be 0.001
+    constant panstep set to 10/property.scale
+    variable jstep set to 0.001
     # save some CPU by not recalculating until a parameter has been changed
     variable changed set to false
     while not changed
@@ -119,7 +119,7 @@ class Coords
 end class
 
 test test_one
-  variable p set to new Coords()
+  constant p set to new Coords()
   assert onepoint(0, 0, 100, p) is 100
   assert onepoint(0.5, 0.5, 100, p) is 3
 end test

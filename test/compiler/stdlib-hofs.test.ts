@@ -94,7 +94,7 @@ return [main, _tests];}`;
 
 constant source set to "onetwo"
 main
-  let li be source.split("")
+  variable li set to source.split("")
   print li.filter(lambda x as String => x is "o")
 end main`;
 
@@ -104,7 +104,7 @@ const global = new class {
 
 };
 async function main() {
-  const li = _stdlib.split(global.source, "");
+  let li = _stdlib.split(global.source, "");
   await system.print((await li.filter(async (x) => x === "o")));
 }
 return [main, _tests];}`;
@@ -251,7 +251,7 @@ return [main, _tests];}`;
 
 constant source set to "onetwo"
 main
-  let li be source.split("")
+  variable li set to source.split("")
   print li.map(lambda x as String => x + "*")
 end main`;
 
@@ -261,7 +261,7 @@ const global = new class {
 
 };
 async function main() {
-  const li = _stdlib.split(global.source, "");
+  let li = _stdlib.split(global.source, "");
   await system.print((await li.map(async (x) => x + "*")));
 }
 return [main, _tests];}`;
@@ -396,7 +396,7 @@ return [main, _tests];}`;
 
 constant source set to "onetwo"
 main
-  let li be source.split("")
+  variable li set to source.split("")
   print li.reduce("Concat:", lambda s as String, x as String => s + "*" + x)
 end main`;
 
@@ -406,7 +406,7 @@ const global = new class {
 
 };
 async function main() {
-  const li = _stdlib.split(global.source, "");
+  let li = _stdlib.split(global.source, "");
   await system.print((await li.reduce("Concat:", async (s, x) => s + "*" + x)));
 }
 return [main, _tests];}`;
@@ -693,14 +693,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let source be [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
   print minInt(source)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   await system.print(_stdlib.minInt(source));
 }
 return [main, _tests];}`;
@@ -725,14 +725,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let source be [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  variable source set to [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
   print minFloat(source)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   await system.print(_stdlib.minFloat(source));
 }
 return [main, _tests];}`;
@@ -757,14 +757,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let source be [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
   print maxInt(source)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   await system.print(_stdlib.maxInt(source));
 }
 return [main, _tests];}`;
@@ -789,14 +789,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let source be [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  variable source set to [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
   print maxFloat(source)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
+  let source = system.list([2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]);
   await system.print(_stdlib.maxFloat(source));
 }
 return [main, _tests];}`;
@@ -821,7 +821,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let source be [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
+  variable source set to [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
   print minInt(source)
 end main`;
 
@@ -1162,7 +1162,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let source be ["apple", "orange", "pair"]
+  variable source set to ["apple", "orange", "pair"]
   print maxInt(source)
 end main`;
 

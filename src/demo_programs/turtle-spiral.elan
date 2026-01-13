@@ -1,7 +1,7 @@
-# 3a2ab860dd160d39b293107f10f44372e6e99fab38f2e010e56c7f1e6e670f02 Elan 2.0.0-alpha guest default_profile valid
+# 60e1a208df19fb6c83a09efec745cb9ad948f1e95d6eeef502ed6b7314d986a7 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let t be new Turtle()
+  variable t set to new Turtle()
   call t.placeAt(-100, 75)
   call t.turnToHeading(90)
   for i from 150 to 0 step -5
