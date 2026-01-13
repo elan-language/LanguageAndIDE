@@ -517,7 +517,7 @@ class IDEViewModel implements IIDEViewModel {
 
   async updateFileAndCode(code: string) {
     const fn = codeViewModel.fileName;
-    codeViewModel.recreateFile();
+    codeViewModel.recreateFile(ideViewModel);
     await codeViewModel.displayCode(this, testRunner, code, fn);
   }
 
@@ -662,7 +662,7 @@ class IDEViewModel implements IIDEViewModel {
     if (m.data && typeof m.data === "string") {
       if (m.data.startsWith("code:")) {
         const code = m.data.slice(5);
-        cvm.recreateFile();
+        cvm.recreateFile(ideViewModel);
         fm.reset();
         await cvm.readAndParse(this, fm, tr, code, cvm.fileName, ParseMode.loadNew);
       }
@@ -688,6 +688,10 @@ class IDEViewModel implements IIDEViewModel {
         this.updateNameAndSavedStatus(cvm, fm);
       }
     }
+  }
+
+  setDisplayLanguage(name: string) {
+    languageButton.textContent = name;
   }
 }
 
@@ -769,7 +773,7 @@ newButton?.addEventListener("click", async (event: Event) => {
     if (checkForUnsavedChanges(fileManager, codeViewModel, cancelMsg)) {
       await ideViewModel.clearDisplays();
       fileManager.reset();
-      codeViewModel.recreateFile();
+      codeViewModel.recreateFile(ideViewModel);
       await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, false);
     }
   }
@@ -985,7 +989,7 @@ if (checkIsChrome() || confirmContinueOnNonChromeBrowser()) {
 async function setup(p: Profile) {
   fileManager.reset();
   codeViewModel.setProfile(p);
-  codeViewModel.recreateFile();
+  codeViewModel.recreateFile(ideViewModel);
   await codeViewModel.displayFile(fileManager, ideViewModel, testRunner);
 }
 

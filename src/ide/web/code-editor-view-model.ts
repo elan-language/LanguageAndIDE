@@ -159,8 +159,9 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     return this.file!.getFirstChild();
   }
 
-  recreateFile() {
+  recreateFile(vm: IIDEViewModel) {
     this.file = new FileImpl(hash, this.profile!, undefined, transforms(), stdlib);
+    vm.setDisplayLanguage(this.file?.language().languageFullName);
   }
 
   get currentHash() {
@@ -432,7 +433,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   async resetFile(fm: FileManager, vm: IIDEViewModel, tr: TestRunner) {
-    this.recreateFile();
+    this.recreateFile(vm);
     await this.initialDisplay(fm, vm, tr, false);
   }
 
@@ -486,7 +487,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   async loadDemoFile(fileName: string, vm: IIDEViewModel, fm: FileManager, tr: TestRunner) {
     const f = await fetch(fileName, { mode: "same-origin" });
     const rawCode = await f.text();
-    this.recreateFile();
+    this.recreateFile(vm);
     this.fileName = fileName;
     fm.reset();
     await this.readAndParse(vm, fm, tr, rawCode, fileName, ParseMode.loadNew);
@@ -685,6 +686,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   async changeLanguage(l: Language, vm: IIDEViewModel, tr: TestRunner) {
     this.file?.setLanguage(l);
+    vm.setDisplayLanguage(l.languageFullName);
     await this.refreshAndDisplay(vm, tr, true, false);
   }
 

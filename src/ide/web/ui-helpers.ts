@@ -156,7 +156,7 @@ export interface ICodeEditorViewModel {
 
   getFirstChild(): Frame;
 
-  recreateFile(): void;
+  recreateFile(vm: IIDEViewModel): void;
 
   currentHash: string;
 
@@ -255,6 +255,7 @@ export interface IIDEViewModel {
   postCodeResetToWorksheet(code: string): void;
   updateNameAndSavedStatus(cvm: ICodeEditorViewModel, fm: FileManager): void;
   handleEscape(e: editorEvent, cvm: ICodeEditorViewModel, tr: TestRunner): Promise<boolean>;
+  setDisplayLanguage(n: string): void;
 }
 
 export const delayMessage =

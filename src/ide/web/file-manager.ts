@@ -324,7 +324,7 @@ export class FileManager {
       const fileName = mode === ParseMode.loadNew ? codeFile.name : cvm.fileName;
       const rawCode = await codeFile.text();
       if (mode === ParseMode.loadNew) {
-        cvm.recreateFile();
+        cvm.recreateFile(vm);
         this.reset();
       }
       await cvm.readAndParse(vm, this, tr, rawCode, fileName, mode);
@@ -351,7 +351,7 @@ export class FileManager {
       reader.addEventListener("load", async (event: any) => {
         const rawCode = event.target.result;
         if ((mode = ParseMode.loadNew)) {
-          cvm.recreateFile();
+          cvm.recreateFile(vm);
           this.reset();
         }
         await cvm.readAndParse(vm, this, tr, rawCode, fileName, mode);
