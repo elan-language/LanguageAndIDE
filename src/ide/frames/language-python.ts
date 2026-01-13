@@ -45,6 +45,9 @@ import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 
 export class LanguagePython implements Language {
+  commentRegex(): RegExp {
+    return /# [^\r\n]*/;
+  }
   languageFullName: string = "Python";
 
   annotation(frame: Frame): string {

@@ -42,6 +42,9 @@ import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 
 export class LanguageElan implements Language {
+  commentRegex(): RegExp {
+    return /# [^\r\n]*/;
+  }
   languageFullName: string = "Elan";
 
   annotation(frame: Frame): string {
