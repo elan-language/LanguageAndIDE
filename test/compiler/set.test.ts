@@ -186,10 +186,10 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let st0 be new Set<of Int>()
-  let st1 be st0.add(2).add(4).add(6).add(3)
-  let st2 be st0.add(3).add(1).add(4).add(9)
-  let st3 be st0.add(8).add(9)
+  variable st0 set to new Set<of Int>()
+  variable st1 set to st0.add(2).add(4).add(6).add(3)
+  variable st2 set to st0.add(3).add(1).add(4).add(9)
+  variable st3 set to st0.add(8).add(9)
   print st1.isDisjointFrom(st2)
   print st1.isDisjointFrom(st3)
   print st2.isDisjointFrom(st3)
@@ -198,10 +198,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st0 = system.initialise(await new _stdlib.Set()._initialise());
-  const st1 = st0.add(2).add(4).add(6).add(3);
-  const st2 = st0.add(3).add(1).add(4).add(9);
-  const st3 = st0.add(8).add(9);
+  let st0 = system.initialise(await new _stdlib.Set()._initialise());
+  let st1 = st0.add(2).add(4).add(6).add(3);
+  let st2 = st0.add(3).add(1).add(4).add(9);
+  let st3 = st0.add(8).add(9);
   await system.print(st1.isDisjointFrom(st2));
   await system.print(st1.isDisjointFrom(st3));
   await system.print(st2.isDisjointFrom(st3));
@@ -228,10 +228,10 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let st0 be new Set<of Int>()
-  let st1 be st0.add(2).add(4).add(6).add(3)
-  let st2 be st0.add(4).add(6)
-  let st3 be st0.add(4).add(6).add(1)
+  variable st0 set to new Set<of Int>()
+  variable st1 set to st0.add(2).add(4).add(6).add(3)
+  variable st2 set to st0.add(4).add(6)
+  variable st3 set to st0.add(4).add(6).add(1)
   print st2.isSubsetOf(st1)
   print st2.isSupersetOf(st1)
   print st1.isSupersetOf(st2)
@@ -243,10 +243,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st0 = system.initialise(await new _stdlib.Set()._initialise());
-  const st1 = st0.add(2).add(4).add(6).add(3);
-  const st2 = st0.add(4).add(6);
-  const st3 = st0.add(4).add(6).add(1);
+  let st0 = system.initialise(await new _stdlib.Set()._initialise());
+  let st1 = st0.add(2).add(4).add(6).add(3);
+  let st2 = st0.add(4).add(6);
+  let st3 = st0.add(4).add(6).add(1);
   await system.print(st2.isSubsetOf(st1));
   await system.print(st2.isSupersetOf(st1));
   await system.print(st1.isSupersetOf(st2));
@@ -275,20 +275,20 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let st0 be new Set<of Int>()
-  let st1 be st0.addFromList([2,4,6,3])
+  variable st0 set to new Set<of Int>()
+  variable st1 set to st0.addFromList([2,4,6,3])
   print st1
-  let st2 be st1.addFromList([2,5,6])
+  variable st2 set to st1.addFromList([2,5,6])
   print st2
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st0 = system.initialise(await new _stdlib.Set()._initialise());
-  const st1 = st0.addFromList(system.list([2, 4, 6, 3]));
+  let st0 = system.initialise(await new _stdlib.Set()._initialise());
+  let st1 = st0.addFromList(system.list([2, 4, 6, 3]));
   await system.print(st1);
-  const st2 = st1.addFromList(system.list([2, 5, 6]));
+  let st2 = st1.addFromList(system.list([2, 5, 6]));
   await system.print(st2);
 }
 return [main, _tests];}`;
@@ -313,8 +313,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let a be ["one", "two", "three"].asSet()
-  let c be a.asList()
+  variable a set to ["one", "two", "three"].asSet()
+  variable c set to a.asList()
   variable aa set to empty Set<of String>
   variable cc set to empty List<of String>
   set aa to a
@@ -326,8 +326,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const a = system.list(["one", "two", "three"]).asSet();
-  const c = a.asList();
+  let a = system.list(["one", "two", "three"]).asSet();
+  let c = a.asList();
   let aa = system.initialise(_stdlib.Set.emptyInstance());
   let cc = system.initialise(_stdlib.List.emptyInstance());
   aa = a;

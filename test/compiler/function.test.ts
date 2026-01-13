@@ -1514,8 +1514,8 @@ end function`;
     const code = `${testHeader}
 
 main
-  let g be "xxx"
-  let g2 be g.length
+  variable g set to "xxx"
+  variable g2 set to g.length
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1662,8 +1662,8 @@ end function`;
     const code = `${testHeader}
 
 main
-  let s be "hello"
-  let s1 be s.asBinary()
+  variable s set to "hello"
+  variable s1 set to s.asBinary()
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1687,8 +1687,8 @@ end main`;
     const code = `${testHeader}
 
 main
-  let s be "hello"
-  let s1 be s.reverse()
+  variable s set to "hello"
+  variable s1 set to s.reverse()
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1712,7 +1712,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let a be s.reverse()
+  variable a set to s.reverse()
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1734,7 +1734,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let x be 3
+  variable x set to 3
   print x.bitShiftL(x, 2)
 end main`;
 
@@ -1759,7 +1759,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let x be 3
+  variable x set to 3
   print x.foo(x)
 end main
 

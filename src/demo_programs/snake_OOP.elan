@@ -1,10 +1,10 @@
-# 1cec164f8eff8ef496681480f3615c408d3ba7dcd4ea8c33148c178ab3cc4bc0 Elan 2.0.0-alpha guest default_profile valid
+# 57d8c47a5f2aca574cad6080b7b2061944d0de037eb2bd126131e248088b0c95 Elan 2.0.0-alpha guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
-  let blocks be new Array2D<of Int>(40, 30, white)
-  let snake be new Snake()
-  let apple be new Apple()
+  variable blocks set to new Array2D<of Int>(40, 30, white)
+  variable snake set to new Snake()
+  variable apple set to new Apple()
   call apple.newRandomPosition(snake)
   while not snake.gameOver()
     call snake.updateBlocks(blocks)
@@ -18,7 +18,7 @@ end main
 
 class Snake
   constructor()
-    let tail be new Square(20, 15)
+    variable tail set to new Square(20, 15)
     set property.currentDir to Direction.right
     set property.body to [tail]
     set property.head to tail.getAdjacentSquare(property.currentDir)
@@ -90,8 +90,8 @@ class Apple
   procedure newRandomPosition(snake as Snake)
     variable changePosition set to true
     while changePosition
-      let ranX be randomInt(0, 39)
-      let ranY be randomInt(0, 29)
+      constant ranX set to randomInt(0, 39)
+      constant ranY set to randomInt(0, 29)
       set property.location to new Square(ranX, ranY)
       if not snake.bodyCovers(property.location) then
         set changePosition to false
@@ -139,7 +139,7 @@ end class
 enum Direction up, down, left, right
 
 test test_snake
-  let snake be new Snake()
+  constant snake set to new Snake()
   # bodyCovers
   assert snake.bodyCovers(new Square(20, 15)) is true
   assert snake.bodyCovers(new Square(21, 15)) is false
@@ -155,13 +155,13 @@ end test
 test test_square
   # constructor - not testable as properties are private
   # getAdjacentSquare
-  let sq1 be new Square(3, 4)
+  constant sq1 set to new Square(3, 4)
   assert sq1.getAdjacentSquare(Direction.up) is new Square(3, 3)
   assert sq1.getAdjacentSquare(Direction.down) is new Square(3, 5)
   assert sq1.getAdjacentSquare(Direction.left) is new Square(2, 4)
   assert sq1.getAdjacentSquare(Direction.right) is new Square(4, 4)
-  let sq2 be new Square(0, 0)
-  let sq3 be new Square(-1, 0)
+  constant sq2 set to new Square(0, 0)
+  constant sq3 set to new Square(-1, 0)
   assert sq2.getAdjacentSquare(Direction.left) is sq3
   # hasHitEdge
   assert (new Square(0, 0)).hasHitEdge() is false

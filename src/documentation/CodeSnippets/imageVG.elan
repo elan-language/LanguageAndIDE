@@ -1,6 +1,6 @@
-# 05828005fd7ba17f58a250becaedd5f524ab7300a3b7bad00e76449ca9980729 Elan 2.0.0-alpha guest default_profile valid
+# a5bc9c693929d62fa5bb2938569e07823fb1026952585b54b0ecf060ce209b6d Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let pic be new ImageVG('https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg') with width set to 400, height set to 200, alt set to "Shark"
+  variable pic set to new ImageVG('https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg') with width set to 400, height set to 200, alt set to "Shark"
   call displayVectorGraphics([pic])
 end main

@@ -1,7 +1,7 @@
-# 75a9138a4b5a4c973ae913aad3711a5910f5850cc93ef0cfffcb66d66263ef17 Elan 2.0.0-alpha guest default_profile valid
+# d921550e4c4cb59b710406219f598d8a6f657a0d5a4b1659e421d5d9aaecc385 Elan 2.0.0-alpha guest default_profile valid
 
 test test_matchesRegExp
-  let a be [5, 1, 7]
+  variable a set to [5, 1, 7]
   assert a[0] is 5
   assert a[2] is 7
   assert a[4] is 0

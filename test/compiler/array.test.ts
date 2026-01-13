@@ -228,9 +228,9 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let a be ["one", "two", "three"].asArray()
-  let c be a.asList()
-  let d be a.asSet()
+  variable a set to ["one", "two", "three"].asArray()
+  variable c set to a.asList()
+  variable d set to a.asSet()
   variable aa set to empty Array<of String>
   variable cc set to empty List<of String>
   variable dd set to empty Set<of String>
@@ -245,9 +245,9 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const a = system.list(["one", "two", "three"]).asArray();
-  const c = a.asList();
-  const d = a.asSet();
+  let a = system.list(["one", "two", "three"]).asArray();
+  let c = a.asList();
+  let d = a.asSet();
   let aa = system.initialise(_stdlib.Array.emptyInstance());
   let cc = system.initialise(_stdlib.List.emptyInstance());
   let dd = system.initialise(_stdlib.Set.emptyInstance());

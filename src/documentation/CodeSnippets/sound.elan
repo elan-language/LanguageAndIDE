@@ -1,10 +1,10 @@
-# 34555c7ed5b686c1b581e4d8f1199a60153a80b478dd9c2e2b5769e022d15aa1 Elan 2.0.0-alpha guest default_profile valid
+# 2a4dc05751c9e99cc0b28537b34193893d568ebf61dc8903f231f8f32ae46d53 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let scale be [262, 294, 330, 349, 392, 440, 494, 523]
-  let scaleL be scale.length()
-  let quaver be 250
-  let volume be 1.5
+  variable scale set to [262, 294, 330, 349, 392, 440, 494, 523]
+  variable scaleL set to scale.length()
+  variable quaver set to 250
+  variable volume set to 1.5
   for i from 0 to scaleL - 1 step 1
     call tone(quaver, scale[i], volume)
   end for

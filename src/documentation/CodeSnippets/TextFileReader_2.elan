@@ -1,10 +1,10 @@
-# 9c3dc66dd99add16e05328beb40055e9dcf68ea12ba20aa94305179d61c5e949 Elan 2.0.0-alpha guest default_profile valid
+# f695e657beee0fc430cec1cf8c58a05dbdf5c421bc75915bb28da9fd7c787b08 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let file be openFileForReading()
+  variable file set to openFileForReading()
   variable lines set to empty List<of String>
   while not file.endOfFile()
-    let line be file.readLine()
+    variable line set to file.readLine()
     call lines.append(line)
   end while
   call print(lines)

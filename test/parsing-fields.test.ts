@@ -9,7 +9,6 @@ import { TestFrame } from "../src/ide/frames/globals/test-frame";
 import { AssertStatement } from "../src/ide/frames/statements/assert-statement";
 import { CallStatement } from "../src/ide/frames/statements/call-statement";
 import { CommentStatement } from "../src/ide/frames/statements/comment-statement";
-import { LetStatement } from "../src/ide/frames/statements/let-statement";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 import { ParseStatus } from "../src/ide/frames/status-enums";
 import { StubInputOutput } from "../src/ide/stub-input-output";
@@ -77,8 +76,8 @@ suite("Field Parsing Tests", () => {
     const main = new MainFrame(
       new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
     );
-    const letSt = new LetStatement(main);
-    const id = letSt.name;
+    const v = new VariableStatement(main);
+    const id = v.name;
     assert.equal(id.textAsSource(), "");
     assert.equal(id.readParseStatus(), ParseStatus.incomplete);
     id.setFieldToKnownValidText("ab_1");
@@ -204,7 +203,7 @@ suite("Field Parsing Tests", () => {
     const test = new TestFrame(
       new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
     );
-    const a = new LetStatement(test);
+    const a = new VariableStatement(test);
     const expr = a.expr;
     expr.setFieldToKnownValidText(`foo.`);
     expr.parseCurrentText();

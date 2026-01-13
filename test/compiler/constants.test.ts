@@ -495,14 +495,22 @@ end main
     ]);
   });
 
-  test("Fail_useInsideMain", async () => {
+  test("Pass_useInsideMain", async () => {
     const code = `${testHeader}
 
 main
-  constant a set to 3 
+  constant a set to 3
   print a
 end main
 `;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  const a = 3;
+  await system.print(a);
+}
+return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -514,7 +522,9 @@ end main
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
   });
 
   test("Fail_incorrectKeyword", async () => {

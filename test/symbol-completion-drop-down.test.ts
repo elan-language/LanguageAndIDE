@@ -66,7 +66,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let foo be foo
+  variable foo set to foo
 end main`;
 
     const fileImpl = new FileImpl(
@@ -1850,7 +1850,7 @@ end main`;
 
     main
       variable foo set to 1.1
-      let a be foo
+      variable a set to foo
     end main`;
 
     const fileImpl = new FileImpl(
@@ -1879,7 +1879,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let foo be new CircleVG()
+  variable foo set to new CircleVG()
 end main
 `;
 
@@ -1902,7 +1902,7 @@ end main
     const code = `${testHeader}
 
 main
-  let foo be new Array<of Int>()
+  variable foo set to new Array<of Int>()
 end main`;
 
     const fileImpl = new FileImpl(
@@ -2060,7 +2060,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let c be new Foo() with x set to 1
+  variable c set to new Foo() with x set to 1
 end main
 
 record Foo
@@ -2093,8 +2093,8 @@ end record
     const code = `${testHeader}
 
 main
-  let vg be new List<of VectorGraphic>()
-  let vg2 be vg.withAppend(new CircleVG())
+  variable vg set to new List<of VectorGraphic>()
+  variable vg2 set to vg.withAppend(new CircleVG())
 end main`;
 
     const fileImpl = new FileImpl(
@@ -2140,7 +2140,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let vg be Fruit.apple
+  variable vg set to Fruit.apple
 end main
 
 enum Fruit apple, orange, pear`;
@@ -2164,7 +2164,7 @@ enum Fruit apple, orange, pear`;
     const code = `${testHeader}
 
 main
-  let vg be Fruit.apple
+  variable vg set to Fruit.apple
 end main
 
 enum Fruit apple, orange, pear`;
@@ -2261,7 +2261,7 @@ end main`;
 
 main
   variable s set to "Hello World"
-  let b be s.contains("e")
+  variable b set to s.contains("e")
 end main`;
 
     const fileImpl = new FileImpl(
@@ -2284,7 +2284,7 @@ end main`;
 
 main
   variable s set to "Hello World"
-  let b be s.contains("e")
+  variable b set to s.contains("e")
 end main`;
 
     const fileImpl = new FileImpl(
@@ -2724,7 +2724,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  let t be new Turtle()
+  variable t set to new Turtle()
   call t.something()
 end main`;
 
@@ -2760,7 +2760,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let t be new Foo()
+  variable t set to new Foo()
 end main
 
 class Foo
@@ -2785,7 +2785,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  let t be new List<of VectorGraphics>()
+  variable t set to new List<of VectorGraphics>()
 end main`;
 
     const fileImpl = new FileImpl(
@@ -2814,7 +2814,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let aaa be 10
+  variable aaa set to 10
   call pause(aaa)
 end main`;
 
@@ -2869,8 +2869,8 @@ end main`;
     const code = `${testHeader}
 
 main
-  let t be tuple(1, "fred")
-  let a be t.item0
+  variable t set to tuple(1, "fred")
+  variable a set to t.item0
 end main`;
 
     const fileImpl = new FileImpl(
@@ -2895,7 +2895,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let a be foo().item0
+  variable a set to foo().item0
 end main
 
 function foo() returns (Int, String)

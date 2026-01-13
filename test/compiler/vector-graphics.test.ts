@@ -43,18 +43,18 @@ end main`;
     const code = `${testHeader}
 
 main
-  let vg be new List<of VectorGraphic>()
-  let circ be new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to red, strokeColour set to black, strokeWidth set to 1
-  let vg2 be vg.withAppend(circ)
+  variable vg set to new List<of VectorGraphic>()
+  variable circ set to new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to red, strokeColour set to black, strokeWidth set to 1
+  variable vg2 set to vg.withAppend(circ)
   print vg2.vectorGraphicsAsHtml()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(await new _stdlib.List()._initialise());
-  const circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.red; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
-  const vg2 = vg.withAppend(circ);
+  let vg = system.initialise(await new _stdlib.List()._initialise());
+  let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.red; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
+  let vg2 = vg.withAppend(circ);
   await system.print(_stdlib.vectorGraphicsAsHtml(vg2));
 }
 return [main, _tests];}`;
@@ -85,8 +85,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let vg be new List<of VectorGraphic>()
-  let circ be new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to red, strokeColour set to black, strokeWidth set to 1
+  variable vg set to new List<of VectorGraphic>()
+  variable circ set to new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to red, strokeColour set to black, strokeWidth set to 1
   call vg.append(circ)
   print vg.vectorGraphicsAsHtml()
 end main`;
@@ -94,8 +94,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(await new _stdlib.List()._initialise());
-  const circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.red; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
+  let vg = system.initialise(await new _stdlib.List()._initialise());
+  let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.red; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
   vg.append(circ);
   await system.print(_stdlib.vectorGraphicsAsHtml(vg));
 }
@@ -127,8 +127,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let vg be new List<of VectorGraphic>()
-  let circ be new CircleVG()
+  variable vg set to new List<of VectorGraphic>()
+  variable circ set to new CircleVG()
   call vg.append(circ)
   call circ.setRadius(20)
   call circ.setCentreX(30)
@@ -136,7 +136,7 @@ main
   call circ.setFillColour(blue)
   call circ.setStrokeColour(yellow)
   call circ.setStrokeWidth(2)
-  let line be new LineVG()
+  variable line set to new LineVG()
   call vg.append(line)
   call line.setX1(10)
   call line.setY1(15)
@@ -144,7 +144,7 @@ main
   call line.setY2(30)
   call line.setStrokeColour(blue)
   call line.setStrokeWidth(3)
-  let rect be new RectangleVG()
+  variable rect set to new RectangleVG()
   call vg.append(rect)
   call rect.setX(10)
   call rect.setY(15)
@@ -159,8 +159,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(await new _stdlib.List()._initialise());
-  const circ = system.initialise(await new _stdlib.CircleVG()._initialise());
+  let vg = system.initialise(await new _stdlib.List()._initialise());
+  let circ = system.initialise(await new _stdlib.CircleVG()._initialise());
   vg.append(circ);
   circ.setRadius(20);
   circ.setCentreX(30);
@@ -168,7 +168,7 @@ async function main() {
   circ.setFillColour(_stdlib.blue);
   circ.setStrokeColour(_stdlib.yellow);
   circ.setStrokeWidth(2);
-  const line = system.initialise(await new _stdlib.LineVG()._initialise());
+  let line = system.initialise(await new _stdlib.LineVG()._initialise());
   vg.append(line);
   line.setX1(10);
   line.setY1(15);
@@ -176,7 +176,7 @@ async function main() {
   line.setY2(30);
   line.setStrokeColour(_stdlib.blue);
   line.setStrokeWidth(3);
-  const rect = system.initialise(await new _stdlib.RectangleVG()._initialise());
+  let rect = system.initialise(await new _stdlib.RectangleVG()._initialise());
   vg.append(rect);
   rect.setX(10);
   rect.setY(15);
@@ -307,14 +307,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let circ be new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to red, strokeColour set to black, strokeWidth set to 1
+  variable circ set to new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to red, strokeColour set to black, strokeWidth set to 1
   print circ.centreX
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.red; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
+  let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.red; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
   await system.print(circ.centreX);
 }
 return [main, _tests];}`;
@@ -339,18 +339,18 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let vg be new List<of VectorGraphic>()
-  let circ be new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to transparent, strokeColour set to black, strokeWidth set to 1
-  let vg2 be vg.withAppend(circ)
+  variable vg set to new List<of VectorGraphic>()
+  variable circ set to new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to transparent, strokeColour set to black, strokeWidth set to 1
+  variable vg2 set to vg.withAppend(circ)
   print vg2.vectorGraphicsAsHtml()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(await new _stdlib.List()._initialise());
-  const circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.transparent; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
-  const vg2 = vg.withAppend(circ);
+  let vg = system.initialise(await new _stdlib.List()._initialise());
+  let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.transparent; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
+  let vg2 = vg.withAppend(circ);
   await system.print(_stdlib.vectorGraphicsAsHtml(vg2));
 }
 return [main, _tests];}`;
@@ -381,8 +381,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let vg be new List<of VectorGraphic>()
-  let circ be new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to transparent, strokeColour set to transparent, strokeWidth set to 1
+  variable vg set to new List<of VectorGraphic>()
+  variable circ set to new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to transparent, strokeColour set to transparent, strokeWidth set to 1
   call vg.append(circ)
   print vg.vectorGraphicsAsHtml()
 end main`;
@@ -390,8 +390,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(await new _stdlib.List()._initialise());
-  const circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.transparent; _a.strokeColour = _stdlib.transparent; _a.strokeWidth = 1; return _a;})();
+  let vg = system.initialise(await new _stdlib.List()._initialise());
+  let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.transparent; _a.strokeColour = _stdlib.transparent; _a.strokeWidth = 1; return _a;})();
   vg.append(circ);
   await system.print(_stdlib.vectorGraphicsAsHtml(vg));
 }
@@ -420,8 +420,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let vg be new List<of VectorGraphic>()
-  let circ be new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to white + 1, strokeColour set to black, strokeWidth set to 1
+  variable vg set to new List<of VectorGraphic>()
+  variable circ set to new CircleVG() with centreX set to 50, centreY set to 50, radius set to 10, fillColour set to white + 1, strokeColour set to black, strokeWidth set to 1
   call vg.append(circ)
   print vg.vectorGraphicsAsHtml()
 end main`;
@@ -429,8 +429,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(await new _stdlib.List()._initialise());
-  const circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.white + 1; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
+  let vg = system.initialise(await new _stdlib.List()._initialise());
+  let circ = await (async () => {const _a = {...system.initialise(await new _stdlib.CircleVG()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.CircleVG()._initialise()))); _a.centreX = 50; _a.centreY = 50; _a.radius = 10; _a.fillColour = _stdlib.white + 1; _a.strokeColour = _stdlib.black; _a.strokeWidth = 1; return _a;})();
   vg.append(circ);
   await system.print(_stdlib.vectorGraphicsAsHtml(vg));
 }
@@ -458,8 +458,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let vg be new List<of VectorGraphic>()
-  let i be new ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png") with x set to 50, y set to 50, width set to 50, height set to 50
+  variable vg set to new List<of VectorGraphic>()
+  variable i set to new ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png") with x set to 50, y set to 50, width set to 50, height set to 50
   call vg.append(i)
   print vg.vectorGraphicsAsHtml()
 end main`;
@@ -467,8 +467,8 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const vg = system.initialise(await new _stdlib.List()._initialise());
-  const i = await (async () => {const _a = {...system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png"))}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")))); _a.x = 50; _a.y = 50; _a.width = 50; _a.height = 50; return _a;})();
+  let vg = system.initialise(await new _stdlib.List()._initialise());
+  let i = await (async () => {const _a = {...system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png"))}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new _stdlib.ImageVG()._initialise("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")))); _a.x = 50; _a.y = 50; _a.width = 50; _a.height = 50; return _a;})();
   vg.append(i);
   await system.print(_stdlib.vectorGraphicsAsHtml(vg));
 }
@@ -500,16 +500,16 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let c be new CircleVG()
-  let x be c.centreX
+  variable c set to new CircleVG()
+  variable x set to c.centreX
   print x
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const c = system.initialise(await new _stdlib.CircleVG()._initialise());
-  const x = c.centreX;
+  let c = system.initialise(await new _stdlib.CircleVG()._initialise());
+  let x = c.centreX;
   await system.print(x);
 }
 return [main, _tests];}`;

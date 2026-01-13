@@ -1,4 +1,4 @@
-# a052d2f3d71f728523dc978aa7dab6a3d36dfe98325431d56dddf27f41a3058d Elan 2.0.0-alpha guest default_profile valid
+# 3cc309ad77f75bac01cd69ae5d45195168cce3372f37c85c9d7b25a66e9a082d Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable grid set to new Array2D<of Int>(40, 30, white)
@@ -37,20 +37,20 @@ function north(cell as (Int, Int)) returns (Int, Int)
 end function
 
 function south(cell as (Int, Int)) returns (Int, Int)
-  let x, y be cell
-  let y2 be if y is 29 then 0 else y + 1
+  constant x, y set to cell
+  constant y2 set to if y is 29 then 0 else y + 1
   return tuple(x, y2)
 end function
 
 function east(cell as (Int, Int)) returns (Int, Int)
-  let x, y be cell
-  let x2 be if x is 39 then 0 else x + 1
+  constant x, y set to cell
+  constant x2 set to if x is 39 then 0 else x + 1
   return tuple(x2, y)
 end function
 
 function west(cell as (Int, Int)) returns (Int, Int)
-  let x, y be cell
-  let x2 be if x is 0 then 39 else x - 1
+  constant x, y set to cell
+  constant x2 set to if x is 0 then 39 else x - 1
   return tuple(x2, y)
 end function
 
@@ -71,14 +71,14 @@ function southWest(cell as (Int, Int)) returns (Int, Int)
 end function
 
 function neighbourCells(x as Int, y as Int) returns List<of (Int, Int)>
-  let c be tuple(x, y)
+  constant c set to tuple(x, y)
   return [northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)]
 end function
 
 function liveNeighbours(grid as Array2D<of Int>, x as Int, y as Int) returns Int
   variable count set to 0
   each cell in neighbourCells(x, y)
-    let cx, cy be cell
+    constant cx, cy set to cell
     if grid[cx, cy] is black then
       set count to count + 1
     end if
@@ -98,7 +98,7 @@ end function
 
 function nextCellValue(grid as Array2D<of Int>, x as Int, y as Int) returns Int
   variable colour set to white
-  let live be willLive(grid[x, y], liveNeighbours(grid, x, y))
+  constant live set to willLive(grid[x, y], liveNeighbours(grid, x, y))
   if live then
     set colour to black
   end if
@@ -106,10 +106,10 @@ function nextCellValue(grid as Array2D<of Int>, x as Int, y as Int) returns Int
 end function
 
 procedure nextGeneration(out grid as Array2D<of Int>)
-  let next be new Array2D<of Int>(40, 30, white)
+  variable next set to new Array2D<of Int>(40, 30, white)
   for x from 0 to 39 step 1
     for y from 0 to 29 step 1
-      let colour be nextCellValue(grid, x, y)
+      constant colour set to nextCellValue(grid, x, y)
       call next.put(x, y, colour)
     end for
   end for

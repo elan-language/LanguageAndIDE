@@ -1,11 +1,11 @@
-# 6eff73daa7c086b9e4a9e2e19399ca5e4c0c0ffb424a90d30f53e0cdb807cbe1 Elan 2.0.0-alpha guest default_profile valid
+# 37a6882f942fee478429d0df9168c2c662dd99add6b7097fa294ebd2a82e6e00 Elan 2.0.0-alpha guest default_profile valid
 
 function score(g as Game) returns Int
   return g.body.length() - 2
 end function
 
 main
-  let g be new Game()
+  variable g set to new Game()
   call print(score(g))
 end main
 

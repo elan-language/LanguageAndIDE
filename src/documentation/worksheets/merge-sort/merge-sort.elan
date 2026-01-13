@@ -1,4 +1,4 @@
-# 5bb18dcbc875379531f4cea9f963dcfd8f41faea52c1fee303035fac6574cf6e Elan 2.0.0-alpha guest default_profile valid
+# a63831ccf7d26ba5d29e8b934f97329b305382169761122fee7e740e47dfb5f5 Elan 2.0.0-alpha guest default_profile valid
 
 # This code is the start-point for Worksheet 'Merge sort' where the task is to implement the 'sort' function properly, and hence get all tests passing.
 function sort(li as List<of String>) returns List<of String>
@@ -7,21 +7,21 @@ end function
 
 test test_sort
   # Edge case: empty
-  let emptyList be empty List<of String>
+  variable emptyList set to empty List<of String>
   assert sort(emptyList) is emptyList
   # Edge case: one item
-  let li2 be ["plum"]
+  variable li2 set to ["plum"]
   assert sort(li2) is li2
   # Happy case: odd number of members
-  let li3 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
+  variable li3 set to ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
   # Happy case: even number of members
-  let sorted3 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"]
+  variable sorted3 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"]
   assert sort(li3) is sorted3
-  let li4 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"]
-  let sorted4 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"]
+  variable li4 set to ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"]
+  variable sorted4 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"]
   assert sort(li4) is sorted4
   # Edge case: already sorted
-  let li5 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"]
+  variable li5 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"]
   assert sort(li5) is li5
 end test
 
@@ -40,11 +40,11 @@ function merge(a as List<of String>, b as List<of String>) returns List<of Strin
 end function
 
 test test_merge
-  let emptyList be empty List<of String>
+  variable emptyList set to empty List<of String>
   assert merge(emptyList, emptyList) is emptyList
   assert merge(["orange"], ["melon"]) is ["melon", "orange"]
-  let l1 be ["apple", "lime", "pear"]
-  let l2 be ["apricot", "lemon", "plum"]
+  variable l1 set to ["apple", "lime", "pear"]
+  variable l2 set to ["apricot", "lemon", "plum"]
   assert merge(l1, l2) is ["apple", "apricot", "lemon", "lime", "pear", "plum"]
   assert merge(l2, l1) is ["apple", "apricot", "lemon", "lime", "pear", "plum"]
   assert merge(l1, emptyList) is l1

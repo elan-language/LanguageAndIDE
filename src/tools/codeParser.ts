@@ -10,7 +10,7 @@ import { TypeField } from "../ide/frames/fields/type-field";
 import { FileImpl } from "../ide/frames/file-impl";
 import { ConcreteClass } from "../ide/frames/globals/concrete-class";
 import { MainFrame } from "../ide/frames/globals/main-frame";
-import { LetStatement } from "../ide/frames/statements/let-statement";
+import { ConstantStatement } from "../ide/frames/statements/constant-statement";
 import { StatementSelector } from "../ide/frames/statements/statement-selector";
 import { ParseStatus } from "../ide/frames/status-enums";
 import { StubInputOutput } from "../ide/stub-input-output";
@@ -113,7 +113,7 @@ async function parseAsExpression(code: string) {
 
   try {
     const mf = new MainFrame(file);
-    const ls = new LetStatement(mf);
+    const ls = new ConstantStatement(mf);
     const expr = new ExpressionField(ls);
     expr.parseFrom(codeSource);
 
@@ -135,7 +135,7 @@ async function parseAsType(code: string) {
 
   try {
     const mf = new MainFrame(file);
-    const ls = new LetStatement(mf);
+    const ls = new ConstantStatement(mf);
     const expr = new TypeField(ls);
     expr.parseFrom(codeSource);
 

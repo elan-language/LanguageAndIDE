@@ -1,7 +1,7 @@
-# ee3a3aa1427d73194c62516d3f3f0dd3d2148a398ef9bf41ba14b1fb014695c8 Elan 2.0.0-alpha guest default_profile valid
+# 693d641034308653fb2a7d0d421e9ab9faa2b65895ec6b5017088d713e7cbfef Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let t be new Turtle()
+  variable t set to new Turtle()
   call t.placeAt(-50, 30)
   call t.turn(90)
   for i from 1 to 3 step 1
@@ -12,7 +12,7 @@ end main
 
 procedure drawSide(length as Float, t as Turtle)
   if (length > 1) then
-    let third be length/3
+    constant third set to length/3
     call drawSide(third, t)
     call t.turn(-60)
     call drawSide(third, t)

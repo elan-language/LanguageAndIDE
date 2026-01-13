@@ -251,7 +251,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [[1,2,3], [4,5,6], [7,8,9]]
-  let x:y be a
+  variable x:y set to a
   print x
   print y
 end main
@@ -261,7 +261,7 @@ end main
 const global = new class {};
 async function main() {
   let a = system.list([system.list([1, 2, 3]), system.list([4, 5, 6]), system.list([7, 8, 9])]);
-  const [x, y] = system.deconstructList(a);
+  let [x, y] = system.deconstructList(a);
   await system.print(x);
   await system.print(y);
 }
@@ -329,7 +329,7 @@ return [main, _tests];}`;
 
 main
   variable a set to {1,2,3}
-  let x:y be a
+  variable x:y set to a
   print x
   print y
 end main
@@ -339,7 +339,7 @@ end main
 const global = new class {};
 async function main() {
   let a = system.listImmutable([1, 2, 3]);
-  const [x, y] = system.deconstructList(a);
+  let [x, y] = system.deconstructList(a);
   await system.print(x);
   await system.print(y);
 }
@@ -366,7 +366,7 @@ return [main, _tests];}`;
 
 main
   variable a set to {1,2,3}
-  let x:_ be a
+  variable x:_ set to a
   print x
 end main
 `;
@@ -375,7 +375,7 @@ end main
 const global = new class {};
 async function main() {
   let a = system.listImmutable([1, 2, 3]);
-  const [x, ] = system.deconstructList(a);
+  let [x, ] = system.deconstructList(a);
   await system.print(x);
 }
 return [main, _tests];}`;
@@ -401,7 +401,7 @@ return [main, _tests];}`;
 
 main
   variable a set to {1,2,3}
-  let _:y be a
+  variable _:y set to a
   print y
 end main
 `;
@@ -410,7 +410,7 @@ end main
 const global = new class {};
 async function main() {
   let a = system.listImmutable([1, 2, 3]);
-  const [, y] = system.deconstructList(a);
+  let [, y] = system.deconstructList(a);
   await system.print(y);
 }
 return [main, _tests];}`;
@@ -473,7 +473,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [1]
-  let x:y be a
+  variable x:y set to a
   print x
   print y
 end main
@@ -483,7 +483,7 @@ end main
 const global = new class {};
 async function main() {
   let a = system.list([1]);
-  const [x, y] = system.deconstructList(a);
+  let [x, y] = system.deconstructList(a);
   await system.print(x);
   await system.print(y);
 }
@@ -874,7 +874,7 @@ end main
 
 main
   variable a set to 1
-  let x:y be a
+  variable x:y set to a
 end main
 `;
 
@@ -1057,37 +1057,6 @@ end main
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range error");
   });
 
-  test("Fail_DeconstructIntoExistingLetVariables", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to [1,2,3]
-  let x be 1
-  let y be empty List<of Int>
-  set x:y to a
-  print x
-  print y
-end main
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "May not re-assign the 'let' 'x'.LangRef.html#compile_error",
-      "May not re-assign the 'let' 'y'.LangRef.html#compile_error",
-    ]);
-  });
-
   test("Fail_DeconstructIntoExistingAndNewVariables", async () => {
     const code = `${testHeader}
 
@@ -1118,7 +1087,7 @@ end main
 
 main
   variable a set to [1,2]
-  let x, y be a
+  variable x, y set to a
   print x
 end main
 `;

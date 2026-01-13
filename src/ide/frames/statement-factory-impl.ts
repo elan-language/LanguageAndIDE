@@ -5,12 +5,12 @@ import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
+import { ConstantStatement } from "./statements/constant-statement";
 import { Each } from "./statements/each";
 import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
-import { LetStatement } from "./statements/let-statement";
 import { Print } from "./statements/print";
 import { SetStatement } from "./statements/set-statement";
 import { Throw } from "./statements/throw";
@@ -43,8 +43,8 @@ export class StatementFactoryImpl implements StatementFactory {
   public newIf(parent: Parent): Frame {
     return new IfStatement(parent);
   }
-  public newLet(parent: Parent): Frame {
-    return new LetStatement(parent);
+  public newConstantStatement(parent: Parent): Frame {
+    return new ConstantStatement(parent);
   }
   public newPrint(parent: Parent): Frame {
     return new Print(parent);

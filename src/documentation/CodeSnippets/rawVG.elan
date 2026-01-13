@@ -1,7 +1,7 @@
-# 353719e76909dffff0f172b387b85be8bdc01e05642e2fecc54cc406fe5a81c9 Elan 2.0.0-alpha guest default_profile valid
+# cdb7b3ecf6c80e07ecd2d7cc60d2d2b7531be6d7b0a199aeb41e650d86919800 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let movingCircle be '<circle cx="50" cy="50" r="50" style="fill:red;">\n<animate attributeName="cx" begin="0s" dur="2s" from="50" to="90%" repeatCount="indefinite" /></circle>'
-  let raw be new RawVG() with rawSVGcontent set to movingCircle
+  variable movingCircle set to '<circle cx="50" cy="50" r="50" style="fill:red;">\n<animate attributeName="cx" begin="0s" dur="2s" from="50" to="90%" repeatCount="indefinite" /></circle>'
+  variable raw set to new RawVG() with rawSVGcontent set to movingCircle
   call displayVectorGraphics([raw])
 end main

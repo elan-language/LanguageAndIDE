@@ -126,14 +126,14 @@ end main`;
     const code = `${testHeader}
 
 main
-  let q be new Queue<of String>()
+  variable q set to new Queue<of String>()
   print q.peek()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const q = system.initialise(await new _stdlib.Queue()._initialise());
+  let q = system.initialise(await new _stdlib.Queue()._initialise());
   await system.print(q.peek());
 }
 return [main, _tests];}`;
@@ -161,14 +161,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let q be new Queue<of String>()
+  variable q set to new Queue<of String>()
   print q.dequeue()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const q = system.initialise(await new _stdlib.Queue()._initialise());
+  let q = system.initialise(await new _stdlib.Queue()._initialise());
   await system.print(q.dequeue());
 }
 return [main, _tests];}`;
@@ -196,7 +196,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let q be new Queue()
+  variable q set to new Queue()
 end main`;
 
     const fileImpl = new FileImpl(

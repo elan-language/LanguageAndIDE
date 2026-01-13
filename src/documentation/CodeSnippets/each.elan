@@ -1,7 +1,7 @@
-# 20c375f5eb4a76f30072657add6ec708a873d31e2fc2c961a84650efccf2f1bc Elan 2.0.0-alpha guest default_profile valid
+# 23a78d75619d2cbac2b2e1b51ab8bc053d4108d02b7f6d8fbe1bcd25ea605514 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let names be ["Tom", "Dick", "Harriet"]
+  variable names set to ["Tom", "Dick", "Harriet"]
   call print(names[0])
   each n in names
     call print(n)

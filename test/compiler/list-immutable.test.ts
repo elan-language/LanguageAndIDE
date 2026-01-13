@@ -1605,10 +1605,10 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let a be {"one", "two", "three"}
-  let b be a.asArray()
-  let c be a.asList()
-  let d be a.asSet()
+  variable a set to {"one", "two", "three"}
+  variable b set to a.asArray()
+  variable c set to a.asList()
+  variable d set to a.asSet()
   variable aa set to empty ListImmutable<of String>
   variable bb set to empty Array<of String>
   variable cc set to empty List<of String>
@@ -1626,10 +1626,10 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const a = system.listImmutable(["one", "two", "three"]);
-  const b = a.asArray();
-  const c = a.asList();
-  const d = a.asSet();
+  let a = system.listImmutable(["one", "two", "three"]);
+  let b = a.asArray();
+  let c = a.asList();
+  let d = a.asSet();
   let aa = system.initialise(_stdlib.ListImmutable.emptyInstance());
   let bb = system.initialise(_stdlib.Array.emptyInstance());
   let cc = system.initialise(_stdlib.List.emptyInstance());

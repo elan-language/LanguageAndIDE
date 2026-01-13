@@ -1,4 +1,4 @@
-# a53bf2ef06dd4c728ac799b037c45897667ca087c283f224f897fc2676e55e48 Elan 2.0.0-alpha guest default_profile valid
+# 9e6593950ef741a7a144083ed08688e1709aa18edeedcd31256e4aa3c9ee09b5 Elan 2.0.0-alpha guest default_profile valid
 
 # 
 # 
@@ -7,16 +7,16 @@
 # 
 # Elan 1.9.0
 main
-  let t be new Turtle()
+  variable t set to new Turtle()
   variable paces set to 0
   call t.hide()
   call circle(t, 50)
   for count from 1 to 20 step 1
     call t.placeAt(0, 0)
-    let colour be randomInt(red, blue)
+    variable colour set to randomInt(red, blue)
     call t.penColour(colour)
     while sqrt(t.x^2 + t.y^2) < 50
-      let angle be randomInt(-90, 90)
+      variable angle set to randomInt(-90, 90)
       call t.turn(angle)
       call t.move(5)
       set paces to paces + 1
@@ -26,7 +26,7 @@ main
 end main
 
 procedure circle(t as Turtle, radius as Int)
-  let segment be radius*pi*2/360
+  variable segment set to radius*pi*2/360
   call t.placeAt(-radius, 0)
   for count from 1 to 360 step 1
     call t.move(segment)

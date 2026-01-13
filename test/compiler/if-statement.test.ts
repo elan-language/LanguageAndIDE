@@ -477,10 +477,10 @@ return [main, _tests];}`;
 main
   variable a set to 3
   if a is 1 then
-    let b be 1
+    variable b set to 1
     print b
   else
-    let b be a
+    variable b set to a
     print b
   end if
 end main`;
@@ -490,10 +490,10 @@ const global = new class {};
 async function main() {
   let a = 3;
   if (a === 1) {
-    const b = 1;
+    let b = 1;
     await system.print(b);
   } else {
-    const b = a;
+    let b = a;
     await system.print(b);
   }
 }
@@ -607,7 +607,7 @@ main
   if a is 1 then
     print ""
   else 
-    [ghosted] let b be 2
+    [ghosted] constant b set to 2
   end if
 end main`;
 

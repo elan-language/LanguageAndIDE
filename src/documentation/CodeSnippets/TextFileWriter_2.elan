@@ -1,7 +1,7 @@
-# 4ca63885e8ccea07cd3df29bb3d3fa55ca8611455287278a1cf0d311d11e8111 Elan 2.0.0-alpha guest default_profile valid
+# f9dfb7f6d01b4af58e9dc97f87546a7ddd3fc2b8ab107d958ab7231a9fd570a1 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let file be createFileForWriting("squares.txt")
+  variable file set to createFileForWriting("squares.txt")
   for i from 1 to 100 step 1
     call file.writeLine("{i*i}")
   end for

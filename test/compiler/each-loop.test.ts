@@ -322,7 +322,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let bar be new Bar([1,2])
+  variable bar set to new Bar([1,2])
   call bar.display()
 end main
 
@@ -574,7 +574,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let s be "hello"
+  constant s set to "hello"
   each ch in s
     print ch
     set s to "fred"
@@ -593,7 +593,9 @@ end main
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the 'let' 's'.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not re-assign the constant 's'.LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_undefinedCollection", async () => {
@@ -601,7 +603,7 @@ end main
 
 main
   each x in a
-    let b be x.z
+    variable b set to x.z
   end each
 end main
 `;

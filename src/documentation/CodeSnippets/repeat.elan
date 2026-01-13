@@ -1,8 +1,8 @@
-# b31bcd6a4eb279df6c8aba81900e18f290cab68278f0f7bd21abd3cff8d8e6dc Elan 2.0.0-alpha guest default_profile valid
+# f55daf15c9b4dded96fd9cf08fcb758f9e01d6968cc2946a95f79140cd7b61c0 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let names be ["Abel", "Boole", "Cantor", "Descartes"]
-  let file be createFileForWriting("Maths.txt")
+  variable names set to ["Abel", "Boole", "Cantor", "Descartes"]
+  variable file set to createFileForWriting("Maths.txt")
   variable i set to 0
   while i < names.length()
     call file.writeLine(names[i])

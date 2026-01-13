@@ -1,4 +1,4 @@
-# c90c118f9907d3b91389ed7ddccfeca79197e8a9f2a4f140cfbfe4fcbcb9c8a7 Elan 2.0.0-alpha guest default_profile valid
+# 4a24654da6e582e1909f623506bf8ac168c8d279266d9ae187606deb9d983335 Elan 2.0.0-alpha guest default_profile valid
 
 main
   # original quotes
@@ -13,7 +13,7 @@ main
   call pause(1000)
   call clearHtml()
   # 
-  let s be '<h1 style="color: blue;">A heading</h1><p>some text</p>'
+  variable s set to '<h1 style="color: blue;">A heading</h1><p>some text</p>'
   call print(s)
   call displayHtml(s)
 end main

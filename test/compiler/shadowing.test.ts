@@ -90,14 +90,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let pi be library.pi
+  variable pi set to library.pi
   print pi
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const pi = _stdlib.pi;
+  let pi = _stdlib.pi;
   await system.print(pi);
 }
 return [main, _tests];}`;
@@ -124,7 +124,7 @@ return [main, _tests];}`;
 constant f set to 1
 
 main
-  let f be 2
+  variable f set to 2
   print f
   print global.f
 end main`;
@@ -135,7 +135,7 @@ const global = new class {
 
 };
 async function main() {
-  const f = 2;
+  let f = 2;
   await system.print(f);
   await system.print(global.f);
 }
@@ -387,7 +387,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let add2 be add2(1)
+  variable add2 set to add2(1)
   print add2
 end main
 
@@ -398,7 +398,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const add2 = (await global.add2(1));
+  let add2 = (await global.add2(1));
   await system.print(add2);
 }
 
@@ -611,11 +611,11 @@ end main`;
     ]);
   });
 
-  test("Fail_IdShadowsLet", async () => {
+  test("Fail_IdShadowsConstant", async () => {
     const code = `${testHeader}
 
 main
-  let a be 1
+  constant a set to 1
   variable a set to 2
 end main`;
 
@@ -632,16 +632,16 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a 'let' and cannot be re-defined here.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a constant and cannot be re-defined here.LangRef.html#compile_error",
     ]);
   });
 
-  test("Fail_LetShadowsLet", async () => {
+  test("Fail_ConstantShadowsConstant", async () => {
     const code = `${testHeader}
 
 main
-  let a be 1
-  let a be 2
+  constant a set to 1
+  constant a set to 2
 end main`;
 
     const fileImpl = new FileImpl(
@@ -657,7 +657,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'a' is already used for a 'let' and cannot be re-defined here.LangRef.html#compile_error",
+      "The identifier 'a' is already used for a constant and cannot be re-defined here.LangRef.html#compile_error",
     ]);
   });
 
@@ -766,7 +766,7 @@ main
 end main
 
 function foo(a as Int, b as Int) returns Int
-  let a be 1
+  variable a set to 1
   return a * b
 end function`;
 

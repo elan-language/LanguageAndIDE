@@ -563,7 +563,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let x be --4
+  variable x set to --4
 end main`;
 
     const fileImpl = new FileImpl(
@@ -608,7 +608,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let x be not not true
+  variable x set to not not true
 end main`;
 
     const fileImpl = new FileImpl(

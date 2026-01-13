@@ -1,7 +1,7 @@
-# 725f9efef9561fd87473abc78e3e3b0527a02009b8d7ad054b1d934bf8dfad2b Elan 2.0.0-alpha guest default_profile valid
+# bc242ee1f381fedaea2f4a1c5df9ea5ba82700d1f759769a49c7e9bfa830999b Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let file be openFileForReading()
-  let text be file.readWholeFile()
+  variable file set to openFileForReading()
+  variable text set to file.readWholeFile()
   call print(text)
 end main

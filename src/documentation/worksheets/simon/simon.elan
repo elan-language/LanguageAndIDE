@@ -1,9 +1,9 @@
-# 7f3ee153cdf3c09770d51e3f70d89e84885d03fa045cd921dd44c16096b86cbe Elan 2.0.0-alpha guest default_profile valid
+# 2daa58a489afdc50dc7df292031294d9348bfd3b9412c2cda13d3c37b17e9ed5 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable ok set to true
   variable interval set to 1000
-  let sequence be empty List<of Int>
+  variable sequence set to empty List<of Int>
   while ok
     call simonsTurn(sequence, interval)
     call clearVectorGraphics()
@@ -25,8 +25,8 @@ procedure playersTurn(sequence as List<of Int>, interval as Int, out ok as Boole
   variable counter set to 0
   variable correctSoFar set to true
   while (counter < sequence.length()) and correctSoFar
-    let k be waitForKey()
-    let valid, move be parseAsInt(k)
+    variable k set to waitForKey()
+    variable valid, move set to parseAsInt(k)
     if valid and (sequence[counter] is move) then
       call displayMove(move, interval)
     else
@@ -38,9 +38,9 @@ procedure playersTurn(sequence as List<of Int>, interval as Int, out ok as Boole
 end procedure
 
 procedure displayMove(move as Int, interval as Int)
-  let colours be [red, yellow, blue, green]
-  let tones be [164.81, 220, 277.18, 329.63]
-  let circle be new CircleVG() with centreX set to move*20 - 5, centreY set to 15, radius set to 10, strokeWidth set to 0, fillColour set to colours[move - 1]
+  variable colours set to [red, yellow, blue, green]
+  variable tones set to [164.81, 220, 277.18, 329.63]
+  variable circle set to new CircleVG() with centreX set to move*20 - 5, centreY set to 15, radius set to 10, strokeWidth set to 0, fillColour set to colours[move - 1]
   call displayVectorGraphics([circle])
   call tone(interval, tones[move - 1], 0.1)
   call clearVectorGraphics()

@@ -1,13 +1,13 @@
-# 0b9e14edbae7940bfe59b571079e1e7760f17c415f2e71d3ca04823aa403a4e4 Elan 2.0.0-alpha guest default_profile valid
+# 741c495d109f126cfd5f5934f52cda426756d69a7cc14a80172852f3100b672f Elan 2.0.0-alpha guest default_profile valid
 
 function bestFitLine(points as List<of Point>) returns (Float, Float)
-  let sumX be points.reduce(0.0, lambda s as Float, p as Point => s + p.x)
-  let sumXsq be points.reduce(0.0, lambda s as Float, p as Point => s + p.x^2)
-  let sumY be points.reduce(0.0, lambda s as Float, p as Point => s + p.y)
-  let sumXY be points.reduce(0.0, lambda s as Float, p as Point => s + p.x*p.y)
-  let n be points.length()
-  let a be (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX)
-  let b be (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX)
+  constant sumX set to points.reduce(0.0, lambda s as Float, p as Point => s + p.x)
+  constant sumXsq set to points.reduce(0.0, lambda s as Float, p as Point => s + p.x^2)
+  constant sumY set to points.reduce(0.0, lambda s as Float, p as Point => s + p.y)
+  constant sumXY set to points.reduce(0.0, lambda s as Float, p as Point => s + p.x*p.y)
+  constant n set to points.length()
+  constant a set to (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX)
+  constant b set to (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX)
   return tuple(a, b)
 end function
 
@@ -23,8 +23,8 @@ function newPoint(x as Float, y as Float) returns Point
 end function
 
 test test_
-  let l1 be [newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)]
-  let first, second be bestFitLine(l1)
+  constant l1 set to [newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)]
+  constant first, second set to bestFitLine(l1)
   assert first.round(3) is 0.766
   assert second.round(3) is 1.093
 end test

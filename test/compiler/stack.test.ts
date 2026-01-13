@@ -153,14 +153,14 @@ end main`;
     const code = `${testHeader}
 
 main
-  let st be new Stack<of String>()
+  variable st set to new Stack<of String>()
   print st.peek()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st = system.initialise(await new _stdlib.Stack()._initialise());
+  let st = system.initialise(await new _stdlib.Stack()._initialise());
   await system.print(st.peek());
 }
 return [main, _tests];}`;
@@ -188,14 +188,14 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let st be new Stack<of String>()
+  variable st set to new Stack<of String>()
   print st.pop()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const st = system.initialise(await new _stdlib.Stack()._initialise());
+  let st = system.initialise(await new _stdlib.Stack()._initialise());
   await system.print(st.pop());
 }
 return [main, _tests];}`;
@@ -223,7 +223,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let st be new Stack()
+  variable st set to new Stack()
 end main`;
 
     const fileImpl = new FileImpl(

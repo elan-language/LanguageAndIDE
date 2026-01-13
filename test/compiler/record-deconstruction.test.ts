@@ -73,7 +73,7 @@ return [main, _tests];}`;
 
 main
   variable x set to new Foo() with a set to 3, fruit set to "Apple", aBool set to true, aFloat set to 1.1
-  let a, fruit, aBool, aFloat be x
+  variable a, fruit, aBool, aFloat set to x
   print a
   print fruit
   print aBool
@@ -93,7 +93,7 @@ end record
 const global = new class {};
 async function main() {
   let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = 3; _a.fruit = "Apple"; _a.aBool = _stdlib.true; _a.aFloat = 1.1; return _a;})();
-  const {a, fruit, aBool, aFloat} = x;
+  let {a, fruit, aBool, aFloat} = x;
   await system.print(a);
   await system.print(fruit);
   await system.print(aBool);
@@ -167,7 +167,7 @@ end record`;
 
 main
   variable x set to new Foo() with a set to 100, b set to "fred"
-  let _, b be x
+  variable _, b set to x
   print b
 end main
 
@@ -394,8 +394,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let x be new Foo() with a set to {1,2}, b set to "fred"
-  let a, b be x
+  variable x set to new Foo() with a set to {1,2}, b set to "fred"
+  variable a, b set to x
   print a
   print b
 end main
@@ -408,8 +408,8 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
-  const {a, b} = x;
+  let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
+  let {a, b} = x;
   await system.print(a);
   await system.print(b);
 }
@@ -445,7 +445,7 @@ return [main, _tests];}`;
 
 main
   variable x set to new Foo() with a set to {1,2}, b set to "fred"
-  let a, b be x
+  variable a, b set to x
   print a
   print b
 end main
@@ -459,7 +459,7 @@ end record`;
 const global = new class {};
 async function main() {
   let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
-  const {a, b} = x;
+  let {a, b} = x;
   await system.print(a);
   await system.print(b);
 }
@@ -566,8 +566,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let x be new Foo() with a set to {1,2}, b set to "fred"
-  let y be new Bar() with c set to x
+  variable x set to new Foo() with a set to {1,2}, b set to "fred"
+  variable y set to new Bar() with c set to x
   variable c, d set to y
   print c
   print d
@@ -586,8 +586,8 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
-  const y = await (async () => {const _a = {...system.initialise(await new Bar()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Bar()._initialise()))); _a.c = x; return _a;})();
+  let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
+  let y = await (async () => {const _a = {...system.initialise(await new Bar()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Bar()._initialise()))); _a.c = x; return _a;})();
   let {c, d} = y;
   await system.print(c);
   await system.print(d);
@@ -769,8 +769,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let x be new Foo() with a set to {1,2}, b set to "fred"
-  let y be new Bar() with c set to x
+  variable x set to new Foo() with a set to {1,2}, b set to "fred"
+  variable y set to new Bar() with c set to x
   variable c set to empty Foo
   variable d set to ""
   set c, d to y
@@ -791,8 +791,8 @@ end record`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
-  const y = await (async () => {const _a = {...system.initialise(await new Bar()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Bar()._initialise()))); _a.c = x; return _a;})();
+  let x = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.a = system.listImmutable([1, 2]); _a.b = "fred"; return _a;})();
+  let y = await (async () => {const _a = {...system.initialise(await new Bar()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Bar()._initialise()))); _a.c = x; return _a;})();
   let c = Foo.emptyInstance();
   let d = "";
   ({c, d} = y);
@@ -949,8 +949,8 @@ end record`;
 
 main
   variable x set to new Foo() with a set to 100, b set to "fred"
-  let a be 0
-  let b be ""
+  constant a set to 0
+  constant b set to ""
   set a, b to x
   print a
   print b
@@ -974,8 +974,8 @@ end record`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "May not re-assign the 'let' 'a'.LangRef.html#compile_error",
-      "May not re-assign the 'let' 'b'.LangRef.html#compile_error",
+      "May not re-assign the constant 'a'.LangRef.html#compile_error",
+      "May not re-assign the constant 'b'.LangRef.html#compile_error",
     ]);
   });
 
@@ -1056,7 +1056,7 @@ end class`;
 
 main
   variable x set to new Foo()
-  let a, b be x
+  variable a, b set to x
   print a
   print b
 end main

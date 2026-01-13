@@ -1,6 +1,6 @@
-# b2154dd4267882c6773c191c4e1605900ea698b51c680b6705658eff7f1ace18 Elan 2.0.0-alpha guest default_profile valid
+# 1504f87c3efdb7a7a069b474763764e5108f25b2b23e42883c75227ed39ba3b1 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let style be '<style> h1 { color: Red; font-size: 24pt; } p { font-family: Serif; } </style>'
+  variable style set to '<style> h1 { color: Red; font-size: 24pt; } p { font-family: Serif; } </style>'
   call displayHtml("{style}<h1>New heading</h1><p>some new text</p>")
 end main

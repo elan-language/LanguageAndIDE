@@ -21,7 +21,7 @@ suite("Tuple", () => {
 main
     variable x set to tuple(3, "Apple")
     print x
-    let f, s be x
+    variable f, s set to x
     print f
     print s
 end main`;
@@ -31,7 +31,7 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   await system.print(x);
-  const [f, s] = x;
+  let [f, s] = x;
   await system.print(f);
   await system.print(s);
 }
@@ -59,8 +59,8 @@ return [main, _tests];}`;
 main
     variable x set to tuple(3, "Apple")
     print x
-    let f be x.item0
-    let s be x.item1
+    variable f set to x.item0
+    variable s set to x.item1
     print f
     print s
 end main`;
@@ -70,8 +70,8 @@ const global = new class {};
 async function main() {
   let x = system.tuple([3, "Apple"]);
   await system.print(x);
-  const f = x[0];
-  const s = x[1];
+  let f = x[0];
+  let s = x[1];
   await system.print(f);
   await system.print(s);
 }
@@ -99,7 +99,7 @@ return [main, _tests];}`;
 main
   variable x set to f()
   print x
-  let fst, sec be x
+  variable fst, sec set to x
   print fst
   print sec
 end main
@@ -113,7 +113,7 @@ const global = new class {};
 async function main() {
   let x = (await global.f());
   await system.print(x);
-  const [fst, sec] = x;
+  let [fst, sec] = x;
   await system.print(fst);
   await system.print(sec);
 }
@@ -146,8 +146,8 @@ return [main, _tests];}`;
 main
   variable x set to f()
   print x
-  let fst be x.item0
-  let snd be x.item1
+  variable fst set to x.item0
+  variable snd set to x.item1
   print fst
   print snd
 end main
@@ -161,8 +161,8 @@ const global = new class {};
 async function main() {
   let x = (await global.f());
   await system.print(x);
-  const fst = x[0];
-  const snd = x[1];
+  let fst = x[0];
+  let snd = x[1];
   await system.print(fst);
   await system.print(snd);
 }
@@ -194,7 +194,7 @@ return [main, _tests];}`;
 
 main
   variable t set to f()
-  let fst, _ be t
+  variable fst, _ set to t
   print fst
 end main
 
@@ -206,7 +206,7 @@ end function`;
 const global = new class {};
 async function main() {
   let t = (await global.f());
-  const [fst, ] = t;
+  let [fst, ] = t;
   await system.print(fst);
 }
 
@@ -237,7 +237,7 @@ return [main, _tests];}`;
 
 main
   variable t set to f()
-  let fst be t.item0
+  variable fst set to t.item0
   print fst
 end main
 
@@ -249,7 +249,7 @@ end function`;
 const global = new class {};
 async function main() {
   let t = (await global.f());
-  const fst = t[0];
+  let fst = t[0];
   await system.print(fst);
 }
 
@@ -280,7 +280,7 @@ return [main, _tests];}`;
 
 main
   variable t set to a.reduce(tuple(1, 1), lambda i as (Int, Int), j as (Int, Int) => j)
-  let fst, _ be t
+  variable fst, _ set to t
   print fst
 end main
 constant a set to {tuple(1,2)}`;
@@ -292,7 +292,7 @@ const global = new class {
 };
 async function main() {
   let t = (await global.a.reduce(system.tuple([1, 1]), async (i, j) => j));
-  const [fst, ] = t;
+  let [fst, ] = t;
   await system.print(fst);
 }
 return [main, _tests];}`;
@@ -318,7 +318,7 @@ return [main, _tests];}`;
 
 main
   variable t set to a.reduce(tuple(1, 1), lambda i as (Int, Int), j as (Int, Int) => j)
-  let fst be t.item0
+  variable fst set to t.item0
   print fst
 end main
 constant a set to {tuple(1,2)}`;
@@ -330,7 +330,7 @@ const global = new class {
 };
 async function main() {
   let t = (await global.a.reduce(system.tuple([1, 1]), async (i, j) => j));
-  const fst = t[0];
+  let fst = t[0];
   await system.print(fst);
 }
 return [main, _tests];}`;
@@ -361,7 +361,7 @@ main
 end main
 
 function f(t as (String, String)) returns String
-   let first, _ be t
+   variable first, _ set to t
    return first
 end function`;
 
@@ -374,7 +374,7 @@ async function main() {
 }
 
 async function f(t) {
-  const [first, ] = t;
+  let [first, ] = t;
   return first;
 }
 global["f"] = f;
@@ -406,7 +406,7 @@ main
 end main
 
 function f(t as (String, String)) returns String
-   let first be t.item0
+   variable first set to t.item0
    return first
 end function`;
 
@@ -419,7 +419,7 @@ async function main() {
 }
 
 async function f(t) {
-  const first = t[0];
+  let first = t[0];
   return first;
 }
 global["f"] = f;
@@ -482,10 +482,10 @@ return [main, _tests];}`;
 main
   variable p set to [1, 2, 3, 4, 5]
   variable x set to tuple(3, 4)
-  let y be x.item0 + x.item1
-  let z be p[x.item0]
-  let q be abs(x.item1)
-  let s be abs(p[x.item1])
+  variable y set to x.item0 + x.item1
+  variable z set to p[x.item0]
+  variable q set to abs(x.item1)
+  variable s set to abs(p[x.item1])
   print y
   print z
   print q
@@ -498,10 +498,10 @@ const global = new class {};
 async function main() {
   let p = system.list([1, 2, 3, 4, 5]);
   let x = system.tuple([3, 4]);
-  const y = x[0] + x[1];
-  const z = system.safeIndex(p, x[0]);
-  const q = _stdlib.abs(x[1]);
-  const s = _stdlib.abs(system.safeIndex(p, x[1]));
+  let y = x[0] + x[1];
+  let z = system.safeIndex(p, x[0]);
+  let q = _stdlib.abs(x[1]);
+  let s = _stdlib.abs(system.safeIndex(p, x[1]));
   await system.print(y);
   await system.print(z);
   await system.print(q);
@@ -713,7 +713,7 @@ end main
 
 main
   variable x set to tuple(3, "Apple")
-  let y be x.item2
+  variable y set to x.item2
 end main
 `;
 

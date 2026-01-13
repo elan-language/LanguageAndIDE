@@ -1,13 +1,13 @@
-# 0dbe82d4aa346937bd5547732eabb98a416c299cd5f7ba7228e15fe09267e5b4 Elan 2.0.0-alpha guest default_profile valid
+# 67bcb1bca6c11cdb86a4f5b55470a8f23d164bc5e11b9bfcad2f54a856588f7c Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let pic be "<img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg'\nwidth='400' height='200'\ntitle='shark' alt='shark'>"
+  variable pic set to "<img src='https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg'\nwidth='400' height='200'\ntitle='shark' alt='shark'>"
   call displayHtml(pic)
   call print("\n\npic")
   call pause(2000)
   call clearHtml()
   # swap quotes: not working in 1.4.0
-  let pic2 be '<img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg" \n width="400" height="200" \n title="shark" alt="shark">'
+  variable pic2 set to '<img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_%2828225976491%29.jpg" \n width="400" height="200" \n title="shark" alt="shark">'
   call displayHtml(pic2)
   call print("pic2")
 end main

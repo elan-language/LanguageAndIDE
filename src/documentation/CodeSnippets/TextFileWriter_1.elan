@@ -1,6 +1,6 @@
-# 5dba3b7d7d947fc6e5103a3e14601bcc14008cfd5bcce7ebf18831b02c996082 Elan 2.0.0-alpha guest default_profile valid
+# 984c43e590f1c8053d1a9dca674ad77dc8185fa2f4f1facfbbf0a02de82a39f6 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let file be createFileForWriting("myFile.txt")
+  variable file set to createFileForWriting("myFile.txt")
   call file.writeWholeFile("this is\nmyText")
 end main

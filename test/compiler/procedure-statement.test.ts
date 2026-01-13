@@ -1608,11 +1608,11 @@ end procedure`;
     ]);
   });
 
-  test("Fail_PassLetAsOut", async () => {
+  test("Fail_PassConstantAsOut", async () => {
     const code = `${testHeader}
 
 main
-  let a be 1
+  constant a set to 1
   call foo(a)
 end main
 
@@ -1789,7 +1789,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  let s be "hello"
+  variable s set to "hello"
   call s.reverse()
 end main`;
 
