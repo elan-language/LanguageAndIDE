@@ -46,6 +46,9 @@ import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
 
 export class LanguageVB implements Language {
+  commentRegex(): RegExp {
+    return /' [^\r\n]*/;
+  }
   languageFullName: string = "VB";
 
   annotation(frame: Frame): string {

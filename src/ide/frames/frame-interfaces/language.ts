@@ -10,6 +10,8 @@ export interface Language {
 
   commentMarker(): string; //e.g. `#`
 
+  commentRegex(): RegExp;
+
   renderSingleLineAsHtml(frame: Frame): string;
 
   renderSingleLineAsExport(frame: Frame): string;

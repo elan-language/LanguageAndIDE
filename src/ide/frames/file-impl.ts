@@ -41,7 +41,11 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
+import { LanguageCS } from "./language-cs";
 import { LanguageElan } from "./language-elan";
+import { LanguageJava } from "./language-java";
+import { LanguagePython } from "./language-python";
+import { LanguageVB } from "./language-vb";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -211,14 +215,14 @@ export class FileImpl implements File {
     const globals = parentHelper_renderChildrenAsHtml(this);
     this.currentHash = await this.getHash();
     return withHeader
-      ? `<el-header># ${this.getHashAsHtml()} ${this.getVersionAsHtml()} ${this.getUserNameAsHtml()} ${this.getProfileNameAsHtml()}</el-header>\r\n${globals}`
+      ? `<el-header>${this._language.commentMarker()} ${this.getHashAsHtml()} ${this.getVersionAsHtml()} ${this.getUserNameAsHtml()} ${this.getProfileNameAsHtml()}</el-header>\r\n${globals}`
       : globals;
   }
 
   async renderAsElanSource(): Promise<string> {
     const content = this.renderHashableContent();
     this.currentHash = await this.getHash(content);
-    return `# ${this.currentHash} ${content}`;
+    return `${this._language.commentMarker()} ${this.currentHash} ${content}`;
   }
 
   async renderAsExport(): Promise<string> {
@@ -619,6 +623,31 @@ export class FileImpl implements File {
     }
   }
 
+  setLanguageFromHeader(l: string) {
+    switch (l) {
+      case "Elan": {
+        this._language = new LanguageElan();
+        break;
+      }
+      case "Python": {
+        this._language = new LanguagePython();
+        break;
+      }
+      case "C#": {
+        this._language = new LanguageCS();
+        break;
+      }
+      case "VB": {
+        this._language = new LanguageVB();
+        break;
+      }
+      case "Java": {
+        this._language = new LanguageJava();
+        break;
+      }
+    }
+  }
+
   async parseFrom(source: CodeSource): Promise<void> {
     if (!this._stdLibSymbols.isInitialised) {
       this.parseError = this._stdLibSymbols.error;
@@ -633,8 +662,9 @@ export class FileImpl implements File {
       }
 
       await this.validateHeader(source.getRemainingCode());
-      if (source.isMatch("#")) {
-        source.removeRegEx(Regexes.comment, false);
+
+      if (source.isMatch(this._language.commentMarker())) {
+        source.removeRegEx(this._language.commentRegex(), false);
         source.removeRegEx(Regexes.newLine, false);
         source.removeRegEx(Regexes.newLine, false);
       }
@@ -708,18 +738,39 @@ export class FileImpl implements File {
     }
   }
 
+  validateLanguage(tokens: string[], offset: number) {
+    if (tokens[2 + offset] !== "Elan") {
+      throw new ElanFileError(cannotLoadInvalidFile);
+    }
+    this.validateVersion(tokens[3 + offset]);
+    this.userName = tokens[4 + offset] ?? defaultUsername;
+    return tokens[2];
+  }
+
+  validateHeaderComment(tokens: string[]) {
+    if (tokens[0] !== this._language.commentMarker()) {
+      throw new ElanFileError(cannotLoadInvalidFile);
+    }
+  }
+
   async validateHeader(code: string) {
+    let language = "elan";
     if (!this.isEmpty(code)) {
       const eol = code.indexOf("\n");
       const header = code.substring(0, eol > 0 ? eol : undefined);
       const tokens = header.split(" ");
-      if (tokens.length === 7 && tokens[0] === "#" && tokens[2] === "Elan") {
-        this.validateVersion(tokens[3]);
+
+      if (tokens.length === 7) {
         await this.validateHash(tokens[1], code);
-        this.userName = tokens[4] ?? defaultUsername;
+        language = this.validateLanguage(tokens, 0);
+      } else if (tokens.length === 9) {
+        await this.validateHash(tokens[1], code);
+        language = this.validateLanguage(tokens, 2);
       } else {
         throw new ElanFileError(cannotLoadInvalidFile);
       }
+      this.setLanguageFromHeader(language);
+      this.validateHeaderComment(tokens);
     }
   }
 
