@@ -21,9 +21,11 @@ import { SymbolType } from "./compiler-interfaces/symbol-type";
 import { getTypeOptions, noTypeOptions, TypeOptions } from "./compiler-interfaces/type-options";
 import { ElanCompilerError } from "./elan-compiler-error";
 import { constructorKeyword } from "./keywords";
+import { AnyType } from "./symbols/any-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
 import {
+  AnyName,
   BooleanName,
   ClassName,
   FloatName,
@@ -179,6 +181,8 @@ export class ElanValueTypeDescriptor implements TypeDescriptor {
         return BooleanType.Instance;
       case RegExpName:
         return RegExpType.Instance;
+      case AnyName:
+        return AnyType.Instance;
     }
     throw new Error("NotImplemented: " + this.name);
   }
@@ -575,6 +579,7 @@ export function elanDeprecated(
   };
 }
 
+export const ElanAny: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(AnyName);
 export const ElanInt: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(IntName);
 export const ElanFloat: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(FloatName);
 export const ElanString: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(StringName);
@@ -609,6 +614,10 @@ export function ElanTuple(ofTypes: TypeDescriptor[]) {
 
 export function ElanFunc(parameters: TypeDescriptor[], returnType: TypeDescriptor) {
   return new ElanFuncTypeDescriptor(parameters, returnType);
+}
+
+export function elanAnyType() {
+  return elanType(ElanAny);
 }
 
 export function elanIntType() {

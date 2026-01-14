@@ -11,6 +11,7 @@ import {
   ElanTuple,
   FunctionOptions,
   ProcedureOptions,
+  elanAnyType,
   elanClassExport,
   elanClassType,
   elanConstant,
@@ -393,19 +394,22 @@ export class StdLib {
     return this.system.tuple([false, 0]) as [boolean, number];
   }
 
-  @elanProcedure(["text"], ProcedureOptions.async)
-  async print(s: string) {
-    await this.system.elanInputOutput.print(`${s}\n`);
+  @elanProcedure(["any"], ProcedureOptions.async)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async print(@elanAnyType() s: any) {
+    await this.system.elanInputOutput.print(`${await this.system.asString(s)}\n`);
   }
 
-  @elanProcedure(["text"], ProcedureOptions.async)
-  async printNoLine(s: string) {
-    await this.system.elanInputOutput.print(s);
+  @elanProcedure(["any"], ProcedureOptions.async)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async printNoLine(@elanAnyType() s: any) {
+    await this.system.elanInputOutput.print(await this.system.asString(s));
   }
 
-  @elanProcedure(["position", "text"], ProcedureOptions.async)
-  async printTab(@elanIntType() position: number, s: string) {
-    await this.system.elanInputOutput.printTab(position, s);
+  @elanProcedure(["position", "any"], ProcedureOptions.async)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async printTab(@elanIntType() position: number, @elanAnyType() s: any) {
+    await this.system.elanInputOutput.printTab(position, await this.system.asString(s));
   }
 
   @elanProcedure([], ProcedureOptions.async)
