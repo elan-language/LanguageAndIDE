@@ -23,11 +23,16 @@ import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { Index } from "./parse-nodes";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { IdentifierNode } from "./parse-nodes/identifier-node";
 import { IndexDouble } from "./parse-nodes/index-double";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ListNode } from "./parse-nodes/list-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
+import { Space } from "./parse-nodes/parse-node-helpers";
+import { PunctuationNode } from "./parse-nodes/punctuation-node";
+import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeNode } from "./parse-nodes/type-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
@@ -45,6 +50,7 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
+import { TokenType } from "./symbol-completion-helpers";
 
 export class LanguageVB implements Language {
   commentRegex(): RegExp {
@@ -244,7 +250,11 @@ export class LanguageVB implements Language {
   }
 
   parseText(node: ParseNode, text: string): boolean {
-    return node && text ? false : false;
+    let result = false;
+    if (node instanceof ParamDefNode) {
+      result = this.parseParamDefNode(node, text);
+    }
+    return result;
   }
 
   private spaced(text: string): string {
@@ -291,4 +301,22 @@ export class LanguageVB implements Language {
   private SINGLE_QUOTE = "'";
   private EQUALS = "=";
   private NOT_EQUALS = "<>";
+
+  parseParamDefNode(node: ParamDefNode, text: string): boolean {
+    node.name = new IdentifierNode(node.file);
+    node.addElement(node.name);
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.addElement(new PunctuationNode(node.file, this.AS));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.type = new TypeNode(
+      node.file,
+      new Set<TokenType>([
+        TokenType.type_concrete,
+        TokenType.type_abstract,
+        TokenType.type_notInheritable,
+      ]),
+    );
+    node.addElement(node.type);
+    return text ? true : true;
+  }
 }

@@ -22,9 +22,13 @@ import { ProcedureFrame } from "./globals/procedure-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { IdentifierNode } from "./parse-nodes/identifier-node";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
+import { Space } from "./parse-nodes/parse-node-helpers";
+import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeNode } from "./parse-nodes/type-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
@@ -42,6 +46,7 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
+import { TokenType } from "./symbol-completion-helpers";
 
 export class LanguageCS implements Language {
   commentRegex(): RegExp {
@@ -205,7 +210,11 @@ export class LanguageCS implements Language {
   }
 
   parseText(node: ParseNode, text: string): boolean {
-    return node && text ? false : false;
+    let result = false;
+    if (node instanceof ParamDefNode) {
+      result = this.parseParamDefNode(node, text);
+    }
+    return result;
   }
 
   private spaced(text: string): string {
@@ -242,4 +251,20 @@ export class LanguageCS implements Language {
   private NOT = "!";
   private AND = "&&";
   private OR = "||";
+
+  parseParamDefNode(node: ParamDefNode, text: string): boolean {
+    node.type = new TypeNode(
+      node.file,
+      new Set<TokenType>([
+        TokenType.type_concrete,
+        TokenType.type_abstract,
+        TokenType.type_notInheritable,
+      ]),
+    );
+    node.addElement(node.type);
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.name = new IdentifierNode(node.file);
+    node.addElement(node.name);
+    return text ? true : true;
+  }
 }
