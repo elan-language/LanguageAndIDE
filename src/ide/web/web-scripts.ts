@@ -773,6 +773,7 @@ newButton?.addEventListener("click", async (event: Event) => {
     if (checkForUnsavedChanges(fileManager, codeViewModel, cancelMsg)) {
       await ideViewModel.clearDisplays();
       fileManager.reset();
+
       codeViewModel.recreateFile(ideViewModel);
       await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, false);
     }
