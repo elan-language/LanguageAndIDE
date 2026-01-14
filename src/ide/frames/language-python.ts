@@ -74,10 +74,6 @@ export class LanguagePython implements Language {
     return annotation;
   }
 
-  commentMarker(): string {
-    return this.HASH;
-  }
-
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for ${typeof frame}`;
     if (frame instanceof AbstractFunction) {
@@ -93,7 +89,7 @@ export class LanguagePython implements Language {
     } else if (frame instanceof CatchStatement) {
       html = `${this.EXCEPT}<el-punc>:</el-punc>`;
     } else if (frame instanceof CommentStatement) {
-      html = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
       html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
@@ -103,7 +99,7 @@ export class LanguagePython implements Language {
     } else if (frame instanceof Enum) {
       html = `${frame.name.renderAsHtml()} = <el-type>Enum</el-type>('${frame.name.renderAsHtml()}', '${frame.values.renderAsHtml()}')`;
     } else if (frame instanceof GlobalComment) {
-      html = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantStatement) {
       html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Print) {
@@ -137,7 +133,7 @@ export class LanguagePython implements Language {
     } else if (frame instanceof CatchStatement) {
       source = `${this.EXCEPT}<el-punc>:</el-punc>`;
     } else if (frame instanceof CommentStatement) {
-      source = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsExport()}`;
+      source = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsExport()}`;
     } else if (frame instanceof ConstantGlobal) {
       source = `${frame.name.renderAsExport()}<el-punc> = </el-punc>${frame.value.renderAsExport()}`;
     } else if (frame instanceof Elif) {
@@ -147,7 +143,7 @@ export class LanguagePython implements Language {
     } else if (frame instanceof Enum) {
       source = `${frame.name.renderAsExport()} = <el-type>Enum</el-type>('${frame.name.renderAsExport()}', '${frame.values.renderAsExport()}')`;
     } else if (frame instanceof GlobalComment) {
-      source = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsExport()}`;
+      source = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsExport()}`;
     } else if (frame instanceof ConstantStatement) {
       source = `${frame.name.renderAsExport()}<el-punc> = </el-punc>${frame.expr.renderAsExport()}`;
     } else if (frame instanceof Print) {
@@ -278,7 +274,16 @@ export class LanguagePython implements Language {
 
   private OPEN_SQUARE_BRACKET = "[";
   private CLOSE_SQUARE_BRACKET = "]";
-  private HASH = "#";
+
+  POWER: string = "^";
+  MOD: string = "%";
+  EQUAL: string = "==";
+  NOT_EQUAL: string = "!=";
+  AND: string = "and";
+  OR: string = "or";
+  NOT: string = "not";
+
+  COMMENT_MARKER = "#";
 
   parseParamDefNode(node: ParamDefNode, text: string): boolean {
     node.name = new IdentifierNode(node.file);
@@ -296,7 +301,4 @@ export class LanguagePython implements Language {
     node.addElement(node.type);
     return text ? true : true;
   }
-
-
-
 }

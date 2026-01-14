@@ -52,9 +52,6 @@ export class LanguageJava implements Language {
     return frame.frameSpecificAnnotation();
   }
 
-  commentMarker(): string {
-    return this.COMMENT_MARKER;
-  }
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
@@ -170,7 +167,7 @@ export class LanguageJava implements Language {
       const close = node.keyword ? "</el-kw>" : "";
       let text = node.matchedText.trim();
       if (text === "is") {
-        text = this.spaced(this.DOUBLE_EQUAL);
+        text = this.spaced(this.EQUAL);
       } else if (text === "isnt") {
         text = this.spaced(this.NOT_EQUAL);
       } else if (text === "and") {
@@ -225,11 +222,13 @@ export class LanguageJava implements Language {
   private VOID = "void";
   private WHILE = "while";
 
-  private COMMENT_MARKER = "//";
-  private DOUBLE_EQUAL = "==";
-  private NOT_EQUAL = "!=";
-  private MOD = "%";
-  private NOT = "!";
-  private AND = "&&";
-  private OR = "||";
+  POWER: string = "**";
+  EQUAL = "==";
+  NOT_EQUAL = "!=";
+  MOD = "%";
+  NOT = "!";
+  AND = "&&";
+  OR = "||";
+
+  COMMENT_MARKER = "//";
 }

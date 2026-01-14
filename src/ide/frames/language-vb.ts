@@ -71,9 +71,6 @@ export class LanguageVB implements Language {
     return annotation;
   }
 
-  commentMarker(): string {
-    return this.SINGLE_QUOTE;
-  }
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
@@ -262,7 +259,6 @@ export class LanguageVB implements Language {
   }
 
   private ABSTRACT = "abstract";
-  private AND = "And";
   private AS = "As";
   private CATCH = "Catch";
   private CLASS = "Class";
@@ -280,12 +276,9 @@ export class LanguageVB implements Language {
   private INHERITS = "Inherits";
   private INTERFACE = "Interface";
   private IS = "Is";
-  private MOD = "Mod";
   private NEW = "New";
   private NEXT = "Next";
-  private NOT = "Not";
   private OF = "Of";
-  private OR = "Or";
   private PRIVATE = "Private";
   private PROPERTY = "Property";
   private PUBLIC = "Public";
@@ -301,6 +294,16 @@ export class LanguageVB implements Language {
   private SINGLE_QUOTE = "'";
   private EQUALS = "=";
   private NOT_EQUALS = "<>";
+
+  POWER: string = "^";
+  EQUAL: string = "==";
+  NOT_EQUAL: string = "!=";
+  MOD = "Mod";
+  AND = "And";
+  OR = "Or";
+  NOT = "Not";
+
+  COMMENT_MARKER: string = this.SINGLE_QUOTE;
 
   parseParamDefNode(node: ParamDefNode, text: string): boolean {
     node.name = new IdentifierNode(node.file);

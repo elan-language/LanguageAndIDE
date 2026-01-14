@@ -48,9 +48,7 @@ export class LanguageElan implements Language {
   annotation(frame: Frame): string {
     return frame ? "" : ""; //No *frame-specific* annotation needed for Elan (but must consume frame parameter!)
   }
-  commentMarker(): string {
-    return this.HASH;
-  }
+
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
@@ -60,7 +58,7 @@ export class LanguageElan implements Language {
     } else if (frame instanceof CatchStatement) {
       html = `<el-kw>${this.CATCH} ${this.EXCEPTION} ${this.IN} </el-kw>${frame.variable.renderAsHtml()}`;
     } else if (frame instanceof CommentStatement) {
-      html = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.CONSTANT} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;
@@ -71,7 +69,7 @@ export class LanguageElan implements Language {
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
-      html = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantStatement) {
       html = `<el-kw>${this.CONSTANT} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.SET} ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Print) {
@@ -163,7 +161,6 @@ export class LanguageElan implements Language {
   }
 
   private ABSTRACT = "abstract";
-  private AND = "and";
   private AS = "as";
   private ASSERT = "assert";
   private BE = "be";
@@ -191,17 +188,12 @@ export class LanguageElan implements Language {
   private IN = "in";
   private INHERITS = "inherits";
   private INTERFACE = "interface";
-  private IS = "is";
-  private ISNT = "isnt";
   private lambdaKeyword = "lambda";
   private letKeyword = "let";
   private LIBRARY = "library";
   private MAIN = "main";
-  private MOD = "mod";
   private NEW = "new";
-  private NOT = "not";
   private OF = "of";
-  private OR = "or";
   private OUT = "out";
   private PRINT = "print";
   private PRIVATE = "private";
@@ -223,5 +215,13 @@ export class LanguageElan implements Language {
   private WHILE = "while";
   private WITH = "with";
 
-  private HASH = "#";
+  POWER: string = "^";
+  EQUAL: string = "is";
+  NOT_EQUAL: string = "isnt";
+  MOD = "mod";
+  AND = "and";
+  OR = "or";
+  NOT = "not";
+
+  COMMENT_MARKER = "#";
 }

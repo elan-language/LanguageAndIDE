@@ -8,8 +8,6 @@ export interface Language {
 
   annotation(frame: Frame): string;
 
-  commentMarker(): string; //e.g. `#`
-
   commentRegex(): RegExp;
 
   renderSingleLineAsHtml(frame: Frame): string;
@@ -27,4 +25,14 @@ export interface Language {
   renderNodeAsHtml(node: ParseNode): string;
 
   parseText(node: ParseNode, text: string): boolean;
+
+  POWER: string;
+  MOD: string;
+  EQUAL: string;
+  NOT_EQUAL: string;
+  AND: string;
+  OR: string;
+  NOT: string;
+
+  COMMENT_MARKER: string; //e.g. `#`
 }

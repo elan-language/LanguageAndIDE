@@ -67,9 +67,6 @@ export class LanguageCS implements Language {
     return annotation;
   }
 
-  commentMarker(): string {
-    return this.COMMENT_MARKER;
-  }
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
@@ -185,7 +182,7 @@ export class LanguageCS implements Language {
       const close = node.keyword ? "</el-kw>" : "";
       let text = node.matchedText.trim();
       if (text === "is") {
-        text = this.spaced(this.DOUBLE_EQUAL);
+        text = this.spaced(this.EQUAL);
       } else if (text === "isnt") {
         text = this.spaced(this.NOT_EQUAL);
       } else if (text === "and") {
@@ -244,13 +241,15 @@ export class LanguageCS implements Language {
   private VOID = "void";
   private WHILE = "while";
 
-  private COMMENT_MARKER = "//";
-  private DOUBLE_EQUAL = "==";
-  private NOT_EQUAL = "!=";
-  private MOD = "%";
-  private NOT = "!";
-  private AND = "&&";
-  private OR = "||";
+  POWER: string = "^";
+  EQUAL: string = "==";
+  NOT_EQUAL: string = "!=";
+  MOD = "%";
+  AND = "&&";
+  OR = "||";
+  NOT = "!";
+
+  COMMENT_MARKER = "//";
 
   parseParamDefNode(node: ParamDefNode, text: string): boolean {
     node.type = new TypeNode(
