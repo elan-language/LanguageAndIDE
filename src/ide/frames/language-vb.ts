@@ -243,21 +243,12 @@ export class LanguageVB implements Language {
     return html;
   }
 
+  parseText(node: ParseNode, text: string): boolean {
+    return node && text ? false : false;
+  }
+
   private spaced(text: string): string {
     return ` ${text} `;
-  }
-
-  // Not yet used - for illustration only
-  grammarForNode(node: ParseNode): string {
-    return node ? "" : "";
-  }
-
-  // Not yet used - for illustration only
-  lexer(): string {
-    return `
-IS:           'is';
-PLUS:         '+';
-`; //etc.
   }
 
   private ABSTRACT = "abstract";

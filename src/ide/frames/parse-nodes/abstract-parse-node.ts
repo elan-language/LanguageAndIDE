@@ -15,7 +15,7 @@ export abstract class AbstractParseNode implements ParseNode {
   //SpaceNode and sub-classes of FixedTextNode or of AbstractSequence
   _done: boolean = false;
 
-  constructor(protected readonly file: File) {}
+  constructor(public readonly file: File) {}
 
   setSyntaxCompletionWhenEmpty(ph: string) {
     this.completionWhenEmpty = ph;

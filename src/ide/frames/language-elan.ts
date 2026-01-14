@@ -20,8 +20,6 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
-import { BinaryOperation } from "./parse-nodes/binary-operation";
-import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
@@ -160,26 +158,8 @@ export class LanguageElan implements Language {
     return html;
   }
 
-  // Not yet used - for illustration only
-  grammarForNode(node: ParseNode): string {
-    let grammar = "";
-    if (node instanceof ParamDefNode) {
-      grammar = "OUT? name SPACE AS SPACE type"; //We will be disallowing OUT shortly
-    } else if (node instanceof BinaryOperation) {
-      grammar = "IS | ISNT | PLUS | MINUS ..."; // etc
-    } else if (node instanceof TypeGenericNode) {
-      grammar = "LT OF SPACE type GT";
-    }
-    // etc.
-    return grammar;
-  }
-
-  // Not yet used - for illustration only
-  lexer(): string {
-    return `
-IS:           'is';
-PLUS:         '+';
-`; //etc.
+  parseText(node: ParseNode, text: string): boolean {
+    return node && text ? false : false;
   }
 
   private ABSTRACT = "abstract";

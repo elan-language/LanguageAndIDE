@@ -1,4 +1,3 @@
-import { } from "../../compiler/keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -24,10 +23,15 @@ import { ProcedureFrame } from "./globals/procedure-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { IdentifierNode } from "./parse-nodes/identifier-node";
 import { IndexDouble } from "./parse-nodes/index-double";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
+import { Space } from "./parse-nodes/parse-node-helpers";
+import { PunctuationNode } from "./parse-nodes/punctuation-node";
+import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeNode } from "./parse-nodes/type-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
@@ -45,6 +49,8 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
+import { TokenType } from "./symbol-completion-helpers";
+import { COLON } from "./symbols";
 
 export class LanguagePython implements Language {
   commentRegex(): RegExp {
@@ -217,11 +223,9 @@ export class LanguagePython implements Language {
   renderNodeAsHtml(node: ParseNode): string {
     let html = "";
     if (node instanceof TypeGenericNode) {
+      const simpleType = node.simpleType?.renderAsHtml();
       const generics = node.generic?.renderAsHtml();
-      const chopped = generics?.substring(22, generics.length - 4);
-      html =
-        node.simpleType?.renderAsHtml() +
-        `<el-punc>[</el-punc><el-type>${chopped}</el-type><el-punc>]</el-punc>`;
+      html = `${simpleType}${generics}`;
     } else if (node instanceof ParamDefNode) {
       html = node.name?.renderAsHtml() + ": " + node.type?.renderAsHtml();
     } else if (node instanceof BinaryOperation) {
@@ -249,26 +253,12 @@ export class LanguagePython implements Language {
     return html;
   }
 
-  // Not yet used - for illustration only
-  grammarForNode(node: ParseNode): string {
-    let grammar = "";
+  parseText(node: ParseNode, text: string): boolean {
+    let result = false;
     if (node instanceof ParamDefNode) {
-      grammar = "name COLON SPACE type";
-    } else if (node instanceof BinaryOperation) {
-      grammar = "EQ | NE | LT | GT | LE | GE | PLUS | MINUS "; // etc
-    } else if (node instanceof TypeGenericNode) {
-      grammar = "OPEN_SQ_BRACKET type CLOSE_SQ_BRACKET";
+      result = this.parseParamDefNode(node, text);
     }
-    // etc
-    return grammar;
-  }
-
-  // Not yet used - for illustration only
-  lexer(): string {
-    return `
-EQ:           '==';
-NE:           '!=';
-`; //etc
+    return result;
   }
 
   private DEF = "def";
@@ -286,5 +276,24 @@ NE:           '!=';
   private TRY = "try";
   private WHILE = "while";
 
+  private OPEN_SQUARE_BRACKET = "[";
+  private CLOSE_SQUARE_BRACKET = "]";
   private HASH = "#";
+
+  parseParamDefNode(node: ParamDefNode, text: string): boolean {
+    node.name = new IdentifierNode(node.file);
+    node.addElement(node.name);
+    node.addElement(new PunctuationNode(node.file, COLON));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.type = new TypeNode(
+      node.file,
+      new Set<TokenType>([
+        TokenType.type_concrete,
+        TokenType.type_abstract,
+        TokenType.type_notInheritable,
+      ]),
+    );
+    node.addElement(node.type);
+    return text ? true : true;
+  }
 }

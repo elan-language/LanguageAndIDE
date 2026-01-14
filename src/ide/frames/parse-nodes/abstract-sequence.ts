@@ -10,7 +10,7 @@ export abstract class AbstractSequence extends AbstractParseNode {
     super(file);
   }
 
-  protected addElement(node: ParseNode) {
+  public addElement(node: ParseNode) {
     this.elements.push(node);
   }
 
