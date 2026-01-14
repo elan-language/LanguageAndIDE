@@ -1,4 +1,4 @@
-# 25bf64addaf8ad8ad910f251df0368c9d3d8dd42761cc751a1e0be609905bc5e Elan 2.0.0-alpha guest default_profile valid
+# 2a674e07929a0d0b738fb7de5b944acfea49c4ff91b01aaadf23a2270d0c2115 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable reply set to ""
@@ -16,28 +16,28 @@ main
 end main
 
 procedure printDate(unixSecs as Int)
-  let hour, minute, second, days, year, weekday be dateTime(unixSecs)
-  let h be pad("L", z2, hour.asString())
-  let m be pad("L", z2, minute.asString())
-  let s be pad("L", z2, second.asString())
-  let startDaysL be startDaysList(year, startDays)
-  let month, day be monthDay(startDaysL, (days mod startDays[12]))
+  constant hour, minute, second, days, year, weekday set to dateTime(unixSecs)
+  constant h set to pad("L", z2, hour.asString())
+  constant m set to pad("L", z2, minute.asString())
+  constant s set to pad("L", z2, second.asString())
+  constant startDaysL set to startDaysList(year, startDays)
+  constant month, day set to monthDay(startDaysL, (days mod startDays[12]))
   call print(weekdayNames[weekday] + cs + pad("L", z2, day.asString()) + s1 + monthNames[month - 1] + s1 + "{year}" + s1 + h + co + m + co + s + " UTC\n")
 end procedure
 
 function dateTime(unixSecs as Int) returns (Int, Int, Int, Int, Int, Int)
   # get separate values from Unix time
-  let hour be ((unixSecs/60).floor()/60).floor() mod 24
-  let minute be (unixSecs/60).floor() mod 60
-  let second be (unixSecs mod 60)
+  constant hour set to ((unixSecs/60).floor()/60).floor() mod 24
+  constant minute set to (unixSecs/60).floor() mod 60
+  constant second set to (unixSecs mod 60)
   # days and years from Unix epoch
-  let unixDay be (unixSecs/daySecs).floor()
-  let years be ((unixDay + 1)/365.24).floor()
+  constant unixDay set to (unixSecs/daySecs).floor()
+  constant years set to ((unixDay + 1)/365.24).floor()
   # this year and weekday
-  let year be unixYear + years
-  let weekday be (unixDay + unixWeekday) mod 7
+  constant year set to unixYear + years
+  constant weekday set to (unixDay + unixWeekday) mod 7
   # day number (1-365 or 1-366) in this year
-  let day be dayInYear(year, unixDay)
+  constant day set to dayInYear(year, unixDay)
   return tuple(hour, minute, second, day, year, weekday)
 end function
 

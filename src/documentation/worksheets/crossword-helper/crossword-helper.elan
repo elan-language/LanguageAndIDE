@@ -1,19 +1,19 @@
-# e43fefeeef1cfd71543d43fa3377ff8f6d7af66de0bf5eab5bf78e3a5ace8c13 Elan 2.0.0-alpha guest default_profile incomplete
+# 06dd9dde263f759302094a0306808ebe36609f44b3b60fb9ba2386b9948b7e16 Elan 2.0.0-alpha guest default_profile incomplete
 
 main
   variable w set to words.split(" ")
-  let len be inputIntBetween("Enter number of characters?", 2, 15)
+  variable len set to inputIntBetween("Enter number of characters?", 2, 15)
   set w to w.filter(lambda w as String => w.length() <= len)
-  let rgx be inputStringWithLimits("Enter {len} characters to match, using a . for 'unknown'", len, len).lowerCase().asRegExp()
+  variable rgx set to inputStringWithLimits("Enter {len} characters to match, using a . for 'unknown'", len, len).lowerCase().asRegExp()
   set w to w.filter(lambda w as String => w.matchesRegExp(rgx))
-  let a be inputStringFromOptions("Clue is an anagram? (y/n)", ["y", "n"])
+  variable a set to inputStringFromOptions("Clue is an anagram? (y/n)", ["y", "n"])
   if a is "y" then
-    let source be inputString("Enter word(s) to match as anagram:")
-    let letters be source.split("").filter(lambda l as String => l isnt " ").join("")
-    let anagram be sortLettersOfWord(source.trim())
+    variable source set to inputString("Enter word(s) to match as anagram:")
+    variable letters set to source.split("").filter(lambda l as String => l isnt " ").join("")
+    variable anagram set to sortLettersOfWord(source.trim())
     set w to w.filter(lambda w as String => sortLettersOfWord(w) is anagram)
   end if
-  let output be w.join("\n")
+  variable output set to w.join("\n")
   call print("{w.length()} matching words:\n{w}")
 end main
 

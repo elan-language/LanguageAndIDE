@@ -31,12 +31,12 @@ import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
+import { ConstantStatement } from "./statements/constant-statement";
 import { Each } from "./statements/each";
 import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
-import { LetStatement } from "./statements/let-statement";
 import { Print } from "./statements/print";
 import { ReturnStatement } from "./statements/return-statement";
 import { SetStatement } from "./statements/set-statement";
@@ -79,8 +79,8 @@ export class LanguageVB implements Language {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
       html = `<el-kw>${this.SINGLE_QUOTE} </el-kw>${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof LetStatement) {
-      html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
+    } else if (frame instanceof ConstantStatement) {
+      html = `${this.CONST} ${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Print) {
       html = `<el-method>PRINT</el-method><el-punc>((</el-punc>${frame.expr.renderAsHtml()}<el-punc>).</el-punc><el-method>asString</el-method><el-punc>())</el-punc>`;
     } else if (frame instanceof Property) {

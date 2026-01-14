@@ -1553,7 +1553,7 @@ end class`;
 
 class Bar
   procedure p()
-    let a be property.asString()
+    variable a set to property.asString()
   end procedure
 
 end class`;
@@ -1583,7 +1583,7 @@ end function
 
 class Bar
   procedure p()
-    let a be property.foo()
+    variable a set to property.foo()
   end procedure
 
 end class`;
@@ -1611,7 +1611,7 @@ constant aa set to 1
 
 class Bar
   procedure p()
-    let a be property.aa
+    variable a set to property.aa
   end procedure
 
 end class`;

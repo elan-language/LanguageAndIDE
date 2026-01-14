@@ -1,8 +1,8 @@
-# 1de1bd3073821348937fdb9ac7d62f222b4d3be9e748e55b646bf2787b448d6b Elan 2.0.0-alpha guest default_profile valid
+# b588874d1e28de6be4701b72b72d13583fc3aae5297c866e93fab1be2ebbe18e Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let numbers be ["One", "Two", "Three", "Four", "Five", "Six"]
-  let s be 2
+  variable numbers set to ["One", "Two", "Three", "Four", "Five", "Six"]
+  variable s set to 2
   for i from numbers.length() - 1 to 0 step -s
     call print(numbers[i])
   end for

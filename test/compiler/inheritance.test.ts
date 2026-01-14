@@ -3190,7 +3190,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  let x be new Bar()
+  variable x set to new Bar()
   print ff(x)
 end main
 
@@ -3225,7 +3225,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  let x be new Bar()
+  variable x set to new Bar()
   print ff(x)
 end main
 
@@ -3264,7 +3264,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  let x be new Bar()
+  variable x set to new Bar()
   print ff(x)
 end main
 

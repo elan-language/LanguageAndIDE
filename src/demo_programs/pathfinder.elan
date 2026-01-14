@@ -1,20 +1,20 @@
-# aef2d6bd65704c9fd3bad858d81f4f48b453c4a75b0c62619c08b6de61c388f4 Elan 2.0.0-alpha guest default_profile valid
+# 261b841cb4231ed32e314ee6b55c25e0674238131cc8e26d77b86528ad3ece29 Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let start be newPoint(5, 5)
-  let destination be newPoint(34, 24)
-  let percentRocks be inputIntBetween("Enter % rocks (0-100): ", 0, 100)
+  variable start set to newPoint(5, 5)
+  variable destination set to newPoint(34, 24)
+  variable percentRocks set to inputIntBetween("Enter % rocks (0-100): ", 0, 100)
   call clearPrintedText()
   variable rocks set to empty List<of Point>
   variable nodes set to empty List<of Node>
   call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
-  let gr be initialiseGraphics(start, destination, rocks)
+  variable gr set to initialiseGraphics(start, destination, rocks)
   call displayBlocks(gr)
   variable solver set to new Solver(nodes, start, destination)
   while true
-    let option be inputStringFromOptions(algPrompt, ["a", "d", "h"])
+    constant option set to inputStringFromOptions(algPrompt, ["a", "d", "h"])
     call clearPrintedText()
-    let alg be algFromLetter[option]
+    constant alg set to algFromLetter[option]
     call runSolver(gr, start, destination, rocks, solver, alg)
   end while
 end main
@@ -29,7 +29,7 @@ procedure runSolver(gr as Array2D<of Int>, start as Point, destination as Point,
     call pause(0)
   end while
   if solver.getLastVisited() is destination then
-    let route, length be solver.getRouteAndLength()
+    variable route, length set to solver.getRouteAndLength()
     set gr2 to addRoute(gr2, route)
     call displayBlocks(gr2)
     call printNoLine("Length of route: {length.round(2)} ")
@@ -41,7 +41,7 @@ end procedure
 procedure createRocksAndNodes(percentRocks as Int, out rocks as List<of Point>, out nodes as List<of Node>, start as Point, dest as Point)
   for x from 0 to 39 step 1
     for y from 1 to 29 step 1
-      let p be newPoint(x, y)
+      variable p set to newPoint(x, y)
       if p is start then
         call nodes.append(new Node(p, 0, p.minDistTo(dest)))
       elif p is dest then
@@ -74,8 +74,8 @@ function addRoute(gr as Array2D<of Int>, route as ListImmutable<of Point>) retur
   each p in route
     set gr2 to gr2.withPut(p.x, p.y, orange)
   end each
-  let start be route[0]
-  let dest be route[route.length() - 1]
+  constant start set to route[0]
+  constant dest set to route[route.length() - 1]
   set gr2 to gr2.withPut(start.x, start.y, green)
   set gr2 to gr2.withPut(dest.x, dest.y, red)
   return gr2
@@ -122,10 +122,10 @@ class Solver
   end procedure
 
   procedure updateNeighbours()
-    let distToCurrent be property.current.distFromStart
+    constant distToCurrent set to property.current.distFromStart
     each neighbour in currentNeighbours()
-      let currentPoint be property.current.point
-      let distViaCurrent be distToCurrent + currentPoint.minDistTo(neighbour.point)
+      variable currentPoint set to property.current.point
+      variable distViaCurrent set to distToCurrent + currentPoint.minDistTo(neighbour.point)
       if distViaCurrent < neighbour.distFromStart then
         call neighbour.setVia(property.current.point)
         call neighbour.setDistanceFromStart(distViaCurrent)
@@ -135,10 +135,10 @@ class Solver
 
   function currentNeighbours() returns List<of Node>
     variable neighbours set to new List<of Node>()
-    let currentPoint be property.current.point
+    variable currentPoint set to property.current.point
     each p in currentPoint.neighbouringPoints()
-      let node be getNodeFor(p)
-      let point be node.point
+      variable node set to getNodeFor(p)
+      variable point set to node.point
       if point.isNotEmpty then
         set neighbours to neighbours.withAppend(node)
       end if
@@ -147,7 +147,7 @@ class Solver
   end function
 
   function getNodeFor(p as Point) returns Node
-    let matches be property.nodes.filter(lambda n as Node => n.point is p)
+    constant matches set to property.nodes.filter(lambda n as Node => n.point is p)
     return if matches.length() is 1 then matches.head() else empty Node
   end function
 
@@ -158,9 +158,9 @@ class Solver
   function nextNodeToVisit() returns Node
     variable lowestCostSoFar set to infinity
     variable lowestCostNode set to empty Node
-    let possibilities be property.nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
+    constant possibilities set to property.nodes.filter(lambda nd as Node => (not nd.visited) and (nd.distFromStart < infinity))
     each nd in possibilities
-      let cost be calculateCost(nd)
+      variable cost set to calculateCost(nd)
       if cost < lowestCostSoFar then
         set lowestCostSoFar to cost
         set lowestCostNode to nd
@@ -171,8 +171,8 @@ class Solver
 
   function calculateCost(node as Node) returns Float
     variable cost set to 0.0
-    let fromStart be node.distFromStart
-    let estToDest be node.estDistToDest
+    constant fromStart set to node.distFromStart
+    constant estToDest set to node.estDistToDest
     if property.alg is Algorithm.dijkstra then
       set cost to fromStart
     elif property.alg is Algorithm.aStar then
@@ -188,8 +188,8 @@ class Solver
     variable length set to 0.0
     variable node set to getNodeFor(property.destination)
     while node.point isnt property.start
-      let previous be node.via
-      let p be node.point
+      variable previous set to node.via
+      variable p set to node.point
       set length to length + p.minDistTo(previous)
       set route to route.withInsert(0, previous)
       set node to getNodeFor(previous)
@@ -280,8 +280,8 @@ constant lightBlue set to 0x80abff
 constant orange set to 0xe97132
 
 test test_point
-  let p be newPoint(0, 0)
-  let n be p.neighbouringPoints()
-  let expected be {newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)}
+  constant p set to newPoint(0, 0)
+  constant n set to p.neighbouringPoints()
+  constant expected set to {newPoint(-1, -1), newPoint(0, -1), newPoint(1, -1), newPoint(-1, 0), newPoint(1, 0), newPoint(-1, 1), newPoint(0, 1), newPoint(1, 1)}
   assert n is expected
 end test

@@ -117,7 +117,7 @@ end main
 
 function foo() returns Foo
   variable a set to new Foo()
-  let b be copy a with a set to 2
+  variable b set to copy a with a set to 2
   return b
 end function
 
@@ -134,7 +134,7 @@ async function main() {
 
 async function foo() {
   let a = system.initialise(await new Foo()._initialise());
-  const b = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
+  let b = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
   return b;
 }
 global["foo"] = foo;
@@ -172,8 +172,8 @@ main
 end main
 
 function foo() returns Foo
-  let a be new Foo()
-  let b be copy a with a set to 2
+  variable a set to new Foo()
+  variable b set to copy a with a set to 2
   return b
 end function
 
@@ -189,8 +189,8 @@ async function main() {
 }
 
 async function foo() {
-  const a = system.initialise(await new Foo()._initialise());
-  const b = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
+  let a = system.initialise(await new Foo()._initialise());
+  let b = await (async () => {const _a = {...a}; Object.setPrototypeOf(_a, Object.getPrototypeOf(a)); _a.a = 2; return _a;})();
   return b;
 }
 global["foo"] = foo;

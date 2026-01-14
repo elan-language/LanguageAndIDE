@@ -388,7 +388,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let a be new DeprecatedClass()
+  variable a set to new DeprecatedClass()
 end main`;
 
     const fileImpl = new FileImpl(
@@ -414,7 +414,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let a be empty DeprecatedClass
+  variable a set to empty DeprecatedClass
 end main`;
 
     const fileImpl = new FileImpl(
@@ -440,7 +440,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  let a be new List<of DeprecatedClass>()
+  variable a set to new List<of DeprecatedClass>()
 end main`;
 
     const fileImpl = new FileImpl(

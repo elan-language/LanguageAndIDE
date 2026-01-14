@@ -1,4 +1,4 @@
-# 7a1e8249acfa88590cf4dac609837131c56a6b48891b18468998c28771bf2162 Elan 2.0.0-alpha guest default_profile valid
+# d2a194dbdc89804afacaeab272e54c5d6dd5f964d0f3964485181cab737546eb Elan 2.0.0-alpha guest default_profile valid
 
 # A program to investigate the Collatz Conjecture
 # https://en.wikipedia.org/wiki/Collatz_conjecture
@@ -7,7 +7,7 @@ main
   while x > 0
     set x to inputInt("Enter a starting number (0 to quit)")
     # Array of the values we have seen so far
-    let p be [x]
+    variable p set to [x]
     # record the max value so we can scale the graph
     variable max set to x
     while x > 1

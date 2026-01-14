@@ -1,4 +1,4 @@
-# 1931d86f67614ccc2e899ecb2333b8bc1c37720789cb49fb01f6f6f6c2cf833c Elan 2.0.0-alpha guest default_profile valid
+# 66737955da9780a404167f595966111b3cca67482c2840a6a5e19e5423ed9fd3 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable score set to 0
@@ -8,9 +8,9 @@ main
     if random() > 0.5 then
       set hole to Hole.mole
     end if
-    let html be htmlForFullGame(holes, score)
+    variable html set to htmlForFullGame(holes, score)
     call displayHtml(html)
-    let stop be clock() + 1000
+    variable stop set to clock() + 1000
     while clock() < stop
       call processKey(hole, score)
     end while
@@ -18,7 +18,7 @@ main
 end main
 
 procedure processKey(out hole as Hole, out score as Int)
-  let n be getNumericKey()
+  variable n set to getNumericKey()
   if n isnt -1 then
     if hole is Hole.mole then
       set hole to Hole.hit
@@ -27,7 +27,7 @@ procedure processKey(out hole as Hole, out score as Int)
       set hole to Hole.miss
       set score to score - 1
     end if
-    let html be htmlForSimpleGame(hole, score)
+    variable html set to htmlForSimpleGame(hole, score)
     call displayHtml(html)
   end if
 end procedure
@@ -35,7 +35,7 @@ end procedure
 enum Hole vacant, mole, hit, miss
 
 function htmlForSimpleGame(hole as Hole, score as Int) returns String
-  let core be htmlForHole(hole, "hole")
+  variable core set to htmlForHole(hole, "hole")
   return "<style>{styleSheet}</style><div class='game'>{core}</div><div class='score'>Score: {score}</score>"
 end function
 
@@ -48,7 +48,7 @@ function htmlForFullGame(holes as Array<of Hole>, score as Int) returns String
 end function
 
 function htmlForHole(hole as Hole, label as String) returns String
-  let img be imageForStatus[hole]
+  variable img set to imageForStatus[hole]
   return "<div class='hole'><img src='{img}'><div class='label'>{label}</div></div>"
 end function
 

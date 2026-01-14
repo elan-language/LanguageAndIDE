@@ -1,4 +1,4 @@
-# 481ceccfb7f6deb124268bf13242cb0ee387c6abaff165e921155fbf3845b3da Elan 2.0.0-alpha guest default_profile valid
+# 2bc4be78ebca7d2bec41e37989e84ba7e7a411d8adf202dff046771d9084709a Elan 2.0.0-alpha guest default_profile valid
 
 # Exercise: implement a function to search for an item in a sorted list, 
 # using the 'binary search' algorithm
@@ -25,12 +25,12 @@ function binarySearch(li as List<of String>, item as String) returns Boolean
 end function
 
 main
-  let fruit be ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
+  variable fruit set to ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
   variable exit set to false
   while exit is false
-    let wanted be inputString("What type of fruit do you want ('x' to exit)? ")
+    variable wanted set to inputString("What type of fruit do you want ('x' to exit)? ")
     if wanted isnt "x" then
-      let result be binarySearch(fruit, wanted)
+      variable result set to binarySearch(fruit, wanted)
       if result then
         call print("We can supply a {wanted}")
       else
@@ -43,18 +43,18 @@ main
 end main
 
 test test_binarySearch
-  let li1 be ["lemon", "lime", "orange"]
+  variable li1 set to ["lemon", "lime", "orange"]
   assert binarySearch(li1, "lemon") is true
   assert binarySearch(li1, "lime") is true
   assert binarySearch(li1, "orange") is true
   assert binarySearch(li1, "pear") is false
-  let li2 be ["lemon", "orange"]
+  variable li2 set to ["lemon", "orange"]
   assert binarySearch(li2, "lemon") is true
   assert binarySearch(li2, "orange") is true
   assert binarySearch(li2, "pear") is false
-  let li3 be ["lemon"]
+  variable li3 set to ["lemon"]
   assert binarySearch(li3, "lemon") is true
   assert binarySearch(li3, "lime") is false
-  let li4 be empty List<of String>
+  variable li4 set to empty List<of String>
   assert binarySearch(li4, "pear") is false
 end test

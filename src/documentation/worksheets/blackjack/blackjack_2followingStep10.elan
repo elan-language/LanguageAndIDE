@@ -1,9 +1,9 @@
-# 64808cc47371434cc06556ddf1b31fbcc0d364973fb9e81b2cafca054a460f5c Elan 2.0.0-alpha guest default_profile valid
+# 3d0c2ed79b390d316d82c62a18de71fe6103ae15e00df01a26a6b67d4b66e3fd Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let points be 1000
+  variable points set to 1000
   variable rounds set to 10000
-  let game be new Game(points)
+  variable game set to new Game(points)
   call game.addPlayer(new AutomatedPlayer("Player A", strategyA, points))
   call game.addPlayer(new AutomatedPlayer("Player B", strategyB, points))
   while rounds > 0
@@ -17,7 +17,7 @@ end main
 procedure playOneRound(game as Game)
   call game.newRound()
   [ghosted] call display(game)
-  let dealer be game.dealer
+  variable dealer set to game.dealer
   each player in game.players
     call player.startTurn()
     [ghosted] call display(game)
@@ -36,7 +36,7 @@ procedure playOneRound(game as Game)
 end procedure
 
 procedure display(game as Game)
-  let html be "<style>{styleSheet}</style>{htmlForGame(game)}"
+  variable html set to "<style>{styleSheet}</style>{htmlForGame(game)}"
   call displayHtml(html)
   call pause(1500)
 end procedure
@@ -84,16 +84,16 @@ end procedure
 
 function determinePlayerOutcome(dealer as Dealer, player as Player) returns Outcome
   # These 'let' definitions are just to make the logic that follows them simpler to read
-  let d be dealer.status
-  let dTotal be dealer.handTotal
-  let p be player.status
-  let pTotal be player.handTotal
-  let bust be Status.bust
-  let bj be Status.blackjack
-  let win be Outcome.win
-  let winDouble be Outcome.winDouble
-  let lose be Outcome.lose
-  let draw be Outcome.draw
+  variable d set to dealer.status
+  variable dTotal set to dealer.handTotal
+  variable p set to player.status
+  variable pTotal set to player.handTotal
+  variable bust set to Status.bust
+  variable bj set to Status.blackjack
+  variable win set to Outcome.win
+  variable winDouble set to Outcome.winDouble
+  variable lose set to Outcome.lose
+  variable draw set to Outcome.draw
   variable playerOutcome set to draw
   if p is bust then
     set playerOutcome to lose
@@ -119,9 +119,9 @@ function determinePlayerOutcome(dealer as Dealer, player as Player) returns Outc
 end function
 
 function dealCard(random as Float) returns Card
-  let number be (random*52).floor()
-  let rank be rankValue.keys()[number div 4]
-  let suit be intAsSuit(number mod 4)
+  variable number set to (random*52).floor()
+  variable rank set to rankValue.keys()[number div 4]
+  variable suit set to intAsSuit(number mod 4)
   return new Card(rank, suit)
 end function
 
@@ -152,8 +152,8 @@ function htmlForPlayer(player as Player) returns String
   set html to html + "<div class='details'>{player.name} - {player.points} points {player.getMessage()}</div>"
   set html to html + "<div class='hand'>"
   each card in player.cards
-    let suit be card.suit
-    let rank be card.rank
+    variable suit set to card.suit
+    variable rank set to card.rank
     set html to html + htmlForCard(card)
   end each
   return html + "</div></div>"
@@ -164,13 +164,13 @@ function htmlForCard(card as Card) returns String
   if card.faceDown then
     set html to "<div class='card reversed'>"
   else
-    let rank be card.rank
-    let suit be card.suit
-    let colour be colours[suit]
-    let symbol be symbols[suit]
+    variable rank set to card.rank
+    variable suit set to card.suit
+    variable colour set to colours[suit]
+    variable symbol set to symbols[suit]
     set html to "<div class='card {colour}'>"
-    let u be htmlForSpot("u", rank)
-    let v be htmlForSpot("v", symbol)
+    variable u set to htmlForSpot("u", rank)
+    variable v set to htmlForSpot("v", symbol)
     variable grid set to ""
     each location in gridByRank[rank]
       if location is "royal" then
@@ -208,7 +208,7 @@ class Game
 
   procedure updatePoints()
     each player in property.players
-      let playerOutcome be determinePlayerOutcome(property.dealer, player)
+      variable playerOutcome set to determinePlayerOutcome(property.dealer, player)
       call global.updatePoints(property.dealer, player, playerOutcome)
     end each
   end procedure
@@ -291,7 +291,7 @@ abstract class Player
   end procedure
 
   procedure draw()
-    let newCard be dealCard(random())
+    variable newCard set to dealCard(random())
     call property.cards.append(newCard)
     if newCard.rank is "A" then
       call addAce()
@@ -334,7 +334,7 @@ abstract class Player
 
   function statusAsString() returns String
     variable msg set to ""
-    let status be property.status
+    variable status set to property.status
     if property.hasTurn then
       set msg to msg + " - PLAYING"
     elif status is Status.standing then
@@ -363,7 +363,7 @@ class Dealer inherits Player
 
   procedure play()
     call startTurn()
-    let hiddenCard be property.cards[1]
+    variable hiddenCard set to property.cards[1]
     call hiddenCard.turnFaceUp()
     set property.hasPlayed to true
   end procedure
@@ -372,7 +372,7 @@ class Dealer inherits Player
     set property.hasPlayed to false
     call newHandHelper()
     set property.faceCard to property.cards[0]
-    let hiddenCard be property.cards[1]
+    variable hiddenCard set to property.cards[1]
     call hiddenCard.turnFaceDown()
   end procedure
 
@@ -443,7 +443,7 @@ class AutomatedPlayer inherits Player
   end procedure
 
   procedure nextAction(dealerFaceCard as Card)
-    let act be decisionFunc(this, dealerFaceCard)
+    variable act set to decisionFunc(this, dealerFaceCard)
     if act is Action.draw then
       call draw()
     else

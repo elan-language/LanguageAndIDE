@@ -1,4 +1,4 @@
-# 7e5ad324799e114b6f775b9d83e394b91992d912d9a8d87c1051dfa838da1fa2 Elan 2.0.0-alpha guest default_profile valid
+# c7b310c629662a53f9fb4cafc7de2480d08bb8ec5535b5d8c57c70fc6e5fa862 Elan 2.0.0-alpha guest default_profile valid
 
 class Square
   constructor(x as Int, y as Int)
@@ -13,5 +13,5 @@ class Square
 end class
 
 main
-  let tail be new Square(20, 15)
+  variable tail set to new Square(20, 15)
 end main

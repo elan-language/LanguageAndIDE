@@ -10,7 +10,7 @@ export interface StatementFactory {
   newElse(parent: Parent): Frame;
   newFor(parent: Parent): Frame;
   newIf(parent: Parent): Frame;
-  newLet(parent: Parent): Frame;
+  newConstantStatement(parent: Parent): Frame;
   newPrint(parent: Parent): Frame;
   newSet(parent: Parent): Frame;
   newThrow(parent: Parent): Frame;

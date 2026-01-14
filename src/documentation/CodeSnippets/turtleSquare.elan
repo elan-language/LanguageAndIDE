@@ -1,7 +1,7 @@
-# 5e4adee63e63f22494edfd3589be58393c41490f950d8e5841be1edad947a2d8 Elan 2.0.0-alpha guest default_profile valid
+# 163410256987fa671f8316bc1e36116b476d736096a007d08485723a2514962d Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let t be new Turtle()
+  variable t set to new Turtle()
   call t.placeAt(-75, 50)
   call t.show()
   for i from 1 to 4 step 1

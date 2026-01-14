@@ -1,11 +1,11 @@
-# 888d6fe2c5a6ded0cbff7511578d4e0f3837769d500eb412e020cdd65ebd3027 Elan 2.0.0-alpha guest default_profile valid
+# 6e90947dbe9738f98f84edfaa5e198453ca66e8d3fdfdbb62a7fe33945b9a0d8 Elan 2.0.0-alpha guest default_profile valid
 
 # REDO on basis that the computer player will be added using 'append' with small mods to your code 
 main
   variable x1 set to 10
   variable y1 set to 7
   variable dir1 set to "d"
-  let grid be new Array2D<of Int>(40, 30, white)
+  variable grid set to new Array2D<of Int>(40, 30, white)
   for i from 1 to 1000 step 1
     call displayBlocks(grid)
     call pause(500)
@@ -13,7 +13,7 @@ main
 end main
 
 procedure move(out x as Int, out y as Int, out dir as String)
-  let k be getKey()
+  variable k set to getKey()
   if (k isnt "") and (directions.contains(k)) then
     set dir to k
   end if
@@ -31,9 +31,9 @@ end procedure
 constant directions set to "wasd"
 
 procedure compTurn(out dir as String)
-  let i be directions.indexOf(dir)
-  let rnd be randomInt(-1, 1)
-  let i2 be (i + rnd) mod 4
+  variable i set to directions.indexOf(dir)
+  variable rnd set to randomInt(-1, 1)
+  variable i2 set to (i + rnd) mod 4
   set dir to directions[i2]
 end procedure
 

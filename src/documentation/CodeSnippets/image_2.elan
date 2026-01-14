@@ -1,8 +1,8 @@
-# 72c4bd3e606e9a40b5293547a3cd12388f9a3dd79092e7f897030c9e95f92b09 Elan 2.0.0-alpha guest default_profile valid
+# 664440bf9644e8e7ae74f8a8bbd2f778710329cb439827108271d2d85ad3377f Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable vg set to new List<of VectorGraphic>()
-  let pic be image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg with width set to 304, height set to 139
+  variable pic set to image https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg with width set to 304, height set to 139
   call vg.append(pic)
   call displayHtml(pic.asHtml())
 end main

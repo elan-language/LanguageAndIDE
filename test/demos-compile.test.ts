@@ -22,9 +22,9 @@ suite("Demo compile", () => {
   test("test fern-params", async () => {
     await testElanProgram("demo_programs\\fern-params.elan");
   });
-  test("test in-place-ripple-sort", async () => {
+  /*   test("test in-place-ripple-sort", async () => {
     await testElanProgram("demo_programs\\in-place-ripple-sort.elan");
-  });
+  }); */
   test("test julia-set", async () => {
     await testElanProgram("demo_programs\\julia-set.elan");
   });

@@ -1,4 +1,4 @@
-# 97908e6b39fd52f1bdddf44dd8c7391fd40ae45101ae6c38697c7621ef6aec64 Elan 2.0.0-alpha guest default_profile valid
+# 259945726091dc88e964c17c7f8ce63557f9cc464b9eecbbc25896e3740cc276 Elan 2.0.0-alpha guest default_profile valid
 
 function sort(li as List<of String>) returns List<of String>
   variable result set to li
@@ -8,21 +8,21 @@ end function
 
 test test_sort
   # 1. Edge case: empty
-  let l1 be empty List<of String>
+  constant l1 set to empty List<of String>
   assert sort(l1) is l1
   # 2. Edge case: one item
-  let li2 be ["plum"]
+  constant li2 set to ["plum"]
   assert sort(li2) is li2
   # 3. Happy case: odd number of members
-  let li3 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
-  let sorted3 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"]
+  constant li3 set to ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
+  constant sorted3 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"]
   assert sort(li3) is sorted3
   # 4. Happy case: even number of members
-  let li4 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"]
-  let sorted4 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"]
+  constant li4 set to ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"]
+  constant sorted4 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"]
   assert sort(li4) is sorted4
   # 5. Edge case: already sorted
-  let li5 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"]
+  constant li5 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"]
   assert sort(li5) is li5
 end test
 
@@ -42,9 +42,9 @@ function merge(a as List<of String>, b as List<of String>) returns List<of Strin
 end function
 
 test test_merge
-  let le be empty List<of String>
-  let l1 be ["apple", "lime", "pear"]
-  let l2 be ["apricot", "lemon", "plum", "watermelon"]
+  constant le set to empty List<of String>
+  constant l1 set to ["apple", "lime", "pear"]
+  constant l2 set to ["apricot", "lemon", "plum", "watermelon"]
   assert merge(le, le) is le
   assert merge(["orange"], ["melon"]) is ["melon", "orange"]
   assert merge(l1, l2) is ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]

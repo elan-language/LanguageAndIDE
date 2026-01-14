@@ -1,4 +1,4 @@
-# f09c34b222812674a999a14f9c9d21554d230ae257b8fd0f897555c58ab43d54 Elan 2.0.0-alpha guest default_profile valid
+# 0b3b38486090228dc4af2d8ba42da6dd7601b19bcf1540a2de01466b55386933 Elan 2.0.0-alpha guest default_profile valid
 
 # Exercise: use VectorGraphics to create an attractive simple animation
 # 1. Create a 'main' and within it add a 'let' statement to define a new List<of CircleVG>
@@ -37,9 +37,9 @@
 # Run the program to check that bubbles burst (disappear) randomly and new ones appear continually
 # at the bottom
 main
-  let bubbles be new List<of CircleVG>()
+  variable bubbles set to new List<of CircleVG>()
   for i from 1 to 20 step 1
-    let c be new CircleVG() with centreX set to i*5 + 2, centreY set to 75, radius set to 1, fillColour set to transparent, strokeColour set to randomInt(black, white)
+    variable c set to new CircleVG() with centreX set to i*5 + 2, centreY set to 75, radius set to 1, fillColour set to transparent, strokeColour set to randomInt(black, white)
     call bubbles.append(c)
   end for
   while true

@@ -188,12 +188,12 @@ import { AssertStatement } from "../frames/statements/assert-statement";
 import { CallStatement } from "../frames/statements/call-statement";
 import { CatchStatement } from "../frames/statements/catch-statement";
 import { CommentStatement } from "../frames/statements/comment-statement";
+import { ConstantStatement } from "../frames/statements/constant-statement";
 import { Each } from "../frames/statements/each";
 import { Elif } from "../frames/statements/elif";
 import { Else } from "../frames/statements/else";
 import { For } from "../frames/statements/for";
 import { IfStatement } from "../frames/statements/if-statement";
-import { LetStatement } from "../frames/statements/let-statement";
 import { Print } from "../frames/statements/print";
 import { ReturnStatement } from "../frames/statements/return-statement";
 import { SetStatement } from "../frames/statements/set-statement";
@@ -394,7 +394,7 @@ export function transform(
     return varAsn;
   }
 
-  if (node instanceof LetStatement) {
+  if (node instanceof ConstantStatement) {
     const letAsn = new LetAsn(node.getHtmlId(), scope);
     letAsn.breakpointStatus = node.breakpointStatus;
 

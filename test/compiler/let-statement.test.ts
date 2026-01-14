@@ -13,7 +13,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("Let Statement", () => {
+suite("Constant Statement", () => {
   test("Pass_normal", async () => {
     const code = `${testHeader}
 
@@ -22,8 +22,8 @@ main
 end main
 
 function add() returns Int
-  let x be 3
-  let y be x + 3
+  constant x set to 3
+  constant y set to x + 3
   return x + y
 end function`;
 
@@ -68,7 +68,7 @@ end main
 
 procedure foo()
   for i from 0 to 4 step 1
-    let temp be li[i]
+    constant temp set to li[i]
     print temp
   end for
 end procedure`;
@@ -118,7 +118,7 @@ end main
 procedure foo()
   variable li set to {1,2,3,4,5}
   for i from 0 to 3 step 1
-    let temp be li[i]
+    constant temp set to li[i]
     set li to li.withPut(i, li[i + 1])
     set li to li.withPut(i + 1, temp)
   end for
@@ -169,9 +169,9 @@ end main
 
 function foo() returns Int
   if true then
-    variable i set to 0
+    constant i set to 0
   end if
-  let i be 1
+  constant i set to 1
   return i
 end function`;
 
@@ -183,7 +183,7 @@ async function main() {
 
 async function foo() {
   if (_stdlib.true) {
-    let i = 0;
+    const i = 0;
   }
   const i = 1;
   return i;
@@ -215,8 +215,8 @@ main
 end main
 
 function foo() returns Int
-  let x be 3
-  let x be 4
+  constant x set to 3
+  constant x set to 4
   return x
 end function`;
 
@@ -233,7 +233,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "The identifier 'x' is already used for a 'let' and cannot be re-defined here.LangRef.html#compile_error",
+      "The identifier 'x' is already used for a constant and cannot be re-defined here.LangRef.html#compile_error",
     ]);
   });
 
@@ -245,7 +245,7 @@ main
 end main
 
 function foo() returns Int
-  let x be 3
+  constant x set to 3
   set x to 4
   return x
 end function`;
@@ -262,7 +262,9 @@ end function`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["May not re-assign the 'let' 'x'.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "May not re-assign the constant 'x'.LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_RecursiveDefinition", async () => {
@@ -274,7 +276,7 @@ main
 end main
 
 function foo() returns Int
-  let x be x + 1
+  variable x set to x + 1
   return x
 end function`;
 
@@ -301,7 +303,7 @@ end main
 
 function foo() returns Int
   variable x set to 1
-  let y be x.y
+  variable y set to x.y
   return y
 end function`;
 
@@ -325,7 +327,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  let a, length be foo()
+  constant a, length set to foo()
 end main
 
 function foo() returns (Int, Int)

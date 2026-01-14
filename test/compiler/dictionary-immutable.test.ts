@@ -198,9 +198,9 @@ return [main, _tests];}`;
 
 main
   variable a set to new DictionaryImmutable<of Point, Int>()
-  let r1 be new Point() with x set to 1, y set to 2
-  let r2 be new Point() with x set to 2, y set to 1
-  let r3 be new Point() with x set to 1, y set to 2
+  variable r1 set to new Point() with x set to 1, y set to 2
+  variable r2 set to new Point() with x set to 2, y set to 1
+  variable r3 set to new Point() with x set to 1, y set to 2
 
   set a to a.withPut(r1, 1)
   set a to a.withPut(r2, 2)
@@ -219,9 +219,9 @@ end record`;
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.DictionaryImmutable()._initialise());
-  const r1 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
-  const r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 2; _a.y = 1; return _a;})();
-  const r3 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
+  let r1 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
+  let r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 2; _a.y = 1; return _a;})();
+  let r3 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
   a = a.withPut(r1, 1);
   a = a.withPut(r2, 2);
   await system.print(system.safeIndex(a, r1));
@@ -578,8 +578,8 @@ return [main, _tests];}`;
 
 main
   variable a set to new DictionaryImmutable<of Point, Int>()
-  let r1 be new Point() with x set to 1, y set to 2
-  let r2 be new Point() with x set to 1, y set to 2
+  variable r1 set to new Point() with x set to 1, y set to 2
+  variable r2 set to new Point() with x set to 1, y set to 2
 
   set a to a.withPut(r1, 1)
   set a to a.withPut(r2, 2)
@@ -601,8 +601,8 @@ end record`;
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.DictionaryImmutable()._initialise());
-  const r1 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
-  const r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
+  let r1 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
+  let r2 = await (async () => {const _a = {...system.initialise(await new Point()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Point()._initialise()))); _a.x = 1; _a.y = 2; return _a;})();
   a = a.withPut(r1, 1);
   a = a.withPut(r2, 2);
   await system.print(system.safeIndex(a, r1));
@@ -641,7 +641,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  let a be {"a":1, "b":3, "z":10}
+  variable a set to {"a":1, "b":3, "z":10}
   variable b set to empty Dictionary<of String, Int>
   set b to a.asDictionary()
   print a
@@ -651,7 +651,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const a = system.dictionaryImmutable([["a", 1], ["b", 3], ["z", 10]]);
+  let a = system.dictionaryImmutable([["a", 1], ["b", 3], ["z", 10]]);
   let b = system.initialise(_stdlib.Dictionary.emptyInstance());
   b = a.asDictionary();
   await system.print(a);

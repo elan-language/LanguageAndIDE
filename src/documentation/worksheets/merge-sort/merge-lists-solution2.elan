@@ -1,4 +1,4 @@
-# e9bb6e25afd1b4ab0c0314b70479de54ef0f8e7cfbe08ff97bff301fa2a57b9e Elan 2.0.0-alpha guest default_profile valid
+# f1eb3e094fb170438139a031a28a68ad123a6804f21e8edea77fc490f35b88ba Elan 2.0.0-alpha guest default_profile valid
 
 function merge(a as List<of String>, b as List<of String>) returns List<of String>
   variable result set to empty List<of String>
@@ -7,8 +7,8 @@ function merge(a as List<of String>, b as List<of String>) returns List<of Strin
   elif b.length() is 0 then
     set result to a
   else
-    let head_a, tail_a be a
-    let head_b, tail_b be b
+    variable head_a, tail_a set to a
+    variable head_b, tail_b set to b
     if head_a.isBefore(head_b) then
       set result to [head_a].withAppendList(merge(tail_a, b))
     else

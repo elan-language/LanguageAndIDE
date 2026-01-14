@@ -428,7 +428,7 @@ main
   try
     throw exception "fail"
   catch exception in e
-    [ghosted] let a be 1
+    [ghosted] constant a set to 1
   end try
 end main`;
 

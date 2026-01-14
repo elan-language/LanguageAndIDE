@@ -1,7 +1,7 @@
-# 7622fd5493636211fcc54adef49f78dcdc30cedb5876b398b76f1405ee95b483 Elan 2.0.0-alpha guest default_profile valid
+# e83bd6c8c48973073a8a1d80121391c1f79884951650c109cc43721d55dc946b Elan 2.0.0-alpha guest default_profile valid
 
 main
-  let probability be random()
+  variable probability set to random()
   call print(probability)
   for i from 1 to 10 step 1
     call print(randomInt(1, 6))

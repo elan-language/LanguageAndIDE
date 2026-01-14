@@ -54,8 +54,8 @@ export function isProcedure(f?: MemberFrame): f is MemberFrame {
   return !!f && "isProcedure" in f;
 }
 
-export function isLet(f?: Statement): f is Statement {
-  return !!f && "isLet" in f;
+export function isConstant(f?: Statement): f is Statement {
+  return !!f && "isConstant" in f;
 }
 
 export function isConstructor(f?: Frame | MemberFrame | Parent): f is MemberFrame {

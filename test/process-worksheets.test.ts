@@ -26,7 +26,7 @@ suite("process worksheets", () => {
     const code = `procedure fillRandom(grid as Array2D<of Int>)
   for col from 0 to 39 step 1
     for row from 0 to 29 step 1
-      let cell be if random() > 0.5 then black else white
+      variable cell set to if random() > 0.5 then black else white
       call grid.put(col, row, cell)
     end for
   end for
@@ -40,7 +40,7 @@ end procedure`;
   test("process statement", async () => {
     const code = `for col from 0 to 39 step 1
   for row from 0 to 29 step 1
-    let cell be if random() > 0.5 then black else white
+    variable cell set to if random() > 0.5 then black else white
     call grid.put(col, row, cell)
   end for
 end for`;
@@ -139,9 +139,9 @@ end constructor`;
   test("process wrapped test", async () => {
     const code = `<codeblock>
   test ranges
-    let mark be "00000"
-    let i be 3
-    let expression be mark[something] + "2" + mark[something]
+    variable mark set to "00000"
+    variable i set to 3
+    variable expression set to mark[something] + "2" + mark[something]
     assert expression is "00020"
   end test
 </codeblock>`;

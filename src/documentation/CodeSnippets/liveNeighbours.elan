@@ -1,8 +1,8 @@
-# e2bece679c570e883f1ef1f6f62a1fec3cc6bddcd03146a9021cc7d304ec1024 Elan 2.0.0-alpha guest default_profile valid
+# c567d3837a177c7ee0709a1d7b4bb6f31341b1231f9cc27157d583cfb6f8ea7d Elan 2.0.0-alpha guest default_profile valid
 
 function liveNeighbours(cells as List<of Boolean>, c as Int) returns Int
-  let neighbours be neighbourCells(c)
-  let live be neighbours.filter(lambda i as Int => cells[i])
+  variable neighbours set to neighbourCells(c)
+  variable live set to neighbours.filter(lambda i as Int => cells[i])
   return live.length()
 end function
 
