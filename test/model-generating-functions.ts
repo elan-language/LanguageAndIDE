@@ -6,7 +6,7 @@ import { Property } from "../src/ide/frames/class-members/property";
 import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { ConcreteClass } from "../src/ide/frames/globals/concrete-class";
-import { Constant } from "../src/ide/frames/globals/constant";
+import { ConstantGlobal } from "../src/ide/frames/globals/constant-global";
 import { Enum } from "../src/ide/frames/globals/enum";
 import { GlobalComment } from "../src/ide/frames/globals/global-comment";
 import { GlobalFunction } from "../src/ide/frames/globals/global-function";
@@ -143,7 +143,7 @@ export function CollapseAll(f: FileImpl) {
 export function T04_allGlobalsExceptClass(): FileImpl {
   const f = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()));
   const gs = f.getFirstSelectorAsDirectChild();
-  const con = new Constant(f);
+  const con = new ConstantGlobal(f);
   con.name.setFieldToKnownValidText("phi");
   con.value.setFieldToKnownValidText("1.618");
   f.addChildBefore(con, gs);
@@ -219,7 +219,7 @@ export function getTestFrame(fn: string): FileImpl {
 export function oneConstant(): FileImpl {
   const file = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()));
   const globSel = file.getFirstChild();
-  const con = new Constant(file);
+  const con = new ConstantGlobal(file);
   file.addChildBefore(con, globSel);
   con.name.setFieldToKnownValidText("phi");
   con.value.setFieldToKnownValidText("1.618");
@@ -248,11 +248,11 @@ export function emptyFunctionOnly(): FileImpl {
 export function twoConstants(): FileImpl {
   const file = new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput()));
   const globSel = file.getFirstChild();
-  const con1 = new Constant(file);
+  const con1 = new ConstantGlobal(file);
   file.addChildBefore(con1, globSel);
   con1.name.setFieldToKnownValidText("phi");
   con1.value.setFieldToKnownValidText("1.618");
-  const con2 = new Constant(file);
+  const con2 = new ConstantGlobal(file);
   file.addChildAfter(con2, con1);
   con2.name.setFieldToKnownValidText("c");
   con2.value.setFieldToKnownValidText("299792458");

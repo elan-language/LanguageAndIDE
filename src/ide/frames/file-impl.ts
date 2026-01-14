@@ -31,7 +31,7 @@ import { Selectable } from "./frame-interfaces/selectable";
 import { StatementFactory } from "./frame-interfaces/statement-factory";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
-import { Constant } from "./globals/constant";
+import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
@@ -582,7 +582,7 @@ export class FileImpl implements File {
     return new GlobalComment(this);
   }
   createConstant(): Frame {
-    return new Constant(this);
+    return new ConstantGlobal(this);
   }
   createTest(): Frame {
     return new TestFrame(this);

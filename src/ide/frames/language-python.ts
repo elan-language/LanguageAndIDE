@@ -1,4 +1,4 @@
-import {} from "../../compiler/keywords";
+import { } from "../../compiler/keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -12,13 +12,15 @@ import { Language } from "./frame-interfaces/language";
 import { ParseNode } from "./frame-interfaces/parse-node";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
-import { Constant } from "./globals/constant";
+import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
+import { FunctionFrame } from "./globals/function-frame";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
+import { ProcedureFrame } from "./globals/procedure-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
@@ -51,7 +53,19 @@ export class LanguagePython implements Language {
   languageFullName: string = "Python";
 
   annotation(frame: Frame): string {
-    return frame.frameSpecificAnnotation();
+    let annotation = "";
+    if (
+      frame instanceof VariableStatement ||
+      frame instanceof ConstantGlobal ||
+      frame instanceof ConstantStatement ||
+      frame instanceof FunctionFrame ||
+      frame instanceof ProcedureFrame ||
+      frame instanceof CallStatement ||
+      frame instanceof SetStatement
+    ) {
+      annotation = frame.frameSpecificAnnotation();
+    }
+    return annotation;
   }
 
   commentMarker(): string {
@@ -74,7 +88,7 @@ export class LanguagePython implements Language {
       html = `${this.EXCEPT}<el-punc>:</el-punc>`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof Constant) {
+    } else if (frame instanceof ConstantGlobal) {
       html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
       html = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
@@ -118,7 +132,7 @@ export class LanguagePython implements Language {
       source = `${this.EXCEPT}<el-punc>:</el-punc>`;
     } else if (frame instanceof CommentStatement) {
       source = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsExport()}`;
-    } else if (frame instanceof Constant) {
+    } else if (frame instanceof ConstantGlobal) {
       source = `${frame.name.renderAsExport()}<el-punc> = </el-punc>${frame.value.renderAsExport()}`;
     } else if (frame instanceof Elif) {
       source = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsExport()}<el-punc>:</el-punc>`;
@@ -179,7 +193,7 @@ export class LanguagePython implements Language {
     } else if (frame instanceof RecordFrame) {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.DEF} </el-kw> <el-method>test_${frame.testName.renderAsElanSource()}</el-method><el-punc>()-> </el-punc><el-kw>${this.NONE}</el-kw><el-punc>:</el-punc>`;
+      html = `<el-kw>${this.DEF} </el-kw> <el-method>${frame.testName.renderAsElanSource()}</el-method><el-punc>()-> </el-punc><el-kw>${this.NONE}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof TryStatement) {
       html = `${this.TRY}<el-punc>:</el-punc>`;
     } else if (frame instanceof While) {

@@ -11,7 +11,7 @@ import { Language } from "./frame-interfaces/language";
 import { ParseNode } from "./frame-interfaces/parse-node";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
-import { Constant } from "./globals/constant";
+import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
@@ -63,7 +63,7 @@ export class LanguageElan implements Language {
       html = `<el-kw>${this.CATCH} ${this.EXCEPTION} ${this.IN} </el-kw>${frame.variable.renderAsHtml()}`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof Constant) {
+    } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.CONSTANT} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {

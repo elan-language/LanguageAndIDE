@@ -114,7 +114,7 @@ import { Frame } from "../frames/frame-interfaces/frame";
 import { ParseNode } from "../frames/frame-interfaces/parse-node";
 import { AbstractClass } from "../frames/globals/abstract-class";
 import { ConcreteClass } from "../frames/globals/concrete-class";
-import { Constant } from "../frames/globals/constant";
+import { ConstantGlobal } from "../frames/globals/constant-global";
 import { Enum } from "../frames/globals/enum";
 import { GlobalComment } from "../frames/globals/global-comment";
 import { GlobalFunction } from "../frames/globals/global-function";
@@ -455,7 +455,7 @@ export function transform(
     return enumValues;
   }
 
-  if (node instanceof Constant) {
+  if (node instanceof ConstantGlobal) {
     const constantAsn = new ConstantAsn(node.getHtmlId(), scope);
     constantAsn.breakpointStatus = node.breakpointStatus;
 

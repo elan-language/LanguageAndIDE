@@ -11,13 +11,14 @@ import { Language } from "./frame-interfaces/language";
 import { ParseNode } from "./frame-interfaces/parse-node";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
-import { Constant } from "./globals/constant";
+import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
+import { ProcedureFrame } from "./globals/procedure-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
@@ -49,7 +50,16 @@ export class LanguageCS implements Language {
   languageFullName: string = "C#";
 
   annotation(frame: Frame): string {
-    return frame.frameSpecificAnnotation();
+    let annotation = "";
+    if (
+      frame instanceof VariableStatement ||
+      frame instanceof ProcedureFrame ||
+      frame instanceof CallStatement ||
+      frame instanceof SetStatement
+    ) {
+      annotation = frame.frameSpecificAnnotation();
+    }
+    return annotation;
   }
 
   commentMarker(): string {
@@ -65,7 +75,7 @@ export class LanguageCS implements Language {
       html = `<el-kw>${this.CATCH} <el-punc>(</el-punc><el-type>Exception</el-type>${frame.variable.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof Constant) {
+    } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {

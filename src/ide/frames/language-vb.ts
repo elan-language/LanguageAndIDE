@@ -11,13 +11,14 @@ import { Language } from "./frame-interfaces/language";
 import { ParseNode } from "./frame-interfaces/parse-node";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
-import { Constant } from "./globals/constant";
+import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
+import { ProcedureFrame } from "./globals/procedure-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { Index } from "./parse-nodes";
@@ -52,7 +53,16 @@ export class LanguageVB implements Language {
   languageFullName: string = "VB";
 
   annotation(frame: Frame): string {
-    return frame.frameSpecificAnnotation();
+    let annotation = "";
+    if (
+      frame instanceof VariableStatement ||
+      frame instanceof ProcedureFrame ||
+      frame instanceof CallStatement ||
+      frame instanceof SetStatement
+    ) {
+      annotation = frame.frameSpecificAnnotation();
+    }
+    return annotation;
   }
 
   commentMarker(): string {
@@ -68,7 +78,7 @@ export class LanguageVB implements Language {
       html = `<el-kw>${this.CATCH} <el-type>Exception</el-type> ${this.IN} </el-kw>${frame.variable.renderAsHtml()}`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.SINGLE_QUOTE} </el-kw>${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof Constant) {
+    } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}<el-kw></el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {

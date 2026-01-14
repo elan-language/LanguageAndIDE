@@ -7,7 +7,7 @@ import { IdentifierField } from "../src/ide/frames/fields/identifier-field";
 import { InheritsFromField } from "../src/ide/frames/fields/inherits-from-field";
 import { TypeNameField } from "../src/ide/frames/fields/type-name-field";
 import { ConcreteClass } from "../src/ide/frames/globals/concrete-class";
-import { Constant } from "../src/ide/frames/globals/constant";
+import { ConstantGlobal } from "../src/ide/frames/globals/constant-global";
 import { GlobalFunction } from "../src/ide/frames/globals/global-function";
 import { GlobalSelector } from "../src/ide/frames/globals/global-selector";
 import { MainFrame } from "../src/ide/frames/globals/main-frame";
@@ -42,7 +42,7 @@ suite("Editing Frames", () => {
     const file = oneConstant();
     file.removeAllSelectorsThatCanBe();
     assert.equal(file.getChildren().length, 1);
-    const c = file.getById("const1") as Constant;
+    const c = file.getById("const1") as ConstantGlobal;
     c.select(true, false);
     c.processKey(enter());
     assert.equal(file.getChildren().length, 2);
@@ -52,7 +52,7 @@ suite("Editing Frames", () => {
   test("Enter on a frame does not create a selector if there is already one there", () => {
     const file = oneConstant();
     assert.equal(file.getChildren().length, 2);
-    const c = file.getById("const1") as Constant;
+    const c = file.getById("const1") as ConstantGlobal;
     c.select(true, false);
     c.processKey(enter());
     assert.equal(file.getChildren().length, 2);
@@ -93,7 +93,7 @@ suite("Editing Frames", () => {
   });
   test("Tab/Shift-Tab on a field goes to next/prev", () => {
     const file = oneConstant();
-    const c = file.getById("const1") as Constant;
+    const c = file.getById("const1") as ConstantGlobal;
     const ident2 = file.getById("ident2") as IdentifierField;
     const text3 = file.getById("text3") as ConstantValueField;
     c.select(true, false);
@@ -139,9 +139,9 @@ suite("Editing Frames", () => {
 
   test("Move", () => {
     const file = twoConstants();
-    const phi = file.getById("const1") as Constant;
+    const phi = file.getById("const1") as ConstantGlobal;
     const sel0 = file.getById("select0") as GlobalSelector;
-    const c = file.getById("const4") as Constant;
+    const c = file.getById("const4") as ConstantGlobal;
     assert.equal(file.getFirstChild(), phi);
     assert.equal(file.getLastChild(), sel0);
     phi.select(true, false);
