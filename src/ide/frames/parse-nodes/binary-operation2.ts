@@ -63,6 +63,9 @@ export class BinaryOperation extends AbstractAlternatives {
   parseText(text: string): void {
     this.remainingText = text;
     if (this.remainingText.length > 0) {
+      while (this.nextChar() === " ") {
+        this.moveCharsToMatched(1, ParseStatus.incomplete);
+      }
       const lang = this.file.language();
       const file = this.file;
       this.alternatives.push(new Operation(file, PLUS, false, "+"));
@@ -108,6 +111,18 @@ export class BinaryOperation extends AbstractAlternatives {
     if (this.status === ParseStatus.valid) {
       const best = this.bestMatch! as Operation;
       const space = best.closePacked ? "" : " ";
+      source = `${space}${best.elanSource}${space}`;
+    } else {
+      source = this.matchedText;
+    }
+    return source;
+  }
+
+  renderAsExport(): string {
+    let source = "";
+    if (this.status === ParseStatus.valid) {
+      const best = this.bestMatch! as Operation;
+      const space = best.closePacked ? "" : " ";
       source = `${space}${best.matchedText.trim()}${space}`;
     } else {
       source = this.matchedText;
@@ -119,7 +134,7 @@ export class BinaryOperation extends AbstractAlternatives {
     const best = this.bestMatch! as Operation;
     const open = best.keyword ? "<el-kw>" : "";
     const close = best.keyword ? "</el-kw>" : "";
-    return `${open}${this.renderAsElanSource()}${close}`;
+    return `${open}${this.renderAsExport()}${close}`;
   }
 
   getSyntaxCompletionAsHtml(): string {

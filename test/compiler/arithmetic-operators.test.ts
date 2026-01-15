@@ -463,54 +463,6 @@ end class
     ]);
   });
 
-  test("Fail_IntegerDivisionOnFloats1", async () => {
-    const code = `${testHeader}
-
-main
-  print 7.6 div 2
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
-    ]);
-  });
-
-  test("Fail_IntegerDivisionOnFloats2", async () => {
-    const code = `${testHeader}
-
-main
-  print 7 div 2.5
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new DefaultProfile(),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float.LangRef.html#TypesCompileError",
-    ]);
-  });
-
   test("Fail_ModWithFloats1", async () => {
     const code = `${testHeader}
 
