@@ -2,9 +2,9 @@
 
 main
   variable li set to example.asList()
-  call print(li.asString())
+  call print(li)
   call inPlaceRippleSort(li)
-  call print(li.asString())
+  call print(li)
 end main
 
 procedure inPlaceRippleSort(li as List<of Int>)

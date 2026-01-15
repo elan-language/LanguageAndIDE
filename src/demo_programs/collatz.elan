@@ -27,7 +27,7 @@ main
         set vg to vg.withAppend(new LineVG() with x1 set to scx(i, p), y1 set to scy(p[i], max), x2 set to scx(i + 1, p), y2 set to scy(p[i + 1], max), strokeColour set to black, strokeWidth set to 1)
       end for
       call displayVectorGraphics(vg)
-      call print(x.asString())
+      call print(x)
       call pause(100)
     end while
   end while
