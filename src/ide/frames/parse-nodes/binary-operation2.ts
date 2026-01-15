@@ -13,7 +13,6 @@ import { DIVIDE, GE, GT, LE, LT, MINUS, MULT, PLUS } from "../symbols";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { FixedTextNode } from "./fixed-text-node";
 
-
 // THIS IS NOT WORKING, or currently used.
 export class Operation extends FixedTextNode {
   keyword: boolean = false;
@@ -62,9 +61,10 @@ export class BinaryOperation extends AbstractAlternatives {
   completion: string = "";
 
   parseText(text: string): void {
-    const lang = this.file.language();
-    const file = this.file;
-    if (text.length > 0) {
+    this.remainingText = text;
+    if (this.remainingText.length > 0) {
+      const lang = this.file.language();
+      const file = this.file;
       this.alternatives.push(new Operation(file, PLUS, false, "+"));
       this.alternatives.push(new Operation(file, MINUS, false, "-"));
       this.alternatives.push(new Operation(file, MULT, true, "*"));
@@ -80,8 +80,27 @@ export class BinaryOperation extends AbstractAlternatives {
       this.alternatives.push(new Operation(file, lang.AND, false, "and"));
       this.alternatives.push(new Operation(file, lang.OR, false, "or"));
       this.alternatives.push(new Operation(file, lang.NOT, false, "not"));
-      super.parseText(text);
+      super.parseText(this.remainingText);
+      while (this.status === ParseStatus.valid && this.nextChar() === " ") {
+        this.moveCharsToMatched(1, ParseStatus.valid);
+      }
+      if (
+        this.remainingText.length > 0 &&
+        (this.status === ParseStatus.empty || this.status === ParseStatus.incomplete)
+      ) {
+        this.status = ParseStatus.invalid;
+      }
     }
+  }
+
+  private nextChar(): string {
+    return this.remainingText.length > 0 ? this.remainingText[0] : "";
+  }
+
+  private moveCharsToMatched(n: number, st: ParseStatus): void {
+    this.matchedText = this.matchedText + this.remainingText.slice(0, n);
+    this.remainingText = this.remainingText.slice(n);
+    this.status = st;
   }
 
   renderAsElanSource(): string {
