@@ -1,4 +1,4 @@
-# d2a194dbdc89804afacaeab272e54c5d6dd5f964d0f3964485181cab737546eb Elan 2.0.0-alpha guest default_profile valid
+# 67dc3ac3793af97624676c5141db1ebfaeacaed1bdc26cbe207a017da4f87e38 Elan 2.0.0-alpha guest default_profile valid
 
 # A program to investigate the Collatz Conjecture
 # https://en.wikipedia.org/wiki/Collatz_conjecture
@@ -27,7 +27,7 @@ main
         set vg to vg.withAppend(new LineVG() with x1 set to scx(i, p), y1 set to scy(p[i], max), x2 set to scx(i + 1, p), y2 set to scy(p[i + 1], max), strokeColour set to black, strokeWidth set to 1)
       end for
       call displayVectorGraphics(vg)
-      call print(x.asString())
+      call print(x)
       call pause(100)
     end while
   end while

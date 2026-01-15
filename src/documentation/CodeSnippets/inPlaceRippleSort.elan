@@ -1,8 +1,8 @@
-# 6dc7a0bc598b22bd0f954c02662caecc8647587b8cd12f5a9e347d454341dc60 Elan 2.0.0-alpha guest default_profile valid
+# 5ce49e8314bde93e37819023925cf8658563cac744ff7b15f73251d203a028b7 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable li set to example.asList()
-  call print(li.asString())
+  call print(li)
   call inPlaceRippleSort(li)
   call print(li)
 end main

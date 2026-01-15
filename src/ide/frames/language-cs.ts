@@ -251,6 +251,11 @@ export class LanguageCS implements Language {
 
   COMMENT_MARKER = "//";
 
+  INT_NAME: string = "int";
+  FLOAT_NAME: string = "double";
+  BOOL_NAME: string = "bool";
+  STRING_NAME: string = "string";
+
   parseParamDefNode(node: ParamDefNode, text: string): boolean {
     node.type = new TypeNode(
       node.file,
