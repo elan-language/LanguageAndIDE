@@ -884,7 +884,11 @@ export class FileImpl implements File {
   }
 
   setLanguage(l: Language) {
-    this._language = l;
+    if (this._language.languageFullName !== l.languageFullName) {
+      this._language = l;
+      return true;
+    }
+    return false;
   }
 
   language(): Language {

@@ -13,6 +13,7 @@ import { Frame } from "../frames/frame-interfaces/frame";
 import { Language } from "../frames/frame-interfaces/language";
 import { Profile } from "../frames/frame-interfaces/profile";
 import { Selectable } from "../frames/frame-interfaces/selectable";
+import { LanguageElan } from "../frames/language-elan";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
 import { FileManager } from "./file-manager";
@@ -160,7 +161,9 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   recreateFile(vm: IIDEViewModel) {
+    const existingLanguage = this.file?.language() ?? new LanguageElan();
     this.file = new FileImpl(hash, this.profile!, undefined, transforms(), stdlib);
+    this.file.setLanguage(existingLanguage);
     vm.setDisplayLanguage(this.file?.language().languageFullName);
   }
 
@@ -685,9 +688,10 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   async changeLanguage(l: Language, vm: IIDEViewModel, tr: TestRunner) {
-    this.file?.setLanguage(l);
-    vm.setDisplayLanguage(l.languageFullName);
-    await this.refreshAndDisplay(vm, tr, true, false);
+    if (this.file?.setLanguage(l)) {
+      vm.setDisplayLanguage(l.languageFullName);
+      await this.refreshAndDisplay(vm, tr, true, false);
+    }
   }
 
   async updateContent(

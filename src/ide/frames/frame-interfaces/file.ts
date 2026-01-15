@@ -122,6 +122,6 @@ export interface File extends Parent {
 
   deleteAllGhosted(): void;
 
-  setLanguage(l: Language): void;
+  setLanguage(l: Language): boolean;
   language(): Language;
 }
