@@ -305,6 +305,11 @@ export class LanguageVB implements Language {
 
   COMMENT_MARKER: string = this.SINGLE_QUOTE;
 
+  INT_NAME: string = "Integer";
+  FLOAT_NAME: string = "Double";
+  BOOL_NAME: string = "Boolean";
+  STRING_NAME: string = "String";
+
   parseParamDefNode(node: ParamDefNode, text: string): boolean {
     node.name = new IdentifierNode(node.file);
     node.addElement(node.name);

@@ -35,4 +35,9 @@ export interface Language {
   NOT: string;
 
   COMMENT_MARKER: string; //e.g. `#`
+
+  INT_NAME: string;
+  FLOAT_NAME: string;
+  BOOL_NAME: string;
+  STRING_NAME: string;
 }

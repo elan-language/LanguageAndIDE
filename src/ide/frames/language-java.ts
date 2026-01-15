@@ -231,4 +231,9 @@ export class LanguageJava implements Language {
   OR = "||";
 
   COMMENT_MARKER = "//";
+
+  INT_NAME: string = "int";
+  FLOAT_NAME: string = "double";
+  BOOL_NAME: string = "bool";
+  STRING_NAME: string = "String";
 }

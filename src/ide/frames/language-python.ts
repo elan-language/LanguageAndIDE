@@ -285,6 +285,11 @@ export class LanguagePython implements Language {
 
   COMMENT_MARKER = "#";
 
+  INT_NAME: string = "int";
+  FLOAT_NAME: string = "float";
+  BOOL_NAME: string = "bool";
+  STRING_NAME: string = "str";
+
   parseParamDefNode(node: ParamDefNode, text: string): boolean {
     node.name = new IdentifierNode(node.file);
     node.addElement(node.name);

@@ -224,4 +224,9 @@ export class LanguageElan implements Language {
   NOT = "not";
 
   COMMENT_MARKER = "#";
+
+  INT_NAME: string = "Int";
+  FLOAT_NAME: string = "Float";
+  BOOL_NAME: string = "Bool";
+  STRING_NAME: string = "String";
 }
