@@ -11,19 +11,24 @@ import { Language } from "./frame-interfaces/language";
 import { ParseNode } from "./frame-interfaces/parse-node";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
-import { Constant } from "./globals/constant";
+import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
+import { ProcedureFrame } from "./globals/procedure-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { IdentifierNode } from "./parse-nodes/identifier-node";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
+import { Space } from "./parse-nodes/parse-node-helpers";
+import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeNode } from "./parse-nodes/type-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
@@ -41,6 +46,7 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
+import { TokenType } from "./symbol-completion-helpers";
 
 export class LanguageCS implements Language {
   commentRegex(): RegExp {
@@ -49,12 +55,18 @@ export class LanguageCS implements Language {
   languageFullName: string = "C#";
 
   annotation(frame: Frame): string {
-    return frame.frameSpecificAnnotation();
+    let annotation = "";
+    if (
+      frame instanceof VariableStatement ||
+      frame instanceof ProcedureFrame ||
+      frame instanceof CallStatement ||
+      frame instanceof SetStatement
+    ) {
+      annotation = frame.frameSpecificAnnotation();
+    }
+    return annotation;
   }
 
-  commentMarker(): string {
-    return this.COMMENT_MARKER;
-  }
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
@@ -65,7 +77,7 @@ export class LanguageCS implements Language {
       html = `<el-kw>${this.CATCH} <el-punc>(</el-punc><el-type>Exception</el-type>${frame.variable.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof Constant) {
+    } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
@@ -170,7 +182,7 @@ export class LanguageCS implements Language {
       const close = node.keyword ? "</el-kw>" : "";
       let text = node.matchedText.trim();
       if (text === "is") {
-        text = this.spaced(this.DOUBLE_EQUAL);
+        text = this.spaced(this.EQUAL);
       } else if (text === "isnt") {
         text = this.spaced(this.NOT_EQUAL);
       } else if (text === "and") {
@@ -194,21 +206,16 @@ export class LanguageCS implements Language {
     return html;
   }
 
+  parseText(node: ParseNode, text: string): boolean {
+    let result = false;
+    if (node instanceof ParamDefNode) {
+      result = this.parseParamDefNode(node, text);
+    }
+    return result;
+  }
+
   private spaced(text: string): string {
     return ` ${text} `;
-  }
-
-  // Not yet used - for illustration only
-  grammarForNode(node: ParseNode): string {
-    return node ? "" : "";
-  }
-
-  // Not yet used - for illustration only
-  lexer(): string {
-    return `
-IS:           'is';
-PLUS:         '+';
-`; //etc.
   }
 
   private ABSTRACT = "abstract";
@@ -234,11 +241,29 @@ PLUS:         '+';
   private VOID = "void";
   private WHILE = "while";
 
-  private COMMENT_MARKER = "//";
-  private DOUBLE_EQUAL = "==";
-  private NOT_EQUAL = "!=";
-  private MOD = "%";
-  private NOT = "!";
-  private AND = "&&";
-  private OR = "||";
+  POWER: string = "^";
+  EQUAL: string = "==";
+  NOT_EQUAL: string = "!=";
+  MOD = "%";
+  AND = "&&";
+  OR = "||";
+  NOT = "!";
+
+  COMMENT_MARKER = "//";
+
+  parseParamDefNode(node: ParamDefNode, text: string): boolean {
+    node.type = new TypeNode(
+      node.file,
+      new Set<TokenType>([
+        TokenType.type_concrete,
+        TokenType.type_abstract,
+        TokenType.type_notInheritable,
+      ]),
+    );
+    node.addElement(node.type);
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.name = new IdentifierNode(node.file);
+    node.addElement(node.name);
+    return text ? true : true;
+  }
 }

@@ -8,7 +8,7 @@ import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { SingleLineFrame } from "../single-line-frame";
 
-export class Constant extends SingleLineFrame implements GlobalFrame, Collapsible {
+export class ConstantGlobal extends SingleLineFrame implements GlobalFrame, Collapsible {
   isCollapsible: boolean = true;
   isGlobal = true;
   name: IdentifierField;

@@ -1,4 +1,3 @@
-import {} from "../../compiler/keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -12,20 +11,27 @@ import { Language } from "./frame-interfaces/language";
 import { ParseNode } from "./frame-interfaces/parse-node";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
-import { Constant } from "./globals/constant";
+import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
+import { FunctionFrame } from "./globals/function-frame";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
+import { ProcedureFrame } from "./globals/procedure-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { IdentifierNode } from "./parse-nodes/identifier-node";
 import { IndexDouble } from "./parse-nodes/index-double";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
+import { Space } from "./parse-nodes/parse-node-helpers";
+import { PunctuationNode } from "./parse-nodes/punctuation-node";
+import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeNode } from "./parse-nodes/type-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
@@ -43,6 +49,8 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
+import { TokenType } from "./symbol-completion-helpers";
+import { COLON } from "./symbols";
 
 export class LanguagePython implements Language {
   commentRegex(): RegExp {
@@ -51,11 +59,19 @@ export class LanguagePython implements Language {
   languageFullName: string = "Python";
 
   annotation(frame: Frame): string {
-    return frame.frameSpecificAnnotation();
-  }
-
-  commentMarker(): string {
-    return this.HASH;
+    let annotation = "";
+    if (
+      frame instanceof VariableStatement ||
+      frame instanceof ConstantGlobal ||
+      frame instanceof ConstantStatement ||
+      frame instanceof FunctionFrame ||
+      frame instanceof ProcedureFrame ||
+      frame instanceof CallStatement ||
+      frame instanceof SetStatement
+    ) {
+      annotation = frame.frameSpecificAnnotation();
+    }
+    return annotation;
   }
 
   renderSingleLineAsHtml(frame: Frame): string {
@@ -73,8 +89,8 @@ export class LanguagePython implements Language {
     } else if (frame instanceof CatchStatement) {
       html = `${this.EXCEPT}<el-punc>:</el-punc>`;
     } else if (frame instanceof CommentStatement) {
-      html = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof Constant) {
+      html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
+    } else if (frame instanceof ConstantGlobal) {
       html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
       html = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}<el-punc>:</el-punc>`;
@@ -83,7 +99,7 @@ export class LanguagePython implements Language {
     } else if (frame instanceof Enum) {
       html = `${frame.name.renderAsHtml()} = <el-type>Enum</el-type>('${frame.name.renderAsHtml()}', '${frame.values.renderAsHtml()}')`;
     } else if (frame instanceof GlobalComment) {
-      html = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantStatement) {
       html = `${frame.name.renderAsHtml()}<el-punc> = </el-punc>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Print) {
@@ -117,8 +133,8 @@ export class LanguagePython implements Language {
     } else if (frame instanceof CatchStatement) {
       source = `${this.EXCEPT}<el-punc>:</el-punc>`;
     } else if (frame instanceof CommentStatement) {
-      source = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsExport()}`;
-    } else if (frame instanceof Constant) {
+      source = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsExport()}`;
+    } else if (frame instanceof ConstantGlobal) {
       source = `${frame.name.renderAsExport()}<el-punc> = </el-punc>${frame.value.renderAsExport()}`;
     } else if (frame instanceof Elif) {
       source = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsExport()}<el-punc>:</el-punc>`;
@@ -127,7 +143,7 @@ export class LanguagePython implements Language {
     } else if (frame instanceof Enum) {
       source = `${frame.name.renderAsExport()} = <el-type>Enum</el-type>('${frame.name.renderAsExport()}', '${frame.values.renderAsExport()}')`;
     } else if (frame instanceof GlobalComment) {
-      source = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsExport()}`;
+      source = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsExport()}`;
     } else if (frame instanceof ConstantStatement) {
       source = `${frame.name.renderAsExport()}<el-punc> = </el-punc>${frame.expr.renderAsExport()}`;
     } else if (frame instanceof Print) {
@@ -179,7 +195,7 @@ export class LanguagePython implements Language {
     } else if (frame instanceof RecordFrame) {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.DEF} </el-kw> <el-method>test_${frame.testName.renderAsElanSource()}</el-method><el-punc>()-> </el-punc><el-kw>${this.NONE}</el-kw><el-punc>:</el-punc>`;
+      html = `<el-kw>${this.DEF} </el-kw> <el-method>${frame.testName.renderAsElanSource()}</el-method><el-punc>()-> </el-punc><el-kw>${this.NONE}</el-kw><el-punc>:</el-punc>`;
     } else if (frame instanceof TryStatement) {
       html = `${this.TRY}<el-punc>:</el-punc>`;
     } else if (frame instanceof While) {
@@ -203,11 +219,9 @@ export class LanguagePython implements Language {
   renderNodeAsHtml(node: ParseNode): string {
     let html = "";
     if (node instanceof TypeGenericNode) {
+      const simpleType = node.simpleType?.renderAsHtml();
       const generics = node.generic?.renderAsHtml();
-      const chopped = generics?.substring(22, generics.length - 4);
-      html =
-        node.simpleType?.renderAsHtml() +
-        `<el-punc>[</el-punc><el-type>${chopped}</el-type><el-punc>]</el-punc>`;
+      html = `${simpleType}${generics}`;
     } else if (node instanceof ParamDefNode) {
       html = node.name?.renderAsHtml() + ": " + node.type?.renderAsHtml();
     } else if (node instanceof BinaryOperation) {
@@ -235,26 +249,12 @@ export class LanguagePython implements Language {
     return html;
   }
 
-  // Not yet used - for illustration only
-  grammarForNode(node: ParseNode): string {
-    let grammar = "";
+  parseText(node: ParseNode, text: string): boolean {
+    let result = false;
     if (node instanceof ParamDefNode) {
-      grammar = "name COLON SPACE type";
-    } else if (node instanceof BinaryOperation) {
-      grammar = "EQ | NE | LT | GT | LE | GE | PLUS | MINUS "; // etc
-    } else if (node instanceof TypeGenericNode) {
-      grammar = "OPEN_SQ_BRACKET type CLOSE_SQ_BRACKET";
+      result = this.parseParamDefNode(node, text);
     }
-    // etc
-    return grammar;
-  }
-
-  // Not yet used - for illustration only
-  lexer(): string {
-    return `
-EQ:           '==';
-NE:           '!=';
-`; //etc
+    return result;
   }
 
   private DEF = "def";
@@ -272,5 +272,33 @@ NE:           '!=';
   private TRY = "try";
   private WHILE = "while";
 
-  private HASH = "#";
+  private OPEN_SQUARE_BRACKET = "[";
+  private CLOSE_SQUARE_BRACKET = "]";
+
+  POWER: string = "^";
+  MOD: string = "%";
+  EQUAL: string = "==";
+  NOT_EQUAL: string = "!=";
+  AND: string = "and";
+  OR: string = "or";
+  NOT: string = "not";
+
+  COMMENT_MARKER = "#";
+
+  parseParamDefNode(node: ParamDefNode, text: string): boolean {
+    node.name = new IdentifierNode(node.file);
+    node.addElement(node.name);
+    node.addElement(new PunctuationNode(node.file, COLON));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.type = new TypeNode(
+      node.file,
+      new Set<TokenType>([
+        TokenType.type_concrete,
+        TokenType.type_abstract,
+        TokenType.type_notInheritable,
+      ]),
+    );
+    node.addElement(node.type);
+    return text ? true : true;
+  }
 }

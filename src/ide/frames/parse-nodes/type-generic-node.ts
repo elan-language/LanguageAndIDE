@@ -3,9 +3,7 @@ import { ParseNode } from "../frame-interfaces/parse-node";
 import { TokenType } from "../symbol-completion-helpers";
 import { GT, LT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
-import { CommaNode } from "./comma-node";
 import { KeywordNode } from "./keyword-node";
-import { Multiple } from "./multiple";
 import { concreteAndAbstractTypes, Space } from "./parse-node-helpers";
 import { PunctuationNode } from "./punctuation-node";
 import { Sequence } from "./sequence";
@@ -13,6 +11,7 @@ import { SpaceNode } from "./space-node";
 import { TypeNameNode } from "./type-name-node";
 import { TypeNode } from "./type-node";
 import { File } from "../frame-interfaces/file";
+import { CSV } from "./csv";
 
 export class TypeGenericNode extends AbstractSequence {
   simpleType: TypeNameNode | undefined;
@@ -33,15 +32,10 @@ export class TypeGenericNode extends AbstractSequence {
       const lt = () => new PunctuationNode(this.file, LT);
       const of = () => new KeywordNode(this.file, ofKeyword);
       const sp = () => new SpaceNode(this.file, Space.required);
-      const type = () => new TypeNode(this.file, this.concreteAndAbstract);
-      const commaType = () =>
-        new Sequence(this.file, [
-          () => new CommaNode(this.file),
-          () => new TypeNode(this.file, this.concreteAndAbstract),
-        ]);
-      const commaTypes = () => new Multiple(this.file, commaType, 0);
+      const typeConstr = () => new TypeNode(this.file, this.concreteAndAbstract);
+      const types = () => new CSV(this.file, typeConstr, 1);
       const gt = () => new PunctuationNode(this.file, GT);
-      this.generic = new Sequence(this.file, [lt, of, sp, type, commaTypes, gt]);
+      this.generic = new Sequence(this.file, [lt, of, sp, types, gt]);
       this.addElement(this.simpleType);
       this.addElement(this.generic);
       super.parseText(text);

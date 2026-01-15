@@ -11,7 +11,7 @@ import { Language } from "./frame-interfaces/language";
 import { ParseNode } from "./frame-interfaces/parse-node";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
-import { Constant } from "./globals/constant";
+import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
@@ -52,9 +52,6 @@ export class LanguageJava implements Language {
     return frame.frameSpecificAnnotation();
   }
 
-  commentMarker(): string {
-    return this.COMMENT_MARKER;
-  }
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
@@ -65,7 +62,7 @@ export class LanguageJava implements Language {
       html = `<el-kw>${this.CATCH} <el-punc>(</el-punc><el-type>Exception</el-type>${frame.variable.renderAsHtml()}<el-punc>) {</el-punc>`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof Constant) {
+    } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
@@ -170,7 +167,7 @@ export class LanguageJava implements Language {
       const close = node.keyword ? "</el-kw>" : "";
       let text = node.matchedText.trim();
       if (text === "is") {
-        text = this.spaced(this.DOUBLE_EQUAL);
+        text = this.spaced(this.EQUAL);
       } else if (text === "isnt") {
         text = this.spaced(this.NOT_EQUAL);
       } else if (text === "and") {
@@ -194,21 +191,12 @@ export class LanguageJava implements Language {
     return html;
   }
 
+  parseText(node: ParseNode, text: string): boolean {
+    return node && text ? false : false;
+  }
+
   private spaced(text: string): string {
     return ` ${text} `;
-  }
-
-  // Not yet used - for illustration only
-  grammarForNode(node: ParseNode): string {
-    return node ? "" : "";
-  }
-
-  // Not yet used - for illustration only
-  lexer(): string {
-    return `
-IS:           'is';
-PLUS:         '+';
-`; //etc.
   }
 
   private ABSTRACT = "abstract";
@@ -234,11 +222,13 @@ PLUS:         '+';
   private VOID = "void";
   private WHILE = "while";
 
-  private COMMENT_MARKER = "//";
-  private DOUBLE_EQUAL = "==";
-  private NOT_EQUAL = "!=";
-  private MOD = "%";
-  private NOT = "!";
-  private AND = "&&";
-  private OR = "||";
+  POWER: string = "**";
+  EQUAL = "==";
+  NOT_EQUAL = "!=";
+  MOD = "%";
+  NOT = "!";
+  AND = "&&";
+  OR = "||";
+
+  COMMENT_MARKER = "//";
 }

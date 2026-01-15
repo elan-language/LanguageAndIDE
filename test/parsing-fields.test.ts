@@ -2,7 +2,7 @@ import assert from "assert";
 import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { DefaultProfile } from "../src/ide/frames/default-profile";
 import { FileImpl } from "../src/ide/frames/file-impl";
-import { Constant } from "../src/ide/frames/globals/constant";
+import { ConstantGlobal } from "../src/ide/frames/globals/constant-global";
 import { GlobalFunction } from "../src/ide/frames/globals/global-function";
 import { MainFrame } from "../src/ide/frames/globals/main-frame";
 import { TestFrame } from "../src/ide/frames/globals/test-frame";
@@ -245,7 +245,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(name.textAsSource(), ``);
   });
   test("parse list of listof floats", () => {
-    const c = new Constant(
+    const c = new ConstantGlobal(
       new FileImpl(hash, new DefaultProfile(), "", transforms(), new StdLib(new StubInputOutput())),
     );
     const v = c.value;

@@ -11,7 +11,7 @@ import { Language } from "./frame-interfaces/language";
 import { ParseNode } from "./frame-interfaces/parse-node";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
-import { Constant } from "./globals/constant";
+import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
@@ -20,8 +20,6 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
-import { BinaryOperation } from "./parse-nodes/binary-operation";
-import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
@@ -50,9 +48,7 @@ export class LanguageElan implements Language {
   annotation(frame: Frame): string {
     return frame ? "" : ""; //No *frame-specific* annotation needed for Elan (but must consume frame parameter!)
   }
-  commentMarker(): string {
-    return this.HASH;
-  }
+
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
@@ -62,8 +58,8 @@ export class LanguageElan implements Language {
     } else if (frame instanceof CatchStatement) {
       html = `<el-kw>${this.CATCH} ${this.EXCEPTION} ${this.IN} </el-kw>${frame.variable.renderAsHtml()}`;
     } else if (frame instanceof CommentStatement) {
-      html = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof Constant) {
+      html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
+    } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.CONSTANT} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
@@ -73,7 +69,7 @@ export class LanguageElan implements Language {
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof GlobalComment) {
-      html = `<el-kw>${this.HASH} </el-kw>${frame.text.renderAsHtml()}`;
+      html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantStatement) {
       html = `<el-kw>${this.CONSTANT} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.SET} ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Print) {
@@ -160,30 +156,11 @@ export class LanguageElan implements Language {
     return html;
   }
 
-  // Not yet used - for illustration only
-  grammarForNode(node: ParseNode): string {
-    let grammar = "";
-    if (node instanceof ParamDefNode) {
-      grammar = "OUT? name SPACE AS SPACE type"; //We will be disallowing OUT shortly
-    } else if (node instanceof BinaryOperation) {
-      grammar = "IS | ISNT | PLUS | MINUS ..."; // etc
-    } else if (node instanceof TypeGenericNode) {
-      grammar = "LT OF SPACE type GT";
-    }
-    // etc.
-    return grammar;
-  }
-
-  // Not yet used - for illustration only
-  lexer(): string {
-    return `
-IS:           'is';
-PLUS:         '+';
-`; //etc.
+  parseText(node: ParseNode, text: string): boolean {
+    return node && text ? false : false;
   }
 
   private ABSTRACT = "abstract";
-  private AND = "and";
   private AS = "as";
   private ASSERT = "assert";
   private BE = "be";
@@ -211,17 +188,12 @@ PLUS:         '+';
   private IN = "in";
   private INHERITS = "inherits";
   private INTERFACE = "interface";
-  private IS = "is";
-  private ISNT = "isnt";
   private lambdaKeyword = "lambda";
   private letKeyword = "let";
   private LIBRARY = "library";
   private MAIN = "main";
-  private MOD = "mod";
   private NEW = "new";
-  private NOT = "not";
   private OF = "of";
-  private OR = "or";
   private OUT = "out";
   private PRINT = "print";
   private PRIVATE = "private";
@@ -243,5 +215,13 @@ PLUS:         '+';
   private WHILE = "while";
   private WITH = "with";
 
-  private HASH = "#";
+  POWER: string = "^";
+  EQUAL: string = "is";
+  NOT_EQUAL: string = "isnt";
+  MOD = "mod";
+  AND = "and";
+  OR = "or";
+  NOT = "not";
+
+  COMMENT_MARKER = "#";
 }

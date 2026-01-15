@@ -31,7 +31,7 @@ import { Selectable } from "./frame-interfaces/selectable";
 import { StatementFactory } from "./frame-interfaces/statement-factory";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
-import { Constant } from "./globals/constant";
+import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
@@ -215,20 +215,20 @@ export class FileImpl implements File {
     const globals = parentHelper_renderChildrenAsHtml(this);
     this.currentHash = await this.getHash();
     return withHeader
-      ? `<el-header>${this._language.commentMarker()} ${this.getHashAsHtml()} ${this.getVersionAsHtml()} ${this.getUserNameAsHtml()} ${this.getProfileNameAsHtml()}</el-header>\r\n${globals}`
+      ? `<el-header>${this._language.COMMENT_MARKER} ${this.getHashAsHtml()} ${this.getVersionAsHtml()} ${this.getUserNameAsHtml()} ${this.getProfileNameAsHtml()}</el-header>\r\n${globals}`
       : globals;
   }
 
   async renderAsElanSource(): Promise<string> {
     const content = this.renderHashableContent();
     this.currentHash = await this.getHash(content);
-    return `${this._language.commentMarker()} ${this.currentHash} ${content}`;
+    return `${this._language.COMMENT_MARKER} ${this.currentHash} ${content}`;
   }
 
   async renderAsExport(): Promise<string> {
     const content = this.renderHashableContent();
     this.currentHash = await this.getHash(content);
-    return `${this.language().commentMarker()} ${this.currentHash} ${content}`;
+    return `${this.language().COMMENT_MARKER} ${this.currentHash} ${content}`;
   }
 
   public indent(): string {
@@ -582,7 +582,7 @@ export class FileImpl implements File {
     return new GlobalComment(this);
   }
   createConstant(): Frame {
-    return new Constant(this);
+    return new ConstantGlobal(this);
   }
   createTest(): Frame {
     return new TestFrame(this);
@@ -663,7 +663,7 @@ export class FileImpl implements File {
 
       await this.validateHeader(source.getRemainingCode());
 
-      if (source.isMatch(this._language.commentMarker())) {
+      if (source.isMatch(this._language.COMMENT_MARKER)) {
         source.removeRegEx(this._language.commentRegex(), false);
         source.removeRegEx(Regexes.newLine, false);
         source.removeRegEx(Regexes.newLine, false);
@@ -748,7 +748,7 @@ export class FileImpl implements File {
   }
 
   validateHeaderComment(tokens: string[]) {
-    if (tokens[0] !== this._language.commentMarker()) {
+    if (tokens[0] !== this._language.COMMENT_MARKER) {
       throw new ElanFileError(cannotLoadInvalidFile);
     }
   }

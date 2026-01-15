@@ -11,22 +11,28 @@ import { Language } from "./frame-interfaces/language";
 import { ParseNode } from "./frame-interfaces/parse-node";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
-import { Constant } from "./globals/constant";
+import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainFrame } from "./globals/main-frame";
+import { ProcedureFrame } from "./globals/procedure-frame";
 import { RecordFrame } from "./globals/record-frame";
 import { TestFrame } from "./globals/test-frame";
 import { Index } from "./parse-nodes";
 import { BinaryOperation } from "./parse-nodes/binary-operation";
+import { IdentifierNode } from "./parse-nodes/identifier-node";
 import { IndexDouble } from "./parse-nodes/index-double";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { ListNode } from "./parse-nodes/list-node";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
+import { Space } from "./parse-nodes/parse-node-helpers";
+import { PunctuationNode } from "./parse-nodes/punctuation-node";
+import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
+import { TypeNode } from "./parse-nodes/type-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
@@ -44,6 +50,7 @@ import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
 import { While } from "./statements/while";
+import { TokenType } from "./symbol-completion-helpers";
 
 export class LanguageVB implements Language {
   commentRegex(): RegExp {
@@ -52,12 +59,18 @@ export class LanguageVB implements Language {
   languageFullName: string = "VB";
 
   annotation(frame: Frame): string {
-    return frame.frameSpecificAnnotation();
+    let annotation = "";
+    if (
+      frame instanceof VariableStatement ||
+      frame instanceof ProcedureFrame ||
+      frame instanceof CallStatement ||
+      frame instanceof SetStatement
+    ) {
+      annotation = frame.frameSpecificAnnotation();
+    }
+    return annotation;
   }
 
-  commentMarker(): string {
-    return this.SINGLE_QUOTE;
-  }
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
@@ -68,7 +81,7 @@ export class LanguageVB implements Language {
       html = `<el-kw>${this.CATCH} <el-type>Exception</el-type> ${this.IN} </el-kw>${frame.variable.renderAsHtml()}`;
     } else if (frame instanceof CommentStatement) {
       html = `<el-kw>${this.SINGLE_QUOTE} </el-kw>${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof Constant) {
+    } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}<el-kw></el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Elif) {
@@ -233,25 +246,19 @@ export class LanguageVB implements Language {
     return html;
   }
 
+  parseText(node: ParseNode, text: string): boolean {
+    let result = false;
+    if (node instanceof ParamDefNode) {
+      result = this.parseParamDefNode(node, text);
+    }
+    return result;
+  }
+
   private spaced(text: string): string {
     return ` ${text} `;
   }
 
-  // Not yet used - for illustration only
-  grammarForNode(node: ParseNode): string {
-    return node ? "" : "";
-  }
-
-  // Not yet used - for illustration only
-  lexer(): string {
-    return `
-IS:           'is';
-PLUS:         '+';
-`; //etc.
-  }
-
   private ABSTRACT = "abstract";
-  private AND = "And";
   private AS = "As";
   private CATCH = "Catch";
   private CLASS = "Class";
@@ -269,12 +276,9 @@ PLUS:         '+';
   private INHERITS = "Inherits";
   private INTERFACE = "Interface";
   private IS = "Is";
-  private MOD = "Mod";
   private NEW = "New";
   private NEXT = "Next";
-  private NOT = "Not";
   private OF = "Of";
-  private OR = "Or";
   private PRIVATE = "Private";
   private PROPERTY = "Property";
   private PUBLIC = "Public";
@@ -290,4 +294,32 @@ PLUS:         '+';
   private SINGLE_QUOTE = "'";
   private EQUALS = "=";
   private NOT_EQUALS = "<>";
+
+  POWER: string = "^";
+  EQUAL: string = "==";
+  NOT_EQUAL: string = "!=";
+  MOD = "Mod";
+  AND = "And";
+  OR = "Or";
+  NOT = "Not";
+
+  COMMENT_MARKER: string = this.SINGLE_QUOTE;
+
+  parseParamDefNode(node: ParamDefNode, text: string): boolean {
+    node.name = new IdentifierNode(node.file);
+    node.addElement(node.name);
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.addElement(new PunctuationNode(node.file, this.AS));
+    node.addElement(new SpaceNode(node.file, Space.required));
+    node.type = new TypeNode(
+      node.file,
+      new Set<TokenType>([
+        TokenType.type_concrete,
+        TokenType.type_abstract,
+        TokenType.type_notInheritable,
+      ]),
+    );
+    node.addElement(node.type);
+    return text ? true : true;
+  }
 }

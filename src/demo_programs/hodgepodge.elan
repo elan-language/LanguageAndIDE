@@ -1,4 +1,4 @@
-# abfff555534599218e90cf5e615574abab60eaf71becf537b97550fa3171138f Elan 2.0.0-alpha guest default_profile valid
+# fb6149963489fb207a6606a8369099d306d406525d64e22b9a7e048d57bc877b Elan 2.0.0-alpha guest default_profile valid
 
 # Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
 # A Cellular Automaton Model of Excitable Media
@@ -12,12 +12,12 @@ constant gH set to 30
 constant iR set to 1
 
 # w1, w2 : weighting factors (low integers)
-constant w1 set to 5
+constant w1 set to 4
 
 constant w2 set to 1
 
 # colours : cellColour.s in descending order of RGB value
-# state of a cell is colours.indexOf(cellColour)
+# state : of a cell is colours.indexOf(cellColour) in [0..colours.length() - 1]
 # colours[0] = healthy; colours[colours.length() - 1] = ill, otherwise infected
 constant healthy set to white
 
@@ -30,27 +30,30 @@ constant vN set to false
 
 main
   # colour grids: hodge for display, podge for working
-  variable hodge set to new Array2D<of Int>(gW, gH, 0)
-  variable podge set to new Array2D<of Int>(gW, gH, 0)
+  variable podge set to new Array2D<of Int>(gW, gH, healthy)
+  variable hodge set to new Array2D<of Int>(gW, gH, healthy)
+  constant blank set to new Array2D<of Int>(gW, gH, healthy)
   # initial colours of grid
   call updateGrid(hodge, podge, true)
   while not uniform(hodge)
-    # successive updates to grid
+    # successive updates to grid in blank podge
+    set podge to blank
     call updateGrid(hodge, podge, false)
   end while
 end main
 
 procedure updateGrid(out hodge as Array2D<of Int>, podge as Array2D<of Int>, initial as Boolean)
-  constant nColours set to colours.length()
-  for i from 0 to gW - 1 step 1
-    for j from 0 to gH - 1 step 1
+  for j from 0 to gH - 1 step 1
+    for i from 0 to gW - 1 step 1
       if initial then
-        call podge.put(i, j, colours[randomInt(0, (nColours - 1))])
+        call podge.put(i, j, colours[randomInt(0, (colours.length() - 1))])
+        [ghosted] call podge.put(1, 1, 0x1a001a)
       else
-        call podge.put(i, j, updateCell(hodge, i, j))
+        call podge.put(i, j, newColour(getNeighbourColours(hodge, i, j), hodge[i, j]))
       end if
     end for
   end for
+  constant a set to 0
   set hodge to podge
   call displayBlocks(hodge)
   call pause(50)
@@ -61,51 +64,47 @@ function uniform(grid as Array2D<of Int>) returns Boolean
   return if grid is uniformGrid then true else false
 end function
 
-function updateCell(grid as Array2D<of Int>, i as Int, j as Int) returns Int
-  return infection(getNeighbourColours(grid, i, j), grid[i, j])
-end function
-
 function getNeighbourColours(grid as Array2D<of Int>, i as Int, j as Int) returns List<of Int>
   # grid wraps around: all cells have the same number of neighbours
-  constant sL set to grid[(i + gW - 1) mod gW, j]
-  constant sR set to grid[(i + gW + 1) mod gW, j]
-  constant sA set to grid[i, (j + gH - 1) mod gH]
-  constant sB set to grid[i, (j + gH + 1) mod gH]
+  # H and V neighbours(von Neumann)
+  constant sL set to grid[(i - 1 + gW) mod gW, j]
+  constant sR set to grid[(i + 1 + gW) mod gW, j]
+  constant sA set to grid[i, (j - 1 + gH) mod gH]
+  constant sB set to grid[i, (j + 1 + gH) mod gH]
   variable neighbourColours set to [sL, sR, sA, sB]
   if vN is false then
-    constant sLA set to grid[(i + gW - 1) mod gW, (j + gH - 1) mod gH]
-    constant sRA set to grid[(i + gW + 1) mod gW, (j + gH - 1) mod gH]
-    constant sLB set to grid[(i + gW - 1) mod gW, (j + gH + 1) mod gH]
-    constant sRB set to grid[(i + gW + 1) mod gW, (j + gH + 1) mod gH]
+    # add diagonal neighbours (Moore)
+    constant sLA set to grid[(i - 1 + gW) mod gW, (j - 1 + gH) mod gH]
+    constant sRA set to grid[(i + 1 + gW) mod gW, (j - 1 + gH) mod gH]
+    constant sLB set to grid[(i - 1 + gW) mod gW, (j + 1 + gH) mod gH]
+    constant sRB set to grid[(i + 1 + gW) mod gW, (j + 1 + gH) mod gH]
     set neighbourColours to [sL, sR, sA, sB, sLA, sRA, sLB, sRB]
   end if
   return neighbourColours
 end function
 
-function infection(neighbourColours as List<of Int>, nowColour as Int) returns Int
+function newColour(neighbourColours as List<of Int>, nowColour as Int) returns Int
   variable nInfected set to 0
   variable nIll set to 0
-  variable stateSum set to colours.indexOf(nowColour)
+  variable sumStates set to colours.indexOf(nowColour)
   each colour in neighbourColours
-    set stateSum to stateSum + colours.indexOf(colour)
-    if colour isnt healthy then
+    set sumStates to sumStates + colours.indexOf(colour)
+    if colour < healthy then
+      set nInfected to nInfected + 1
       if colour is ill then
         set nIll to nIll + 1
-      else
-        set nInfected to nInfected + 1
       end if
     end if
   end each
-  return updateColour(nowColour, stateSum, nInfected, nIll)
+  return updateColour(nowColour, sumStates, nInfected, nIll)
 end function
 
-function updateColour(nowColour as Int, stateSum as Int, nInfected as Int, nIll as Int) returns Int
-  #  iColour : index into colours (i.e. state)
-  variable iColour set to 0
+function updateColour(nowColour as Int, sumStates as Int, nInfected as Int, nIll as Int) returns Int
+  variable state set to 0
   if nowColour is healthy then
-    set iColour to (nInfected/w1).floor() + (nIll/w2).floor()
-  elif nowColour > ill then
-    set iColour to (stateSum/(nInfected + 1)).floor() + iR
+    set state to (nInfected/w1).floor() + (nIll/w2).floor()
+  elif nowColour isnt ill then
+    set state to (sumStates/(nInfected + 1)).floor() + iR
   end if
-  return if iColour > (colours.length() - 1) then ill else colours[iColour]
+  return if state > (colours.length() - 1) then ill else colours[state]
 end function

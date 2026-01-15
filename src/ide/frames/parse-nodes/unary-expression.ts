@@ -1,4 +1,4 @@
-import { notKeyword } from "../../../compiler/keywords";
+import { File } from "../frame-interfaces/file";
 import { MINUS } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
@@ -8,7 +8,6 @@ import { PunctuationNode } from "./punctuation-node";
 import { Sequence } from "./sequence";
 import { SpaceNode } from "./space-node";
 import { Term } from "./term";
-import { File } from "../frame-interfaces/file";
 
 export class UnaryExpression extends AbstractSequence {
   unaryOp: Alternatives | undefined;
@@ -20,8 +19,9 @@ export class UnaryExpression extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
+      const lang = this.file.language();
       const minus = () => new PunctuationNode(this.file, MINUS);
-      const not = () => new KeywordNode(this.file, notKeyword);
+      const not = () => new KeywordNode(this.file, lang.NOT);
       const sp = () => new SpaceNode(this.file, Space.added);
       const notSp = () => new Sequence(this.file, [not, sp]);
       this.unaryOp = new Alternatives(this.file, [minus, notSp]);
