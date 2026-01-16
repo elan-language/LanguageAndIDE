@@ -1111,7 +1111,7 @@ suite("Parsing Nodes", () => {
       "",
       ")",
       "",
-      "<el-kw>if </el-kw><el-id>cell</el-id><el-kw><br>then </el-kw><el-type>Colour</el-type>.<el-id>green</el-id><el-kw><br>else </el-kw><el-type>Colour</el-type>.<el-id>black</el-id>",
+      "<el-kw>if </el-kw><el-id>cell</el-id><el-kw> then </el-kw><el-type>Colour</el-type>.<el-id>green</el-id><el-kw> else </el-kw><el-type>Colour</el-type>.<el-id>black</el-id>",
     );
     testNodeParse(new IfExpr(f), `if cell then Colour.amber`, ParseStatus.incomplete, "", "", "");
     testNodeParse(
@@ -1934,7 +1934,7 @@ suite("Parsing Nodes", () => {
       "image http://website.com/images/image1.png with height set to 10, width set to 20",
       "",
       "image http://website.com/images/image1.png with height set to 10, width set to 20",
-      `<img src="http://website.com/images/image1.png"><el-kw> with </el-kw><br><el-id>height</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <br><el-id>width</el-id><el-kw> set to </el-kw><el-lit>20</el-lit>`,
+      `<img src="http://website.com/images/image1.png"><el-kw> with </el-kw><el-id>height</el-id><el-kw> set to </el-kw><el-lit>10</el-lit>, <el-id>width</el-id><el-kw> set to </el-kw><el-lit>20</el-lit>`,
     );
   });
 });

@@ -13,6 +13,7 @@ import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
+import { FunctionFrame } from "./globals/function-frame";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
@@ -59,6 +60,7 @@ export class LanguageCS implements Language {
     if (
       frame instanceof VariableStatement ||
       frame instanceof ProcedureFrame ||
+      frame instanceof FunctionFrame ||
       frame instanceof CallStatement ||
       frame instanceof SetStatement
     ) {
