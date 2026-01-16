@@ -64,7 +64,6 @@ export class LanguageVB implements Language {
     if (
       frame instanceof VariableStatement ||
       frame instanceof ProcedureFrame ||
-      frame instanceof FunctionFrame ||
       frame instanceof CallStatement ||
       frame instanceof SetStatement
     ) {
