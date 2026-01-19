@@ -6,7 +6,7 @@ export class Regexes {
   static readonly indent = /^\s*/;
   static readonly ifClause = /^if[^\S\r\n]/;
   static readonly intoClause = /^into[^\S\r\n]/;
-  static readonly identifier = /^\s*[a-z]\w*/;
+  static readonly identifier = /^\s*([a-z][a-zA-Z0-9_]*)|(_[a-zA-Z0-9_]+)/;
   static readonly literalInt = /^\s*[0-9]+/;
   static readonly negatableLitInt = /^\s*-?((0b[0-1]+)|(0x[0-9a-fA-F]+)|([0-9]+))/;
   static readonly negatableLitFloat = /^\s*-?[0-9]+\.[0-9]+((e|E)-?[0-9]+)?/;
