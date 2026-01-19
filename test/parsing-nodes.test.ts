@@ -245,6 +245,8 @@ suite("Parsing Nodes", () => {
     testNodeParse(new IdentifierNode(f), `new`, ParseStatus.valid, `new`, "", "");
     testNodeParse(new IdentifierNode(f), `global`, ParseStatus.valid, `global`, "", "");
     testNodeParse(new IdentifierNode(f), `x as`, ParseStatus.valid, `x`, " as", "x");
+    testNodeParse(new IdentifierNode(f), `_a`, ParseStatus.valid, `_a`, "", "_a", "");
+    testNodeParse(new IdentifierNode(f), `_`, ParseStatus.invalid, ``, "_", "");
   });
   test("LitString - single chars", () => {
     testNodeParse(new LitString(f), "", ParseStatus.empty, "", "", "", "");
