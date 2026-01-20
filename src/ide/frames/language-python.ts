@@ -220,7 +220,7 @@ export class LanguagePython implements Language {
     let html = "";
     if (node instanceof TypeGenericNode) {
       const simpleType = node.simpleType?.renderAsHtml();
-      const generics = node.generic?.renderAsHtml();
+      const generics = node.genericTypes?.renderAsHtml();
       html = `${simpleType}${generics}`;
     } else if (node instanceof ParamDefNode) {
       html = node.name?.renderAsHtml() + ": " + node.type?.renderAsHtml();

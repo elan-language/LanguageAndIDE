@@ -806,9 +806,9 @@ export function transform(
     const type = node.simpleType!.name!.matchedText;
     const qualifier =
       transform(node.simpleType?.libraryQualifier, fieldId, scope) ?? EmptyAsn.Instance;
-    const generic = node.generic;
+    const generic = node.genericTypes;
     let gp = new Array<AstNode>();
-    gp = transformMany(generic as Sequence, fieldId, scope).items;
+    gp = transformMany(generic as CSV, fieldId, scope).items;
     return new TypeAsn(type, qualifier, gp, fieldId, scope);
   }
 
