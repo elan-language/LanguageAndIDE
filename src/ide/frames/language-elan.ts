@@ -151,7 +151,7 @@ export class LanguageElan implements Language {
   renderNodeAsHtml(node: ParseNode): string {
     let html = ""; // If "" returned the node will use its own generic implementation
     if (node instanceof TypeGenericNode) {
-      html = `${node.simpleType?.renderAsHtml()}${node.generic?.renderAsHtml()}`;
+      html = `${node.simpleType?.renderAsHtml()}&lt;<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()}&gt;`;
     }
     return html;
   }
