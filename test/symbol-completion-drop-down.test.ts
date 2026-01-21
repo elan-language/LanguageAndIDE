@@ -54,12 +54,11 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     const expected = [
-      ["property", "property", "property."],
       ["foo", "foo", "foo"],
       ["foobar", "foobar", "foobar"],
     ] as [string, string, string][];
 
-    await assertSymbolCompletionWithString(fileImpl, "ident10", " ", expected);
+    await assertSymbolCompletionWithString(fileImpl, "ident10", "f", expected);
   });
 
   test("Pass_Let", async () => {
@@ -344,6 +343,7 @@ end class`;
       ["a", "a", "a"],
       ["aa2", "property.aa2", "property.aa2"],
       ["aa3", "property.aa3", "property.aa3"],
+      ["aa4", "aa4", "aa4"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "ident16", "a", expected);

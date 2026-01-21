@@ -805,6 +805,115 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[a:[a:1]][]falsefalsetrue");
   });
 
+  test("Pass_SetInMain", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to ["a":2, "b":2]
+  set a["a"] to 1
+  call print(a["a"])
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.dictionary([["a", 2], ["b", 2]]);
+  system.safeSet(a, "a", 1);
+  await _stdlib.print(system.safeIndex(a, "a"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1\n");
+  });
+
+  test("Pass_SetInProcedure", async () => {
+    const code = `${testHeader}
+
+main 
+  call foo()
+end main
+
+procedure foo()
+  variable a set to ["a":2,"b":2]
+  set a["a"] to 1
+  call print(a["a"])
+end procedure
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await foo();
+}
+
+async function foo() {
+  let a = system.dictionary([["a", 2], ["b", 2]]);
+  system.safeSet(a, "a", 1);
+  await _stdlib.print(system.safeIndex(a, "a"));
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1\n");
+  });
+
+  test("Fail_SetInFunction", async () => {
+    const code = `${testHeader}
+
+main
+  call print(foo())
+end main
+
+function foo() returns Int
+  variable a set to ["a":2,"b":2]
+  set a["a"] to 1
+  return a["a"]
+end function
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot mutate set an indexed value within a function. Use .withPut... functionLangRef.html#compile_error",
+    ]);
+  });
+
   test("Fail_RepeatedKey", async () => {
     const code = `${testHeader}
 

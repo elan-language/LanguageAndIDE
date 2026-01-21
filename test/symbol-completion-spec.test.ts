@@ -219,7 +219,13 @@ suite("Symbol Completion Spec", () => {
       ParseStatus.valid,
       IdentifierNode.name,
       "f",
-      [TokenType.id_property],
+      [
+        TokenType.id_let,
+        TokenType.id_parameter_out,
+        TokenType.id_parameter_regular,
+        TokenType.id_property,
+        TokenType.id_variable,
+      ],
       [],
       "",
     );

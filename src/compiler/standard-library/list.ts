@@ -226,8 +226,7 @@ export class List<T1> {
     return r;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  safeSet(index: number, value: any) {
+  safeSet(index: number, value: T1) {
     this.put(index, value);
   }
 

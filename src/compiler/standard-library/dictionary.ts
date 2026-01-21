@@ -104,6 +104,11 @@ export class Dictionary<T1, T2> {
     return this.contents.get(rk);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  safeSet(key: T1, value: T2) {
+    this.put(key, value);
+  }
+
   equals(other: unknown) {
     if (other instanceof Dictionary) {
       if (this.contents.size === other.contents.size) {
