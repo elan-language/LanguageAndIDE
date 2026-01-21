@@ -1588,7 +1588,6 @@ end main`;
 
 main
   variable a set to p1()
-  variable b set to p2()
 end main
 
 function p1() returns Int
@@ -1607,7 +1606,10 @@ end function`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot mutate set an indexed value within a function. Use .withPut... functionLangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_ReturnListOfMutableType", async () => {

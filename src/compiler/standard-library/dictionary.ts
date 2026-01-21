@@ -104,6 +104,10 @@ export class Dictionary<T1, T2> {
     return this.contents.get(rk);
   }
 
+  safeSet(value: T2, key: T1) {
+    this.put(key, value);
+  }
+
   equals(other: unknown) {
     if (other instanceof Dictionary) {
       if (this.contents.size === other.contents.size) {

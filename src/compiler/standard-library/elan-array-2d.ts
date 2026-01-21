@@ -154,4 +154,8 @@ export class ElanArray2D<T1> {
 
     return r1 as T1;
   }
+
+  safeSet(value: T1, index1: number, index2: number) {
+    this.put(index1, index2, value);
+  }
 }

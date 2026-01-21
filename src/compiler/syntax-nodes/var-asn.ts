@@ -26,15 +26,25 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     public readonly id: string,
     public readonly isAssignable: boolean,
     public readonly qualifier: AstQualifierNode | EmptyAsn,
-    private readonly index: IndexAsn | EmptyAsn,
+    public readonly index: IndexAsn | EmptyAsn,
     public readonly fieldId: string,
     private scope: Scope,
   ) {
     super();
   }
 
+  private rhs?: string;
+
+  setRHS(code: string) {
+    this.rhs = code;
+  }
+
   isSimpleSubscript() {
     return this.index instanceof IndexAsn && this.index.isSimpleSubscript();
+  }
+
+  isRangeSubscript() {
+    return this.index instanceof IndexAsn && this.index.isRangeSubscript();
   }
 
   getSymbol() {
@@ -85,9 +95,11 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
         : "";
 
     // handles indexing within call statement
-    const code = this.isSimpleSubscript()
-      ? this.compileSimpleSubscript(symbol.symbolId, prefix, postfix)
-      : `${prefix}${this.id}${postfix}`;
+    const code = this.rhs
+      ? `system.safeSet(${prefix}${this.id}, ${this.rhs}, ${postfix})`
+      : this.isSimpleSubscript()
+        ? this.compileSimpleSubscript(symbol.symbolId, prefix, postfix)
+        : `${prefix}${this.id}${postfix}`;
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

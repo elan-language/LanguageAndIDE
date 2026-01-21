@@ -40,6 +40,10 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     return !(this.index instanceof RangeAsn);
   }
 
+  isRangeSubscript() {
+    return this.index instanceof RangeAsn;
+  }
+
   compileSubscript() {
     return this.index.compile();
   }

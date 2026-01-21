@@ -116,6 +116,10 @@ export class ElanArray<T1> {
     return r;
   }
 
+  safeSet(value: T1, index: number) {
+    this.put(index, value);
+  }
+
   safeSlice(index1: number | undefined, index2: number | undefined) {
     if (index1 && index1 < 0) {
       this.system!.throwRangeError(this.contents, index1);

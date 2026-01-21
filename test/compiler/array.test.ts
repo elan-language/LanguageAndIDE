@@ -674,6 +674,164 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
+  test("Pass_SetInMain", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to {2,2}.asArray()
+  set a[0] to 1
+  call print(a[0])
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.listImmutable([2, 2]).asArray();
+  system.safeSet(a, 1, 0);
+  await _stdlib.print(system.safeIndex(a, 0));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1\n");
+  });
+
+  test("Pass_SetInProcedure", async () => {
+    const code = `${testHeader}
+
+main 
+  call foo()
+end main
+
+procedure foo()
+  variable a set to {2,2}.asArray()
+  set a[0] to 1
+  call print(a[0])
+end procedure
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await foo();
+}
+
+async function foo() {
+  let a = system.listImmutable([2, 2]).asArray();
+  system.safeSet(a, 1, 0);
+  await _stdlib.print(system.safeIndex(a, 0));
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1\n");
+  });
+
+  test("Fail_SetInFunction", async () => {
+    const code = `${testHeader}
+
+main
+  call print(foo())
+end main
+
+function foo() returns Int
+  variable a set to {2,2}.asArray()
+  set a[0] to 1
+  return a[0]
+end function
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot mutate set an indexed value within a function. Use .withPut... functionLangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_SetWrongType", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to {2,2}.asArray()
+  set a[0] to "fred"
+  call print(a[0])
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
+    ]);
+  });
+
+  test("Fail_assignRange", async () => {
+    const code = `${testHeader}
+
+main
+    variable a set to {1,2,3,4}.asArray()
+    set a[1..2] to a
+    print a
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Cannot mutate set a ranged valueLangRef.html#compile_error"]);
+  });
+
   test("Fail_ArrayAccessedAs2D", async () => {
     const code = `${testHeader}
 
