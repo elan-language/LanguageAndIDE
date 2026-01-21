@@ -226,6 +226,11 @@ export class List<T1> {
     return r;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  safeSet(index: number, value: any) {
+    this.put(index, value);
+  }
+
   safeSlice(index1: number | undefined, index2: number | undefined) {
     if (index1 && index1 < 0) {
       this.system!.throwRangeError(this.contents, index1);

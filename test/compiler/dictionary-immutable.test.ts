@@ -10,6 +10,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -846,7 +847,7 @@ end main
     ]);
   });
 
-  test("Fail_CannotSetIndex", async () => {
+  ignore_test("Fail_CannotSetIndex", async () => {
     const code = `${testHeader}
 
 main

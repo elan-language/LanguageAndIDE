@@ -967,6 +967,25 @@ export function mustNotBePropertyOnFunctionMethod(
   }
 }
 
+export function mustNotSetIndexInFunctionMethod(
+  scope: Scope,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (isInsideFunction(scope)) {
+    compileErrors.push(
+      new SyntaxCompileError(
+        `Cannot mutate set an indexed value within a function. Use .withPut... function`,
+        location,
+      ),
+    );
+  }
+}
+
+export function mustNotSetRangedIndex(compileErrors: CompileError[], location: string) {
+  compileErrors.push(new SyntaxCompileError(`Cannot mutate set a ranged value`, location));
+}
+
 export function mustBePropertyPrefixedOnMember(compileErrors: CompileError[], location: string) {
   compileErrors.push(new SyntaxCompileError(`referencing a property requires a prefix.`, location));
 }

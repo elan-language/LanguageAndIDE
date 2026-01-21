@@ -9,10 +9,13 @@ import {
   mustNotBeLet,
   mustNotBeParameter,
   mustNotBePropertyOnFunctionMethod,
+  mustNotSetIndexInFunctionMethod,
+  mustNotSetRangedIndex,
 } from "../../compile-rules";
 import { getIds, wrapDeconstructionLhs, wrapDeconstructionRhs } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
+import { VarAsn } from "../var-asn";
 
 export class SetAsn extends BreakpointAsn {
   constructor(fieldId: string, scope: Scope) {
@@ -64,6 +67,20 @@ export class SetAsn extends BreakpointAsn {
     for (const id of ids) {
       const symbol = this.getParentScope().resolveSymbol(id, this);
       mustNotBeLet(symbol, id, this.compileErrors, this.fieldId);
+    }
+
+    if (this.assignable instanceof VarAsn) {
+      if (this.assignable.isSimpleSubscript()) {
+        mustNotSetIndexInFunctionMethod(this.scope, this.compileErrors, this.fieldId);
+
+        this.assignable.setRHS(exprAstNode.compile());
+        const code = this.assignable.compile();
+        getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+        return `${this.indent()}${this.breakPoint(this.debugSymbols())}${code};`;
+      }
+      if (this.assignable.isRangeSubscript()) {
+        mustNotSetRangedIndex(this.compileErrors, this.fieldId);
+      }
     }
 
     const lhs = wrapDeconstructionLhs(assignableAstNode, exprAstNode, true);
