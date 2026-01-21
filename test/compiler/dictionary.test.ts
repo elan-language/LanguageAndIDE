@@ -914,6 +914,32 @@ end function
     ]);
   });
 
+  test("Fail_SetWrongType", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to ["a":2,"b":2]
+  set a["a"] to "fred"
+  call print(a["a"])
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
+    ]);
+  });
+
   test("Fail_RepeatedKey", async () => {
     const code = `${testHeader}
 

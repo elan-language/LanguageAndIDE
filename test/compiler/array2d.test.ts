@@ -631,6 +631,32 @@ end function
     ]);
   });
 
+  test("Fail_SetWrongType", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to new Array2D<of Int>(2, 2, 2)
+  set a[0, 1] to "fred"
+  call print(a[0, 1])
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int, Provided: String.LangRef.html#TypesCompileError",
+    ]);
+  });
+
   test("Fail_EmptyArray2D1", async () => {
     const code = `${testHeader}
 
