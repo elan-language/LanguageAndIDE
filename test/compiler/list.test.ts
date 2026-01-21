@@ -801,7 +801,7 @@ end main
 const global = new class {};
 async function main() {
   let a = system.list([2, 2]);
-  system.safeSet(a, 0, 1);
+  system.safeSet(a, 1, 0);
   await _stdlib.print(system.safeIndex(a, 0));
 }
 return [main, _tests];}`;
@@ -844,7 +844,7 @@ async function main() {
 
 async function foo() {
   let a = system.list([2, 2]);
-  system.safeSet(a, 0, 1);
+  system.safeSet(a, 1, 0);
   await _stdlib.print(system.safeIndex(a, 0));
 }
 global["foo"] = foo;

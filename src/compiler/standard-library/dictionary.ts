@@ -104,8 +104,7 @@ export class Dictionary<T1, T2> {
     return this.contents.get(rk);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  safeSet(key: T1, value: T2) {
+  safeSet(value: T2, key: T1) {
     this.put(key, value);
   }
 

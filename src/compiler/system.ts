@@ -81,9 +81,9 @@ export class System {
     return t;
   }
 
-  safeSet(indexable: any, index1: any, v: any) {
+  safeSet(indexable: any, v: any, index1: any, index2: any | undefined) {
     if (typeof indexable !== "string" && "safeSet" in indexable) {
-      indexable.safeSet(index1, v);
+      indexable.safeSet(v, index1, index2);
       return;
     }
 

@@ -226,7 +226,7 @@ export class List<T1> {
     return r;
   }
 
-  safeSet(index: number, value: T1) {
+  safeSet(value: T1, index: number) {
     this.put(index, value);
   }
 

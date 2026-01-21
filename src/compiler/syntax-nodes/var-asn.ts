@@ -96,7 +96,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
 
     // handles indexing within call statement
     const code = this.rhs
-      ? `system.safeSet(${prefix}${this.id}, ${postfix}, ${this.rhs})`
+      ? `system.safeSet(${prefix}${this.id}, ${this.rhs}, ${postfix})`
       : this.isSimpleSubscript()
         ? this.compileSimpleSubscript(symbol.symbolId, prefix, postfix)
         : `${prefix}${this.id}${postfix}`;
