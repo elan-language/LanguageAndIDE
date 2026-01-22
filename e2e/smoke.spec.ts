@@ -10,7 +10,9 @@ test('simple program', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m');
-  await page.keyboard.type('p');
+  await page.keyboard.type('ca');
+  await page.keyboard.type('print');
+  await page.keyboard.press('Tab');
   await page.keyboard.type('100');
   await page.keyboard.press('Tab');
 
@@ -93,21 +95,24 @@ test('debug program', async ({ page }) => {
   await page.keyboard.type('a as Int');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('p'); // print
+  await page.keyboard.type('ca');
+  await page.keyboard.type('print');
+  await page.keyboard.press('Tab');
   await page.keyboard.type('100');
+  await page.keyboard.press('Tab');
   await page.keyboard.press('Enter');
 
   await page.keyboard.press('ArrowLeft');
   await page.keyboard.press('End'); // to outer selector
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('c'); // call
+  await page.keyboard.type('ca'); // call
   await page.keyboard.type('foo');
   await page.keyboard.press('Tab');
   await page.keyboard.type('100');
   await page.keyboard.press('Tab');
 
-  await page.getByText('print', { exact: true }).click({
+  await page.locator('#call5').click({
     button: 'right'
   });
   await page.getByText('set breakpoint').click();
@@ -127,7 +132,7 @@ test('compile error', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('c'); // call
+  await page.keyboard.type('ca'); // call
   await page.keyboard.type('foo');
   await page.keyboard.press('Tab');
   
@@ -145,7 +150,7 @@ test('parse error', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('c'); // call
+  await page.keyboard.type('ca'); // call
   await page.keyboard.type('4');
   
   await expect(page.locator('#call3')).toContainText('Invalid.');
@@ -176,7 +181,7 @@ test('symbol completion', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m');
-  await page.keyboard.type('c');
+  await page.keyboard.type('ca');
   await page.keyboard.type('c');
 
   await expect(page.locator('#ident4')).toContainText('clearBlocksclearHtmlclearKeyBufferclearPrintedTextclearVectorGraphicsdisplayBlocksdisplayVectorGraphics');
@@ -234,18 +239,16 @@ test('display image', async ({ page }) => {
     dialog.accept().catch(() => {});
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
- 
-  await page.getByText('main procedure function test').click();
 
+  await page.getByText('main procedure function test').click();
   await page.keyboard.type('m');
-  await page.keyboard.type('l');
+  await page.keyboard.type('va');
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('image https://elan-lang.org/documentation/images/logo.png');
   await page.keyboard.press('Enter');
-  await page.keyboard.type('c');
+  await page.keyboard.type('ca');
   await page.keyboard.type('displayHtml(a.asString())');
-
   await page.getByRole('button', { name: 'run' }).click();
   await expect(page.locator('img[src="https://elan-lang.org/documentation/images/logo.png"]')).toBeVisible();
 });
@@ -296,7 +299,7 @@ test('ghost code', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m');
-  await page.keyboard.type('l');
+  await page.keyboard.type('va');
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('fred');
@@ -304,7 +307,7 @@ test('ghost code', async ({ page }) => {
   
   await expect(page.locator('#compile')).toContainText('unknown');
 
-  await page.getByText('let', { exact: true }).click({
+  await page.getByText('variable', { exact: true }).click({
     button: 'right'
   });
 
@@ -312,7 +315,7 @@ test('ghost code', async ({ page }) => {
 
   await expect(page.locator('#compile')).toContainText('ok');
 
-  await page.getByText('let', { exact: true }).click({
+  await page.getByText('variable', { exact: true }).click({
     button: 'right'
   });
 
@@ -388,13 +391,13 @@ test('toggle private ', async ({ page }) => {
   await page.keyboard.press('Enter');
 
   await page.keyboard.type('m');
-  await page.keyboard.type('l');
+  await page.keyboard.type('va');
   await page.keyboard.type('foo');
   await page.keyboard.press('Tab');
   await page.keyboard.type('new Foo()');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('l');
+  await page.keyboard.type('va');
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('foo.aa');
@@ -446,13 +449,13 @@ test('toggle private by keyboard', async ({ page }) => {
   await page.keyboard.press('Enter');
 
   await page.keyboard.type('m');
-  await page.keyboard.type('l');
+  await page.keyboard.type('va');
   await page.keyboard.type('foo');
   await page.keyboard.press('Tab');
   await page.keyboard.type('new Foo()');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('l');
+  await page.keyboard.type('va');
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('foo.aa');
@@ -487,7 +490,7 @@ test('backspace enter #2027', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m');
-  await page.keyboard.type('l');
+  await page.keyboard.type('va');
   await page.keyboard.type('foo');
   await page.keyboard.press('Tab');
   await page.keyboard.type('1234');
