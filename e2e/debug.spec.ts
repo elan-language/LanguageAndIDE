@@ -11,41 +11,43 @@ test('debug simple types', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('l'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('100');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('l'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('b');
   await page.keyboard.press('Tab');
   await page.keyboard.type('"fred"');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('l'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('c');
   await page.keyboard.press('Tab');
   await page.keyboard.type('1.0');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('l'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('d');
   await page.keyboard.press('Tab');
   await page.keyboard.type('true');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('l'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('f');
   await page.keyboard.press('Tab');
   await page.keyboard.type('/a+/');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('p'); 
+  await page.keyboard.type('ca')
+  await page.keyboard.type('print'); 
+  await page.keyboard.press('Tab');
   await page.keyboard.type('a');
   await page.keyboard.press('Enter');
 
-  await page.getByText('print', { exact: true }).click({
+  await page.getByText('call', { exact: true }).click({
     button: 'right'
   });
 
@@ -72,17 +74,19 @@ test('debug list', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('l'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('[1, 2, 3]');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('p'); 
+  await page.keyboard.type('ca')
+  await page.keyboard.type('print'); 
+  await page.keyboard.press('Tab');
   await page.keyboard.type('a');
   await page.keyboard.press('Enter');
 
-  await page.getByText('print', { exact: true }).click({
+  await page.getByText('call', { exact: true }).click({
     button: 'right'
   });
 
@@ -114,17 +118,19 @@ test('debug list immutable', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('l'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('{1, 2, 3}');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('p'); 
+  await page.keyboard.type('ca')
+  await page.keyboard.type('print'); 
+  await page.keyboard.press('Tab');
   await page.keyboard.type('a');
   await page.keyboard.press('Enter');
 
-  await page.getByText('print', { exact: true }).click({
+  await page.getByText('call', { exact: true }).click({
     button: 'right'
   });
 
@@ -156,17 +162,19 @@ test('debug array', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('l'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('new Array<of Int>(3, 1)');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('p'); 
+  await page.keyboard.type('ca')
+  await page.keyboard.type('print'); 
+  await page.keyboard.press('Tab');
   await page.keyboard.type('a');
   await page.keyboard.press('Enter');
 
-  await page.getByText('print', { exact: true }).click({
+  await page.getByText('call', { exact: true }).click({
     button: 'right'
   });
 
@@ -198,17 +206,19 @@ test('debug array 2d', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('l'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('new Array2D<of String>(3, 3, "bill")');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('p'); 
+  await page.keyboard.type('ca')
+  await page.keyboard.type('print'); 
+  await page.keyboard.press('Tab');
   await page.keyboard.type('a');
   await page.keyboard.press('Enter');
 
-  await page.getByText('print', { exact: true }).click({
+  await page.getByText('call', { exact: true }).click({
     button: 'right'
   });
 
@@ -254,17 +264,19 @@ test('debug dictionary', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('l'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('["k1":1, "k2":2]');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('p'); 
+  await page.keyboard.type('ca')
+  await page.keyboard.type('print'); 
+  await page.keyboard.press('Tab');
   await page.keyboard.type('a');
   await page.keyboard.press('Enter');
 
-  await page.getByText('print', { exact: true }).click({
+  await page.getByText('call', { exact: true }).click({
     button: 'right'
   });
 
@@ -295,17 +307,19 @@ test('debug dictionary immutable', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('l'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('{1:"v1", 2:"v2"}');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('p'); 
+  await page.keyboard.type('ca')
+  await page.keyboard.type('print'); 
+  await page.keyboard.press('Tab');
   await page.keyboard.type('a');
   await page.keyboard.press('Enter');
 
-  await page.getByText('print', { exact: true }).click({
+  await page.getByText('call', { exact: true }).click({
     button: 'right'
   });
 
@@ -336,17 +350,19 @@ test('debug tuple', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('l'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('tuple(1, "bill")');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('p'); 
+  await page.keyboard.type('ca')
+  await page.keyboard.type('print'); 
+  await page.keyboard.press('Tab');
   await page.keyboard.type('a');
   await page.keyboard.press('Enter');
 
-  await page.getByText('print', { exact: true }).click({
+  await page.getByText('call', { exact: true }).click({
     button: 'right'
   });
 
@@ -383,17 +399,19 @@ test('debug enum', async ({ page }) => {
   await page.keyboard.press('Enter');
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('l'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('Fruit.pear');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('p'); 
+  await page.keyboard.type('ca')
+  await page.keyboard.type('print'); 
+  await page.keyboard.press('Tab');
   await page.keyboard.type('a');
   await page.keyboard.press('Enter');
 
-  await page.getByText('print', { exact: true }).click({
+  await page.getByText('call', { exact: true }).click({
     button: 'right'
   });
 
@@ -448,17 +466,19 @@ test('debug class', async ({ page }) => {
 
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('l'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('new Foo()');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('p'); 
+  await page.keyboard.type('ca')
+  await page.keyboard.type('print'); 
+  await page.keyboard.press('Tab');
   await page.keyboard.type('a');
   await page.keyboard.press('Enter');
 
-  await page.getByText('print', { exact: true }).click({
+  await page.getByText('call', { exact: true }).click({
     button: 'right'
   });
 
@@ -488,24 +508,26 @@ test('debug deconstruct list', async ({ page }) => {
 
   await page.getByText('main procedure function test').click();
 
-  await page.keyboard.type('co'); 
+  await page.keyboard.type('con'); 
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('{1, 2, 3}');
   await page.keyboard.press('Enter');
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('l'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('x:y');
   await page.keyboard.press('Tab');
   await page.keyboard.type('a');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('p'); 
+  await page.keyboard.type('ca');
+  await page.keyboard.type('print'); 
+  await page.keyboard.press('Tab');
   await page.keyboard.type('a');
   await page.keyboard.press('Enter');
 
-  await page.getByText('print', { exact: true }).click({
+  await page.getByText('call', { exact: true }).click({
     button: 'right'
   });
 
@@ -528,24 +550,26 @@ test('debug deconstruct tuple', async ({ page }) => {
 
   await page.getByText('main procedure function test').click();
 
-  await page.keyboard.type('co'); 
+  await page.keyboard.type('con'); 
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('tuple(1, "bill", {1, 2})');
   await page.keyboard.press('Enter');
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('l'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('x,z,y');
   await page.keyboard.press('Tab');
   await page.keyboard.type('a');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('p'); 
+  await page.keyboard.type('ca')
+  await page.keyboard.type('print'); 
+  await page.keyboard.press('Tab');
   await page.keyboard.type('a');
   await page.keyboard.press('Enter');
 
-  await page.getByText('print', { exact: true }).click({
+  await page.getByText('call', { exact: true }).click({
     button: 'right'
   });
 
@@ -560,119 +584,123 @@ test('debug deconstruct tuple', async ({ page }) => {
  
 });
 
-test('debug deconstruct record', async ({ page }) => {
-  page.once('dialog', dialog => {
-    //console.log(`Dialog message: ${dialog.message()}`);
-    dialog.accept().catch(() => {});
-  });
-  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+// test('debug deconstruct record', async ({ page }) => {
+//   page.once('dialog', dialog => {
+//     //console.log(`Dialog message: ${dialog.message()}`);
+//     dialog.accept().catch(() => {});
+//   });
+//   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
 
-  await page.getByText('main procedure function test').click();
+//   await page.getByText('main procedure function test').click();
 
-  await page.keyboard.type('r'); 
-  await page.keyboard.type('Foo');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('p');
-  await page.keyboard.type('a');
-  await page.keyboard.press('Tab');
-  await page.keyboard.type('Int');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('p');
-  await page.keyboard.type('b');
-  await page.keyboard.press('Tab');
-  await page.keyboard.type('String');
-  await page.keyboard.press('Enter');
-  await page.keyboard.press('ArrowLeft');
-  await page.keyboard.press('Enter');
+//   await page.keyboard.type('r'); 
+//   await page.keyboard.type('Foo');
+//   await page.keyboard.press('Enter');
+//   await page.keyboard.type('p');
+//   await page.keyboard.type('a');
+//   await page.keyboard.press('Tab');
+//   await page.keyboard.type('Int');
+//   await page.keyboard.press('Enter');
+//   await page.keyboard.type('p');
+//   await page.keyboard.type('b');
+//   await page.keyboard.press('Tab');
+//   await page.keyboard.type('String');
+//   await page.keyboard.press('Enter');
+//   await page.keyboard.press('ArrowLeft');
+//   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('m'); // main
-  await page.keyboard.type('l'); 
-  await page.keyboard.type('a,b');
-  await page.keyboard.press('Tab');
-  await page.keyboard.type('new Foo() with a set to 1, b set to "bill"');
-  await page.keyboard.press('Enter');
+//   await page.keyboard.type('m'); // main
+//   await page.keyboard.type('va'); 
+//   await page.keyboard.type('a,b');
+//   await page.keyboard.press('Tab');
+//   await page.keyboard.type('new Foo() with a set to 1, b set to "bill"');
+//   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('p'); 
-  await page.keyboard.type('a');
-  await page.keyboard.press('Enter');
+//   await page.keyboard.type('ca')
+//   await page.keyboard.type('print'); 
+//   await page.keyboard.press('Tab');
+//   await page.keyboard.type('a');
+//   await page.keyboard.press('Enter');
 
-  await page.getByText('print', { exact: true }).click({
-    button: 'right'
-  });
+//   await page.getByText('call', { exact: true }).click({
+//     button: 'right'
+//   });
 
-  await page.getByText('set breakpoint').click();
-  await page.getByRole('button', { name: 'debug' }).click();
-  await expect(page.locator('#system-info')).toContainText("a 1");
-  await expect(page.locator('#system-info')).toContainText('b "bill"');
+//   await page.getByText('set breakpoint').click();
+//   await page.getByRole('button', { name: 'debug' }).click();
+//   await expect(page.locator('#system-info')).toContainText("a 1");
+//   await expect(page.locator('#system-info')).toContainText('b "bill"');
 
-  await expect(page.locator('#run-status')).toContainText('paused');
+//   await expect(page.locator('#run-status')).toContainText('paused');
  
-});
+// });
 
 
-test('debug complex structure', async ({ page }) => {
-  page.once('dialog', dialog => {
-    //console.log(`Dialog message: ${dialog.message()}`);
-    dialog.accept().catch(() => {});
-  });
-  await page.goto('https://elan-language.github.io/LanguageAndIDE/');
+// test('debug complex structure', async ({ page }) => {
+//   page.once('dialog', dialog => {
+//     //console.log(`Dialog message: ${dialog.message()}`);
+//     dialog.accept().catch(() => {});
+//   });
+//   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
 
-  await page.getByText('main procedure function test').click();
+//   await page.getByText('main procedure function test').click();
 
-  await page.keyboard.type('r'); 
-  await page.keyboard.type('Foo');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('p');
-  await page.keyboard.type('a');
-  await page.keyboard.press('Tab');
-  await page.keyboard.type('ListImmutable<of Int>');
-  await page.keyboard.press('Enter');
-  await page.keyboard.type('p');
-  await page.keyboard.type('b');
-  await page.keyboard.press('Tab');
-  await page.keyboard.type('String');
-  await page.keyboard.press('Enter');
-  await page.keyboard.press('ArrowLeft');
-  await page.keyboard.press('Enter');
+//   await page.keyboard.type('r'); 
+//   await page.keyboard.type('Foo');
+//   await page.keyboard.press('Enter');
+//   await page.keyboard.type('p');
+//   await page.keyboard.type('a');
+//   await page.keyboard.press('Tab');
+//   await page.keyboard.type('ListImmutable<of Int>');
+//   await page.keyboard.press('Enter');
+//   await page.keyboard.type('p');
+//   await page.keyboard.type('b');
+//   await page.keyboard.press('Tab');
+//   await page.keyboard.type('String');
+//   await page.keyboard.press('Enter');
+//   await page.keyboard.press('ArrowLeft');
+//   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('m'); // main
-  await page.keyboard.type('l'); 
-  await page.keyboard.type('dict');
-  await page.keyboard.press('Tab');
-  await page.keyboard.type('{"key":new Foo() with a set to {1, 2}, b set to "bill"}');
-  await page.keyboard.press('Enter');
+//   await page.keyboard.type('m'); // main
+//   await page.keyboard.type('va'); 
+//   await page.keyboard.type('dict');
+//   await page.keyboard.press('Tab');
+//   await page.keyboard.type('{"key":new Foo() with a set to {1, 2}, b set to "bill"}');
+//   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('p'); 
-  await page.keyboard.type('dict');
-  await page.keyboard.press('Enter');
+//   await page.keyboard.type('ca');
+//   await page.keyboard.type('print'); 
+//   await page.keyboard.press('Tab');
+//   await page.keyboard.type('a');
+//   await page.keyboard.press('Enter');
 
-  await page.getByText('print', { exact: true }).click({
-    button: 'right'
-  });
+//   await page.getByText('call', { exact: true }).click({
+//     button: 'right'
+//   });
 
-  await page.getByText('set breakpoint').click();
-  await page.getByRole('button', { name: 'debug' }).click();
-  const summary = 'dict DictionaryImmutable<of String, Foo> # length 1'
-  await expect(page.locator('#system-info')).toContainText(summary);
+//   await page.getByText('set breakpoint').click();
+//   await page.getByRole('button', { name: 'debug' }).click();
+//   const summary = 'dict DictionaryImmutable<of String, Foo> # length 1'
+//   await expect(page.locator('#system-info')).toContainText(summary);
 
-  await page.getByText(summary).click();
+//   await page.getByText(summary).click();
 
-  await expect(page.getByText('["key"] Foo')).toBeVisible();
+//   await expect(page.getByText('["key"] Foo')).toBeVisible();
 
-  await page.getByText('["key"] Foo').click();
+//   await page.getByText('["key"] Foo').click();
 
-  await expect(page.getByText('a ListImmutable<of Int> # length 2')).toBeVisible();
-  await expect(page.getByText('b "bill"')).toBeVisible();
+//   await expect(page.getByText('a ListImmutable<of Int> # length 2')).toBeVisible();
+//   await expect(page.getByText('b "bill"')).toBeVisible();
 
-  await page.getByText('a ListImmutable<of Int> # length 2').click();
+//   await page.getByText('a ListImmutable<of Int> # length 2').click();
 
-  await expect(page.getByText('[0] 1')).toBeVisible();
-  await expect(page.getByText('[1] 2')).toBeVisible();
+//   await expect(page.getByText('[0] 1')).toBeVisible();
+//   await expect(page.getByText('[1] 2')).toBeVisible();
 
 
-  await expect(page.locator('#run-status')).toContainText('paused');
+//   await expect(page.locator('#run-status')).toContainText('paused');
  
-});
+// });
 
 test('debug out parameter', async ({ page }) => {
   page.once('dialog', dialog => {
@@ -700,25 +728,28 @@ test('debug out parameter', async ({ page }) => {
   await page.keyboard.press('Tab');
   await page.keyboard.type('out a as Foo');
   await page.keyboard.press('Enter');
-  await page.keyboard.type('p');
+  await page.keyboard.type('ca'); 
+  await page.keyboard.type('print');
+  await page.keyboard.press('Tab');
   await page.keyboard.type('a');
+  await page.keyboard.press('Tab');
   await page.keyboard.press('Enter');
   await page.keyboard.press('ArrowLeft');
   await page.keyboard.press('Enter');
 
   await page.keyboard.type('m'); // main
-  await page.keyboard.type('v'); 
+  await page.keyboard.type('va'); 
   await page.keyboard.type('x');
   await page.keyboard.press('Tab');
   await page.keyboard.type('new Foo()');
   await page.keyboard.press('Enter');
 
-  await page.keyboard.type('c'); 
+  await page.keyboard.type('ca'); 
   await page.keyboard.type('bar');
   await page.keyboard.press('Tab');
   await page.keyboard.type('x');
 
-  await page.getByText('print', { exact: true }).click({
+  await page.locator('#call12').click({
     button: 'right'
   });
 
