@@ -10,7 +10,7 @@ test('display html', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m');
-  await page.keyboard.type('c');
+  await page.keyboard.type('ca');
   await page.keyboard.type('displayHtml');
   await page.keyboard.press('Tab');
   await page.keyboard.type(`"<p id='test-value'>fred</p>"`);
@@ -30,17 +30,19 @@ test('clear buffer', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m');
-  await page.keyboard.type('l');
+  await page.keyboard.type('va');
   await page.keyboard.type('a');
   await page.keyboard.press('Tab');
   await page.keyboard.type('inputInt("")');
   await page.keyboard.press('Enter');
-  await page.keyboard.type('l');
+  await page.keyboard.type('va');
   await page.keyboard.type('b');
   await page.keyboard.press('Tab');
   await page.keyboard.type('waitForKey()');
   await page.keyboard.press('Enter');
-  await page.keyboard.type('p');
+  await page.keyboard.type('ca'); 
+  await page.keyboard.type('print');
+  await page.keyboard.press('Tab');
   await page.keyboard.type('b');
 
 
