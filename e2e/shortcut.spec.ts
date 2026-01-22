@@ -82,6 +82,10 @@ test('tabs', async ({ page }) => {
 
  await page.keyboard.press('Tab');
 
+ await expect(page.getByRole('button', {name : 'Elan'})).toBeFocused();
+
+ await page.keyboard.press('Tab');
+
  await expect(page.locator('#help-home')).toBeFocused();
 
  await page.keyboard.press('Tab');
@@ -133,6 +137,10 @@ test('tabs uppercase', async ({ page }) => {
 
  await page.keyboard.press('Tab');
 
+  await expect(page.getByRole('button', {name : 'Elan'})).toBeFocused();
+
+ await page.keyboard.press('Tab');
+
  await expect(page.locator('#help-home')).toBeFocused();
 
  await page.keyboard.press('Tab');
@@ -180,7 +188,7 @@ test('demos', async ({ page }) => {
 
   await expect(page.getByText('Burrow')).toBeFocused();
 
-await page.keyboard.press('ArrowUp');
+  await page.keyboard.press('ArrowUp');
 
   await page.keyboard.press('Enter');
 
@@ -276,7 +284,8 @@ test('close menus by open menus', async ({ page }) => {
   await page.keyboard.press('Tab');
   await page.keyboard.press('Tab');
   await page.keyboard.press('Tab');
-
+  await page.keyboard.press('Tab');
+  
   await page.keyboard.press('Enter');
 
   await expect(page.getByText('Guide to the worksheets')).toBeVisible();
@@ -642,7 +651,7 @@ test('tabs parse', async ({ page }) => {
 
   await page.keyboard.type("m");
 
-  await page.keyboard.type("l");
+  await page.keyboard.type("va");
 
   await expect(page.getByText("incomplete")).toBeVisible();
 
@@ -653,9 +662,10 @@ test('tabs parse', async ({ page }) => {
   await page.keyboard.press('Tab');
   await page.keyboard.press('Tab');
   await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
 
- await expect(page.getByText("incomplete")).toBeFocused();
- await page.keyboard.press('Enter');
+  await expect(page.getByText("incomplete")).toBeFocused();
+  await page.keyboard.press('Enter');
 
  await expect(page.locator("el-txt input")).toBeFocused();
 });
@@ -671,7 +681,7 @@ test('tabs compile', async ({ page }) => {
 
   await page.keyboard.type("m");
 
-  await page.keyboard.type("l");
+  await page.keyboard.type("va");
 
   await page.keyboard.type("a");
 
@@ -684,6 +694,7 @@ test('tabs compile', async ({ page }) => {
   await page.keyboard.press('Control+b');
 
   await page.keyboard.press('Tab');  
+  await page.keyboard.press('Tab');
   await page.keyboard.press('Tab');
   await page.keyboard.press('Tab');
   await page.keyboard.press('Tab');

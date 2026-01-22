@@ -9,7 +9,8 @@ test('long strings pass', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await page.keyboard.type('test');
+  await page.keyboard.type('t');
+  await page.keyboard.type('a');
   await page.keyboard.press('Enter');
   await page.keyboard.type('a');
   await page.keyboard.type('"a string over twenty characters long"');
@@ -29,7 +30,8 @@ test('long strings fail 1', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await page.keyboard.type('test');
+  await page.keyboard.type('t');
+  await page.keyboard.type('a');
   await page.keyboard.press('Enter');
   await page.keyboard.type('a');
   await page.keyboard.type('"a string over twenty characters long"');
@@ -49,7 +51,8 @@ test('long strings fail 2', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await page.keyboard.type('test');
+  await page.keyboard.type('t');
+  await page.keyboard.type('a');
   await page.keyboard.press('Enter');
   await page.keyboard.type('a');
   await page.keyboard.type('"a string over twenty characters longac"');
@@ -69,7 +72,8 @@ test('long strings fail 3', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await page.keyboard.type('test');
+  await page.keyboard.type('t');
+  await page.keyboard.type('a');
   await page.keyboard.press('Enter');
   await page.keyboard.type('a');
   await page.keyboard.type('"a string over twenty characters long"');
@@ -89,7 +93,8 @@ test('long strings fail 4', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await page.keyboard.type('test');
+  await page.keyboard.type('t');
+  await page.keyboard.type('a');
   await page.keyboard.press('Enter');
   await page.keyboard.type('a');
   await page.keyboard.type('"a string over twentycharacters long"');
@@ -109,7 +114,8 @@ test('long strings fail 5', async ({ page }) => {
   });
   await page.goto('https://elan-language.github.io/LanguageAndIDE/');
  
-  await page.keyboard.type('test');
+  await page.keyboard.type('t');
+  await page.keyboard.type('a');
   await page.keyboard.press('Enter');
   await page.keyboard.type('a');
   await page.keyboard.type('"a string over twenty  characters long"');

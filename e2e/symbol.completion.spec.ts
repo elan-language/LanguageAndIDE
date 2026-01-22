@@ -112,7 +112,7 @@ test('property symbol completion', async ({ page }) => {
     await page.keyboard.press('Tab');
     await page.keyboard.type('Int');
     await page.keyboard.press('Enter');
-    await page.keyboard.press('l');
+    await page.keyboard.type('va');
     await page.keyboard.press('a');
     await page.keyboard.press('Tab');
     await page.keyboard.type('ba');

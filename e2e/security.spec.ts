@@ -37,7 +37,9 @@ test('img click xss', async ({ page }) => {
   await page.getByText('main procedure function test').click();
 
   await page.keyboard.type('m');
-  await page.keyboard.type('p');
+  await page.keyboard.type('ca');
+  await page.keyboard.type('print');
+  await page.keyboard.press('Tab');
   await page.keyboard.type(`"<img src='images/Debug.png' onclick=console.error('exploit') />"`);
   await page.keyboard.press('Tab');
 
@@ -56,7 +58,9 @@ test('iframe xss', async ({ page }) => {
     await page.getByText('main procedure function test').click();
   
     await page.keyboard.type('m');
-    await page.keyboard.type('p');
+    await page.keyboard.type('ca');
+    await page.keyboard.type('print');
+    await page.keyboard.press('Tab');
     await page.keyboard.type(`"<iframe src=javascript:console.error('exploit') ></iframe>"`);
     await page.keyboard.press('Tab');
   
@@ -108,7 +112,7 @@ test('iframe xss', async ({ page }) => {
       await page.getByText('main procedure function test').click();
     
       await page.keyboard.type('m');
-      await page.keyboard.type('c');
+      await page.keyboard.type('ca');
       await page.keyboard.type('displayHtml');
       await page.keyboard.press('Tab');
       await page.keyboard.type(`"<iframe src=javascript:console.error('exploit') ></iframe>"`);
