@@ -546,6 +546,10 @@ export abstract class AbstractFrame implements Frame {
     return this._selected;
   }
 
+  onClick(withFocus: boolean, multiSelect: boolean): void {
+    this.select(withFocus, multiSelect);
+  }
+
   select(withFocus: boolean, multiSelect: boolean): void {
     if (!multiSelect) {
       this.deselectAll();
