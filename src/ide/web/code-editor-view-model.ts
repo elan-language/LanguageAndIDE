@@ -289,18 +289,18 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
             }
 
             // this should clear all other selections
-            s?.select(true, false);
+            s?.onClick(true, false);
             // select all in range
             for (const ts of toSelect) {
-              ts.select(false, true);
+              ts.onClick(false, true);
             }
             // select with focus clicked on frame
-            s?.select(true, true);
+            s?.onClick(true, true);
           } else {
-            s?.select(true, false);
+            s?.onClick(true, false);
           }
         } else {
-          s?.select(true, false, e.selection);
+          s?.onClick(true, false, e.selection);
         }
         return true;
       }

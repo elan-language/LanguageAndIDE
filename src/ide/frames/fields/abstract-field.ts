@@ -239,6 +239,11 @@ export abstract class AbstractField implements Selectable, Field {
         }
         break;
       }
+      case "ContextMenu": {
+        if (this.getHolder().isSelected()) {
+          return this.getHolder().processKey(e);
+        }
+      }
       case "Backspace": {
         if (this.holder.isNew) {
           this.holder.deleteIfPermissible();
@@ -591,6 +596,17 @@ export abstract class AbstractField implements Selectable, Field {
     return helper_deriveCompileStatusFromErrors(
       this.getFile().getAst(false)?.getCompileErrorsFor(this.htmlId) ?? [],
     );
+  }
+
+  onClick(withFocus?: boolean, multiSelect?: boolean, selection?: [number, number]): void {
+    if (!this.isWithinAGhostedFrame()) {
+      const parentSelected = this.getHolder().isSelected();
+      if (parentSelected || (selection && selection[0] !== selection[1])) {
+        this.select(withFocus, multiSelect, selection);
+      } else {
+        this.getHolder().select(true);
+      }
+    }
   }
 
   select(_withFocus?: boolean, _multiSelect?: boolean, selection?: [number, number]): void {
