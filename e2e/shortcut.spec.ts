@@ -667,7 +667,7 @@ test('tabs parse', async ({ page }) => {
   await expect(page.getByText("incomplete")).toBeFocused();
   await page.keyboard.press('Enter');
 
- await expect(page.locator("el-txt input")).toBeFocused();
+ await expect(page.locator("#var3")).toBeFocused();
 });
 
 test('tabs compile', async ({ page }) => {
@@ -703,5 +703,5 @@ test('tabs compile', async ({ page }) => {
  await expect(page.getByText("unknown")).toBeFocused();
  await page.keyboard.press('Enter');
 
- await expect(page.locator("el-txt input")).toBeFocused();
+ await expect(page.locator("#var3")).toBeFocused();
 });
