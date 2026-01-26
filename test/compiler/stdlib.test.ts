@@ -2255,13 +2255,13 @@ main
   variable b set to ["2", "7"].asSet()
   variable c set to ["7", "2"].asSet()
   variable d set to ["8", "2"].asSet()
-  print b is c
-  print b is d
+  print b.isSameValueAs(c)
+  print b.isSameValueAs(d)
   variable b2 set to [2, 7].asSet()
   variable c2 set to [7, 2].asSet()
   variable d2 set to [8, 2].asSet()
-  print b2 is c2
-  print b2 is d2
+  print b2.isSameValueAs(c2)
+  print b2.isSameValueAs(d2)
 end main
 `;
 
@@ -2271,13 +2271,13 @@ async function main() {
   let b = system.list(["2", "7"]).asSet();
   let c = system.list(["7", "2"]).asSet();
   let d = system.list(["8", "2"]).asSet();
-  await system.print(system.objectEquals(b, c));
-  await system.print(system.objectEquals(b, d));
+  await system.print(_stdlib.isSameValueAs(b, c));
+  await system.print(_stdlib.isSameValueAs(b, d));
   let b2 = system.list([2, 7]).asSet();
   let c2 = system.list([7, 2]).asSet();
   let d2 = system.list([8, 2]).asSet();
-  await system.print(system.objectEquals(b2, c2));
-  await system.print(system.objectEquals(b2, d2));
+  await system.print(_stdlib.isSameValueAs(b2, c2));
+  await system.print(_stdlib.isSameValueAs(b2, d2));
 }
 return [main, _tests];}`;
 

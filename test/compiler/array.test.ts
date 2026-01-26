@@ -322,9 +322,9 @@ main
   variable b set to empty Array<of Int>
   print a
   print b
-  print a is b
-  print a is empty Array<of Int>
-  print b is empty Array<of Int>
+  print a.isSameValueAs(b)
+  print a.isSameValueAs(empty Array<of Int>)
+  print b.isSameValueAs(empty Array<of Int>)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -334,9 +334,9 @@ async function main() {
   let b = system.initialise(_stdlib.Array.emptyInstance());
   await system.print(a);
   await system.print(b);
-  await system.print(system.objectEquals(a, b));
-  await system.print(system.objectEquals(a, system.initialise(_stdlib.Array.emptyInstance())));
-  await system.print(system.objectEquals(b, system.initialise(_stdlib.Array.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(a, b));
+  await system.print(_stdlib.isSameValueAs(a, system.initialise(_stdlib.Array.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(b, system.initialise(_stdlib.Array.emptyInstance())));
 }
 return [main, _tests];}`;
 

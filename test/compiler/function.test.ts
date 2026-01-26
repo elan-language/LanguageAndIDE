@@ -1274,7 +1274,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  variable a set to ref p1 is ref p2
+  variable a set to (ref p1).isSameValueAs(ref p2)
 end main
 
 function p1() returns Int
@@ -1296,6 +1296,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
+      "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "The 'ref' keyword is no longer needed and we recommend that you remove it.LangRef.html#ref",
       "Cannot do equality operations on Procedures or Functions.LangRef.html#CannotCompareProcFunc",
@@ -1399,7 +1400,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  variable a set to p1 is p2
+  variable a set to p1.isSameValueAs(p2)
 end main
 
 function p1() returns Int

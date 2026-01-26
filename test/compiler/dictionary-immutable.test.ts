@@ -539,9 +539,9 @@ main
   set b to a.withPut("a", 1)
   print a
   print b
-  print a is b
-  print a is empty DictionaryImmutable<of String, Int>
-  print b is empty DictionaryImmutable<of String, Int>
+  print a.isSameValueAs(b)
+  print a.isSameValueAs(empty DictionaryImmutable<of String, Int>)
+  print b.isSameValueAs(empty DictionaryImmutable<of String, Int>)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -552,9 +552,9 @@ async function main() {
   b = a.withPut("a", 1);
   await system.print(a);
   await system.print(b);
-  await system.print(system.objectEquals(a, b));
-  await system.print(system.objectEquals(a, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
-  await system.print(system.objectEquals(b, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(a, b));
+  await system.print(_stdlib.isSameValueAs(a, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(b, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
 }
 return [main, _tests];}`;
 

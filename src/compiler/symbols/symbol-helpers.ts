@@ -194,6 +194,16 @@ export function isValueType(type: SymbolType): boolean {
   );
 }
 
+export function isValueTypeExcludingString(type: SymbolType): boolean {
+  return (
+    type instanceof IntType ||
+    type instanceof FloatType ||
+    type instanceof BooleanType ||
+    type instanceof EnumType ||
+    type instanceof RegExpType
+  );
+}
+
 export function isProcedure(s: ElanSymbol): boolean {
   return s.symbolType() instanceof ProcedureType;
 }

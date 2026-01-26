@@ -95,7 +95,7 @@ return [main, _tests];}`;
 constant source set to "onetwo"
 main
   variable li set to source.split("")
-  print li.filter(lambda x as String => x is "o")
+  print li.filter(lambda x as String => x.isSameValueAs("o"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -105,7 +105,7 @@ const global = new class {
 };
 async function main() {
   let li = _stdlib.split(global.source, "");
-  await system.print((await li.filter(async (x) => x === "o")));
+  await system.print((await li.filter(async (x) => _stdlib.isSameValueAs(x, "o"))));
 }
 return [main, _tests];}`;
 
@@ -1106,7 +1106,7 @@ main
 end main
 
 function getTrailingNumber(s as String) returns String
-  return if s is "" then "" else s[last(sequence(0, s.length() -1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
+  return if s.isSameValueAs("") then "" else s[last(sequence(0, s.length() -1).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()]
 end function
 
 function isnumberchar(s as String) returns Boolean
@@ -1127,7 +1127,7 @@ async function main() {
 }
 
 async function getTrailingNumber(s) {
-  return (s === "" ? "" : system.safeSlice(s, (await global.last((await _stdlib.sequence(0, _stdlib.length(s) - 1).filter(async (n) => !(await global.isnumberchar(system.safeIndex(s, n))))))) + 1, _stdlib.length(s)));
+  return _stdlib.isSameValueAs(s, "") ? "" : system.safeSlice(s, (await global.last((await _stdlib.sequence(0, _stdlib.length(s) - 1).filter(async (n) => !(await global.isnumberchar(system.safeIndex(s, n))))))) + 1, _stdlib.length(s)));
 }
 global["getTrailingNumber"] = getTrailingNumber;
 

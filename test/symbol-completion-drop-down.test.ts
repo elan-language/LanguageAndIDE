@@ -878,6 +878,8 @@ end main`;
       ["asDictionaryImmutable", "*", "*"],
       ["asString", "*", "*"],
       ["hasKey", "*", "*"],
+      ["isSameReferenceAs", "*", "*"],
+      ["isSameValueAs", "*", "*"],
       ["keys", "*", "*"],
       ["values", "*", "*"],
       ["withPut", "*", "*"],
@@ -909,6 +911,8 @@ end main`;
       ["asDictionary", "*", "*"],
       ["asString", "*", "*"],
       ["hasKey", "*", "*"],
+      ["isSameReferenceAs", "*", "*"],
+      ["isSameValueAs", "*", "*"],
       ["keys", "*", "*"],
       ["values", "*", "*"],
       ["withPut", "*", "*"],
@@ -1306,6 +1310,8 @@ end test`;
     const expected = [
       ["asString", "*", "*"],
       ["ff", "*", "*"],
+      ["isSameReferenceAs", "*", "*"],
+      ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "text24", "gr.", expected);
@@ -1629,6 +1635,8 @@ end class`;
       ["f1", "*", "*"],
       ["f2", "*", "*"],
       ["f3", "*", "*"],
+      ["isSameReferenceAs", "*", "*"],
+      ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo(1).", expected);
@@ -1869,6 +1877,8 @@ end main`;
       ["floor", "*", "*"],
       ["isInfinite", "*", "*"],
       ["isNaN", "*", "*"],
+      ["isSameReferenceAs", "*", "*"],
+      ["isSameValueAs", "*", "*"],
       ["round", "*", "*"],
     ] as [string, string, string][];
 
@@ -3090,6 +3100,8 @@ end procedure`;
     const expected = [
       ["asString", "asString", "asString("],
       ["bar", "bar", "bar("],
+      ["isSameReferenceAs", "*", "*"],
+      ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(

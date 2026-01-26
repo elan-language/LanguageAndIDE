@@ -726,9 +726,9 @@ main
   call a.put("a", 3)
   print a
   print b
-  print a is b
-  print a is empty Dictionary<of String, Int>
-  print b is empty Dictionary<of String, Int>
+  print a.isSameValueAs(b)
+  print a.isSameValueAs(empty Dictionary<of String, Int>)
+  print b.isSameValueAs(empty Dictionary<of String, Int>)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -739,9 +739,9 @@ async function main() {
   a.put("a", 3);
   await system.print(a);
   await system.print(b);
-  await system.print(system.objectEquals(a, b));
-  await system.print(system.objectEquals(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
-  await system.print(system.objectEquals(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(a, b));
+  await system.print(_stdlib.isSameValueAs(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -770,9 +770,9 @@ main
   call a.put("a", ["a":1])
   print a
   print b
-  print a is b
-  print a is empty Dictionary<of String, Dictionary<of String, Int>>
-  print b is empty Dictionary<of String, Dictionary<of String, Int>>
+  print a.isSameValueAs(b)
+  print a.isSameValueAs(empty Dictionary<of String, Dictionary<of String, Int>>)
+  print b.isSameValueAs(empty Dictionary<of String, Dictionary<of String, Int>>)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -783,9 +783,9 @@ async function main() {
   a.put("a", system.dictionary([["a", 1]]));
   await system.print(a);
   await system.print(b);
-  await system.print(system.objectEquals(a, b));
-  await system.print(system.objectEquals(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
-  await system.print(system.objectEquals(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(a, b));
+  await system.print(_stdlib.isSameValueAs(a, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(b, system.initialise(_stdlib.Dictionary.emptyInstance())));
 }
 return [main, _tests];}`;
 

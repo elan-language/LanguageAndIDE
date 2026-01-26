@@ -911,9 +911,9 @@ main
   set b to a.withAppend(3)
   print a
   print b
-  print a is b
-  print a is empty ListImmutable<of Int>
-  print b is empty ListImmutable<of Int>
+  print a.isSameValueAs(b)
+  print a.isSameValueAs(empty ListImmutable<of Int>)
+  print b.isSameValueAs(empty ListImmutable<of Int>)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -924,9 +924,9 @@ async function main() {
   b = a.withAppend(3);
   await system.print(a);
   await system.print(b);
-  await system.print(system.objectEquals(a, b));
-  await system.print(system.objectEquals(a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
-  await system.print(system.objectEquals(b, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(a, b));
+  await system.print(_stdlib.isSameValueAs(a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(b, system.initialise(_stdlib.ListImmutable.emptyInstance())));
 }
 return [main, _tests];}`;
 

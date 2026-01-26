@@ -197,7 +197,7 @@ return [main, _tests];}`;
 constant a set to ""
 main
   print a
-  print a is empty String
+  print a.isSameValueAs(empty String)
 end main
 `;
 
@@ -208,7 +208,7 @@ const global = new class {
 };
 async function main() {
   await system.print(global.a);
-  await system.print(global.a === "");
+  await system.print(_stdlib.isSameValueAs(global.a, ""));
 }
 return [main, _tests];}`;
 

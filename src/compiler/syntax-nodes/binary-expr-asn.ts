@@ -17,6 +17,7 @@ import {
   mustBeIntegerType,
   mustBeKnownOperation,
   mustBeNumberTypes,
+  mustBeValueType,
 } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { mapOperation } from "./ast-helpers";
@@ -143,6 +144,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     }
 
     if (this.isEqualityOp(opSymbol)) {
+      mustBeValueType(lst, rst, this.compileErrors, this.fieldId);
       mustBeCoercibleType(lst, rst, this.compileErrors, this.fieldId);
     }
 

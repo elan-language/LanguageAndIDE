@@ -21,9 +21,9 @@ main
   variable x set to new Foo(7, "Apple")
   variable y set to new Foo(7, "Orange")
   variable z set to new Foo(7, "Orange")
-  print x is x
-  print x is y
-  print y is z
+  print x.isSameValueAs(x)
+  print x.isSameValueAs(y)
+  print y.isSameValueAs(z)
 end main
 
 class Foo
@@ -49,9 +49,9 @@ async function main() {
   let x = system.initialise(await new Foo()._initialise(7, "Apple"));
   let y = system.initialise(await new Foo()._initialise(7, "Orange"));
   let z = system.initialise(await new Foo()._initialise(7, "Orange"));
-  await system.print(system.objectEquals(x, x));
-  await system.print(system.objectEquals(x, y));
-  await system.print(system.objectEquals(y, z));
+  await system.print(_stdlib.isSameValueAs(x, x));
+  await system.print(_stdlib.isSameValueAs(x, y));
+  await system.print(_stdlib.isSameValueAs(y, z));
 }
 
 class Foo {
@@ -99,7 +99,7 @@ return [main, _tests];}`;
 
 main
   variable x set to new Foo()
-  print x is empty Foo
+  print x.isSameValueAs(empty Foo)
 end main
 
 class Foo
@@ -121,7 +121,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Foo()._initialise());
-  await system.print(system.objectEquals(x, Foo.emptyInstance()));
+  await system.print(_stdlib.isSameValueAs(x, Foo.emptyInstance()));
 }
 
 class Foo {
@@ -171,9 +171,9 @@ main
   variable y set to x
   call y.setP1(3)
   variable z set to new Foo(8, "Orange")
-  print x is x
-  print x is y
-  print x is z
+  print x.isSameValueAs(x)
+  print x.isSameValueAs(y)
+  print x.isSameValueAs(z)
 end main
 
 class Foo
@@ -201,9 +201,9 @@ async function main() {
   let y = x;
   await y.setP1(3);
   let z = system.initialise(await new Foo()._initialise(8, "Orange"));
-  await system.print(system.objectEquals(x, x));
-  await system.print(system.objectEquals(x, y));
-  await system.print(system.objectEquals(x, z));
+  await system.print(_stdlib.isSameValueAs(x, x));
+  await system.print(_stdlib.isSameValueAs(x, y));
+  await system.print(_stdlib.isSameValueAs(x, z));
 }
 
 class Foo {
@@ -251,7 +251,7 @@ return [main, _tests];}`;
 
 main
   variable x set to new Foo()
-  print x.p1 is x.p1
+  print (x.p1).isSameValueAs(x.p1)
 end main
 
 class Foo
@@ -287,13 +287,13 @@ main
   variable f2 set to new Foo(2)
   variable l1 set to [f1, f2]
   variable l2 set to [f1, f2]
-  print l1 is l2
+  print l1.isSameValueAs(l2)
   variable l3 set to [f2, f1]
-  print l1 is l3
+  print l1.isSameValueAs(l3)
   variable l4 set to [new Foo(1), new Foo(2)]
-  print  l4 is l1
+  print  l4.isSameValueAs(l1)
   call l4[0].setP(3)
-  print l4 is l1
+  print l4.isSameValueAs(l1)
 end main
 
 class Foo
@@ -326,13 +326,13 @@ async function main() {
   let f2 = system.initialise(await new Foo()._initialise(2));
   let l1 = system.list([f1, f2]);
   let l2 = system.list([f1, f2]);
-  await system.print(system.objectEquals(l1, l2));
+  await system.print(_stdlib.isSameValueAs(l1, l2));
   let l3 = system.list([f2, f1]);
-  await system.print(system.objectEquals(l1, l3));
+  await system.print(_stdlib.isSameValueAs(l1, l3));
   let l4 = system.list([system.initialise(await new Foo()._initialise(1)), system.initialise(await new Foo()._initialise(2))]);
-  await system.print(system.objectEquals(l4, l1));
+  await system.print(_stdlib.isSameValueAs(l4, l1));
   await system.safeIndex(l4, 0).setP(3);
-  await system.print(system.objectEquals(l4, l1));
+  await system.print(_stdlib.isSameValueAs(l4, l1));
 }
 
 class Foo {
@@ -366,11 +366,11 @@ main
   variable f2 set to new Foo() with p set to 2
   variable l1 set to {f1, f2}
   variable l2 set to {f1, f2}
-  print l1 is l2
+  print l1.isSameValueAs(l2)
   variable l3 set to {f2, f1}
-  print l1 is l3
+  print l1.isSameValueAs(l3)
   variable l4 set to {new Foo() with p set to 1, new Foo() with p set to 2}
-  print  l4 is l1
+  print  l4.isSameValueAs(l1)
 end main
 
 record Foo
@@ -395,11 +395,11 @@ async function main() {
   let f2 = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})();
   let l1 = system.listImmutable([f1, f2]);
   let l2 = system.listImmutable([f1, f2]);
-  await system.print(system.objectEquals(l1, l2));
+  await system.print(_stdlib.isSameValueAs(l1, l2));
   let l3 = system.listImmutable([f2, f1]);
-  await system.print(system.objectEquals(l1, l3));
+  await system.print(_stdlib.isSameValueAs(l1, l3));
   let l4 = system.listImmutable([await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 1; return _a;})(), await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})()]);
-  await system.print(system.objectEquals(l4, l1));
+  await system.print(_stdlib.isSameValueAs(l4, l1));
 }
 
 class Foo {

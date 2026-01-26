@@ -604,10 +604,10 @@ return [main, _tests];}`;
 
 main
   variable g set to new Game()
-  print g.p1 is empty Player
-  print g.p2 is empty Player
-  print g.previousGame is empty Game
-  print g.previousScores is empty ListImmutable<of Int>
+  print g.p1.isSameValueAs(empty Player)
+  print g.p2.isSameValueAs(empty Player)
+  print g.previousGame.isSameValueAs(empty Game)
+  print g.previousScores.isSameValueAs(empty ListImmutable<of Int>)
   print g.score is empty Int
   print g.best is empty Int
   print g.r is empty RegExp
@@ -653,10 +653,10 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(await new Game()._initialise());
-  await system.print(system.objectEquals(g.p1, Player.emptyInstance()));
-  await system.print(system.objectEquals(g.p2, Player.emptyInstance()));
-  await system.print(system.objectEquals(g.previousGame, Game.emptyInstance()));
-  await system.print(system.objectEquals(g.previousScores, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(g.p1, Player.emptyInstance()));
+  await system.print(_stdlib.isSameValueAs(g.p2, Player.emptyInstance()));
+  await system.print(_stdlib.isSameValueAs(g.previousGame, Game.emptyInstance()));
+  await system.print(_stdlib.isSameValueAs(g.previousScores, system.initialise(_stdlib.ListImmutable.emptyInstance())));
   await system.print(g.score === 0);
   await system.print(g.best === 0);
   await system.print(g.r === system.emptyRegExp());
@@ -888,10 +888,10 @@ main
   print f.b
   print f.c
   print f.d
-  print f.a is empty ListImmutable<of Int>
-  print f.b is empty String
-  print f.c is empty Dictionary<of String,Int>
-  print f.d is empty List<of Int>
+  print f.a.isSameValueAs(empty ListImmutable<of Int>)
+  print f.b.isSameValueAs(empty String)
+  print f.c.isSameValueAs(empty Dictionary<of String,Int>)
+  print f.d.isSameValueAs(empty List<of Int>)
 end main
 
 class Foo
@@ -917,10 +917,10 @@ async function main() {
   await system.print(f.b);
   await system.print(f.c);
   await system.print(f.d);
-  await system.print(system.objectEquals(f.a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
-  await system.print(f.b === "");
-  await system.print(system.objectEquals(f.c, system.initialise(_stdlib.Dictionary.emptyInstance())));
-  await system.print(system.objectEquals(f.d, system.initialise(_stdlib.List.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(f.a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(f.b, ""));
+  await system.print(_stdlib.isSameValueAs(f.c, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(f.d, system.initialise(_stdlib.List.emptyInstance())));
 }
 
 class Foo {

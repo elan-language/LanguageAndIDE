@@ -1497,7 +1497,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  variable a set to p1 is p2
+  variable a set to p2.isSameValueAs(p2)
   variable b set to p1 + p2
   variable c set to -p1
 end main

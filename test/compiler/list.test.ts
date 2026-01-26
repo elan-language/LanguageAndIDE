@@ -752,9 +752,9 @@ main
   call a.append(3)
   print a
   print b
-  print a is b
-  print a is empty List<of Int>
-  print b is empty List<of Int>
+  print a.isSameValueAs(b)
+  print a.isSameValueAs(empty List<of Int>)
+  print b.isSameValueAs(empty List<of Int>)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -765,9 +765,9 @@ async function main() {
   a.append(3);
   await system.print(a);
   await system.print(b);
-  await system.print(system.objectEquals(a, b));
-  await system.print(system.objectEquals(a, system.initialise(_stdlib.List.emptyInstance())));
-  await system.print(system.objectEquals(b, system.initialise(_stdlib.List.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(a, b));
+  await system.print(_stdlib.isSameValueAs(a, system.initialise(_stdlib.List.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(b, system.initialise(_stdlib.List.emptyInstance())));
 }
 return [main, _tests];}`;
 
