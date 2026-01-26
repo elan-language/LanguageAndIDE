@@ -273,9 +273,6 @@ export abstract class AbstractField implements Selectable, Field {
         this.editingField();
         break;
       }
-      case "ContextMenu": {
-        break;
-      }
       case "t": {
         if (e.modKey.alt) {
           this.getFile().removeAllSelectorsThatCanBe();

@@ -320,7 +320,7 @@ suite("Selector tests", () => {
     const filtered = gs.optionsMatchingUserInput(`f`);
     assert.equal(filtered.length, 1);
   });
-  test("#535 - Selector should not respond to Enter", () => {
+  test("#2386 - Selector should respond to Enter", () => {
     const fl = new FileImpl(
       hash,
       new DefaultProfile(),
@@ -332,7 +332,7 @@ suite("Selector tests", () => {
     gs.select(true, false);
     assert.equal(fl.getChildren().length, 1);
     gs.processKey(key("Enter"));
-    assert.equal(gs.isSelected(), true);
+    assert.equal(gs.isSelected(), false);
     assert.equal(fl.getChildren().length, 1);
   });
 });

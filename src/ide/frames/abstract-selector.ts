@@ -200,7 +200,15 @@ export abstract class AbstractSelector extends AbstractFrame {
         break;
       }
       case "Enter": {
-        //do nothing. This is to prevent it being passed up to superclass
+        const next = this.getNextPeerFrame();
+        if (next !== this) {
+          next.select(true, false);
+        } else {
+          const parent = this.getParent();
+          if (parent instanceof AbstractFrame) {
+            parent.select(true, false);
+          }
+        }
         break;
       }
       case "d": {
