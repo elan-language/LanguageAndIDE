@@ -314,6 +314,16 @@ export class StdLib {
     return this.system.initialise(new List(s.split(separator)));
   }
 
+  @elanFunction(["number", "number"], FunctionOptions.pure, ElanInt)
+  divAsInteger(n1: number, n2 : number) {
+    return Math.floor(n1 / n2);
+  }
+
+  @elanFunction(["number", "number"], FunctionOptions.pure, ElanInt)
+  divAsFloat(n1: number, n2 : number) {
+    return n1 / n2;
+  }
+
   @elanFunction(["number"], FunctionOptions.pureExtension, ElanInt)
   floor(n: number) {
     return Math.floor(n);
