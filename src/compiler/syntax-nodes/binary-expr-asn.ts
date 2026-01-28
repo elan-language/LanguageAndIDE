@@ -18,6 +18,7 @@ import {
   mustBeKnownOperation,
   mustBeNumberTypes,
   mustBeValueType,
+  mustNotBeIntegerTypesToDivide,
 } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { mapOperation } from "./ast-helpers";
@@ -158,6 +159,10 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
 
     if (this.isLogicalOp(opSymbol)) {
       mustBeBooleanTypes(lst, rst, this.compileErrors, this.fieldId);
+    }
+
+    if (opSymbol === OperationSymbol.Divide) {
+      mustNotBeIntegerTypesToDivide(lst, rst, this.compileErrors, this.fieldId);
     }
 
     if (opSymbol === OperationSymbol.Div) {
