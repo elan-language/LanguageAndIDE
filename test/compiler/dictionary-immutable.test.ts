@@ -530,7 +530,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "213");
   });
 
-  test("Pass_EmptyDictionaryImmutable", async () => {
+  test("Pass_EmptyDictionaryImmutableByValue", async () => {
     const code = `${testHeader}
 
 main
@@ -572,6 +572,50 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{}{a:1}falsetruefalse");
+  });
+
+  test("Pass_EmptyDictionaryImmutableByReference", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to empty DictionaryImmutable<of String, Int>
+  variable b set to empty DictionaryImmutable<of String, Int>
+  set b to a.withPut("a", 1)
+  print a
+  print b
+  print a.isSameReferenceAs(b)
+  print a.isSameReferenceAs(empty DictionaryImmutable<of String, Int>)
+  print b.isSameReferenceAs(empty DictionaryImmutable<of String, Int>)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
+  let b = system.initialise(_stdlib.DictionaryImmutable.emptyInstance());
+  b = a.withPut("a", 1);
+  await system.print(a);
+  await system.print(b);
+  await system.print(_stdlib.isSameReferenceAs(a, b));
+  await system.print(_stdlib.isSameReferenceAs(a, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
+  await system.print(_stdlib.isSameReferenceAs(b, system.initialise(_stdlib.DictionaryImmutable.emptyInstance())));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{}{a:1}falsefalsefalse");
   });
 
   test("Pass_RecordKeyNoDuplicates", async () => {

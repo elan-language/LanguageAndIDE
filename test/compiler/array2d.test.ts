@@ -308,7 +308,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "foo");
   });
 
-  test("Pass_EmptyArray", async () => {
+  test("Pass_EmptyArrayByValue", async () => {
     const code = `${testHeader}
 
 main
@@ -348,6 +348,48 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[][]truetruetrue");
+  });
+
+  test("Pass_EmptyArrayByReference", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to empty Array2D<of Int>
+  variable b set to empty Array2D<of Int>
+  variable c set to a
+  print a.isSameReferenceAs(b)
+  print a.isSameReferenceAs(empty Array2D<of Int>)
+  print b.isSameReferenceAs(empty Array2D<of Int>)
+  print a.isSameReferenceAs(c)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(_stdlib.Array2D.emptyInstance());
+  let b = system.initialise(_stdlib.Array2D.emptyInstance());
+  let c = a;
+  await system.print(_stdlib.isSameReferenceAs(a, b));
+  await system.print(_stdlib.isSameReferenceAs(a, system.initialise(_stdlib.Array2D.emptyInstance())));
+  await system.print(_stdlib.isSameReferenceAs(b, system.initialise(_stdlib.Array2D.emptyInstance())));
+  await system.print(_stdlib.isSameReferenceAs(a, c));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "falsefalsefalsetrue");
   });
 
   test("Pass_InitialiseEmptyArray", async () => {

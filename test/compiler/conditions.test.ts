@@ -427,7 +427,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_compareDifferentTypes", async () => {
+  test("Fail_compareDifferentTypesByValue", async () => {
     const code = `${testHeader}
 
 main
@@ -458,6 +458,32 @@ end main
       "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
       "Incompatible types. Expected: Float or Int, Provided: String.LangRef.html#TypesCompileError",
+    ]);
+  });
+
+  test("Fail_compareDifferentTypesByReference", async () => {
+    const code = `${testHeader}
+
+main
+  print 3.isSameReferenceAs("3")
+  print not 3.isSameReferenceAs("3")
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: parameter1 (Int), Provided: String.LangRef.html#compile_error",
+      "Argument types. Expected: parameter1 (Int), Provided: String.LangRef.html#compile_error",
     ]);
   });
 
