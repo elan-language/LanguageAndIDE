@@ -852,7 +852,7 @@ with specified changes: that is why all such methods have names starting '<el-co
   <td><el-kw>lambda</el-kw></td>
   <td><el-type>List</el-type></td>
   <td>a new List obtained from applying a lambda to the input List<br>
-  see <a href="#filter"><el-method>filter</el-method></a> in HoFs</td>
+  see <a href="#filter"><el-method>filter</el-method></a> in <a href="#HoFs">HoFs</a></td>
  </tr><tr id="head_List">
   <td><el-method>head</el-method></td>
   <td><el-type>List</el-type></td>
@@ -883,7 +883,7 @@ with specified changes: that is why all such methods have names starting '<el-co
   <td><el-kw>lambda</el-kw></td>
   <td><el-type>List</el-type></td>
   <td>a new List obtained from applying a lambda to the input List<br>
-  see <a href="#map"><el-method>map</el-method></a> in HoFs</td>
+  see <a href="#map"><el-method>map</el-method></a> in <a href="#HoFs">HoFs</a></td>
  </tr><tr id="maxFloat">
   <td><el-method>maxFloat</el-method></td>
   <td>(not a dot method)</td>
@@ -914,14 +914,14 @@ with specified changes: that is why all such methods have names starting '<el-co
   <td><el-kw>lambda</el-kw></td>
   <td><el-type>List</el-type> items' Type</td>
   <td>the list item corresponding to the maximum of the values returned by a lambda<br>
-  see <a href="#maxBy"><el-method>maxBy</el-method></a> in HoFs</td>
+  see <a href="#maxBy"><el-method>maxBy</el-method></a> in <a href="#HoFs">HoFs</a></td>
  </tr><tr id="minBy_List">
   <td><el-method>minBy</el-method></td>
   <td><el-type>List</el-type></td>
   <td><el-kw>lambda</el-kw></td>
   <td><el-type>List</el-type> items' Type</td>
   <td>the list item corresponding to the minimum of the values returned by a lambda<br>
-  see <a href="#minBy"><el-method>minBy</el-method></a> in HoFs</td>
+  see <a href="#minBy"><el-method>minBy</el-method></a> in <a href="#HoFs">HoFs</a></td>
  </tr><tr id="orderBy_List">
   <td><el-method>orderBy</el-method></td>
   <td><el-type>List</el-type></td>
@@ -935,13 +935,13 @@ with specified changes: that is why all such methods have names starting '<el-co
   <td><el-type>return type of lambda</el-type></td>
   <td>the final value obtained by applying a lambda cumulatively to each item in the input List<br>
   taking account of the first argument as an initial (and default return) value<br>
-  see <a href="#reduce"><el-method>reduce</el-method></a> in HoFs</td>
+  see <a href="#reduce"><el-method>reduce</el-method></a> in <a href="#HoFs">HoFs</a></td>
  </tr><tr id="sortBy_List">
   <td><el-method>sortBy</el-method></td>
   <td><el-type>List</el-type></td>
   <td><el-kw>lambda</el-kw></td>
   <td><el-type>List</el-type></td>
-  <td><b><i>deprecated</i></b> use method <a href="#orderBy">orderBy</a> in <a href="#Hofs">HoFs</a> instead</td>
+  <td><b><i>deprecated</i></b> use method <a href="#orderBy">orderBy</a> in <a href="#HoFs">HoFs</a> instead</td>
  </tr><tr id="withAppend">
   <td><el-method>withAppend</el-method></td>
   <td><el-type>List</el-type></td>
@@ -1247,7 +1247,7 @@ You can still insert, delete or change items in a <el-code>ListImmutable</el-cod
   <td><el-type>ListImmutable</el-type></td>
   <td><el-kw>lambda</el-kw></td>
   <td><el-type>ListImmutable</el-type></td>
-  <td><b><i>deprecated</i></b> use method <a href="#orderBy">orderBy</a> in <a href="#Hofs">HoFs</a> instead</td>
+  <td><b><i>deprecated</i></b> use method <a href="#orderBy">orderBy</a> in <a href="#HoFs">HoFs</a> instead</td>
  </tr><tr id="withPut_ListImmutable">
   <td><el-method>withPut</el-method></td>
   <td><el-type>ListImmutable</el-type></td>
@@ -3399,6 +3399,9 @@ of integer values as defined by the two integer parameters: <el-id>start</el-id>
 <p>These are not yet fully documented but, for readers familiar with HoFs from another programming language, some examples are shown below.</p>
 
 <h3 class="no-TOC" id="filter">filter </h3>
+
+<p>You give a <el-type>List</el-type> to the higher-order function <el-method>filter</el-method> in order to return a new <el-type>List</el-type> containing a subset of items.
+The subset is chosen by a lambda function that tests list item values and returns a Boolean to specify filtering in or out.</p>  
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>filter</el-method></h4>
