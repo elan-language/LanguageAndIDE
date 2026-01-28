@@ -1,4 +1,4 @@
-# 0ff1bbda25b41611143fecc09137a1924e8ce06bed471a512b535e808fbe9b62 Elan 2.0.0-alpha guest default_profile valid
+# 9a5a4eac9377209b322261df415f80d723414885223bfea2410f5d231597be3c Elan 2.0.0-alpha guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -16,7 +16,7 @@ main
 end main
 
 function clockTick(g as Game, k as String) returns Game
-  constant g2 set to if k is "" then g else copy g with key set to k
+  constant g2 set to if k.isSameValueAs("") then g else copy g with key set to k
   constant g3 set to moveSnake(g2)
   constant g4 set to eatAppleIfPoss(g3)
   return if gameOver(g4) then copy g4 with isOn set to false else g4
@@ -26,7 +26,7 @@ function updateGraphics(g as Game, b as Array2D<of Int>) returns Array2D<of Int>
   constant b2 set to b.withPut(g.apple.x, g.apple.y, red)
   constant b3 set to b2.withPut(g.head.x, g.head.y, green)
   constant tail set to g.body[0]
-  constant tailColour set to if tail is g.priorTail then green else white
+  constant tailColour set to if tail.isSameValueAs(g.priorTail) then green else white
   return b3.withPut(tail.x, tail.y, tailColour)
 end function
 
@@ -45,8 +45,8 @@ end function
 function moveSnake(g as Game) returns Game
   constant k set to g.key
   constant x, y set to g.head
-  constant newX set to if k is "a" then x - 1 else if k is "d" then x + 1 else x
-  constant newY set to if k is "w" then y - 1 else if k is "s" then y + 1 else y
+  constant newX set to if k.isSameValueAs("a") then x - 1 else if k.isSameValueAs("d") then x + 1 else x
+  constant newY set to if k.isSameValueAs("w") then y - 1 else if k.isSameValueAs("s") then y + 1 else y
   return copy g with body set to g.body.withAppend(g.head), head set to newSquare(newX, newY)
 end function
 
@@ -57,7 +57,7 @@ function eatAppleIfPoss(g as Game) returns Game
 end function
 
 function headOverApple(g as Game) returns Boolean
-  return g.head is g.apple
+  return g.head.isSameValueAs(g.apple)
 end function
 
 function gameOver(g as Game) returns Boolean
@@ -237,7 +237,7 @@ end test
 test test_newGame
   variable rnd set to new Random()
   variable game set to newGame(rnd)
-  variable totest set to game.rnd is rnd
+  variable totest set to game.rnd.isSameValueAs(rnd)
   assert totest is false
   assert game.head is newSquare(22, 15)
   variable body set to game.body

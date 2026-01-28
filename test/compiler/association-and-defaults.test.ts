@@ -599,15 +599,15 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "A game");
   });
 
-  test("Pass_defaultKeywordToTestValue", async () => {
+  test("Pass_emptyKeywordToTestValue", async () => {
     const code = `${testHeader}
 
 main
   variable g set to new Game()
-  print g.p1 is empty Player
-  print g.p2 is empty Player
-  print g.previousGame is empty Game
-  print g.previousScores is empty ListImmutable<of Int>
+  print g.p1.isSameValueAs(empty Player)
+  print g.p2.isSameValueAs(empty Player)
+  print g.previousGame.isSameValueAs(empty Game)
+  print g.previousScores.isSameValueAs(empty ListImmutable<of Int>)
   print g.score is empty Int
   print g.best is empty Int
   print g.r is empty RegExp
@@ -653,10 +653,10 @@ end class`;
 const global = new class {};
 async function main() {
   let g = system.initialise(await new Game()._initialise());
-  await system.print(system.objectEquals(g.p1, Player.emptyInstance()));
-  await system.print(system.objectEquals(g.p2, Player.emptyInstance()));
-  await system.print(system.objectEquals(g.previousGame, Game.emptyInstance()));
-  await system.print(system.objectEquals(g.previousScores, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(g.p1, Player.emptyInstance()));
+  await system.print(_stdlib.isSameValueAs(g.p2, Player.emptyInstance()));
+  await system.print(_stdlib.isSameValueAs(g.previousGame, Game.emptyInstance()));
+  await system.print(_stdlib.isSameValueAs(g.previousScores, system.initialise(_stdlib.ListImmutable.emptyInstance())));
   await system.print(g.score === 0);
   await system.print(g.best === 0);
   await system.print(g.r === system.emptyRegExp());
@@ -739,6 +739,148 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truetruetruetruefalsetruetrue");
+  });
+
+  test("Pass_emptyKeywordToTestReference", async () => {
+    const code = `${testHeader}
+
+main
+  variable g set to new Game()
+  print g.p1.isSameReferenceAs(empty Player)
+  print g.p2.isSameReferenceAs(empty Player)
+  print g.previousGame.isSameReferenceAs(empty Game)
+  print g.previousScores.isSameReferenceAs(empty ListImmutable<of Int>)
+  print g.score.isSameReferenceAs(empty Int)
+  print g.best.isSameReferenceAs(empty Int)
+  print g.r.isSameReferenceAs(empty RegExp)
+end main
+
+class Game
+  constructor()
+    set property.score to 1
+  end constructor
+
+  property score as Float
+  property best as Float
+
+  property p1 as Player
+  property p2 as Player
+
+  property previousGame as Game
+
+  property previousScores as ListImmutable<of Int>
+
+  property r as RegExp
+
+  function asString() returns String
+    return "A game"
+  end function
+
+end class
+
+class Player
+  constructor(name as String)
+    set property.name to name
+  end constructor
+
+  property name as String
+
+  function asString() returns String
+    return property.name
+  end function
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let g = system.initialise(await new Game()._initialise());
+  await system.print(_stdlib.isSameReferenceAs(g.p1, Player.emptyInstance()));
+  await system.print(_stdlib.isSameReferenceAs(g.p2, Player.emptyInstance()));
+  await system.print(_stdlib.isSameReferenceAs(g.previousGame, Game.emptyInstance()));
+  await system.print(_stdlib.isSameReferenceAs(g.previousScores, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await system.print(_stdlib.isSameReferenceAs(g.score, 0));
+  await system.print(_stdlib.isSameReferenceAs(g.best, 0));
+  await system.print(_stdlib.isSameReferenceAs(g.r, system.emptyRegExp()));
+}
+
+class Game {
+  static emptyInstance() { return system.emptyClass(Game, [["score", 0], ["best", 0], ["previousScores", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["r", system.emptyRegExp()]]);};
+
+  async _initialise() {
+    this.score = 1;
+    return this;
+  }
+
+  score = 0;
+
+  best = 0;
+
+  _p1;
+  get p1() {
+    return this._p1 ??= Player.emptyInstance();
+  }
+  set p1(p1) {
+    this._p1 = p1;
+  }
+
+  _p2;
+  get p2() {
+    return this._p2 ??= Player.emptyInstance();
+  }
+  set p2(p2) {
+    this._p2 = p2;
+  }
+
+  _previousGame;
+  get previousGame() {
+    return this._previousGame ??= Game.emptyInstance();
+  }
+  set previousGame(previousGame) {
+    this._previousGame = previousGame;
+  }
+
+  previousScores = system.initialise(_stdlib.ListImmutable.emptyInstance());
+
+  r = system.emptyRegExp();
+
+  async asString() {
+    return "A game";
+  }
+
+}
+
+class Player {
+  static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
+
+  async _initialise(name) {
+    this.name = name;
+    return this;
+  }
+
+  name = "";
+
+  async asString() {
+    return this.name;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "falsefalsefalsefalsefalsetruetrue");
   });
 
   test("Pass_defaultValueCanBeAssigned", async () => {
@@ -879,7 +1021,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "100");
   });
 
-  test("Pass_defaultForStandardDataStructures", async () => {
+  test("Pass_emptyForStandardDataStructuresByValue", async () => {
     const code = `${testHeader}
 
 main
@@ -888,10 +1030,10 @@ main
   print f.b
   print f.c
   print f.d
-  print f.a is empty ListImmutable<of Int>
-  print f.b is empty String
-  print f.c is empty Dictionary<of String,Int>
-  print f.d is empty List<of Int>
+  print f.a.isSameValueAs(empty ListImmutable<of Int>)
+  print f.b.isSameValueAs(empty String)
+  print f.c.isSameValueAs(empty Dictionary<of String,Int>)
+  print f.d.isSameValueAs(empty List<of Int>)
 end main
 
 class Foo
@@ -917,10 +1059,10 @@ async function main() {
   await system.print(f.b);
   await system.print(f.c);
   await system.print(f.d);
-  await system.print(system.objectEquals(f.a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
-  await system.print(f.b === "");
-  await system.print(system.objectEquals(f.c, system.initialise(_stdlib.Dictionary.emptyInstance())));
-  await system.print(system.objectEquals(f.d, system.initialise(_stdlib.List.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(f.a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(f.b, ""));
+  await system.print(_stdlib.isSameValueAs(f.c, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(f.d, system.initialise(_stdlib.List.emptyInstance())));
 }
 
 class Foo {
@@ -960,6 +1102,89 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "{}[][]truetruetruetrue");
+  });
+
+  test("Pass_emptyForStandardDataStructuresByReference", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  print f.a
+  print f.b
+  print f.c
+  print f.d
+  print f.a.isSameReferenceAs(empty ListImmutable<of Int>)
+  print f.b.isSameReferenceAs(empty String)
+  print f.c.isSameReferenceAs(empty Dictionary<of String,Int>)
+  print f.d.isSameReferenceAs(empty List<of Int>)
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property a as ListImmutable<of Int>
+  property b as String
+  property c as Dictionary<of String, Int>
+  property d as List<of Int>
+
+  function asString() returns String
+    return "A Foo"
+  end function
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(await new Foo()._initialise());
+  await system.print(f.a);
+  await system.print(f.b);
+  await system.print(f.c);
+  await system.print(f.d);
+  await system.print(_stdlib.isSameReferenceAs(f.a, system.initialise(_stdlib.ListImmutable.emptyInstance())));
+  await system.print(_stdlib.isSameReferenceAs(f.b, ""));
+  await system.print(_stdlib.isSameReferenceAs(f.c, system.initialise(_stdlib.Dictionary.emptyInstance())));
+  await system.print(_stdlib.isSameReferenceAs(f.d, system.initialise(_stdlib.List.emptyInstance())));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["a", system.initialise(_stdlib.ListImmutable.emptyInstance())], ["b", ""], ["c", system.initialise(_stdlib.Dictionary.emptyInstance())], ["d", system.initialise(_stdlib.List.emptyInstance())]]);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  a = system.initialise(_stdlib.ListImmutable.emptyInstance());
+
+  b = "";
+
+  c = system.initialise(_stdlib.Dictionary.emptyInstance());
+
+  d = system.initialise(_stdlib.List.emptyInstance());
+
+  async asString() {
+    return "A Foo";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "{}[][]falsetruefalsefalse");
   });
 
   test("Pass_PropertyOfAbstractType", async () => {

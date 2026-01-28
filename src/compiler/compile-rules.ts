@@ -79,6 +79,7 @@ import {
   isProcedure,
   isProperty,
   isSymbol,
+  isValueTypeExcludingString,
   symbolScopeToFriendlyName,
 } from "./symbols/symbol-helpers";
 import { SymbolScope } from "./symbols/symbol-scope";
@@ -699,6 +700,23 @@ export function mustBeCoercibleType(
   }
 
   mustBeAssignableType(lhs, rhs, compileErrors, location);
+}
+
+export function mustBeValueType(
+  lhs: SymbolType,
+  rhs: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  // for compare allow int and floats
+  if (!isValueTypeExcludingString(lhs) || !isValueTypeExcludingString(rhs)) {
+    compileErrors.push(
+      new SyntaxCompileError(
+        `Can only compare value types with an operator. To compare reference types use '.isSameValueAs' or '.isSameReferenceAs'`,
+        location,
+      ),
+    );
+  }
 }
 
 export function mustBeKnownOperation(op: string, compileErrors: CompileError[], location: string) {

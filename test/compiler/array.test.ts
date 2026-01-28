@@ -314,7 +314,7 @@ return [main, _tests];}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "Out of range index: 3 size: 3");
   });
 
-  test("Pass_EmptyArray", async () => {
+  test("Pass_EmptyArrayByValue", async () => {
     const code = `${testHeader}
 
 main
@@ -322,9 +322,9 @@ main
   variable b set to empty Array<of Int>
   print a
   print b
-  print a is b
-  print a is empty Array<of Int>
-  print b is empty Array<of Int>
+  print a.isSameValueAs(b)
+  print a.isSameValueAs(empty Array<of Int>)
+  print b.isSameValueAs(empty Array<of Int>)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -334,9 +334,9 @@ async function main() {
   let b = system.initialise(_stdlib.Array.emptyInstance());
   await system.print(a);
   await system.print(b);
-  await system.print(system.objectEquals(a, b));
-  await system.print(system.objectEquals(a, system.initialise(_stdlib.Array.emptyInstance())));
-  await system.print(system.objectEquals(b, system.initialise(_stdlib.Array.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(a, b));
+  await system.print(_stdlib.isSameValueAs(a, system.initialise(_stdlib.Array.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(b, system.initialise(_stdlib.Array.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -354,6 +354,48 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[][]truetruetrue");
+  });
+
+  test("Pass_EmptyArrayByReference", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to empty Array<of Int>
+  variable b set to empty Array<of Int>
+  variable c set to a
+  print a.isSameReferenceAs(b)
+  print a.isSameReferenceAs(empty Array<of Int>)
+  print b.isSameReferenceAs(empty Array<of Int>)
+  print a.isSameReferenceAs(c)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(_stdlib.Array.emptyInstance());
+  let b = system.initialise(_stdlib.Array.emptyInstance());
+  let c = a;
+  await system.print(_stdlib.isSameReferenceAs(a, b));
+  await system.print(_stdlib.isSameReferenceAs(a, system.initialise(_stdlib.Array.emptyInstance())));
+  await system.print(_stdlib.isSameReferenceAs(b, system.initialise(_stdlib.Array.emptyInstance())));
+  await system.print(_stdlib.isSameReferenceAs(a, c));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "falsefalsefalsetrue");
   });
 
   test("Pass_InitialiseEmptyArray", async () => {

@@ -191,13 +191,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "hell0");
   });
 
-  test("Pass_EmptyString", async () => {
+  test("Pass_EmptyStringByValue", async () => {
     const code = `${testHeader}
 
 constant a set to ""
 main
   print a
-  print a is empty String
+  print a.isSameValueAs(empty String)
 end main
 `;
 
@@ -208,7 +208,44 @@ const global = new class {
 };
 async function main() {
   await system.print(global.a);
-  await system.print(global.a === "");
+  await system.print(_stdlib.isSameValueAs(global.a, ""));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "true");
+  });
+
+  test("Pass_EmptyStringByReference", async () => {
+    const code = `${testHeader}
+
+constant a set to ""
+main
+  print a
+  print a.isSameReferenceAs(empty String)
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  a = "";
+
+};
+async function main() {
+  await system.print(global.a);
+  await system.print(_stdlib.isSameReferenceAs(global.a, ""));
 }
 return [main, _tests];}`;
 

@@ -1,10 +1,10 @@
-# cdeb1289ded0148926916a4e6ee56b11fcead63b667ba834125499586f3b56bd Elan 2.0.0-alpha guest default_profile valid
+# 6b94c5944b7a1793af48e44e7be4c08c68b18f3619cc2c398be6ae3e0bd2ffbf Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable reply set to ""
-  while reply.upperCase() isnt "Q"
+  while not reply.upperCase().isSameValueAs("Q")
     set reply to inputString('RETURN for time now or\nUnix time (positive integer) or\nQ to quit')
-    if reply is "" then
+    if reply.isSameValueAs("") then
       call printDate((clock()/1000).floor())
     else
       variable t, d set to parseAsInt(reply)
@@ -124,9 +124,9 @@ function pad(d as String, p as String, s as String) returns String
   # s: input string
   variable sR set to s
   if p.length() > s.length() then
-    if d.upperCase() is "L" then
+    if d.upperCase().isSameValueAs("L") then
       set sR to (p + s)[(p + s).length() - p.length()..]
-    elif d.upperCase() is "R" then
+    elif d.upperCase().isSameValueAs("R") then
       set sR to (s + p)[..p.length()]
     end if
   end if

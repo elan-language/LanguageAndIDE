@@ -743,7 +743,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  test("Pass_EmptyList", async () => {
+  test("Pass_EmptyListByValue", async () => {
     const code = `${testHeader}
 
 main
@@ -752,9 +752,9 @@ main
   call a.append(3)
   print a
   print b
-  print a is b
-  print a is empty List<of Int>
-  print b is empty List<of Int>
+  print a.isSameValueAs(b)
+  print a.isSameValueAs(empty List<of Int>)
+  print b.isSameValueAs(empty List<of Int>)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -765,9 +765,9 @@ async function main() {
   a.append(3);
   await system.print(a);
   await system.print(b);
-  await system.print(system.objectEquals(a, b));
-  await system.print(system.objectEquals(a, system.initialise(_stdlib.List.emptyInstance())));
-  await system.print(system.objectEquals(b, system.initialise(_stdlib.List.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(a, b));
+  await system.print(_stdlib.isSameValueAs(a, system.initialise(_stdlib.List.emptyInstance())));
+  await system.print(_stdlib.isSameValueAs(b, system.initialise(_stdlib.List.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -785,6 +785,50 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[3][]falsefalsetrue");
+  });
+
+  test("Pass_EmptyListByReference", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to empty List<of Int>
+  variable b set to empty List<of Int>
+  call a.append(3)
+  print a
+  print b
+  print a.isSameReferenceAs(b)
+  print a.isSameReferenceAs(empty List<of Int>)
+  print b.isSameReferenceAs(empty List<of Int>)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(_stdlib.List.emptyInstance());
+  let b = system.initialise(_stdlib.List.emptyInstance());
+  a.append(3);
+  await system.print(a);
+  await system.print(b);
+  await system.print(_stdlib.isSameReferenceAs(a, b));
+  await system.print(_stdlib.isSameReferenceAs(a, system.initialise(_stdlib.List.emptyInstance())));
+  await system.print(_stdlib.isSameReferenceAs(b, system.initialise(_stdlib.List.emptyInstance())));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[3][]falsefalsefalse");
   });
 
   test("Pass_SetInMain", async () => {

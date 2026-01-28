@@ -1,4 +1,4 @@
-# ed8091ff3bfe1eabc4b2b7991ce678be09d79f62038d25467dfc846fcb637fa5 Elan 2.0.0-alpha guest default_profile valid
+# a36ce897f30f33cd631b644a8abb97d978c7b2956db9bbbfc07bbba973a791e7 Elan 2.0.0-alpha guest default_profile valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -63,11 +63,11 @@ class TuringMachine
   end procedure
 
   function isHalted() returns Boolean
-    return property.currentState is property.haltState
+    return property.currentState.isSameValueAs(property.haltState)
   end function
 
   function findMatchingRule() returns Rule
-    variable matches set to property.rules.filter(lambda r as Rule => (r.currentState is property.currentState) and (r.currentSymbol is property.tape[property.headPosition]))
+    variable matches set to property.rules.filter(lambda r as Rule => (r.currentState.isSameValueAs(property.currentState)) and (r.currentSymbol.isSameValueAs(property.tape[property.headPosition])))
     if matches.length() is 0 then
       throw exception "No rule matching state {property.currentState} and symbol {property.tape[property.headPosition]}"
     end if

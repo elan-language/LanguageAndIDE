@@ -301,29 +301,71 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "bccdeab");
   });
 
-  test("Pass_EqualityTesting", async () => {
+  test("Pass_ValueEqualityTesting", async () => {
     const code = `${testHeader}
 
 main
-    print "abc" is "abc"
-    print "abc" is "abcd"
-    print "abc" is "Abc"
-    print "abc" is "abc"
-    print "abc" isnt "abcd"
-    print "abc" isnt "abcd"
-    print "abc" isnt "Abc"
+    print "abc".isSameValueAs("abc")
+    print "abc".isSameValueAs("abcd")
+    print "abc".isSameValueAs("Abc")
+    print "abc".isSameValueAs("abc")
+    print not "abc".isSameValueAs("abcd")
+    print not "abc".isSameValueAs("abcd")
+    print not "abc".isSameValueAs("Abc")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print("abc" === "abc");
-  await system.print("abc" === "abcd");
-  await system.print("abc" === "Abc");
-  await system.print("abc" === "abc");
-  await system.print("abc" !== "abcd");
-  await system.print("abc" !== "abcd");
-  await system.print("abc" !== "Abc");
+  await system.print(_stdlib.isSameValueAs("abc", "abc"));
+  await system.print(_stdlib.isSameValueAs("abc", "abcd"));
+  await system.print(_stdlib.isSameValueAs("abc", "Abc"));
+  await system.print(_stdlib.isSameValueAs("abc", "abc"));
+  await system.print(!_stdlib.isSameValueAs("abc", "abcd"));
+  await system.print(!_stdlib.isSameValueAs("abc", "abcd"));
+  await system.print(!_stdlib.isSameValueAs("abc", "Abc"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truefalsefalsetruetruetruetrue");
+  });
+
+  test("Pass_ReferenceEqualityTesting", async () => {
+    const code = `${testHeader}
+
+main
+    print "abc".isSameReferenceAs("abc")
+    print "abc".isSameReferenceAs("abcd")
+    print "abc".isSameReferenceAs("Abc")
+    print "abc".isSameReferenceAs("abc")
+    print not "abc".isSameReferenceAs("abcd")
+    print not "abc".isSameReferenceAs("abcd")
+    print not "abc".isSameReferenceAs("Abc")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.print(_stdlib.isSameReferenceAs("abc", "abc"));
+  await system.print(_stdlib.isSameReferenceAs("abc", "abcd"));
+  await system.print(_stdlib.isSameReferenceAs("abc", "Abc"));
+  await system.print(_stdlib.isSameReferenceAs("abc", "abc"));
+  await system.print(!_stdlib.isSameReferenceAs("abc", "abcd"));
+  await system.print(!_stdlib.isSameReferenceAs("abc", "abcd"));
+  await system.print(!_stdlib.isSameReferenceAs("abc", "Abc"));
 }
 return [main, _tests];}`;
 

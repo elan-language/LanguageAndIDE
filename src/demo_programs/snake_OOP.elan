@@ -1,4 +1,4 @@
-# 57d8c47a5f2aca574cad6080b7b2061944d0de037eb2bd126131e248088b0c95 Elan 2.0.0-alpha guest default_profile valid
+# 835a29cb638e365c4d933237f49e584a611c9c3b83a7023dc4cd2b5326a48553 Elan 2.0.0-alpha guest default_profile valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -38,7 +38,7 @@ class Snake
     set property.priorTail to property.body[0]
     call property.body.append(property.head)
     set property.head to property.head.getAdjacentSquare(property.currentDir)
-    if property.head is apple.location then
+    if property.head.isSameValueAs(apple.location) then
       call apple.newRandomPosition(this)
     else
       set property.body to property.body[1..]
@@ -47,7 +47,7 @@ class Snake
 
   procedure updateBlocks(blocks as Array2D<of Int>)
     call blocks.put(property.head.x, property.head.y, green)
-    if property.body[0] isnt property.priorTail then
+    if not property.body[0].isSameValueAs(property.priorTail) then
       call blocks.put(property.priorTail.x, property.priorTail.y, white)
     end if
   end procedure
@@ -59,7 +59,7 @@ class Snake
   function bodyCovers(sq as Square) returns Boolean
     variable result set to false
     each seg in property.body
-      if (seg is sq) then
+      if (seg.isSameValueAs(sq)) then
         set result to true
       end if
     end each
@@ -71,13 +71,13 @@ class Snake
   end function
 
   private procedure setDirection(key as String)
-    if key is "w" then
+    if key.isSameValueAs("w") then
       set property.currentDir to Direction.up
-    elif key is "s" then
+    elif key.isSameValueAs("s") then
       set property.currentDir to Direction.down
-    elif key is "a" then
+    elif key.isSameValueAs("a") then
       set property.currentDir to Direction.left
-    elif key is "d" then
+    elif key.isSameValueAs("d") then
       set property.currentDir to Direction.right
     end if
   end procedure

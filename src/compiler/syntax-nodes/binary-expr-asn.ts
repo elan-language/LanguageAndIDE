@@ -7,7 +7,7 @@ import { IntType } from "../../compiler/symbols/int-type";
 import { StringType } from "../../compiler/symbols/string-type";
 import {
   getGlobalScope,
-  isValueType,
+  isValueTypeExcludingString,
   mostPreciseSymbol,
 } from "../../compiler/symbols/symbol-helpers";
 import {
@@ -17,6 +17,7 @@ import {
   mustBeIntegerType,
   mustBeKnownOperation,
   mustBeNumberTypes,
+  mustBeValueType,
 } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { mapOperation } from "./ast-helpers";
@@ -143,6 +144,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
     }
 
     if (this.isEqualityOp(opSymbol)) {
+      mustBeValueType(lst, rst, this.compileErrors, this.fieldId);
       mustBeCoercibleType(lst, rst, this.compileErrors, this.fieldId);
     }
 
@@ -164,7 +166,10 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    if (opSymbol === OperationSymbol.Equals && (isValueType(lst) || isValueType(rst))) {
+    if (
+      opSymbol === OperationSymbol.Equals &&
+      (isValueTypeExcludingString(lst) || isValueTypeExcludingString(rst))
+    ) {
       return `${lhsCode} ${this.opToJs(opSymbol)} ${rhsCode}`;
     }
 

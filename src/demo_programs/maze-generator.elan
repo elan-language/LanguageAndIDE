@@ -1,4 +1,4 @@
-# ec4eaf706177327d417ec577c6f371009ce5263d9845646824f82696ba61685b Elan 2.0.0-alpha guest default_profile valid
+# 91251549ab1f66a7c24b42fc4a8d0d1ee317ed5b5808c129c1538f17c809391a Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable blocks set to new Array2D<of Int>(40, 30, black)
@@ -16,7 +16,7 @@ main
   end for
   call displayBlocks(blocks)
   constant name set to inputString("File name to save: ")
-  if name isnt "x" then
+  if not name.isSameValueAs("x") then
     call saveAsFile(name, blocks)
   end if
 end main
