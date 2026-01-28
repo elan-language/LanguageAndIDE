@@ -1,4 +1,4 @@
-# 9225afd4f61281809de87122d11592501e4491beffbbf0676afba7bdb6fa9121 Elan 2.0.0-alpha guest default_profile valid
+# 10b7a336deeb726a0bfb8abc74d14468aa9ce5a357825a63c4440244f351d772 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable points set to 1000
@@ -153,7 +153,7 @@ function htmlForCard(card as Card) returns String
     variable v set to htmlForSpot("v", symbol)
     variable grid set to ""
     each location in gridByRank[rank]
-      if location is "royal" then
+      if location.isSameValueAs("royal") then
         set grid to grid + htmlForSpot(location, rank)
       else
         set grid to grid + htmlForSpot(location, symbol)
@@ -273,7 +273,7 @@ abstract class Player
   procedure draw()
     variable newCard set to dealCard(random())
     call property.cards.append(newCard)
-    if newCard.rank is "A" then
+    if newCard.rank.isSameValueAs("A") then
       call addAce()
     else
       set property.handTotal to property.handTotal + newCard.value
@@ -387,11 +387,11 @@ class HumanPlayer inherits Player
   procedure nextAction(dealerFaceCard as Card)
     variable key set to ""
     call clearKeyBuffer()
-    while key is ""
+    while key.isSameValueAs("")
       set key to waitForKey()
-      if key is "d" then
+      if key.isSameValueAs("d") then
         call draw()
-      elif key is "s" then
+      elif key.isSameValueAs("s") then
         call stand()
       else
         set key to ""

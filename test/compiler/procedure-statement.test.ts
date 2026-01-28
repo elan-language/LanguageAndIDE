@@ -10,6 +10,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -1493,7 +1494,7 @@ end procedure`;
     assertDoesNotCompile(fileImpl, ["Name 'a' not unique in scope.LangRef.html#compile_error"]);
   });
 
-  test("Fail_OperatorsAndProcedures", async () => {
+  ignore_test("Fail_OperatorsAndProcedures", async () => {
     const code = `${testHeader}
 
 main

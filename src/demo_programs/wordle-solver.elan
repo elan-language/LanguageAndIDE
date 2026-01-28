@@ -1,4 +1,4 @@
-# 44d2bcc794521da5ed3135ea54e212b8d70f40b22e30c87b5d52d50b10c28bcf Elan 2.0.0-alpha guest default_profile valid
+# e690ffe0b084838e4816914a398c39042f0905f9008a7c7f1f13eb622f7f57cf Elan 2.0.0-alpha guest default_profile valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Works only for the 2,309 words that may be set by the official online Wordle
@@ -12,7 +12,7 @@ main
   variable possible set to allPossibleAnswers
   variable mark set to ""
   variable attempt set to "RAISE"
-  while mark isnt "*****"
+  while not mark.isSameValueAs("*****")
     set mark to inputString(attempt)
     set possible to possibleAnswersAfterAttempt(possible, attempt, mark)
     set attempt to bestAttempt(possible)
@@ -20,7 +20,7 @@ main
 end main
 
 function isGreen(attempt as String, target as String, n as Int) returns Boolean
-  return target[n] is attempt[n]
+  return target[n].isSameValueAs(attempt[n])
 end function
 
 test test_isGreen
@@ -86,7 +86,7 @@ test test_isYellow
 end test
 
 function setAttemptIfYellow(attempt as String, target as String, n as Int) returns String
-  return if attempt[n] is "*" then attempt else if isYellow(attempt, target, n) then setChar(attempt, n, "+") else setChar(attempt, n, "_")
+  return if attempt[n].isSameValueAs("*") then attempt else if isYellow(attempt, target, n) then setChar(attempt, n, "+") else setChar(attempt, n, "_")
 end function
 
 test test_setAttemptIfYellow
@@ -97,7 +97,7 @@ test test_setAttemptIfYellow
 end test
 
 function isAlreadyMarkedGreen(attempt as String, n as Int) returns Boolean
-  return attempt[n] is "*"
+  return attempt[n].isSameValueAs("*")
 end function
 
 test test_isAlreadyMarkedGreen
@@ -153,7 +153,7 @@ test test_markAttempt
 end test
 
 function possibleAnswersAfterAttempt(prior as ListImmutable<of String>, attempt as String, mark as String) returns ListImmutable<of String>
-  return prior.filter(lambda w as String => markAttempt(attempt, w) is mark)
+  return prior.filter(lambda w as String => markAttempt(attempt, w).isSameValueAs(mark))
 end function
 
 test test_possibleAnswersAfterAttempt

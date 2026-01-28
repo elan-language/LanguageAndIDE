@@ -1588,6 +1588,8 @@ end class`;
       ["f1", "*", "*"],
       ["f2", "*", "*"],
       ["f3", "*", "*"],
+      ["isSameReferenceAs", "*", "*"],
+      ["isSameValueAs", "*", "*"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "expr5", "foo().", expected);

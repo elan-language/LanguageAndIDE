@@ -275,7 +275,7 @@ end class`;
     assertDoesNotCompile(fileImpl, [
       "Library or class function 'p1' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
       "Library or class function 'p1' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
-      "Cannot do equality operations on Procedures or Functions.LangRef.html#CannotCompareProcFunc",
+      "Library or class function 'p1' cannot be used without bracketsLangRef.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 

@@ -1127,7 +1127,7 @@ async function main() {
 }
 
 async function getTrailingNumber(s) {
-  return _stdlib.isSameValueAs(s, "") ? "" : system.safeSlice(s, (await global.last((await _stdlib.sequence(0, _stdlib.length(s) - 1).filter(async (n) => !(await global.isnumberchar(system.safeIndex(s, n))))))) + 1, _stdlib.length(s)));
+  return (_stdlib.isSameValueAs(s, "") ? "" : system.safeSlice(s, (await global.last((await _stdlib.sequence(0, _stdlib.length(s) - 1).filter(async (n) => !(await global.isnumberchar(system.safeIndex(s, n))))))) + 1, _stdlib.length(s)));
 }
 global["getTrailingNumber"] = getTrailingNumber;
 

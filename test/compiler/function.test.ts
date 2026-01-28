@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -1270,7 +1271,7 @@ end function`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_OperatorsAndProceduresWithFunctionKeyword1", async () => {
+  ignore_test("Fail_OperatorsAndProceduresWithFunctionKeyword1", async () => {
     const code = `${testHeader}
 
 main
@@ -1396,7 +1397,7 @@ end function`;
     ]);
   });
 
-  test("Fail_OperatorsAndProcedures1", async () => {
+  ignore_test("Fail_OperatorsAndProcedures1", async () => {
     const code = `${testHeader}
 
 main

@@ -1,4 +1,4 @@
-# fb6149963489fb207a6606a8369099d306d406525d64e22b9a7e048d57bc877b Elan 2.0.0-alpha guest default_profile valid
+# 265d96ccb452292264ad465e87d791c74d3d9b5d91afebdeaa0aa6dd5b0968fb Elan 2.0.0-alpha guest default_profile valid
 
 # Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
 # A Cellular Automaton Model of Excitable Media
@@ -61,7 +61,7 @@ end procedure
 
 function uniform(grid as Array2D<of Int>) returns Boolean
   constant uniformGrid set to new Array2D<of Int>(gW, gH, grid[0, 0])
-  return if grid is uniformGrid then true else false
+  return if grid.isSameValueAs(uniformGrid) then true else false
 end function
 
 function getNeighbourColours(grid as Array2D<of Int>, i as Int, j as Int) returns List<of Int>
