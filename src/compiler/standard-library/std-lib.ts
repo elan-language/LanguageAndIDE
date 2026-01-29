@@ -315,12 +315,12 @@ export class StdLib {
   }
 
   @elanFunction(["number", "number"], FunctionOptions.pure, ElanInt)
-  divAsInteger(n1: number, n2 : number) {
+  divAsInteger(n1: number, n2: number) {
     return Math.floor(n1 / n2);
   }
 
-  @elanFunction(["number", "number"], FunctionOptions.pure, ElanInt)
-  divAsFloat(n1: number, n2 : number) {
+  @elanFunction(["number", "number"], FunctionOptions.pure, ElanFloat)
+  divAsFloat(n1: number, n2: number) {
     return n1 / n2;
   }
 

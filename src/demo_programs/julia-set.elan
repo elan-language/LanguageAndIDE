@@ -1,4 +1,4 @@
-# 738315a27b1aeb5fb08a5f3650fd4b812c397b0d110e8ed32eeeb37c34664222 Elan 2.0.0-alpha guest default_profile valid
+# 0c6a15f48ba7c23c578d80775e5febf87f2a3a3a5656ae690eb294d5cc492c64 Elan 2.0.0-alpha guest default_profile valid
 
 # After image is displayed, press: 
 # - z to zoom in, x to zoom out
@@ -23,10 +23,10 @@ function allpoints(p as Coords) returns List<of VectorGraphic>
   for xp from 0 to width step 1
     for yp from 0 to height step 1
       # scale and centre
-      constant n set to onepoint((xp - width/2)/p.scale - p.xoff, (yp - height/2)/p.scale - p.yoff, nmax, p)
+      constant n set to onepoint(divAsFloat(divAsFloat(xp - width, 2), p.scale - p.xoff), divAsFloat(divAsFloat(yp - height, 2), p.scale - p.yoff), nmax, p)
       # colour depends on how many iterations were done for that point
       constant col set to if n is nmax then 0xffffff else ((n*0x010201) mod 0xffffff)
-      constant rect set to new RectangleVG() with x set to xp/2, y set to yp/2, width set to 0.5, height set to 0.5, fillColour set to col, strokeColour set to col, strokeWidth set to 0.25
+      constant rect set to new RectangleVG() with x set to divAsFloat(xp, 2), y set to divAsFloat(yp, 2), width set to 0.5, height set to 0.5, fillColour set to col, strokeColour set to col, strokeWidth set to 0.25
       set vg2 to vg2.withAppend(rect)
     end for
   end for

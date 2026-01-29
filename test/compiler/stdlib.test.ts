@@ -1767,9 +1767,9 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print (1/0).isInfinite()
-  print (-1/0).isInfinite()
-  print (1/1).isInfinite()
+  print (1.0/0).isInfinite()
+  print (-1.0/0).isInfinite()
+  print (1.0/1).isInfinite()
   print sqrt(-1).isInfinite()
 end main`;
 

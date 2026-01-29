@@ -1,4 +1,4 @@
-# 137eb6ea3e7d383ddc374dcf1a258f4da09da4aabd6dd62fcf05a9ed063a4064 Elan 2.0.0-alpha guest default_profile valid
+# 43c637020acdce59bcac27a3533c31b79c5cd0b0f7dad8817ee285f636b1e544 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable game set to new Game(1000)
@@ -117,7 +117,7 @@ end test
 
 function dealCard(random as Float) returns Card
   variable number set to (random*52).floor()
-  variable rank set to rankValue.keys()[(number/4).floor()]
+  variable rank set to rankValue.keys()[divAsInteger(number, 4)]
   variable suit set to number mod 4
   return new Card() with rank set to rank, suit set to intAsSuit(suit)
 end function

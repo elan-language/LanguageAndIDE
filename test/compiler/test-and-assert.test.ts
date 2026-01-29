@@ -775,7 +775,7 @@ main
 end main
 
 test round1
-  variable a set to 1/3
+  variable a set to 1/3.0
   variable b set to a.round(4)
   assert b is 0.3333
 end test
