@@ -193,7 +193,7 @@ main
   variable f set to 3 is 4
   variable g set to 3 isnt 4
   variable h set to not false
-  variable k set to 4 / 3
+  variable k set to 4.0 / 3
   print a
   print b
   print c

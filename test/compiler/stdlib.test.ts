@@ -1767,9 +1767,9 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print (1/0).isInfinite()
-  print (-1/0).isInfinite()
-  print (1/1).isInfinite()
+  print (1.0/0).isInfinite()
+  print (-1.0/0).isInfinite()
+  print (1.0/1).isInfinite()
   print sqrt(-1).isInfinite()
 end main`;
 
@@ -2344,5 +2344,50 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "falsefalsefalsefalse");
+  });
+
+  test("Pass_divideFunctions", async () => {
+    const code = `${testHeader}
+
+main
+  print divAsInteger(1, 2)
+  print divAsInteger(1.0, 2.0)
+  print divAsInteger(1, 2.0)
+  print divAsInteger(1.0, 2)
+  print divAsFloat(1, 2)
+  print divAsFloat(1.0, 2.0)
+  print divAsFloat(1, 2.0)
+  print divAsFloat(1.0, 2)
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.print(_stdlib.divAsInteger(1, 2));
+  await system.print(_stdlib.divAsInteger(1, 2));
+  await system.print(_stdlib.divAsInteger(1, 2));
+  await system.print(_stdlib.divAsInteger(1, 2));
+  await system.print(_stdlib.divAsFloat(1, 2));
+  await system.print(_stdlib.divAsFloat(1, 2));
+  await system.print(_stdlib.divAsFloat(1, 2));
+  await system.print(_stdlib.divAsFloat(1, 2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "00000.50.50.50.5");
   });
 });

@@ -1,4 +1,4 @@
-# 03afcf7e270d599bc94eaa95ea78dbc5e0d57e566cd84a32ff23f4a39a65328a Elan 2.0.0-alpha guest default_profile valid
+# 8efa67356a83e198165242f9c6311d4f2373d111967578143c38b5ab147844fc Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable start set to newPoint(5, 5)
@@ -46,7 +46,7 @@ procedure createRocksAndNodes(percentRocks as Int, out rocks as List<of Point>, 
         call nodes.append(new Node(p, 0, p.minDistTo(dest)))
       elif p.isSameValueAs(dest) then
         call nodes.append(new Node(p, infinity, 0))
-      elif random() < percentRocks/100 then
+      elif random() < divAsFloat(percentRocks, 100) then
         call rocks.append(p)
       else
         call nodes.append(new Node(p, infinity, p.minDistTo(dest)))

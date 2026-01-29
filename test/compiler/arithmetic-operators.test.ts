@@ -138,19 +138,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "7");
   });
 
-  test("Pass_DivideIntegersToFloat", async () => {
+  test("Fail_DivideIntegersToFloat", async () => {
     const code = `${testHeader}
 
 main
   print 3 / 2
 end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  await system.print(3 / 2);
-}
-return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -163,22 +156,22 @@ return [main, _tests];}`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1.5");
+    assertDoesNotCompile(fileImpl, [
+      "Cannot apply / to two integer values. Either ensure both values are integer types, or use the function divAsInteger or divAsFloat.LangRef.html#compile_error",
+    ]);
   });
 
-  test("Pass_IntegerDivision", async () => {
+  test("Pass_IntegerDivision1", async () => {
     const code = `${testHeader}
 
 main
-  print (7/2).floor()
+  print divAsFloat(7, 2).floor()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.floor((7 / 2)));
+  await system.print(_stdlib.floor(_stdlib.divAsFloat(7, 2)));
 }
 return [main, _tests];}`;
 
@@ -196,6 +189,66 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  test("Pass_IntegerDivision2", async () => {
+    const code = `${testHeader}
+
+main
+  print divAsInteger(7, 2)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.print(_stdlib.divAsInteger(7, 2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  test("Pass_IntegerDivision3", async () => {
+    const code = `${testHeader}
+
+main
+  print divAsFloat(7, 2)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await system.print(_stdlib.divAsFloat(7, 2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3.5");
   });
 
   test("Pass_Mod", async () => {

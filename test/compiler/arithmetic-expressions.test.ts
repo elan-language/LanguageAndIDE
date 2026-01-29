@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -167,12 +168,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2512");
   });
 
-  test("Pass_PowerHasHigherPrecedenceThanIntDivision", async () => {
+  test("Pass_PowerHasHigherPrecedenceThanDivision", async () => {
     const code = `${testHeader}
 
 main
-  variable x set to 16 / 2 ^ 3
-  variable y set to (16 / 2) ^ 3
+  variable x set to 16.0 / 2 ^ 3
+  variable y set to (16.0 / 2) ^ 3
   print x
   print y
 end main`;
@@ -318,12 +319,13 @@ end main`;
 
     assertDoesNotParse(fileImpl);
   });
+
   test("Pass_OperatorOrder#1167", async () => {
     const code = `${testHeader}
 
 main
-  print 2*12/3 + 190
-  print 24/6/2
+  print 2*12/3.0 + 190
+  print 24/6/2.0
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -382,7 +384,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 1/0
+  print 1.0/0
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

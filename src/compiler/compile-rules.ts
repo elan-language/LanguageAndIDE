@@ -769,6 +769,22 @@ export function mustBeIntegerType(
   mustBeAssignableType(IntType.Instance, rhs, compileErrors, location);
 }
 
+export function mustNotBeIntegerTypesToDivide(
+  lhs: SymbolType,
+  rhs: SymbolType,
+  compileErrors: CompileError[],
+  location: string,
+) {
+  if (lhs === IntType.Instance && rhs === IntType.Instance) {
+    compileErrors.push(
+      new SyntaxCompileError(
+        "Cannot apply / to two integer values. Either ensure both values are integer types, or use the function divAsInteger or divAsFloat.",
+        location,
+      ),
+    );
+  }
+}
+
 export function mustBeImmutableType(
   name: string,
   type: SymbolType,

@@ -1,4 +1,4 @@
-# 265d96ccb452292264ad465e87d791c74d3d9b5d91afebdeaa0aa6dd5b0968fb Elan 2.0.0-alpha guest default_profile valid
+# 727704f5e98de05d8b09be4bbfbcd5abc1a464f896b70fee811526c2d1ca38c5 Elan 2.0.0-alpha guest default_profile valid
 
 # Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
 # A Cellular Automaton Model of Excitable Media
@@ -102,9 +102,9 @@ end function
 function updateColour(nowColour as Int, sumStates as Int, nInfected as Int, nIll as Int) returns Int
   variable state set to 0
   if nowColour is healthy then
-    set state to (nInfected/w1).floor() + (nIll/w2).floor()
+    set state to divAsInteger(nInfected, w1) + divAsInteger(nIll, w2)
   elif nowColour isnt ill then
-    set state to (sumStates/(nInfected + 1)).floor() + iR
+    set state to divAsInteger(sumStates, (nInfected + 1)) + iR
   end if
   return if state > (colours.length() - 1) then ill else colours[state]
 end function
