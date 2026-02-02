@@ -27,7 +27,7 @@ function square(x as Float) returns Float
   return x ^ 2
 end function
 
-test square
+test test_square
   assert square(3) is 9
   variable actual set to square(4)
   variable expected set to 16
@@ -84,7 +84,7 @@ return [main, _tests];}`;
 main
 end main
 
-test foo
+test test_foo
   assert (3 + 4) is 7
 end test
 `;
@@ -124,7 +124,7 @@ return [main, _tests];}`;
 main
 end main
 
-test square
+test test_square
   variable t set to tuple("one", "two")
   assert t is tuple("one", "two")
 end test
@@ -169,7 +169,7 @@ return [main, _tests];}`;
 main
 end main
 
-test square
+test test_square
   constant t set to tuple("one", "two")
   assert t is tuple("one", "two")
 end test
@@ -214,7 +214,7 @@ return [main, _tests];}`;
 main
 end main
 
-test square
+test test_square
   assert parseAsInt("3") is tuple(true, 3)
 end test
 `;
@@ -257,7 +257,7 @@ return [main, _tests];}`;
 main
 end main
 
-test square
+test test_square
   variable t1 set to tuple("one", "two")
   variable t2 set to tuple("one", "two")
   assert t1 is t2
@@ -304,7 +304,7 @@ return [main, _tests];}`;
 main
 end main
 
-test square
+test test_square
   variable f set to new Foo()
   variable t2 set to 10
   assert f.p1 is t2
@@ -368,7 +368,7 @@ return [main, _tests];}`;
 main
 end main
 
-test square
+test test_square
   variable f set to new Foo()
   variable t2 set to 10
   assert t2 is f.p1
@@ -436,7 +436,7 @@ function square(x as Float) returns Float
   return x ^ 2
 end function
 
-test square
+test test_square
   assert square(3) is 10
   assert square(4) is 16
 end test
@@ -488,7 +488,7 @@ return [main, _tests];}`;
 main
 end main
 
-test square
+test test_square
   variable arr set to empty List<of Int>
   assert arr[1] is "Out of range index: 1 size: 0"
 end test
@@ -540,7 +540,7 @@ return [main, _tests];}`;
 main
 end main
 
-test square
+test test_square
   variable arr set to empty List<of Int>
   assert arr[1] is 0
 end test
@@ -584,7 +584,7 @@ return [main, _tests];}`;
 main
 end main
 
-test square
+test test_square
   variable arr set to empty List<of Int>
   variable b set to arr[1]
   assert b is 0
@@ -627,25 +627,25 @@ return [main, _tests];}`;
 main
 end main
 
-test list_
+test test_list_
   variable a set to {3, 2, 4, 0}
   variable b set to {3, 2, 4, 0}
   assert a is b
 end test
 
-test dictionary_
+test test_dictionary_
   variable a set to [3:"a", 2:"b", 4:"c"]
   variable b set to [3:"a", 2:"b", 4:"c"]
   assert a is b
 end test
 
-test string_
+test test_string_
   variable a set to "Hello World"
   variable b set to "Hello" + " " + "World"
   assert a is b
 end test
 
-test default_
+test test_default_
   variable a set to 0
   variable b set to empty Int
   assert a is b
@@ -653,7 +653,7 @@ end test
 
 constant hello set to "Hello"
 
-test constant_
+test test_constant_
   variable b set to "Hello"
   assert hello is b
 end test
@@ -666,13 +666,13 @@ class Foo
   property bar as Int
 end class
 
-test class1
+test test_class1
   variable a set to new Foo(3)
   variable b set to new Foo(3)
   assert a is b
 end test
 
-test class2
+test test_class2
   variable a set to empty Foo
   variable b set to empty Foo
   assert a is b
@@ -774,25 +774,25 @@ return [main, _tests];}`;
 main
 end main
 
-test round1
+test test_round1
   variable a set to 1/3.0
   variable b set to a.round(4)
   assert b is 0.3333
 end test
 
-test round2
+test test_round2
   variable a set to 0.9999
   variable b set to a.round(2)
   assert b is 1
 end test
 
-test round3
+test test_round3
   variable a set to 1.25
   variable b set to a.round(1)
   assert b is 1.3
 end test
 
-test round4
+test test_round4
   variable a set to 44.444
   variable b set to a.round(2)
   assert b is 44.44
@@ -862,7 +862,7 @@ procedure square(x as Int, out y as List<of Int>)
   call y.put(0,  x ^ 2)
 end procedure
 
-test square
+test test_square
   variable arr set to createList(1, 0)
   call square(3, arr)
   assert arr[0] is 9
@@ -891,7 +891,7 @@ function square(x as Float) returns Float
   return x ^ 2
 end function
 
-test square
+test test_square
   assert square(3) is 3 * 3
 end test
 `;
@@ -933,7 +933,7 @@ return [main, _tests];}`;
   test("Pass_NonObviousDifferentTypes", async () => {
     const code = `${testHeader}
 
-test arrayContent
+test test_arrayContent
   variable a set to new Array2D<of String>(2, 2, "*")
   assert a is [["*", "*"], ["*", "*"]]
 end test
@@ -1008,14 +1008,14 @@ end function
     const code = `${testHeader}
 
 main
-  call squareTest()
+  call test_squareTest()
 end main
 
 function square(x as Float) returns Float
   return x ^ 2
 end function
 
-test squareTest
+test test_squareTest
   assert square(3) is 93
 end test
 `;
@@ -1030,21 +1030,23 @@ end test
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'squareTest' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot invoke identifier 'test_squareTest' as a method.LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_useTestAsAReference", async () => {
     const code = `${testHeader}
 
 main
-  variable a set to squareTest
+  variable a set to test_squareTest
 end main
 
 function square(x as Float) returns Float
   return x ^ 2
 end function
 
-test squareTest
+test test_squareTest
   assert square(3) is 93
 end test
 `;
@@ -1059,7 +1061,9 @@ end test
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'squareTest' is not defined.LangRef.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot assign a test to a variable.LangRef.html#compile_error",
+    ]);
   });
 
   test("Fail_assertWithinAMultiline", async () => {
@@ -1069,7 +1073,7 @@ main
 
 end main
 
-test square
+test test_square
   variable a set to 1
   if true then
     assert a is 9
@@ -1097,7 +1101,7 @@ main
 
 end main
 
-test square
+test test_square
   variable a set to 1
   while true
     assert a is 9
@@ -1117,13 +1121,14 @@ end test
 
     assertDoesNotParse(fileImpl);
   });
+
   test("Pass_HtmlEscapedString", async () => {
     const code = `${testHeader}
 
 main
 end main
 
-test square
+test test_square
   variable actual set to " 1  2   3    "
   variable expected set to " 1  2   3    "
   assert actual is expected
@@ -1159,5 +1164,83 @@ return [main, _tests];}`;
     await assertTestObjectCodeExecutes(fileImpl, [
       ["test3", [new AssertOutcome(TestStatus.pass, " 1  2   3    ", " 1  2   3    ", "assert12")]],
     ]);
+  });
+
+  test("Fail_DuplicateTestName1", async () => {
+    const code = `${testHeader}
+
+test test_square
+
+end test
+
+test test_square
+
+end test
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'test_square' not unique in scope.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicateTestName2", async () => {
+    const code = `${testHeader}
+
+procedure proc()
+ 
+end procedure
+
+test proc
+
+end test
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name 'proc' not unique in scope.LangRef.html#compile_error"]);
+  });
+
+  test("Fail_DuplicateTestName3", async () => {
+    const code = `${testHeader}
+
+constant cc set to 1
+
+test cc
+
+end test
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name 'cc' not unique in scope.LangRef.html#compile_error"]);
   });
 });

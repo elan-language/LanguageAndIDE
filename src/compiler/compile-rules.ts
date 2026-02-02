@@ -101,6 +101,7 @@ import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { LetAsn } from "./syntax-nodes/statements/let-asn";
 import { ThisAsn } from "./syntax-nodes/this-asn";
+import { TestType } from "./symbols/test-type";
 
 export function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -952,6 +953,10 @@ export function mustBeCompatibleDefinitionNode(
   const rst = rhs.symbolType();
 
   mustBeCompatibleDeconstruction(ids, lst, rst, scope, compileErrors, location);
+
+  if (rst instanceof TestType) {
+    compileErrors.push(new SyntaxCompileError(`Cannot assign a test to a variable.`, location));
+  }
 }
 
 export function mustBeCompatibleNode(
