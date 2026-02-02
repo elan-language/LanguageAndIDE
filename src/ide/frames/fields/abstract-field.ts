@@ -598,7 +598,7 @@ export abstract class AbstractField implements Selectable, Field {
   onClick(withFocus?: boolean, multiSelect?: boolean, selection?: [number, number]): void {
     if (!this.isWithinAGhostedFrame()) {
       const parentSelected = this.getHolder().isSelected();
-      if (parentSelected || (selection && selection[0] !== selection[1])) {
+      if (this.selected || parentSelected || (selection && selection[0] !== selection[1])) {
         this.select(withFocus, multiSelect, selection);
       } else {
         this.getHolder().select(true);
