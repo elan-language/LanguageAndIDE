@@ -265,7 +265,7 @@ export function transform(
   }
 
   if (node instanceof TestFrame) {
-    const testAsn = new TestAsn(node.getHtmlId(), scope);
+    const testAsn = new TestAsn(node.testName.text, node.getHtmlId(), scope);
     testAsn.breakpointStatus = node.breakpointStatus;
 
     testAsn.children = node
