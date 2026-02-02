@@ -50,7 +50,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       case OperationSymbol.Minus:
       case OperationSymbol.Multiply:
       case OperationSymbol.Divide:
-      case OperationSymbol.Pow:
         return true;
     }
     return false;
@@ -115,8 +114,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
         return "%";
       case OperationSymbol.Divide:
         return "/";
-      case OperationSymbol.Pow:
-        return "**";
     }
     return " ";
   }
@@ -199,8 +196,6 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       case OperationSymbol.Minus:
         return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Multiply:
-        return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
-      case OperationSymbol.Pow:
         return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
       case OperationSymbol.Div:
         return IntType.Instance;

@@ -315,13 +315,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 3 ^ 3
+  print power(3, 3)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(3 ** 3);
+  await system.print(_stdlib.power(3, 3));
 }
 return [main, _tests];}`;
 
@@ -345,12 +345,12 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to 1
+  variable a set to 1.0
   variable b set to 1.1
-  set a to 2 ^ 2
-  set b to 2 ^ 2
-  set b to 2 ^ 0.5
-  set b to 0.5 ^ 2
+  set a to power(2, 2)
+  set b to power(2, 2)
+  set b to power(2, 0.5)
+  set b to power(0.5, 2)
   print a
   print b
 end main`;
@@ -360,10 +360,10 @@ const global = new class {};
 async function main() {
   let a = 1;
   let b = 1.1;
-  a = 2 ** 2;
-  b = 2 ** 2;
-  b = 2 ** 0.5;
-  b = 0.5 ** 2;
+  a = _stdlib.power(2, 2);
+  b = _stdlib.power(2, 2);
+  b = _stdlib.power(2, 0.5);
+  b = _stdlib.power(0.5, 2);
   await system.print(a);
   await system.print(b);
 }
@@ -659,7 +659,7 @@ end main`;
 
 main
   variable x set to 1
-  set x to 2 ^ 0.5
+  set x to power(2, 0.5)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -684,7 +684,7 @@ end main`;
 
 main
   variable x set to 1
-  set x to 0.5 ^ 2
+  set x to power(0.5, 2)
 end main`;
 
     const fileImpl = new FileImpl(

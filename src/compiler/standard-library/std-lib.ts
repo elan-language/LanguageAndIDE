@@ -324,6 +324,11 @@ export class StdLib {
     return n1 / n2;
   }
 
+  @elanFunction(["number", "number"], FunctionOptions.pure, ElanFloat)
+  power(n1: number, n2: number) {
+    return Math.pow(n1, n2);
+  }
+
   @elanFunction(["number"], FunctionOptions.pureExtension, ElanInt)
   floor(n: number) {
     return Math.floor(n);

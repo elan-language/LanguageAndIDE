@@ -14,7 +14,6 @@ export const PLUS = "+";
 export const MINUS = "-";
 export const MULT = "*";
 export const DIVIDE = "/";
-export const POWER = "^";
 export const LT = "<";
 export const GT = ">";
 export const LE = "<=";

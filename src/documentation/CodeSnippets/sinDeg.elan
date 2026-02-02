@@ -1,8 +1,8 @@
-# 341d6ca6bf957814e365eb419322b68b290487b14392953975d636173915b4d2 Elan 2.0.0-alpha guest default_profile valid
+# 7aa99302f37ac41ec3d05146b7f5faab79430770940a163ddb5b77514892e23c Elan 2.0.0-alpha guest default_profile valid
 
 main
   call print(sinDeg(30))
-  variable x set to sinDeg(30)^2 + cosDeg(30)^2
+  variable x set to power(sinDeg(30), 2) + power(cosDeg(30), 2)
   variable name set to inputString("Your name")
   call print(name.upperCase())
 end main

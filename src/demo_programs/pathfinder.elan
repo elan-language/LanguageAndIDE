@@ -1,4 +1,4 @@
-# 8efa67356a83e198165242f9c6311d4f2373d111967578143c38b5ab147844fc Elan 2.0.0-alpha guest default_profile valid
+# 418996796841bc1e32ff97a99ccddb160c36853895fd8cf92494b578599b3ffb Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable start set to newPoint(5, 5)
@@ -244,7 +244,7 @@ record Point
   property isNotEmpty as Boolean
 
   function minDistTo(p as Point) returns Float
-    return sqrt((p.x - property.x)^2 + (p.y - property.y)^2)
+    return sqrt(power((p.x - property.x), 2) + power((p.y - property.y), 2))
   end function
 
   function isAdjacentTo(p as Point) returns Boolean

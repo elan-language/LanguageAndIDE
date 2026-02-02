@@ -1,4 +1,4 @@
-# d1c53208ba97ca313d6fa88b70e7ad12c71b6fa3a0cd0c3fd598acc2c53cf95a Elan 2.0.0-alpha guest default_profile valid
+# eff332da96a2a9c0ada4ef337fa6b6a9f306e90cf581e9bfeae3b0ef284c9d9b Elan 2.0.0-alpha guest default_profile valid
 
 main
   call printTab(0, "Number")
@@ -6,7 +6,7 @@ main
   call printTab(20, "Cube\n")
   for i from 1 to 10 step 1
     call printTab(0, i.asString())
-    call printTab(10, "{i^2}")
-    call printTab(20, "{i^3}\n")
+    call printTab(10, "{power(i, 2)}")
+    call printTab(20, "{power(i, 3)}\n")
   end for
 end main

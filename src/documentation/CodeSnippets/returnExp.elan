@@ -1,5 +1,5 @@
-# 51ddcd2c53268f35fea86ba55c3cbe863f4ef67a52a5a69a7a6ba2869734f5a9 Elan 2.0.0-alpha guest default_profile valid
+# 22ca595984c7f72380aae90b06cdcf7b4d881818058a0a09e835d80cc9c88024 Elan 2.0.0-alpha guest default_profile valid
 
 function foo(a as Int, b as Int) returns Boolean
-  return if (a^b) < (b^a) then true else false
+  return if power(a, b) < power(b, a) then true else false
 end function
