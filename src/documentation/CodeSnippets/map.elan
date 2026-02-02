@@ -1,8 +1,8 @@
-# 91a580cb81dbc5252162da44f660c05884ac23d267e57acbc3344cc73d58cfbd Elan 2.0.0-alpha guest default_profile valid
+# 0faca7561d7f3824d36473a88759c082be8ebccaeaf3e7d0ae52b50b95607230 Elan 2.0.0-alpha guest default_profile valid
 
 main
   variable li set to [1, 2, 3, 4, 5]
-  call print(li.map(lambda n as Int => n^3))
+  call print(li.map(lambda n as Int => power(n, 3)))
   variable names set to ["Tom", "Dick", "Harriet"]
   call print(names.map(lambda s as String => s.upperCase()))
   call print(names.map(lambda s as String => reverseString(s)))

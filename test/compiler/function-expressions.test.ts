@@ -150,7 +150,7 @@ return [main, _tests];}`;
 
 main
   variable x set to 0.7
-  variable y set to sin(x) ^ 2 + cos(x) ^ 2
+  variable y set to power(sin(x), 2) + power(cos(x), 2)
   print y
 end main`;
 
@@ -158,7 +158,7 @@ end main`;
 const global = new class {};
 async function main() {
   let x = 0.7;
-  let y = _stdlib.sin(x) ** 2 + _stdlib.cos(x) ** 2;
+  let y = _stdlib.power(_stdlib.sin(x), 2) + _stdlib.power(_stdlib.cos(x), 2);
   await system.print(y);
 }
 return [main, _tests];}`;

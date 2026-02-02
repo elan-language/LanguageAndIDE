@@ -8,7 +8,7 @@ import {
 } from "../../../compiler/keywords";
 import { ParseStatus } from "../status-enums";
 import { KeywordCompletion } from "../symbol-completion-helpers";
-import { DIVIDE, GT, LT, MINUS, MULT, PLUS, POWER } from "../symbols";
+import { DIVIDE, GT, LT, MINUS, MULT, PLUS } from "../symbols";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { File } from "../frame-interfaces/file";
 
@@ -32,11 +32,7 @@ export class BinaryOperation extends AbstractParseNode {
         this.processComparison();
       } else if (this.nextChar() === "i") {
         this.processEquality();
-      } else if (
-        this.nextChar() === POWER ||
-        this.nextChar() === MULT ||
-        this.nextChar() === DIVIDE
-      ) {
+      } else if (this.nextChar() === MULT || this.nextChar() === DIVIDE) {
         this.moveCharsToMatched(1, ParseStatus.valid);
         this.closePacked = true;
       } else if (this.nextChar() === PLUS || this.nextChar() === MINUS) {

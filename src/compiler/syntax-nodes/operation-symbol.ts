@@ -13,7 +13,6 @@ export enum OperationSymbol {
   Mod,
   Divide,
   NotEquals,
-  Pow,
   Or,
   Unknown,
 }

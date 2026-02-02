@@ -1,4 +1,4 @@
-# 987babe58e62acd8ccda533a19284850eae0466395e7925ade713d068855b0cd Elan 2.0.0-alpha guest default_profile valid
+# 5604fd76a7930fdbc08dd840716106a28115f32355589466eadd6cc93dbb0d25 Elan 2.0.0-alpha guest default_profile valid
 
 constant phi set to 1.618
 
@@ -11,7 +11,7 @@ procedure signIn()
 end procedure
 
 function hypotenuse(sideB as Float, sideC as Float) returns Float
-  return sqrt(sideB^2 + sideC^2)
+  return sqrt(power(sideB, 2) + power(sideC, 2))
 end function
 
 enum Fruit apple, orange, pear

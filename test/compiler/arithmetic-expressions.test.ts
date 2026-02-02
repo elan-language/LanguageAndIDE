@@ -96,7 +96,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "182630");
   });
 
-  test("Pass_PowerHasHigherPrecedenceThatMultiply", async () => {
+  ignore_test("Pass_PowerHasHigherPrecedenceThatMultiply", async () => {
     const code = `${testHeader}
 
 main
@@ -132,7 +132,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1125");
   });
 
-  test("Pass_PowerHasHigherPrecedenceThanFloatDivision", async () => {
+  ignore_test("Pass_PowerHasHigherPrecedenceThanFloatDivision", async () => {
     const code = `${testHeader}
 
 main
@@ -168,7 +168,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2512");
   });
 
-  test("Pass_PowerHasHigherPrecedenceThanDivision", async () => {
+  ignore_test("Pass_PowerHasHigherPrecedenceThanDivision", async () => {
     const code = `${testHeader}
 
 main
