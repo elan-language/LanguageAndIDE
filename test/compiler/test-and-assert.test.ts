@@ -1121,6 +1121,7 @@ end test
 
     assertDoesNotParse(fileImpl);
   });
+
   test("Pass_HtmlEscapedString", async () => {
     const code = `${testHeader}
 
@@ -1163,5 +1164,83 @@ return [main, _tests];}`;
     await assertTestObjectCodeExecutes(fileImpl, [
       ["test3", [new AssertOutcome(TestStatus.pass, " 1  2   3    ", " 1  2   3    ", "assert12")]],
     ]);
+  });
+
+  test("Fail_DuplicateTestName1", async () => {
+    const code = `${testHeader}
+
+test test_square
+
+end test
+
+test test_square
+
+end test
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'test_square' not unique in scope.LangRef.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicateTestName2", async () => {
+    const code = `${testHeader}
+
+procedure proc()
+ 
+end procedure
+
+test proc
+
+end test
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name 'proc' not unique in scope.LangRef.html#compile_error"]);
+  });
+
+  test("Fail_DuplicateTestName3", async () => {
+    const code = `${testHeader}
+
+constant cc set to 1
+
+test cc
+
+end test
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new DefaultProfile(),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["Name 'cc' not unique in scope.LangRef.html#compile_error"]);
   });
 });
