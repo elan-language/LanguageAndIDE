@@ -779,7 +779,7 @@ export function mustNotBeIntegerTypesToDivide(
   if (lhs === IntType.Instance && rhs === IntType.Instance) {
     compileErrors.push(
       new SyntaxCompileError(
-        "Cannot apply / to two integer values. Either ensure both values are integer types, or use the function divAsInteger or divAsFloat.",
+        "Cannot apply / to two integer values. Either ensure at least one value is floating point type, or use the function divAsInteger or divAsFloat.",
         location,
       ),
     );

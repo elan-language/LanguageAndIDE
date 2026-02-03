@@ -157,7 +157,7 @@ end main`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot apply / to two integer values. Either ensure both values are integer types, or use the function divAsInteger or divAsFloat.LangRef.html#compile_error",
+      "Cannot apply / to two integer values. Either ensure at least one value is floating point type, or use the function divAsInteger or divAsFloat.LangRef.html#compile_error",
     ]);
   });
 
