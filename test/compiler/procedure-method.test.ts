@@ -19,9 +19,9 @@ suite("Procedure Method", () => {
 
 main
   variable f set to new Foo()
-  print f.p1
+  call printNoLine(f.p1)
   call f.setP1(7)
-  print f.p1
+  call printNoLine(f.p1)
 end main
 
 class Foo
@@ -41,9 +41,9 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.print(f.p1);
+  await _stdlib.printNoLine(f.p1);
   await f.setP1(7);
-  await system.print(f.p1);
+  await _stdlib.printNoLine(f.p1);
 }
 
 class Foo {
@@ -99,7 +99,7 @@ class Foo
   property p1 as Float
 
   procedure display()
-      print property.p1
+      call printNoLine(property.p1)
   end procedure
 
   function asString() returns String
@@ -126,7 +126,7 @@ class Foo {
   p1 = 0;
 
   async display() {
-    await system.print(this.p1);
+    await _stdlib.printNoLine(this.p1);
   }
 
   async asString() {
@@ -172,7 +172,7 @@ class Foo
         call b.p1PlusOne()
         call p1PlusOne()
         set property.p1 to property.p1 + b.p1
-        print property.p1
+        call printNoLine(property.p1)
     end procedure
 
     procedure p1PlusOne()
@@ -226,7 +226,7 @@ class Foo {
     await b[0].p1PlusOne();
     await this.p1PlusOne();
     this.p1 = this.p1 + b[0].p1;
-    await system.print(this.p1);
+    await _stdlib.printNoLine(this.p1);
   }
 
   async p1PlusOne() {
@@ -292,7 +292,7 @@ class Foo
   property p1 as Float
 
   procedure show()
-    print p1
+    call printNoLine(p1)
   end procedure
 
   function asString() returns String

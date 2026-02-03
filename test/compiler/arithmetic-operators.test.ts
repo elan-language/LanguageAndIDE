@@ -20,13 +20,13 @@ suite("Arithmetic Operators", () => {
     const code = `${testHeader}
 
 main
-  print 3 + 4
+  call printNoLine(3 + 4)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(3 + 4);
+  await _stdlib.printNoLine(3 + 4);
 }
 return [main, _tests];}`;
 
@@ -50,13 +50,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 3 - 4
+  call printNoLine(3 - 4)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(3 - 4);
+  await _stdlib.printNoLine(3 - 4);
 }
 return [main, _tests];}`;
 
@@ -80,13 +80,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 3 * 4
+  call printNoLine(3 * 4)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(3 * 4);
+  await _stdlib.printNoLine(3 * 4);
 }
 return [main, _tests];}`;
 
@@ -111,14 +111,14 @@ return [main, _tests];}`;
 
 main
   variable a set to 3
-  print a + 4
+  call printNoLine(a + 4)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = 3;
-  await system.print(a + 4);
+  await _stdlib.printNoLine(a + 4);
 }
 return [main, _tests];}`;
 
@@ -142,7 +142,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 3 / 2
+  call printNoLine(3 / 2)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -165,13 +165,13 @@ end main`;
     const code = `${testHeader}
 
 main
-  print divAsFloat(7, 2).floor()
+  call printNoLine(divAsFloat(7, 2).floor())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.floor(_stdlib.divAsFloat(7, 2)));
+  await _stdlib.printNoLine(_stdlib.floor(_stdlib.divAsFloat(7, 2)));
 }
 return [main, _tests];}`;
 
@@ -195,13 +195,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print divAsInteger(7, 2)
+  call printNoLine(divAsInteger(7, 2))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.divAsInteger(7, 2));
+  await _stdlib.printNoLine(_stdlib.divAsInteger(7, 2));
 }
 return [main, _tests];}`;
 
@@ -225,13 +225,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print divAsFloat(7, 2)
+  call printNoLine(divAsFloat(7, 2))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.divAsFloat(7, 2));
+  await _stdlib.printNoLine(_stdlib.divAsFloat(7, 2));
 }
 return [main, _tests];}`;
 
@@ -255,13 +255,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 11 mod 3
+  call printNoLine(11 mod 3)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(11 % 3);
+  await _stdlib.printNoLine(11 % 3);
 }
 return [main, _tests];}`;
 
@@ -285,13 +285,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print if (25 mod 20) < 19 then 1 else 2
+  call printNoLine(if (25 mod 20) < 19 then 1 else 2)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(((25 % 20) < 19 ? 1 : 2));
+  await _stdlib.printNoLine(((25 % 20) < 19 ? 1 : 2));
 }
 return [main, _tests];}`;
 
@@ -315,13 +315,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print power(3, 3)
+  call printNoLine(power(3, 3))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.power(3, 3));
+  await _stdlib.printNoLine(_stdlib.power(3, 3));
 }
 return [main, _tests];}`;
 
@@ -351,8 +351,8 @@ main
   set b to power(2, 2)
   set b to power(2, 0.5)
   set b to power(0.5, 2)
-  print a
-  print b
+  call printNoLine(a)
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -364,8 +364,8 @@ async function main() {
   b = _stdlib.power(2, 2);
   b = _stdlib.power(2, 0.5);
   b = _stdlib.power(0.5, 2);
-  await system.print(a);
-  await system.print(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -391,7 +391,7 @@ return [main, _tests];}`;
 main
   variable a set to 3
   set a to a + 1
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -399,7 +399,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   a = a + 1;
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -520,7 +520,7 @@ end class
     const code = `${testHeader}
 
 main
-  print 11 mod 3.2
+  call printNoLine(11 mod 3.2)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -544,7 +544,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  print 11.7 mod 3
+  call printNoLine(11.7 mod 3)
 end main`;
 
     const fileImpl = new FileImpl(

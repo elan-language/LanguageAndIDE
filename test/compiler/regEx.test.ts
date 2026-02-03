@@ -20,18 +20,18 @@ suite("RegExp", () => {
 
 main
   variable r set to /a+/
-  print r
-  print "aa".matchesRegExp(r)
-  print "b".matchesRegExp(r)
+  call printNoLine(r)
+  call printNoLine("aa".matchesRegExp(r))
+  call printNoLine("b".matchesRegExp(r))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let r = /a+/;
-  await system.print(r);
-  await system.print(_stdlib.matchesRegExp("aa", r));
-  await system.print(_stdlib.matchesRegExp("b", r));
+  await _stdlib.printNoLine(r);
+  await _stdlib.printNoLine(_stdlib.matchesRegExp("aa", r));
+  await _stdlib.printNoLine(_stdlib.matchesRegExp("b", r));
 }
 return [main, _tests];}`;
 
@@ -56,7 +56,7 @@ return [main, _tests];}`;
 
 main
   variable r set to /a+/
-  print testRegex(r)
+  call printNoLine(testRegex(r))
 end main
 
 function testRegex(r as RegExp) returns Boolean
@@ -67,7 +67,7 @@ end function`;
 const global = new class {};
 async function main() {
   let r = /a+/;
-  await system.print((await global.testRegex(r)));
+  await _stdlib.printNoLine((await global.testRegex(r)));
 }
 
 async function testRegex(r) {
@@ -98,7 +98,7 @@ return [main, _tests];}`;
 main
   variable r set to empty RegExp
   set r to testRegex()
-  print "aa".matchesRegExp(r)
+  call printNoLine("aa".matchesRegExp(r))
 end main
 
 function testRegex() returns RegExp
@@ -110,7 +110,7 @@ const global = new class {};
 async function main() {
   let r = system.emptyRegExp();
   r = (await global.testRegex());
-  await system.print(_stdlib.matchesRegExp("aa", r));
+  await _stdlib.printNoLine(_stdlib.matchesRegExp("aa", r));
 }
 
 async function testRegex() {
@@ -140,10 +140,10 @@ return [main, _tests];}`;
 
 main
   variable r set to /a\\/b/
-  print "a/b".matchesRegExp(r)
-  print "a\\/b".matchesRegExp(r)
-  print "a\\b".matchesRegExp(r)
-  print "a\\\\/b".matchesRegExp(r)
+  call printNoLine("a/b".matchesRegExp(r))
+  call printNoLine("a\\/b".matchesRegExp(r))
+  call printNoLine("a\\b".matchesRegExp(r))
+  call printNoLine("a\\\\/b".matchesRegExp(r))
 
 end main`;
 
@@ -151,10 +151,10 @@ end main`;
 const global = new class {};
 async function main() {
   let r = /a\\/b/;
-  await system.print(_stdlib.matchesRegExp("a/b", r));
-  await system.print(_stdlib.matchesRegExp("a\\\\/b", r));
-  await system.print(_stdlib.matchesRegExp("a\\\\b", r));
-  await system.print(_stdlib.matchesRegExp("a\\\\\\\\/b", r));
+  await _stdlib.printNoLine(_stdlib.matchesRegExp("a/b", r));
+  await _stdlib.printNoLine(_stdlib.matchesRegExp("a\\\\/b", r));
+  await _stdlib.printNoLine(_stdlib.matchesRegExp("a\\\\b", r));
+  await _stdlib.printNoLine(_stdlib.matchesRegExp("a\\\\\\\\/b", r));
 }
 return [main, _tests];}`;
 
@@ -199,8 +199,8 @@ end main`;
 
 main
   variable r set to "/a+/"
-  print "aa".matchesRegExp(r)
-  print "b".matchesRegExp(r)
+  call printNoLine("aa".matchesRegExp(r))
+  call printNoLine("b".matchesRegExp(r))
 end main`;
 
     const fileImpl = new FileImpl(

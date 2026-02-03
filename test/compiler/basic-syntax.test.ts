@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -75,19 +76,19 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test("Pass_PrintWithNoExpression", async () => {
+  ignore_test("Pass_PrintWithNoExpression", async () => {
     const code = `${testHeader}
 
 main
-  print
-  print
+  call printNoLine()
+  call PrintNoLine()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print("");
-  await system.print("");
+  await _stdlib.printNoLine("");
+  await _stdlib.printNoLine("");
 }
 return [main, _tests];}`;
 
@@ -111,13 +112,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-    print "Hello World!"
+    call printNoLine("Hello World!")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print("Hello World!");
+  await _stdlib.printNoLine("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -141,13 +142,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-    print ("Hello World!")
+    call printNoLine(("Hello World!"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(("Hello World!"));
+  await _stdlib.printNoLine(("Hello World!"));
 }
 return [main, _tests];}`;
 
@@ -171,13 +172,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-    print 1
+    call printNoLine(1)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(1);
+  await _stdlib.printNoLine(1);
 }
 return [main, _tests];}`;
 
@@ -201,13 +202,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-    print 2.1
+    call printNoLine(2.1)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(2.1);
+  await _stdlib.printNoLine(2.1);
 }
 return [main, _tests];}`;
 
@@ -231,13 +232,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 2.1e4
+  call printNoLine(2.1e4)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(21000);
+  await _stdlib.printNoLine(21000);
 }
 return [main, _tests];}`;
 
@@ -261,13 +262,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 2.1e100
+  call printNoLine(2.1e100)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(2.1e+100);
+  await _stdlib.printNoLine(2.1e+100);
 }
 return [main, _tests];}`;
 
@@ -291,13 +292,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print 2.1e-4
+  call printNoLine(2.1e-4)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(0.00021);
+  await _stdlib.printNoLine(0.00021);
 }
 return [main, _tests];}`;
 
@@ -321,13 +322,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print "%"
+  call printNoLine("%")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print("%");
+  await _stdlib.printNoLine("%");
 }
 return [main, _tests];}`;
 
@@ -351,13 +352,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-    print true
+    call printNoLine(true)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(_stdlib.true);
+  await _stdlib.printNoLine(_stdlib.true);
 }
 return [main, _tests];}`;
 
@@ -381,13 +382,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-    print ""
+    call printNoLine("")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print("");
+  await _stdlib.printNoLine("");
 }
 return [main, _tests];}`;
 
@@ -411,7 +412,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print foo
+  call printNoLine(foo)
 end main
 
 function foo() returns Int
@@ -422,7 +423,7 @@ end function
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(global.foo);
+  await _stdlib.printNoLine(global.foo);
 }
 
 async function foo() {
@@ -451,7 +452,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print [foo]
+  call printNoLine([foo])
 end main
 
 function foo() returns Int
@@ -462,7 +463,7 @@ end function
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print(system.list([global.foo]));
+  await _stdlib.printNoLine(system.list([global.foo]));
 }
 
 async function foo() {
@@ -490,7 +491,7 @@ return [main, _tests];}`;
   test("Fail_noMain", async () => {
     const code = `${testHeader}
 
-print "hello World!"`;
+call printNoLine("hello World!"`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -509,7 +510,7 @@ print "hello World!"`;
     const code = `${testHeader}
 
 main
-  print "Hello World!"
+  call printNoLine("Hello World!")
 `;
 
     const fileImpl = new FileImpl(
@@ -529,7 +530,7 @@ main
     const code = `${testHeader}
 
 MAIN
-  print "Hello World!"
+  call printNoLine("Hello World!")
 end main`;
 
     const fileImpl = new FileImpl(

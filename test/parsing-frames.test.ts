@@ -336,7 +336,7 @@ end main
 # my comment
 main
   # My first program
-  print "Hello World!"
+  call printNoLine("Hello World!")
 end main
 `;
     const source = new CodeSourceFromString(code);
@@ -364,7 +364,7 @@ main
   set a to 3 + 4
   throw exception "message"
   call signIn(rwp, password)
-  print "Hello World!"
+  call printNoLine("Hello World!")
 end main
 `;
     const source = new CodeSourceFromString(code);
@@ -425,7 +425,7 @@ class Player inherits Foo, Bar
   property score as Int
 
   procedure foo()
-    print 1
+    call printNoLine(1)
   end procedure
 
   function bar() returns Int

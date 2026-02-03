@@ -20,14 +20,14 @@ suite("Variables", () => {
 
 main
   variable a set to 3
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = 3;
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -53,7 +53,7 @@ return [main, _tests];}`;
 main
   variable a set to 3
   variable b set to a
-  print b
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -61,7 +61,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   let b = a;
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -86,14 +86,14 @@ return [main, _tests];}`;
 
 main
   variable a set to 3 + 4
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = 3 + 4;
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -119,7 +119,7 @@ return [main, _tests];}`;
 main
   variable a set to 3
   set a to 4
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -127,7 +127,7 @@ const global = new class {};
 async function main() {
   let a = 3;
   a = 4;
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -153,7 +153,7 @@ return [main, _tests];}`;
 main
   variable a set to 3.1
   set a to 4
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -161,7 +161,7 @@ const global = new class {};
 async function main() {
   let a = 3.1;
   a = 4;
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -194,15 +194,15 @@ main
   variable g set to 3 isnt 4
   variable h set to not false
   variable k set to 4.0 / 3
-  print a
-  print b
-  print c
-  print d
-  print e
-  print f
-  print g
-  print h
-  print k
+  call printNoLine(a)
+  call printNoLine(b)
+  call printNoLine(c)
+  call printNoLine(d)
+  call printNoLine(e)
+  call printNoLine(f)
+  call printNoLine(g)
+  call printNoLine(h)
+  call printNoLine(k)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -217,15 +217,15 @@ async function main() {
   let g = 3 !== 4;
   let h = !_stdlib.false;
   let k = 4 / 3;
-  await system.print(a);
-  await system.print(b);
-  await system.print(c);
-  await system.print(d);
-  await system.print(e);
-  await system.print(f);
-  await system.print(g);
-  await system.print(h);
-  await system.print(k);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+  await _stdlib.printNoLine(c);
+  await _stdlib.printNoLine(d);
+  await _stdlib.printNoLine(e);
+  await _stdlib.printNoLine(f);
+  await _stdlib.printNoLine(g);
+  await _stdlib.printNoLine(h);
+  await _stdlib.printNoLine(k);
 }
 return [main, _tests];}`;
 
@@ -249,7 +249,7 @@ return [main, _tests];}`;
 
 main
   variable a set to Fruit.apple
-  print a
+  call printNoLine(a)
 end main
 enum Fruit apple, orange, pear`;
 
@@ -261,7 +261,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let a = Fruit.apple;
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -289,7 +289,7 @@ constant a set to {1, 2}
 main
   variable b set to a.map(lambda x as Int => x)
   set b to {1, 2}
-  print b
+  call printNoLine(b)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -300,7 +300,7 @@ const global = new class {
 async function main() {
   let b = (await global.a.map(async (x) => x));
   b = system.listImmutable([1, 2]);
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 return [main, _tests];}`;
 
@@ -699,7 +699,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ((((3))))
-  print a
+  call printNoLine(a)
 end main
 `;
 
@@ -707,7 +707,7 @@ end main
 const global = new class {};
 async function main() {
   let a = ((((3))));
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 

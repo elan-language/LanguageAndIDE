@@ -24,8 +24,8 @@ main
   variable x set to 1
   variable y set to empty List<of Int>
   set x:y to a
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main
 `;
 
@@ -36,8 +36,8 @@ async function main() {
   let x = 1;
   let y = system.initialise(_stdlib.List.emptyInstance());
   [x, y] = system.deconstructList(a);
-  await system.print(x);
-  await system.print(y);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -64,7 +64,7 @@ main
   variable a set to [1,2,3]
   variable y set to empty List<of Int>
   set _:y to a
-  print y
+  call printNoLine(y)
 end main
 `;
 
@@ -74,7 +74,7 @@ async function main() {
   let a = system.list([1, 2, 3]);
   let y = system.initialise(_stdlib.List.emptyInstance());
   [, y] = system.deconstructList(a);
-  await system.print(y);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -101,7 +101,7 @@ main
   variable a set to [1,2,3]
   variable x set to 1
   set x:_ to a
-  print x
+  call printNoLine(x)
 end main
 `;
 
@@ -111,7 +111,7 @@ async function main() {
   let a = system.list([1, 2, 3]);
   let x = 1;
   [x, ] = system.deconstructList(a);
-  await system.print(x);
+  await _stdlib.printNoLine(x);
 }
 return [main, _tests];}`;
 
@@ -137,8 +137,8 @@ return [main, _tests];}`;
 main
   variable a set to [1,2,3]
   variable x:y set to a
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main
 `;
 
@@ -147,8 +147,8 @@ const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3]);
   let [x, y] = system.deconstructList(a);
-  await system.print(x);
-  await system.print(y);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -176,8 +176,8 @@ main
   variable x set to empty List<of Int>
   variable y set to empty List<of List<of Int>>
   set x:y to a
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main
 `;
 
@@ -188,8 +188,8 @@ async function main() {
   let x = system.initialise(_stdlib.List.emptyInstance());
   let y = system.initialise(_stdlib.List.emptyInstance());
   [x, y] = system.deconstructList(a);
-  await system.print(x);
-  await system.print(y);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -215,8 +215,8 @@ return [main, _tests];}`;
 main
   variable a set to [[1,2,3], [4,5,6], [7,8,9]]
   variable x:y set to a
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main
 `;
 
@@ -225,8 +225,8 @@ const global = new class {};
 async function main() {
   let a = system.list([system.list([1, 2, 3]), system.list([4, 5, 6]), system.list([7, 8, 9])]);
   let [x, y] = system.deconstructList(a);
-  await system.print(x);
-  await system.print(y);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -252,8 +252,8 @@ return [main, _tests];}`;
 main
   variable a set to [[1,2,3], [4,5,6], [7,8,9]]
   variable x:y set to a
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main
 `;
 
@@ -262,8 +262,8 @@ const global = new class {};
 async function main() {
   let a = system.list([system.list([1, 2, 3]), system.list([4, 5, 6]), system.list([7, 8, 9])]);
   let [x, y] = system.deconstructList(a);
-  await system.print(x);
-  await system.print(y);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -291,8 +291,8 @@ main
   variable x set to 1
   variable y set to empty List<of Int>
   set x:y to a
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main
 `;
 
@@ -303,8 +303,8 @@ async function main() {
   let x = 1;
   let y = system.initialise(_stdlib.List.emptyInstance());
   [x, y] = system.deconstructList(a);
-  await system.print(x);
-  await system.print(y);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -330,8 +330,8 @@ return [main, _tests];}`;
 main
   variable a set to {1,2,3}
   variable x:y set to a
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main
 `;
 
@@ -340,8 +340,8 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([1, 2, 3]);
   let [x, y] = system.deconstructList(a);
-  await system.print(x);
-  await system.print(y);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -367,7 +367,7 @@ return [main, _tests];}`;
 main
   variable a set to {1,2,3}
   variable x:_ set to a
-  print x
+  call printNoLine(x)
 end main
 `;
 
@@ -376,7 +376,7 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([1, 2, 3]);
   let [x, ] = system.deconstructList(a);
-  await system.print(x);
+  await _stdlib.printNoLine(x);
 }
 return [main, _tests];}`;
 
@@ -402,7 +402,7 @@ return [main, _tests];}`;
 main
   variable a set to {1,2,3}
   variable _:y set to a
-  print y
+  call printNoLine(y)
 end main
 `;
 
@@ -411,7 +411,7 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([1, 2, 3]);
   let [, y] = system.deconstructList(a);
-  await system.print(y);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -437,8 +437,8 @@ return [main, _tests];}`;
 main
   variable a set to [1]
   variable x:y set to a
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main
 `;
 
@@ -447,8 +447,8 @@ const global = new class {};
 async function main() {
   let a = system.list([1]);
   let [x, y] = system.deconstructList(a);
-  await system.print(x);
-  await system.print(y);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -474,8 +474,8 @@ return [main, _tests];}`;
 main
   variable a set to [1]
   variable x:y set to a
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main
 `;
 
@@ -484,8 +484,8 @@ const global = new class {};
 async function main() {
   let a = system.list([1]);
   let [x, y] = system.deconstructList(a);
-  await system.print(x);
-  await system.print(y);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -511,8 +511,8 @@ return [main, _tests];}`;
 main
   variable a set to {1,2,3}
   variable x:y set to a
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main
 `;
 
@@ -521,8 +521,8 @@ const global = new class {};
 async function main() {
   let a = system.listImmutable([1, 2, 3]);
   let [x, y] = system.deconstructList(a);
-  await system.print(x);
-  await system.print(y);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -550,8 +550,8 @@ main
   variable x set to 1
   variable y set to empty ListImmutable<of Int>
   set x:y to a
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main
 `;
 
@@ -562,8 +562,8 @@ async function main() {
   let x = 1;
   let y = system.initialise(_stdlib.ListImmutable.emptyInstance());
   [x, y] = system.deconstructList(a);
-  await system.print(x);
-  await system.print(y);
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -1009,8 +1009,8 @@ end main
 main
   variable a set to empty List<of Int>
   variable x:y set to a
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main
 `;
 
@@ -1037,8 +1037,8 @@ main
   variable x set to 0
   variable y set to empty List<of Int>
   set x:y to a
-  print x
-  print y
+  call printNoLine(x)
+  call printNoLine(y)
 end main
 `;
 
@@ -1088,7 +1088,7 @@ end main
 main
   variable a set to [1,2]
   variable x, y set to a
-  print x
+  call printNoLine(x)
 end main
 `;
 
@@ -1117,7 +1117,7 @@ main
   variable x set to 0
   variable y set to 0
   set x, y to a
-  print x
+  call printNoLine(x)
 end main
 `;
 
@@ -1144,7 +1144,7 @@ end main
 main
   variable a set to tuple(1,"apple")
   variable x:y set to a
-  print x
+  call printNoLine(x)
 end main
 `;
 
@@ -1173,7 +1173,7 @@ main
   variable x set to 0
   variable y set to ""
   set x:y to a
-  print x
+  call printNoLine(x)
 end main
 `;
 

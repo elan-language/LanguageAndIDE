@@ -24,7 +24,7 @@ main
 end main
   
 procedure printModified(i as Int, f as Func<of Int => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -34,7 +34,7 @@ async function main() {
 }
 
 async function printModified(i, f) {
-  await system.print((await f(i)));
+  await _stdlib.printNoLine((await f(i)));
 }
 global["printModified"] = printModified;
 return [main, _tests];}`;
@@ -68,7 +68,7 @@ function first(t as (Int, Int)) returns Int
 end function
   
 procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -84,7 +84,7 @@ async function first(t) {
 global["first"] = first;
 
 async function printModified(i, f) {
-  await system.print((await f(i)));
+  await _stdlib.printNoLine((await f(i)));
 }
 global["printModified"] = printModified;
 return [main, _tests];}`;
@@ -113,7 +113,7 @@ main
 end main
   
 procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -123,7 +123,7 @@ async function main() {
 }
 
 async function printModified(i, f) {
-  await system.print((await f(i)));
+  await _stdlib.printNoLine((await f(i)));
 }
 global["printModified"] = printModified;
 return [main, _tests];}`;
@@ -149,14 +149,14 @@ return [main, _tests];}`;
 
 main
   variable l set to lambda x as Int => x * 5
-  print l(5)
+  call printNoLine(l(5))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let l = async (x) => x * 5;
-  await system.print((await l(5)));
+  await _stdlib.printNoLine((await l(5)));
 }
 return [main, _tests];}`;
 
@@ -183,7 +183,7 @@ main
   variable foo set to new Foo()
   call foo.setP1(lambda x as Int => x)
   variable v set to foo.p1(5)
-  print v
+  call printNoLine(v)
 end main
 
 class Foo
@@ -203,7 +203,7 @@ async function main() {
   let foo = system.initialise(await new Foo()._initialise());
   await foo.setP1(async (x) => x);
   let v = (await foo.p1(5));
-  await system.print(v);
+  await _stdlib.printNoLine(v);
 }
 
 class Foo {
@@ -246,14 +246,14 @@ return [main, _tests];}`;
 
 main
   variable l set to lambda x as Int => x * 5
-  print l(5) + 5
+  call printNoLine(l(5) + 5)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let l = async (x) => x * 5;
-  await system.print((await l(5)) + 5);
+  await _stdlib.printNoLine((await l(5)) + 5);
 }
 return [main, _tests];}`;
 
@@ -278,7 +278,7 @@ return [main, _tests];}`;
 
 main
   variable l set to getFunc()
-  print l(5)
+  call printNoLine(l(5))
 end main
     
 function getFunc() returns Func<of Int => Int>
@@ -289,7 +289,7 @@ end function`;
 const global = new class {};
 async function main() {
   let l = (await global.getFunc());
-  await system.print((await l(5)));
+  await _stdlib.printNoLine((await l(5)));
 }
 
 async function getFunc() {
@@ -320,7 +320,7 @@ return [main, _tests];}`;
 main
   variable x set to 3
   variable l set to lambda => x * 5
-  print l()
+  call printNoLine(l())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -328,7 +328,7 @@ const global = new class {};
 async function main() {
   let x = 3;
   let l = async () => x * 5;
-  await system.print((await l()));
+  await _stdlib.printNoLine((await l()));
 }
 return [main, _tests];}`;
 
@@ -353,7 +353,7 @@ return [main, _tests];}`;
 
 main
   variable l set to getFunc(5)
-  print l()
+  call printNoLine(l())
 end main
     
 function getFunc(x as Int) returns Func<of => Int>
@@ -364,7 +364,7 @@ end function`;
 const global = new class {};
 async function main() {
   let l = (await global.getFunc(5));
-  await system.print((await l()));
+  await _stdlib.printNoLine((await l()));
 }
 
 async function getFunc(x) {
@@ -394,7 +394,7 @@ return [main, _tests];}`;
 
 main
   variable l set to getFunc(5)
-  print l([5])
+  call printNoLine(l([5]))
 end main
     
 function getFunc(x as Int) returns Func<of List<of Int> => List<of Int>>
@@ -405,7 +405,7 @@ end function`;
 const global = new class {};
 async function main() {
   let l = (await global.getFunc(5));
-  await system.print((await l(system.list([5]))));
+  await _stdlib.printNoLine((await l(system.list([5]))));
 }
 
 async function getFunc(x) {
@@ -435,14 +435,14 @@ return [main, _tests];}`;
 
 main
   variable l set to lambda x as Func<of Int => Int> => x(2)
-  print l(lambda x as Int => 2 * x)
+  call printNoLine(l(lambda x as Int => 2 * x))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let l = async (x) => (await x(2));
-  await system.print((await l(async (x) => 2 * x)));
+  await _stdlib.printNoLine((await l(async (x) => 2 * x)));
 }
 return [main, _tests];}`;
 
@@ -467,7 +467,7 @@ return [main, _tests];}`;
 
 main
   variable l set to getFunc()(5)
-  print l
+  call printNoLine(l)
 end main
     
 function getFunc() returns Func<of Int => Int>
@@ -495,7 +495,7 @@ main
 end main
 
 procedure printModified(i as Int, f as Func<of Int => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -522,7 +522,7 @@ main
 end main
 
 procedure printModified(i as String, f as Func<of Int => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -549,7 +549,7 @@ main
 end main
 
 procedure printModified(i as Int, f as Func<of => Int>)
-  print f()
+  call printNoLine(f())
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -576,7 +576,7 @@ main
 end main
 
 procedure printModified(i as Int, f as Func<of Int => Int>)
-  print f(5)
+  call printNoLine(f(5))
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -603,7 +603,7 @@ main
 end main
 
 procedure printModified(i as Int, f as Func<of => Int>)
-  print f(5)
+  call printNoLine(f(5))
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -718,7 +718,7 @@ main
 end main
   
 procedure printModified(i as Int, f as Func<of Int => Int>)
-  print f(i)
+  call printNoLine(f(i))
 end procedure`;
 
     const fileImpl = new FileImpl(

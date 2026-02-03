@@ -21,9 +21,9 @@ main
   variable x set to new Foo(7, "Apple")
   variable y set to new Foo(7, "Orange")
   variable z set to new Foo(7, "Orange")
-  print x.isSameValueAs(x)
-  print x.isSameValueAs(y)
-  print y.isSameValueAs(z)
+  call printNoLine(x.isSameValueAs(x))
+  call printNoLine(x.isSameValueAs(y))
+  call printNoLine(y.isSameValueAs(z))
 end main
 
 class Foo
@@ -49,9 +49,9 @@ async function main() {
   let x = system.initialise(await new Foo()._initialise(7, "Apple"));
   let y = system.initialise(await new Foo()._initialise(7, "Orange"));
   let z = system.initialise(await new Foo()._initialise(7, "Orange"));
-  await system.print(_stdlib.isSameValueAs(x, x));
-  await system.print(_stdlib.isSameValueAs(x, y));
-  await system.print(_stdlib.isSameValueAs(y, z));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(x, x));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(x, y));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(y, z));
 }
 
 class Foo {
@@ -101,9 +101,9 @@ main
   variable x set to new Foo(7, "Apple")
   variable y set to new Foo(7, "Orange")
   variable z set to new Foo(7, "Orange")
-  print x.isSameReferenceAs(x)
-  print x.isSameReferenceAs(y)
-  print y.isSameReferenceAs(z)
+  call printNoLine(x.isSameReferenceAs(x))
+  call printNoLine(x.isSameReferenceAs(y))
+  call printNoLine(y.isSameReferenceAs(z))
 end main
 
 class Foo
@@ -129,9 +129,9 @@ async function main() {
   let x = system.initialise(await new Foo()._initialise(7, "Apple"));
   let y = system.initialise(await new Foo()._initialise(7, "Orange"));
   let z = system.initialise(await new Foo()._initialise(7, "Orange"));
-  await system.print(_stdlib.isSameReferenceAs(x, x));
-  await system.print(_stdlib.isSameReferenceAs(x, y));
-  await system.print(_stdlib.isSameReferenceAs(y, z));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(x, x));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(x, y));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(y, z));
 }
 
 class Foo {
@@ -179,7 +179,7 @@ return [main, _tests];}`;
 
 main
   variable x set to new Foo()
-  print x.isSameValueAs(empty Foo)
+  call printNoLine(x.isSameValueAs(empty Foo))
 end main
 
 class Foo
@@ -201,7 +201,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Foo()._initialise());
-  await system.print(_stdlib.isSameValueAs(x, Foo.emptyInstance()));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(x, Foo.emptyInstance()));
 }
 
 class Foo {
@@ -248,7 +248,7 @@ return [main, _tests];}`;
 
 main
   variable x set to new Foo()
-  print x.isSameReferenceAs(empty Foo)
+  call printNoLine(x.isSameReferenceAs(empty Foo))
 end main
 
 class Foo
@@ -270,7 +270,7 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Foo()._initialise());
-  await system.print(_stdlib.isSameReferenceAs(x, Foo.emptyInstance()));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(x, Foo.emptyInstance()));
 }
 
 class Foo {
@@ -320,12 +320,12 @@ main
   variable y set to x
   call y.setP1(3)
   variable z set to new Foo(8, "Orange")
-  print x.isSameValueAs(x)
-  print x.isSameValueAs(y)
-  print x.isSameValueAs(z)
-  print x.isSameReferenceAs(x)
-  print x.isSameReferenceAs(y)
-  print x.isSameReferenceAs(z)
+  call printNoLine(x.isSameValueAs(x))
+  call printNoLine(x.isSameValueAs(y))
+  call printNoLine(x.isSameValueAs(z))
+  call printNoLine(x.isSameReferenceAs(x))
+  call printNoLine(x.isSameReferenceAs(y))
+  call printNoLine(x.isSameReferenceAs(z))
 end main
 
 class Foo
@@ -353,12 +353,12 @@ async function main() {
   let y = x;
   await y.setP1(3);
   let z = system.initialise(await new Foo()._initialise(8, "Orange"));
-  await system.print(_stdlib.isSameValueAs(x, x));
-  await system.print(_stdlib.isSameValueAs(x, y));
-  await system.print(_stdlib.isSameValueAs(x, z));
-  await system.print(_stdlib.isSameReferenceAs(x, x));
-  await system.print(_stdlib.isSameReferenceAs(x, y));
-  await system.print(_stdlib.isSameReferenceAs(x, z));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(x, x));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(x, y));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(x, z));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(x, x));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(x, y));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(x, z));
 }
 
 class Foo {
@@ -406,7 +406,7 @@ return [main, _tests];}`;
 
 main
   variable x set to new Foo()
-  print (x.p1).isSameValueAs(x.p1)
+  call printNoLine((x.p1).isSameValueAs(x.p1))
 end main
 
 class Foo
@@ -442,13 +442,13 @@ main
   variable f2 set to new Foo(2)
   variable l1 set to [f1, f2]
   variable l2 set to [f1, f2]
-  print l1.isSameValueAs(l2)
+  call printNoLine(l1.isSameValueAs(l2))
   variable l3 set to [f2, f1]
-  print l1.isSameValueAs(l3)
+  call printNoLine(l1.isSameValueAs(l3))
   variable l4 set to [new Foo(1), new Foo(2)]
-  print  l4.isSameValueAs(l1)
+  call printNoLine( l4.isSameValueAs(l1))
   call l4[0].setP(3)
-  print l4.isSameValueAs(l1)
+  call printNoLine(l4.isSameValueAs(l1))
 end main
 
 class Foo
@@ -481,13 +481,13 @@ async function main() {
   let f2 = system.initialise(await new Foo()._initialise(2));
   let l1 = system.list([f1, f2]);
   let l2 = system.list([f1, f2]);
-  await system.print(_stdlib.isSameValueAs(l1, l2));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(l1, l2));
   let l3 = system.list([f2, f1]);
-  await system.print(_stdlib.isSameValueAs(l1, l3));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(l1, l3));
   let l4 = system.list([system.initialise(await new Foo()._initialise(1)), system.initialise(await new Foo()._initialise(2))]);
-  await system.print(_stdlib.isSameValueAs(l4, l1));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(l4, l1));
   await system.safeIndex(l4, 0).setP(3);
-  await system.print(_stdlib.isSameValueAs(l4, l1));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(l4, l1));
 }
 
 class Foo {
@@ -521,11 +521,11 @@ main
   variable f2 set to new Foo() with p set to 2
   variable l1 set to {f1, f2}
   variable l2 set to {f1, f2}
-  print l1.isSameValueAs(l2)
+  call printNoLine(l1.isSameValueAs(l2))
   variable l3 set to {f2, f1}
-  print l1.isSameValueAs(l3)
+  call printNoLine(l1.isSameValueAs(l3))
   variable l4 set to {new Foo() with p set to 1, new Foo() with p set to 2}
-  print  l4.isSameValueAs(l1)
+  call printNoLine( l4.isSameValueAs(l1))
 end main
 
 record Foo
@@ -550,11 +550,11 @@ async function main() {
   let f2 = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})();
   let l1 = system.listImmutable([f1, f2]);
   let l2 = system.listImmutable([f1, f2]);
-  await system.print(_stdlib.isSameValueAs(l1, l2));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(l1, l2));
   let l3 = system.listImmutable([f2, f1]);
-  await system.print(_stdlib.isSameValueAs(l1, l3));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(l1, l3));
   let l4 = system.listImmutable([await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 1; return _a;})(), await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})()]);
-  await system.print(_stdlib.isSameValueAs(l4, l1));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(l4, l1));
 }
 
 class Foo {
@@ -579,13 +579,13 @@ main
   variable f2 set to new Foo(2)
   variable l1 set to [f1, f2]
   variable l2 set to [f1, f2]
-  print l1.isSameReferenceAs(l2)
+  call printNoLine(l1.isSameReferenceAs(l2))
   variable l3 set to [f2, f1]
-  print l1.isSameReferenceAs(l3)
+  call printNoLine(l1.isSameReferenceAs(l3))
   variable l4 set to [new Foo(1), new Foo(2)]
-  print  l4.isSameReferenceAs(l1)
+  call printNoLine( l4.isSameReferenceAs(l1))
   call l4[0].setP(3)
-  print l4.isSameReferenceAs(l1)
+  call printNoLine(l4.isSameReferenceAs(l1))
 end main
 
 class Foo
@@ -618,13 +618,13 @@ async function main() {
   let f2 = system.initialise(await new Foo()._initialise(2));
   let l1 = system.list([f1, f2]);
   let l2 = system.list([f1, f2]);
-  await system.print(_stdlib.isSameReferenceAs(l1, l2));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l1, l2));
   let l3 = system.list([f2, f1]);
-  await system.print(_stdlib.isSameReferenceAs(l1, l3));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l1, l3));
   let l4 = system.list([system.initialise(await new Foo()._initialise(1)), system.initialise(await new Foo()._initialise(2))]);
-  await system.print(_stdlib.isSameReferenceAs(l4, l1));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l4, l1));
   await system.safeIndex(l4, 0).setP(3);
-  await system.print(_stdlib.isSameReferenceAs(l4, l1));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l4, l1));
 }
 
 class Foo {
@@ -658,11 +658,11 @@ main
   variable f2 set to new Foo() with p set to 2
   variable l1 set to {f1, f2}
   variable l2 set to {f1, f2}
-  print l1.isSameReferenceAs(l2)
+  call printNoLine(l1.isSameReferenceAs(l2))
   variable l3 set to {f2, f1}
-  print l1.isSameReferenceAs(l3)
+  call printNoLine(l1.isSameReferenceAs(l3))
   variable l4 set to {new Foo() with p set to 1, new Foo() with p set to 2}
-  print  l4.isSameReferenceAs(l1)
+  call printNoLine( l4.isSameReferenceAs(l1))
 end main
 
 record Foo
@@ -687,11 +687,11 @@ async function main() {
   let f2 = await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})();
   let l1 = system.listImmutable([f1, f2]);
   let l2 = system.listImmutable([f1, f2]);
-  await system.print(_stdlib.isSameReferenceAs(l1, l2));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l1, l2));
   let l3 = system.listImmutable([f2, f1]);
-  await system.print(_stdlib.isSameReferenceAs(l1, l3));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l1, l3));
   let l4 = system.listImmutable([await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 1; return _a;})(), await (async () => {const _a = {...system.initialise(await new Foo()._initialise())}; Object.setPrototypeOf(_a, Object.getPrototypeOf(system.initialise(await new Foo()._initialise()))); _a.p = 2; return _a;})()]);
-  await system.print(_stdlib.isSameReferenceAs(l4, l1));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(l4, l1));
 }
 
 class Foo {

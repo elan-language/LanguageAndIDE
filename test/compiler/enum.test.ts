@@ -19,9 +19,9 @@ suite("Enum", () => {
     const code = `${testHeader}
 
 main
-  print Fruit.apple
-  print Fruit.orange
-  print Fruit.pear
+  call printNoLine(Fruit.apple)
+  call printNoLine(Fruit.orange)
+  call printNoLine(Fruit.pear)
 end main
    
 enum Fruit apple, orange, pear`;
@@ -33,9 +33,9 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  await system.print(Fruit.apple);
-  await system.print(Fruit.orange);
-  await system.print(Fruit.pear);
+  await _stdlib.printNoLine(Fruit.apple);
+  await _stdlib.printNoLine(Fruit.orange);
+  await _stdlib.printNoLine(Fruit.pear);
 }
 return [main, _tests];}`;
 
@@ -60,7 +60,7 @@ return [main, _tests];}`;
 
 main
   variable e set to empty Fruit
-  print e
+  call printNoLine(e)
 end main
    
 enum Fruit apple, orange, pear`;
@@ -73,7 +73,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let e = Fruit._default;
-  await system.print(e);
+  await _stdlib.printNoLine(e);
 }
 return [main, _tests];}`;
 
@@ -98,7 +98,7 @@ return [main, _tests];}`;
 
 main
   variable foo set to new Foo()
-  print foo.fruit
+  call printNoLine(foo.fruit)
 end main
 
 class Foo
@@ -118,7 +118,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let foo = system.initialise(await new Foo()._initialise());
-  await system.print(foo.fruit);
+  await _stdlib.printNoLine(foo.fruit);
 }
 
 class Foo {
@@ -155,7 +155,7 @@ return [main, _tests];}`;
 
 main
   variable foo set to empty Foo
-  print foo.fruit
+  call printNoLine(foo.fruit)
 end main
 
 class Foo
@@ -175,7 +175,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let foo = Foo.emptyInstance();
-  await system.print(foo.fruit);
+  await _stdlib.printNoLine(foo.fruit);
 }
 
 class Foo {
@@ -213,7 +213,7 @@ return [main, _tests];}`;
 main
   variable x set to Fruit.apple
   set x to Fruit.pear
-  print x
+  call printNoLine(x)
 end main
    
 enum Fruit apple, orange, pear`;
@@ -227,7 +227,7 @@ const global = new class {};
 async function main() {
   let x = Fruit.apple;
   x = Fruit.pear;
-  await system.print(x);
+  await _stdlib.printNoLine(x);
 }
 return [main, _tests];}`;
 
@@ -253,7 +253,7 @@ return [main, _tests];}`;
 main
   variable x set to Fruit.apple
   variable y set to x
-  print y
+  call printNoLine(y)
 end main
    
 enum Fruit apple, orange, pear`;
@@ -267,7 +267,7 @@ const global = new class {};
 async function main() {
   let x = Fruit.apple;
   let y = x;
-  await system.print(y);
+  await _stdlib.printNoLine(y);
 }
 return [main, _tests];}`;
 
@@ -291,8 +291,8 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print isFavourite(Fruit.apple)
-  print isFavourite(Fruit.pear)
+  call printNoLine(isFavourite(Fruit.apple))
+  call printNoLine(isFavourite(Fruit.pear))
 end main
    
 enum Fruit apple, orange, pear
@@ -309,8 +309,8 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  await system.print((await global.isFavourite(Fruit.apple)));
-  await system.print((await global.isFavourite(Fruit.pear)));
+  await _stdlib.printNoLine((await global.isFavourite(Fruit.apple)));
+  await _stdlib.printNoLine((await global.isFavourite(Fruit.pear)));
 }
 
 async function isFavourite(f) {
@@ -339,7 +339,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print firstFruit() is Fruit.apple
+  call printNoLine(firstFruit() is Fruit.apple)
 end main
    
 enum Fruit apple, orange, pear
@@ -356,7 +356,7 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  await system.print((await global.firstFruit()) === Fruit.apple);
+  await _stdlib.printNoLine((await global.firstFruit()) === Fruit.apple);
 }
 
 async function firstFruit() {
@@ -386,8 +386,8 @@ return [main, _tests];}`;
 
 main
   variable x set to Fruit.apple
-  print x is Fruit.apple
-  print x is Fruit.pear
+  call printNoLine(x is Fruit.apple)
+  call printNoLine(x is Fruit.pear)
 end main
    
 enum Fruit apple, orange, pear`;
@@ -400,8 +400,8 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let x = Fruit.apple;
-  await system.print(x === Fruit.apple);
-  await system.print(x === Fruit.pear);
+  await _stdlib.printNoLine(x === Fruit.apple);
+  await _stdlib.printNoLine(x === Fruit.pear);
 }
 return [main, _tests];}`;
 
@@ -426,7 +426,7 @@ return [main, _tests];}`;
 
 main
   variable a set to "Eat more {Fruit.apple}s!"
-  print a
+  call printNoLine(a)
 end main
    
 enum Fruit apple, orange, pear`;
@@ -439,7 +439,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let a = \`Eat more \${await _stdlib.asString(Fruit.apple)}s!\`;
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -464,7 +464,7 @@ return [main, _tests];}`;
 
 main
   variable a set to "Eat more " + Fruit.apple
-  print a
+  call printNoLine(a)
 end main
    
 enum Fruit apple, orange, pear`;
@@ -580,7 +580,7 @@ enum Fruit apple, orange, pear`;
     const code = `${testHeader}
 
 main
-  print Fruit.apple
+  call printNoLine(Fruit.apple)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -601,7 +601,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  print Fruit.kiwi
+  call printNoLine(Fruit.kiwi)
 end main
 
 enum Fruit apple, orange, pear`;

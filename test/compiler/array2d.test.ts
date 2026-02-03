@@ -20,14 +20,14 @@ suite("Array2D", () => {
 
 main
   variable c set to new Array2D<of Int>(1, 1, 0)
-  print c
+  call printNoLine(c)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let c = system.initialise(await new _stdlib.Array2D()._initialise(1, 1, 0));
-  await system.print(c);
+  await _stdlib.printNoLine(c);
 }
 return [main, _tests];}`;
 
@@ -52,7 +52,7 @@ return [main, _tests];}`;
 
 main
   variable a set to new Array2D<of Int>(1, 1, 0)
-  print bar(a)
+  call printNoLine(bar(a))
 end main
 
 function bar(arr as Array2D<of Int>) returns Array2D<of Int>
@@ -63,7 +63,7 @@ end function`;
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Array2D()._initialise(1, 1, 0));
-  await system.print((await global.bar(a)));
+  await _stdlib.printNoLine((await global.bar(a)));
 }
 
 async function bar(arr) {
@@ -93,7 +93,7 @@ return [main, _tests];}`;
 
 main
   variable a set to new Array2D<of Int>(0, 0, 0)
-  print foo(a)
+  call printNoLine(foo(a))
 end main
 
 function foo(arr as List<of List<of Int>>) returns List<of List<of Int>>
@@ -121,14 +121,14 @@ end function`;
 
 main
   variable a set to empty Array2D<of String>
-  print a.columns()
+  call printNoLine(a.columns())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.initialise(_stdlib.Array2D.emptyInstance());
-  await system.print(a.columns());
+  await _stdlib.printNoLine(a.columns());
 }
 return [main, _tests];}`;
 
@@ -157,8 +157,8 @@ main
   call a.put(0, 1, "foo")
   call a.put(2, 0, "yon")
   call a.put(2, 1, "xan")
-  print a[0, 1]
-  print a[2, 0]
+  call printNoLine(a[0, 1])
+  call printNoLine(a[2, 0])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -169,8 +169,8 @@ async function main() {
   a.put(0, 1, "foo");
   a.put(2, 0, "yon");
   a.put(2, 1, "xan");
-  await system.print(system.safeIndex(a, 0, 1));
-  await system.print(system.safeIndex(a, 2, 0));
+  await _stdlib.printNoLine(system.safeIndex(a, 0, 1));
+  await _stdlib.printNoLine(system.safeIndex(a, 2, 0));
 }
 return [main, _tests];}`;
 
@@ -198,7 +198,7 @@ main
   set a to new Array2D<of String>(3, 2, "")
   call a.put(0, 0, "bar")
   call a.put(0, 1, "foo")
-  print a[0, 1]
+  call printNoLine(a[0, 1])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -208,7 +208,7 @@ async function main() {
   a = system.initialise(await new _stdlib.Array2D()._initialise(3, 2, ""));
   a.put(0, 0, "bar");
   a.put(0, 1, "foo");
-  await system.print(system.safeIndex(a, 0, 1));
+  await _stdlib.printNoLine(system.safeIndex(a, 0, 1));
 }
 return [main, _tests];}`;
 
@@ -237,8 +237,8 @@ main
   set a to a.withPut(0, 1, "foo")
   set a to a.withPut(2, 0, "yon")
   set a to a.withPut(2, 1, "xan")
-  print a[0, 1]
-  print a[2, 0]
+  call printNoLine(a[0, 1])
+  call printNoLine(a[2, 0])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -249,8 +249,8 @@ async function main() {
   a = a.withPut(0, 1, "foo");
   a = a.withPut(2, 0, "yon");
   a = a.withPut(2, 1, "xan");
-  await system.print(system.safeIndex(a, 0, 1));
-  await system.print(system.safeIndex(a, 2, 0));
+  await _stdlib.printNoLine(system.safeIndex(a, 0, 1));
+  await _stdlib.printNoLine(system.safeIndex(a, 2, 0));
 }
 return [main, _tests];}`;
 
@@ -278,7 +278,7 @@ main
   set a to new Array2D<of String>(3, 2, "")
   set a to a.withPut(0, 0, "bar")
   set a to a.withPut(0, 1, "foo")
-  print a[0, 1]
+  call printNoLine(a[0, 1])
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -288,7 +288,7 @@ async function main() {
   a = system.initialise(await new _stdlib.Array2D()._initialise(3, 2, ""));
   a = a.withPut(0, 0, "bar");
   a = a.withPut(0, 1, "foo");
-  await system.print(system.safeIndex(a, 0, 1));
+  await _stdlib.printNoLine(system.safeIndex(a, 0, 1));
 }
 return [main, _tests];}`;
 
@@ -314,11 +314,11 @@ return [main, _tests];}`;
 main
   variable a set to empty Array2D<of Int>
   variable b set to empty Array2D<of Int>
-  print a
-  print b
-  print a.isSameValueAs(b)
-  print a.isSameValueAs(empty Array2D<of Int>)
-  print b.isSameValueAs(empty Array2D<of Int>)
+  call printNoLine(a)
+  call printNoLine(b)
+  call printNoLine(a.isSameValueAs(b))
+  call printNoLine(a.isSameValueAs(empty Array2D<of Int>))
+  call printNoLine(b.isSameValueAs(empty Array2D<of Int>))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -326,11 +326,11 @@ const global = new class {};
 async function main() {
   let a = system.initialise(_stdlib.Array2D.emptyInstance());
   let b = system.initialise(_stdlib.Array2D.emptyInstance());
-  await system.print(a);
-  await system.print(b);
-  await system.print(_stdlib.isSameValueAs(a, b));
-  await system.print(_stdlib.isSameValueAs(a, system.initialise(_stdlib.Array2D.emptyInstance())));
-  await system.print(_stdlib.isSameValueAs(b, system.initialise(_stdlib.Array2D.emptyInstance())));
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, b));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(a, system.initialise(_stdlib.Array2D.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameValueAs(b, system.initialise(_stdlib.Array2D.emptyInstance())));
 }
 return [main, _tests];}`;
 
@@ -357,10 +357,10 @@ main
   variable a set to empty Array2D<of Int>
   variable b set to empty Array2D<of Int>
   variable c set to a
-  print a.isSameReferenceAs(b)
-  print a.isSameReferenceAs(empty Array2D<of Int>)
-  print b.isSameReferenceAs(empty Array2D<of Int>)
-  print a.isSameReferenceAs(c)
+  call printNoLine(a.isSameReferenceAs(b))
+  call printNoLine(a.isSameReferenceAs(empty Array2D<of Int>))
+  call printNoLine(b.isSameReferenceAs(empty Array2D<of Int>))
+  call printNoLine(a.isSameReferenceAs(c))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -369,10 +369,10 @@ async function main() {
   let a = system.initialise(_stdlib.Array2D.emptyInstance());
   let b = system.initialise(_stdlib.Array2D.emptyInstance());
   let c = a;
-  await system.print(_stdlib.isSameReferenceAs(a, b));
-  await system.print(_stdlib.isSameReferenceAs(a, system.initialise(_stdlib.Array2D.emptyInstance())));
-  await system.print(_stdlib.isSameReferenceAs(b, system.initialise(_stdlib.Array2D.emptyInstance())));
-  await system.print(_stdlib.isSameReferenceAs(a, c));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, b));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, system.initialise(_stdlib.Array2D.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(b, system.initialise(_stdlib.Array2D.emptyInstance())));
+  await _stdlib.printNoLine(_stdlib.isSameReferenceAs(a, c));
 }
 return [main, _tests];}`;
 
@@ -397,14 +397,14 @@ return [main, _tests];}`;
 
 main
   variable a set to new Array2D<of Int>(2, 2, 0)
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, 0));
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -429,14 +429,14 @@ return [main, _tests];}`;
 
 main
   variable a set to new Array2D<of Int>(2, 2, 1)
-  print a
+  call printNoLine(a)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, 1));
-  await system.print(a);
+  await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
 
@@ -462,7 +462,7 @@ return [main, _tests];}`;
 main
   variable a set to new Array2D<of String>(2, 2, "")
   call a.put(0, 1, "foo")
-  print a.contains("foo")
+  call printNoLine(a.contains("foo"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -470,7 +470,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, ""));
   a.put(0, 1, "foo");
-  await system.print(a.contains("foo"));
+  await _stdlib.printNoLine(a.contains("foo"));
 }
 return [main, _tests];}`;
 
@@ -496,7 +496,7 @@ return [main, _tests];}`;
 main
   variable a set to new Array2D<of String>(2, 2, "")
   call a.put(0, 1, "bar")
-  print a.contains("foo")
+  call printNoLine(a.contains("foo"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -504,7 +504,7 @@ const global = new class {};
 async function main() {
   let a = system.initialise(await new _stdlib.Array2D()._initialise(2, 2, ""));
   a.put(0, 1, "bar");
-  await system.print(a.contains("foo"));
+  await _stdlib.printNoLine(a.contains("foo"));
 }
 return [main, _tests];}`;
 
@@ -531,9 +531,9 @@ main
   variable a set to new Array2D<of String>(10, 10, "")
   call a.put(5, 7, "bar")
   call a.put(8, 2, "foo")
-  print a.indexOf("bar")
-  print a.indexOf("foo")
-  print a.indexOf("yon")
+  call printNoLine(a.indexOf("bar"))
+  call printNoLine(a.indexOf("foo"))
+  call printNoLine(a.indexOf("yon"))
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -542,9 +542,9 @@ async function main() {
   let a = system.initialise(await new _stdlib.Array2D()._initialise(10, 10, ""));
   a.put(5, 7, "bar");
   a.put(8, 2, "foo");
-  await system.print(a.indexOf("bar"));
-  await system.print(a.indexOf("foo"));
-  await system.print(a.indexOf("yon"));
+  await _stdlib.printNoLine(a.indexOf("bar"));
+  await _stdlib.printNoLine(a.indexOf("foo"));
+  await _stdlib.printNoLine(a.indexOf("yon"));
 }
 return [main, _tests];}`;
 
@@ -825,8 +825,8 @@ end main
 
 main
   variable a set to new Array2D<of String>(3, 0, "")
-  print a[0].length()
-  print a
+  call printNoLine(a[0].length())
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -848,7 +848,7 @@ end main`;
 
 main
   variable a set to new Array2D(3, 0, "")
-  print a
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -873,7 +873,7 @@ end main`;
 
 main
   variable a set to new Array2D<of String>(0, 1, "")
-  print a
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -899,7 +899,7 @@ end main`;
 
 main
   variable a set to new Array2D<of String>(1, 0, "")
-  print a
+  call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(

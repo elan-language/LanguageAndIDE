@@ -20,38 +20,38 @@ suite("Queue", () => {
 
 main
   variable q set to new Queue<of String>()
-  print q.length()
+  call printNoLine(q.length())
   set q to q.enqueue("apple")
   set q to q.enqueue("pear")
-  print q
-  print q.length()
-  print q.peek()
+  call printNoLine(q)
+  call printNoLine(q.length())
+  call printNoLine(q.peek())
   variable fruit set to ""
   set fruit, q to q.dequeue()
-  print fruit
+  call printNoLine(fruit)
   set fruit, q to q.dequeue()
-  print fruit
-  print q.length()
-  print q
+  call printNoLine(fruit)
+  call printNoLine(q.length())
+  call printNoLine(q)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let q = system.initialise(await new _stdlib.Queue()._initialise());
-  await system.print(q.length());
+  await _stdlib.printNoLine(q.length());
   q = q.enqueue("apple");
   q = q.enqueue("pear");
-  await system.print(q);
-  await system.print(q.length());
-  await system.print(q.peek());
+  await _stdlib.printNoLine(q);
+  await _stdlib.printNoLine(q.length());
+  await _stdlib.printNoLine(q.peek());
   let fruit = "";
   [fruit, q] = q.dequeue();
-  await system.print(fruit);
+  await _stdlib.printNoLine(fruit);
   [fruit, q] = q.dequeue();
-  await system.print(fruit);
-  await system.print(q.length());
-  await system.print(q);
+  await _stdlib.printNoLine(fruit);
+  await _stdlib.printNoLine(q.length());
+  await _stdlib.printNoLine(q);
 }
 return [main, _tests];}`;
 
@@ -127,14 +127,14 @@ end main`;
 
 main
   variable q set to new Queue<of String>()
-  print q.peek()
+  call printNoLine(q.peek())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let q = system.initialise(await new _stdlib.Queue()._initialise());
-  await system.print(q.peek());
+  await _stdlib.printNoLine(q.peek());
 }
 return [main, _tests];}`;
 
@@ -162,14 +162,14 @@ return [main, _tests];}`;
 
 main
   variable q set to new Queue<of String>()
-  print q.dequeue()
+  call printNoLine(q.dequeue())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let q = system.initialise(await new _stdlib.Queue()._initialise());
-  await system.print(q.dequeue());
+  await _stdlib.printNoLine(q.dequeue());
 }
 return [main, _tests];}`;
 

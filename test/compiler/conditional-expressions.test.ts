@@ -19,10 +19,10 @@ suite("Conditional Expressions", () => {
     const code = `${testHeader}
 
 main
-  print grade(90)
-  print grade(70)
-  print grade(50)
-  print grade(30)
+  call printNoLine(grade(90))
+  call printNoLine(grade(70))
+  call printNoLine(grade(50))
+  call printNoLine(grade(30))
 end main
 
 function grade(score as Float) returns String
@@ -32,10 +32,10 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print((await global.grade(90)));
-  await system.print((await global.grade(70)));
-  await system.print((await global.grade(50)));
-  await system.print((await global.grade(30)));
+  await _stdlib.printNoLine((await global.grade(90)));
+  await _stdlib.printNoLine((await global.grade(70)));
+  await _stdlib.printNoLine((await global.grade(50)));
+  await _stdlib.printNoLine((await global.grade(30)));
 }
 
 async function grade(score) {
@@ -66,7 +66,7 @@ return [main, _tests];}`;
 main
   variable score set to 70
   variable grade set to if score > 80 then "Distinction" else if score > 60 then "Merit" else if score > 40 then "Pass" else "Fail"
-  print grade
+  call printNoLine(grade)
 end main
 `;
 
@@ -75,7 +75,7 @@ const global = new class {};
 async function main() {
   let score = 70;
   let grade = (score > 80 ? "Distinction" : (score > 60 ? "Merit" : (score > 40 ? "Pass" : "Fail")));
-  await system.print(grade);
+  await _stdlib.printNoLine(grade);
 }
 return [main, _tests];}`;
 
@@ -101,7 +101,7 @@ return [main, _tests];}`;
 main
   variable score set to 70
   set score to score + if score is 70 then 1 else 2
-  print score
+  call printNoLine(score)
 end main
 `;
 
@@ -110,7 +110,7 @@ const global = new class {};
 async function main() {
   let score = 70;
   score = score + (score === 70 ? 1 : 2);
-  await system.print(score);
+  await _stdlib.printNoLine(score);
 }
 return [main, _tests];}`;
 
@@ -136,7 +136,7 @@ return [main, _tests];}`;
 main
   variable score set to 70.1
   set score to if true then 60.1 else 60
-  print score
+  call printNoLine(score)
 end main
 `;
 
@@ -145,7 +145,7 @@ const global = new class {};
 async function main() {
   let score = 70.1;
   score = (_stdlib.true ? 60.1 : 60);
-  await system.print(score);
+  await _stdlib.printNoLine(score);
 }
 return [main, _tests];}`;
 
@@ -171,7 +171,7 @@ return [main, _tests];}`;
 main
   variable score set to 70.1
   set score to if false then 60 else 60.1
-  print score
+  call printNoLine(score)
 end main
 `;
 
@@ -180,7 +180,7 @@ const global = new class {};
 async function main() {
   let score = 70.1;
   score = (_stdlib.false ? 60 : 60.1);
-  await system.print(score);
+  await _stdlib.printNoLine(score);
 }
 return [main, _tests];}`;
 
@@ -206,7 +206,7 @@ return [main, _tests];}`;
 main
   variable score set to cast(new Bar())
   set score to if false then new Bar() else cast(new Bar())
-  print score
+  call printNoLine(score)
 end main
 
 abstract class Foo
@@ -224,7 +224,7 @@ const global = new class {};
 async function main() {
   let score = (await global.cast(system.initialise(await new Bar()._initialise())));
   score = (_stdlib.false ? system.initialise(await new Bar()._initialise()) : (await global.cast(system.initialise(await new Bar()._initialise()))));
-  await system.print(score);
+  await _stdlib.printNoLine(score);
 }
 
 class Foo {
@@ -266,7 +266,7 @@ return [main, _tests];}`;
 main
   variable score set to cast(new Bar())
   set score to if false then cast(new Bar()) else new Bar()
-  print score
+  call printNoLine(score)
 end main
 
 abstract class Foo
@@ -284,7 +284,7 @@ const global = new class {};
 async function main() {
   let score = (await global.cast(system.initialise(await new Bar()._initialise())));
   score = (_stdlib.false ? (await global.cast(system.initialise(await new Bar()._initialise()))) : system.initialise(await new Bar()._initialise()));
-  await system.print(score);
+  await _stdlib.printNoLine(score);
 }
 
 class Foo {
@@ -324,10 +324,10 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
- print grade(90)
- print grade(70)
- print grade(50)
- print grade(30)
+ call printNoLine(grade(90))
+ call printNoLine(grade(70))
+ call printNoLine(grade(50))
+ call printNoLine(grade(30))
 end main
 
 function grade(score as Int) as String
@@ -353,7 +353,7 @@ end function
 
 main
  variable a set to if 2 then 5 else 7
- print a
+ call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -378,7 +378,7 @@ end main`;
 
 main
  variable a set to if true then "five" else 7
- print a
+ call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -404,7 +404,7 @@ end main`;
 main
  variable a set to 10
  set a to if true then 0.5 else 10
- print a
+ call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -430,7 +430,7 @@ end main`;
 main
  variable a set to 10
  set a to if true then 10 else 0.5
- print a
+ call printNoLine(a)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -456,7 +456,7 @@ end main`;
 main
   variable score set to new Bar()
   set score to if false then new Foo() else new Bar()
-  print score
+  call printNoLine(score)
 end main
 
 class Foo
@@ -489,7 +489,7 @@ end class`;
 main
   variable score set to new Bar()
   set score to if false then new Bar() else new Foo()
-  print score
+  call printNoLine(score)
 end main
 
 class Foo
@@ -521,7 +521,7 @@ end class`;
 main
   variable score set to new Bar()
   set score to if false then new Bar() else cast(new Bar())
-  print score
+  call printNoLine(score)
 end main
 
 abstract class Foo
@@ -557,7 +557,7 @@ end function`;
 main
   variable score set to new Bar()
   set score to if false then cast(new Bar()) else new Bar()
-  print score
+  call printNoLine(score)
 end main
 
 abstract class Foo

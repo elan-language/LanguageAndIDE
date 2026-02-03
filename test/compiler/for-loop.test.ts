@@ -23,7 +23,7 @@ main
   for i from 1 to 10 step 1
     set tot to tot + i
   end for
-  print tot
+  call printNoLine(tot)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -34,7 +34,7 @@ async function main() {
   for (let i = 1; i <= _tofor6; i = i + 1) {
     tot = tot + i;
   }
-  await system.print(tot);
+  await _stdlib.printNoLine(tot);
 }
 return [main, _tests];}`;
 
@@ -63,7 +63,7 @@ main
   for i from 1 to 10 step 1
     set tot to tot + i
   end for
-  print tot
+  call printNoLine(tot)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -75,7 +75,7 @@ async function main() {
   for (i = 1; i <= _tofor9; i = i + 1) {
     tot = tot + i;
   }
-  await system.print(tot);
+  await _stdlib.printNoLine(tot);
 }
 return [main, _tests];}`;
 
@@ -103,7 +103,7 @@ variable tot set to 0
 for i from 1 to 10 step 2
   set tot to tot + i
 end for
-print tot
+call printNoLine(tot)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -114,7 +114,7 @@ async function main() {
   for (let i = 1; i <= _tofor6; i = i + 2) {
     tot = tot + i;
   }
-  await system.print(tot);
+  await _stdlib.printNoLine(tot);
 }
 return [main, _tests];}`;
 
@@ -142,7 +142,7 @@ main
   for i from 10 to 3 step -1
     set tot to tot + i
   end for
-  print tot
+  call printNoLine(tot)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -153,7 +153,7 @@ async function main() {
   for (let i = 10; i >= _tofor6; i = i - 1) {
     tot = tot + i;
   }
-  await system.print(tot);
+  await _stdlib.printNoLine(tot);
 }
 return [main, _tests];}`;
 
@@ -183,7 +183,7 @@ main
       set tot to tot + 1
     end for
   end for
-  print tot
+  call printNoLine(tot)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -197,7 +197,7 @@ async function main() {
       tot = tot + 1;
     }
   }
-  await system.print(tot);
+  await _stdlib.printNoLine(tot);
 }
 return [main, _tests];}`;
     const fileImpl = new FileImpl(
@@ -226,7 +226,7 @@ main
   for i from lower to upper step 2
     set tot to tot + i
   end for
-  print tot
+  call printNoLine(tot)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -239,7 +239,7 @@ async function main() {
   for (let i = lower; i <= _tofor12; i = i + 2) {
     tot = tot + i;
   }
-  await system.print(tot);
+  await _stdlib.printNoLine(tot);
 }
 return [main, _tests];}`;
     const fileImpl = new FileImpl(
@@ -270,7 +270,7 @@ procedure foo(out arr as List<of Int>)
   for i from 0 to 10 step 1
     call arr.put(i, 1)
   end for
-  print arr[0]
+  call printNoLine(arr[0])
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -287,7 +287,7 @@ async function foo(arr) {
   for (let i = 0; i <= _tofor13; i = i + 1) {
     arr[0].put(i, 1);
   }
-  await system.print(system.safeIndex(arr[0], 0));
+  await _stdlib.printNoLine(system.safeIndex(arr[0], 0));
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -313,7 +313,7 @@ return [main, _tests];}`;
 main
   variable limit set to 10
   for i from 1 to limit step 1
-    print "{i}"
+    call printNoLine("{i}")
     set limit to limit + 1
   end for
 end main`;
@@ -324,7 +324,7 @@ async function main() {
   let limit = 10;
   const _tofor6 = limit;
   for (let i = 1; i <= _tofor6; i = i + 1) {
-    await system.print(\`\${await _stdlib.asString(i)}\`);
+    await _stdlib.printNoLine(\`\${await _stdlib.asString(i)}\`);
     limit = limit + 1;
   }
 }
@@ -355,7 +355,7 @@ main
   for i from 1 to 10 step 1
     set tot to tot + i
   end for
-  print tot
+  call printNoLine(tot)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -381,7 +381,7 @@ main
   for i from 1.5 to 10.1 step 1.0
     set tot to tot + i
   end for
-  print tot
+  call printNoLine(tot)
 end main
 `;
 
@@ -438,7 +438,7 @@ main
   for i from 1 to 10 step 1
     set tot to 10
   end for
-  print i
+  call printNoLine(i)
 end main
 `;
 
@@ -557,9 +557,9 @@ end main
 main
   variable ids set to 10
   for id from id to 11 step 1
-    print id
+    call printNoLine(id)
   end for
-  print ids
+  call printNoLine(ids)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -582,9 +582,9 @@ end main`;
 main
   variable ids set to 10
   for id from 0 to id step 1
-    print id
+    call printNoLine(id)
   end for
-  print ids
+  call printNoLine(ids)
 end main`;
 
     const fileImpl = new FileImpl(

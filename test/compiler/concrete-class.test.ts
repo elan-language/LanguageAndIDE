@@ -20,9 +20,9 @@ suite("Concrete Class", () => {
 
 main
   variable x set to new Foo()
-  print x.p1
-  print x.p2
-  print x.asString()
+  call printNoLine(x.p1)
+  call printNoLine(x.p2)
+  call printNoLine(x.asString())
 end main
 
 class Foo
@@ -44,9 +44,9 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Foo()._initialise());
-  await system.print(x.p1);
-  await system.print(x.p2);
-  await system.print((await x.asString()));
+  await _stdlib.printNoLine(x.p1);
+  await _stdlib.printNoLine(x.p2);
+  await _stdlib.printNoLine((await x.asString()));
 }
 
 class Foo {
@@ -89,8 +89,8 @@ return [main, _tests];}`;
 
 main
   variable x set to new Foo(7, "Apple")
-  print x.p1
-  print x.p2
+  call printNoLine(x.p1)
+  call printNoLine(x.p2)
 end main
 
 class Foo
@@ -111,8 +111,8 @@ end class`;
 const global = new class {};
 async function main() {
   let x = system.initialise(await new Foo()._initialise(7, "Apple"));
-  await system.print(x.p1);
-  await system.print(x.p2);
+  await _stdlib.printNoLine(x.p1);
+  await _stdlib.printNoLine(x.p2);
 }
 
 class Foo {
@@ -178,7 +178,7 @@ class Bar
     property p1 as Int
 
     procedure printP1()
-      print property.p1
+      call printNoLine(property.p1)
     end procedure
 end class`;
 
@@ -220,7 +220,7 @@ class Bar {
   p1 = 0;
 
   async printP1() {
-    await system.print(this.p1);
+    await _stdlib.printNoLine(this.p1);
   }
 
 }
@@ -248,12 +248,12 @@ return [main, _tests];}`;
 main
   variable foo set to new Foo()
   variable bar set to foo.bar
-  print bar.p1
-  print bar.p2
+  call printNoLine(bar.p1)
+  call printNoLine(bar.p2)
   variable foo2 set to bar.foo
   variable bar2 set to foo2.bar
-  print bar2.p1
-  print bar2.p2
+  call printNoLine(bar2.p1)
+  call printNoLine(bar2.p2)
 end main
 
 class Foo
@@ -289,12 +289,12 @@ const global = new class {};
 async function main() {
   let foo = system.initialise(await new Foo()._initialise());
   let bar = foo.bar;
-  await system.print(bar.p1);
-  await system.print(bar.p2);
+  await _stdlib.printNoLine(bar.p1);
+  await _stdlib.printNoLine(bar.p2);
   let foo2 = bar.foo;
   let bar2 = foo2.bar;
-  await system.print(bar2.p1);
-  await system.print(bar2.p2);
+  await _stdlib.printNoLine(bar2.p1);
+  await _stdlib.printNoLine(bar2.p2);
 }
 
 class Foo {
@@ -368,7 +368,7 @@ return [main, _tests];}`;
 main
   variable foo set to new Foo()
   variable b set to foo.strArr[0]
-  print b
+  call printNoLine(b)
 end main
 
 class Foo
@@ -385,7 +385,7 @@ const global = new class {};
 async function main() {
   let foo = system.initialise(await new Foo()._initialise());
   let b = system.safeIndex(foo.strArr, 0);
-  await system.print(b);
+  await _stdlib.printNoLine(b);
 }
 
 class Foo {
@@ -432,7 +432,7 @@ class Foo
 end class
 
 procedure proc(foo as Foo)
-    print foo.p1
+    call printNoLine(foo.p1)
 end procedure
 `;
 
@@ -456,7 +456,7 @@ class Foo {
 }
 
 async function proc(foo) {
-  await system.print(foo.p1);
+  await _stdlib.printNoLine(foo.p1);
 }
 global["proc"] = proc;
 return [main, _tests];}`;
@@ -482,7 +482,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  print fun(f)
+  call printNoLine(fun(f))
 end main
 
 class Foo
@@ -504,7 +504,7 @@ end function
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.print((await global.fun(f)));
+  await _stdlib.printNoLine((await global.fun(f)));
 }
 
 class Foo {
@@ -577,7 +577,7 @@ end class`;
 
 main
   variable f set to new Foo()
-  print f.p1
+  call printNoLine(f.p1)
 end main
 
 class Foo
@@ -596,7 +596,7 @@ end class`;
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  await system.print(f.p1);
+  await _stdlib.printNoLine(f.p1);
 }
 
 class Foo {
@@ -645,7 +645,7 @@ class Foo
 
   procedure append()
     call property.p1.append(1)
-    print property.p1
+    call printNoLine(property.p1)
   end procedure
 end class`;
 
@@ -663,7 +663,7 @@ class Foo {
 
   async append() {
     this.p1.append(1);
-    await system.print(this.p1);
+    await _stdlib.printNoLine(this.p1);
   }
 
 }
@@ -888,9 +888,9 @@ end class`;
 
 main
   variable x set to Foo()
-  print x.p1
-  print x.p2
-  print x.asString()
+  call printNoLine(x.p1)
+  call printNoLine(x.p2)
+  call printNoLine(x.asString())
 end main
 
 class Foo
@@ -963,7 +963,7 @@ class Bar
 end class
 
 procedure proc(bar as Bar)
-    print bar.p1
+    call printNoLine(bar.p1)
 end procedure
 `;
 
@@ -989,7 +989,7 @@ end procedure
 
 main
   variable f set to new Foo()
-  print fun(f)
+  call printNoLine(fun(f))
 end main
 
 class Foo
@@ -1279,7 +1279,7 @@ end class`;
 
 main
   variable x set to new Foo()
-  print x.b
+  call printNoLine(x.b)
 end main
 
 class Foo

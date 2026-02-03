@@ -18,7 +18,7 @@ suite("Constant Statement", () => {
     const code = `${testHeader}
 
 main
-  print add()
+  call printNoLine(add())
 end main
 
 function add() returns Int
@@ -30,7 +30,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print((await global.add()));
+  await _stdlib.printNoLine((await global.add()));
 }
 
 async function add() {
@@ -69,7 +69,7 @@ end main
 procedure foo()
   for i from 0 to 4 step 1
     constant temp set to li[i]
-    print temp
+    call printNoLine(temp)
   end for
 end procedure`;
 
@@ -86,7 +86,7 @@ async function foo() {
   const _tofor13 = 4;
   for (let i = 0; i <= _tofor13; i = i + 1) {
     const temp = system.safeIndex(global.li, i);
-    await system.print(temp);
+    await _stdlib.printNoLine(temp);
   }
 }
 global["foo"] = foo;
@@ -122,7 +122,7 @@ procedure foo()
     set li to li.withPut(i, li[i + 1])
     set li to li.withPut(i + 1, temp)
   end for
-  print li
+  call printNoLine(li)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -139,7 +139,7 @@ async function foo() {
     li = li.withPut(i, system.safeIndex(li, i + 1));
     li = li.withPut(i + 1, temp);
   }
-  await system.print(li);
+  await _stdlib.printNoLine(li);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -164,7 +164,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print foo()
+  call printNoLine(foo())
 end main
 
 function foo() returns Int
@@ -178,7 +178,7 @@ end function`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print((await global.foo()));
+  await _stdlib.printNoLine((await global.foo()));
 }
 
 async function foo() {
@@ -211,7 +211,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print foo()
+  call printNoLine(foo())
 end main
 
 function foo() returns Int
@@ -241,7 +241,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  print foo()
+  call printNoLine(foo())
 end main
 
 function foo() returns Int
@@ -272,7 +272,7 @@ end function`;
 
 main
   variable x set to foo()
-  print x
+  call printNoLine(x)
 end main
 
 function foo() returns Int
@@ -298,7 +298,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  print foo()
+  call printNoLine(foo())
 end main
 
 function foo() returns Int

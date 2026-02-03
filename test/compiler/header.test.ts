@@ -14,18 +14,18 @@ import {
 
 suite("Header", () => {
   test("Pass_hash", async () => {
-    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
+    const code = `# ff8601fdd724f6654ef14bee767d21a616485dbe53823b5a9df490f2b4cf2c35 Elan 1.0.0 guest default_profile valid
 
 main
   # My first program
-  print "Hello World!"
+  call printNoLine("Hello World!")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
 
-  await system.print("Hello World!");
+  await _stdlib.printNoLine("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -47,18 +47,18 @@ return [main, _tests];}`;
   });
 
   test("Pass_versionSame", async () => {
-    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
+    const code = `# ff8601fdd724f6654ef14bee767d21a616485dbe53823b5a9df490f2b4cf2c35 Elan 1.0.0 guest default_profile valid
 
 main
   # My first program
-  print "Hello World!"
+  call printNoLine("Hello World!")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
 
-  await system.print("Hello World!");
+  await _stdlib.printNoLine("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -80,18 +80,18 @@ return [main, _tests];}`;
   });
 
   test("Pass_versionPatch1", async () => {
-    const code = `# 93c8c544e1e7e741cc1ecc570ac797c4d0095d4f7e9edbdbdb003d812e504537 Elan 1.0.100 guest default_profile valid
+    const code = `# 059b98f737252eb25aef520a8ebaeb7b649dc31f1d3d129ebe43992f7df5bbf3 Elan 1.0.100 guest default_profile valid
 
 main
   # My first program
-  print "Hello World!"
+  call printNoLine("Hello World!")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
 
-  await system.print("Hello World!");
+  await _stdlib.printNoLine("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -113,18 +113,18 @@ return [main, _tests];}`;
   });
 
   test("Pass_versionPatch2", async () => {
-    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
+    const code = `# ff8601fdd724f6654ef14bee767d21a616485dbe53823b5a9df490f2b4cf2c35 Elan 1.0.0 guest default_profile valid
 
 main
   # My first program
-  print "Hello World!"
+  call printNoLine("Hello World!")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
 
-  await system.print("Hello World!");
+  await _stdlib.printNoLine("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -146,18 +146,18 @@ return [main, _tests];}`;
   });
 
   test("Pass_versionMinor", async () => {
-    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
+    const code = `# ff8601fdd724f6654ef14bee767d21a616485dbe53823b5a9df490f2b4cf2c35 Elan 1.0.0 guest default_profile valid
 
 main
   # My first program
-  print "Hello World!"
+  call printNoLine("Hello World!")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
 
-  await system.print("Hello World!");
+  await _stdlib.printNoLine("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -179,18 +179,18 @@ return [main, _tests];}`;
   });
 
   test("Pass_user", async () => {
-    const code = `# 0887656cae717264197a75bbc3f0c8c2b737eb0e48854ae2399ea76331822755 Elan 1.0.0 aUser default_profile valid
+    const code = `# 4949493ed4278e580a9ce6c85933365009324ed49b9a92437d04b027e4613522 Elan 1.0.0 aUser default_profile valid
 
 main
   # My first program
-  print "Hello World!"
+  call printNoLine("Hello World!")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
 
-  await system.print("Hello World!");
+  await _stdlib.printNoLine("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -212,11 +212,11 @@ return [main, _tests];}`;
   });
 
   test("Fail_versionMajor1", async () => {
-    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
+    const code = `# ff8601fdd724f6654ef14bee767d21a616485dbe53823b5a9df490f2b4cf2c35 Elan 1.0.0 guest default_profile valid
 
 main
   # My first program
-  print "Hello World!"
+  call printNoLine("Hello World!")
 end main`;
 
     const fileImpl = new FileImpl(
@@ -237,11 +237,11 @@ end main`;
   });
 
   test("Fail_versionMajor2", async () => {
-    const code = `# 14dddb83fe745f514d078c6035905da8f1dfbf7da06483ddd8c1f8ce8e5e4b05 Elan 1.0.0 guest default_profile valid
+    const code = `# ff8601fdd724f6654ef14bee767d21a616485dbe53823b5a9df490f2b4cf2c35 Elan 1.0.0 guest default_profile valid
 
 main
   # My first program
-  print "Hello World!"
+  call printNoLine("Hello World!")
 end main`;
 
     const fileImpl = new FileImpl(
@@ -262,11 +262,11 @@ end main`;
   });
 
   test("Fail_versionMinor", async () => {
-    const code = `# da01be00d946912fec86405112300c347b38ea560d11e4992db91681093ef049 Elan 1.1.0 guest default_profile valid
+    const code = `# 4999398e974acfe969ceb831f0f85efc31fb873bb0b7f09d6cd365f547365492 Elan 1.1.0 guest default_profile valid
 
 main
   # My first program
-  print "Hello World!"
+  call printNoLine("Hello World!")
 end main`;
 
     const fileImpl = new FileImpl(
@@ -287,18 +287,18 @@ end main`;
   });
 
   test("Pass_preRelease", async () => {
-    const code = `# 775d96007a883395a4cb0cf72b418c81c5288b76b6387c8da49ca376834c1a04 Elan 1.1.0-Beta guest default_profile valid
+    const code = `# 2096eb1fe5463ded352b7d4546b570abccbf5486ff08c57c32e75bbb287fba15 Elan 1.1.0-Beta guest default_profile valid
 
 main
   # My first program
-  print "Hello World!"
+  call printNoLine("Hello World!")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
 
-  await system.print("Hello World!");
+  await _stdlib.printNoLine("Hello World!");
 }
 return [main, _tests];}`;
 
@@ -320,11 +320,11 @@ return [main, _tests];}`;
   });
 
   test("Fail_preReleaseBadSemver", async () => {
-    const code = `# 775d96007a883395a4cb0cf72b418c81c5288b76b6387c8da49ca376834c1a04 Elan 1.1.0-Beta guest default_profile valid
+    const code = `# 2096eb1fe5463ded352b7d4546b570abccbf5486ff08c57c32e75bbb287fba15 Elan 1.1.0-Beta guest default_profile valid
 
 main
   # My first program
-  print "Hello World!"
+  call printNoLine("Hello World!")
 end main`;
 
     const fileImpl = new FileImpl(

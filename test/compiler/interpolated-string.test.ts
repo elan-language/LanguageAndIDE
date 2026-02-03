@@ -18,15 +18,15 @@ suite("Strings", () => {
     const code = `${testHeader}
 
 main
-  print "'Hello,' she said."
-  print '"Hello," she said.'
+  call printNoLine("'Hello,' she said.")
+  call printNoLine('"Hello," she said.')
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  await system.print("'Hello,' she said.");
-  await system.print('"Hello," she said.');
+  await _stdlib.printNoLine("'Hello,' she said.");
+  await _stdlib.printNoLine('"Hello," she said.');
 }
 return [main, _tests];}`;
 
@@ -52,8 +52,8 @@ main
   variable a set to 1
   variable b set to "Apple"
   variable c set to {1,2,3}
-  print "{a} {b} {c}"
-  print '{a} {b} {c}'
+  call printNoLine("{a} {b} {c}")
+  call printNoLine('{a} {b} {c}')
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -62,8 +62,8 @@ async function main() {
   let a = 1;
   let b = "Apple";
   let c = system.listImmutable([1, 2, 3]);
-  await system.print(\`\${await _stdlib.asString(a)} \${await _stdlib.asString(b)} \${await _stdlib.asString(c)}\`);
-  await system.print('{a} {b} {c}');
+  await _stdlib.printNoLine(\`\${await _stdlib.asString(a)} \${await _stdlib.asString(b)} \${await _stdlib.asString(c)}\`);
+  await _stdlib.printNoLine('{a} {b} {c}');
 }
 return [main, _tests];}`;
 
@@ -90,7 +90,7 @@ main
   variable a set to 1
   variable b set to "Apple"
   variable c set to {1,2,3}
-  print "{a {b} {c}"
+  call printNoLine("{a {b} {c}")
 end main`;
 
     const fileImpl = new FileImpl(
@@ -113,7 +113,7 @@ main
   variable a set to 1
   variable b set to "Apple"
   variable c set to {1,2,3}
-  print "{a} {b} {{c}"
+  call printNoLine("{a} {b} {{c}")
 end main`;
 
     const fileImpl = new FileImpl(
