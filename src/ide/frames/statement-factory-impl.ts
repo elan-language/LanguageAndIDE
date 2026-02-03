@@ -11,7 +11,6 @@ import { Elif } from "./statements/elif";
 import { Else } from "./statements/else";
 import { For } from "./statements/for";
 import { IfStatement } from "./statements/if-statement";
-import { Print } from "./statements/print";
 import { SetStatement } from "./statements/set-statement";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
@@ -45,9 +44,6 @@ export class StatementFactoryImpl implements StatementFactory {
   }
   public newConstantStatement(parent: Parent): Frame {
     return new ConstantStatement(parent);
-  }
-  public newPrint(parent: Parent): Frame {
-    return new Print(parent);
   }
   public newSet(parent: Parent): Frame {
     return new SetStatement(parent);

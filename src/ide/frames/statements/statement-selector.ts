@@ -8,7 +8,6 @@ import {
   elseKeyword,
   forKeyword,
   ifKeyword,
-  printKeyword,
   setKeyword,
   throwKeyword,
   tryKeyword,
@@ -43,7 +42,6 @@ export class StatementSelector extends AbstractSelector {
       [forKeyword, (parent: Parent) => this.factory.newFor(parent)],
       [ifKeyword, (parent: Parent) => this.factory.newIf(parent)],
       [constantKeyword, (parent: Parent) => this.factory.newConstantStatement(parent)],
-      [printKeyword, (parent: Parent) => this.factory.newPrint(parent)],
       [setKeyword, (parent: Parent) => this.factory.newSet(parent)],
       [throwKeyword, (parent: Parent) => this.factory.newThrow(parent)],
       [tryKeyword, (parent: Parent) => this.factory.newTryCatch(parent)],
@@ -55,7 +53,7 @@ export class StatementSelector extends AbstractSelector {
   }
 
   profileAllows(keyword: string): boolean {
-    return keyword !== printKeyword && keyword !== commentMarker;
+    return keyword !== commentMarker;
   }
 
   validWithinCurrentContext(keyword: string, _userEntry: boolean): boolean {
@@ -63,7 +61,7 @@ export class StatementSelector extends AbstractSelector {
     let result = false;
     if (keyword === elseKeyword || keyword === elifKeyword) {
       result = parent.getIdPrefix() === ifKeyword;
-    } else if (keyword === printKeyword || keyword === callKeyword) {
+    } else if (keyword === callKeyword) {
       result = !(
         this.isWithinAFunction() ||
         this.isDirectlyWithinATest() ||
